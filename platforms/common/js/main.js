@@ -3305,6 +3305,14 @@ ready(function() {
                     content: zen('ul').html(content.html())[0].outerHTML,
                     allowElementsClick: '.toggle'
                 });
+            element.on('shown.popover', function(popover){
+                element.attribute('aria-expanded', true).attribute('aria-hidden', false);
+                element.find('.enabler')[0].focus();
+            });
+
+            element.on('hide.popover', function(popover){
+                element.attribute('aria-expanded', false).attribute('aria-hidden', true);
+            });
 
             element.getPopover().show();
         }
@@ -8432,6 +8440,7 @@ var prime    = require('prime'),
     forEach  = require('mout/array/forEach'),
     last     = require('mout/array/last'),
     merge    = require('mout/object/merge'),
+    trim     = require('mout/string/trim'),
 
     request  = require('agent');
 
@@ -8529,7 +8538,12 @@ var Modal = new prime({
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
             .addClass(options.className)
-            .style(options.css);
+            .style(options.css)
+            .attribute('tabindex', '0')
+            .attribute('role', 'dialog')
+            .attribute('aria-hidden', 'true')
+            .attribute('aria-labelledby', 'g-modal-labelledby')
+            .attribute('aria-describedby', 'g-modal-describedby');
 
         storage.set(elements.container, { dialog: options });
 
@@ -8553,6 +8567,7 @@ var Modal = new prime({
             .addClass(options.baseClassNames.content)
             .addClass(options.contentClassName)
             .style(options.contentCSS)
+            .attribute('aria-live', 'assertive')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -8591,9 +8606,13 @@ var Modal = new prime({
                     options.remoteLoaded(response, options);
                 }
 
+                elements.container.attribute('aria-hidden', 'false');
+
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
+        } else {
+            elements.container.attribute('aria-hidden', 'false');
         }
 
         // close button
@@ -8601,6 +8620,7 @@ var Modal = new prime({
             elements.closeButton = zen('div')
                 .addClass(options.baseClassNames.close)
                 .addClass(options.closeClassName)
+                .attribute('role', 'button').attribute('aria-label', 'Close')
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
@@ -8770,7 +8790,7 @@ var modal = new Modal();
 
 module.exports = modal;
 
-},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],48:[function(require,module,exports){
+},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"mout/string/trim":230,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],48:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -8984,6 +9004,7 @@ var Popover = new prime({
         }
 
         this._poped = true;
+        this.element[0].focus();
         this.element.emit('shown.popover', this);
 
     },
@@ -12086,6 +12107,7 @@ var hiddens,
 
         if (!hiddens) return true;
         hiddens.value(hiddens.value() == '0' ? '1' : '0');
+        element.parent('.enabler').attribute('aria-checked', hiddens.value() == '1' ? 'true' : 'false');
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
@@ -12095,6 +12117,18 @@ var hiddens,
 
 ready(function() {
     var body = $('body');
+    body.delegate('keydown', '.enabler', function(event, element){
+        element = $(element);
+        if (element.disabled() || element.find('[disabled]')) {
+            return;
+        }
+
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            toggles(event, element.find('.toggle'));
+        }
+    });
+
     ['touchend', 'mouseup', 'click'].forEach(function(event) {
         body.delegate(event, '.enabler .toggle', toggles);
     });

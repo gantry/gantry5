@@ -15,6 +15,7 @@ var prime    = require('prime'),
     forEach  = require('mout/array/forEach'),
     last     = require('mout/array/last'),
     merge    = require('mout/object/merge'),
+    trim     = require('mout/string/trim'),
 
     request  = require('agent');
 
@@ -112,7 +113,12 @@ var Modal = new prime({
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
             .addClass(options.className)
-            .style(options.css);
+            .style(options.css)
+            .attribute('tabindex', '0')
+            .attribute('role', 'dialog')
+            .attribute('aria-hidden', 'true')
+            .attribute('aria-labelledby', 'g-modal-labelledby')
+            .attribute('aria-describedby', 'g-modal-describedby');
 
         storage.set(elements.container, { dialog: options });
 
@@ -136,6 +142,7 @@ var Modal = new prime({
             .addClass(options.baseClassNames.content)
             .addClass(options.contentClassName)
             .style(options.contentCSS)
+            .attribute('aria-live', 'assertive')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -174,9 +181,13 @@ var Modal = new prime({
                     options.remoteLoaded(response, options);
                 }
 
+                elements.container.attribute('aria-hidden', 'false');
+
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
+        } else {
+            elements.container.attribute('aria-hidden', 'false');
         }
 
         // close button
@@ -184,6 +195,7 @@ var Modal = new prime({
             elements.closeButton = zen('div')
                 .addClass(options.baseClassNames.close)
                 .addClass(options.closeClassName)
+                .attribute('role', 'button').attribute('aria-label', 'Close')
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });

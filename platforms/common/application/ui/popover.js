@@ -211,6 +211,7 @@ var Popover = new prime({
         }
 
         this._poped = true;
+        this.element[0].focus();
         this.element.emit('shown.popover', this);
 
     },

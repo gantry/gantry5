@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
+        - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs [wip] (#713)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
 2. [Joomla](#joomla)

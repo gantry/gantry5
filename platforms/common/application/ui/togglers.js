@@ -19,6 +19,7 @@ var hiddens,
 
         if (!hiddens) return true;
         hiddens.value(hiddens.value() == '0' ? '1' : '0');
+        element.parent('.enabler').attribute('aria-checked', hiddens.value() == '1' ? 'true' : 'false');
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
@@ -28,6 +29,18 @@ var hiddens,
 
 ready(function() {
     var body = $('body');
+    body.delegate('keydown', '.enabler', function(event, element){
+        element = $(element);
+        if (element.disabled() || element.find('[disabled]')) {
+            return;
+        }
+
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            toggles(event, element.find('.toggle'));
+        }
+    });
+
     ['touchend', 'mouseup', 'click'].forEach(function(event) {
         body.delegate(event, '.enabler .toggle', toggles);
     });
