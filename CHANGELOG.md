@@ -2,7 +2,9 @@
 ## XX/XX/2015
 
 1. [Common](#common)
-    1. [](#bugfix)
+    1. [](#improved)
+        - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
+    3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
 2. [Joomla](#joomla)
     3. [](#bugfix)
