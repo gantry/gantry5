@@ -6,8 +6,9 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 global $wp_filesystem;
 
-// Remove cache.
+// Remove cache (also parent directory but only if it's empty).
 $wp_filesystem->rmdir(WP_CONTENT_DIR . '/cache/gantry5', true);
+$wp_filesystem->rmdir(WP_CONTENT_DIR . '/cache', false);
 
 // Remove options.
 delete_option( 'gantry5_plugin' );
