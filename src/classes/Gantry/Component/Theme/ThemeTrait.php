@@ -101,11 +101,11 @@ trait ThemeTrait
 
             $results = $compiler->compileAll()->getWarnings();
             if ($results) {
-                $warnigns[$configuration] = $results;
+                $warnings[$configuration] = $results;
             }
         }
 
-        return $warnigns;
+        return $warnings;
     }
 
     /**
