@@ -2,7 +2,7 @@
 
 <div id="outline-{{ name }}" class="page">
     <h4 class="g-tooltip" data-title="{{ title|e }}">
-        <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="post" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+        <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="post" data-title-editable="{{ title|e }}" class="title">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title|e}) }}" data-title-edit=""></i>
         <span class="float-right font-small">(id: {{ name }})</span>
     </h4>
     <div class="inner-params">

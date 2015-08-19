@@ -349,6 +349,14 @@ ready(function() {
     var body = $('body');
 
     var selectized, select, editable, href;
+    body.delegate('keydown', '.config-select-wrap [data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '.config-select-wrap [data-title-edit]', function(event, element) {
         selectized = element.siblings('.selectize-control');
         select = element.siblings('select');
@@ -3443,6 +3451,14 @@ ready(function() {
     });
 
     // Editable titles
+    body.delegate('keydown', '[data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('click', event);
+        }
+    });
+
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         if (element.hasClass('disabled')) { return false; }

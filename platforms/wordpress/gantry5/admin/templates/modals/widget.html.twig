@@ -15,7 +15,7 @@
         <div class="g-pane active">
             <div class="card settings-block">
                 <h4>
-                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title }) }}" data-title-edit></i>
                     <span class="badge font-small">{{ item.options.type }}</span>
                 </h4>
 

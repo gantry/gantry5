@@ -6,7 +6,7 @@
             {% for key, val in value %}
                 <div class="card settings-block">
                     <h4>
-                        <span data-title-editable="{{ (field.value == field.key ? key : val[field.value])|e }}" data-collection-key="{{ (prefix ~ '.' ~ key ~ '.' ~ field.value)|fieldName|e }}" class="title">{{ (field.value == field.key ? key : val[field.value])|e }}</span> <i class="fa fa-pencil font-small" data-title-edit></i>
+                        <span data-title-editable="{{ (field.value == field.key ? key : val[field.value])|e }}" data-collection-key="{{ (prefix ~ '.' ~ key ~ '.' ~ field.value)|fieldName|e }}" class="title">{{ (field.value == field.key ? key : val[field.value])|e }}</span> <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': (field.value == field.key ? key : val[field.value])|e}) }}" data-title-edit></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -46,7 +46,7 @@
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue|e }}" class="title">{{ itemValue|e }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
-                                            <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                                            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': itemValue|e}) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         {% block collection_fields %}
