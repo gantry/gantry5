@@ -386,3 +386,9 @@ msgstr "Search Font..."
 
 msgid "GANTRY5_PLATFORM_SEARCH_FONT"
 msgstr "Search Font"
+
+msgid "GANTRY5_PLATFORM_OVERRIDE_CHECKBOX"
+msgstr "Enables the override for the field '%s'"
+
+msgid "GANTRY5_PLATFORM_EDIT_TITLE"
+msgstr "Edit Title '%s'"

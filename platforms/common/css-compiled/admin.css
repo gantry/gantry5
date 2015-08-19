@@ -1477,9 +1477,15 @@
 #g5-container .visible-desktop {
   display: inherit !important;
 }
+#g5-container .g-block.visible-desktop {
+  display: block !important;
+}
 @media print {
   #g5-container .visible-print {
     display: inherit !important;
+  }
+  #g5-container .g-block.visible-print {
+    display: block !important;
   }
   #g5-container .hidden-print {
     display: none !important;
@@ -5306,6 +5312,9 @@ html.g5-dialog-open {
   color: #666;
   background-color: #eee;
   border-radius: 4px;
+}
+#g5-container .g5-popover-extras a:focus, #g5-container .g5-popover-extras [data-g-devprod]:focus {
+  outline: auto;
 }
 
 #g5-container {

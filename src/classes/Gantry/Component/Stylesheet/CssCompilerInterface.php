@@ -17,6 +17,11 @@ namespace Gantry\Component\Stylesheet;
 interface CssCompilerInterface
 {
     /**
+     * @return array
+     */
+    public function getWarnings();
+
+    /**
      * @return string
      */
     public function getTarget();

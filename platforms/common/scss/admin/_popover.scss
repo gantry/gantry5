@@ -313,6 +313,10 @@ $close-color:               #000;
                 background-color: #eee;
                 border-radius: $border-radius-base;
             }
+
+            &:focus {
+                outline: auto;
+            }
         }
     }
 }

@@ -104,7 +104,7 @@ ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
     // Layout Manager
-    layoutmanager = new LayoutManager('body', {
+    layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
@@ -133,6 +133,13 @@ ready(function() {
         event.preventDefault();
         return false;
     });
+    body.delegate('keydown', '.g-tabs a', function(event, element) {
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mouseup', event);
+            return false;
+        }
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -150,6 +157,13 @@ ready(function() {
         parent.find('.active').removeClass('active');
         panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
         parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker

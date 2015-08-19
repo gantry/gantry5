@@ -104,6 +104,14 @@ ready(function() {
                     content: zen('ul').html(content.html())[0].outerHTML,
                     allowElementsClick: '.toggle'
                 });
+            element.on('shown.popover', function(popover){
+                element.attribute('aria-expanded', true).attribute('aria-hidden', false);
+                element.find('.enabler')[0].focus();
+            });
+
+            element.on('hide.popover', function(popover){
+                element.attribute('aria-expanded', false).attribute('aria-hidden', true);
+            });
 
             element.getPopover().show();
         }
@@ -225,6 +233,14 @@ ready(function() {
     });
 
     // Editable titles
+    body.delegate('keydown', '[data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('click', event);
+        }
+    });
+
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         if (element.hasClass('disabled')) { return false; }

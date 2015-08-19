@@ -30,6 +30,7 @@ var prime      = require('prime'),
 
 
 var IS_MAC                = /Mac/.test(navigator.userAgent),
+    IS_IE                 = /MSIE 9/i.test(navigator.userAgent) || /MSIE 10/i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent),
     COUNT                 = 0,
 
     KEY_A                 = 65,
@@ -453,6 +454,9 @@ var Selectize = new prime({
                 width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
             });
         }
+
+        // g5 custom
+        $dropdown.attribute('role', 'listbox');
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
             $input.attribute('multiple', 'multiple');
@@ -1173,7 +1177,7 @@ var Selectize = new prime({
 
         if (this.ignoreFocus) {
             return;
-        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && this.$wrapper.find($(e.target))))) {
+        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && IS_IE && this.$wrapper.find($(e.target))))) {
             // ^- g5 custom [before: no e.target && ..]
             // necessary to prevent IE closing the dropdown when the scrollbar is clicked
             this.ignoreBlur = true;
@@ -1672,13 +1676,13 @@ var Selectize = new prime({
         var height_menu, height_item, y;
         var scroll_top, scroll_bottom;
 
-        if (this.$activeOption) this.$activeOption.removeClass('active');
+        if (this.$activeOption) this.$activeOption.removeClass('active').attribute('aria-selected', 'false');
         this.$activeOption = null;
 
         $option = $($option);
         if (!$option) return;
 
-        this.$activeOption = $option.addClass('active');
+        this.$activeOption = $option.addClass('active').attribute('aria-selected', 'true');
 
         if (scroll || !isset(scroll)) {
 
@@ -2018,7 +2022,7 @@ var Selectize = new prime({
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.replace(regex_tag, '<$1 data-selectable role="option" tabindex="0" aria-label="' + trim(data.text) + '"');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';

@@ -1,3 +1,22 @@
+# 5.1.1
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#improved)
+        - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
+        - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs, Extras dropdown, Modals, Tabs within Modals, Popovers, Assignments, Settings, Outlines, Selectize, Editable Titles [wip] (#713)
+        -  Catch and display warnings from SCSS compiler (#705)
+    3. [](#bugfix)
+        - ToTop Particle allows HTML again in the content field (#720, #721)
+        - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
+        - Uninstall is leaving behind cache files and options (#659)
+
 # 5.1.0
 ## 16/08/2015
 

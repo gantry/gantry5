@@ -349,6 +349,14 @@ ready(function() {
     var body = $('body');
 
     var selectized, select, editable, href;
+    body.delegate('keydown', '.config-select-wrap [data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '.config-select-wrap [data-title-edit]', function(event, element) {
         selectized = element.siblings('.selectize-control');
         select = element.siblings('select');
@@ -2121,7 +2129,7 @@ ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
     // Layout Manager
-    layoutmanager = new LayoutManager('body', {
+    layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
@@ -2150,6 +2158,13 @@ ready(function() {
         event.preventDefault();
         return false;
     });
+    body.delegate('keydown', '.g-tabs a', function(event, element) {
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mouseup', event);
+            return false;
+        }
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -2167,6 +2182,13 @@ ready(function() {
         parent.find('.active').removeClass('active');
         panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
         parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -3305,6 +3327,14 @@ ready(function() {
                     content: zen('ul').html(content.html())[0].outerHTML,
                     allowElementsClick: '.toggle'
                 });
+            element.on('shown.popover', function(popover){
+                element.attribute('aria-expanded', true).attribute('aria-hidden', false);
+                element.find('.enabler')[0].focus();
+            });
+
+            element.on('hide.popover', function(popover){
+                element.attribute('aria-expanded', false).attribute('aria-hidden', true);
+            });
 
             element.getPopover().show();
         }
@@ -3426,6 +3456,14 @@ ready(function() {
     });
 
     // Editable titles
+    body.delegate('keydown', '[data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('click', event);
+        }
+    });
+
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         if (element.hasClass('disabled')) { return false; }
@@ -4138,7 +4176,7 @@ var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
 ready(function() {
     var body = $('body');
 
-    menumanager = new MenuManager('body', {
+    menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
@@ -8432,6 +8470,7 @@ var prime    = require('prime'),
     forEach  = require('mout/array/forEach'),
     last     = require('mout/array/last'),
     merge    = require('mout/object/merge'),
+    trim     = require('mout/string/trim'),
 
     request  = require('agent');
 
@@ -8529,7 +8568,12 @@ var Modal = new prime({
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
             .addClass(options.className)
-            .style(options.css);
+            .style(options.css)
+            .attribute('tabindex', '0')
+            .attribute('role', 'dialog')
+            .attribute('aria-hidden', 'true')
+            .attribute('aria-labelledby', 'g-modal-labelledby')
+            .attribute('aria-describedby', 'g-modal-describedby');
 
         storage.set(elements.container, { dialog: options });
 
@@ -8553,6 +8597,8 @@ var Modal = new prime({
             .addClass(options.baseClassNames.content)
             .addClass(options.contentClassName)
             .style(options.contentCSS)
+            .attribute('aria-live', 'assertive')
+            .attribute('tabindex', '0')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -8591,9 +8637,15 @@ var Modal = new prime({
                     options.remoteLoaded(response, options);
                 }
 
+                elements.container.attribute('aria-hidden', 'false');
+                setTimeout(function(){ elements.content[0].focus(); }, 0);
+
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
+        } else {
+            elements.container.attribute('aria-hidden', 'false');
+            setTimeout(function(){ elements.content[0].focus(); }, 0);
         }
 
         // close button
@@ -8601,6 +8653,7 @@ var Modal = new prime({
             elements.closeButton = zen('div')
                 .addClass(options.baseClassNames.close)
                 .addClass(options.closeClassName)
+                .attribute('role', 'button').attribute('aria-label', 'Close')
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
@@ -8770,7 +8823,7 @@ var modal = new Modal();
 
 module.exports = modal;
 
-},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],48:[function(require,module,exports){
+},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"mout/string/trim":230,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],48:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -8881,13 +8934,13 @@ var Popover = new prime({
 
         var elements = $(css);
         if (!elements) { return this; }
-        elements.removeClass('in').style({ display: 'none' });
+        elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
 
         return this;
     },
 
     show: function() {
-        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass);
+        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass).attribute('tabindex', '0');
 
         if (!this.options.multi) {
             this.hideAll();
@@ -8915,6 +8968,10 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
+        
+        setTimeout(bind(function(){
+            target[0].focus();
+        }, this), 0);
     },
 
     displayContent: function() {
@@ -8984,6 +9041,7 @@ var Popover = new prime({
         }
 
         this._poped = true;
+        this.element[0].focus();
         this.element.emit('shown.popover', this);
 
     },
@@ -9062,6 +9120,11 @@ var Popover = new prime({
 
             var target = this.getContentElement();
             target.attribute('style', null);
+
+            setTimeout(bind(function(){
+                target.parent('.' + this.options.mainClass)[0].focus();
+            }, this), 0);
+
             this.displayContent();
             this.bindBodyEvents();
 
@@ -9553,6 +9616,7 @@ var prime      = require('prime'),
 
 
 var IS_MAC                = /Mac/.test(navigator.userAgent),
+    IS_IE                 = /MSIE 9/i.test(navigator.userAgent) || /MSIE 10/i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent),
     COUNT                 = 0,
 
     KEY_A                 = 65,
@@ -9976,6 +10040,9 @@ var Selectize = new prime({
                 width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
             });
         }
+
+        // g5 custom
+        $dropdown.attribute('role', 'listbox');
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
             $input.attribute('multiple', 'multiple');
@@ -10696,7 +10763,7 @@ var Selectize = new prime({
 
         if (this.ignoreFocus) {
             return;
-        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && this.$wrapper.find($(e.target))))) {
+        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && IS_IE && this.$wrapper.find($(e.target))))) {
             // ^- g5 custom [before: no e.target && ..]
             // necessary to prevent IE closing the dropdown when the scrollbar is clicked
             this.ignoreBlur = true;
@@ -11195,13 +11262,13 @@ var Selectize = new prime({
         var height_menu, height_item, y;
         var scroll_top, scroll_bottom;
 
-        if (this.$activeOption) this.$activeOption.removeClass('active');
+        if (this.$activeOption) this.$activeOption.removeClass('active').attribute('aria-selected', 'false');
         this.$activeOption = null;
 
         $option = $($option);
         if (!$option) return;
 
-        this.$activeOption = $option.addClass('active');
+        this.$activeOption = $option.addClass('active').attribute('aria-selected', 'true');
 
         if (scroll || !isset(scroll)) {
 
@@ -11541,7 +11608,7 @@ var Selectize = new prime({
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.replace(regex_tag, '<$1 data-selectable role="option" tabindex="0" aria-label="' + trim(data.text) + '"');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
@@ -12086,6 +12153,7 @@ var hiddens,
 
         if (!hiddens) return true;
         hiddens.value(hiddens.value() == '0' ? '1' : '0');
+        element.parent('.enabler').attribute('aria-checked', hiddens.value() == '1' ? 'true' : 'false');
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
@@ -12095,6 +12163,18 @@ var hiddens,
 
 ready(function() {
     var body = $('body');
+    body.delegate('keydown', '.enabler', function(event, element){
+        element = $(element);
+        if (element.disabled() || element.find('[disabled]')) {
+            return;
+        }
+
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            toggles(event, element.find('.toggle'));
+        }
+    });
+
     ['touchend', 'mouseup', 'click'].forEach(function(event) {
         body.delegate(event, '.enabler .toggle', toggles);
     });
@@ -12250,6 +12330,7 @@ History.Adapter.bind(window, 'statechange', function() {
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({ opacity: 0 });
+                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
                 $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
@@ -12404,6 +12485,7 @@ domready(function() {
                             modal.close();
 
                             body.emit('click', { target: item });
+                            navbar.attribute('tabindex', null).attribute('aria-hidden', 'false');
                             navbar.slideDown();
                         };
 
@@ -12441,6 +12523,7 @@ domready(function() {
         }
 
         body.emit('click', { target: item });
+        navbar.attribute('tabindex', null);
         navbar.slideDown();
     });
 

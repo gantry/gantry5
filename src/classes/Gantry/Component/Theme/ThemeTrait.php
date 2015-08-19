@@ -74,6 +74,8 @@ trait ThemeTrait
 
     /**
      * Update all CSS files in the theme.
+     *
+     * @return array List of CSS warnings.
      */
     public function updateCss()
     {
@@ -91,12 +93,19 @@ trait ThemeTrait
 
         /** @var Configurations $configurations */
         $configurations = $gantry['configurations'];
+        $warnings = [];
         foreach ($configurations as $configuration => $title) {
             $config = ConfigServiceProvider::load($gantry, $configuration);
 
             $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
-            $compiler->compileAll();
+
+            $results = $compiler->compileAll()->getWarnings();
+            if ($results) {
+                $warnings[$configuration] = $results;
+            }
         }
+
+        return $warnings;
     }
 
     /**

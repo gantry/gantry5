@@ -11,7 +11,7 @@ notifications:
 env:
   global:
     # GH_TOKEN
-    - secure: "kY4hfKlKczsizZVxHMA1THnh3w2kmMOPnaadpnAwbpYcCQOlCgwgz7tbGEB5gPAbsKJfQMEgdlEAWnRiUUQdQE5vKhiwS14Jo3pry/i10iWCys/M+zLn6uclXCuTQUjNm4L0ReLQu5nkCPRyDL/F9vOp6v3h+vd4gfTEw+9TntfOg1g5RIW8tG1iBm12IhFgoQjP+wKUXluGTqZIlJyV5Jx1ef51Da3nSxd8lPHrsxElzZEebTRd2CvVM5vY+wZY4xjl0GjZo2v8ps3HI7IOZYygzYGLkH+Hbir+SHNTLZX6IMWQWuq56iiRb5CZm64GNULnrXAEaP2EZyiEHkA7gQgddtCzhMlGq5qyrYBfrPRukjRGEhRHEMvntUQloGlPYsETzO6ulvYBRlkS26s4C1uw6RBSgv58vWjhoXHyt7cDzv9yjKsboRE+2KCogkbbBDt7DxFRuUsQ9SnslzPuAFzBKZXik8Ea5Fl2Q/3tXOMt3fXp5CTQ5fT3X0p82orln5o1yQ1GZ3xWBtprMoWz5GyRq67G+gZql/BTI834JeQQ/TBhOszWV2a0zcw2SyjVFf9SeZTfNSOmpJz60aJcZSegEuTuxEfm+P3x34WAP/AFIt3vAFxRGad6A8ceP0rbY7R3WzaJcRWpuLCVzcmMukKNOltbzL0We3fF267Z7d4="
+    - secure: "GIFHCpRBw07hm/RwDUbeh1EZS3nUCRFnsAhyeBm02a5dKbCCIrAUoI5HVjTPyFiG/UKaRo3u/7byA3ROmXgVE48Hg5n4E3+ga8zOwdRdXql7V6pwu4bII4Kr+4qFgIDkn8ca1Ut1bxKQZI/NP/FR73pZ/pst/rtw27M4Au/PZSHAtAkMF1KSqcRSfvggAtqnhh3xFTFx13XvakX7zpP1AyD1Yft4dHhhZN+BHTxQgRrl+fJLky1MAwIwOl1xOF1VH+RQDdh3yXLHMfbznTjdeE9vJCiEjnZPUgZ+aXusLj1bJoNgrRNVCCikrOMLFK854YxxzGuzRtN/6xhcB/8LeFypw8jhHNnswJ5TX8heB7i4Jbu/7OTCk5/Ew0uG6kveTtvWsAOmVZZAqSl4Z/hZowCAavXy2X1DmZpsjQ0ljxZC271a5UQpI5HF7EKVoFhzvxyxZrxlUYSSDFTOoNGauKvsZbtgz6A0eAQOpjtuWXRTYnbxsOEZFuZCuOwUU6EdDtSA0RIpxnUI3qwn26+GzGTaaxjwTQ+ZtytmHaddC3jgKZ9EfZB6yOUeXXdnI+h0coSR8lp4yjOU/ZWnA9n96+fMqwnR5zCbxJeErhI8RJFWJL1/so1k0wq3t4OixVjDGY1rJkkugD8AnIUEPgB/gfGtF5t6J4WGrpFhWzej9/c="
 before_install:
   - composer self-update
   - if [ ! -z "$TRAVIS_TAG" ]; then
@@ -104,6 +104,7 @@ after_deploy:
       git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
       git fetch --quiet;
       git checkout develop;
+      git reset --hard HEAD;
       cd $TRAVIS_BUILD_DIR/bin/build;
       php build.php prod-versions -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
       cd $TRAVIS_BUILD_DIR;

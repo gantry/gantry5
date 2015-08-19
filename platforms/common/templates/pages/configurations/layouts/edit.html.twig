@@ -8,7 +8,7 @@
 
 {% else %}
 
-<div class="g-grid">
+<div class="g-grid" data-lm-container>
     <div class="g-block sidebar-block particles-sidebar-block">
         <h2 class="page-title">
             <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLES'|trans }}</span>
@@ -41,9 +41,9 @@
         <span class="float-right">
             {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
             <a href="#" class="button"><i class="fa fa-fw fa-sign-out"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>#}
-            <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}"><i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span></a>
-            <a href="#" class="button" data-lm-clear><i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span></a>
-            <a href="#" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span></a>
+            <a href="#" class="button" role="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}" aria-label="{{ 'GANTRY5_PLATFORM_LOAD'|trans }} Preset"><i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span></a>
+            <a href="#" class="button" role="button" data-lm-clear aria-label="{{ 'GANTRY5_PLATFORM_CLEAR'|trans }} Layout"><i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span></a>
+            <a href="#" class="button button-primary button-save" role="button" data-save="{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }} Layout"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span></a>
         </span>
         <h2 class="page-title layout-title">
             <span class="title">{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }} <small>({{ preset_title|default('Unknown') }})</small></span>

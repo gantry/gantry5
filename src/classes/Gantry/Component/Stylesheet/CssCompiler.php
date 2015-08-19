@@ -31,6 +31,8 @@ abstract class CssCompiler implements CssCompilerInterface
 
     protected $debug = false;
 
+    protected $warnings = [];
+
     /**
      * @var array
      */
@@ -75,6 +77,11 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // In production mode we do not need to do any other checks.
         $this->production = (bool) $global->get('production');
+    }
+
+    public function getWarnings()
+    {
+        return $this->warnings;
     }
 
     /**
