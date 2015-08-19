@@ -14,6 +14,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
+        - Uninstall is leaving behind cache files and options (#659)
 
 # 5.1.0
 ## 16/08/2015
