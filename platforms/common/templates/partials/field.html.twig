@@ -26,6 +26,7 @@
                     {% if field.id is defined %} id="{{ field.id }}" {% endif %}
                     {% if field.style is defined %} style="{{ field.style }}" {% endif %}
                     {% if field.title is defined %} title="{{ field.title }}" {% endif %}
+                    aria-label="{{ (scope ~ name)|replace({'.': ' '})|title|trim }}"
                 {% endblock %}
                 />
     {% endblock %}
