@@ -2150,6 +2150,13 @@ ready(function() {
         event.preventDefault();
         return false;
     });
+    body.delegate('keydown', '.g-tabs a', function(event, element) {
+        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mouseup', event);
+            return false;
+        }
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -2164,9 +2171,11 @@ ready(function() {
         });
 
         panes.find('.active').removeClass('active');
+        panes.search('[aria-expanded]').attribute('aria-expanded', 'false');
         parent.find('.active').removeClass('active');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
-        parent.find('li:nth-child(' + index + ')').addClass('active');
+        parent.search('[aria-expanded]').attribute('aria-expanded', 'false');
+        panes.find('.g-pane:nth-child(' + index + ')').addClass('active').attribute('aria-expanded', 'true');
+        parent.find('li:nth-child(' + index + ')').addClass('active').find('[aria-expanded]').attribute('aria-expanded', 'true');
     });
 
     // Picker
@@ -8901,13 +8910,13 @@ var Popover = new prime({
 
         var elements = $(css);
         if (!elements) { return this; }
-        elements.removeClass('in').style({ display: 'none' });
+        elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
 
         return this;
     },
 
     show: function() {
-        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass);
+        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass).attribute('tabindex', '0');
 
         if (!this.options.multi) {
             this.hideAll();
@@ -8921,6 +8930,10 @@ var Popover = new prime({
             if (!this.options.closeable) {
                 target.find('.close').off('click').remove();
             }
+
+            setTimeout(bind(function(){
+                target[0].focus();
+            }, this), 0);
 
             if (!this.isAsync()) {
                 this.setContent(this.getContent());
@@ -9083,6 +9096,11 @@ var Popover = new prime({
 
             var target = this.getContentElement();
             target.attribute('style', null);
+
+            setTimeout(bind(function(){
+                target.parent('.' + this.options.mainClass)[0].focus();
+            }, this), 0);
+
             this.displayContent();
             this.bindBodyEvents();
 
@@ -12284,7 +12302,7 @@ History.Adapter.bind(window, 'statechange', function() {
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({ opacity: 0 });
-                if (isTopNavOrMenu) { navbar.attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
+                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
                 $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
