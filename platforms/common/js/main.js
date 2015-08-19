@@ -10017,6 +10017,9 @@ var Selectize = new prime({
             });
         }
 
+        // g5 custom
+        $dropdown.attribute('role', 'listbox');
+
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
             $input.attribute('multiple', 'multiple');
         }
@@ -11235,13 +11238,13 @@ var Selectize = new prime({
         var height_menu, height_item, y;
         var scroll_top, scroll_bottom;
 
-        if (this.$activeOption) this.$activeOption.removeClass('active');
+        if (this.$activeOption) this.$activeOption.removeClass('active').attribute('aria-selected', 'false');
         this.$activeOption = null;
 
         $option = $($option);
         if (!$option) return;
 
-        this.$activeOption = $option.addClass('active');
+        this.$activeOption = $option.addClass('active').attribute('aria-selected', 'true');
 
         if (scroll || !isset(scroll)) {
 
@@ -11581,7 +11584,7 @@ var Selectize = new prime({
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.replace(regex_tag, '<$1 data-selectable role="option" tabindex="0" aria-label="' + trim(data.text) + '"');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
