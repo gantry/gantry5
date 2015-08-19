@@ -11,6 +11,9 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
 
 # 5.1.0
 ## 16/08/2015

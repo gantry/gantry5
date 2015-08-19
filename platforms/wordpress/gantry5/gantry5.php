@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
 
 // NOTE: This file needs to be PHP 5.2 compatible.
 
-require_once __DIR__ . '/src/Loader.php';
+require_once dirname(__FILE__) . '/src/Loader.php';
 
 if (!defined('GANTRY5_PATH')) {
     // Works also with symlinks.
