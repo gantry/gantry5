@@ -143,6 +143,7 @@ var Modal = new prime({
             .addClass(options.contentClassName)
             .style(options.contentCSS)
             .attribute('aria-live', 'assertive')
+            .attribute('tabindex', '0')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -182,12 +183,14 @@ var Modal = new prime({
                 }
 
                 elements.container.attribute('aria-hidden', 'false');
+                setTimeout(function(){ elements.content[0].focus(); }, 0);
 
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
         } else {
             elements.container.attribute('aria-hidden', 'false');
+            setTimeout(function(){ elements.content[0].focus(); }, 0);
         }
 
         // close button

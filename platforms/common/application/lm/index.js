@@ -154,11 +154,16 @@ ready(function() {
         });
 
         panes.find('.active').removeClass('active');
-        panes.search('[aria-expanded]').attribute('aria-expanded', 'false');
         parent.find('.active').removeClass('active');
-        parent.search('[aria-expanded]').attribute('aria-expanded', 'false');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active').attribute('aria-expanded', 'true');
-        parent.find('li:nth-child(' + index + ')').addClass('active').find('[aria-expanded]').attribute('aria-expanded', 'true');
+        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker

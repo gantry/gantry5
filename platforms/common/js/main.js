@@ -2179,11 +2179,16 @@ ready(function() {
         });
 
         panes.find('.active').removeClass('active');
-        panes.search('[aria-expanded]').attribute('aria-expanded', 'false');
         parent.find('.active').removeClass('active');
-        parent.search('[aria-expanded]').attribute('aria-expanded', 'false');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active').attribute('aria-expanded', 'true');
-        parent.find('li:nth-child(' + index + ')').addClass('active').find('[aria-expanded]').attribute('aria-expanded', 'true');
+        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -8593,6 +8598,7 @@ var Modal = new prime({
             .addClass(options.contentClassName)
             .style(options.contentCSS)
             .attribute('aria-live', 'assertive')
+            .attribute('tabindex', '0')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -8632,12 +8638,14 @@ var Modal = new prime({
                 }
 
                 elements.container.attribute('aria-hidden', 'false');
+                setTimeout(function(){ elements.content[0].focus(); }, 0);
 
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
         } else {
             elements.container.attribute('aria-hidden', 'false');
+            setTimeout(function(){ elements.content[0].focus(); }, 0);
         }
 
         // close button

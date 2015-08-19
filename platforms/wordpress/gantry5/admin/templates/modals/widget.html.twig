@@ -2,17 +2,17 @@
 
 {% block gantry %}
 <form method="post" action="{{ gantry.route(action) }}">
-    <div class="g-tabs">
+    <div class="g-tabs" role="tablist">
         <ul>
-            <li class="active"><a href="#">{{ 'Widget'|trans }}</a></li>
+            <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" aria-role="tab" aria-expanded="true">{{ 'Widget'|trans }}</a></li>
             {% if block %}
-            <li><a href="#">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" aria-role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
             {% endif %}
         </ul>
     </div>
 
     <div class="g-panes">
-        <div class="g-pane active">
+        <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             <div class="card settings-block">
                 <h4>
                     <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title }) }}" data-title-edit></i>
@@ -26,7 +26,7 @@
         </div>
 
         {% if block %}
-        <div class="g-pane">
+        <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
             <div class="card settings-block">
                 <h4>
                     {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
@@ -42,7 +42,7 @@
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
         <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
-        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </form>
 {% endblock %}
