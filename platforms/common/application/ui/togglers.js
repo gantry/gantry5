@@ -35,7 +35,8 @@ ready(function() {
             return;
         }
 
-        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             toggles(event, element.find('.toggle'));
         }

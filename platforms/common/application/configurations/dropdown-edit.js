@@ -17,7 +17,7 @@ ready(function() {
     var selectized, select, editable, href;
     body.delegate('keydown', '.config-select-wrap [data-title-edit]', function(event, element) {
         var key = (event.which ? event.which : event.keyCode);
-        if (key == 32 || key == 13) { // ARIA support: Space toggle
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             body.emit('mousedown', event);
         }
