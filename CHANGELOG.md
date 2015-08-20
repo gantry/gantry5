@@ -6,6 +6,7 @@
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
         - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs, Extras dropdown, Modals, Tabs within Modals, Popovers, Assignments, Settings, Outlines, Selectize, Editable Titles [wip] (#713)
         - Catch and display warnings from SCSS compiler (#705)
+        - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers

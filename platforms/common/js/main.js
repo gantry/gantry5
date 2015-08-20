@@ -10144,6 +10144,7 @@ var Selectize = new prime({
             if (this.isFocused) {
                 // prevent events on the dropdown scrollbar from causing the control to blur
                 if (e.target === this.$dropdown[0] || e.target.parentNode === this.$dropdown[0]) {
+                    e.preventDefault();
                     return false;
                 }
                 // blur on click outside
