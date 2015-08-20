@@ -35,6 +35,14 @@ $.implement({
         return this;
     },
 
+    hide: function() {
+        return this.style('display', 'none');
+    },
+
+    show: function(mode) {
+        return this.style('display', mode || 'inherit');
+    },
+
     progresser: function(options) {
         var instance;
 
