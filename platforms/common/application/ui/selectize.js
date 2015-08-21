@@ -26,7 +26,8 @@ var prime      = require('prime'),
     size       = require('mout/object/size'),
     values     = require('mout/object/values'),
     escapeHTML = require('mout/string/escapeHtml'),
-    trim       = require('mout/string/trim');
+    trim       = require('mout/string/trim'),
+    slugify    = require('mout/string/slugify');
 
 
 var IS_MAC                = /Mac/.test(navigator.userAgent),
@@ -369,6 +370,7 @@ var Selectize = new prime({
         var dir = computedStyle ? computedStyle.getPropertyValue('direction') : input[0].currentStyle && input[0].currentStyle.direction;
         dir = dir || input.parents('[dir]:first').attr('dir') || '';
 
+        this.rand = 'selectize-id-' + (Math.random() + 1).toString(36).substring(5);
         this.input = input;
         this.input.selectizeInstance = this;
 
@@ -446,16 +448,15 @@ var Selectize = new prime({
 
         $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass(inputMode).after(this.input);
         $control = zen('div').addClass(this.options.inputClass).addClass('items').bottom($wrapper);
-        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : this.tabIndex);
+        $control_input = zen('input[type="search"][autocomplete="off"][role="textbox"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : this.tabIndex);
         $dropdown_parent = $(this.options.dropdownParent || $wrapper);
         $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).hide().bottom($dropdown_parent);
-        $dropdown_content = zen('div').addClass(this.options.dropdownContentClass).bottom($dropdown);
+        $dropdown_content = zen('div[id="' + this.rand + '"]').addClass(this.options.dropdownContentClass).bottom($dropdown);
 
         if (this.options.copyClassesToDropdown) {
             $dropdown.addClass(classes);
         }
 
-        // g5 custom
         if (inputMode == 'single') {
             $wrapper.style('width', parseInt($input[0].offsetWidth) + 12 + 24); // padding compensation
         }
@@ -561,7 +562,7 @@ var Selectize = new prime({
             tabindex: this.input.attribute('tabindex')
         };
 
-        this.input.attribute('tabindex', -1).hide().after($wrapper);
+        this.input.attribute('tabindex', -1).attribute('aria-hidden', true).hide().after($wrapper);
 
         if (isArray(this.options.items)) {
             this.setValue(this.options.items);
@@ -597,6 +598,19 @@ var Selectize = new prime({
         if (this.options.preload === true) {
             this.onSearchChange('');
         }
+        // ARIA
+        $wrapper
+            .attribute('role', 'combobox')
+            .attribute('aria-autocomplete', 'list')
+            .attribute('aria-haspopup', true)
+            .attribute('aria-expanded', false)
+            .attribute('aria-labelledby', this.rand + '-' + slugify(this.getValue()));
+
+        $dropdown_content
+            .attribute('role', 'tree')
+            .attribute('aria-expanded', false)
+            .attribute('aria-hidden', true);
+
 
     },
 
@@ -615,7 +629,7 @@ var Selectize = new prime({
                 return '<div class="option">' + escape(data[field_label]) + '</div>';
             },
             'item': function(data, escape) {
-                return '<div class="item">' + escape(data[field_label]) + '</div>';
+                return '<div class="item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '</div>';
             },
             'option_create': function(data, escape) {
                 return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
@@ -1018,6 +1032,7 @@ var Selectize = new prime({
                 $item = this.$control[0].childNodes[i];
                 if (this.$activeItems.indexOf($item) === -1) {
                     $($item).addClass('active');
+                    this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $($item).attribute('data-value')));
                     this.$activeItems.push($item);
                 }
             }
@@ -1029,10 +1044,12 @@ var Selectize = new prime({
                 item.removeClass('active');
             } else {
                 this.$activeItems.push(item.addClass('active')[0]);
+                this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
             }
         } else {
             if ($(this.$activeItems)) $(this.$activeItems).removeClass('active');
             this.$activeItems = [item.addClass('active')[0]];
+            this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
         }
 
         // ensure control has focus
@@ -1053,6 +1070,7 @@ var Selectize = new prime({
         if (!$option) return;
 
         this.$activeOption = $option.addClass('active');
+        this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $option.attribute('data-value')));
 
         if (scroll || !isset(scroll)) {
 
@@ -1088,7 +1106,11 @@ var Selectize = new prime({
         if (this.options.mode === 'single') return;
 
         var items = this.$control.children(':not(input)');
-        if (items) { items.addClass('active'); }
+        if (items) {
+            items.addClass('active');
+            this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + items.attribute('data-value')));
+        }
+
         this.$activeItems = Array.prototype.slice.apply(items || []);
         if (this.$activeItems.length) {
             this.hideInput();
@@ -1275,7 +1297,7 @@ var Selectize = new prime({
         // add "selected" class to selected options
         if (!this.options.hideSelected) {
             for (i = 0, n = this.items.length; i < n; i++) {
-                this.getOption(this.items[i]).addClass('selected');
+                this.getOption(this.items[i]).addClass('selected').attribute('aria-selected', true);
             }
         }
 
@@ -1426,7 +1448,10 @@ var Selectize = new prime({
             $item = this.getItem(value);
             var dummy = zen('div').html(this.render('item', data));
             $item_new = dummy.firstChild();
-            if ($item.hasClass('active')) $item_new.addClass('active');
+            if ($item.hasClass('active')) {
+                $item_new.addClass('active');
+                this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $item_new.attribute('data-value')));
+            }
 
             $item_new.after($item);
             $item.remove();
@@ -1524,6 +1549,11 @@ var Selectize = new prime({
 
             var dummy = zen('div').html(this.render('item', this.Options[value]));
             $item = dummy.firstChild();
+
+            // ARIA
+            $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
+            if (inputMode === 'multi') $item.attribute('aria-selected', true);
+
             wasFull = this.isFull();
             this.items.splice(this.caretPos, 0, value);
             this.insertAtCaret($item);
@@ -1676,6 +1706,27 @@ var Selectize = new prime({
         this.$control.toggleClass('dropdown-active', this.isOpen);
         this.$control.toggleClass('has-options', !size(this.options.Options));
         this.$control.toggleClass('has-items', this.items.length > 0);
+
+        // ARIA
+        if (this.isOpen) {
+            this.$wrapper
+                .attribute('aria-owns', this.rand)
+                .attribute('aria-activedescendant', slugify(this.rand + '-' + this.getValue()))
+                .attribute('aria-expanded', true);
+
+            this.$dropdown_content
+                .attribute('aria-expanded', true)
+                .attribute('aria-hidden', false);
+        } else {
+            this.$wrapper
+                .attribute('aria-owns', null)
+                .attribute('aria-activedescendant', null)
+                .attribute('aria-expanded', false);
+
+            this.$dropdown_content
+                .attribute('aria-expanded', false)
+                .attribute('aria-hidden', true);
+        }
 
         this.$control_input.selectizeGrow = !isFull && !isLocked;
     },
@@ -1978,7 +2029,7 @@ var Selectize = new prime({
 
     render: function(templateName, data) {
         var value, id, label;
-        var html = '';
+        var name = '';
         var cache = false;
         var regex_tag = /^[\t \r\n]*<([a-z][a-z0-9\-_]*(?:\:[a-z][a-z0-9\-_]*)?)/i;
 
@@ -1998,7 +2049,7 @@ var Selectize = new prime({
         }
 
         // render markup
-        html = this.options.render[templateName].apply(this, [data, escapeHTML]);
+        var html = this.options.render[templateName].apply(this, [data, escapeHTML]);
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
@@ -2006,10 +2057,12 @@ var Selectize = new prime({
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
-            html = html.replace(regex_tag, '<$1 data-group="' + escape_replace(escapeHTML(id)) + '"');
+            name = escape_replace(escapeHTML(id));
+            html = html.replace(regex_tag, '<$1 data-group="' + name + '" role="group" aria-label="' + name + '"');
         }
         if (templateName === 'option' || templateName === 'item') {
-            html = html.replace(regex_tag, '<$1 data-value="' + escape_replace(escapeHTML(value || '')) + '"');
+            name = escape_replace(escapeHTML(value || ''));
+            html = html.replace(regex_tag, '<$1 data-value="' + name + '" id="' + slugify(this.rand + '-' + name) + '" role="treeitem" aria-label="' + trim(data.text) + '" aria-selected="false"');
         }
 
         // update cache
