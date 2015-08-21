@@ -8960,7 +8960,7 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
-        this.restoreFocus();
+        // this.restoreFocus();
     },
 
     toggle: function(e) {
@@ -9006,7 +9006,7 @@ var Popover = new prime({
         var elements = $(css);
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
-        this.restoreFocus();
+        if (!force) this.restoreFocus();
 
         return this;
     },
@@ -12904,7 +12904,6 @@ $.implement({
             size          = this.getRealSize(),
             callbackStart = function() {
                 element.gSlideCollapsed = false;
-                element.style('visibility', 'visible').attribute('aria-hidden', false);
             },
             callbackEnd   = function() {
                 element.attribute('style', element.gSlideStyle);
@@ -12918,6 +12917,8 @@ $.implement({
             duration: '250ms',
             callback: callback
         };
+
+        this.style('visibility', 'visible').attribute('aria-hidden', false);
         this.animate({ height: size.height }, animation);
     },
 

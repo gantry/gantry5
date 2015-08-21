@@ -106,7 +106,6 @@ $.implement({
             size          = this.getRealSize(),
             callbackStart = function() {
                 element.gSlideCollapsed = false;
-                element.style('visibility', 'visible').attribute('aria-hidden', false);
             },
             callbackEnd   = function() {
                 element.attribute('style', element.gSlideStyle);
@@ -120,6 +119,8 @@ $.implement({
             duration: '250ms',
             callback: callback
         };
+
+        this.style('visibility', 'visible').attribute('aria-hidden', false);
         this.animate({ height: size.height }, animation);
     },
 

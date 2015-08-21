@@ -91,7 +91,7 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
-        this.restoreFocus();
+        // this.restoreFocus();
     },
 
     toggle: function(e) {
@@ -137,7 +137,7 @@ var Popover = new prime({
         var elements = $(css);
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
-        this.restoreFocus();
+        if (!force) this.restoreFocus();
 
         return this;
     },
