@@ -287,6 +287,14 @@ ready(function() {
     });
 
     // Switch Layout
+    body.delegate('keydown', '[data-switch]', function(event, element){
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 

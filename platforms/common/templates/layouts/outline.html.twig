@@ -10,9 +10,9 @@
     </div>
     <div class="inner-params">
         <div class="center">
-            <button data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
+            <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" role="button" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
                 <i class="fa fa-fw fa-pencil"></i>
-            </button>
+            </a>
             <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
                 <i class="fa fa-fw fa-copy"></i>
             </button>
