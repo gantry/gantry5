@@ -8999,7 +8999,7 @@ var Popover = new prime({
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
         this.restoreFocus();
-        
+
         return this;
     },
 
