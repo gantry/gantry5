@@ -289,7 +289,7 @@ var Selectize = new prime({
         persist: true,
         diacritics: true,
         create: false,
-        createOnBlur: false,
+        createOnBlur: true,
         createFilter: null,
         highlight: true,
         openOnFocus: true,
@@ -364,12 +364,18 @@ var Selectize = new prime({
         input = $(input);
         this.setOptions(options);
 
+        // detect rtl environment
+        var computedStyle = window.getComputedStyle && window.getComputedStyle(input[0], null);
+        var dir = computedStyle ? computedStyle.getPropertyValue('direction') : input[0].currentStyle && input[0].currentStyle.direction;
+        dir = dir || input.parents('[dir]:first').attr('dir') || '';
+
         this.input = input;
         this.input.selectizeInstance = this;
 
         this.order = 0;
         this.tabIndex = input.attribute('tabindex') || '';
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
+        this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
         forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
@@ -488,11 +494,10 @@ var Selectize = new prime({
 
         autoGrow($control_input);
 
-        $control.delegate('mousedown', '*:not(input)', bind(function(event, element) { return this.onItemSelect.apply(this, arguments); }, this));
-        /*$control.delegate('mousedown', '*:not(input)', bind(function(event, element) {
+        $control.delegate('mousedown', '*:not(input)', bind(function(event, element) {
             if (element == $control) { return true; }
-            this.onItemSelect(event, element);
-        }, this));*/
+            return this.onItemSelect.apply(this, arguments);
+        }, this));
 
         $control.on('mousedown', bind(function() { return this.onMouseDown.apply(this, arguments); }, this));
         $control.on('click', bind(function() { return this.onClick.apply(this, arguments); }, this));
