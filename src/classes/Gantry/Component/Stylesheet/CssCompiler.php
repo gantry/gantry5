@@ -235,6 +235,7 @@ abstract class CssCompiler implements CssCompilerInterface
         }
 
         $content = $metaFile->content();
+        $metaFile->free();
 
         // Check if filename in meta file matches.
         if (empty($content['file']) || $content['file'] != $out) {

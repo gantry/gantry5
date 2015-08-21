@@ -52,10 +52,6 @@ abstract class RealLoader
             define('DS', DIRECTORY_SEPARATOR);
         }
 
-        if (!defined('GANTRY5_DEBUG')) {
-            define('GANTRY5_DEBUG', false);
-        }
-
         return self::autoload();
     }
 

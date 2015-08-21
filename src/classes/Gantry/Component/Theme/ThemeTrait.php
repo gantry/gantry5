@@ -43,6 +43,7 @@ trait ThemeTrait
     protected $segments;
     protected $preset;
     protected $cssCache;
+    protected $compiler;
 
     /**
      * Initialize theme.
@@ -187,9 +188,7 @@ trait ThemeTrait
      */
     public function compiler()
     {
-        static $compiler;
-
-        if (!$compiler) {
+        if (!$this->compiler) {
             $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
 
             if (!class_exists($compilerClass)) {
@@ -199,8 +198,8 @@ trait ThemeTrait
             $details = $this->details();
 
             /** @var CssCompilerInterface $compiler */
-            $compiler = new $compilerClass();
-            $compiler
+            $this->compiler = new $compilerClass();
+            $this->compiler
                 ->setTarget($details->get('configuration.css.target'))
                 ->setPaths($details->get('configuration.css.paths'))
                 ->setFiles($details->get('configuration.css.files'))
@@ -209,13 +208,13 @@ trait ThemeTrait
 
         $preset = $this->preset(true);
         if ($preset) {
-            $compiler->setConfiguration($preset);
+            $this->compiler->setConfiguration($preset);
         } else {
             $gantry = static::gantry();
-            $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
+            $this->compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
         }
 
-        return $compiler->reset();
+        return $this->compiler->reset();
     }
 
     /**

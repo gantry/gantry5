@@ -38,6 +38,8 @@ abstract class Gantry extends Container
     {
         if (!self::$instance) {
             self::$instance = static::load();
+
+            define('GANTRY5_DEBUG', self::$instance->debug());
         }
 
         return self::$instance;
