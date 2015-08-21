@@ -180,6 +180,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
+        layoutmanager.refresh();
         layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 

@@ -44,6 +44,7 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+        menumanager.refresh();
 
         // refresh MM eraser
         if (menumanager.eraser) {

@@ -30,7 +30,7 @@ var MenuManager = new prime({
 
     constructor: function(element, options) {
         this.setOptions(options);
-        this.element = element;
+        this.refElement = element;
         this.map = {};
 
         if (!element || !$(element)) { return; }
@@ -41,8 +41,8 @@ var MenuManager = new prime({
     init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(this.element, this.options, this);
-        this.resizer = new Resizer(this.element, this.options, this);
+        this.dragdrop = new DragDrop(this.refElement, this.options, this);
+        this.resizer = new Resizer(this.refElement, this.options, this);
         this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
@@ -57,7 +57,7 @@ var MenuManager = new prime({
     },
 
     refresh: function() {
-        if (!this.element || !$(this.element)) { return; }
+        if (!this.refElement || !$(this.refElement)) { return; }
         this.init();
     },
 

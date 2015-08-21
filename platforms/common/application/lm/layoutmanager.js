@@ -55,7 +55,7 @@ var LayoutManager = new prime({
 
     constructor: function(element, options) {
         this.setOptions(options);
-        this.element = element;
+        this.refElement = element;
 
         if (!element || !$(element)) { return; }
 
@@ -63,8 +63,8 @@ var LayoutManager = new prime({
     },
 
     init: function() {
-        this.dragdrop = new DragDrop(this.element, this.options);
-        this.resizer = new Resizer(this.element, this.options);
+        this.dragdrop = new DragDrop(this.refElement, this.options);
+        this.resizer = new Resizer(this.refElement, this.options);
         this.eraser = new Eraser('[data-lm-eraseblock]', this.options);
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
@@ -83,7 +83,7 @@ var LayoutManager = new prime({
     },
 
     refresh: function() {
-        if (!this.element || !$(this.element)) { return; }
+        if (!this.refElement || !$(this.refElement)) { return; }
         this.init();
     },
 

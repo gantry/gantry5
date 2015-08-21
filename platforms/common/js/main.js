@@ -2205,6 +2205,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
+        layoutmanager.refresh();
         layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 
@@ -2652,7 +2653,7 @@ var LayoutManager = new prime({
 
     constructor: function(element, options) {
         this.setOptions(options);
-        this.element = element;
+        this.refElement = element;
 
         if (!element || !$(element)) { return; }
 
@@ -2660,8 +2661,8 @@ var LayoutManager = new prime({
     },
 
     init: function() {
-        this.dragdrop = new DragDrop(this.element, this.options);
-        this.resizer = new Resizer(this.element, this.options);
+        this.dragdrop = new DragDrop(this.refElement, this.options);
+        this.resizer = new Resizer(this.refElement, this.options);
         this.eraser = new Eraser('[data-lm-eraseblock]', this.options);
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
@@ -2680,7 +2681,7 @@ var LayoutManager = new prime({
     },
 
     refresh: function() {
-        if (!this.element || !$(this.element)) { return; }
+        if (!this.refElement || !$(this.refElement)) { return; }
         this.init();
     },
 
@@ -4223,6 +4224,7 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+        menumanager.refresh();
 
         // refresh MM eraser
         if (menumanager.eraser) {
@@ -4546,7 +4548,7 @@ var MenuManager = new prime({
 
     constructor: function(element, options) {
         this.setOptions(options);
-        this.element = element;
+        this.refElement = element;
         this.map = {};
 
         if (!element || !$(element)) { return; }
@@ -4557,8 +4559,8 @@ var MenuManager = new prime({
     init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(this.element, this.options, this);
-        this.resizer = new Resizer(this.element, this.options, this);
+        this.dragdrop = new DragDrop(this.refElement, this.options, this);
+        this.resizer = new Resizer(this.refElement, this.options, this);
         this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
@@ -4573,7 +4575,7 @@ var MenuManager = new prime({
     },
 
     refresh: function() {
-        if (!this.element || !$(this.element)) { return; }
+        if (!this.refElement || !$(this.refElement)) { return; }
         this.init();
     },
 
@@ -12425,10 +12427,6 @@ History.Adapter.bind(window, 'statechange', function() {
         selectorChangeEvent();
 
         body.emit('statechangeEnd');
-
-        // Refresh D&D for LM and MM
-        lm.layoutmanager.refresh();
-        mm.menumanager.refresh();
     });
 });
 
