@@ -91,7 +91,12 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
-        // this.restoreFocus();
+
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+            this.restoreFocus();
+        }
     },
 
     toggle: function(e) {
@@ -113,7 +118,7 @@ var Popover = new prime({
         ) { return; }
 
         this.hide();
-        this.restoreFocus();
+        if (this._focusAttached) this.restoreFocus();
     },
 
     restoreFocus: function(element) {
@@ -137,8 +142,12 @@ var Popover = new prime({
         var elements = $(css);
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
-        if (!force) this.restoreFocus();
+        if (!force && this._focusAttached) this.restoreFocus();
 
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+        }
         return this;
     },
 
@@ -175,6 +184,11 @@ var Popover = new prime({
         setTimeout(function(){
             target[0].focus();
         }, 0);
+
+        if (!this._focusAttached) {
+            $('body').on('focus', this.bound('focus'), true);
+            this._focusAttached = true;
+        }
     },
 
     displayContent: function() {
@@ -340,7 +354,6 @@ var Popover = new prime({
         var body = $('body');
         body.off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
         body.off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
-        body.off('focus', this.bound('focus'), true).on('focus', this.bound('focus'), true);
     },
 
 
