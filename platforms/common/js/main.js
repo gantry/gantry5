@@ -351,7 +351,7 @@ ready(function() {
     var selectized, select, editable, href;
     body.delegate('keydown', '.config-select-wrap [data-title-edit]', function(event, element) {
         var key = (event.which ? event.which : event.keyCode);
-        if (key == 32 || key == 13) { // ARIA support: Space toggle
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             body.emit('mousedown', event);
         }
@@ -2159,7 +2159,8 @@ ready(function() {
         return false;
     });
     body.delegate('keydown', '.g-tabs a', function(event, element) {
-        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             body.emit('mouseup', event);
             return false;
@@ -2311,6 +2312,14 @@ ready(function() {
     });
 
     // Switch Layout
+    body.delegate('keydown', '[data-switch]', function(event, element){
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -2639,11 +2648,21 @@ var LayoutManager = new prime({
     mixin: [Bound, Options],
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
-        if (!element) { return; }
-        this.dragdrop = new DragDrop(element, options);
-        this.resizer = new Resizer(element, options);
-        this.eraser = new Eraser('[data-lm-eraseblock]', options);
+        this.setOptions(options);
+        this.element = element;
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
+        this.dragdrop = new DragDrop(this.element, this.options);
+        this.resizer = new Resizer(this.element, this.options);
+        this.eraser = new Eraser('[data-lm-eraseblock]', this.options);
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:location', this.bound('location'))
@@ -2653,11 +2672,16 @@ var LayoutManager = new prime({
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
-        this.builder = options.builder;
-        this.history = options.history;
-        this.savestate = options.savestate || null;
+        this.builder = this.options.builder;
+        this.history = this.options.history;
+        this.savestate = this.options.savestate || null;
 
         singles.disable();
+    },
+
+    refresh: function() {
+        if (!this.element || !$(this.element)) { return; }
+        this.init();
     },
 
     singles: function(mode, builder, dropLast) {
@@ -2665,14 +2689,14 @@ var LayoutManager = new prime({
     },
 
     updatePendingChanges: function() {
-        var saveData = this.savestate.getData(),
+        var saveData   = this.savestate.getData(),
             serialData = this.builder.serialize(null, true),
-            different = false,
+            different  = false,
 
-            equals = deepEquals(saveData, serialData),
-            save = $('[data-save="Layout"]'),
-            icon = save.find('i'),
-            indicator = save.find('.changes-indicator');
+            equals     = deepEquals(saveData, serialData),
+            save       = $('[data-save="Layout"]'),
+            icon       = save.find('i'),
+            indicator  = save.find('.changes-indicator');
 
         if (equals && indicator) { save.hideIndicator(); }
         if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
@@ -2682,7 +2706,7 @@ var LayoutManager = new prime({
         // Used for UI to show particles where there have been differences applied
         // After a saved state
         var saved, current, id;
-        serialData.forEach(function(block){
+        serialData.forEach(function(block) {
             id = keys(block)[0];
             saved = find(saveData, function(data) { return data[id]; });
             current = find(serialData, function(data) { return data[id]; });
@@ -2702,7 +2726,7 @@ var LayoutManager = new prime({
 
         root.addClass('moving');
 
-        var type = $(element).data('lm-blocktype'),
+        var type  = $(element).data('lm-blocktype'),
             clone = element[0].cloneNode(true);
 
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
@@ -2719,10 +2743,10 @@ var LayoutManager = new prime({
         this.originalType = type;
 
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
-            builder: this.builder,
-            subtype: element.data('lm-subtype'),
-            title: element.text()
-        });
+                builder: this.builder,
+                subtype: element.data('lm-subtype'),
+                title: element.text()
+            });
 
         if (!this.block.isNew()) {
             element.style({
@@ -2768,11 +2792,11 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
-            dataType = target.data('lm-blocktype'),
+            dataType     = target.data('lm-blocktype'),
             originalType = this.block.getType();
 
         if (!dataType && target.data('lm-root')) { dataType = 'root'; }
@@ -2780,7 +2804,7 @@ var LayoutManager = new prime({
         if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') === 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
-        var exclude = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
+        var exclude   = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
             adjacents = {
                 before: this.original.previousSiblings(exclude),
                 after: this.original.nextSiblings(exclude)
@@ -2797,7 +2821,7 @@ var LayoutManager = new prime({
         }
 
         var nonVisible = target.parent('[data-lm-blocktype="atoms"]'),
-            child = this.block.block.find('[data-lm-id]');
+            child      = this.block.block.find('[data-lm-id]');
 
         if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {
             if (!nonVisible) { return; }
@@ -2845,7 +2869,7 @@ var LayoutManager = new prime({
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
 
         if (originalType === 'grid' && dataType === 'grid') {
-            var next = this.placeholder.nextSibling(),
+            var next     = this.placeholder.nextSibling(),
                 previous = this.placeholder.previousSibling();
 
             this.placeholder.addClass('in-between-grids');
@@ -2855,7 +2879,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
@@ -2896,8 +2920,8 @@ var LayoutManager = new prime({
         var siblings = this.block.block.siblings(':not(.original-placeholder)');
 
         if (siblings && this.block.getType() == 'block') {
-            var size = this.block.getSize(),
-                diff = size / siblings.length,
+            var size                  = this.block.getSize(),
+                diff                  = size / siblings.length,
                 newSize, block, total = 0, last;
             siblings.forEach(function(sibling, index) {
                 sibling = $(sibling);
@@ -2975,15 +2999,15 @@ var LayoutManager = new prime({
 
         var wrapper, insider,
             multiLocationResize = false,
-            blockWasNew = this.block.isNew(),
-            type = this.block.getType(),
-            targetId = target.data('lm-id'),
-            targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
-            placeholderParent = this.placeholder.parent();
+            blockWasNew         = this.block.isNew(),
+            type                = this.block.getType(),
+            targetId            = target.data('lm-id'),
+            targetType          = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
+            placeholderParent   = this.placeholder.parent();
 
         if (!placeholderParent) { return; }
 
-        var parentId = placeholderParent.data('lm-id'),
+        var parentId   = placeholderParent.data('lm-id'),
             parentType = get(this.builder.map, parentId || '') ? get(this.builder.map, parentId).getType() : false,
             resizeCase = false;
 
@@ -3018,7 +3042,7 @@ var LayoutManager = new prime({
         // case 2: moving a block around, need to fix sizes if it's a multi location resize
         if (this.originalType === 'block' && this.block.getType() === 'block') {
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent('[data-lm-blocktype="grid"]'),
+            var previous            = this.block.block.parent('[data-lm-blocktype="grid"]'),
                 placeholderPrevious = this.placeholder.parent('[data-lm-blocktype="grid"]');
             //if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
@@ -3103,7 +3127,7 @@ var LayoutManager = new prime({
         if (this.originalType === 'grid') {
             var blocks, block;
             if (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])')) {
-                blocks.forEach(function(element){
+                blocks.forEach(function(element) {
                     element = $(element);
                     block = get(this.builder.map, element.data('lm-id'));
                     element.attribute('style', null);
@@ -3411,8 +3435,6 @@ ready(function() {
                         data[name] = value;
                     });
                 }
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
         if (invalid.length) {
@@ -3435,7 +3457,12 @@ ready(function() {
                 });
             } else {
                 modal.close();
-                toastr.success(interpolate(sentence, {
+
+                if ($('#styles')) {
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                }
+
+                toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
@@ -3458,7 +3485,7 @@ ready(function() {
     // Editable titles
     body.delegate('keydown', '[data-title-edit]', function(event, element) {
         var key = (event.which ? event.which : event.keyCode);
-        if (key == 32 || key == 13) { // ARIA support: Space toggle
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             body.emit('click', event);
         }
@@ -3544,7 +3571,7 @@ ready(function() {
                 indicator.hideIndicator();
                 return false;
             } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                toastr[response.body.warning ? 'warning' : 'success'](response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             indicator.hideIndicator();
@@ -4197,9 +4224,11 @@ ready(function() {
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
 
-        // refresh LM eraser
-        menumanager.eraser.element = $('[data-mm-eraseparticle]');
-        menumanager.eraser.hide();
+        // refresh MM eraser
+        if (menumanager.eraser) {
+            menumanager.eraser.element = $('[data-mm-eraseparticle]');
+            menumanager.eraser.hide();
+        }
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {
@@ -4513,13 +4542,24 @@ var MenuManager = new prime({
 
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
+        this.setOptions(options);
+        this.element = element;
         this.map = {};
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(element, options, this);
-        this.resizer = new Resizer(element, options, this);
-        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
+        this.dragdrop = new DragDrop(this.element, this.options, this);
+        this.resizer = new Resizer(this.element, this.options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -4530,8 +4570,11 @@ var MenuManager = new prime({
             .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
+    },
 
-        //console.log(this.ordering, this.items);
+    refresh: function() {
+        if (!this.element || !$(this.element)) { return; }
+        this.init();
     },
 
     setRoot: function() {
@@ -8917,6 +8960,7 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
+        this.restoreFocus();
     },
 
     toggle: function(e) {
@@ -8927,6 +8971,33 @@ var Popover = new prime({
         this[this.getTarget().hasClass('in') ? 'hide' : 'show']();
     },
 
+    focus: function(e) {
+        if (!this.getTarget().hasClass('in')) { return; }
+        var self = this,
+            target = $(e.target || e);
+
+        if (
+            this.$target[0] === target[0] || target.parent(this.$target) ||
+            this.element[0] === target[0] || target.parent(this.element)
+        ) { return; }
+
+        this.hide();
+        this.restoreFocus();
+    },
+
+    restoreFocus: function(element) {
+        element = $(element || this.element);
+        var tag = element.tag();
+
+        setTimeout(function(){
+            if (tag != 'a' && tag != 'input' && tag != 'button') {
+                element.find('a, button, input')[0].focus();
+            } else {
+                element[0].focus();
+            }
+        }, 0);
+    },
+
     hideAll: function(force) {
         var css = '';
         if (force) { css = 'div.' + this.options.mainClass; }
@@ -8935,6 +9006,7 @@ var Popover = new prime({
         var elements = $(css);
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
+        this.restoreFocus();
 
         return this;
     },
@@ -8968,10 +9040,10 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
-        
-        setTimeout(bind(function(){
+
+        setTimeout(function(){
             target[0].focus();
-        }, this), 0);
+        }, 0);
     },
 
     displayContent: function() {
@@ -9137,6 +9209,7 @@ var Popover = new prime({
         var body = $('body');
         body.off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
         body.off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
+        body.off('focus', this.bound('focus'), true).on('focus', this.bound('focus'), true);
     },
 
 
@@ -9817,10 +9890,10 @@ var autoGrow = function(input) {
         if (e.type && e.type.toLowerCase() === 'keydown') {
             keyCode = e.keyCode;
             printable = (
-            (keyCode >= 97 && keyCode <= 122) || // a-z
-            (keyCode >= 65 && keyCode <= 90) || // A-Z
-            (keyCode >= 48 && keyCode <= 57) || // 0-9
-            keyCode === 32 // space
+                (keyCode >= 97 && keyCode <= 122) || // a-z
+                (keyCode >= 65 && keyCode <= 90) || // A-Z
+                (keyCode >= 48 && keyCode <= 57) || // 0-9
+                keyCode === 32 // space
             );
 
             if (keyCode === KEY_DELETE || keyCode === KEY_BACKSPACE) {
@@ -9875,7 +9948,7 @@ var Selectize = new prime({
         persist: true,
         diacritics: true,
         create: false,
-        createOnBlur: false,
+        createOnBlur: true,
         createFilter: null,
         highlight: true,
         openOnFocus: true,
@@ -9887,6 +9960,7 @@ var Selectize = new prime({
         preload: false,
         allowEmptyOption: false,
         closeAfterSelect: false,
+        searchOnKeypress: true,
 
         scrollDuration: 60,
         loadThrottle: 300,
@@ -9949,12 +10023,18 @@ var Selectize = new prime({
         input = $(input);
         this.setOptions(options);
 
+        // detect rtl environment
+        var computedStyle = window.getComputedStyle && window.getComputedStyle(input[0], null);
+        var dir = computedStyle ? computedStyle.getPropertyValue('direction') : input[0].currentStyle && input[0].currentStyle.direction;
+        dir = dir || input.parents('[dir]:first').attr('dir') || '';
+
         this.input = input;
         this.input.selectizeInstance = this;
 
         this.order = 0;
         this.tabIndex = input.attribute('tabindex') || '';
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
+        this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
         forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
@@ -10016,18 +10096,18 @@ var Selectize = new prime({
             $dropdown_content,
             $dropdown_parent,
             inputMode,
-            tab_index,
+            timeout_blur,
+            timeout_focus,
             classes;
 
         inputMode = this.options.mode;
-        tab_index = $input.attribute('tabindex') || '';
         classes = $input.attribute('class') || '';
 
         $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass(inputMode).after(this.input);
         $control = zen('div').addClass(this.options.inputClass).addClass('items').bottom($wrapper);
-        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : tab_index);
+        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : this.tabIndex);
         $dropdown_parent = $(this.options.dropdownParent || $wrapper);
-        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).style({ display: 'none' }).bottom($dropdown_parent);
+        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).hide().bottom($dropdown_parent);
         $dropdown_content = zen('div').addClass(this.options.dropdownContentClass).bottom($dropdown);
 
         if (this.options.copyClassesToDropdown) {
@@ -10036,13 +10116,8 @@ var Selectize = new prime({
 
         // g5 custom
         if (inputMode == 'single') {
-            $wrapper.style({
-                width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
-            });
+            $wrapper.style('width', parseInt($input[0].offsetWidth) + 12 + 24); // padding compensation
         }
-
-        // g5 custom
-        $dropdown.attribute('role', 'listbox');
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
             $input.attribute('multiple', 'multiple');
@@ -10080,7 +10155,7 @@ var Selectize = new prime({
 
         $control.delegate('mousedown', '*:not(input)', bind(function(event, element) {
             if (element == $control) { return true; }
-            this.onItemSelect(event, element);
+            return this.onItemSelect.apply(this, arguments);
         }, this));
 
         $control.on('mousedown', bind(function() { return this.onMouseDown.apply(this, arguments); }, this));
@@ -10094,7 +10169,7 @@ var Selectize = new prime({
         $control_input.on('blur', bind(function() { return this.onBlur.apply(this, arguments); }, this));
         $control_input.on('focus', bind(function() {
             this.ignoreBlur = false;
-            return this.onFocus(arguments);
+            return this.onFocus.apply(this, arguments);
         }, this));
         $control_input.on('paste', bind(function() { return this.onPaste.apply(this, arguments); }, this));
 
@@ -10114,6 +10189,7 @@ var Selectize = new prime({
             if (this.isFocused) {
                 // prevent events on the dropdown scrollbar from causing the control to blur
                 if (e.target === this.$dropdown[0] || e.target.parentNode === this.$dropdown[0]) {
+                    e.preventDefault();
                     return false;
                 }
                 // blur on click outside
@@ -10144,7 +10220,7 @@ var Selectize = new prime({
             tabindex: this.input.attribute('tabindex')
         };
 
-        this.input.attribute('tabindex', -1).style({ display: 'none' }).after($wrapper);
+        this.input.attribute('tabindex', -1).hide().after($wrapper);
 
         if (isArray(this.options.items)) {
             this.setValue(this.options.items);
@@ -10166,7 +10242,7 @@ var Selectize = new prime({
         this.updatePlaceholder();
         this.isSetup = true;
 
-        if (this.input.matches(':disabled')) {
+        if (this.input.disabled()) {
             this.disable();
         }
 
@@ -10184,7 +10260,7 @@ var Selectize = new prime({
     },
 
     setupTemplates: function() {
-        var field_label = this.options.labelField,
+        var field_label    = this.options.labelField,
             field_optgroup = this.options.optgroupLabelField;
 
         var templates = {
@@ -10209,7 +10285,7 @@ var Selectize = new prime({
     },
 
     setupCallbacks: function() {
-        var callbacks = {
+        var key, fn, callbacks = {
             'initialize': 'onInitialize',
             'change': 'onChange',
             'item_add': 'onItemAdd',
@@ -10229,331 +10305,15 @@ var Selectize = new prime({
             'blur': 'onBlur'
         };
 
-        forEach(callbacks, function(value, key) {
-            var fn = this.options[callbacks[key]];
-            if (fn) { this.on(key, fn); }
-        }, this);
-    },
-
-    updateOriginalInput: function(opts) {
-        var options, label;
-        opts = opts || {};
-
-        if (this.tagType === TAG_SELECT) {
-            options = [];
-            for (var i = 0, n = this.items.length; i < n; i++) {
-                label = this.Options[this.items[i]][this.options.labelField] || '';
-                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected">' + escapeHTML(label) + '</option>');
-            }
-            if (!options.length && !this.input.attribute('multiple')) {
-                options.push('<option value="" selected="selected"></option>');
-            }
-            this.input.html(options.join(''));
-        } else {
-            this.input.value(this.getValue());
-            this.input.attribute('value', this.input.value());
-        }
-
-        if (this.isSetup && !opts.silent) {
-            this.emit('change', this.input.value());
-        }
-    },
-
-    getAdjacentOption: function($option, direction) {
-        var $options = this.$dropdown.search('[data-selectable]');
-        var index = indexOf($options, ($option ? $option[0] : null)) + direction;
-
-        return index >= 0 && index < ($options ? $options.length : 0) ? $($options[index]) : $();
-    },
-
-    getOption: function(value) {
-        return this.getElementWithValue(value, this.$dropdown_content.search('[data-selectable]'));
-    },
-
-    getElementWithValue: function(value, $els) {
-        value = hash_key(value);
-
-        if (typeof value !== 'undefined' && value !== null) {
-            for (var i = 0, n = ($els ? $els.length : 0); i < n; i++) {
-                if ($els[i].getAttribute('data-value') === value) {
-                    return $($els[i]);
-                }
+        for (key in callbacks) {
+            if (callbacks.hasOwnProperty(key)) {
+                fn = this.options[callbacks[key]];
+                if (fn) { this.on(key, fn); }
             }
         }
-
-        return $();
     },
 
-    getItem: function(value) {
-        return this.getElementWithValue(value, this.$control.children());
-    },
 
-    addItems: function(values, silent) {
-        var items = isArray(values) ? values : [values];
-        for (var i = 0, n = items.length; i < n; i++) {
-            this.isPending = (i < n - 1);
-            this.addItem(items[i], silent);
-        }
-    },
-
-    addItem: function(value, silent) {
-        var events = silent ? [] : ['change'];
-
-        debounce_events(this, events, function() {
-            var $item, $option, $options;
-            var inputMode = this.options.mode;
-            var i, active, value_next, wasFull;
-            value = hash_key(value);
-
-            if (this.items.indexOf(value) !== -1) {
-                // g5 custom [before: && this.isOpen]
-                if (inputMode === 'single') this.close();
-                return;
-            }
-
-            if (!this.Options.hasOwnProperty(value)) return;
-            if (inputMode === 'single') this.clear(silent);
-            // g5 custom [before (this.isFull() || !value)
-            if (inputMode === 'multi' && this.isFull()) return;
-
-            var dummy = zen('div').html(this.render('item', this.Options[value]));
-            $item = dummy.firstChild();
-            wasFull = this.isFull();
-            this.items.splice(this.caretPos, 0, value);
-            this.insertAtCaret($item);
-            if (!this.isPending || (!wasFull && this.isFull())) {
-                this.refreshState();
-            }
-
-            if (this.isSetup) {
-                $options = this.$dropdown_content.search('[data-selectable]');
-
-                // update menu / remove the option (if this is not one item being added as part of series)
-                if (!this.isPending) {
-                    $option = this.getOption(value);
-                    var adj = this.getAdjacentOption($option, 1);
-                    value_next = (adj) ? adj.attribute('data-value') : null;
-                    this.refreshOptions(this.isFocused && inputMode !== 'single');
-                    if (value_next) {
-                        this.setActiveOption(this.getOption(value_next));
-                    }
-                }
-
-                // hide the menu if the maximum number of items have been selected or no options are left
-                if (!$options || this.isFull()) {
-                    this.close();
-                } else {
-                    this.positionDropdown();
-                }
-
-                this.updatePlaceholder();
-                this.emit('item_add', value, $item);
-                this.updateOriginalInput({silent: silent});
-            }
-        });
-    },
-
-    removeItem: function(value, silent) {
-        var $item, i, idx;
-
-        $item = (typeof value === 'object') ? value : this.getItem(value);
-        value = hash_key($item.attribute('data-value'));
-        i = this.items.indexOf(value);
-
-        if (i !== -1) {
-            $item.remove();
-            if ($item.hasClass('active')) {
-                idx = this.$activeItems.indexOf($item[0]);
-                this.$activeItems.splice(idx, 1);
-            }
-
-            this.items.splice(i, 1);
-            this.lastQuery = null;
-            if (!this.options.persist && this.UserOptions.hasOwnProperty(value)) {
-                this.removeOption(value, silent);
-            }
-
-            if (i < this.caretPos) {
-                this.setCaret(this.caretPos - 1);
-            }
-
-            this.refreshState();
-            this.updatePlaceholder();
-            this.updateOriginalInput({silent: silent});
-            this.positionDropdown();
-            this.emit('item_remove', value, $item);
-        }
-    },
-
-    createItem: function(input, triggerDropdown) {
-        var caret = this.caretPos;
-        input = input || trim(this.$control_input.value() || '');
-
-        var callback = arguments[arguments.length - 1];
-        if (typeof callback !== 'function') callback = function() {};
-
-        if (!isBoolean(triggerDropdown)) {
-            triggerDropdown = true;
-        }
-
-        if (!this.canCreate(input)) {
-            callback();
-            return false;
-        }
-
-        this.lock();
-
-        var setup = (typeof this.options.create === 'function') ? this.options.create : bind(function(input) {
-            var data = {};
-            data[this.options.labelField] = input;
-            data[this.options.valueField] = input;
-            return data;
-        }, this);
-
-        var create = once(bind(function(data) {
-            this.unlock();
-
-            if (!data || typeof data !== 'object') return callback();
-            var value = hash_key(data[this.options.valueField]);
-            if (typeof value !== 'string') return callback();
-
-            this.setTextboxValue('');
-            this.addOption(data);
-            this.setCaret(caret);
-            this.addItem(value);
-            this.refreshOptions(triggerDropdown && this.options.mode !== 'single');
-            callback(data);
-        }, this));
-
-        var output = setup.apply(this, [input, create]);
-        if (typeof output !== 'undefined') {
-            create(output);
-        }
-
-        return true;
-    },
-
-    refreshItems: function() {
-        this.lastQuery = null;
-
-        if (this.isSetup) {
-            this.addItem(this.items);
-        }
-
-        this.refreshState();
-        this.updateOriginalInput();
-    },
-
-    refreshState: function() {
-        var invalid;
-        if (this.isRequired) {
-            if (this.items.length) this.isInvalid = false;
-            this.$control_input.attribute('required', invalid);
-        }
-        this.refreshClasses();
-    },
-
-    refreshClasses: function() {
-        var isFull = this.isFull(),
-            isLocked = this.isLocked;
-
-        this.$wrapper.toggleClass('rtl', this.rtl);
-
-        this.$control.toggleClass('focus', this.isFocused);
-        this.$control.toggleClass('disabled', this.isDisabled);
-        this.$control.toggleClass('required', this.isRequired);
-        this.$control.toggleClass('invalid', this.isInvalid);
-        this.$control.toggleClass('locked', isLocked);
-        this.$control.toggleClass('full', isFull);
-        this.$control.toggleClass('not-full', !isFull);
-        this.$control.toggleClass('input-active', this.isFocused && !this.isInputHidden);
-        this.$control.toggleClass('dropdown-active', this.isOpen);
-        this.$control.toggleClass('has-options', !size(this.options.Options));
-        this.$control.toggleClass('has-items', this.items.length > 0);
-
-        this.$control_input.selectizeGrow = !isFull && !isLocked;
-    },
-
-    isFull: function() {
-        return this.options.maxItems !== null && this.items.length >= this.options.maxItems;
-    },
-
-    updatePlaceholder: function() {
-        if (!this.options.placeholder) return;
-        var control_input = this.$control_input;
-
-        if (this.items.length) {
-            control_input.attribute('placeholder', null);
-        } else {
-            control_input.attribute('placeholder', this.options.placeholder);
-        }
-        control_input.emit('update', { force: true });
-    },
-
-    open: function() {
-        if (this.isLocked || this.isOpen || (this.options.mode === 'multi' && this.isFull())) return;
-        this.focus();
-        this.isOpen = true;
-        this.refreshState();
-        this.$dropdown.style({
-            visibility: 'hidden',
-            display: 'block'
-        });
-        this.positionDropdown();
-        this.$dropdown.style({ visibility: 'visible' });
-        this.emit('dropdown_open', this.$dropdown);
-    },
-
-    close: function() {
-        var trigger = this.isOpen;
-
-        if (this.options.mode === 'single' && this.items.length) {
-            this.hideInput();
-        }
-
-        this.isOpen = false;
-        this.$dropdown.style({ display: 'none' });
-        this.setActiveOption(null);
-        this.refreshState();
-
-        // g5 custom
-        /*if (this.options.mode === 'single' && !this.getValue()) {
-            this.lastQuery = null;
-            this.setTextboxValue('');
-            this.addItem(this.Options[Object.keys(this.Options)[0]][this.options.valueField]);
-            //this.blur();
-        }*/
-
-        if (trigger) this.emit('dropdown_close', this.$dropdown);
-    },
-
-    positionDropdown: function() {
-        var control = this.$control,
-            offset = control.position();//this.options.dropdownParent === 'body' ? control.offset() : control.position();
-        offset.top += control[0].offsetHeight;
-
-        this.$dropdown.style({
-            width: control[0].offsetWidth,
-            top: control[0].offsetTop + control[0].offsetHeight,
-            left: control[0].offsetLeft
-        });
-    },
-
-    clear: function(silent) {
-        var non_input = this.$control.children(':not(input)');
-        if (!this.items.length) return;
-
-        if (non_input) non_input.remove();
-        this.items = [];
-        this.lastQuery = null;
-        this.setCaret(0);
-        this.setActiveItem(null);
-        this.updatePlaceholder();
-        this.updateOriginalInput({silent: silent});
-        this.refreshState();
-        this.showInput();
-        this.emit('clear');
-    },
 
     onClick: function(e) {
         // necessary for mobile webkit devices (manual focus triggering
@@ -10565,7 +10325,7 @@ var Selectize = new prime({
     },
 
     onMouseDown: function(e) {
-        var defaultPrevented = e.defaultPrevented;
+        var defaultPrevented = e.defaultPrevented || (typeof e.defaultPrevented === 'undefined');
         var $target = $(e.target);
 
         if (this.isFocused) {
@@ -10580,8 +10340,8 @@ var Selectize = new prime({
                     this.setActiveItem(null);
                 }
 
-                e.preventDefault();
-                e.stopPropagation();
+                /*e.preventDefault();
+                e.stopPropagation();*/
                 return false;
             }
         } else {
@@ -10644,7 +10404,7 @@ var Selectize = new prime({
                 }
                 break;
             case KEY_ESC:
-                if (this.isOpen){
+                if (this.isOpen) {
                     e.preventDefault();
                     e.stopPropagation();
                     this.close();
@@ -10659,7 +10419,7 @@ var Selectize = new prime({
                 } else if (this.$activeOption) {
                     this.ignoreHover = true;
                     var $next = this.getAdjacentOption(this.$activeOption, 1);
-                    if ($next) this.setActiveOption($next, true, true);
+                    if ($next) { this.setActiveOption($next, true, true); }
                 }
                 e.preventDefault();
                 return;
@@ -10669,7 +10429,7 @@ var Selectize = new prime({
                 if (this.$activeOption) {
                     this.ignoreHover = true;
                     var $prev = this.getAdjacentOption(this.$activeOption, -1);
-                    if ($prev) this.setActiveOption($prev, true, true);
+                    if ($prev) { this.setActiveOption($prev, true, true); }
                 }
                 e.preventDefault();
                 return;
@@ -10728,9 +10488,9 @@ var Selectize = new prime({
         if (!fn) return;
         if (this.loadedSearches.hasOwnProperty(value)) return;
         this.loadedSearches[value] = true;
-        this.load(function(callback) {
+        this.load(bind(function(callback) {
             fn.apply(this, [value, callback]);
-        });
+        }, this));
     },
 
     onFocus: function(e) {
@@ -10763,7 +10523,7 @@ var Selectize = new prime({
 
         if (this.ignoreFocus) {
             return;
-        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && IS_IE && this.$wrapper.find($(e.target))))) {
+        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0])) {
             // ^- g5 custom [before: no e.target && ..]
             // necessary to prevent IE closing the dropdown when the scrollbar is clicked
             this.ignoreBlur = true;
@@ -10875,15 +10635,6 @@ var Selectize = new prime({
         }
     },
 
-    getPreviousValue: function() {
-        return this.previousValue;
-    },
-
-    /**
-     * Resets the selected items to the given value.
-     *
-     * @param {mixed} value
-     */
     setValue: function(value, silent) {
         var events = silent ? [] : ['change'];
 
@@ -10892,33 +10643,6 @@ var Selectize = new prime({
             this.previousValue = this.getValue() || value;
             this.addItems(value, silent);
         });
-    },
-
-    focus: function() {
-        if (this.isDisabled) { return; }
-
-        this.ignoreFocus = true;
-        this.$control_input[0].focus();
-        setTimeout(bind(function() {
-            this.ignoreFocus = false;
-            this.onFocus();
-        }, this), 0);
-    },
-
-    blur: function(dest) {
-        this.$control_input.emit('blur');
-        this.onBlur(null, dest);
-        // g5 custom
-        //this.$control_input[0].blur();
-    },
-
-    showInput: function() {
-        this.$control_input.style({
-            opacity: 1,
-            position: 'relative',
-            left: 0
-        });
-        this.isInputHidden = false;
     },
 
     setActiveItem: function(item, e) {
@@ -10977,6 +10701,149 @@ var Selectize = new prime({
         }
     },
 
+    setActiveOption: function($option, scroll, animate) {
+        var height_menu, height_item, y;
+        var scroll_top, scroll_bottom;
+
+        if (this.$activeOption) this.$activeOption.removeClass('active');
+        this.$activeOption = null;
+
+        $option = $($option);
+        if (!$option) return;
+
+        this.$activeOption = $option.addClass('active');
+
+        if (scroll || !isset(scroll)) {
+
+            height_menu = this.$dropdown_content[0].offsetHeight;
+            height_item = this.$activeOption[0].offsetHeight;
+            scroll = this.$dropdown_content[0].scrollTop || 0;
+            y = this.$activeOption.position().top - this.$dropdown_content.position().top + scroll;
+            scroll_top = y;
+            scroll_bottom = y - height_menu + height_item;
+
+            if (y + height_item > height_menu + scroll) {
+                this.$dropdown_content[0].scrollTop = scroll_bottom;
+                /*moofx(bind(function(value){
+                 this.$dropdown_content[0].scrollTop = value;
+                 }, this), {
+                 duration: animate ? this.options.scrollDuration : 0,
+                 equation: 'linear'
+                 }).start(scroll, scroll_bottom);*/
+            } else if (y < scroll) {
+                this.$dropdown_content[0].scrollTop = scroll_top;
+                /*moofx(bind(function(value){
+                 this.$dropdown_content[0].scrollTop = value;
+                 }, this), {
+                 duration: animate ? this.options.scrollDuration : 0,
+                 equation: 'linear'
+                 }).start(scroll, scroll_top);*/
+            }
+
+        }
+    },
+
+    selectAll: function() {
+        if (this.options.mode === 'single') return;
+
+        var items = this.$control.children(':not(input)');
+        if (items) { items.addClass('active'); }
+        this.$activeItems = Array.prototype.slice.apply(items || []);
+        if (this.$activeItems.length) {
+            this.hideInput();
+            this.close();
+        }
+        this.focus();
+    },
+
+    hideInput: function() {
+
+        this.setTextboxValue('');
+        this.$control_input.style({
+            opacity: 0,
+            position: 'absolute',
+            left: this.rtl ? 10000 : -10000
+        });
+        this.isInputHidden = true;
+    },
+
+    showInput: function() {
+        this.$control_input.style({
+            opacity: 1,
+            position: 'relative',
+            left: 0
+        });
+        this.isInputHidden = false;
+    },
+
+    focus: function() {
+        if (this.isDisabled) { return; }
+
+        this.ignoreFocus = true;
+        this.$control_input[0].focus();
+        setTimeout(bind(function() {
+            this.ignoreFocus = false;
+            this.onFocus();
+        }, this), 0);
+    },
+
+    blur: function(dest) {
+        this.$control_input[0].blur();
+        this.onBlur(null, dest);
+        // g5 custom
+        //this.$control_input[0].blur();
+    },
+
+    getScoreFunction: function(query) {
+        return this.sifter.getScoreFunction(query, this.getSearchOptions());
+    },
+
+    getSearchOptions: function() {
+        var sort = this.options.sortField;
+        if (typeof sort === 'string') {
+            sort = [{ field: sort }];
+        }
+
+        return {
+            fields: this.options.searchField,
+            conjunction: this.options.searchConjunction,
+            sort: sort
+        };
+    },
+
+    search: function(query) {
+        var i, value, score, result, calculateScore;
+        var options = this.getSearchOptions();
+
+        // validate user-provided result scoring function
+        if (this.options.score) {
+            calculateScore = this.options.score.apply(this, [query]);
+            if (typeof calculateScore !== 'function') {
+                throw new Error('Selectize "score" setting must be a function that returns a function');
+            }
+        }
+
+        // perform search
+        if (query !== this.lastQuery) {
+            this.lastQuery = query;
+            result = this.sifter.search(query, merge(options, { score: calculateScore }));
+            this.currentResults = result;
+        } else {
+            result = merge({}, this.currentResults);
+        }
+
+        // filter out selected items
+        if (this.options.hideSelected) {
+            for (i = result.items.length - 1; i >= 0; i--) {
+                if (this.items.indexOf(hash_key(result.items[i].id)) !== -1) {
+                    result.items.splice(i, 1);
+                }
+            }
+        }
+
+        return result;
+    },
+
     refreshOptions: function(triggerDropdown) {
         var i, j, k, n, groups, groups_order, option, option_html, optgroup, optgroups, html, html_children, has_create_option;
         var $active, $active_before, $create;
@@ -10988,7 +10855,7 @@ var Selectize = new prime({
         var query = trim(this.$control_input.value());
         var results = this.search(query);
         var $dropdown_content = this.$dropdown_content;
-        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('data-value')); // g5 custom [before: value]
+        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('data-value'));
 
         // build markup
         n = results.items.length;
@@ -11125,17 +10992,17 @@ var Selectize = new prime({
 
         // g5 custom
         /*value = hash_key(data[this.options.valueField]);
-        if (typeof value !== 'string' || this.Options.hasOwnProperty(value)) return;
+         if (typeof value !== 'string' || this.Options.hasOwnProperty(value)) return;
 
-        this.UserOptions[value] = true;
-        this.Options[value] = data;
-        this.lastQuery = null;
-        this.emit('option_add', value, data);*/
+         this.UserOptions[value] = true;
+         this.Options[value] = data;
+         this.lastQuery = null;
+         this.emit('option_add', value, data);*/
     },
 
     registerOption: function(data) {
         var key = hash_key(data[this.options.valueField]);
-        if ((!key || this.options.hasOwnProperty(key)) && !this.options.allowEmptyOption) return false;
+        if (!key || this.options.hasOwnProperty(key)) return false;
         data.$order = data.$order || ++this.order;
         this.Options[key] = data;
 
@@ -11144,7 +11011,7 @@ var Selectize = new prime({
 
     registerOptionGroup: function(data) {
         var key = hash_key(data[this.options.optgroupValueField]);
-        if (!key && !this.options.allowEmptyOption) return false;
+        if (!key) return false;
 
         data.$order = data.$order || ++this.order;
         this.Optgroups[key] = data;
@@ -11179,7 +11046,7 @@ var Selectize = new prime({
         var $item, $item_new, dummy;
         var value_new, index_item, cache_items, cache_options, order_old;
 
-        value     = hash_key(value);
+        value = hash_key(value);
         value_new = hash_key(data[this.options.valueField]);
 
         // sanity checks
@@ -11233,7 +11100,7 @@ var Selectize = new prime({
         }
     },
 
-    removeOption: function(value) {
+    removeOption: function(value, silent) {
         value = hash_key(value);
 
         var cache_items = this.renderCache['item'];
@@ -11245,7 +11112,7 @@ var Selectize = new prime({
         delete this.Options[value];
         this.lastQuery = null;
         this.emit('option_remove', value);
-        this.removeItem(value);
+        this.removeItem(value, silent);
     },
 
     clearOptions: function() {
@@ -11258,129 +11125,315 @@ var Selectize = new prime({
         this.clear();
     },
 
-    setActiveOption: function($option, scroll, animate) {
-        var height_menu, height_item, y;
-        var scroll_top, scroll_bottom;
-
-        if (this.$activeOption) this.$activeOption.removeClass('active').attribute('aria-selected', 'false');
-        this.$activeOption = null;
-
-        $option = $($option);
-        if (!$option) return;
-
-        this.$activeOption = $option.addClass('active').attribute('aria-selected', 'true');
-
-        if (scroll || !isset(scroll)) {
-
-            height_menu = this.$dropdown_content[0].offsetHeight;
-            height_item = this.$activeOption[0].offsetHeight;
-            scroll = this.$dropdown_content[0].scrollTop || 0;
-            y = this.$activeOption.position().top - this.$dropdown_content.position().top + scroll;
-            scroll_top = y;
-            scroll_bottom = y - height_menu + height_item;
-
-            if (y + height_item > height_menu + scroll) {
-                this.$dropdown_content[0].scrollTop = scroll_bottom;
-                /*moofx(bind(function(value){
-                 this.$dropdown_content[0].scrollTop = value;
-                 }, this), {
-                 duration: animate ? this.options.scrollDuration : 0,
-                 equation: 'linear'
-                 }).start(scroll, scroll_bottom);*/
-            } else if (y < scroll) {
-                this.$dropdown_content[0].scrollTop = scroll_top;
-                /*moofx(bind(function(value){
-                 this.$dropdown_content[0].scrollTop = value;
-                 }, this), {
-                 duration: animate ? this.options.scrollDuration : 0,
-                 equation: 'linear'
-                 }).start(scroll, scroll_top);*/
-            }
-
-        }
+    getOption: function(value) {
+        return this.getElementWithValue(value, this.$dropdown_content.search('[data-selectable]'));
     },
 
-    selectAll: function() {
-        if (this.options.mode === 'single') return;
+    getAdjacentOption: function($option, direction) {
+        var $options = this.$dropdown.search('[data-selectable]');
+        var index = indexOf($options, ($option ? $option[0] : null)) + direction;
 
-        var items = this.$control.children(':not(input)');
-        if (items) { items.addClass('active'); }
-        this.$activeItems = Array.prototype.slice.apply(items || 0);
-        if (this.$activeItems) {
-            this.hideInput();
-            this.close();
-        }
-        this.focus();
+        return index >= 0 && index < ($options ? $options.length : 0) ? $($options[index]) : $();
     },
 
-    hideInput: function() {
+    getElementWithValue: function(value, $els) {
+        value = hash_key(value);
 
-        this.setTextboxValue('');
-        this.$control_input.style({
-            opacity: 0,
-            position: 'absolute',
-            left: this.rtl ? 10000 : -10000
-        });
-        this.isInputHidden = true;
-    },
-
-    search: function(query) {
-        var i, value, score, result, calculateScore;
-        var options = this.getSearchOptions();
-
-        // validate user-provided result scoring function
-        if (this.options.score) {
-            calculateScore = this.options.score.apply(this, [query]);
-            if (typeof calculateScore !== 'function') {
-                throw new Error('Selectize "score" setting must be a function that returns a function');
-            }
-        }
-
-        // perform search
-        if (query !== this.lastQuery) {
-            this.lastQuery = query;
-            result = this.sifter.search(query, merge(options, { score: calculateScore }));
-            this.currentResults = result;
-        } else {
-            result = merge({}, this.currentResults);
-        }
-
-        // filter out selected items
-        if (this.options.hideSelected) {
-            for (i = result.items.length - 1; i >= 0; i--) {
-                if (this.items.indexOf(hash_key(result.items[i].id)) !== -1) {
-                    result.items.splice(i, 1);
+        if (typeof value !== 'undefined' && value !== null) {
+            for (var i = 0, n = ($els ? $els.length : 0); i < n; i++) {
+                if ($els[i].getAttribute('data-value') === value) {
+                    return $($els[i]);
                 }
             }
         }
 
-        return result;
+        return $();
     },
 
-    getScoreFunction: function(query) {
-        return this.sifter.getScoreFunction(query, this.getSearchOptions());
+    getItem: function(value) {
+        return this.getElementWithValue(value, this.$control.children());
     },
 
-    getSearchOptions: function() {
-        var sort = this.options.sortField;
-        if (typeof sort === 'string') {
-            sort = [{ field: sort }];
+    addItems: function(values, silent) {
+        var items = isArray(values) ? values : [values];
+        for (var i = 0, n = items.length; i < n; i++) {
+            this.isPending = (i < n - 1);
+            this.addItem(items[i], silent);
+        }
+    },
+
+    addItem: function(value, silent) {
+        var events = silent ? [] : ['change'];
+
+        debounce_events(this, events, function() {
+            var $item, $option, $options;
+            var inputMode = this.options.mode;
+            var i, active, value_next, wasFull;
+            value = hash_key(value);
+
+            if (this.items.indexOf(value) !== -1) {
+                // g5 custom [before: && this.isOpen]
+                if (inputMode === 'single') this.close();
+                return;
+            }
+
+            if (!this.Options.hasOwnProperty(value)) return;
+            if (inputMode === 'single') this.clear(silent);
+            if (inputMode === 'multi' && this.isFull()) return;
+
+            var dummy = zen('div').html(this.render('item', this.Options[value]));
+            $item = dummy.firstChild();
+            wasFull = this.isFull();
+            this.items.splice(this.caretPos, 0, value);
+            this.insertAtCaret($item);
+            if (!this.isPending || (!wasFull && this.isFull())) {
+                this.refreshState();
+            }
+
+            if (this.isSetup) {
+                $options = this.$dropdown_content.search('[data-selectable]');
+
+                // update menu / remove the option (if this is not one item being added as part of series)
+                if (!this.isPending) {
+                    $option = this.getOption(value);
+                    var adj = this.getAdjacentOption($option, 1);
+                    value_next = (adj) ? adj.attribute('data-value') : null;
+                    this.refreshOptions(this.isFocused && inputMode !== 'single');
+                    if (value_next) {
+                        this.setActiveOption(this.getOption(value_next));
+                    }
+                }
+
+                // hide the menu if the maximum number of items have been selected or no options are left
+                if (!$options || this.isFull()) {
+                    this.close();
+                } else {
+                    this.positionDropdown();
+                }
+
+                this.updatePlaceholder();
+                this.emit('item_add', value, $item);
+                this.updateOriginalInput({ silent: silent });
+            }
+        });
+    },
+
+    removeItem: function(value, silent) {
+        var $item, i, idx;
+
+        $item = (typeof value === 'object') ? value : this.getItem(value);
+        value = hash_key($item.attribute('data-value'));
+        i = this.items.indexOf(value);
+
+        if (i !== -1) {
+            $item.remove();
+            if ($item.hasClass('active')) {
+                idx = this.$activeItems.indexOf($item[0]);
+                this.$activeItems.splice(idx, 1);
+            }
+
+            this.items.splice(i, 1);
+            this.lastQuery = null;
+            if (!this.options.persist && this.UserOptions.hasOwnProperty(value)) {
+                this.removeOption(value, silent);
+            }
+
+            if (i < this.caretPos) {
+                this.setCaret(this.caretPos - 1);
+            }
+
+            this.refreshState();
+            this.updatePlaceholder();
+            this.updateOriginalInput({ silent: silent });
+            this.positionDropdown();
+            this.emit('item_remove', value, $item);
+        }
+    },
+
+    createItem: function(input, triggerDropdown) {
+        var caret = this.caretPos;
+        input = input || trim(this.$control_input.value() || '');
+
+        var callback = arguments[arguments.length - 1];
+        if (typeof callback !== 'function') callback = function() {};
+
+        if (!isBoolean(triggerDropdown)) {
+            triggerDropdown = true;
         }
 
-        return {
-            fields: this.options.searchField,
-            conjunction: this.options.searchConjunction,
-            sort: sort
-        };
+        if (!this.canCreate(input)) {
+            callback();
+            return false;
+        }
+
+        this.lock();
+
+        var setup = (typeof this.options.create === 'function') ? this.options.create : bind(function(input) {
+            var data = {};
+            data[this.options.labelField] = input;
+            data[this.options.valueField] = input;
+            return data;
+        }, this);
+
+        var create = once(bind(function(data) {
+            this.unlock();
+
+            if (!data || typeof data !== 'object') return callback();
+            var value = hash_key(data[this.options.valueField]);
+            if (typeof value !== 'string') return callback();
+
+            this.setTextboxValue('');
+            this.addOption(data);
+            this.setCaret(caret);
+            this.addItem(value);
+            this.refreshOptions(triggerDropdown && this.options.mode !== 'single');
+            callback(data);
+        }, this));
+
+        var output = setup.apply(this, [input, create]);
+        if (typeof output !== 'undefined') {
+            create(output);
+        }
+
+        return true;
     },
 
-    canCreate: function(input) {
-        if (!this.options.create) return false;
-        var filter = this.options.createFilter;
-        return input.length
-            && (typeof filter !== 'function' || filter.apply(self, [input]))
-            && (typeof filter !== 'string' || new RegExp(filter).test(input))
-            && (!(filter instanceof RegExp) || filter.test(input));
+    refreshItems: function() {
+        this.lastQuery = null;
+
+        if (this.isSetup) {
+            this.addItem(this.items);
+        }
+
+        this.refreshState();
+        this.updateOriginalInput();
+    },
+
+    refreshState: function() {
+        var invalid;
+        if (this.isRequired) {
+            if (this.items.length) this.isInvalid = false;
+            this.$control_input.attribute('required', this.isInvalid || null);
+        }
+        this.refreshClasses();
+    },
+
+    refreshClasses: function() {
+        var isFull   = this.isFull(),
+            isLocked = this.isLocked;
+
+        this.$wrapper.toggleClass('rtl', this.rtl);
+
+        this.$control.toggleClass('focus', this.isFocused);
+        this.$control.toggleClass('disabled', this.isDisabled);
+        this.$control.toggleClass('required', this.isRequired);
+        this.$control.toggleClass('invalid', this.isInvalid);
+        this.$control.toggleClass('locked', isLocked);
+        this.$control.toggleClass('full', isFull);
+        this.$control.toggleClass('not-full', !isFull);
+        this.$control.toggleClass('input-active', this.isFocused && !this.isInputHidden);
+        this.$control.toggleClass('dropdown-active', this.isOpen);
+        this.$control.toggleClass('has-options', !size(this.options.Options));
+        this.$control.toggleClass('has-items', this.items.length > 0);
+
+        this.$control_input.selectizeGrow = !isFull && !isLocked;
+    },
+
+    isFull: function() {
+        return this.options.maxItems !== null && this.items.length >= this.options.maxItems;
+    },
+
+    updateOriginalInput: function(opts) {
+        var options, label;
+        opts = opts || {};
+
+        if (this.tagType === TAG_SELECT) {
+            options = [];
+            for (var i = 0, n = this.items.length; i < n; i++) {
+                label = this.Options[this.items[i]][this.options.labelField] || '';
+                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected">' + escapeHTML(label) + '</option>');
+            }
+            if (!options.length && !this.input.attribute('multiple')) {
+                options.push('<option value="" selected="selected"></option>');
+            }
+            this.input.html(options.join(''));
+        } else {
+            this.input.value(this.getValue());
+            this.input.attribute('value', this.input.value());
+        }
+
+        if (this.isSetup && !opts.silent) {
+            this.emit('change', this.input.value());
+        }
+    },
+
+    updatePlaceholder: function() {
+        if (!this.options.placeholder) return;
+        var control_input = this.$control_input;
+
+        if (this.items.length) {
+            control_input.attribute('placeholder', null);
+        } else {
+            control_input.attribute('placeholder', this.options.placeholder);
+        }
+        control_input.emit('update', { force: true });
+    },
+
+    open: function() {
+        if (this.isLocked || this.isOpen || (this.options.mode === 'multi' && this.isFull())) return;
+        this.focus();
+        this.isOpen = true;
+        this.refreshState();
+        this.$dropdown.style({
+            visibility: 'hidden',
+            display: 'block'
+        });
+        this.positionDropdown();
+        this.$dropdown.style({ visibility: 'visible' });
+        this.emit('dropdown_open', this.$dropdown);
+    },
+
+    close: function() {
+        var trigger = this.isOpen;
+
+        if (this.options.mode === 'single' && this.items.length) {
+            this.hideInput();
+        }
+
+        this.isOpen = false;
+        this.$dropdown.hide();
+        this.setActiveOption(null);
+        this.refreshState();
+
+        if (trigger) this.emit('dropdown_close', this.$dropdown);
+    },
+
+    positionDropdown: function() {
+        var control = this.$control,
+            offset  = control.position();//this.options.dropdownParent === 'body' ? control.offset() : control.position();
+        offset.top += control[0].offsetHeight;
+
+        this.$dropdown.style({
+            width: control[0].offsetWidth,
+            top: control[0].offsetTop + control[0].offsetHeight,
+            left: control[0].offsetLeft
+        });
+    },
+
+    clear: function(silent) {
+        var non_input = this.$control.children(':not(input)');
+        if (!this.items.length) return;
+
+        if (non_input) non_input.remove();
+        this.items = [];
+        this.lastQuery = null;
+        this.setCaret(0);
+        this.setActiveItem(null);
+        this.updatePlaceholder();
+        this.updateOriginalInput({ silent: silent });
+        this.refreshState();
+        this.showInput();
+        this.emit('clear');
     },
 
     insertAtCaret: function($el) {
@@ -11544,7 +11597,7 @@ var Selectize = new prime({
     },
 
     disable: function() {
-        this.input.attribute('disabled', true);
+        this.input.disabled(true);
         this.$control_input.attribute('disabled', true).attribute('tabindex', -1);
         this.isDisabled = true;
         this.lock();
@@ -11571,7 +11624,7 @@ var Selectize = new prime({
             .attribute('tabindex', null)
             .removeClass('selectized')
             .attribute({ tabindex: revertSettings.tabindex })
-            .style({ display: 'block' });
+            .show();
 
         /*$(window).off(eventNS);
          $(document).off(eventNS);
@@ -11608,7 +11661,7 @@ var Selectize = new prime({
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable role="option" tabindex="0" aria-label="' + trim(data.text) + '"');
+            html = html.replace(regex_tag, '<$1 data-selectable');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
@@ -11632,18 +11685,31 @@ var Selectize = new prime({
         } else {
             delete this.renderCache[templateName];
         }
+    },
+
+    canCreate: function(input) {
+        if (!this.options.create) return false;
+        var filter = this.options.createFilter;
+        return input.length
+            && (typeof filter !== 'function' || filter.apply(self, [input]))
+            && (typeof filter !== 'string' || new RegExp(filter).test(input))
+            && (!(filter instanceof RegExp) || filter.test(input));
+    },
+
+    getPreviousValue: function() {
+        return this.previousValue;
     }
 });
 
 $.implement({
     selectize: function(settings_user) {
         settings_user = settings_user || {};
-        var defaults = Selectize.prototype.options,
-            settings = merge({}, defaults, settings_user),
-            attr_data = settings.dataAttr,
-            field_label = settings.labelField,
-            field_value = settings.valueField,
-            field_optgroup = settings.optgroupField,
+        var defaults             = Selectize.prototype.options,
+            settings             = merge({}, defaults, settings_user),
+            attr_data            = settings.dataAttr,
+            field_label          = settings.labelField,
+            field_value          = settings.valueField,
+            field_optgroup       = settings.optgroupField,
             field_optgroup_label = settings.optgroupLabelField,
             field_optgroup_value = settings.optgroupValueField;
 
@@ -11765,7 +11831,7 @@ $.implement({
 
             var instance,
                 dataOptions = $input.data('selectize'),
-                tag_name = $input.tag().toLowerCase(),
+                tag_name    = $input.tag().toLowerCase(),
                 placeholder = $input.attribute('placeholder') || $input.attribute('data-placeholder');
 
             // g5 custom
@@ -11940,7 +12006,8 @@ var Toaster = new prime({
         var container = this.getContainer(options, true),
             element = zen('div'), title = zen('div'), message = zen('div'),
             icon = zen('i.fa'),
-            progress = zen('div.g-notifications-progress'), close = zen('a.fa.fa-close[href="#"]');
+            progress = zen('div.g-notifications-progress'),
+            close = zen('a.fa.fa-close[href="#"]');
 
         this.map.set(element, {
             container: container,
@@ -12106,7 +12173,7 @@ var Toaster = new prime({
     createContainer: function(options) {
         options = this.mergeOptions(options);
 
-        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target);
+        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target).attribute('aria-live', 'polite').attribute('role', 'alert');
     },
 
     remove: function(element) {
@@ -12131,6 +12198,7 @@ var Toaster = new prime({
 var toaster = new Toaster();
 
 module.exports = toaster;
+
 },{"../utils/elements.utils.js":56,"elements/zen":101,"mout/function/bind":155,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],52:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
@@ -12169,7 +12237,8 @@ ready(function() {
             return;
         }
 
-        if ((event.which ? event.which : event.keyCode) == 32) { // ARIA support: Space toggle
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
             event.preventDefault();
             toggles(event, element.find('.toggle'));
         }
@@ -12235,6 +12304,7 @@ var prime         = require('prime'),
     flags         = require('./flags-state'),
     parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
+    lm            = require('../lm'),
     mm            = require('../menu');
 
 require('../ui/popover');
@@ -12353,6 +12423,10 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
+
+        // Refresh D&D for LM and MM
+        lm.layoutmanager.refresh();
+        mm.menumanager.refresh();
 
         body.emit('statechangeEnd');
     });
@@ -12632,7 +12706,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../menu":30,"../ui":46,"../ui/popover":48,"../utils/elements.utils":56,"./flags-state":59,"./get-ajax-suffix":60,"./get-ajax-url":61,"./history":64,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/collection/size":154,"mout/object/keys":198,"mout/object/merge":199,"mout/queryString/encode":208,"mout/queryString/getParam":209,"mout/queryString/setParam":211,"mout/random/guid":213,"mout/string/contains":219,"prime":260,"prime/map":261}],54:[function(require,module,exports){
+},{"../lm":24,"../menu":30,"../ui":46,"../ui/popover":48,"../utils/elements.utils":56,"./flags-state":59,"./get-ajax-suffix":60,"./get-ajax-url":61,"./history":64,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/collection/size":154,"mout/object/keys":198,"mout/object/merge":199,"mout/queryString/encode":208,"mout/queryString/getParam":209,"mout/queryString/setParam":211,"mout/random/guid":213,"mout/string/contains":219,"prime":260,"prime/map":261}],54:[function(require,module,exports){
 "use strict";
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
@@ -12759,6 +12833,14 @@ $.implement({
         return this;
     },
 
+    hide: function() {
+        return this.style('display', 'none');
+    },
+
+    show: function(mode) {
+        return this.style('display', mode || 'inherit');
+    },
+
     progresser: function(options) {
         var instance;
 
@@ -12822,6 +12904,7 @@ $.implement({
             size          = this.getRealSize(),
             callbackStart = function() {
                 element.gSlideCollapsed = false;
+                element.style('visibility', 'visible').attribute('aria-hidden', false);
             },
             callbackEnd   = function() {
                 element.attribute('style', element.gSlideStyle);
@@ -12846,11 +12929,14 @@ $.implement({
         var element       = this,
             callbackStart = function() {
                 element.gSlideCollapsed = true;
+            },
+            callbackEnd = function() {
+                element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
-        callback = series(callbackStart, callback);
+        callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
             duration: '250ms',

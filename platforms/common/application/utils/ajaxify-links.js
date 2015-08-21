@@ -23,6 +23,7 @@ var prime         = require('prime'),
     flags         = require('./flags-state'),
     parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
+    lm            = require('../lm'),
     mm            = require('../menu');
 
 require('../ui/popover');
@@ -141,6 +142,10 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
+
+        // Refresh D&D for LM and MM
+        lm.layoutmanager.refresh();
+        mm.menumanager.refresh();
 
         body.emit('statechangeEnd');
     });

@@ -91,6 +91,7 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
+        this.restoreFocus();
     },
 
     toggle: function(e) {
@@ -101,6 +102,33 @@ var Popover = new prime({
         this[this.getTarget().hasClass('in') ? 'hide' : 'show']();
     },
 
+    focus: function(e) {
+        if (!this.getTarget().hasClass('in')) { return; }
+        var self = this,
+            target = $(e.target || e);
+
+        if (
+            this.$target[0] === target[0] || target.parent(this.$target) ||
+            this.element[0] === target[0] || target.parent(this.element)
+        ) { return; }
+
+        this.hide();
+        this.restoreFocus();
+    },
+
+    restoreFocus: function(element) {
+        element = $(element || this.element);
+        var tag = element.tag();
+
+        setTimeout(function(){
+            if (tag != 'a' && tag != 'input' && tag != 'button') {
+                element.find('a, button, input')[0].focus();
+            } else {
+                element[0].focus();
+            }
+        }, 0);
+    },
+
     hideAll: function(force) {
         var css = '';
         if (force) { css = 'div.' + this.options.mainClass; }
@@ -109,6 +137,7 @@ var Popover = new prime({
         var elements = $(css);
         if (!elements) { return this; }
         elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
+        this.restoreFocus();
 
         return this;
     },
@@ -142,10 +171,10 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
-        
-        setTimeout(bind(function(){
+
+        setTimeout(function(){
             target[0].focus();
-        }, this), 0);
+        }, 0);
     },
 
     displayContent: function() {
@@ -311,6 +340,7 @@ var Popover = new prime({
         var body = $('body');
         body.off('keyup', this.bound('escapeHandler')).on('keyup', this.bound('escapeHandler'));
         body.off('click', this.bound('bodyClickHandler')).on('click', this.bound('bodyClickHandler'));
+        body.off('focus', this.bound('focus'), true).on('focus', this.bound('focus'), true);
     },
 
 

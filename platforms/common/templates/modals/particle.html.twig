@@ -4,9 +4,9 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs" role="tablist">
         <ul>
-            <li class="active"><a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" aria-role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</a></li>
+            <li class="active"><a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</a></li>
             {% if block %}
-            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" aria-role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
             {% endif %}
         </ul>
     </div>

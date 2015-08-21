@@ -169,8 +169,9 @@ class Styles extends HtmlController
             $this->params += ['warnings' => $warnings];
             return new JsonResponse(
                 [
-                    'html' => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
-                    'title' => 'CSS Compiled With Warnings',
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
                 ]
             );
         } else {
@@ -222,8 +223,9 @@ class Styles extends HtmlController
             $this->params += ['warnings' => $warnings];
             return new JsonResponse(
                 [
-                    'html' => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
-                    'title' => 'CSS Compiled With Warnings',
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
                 ]
             );
         } else {
