@@ -12424,11 +12424,11 @@ History.Adapter.bind(window, 'statechange', function() {
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
 
+        body.emit('statechangeEnd');
+
         // Refresh D&D for LM and MM
         lm.layoutmanager.refresh();
         mm.menumanager.refresh();
-
-        body.emit('statechangeEnd');
     });
 });
 
