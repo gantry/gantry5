@@ -12864,6 +12864,7 @@ $.implement({
             size          = this.getRealSize(),
             callbackStart = function() {
                 element.gSlideCollapsed = false;
+                element.style('visibility', 'visible').attribute('aria-hidden', false);
             },
             callbackEnd   = function() {
                 element.attribute('style', element.gSlideStyle);
@@ -12888,11 +12889,14 @@ $.implement({
         var element       = this,
             callbackStart = function() {
                 element.gSlideCollapsed = true;
+            },
+            callbackEnd = function() {
+                element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
-        callback = series(callbackStart, callback);
+        callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
             duration: '250ms',
