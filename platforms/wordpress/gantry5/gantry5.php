@@ -48,11 +48,11 @@ function gantry5_plugin_defaults() {
 $domain = 'gantry5';
 $languages_path = basename( GANTRY5_PATH ) . '/admin/languages';
 
-load_plugin_textdomain( $domain, false, $languages_path );
-
 if( load_plugin_textdomain( $domain, false, $languages_path ) === false ) {
     add_filter( 'plugin_locale', 'modify_gantry5_locale', 10, 2 );
 }
+
+load_plugin_textdomain( $domain, false, $languages_path );
 
 function modify_gantry5_locale( $locale, $domain ) {
     // Revert the gantry5 domain locale to en_US
