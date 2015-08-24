@@ -329,13 +329,25 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $uri = basename($out);
         $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
-        $metaFile->save([
+        $data = [
             'file' => $out,
             'timestamp' => filemtime($locator->findResource($out)),
             'md5' => $md5,
             'variables' => $this->getVariables(),
             'imports' => $this->compiler->getParsedFiles()
-        ]);
-        $metaFile->free();
+        ];
+
+        // Attempt to lock the file for writing.
+        try {
+            $metaFile->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
+        // If meta file wasn't already locked by another process, save it.
+        if ($metaFile->locked() !== false) {
+            $metaFile->save($data);
+            $metaFile->unlock();
+            $metaFile->free();
+        }
     }
 }

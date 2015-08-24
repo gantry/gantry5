@@ -82,6 +82,19 @@ class ScssCompiler extends CssCompiler
 
         $out = $this->getCssUrl($in);
         $path = $locator->findResource($out, true, true);
+        $file = File::instance($path);
+
+        // Attempt to lock the file for writing.
+        try {
+            $file->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
+
+        if ($file->locked() === false) {
+            // File was already locked by another process, lets avoid compiling the same file twice.
+            return false;
+        }
 
         // Set the lookup paths.
         $this->compiler->setBasePath($path);
@@ -113,21 +126,6 @@ class ScssCompiler extends CssCompiler
  */
 WARN;
             $css = $warning . "\n\n" . $css;
-        }
-
-        $file = File::instance($path);
-
-        // Attempt to lock the file for writing.
-        try {
-            $file->lock(false);
-        } catch (\Exception $e) {
-            // Another process has locked the file; we will check this in a bit.
-        }
-
-        //TODO: Better way to handle double writing files at same time.
-        if ($file->locked() === false) {
-            // File was already locked by another process.
-            return false;
         }
 
         $file->save($css);

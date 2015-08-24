@@ -10,6 +10,7 @@
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
+        - Avoid race conditions when compiling CSS by compiling each file only once (#516)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)

@@ -228,9 +228,22 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $filename = $locator->findResource("gantry-config://{$this->name}/index.yaml", true, true);
         $cache = $locator->findResource("gantry-cache://{$this->name}/compiled/yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
-        $file->setCachePath($cache)->settings(['inline' => 20]);
+
+        // Attempt to lock the file for writing.
+        try {
+            $file->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
+
         $index = $this->buildIndex();
-        $file->save($index);
+
+        // If file wasn't already locked by another process, save it.
+        if ($file->locked() !== false) {
+            $file->setCachePath($cache)->settings(['inline' => 20]);
+            $file->save($index);
+            $file->unlock();
+        }
 
         static::$indexes['name'] = $index;
 
