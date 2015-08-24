@@ -162,7 +162,8 @@ abstract class Folder
             $filePath = $file->{$value}();
             if ($filters) {
                 if (isset($filters['key'])) {
-                    $fileKey = preg_replace($filters['key'], '', $fileKey);
+                    $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
+                    $fileKey = $pre . preg_replace($filters['key'], '', $fileKey);
                 }
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];

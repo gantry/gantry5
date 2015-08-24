@@ -48,8 +48,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $locator = $container['locator'];
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
-        $paths = $locator->findResources('gantry-blueprints://config');
-        $files = (new ConfigFileFinder)->locateFiles($paths);
+        $paths = $locator->findResources('gantry-particles://');
+        $files = (new ConfigFileFinder)->setBase('particles')->locateFiles($paths);
 
         $config = new CompiledBlueprints($cache, $files);
 
