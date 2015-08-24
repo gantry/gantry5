@@ -178,17 +178,21 @@ class Layout extends HtmlController
         $attributes = $this->request->post->getArray('options');
 
         if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
+            $hasBlock = $type == 'section' && isset($block);
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
-            $extra = null;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
+            $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
-            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        }
+
+        if ($hasBlock) {
+            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
         }
 
         // TODO: Use blueprints to merge configuration.
@@ -330,27 +334,28 @@ class Layout extends HtmlController
             }
 
             $data->join('title', $this->request->post['title'] ?: ucfirst($particle));
-            $block = $this->request->post->getArray('block');
-            if ($block) {
-                // TODO: remove empty items in some other way:
-                foreach ($block as $key => $param) {
-                    if ($param === '') {
-                        unset($block[$key]);
-                        continue;
-                    }
-                    if ($key == 'size') {
-                        $param = round($param, 4);
-                        if ($param < 5) {
-                            $param = 5;
-                        } elseif ($param > 100) {
-                            $param = 100;
-                        }
-                        $block[$key] = $param;
-                    }
-                }
+        }
 
-                $data->join('block', $block);
+        $block = $this->request->post->getArray('block');
+        if ($block) {
+            // TODO: remove empty items in some other way:
+            foreach ($block as $key => $param) {
+                if ($param === '') {
+                    unset($block[$key]);
+                    continue;
+                }
+                if ($key == 'size') {
+                    $param = round($param, 4);
+                    if ($param < 5) {
+                        $param = 5;
+                    } elseif ($param > 100) {
+                        $param = 100;
+                    }
+                    $block[$key] = $param;
+                }
             }
+
+            $data->join('block', $block);
         }
 
         // TODO: validate
