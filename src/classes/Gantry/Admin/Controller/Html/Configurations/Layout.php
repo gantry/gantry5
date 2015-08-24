@@ -169,7 +169,7 @@ class Layout extends HtmlController
         }
 
         $block = $this->request->post->getArray('block');
-        if (isset($block)) {
+        if (!empty($block)) {
             $item->block = (object) $block;
         }
 
@@ -178,12 +178,14 @@ class Layout extends HtmlController
         $attributes = $this->request->post->getArray('options');
 
         if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
-            $hasBlock = $type == 'section' && isset($block);
+            $particle = false;
+            $hasBlock = $type == 'section' && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
+            $particle = true;
             $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
@@ -200,7 +202,7 @@ class Layout extends HtmlController
 
         $this->params['id'] = $name;
         $this->params += [
-            'extra'         => $extra,
+            'extra'         => isset($extra) ? $extra : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],
@@ -212,7 +214,7 @@ class Layout extends HtmlController
             'skip'          => ['enabled']
         ];
 
-        if ($extra) {
+        if ($particle) {
             $typeLayout = $type == 'atom' ? $type : 'particle';
             $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
