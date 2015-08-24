@@ -339,7 +339,13 @@ class Layout extends HtmlController
                         continue;
                     }
                     if ($key == 'size') {
-                        $block[$key] = round($param, 4);
+                        $param = round($param, 4);
+                        if ($param < 5) {
+                            $param = 5;
+                        } elseif ($param > 100) {
+                            $param = 100;
+                        }
+                        $block[$key] = $param;
                     }
                 }
 
