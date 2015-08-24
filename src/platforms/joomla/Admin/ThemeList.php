@@ -80,6 +80,7 @@ class ThemeList
             ->from('#__template_styles AS s')
             ->where('s.client_id = 0')
             ->where('e.enabled = 1')
+            ->where('e.state = 0')
             ->leftJoin('#__extensions AS e ON e.element=s.template AND e.type='
             . $db->quote('template') . ' AND e.client_id=s.client_id');
 

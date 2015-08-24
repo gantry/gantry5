@@ -15,6 +15,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
+        - Gantry update message is showing up even when there is no update (#631)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Admin language will fallback to en_US if the locale based .mo couldn't be loaded (#719)
