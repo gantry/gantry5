@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1db4ef5217d732832728a80de226f58a",
+    "hash": "857c88a0f678ff519fb462c5fdd54055",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -232,16 +232,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.1.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "9e945cc64ccb6126123dd45cc2d219a4fbc99582"
+                "reference": "9fff16c6e431396f4f51e78143e2118826cea66b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/9e945cc64ccb6126123dd45cc2d219a4fbc99582",
-                "reference": "9e945cc64ccb6126123dd45cc2d219a4fbc99582",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/9fff16c6e431396f4f51e78143e2118826cea66b",
+                "reference": "9fff16c6e431396f4f51e78143e2118826cea66b",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-08-23 16:12:31"
+            "time": "2015-08-23 20:33:31"
         },
         {
             "name": "pimple/pimple",
@@ -448,12 +448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "212832b4f30acc4d4f6c5484ec127fc013e3e5ce"
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/212832b4f30acc4d4f6c5484ec127fc013e3e5ce",
-                "reference": "212832b4f30acc4d4f6c5484ec127fc013e3e5ce",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
                 "shasum": ""
             },
             "require": {
@@ -489,7 +489,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-22 07:42:07"
+            "time": "2015-08-24 07:18:02"
         },
         {
             "name": "twig/twig",
@@ -497,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "1dfa7dfb5d03a5eb470b2af3c353286ad3b43174"
+                "reference": "71b4dc2572eb822552e394a254a7bdf16be15448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1dfa7dfb5d03a5eb470b2af3c353286ad3b43174",
-                "reference": "1dfa7dfb5d03a5eb470b2af3c353286ad3b43174",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/71b4dc2572eb822552e394a254a7bdf16be15448",
+                "reference": "71b4dc2572eb822552e394a254a7bdf16be15448",
                 "shasum": ""
             },
             "require": {
@@ -550,14 +550,15 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-23 12:35:41"
+            "time": "2015-08-24 09:58:37"
         }
     ],
     "packages-dev": null,
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "rockettheme/toolbox": 20
+        "rockettheme/toolbox": 20,
+        "leafo/scssphp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
