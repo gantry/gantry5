@@ -2,7 +2,9 @@
 ## XX/XX/2015
 
 1. [Common](#common)
-    1. [](#improved)
+    1. [](#new)
+        - Layout Manager: Add support for fixed width sections (#115)
+    2. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
         - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs, Extras dropdown, Modals, Tabs within Modals, Popovers, Assignments, Settings, Outlines, Selectize, Editable Titles [wip] (#713)
         - Catch and display warnings from SCSS compiler (#705)

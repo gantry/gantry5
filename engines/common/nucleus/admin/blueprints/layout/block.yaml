@@ -37,3 +37,8 @@ form:
       append:
         type: "text"
         text: "%"
+
+    fixed:
+      type: input.checkbox
+      label: Fixed Size
+      description: Make block size fixed. If set, this block will always take the same amount of space.

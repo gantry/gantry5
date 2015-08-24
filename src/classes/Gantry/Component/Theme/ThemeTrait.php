@@ -523,12 +523,20 @@ trait ThemeTrait
                         if (!isset($child->attributes->size)) {
                             $child->attributes->size = 100 / count($item->children);
                         }
-                        $dynamicSize += $child->attributes->size;
+                        if (empty($child->attributes->fixed)) {
+                            $dynamicSize += $child->attributes->size;
+                        } else {
+                            $fixedSize += $child->attributes->size;
+                        }
                     }
                     if (round($dynamicSize, 1) != 100) {
                         $fraction = 0;
                         $multiplier = (100 - $fixedSize) / $dynamicSize;
                         foreach ($item->children as $child) {
+                            if (!empty($child->attributes->fixed)) {
+                                continue;
+                            }
+
                             // Calculate size for the next item by taking account the rounding error from the last item.
                             // This will allow us to approximate cumulating error and fix it when rounding error grows
                             // over the rounding treshold.
