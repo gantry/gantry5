@@ -126,6 +126,9 @@ msgstr "Presets"
 msgid "GANTRY5_PLATFORM_OUTLINES"
 msgstr "Outlines"
 
+msgid "GANTRY5_PLATFORM_ADD_NEW_OUTLINE"
+msgstr "Add New Outline"
+
 msgid "GANTRY5_PLATFORM_SWITCH_PRESET_DESC"
 msgstr "Keep the current Particles while changing Preset"
 
