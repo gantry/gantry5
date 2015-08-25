@@ -1779,6 +1779,9 @@ body.g-prime {
 #g5-container .card .theme-screenshot a {
   display: block;
 }
+#g5-container .enabler {
+  outline: transparent;
+}
 #g5-container .enabler .toggle {
   background-color: #ed5565;
 }
@@ -4990,6 +4993,7 @@ html.g5-dialog-open {
   -moz-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
   background: #fff;
+  outline: transparent;
 }
 #g5-container .g5-dialog.g5-closing .g5-content {
   -webkit-animation: fadeOut 0.3s;
@@ -5131,6 +5135,7 @@ html.g5-dialog-open {
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   color: #444;
+  outline: transparent;
 }
 #g5-container .g5-popover.top, #g5-container .g5-popover.top-left, #g5-container .g5-popover.top-right {
   margin-top: -10px;
