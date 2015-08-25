@@ -32,6 +32,11 @@ form:
           placeholder: 'http://cdn1.remote/file.css'
           filter: '\.(css|less|scss|sass)$'
 
+        .inline:
+          type: textarea.textarea
+          label: Inline CSS
+          description: Adds inline CSS for quick snippets.
+
         .extra:
           type: collection.keyvalue
           label: Tag attributes
