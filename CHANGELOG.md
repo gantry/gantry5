@@ -18,6 +18,8 @@
         - Layout Manager: It's possible to set "block size" to 0% when changing a particle's settings (#539)
         - Load default configuration values from Blueprints (#117, #154)
 2. [Joomla](#joomla)
+    2. [](#improved)
+        - Use cleaner formatting in templateDetails.xml for positions
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
         - Gantry update message is showing up even when there is no update (#631)
