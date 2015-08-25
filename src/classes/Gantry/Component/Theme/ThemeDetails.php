@@ -46,6 +46,7 @@ class ThemeDetails implements \ArrayAccess
     public function getPaths()
     {
         $paths = array_merge(
+            (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom'),
             ['gantry-theme://'],
             (array) $this->get('configuration.theme.base', 'gantry-theme://common')
         );
