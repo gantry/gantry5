@@ -114,7 +114,7 @@ function gantry5_plugin_settings() {
             <form method="post" action="options.php">
                 <?php settings_fields( 'gantry5_plugin_options' ); ?>
 
-                <h1 class="available-options"><?php _e( 'Gantry 5 Options', 'gantry5' ); ?></h1>
+                <h1 class="available-options"><?php _e( 'Gantry 5 Settings', 'gantry5' ); ?></h1>
 
                 <table class="form-table">
                     <tbody>
