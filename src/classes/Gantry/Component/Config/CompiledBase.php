@@ -23,6 +23,11 @@ use RocketTheme\Toolbox\File\PhpFile;
 abstract class CompiledBase
 {
     /**
+     * @var int Version number for the compiled file.
+     */
+    public $version = 1;
+
+    /**
      * @var string|bool  Configuration checksum.
      */
     public $checksum;
@@ -91,7 +96,7 @@ abstract class CompiledBase
     public function checksum()
     {
         if (!isset($this->checksum)) {
-            $this->checksum = md5(json_encode($this->files));
+            $this->checksum = md5(json_encode($this->files) . $this->version);
         }
 
         return $this->checksum;

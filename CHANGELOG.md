@@ -16,6 +16,7 @@
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
         - Avoid race conditions when compiling CSS by compiling each file only once (#516)
         - Layout Manager: It's possible to set "block size" to 0% when changing a particle's settings (#539)
+        - Load default configuration values from Blueprints (#117, #154)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)

@@ -22,6 +22,11 @@ use Gantry\Component\File\CompiledYamlFile;
 class CompiledConfig extends CompiledBase
 {
     /**
+     * @var int Version number for the compiled file.
+     */
+    public $version = 1;
+
+    /**
      * @var Config  Configuration object.
      */
     protected $object;
@@ -30,6 +35,11 @@ class CompiledConfig extends CompiledBase
      * @var callable  Blueprints loader.
      */
     protected $callable;
+
+    /**
+     * @var bool
+     */
+    protected $withDefaults;
 
     /**
      * @param  string $cacheFolder  Cache folder to be used.
@@ -50,12 +60,28 @@ class CompiledConfig extends CompiledBase
     }
 
     /**
+     * @param bool $withDefaults
+     * @return mixed
+     */
+    public function load($withDefaults = false)
+    {
+        $this->withDefaults = $withDefaults;
+
+        return parent::load();
+    }
+
+    /**
      * Create configuration object.
      *
      * @param  array  $data
      */
     protected function createObject(array $data = [])
     {
+        if ($this->withDefaults && empty($data) && is_callable($this->callable)) {
+            $blueprints = $this->callable;
+            $data = $blueprints()->getDefaults();
+        }
+
         $this->object = new Config($data, $this->callable);
     }
 

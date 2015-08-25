@@ -23,6 +23,11 @@ use RocketTheme\Toolbox\Blueprints\Blueprints;
 class CompiledBlueprints extends CompiledBase
 {
     /**
+     * @var int Version number for the compiled file.
+     */
+    public $version = 1;
+
+    /**
      * @var Blueprints  Blueprints object.
      */
     protected $object;

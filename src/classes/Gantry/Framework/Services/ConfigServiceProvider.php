@@ -86,6 +86,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
             return $container['blueprints'];
         });
 
-        return $config->load();
+        return $config->load(true);
     }
 }
