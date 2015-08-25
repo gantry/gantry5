@@ -3,12 +3,12 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Layout Manager: Add block settings for nested sections (#713)
+        - Layout Manager: Add block settings for nested sections (#539)
         - Layout Manager: Add support for fixed width sections (#115)
         - Custom JS/CSS Particle supports now inline CSS
     2. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
-        - WAI-ARIA: Improved accessibility for Togglers, Override checkboxes, Dialogs, Extras dropdown, Modals, Tabs within Modals, Popovers, Assignments, Settings, Outlines, Selectize, Editable Titles [wip] (#713)
+        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#713)
         - Catch and display warnings from SCSS compiler (#705)
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
     3. [](#bugfix)
@@ -22,8 +22,8 @@
         - Gantry update message is showing up even when there is no update (#631)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        - Admin language will fallback to en_US if the locale based .mo couldn't be loaded (#719)
-        - Extra location of the plugin translation .mo file changed to the default value WP_LANG_DIR/plugins/ (#719)
+        - Admin language will fallback to `en_US` if the locale based `.mo` couldn't be loaded (#719)
+        - Extra location of the plugin translation `.mo` file changed to the default value `WP_LANG_DIR/plugins/` (#719)
         - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
         - Uninstall is leaving behind cache files and options (#659)
         - Move blueprints for content into its proper location
