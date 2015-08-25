@@ -21,7 +21,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\Event\Event;

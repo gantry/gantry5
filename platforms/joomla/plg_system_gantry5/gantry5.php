@@ -152,7 +152,7 @@ class plgSystemGantry5 extends JPlugin
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
-        /** @var \Gantry\Framework\Configurations $configurations */
+        /** @var \Gantry\Framework\Outlines $configurations */
         $configurations = $gantry['configurations'];
 
         $theme->setLayout($configurations->current());

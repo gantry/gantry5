@@ -16,7 +16,7 @@ namespace Gantry\Component\Layout;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -476,7 +476,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Find out the currently used layout file.
         $layoutFile = $locator("gantry-config://{$name}/layout.yaml");
         if (!$layoutFile) {
-            /** @var Configurations $configurations */
+            /** @var Outlines $configurations */
             $configurations = $gantry['configurations'];
 
             $preset = $configurations->preset($name);

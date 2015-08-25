@@ -14,9 +14,8 @@
 
 namespace Gantry\Framework;
 
-/**
- * @deprecated 5.1.1
- */
-class Configurations extends Outlines
+use Gantry\Framework\Base\Outlines as BaseOutlines;
+
+class Outlines extends BaseOutlines
 {
 }

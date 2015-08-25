@@ -92,7 +92,7 @@ trait ThemeTrait
             Folder::delete($path, false);
         }
 
-        /** @var Configurations $configurations */
+        /** @var Outlines $configurations */
         $configurations = $gantry['configurations'];
         $warnings = [];
         foreach ($configurations as $configuration => $title) {

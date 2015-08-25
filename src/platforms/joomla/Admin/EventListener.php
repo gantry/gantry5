@@ -13,7 +13,7 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Joomla\Registry\Registry;

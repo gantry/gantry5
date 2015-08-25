@@ -13,12 +13,12 @@ namespace Gantry\Framework;
 
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Framework\Base\Configurations as BaseConfigurations;
+use Gantry\Framework\Base\Outlines as BaseOutlines;
 use Gantry\Joomla\StyleHelper;
 use Gantry\Joomla\TemplateInstaller;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Configurations extends BaseConfigurations
+class Outlines extends BaseOutlines
 {
     /**
      * @param string $path
@@ -26,6 +26,8 @@ class Configurations extends BaseConfigurations
      */
     public function load($path = 'gantry-config://')
     {
+        $this->path = $path;
+
         $gantry = $this->container;
 
         $theme = isset($gantry['theme.name']) ? $gantry['theme.name'] : null;
@@ -87,7 +89,7 @@ class Configurations extends BaseConfigurations
         $preset = $template->params->get('preset', 'default');
         $configuration = $template->params->get('configuration', $template->id);
 
-        return is_dir($locator("gantry-config://{$configuration}")) ? $configuration : $preset;
+        return is_dir($locator("{$this->path}/{$configuration}")) ? $configuration : $preset;
     }
 
     public function create($title = 'Untitled', $preset = 'default')
@@ -180,7 +182,7 @@ class Configurations extends BaseConfigurations
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $path = $locator->findResource("gantry-config://{$item->id}", true, true);
+        $path = $locator->findResource("{$this->path}/{$item->id}", true, true);
         if ($path) {
             if (file_exists($path)) {
                 Folder::delete($path);
