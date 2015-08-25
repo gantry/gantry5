@@ -104,50 +104,50 @@ function gantry5_plugin_settings() {
     $option = get_option( 'gantry5_plugin' );
 
     if( isset( $_GET[ 'settings-updated' ] ) && $_GET[ 'settings-updated' ] == 'true' ) {
-        echo '<div id="message" class="updated fade"><p>Gantry 5 plugin settings saved.</p></div>';
+        echo '<div id="message" class="updated fade"><p>' . __( 'Gantry 5 plugin settings saved.', 'gantry5' ) . '</p></div>';
     }
 
     ?>
 
     <div id="g5-options-main">
-        <form method="post" action="options.php">
-            <?php settings_fields( 'gantry5_plugin_options' ); ?>
+        <div class="wrap">
+            <form method="post" action="options.php">
+                <?php settings_fields( 'gantry5_plugin_options' ); ?>
 
-            <table class="widefat fixed">
-                <tfoot>
-                <tr>
-                    <th colspan="2">
-                        <input type="submit" class="button button-primary rb-submit" value="<?php _e('Save Changes', 'gantry5'); ?>" />
-                    </th>
-                </tr>
-                </tfoot>
-                <tbody>
-                <tr>
-                    <td>
-                        <h3 class="available-options"><?php _e( 'Available Options', 'gantry5' ); ?></h3>
-                        <div class="param-row alternate first">
-                            <div class="label"><?php _e( 'Production Mode', 'gantry5' ); ?></div>
-                            <div class="option">
+                <h1 class="available-options"><?php _e( 'Gantry 5 Options', 'gantry5' ); ?></h1>
+
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <label for="production1"><?php _e( 'Production Mode', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
                                 <input id="production1" type="radio" <?php checked( $option[ 'production' ], '1' ); ?> value="1" name="gantry5_plugin[production]"/>
-                                <label for="production1"><?php _e('Enable', 'gantry5'); ?></label>&nbsp;&nbsp;
+                                <label for="production1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="production2" class="second" type="radio" <?php checked( $option['production'], '0' ); ?> value="0" name="gantry5_plugin[production]"/>
-                                <label for="production2"><?php _e('Disable', 'gantry5'); ?></label>
-                            </div>
-                        </div>
-                        <div class="param-row last">
-                            <div class="label"><?php _e( 'Debug Mode', 'gantry5' ); ?></div>
-                            <div class="option">
+                                <label for="production2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="debug1"><?php _e( 'Debug Mode', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
                                 <input id="debug1" type="radio" <?php checked( $option[ 'debug' ], '1' ); ?> value="1" name="gantry5_plugin[debug]"/>
-                                <label for="debug1"><?php _e('Enable', 'gantry5'); ?></label>&nbsp;&nbsp;
+                                <label for="debug1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="debug2" class="second" type="radio" <?php checked( $option['debug'], '0' ); ?> value="0" name="gantry5_plugin[debug]"/>
-                                <label for="debug2"><?php _e('Disable', 'gantry5'); ?></label>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+                                <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="submit">
+                    <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Save Changes' ); ?>" />
+                </p>
+            </form>
+        </div>
     </div>
 
 <?php

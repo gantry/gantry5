@@ -28,6 +28,7 @@
         - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
         - Uninstall is leaving behind cache files and options (#659)
         - Move blueprints for content into its proper location
+        - Fixed the styling for the Gantry 5 settings page
 
 # 5.1.0
 ## 16/08/2015
