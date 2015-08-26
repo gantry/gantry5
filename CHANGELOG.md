@@ -27,6 +27,8 @@
         - Gantry update message is showing up even when there is no update (#631)
         - Module positions not showing up after installing/updating theme (#212)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Make timber functions to work from particles
     3. [](#bugfix)
         - Admin language will fallback to `en_US` if the locale based `.mo` couldn't be loaded (#719)
         - Extra location of the plugin translation `.mo` file changed to the default value `WP_LANG_DIR/plugins/` (#719)
@@ -34,7 +36,6 @@
         - Uninstall is leaving behind cache files and options (#659)
         - Move blueprints for content into its proper location
         - Fixed the styling for the Gantry 5 settings page
-        - Make timber functions to work from particles
 
 # 5.1.0
 ## 16/08/2015
