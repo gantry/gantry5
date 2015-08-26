@@ -68,7 +68,7 @@ class Theme extends BaseTheme
 
             $params = array(
                 'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => true,
+                'debug' => $gantry->debug(),
                 'auto_reload' => true,
                 'autoescape' => 'html'
             );
@@ -77,6 +77,11 @@ class Theme extends BaseTheme
             $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
 
             $twig = new \Twig_Environment($loader, $params);
+
+            if ($gantry->debug()) {
+                $twig->addExtension(new Twig_Extension_Debug());
+            }
+
             $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
             $this->add_to_twig($twig);

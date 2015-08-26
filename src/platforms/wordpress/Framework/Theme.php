@@ -72,12 +72,20 @@ class Theme extends Base\Theme
 
             $params = array(
                 'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => true,
+                'debug' => $gantry->debug(),
                 'auto_reload' => true,
                 'autoescape' => 'html'
             );
 
             $twig = new \Twig_Environment($loader, $params);
+
+            if ($gantry->debug()) {
+                $twig->addExtension(new Twig_Extension_Debug());
+            }
+
+            $twig = apply_filters('twig_apply_filters', $twig);
+            $twig = apply_filters('timber/twig/filters', $twig);
+            $twig = apply_filters('timber/loader/twig', $twig);
 
             // FIXME: Get timezone from WP.
             //$timezone = 'UTC';
@@ -186,6 +194,7 @@ class Theme extends Base\Theme
     public function add_to_context( array $context )
     {
         $context = parent::add_to_context( $context );
+        $context += \Timber::get_context();
 
         $this->url = $context['site']->theme->link;
 

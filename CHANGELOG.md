@@ -12,6 +12,7 @@
         - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#713)
         - Catch and display warnings from SCSS compiler (#705)
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
+        - Enable twig debug extension if Gantry debug has been turned on
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
@@ -33,6 +34,7 @@
         - Uninstall is leaving behind cache files and options (#659)
         - Move blueprints for content into its proper location
         - Fixed the styling for the Gantry 5 settings page
+        - Make timber functions to work from particles
 
 # 5.1.0
 ## 16/08/2015
