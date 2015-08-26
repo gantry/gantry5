@@ -100,10 +100,16 @@ class Theme extends Base\Theme
     }
 
 
-    public function render($file, array $context = array())
+    public function render($file, array $context = [])
     {
+        static $timberContext;
+
+        if (!isset($timberContext)) {
+            $timberContext = \Timber::get_context();
+        }
+
         // Include Gantry specific things to the context.
-        $context = $this->add_to_context($context);
+        $context = array_replace($timberContext, $context);
 
         return $this->renderer()->render($file, $context);
     }
