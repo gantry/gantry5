@@ -162,6 +162,11 @@ abstract class Platform
         return null;
     }
 
+    public function filter($text)
+    {
+        return $text;
+    }
+
     public function finalize()
     {
     }

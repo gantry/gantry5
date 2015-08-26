@@ -70,6 +70,12 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
+    public function filter($text)
+    {
+        \JPluginHelper::importPlugin('content');
+        return \JHtml::_('content.prepare', $text, '', 'mod_custom.content');
+    }
+
     public function finalize()
     {
         Document::registerAssets();

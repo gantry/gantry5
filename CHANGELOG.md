@@ -6,6 +6,7 @@
         - Layout Manager: Add block settings for nested sections (#539)
         - Layout Manager: Add support for fixed width sections (#115)
         - Custom JS/CSS Particle supports now inline CSS
+        - Process shortcodes in custom HTML particle (#369)
     2. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
         - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#713)
