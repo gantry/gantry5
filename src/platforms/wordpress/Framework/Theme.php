@@ -110,6 +110,7 @@ class Theme extends Base\Theme
 
         // Include Gantry specific things to the context.
         $context = array_replace($timberContext, $context);
+        print_r($context);die();
 
         return $this->renderer()->render($file, $context);
     }
@@ -268,5 +269,12 @@ class Theme extends Base\Theme
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    protected function renderContent($item)
+    {
+        $context = ['segment' => $item];
+
+        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
     }
 }
