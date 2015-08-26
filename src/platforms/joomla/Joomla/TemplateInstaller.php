@@ -312,6 +312,8 @@ class TemplateInstaller
         $cssPath = $path . '/custom/css-compiled';
         if (is_dir($cssPath)) {
             \JFolder::delete($cssPath);
+        } elseif (is_file($cssPath)) {
+            \JFile::delete($cssPath);
         }
 
         // Remove wrongly named file if it exists.
