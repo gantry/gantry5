@@ -80,7 +80,7 @@ class Theme extends Base\Theme
             $twig = new \Twig_Environment($loader, $params);
 
             if ($gantry->debug()) {
-                $twig->addExtension(new Twig_Extension_Debug());
+                $twig->addExtension(new \Twig_Extension_Debug());
             }
 
             $twig = apply_filters('twig_apply_filters', $twig);
@@ -194,7 +194,6 @@ class Theme extends Base\Theme
     public function add_to_context( array $context )
     {
         $context = parent::add_to_context( $context );
-        $context += \Timber::get_context();
 
         $this->url = $context['site']->theme->link;
 

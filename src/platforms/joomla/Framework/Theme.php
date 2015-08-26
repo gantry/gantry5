@@ -79,7 +79,7 @@ class Theme extends BaseTheme
             $twig = new \Twig_Environment($loader, $params);
 
             if ($gantry->debug()) {
-                $twig->addExtension(new Twig_Extension_Debug());
+                $twig->addExtension(new \Twig_Extension_Debug());
             }
 
             $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
