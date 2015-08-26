@@ -282,19 +282,61 @@ class plgSystemGantry5 extends JPlugin
 
     public function onContentPrepareData($context, $data)
     {
-        if ($context !== 'com_menus.item') {
-            return;
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+        // Check that we are manipulating a valid form.
+        switch ($context) {
+            // TODO: Joomla seems to be missing support for component data manipulation!
+/*
+            case 'com_config.component':
+                // Add plugin parameters under plg_type_name.
+                if ($data instanceof JRegistry) {
+                    $data->set($name, $this->params->toObject());
+                }
+                break;
+*/
+
+            case 'com_menus.item':
+                break;
         }
+
+        return true;
     }
 
     public function onContentPrepareForm($form, $data)
     {
+        // Check that we are manipulating a valid form.
+        if (!($form instanceof JForm)) {
+            $this->_subject->setError('JERROR_NOT_A_FORM');
+
+            return false;
+        }
+
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
         switch ($form->getName()) {
+            // TODO: This part works, but Joomla seems to be missing support for component data manipulation!
+/*
+            case 'com_config.component':
+                // If we are editing configuration from Gantry component, add missing fields from system plugin.
+                $rules = $form->getField('rules');
+                if ($rules && $rules->getAttribute('component') == 'com_gantry5') {
+                    $this->loadLanguage('plg_system_gantry5.sys');
+                    // Add plugin fields to the form under plg_type_name.
+                    $file = file_get_contents(__DIR__."/{$this->_name}.xml");
+                    $file = preg_replace('/ name="params"/', " name=\"{$name}\"", $file);
+                    $form->load($file, false, '/extension/config');
+                }
+                break;
+*/
             case 'com_menus.items.filter':
                 break;
+
             case 'com_menus.item':
                 break;
         }
+
+        return true;
     }
 
     /**
