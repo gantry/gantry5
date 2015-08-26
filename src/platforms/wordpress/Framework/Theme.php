@@ -110,7 +110,6 @@ class Theme extends Base\Theme
 
         // Include Gantry specific things to the context.
         $context = array_replace($timberContext, $context);
-        print_r($context);die();
 
         return $this->renderer()->render($file, $context);
     }
