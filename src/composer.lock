@@ -236,12 +236,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "9fff16c6e431396f4f51e78143e2118826cea66b"
+                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/9fff16c6e431396f4f51e78143e2118826cea66b",
-                "reference": "9fff16c6e431396f4f51e78143e2118826cea66b",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
+                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-08-23 20:33:31"
+            "time": "2015-08-25 16:15:39"
         },
         {
             "name": "pimple/pimple",
@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "bfc3a002cce76ac81c1312f9bf535af7f7143240"
+                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/bfc3a002cce76ac81c1312f9bf535af7f7143240",
-                "reference": "bfc3a002cce76ac81c1312f9bf535af7f7143240",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/19fb0167176e7bf8bfd9602c6765528b31fa23bf",
+                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-08-25 10:28:33"
+            "time": "2015-08-27 10:05:44"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -497,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "71b4dc2572eb822552e394a254a7bdf16be15448"
+                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/71b4dc2572eb822552e394a254a7bdf16be15448",
-                "reference": "71b4dc2572eb822552e394a254a7bdf16be15448",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5815c8344b4d645323d92dab3abb5b8a7d8dd605",
+                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-24 09:58:37"
+            "time": "2015-08-27 07:48:00"
         }
     ],
     "packages-dev": null,

@@ -19,6 +19,7 @@
         - Avoid race conditions when compiling CSS by compiling each file only once (#516)
         - Layout Manager: It's possible to set "block size" to 0% when changing a particle's settings (#539)
         - Load default configuration values from Blueprints (#117, #154)
+        - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Use cleaner formatting in templateDetails.xml for positions

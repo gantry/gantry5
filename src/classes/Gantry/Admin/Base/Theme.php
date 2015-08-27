@@ -67,7 +67,7 @@ class Theme extends BaseTheme
                 return $c['blueprints'];
             });
 
-            return $config->load();
+            return $config->load(true);
         };
 
         parent::__construct($path, $name);
