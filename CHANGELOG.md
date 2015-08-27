@@ -20,6 +20,7 @@
         - Avoid race conditions when compiling CSS by compiling each file only once (#516)
         - Load default configuration values from Blueprints (#117, #154)
         - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
+        - It is now possible to override the 'enabled' state of a Particle (green / red toggle), when the override is disable, Base will be inherited (#615)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Use cleaner formatting in templateDetails.xml for positions
