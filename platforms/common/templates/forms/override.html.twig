@@ -1,0 +1,2 @@
+<input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} role="checkbox" aria-label="{{ 'GANTRY5_PLATFORM_OVERRIDE_CHECKBOX'|trans|replace({'%s': (scope ~ name)|replace({'.': ' '})|title|trim}) }}" title="{{ 'GANTRY5_PLATFORM_OVERRIDE_CHECKBOX'|trans|replace({'%s': field.label}) }}" />
+<label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
