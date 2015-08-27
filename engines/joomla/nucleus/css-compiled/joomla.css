@@ -649,6 +649,10 @@ th .tooltip-inner {
   display: block;
 }
 
+.contentpane.modal {
+  padding: 1.5rem;
+}
+
 .sprocket-strips.loading .sprocket-strips-overlay {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;

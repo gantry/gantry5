@@ -205,7 +205,7 @@ th .tooltip-inner {
     height: 100px;
 }
 
-// Mailto and Print Windows
+// Modals
 .view-mailto, .print-mode {
     padding: 0 $leading-margin;
     .formelm {
@@ -213,6 +213,10 @@ th .tooltip-inner {
             display: block;
         }
     }
+}
+
+.contentpane.modal {
+    padding: $leading-margin;
 }
 
 // Third Party Resets
