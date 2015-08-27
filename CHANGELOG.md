@@ -13,11 +13,11 @@
         - Catch and display warnings from SCSS compiler (#705)
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
         - Enable twig debug extension if Gantry debug has been turned on
+        - Implemented validation for the Block Size of a Particle Block (#539)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
         - Avoid race conditions when compiling CSS by compiling each file only once (#516)
-        - Layout Manager: It's possible to set "block size" to 0% when changing a particle's settings (#539)
         - Load default configuration values from Blueprints (#117, #154)
         - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
 2. [Joomla](#joomla)
