@@ -1747,6 +1747,8 @@ body.g-prime {
   line-height: 1rem;
   padding: 2px;
   margin-right: 5px;
+  position: relative;
+  z-index: 5;
 }
 #g5-container .card h4[data-g-collapse] .g-collapse:hover:before {
   bottom: 1.65rem;
@@ -2434,6 +2436,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 #g5-container .settings-block .alert {
   margin: 0.625rem 0;
+}
+#g5-container .settings-block h4.card-overrideable {
+  padding: 4px 8px;
+}
+#g5-container .settings-block h4.card-overrideable .enabler {
+  margin-right: 2rem;
 }
 #g5-container .settings-block .settings-param {
   padding: 10px 5px;

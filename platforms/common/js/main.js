@@ -3507,7 +3507,7 @@ ready(function() {
                         input = $(input);
                         var name     = input.attribute('name'),
                             value    = input.value(),
-                            parent   = input.parent('.settings-param'),
+                            parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
