@@ -23,6 +23,7 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Use cleaner formatting in templateDetails.xml for positions
+        - Make Debug module position fixed to the bottom of every layout (#715)
     3. [](#bugfix)
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
         - Gantry update message is showing up even when there is no update (#631)

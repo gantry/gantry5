@@ -500,45 +500,6 @@ children:
                       title: Position-14
                     children: {  }
   -
-    id: 838edc20-2112-1305-bf30-5f6ed496705d
-    type: section
-    subtype: false
-    title: Debug
-    attributes: {  }
-    children:
-      -
-        id: 032c35ff-ef14-1f69-1665-cc7cc2524ad4
-        type: container
-        subtype: false
-        title: Untitled
-        attributes: {  }
-        children:
-          -
-            id: 5affcbd1-776f-d78a-824d-2c6808f683b8
-            type: grid
-            subtype: false
-            title: Untitled
-            attributes: {  }
-            children:
-              -
-                id: 58b109ea-2f75-63ed-02f1-4239291ab500
-                type: block
-                subtype: false
-                title: Untitled
-                attributes:
-                  size: 100
-                children:
-                  -
-                    id: b87d1f85-3f0e-2d27-3a5c-dea73631f5fb
-                    type: position
-                    subtype: false
-                    title: Debug
-                    attributes:
-                      enabled: 1
-                      key: debug
-                      title: Debug
-                    children: {  }
-  -
     id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
     type: offcanvas
     subtype: false
