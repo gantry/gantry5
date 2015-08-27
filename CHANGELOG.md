@@ -9,7 +9,7 @@
         - Process shortcodes in custom HTML particle (#369)
     2. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
-        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#713)
+        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#754 - ref. #713)
         - Catch and display warnings from SCSS compiler (#705)
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
         - Enable twig debug extension if Gantry debug has been turned on
