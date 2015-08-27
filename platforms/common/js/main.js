@@ -999,6 +999,10 @@ var Base = new prime({
     setLayout: function(layout) {
         this.block = layout;
         return this;
+    },
+
+    getLimits: function() {
+        return false;
     }
 });
 
@@ -1329,8 +1333,30 @@ var Particle = new prime({
         parent.on('resized', this.bound('onParentResize'));
     },
 
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
     onParentResize: function(resize) {
         this.setLabelSize(resize);
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
+            sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 
@@ -1445,6 +1471,28 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+    },
+
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
+            sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 
@@ -2453,9 +2501,11 @@ ready(function() {
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.block.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
+            if (!size(data.options)) { delete data.options; }
         }
 
         modal.open({
@@ -2475,6 +2525,35 @@ ready(function() {
 
                 var urlTemplate = content.elements.content.find('.g-urltemplate');
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                var blockSize = content.elements.content.find('[name="block[size]"]');
+
+                // logic for limits
+                if (blockSize && data.block.size_limits) {
+                    var note = content.elements.content.find('.blocksize-note'),
+                        min = data.block.size_limits[0],
+                        max = data.block.size_limits[1];
+
+                    blockSize.attribute('min', min);
+                    blockSize.attribute('max', max);
+
+                    if (note) {
+                        var noteHTML = note.html();
+                        noteHTML = noteHTML.replace(/#min#/g, min);
+                        noteHTML = noteHTML.replace(/#max#/g, max);
+
+                        note.html(noteHTML);
+                        note.find('.blocksize-' + (min == max ? 'range' : 'fixed')).addClass('hidden');
+                    }
+
+                    var isValid = function() {
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                    };
+
+                    blockSize.on('input', function(){
+                        blockSize[0].setCustomValidity(isValid());
+                    });
+                }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {
@@ -13124,8 +13203,8 @@ var fieldValidation = function(field) {
 
     // use native validation if available
     if (typeof _field.willValidate !== 'undefined') {
-        if (tag == 'input' && _field.type.toLowerCase() !== type) {
-            // type not supported, fallback validation
+        if (tag == 'input' && (_field.type.toLowerCase() !== type || field.hasClass('custom-validation-field'))) {
+            // type not supported or custom, fallback validation
             _field.setCustomValidity(validate(field) ? '' : 'The field value is invalid');
         }
 
@@ -13153,6 +13232,8 @@ var validate = function(field) {
         required = field.attribute('required'),
         minlength = field.attribute('minlength'),
         maxlength = field.attribute('maxlength'),
+        min = field.attribute('min'),
+        max = field.attribute('max'),
         pattern = field.attribute('pattern');
 
     // disabled fields should not be validated
@@ -13170,10 +13251,22 @@ var validate = function(field) {
         isValid = pattern.test(value);
     }
 
+    // min / max
+    if (isValid && (min !== null || max !== null)) {
+        if (min !== null) {
+            isValid = parseFloat(value) >= parseFloat(min);
+        }
+
+        if (max !== null) {
+            isValid = parseFloat(value) <= parseFloat(max);
+        }
+    }
+
     return isValid;
 };
 
 module.exports = fieldValidation;
+
 },{"elements":98}],59:[function(require,module,exports){
 "use strict";
 

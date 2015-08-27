@@ -144,6 +144,10 @@ var Base = new prime({
     setLayout: function(layout) {
         this.block = layout;
         return this;
+    },
+
+    getLimits: function() {
+        return false;
     }
 });
 

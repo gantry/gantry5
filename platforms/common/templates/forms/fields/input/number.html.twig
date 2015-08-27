@@ -13,6 +13,7 @@
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
             {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
+            {% if field.pattern is defined %}pattern="{{ field.pattern|e }}"{% endif %}
             {% if field.max is defined %}max="{{ field.max|e }}"{% endif %}
             {% if field.min is defined %}min="{{ field.min|e }}"{% endif %}
             {% if field.placeholder is defined %}placeholder="{{ field.placeholder|e }}"{% endif %}
