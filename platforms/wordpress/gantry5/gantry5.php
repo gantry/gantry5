@@ -42,7 +42,7 @@ function gantry5_plugin_defaults() {
         'production'       => '1',
         'debug'            => '0',
         'offline'          => '0',
-        'offline_message'  => 'Site is currently in the offline mode. Please try again later.',
+        'offline_message'  => 'Site is currently in offline mode. Please try again later.',
     );
 
     $option = get_option( 'gantry5_plugin' );
