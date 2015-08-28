@@ -9,7 +9,7 @@
         - Process shortcodes in custom HTML particle (#369)
     2. [](#improved)
         - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
-        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#713)
+        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#754 - ref. #713)
         - Catch and display warnings from SCSS compiler (#705)
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
         - Enable twig debug extension if Gantry debug has been turned on
@@ -20,6 +20,7 @@
         - Avoid race conditions when compiling CSS by compiling each file only once (#516)
         - Load default configuration values from Blueprints (#117, #154)
         - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
+        - It is now possible to override the 'enabled' state of a Particle (green / red toggle), when the override is disable, Base will be inherited (#615)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Use cleaner formatting in templateDetails.xml for positions
