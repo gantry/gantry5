@@ -151,6 +151,14 @@ function gantry5_plugin_settings() {
                                 <label for="offline2"><?php _e( 'Disable', 'gantry5' ); ?></label>
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="offline_message"><?php _e( 'Offline Message', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="offline_message" type="text" value="<?php echo $option[ 'offline_message' ]; ?>" class="regular-text" name="gantry5_plugin[offline_message]" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
