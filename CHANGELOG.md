@@ -41,6 +41,7 @@
         - Uninstall is leaving behind cache files and options (#659)
         - Move blueprints for content into its proper location
         - Fixed the styling for the Gantry 5 settings page
+        - Fatal error when editing menu item name in the editor (#752)
 
 # 5.1.0
 ## 16/08/2015
