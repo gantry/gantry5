@@ -140,6 +140,44 @@ function gantry5_plugin_settings() {
                                 <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="offline1"><?php _e( 'Offline Mode', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="offline1" type="radio" <?php checked( $option[ 'offline' ], '1' ); ?> value="1" name="gantry5_plugin[offline]"/>
+                                <label for="offline1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="offline2" class="second" type="radio" <?php checked( $option['offline'], '0' ); ?> value="0" name="gantry5_plugin[offline]"/>
+                                <label for="offline2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="offline_message"><?php _e( 'Offline Message', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="offline_message" type="text" value="<?php echo $option[ 'offline_message' ]; ?>" class="regular-text" name="gantry5_plugin[offline_message]" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="coming_soon1"><?php _e( 'Coming Soon Mode', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="coming_soon1" type="radio" <?php checked( $option[ 'coming_soon' ], '1' ); ?> value="1" name="gantry5_plugin[coming_soon]"/>
+                                <label for="coming_soon1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="coming_soon2" class="second" type="radio" <?php checked( $option['coming_soon'], '0' ); ?> value="0" name="gantry5_plugin[coming_soon]"/>
+                                <label for="coming_soon2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="coming_soon_date"><?php _e( 'Coming Soon Date', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="coming_soon_date" type="text" value="<?php echo $option[ 'coming_soon_date' ]; ?>" class="regular-text" name="gantry5_plugin[coming_soon_date]" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 

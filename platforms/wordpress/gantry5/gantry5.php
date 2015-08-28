@@ -33,15 +33,23 @@ if ( !defined( 'GANTRYADMIN_PATH' ) ) {
 }
 
 // Add Gantry 5 defaults on plugin activation
+// TODO: change the admin_init to a better hook ie. only when plugin updates
 register_activation_hook( __FILE__, 'gantry5_plugin_defaults' );
+add_action( 'admin_init', 'gantry5_plugin_defaults' );
 
 function gantry5_plugin_defaults() {
     $defaults = array(
-        'production' => '1',
-        'debug' => '0',
+        'production'       => '1',
+        'debug'            => '0',
+        'offline'          => '0',
+        'offline_message'  => 'Sorry! The site is offline!',
+        'coming_soon'      => '0',
+        'coming_soon_date' => '',
     );
 
-    add_option( 'gantry5_plugin', $defaults );
+    $option = get_option( 'gantry5_plugin' );
+
+    update_option( 'gantry5_plugin', $option + $defaults );
 }
 
 // Initialize plugin language and fallback to en_US if the .mo file can't be found
