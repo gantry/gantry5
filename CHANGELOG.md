@@ -35,7 +35,7 @@
         - Missing padding in modal windows of 3rd party components (#746)
 3. [WordPress](#wordpress)
     2. [](#improved)
-        - Make timber functions to work from particles
+        - Make Timber functions to work from particles
     3. [](#bugfix)
         - Admin language will fallback to `en_US` if the locale based `.mo` couldn't be loaded (#719)
         - Extra location of the plugin translation `.mo` file changed to the default value `WP_LANG_DIR/plugins/` (#719)
