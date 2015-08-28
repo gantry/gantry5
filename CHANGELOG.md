@@ -16,7 +16,6 @@
         - Enable twig debug extension if Gantry debug has been turned on
         - Implemented validation for the Block Size of a Particle Block (#539)
         - Add HTML body class for used layout preset (#750)
-        - Assets particle: Save CSS / JS files into theme custom directory (#734)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
@@ -24,6 +23,7 @@
         - Load default configuration values from Blueprints (#117, #154)
         - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
         - It is now possible to override the 'enabled' state of a Particle (green / red toggle), when the override is disable, Base will be inherited (#615)
+        - Assets particle: Save CSS and JS files into custom/ directory of the theme instead of custom/images/ (#734)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Use cleaner formatting in templateDetails.xml for positions
