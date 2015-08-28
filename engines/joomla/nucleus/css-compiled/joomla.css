@@ -642,9 +642,6 @@ th .tooltip-inner {
   height: 100px;
 }
 
-.view-mailto, .print-mode {
-  padding: 0 1.5rem;
-}
 .view-mailto .formelm label, .print-mode .formelm label {
   display: block;
 }
