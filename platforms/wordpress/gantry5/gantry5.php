@@ -45,7 +45,7 @@ function gantry5_plugin_defaults() {
         'offline_message'  => 'Site is currently in offline mode. Please try again later.',
     );
 
-    $option = get_option( 'gantry5_plugin' );
+    $option = (array) get_option( 'gantry5_plugin' );
 
     update_option( 'gantry5_plugin', $option + $defaults );
 }
