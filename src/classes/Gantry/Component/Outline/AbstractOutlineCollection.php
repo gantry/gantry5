@@ -12,12 +12,12 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Configuration;
+namespace Gantry\Component\Outline;
 
 use Gantry\Component\Collection\Collection;
 use RocketTheme\Toolbox\DI\Container;
 
-abstract class AbstractConfigurationCollection extends Collection
+abstract class AbstractOutlineCollection extends Collection
 {
     /**
      * @var Container

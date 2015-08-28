@@ -21,6 +21,19 @@ use Gantry\Component\Filesystem\Folder;
  */
 class ConfigFileFinder
 {
+    protected $base = '';
+
+    /**
+     * @param string $base
+     * @return $this
+     */
+    public function setBase($base)
+    {
+        $this->base = $base ? "{$base}/" : '';
+
+        return $this;
+    }
+
     /**
      * Return all locations for all the files with a timestamp.
      *
@@ -115,7 +128,8 @@ class ConfigFileFinder
             } else {
                 $modified = 0;
             }
-            $list[$path] = [$name => ['file' => "{$path}/{$filename}", 'modified' => $modified]];
+            $basename = $this->base . $name;
+            $list[$path] = [$basename => ['file' => "{$path}/{$filename}", 'modified' => $modified]];
         }
 
         return $list;
@@ -141,6 +155,7 @@ class ConfigFileFinder
                 'compare' => 'Filename',
                 'pattern' => $pattern,
                 'filters' => [
+                    'pre-key' => $this->base,
                     'key' => $pattern,
                     'value' => function (\RecursiveDirectoryIterator $file) use ($path) {
                         return ['file' => "{$path}/{$file->getSubPathname()}", 'modified' => $file->getMTime()];
@@ -184,10 +199,11 @@ class ConfigFileFinder
 
                 $name = $directory->getBasename();
                 $find = ($lookup ?: $name) . '.yaml';
-                $filename = "{$path}/{$name}/$find";
+                $filename = "{$path}/{$name}/{$find}";
 
                 if (file_exists($filename)) {
-                    $list[$name] = ['file' => $filename, 'modified' => filemtime($filename)];
+                    $basename = $this->base . $name;
+                    $list[$basename] = ['file' => $filename, 'modified' => filemtime($filename)];
                 }
             }
         }
@@ -215,6 +231,7 @@ class ConfigFileFinder
                 'compare' => 'Filename',
                 'pattern' => $pattern,
                 'filters' => [
+                    'pre-key' => $this->base,
                     'key' => $pattern,
                     'value' => function (\RecursiveDirectoryIterator $file) use ($path) {
                         return ["{$path}/{$file->getSubPathname()}" => $file->getMTime()];

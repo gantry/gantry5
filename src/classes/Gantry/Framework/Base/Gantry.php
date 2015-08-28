@@ -14,7 +14,7 @@
 
 namespace Gantry\Framework\Base;
 
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
@@ -38,9 +38,20 @@ abstract class Gantry extends Container
     {
         if (!self::$instance) {
             self::$instance = static::load();
+
+            if (!defined('GANTRY5_DEBUG')) {
+                define('GANTRY5_DEBUG', self::$instance->debug());
+            }
         }
 
         return self::$instance;
+    }
+
+    public static function restart()
+    {
+        self::$instance = null;
+
+        return static::instance();
     }
 
     /**
@@ -172,7 +183,7 @@ abstract class Gantry extends Container
         $instance['configurations'] = $instance->factory(function ($c) {
             static $collection;
             if (!$collection) {
-                $collection = (new Configurations($c))->load();
+                $collection = (new Outlines($c))->load();
             }
 
             return $collection->copy();

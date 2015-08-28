@@ -82,6 +82,18 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     }
 
     /**
+     * Get nested structure containing default values defined in the blueprints.
+     *
+     * Fields without default value are ignored in the list.
+
+     * @return array
+     */
+    public function getDefaults()
+    {
+        return $this->blueprints()->getDefaults();
+    }
+
+    /**
      * Set default values by using blueprints.
      *
      * @param string  $name       Dot separated path to the requested value.

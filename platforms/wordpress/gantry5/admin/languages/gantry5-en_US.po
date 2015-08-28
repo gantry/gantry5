@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2015-08-12 19:11-0700\n"
+"PO-Revision-Date: 2015-08-28 20:18+0200\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -125,6 +125,9 @@ msgstr "Presets"
 
 msgid "GANTRY5_PLATFORM_OUTLINES"
 msgstr "Outlines"
+
+msgid "GANTRY5_PLATFORM_ADD_NEW_OUTLINE"
+msgstr "Add New Outline"
 
 msgid "GANTRY5_PLATFORM_SWITCH_PRESET_DESC"
 msgstr "Keep the current Particles while changing Preset"
@@ -386,3 +389,9 @@ msgstr "Search Font..."
 
 msgid "GANTRY5_PLATFORM_SEARCH_FONT"
 msgstr "Search Font"
+
+msgid "GANTRY5_PLATFORM_OVERRIDE_CHECKBOX"
+msgstr "Enables the override for the field '%s'"
+
+msgid "GANTRY5_PLATFORM_EDIT_TITLE"
+msgstr "Edit Title '%s'"

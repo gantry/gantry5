@@ -394,45 +394,6 @@ children:
                       enabled: 1
                     children: {  }
   -
-    id: a4a1bbf6-0e0b-10ce-4d3c-78be1c2c8622
-    type: section
-    subtype: false
-    title: Debug
-    attributes: {  }
-    children:
-      -
-        id: 69363f08-e919-02ce-2a16-727f8bcf4d37
-        type: container
-        subtype: false
-        title: Untitled
-        attributes: {  }
-        children:
-          -
-            id: 3815af86-73d1-685a-d9ad-4070bbf7322d
-            type: grid
-            subtype: false
-            title: Untitled
-            attributes: {  }
-            children:
-              -
-                id: de06062e-4f19-bf48-982f-cc1b537fe776
-                type: block
-                subtype: false
-                title: Untitled
-                attributes:
-                  size: 100
-                children:
-                  -
-                    id: 92528d31-ba92-7133-a6c4-99637eba011b
-                    type: position
-                    subtype: false
-                    title: Debug
-                    attributes:
-                      enabled: 1
-                      key: debug
-                      title: Debug
-                    children: {  }
-  -
     id: b81f55bf-64d5-7b6f-2018-ed3f22daea4f
     type: offcanvas
     subtype: false

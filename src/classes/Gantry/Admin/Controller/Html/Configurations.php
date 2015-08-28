@@ -19,7 +19,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
-use Gantry\Framework\Configurations as ConfigurationsObject;
+use Gantry\Framework\Outlines as OutlinesObject;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController
@@ -71,7 +71,7 @@ class Configurations extends HtmlController
 
     public function create()
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
         $title = $this->request->post->get('title', 'Untitled');
@@ -89,7 +89,7 @@ class Configurations extends HtmlController
 
     public function rename($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
 
@@ -110,7 +110,7 @@ class Configurations extends HtmlController
 
     public function duplicate($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
         // Handle special case on duplicating a preset.
@@ -139,7 +139,7 @@ class Configurations extends HtmlController
 
     public function delete($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
 

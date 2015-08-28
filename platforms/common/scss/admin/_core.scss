@@ -148,6 +148,8 @@ body.g-prime {
                     line-height: 1rem;
                     padding: 2px;
                     margin-right: 5px;
+                    position: relative;
+                    z-index: 5;
 
                     &:hover:before {
                         bottom: 1.65rem;

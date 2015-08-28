@@ -18,7 +18,7 @@
 
     <config>
         <fields name="params">
-            <fieldset name="basic">
+            <fieldset name="basic" label="PLG_SYSTEM_GANTRY5">
                 <field name="production"
                        type="radio"
                        class="btn-group btn-group-yesno"

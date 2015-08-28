@@ -91,6 +91,12 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
+
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+            this.restoreFocus();
+        }
     },
 
     toggle: function(e) {
@@ -101,6 +107,33 @@ var Popover = new prime({
         this[this.getTarget().hasClass('in') ? 'hide' : 'show']();
     },
 
+    focus: function(e) {
+        if (!this.getTarget().hasClass('in')) { return; }
+        var self = this,
+            target = $(e.target || e);
+
+        if (
+            this.$target[0] === target[0] || target.parent(this.$target) ||
+            this.element[0] === target[0] || target.parent(this.element)
+        ) { return; }
+
+        this.hide();
+        if (this._focusAttached) this.restoreFocus();
+    },
+
+    restoreFocus: function(element) {
+        element = $(element || this.element);
+        var tag = element.tag();
+
+        setTimeout(function(){
+            if (tag != 'a' && tag != 'input' && tag != 'button') {
+                element.find('a, button, input')[0].focus();
+            } else {
+                element[0].focus();
+            }
+        }, 0);
+    },
+
     hideAll: function(force) {
         var css = '';
         if (force) { css = 'div.' + this.options.mainClass; }
@@ -108,13 +141,18 @@ var Popover = new prime({
 
         var elements = $(css);
         if (!elements) { return this; }
-        elements.removeClass('in').style({ display: 'none' });
+        elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
+        if (!force && this._focusAttached) this.restoreFocus();
 
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+        }
         return this;
     },
 
     show: function() {
-        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass);
+        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass).attribute('tabindex', '0');
 
         if (!this.options.multi) {
             this.hideAll();
@@ -142,6 +180,15 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
+
+        setTimeout(function(){
+            target[0].focus();
+        }, 0);
+
+        if (!this._focusAttached) {
+            $('body').on('focus', this.bound('focus'), true);
+            this._focusAttached = true;
+        }
     },
 
     displayContent: function() {
@@ -211,6 +258,7 @@ var Popover = new prime({
         }
 
         this._poped = true;
+        this.element[0].focus();
         this.element.emit('shown.popover', this);
 
     },
@@ -289,6 +337,11 @@ var Popover = new prime({
 
             var target = this.getContentElement();
             target.attribute('style', null);
+
+            setTimeout(bind(function(){
+                target.parent('.' + this.options.mainClass)[0].focus();
+            }, this), 0);
+
             this.displayContent();
             this.bindBodyEvents();
 

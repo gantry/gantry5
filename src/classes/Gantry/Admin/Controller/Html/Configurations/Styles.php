@@ -21,7 +21,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\Event\Event;
@@ -163,9 +163,20 @@ class Styles extends HtmlController
             $this->undefined();
         }
 
-        $this->compileSettings();
+        $warnings = $this->compileSettings();
 
-        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        if ($warnings) {
+            $this->params += ['warnings' => $warnings];
+            return new JsonResponse(
+                [
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
+                ]
+            );
+        } else {
+            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        }
     }
 
     public function save($id = null)
@@ -201,9 +212,25 @@ class Styles extends HtmlController
 
         // Apply new styles to the current configuration and compile CSS.
         $config->join('styles', $data);
-        $this->compileSettings();
+        $warnings = $this->compileSettings();
 
-        return $id ? $this->display($id) : $this->index();
+        if (empty($this->params['ajax'])) {
+            // FIXME: HTML request: Output compiler warnings!!
+            return $id ? $this->display($id) : $this->index();
+        }
+
+        if ($warnings) {
+            $this->params += ['warnings' => $warnings];
+            return new JsonResponse(
+                [
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
+                ]
+            );
+        } else {
+            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        }
     }
 
     protected function compileSettings()
@@ -213,11 +240,20 @@ class Styles extends HtmlController
         $configuration = $this->params['configuration'];
 
         if ($configuration === 'default') {
-            $theme->updateCss();
+            $warnings = $theme->updateCss();
         } else {
             $compiler = $theme->compiler();
             $compiler->setVariables($this->container['config']->flatten('styles', '-'));
             $compiler->compileAll();
+
+            $results = $compiler->getWarnings();
+            if ($results) {
+                $warnings[$configuration] = $results;
+            } else {
+                $warnings = [];
+            }
         }
+
+        return $warnings;
     }
 }

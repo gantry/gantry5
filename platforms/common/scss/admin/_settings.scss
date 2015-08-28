@@ -33,6 +33,13 @@
         margin: $content-margin 0;
     }
 
+    h4.card-overrideable {
+        padding: 4px 8px;
+        .enabler {
+            margin-right: 2rem;
+        }
+    }
+
     .settings-param {
         @extend .clearfix;
         padding: 10px 5px;

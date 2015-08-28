@@ -51,11 +51,21 @@ var LayoutManager = new prime({
     mixin: [Bound, Options],
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
-        if (!element) { return; }
-        this.dragdrop = new DragDrop(element, options);
-        this.resizer = new Resizer(element, options);
-        this.eraser = new Eraser('[data-lm-eraseblock]', options);
+        this.setOptions(options);
+        this.refElement = element;
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
+        this.dragdrop = new DragDrop(this.refElement, this.options);
+        this.resizer = new Resizer(this.refElement, this.options);
+        this.eraser = new Eraser('[data-lm-eraseblock]', this.options);
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:location', this.bound('location'))
@@ -65,11 +75,16 @@ var LayoutManager = new prime({
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
-        this.builder = options.builder;
-        this.history = options.history;
-        this.savestate = options.savestate || null;
+        this.builder = this.options.builder;
+        this.history = this.options.history;
+        this.savestate = this.options.savestate || null;
 
         singles.disable();
+    },
+
+    refresh: function() {
+        if (!this.refElement || !$(this.refElement)) { return; }
+        this.init();
     },
 
     singles: function(mode, builder, dropLast) {
@@ -77,14 +92,14 @@ var LayoutManager = new prime({
     },
 
     updatePendingChanges: function() {
-        var saveData = this.savestate.getData(),
+        var saveData   = this.savestate.getData(),
             serialData = this.builder.serialize(null, true),
-            different = false,
+            different  = false,
 
-            equals = deepEquals(saveData, serialData),
-            save = $('[data-save="Layout"]'),
-            icon = save.find('i'),
-            indicator = save.find('.changes-indicator');
+            equals     = deepEquals(saveData, serialData),
+            save       = $('[data-save="Layout"]'),
+            icon       = save.find('i'),
+            indicator  = save.find('.changes-indicator');
 
         if (equals && indicator) { save.hideIndicator(); }
         if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
@@ -94,7 +109,7 @@ var LayoutManager = new prime({
         // Used for UI to show particles where there have been differences applied
         // After a saved state
         var saved, current, id;
-        serialData.forEach(function(block){
+        serialData.forEach(function(block) {
             id = keys(block)[0];
             saved = find(saveData, function(data) { return data[id]; });
             current = find(serialData, function(data) { return data[id]; });
@@ -114,7 +129,7 @@ var LayoutManager = new prime({
 
         root.addClass('moving');
 
-        var type = $(element).data('lm-blocktype'),
+        var type  = $(element).data('lm-blocktype'),
             clone = element[0].cloneNode(true);
 
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
@@ -131,10 +146,10 @@ var LayoutManager = new prime({
         this.originalType = type;
 
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
-            builder: this.builder,
-            subtype: element.data('lm-subtype'),
-            title: element.text()
-        });
+                builder: this.builder,
+                subtype: element.data('lm-subtype'),
+                title: element.text()
+            });
 
         if (!this.block.isNew()) {
             element.style({
@@ -180,11 +195,11 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
-            dataType = target.data('lm-blocktype'),
+            dataType     = target.data('lm-blocktype'),
             originalType = this.block.getType();
 
         if (!dataType && target.data('lm-root')) { dataType = 'root'; }
@@ -192,7 +207,7 @@ var LayoutManager = new prime({
         if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') === 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
-        var exclude = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
+        var exclude   = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
             adjacents = {
                 before: this.original.previousSiblings(exclude),
                 after: this.original.nextSiblings(exclude)
@@ -209,7 +224,7 @@ var LayoutManager = new prime({
         }
 
         var nonVisible = target.parent('[data-lm-blocktype="atoms"]'),
-            child = this.block.block.find('[data-lm-id]');
+            child      = this.block.block.find('[data-lm-id]');
 
         if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {
             if (!nonVisible) { return; }
@@ -257,7 +272,7 @@ var LayoutManager = new prime({
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
 
         if (originalType === 'grid' && dataType === 'grid') {
-            var next = this.placeholder.nextSibling(),
+            var next     = this.placeholder.nextSibling(),
                 previous = this.placeholder.previousSibling();
 
             this.placeholder.addClass('in-between-grids');
@@ -267,7 +282,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
@@ -308,8 +323,8 @@ var LayoutManager = new prime({
         var siblings = this.block.block.siblings(':not(.original-placeholder)');
 
         if (siblings && this.block.getType() == 'block') {
-            var size = this.block.getSize(),
-                diff = size / siblings.length,
+            var size                  = this.block.getSize(),
+                diff                  = size / siblings.length,
                 newSize, block, total = 0, last;
             siblings.forEach(function(sibling, index) {
                 sibling = $(sibling);
@@ -387,15 +402,15 @@ var LayoutManager = new prime({
 
         var wrapper, insider,
             multiLocationResize = false,
-            blockWasNew = this.block.isNew(),
-            type = this.block.getType(),
-            targetId = target.data('lm-id'),
-            targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
-            placeholderParent = this.placeholder.parent();
+            blockWasNew         = this.block.isNew(),
+            type                = this.block.getType(),
+            targetId            = target.data('lm-id'),
+            targetType          = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
+            placeholderParent   = this.placeholder.parent();
 
         if (!placeholderParent) { return; }
 
-        var parentId = placeholderParent.data('lm-id'),
+        var parentId   = placeholderParent.data('lm-id'),
             parentType = get(this.builder.map, parentId || '') ? get(this.builder.map, parentId).getType() : false,
             resizeCase = false;
 
@@ -430,7 +445,7 @@ var LayoutManager = new prime({
         // case 2: moving a block around, need to fix sizes if it's a multi location resize
         if (this.originalType === 'block' && this.block.getType() === 'block') {
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent('[data-lm-blocktype="grid"]'),
+            var previous            = this.block.block.parent('[data-lm-blocktype="grid"]'),
                 placeholderPrevious = this.placeholder.parent('[data-lm-blocktype="grid"]');
             //if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
@@ -515,7 +530,7 @@ var LayoutManager = new prime({
         if (this.originalType === 'grid') {
             var blocks, block;
             if (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])')) {
-                blocks.forEach(function(element){
+                blocks.forEach(function(element) {
                     element = $(element);
                     block = get(this.builder.map, element.data('lm-id'));
                     element.attribute('style', null);

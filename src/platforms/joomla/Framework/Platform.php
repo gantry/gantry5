@@ -70,6 +70,12 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
+    public function filter($text)
+    {
+        \JPluginHelper::importPlugin('content');
+        return \JHtml::_('content.prepare', $text, '', 'mod_custom.content');
+    }
+
     public function finalize()
     {
         Document::registerAssets();
@@ -246,9 +252,8 @@ class Platform extends BasePlatform
 
     public function updates()
     {
-        if (defined('GANTRY5_VERSION') && (GANTRY5_VERSION == '@version@' || substr(GANTRY5_VERSION, 0, 4) == 'dev-')) { return []; }
-
         $styles = ThemeList::getThemes();
+
         $extension_ids = array_unique(array_map(
             function($item) {
                 return (int) $item->extension_id;
@@ -270,9 +275,19 @@ class Platform extends BasePlatform
 
         $list = [];
         foreach ($updates as $update) {
-            // Rename Gantry 5 package.
             if ($update->element == 'pkg_gantry5') {
+                // Rename Gantry 5 package.
                 $update->name = 'Gantry';
+                // Ignore git and CI installs.
+                if (version_compare(GANTRY5_VERSION, 0) < 0) {
+                    continue;
+                }
+            } else {
+                // Check if templates need to be updated.
+                $version = isset($styles[$update->element]) ? $styles[$update->element]->get('details.version') : null;
+                if (version_compare($version, 0) < 0 || version_compare($update->version, $version) <= 0) {
+                    continue;
+                }
             }
             $list[] = $update->name . ' ' . $update->version;
         }

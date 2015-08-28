@@ -130,7 +130,8 @@ var Toaster = new prime({
         var container = this.getContainer(options, true),
             element = zen('div'), title = zen('div'), message = zen('div'),
             icon = zen('i.fa'),
-            progress = zen('div.g-notifications-progress'), close = zen('a.fa.fa-close[href="#"]');
+            progress = zen('div.g-notifications-progress'),
+            close = zen('a.fa.fa-close[href="#"]');
 
         this.map.set(element, {
             container: container,
@@ -296,7 +297,7 @@ var Toaster = new prime({
     createContainer: function(options) {
         options = this.mergeOptions(options);
 
-        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target);
+        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target).attribute('aria-live', 'polite').attribute('role', 'alert');
     },
 
     remove: function(element) {

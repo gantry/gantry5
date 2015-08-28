@@ -1,3 +1,53 @@
+# 5.1.1
+## 28/08/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Layout Manager: Add block settings for nested sections (#539)
+        - Layout Manager: Add support for fixed width sections (#115)
+        - Custom JS/CSS Particle supports now inline CSS
+        - Process shortcodes in custom HTML particle (#369)
+        - New Twig extension and filter : json_decode
+    2. [](#improved)
+        - Dramatically improved the click/touch response in the whole Admin and G5 Particle Module (fixes #551)
+        - WAI-ARIA: Thanks to @Mediaversal, a lot of Admin work has been done for accessibility (#754 - ref. #713)
+        - Catch and display warnings from SCSS compiler (#705)
+        - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
+        - Enable twig debug extension if Gantry debug has been turned on
+        - Implemented validation for the Block Size of a Particle Block (#539)
+        - Add HTML body class for used layout preset (#750)
+    3. [](#bugfix)
+        - ToTop Particle allows HTML again in the content field (#720, #721)
+        - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
+        - Avoid race conditions when compiling CSS by compiling each file only once (#516)
+        - Load default configuration values from Blueprints (#117, #154)
+        - Outline Styles: Overriding only some colors in a card may result unexpected values in the others (#536)
+        - It is now possible to override the 'enabled' state of a Particle (green / red toggle), when the override is disable, Base will be inherited (#615)
+        - Assets particle: Save CSS and JS files into custom/ directory of the theme instead of custom/images/ (#734)
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - Use cleaner formatting in templateDetails.xml for positions
+        - Make Debug module position fixed to the bottom of every layout (#715)
+    3. [](#bugfix)
+        - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
+        - Gantry update message is showing up even when there is no update (#631)
+        - Module positions not showing up after installing/updating theme (#212)
+        - Missing padding in modal windows of 3rd party components (#746)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Add Platform Settings into Extras menu
+        - Add support for Offline mode (#759)
+    2. [](#improved)
+        - Make Timber functions to work from particles
+    3. [](#bugfix)
+        - Admin language will fallback to `en_US` if the locale based `.mo` couldn't be loaded (#719)
+        - Extra location of the plugin translation `.mo` file changed to the default value `WP_LANG_DIR/plugins/` (#719)
+        - Fix fatal error in PHP 5.2: while unsupported, it should still fail gracefully
+        - Uninstall is leaving behind cache files and options (#659)
+        - Move blueprints for content into its proper location
+        - Fixed the styling for the Gantry 5 settings page
+        - Fatal error when editing menu item name in the editor (#752)
+
 # 5.1.0
 ## 16/08/2015
 
@@ -47,9 +97,9 @@
         - Fixed Joomla frontend article editor and popup styling issues (#681)
         - Added missing size class rules for Joomla frontend editing views
         - Fixed Joomla frontend image manager alignment issues
-3. [Wordpress](#wordpress)
+3. [WordPress](#wordpress)
     1. [](#new)
-        * Wordpress is now integrated with Gantry 5!
+        * WordPress is now integrated with Gantry 5!
 
 # 5.0.1
 ## 07/16/2015

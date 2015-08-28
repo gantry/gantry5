@@ -13,10 +13,12 @@ use Pimple\Container;
  * @license MIT
  */
 
-class Platform extends BasePlatform {
+class Platform extends BasePlatform
+{
     protected $name = 'wordpress';
 
-    public function __construct(Container $container) {
+    public function __construct(Container $container)
+    {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
@@ -27,15 +29,18 @@ class Platform extends BasePlatform {
         $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
     }
 
-    public function getCachePath() {
+    public function getCachePath()
+    {
         return WP_CONTENT_DIR . '/cache/gantry5';
     }
 
-    public function getThemesPaths() {
+    public function getThemesPaths()
+    {
         return ['' => Folder::getRelativePath(get_theme_root())];
     }
 
-    public function getMediaPaths() {
+    public function getMediaPaths()
+    {
         return ['' => [
             'gantry-theme://images',
             $this->content_dir . '/uploads',
@@ -44,7 +49,8 @@ class Platform extends BasePlatform {
         ];
     }
 
-    public function getEnginesPaths() {
+    public function getEnginesPaths()
+    {
         if (is_link(GANTRY5_PATH . '/engines')) {
             // Development environment.
             return ['' => [$this->gantry_dir . "/engines/{$this->name}", $this->gantry_dir . '/engines/common']];
@@ -53,7 +59,8 @@ class Platform extends BasePlatform {
         return ['' => [$this->gantry_dir . '/engines']];
     }
 
-    public function getAssetsPaths() {
+    public function getAssetsPaths()
+    {
         if (is_link(GANTRY5_PATH . '/assets')) {
             // Development environment.
             return ['' => ['gantry-theme://', $this->gantry_dir . "/assets/{$this->name}", $this->gantry_dir . '/assets/common']];
@@ -62,11 +69,18 @@ class Platform extends BasePlatform {
         return ['' => ['gantry-theme://', $this->gantry_dir . '/assets']];
     }
 
-    public function finalize() {
+    public function filter($text)
+    {
+        return \do_shortcode($text);
+    }
+
+    public function finalize()
+    {
         Document::registerAssets();
     }
 
-    public function errorHandlerPaths() {
+    public function errorHandlerPaths()
+    {
         // Catch errors in Gantry cache, plugin and theme only.
         $paths = ['#[\\\/]wp-content[\\\/](cache|plugins)[\\\/]gantry5[\\\/]#', '#[\\\/]wp-content[\\\/]themes[\\\/]#'];
 
@@ -78,8 +92,14 @@ class Platform extends BasePlatform {
         return $paths;
     }
 
+    public function settings()
+    {
+        return admin_url('plugins.php?page=g5-settings');
+    }
+
     // getCategories logic for the categories selectize field
-    public function getCategories( $args = [] ) {
+    public function getCategories( $args = [] )
+    {
         $default = [
             'type'                     => 'post',
             'orderby'                  => 'name',

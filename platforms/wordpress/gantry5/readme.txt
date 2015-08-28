@@ -12,7 +12,7 @@ Gantry is a comprehensive set of building blocks to enable the rapid development
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform theme.
 
-* Please visit http://gantry.org to download a FREE WordPress Gantry default theme which can be used as a base for your own themes!
+* Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
 
 Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss.
 
@@ -24,9 +24,7 @@ Gantry 5 uses the **Nucleus** grid system, built from scratch using Flexbox and 
 
 ==== Cross-platform Support ====
 
-The new responsive Gantry 5 framework is available for **Joomla 3.4+**, **WordPress 4.2++**, **phpBB 3.1+**, **Grav 1.0+**, and **Magento CE 1.9.1+**.
-
->>> Gantry 5's initial beta launch will only be compatible with Joomla 3.4+. Additional platforms will be added as development continues.
+The new responsive Gantry 5 framework is available for **WordPress 4.2+**, **Joomla 3.4+**, **phpBB 3.1+**, **Grav 1.0+**, and **Magento CE 1.9.1+**.
 
 ==== Intuitive YAML-driven Configuration ====
 
@@ -34,7 +32,7 @@ The new responsive Gantry 5 framework is available for **Joomla 3.4+**, **WordPr
 
 ==== Twig Templating ====
 
-Gantry 5 utilizes [Twig](http://twig.sensiolabs.org/) to make creating powerful, dynamic themes quick and easy.
+Gantry 5 utilizes [Twig](http://twig.sensiolabs.org/) and [Timber](http://upstatement.com/timber/) to make creating powerful, dynamic themes quick and easy.
 
 ==== New Administrative Interface ====
 
@@ -67,7 +65,6 @@ Theme overrides are now part of Gantry 5's Outline system, enabling you to easil
 ==== Use SCSS, LESS or CSS ====
 
 Gantry 5 has built-in support for SCSS and pure CSS, with the ability to support LESS.
-
 
 > For video tutorials and documentation please visit official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
@@ -103,11 +100,11 @@ We try to ensure that any Gantry theme and the Gantry Plugin specifically will w
 
 = Where are the options of the plugin ? =
 
-The plugin itself doesn't have any options as everything is theme powered. Gantry Framework plugin is working in the background providing the functionality to the Gantry powered themes allowing them to control everything per-theme basis . You can download a basic Gantry theme from the official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
+Gantry 5 plugin is a framework working in the background providing the functionality to the Gantry powered themes, allowing them to control everything per-theme basis. You can download a basic Gantry theme from the official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
 = How can I test it ? =
 
-Once you downloaded and installed Gantry Framework plugin, please download also a default theme (that is intended to be used as a basis for building your own themes) from [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
+Once you downloaded and installed Gantry 5 plugin, please download also a default theme (that is intended to be used as a basis for building your own themes) from [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
 == Changelog ==
 

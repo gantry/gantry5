@@ -26,13 +26,24 @@ var MenuManager = new prime({
 
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
+        this.setOptions(options);
+        this.refElement = element;
         this.map = {};
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(element, options, this);
-        this.resizer = new Resizer(element, options, this);
-        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
+        this.dragdrop = new DragDrop(this.refElement, this.options, this);
+        this.resizer = new Resizer(this.refElement, this.options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -43,8 +54,11 @@ var MenuManager = new prime({
             .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
+    },
 
-        //console.log(this.ordering, this.items);
+    refresh: function() {
+        if (!this.refElement || !$(this.refElement)) { return; }
+        this.init();
     },
 
     setRoot: function() {
@@ -153,7 +167,7 @@ var MenuManager = new prime({
         }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5})?$/i))) {
+        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5,})?$/i))) {
             this.eraser.show();
         }
 

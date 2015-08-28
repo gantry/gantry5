@@ -18,6 +18,7 @@
         </files>
     </fileset>
     <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.files_gantry5_nucleus.ini</language>
         <language tag="en-GB">en-GB/en-GB.files_gantry5_nucleus.sys.ini</language>
     </languages>
 </extension>

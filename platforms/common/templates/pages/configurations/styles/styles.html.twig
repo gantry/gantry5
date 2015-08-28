@@ -7,7 +7,7 @@
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <form method="post" action="{{ gantry.route('configurations', configuration, 'styles') }}">
         <span class="float-right">
-            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
+            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
             <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
         </span>
 
@@ -60,7 +60,7 @@
         <div class="g-filter-actions">
             <div class="g-panel-filters" data-g-global-filter="">
                 <div class="search settings-block">
-                    <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}...">
+                    <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
                     <i class="fa fa-fw fa-search"></i>
                 </div>
                 <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
@@ -88,7 +88,7 @@
 
         <div class="g-footer-actions">
             <span class="float-right">
-                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
+                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" role="button" title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
                 <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
             </span>
         </div>

@@ -255,7 +255,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../utils/async-foreach":54,"../utils/elements.utils":56,"elements/domready":96,"mout/array/forEach":139,"mout/object/merge":199,"mout/string/trim":230,"prime/map":261}],3:[function(require,module,exports){
+},{"../utils/async-foreach":54,"../utils/elements.utils":56,"elements/domready":96,"mout/array/forEach":139,"mout/object/merge":199,"mout/string/trim":233,"prime/map":264}],3:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -331,7 +331,7 @@ ready(function() {
     });
 });
 
-},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"elements":98,"elements/domready":96,"elements/zen":101,"mout/string/interpolate":222,"mout/string/trim":230}],4:[function(require,module,exports){
+},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"elements":98,"elements/domready":96,"elements/zen":101,"mout/string/interpolate":222,"mout/string/trim":233}],4:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -349,6 +349,14 @@ ready(function() {
     var body = $('body');
 
     var selectized, select, editable, href;
+    body.delegate('keydown', '.config-select-wrap [data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '.config-select-wrap [data-title-edit]', function(event, element) {
         selectized = element.siblings('.selectize-control');
         select = element.siblings('select');
@@ -407,7 +415,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"mout/string/trim":230}],5:[function(require,module,exports){
+},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"mout/string/trim":233}],5:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -575,7 +583,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":46,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"./dropdown-edit":4,"agent":67,"elements":98,"elements/domready":96,"mout/object/keys":198,"mout/string/trim":230}],6:[function(require,module,exports){
+},{"../ui":46,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"./dropdown-edit":4,"agent":67,"elements":98,"elements/domready":96,"mout/object/keys":198,"mout/string/trim":233}],6:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -759,7 +767,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"prime/map":261}],7:[function(require,module,exports){
+},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"prime/map":264}],7:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -812,7 +820,7 @@ var Atom = new prime({
 
 module.exports = Atom;
 
-},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"elements/zen":101,"prime":260}],8:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"elements/zen":101,"prime":263}],8:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Section = require('./section');
@@ -844,7 +852,7 @@ var Atoms = new prime({
 
 module.exports = Atoms;
 
-},{"./section":18,"prime":260}],9:[function(require,module,exports){
+},{"./section":18,"prime":263}],9:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
@@ -991,12 +999,16 @@ var Base = new prime({
     setLayout: function(layout) {
         this.block = layout;
         return this;
+    },
+
+    getLimits: function() {
+        return false;
     }
 });
 
 module.exports = Base;
 
-},{"elements":98,"elements/traversal":100,"elements/zen":101,"mout/object/get":195,"mout/object/has":196,"mout/object/set":203,"mout/random/guid":213,"mout/string/trim":230,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],10:[function(require,module,exports){
+},{"elements":98,"elements/traversal":100,"elements/zen":101,"mout/object/get":195,"mout/object/has":196,"mout/object/set":203,"mout/random/guid":213,"mout/string/trim":233,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],10:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1108,7 +1120,7 @@ var Block = new prime({
 
 module.exports = Block;
 
-},{"../../utils/elements.utils":56,"./base":9,"elements/zen":101,"mout/function/bind":155,"mout/number/enforcePrecision":186,"prime":260}],11:[function(require,module,exports){
+},{"../../utils/elements.utils":56,"./base":9,"elements/zen":101,"mout/function/bind":155,"mout/number/enforcePrecision":186,"prime":263}],11:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base = require('./base'),
@@ -1165,7 +1177,7 @@ var Container = new prime({
 
 module.exports = Container;
 
-},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"elements/zen":101,"prime":260}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"elements/zen":101,"prime":263}],12:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
@@ -1214,7 +1226,7 @@ var Grid = new prime({
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"prime":260}],13:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./base":9,"elements":98,"prime":263}],13:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -1259,7 +1271,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":61,"./section":18,"prime":260}],15:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./section":18,"prime":263}],15:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1275,7 +1287,7 @@ var Pagecontent = new prime({
 
 module.exports = Pagecontent;
 
-},{"./particle":16,"prime":260}],16:[function(require,module,exports){
+},{"./particle":16,"prime":263}],16:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1321,14 +1333,36 @@ var Particle = new prime({
         parent.on('resized', this.bound('onParentResize'));
     },
 
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
     onParentResize: function(resize) {
         this.setLabelSize(resize);
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
+            sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 
 module.exports = Particle;
 
-},{"../../utils/get-ajax-url":61,"./atom":7,"elements":98,"mout/function/bind":155,"mout/number/enforcePrecision":186,"prime":260}],17:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./atom":7,"elements":98,"mout/function/bind":155,"mout/number/enforcePrecision":186,"prime":263}],17:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     trim     = require('mout/string/trim'),
@@ -1368,7 +1402,7 @@ var Position = new prime({
 
 module.exports = Position;
 
-},{"./particle":16,"mout/string/trim":230,"prime":260}],18:[function(require,module,exports){
+},{"./particle":16,"mout/string/trim":233,"prime":263}],18:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
@@ -1437,12 +1471,34 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+    },
+
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
+            sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":61,"./base":9,"./grid":12,"elements":98,"elements/insertion":99,"elements/zen":101,"mout/function/bind":155,"prime":260,"prime-util/prime/bound":256}],19:[function(require,module,exports){
+},{"../../utils/get-ajax-url":61,"./base":9,"./grid":12,"elements":98,"elements/insertion":99,"elements/zen":101,"mout/function/bind":155,"prime":263,"prime-util/prime/bound":259}],19:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1460,7 +1516,7 @@ var Spacer = new prime({
 
 module.exports = Spacer;
 
-},{"./particle":16,"prime":260}],20:[function(require,module,exports){
+},{"./particle":16,"prime":263}],20:[function(require,module,exports){
 "use strict";
 var prime       = require('prime'),
     Pagecontent = require('./pagecontent');
@@ -1475,7 +1531,7 @@ var SystemMessages = new prime({
 
 module.exports = SystemMessages;
 
-},{"./pagecontent":15,"prime":260}],21:[function(require,module,exports){
+},{"./pagecontent":15,"prime":263}],21:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     $       = require('elements'),
@@ -1712,7 +1768,7 @@ var Builder = new prime({
 
 module.exports = Builder;
 
-},{"./blocks/":13,"elements":98,"elements/attributes":93,"elements/traversal":100,"mout/array/flatten":138,"mout/collection/forEach":152,"mout/collection/size":154,"mout/lang/isArray":167,"mout/object/deepFillIn":188,"mout/object/forOwn":194,"mout/object/get":195,"mout/object/omit":202,"mout/object/set":203,"mout/object/unset":206,"mout/random/guid":213,"mout/string/repeat":226,"mout/string/rpad":228,"prime":260,"prime/emitter":259}],22:[function(require,module,exports){
+},{"./blocks/":13,"elements":98,"elements/attributes":93,"elements/traversal":100,"mout/array/flatten":138,"mout/collection/forEach":152,"mout/collection/size":154,"mout/lang/isArray":167,"mout/object/deepFillIn":188,"mout/object/forOwn":194,"mout/object/get":195,"mout/object/omit":202,"mout/object/set":203,"mout/object/unset":206,"mout/random/guid":213,"mout/string/repeat":227,"mout/string/rpad":230,"prime":263,"prime/emitter":262}],22:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -1921,7 +1977,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":44,"../utils/elements.utils":56,"elements/delegation":95,"elements/events":97,"mout/function/bind":155,"mout/lang/isString":175,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],23:[function(require,module,exports){
+},{"../ui/drag.events":44,"../utils/elements.utils":56,"elements/delegation":95,"elements/events":97,"mout/function/bind":155,"mout/lang/isString":175,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],23:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
@@ -2014,7 +2070,7 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":147,"mout/lang/deepEquals":165,"mout/object/merge":199,"prime":260,"prime/emitter":259}],24:[function(require,module,exports){
+},{"mout/array/slice":147,"mout/lang/deepEquals":165,"mout/object/merge":199,"prime":263,"prime/emitter":262}],24:[function(require,module,exports){
 "use strict";
 var ready          = require('elements/domready'),
     $              = require('elements/attributes'),
@@ -2121,7 +2177,7 @@ ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
     // Layout Manager
-    layoutmanager = new LayoutManager('body', {
+    layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
@@ -2150,6 +2206,14 @@ ready(function() {
         event.preventDefault();
         return false;
     });
+    body.delegate('keydown', '.g-tabs a', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            body.emit('mouseup', event);
+            return false;
+        }
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -2167,6 +2231,13 @@ ready(function() {
         parent.find('.active').removeClass('active');
         panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
         parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -2182,6 +2253,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
+        layoutmanager.refresh();
         layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 
@@ -2289,6 +2361,14 @@ ready(function() {
     });
 
     // Switch Layout
+    body.delegate('keydown', '[data-switch]', function(event, element){
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -2421,9 +2501,11 @@ ready(function() {
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
             data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.block.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
+            if (!size(data.options)) { delete data.options; }
         }
 
         modal.open({
@@ -2443,6 +2525,35 @@ ready(function() {
 
                 var urlTemplate = content.elements.content.find('.g-urltemplate');
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                var blockSize = content.elements.content.find('[name="block[size]"]');
+
+                // logic for limits
+                if (blockSize && data.block.size_limits) {
+                    var note = content.elements.content.find('.blocksize-note'),
+                        min = data.block.size_limits[0],
+                        max = data.block.size_limits[1];
+
+                    blockSize.attribute('min', min);
+                    blockSize.attribute('max', max);
+
+                    if (note) {
+                        var noteHTML = note.html();
+                        noteHTML = noteHTML.replace(/#min#/g, min);
+                        noteHTML = noteHTML.replace(/#max#/g, max);
+
+                        note.html(noteHTML);
+                        note.find('.blocksize-' + (min == max ? 'range' : 'fixed')).addClass('hidden');
+                    }
+
+                    var isValid = function() {
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                    };
+
+                    blockSize.on('input', function(){
+                        blockSize[0].setCustomValidity(isValid());
+                    });
+                }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {
@@ -2563,7 +2674,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":46,"../ui/popover":48,"../utils/field-validation":58,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"../utils/history":64,"../utils/save-state":66,"./builder":21,"./history":23,"./layoutmanager":25,"./particles-sidebar":26,"agent":67,"elements/attributes":93,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/collection/forEach":152,"mout/collection/size":154,"mout/string/properCase":225,"mout/string/replace":227,"mout/string/trim":230}],25:[function(require,module,exports){
+},{"../ui":46,"../ui/popover":48,"../utils/field-validation":58,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"../utils/history":64,"../utils/save-state":66,"./builder":21,"./history":23,"./layoutmanager":25,"./particles-sidebar":26,"agent":67,"elements/attributes":93,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/collection/forEach":152,"mout/collection/size":154,"mout/string/properCase":225,"mout/string/replace":228,"mout/string/trim":233}],25:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -2617,11 +2728,21 @@ var LayoutManager = new prime({
     mixin: [Bound, Options],
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
-        if (!element) { return; }
-        this.dragdrop = new DragDrop(element, options);
-        this.resizer = new Resizer(element, options);
-        this.eraser = new Eraser('[data-lm-eraseblock]', options);
+        this.setOptions(options);
+        this.refElement = element;
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
+        this.dragdrop = new DragDrop(this.refElement, this.options);
+        this.resizer = new Resizer(this.refElement, this.options);
+        this.eraser = new Eraser('[data-lm-eraseblock]', this.options);
         this.dragdrop
             .on('dragdrop:start', this.bound('start'))
             .on('dragdrop:location', this.bound('location'))
@@ -2631,11 +2752,16 @@ var LayoutManager = new prime({
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
 
-        this.builder = options.builder;
-        this.history = options.history;
-        this.savestate = options.savestate || null;
+        this.builder = this.options.builder;
+        this.history = this.options.history;
+        this.savestate = this.options.savestate || null;
 
         singles.disable();
+    },
+
+    refresh: function() {
+        if (!this.refElement || !$(this.refElement)) { return; }
+        this.init();
     },
 
     singles: function(mode, builder, dropLast) {
@@ -2643,14 +2769,14 @@ var LayoutManager = new prime({
     },
 
     updatePendingChanges: function() {
-        var saveData = this.savestate.getData(),
+        var saveData   = this.savestate.getData(),
             serialData = this.builder.serialize(null, true),
-            different = false,
+            different  = false,
 
-            equals = deepEquals(saveData, serialData),
-            save = $('[data-save="Layout"]'),
-            icon = save.find('i'),
-            indicator = save.find('.changes-indicator');
+            equals     = deepEquals(saveData, serialData),
+            save       = $('[data-save="Layout"]'),
+            icon       = save.find('i'),
+            indicator  = save.find('.changes-indicator');
 
         if (equals && indicator) { save.hideIndicator(); }
         if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
@@ -2660,7 +2786,7 @@ var LayoutManager = new prime({
         // Used for UI to show particles where there have been differences applied
         // After a saved state
         var saved, current, id;
-        serialData.forEach(function(block){
+        serialData.forEach(function(block) {
             id = keys(block)[0];
             saved = find(saveData, function(data) { return data[id]; });
             current = find(serialData, function(data) { return data[id]; });
@@ -2680,7 +2806,7 @@ var LayoutManager = new prime({
 
         root.addClass('moving');
 
-        var type = $(element).data('lm-blocktype'),
+        var type  = $(element).data('lm-blocktype'),
             clone = element[0].cloneNode(true);
 
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
@@ -2697,10 +2823,10 @@ var LayoutManager = new prime({
         this.originalType = type;
 
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
-            builder: this.builder,
-            subtype: element.data('lm-subtype'),
-            title: element.text()
-        });
+                builder: this.builder,
+                subtype: element.data('lm-subtype'),
+                title: element.text()
+            });
 
         if (!this.block.isNew()) {
             element.style({
@@ -2746,11 +2872,11 @@ var LayoutManager = new prime({
 
     location: function(event, location, target/*, element*/) {
         target = $(target);
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]').style({ display: 'none' }); }
 
         var position,
-            dataType = target.data('lm-blocktype'),
+            dataType     = target.data('lm-blocktype'),
             originalType = this.block.getType();
 
         if (!dataType && target.data('lm-root')) { dataType = 'root'; }
@@ -2758,7 +2884,7 @@ var LayoutManager = new prime({
         if (dataType === 'grid' && (target.parent().data('lm-root') || (target.parent().data('lm-blocktype') === 'container' && target.parent().parent().data('lm-root')))) { return; }
 
         // Check for adjacents and avoid inserting any placeholder since it would be the same position
-        var exclude = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
+        var exclude   = ':not(.placeholder):not([data-lm-id="' + this.original.data('lm-id') + '"])',
             adjacents = {
                 before: this.original.previousSiblings(exclude),
                 after: this.original.nextSiblings(exclude)
@@ -2775,7 +2901,7 @@ var LayoutManager = new prime({
         }
 
         var nonVisible = target.parent('[data-lm-blocktype="atoms"]'),
-            child = this.block.block.find('[data-lm-id]');
+            child      = this.block.block.find('[data-lm-id]');
 
         if ((child ? child.data('lm-blocktype') : originalType) == 'atom') {
             if (!nonVisible) { return; }
@@ -2823,7 +2949,7 @@ var LayoutManager = new prime({
         this.placeholder.style({ display: 'block' })[dataType !== 'block' ? 'removeClass' : 'addClass']('in-between');
 
         if (originalType === 'grid' && dataType === 'grid') {
-            var next = this.placeholder.nextSibling(),
+            var next     = this.placeholder.nextSibling(),
                 previous = this.placeholder.previousSibling();
 
             this.placeholder.addClass('in-between-grids');
@@ -2833,7 +2959,7 @@ var LayoutManager = new prime({
     },
 
     nolocation: function(event) {
-        (!this.block.isNew() ? this.original : this.element).style({transform: 'translate(0, 0)'});
+        (!this.block.isNew() ? this.original : this.element).style({ transform: 'translate(0, 0)' });
         if (this.placeholder) { this.placeholder.remove(); }
         if (!this.block) { return; }
 
@@ -2874,8 +3000,8 @@ var LayoutManager = new prime({
         var siblings = this.block.block.siblings(':not(.original-placeholder)');
 
         if (siblings && this.block.getType() == 'block') {
-            var size = this.block.getSize(),
-                diff = size / siblings.length,
+            var size                  = this.block.getSize(),
+                diff                  = size / siblings.length,
                 newSize, block, total = 0, last;
             siblings.forEach(function(sibling, index) {
                 sibling = $(sibling);
@@ -2953,15 +3079,15 @@ var LayoutManager = new prime({
 
         var wrapper, insider,
             multiLocationResize = false,
-            blockWasNew = this.block.isNew(),
-            type = this.block.getType(),
-            targetId = target.data('lm-id'),
-            targetType = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
-            placeholderParent = this.placeholder.parent();
+            blockWasNew         = this.block.isNew(),
+            type                = this.block.getType(),
+            targetId            = target.data('lm-id'),
+            targetType          = !targetId ? false : get(this.builder.map, targetId) ? get(this.builder.map, targetId).getType() : target.data('lm-blocktype'),
+            placeholderParent   = this.placeholder.parent();
 
         if (!placeholderParent) { return; }
 
-        var parentId = placeholderParent.data('lm-id'),
+        var parentId   = placeholderParent.data('lm-id'),
             parentType = get(this.builder.map, parentId || '') ? get(this.builder.map, parentId).getType() : false,
             resizeCase = false;
 
@@ -2996,7 +3122,7 @@ var LayoutManager = new prime({
         // case 2: moving a block around, need to fix sizes if it's a multi location resize
         if (this.originalType === 'block' && this.block.getType() === 'block') {
             resizeCase = { case: 3 };
-            var previous = this.block.block.parent('[data-lm-blocktype="grid"]'),
+            var previous            = this.block.block.parent('[data-lm-blocktype="grid"]'),
                 placeholderPrevious = this.placeholder.parent('[data-lm-blocktype="grid"]');
             //if (previous.find('!> [data-lm-blocktype="container"]')) { previous = previous.parent(); }
             //if (placeholderPrevious.find('!> [data-lm-blocktype="container"]')) { placeholderPrevious = placeholderPrevious.parent(); }
@@ -3081,7 +3207,7 @@ var LayoutManager = new prime({
         if (this.originalType === 'grid') {
             var blocks, block;
             if (blocks = root.search('[data-lm-dropzone]:not([data-lm-blocktype="grid"])')) {
-                blocks.forEach(function(element){
+                blocks.forEach(function(element) {
                     element = $(element);
                     block = get(this.builder.map, element.data('lm-id'));
                     element.attribute('style', null);
@@ -3094,7 +3220,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":43,"../ui/eraser":45,"../utils/elements.utils":56,"../utils/flags-state":59,"./blocks":13,"./drag.resizer":22,"elements/zen":101,"mout/array/every":134,"mout/collection/find":151,"mout/function/bind":155,"mout/lang/deepEquals":165,"mout/lang/isArray":167,"mout/lang/isObject":172,"mout/number/enforcePrecision":186,"mout/object/get":195,"mout/object/keys":198,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],26:[function(require,module,exports){
+},{"../ui/drag.drop":43,"../ui/eraser":45,"../utils/elements.utils":56,"../utils/flags-state":59,"./blocks":13,"./drag.resizer":22,"elements/zen":101,"mout/array/every":134,"mout/collection/find":151,"mout/function/bind":155,"mout/lang/deepEquals":165,"mout/lang/isArray":167,"mout/lang/isObject":172,"mout/number/enforcePrecision":186,"mout/object/get":195,"mout/object/keys":198,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],26:[function(require,module,exports){
 "use strict";
 
 var ready          = require('elements/domready'),
@@ -3305,6 +3431,14 @@ ready(function() {
                     content: zen('ul').html(content.html())[0].outerHTML,
                     allowElementsClick: '.toggle'
                 });
+            element.on('shown.popover', function(popover){
+                element.attribute('aria-expanded', true).attribute('aria-hidden', false);
+                element.find('.enabler')[0].focus();
+            });
+
+            element.on('hide.popover', function(popover){
+                element.attribute('aria-expanded', false).attribute('aria-hidden', true);
+            });
 
             element.getPopover().show();
         }
@@ -3373,7 +3507,7 @@ ready(function() {
                         input = $(input);
                         var name     = input.attribute('name'),
                             value    = input.value(),
-                            parent   = input.parent('.settings-param'),
+                            parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
@@ -3381,8 +3515,6 @@ ready(function() {
                         data[name] = value;
                     });
                 }
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
         if (invalid.length) {
@@ -3405,7 +3537,12 @@ ready(function() {
                 });
             } else {
                 modal.close();
-                toastr.success(interpolate(sentence, {
+
+                if ($('#styles')) {
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                }
+
+                toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
@@ -3426,6 +3563,14 @@ ready(function() {
     });
 
     // Editable titles
+    body.delegate('keydown', '[data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            body.emit('click', event);
+        }
+    });
+
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         if (element.hasClass('disabled')) { return false; }
@@ -3506,7 +3651,7 @@ ready(function() {
                 indicator.hideIndicator();
                 return false;
             } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                toastr[response.body.warning ? 'warning' : 'success'](response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             indicator.hideIndicator();
@@ -3537,7 +3682,7 @@ var modules = {
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":24,"./menu":30,"./particles":37,"./styles":41,"./ui":46,"./ui/popover":48,"./utils/ajaxify-links":53,"./utils/field-validation":58,"./utils/flags-state":59,"./utils/get-ajax-suffix":60,"./utils/get-ajax-url":61,"./utils/rAF-polyfill":65,"agent":67,"elements":98,"elements/attributes":93,"elements/delegation":95,"elements/domready":96,"elements/events":97,"elements/insertion":99,"elements/traversal":100,"elements/zen":101,"moofx":102,"mout/queryString/setParam":211,"mout/string/interpolate":222,"mout/string/trim":230}],28:[function(require,module,exports){
+},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":24,"./menu":30,"./particles":37,"./styles":41,"./ui":46,"./ui/popover":48,"./utils/ajaxify-links":53,"./utils/field-validation":58,"./utils/flags-state":59,"./utils/get-ajax-suffix":60,"./utils/get-ajax-url":61,"./utils/rAF-polyfill":65,"agent":67,"elements":98,"elements/attributes":93,"elements/delegation":95,"elements/domready":96,"elements/events":97,"elements/insertion":99,"elements/traversal":100,"elements/zen":101,"moofx":102,"mout/queryString/setParam":211,"mout/string/interpolate":222,"mout/string/trim":233}],28:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -3810,7 +3955,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":44,"../utils/elements.utils":56,"elements/delegation":95,"elements/events":97,"mout/function/bind":155,"mout/lang/isString":175,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],29:[function(require,module,exports){
+},{"../ui/drag.events":44,"../utils/elements.utils":56,"elements/delegation":95,"elements/events":97,"mout/function/bind":155,"mout/lang/isString":175,"mout/math/clamp":180,"mout/math/map":182,"mout/number/enforcePrecision":186,"mout/object/get":195,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],29:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -4111,7 +4256,7 @@ ready(function() {
 
 module.exports = StepOne;
 
-},{"../ui":46,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/lang/deepEquals":165,"mout/string/trim":230}],30:[function(require,module,exports){
+},{"../ui":46,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/lang/deepEquals":165,"mout/string/trim":233}],30:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -4138,7 +4283,7 @@ var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
 ready(function() {
     var body = $('body');
 
-    menumanager = new MenuManager('body', {
+    menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
@@ -4158,10 +4303,13 @@ ready(function() {
     // Refresh ordering/items on menu type change or Menu navigation link
     body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
         menumanager.setRoot();
+        menumanager.refresh();
 
-        // refresh LM eraser
-        menumanager.eraser.element = $('[data-mm-eraseparticle]');
-        menumanager.eraser.hide();
+        // refresh MM eraser
+        if (menumanager.eraser) {
+            menumanager.eraser.element = $('[data-mm-eraseparticle]');
+            menumanager.eraser.hide();
+        }
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {
@@ -4446,7 +4594,7 @@ module.exports = {
     menumanager: menumanager
 };
 
-},{"../ui":46,"../utils/field-validation":58,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"./extra-items":29,"./menumanager":31,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/math/clamp":180,"mout/string/trim":230}],31:[function(require,module,exports){
+},{"../ui":46,"../utils/field-validation":58,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"./extra-items":29,"./menumanager":31,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/math/clamp":180,"mout/string/trim":233}],31:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -4475,13 +4623,24 @@ var MenuManager = new prime({
 
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
+        this.setOptions(options);
+        this.refElement = element;
         this.map = {};
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(element, options, this);
-        this.resizer = new Resizer(element, options, this);
-        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
+        this.dragdrop = new DragDrop(this.refElement, this.options, this);
+        this.resizer = new Resizer(this.refElement, this.options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -4492,8 +4651,11 @@ var MenuManager = new prime({
             .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
+    },
 
-        //console.log(this.ordering, this.items);
+    refresh: function() {
+        if (!this.refElement || !$(this.refElement)) { return; }
+        this.init();
     },
 
     setRoot: function() {
@@ -4602,7 +4764,7 @@ var MenuManager = new prime({
         }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5})?$/i))) {
+        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5,})?$/i))) {
             this.eraser.show();
         }
 
@@ -4920,7 +5082,7 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":43,"../ui/eraser":45,"../utils/elements.utils":56,"./drag.resizer":28,"elements/zen":101,"mout/array/every":134,"mout/array/indexOf":140,"mout/array/last":144,"mout/function/bind":155,"mout/lang/deepClone":164,"mout/lang/isArray":167,"mout/lang/isObject":172,"mout/object/equals":190,"mout/object/get":195,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],32:[function(require,module,exports){
+},{"../ui/drag.drop":43,"../ui/eraser":45,"../utils/elements.utils":56,"./drag.resizer":28,"elements/zen":101,"mout/array/every":134,"mout/array/indexOf":140,"mout/array/last":144,"mout/function/bind":155,"mout/lang/deepClone":164,"mout/lang/isArray":167,"mout/lang/isObject":172,"mout/object/equals":190,"mout/object/get":195,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],32:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -5208,7 +5370,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":46,"../../utils/field-validation":58,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/insertion":99,"elements/zen":101,"mout/array/indexOf":140,"mout/array/last":144,"mout/string/trim":230,"sortablejs":266}],33:[function(require,module,exports){
+},{"../../ui":46,"../../utils/field-validation":58,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/insertion":99,"elements/zen":101,"mout/array/indexOf":140,"mout/array/last":144,"mout/string/trim":233,"sortablejs":269}],33:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -5947,7 +6109,7 @@ ready(function() {
 
 module.exports = ColorPicker;
 
-},{"../../ui/drag.events":44,"elements":98,"elements/domready":96,"elements/zen":101,"mout/collection/forEach":152,"mout/function/bind":155,"mout/math/clamp":180,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],34:[function(require,module,exports){
+},{"../../ui/drag.events":44,"elements":98,"elements/domready":96,"elements/zen":101,"mout/collection/forEach":152,"mout/function/bind":155,"mout/math/clamp":180,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],34:[function(require,module,exports){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -6390,7 +6552,7 @@ domready(function() {
 
 module.exports = FilePicker;
 
-},{"../../ui":46,"../../utils/elements.utils":56,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"dropzone":92,"elements/domready":96,"elements/zen":101,"mout/function/bind":155,"mout/lang/deepClone":164,"mout/object/deepFillIn":188,"mout/string/rtrim":229,"prime":260}],35:[function(require,module,exports){
+},{"../../ui":46,"../../utils/elements.utils":56,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"dropzone":92,"elements/domready":96,"elements/zen":101,"mout/function/bind":155,"mout/lang/deepClone":164,"mout/object/deepFillIn":188,"mout/string/rtrim":231,"prime":263}],35:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime         = require('prime'),
@@ -7135,7 +7297,7 @@ domready(function() {
 
 module.exports = Fonts;
 
-},{"../../ui":46,"../../utils/async-foreach":54,"../../utils/decouple":55,"../../utils/elements.utils":56,"../../utils/elements.viewport":57,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/append":129,"mout/array/combine":130,"mout/array/contains":131,"mout/array/find":136,"mout/array/forEach":139,"mout/array/insert":141,"mout/array/intersection":142,"mout/array/last":144,"mout/array/map":145,"mout/array/removeAll":146,"mout/array/split":149,"mout/function/bind":155,"mout/object/merge":199,"mout/string/properCase":225,"mout/string/trim":230,"mout/string/unhyphenate":233,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261,"webfontloader":267}],36:[function(require,module,exports){
+},{"../../ui":46,"../../utils/async-foreach":54,"../../utils/decouple":55,"../../utils/elements.utils":56,"../../utils/elements.viewport":57,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/append":129,"mout/array/combine":130,"mout/array/contains":131,"mout/array/find":136,"mout/array/forEach":139,"mout/array/insert":141,"mout/array/intersection":142,"mout/array/last":144,"mout/array/map":145,"mout/array/removeAll":146,"mout/array/split":149,"mout/function/bind":155,"mout/object/merge":199,"mout/string/properCase":225,"mout/string/trim":233,"mout/string/unhyphenate":236,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262,"prime/map":264,"webfontloader":270}],36:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
@@ -7313,7 +7475,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../../ui":46,"../../utils/elements.utils":56,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"elements/domready":96,"mout/array/contains":131,"mout/string/trim":230}],37:[function(require,module,exports){
+},{"../../ui":46,"../../utils/elements.utils":56,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"elements/domready":96,"mout/array/contains":131,"mout/string/trim":233}],37:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -7501,7 +7663,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":46,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/string/trim":230}],39:[function(require,module,exports){
+},{"../../ui":46,"../../utils/get-ajax-suffix":60,"../../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"elements/zen":101,"mout/string/trim":233}],39:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -7650,7 +7812,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":46,"../../utils/get-ajax-suffix":60,"agent":67,"elements":98,"elements/domready":96,"elements/insertion":99,"elements/zen":101,"mout/array/contains":131,"mout/array/indexOf":140,"mout/array/last":144,"mout/array/some":148,"mout/object/has":196,"mout/string/escapeUnicode":221,"mout/string/trim":230,"sortablejs":266}],40:[function(require,module,exports){
+},{"../../ui":46,"../../utils/get-ajax-suffix":60,"agent":67,"elements":98,"elements/domready":96,"elements/insertion":99,"elements/zen":101,"mout/array/contains":131,"mout/array/indexOf":140,"mout/array/last":144,"mout/array/some":148,"mout/object/has":196,"mout/string/escapeUnicode":221,"mout/string/trim":233,"sortablejs":269}],40:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
@@ -7900,7 +8062,7 @@ ready(function() {
 
 module.exports = loadFromStorage;
 
-},{"elements":98,"elements/domready":96,"mout/object/forOwn":194,"mout/string/trim":230}],43:[function(require,module,exports){
+},{"elements":98,"elements/domready":96,"mout/object/forOwn":194,"mout/string/trim":233}],43:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -8288,7 +8450,7 @@ var DragDrop = new prime({
 
 module.exports = DragDrop;
 
-},{"../utils/elements.utils":56,"./drag.events":44,"elements/delegation":95,"elements/events":97,"mout/array/contains":131,"mout/function/bind":155,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],44:[function(require,module,exports){
+},{"../utils/elements.utils":56,"./drag.events":44,"elements/delegation":95,"elements/events":97,"mout/array/contains":131,"mout/function/bind":155,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],44:[function(require,module,exports){
 "use strict";
 var getSupportedEvent = function(events) {
     events = events.split(' ');
@@ -8401,7 +8563,7 @@ var Eraser = new prime({
 
 module.exports = Eraser;
 
-},{"../utils/elements.utils":56,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],46:[function(require,module,exports){
+},{"../utils/elements.utils":56,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],46:[function(require,module,exports){
 "use strict";
 
 var Selectize = require('./selectize');
@@ -8432,6 +8594,7 @@ var prime    = require('prime'),
     forEach  = require('mout/array/forEach'),
     last     = require('mout/array/last'),
     merge    = require('mout/object/merge'),
+    trim     = require('mout/string/trim'),
 
     request  = require('agent');
 
@@ -8529,7 +8692,12 @@ var Modal = new prime({
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
             .addClass(options.className)
-            .style(options.css);
+            .style(options.css)
+            .attribute('tabindex', '0')
+            .attribute('role', 'dialog')
+            .attribute('aria-hidden', 'true')
+            .attribute('aria-labelledby', 'g-modal-labelledby')
+            .attribute('aria-describedby', 'g-modal-describedby');
 
         storage.set(elements.container, { dialog: options });
 
@@ -8553,6 +8721,8 @@ var Modal = new prime({
             .addClass(options.baseClassNames.content)
             .addClass(options.contentClassName)
             .style(options.contentCSS)
+            .attribute('aria-live', 'assertive')
+            .attribute('tabindex', '0')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -8591,9 +8761,15 @@ var Modal = new prime({
                     options.remoteLoaded(response, options);
                 }
 
+                elements.container.attribute('aria-hidden', 'false');
+                setTimeout(function(){ elements.content[0].focus(); }, 0);
+
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
+        } else {
+            elements.container.attribute('aria-hidden', 'false');
+            setTimeout(function(){ elements.content[0].focus(); }, 0);
         }
 
         // close button
@@ -8601,6 +8777,7 @@ var Modal = new prime({
             elements.closeButton = zen('div')
                 .addClass(options.baseClassNames.close)
                 .addClass(options.closeClassName)
+                .attribute('role', 'button').attribute('aria-label', 'Close')
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
@@ -8770,7 +8947,7 @@ var modal = new Modal();
 
 module.exports = modal;
 
-},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],48:[function(require,module,exports){
+},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/object/merge":199,"mout/string/trim":233,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262,"prime/map":264}],48:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -8864,6 +9041,12 @@ var Popover = new prime({
             this.$target.remove();
         }
         this.element.emit('hidden.popover', this);
+
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+            this.restoreFocus();
+        }
     },
 
     toggle: function(e) {
@@ -8874,6 +9057,33 @@ var Popover = new prime({
         this[this.getTarget().hasClass('in') ? 'hide' : 'show']();
     },
 
+    focus: function(e) {
+        if (!this.getTarget().hasClass('in')) { return; }
+        var self = this,
+            target = $(e.target || e);
+
+        if (
+            this.$target[0] === target[0] || target.parent(this.$target) ||
+            this.element[0] === target[0] || target.parent(this.element)
+        ) { return; }
+
+        this.hide();
+        if (this._focusAttached) this.restoreFocus();
+    },
+
+    restoreFocus: function(element) {
+        element = $(element || this.element);
+        var tag = element.tag();
+
+        setTimeout(function(){
+            if (tag != 'a' && tag != 'input' && tag != 'button') {
+                element.find('a, button, input')[0].focus();
+            } else {
+                element[0].focus();
+            }
+        }, 0);
+    },
+
     hideAll: function(force) {
         var css = '';
         if (force) { css = 'div.' + this.options.mainClass; }
@@ -8881,13 +9091,18 @@ var Popover = new prime({
 
         var elements = $(css);
         if (!elements) { return this; }
-        elements.removeClass('in').style({ display: 'none' });
+        elements.removeClass('in').style({ display: 'none' }).attribute('tabindex', '-1');
+        if (!force && this._focusAttached) this.restoreFocus();
 
+        if (this._focusAttached) {
+            $('body').off('focus', this.bound('focus'), true);
+            this._focusAttached = false;
+        }
         return this;
     },
 
     show: function() {
-        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass);
+        var target = this.getTarget().attribute('class', null).addClass(this.options.mainClass).attribute('tabindex', '0');
 
         if (!this.options.multi) {
             this.hideAll();
@@ -8915,6 +9130,15 @@ var Popover = new prime({
 
         this.displayContent();
         this.bindBodyEvents();
+
+        setTimeout(function(){
+            target[0].focus();
+        }, 0);
+
+        if (!this._focusAttached) {
+            $('body').on('focus', this.bound('focus'), true);
+            this._focusAttached = true;
+        }
     },
 
     displayContent: function() {
@@ -8984,6 +9208,7 @@ var Popover = new prime({
         }
 
         this._poped = true;
+        this.element[0].focus();
         this.element.emit('shown.popover', this);
 
     },
@@ -9062,6 +9287,11 @@ var Popover = new prime({
 
             var target = this.getContentElement();
             target.attribute('style', null);
+
+            setTimeout(bind(function(){
+                target.parent('.' + this.options.mainClass)[0].focus();
+            }, this), 0);
+
             this.displayContent();
             this.bindBodyEvents();
 
@@ -9336,7 +9566,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/lang/isFunction":169,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],49:[function(require,module,exports){
+},{"../utils/elements.utils":56,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/forEach":139,"mout/array/last":144,"mout/array/map":145,"mout/function/bind":155,"mout/lang/isFunction":169,"mout/object/merge":199,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262,"prime/map":264}],49:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -9520,7 +9750,7 @@ var Progresser = new prime({
 
 module.exports = Progresser;
 
-},{"elements":98,"elements/zen":101,"moofx":102,"mout/function/bind":155,"mout/lang/isArray":167,"mout/lang/isNumber":171,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259}],50:[function(require,module,exports){
+},{"elements":98,"elements/zen":101,"moofx":102,"mout/function/bind":155,"mout/lang/isArray":167,"mout/lang/isNumber":171,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262}],50:[function(require,module,exports){
 "use strict";
 // selectize (v0.12.1)
 
@@ -9549,10 +9779,12 @@ var prime      = require('prime'),
     size       = require('mout/object/size'),
     values     = require('mout/object/values'),
     escapeHTML = require('mout/string/escapeHtml'),
-    trim       = require('mout/string/trim');
+    trim       = require('mout/string/trim'),
+    slugify    = require('mout/string/slugify');
 
 
 var IS_MAC                = /Mac/.test(navigator.userAgent),
+    IS_IE                 = /MSIE 9/i.test(navigator.userAgent) || /MSIE 10/i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent),
     COUNT                 = 0,
 
     KEY_A                 = 65,
@@ -9753,10 +9985,10 @@ var autoGrow = function(input) {
         if (e.type && e.type.toLowerCase() === 'keydown') {
             keyCode = e.keyCode;
             printable = (
-            (keyCode >= 97 && keyCode <= 122) || // a-z
-            (keyCode >= 65 && keyCode <= 90) || // A-Z
-            (keyCode >= 48 && keyCode <= 57) || // 0-9
-            keyCode === 32 // space
+                (keyCode >= 97 && keyCode <= 122) || // a-z
+                (keyCode >= 65 && keyCode <= 90) || // A-Z
+                (keyCode >= 48 && keyCode <= 57) || // 0-9
+                keyCode === 32 // space
             );
 
             if (keyCode === KEY_DELETE || keyCode === KEY_BACKSPACE) {
@@ -9811,7 +10043,7 @@ var Selectize = new prime({
         persist: true,
         diacritics: true,
         create: false,
-        createOnBlur: false,
+        createOnBlur: true,
         createFilter: null,
         highlight: true,
         openOnFocus: true,
@@ -9823,6 +10055,7 @@ var Selectize = new prime({
         preload: false,
         allowEmptyOption: false,
         closeAfterSelect: false,
+        searchOnKeypress: true,
 
         scrollDuration: 60,
         loadThrottle: 300,
@@ -9885,12 +10118,19 @@ var Selectize = new prime({
         input = $(input);
         this.setOptions(options);
 
+        // detect rtl environment
+        var computedStyle = window.getComputedStyle && window.getComputedStyle(input[0], null);
+        var dir = computedStyle ? computedStyle.getPropertyValue('direction') : input[0].currentStyle && input[0].currentStyle.direction;
+        dir = dir || input.parents('[dir]:first').attr('dir') || '';
+
+        this.rand = 'selectize-id-' + (Math.random() + 1).toString(36).substring(5);
         this.input = input;
         this.input.selectizeInstance = this;
 
         this.order = 0;
         this.tabIndex = input.attribute('tabindex') || '';
         this.tagType = input.tag() == 'select' ? TAG_SELECT : TAG_INPUT;
+        this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
         forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
@@ -9952,29 +10192,26 @@ var Selectize = new prime({
             $dropdown_content,
             $dropdown_parent,
             inputMode,
-            tab_index,
+            timeout_blur,
+            timeout_focus,
             classes;
 
         inputMode = this.options.mode;
-        tab_index = $input.attribute('tabindex') || '';
         classes = $input.attribute('class') || '';
 
         $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass(inputMode).after(this.input);
         $control = zen('div').addClass(this.options.inputClass).addClass('items').bottom($wrapper);
-        $control_input = zen('input[type="text"][autocomplete="off"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : tab_index);
+        $control_input = zen('input[type="text"][autocomplete="off"][role="textbox"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : this.tabIndex);
         $dropdown_parent = $(this.options.dropdownParent || $wrapper);
-        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).style({ display: 'none' }).bottom($dropdown_parent);
-        $dropdown_content = zen('div').addClass(this.options.dropdownContentClass).bottom($dropdown);
+        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).hide().bottom($dropdown_parent);
+        $dropdown_content = zen('div[id="' + this.rand + '"]').addClass(this.options.dropdownContentClass).bottom($dropdown);
 
         if (this.options.copyClassesToDropdown) {
             $dropdown.addClass(classes);
         }
 
-        // g5 custom
         if (inputMode == 'single') {
-            $wrapper.style({
-                width: parseInt($input[0].offsetWidth) + 12 + (24) // padding compensation
-            });
+            $wrapper.style('width', parseInt($input[0].offsetWidth) + 12 + 24); // padding compensation
         }
 
         if ((this.options.maxItems === null || this.options.maxItems > 1) && this.tagType === TAG_SELECT) {
@@ -10013,7 +10250,7 @@ var Selectize = new prime({
 
         $control.delegate('mousedown', '*:not(input)', bind(function(event, element) {
             if (element == $control) { return true; }
-            this.onItemSelect(event, element);
+            return this.onItemSelect.apply(this, arguments);
         }, this));
 
         $control.on('mousedown', bind(function() { return this.onMouseDown.apply(this, arguments); }, this));
@@ -10027,7 +10264,7 @@ var Selectize = new prime({
         $control_input.on('blur', bind(function() { return this.onBlur.apply(this, arguments); }, this));
         $control_input.on('focus', bind(function() {
             this.ignoreBlur = false;
-            return this.onFocus(arguments);
+            return this.onFocus.apply(this, arguments);
         }, this));
         $control_input.on('paste', bind(function() { return this.onPaste.apply(this, arguments); }, this));
 
@@ -10047,6 +10284,7 @@ var Selectize = new prime({
             if (this.isFocused) {
                 // prevent events on the dropdown scrollbar from causing the control to blur
                 if (e.target === this.$dropdown[0] || e.target.parentNode === this.$dropdown[0]) {
+                    e.preventDefault();
                     return false;
                 }
                 // blur on click outside
@@ -10077,7 +10315,7 @@ var Selectize = new prime({
             tabindex: this.input.attribute('tabindex')
         };
 
-        this.input.attribute('tabindex', -1).style({ display: 'none' }).after($wrapper);
+        this.input.attribute('tabindex', -1).attribute('aria-hidden', true).hide().after($wrapper);
 
         if (isArray(this.options.items)) {
             this.setValue(this.options.items);
@@ -10099,7 +10337,7 @@ var Selectize = new prime({
         this.updatePlaceholder();
         this.isSetup = true;
 
-        if (this.input.matches(':disabled')) {
+        if (this.input.disabled()) {
             this.disable();
         }
 
@@ -10113,11 +10351,24 @@ var Selectize = new prime({
         if (this.options.preload === true) {
             this.onSearchChange('');
         }
+        // ARIA
+        $wrapper
+            .attribute('role', 'combobox')
+            .attribute('aria-autocomplete', 'list')
+            .attribute('aria-haspopup', true)
+            .attribute('aria-expanded', false)
+            .attribute('aria-labelledby', this.rand + '-' + slugify(this.getValue()));
+
+        $dropdown_content
+            .attribute('role', 'tree')
+            .attribute('aria-expanded', false)
+            .attribute('aria-hidden', true);
+
 
     },
 
     setupTemplates: function() {
-        var field_label = this.options.labelField,
+        var field_label    = this.options.labelField,
             field_optgroup = this.options.optgroupLabelField;
 
         var templates = {
@@ -10131,7 +10382,7 @@ var Selectize = new prime({
                 return '<div class="option">' + escape(data[field_label]) + '</div>';
             },
             'item': function(data, escape) {
-                return '<div class="item">' + escape(data[field_label]) + '</div>';
+                return '<div class="item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '</div>';
             },
             'option_create': function(data, escape) {
                 return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
@@ -10142,7 +10393,7 @@ var Selectize = new prime({
     },
 
     setupCallbacks: function() {
-        var callbacks = {
+        var key, fn, callbacks = {
             'initialize': 'onInitialize',
             'change': 'onChange',
             'item_add': 'onItemAdd',
@@ -10162,331 +10413,15 @@ var Selectize = new prime({
             'blur': 'onBlur'
         };
 
-        forEach(callbacks, function(value, key) {
-            var fn = this.options[callbacks[key]];
-            if (fn) { this.on(key, fn); }
-        }, this);
-    },
-
-    updateOriginalInput: function(opts) {
-        var options, label;
-        opts = opts || {};
-
-        if (this.tagType === TAG_SELECT) {
-            options = [];
-            for (var i = 0, n = this.items.length; i < n; i++) {
-                label = this.Options[this.items[i]][this.options.labelField] || '';
-                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected">' + escapeHTML(label) + '</option>');
-            }
-            if (!options.length && !this.input.attribute('multiple')) {
-                options.push('<option value="" selected="selected"></option>');
-            }
-            this.input.html(options.join(''));
-        } else {
-            this.input.value(this.getValue());
-            this.input.attribute('value', this.input.value());
-        }
-
-        if (this.isSetup && !opts.silent) {
-            this.emit('change', this.input.value());
-        }
-    },
-
-    getAdjacentOption: function($option, direction) {
-        var $options = this.$dropdown.search('[data-selectable]');
-        var index = indexOf($options, ($option ? $option[0] : null)) + direction;
-
-        return index >= 0 && index < ($options ? $options.length : 0) ? $($options[index]) : $();
-    },
-
-    getOption: function(value) {
-        return this.getElementWithValue(value, this.$dropdown_content.search('[data-selectable]'));
-    },
-
-    getElementWithValue: function(value, $els) {
-        value = hash_key(value);
-
-        if (typeof value !== 'undefined' && value !== null) {
-            for (var i = 0, n = ($els ? $els.length : 0); i < n; i++) {
-                if ($els[i].getAttribute('data-value') === value) {
-                    return $($els[i]);
-                }
+        for (key in callbacks) {
+            if (callbacks.hasOwnProperty(key)) {
+                fn = this.options[callbacks[key]];
+                if (fn) { this.on(key, fn); }
             }
         }
-
-        return $();
     },
 
-    getItem: function(value) {
-        return this.getElementWithValue(value, this.$control.children());
-    },
 
-    addItems: function(values, silent) {
-        var items = isArray(values) ? values : [values];
-        for (var i = 0, n = items.length; i < n; i++) {
-            this.isPending = (i < n - 1);
-            this.addItem(items[i], silent);
-        }
-    },
-
-    addItem: function(value, silent) {
-        var events = silent ? [] : ['change'];
-
-        debounce_events(this, events, function() {
-            var $item, $option, $options;
-            var inputMode = this.options.mode;
-            var i, active, value_next, wasFull;
-            value = hash_key(value);
-
-            if (this.items.indexOf(value) !== -1) {
-                // g5 custom [before: && this.isOpen]
-                if (inputMode === 'single') this.close();
-                return;
-            }
-
-            if (!this.Options.hasOwnProperty(value)) return;
-            if (inputMode === 'single') this.clear(silent);
-            // g5 custom [before (this.isFull() || !value)
-            if (inputMode === 'multi' && this.isFull()) return;
-
-            var dummy = zen('div').html(this.render('item', this.Options[value]));
-            $item = dummy.firstChild();
-            wasFull = this.isFull();
-            this.items.splice(this.caretPos, 0, value);
-            this.insertAtCaret($item);
-            if (!this.isPending || (!wasFull && this.isFull())) {
-                this.refreshState();
-            }
-
-            if (this.isSetup) {
-                $options = this.$dropdown_content.search('[data-selectable]');
-
-                // update menu / remove the option (if this is not one item being added as part of series)
-                if (!this.isPending) {
-                    $option = this.getOption(value);
-                    var adj = this.getAdjacentOption($option, 1);
-                    value_next = (adj) ? adj.attribute('data-value') : null;
-                    this.refreshOptions(this.isFocused && inputMode !== 'single');
-                    if (value_next) {
-                        this.setActiveOption(this.getOption(value_next));
-                    }
-                }
-
-                // hide the menu if the maximum number of items have been selected or no options are left
-                if (!$options || this.isFull()) {
-                    this.close();
-                } else {
-                    this.positionDropdown();
-                }
-
-                this.updatePlaceholder();
-                this.emit('item_add', value, $item);
-                this.updateOriginalInput({silent: silent});
-            }
-        });
-    },
-
-    removeItem: function(value, silent) {
-        var $item, i, idx;
-
-        $item = (typeof value === 'object') ? value : this.getItem(value);
-        value = hash_key($item.attribute('data-value'));
-        i = this.items.indexOf(value);
-
-        if (i !== -1) {
-            $item.remove();
-            if ($item.hasClass('active')) {
-                idx = this.$activeItems.indexOf($item[0]);
-                this.$activeItems.splice(idx, 1);
-            }
-
-            this.items.splice(i, 1);
-            this.lastQuery = null;
-            if (!this.options.persist && this.UserOptions.hasOwnProperty(value)) {
-                this.removeOption(value, silent);
-            }
-
-            if (i < this.caretPos) {
-                this.setCaret(this.caretPos - 1);
-            }
-
-            this.refreshState();
-            this.updatePlaceholder();
-            this.updateOriginalInput({silent: silent});
-            this.positionDropdown();
-            this.emit('item_remove', value, $item);
-        }
-    },
-
-    createItem: function(input, triggerDropdown) {
-        var caret = this.caretPos;
-        input = input || trim(this.$control_input.value() || '');
-
-        var callback = arguments[arguments.length - 1];
-        if (typeof callback !== 'function') callback = function() {};
-
-        if (!isBoolean(triggerDropdown)) {
-            triggerDropdown = true;
-        }
-
-        if (!this.canCreate(input)) {
-            callback();
-            return false;
-        }
-
-        this.lock();
-
-        var setup = (typeof this.options.create === 'function') ? this.options.create : bind(function(input) {
-            var data = {};
-            data[this.options.labelField] = input;
-            data[this.options.valueField] = input;
-            return data;
-        }, this);
-
-        var create = once(bind(function(data) {
-            this.unlock();
-
-            if (!data || typeof data !== 'object') return callback();
-            var value = hash_key(data[this.options.valueField]);
-            if (typeof value !== 'string') return callback();
-
-            this.setTextboxValue('');
-            this.addOption(data);
-            this.setCaret(caret);
-            this.addItem(value);
-            this.refreshOptions(triggerDropdown && this.options.mode !== 'single');
-            callback(data);
-        }, this));
-
-        var output = setup.apply(this, [input, create]);
-        if (typeof output !== 'undefined') {
-            create(output);
-        }
-
-        return true;
-    },
-
-    refreshItems: function() {
-        this.lastQuery = null;
-
-        if (this.isSetup) {
-            this.addItem(this.items);
-        }
-
-        this.refreshState();
-        this.updateOriginalInput();
-    },
-
-    refreshState: function() {
-        var invalid;
-        if (this.isRequired) {
-            if (this.items.length) this.isInvalid = false;
-            this.$control_input.attribute('required', invalid);
-        }
-        this.refreshClasses();
-    },
-
-    refreshClasses: function() {
-        var isFull = this.isFull(),
-            isLocked = this.isLocked;
-
-        this.$wrapper.toggleClass('rtl', this.rtl);
-
-        this.$control.toggleClass('focus', this.isFocused);
-        this.$control.toggleClass('disabled', this.isDisabled);
-        this.$control.toggleClass('required', this.isRequired);
-        this.$control.toggleClass('invalid', this.isInvalid);
-        this.$control.toggleClass('locked', isLocked);
-        this.$control.toggleClass('full', isFull);
-        this.$control.toggleClass('not-full', !isFull);
-        this.$control.toggleClass('input-active', this.isFocused && !this.isInputHidden);
-        this.$control.toggleClass('dropdown-active', this.isOpen);
-        this.$control.toggleClass('has-options', !size(this.options.Options));
-        this.$control.toggleClass('has-items', this.items.length > 0);
-
-        this.$control_input.selectizeGrow = !isFull && !isLocked;
-    },
-
-    isFull: function() {
-        return this.options.maxItems !== null && this.items.length >= this.options.maxItems;
-    },
-
-    updatePlaceholder: function() {
-        if (!this.options.placeholder) return;
-        var control_input = this.$control_input;
-
-        if (this.items.length) {
-            control_input.attribute('placeholder', null);
-        } else {
-            control_input.attribute('placeholder', this.options.placeholder);
-        }
-        control_input.emit('update', { force: true });
-    },
-
-    open: function() {
-        if (this.isLocked || this.isOpen || (this.options.mode === 'multi' && this.isFull())) return;
-        this.focus();
-        this.isOpen = true;
-        this.refreshState();
-        this.$dropdown.style({
-            visibility: 'hidden',
-            display: 'block'
-        });
-        this.positionDropdown();
-        this.$dropdown.style({ visibility: 'visible' });
-        this.emit('dropdown_open', this.$dropdown);
-    },
-
-    close: function() {
-        var trigger = this.isOpen;
-
-        if (this.options.mode === 'single' && this.items.length) {
-            this.hideInput();
-        }
-
-        this.isOpen = false;
-        this.$dropdown.style({ display: 'none' });
-        this.setActiveOption(null);
-        this.refreshState();
-
-        // g5 custom
-        /*if (this.options.mode === 'single' && !this.getValue()) {
-            this.lastQuery = null;
-            this.setTextboxValue('');
-            this.addItem(this.Options[Object.keys(this.Options)[0]][this.options.valueField]);
-            //this.blur();
-        }*/
-
-        if (trigger) this.emit('dropdown_close', this.$dropdown);
-    },
-
-    positionDropdown: function() {
-        var control = this.$control,
-            offset = control.position();//this.options.dropdownParent === 'body' ? control.offset() : control.position();
-        offset.top += control[0].offsetHeight;
-
-        this.$dropdown.style({
-            width: control[0].offsetWidth,
-            top: control[0].offsetTop + control[0].offsetHeight,
-            left: control[0].offsetLeft
-        });
-    },
-
-    clear: function(silent) {
-        var non_input = this.$control.children(':not(input)');
-        if (!this.items.length) return;
-
-        if (non_input) non_input.remove();
-        this.items = [];
-        this.lastQuery = null;
-        this.setCaret(0);
-        this.setActiveItem(null);
-        this.updatePlaceholder();
-        this.updateOriginalInput({silent: silent});
-        this.refreshState();
-        this.showInput();
-        this.emit('clear');
-    },
 
     onClick: function(e) {
         // necessary for mobile webkit devices (manual focus triggering
@@ -10498,7 +10433,7 @@ var Selectize = new prime({
     },
 
     onMouseDown: function(e) {
-        var defaultPrevented = e.defaultPrevented;
+        var defaultPrevented = e.defaultPrevented || (typeof e.defaultPrevented === 'undefined');
         var $target = $(e.target);
 
         if (this.isFocused) {
@@ -10513,8 +10448,8 @@ var Selectize = new prime({
                     this.setActiveItem(null);
                 }
 
-                e.preventDefault();
-                e.stopPropagation();
+                /*e.preventDefault();
+                e.stopPropagation();*/
                 return false;
             }
         } else {
@@ -10577,7 +10512,7 @@ var Selectize = new prime({
                 }
                 break;
             case KEY_ESC:
-                if (this.isOpen){
+                if (this.isOpen) {
                     e.preventDefault();
                     e.stopPropagation();
                     this.close();
@@ -10592,7 +10527,7 @@ var Selectize = new prime({
                 } else if (this.$activeOption) {
                     this.ignoreHover = true;
                     var $next = this.getAdjacentOption(this.$activeOption, 1);
-                    if ($next) this.setActiveOption($next, true, true);
+                    if ($next) { this.setActiveOption($next, true, true); }
                 }
                 e.preventDefault();
                 return;
@@ -10602,7 +10537,7 @@ var Selectize = new prime({
                 if (this.$activeOption) {
                     this.ignoreHover = true;
                     var $prev = this.getAdjacentOption(this.$activeOption, -1);
-                    if ($prev) this.setActiveOption($prev, true, true);
+                    if ($prev) { this.setActiveOption($prev, true, true); }
                 }
                 e.preventDefault();
                 return;
@@ -10661,9 +10596,9 @@ var Selectize = new prime({
         if (!fn) return;
         if (this.loadedSearches.hasOwnProperty(value)) return;
         this.loadedSearches[value] = true;
-        this.load(function(callback) {
+        this.load(bind(function(callback) {
             fn.apply(this, [value, callback]);
-        });
+        }, this));
     },
 
     onFocus: function(e) {
@@ -10696,7 +10631,7 @@ var Selectize = new prime({
 
         if (this.ignoreFocus) {
             return;
-        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0] || (e && this.$wrapper.find($(e.target))))) {
+        } else if (!this.ignoreBlur && (document.activeElement === this.$dropdown_content[0])) {
             // ^- g5 custom [before: no e.target && ..]
             // necessary to prevent IE closing the dropdown when the scrollbar is clicked
             this.ignoreBlur = true;
@@ -10808,15 +10743,6 @@ var Selectize = new prime({
         }
     },
 
-    getPreviousValue: function() {
-        return this.previousValue;
-    },
-
-    /**
-     * Resets the selected items to the given value.
-     *
-     * @param {mixed} value
-     */
     setValue: function(value, silent) {
         var events = silent ? [] : ['change'];
 
@@ -10825,33 +10751,6 @@ var Selectize = new prime({
             this.previousValue = this.getValue() || value;
             this.addItems(value, silent);
         });
-    },
-
-    focus: function() {
-        if (this.isDisabled) { return; }
-
-        this.ignoreFocus = true;
-        this.$control_input[0].focus();
-        setTimeout(bind(function() {
-            this.ignoreFocus = false;
-            this.onFocus();
-        }, this), 0);
-    },
-
-    blur: function(dest) {
-        this.$control_input.emit('blur');
-        this.onBlur(null, dest);
-        // g5 custom
-        //this.$control_input[0].blur();
-    },
-
-    showInput: function() {
-        this.$control_input.style({
-            opacity: 1,
-            position: 'relative',
-            left: 0
-        });
-        this.isInputHidden = false;
     },
 
     setActiveItem: function(item, e) {
@@ -10886,6 +10785,7 @@ var Selectize = new prime({
                 $item = this.$control[0].childNodes[i];
                 if (this.$activeItems.indexOf($item) === -1) {
                     $($item).addClass('active');
+                    this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $($item).attribute('data-value')));
                     this.$activeItems.push($item);
                 }
             }
@@ -10897,10 +10797,12 @@ var Selectize = new prime({
                 item.removeClass('active');
             } else {
                 this.$activeItems.push(item.addClass('active')[0]);
+                this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
             }
         } else {
             if ($(this.$activeItems)) $(this.$activeItems).removeClass('active');
             this.$activeItems = [item.addClass('active')[0]];
+            this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
         }
 
         // ensure control has focus
@@ -10908,6 +10810,154 @@ var Selectize = new prime({
         if (!this.isFocused) {
             this.focus();
         }
+    },
+
+    setActiveOption: function($option, scroll, animate) {
+        var height_menu, height_item, y;
+        var scroll_top, scroll_bottom;
+
+        if (this.$activeOption) this.$activeOption.removeClass('active');
+        this.$activeOption = null;
+
+        $option = $($option);
+        if (!$option) return;
+
+        this.$activeOption = $option.addClass('active');
+        this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $option.attribute('data-value')));
+
+        if (scroll || !isset(scroll)) {
+
+            height_menu = this.$dropdown_content[0].offsetHeight;
+            height_item = this.$activeOption[0].offsetHeight;
+            scroll = this.$dropdown_content[0].scrollTop || 0;
+            y = this.$activeOption.position().top - this.$dropdown_content.position().top + scroll;
+            scroll_top = y;
+            scroll_bottom = y - height_menu + height_item;
+
+            if (y + height_item > height_menu + scroll) {
+                this.$dropdown_content[0].scrollTop = scroll_bottom;
+                /*moofx(bind(function(value){
+                 this.$dropdown_content[0].scrollTop = value;
+                 }, this), {
+                 duration: animate ? this.options.scrollDuration : 0,
+                 equation: 'linear'
+                 }).start(scroll, scroll_bottom);*/
+            } else if (y < scroll) {
+                this.$dropdown_content[0].scrollTop = scroll_top;
+                /*moofx(bind(function(value){
+                 this.$dropdown_content[0].scrollTop = value;
+                 }, this), {
+                 duration: animate ? this.options.scrollDuration : 0,
+                 equation: 'linear'
+                 }).start(scroll, scroll_top);*/
+            }
+
+        }
+    },
+
+    selectAll: function() {
+        if (this.options.mode === 'single') return;
+
+        var items = this.$control.children(':not(input)');
+        if (items) {
+            items.addClass('active');
+            this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + items.attribute('data-value')));
+        }
+
+        this.$activeItems = Array.prototype.slice.apply(items || []);
+        if (this.$activeItems.length) {
+            this.hideInput();
+            this.close();
+        }
+        this.focus();
+    },
+
+    hideInput: function() {
+
+        this.setTextboxValue('');
+        this.$control_input.style({
+            opacity: 0,
+            position: 'absolute',
+            left: this.rtl ? 10000 : -10000
+        });
+        this.isInputHidden = true;
+    },
+
+    showInput: function() {
+        this.$control_input.style({
+            opacity: 1,
+            position: 'relative',
+            left: 0
+        });
+        this.isInputHidden = false;
+    },
+
+    focus: function() {
+        if (this.isDisabled) { return; }
+
+        this.ignoreFocus = true;
+        this.$control_input[0].focus();
+        setTimeout(bind(function() {
+            this.ignoreFocus = false;
+            this.onFocus();
+        }, this), 0);
+    },
+
+    blur: function(dest) {
+        this.$control_input[0].blur();
+        this.onBlur(null, dest);
+        // g5 custom
+        //this.$control_input[0].blur();
+    },
+
+    getScoreFunction: function(query) {
+        return this.sifter.getScoreFunction(query, this.getSearchOptions());
+    },
+
+    getSearchOptions: function() {
+        var sort = this.options.sortField;
+        if (typeof sort === 'string') {
+            sort = [{ field: sort }];
+        }
+
+        return {
+            fields: this.options.searchField,
+            conjunction: this.options.searchConjunction,
+            sort: sort
+        };
+    },
+
+    search: function(query) {
+        var i, value, score, result, calculateScore;
+        var options = this.getSearchOptions();
+
+        // validate user-provided result scoring function
+        if (this.options.score) {
+            calculateScore = this.options.score.apply(this, [query]);
+            if (typeof calculateScore !== 'function') {
+                throw new Error('Selectize "score" setting must be a function that returns a function');
+            }
+        }
+
+        // perform search
+        if (query !== this.lastQuery) {
+            this.lastQuery = query;
+            result = this.sifter.search(query, merge(options, { score: calculateScore }));
+            this.currentResults = result;
+        } else {
+            result = merge({}, this.currentResults);
+        }
+
+        // filter out selected items
+        if (this.options.hideSelected) {
+            for (i = result.items.length - 1; i >= 0; i--) {
+                if (this.items.indexOf(hash_key(result.items[i].id)) !== -1) {
+                    result.items.splice(i, 1);
+                }
+            }
+        }
+
+        return result;
     },
 
     refreshOptions: function(triggerDropdown) {
@@ -10921,7 +10971,7 @@ var Selectize = new prime({
         var query = trim(this.$control_input.value());
         var results = this.search(query);
         var $dropdown_content = this.$dropdown_content;
-        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('data-value')); // g5 custom [before: value]
+        var active_before = this.$activeOption && hash_key(this.$activeOption.attribute('data-value'));
 
         // build markup
         n = results.items.length;
@@ -11000,7 +11050,7 @@ var Selectize = new prime({
         // add "selected" class to selected options
         if (!this.options.hideSelected) {
             for (i = 0, n = this.items.length; i < n; i++) {
-                this.getOption(this.items[i]).addClass('selected');
+                this.getOption(this.items[i]).addClass('selected').attribute('aria-selected', true);
             }
         }
 
@@ -11058,17 +11108,17 @@ var Selectize = new prime({
 
         // g5 custom
         /*value = hash_key(data[this.options.valueField]);
-        if (typeof value !== 'string' || this.Options.hasOwnProperty(value)) return;
+         if (typeof value !== 'string' || this.Options.hasOwnProperty(value)) return;
 
-        this.UserOptions[value] = true;
-        this.Options[value] = data;
-        this.lastQuery = null;
-        this.emit('option_add', value, data);*/
+         this.UserOptions[value] = true;
+         this.Options[value] = data;
+         this.lastQuery = null;
+         this.emit('option_add', value, data);*/
     },
 
     registerOption: function(data) {
         var key = hash_key(data[this.options.valueField]);
-        if ((!key || this.options.hasOwnProperty(key)) && !this.options.allowEmptyOption) return false;
+        if (!key || this.options.hasOwnProperty(key)) return false;
         data.$order = data.$order || ++this.order;
         this.Options[key] = data;
 
@@ -11077,7 +11127,7 @@ var Selectize = new prime({
 
     registerOptionGroup: function(data) {
         var key = hash_key(data[this.options.optgroupValueField]);
-        if (!key && !this.options.allowEmptyOption) return false;
+        if (!key) return false;
 
         data.$order = data.$order || ++this.order;
         this.Optgroups[key] = data;
@@ -11112,7 +11162,7 @@ var Selectize = new prime({
         var $item, $item_new, dummy;
         var value_new, index_item, cache_items, cache_options, order_old;
 
-        value     = hash_key(value);
+        value = hash_key(value);
         value_new = hash_key(data[this.options.valueField]);
 
         // sanity checks
@@ -11151,7 +11201,10 @@ var Selectize = new prime({
             $item = this.getItem(value);
             var dummy = zen('div').html(this.render('item', data));
             $item_new = dummy.firstChild();
-            if ($item.hasClass('active')) $item_new.addClass('active');
+            if ($item.hasClass('active')) {
+                $item_new.addClass('active');
+                this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $item_new.attribute('data-value')));
+            }
 
             $item_new.after($item);
             $item.remove();
@@ -11166,7 +11219,7 @@ var Selectize = new prime({
         }
     },
 
-    removeOption: function(value) {
+    removeOption: function(value, silent) {
         value = hash_key(value);
 
         var cache_items = this.renderCache['item'];
@@ -11178,7 +11231,7 @@ var Selectize = new prime({
         delete this.Options[value];
         this.lastQuery = null;
         this.emit('option_remove', value);
-        this.removeItem(value);
+        this.removeItem(value, silent);
     },
 
     clearOptions: function() {
@@ -11191,129 +11244,341 @@ var Selectize = new prime({
         this.clear();
     },
 
-    setActiveOption: function($option, scroll, animate) {
-        var height_menu, height_item, y;
-        var scroll_top, scroll_bottom;
-
-        if (this.$activeOption) this.$activeOption.removeClass('active');
-        this.$activeOption = null;
-
-        $option = $($option);
-        if (!$option) return;
-
-        this.$activeOption = $option.addClass('active');
-
-        if (scroll || !isset(scroll)) {
-
-            height_menu = this.$dropdown_content[0].offsetHeight;
-            height_item = this.$activeOption[0].offsetHeight;
-            scroll = this.$dropdown_content[0].scrollTop || 0;
-            y = this.$activeOption.position().top - this.$dropdown_content.position().top + scroll;
-            scroll_top = y;
-            scroll_bottom = y - height_menu + height_item;
-
-            if (y + height_item > height_menu + scroll) {
-                this.$dropdown_content[0].scrollTop = scroll_bottom;
-                /*moofx(bind(function(value){
-                 this.$dropdown_content[0].scrollTop = value;
-                 }, this), {
-                 duration: animate ? this.options.scrollDuration : 0,
-                 equation: 'linear'
-                 }).start(scroll, scroll_bottom);*/
-            } else if (y < scroll) {
-                this.$dropdown_content[0].scrollTop = scroll_top;
-                /*moofx(bind(function(value){
-                 this.$dropdown_content[0].scrollTop = value;
-                 }, this), {
-                 duration: animate ? this.options.scrollDuration : 0,
-                 equation: 'linear'
-                 }).start(scroll, scroll_top);*/
-            }
-
-        }
+    getOption: function(value) {
+        return this.getElementWithValue(value, this.$dropdown_content.search('[data-selectable]'));
     },
 
-    selectAll: function() {
-        if (this.options.mode === 'single') return;
+    getAdjacentOption: function($option, direction) {
+        var $options = this.$dropdown.search('[data-selectable]');
+        var index = indexOf($options, ($option ? $option[0] : null)) + direction;
 
-        var items = this.$control.children(':not(input)');
-        if (items) { items.addClass('active'); }
-        this.$activeItems = Array.prototype.slice.apply(items || 0);
-        if (this.$activeItems) {
-            this.hideInput();
-            this.close();
-        }
-        this.focus();
+        return index >= 0 && index < ($options ? $options.length : 0) ? $($options[index]) : $();
     },
 
-    hideInput: function() {
+    getElementWithValue: function(value, $els) {
+        value = hash_key(value);
 
-        this.setTextboxValue('');
-        this.$control_input.style({
-            opacity: 0,
-            position: 'absolute',
-            left: this.rtl ? 10000 : -10000
-        });
-        this.isInputHidden = true;
-    },
-
-    search: function(query) {
-        var i, value, score, result, calculateScore;
-        var options = this.getSearchOptions();
-
-        // validate user-provided result scoring function
-        if (this.options.score) {
-            calculateScore = this.options.score.apply(this, [query]);
-            if (typeof calculateScore !== 'function') {
-                throw new Error('Selectize "score" setting must be a function that returns a function');
-            }
-        }
-
-        // perform search
-        if (query !== this.lastQuery) {
-            this.lastQuery = query;
-            result = this.sifter.search(query, merge(options, { score: calculateScore }));
-            this.currentResults = result;
-        } else {
-            result = merge({}, this.currentResults);
-        }
-
-        // filter out selected items
-        if (this.options.hideSelected) {
-            for (i = result.items.length - 1; i >= 0; i--) {
-                if (this.items.indexOf(hash_key(result.items[i].id)) !== -1) {
-                    result.items.splice(i, 1);
+        if (typeof value !== 'undefined' && value !== null) {
+            for (var i = 0, n = ($els ? $els.length : 0); i < n; i++) {
+                if ($els[i].getAttribute('data-value') === value) {
+                    return $($els[i]);
                 }
             }
         }
 
-        return result;
+        return $();
     },
 
-    getScoreFunction: function(query) {
-        return this.sifter.getScoreFunction(query, this.getSearchOptions());
+    getItem: function(value) {
+        return this.getElementWithValue(value, this.$control.children());
     },
 
-    getSearchOptions: function() {
-        var sort = this.options.sortField;
-        if (typeof sort === 'string') {
-            sort = [{ field: sort }];
+    addItems: function(values, silent) {
+        var items = isArray(values) ? values : [values];
+        for (var i = 0, n = items.length; i < n; i++) {
+            this.isPending = (i < n - 1);
+            this.addItem(items[i], silent);
+        }
+    },
+
+    addItem: function(value, silent) {
+        var events = silent ? [] : ['change'];
+
+        debounce_events(this, events, function() {
+            var $item, $option, $options;
+            var inputMode = this.options.mode;
+            var i, active, value_next, wasFull;
+            value = hash_key(value);
+
+            if (this.items.indexOf(value) !== -1) {
+                // g5 custom [before: && this.isOpen]
+                if (inputMode === 'single') this.close();
+                return;
+            }
+
+            if (!this.Options.hasOwnProperty(value)) return;
+            if (inputMode === 'single') this.clear(silent);
+            if (inputMode === 'multi' && this.isFull()) return;
+
+            var dummy = zen('div').html(this.render('item', this.Options[value]));
+            $item = dummy.firstChild();
+
+            // ARIA
+            $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
+            if (inputMode === 'multi') $item.attribute('aria-selected', true);
+
+            wasFull = this.isFull();
+            this.items.splice(this.caretPos, 0, value);
+            this.insertAtCaret($item);
+            if (!this.isPending || (!wasFull && this.isFull())) {
+                this.refreshState();
+            }
+
+            if (this.isSetup) {
+                $options = this.$dropdown_content.search('[data-selectable]');
+
+                // update menu / remove the option (if this is not one item being added as part of series)
+                if (!this.isPending) {
+                    $option = this.getOption(value);
+                    var adj = this.getAdjacentOption($option, 1);
+                    value_next = (adj) ? adj.attribute('data-value') : null;
+                    this.refreshOptions(this.isFocused && inputMode !== 'single');
+                    if (value_next) {
+                        this.setActiveOption(this.getOption(value_next));
+                    }
+                }
+
+                // hide the menu if the maximum number of items have been selected or no options are left
+                if (!$options || this.isFull()) {
+                    this.close();
+                } else {
+                    this.positionDropdown();
+                }
+
+                this.updatePlaceholder();
+                this.emit('item_add', value, $item);
+                this.updateOriginalInput({ silent: silent });
+            }
+        });
+    },
+
+    removeItem: function(value, silent) {
+        var $item, i, idx;
+
+        $item = (typeof value === 'object') ? value : this.getItem(value);
+        value = hash_key($item.attribute('data-value'));
+        i = this.items.indexOf(value);
+
+        if (i !== -1) {
+            $item.remove();
+            if ($item.hasClass('active')) {
+                idx = this.$activeItems.indexOf($item[0]);
+                this.$activeItems.splice(idx, 1);
+            }
+
+            this.items.splice(i, 1);
+            this.lastQuery = null;
+            if (!this.options.persist && this.UserOptions.hasOwnProperty(value)) {
+                this.removeOption(value, silent);
+            }
+
+            if (i < this.caretPos) {
+                this.setCaret(this.caretPos - 1);
+            }
+
+            this.refreshState();
+            this.updatePlaceholder();
+            this.updateOriginalInput({ silent: silent });
+            this.positionDropdown();
+            this.emit('item_remove', value, $item);
+        }
+    },
+
+    createItem: function(input, triggerDropdown) {
+        var caret = this.caretPos;
+        input = input || trim(this.$control_input.value() || '');
+
+        var callback = arguments[arguments.length - 1];
+        if (typeof callback !== 'function') callback = function() {};
+
+        if (!isBoolean(triggerDropdown)) {
+            triggerDropdown = true;
         }
 
-        return {
-            fields: this.options.searchField,
-            conjunction: this.options.searchConjunction,
-            sort: sort
-        };
+        if (!this.canCreate(input)) {
+            callback();
+            return false;
+        }
+
+        this.lock();
+
+        var setup = (typeof this.options.create === 'function') ? this.options.create : bind(function(input) {
+            var data = {};
+            data[this.options.labelField] = input;
+            data[this.options.valueField] = input;
+            return data;
+        }, this);
+
+        var create = once(bind(function(data) {
+            this.unlock();
+
+            if (!data || typeof data !== 'object') return callback();
+            var value = hash_key(data[this.options.valueField]);
+            if (typeof value !== 'string') return callback();
+
+            this.setTextboxValue('');
+            this.addOption(data);
+            this.setCaret(caret);
+            this.addItem(value);
+            this.refreshOptions(triggerDropdown && this.options.mode !== 'single');
+            callback(data);
+        }, this));
+
+        var output = setup.apply(this, [input, create]);
+        if (typeof output !== 'undefined') {
+            create(output);
+        }
+
+        return true;
     },
 
-    canCreate: function(input) {
-        if (!this.options.create) return false;
-        var filter = this.options.createFilter;
-        return input.length
-            && (typeof filter !== 'function' || filter.apply(self, [input]))
-            && (typeof filter !== 'string' || new RegExp(filter).test(input))
-            && (!(filter instanceof RegExp) || filter.test(input));
+    refreshItems: function() {
+        this.lastQuery = null;
+
+        if (this.isSetup) {
+            this.addItem(this.items);
+        }
+
+        this.refreshState();
+        this.updateOriginalInput();
+    },
+
+    refreshState: function() {
+        var invalid;
+        if (this.isRequired) {
+            if (this.items.length) this.isInvalid = false;
+            this.$control_input.attribute('required', this.isInvalid || null);
+        }
+        this.refreshClasses();
+    },
+
+    refreshClasses: function() {
+        var isFull   = this.isFull(),
+            isLocked = this.isLocked;
+
+        this.$wrapper.toggleClass('rtl', this.rtl);
+
+        this.$control.toggleClass('focus', this.isFocused);
+        this.$control.toggleClass('disabled', this.isDisabled);
+        this.$control.toggleClass('required', this.isRequired);
+        this.$control.toggleClass('invalid', this.isInvalid);
+        this.$control.toggleClass('locked', isLocked);
+        this.$control.toggleClass('full', isFull);
+        this.$control.toggleClass('not-full', !isFull);
+        this.$control.toggleClass('input-active', this.isFocused && !this.isInputHidden);
+        this.$control.toggleClass('dropdown-active', this.isOpen);
+        this.$control.toggleClass('has-options', !size(this.options.Options));
+        this.$control.toggleClass('has-items', this.items.length > 0);
+
+        // ARIA
+        if (this.isOpen) {
+            this.$wrapper
+                .attribute('aria-owns', this.rand)
+                .attribute('aria-activedescendant', slugify(this.rand + '-' + this.getValue()))
+                .attribute('aria-expanded', true);
+
+            this.$dropdown_content
+                .attribute('aria-expanded', true)
+                .attribute('aria-hidden', false);
+        } else {
+            this.$wrapper
+                .attribute('aria-owns', null)
+                .attribute('aria-activedescendant', null)
+                .attribute('aria-expanded', false);
+
+            this.$dropdown_content
+                .attribute('aria-expanded', false)
+                .attribute('aria-hidden', true);
+        }
+
+        this.$control_input.selectizeGrow = !isFull && !isLocked;
+    },
+
+    isFull: function() {
+        return this.options.maxItems !== null && this.items.length >= this.options.maxItems;
+    },
+
+    updateOriginalInput: function(opts) {
+        var options, label;
+        opts = opts || {};
+
+        if (this.tagType === TAG_SELECT) {
+            options = [];
+            for (var i = 0, n = this.items.length; i < n; i++) {
+                label = this.Options[this.items[i]][this.options.labelField] || '';
+                options.push('<option value="' + escapeHTML(this.items[i]) + '" selected="selected">' + escapeHTML(label) + '</option>');
+            }
+            if (!options.length && !this.input.attribute('multiple')) {
+                options.push('<option value="" selected="selected"></option>');
+            }
+            this.input.html(options.join(''));
+        } else {
+            this.input.value(this.getValue());
+            this.input.attribute('value', this.input.value());
+        }
+
+        if (this.isSetup && !opts.silent) {
+            this.emit('change', this.input.value());
+        }
+    },
+
+    updatePlaceholder: function() {
+        if (!this.options.placeholder) return;
+        var control_input = this.$control_input;
+
+        if (this.items.length) {
+            control_input.attribute('placeholder', null);
+        } else {
+            control_input.attribute('placeholder', this.options.placeholder);
+        }
+        control_input.emit('update', { force: true });
+    },
+
+    open: function() {
+        if (this.isLocked || this.isOpen || (this.options.mode === 'multi' && this.isFull())) return;
+        this.focus();
+        this.isOpen = true;
+        this.refreshState();
+        this.$dropdown.style({
+            visibility: 'hidden',
+            display: 'block'
+        });
+        this.positionDropdown();
+        this.$dropdown.style({ visibility: 'visible' });
+        this.emit('dropdown_open', this.$dropdown);
+    },
+
+    close: function() {
+        var trigger = this.isOpen;
+
+        if (this.options.mode === 'single' && this.items.length) {
+            this.hideInput();
+        }
+
+        this.isOpen = false;
+        this.$dropdown.hide();
+        this.setActiveOption(null);
+        this.refreshState();
+
+        if (trigger) this.emit('dropdown_close', this.$dropdown);
+    },
+
+    positionDropdown: function() {
+        var control = this.$control,
+            offset  = control.position();//this.options.dropdownParent === 'body' ? control.offset() : control.position();
+        offset.top += control[0].offsetHeight;
+
+        this.$dropdown.style({
+            width: control[0].offsetWidth,
+            top: control[0].offsetTop + control[0].offsetHeight,
+            left: control[0].offsetLeft
+        });
+    },
+
+    clear: function(silent) {
+        var non_input = this.$control.children(':not(input)');
+        if (!this.items.length) return;
+
+        if (non_input) non_input.remove();
+        this.items = [];
+        this.lastQuery = null;
+        this.setCaret(0);
+        this.setActiveItem(null);
+        this.updatePlaceholder();
+        this.updateOriginalInput({ silent: silent });
+        this.refreshState();
+        this.showInput();
+        this.emit('clear');
     },
 
     insertAtCaret: function($el) {
@@ -11477,7 +11742,7 @@ var Selectize = new prime({
     },
 
     disable: function() {
-        this.input.attribute('disabled', true);
+        this.input.disabled(true);
         this.$control_input.attribute('disabled', true).attribute('tabindex', -1);
         this.isDisabled = true;
         this.lock();
@@ -11504,7 +11769,7 @@ var Selectize = new prime({
             .attribute('tabindex', null)
             .removeClass('selectized')
             .attribute({ tabindex: revertSettings.tabindex })
-            .style({ display: 'block' });
+            .show();
 
         /*$(window).off(eventNS);
          $(document).off(eventNS);
@@ -11517,7 +11782,7 @@ var Selectize = new prime({
 
     render: function(templateName, data) {
         var value, id, label;
-        var html = '';
+        var name = '';
         var cache = false;
         var regex_tag = /^[\t \r\n]*<([a-z][a-z0-9\-_]*(?:\:[a-z][a-z0-9\-_]*)?)/i;
 
@@ -11537,7 +11802,7 @@ var Selectize = new prime({
         }
 
         // render markup
-        html = this.options.render[templateName].apply(this, [data, escapeHTML]);
+        var html = this.options.render[templateName].apply(this, [data, escapeHTML]);
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
@@ -11545,10 +11810,12 @@ var Selectize = new prime({
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
-            html = html.replace(regex_tag, '<$1 data-group="' + escape_replace(escapeHTML(id)) + '"');
+            name = escape_replace(escapeHTML(id));
+            html = html.replace(regex_tag, '<$1 data-group="' + name + '" role="group" aria-label="' + name + '"');
         }
         if (templateName === 'option' || templateName === 'item') {
-            html = html.replace(regex_tag, '<$1 data-value="' + escape_replace(escapeHTML(value || '')) + '"');
+            name = escape_replace(escapeHTML(value || ''));
+            html = html.replace(regex_tag, '<$1 data-value="' + name + '" id="' + slugify(this.rand + '-' + name) + '" role="treeitem" aria-label="' + trim(data.text) + '" aria-selected="false"');
         }
 
         // update cache
@@ -11565,18 +11832,31 @@ var Selectize = new prime({
         } else {
             delete this.renderCache[templateName];
         }
+    },
+
+    canCreate: function(input) {
+        if (!this.options.create) return false;
+        var filter = this.options.createFilter;
+        return input.length
+            && (typeof filter !== 'function' || filter.apply(self, [input]))
+            && (typeof filter !== 'string' || new RegExp(filter).test(input))
+            && (!(filter instanceof RegExp) || filter.test(input));
+    },
+
+    getPreviousValue: function() {
+        return this.previousValue;
     }
 });
 
 $.implement({
     selectize: function(settings_user) {
         settings_user = settings_user || {};
-        var defaults = Selectize.prototype.options,
-            settings = merge({}, defaults, settings_user),
-            attr_data = settings.dataAttr,
-            field_label = settings.labelField,
-            field_value = settings.valueField,
-            field_optgroup = settings.optgroupField,
+        var defaults             = Selectize.prototype.options,
+            settings             = merge({}, defaults, settings_user),
+            attr_data            = settings.dataAttr,
+            field_label          = settings.labelField,
+            field_value          = settings.valueField,
+            field_optgroup       = settings.optgroupField,
             field_optgroup_label = settings.optgroupLabelField,
             field_optgroup_value = settings.optgroupValueField;
 
@@ -11698,7 +11978,7 @@ $.implement({
 
             var instance,
                 dataOptions = $input.data('selectize'),
-                tag_name = $input.tag().toLowerCase(),
+                tag_name    = $input.tag().toLowerCase(),
                 placeholder = $input.attribute('placeholder') || $input.attribute('data-placeholder');
 
             // g5 custom
@@ -11740,7 +12020,7 @@ ready(function() {
 
 module.exports = Selectize;
 
-},{"../utils/elements.utils":56,"elements/domready":96,"elements/zen":101,"moofx":102,"mout/array/indexOf":140,"mout/array/last":144,"mout/collection/forEach":152,"mout/function/bind":155,"mout/function/debounce":156,"mout/lang/isArray":167,"mout/lang/isBoolean":168,"mout/object/merge":199,"mout/object/size":204,"mout/object/unset":206,"mout/object/values":207,"mout/string/escapeHtml":220,"mout/string/trim":230,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"sifter":262}],51:[function(require,module,exports){
+},{"../utils/elements.utils":56,"elements/domready":96,"elements/zen":101,"moofx":102,"mout/array/indexOf":140,"mout/array/last":144,"mout/collection/forEach":152,"mout/function/bind":155,"mout/function/debounce":156,"mout/lang/isArray":167,"mout/lang/isBoolean":168,"mout/object/merge":199,"mout/object/size":204,"mout/object/unset":206,"mout/object/values":207,"mout/string/escapeHtml":220,"mout/string/slugify":232,"mout/string/trim":233,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262,"sifter":265}],51:[function(require,module,exports){
 "use strict";
 
 var prime   = require('prime'),
@@ -11873,7 +12153,8 @@ var Toaster = new prime({
         var container = this.getContainer(options, true),
             element = zen('div'), title = zen('div'), message = zen('div'),
             icon = zen('i.fa'),
-            progress = zen('div.g-notifications-progress'), close = zen('a.fa.fa-close[href="#"]');
+            progress = zen('div.g-notifications-progress'),
+            close = zen('a.fa.fa-close[href="#"]');
 
         this.map.set(element, {
             container: container,
@@ -12039,7 +12320,7 @@ var Toaster = new prime({
     createContainer: function(options) {
         options = this.mergeOptions(options);
 
-        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target);
+        return zen('div#' + options.containerID + '.' + options.location)[options.targetLocation](options.target).attribute('aria-live', 'polite').attribute('role', 'alert');
     },
 
     remove: function(element) {
@@ -12064,7 +12345,8 @@ var Toaster = new prime({
 var toaster = new Toaster();
 
 module.exports = toaster;
-},{"../utils/elements.utils.js":56,"elements/zen":101,"mout/function/bind":155,"mout/object/merge":199,"prime":260,"prime-util/prime/bound":256,"prime-util/prime/options":257,"prime/emitter":259,"prime/map":261}],52:[function(require,module,exports){
+
+},{"../utils/elements.utils.js":56,"elements/zen":101,"mout/function/bind":155,"mout/object/merge":199,"prime":263,"prime-util/prime/bound":259,"prime-util/prime/options":260,"prime/emitter":262,"prime/map":264}],52:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     $             = require('elements'),
@@ -12086,6 +12368,7 @@ var hiddens,
 
         if (!hiddens) return true;
         hiddens.value(hiddens.value() == '0' ? '1' : '0');
+        element.parent('.enabler').attribute('aria-checked', hiddens.value() == '1' ? 'true' : 'false');
 
         hiddens.emit('change');
         $('body').emit('change', { target: hiddens });
@@ -12095,6 +12378,19 @@ var hiddens,
 
 ready(function() {
     var body = $('body');
+    body.delegate('keydown', '.enabler', function(event, element){
+        element = $(element);
+        if (element.disabled() || element.find('[disabled]')) {
+            return;
+        }
+
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            toggles(event, element.find('.toggle'));
+        }
+    });
+
     ['touchend', 'mouseup', 'click'].forEach(function(event) {
         body.delegate(event, '.enabler .toggle', toggles);
     });
@@ -12155,6 +12451,7 @@ var prime         = require('prime'),
     flags         = require('./flags-state'),
     parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
+    lm            = require('../lm'),
     mm            = require('../menu');
 
 require('../ui/popover');
@@ -12250,6 +12547,7 @@ History.Adapter.bind(window, 'statechange', function() {
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({ opacity: 0 });
+                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
                 $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
@@ -12404,6 +12702,7 @@ domready(function() {
                             modal.close();
 
                             body.emit('click', { target: item });
+                            navbar.attribute('tabindex', null).attribute('aria-hidden', 'false');
                             navbar.slideDown();
                         };
 
@@ -12441,6 +12740,7 @@ domready(function() {
         }
 
         body.emit('click', { target: item });
+        navbar.attribute('tabindex', null);
         navbar.slideDown();
     });
 
@@ -12549,7 +12849,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../menu":30,"../ui":46,"../ui/popover":48,"../utils/elements.utils":56,"./flags-state":59,"./get-ajax-suffix":60,"./get-ajax-url":61,"./history":64,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/collection/size":154,"mout/object/keys":198,"mout/object/merge":199,"mout/queryString/encode":208,"mout/queryString/getParam":209,"mout/queryString/setParam":211,"mout/random/guid":213,"mout/string/contains":219,"prime":260,"prime/map":261}],54:[function(require,module,exports){
+},{"../lm":24,"../menu":30,"../ui":46,"../ui/popover":48,"../utils/elements.utils":56,"./flags-state":59,"./get-ajax-suffix":60,"./get-ajax-url":61,"./history":64,"agent":67,"elements/domready":96,"elements/zen":101,"mout/array/indexOf":140,"mout/collection/size":154,"mout/object/keys":198,"mout/object/merge":199,"mout/queryString/encode":208,"mout/queryString/getParam":209,"mout/queryString/setParam":211,"mout/random/guid":213,"mout/string/contains":219,"prime":263,"prime/map":264}],54:[function(require,module,exports){
 "use strict";
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
@@ -12676,6 +12976,14 @@ $.implement({
         return this;
     },
 
+    hide: function() {
+        return this.style('display', 'none');
+    },
+
+    show: function(mode) {
+        return this.style('display', mode || 'inherit');
+    },
+
     progresser: function(options) {
         var instance;
 
@@ -12752,6 +13060,8 @@ $.implement({
             duration: '250ms',
             callback: callback
         };
+
+        this.style('visibility', 'visible').attribute('aria-hidden', false);
         this.animate({ height: size.height }, animation);
     },
 
@@ -12763,11 +13073,14 @@ $.implement({
         var element       = this,
             callbackStart = function() {
                 element.gSlideCollapsed = true;
+            },
+            callbackEnd = function() {
+                element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
-        callback = series(callbackStart, callback);
+        callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
             duration: '250ms',
@@ -12808,7 +13121,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../ui/progresser":49,"elements":98,"elements/zen":101,"moofx":102,"mout/array/map":145,"mout/function/series":160,"slick":264}],57:[function(require,module,exports){
+},{"../ui/progresser":49,"elements":98,"elements/zen":101,"moofx":102,"mout/array/map":145,"mout/function/series":160,"slick":267}],57:[function(require,module,exports){
 "use strict";
 var $     = require('elements');
 
@@ -12890,8 +13203,8 @@ var fieldValidation = function(field) {
 
     // use native validation if available
     if (typeof _field.willValidate !== 'undefined') {
-        if (tag == 'input' && _field.type.toLowerCase() !== type) {
-            // type not supported, fallback validation
+        if (tag == 'input' && (_field.type.toLowerCase() !== type || field.hasClass('custom-validation-field'))) {
+            // type not supported or custom, fallback validation
             _field.setCustomValidity(validate(field) ? '' : 'The field value is invalid');
         }
 
@@ -12919,6 +13232,8 @@ var validate = function(field) {
         required = field.attribute('required'),
         minlength = field.attribute('minlength'),
         maxlength = field.attribute('maxlength'),
+        min = field.attribute('min'),
+        max = field.attribute('max'),
         pattern = field.attribute('pattern');
 
     // disabled fields should not be validated
@@ -12936,10 +13251,22 @@ var validate = function(field) {
         isValid = pattern.test(value);
     }
 
+    // min / max
+    if (isValid && (min !== null || max !== null)) {
+        if (min !== null) {
+            isValid = parseFloat(value) >= parseFloat(min);
+        }
+
+        if (max !== null) {
+            isValid = parseFloat(value) <= parseFloat(max);
+        }
+    }
+
     return isValid;
 };
 
 module.exports = fieldValidation;
+
 },{"elements":98}],59:[function(require,module,exports){
 "use strict";
 
@@ -13013,7 +13340,7 @@ var FlagsState = new prime({
 
 module.exports = new FlagsState();
 
-},{"../ui":46,"./get-ajax-suffix":60,"./get-ajax-url":61,"prime":260,"prime/emitter":259,"prime/map":261}],60:[function(require,module,exports){
+},{"../ui":46,"./get-ajax-suffix":60,"./get-ajax-url":61,"prime":263,"prime/emitter":262,"prime/map":264}],60:[function(require,module,exports){
 "use strict";
 var getAjaxSuffix = function() {
     return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
@@ -13057,7 +13384,7 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
-},{"mout/string/unescapeHtml":232}],62:[function(require,module,exports){
+},{"mout/string/unescapeHtml":235}],62:[function(require,module,exports){
 "use strict";
 
 var zen = require('elements/zen');
@@ -15267,7 +15594,7 @@ var SaveState = new prime({
 
 module.exports = SaveState;
 
-},{"mout/lang/deepClone":164,"prime":260}],67:[function(require,module,exports){
+},{"mout/lang/deepClone":164,"prime":263}],67:[function(require,module,exports){
 /*
 Agent
 - heavily inspired by superagent by visionmedia https://github.com/visionmedia/superagent, released under the MIT license
@@ -18355,7 +18682,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":94,"mout/array/filter":135,"mout/array/forEach":139,"mout/array/indexOf":140,"mout/string/trim":230}],94:[function(require,module,exports){
+},{"./base":94,"mout/array/filter":135,"mout/array/forEach":139,"mout/array/indexOf":140,"mout/string/trim":233}],94:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -18486,7 +18813,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":134,"mout/array/filter":135,"mout/array/forEach":139,"mout/array/map":145,"mout/array/some":148,"prime":260}],95:[function(require,module,exports){
+},{"mout/array/every":134,"mout/array/filter":135,"mout/array/forEach":139,"mout/array/map":145,"mout/array/some":148,"prime":263}],95:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -18569,7 +18896,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":97,"./traversal":100,"prime/map":261}],96:[function(require,module,exports){
+},{"./events":97,"./traversal":100,"prime/map":264}],96:[function(require,module,exports){
 /*
 domready
 */"use strict"
@@ -18749,7 +19076,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":94,"prime/emitter":259}],98:[function(require,module,exports){
+},{"./base":94,"prime/emitter":262}],98:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -18962,7 +19289,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":94,"mout/array/map":145,"slick":264}],101:[function(require,module,exports){
+},{"./base":94,"mout/array/map":145,"slick":267}],101:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -19020,7 +19347,7 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":94,"mout/array/forEach":139,"mout/array/map":145,"slick/parser":265}],102:[function(require,module,exports){
+},{"./base":94,"mout/array/forEach":139,"mout/array/map":145,"slick/parser":268}],102:[function(require,module,exports){
 /*          .-   3
 .-.-..-..-.-|-._.
 ' ' '`-'`-' ' ' '
@@ -22613,7 +22940,7 @@ var getQuery = require('./getQuery');
     module.exports = getParam;
 
 
-},{"../string/typecast":231,"./getQuery":210}],210:[function(require,module,exports){
+},{"../string/typecast":234,"./getQuery":210}],210:[function(require,module,exports){
 
 
     /**
@@ -22891,7 +23218,23 @@ var upperCase = require('./upperCase');
     module.exports = properCase;
 
 
-},{"../lang/toString":179,"./lowerCase":223,"./upperCase":234}],226:[function(require,module,exports){
+},{"../lang/toString":179,"./lowerCase":223,"./upperCase":237}],226:[function(require,module,exports){
+var toString = require('../lang/toString');
+    // This pattern is generated by the _build/pattern-removeNonWord.js script
+    var PATTERN = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
+
+    /**
+     * Remove non-word chars.
+     */
+    function removeNonWord(str){
+        str = toString(str);
+        return str.replace(PATTERN, '');
+    }
+
+    module.exports = removeNonWord;
+
+
+},{"../lang/toString":179}],227:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toInt = require('../number/toInt');
 
@@ -22919,7 +23262,7 @@ var toInt = require('../number/toInt');
 
 
 
-},{"../lang/toString":179,"../number/toInt":187}],227:[function(require,module,exports){
+},{"../lang/toString":179,"../number/toInt":187}],228:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toArray = require('../lang/toArray');
 
@@ -22954,7 +23297,45 @@ var toArray = require('../lang/toArray');
 
 
 
-},{"../lang/toArray":177,"../lang/toString":179}],228:[function(require,module,exports){
+},{"../lang/toArray":177,"../lang/toString":179}],229:[function(require,module,exports){
+var toString = require('../lang/toString');
+    /**
+    * Replaces all accented chars with regular ones
+    */
+    function replaceAccents(str){
+        str = toString(str);
+
+        // verifies if the String has accents and replace them
+        if (str.search(/[\xC0-\xFF]/g) > -1) {
+            str = str
+                    .replace(/[\xC0-\xC5]/g, "A")
+                    .replace(/[\xC6]/g, "AE")
+                    .replace(/[\xC7]/g, "C")
+                    .replace(/[\xC8-\xCB]/g, "E")
+                    .replace(/[\xCC-\xCF]/g, "I")
+                    .replace(/[\xD0]/g, "D")
+                    .replace(/[\xD1]/g, "N")
+                    .replace(/[\xD2-\xD6\xD8]/g, "O")
+                    .replace(/[\xD9-\xDC]/g, "U")
+                    .replace(/[\xDD]/g, "Y")
+                    .replace(/[\xDE]/g, "P")
+                    .replace(/[\xE0-\xE5]/g, "a")
+                    .replace(/[\xE6]/g, "ae")
+                    .replace(/[\xE7]/g, "c")
+                    .replace(/[\xE8-\xEB]/g, "e")
+                    .replace(/[\xEC-\xEF]/g, "i")
+                    .replace(/[\xF1]/g, "n")
+                    .replace(/[\xF2-\xF6\xF8]/g, "o")
+                    .replace(/[\xF9-\xFC]/g, "u")
+                    .replace(/[\xFE]/g, "p")
+                    .replace(/[\xFD\xFF]/g, "y");
+        }
+        return str;
+    }
+    module.exports = replaceAccents;
+
+
+},{"../lang/toString":179}],230:[function(require,module,exports){
 var toString = require('../lang/toString');
 var repeat = require('./repeat');
 
@@ -22971,11 +23352,37 @@ var repeat = require('./repeat');
 
 
 
-},{"../lang/toString":179,"./repeat":226}],229:[function(require,module,exports){
+},{"../lang/toString":179,"./repeat":227}],231:[function(require,module,exports){
 arguments[4][85][0].apply(exports,arguments)
-},{"../lang/toString":179,"./WHITE_SPACES":218,"dup":85}],230:[function(require,module,exports){
+},{"../lang/toString":179,"./WHITE_SPACES":218,"dup":85}],232:[function(require,module,exports){
+var toString = require('../lang/toString');
+var replaceAccents = require('./replaceAccents');
+var removeNonWord = require('./removeNonWord');
+var trim = require('./trim');
+    /**
+     * Convert to lower case, remove accents, remove non-word chars and
+     * replace spaces with the specified delimeter.
+     * Does not split camelCase text.
+     */
+    function slugify(str, delimeter){
+        str = toString(str);
+
+        if (delimeter == null) {
+            delimeter = "-";
+        }
+        str = replaceAccents(str);
+        str = removeNonWord(str);
+        str = trim(str) //should come after removeNonWord
+                .replace(/ +/g, delimeter) //replace spaces with delimeter
+                .toLowerCase();
+        return str;
+    }
+    module.exports = slugify;
+
+
+},{"../lang/toString":179,"./removeNonWord":226,"./replaceAccents":229,"./trim":233}],233:[function(require,module,exports){
 arguments[4][86][0].apply(exports,arguments)
-},{"../lang/toString":179,"./WHITE_SPACES":218,"./ltrim":224,"./rtrim":229,"dup":86}],231:[function(require,module,exports){
+},{"../lang/toString":179,"./WHITE_SPACES":218,"./ltrim":224,"./rtrim":231,"dup":86}],234:[function(require,module,exports){
 
 
     var UNDEF;
@@ -23006,7 +23413,7 @@ arguments[4][86][0].apply(exports,arguments)
     module.exports = typecast;
 
 
-},{}],232:[function(require,module,exports){
+},{}],235:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23026,7 +23433,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":179}],233:[function(require,module,exports){
+},{"../lang/toString":179}],236:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * Replaces hyphens with spaces. (only hyphens between word chars)
@@ -23038,15 +23445,15 @@ var toString = require('../lang/toString');
     module.exports = unhyphenate;
 
 
-},{"../lang/toString":179}],234:[function(require,module,exports){
+},{"../lang/toString":179}],237:[function(require,module,exports){
 arguments[4][87][0].apply(exports,arguments)
-},{"../lang/toString":179,"dup":87}],235:[function(require,module,exports){
+},{"../lang/toString":179,"dup":87}],238:[function(require,module,exports){
 arguments[4][88][0].apply(exports,arguments)
-},{"dup":88}],236:[function(require,module,exports){
+},{"dup":88}],239:[function(require,module,exports){
 arguments[4][147][0].apply(exports,arguments)
-},{"dup":147}],237:[function(require,module,exports){
+},{"dup":147}],240:[function(require,module,exports){
 arguments[4][155][0].apply(exports,arguments)
-},{"../array/slice":236,"dup":155}],238:[function(require,module,exports){
+},{"../array/slice":239,"dup":155}],241:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -23097,41 +23504,41 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":248,"./isPlainObject":242,"./kindOf":243}],239:[function(require,module,exports){
+},{"../object/mixIn":251,"./isPlainObject":245,"./kindOf":246}],242:[function(require,module,exports){
 arguments[4][164][0].apply(exports,arguments)
-},{"../object/forOwn":245,"./clone":238,"./isPlainObject":242,"./kindOf":243,"dup":164}],240:[function(require,module,exports){
+},{"../object/forOwn":248,"./clone":241,"./isPlainObject":245,"./kindOf":246,"dup":164}],243:[function(require,module,exports){
 arguments[4][74][0].apply(exports,arguments)
-},{"./kindOf":243,"dup":74}],241:[function(require,module,exports){
+},{"./kindOf":246,"dup":74}],244:[function(require,module,exports){
 arguments[4][75][0].apply(exports,arguments)
-},{"./isKind":240,"dup":75}],242:[function(require,module,exports){
+},{"./isKind":243,"dup":75}],245:[function(require,module,exports){
 arguments[4][173][0].apply(exports,arguments)
-},{"dup":173}],243:[function(require,module,exports){
+},{"dup":173}],246:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],244:[function(require,module,exports){
+},{"dup":77}],247:[function(require,module,exports){
 arguments[4][79][0].apply(exports,arguments)
-},{"./hasOwn":246,"dup":79}],245:[function(require,module,exports){
+},{"./hasOwn":249,"dup":79}],248:[function(require,module,exports){
 arguments[4][80][0].apply(exports,arguments)
-},{"./forIn":244,"./hasOwn":246,"dup":80}],246:[function(require,module,exports){
+},{"./forIn":247,"./hasOwn":249,"dup":80}],249:[function(require,module,exports){
 arguments[4][81][0].apply(exports,arguments)
-},{"dup":81}],247:[function(require,module,exports){
+},{"dup":81}],250:[function(require,module,exports){
 arguments[4][199][0].apply(exports,arguments)
-},{"../lang/deepClone":239,"../lang/isObject":241,"./hasOwn":246,"dup":199}],248:[function(require,module,exports){
+},{"../lang/deepClone":242,"../lang/isObject":244,"./hasOwn":249,"dup":199}],251:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"./forOwn":245,"dup":82}],249:[function(require,module,exports){
+},{"./forOwn":248,"dup":82}],252:[function(require,module,exports){
 arguments[4][91][0].apply(exports,arguments)
-},{"dup":91,"mout/lang/createObject":250,"mout/lang/kindOf":251,"mout/object/hasOwn":254,"mout/object/mixIn":255}],250:[function(require,module,exports){
+},{"dup":91,"mout/lang/createObject":253,"mout/lang/kindOf":254,"mout/object/hasOwn":257,"mout/object/mixIn":258}],253:[function(require,module,exports){
 arguments[4][71][0].apply(exports,arguments)
-},{"../object/mixIn":255,"dup":71}],251:[function(require,module,exports){
+},{"../object/mixIn":258,"dup":71}],254:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"dup":77}],252:[function(require,module,exports){
+},{"dup":77}],255:[function(require,module,exports){
 arguments[4][79][0].apply(exports,arguments)
-},{"./hasOwn":254,"dup":79}],253:[function(require,module,exports){
+},{"./hasOwn":257,"dup":79}],256:[function(require,module,exports){
 arguments[4][80][0].apply(exports,arguments)
-},{"./forIn":252,"./hasOwn":254,"dup":80}],254:[function(require,module,exports){
+},{"./forIn":255,"./hasOwn":257,"dup":80}],257:[function(require,module,exports){
 arguments[4][81][0].apply(exports,arguments)
-},{"dup":81}],255:[function(require,module,exports){
+},{"dup":81}],258:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"./forOwn":253,"dup":82}],256:[function(require,module,exports){
+},{"./forOwn":256,"dup":82}],259:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -23151,7 +23558,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":237,"prime":249}],257:[function(require,module,exports){
+},{"mout/function/bind":240,"prime":252}],260:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -23170,7 +23577,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":247,"prime":249}],258:[function(require,module,exports){
+},{"mout/object/merge":250,"prime":252}],261:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -23289,7 +23696,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":1,"mout/array/forEach":139,"mout/array/indexOf":140,"mout/lang/kindOf":176,"mout/time/now":235}],259:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":139,"mout/array/indexOf":140,"mout/lang/kindOf":176,"mout/time/now":238}],262:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -23360,7 +23767,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":258,"./index":260,"mout/array/forEach":139,"mout/array/indexOf":140}],260:[function(require,module,exports){
+},{"./defer":261,"./index":263,"mout/array/forEach":139,"mout/array/indexOf":140}],263:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -23452,7 +23859,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":163,"mout/lang/kindOf":176,"mout/object/hasOwn":197,"mout/object/mixIn":200}],261:[function(require,module,exports){
+},{"mout/lang/createObject":163,"mout/lang/kindOf":176,"mout/object/hasOwn":197,"mout/object/mixIn":200}],264:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -23578,7 +23985,7 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":260,"mout/array/indexOf":140}],262:[function(require,module,exports){
+},{"./index":263,"mout/array/indexOf":140}],265:[function(require,module,exports){
 /**
  * sifter.js
  * Copyright (c) 2013 Brian Reavis & contributors
@@ -24051,7 +24458,7 @@ module.exports = map
 }));
 
 
-},{}],263:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -24882,7 +25289,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":265}],264:[function(require,module,exports){
+},{"./parser":268}],267:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -24892,7 +25299,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":263,"./parser":265}],265:[function(require,module,exports){
+},{"./finder":266,"./parser":268}],268:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -25144,7 +25551,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],266:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 /**!
  * Sortable
  * @author	RubaXa   <trash@rubaxa.org>
@@ -26252,7 +26659,7 @@ module.exports = parse
 	return Sortable;
 });
 
-},{}],267:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 /* Web Font Loader v1.6.5 - (c) Adobe Systems, Google. License: Apache 2.0 */
 (function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var p=Date.now||function(){return+new Date};function r(a,b){this.D=a;this.m=b||a;this.F=this.m.document}r.prototype.createElement=function(a,b,c){a=this.F.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.F.createTextNode(c));return a};function s(a,b,c){a=a.F.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}
 function t(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),f=0;f<b.length;f+=1){for(var e=!1,g=0;g<d.length;g+=1)if(b[f]===d[g]){e=!0;break}e||d.push(b[f])}b=[];for(f=0;f<d.length;f+=1){e=!1;for(g=0;g<c.length;g+=1)if(d[f]===c[g]){e=!0;break}e||b.push(d[f])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function u(a,b){for(var c=a.className.split(/\s+/),d=0,f=c.length;d<f;d++)if(c[d]==b)return!0;return!1}

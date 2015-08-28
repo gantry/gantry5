@@ -31,9 +31,5 @@ layout:
       - [position-position-9, position-position-10, position-position-11]
       - position-position-14
 
-  debug:
-    container:
-      - position-debug
-
   offcanvas:
     - particle-mobile-menu

@@ -16,14 +16,19 @@ namespace Gantry\Framework\Base;
 
 use FilesystemIterator;
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Configuration\AbstractConfigurationCollection;
+use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Configurations extends AbstractConfigurationCollection
+class Outlines extends AbstractOutlineCollection
 {
+    /**
+     * @var string
+     */
+    protected $path;
+
     /**
      * @param string $path
      * @return $this
@@ -31,6 +36,8 @@ class Configurations extends AbstractConfigurationCollection
      */
     public function load($path = 'gantry-config://')
     {
+        $this->path = $path;
+
         $iterator = $this->getFilesystemIterator($path);
 
         $files = [];
@@ -149,14 +156,14 @@ class Configurations extends AbstractConfigurationCollection
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $path = $locator->findResource("gantry-config://{$id}");
+        $path = $locator->findResource("{$this->path}/{$id}");
         if (!$path || !is_dir($path)) {
             throw new \RuntimeException('Outline not found', 404);
         }
 
         $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id)));
 
-        $newPath = $locator->findResource("gantry-config://{$folder}", true, true);
+        $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
 
         try {
             Folder::copy($path, $newPath);
@@ -184,7 +191,7 @@ class Configurations extends AbstractConfigurationCollection
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $path = $locator->findResource("gantry-config://{$id}", true, true);
+        $path = $locator->findResource("{$this->path}/{$id}", true, true);
         if (!$path || !is_dir($path)) {
             throw new \RuntimeException('Outline not found', 404);
         }
@@ -195,7 +202,7 @@ class Configurations extends AbstractConfigurationCollection
             throw new \RuntimeException("Outline cannot use reserved name '{$folder}'", 400);
         }
 
-        $newPath = $locator->findResource("gantry-config://{$folder}", true, true);
+        $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
         if (is_dir($newPath)) {
             throw new \RuntimeException("Outline '$id' already exists.", 400);
         }
@@ -223,7 +230,7 @@ class Configurations extends AbstractConfigurationCollection
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
-        $path = $locator->findResource("gantry-config://{$id}", true, true);
+        $path = $locator->findResource("{$this->path}/{$id}", true, true);
         if (!is_dir($path)) {
             throw new \RuntimeException('Outline not found', 404);
         }

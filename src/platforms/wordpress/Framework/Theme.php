@@ -11,9 +11,12 @@ class Theme extends Base\Theme
 
     public function __construct( $path, $name = '' )
     {
+        global $pagenow;
+
         parent::__construct($path, $name);
 
         $gantry = Gantry::instance();
+        $global = $gantry['global'];
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -39,6 +42,19 @@ class Theme extends Base\Theme
         add_action( 'admin_print_styles', [ $this, 'print_styles' ], 200 );
         add_action( 'admin_print_scripts', [ $this, 'print_scripts' ], 200 );
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
+
+        // Offline support.
+        $global = $gantry['global'];
+        if ($global->get('offline') && !is_super_admin() && !current_user_can('manage_options')
+            && $pagenow != 'wp-login.php') {
+            if (locate_template(['offline.php'])) {
+                add_filter('template_include', function () {
+                    return locate_template(['offline.php']);
+                });
+            } else {
+                wp_die($global->get('offline_message'), get_bloginfo('title'));
+            }
+        }
     }
 
     public function init()
@@ -72,12 +88,20 @@ class Theme extends Base\Theme
 
             $params = array(
                 'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => true,
+                'debug' => $gantry->debug(),
                 'auto_reload' => true,
                 'autoescape' => 'html'
             );
 
             $twig = new \Twig_Environment($loader, $params);
+
+            if ($gantry->debug()) {
+                $twig->addExtension(new \Twig_Extension_Debug());
+            }
+
+            $twig = apply_filters('twig_apply_filters', $twig);
+            $twig = apply_filters('timber/twig/filters', $twig);
+            $twig = apply_filters('timber/loader/twig', $twig);
 
             // FIXME: Get timezone from WP.
             //$timezone = 'UTC';
@@ -92,10 +116,16 @@ class Theme extends Base\Theme
     }
 
 
-    public function render($file, array $context = array())
+    public function render($file, array $context = [])
     {
+        static $timberContext;
+
+        if (!isset($timberContext)) {
+            $timberContext = \Timber::get_context();
+        }
+
         // Include Gantry specific things to the context.
-        $context = $this->add_to_context($context);
+        $context = array_replace($timberContext, $context);
 
         return $this->renderer()->render($file, $context);
     }
@@ -254,5 +284,12 @@ class Theme extends Base\Theme
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    protected function renderContent($item)
+    {
+        $context = ['segment' => $item];
+
+        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
     }
 }

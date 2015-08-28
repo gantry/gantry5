@@ -42,6 +42,7 @@ html.g5-dialog-open {
     .g5-content {
         @include animation(fadeIn 0.5s);
         background: $white;
+        outline: transparent;
     }
 
     .g5-dialog.g5-closing .g5-content {

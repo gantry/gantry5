@@ -43,6 +43,7 @@ trait ThemeTrait
     protected $segments;
     protected $preset;
     protected $cssCache;
+    protected $compiler;
 
     /**
      * Initialize theme.
@@ -74,6 +75,8 @@ trait ThemeTrait
 
     /**
      * Update all CSS files in the theme.
+     *
+     * @return array List of CSS warnings.
      */
     public function updateCss()
     {
@@ -89,14 +92,21 @@ trait ThemeTrait
             Folder::delete($path, false);
         }
 
-        /** @var Configurations $configurations */
+        /** @var Outlines $configurations */
         $configurations = $gantry['configurations'];
+        $warnings = [];
         foreach ($configurations as $configuration => $title) {
             $config = ConfigServiceProvider::load($gantry, $configuration);
 
             $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
-            $compiler->compileAll();
+
+            $results = $compiler->compileAll()->getWarnings();
+            if ($results) {
+                $warnings[$configuration] = $results;
+            }
         }
+
+        return $warnings;
     }
 
     /**
@@ -178,9 +188,7 @@ trait ThemeTrait
      */
     public function compiler()
     {
-        static $compiler;
-
-        if (!$compiler) {
+        if (!$this->compiler) {
             $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
 
             if (!class_exists($compilerClass)) {
@@ -190,8 +198,8 @@ trait ThemeTrait
             $details = $this->details();
 
             /** @var CssCompilerInterface $compiler */
-            $compiler = new $compilerClass();
-            $compiler
+            $this->compiler = new $compilerClass();
+            $this->compiler
                 ->setTarget($details->get('configuration.css.target'))
                 ->setPaths($details->get('configuration.css.paths'))
                 ->setFiles($details->get('configuration.css.files'))
@@ -200,13 +208,13 @@ trait ThemeTrait
 
         $preset = $this->preset(true);
         if ($preset) {
-            $compiler->setConfiguration($preset);
+            $this->compiler->setConfiguration($preset);
         } else {
             $gantry = static::gantry();
-            $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
+            $this->compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
         }
 
-        return $compiler->reset();
+        return $this->compiler->reset();
     }
 
     /**
@@ -515,12 +523,20 @@ trait ThemeTrait
                         if (!isset($child->attributes->size)) {
                             $child->attributes->size = 100 / count($item->children);
                         }
-                        $dynamicSize += $child->attributes->size;
+                        if (empty($child->attributes->fixed)) {
+                            $dynamicSize += $child->attributes->size;
+                        } else {
+                            $fixedSize += $child->attributes->size;
+                        }
                     }
                     if (round($dynamicSize, 1) != 100) {
                         $fraction = 0;
                         $multiplier = (100 - $fixedSize) / $dynamicSize;
                         foreach ($item->children as $child) {
+                            if (!empty($child->attributes->fixed)) {
+                                continue;
+                            }
+
                             // Calculate size for the next item by taking account the rounding error from the last item.
                             // This will allow us to approximate cumulating error and fix it when rounding error grows
                             // over the rounding treshold.

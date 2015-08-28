@@ -169,7 +169,7 @@ class Layout extends HtmlController
         }
 
         $block = $this->request->post->getArray('block');
-        if (isset($block)) {
+        if (!empty($block)) {
             $item->block = (object) $block;
         }
 
@@ -178,17 +178,23 @@ class Layout extends HtmlController
         $attributes = $this->request->post->getArray('options');
 
         if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
+            $particle = false;
+            $hasBlock = $type == 'section' && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
-            $extra = null;
             $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
         } else {
+            $particle = true;
+            $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
-            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        }
+
+        if ($hasBlock) {
+            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
         }
 
         // TODO: Use blueprints to merge configuration.
@@ -196,7 +202,7 @@ class Layout extends HtmlController
 
         $this->params['id'] = $name;
         $this->params += [
-            'extra'         => $extra,
+            'extra'         => isset($extra) ? $extra : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],
@@ -208,7 +214,7 @@ class Layout extends HtmlController
             'skip'          => ['enabled']
         ];
 
-        if ($extra) {
+        if ($particle) {
             $typeLayout = $type == 'atom' ? $type : 'particle';
             $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
@@ -330,21 +336,28 @@ class Layout extends HtmlController
             }
 
             $data->join('title', $this->request->post['title'] ?: ucfirst($particle));
-            $block = $this->request->post->getArray('block');
-            if ($block) {
-                // TODO: remove empty items in some other way:
-                foreach ($block as $key => $param) {
-                    if ($param === '') {
-                        unset($block[$key]);
-                        continue;
-                    }
-                    if ($key == 'size') {
-                        $block[$key] = round($param, 4);
-                    }
-                }
+        }
 
-                $data->join('block', $block);
+        $block = $this->request->post->getArray('block');
+        if ($block) {
+            // TODO: remove empty items in some other way:
+            foreach ($block as $key => $param) {
+                if ($param === '') {
+                    unset($block[$key]);
+                    continue;
+                }
+                if ($key == 'size') {
+                    $param = round($param, 4);
+                    if ($param < 5) {
+                        $param = 5;
+                    } elseif ($param > 100) {
+                        $param = 100;
+                    }
+                    $block[$key] = $param;
+                }
             }
+
+            $data->join('block', $block);
         }
 
         // TODO: validate

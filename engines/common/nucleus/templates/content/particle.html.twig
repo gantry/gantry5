@@ -11,7 +11,7 @@
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
             {% include ['particles/' ~ segment.subtype ~ '.html.twig',
             '@particles/' ~ segment.subtype ~ '.html.twig']
-            ignore missing with {gantry: gantry, particle: particle } only %}
+            ignore missing with {gantry: gantry, particle: particle } %}
         {% endif %}
     {% endset %}
 

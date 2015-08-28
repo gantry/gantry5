@@ -35,6 +35,14 @@ $.implement({
         return this;
     },
 
+    hide: function() {
+        return this.style('display', 'none');
+    },
+
+    show: function(mode) {
+        return this.style('display', mode || 'inherit');
+    },
+
     progresser: function(options) {
         var instance;
 
@@ -111,6 +119,8 @@ $.implement({
             duration: '250ms',
             callback: callback
         };
+
+        this.style('visibility', 'visible').attribute('aria-hidden', false);
         this.animate({ height: size.height }, animation);
     },
 
@@ -122,11 +132,14 @@ $.implement({
         var element       = this,
             callbackStart = function() {
                 element.gSlideCollapsed = true;
+            },
+            callbackEnd = function() {
+                element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
         callback = typeof animation == 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
-        callback = series(callbackStart, callback);
+        callback = series(callbackStart, callback, callbackEnd);
 
         animation = typeof animation == 'string' ? animation : {
             duration: '250ms',

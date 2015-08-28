@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1db4ef5217d732832728a80de226f58a",
+    "hash": "857c88a0f678ff519fb462c5fdd54055",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -95,12 +95,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "494fa733db16e2ac66c514621150bd97a0a4eb37"
+                "reference": "cfe9ce209d2705fece1743f0af45f58fec840458"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/494fa733db16e2ac66c514621150bd97a0a4eb37",
-                "reference": "494fa733db16e2ac66c514621150bd97a0a4eb37",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/cfe9ce209d2705fece1743f0af45f58fec840458",
+                "reference": "cfe9ce209d2705fece1743f0af45f58fec840458",
                 "shasum": ""
             },
             "require": {
@@ -145,7 +145,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-06-30 08:10:58"
+            "time": "2015-07-23 15:48:15"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -232,16 +232,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.1.9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "609c08586d583fc7d1db78b7edd8b4ac57fa5137"
+                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/609c08586d583fc7d1db78b7edd8b4ac57fa5137",
-                "reference": "609c08586d583fc7d1db78b7edd8b4ac57fa5137",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
+                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-08-01 16:04:21"
+            "time": "2015-08-25 16:15:39"
         },
         {
             "name": "pimple/pimple",
@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "7b3ced9f19c01f18ba533bb1a40dced7b90f717f"
+                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/7b3ced9f19c01f18ba533bb1a40dced7b90f717f",
-                "reference": "7b3ced9f19c01f18ba533bb1a40dced7b90f717f",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/19fb0167176e7bf8bfd9602c6765528b31fa23bf",
+                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-07-13 10:55:21"
+            "time": "2015-08-27 10:05:44"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -448,12 +448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "6eef1477f3c4451b6024fadb1254009be4602908"
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/6eef1477f3c4451b6024fadb1254009be4602908",
-                "reference": "6eef1477f3c4451b6024fadb1254009be4602908",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
                 "shasum": ""
             },
             "require": {
@@ -489,7 +489,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-29 07:12:56"
+            "time": "2015-08-24 07:18:02"
         },
         {
             "name": "twig/twig",
@@ -497,21 +497,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "61d45b3e24598605211a2d9eb453082d12d2f766"
+                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/61d45b3e24598605211a2d9eb453082d12d2f766",
-                "reference": "61d45b3e24598605211a2d9eb453082d12d2f766",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5815c8344b4d645323d92dab3abb5b8a7d8dd605",
+                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.20-dev"
+                    "dev-master": "1.21-dev"
                 }
             },
             "autoload": {
@@ -546,14 +550,15 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-11 13:57:52"
+            "time": "2015-08-27 07:48:00"
         }
     ],
     "packages-dev": null,
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "rockettheme/toolbox": 20
+        "rockettheme/toolbox": 20,
+        "leafo/scssphp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

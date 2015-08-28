@@ -1,7 +1,7 @@
 <div class="g-grid">
     <div class="g-block navbar-block">
         <nav id="gantry">
-            {% set style = location in ['menu', 'about', 'configurations']  ? ' style="overflow: hidden; height: 0;"' : '' %}
+            {% set style = location in ['menu', 'about', 'configurations']  ? ' style="overflow: hidden; height: 0; visibility: hidden;"' : '' %}
             <section id="navbar"{{ style|raw }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
@@ -25,7 +25,7 @@
                 </ul>
             </section>
         </nav>
-        <a href="{{ gantry.route('themes') }}">
+        <a href="{{ gantry.route('themes') }}" aria-hidden="true" tabindex="-1">
             <svg id="gantry-logo" viewBox="0 0 81 28" style="background-color:#ffffff00" version="1.1"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
                 x="0px" y="0px" width="81px" height="28px"

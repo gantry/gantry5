@@ -1477,9 +1477,15 @@
 #g5-container .visible-desktop {
   display: inherit !important;
 }
+#g5-container .g-block.visible-desktop {
+  display: block !important;
+}
 @media print {
   #g5-container .visible-print {
     display: inherit !important;
+  }
+  #g5-container .g-block.visible-print {
+    display: block !important;
   }
   #g5-container .hidden-print {
     display: none !important;
@@ -1741,6 +1747,8 @@ body.g-prime {
   line-height: 1rem;
   padding: 2px;
   margin-right: 5px;
+  position: relative;
+  z-index: 5;
 }
 #g5-container .card h4[data-g-collapse] .g-collapse:hover:before {
   bottom: 1.65rem;
@@ -1772,6 +1780,9 @@ body.g-prime {
 }
 #g5-container .card .theme-screenshot a {
   display: block;
+}
+#g5-container .enabler {
+  outline: transparent;
 }
 #g5-container .enabler .toggle {
   background-color: #ed5565;
@@ -2425,6 +2436,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 #g5-container .settings-block .alert {
   margin: 0.625rem 0;
+}
+#g5-container .settings-block h4.card-overrideable {
+  padding: 4px 8px;
+}
+#g5-container .settings-block h4.card-overrideable .enabler {
+  margin-right: 2rem;
 }
 #g5-container .settings-block .settings-param {
   padding: 10px 5px;
@@ -4923,6 +4940,17 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   background: #ed5565;
   border: 1px solid #e8273b;
 }
+#g5-container #g-notifications-container .g-notifications-theme-warning {
+  background: #ffce54;
+  color: #ba8500;
+  border: 1px solid #ffbf21;
+}
+#g5-container #g-notifications-container .g-notifications-theme-warning hr {
+  border-bottom-color: #ba8500;
+}
+#g5-container #g-notifications-container .g-notifications-theme-warning h3, #g5-container #g-notifications-container .g-notifications-theme-warning h4 {
+  margin: 0;
+}
 
 html.g5-dialog-open {
   overflow: hidden;
@@ -4973,6 +5001,7 @@ html.g5-dialog-open {
   -moz-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
   background: #fff;
+  outline: transparent;
 }
 #g5-container .g5-dialog.g5-closing .g5-content {
   -webkit-animation: fadeOut 0.3s;
@@ -5114,6 +5143,7 @@ html.g5-dialog-open {
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   color: #444;
+  outline: transparent;
 }
 #g5-container .g5-popover.top, #g5-container .g5-popover.top-left, #g5-container .g5-popover.top-right {
   margin-top: -10px;
@@ -5306,6 +5336,9 @@ html.g5-dialog-open {
   color: #666;
   background-color: #eee;
   border-radius: 4px;
+}
+#g5-container .g5-popover-extras a:focus, #g5-container .g5-popover-extras [data-g-devprod]:focus {
+  outline: auto;
 }
 
 #g5-container {

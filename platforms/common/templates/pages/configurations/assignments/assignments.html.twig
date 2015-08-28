@@ -13,11 +13,11 @@
         <div class="g-filters-bar">
             <div class="g-panel-filters" data-g-global-filter>
                 <div class="search settings-block">
-                    <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}">
+                    <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
                     <i class="fa fa-fw fa-search"></i>
                 </div>
-                <span data-g-assignments-uncheck class="g-tooltip g-tooltip-right" data-title="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-off"></i></span>
-                <span data-g-assignments-check class="g-tooltip g-tooltip-right" data-title="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-on"></i></span>
+                <span data-g-assignments-uncheck data-role="button" class="g-tooltip g-tooltip-right" tabindex="0" data-title="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-off"></i></span>
+                <span data-g-assignments-check data-role="button" class="g-tooltip g-tooltip-right" tabindex="0" data-title="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}"  aria-label="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-on"></i></span>
             </div>
             <label>
                 <input type="checkbox" data-assignments-enabledonly /> {{ 'GANTRY5_PLATFORM_HIDE_ASSIGNMENTS'|trans }}
@@ -37,11 +37,11 @@
                         {{ type.label|e }}
                         <div class="g-panel-filters float-right align-right">
                             <div class="search settings-block">
-                                <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">
+                                <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans ~ ' ' ~ type.label }}" role="search">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
-                            <span data-g-assignments-uncheck class="g-tooltip g-tooltip-right" data-title="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-off"></i></span>
-                            <span data-g-assignments-check class="g-tooltip g-tooltip-right" data-title="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}"><i class="fa fa-fw fa-toggle-on"></i></span>
+                            <span data-g-assignments-uncheck data-role="button" class="g-tooltip g-tooltip-right" tabindex="0" data-title="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans ~ ' in ' ~ type.label  }}"><i class="fa fa-fw fa-toggle-off"></i></span>
+                            <span data-g-assignments-check data-role="button" class="g-tooltip g-tooltip-right" tabindex="0" data-title="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}"  aria-label="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans ~ ' in ' ~ type.label  }}"><i class="fa fa-fw fa-toggle-on"></i></span>
                         </div>
                     </h4>
 
@@ -53,7 +53,8 @@
                             'name': link.name,
                             'field': link.field,
                             'value': link.value,
-                            'disabled': link.disabled
+                            'disabled': link.disabled,
+                            'title': "'" ~ link.label ~ "' Menu Item"
                             } %}
                             <span class="settings-param-title">
                                 {{- link.label -}}

@@ -5,7 +5,7 @@
     <div class="g-totop">
         <a href="#" id="g-totop" rel="nofollow">
             {% if particle.icon %}<i class="{{particle.icon}}"></i>{% endif %}
-            {% if particle.content %}{{particle.content}}{% endif %}
+            {% if particle.content %}{{particle.content|raw}}{% endif %}
             {% if not particle.icon and not particle.content %}To Top{% endif %}
         </a>
     </div>

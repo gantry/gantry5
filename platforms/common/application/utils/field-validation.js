@@ -14,8 +14,8 @@ var fieldValidation = function(field) {
 
     // use native validation if available
     if (typeof _field.willValidate !== 'undefined') {
-        if (tag == 'input' && _field.type.toLowerCase() !== type) {
-            // type not supported, fallback validation
+        if (tag == 'input' && (_field.type.toLowerCase() !== type || field.hasClass('custom-validation-field'))) {
+            // type not supported or custom, fallback validation
             _field.setCustomValidity(validate(field) ? '' : 'The field value is invalid');
         }
 
@@ -43,6 +43,8 @@ var validate = function(field) {
         required = field.attribute('required'),
         minlength = field.attribute('minlength'),
         maxlength = field.attribute('maxlength'),
+        min = field.attribute('min'),
+        max = field.attribute('max'),
         pattern = field.attribute('pattern');
 
     // disabled fields should not be validated
@@ -58,6 +60,17 @@ var validate = function(field) {
     if (isValid && pattern) {
         pattern = new RegExp(pattern);
         isValid = pattern.test(value);
+    }
+
+    // min / max
+    if (isValid && (min !== null || max !== null)) {
+        if (min !== null) {
+            isValid = parseFloat(value) >= parseFloat(min);
+        }
+
+        if (max !== null) {
+            isValid = parseFloat(value) <= parseFloat(max);
+        }
     }
 
     return isValid;

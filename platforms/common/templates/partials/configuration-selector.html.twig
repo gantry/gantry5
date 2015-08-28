@@ -47,6 +47,6 @@
         {% endif %}
     </select>
     {% if selected_editable %}
-    <span data-title-editable="{{ selected_title }}" data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename')|e }}" class="title g-conf-title-edit">{{ selected_title }}</span> <i class="fa fa-pencil font-small" data-title-edit=""></i>
+    <span data-title-editable="{{ selected_title }}" data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename')|e }}" class="title g-conf-title-edit">{{ selected_title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': selected_title}) }}"  data-title-editable="{{ selected_title }}" data-title-edit=""></i>
     {% endif %}
 </li>

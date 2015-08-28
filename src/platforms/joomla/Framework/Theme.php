@@ -30,20 +30,24 @@ class Theme extends BaseTheme
     {
         parent::init();
 
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         \JPluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
         $dispatcher = \JEventDispatcher::getInstance();
         $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
 
+        $lang = \JFactory::getLanguage();
+
+        // FIXME: Do not hardcode this file.
+        $lang->load('files_gantry5_nucleus', JPATH_SITE);
+
         if (\JFactory::getApplication()->isSite()) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
             // Load our custom positions file as frontend requires the strings to be there.
-            $lang = \JFactory::getLanguage();
             $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
 
             if ($filename) {
@@ -64,7 +68,7 @@ class Theme extends BaseTheme
 
             $params = array(
                 'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => true,
+                'debug' => $gantry->debug(),
                 'auto_reload' => true,
                 'autoescape' => 'html'
             );
@@ -73,6 +77,11 @@ class Theme extends BaseTheme
             $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
 
             $twig = new \Twig_Environment($loader, $params);
+
+            if ($gantry->debug()) {
+                $twig->addExtension(new \Twig_Extension_Debug());
+            }
+
             $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
             $this->add_to_twig($twig);

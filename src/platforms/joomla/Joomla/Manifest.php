@@ -45,19 +45,20 @@ class Manifest
 
     public function setPositions(array $positions)
     {
-        // Remove all the old positions.
-        $target = $this->xml->xpath('//positions/*');
-        foreach ($target as $child) {
-            unset($child[0]);
-        }
-
-        // Create the new positions.
         sort($positions);
-        $target = $this->xml->positions[0];
-        foreach ($positions as $position) {
-            $target->addChild('position', $position);
-        }
+
+        // Get the positions.
+        $target = current($this->xml->xpath('//positions'));
+
+        $xml = "<positions>\n        <position>" . implode("</position>\n        <position>", $positions) . "</position>\n    </positions>";
+        $insert = new \SimpleXMLElement($xml);
+
+        // Replace all positions.
+        $targetDom = dom_import_simplexml($target);
+        $insertDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($insert), true);
+        $targetDom->parentNode->replaceChild($insertDom, $targetDom);
     }
+
 
     public function save()
     {

@@ -12,7 +12,7 @@
                     <span data-title-editable="{{ data.data[title]|trim|e }}" data-collection-key="{{ (prefix ~ title)|fieldName }}" class="title">
                         {{ data.data[title]|e }}
                     </span>
-                    <i class="fa fa-pencil font-small" data-title-edit=""></i>
+                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': data.data[title]|trim|e }) }}" data-title-edit=""></i>
                 {% else %}
                 {{ 'GANTRY5_PLATFORM_EDIT'|trans }}
                 {% endif %}
@@ -25,7 +25,7 @@
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
         <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
-        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </form>
 {% endblock %}

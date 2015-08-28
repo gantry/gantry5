@@ -121,7 +121,7 @@ class EventListener implements EventSubscriberInterface
         wp_defer_term_counting(true);
 
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
-       $ordering = $this->flattenOrdering($menu['ordering']);
+        $ordering = $this->flattenOrdering($menu['ordering']);
 
         foreach ($menu['items'] as $key => $item) {
             if (!empty($item['id']) && $menu_items[$item['id']]) {
@@ -132,7 +132,7 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-object-id' => $wpItem->object_id,
                     'menu-item-object' => $wpItem->object,
                     'menu-item-parent-id' => $wpItem->menu_item_parent,
-                    'menu-item-position' => isset($ordering[$item['path']]) ? $ordering[$item['path']] : 0,
+                    'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
                     'menu-item-type' => $wpItem->type,
                     'menu-item-title' => trim($item['title']),
                     'menu-item-url' => trim($item['link']),

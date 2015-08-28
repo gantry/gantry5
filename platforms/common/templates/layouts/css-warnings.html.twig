@@ -1,0 +1,11 @@
+{% block gantry %}
+{% for outline, files in warnings %}
+    <h3>Outline: {{ outline }}</h3>
+    {% for file, list in files %}
+        <h4>File: {{ file }}</h4>
+        {% for warning in list %}
+            <div>{{ warning }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+{% endblock %}

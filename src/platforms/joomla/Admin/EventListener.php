@@ -13,7 +13,7 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Joomla\Registry\Registry;
@@ -61,6 +61,7 @@ class EventListener implements EventSubscriberInterface
         $theme = $event->gantry['theme.name'];
 
         $positions = $event->gantry['configurations']->positions();
+        $positions['debug'] = 'Debug';
 
         $manifest = new Manifest($theme);
         $manifest->setPositions(array_keys($positions));

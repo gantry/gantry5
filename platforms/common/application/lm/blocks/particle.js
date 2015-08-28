@@ -43,8 +43,30 @@ var Particle = new prime({
         parent.on('resized', this.bound('onParentResize'));
     },
 
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
     onParentResize: function(resize) {
         this.setLabelSize(resize);
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
+            sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 
