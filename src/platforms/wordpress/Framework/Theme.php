@@ -44,9 +44,16 @@ class Theme extends Base\Theme
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
 
         // Offline support.
-        if ($gantry['global']->get('offline') && !is_super_admin() && !current_user_can('manage_options')
-            && $pagenow != 'wp-login.php' && locate_template(['offline.php'])) {
-            add_filter( 'template_include', [$this, 'get_offline_template'] );
+        $global = $gantry['global'];
+        if ($global->get('offline') && !is_super_admin() && !current_user_can('manage_options')
+            && $pagenow != 'wp-login.php') {
+            if (locate_template(['offline.php'])) {
+                add_filter('template_include', function () {
+                    return locate_template(['offline.php']);
+                });
+            } else {
+                wp_die($global->get('offline_message'), get_bloginfo('title'));
+            }
         }
     }
 
@@ -269,11 +276,6 @@ class Theme extends Base\Theme
         $cookie = md5($this->name);
 
         $this->updateCookie($cookie, false, time() - 42000);
-    }
-
-    public function get_offline_template()
-    {
-        return locate_template(['offline.php']);
     }
 
     protected function updateCookie($name, $value, $expire = 0)
