@@ -27,6 +27,7 @@ class Page extends Base\Page
         $document = \JFactory::getDocument();
         $input = $app->input;
 
+        $this->tmpl     = $input->getCmd('tmpl', '');
         $this->option   = $input->getCmd('option', '');
         $this->view     = $input->getCmd('view', '');
         $this->layout   = $input->getCmd('layout', '');
@@ -65,9 +66,13 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        $classes = ['site', $this->option, "view-{$this->view}"];
-        $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
-        $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
+        if ($this->tmpl == 'component') {
+            $classes = ['contentpane', 'modal'];
+        } else {
+            $classes = ['site', $this->option, "view-{$this->view}"];
+            $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
+            $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
+        }
         $classes[] = 'dir-' . $this->direction;
         if ($this->class) $classes[] = $this->class;
         if ($this->printing) $classes[] = 'print-mode';

@@ -29,6 +29,7 @@
         - Fixed blocks using bootstrap responsive utility classes displaying improperly (#722)
         - Gantry update message is showing up even when there is no update (#631)
         - Module positions not showing up after installing/updating theme (#212)
+        - Missing padding in modal windows of 3rd party components (#746)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Make timber functions to work from particles
