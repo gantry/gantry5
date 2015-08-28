@@ -51,6 +51,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
+            new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecode']),
         ];
     }
 
@@ -68,6 +69,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
+            new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecode']),
         ];
     }
 
@@ -342,5 +344,9 @@ class TwigExtension extends \Twig_Extension
         } else {
             return false;
         }
+    }
+
+    public function jsonDecode($string, $assoc = false, $depth = 512) {
+        return json_decode($string, $assoc, $depth);
     }
 }
