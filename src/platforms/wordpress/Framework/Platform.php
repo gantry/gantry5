@@ -92,6 +92,11 @@ class Platform extends BasePlatform
         return $paths;
     }
 
+    public function settings()
+    {
+        return admin_url('plugins.php?page=g5-settings');
+    }
+
     // getCategories logic for the categories selectize field
     public function getCategories( $args = [] )
     {

@@ -5,13 +5,6 @@
 
             {% set settings_url = gantry.platform.settings %}
             {% set settings_key = gantry.platform.settings_key %}
-            {#<div data-mode-toggle class="dev-mode-toggle">
-                <input type="radio" value="dev" id="dev-mode-toggle" name="mode" checked>
-                <label for="dev-mode-toggle">{{ 'GANTRY5_PLATFORM_DEV'|trans }}</label>
-                <input type="radio" value="prod" id="prod-mode-toggle" name="mode">
-                <label for="prod-mode-toggle">{{ 'GANTRY5_PLATFORM_PROD'|trans }}</label>
-                <a></a>
-            </div>#}
             <ul class="float-right">
                 <li {{ (location == 'configurations') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations')|e }}"><i class="fa fa-fw fa-th"></i> {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a>
