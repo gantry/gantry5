@@ -36,6 +36,7 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Add Platform Settings into Extras menu
+        - Add support for Maintenance mode (#759)
     2. [](#improved)
         - Make Timber functions to work from particles
     3. [](#bugfix)

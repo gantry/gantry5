@@ -11,9 +11,12 @@ class Theme extends Base\Theme
 
     public function __construct( $path, $name = '' )
     {
+        global $pagenow;
+
         parent::__construct($path, $name);
 
         $gantry = Gantry::instance();
+        $global = $gantry['global'];
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
@@ -39,6 +42,12 @@ class Theme extends Base\Theme
         add_action( 'admin_print_styles', [ $this, 'print_styles' ], 200 );
         add_action( 'admin_print_scripts', [ $this, 'print_scripts' ], 200 );
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
+
+        // Offline support.
+        if ($gantry['global']->get('offline') && !is_super_admin() && !current_user_can('manage_options')
+            && $pagenow != 'wp-login.php' && locate_template(['offline.php'])) {
+            add_filter( 'template_include', [$this, 'get_offline_template'] );
+        }
     }
 
     public function init()
@@ -260,6 +269,11 @@ class Theme extends Base\Theme
         $cookie = md5($this->name);
 
         $this->updateCookie($cookie, false, time() - 42000);
+    }
+
+    public function get_offline_template()
+    {
+        return locate_template(['offline.php']);
     }
 
     protected function updateCookie($name, $value, $expire = 0)
