@@ -34,6 +34,8 @@
         - Module positions not showing up after installing/updating theme (#212)
         - Missing padding in modal windows of 3rd party components (#746)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Add Platform Settings into Extras menu
     2. [](#improved)
         - Make Timber functions to work from particles
     3. [](#bugfix)
