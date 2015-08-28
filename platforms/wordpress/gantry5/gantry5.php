@@ -42,9 +42,6 @@ function gantry5_plugin_defaults() {
         'production'       => '1',
         'debug'            => '0',
         'offline'          => '0',
-        'offline_message'  => 'Sorry! The site is offline!',
-        'coming_soon'      => '0',
-        'coming_soon_date' => '',
     );
 
     $option = get_option( 'gantry5_plugin' );
