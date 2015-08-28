@@ -28,6 +28,11 @@ class Page
         return $this->config->get('page.doctype');
     }
 
+    public function preset()
+    {
+        return 'g-' . preg_replace('/[^a-z0-9-]/', '', $this->config->get('layout.preset.name', 'unknown'));
+    }
+
     public function htmlAttributes()
     {
         return $this->getAttributes($this->config->get('page.html'));

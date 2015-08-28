@@ -14,6 +14,7 @@
         - Dropdowns / Tags fields have been improved for tab stop, it is now easier to navigate through fields via keyboard (partly #713 related)
         - Enable twig debug extension if Gantry debug has been turned on
         - Implemented validation for the Block Size of a Particle Block (#539)
+        - Add HTML body class for used layout preset (#750)
     3. [](#bugfix)
         - ToTop Particle allows HTML again in the content field (#720, #721)
         - Fixed issue in Selectize preventing the dropdown to close when loosing focus in non-IE browsers
