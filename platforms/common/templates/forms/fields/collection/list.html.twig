@@ -1,4 +1,6 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+{# If values contains a plain list of items, we need to reindex them. #}
+{% set value = field.key ? value : value|values %}
 
 {% block field %}
     {% if field.is_current %}

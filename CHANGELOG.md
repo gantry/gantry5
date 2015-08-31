@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fix regression in all collections (#761, #762, #764, #767, #768)
         - Fix Argument 1 passed to RocketTheme\Toolbox\Blueprints\Blueprints::mergeArrays() must be of the type array
+        - Re-index collection lists to avoid caps in the indexing (also fixes broken lists that were saved)
 
 # 5.1.1
 ## 28/08/2015
