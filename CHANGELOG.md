@@ -6,6 +6,7 @@
         - Fix regression in all collections (#761, #762, #764, #767, #768)
         - Fix Argument 1 passed to RocketTheme\Toolbox\Blueprints\Blueprints::mergeArrays() must be of the type array
         - Re-index collection lists to avoid gaps in the indexing (also fixes broken lists that were saved)
+        - Cannot delete social items from social particle if they were defined in theme (#767)
 3. [WordPress)(#wordpress)
     3. [](#bugfix)
         - Fixed issue when renaming an Outline that prevented it to further get edited, duplicated or deleted (#588)

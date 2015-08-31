@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "69bdc200cf9884ff1303789cc4781faf2d078074"
+                "reference": "949c0156f24efd740ac1c2c15ffbbb6e858c4d44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/69bdc200cf9884ff1303789cc4781faf2d078074",
-                "reference": "69bdc200cf9884ff1303789cc4781faf2d078074",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/949c0156f24efd740ac1c2c15ffbbb6e858c4d44",
+                "reference": "949c0156f24efd740ac1c2c15ffbbb6e858c4d44",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-08-31 10:34:15"
+            "time": "2015-08-31 19:14:04"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -497,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605"
+                "reference": "0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5815c8344b4d645323d92dab3abb5b8a7d8dd605",
-                "reference": "5815c8344b4d645323d92dab3abb5b8a7d8dd605",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558",
+                "reference": "0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-27 07:48:00"
+            "time": "2015-08-31 15:44:05"
         }
     ],
     "packages-dev": null,
