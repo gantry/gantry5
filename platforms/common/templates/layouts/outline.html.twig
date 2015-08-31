@@ -9,7 +9,7 @@
         <img src="{{ url(preset.image|default('gantry-admin://images/layouts/default.png')) }}" />
     </div>
     <div class="inner-params">
-        <div class="center">
+        <div class="center outline-actions">
             <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" role="button" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
                 <i class="fa fa-fw fa-pencil"></i>
             </a>

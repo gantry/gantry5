@@ -1,6 +1,7 @@
 "use strict";
 
 var $             = require('elements'),
+    zen           = require('elements/zen'),
     ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     keys          = require('mout/object/keys'),
@@ -130,6 +131,14 @@ ready(function() {
                     element.data('title-editable', original).text(original);
                 } else {
                     element.parent('h4').data('title', title);
+
+                    // refresh ID label and actions buttons
+                    var dummy = zen('div').html(response.body.outline),
+                        id = dummy.find('h4 span:last-child'),
+                        actions = dummy.find('.outline-actions');
+
+                    element.parent('.card').find('h4 span:last-child').html(id.html());
+                    element.parent('.card').find('.outline-actions').html(actions.html());
                 }
 
                 parent.hideIndicator();
