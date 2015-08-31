@@ -1,10 +1,10 @@
 # 5.1.2
-## XX/XX/2015
+## 31/08/2015
 
 1. [Common](#common)
     3. [](#bugfix)
         - Fix regression in all collections (Social, Custom JS / CSS, etc) (#761, #762, #764, #767, #768)
-        - Fix Argument 1 passed to RocketTheme\Toolbox\Blueprints\Blueprints::mergeArrays() must be of the type array
+        - Fix Argument 1 passed to `RocketTheme\Toolbox\Blueprints\Blueprints::mergeArrays()` must be of the type array
         - Re-index collection lists to avoid gaps in the indexing (also fixes broken lists that were saved)
         - Fixed issue in Layout Manager where top level section settings would show the Block tab (#766)
 3. [WordPress](#wordpress)
