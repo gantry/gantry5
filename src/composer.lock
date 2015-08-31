@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "857c88a0f678ff519fb462c5fdd54055",
+    "hash": "6f74bc0e62b1e869121ff74971f176db",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -232,16 +232,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "dev-master",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a"
+                "reference": "7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
-                "reference": "caae09d55e3af9b30cae0bb973d755e5ddf78b1a",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64",
+                "reference": "7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-08-25 16:15:39"
+            "time": "2015-08-25 15:37:56"
         },
         {
             "name": "pimple/pimple",
@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf"
+                "reference": "16d439a1d79bcd717f8d770c7e50cadc412cd4ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/19fb0167176e7bf8bfd9602c6765528b31fa23bf",
-                "reference": "19fb0167176e7bf8bfd9602c6765528b31fa23bf",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/16d439a1d79bcd717f8d770c7e50cadc412cd4ea",
+                "reference": "16d439a1d79bcd717f8d770c7e50cadc412cd4ea",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-08-27 10:05:44"
+            "time": "2015-08-27 18:36:50"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -557,8 +557,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "rockettheme/toolbox": 20,
-        "leafo/scssphp": 20
+        "rockettheme/toolbox": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

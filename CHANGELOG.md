@@ -1,3 +1,10 @@
+# 5.1.2
+## XX/XX/2015
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fix regression in all collections (#761, #762, #764, #767, #768)
+
 # 5.1.1
 ## 28/08/2015
 
