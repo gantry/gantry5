@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "16d439a1d79bcd717f8d770c7e50cadc412cd4ea"
+                "reference": "5d375dbb9b1a32f4d0a2b9c6d173967ee4035e3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/16d439a1d79bcd717f8d770c7e50cadc412cd4ea",
-                "reference": "16d439a1d79bcd717f8d770c7e50cadc412cd4ea",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/5d375dbb9b1a32f4d0a2b9c6d173967ee4035e3a",
+                "reference": "5d375dbb9b1a32f4d0a2b9c6d173967ee4035e3a",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-08-27 18:36:50"
+            "time": "2015-08-31 07:44:15"
         },
         {
             "name": "symfony/event-dispatcher",
