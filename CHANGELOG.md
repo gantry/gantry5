@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fix regression in all collections (#761, #762, #764, #767, #768)
+        - Fix Argument 1 passed to RocketTheme\Toolbox\Blueprints\Blueprints::mergeArrays() must be of the type array
 
 # 5.1.1
 ## 28/08/2015
