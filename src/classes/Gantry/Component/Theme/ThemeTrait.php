@@ -276,6 +276,22 @@ trait ThemeTrait
     }
 
     /**
+     * Return name of the used layout preset.
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function type()
+    {
+        if (!$this->layoutObject) {
+            throw new \RuntimeException('Function called too early');
+        }
+        $name = isset($this->layoutObject->preset['name']) ? $this->layoutObject->preset['name'] : 'unknown';
+
+        return $name;
+    }
+
+    /**
      * Load current layout and its configuration.
      *
      * @param string $name
@@ -292,7 +308,7 @@ trait ThemeTrait
             }
         }
 
-        if (!isset($this->layoutOpject) || $this->layoutObject->name != $name) {
+        if (!isset($this->layoutObject) || $this->layoutObject->name != $name) {
             $layout = Layout::instance($name);
 
             if (!$layout->exists()) {

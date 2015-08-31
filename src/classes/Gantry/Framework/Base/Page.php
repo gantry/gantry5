@@ -16,10 +16,12 @@ namespace Gantry\Framework\Base;
 
 class Page
 {
+    protected $container;
     protected $config;
 
     public function __construct($container)
     {
+        $this->container = $container;
         $this->config = $container['config'];
     }
 
@@ -30,7 +32,9 @@ class Page
 
     public function preset()
     {
-        return 'g-' . preg_replace('/[^a-z0-9-]/', '', $this->config->get('layout.preset.name', 'unknown'));
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+        return 'g-' . preg_replace('/[^a-z0-9-]/', '', $theme->type());
     }
 
     public function htmlAttributes()
