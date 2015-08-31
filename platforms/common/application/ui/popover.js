@@ -127,7 +127,8 @@ var Popover = new prime({
 
         setTimeout(function(){
             if (tag != 'a' && tag != 'input' && tag != 'button') {
-                element.find('a, button, input')[0].focus();
+                var items = element.find('a, button, input');
+                if (items) items[0].focus();
             } else {
                 element[0].focus();
             }
