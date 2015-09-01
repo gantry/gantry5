@@ -16,7 +16,7 @@ Gantry is a comprehensive set of building blocks to enable the rapid development
 
 Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss.
 
-[youtube https://youtu.be/H0RCz-ziJoo]
+[youtube https://www.youtube.com/watch?v=H0RCz-ziJoo]
 
 ==== Responsive Layout System ====
 
