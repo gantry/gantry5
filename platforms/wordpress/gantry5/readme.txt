@@ -108,4 +108,4 @@ Once you downloaded and installed Gantry 5 plugin, please download also a defaul
 
 == Changelog ==
 
-You can read the full changelog at the [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
+You can read the full changelog at the [Gantry Framework](http://gantry.org/#changelog:p=wordpress "Gantry Framework") site.
