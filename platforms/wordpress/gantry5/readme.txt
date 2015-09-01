@@ -6,7 +6,7 @@ Requires at least: 4.2+
 Tested up to: 4.3
 Stable tag: @version@
 
-Gantry 5 is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
+Gantry 5 is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform.
 
 == Description ==
 
