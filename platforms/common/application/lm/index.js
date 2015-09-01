@@ -12,6 +12,7 @@ var ready          = require('elements/domready'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
     forEach        = require('mout/collection/forEach'),
+    precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
@@ -458,8 +459,8 @@ ready(function() {
                 // logic for limits
                 if (blockSize && data.size_limits) {
                     var note = content.elements.content.find('.blocksize-note'),
-                        min = data.size_limits[0],
-                        max = data.size_limits[1];
+                        min = precision(data.size_limits[0], 1),
+                        max = precision(data.size_limits[1], 1);
 
                     blockSize.attribute('min', min);
                     blockSize.attribute('max', max);

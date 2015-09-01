@@ -1037,16 +1037,18 @@ var Block = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+        this.setAttribute('size', precision(options.attributes.size, 1));
 
         this.on('changed', this.hasChanged);
     },
 
     getSize: function() {
-        return this.getAttribute('size');
+        return precision(this.getAttribute('size'), 1);
     },
 
     setSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }
@@ -1062,6 +1064,7 @@ var Block = new prime({
 
     setAnimatedSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }
@@ -2094,6 +2097,7 @@ var ready          = require('elements/domready'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
     forEach        = require('mout/collection/forEach'),
+    precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
@@ -2540,8 +2544,8 @@ ready(function() {
                 // logic for limits
                 if (blockSize && data.size_limits) {
                     var note = content.elements.content.find('.blocksize-note'),
-                        min = data.size_limits[0],
-                        max = data.size_limits[1];
+                        min = precision(data.size_limits[0], 1),
+                        max = precision(data.size_limits[1], 1);
 
                     blockSize.attribute('min', min);
                     blockSize.attribute('max', max);
@@ -2683,7 +2687,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":46,"../ui/popover":48,"../utils/field-validation":58,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"../utils/history":64,"../utils/save-state":66,"./builder":21,"./history":23,"./layoutmanager":25,"./particles-sidebar":26,"agent":67,"elements/attributes":93,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/collection/forEach":152,"mout/collection/size":154,"mout/string/properCase":225,"mout/string/replace":228,"mout/string/trim":233}],25:[function(require,module,exports){
+},{"../ui":46,"../ui/popover":48,"../utils/field-validation":58,"../utils/flags-state":59,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"../utils/history":64,"../utils/save-state":66,"./builder":21,"./history":23,"./layoutmanager":25,"./particles-sidebar":26,"agent":67,"elements/attributes":93,"elements/domready":96,"elements/zen":101,"mout/array/contains":131,"mout/collection/forEach":152,"mout/collection/size":154,"mout/number/enforcePrecision":186,"mout/string/properCase":225,"mout/string/replace":228,"mout/string/trim":233}],25:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),

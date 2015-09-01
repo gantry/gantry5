@@ -17,16 +17,18 @@ var Block = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+        this.setAttribute('size', precision(options.attributes.size, 1));
 
         this.on('changed', this.hasChanged);
     },
 
     getSize: function() {
-        return this.getAttribute('size');
+        return precision(this.getAttribute('size'), 1);
     },
 
     setSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }
@@ -42,6 +44,7 @@ var Block = new prime({
 
     setAnimatedSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }

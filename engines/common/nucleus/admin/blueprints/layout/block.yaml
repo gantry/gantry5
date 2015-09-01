@@ -41,7 +41,7 @@ form:
       description: Block size in percentages (5-100).
       class: 'custom-validation-field'
       formnovalidate: true
-      pattern: '^([5-9]|[1-9][0-9]|8.3{1,}(?:2)?|9.(09(?:1)?|1)|11.1{2,}|12.5|14.28[0-9]{2,}|16.6{2,}(?:7)?|33.3{2,}(?:4)?|100)$'
+      pattern: '^([5-9]|[1-9][0-9]|8.3|9.1|11.1|12.5|14.3|16.7|33.3|100)$'
       min: 5
       max: 100
       append:

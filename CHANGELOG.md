@@ -1,9 +1,10 @@
 # 5.1.3
 ## XX/XX/2015
 
-1. [Common](#common
+1. [Common](#common)
     3. [](#bugfix)
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
+        - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
 
 # 5.1.2
 ## 31/08/2015
