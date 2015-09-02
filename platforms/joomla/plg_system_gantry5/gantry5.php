@@ -53,12 +53,7 @@ class plgSystemGantry5 extends JPlugin
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
-            /** @var \JApplicationSite $app */
-            $app = \JFactory::getApplication();
-            $template = $app->getTemplate(true);
-            $app->setTemplate($template->template, $template->params);
-
-            $this->onAfterRouteSite();
+             $this->onAfterRouteSite();
 
         } elseif ($this->app->isAdmin()) {
             $this->onAfterRouteAdmin();
