@@ -4,9 +4,9 @@
 <a href="{{ url(particle.url)|default(gantry.siteUrl()) }}" title="{{ particle.text }}" rel="home" class="{{ particle.class }}">
     {% set image = url(particle.image) %}
     {% if image %}
-    <img src="{{ url(particle.image) }}" alt="{{ particle.text }}" />
+    <img src="{{ image ) }}" alt="{{ particle.text }}" />
     {% else %}
-    {{ particle.text|default('Logo') }}
+    {{ particle.text }}
     {% endif %}
 </a>
 {% endblock %}

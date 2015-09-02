@@ -24,6 +24,7 @@ form:
       type: input.text
       label: Text
       description: Input logo description text.
+      default: Logo
 
     class:
       type: input.selectize
