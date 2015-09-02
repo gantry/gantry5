@@ -43,7 +43,7 @@ class Page extends Base\Page
             }
         }
         $templateParams = $app->getTemplate(true);
-        $this->outline = $templateParams->id;
+        $this->outline = $templateParams->params->get('configuration', !empty($templateParams->id) ? $templateParams->id : 0);
         $this->sitename = $app->get('sitename');
         $this->theme = $document->template;
         $this->baseUrl = $document->baseurl;

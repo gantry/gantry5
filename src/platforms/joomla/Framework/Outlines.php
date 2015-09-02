@@ -67,29 +67,27 @@ class Outlines extends BaseOutlines
 
     public function current($template = null)
     {
-        if (!$template) {
-            $app = \JFactory::getApplication();
+        if (!is_object($template)) {
+            // Get the template style.
+            $template = \JFactory::getApplication()->getTemplate(true);
+        }
 
-            // Get the template.
-            $template = $app->getTemplate(true);
+        $preset = $template->params->get('preset', 'default');
+        $configuration = $template->params->get('configuration', !empty($template->id) ? $template->id : null);
 
-            if (empty($template->id)) {
-                if (JDEBUG || \JFactory::getUser()->authorise('core.admin')) {
-                    $app->enqueueMessage(sprintf('Gantry 5: Object returned by JApplicationSite::getTemplate(true) is not compatible with Joomla %s API, guessing style Id.', JVERSION), 'notice');
-                }
-                $template->id = $template->params->get('configuration');
+        if (JDEBUG && !$configuration) {
+            static $shown = false;
+
+            if (!$shown) {
+                $shown = true;
+                \JFactory::getApplication()->enqueueMessage('[DEBUG] JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'notice');
             }
         }
 
-
-        $gantry = $this->container;
         /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        $locator = $this->container['locator'];
 
-        $preset = $template->params->get('preset', 'default');
-        $configuration = $template->params->get('configuration', $template->id);
-
-        return is_dir($locator("{$this->path}/{$configuration}")) ? $configuration : $preset;
+        return ($configuration && is_dir($locator("{$this->path}/{$configuration}"))) ? $configuration : $preset;
     }
 
     public function create($title = 'Untitled', $preset = 'default')
