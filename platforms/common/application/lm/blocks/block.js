@@ -17,7 +17,7 @@ var Block = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
-        this.setAttribute('size', precision(options.attributes.size, 1));
+        if (options.attributes && options.attributes.size) this.setAttribute('size', precision(options.attributes.size, 1));
 
         this.on('changed', this.hasChanged);
     },
