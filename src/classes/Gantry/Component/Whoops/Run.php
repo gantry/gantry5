@@ -86,7 +86,7 @@ class Run extends \Whoops\Run
 
         // Propagate error to the next handler.
         if ($this->oldExceptionHandler) {
-            call_user_func($this->oldExceptionHandler, $exception);
+            call_user_func_array($this->oldExceptionHandler, [&$exception]);
         }
     }
 
