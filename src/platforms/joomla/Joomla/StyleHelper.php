@@ -53,8 +53,24 @@ class StyleHelper
             Folder::copy($oldPath, $newPath);
         }
 
-        $installer = new TemplateInstaller($style->extension_id);
+        $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
+
+        $installer = new TemplateInstaller($extension);
         $installer->updateStyle($new, ['configuration' => $new]);
+    }
+
+    public static function delete($id)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $path = $locator->findResource('gantry-config://' . $id, true, true);
+
+        if (is_dir($path)) {
+            Folder::delete($path, true);
+        }
     }
 
     /**
