@@ -280,6 +280,41 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
+    public function onExtensionAfterSave($context, $table, $isNew)
+    {
+        if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
+            return;
+        }
+
+        if (!$isNew) {
+            return;
+        }
+
+        $template = $table->template;
+
+        $gantry = $this->load($template);
+
+        $old = (int) (new Joomla\Registry\Registry($table->params))->get('configuration', 0);
+        $new = (int) $table->id;
+
+        if ($old && $old !== $new) {
+            Gantry\Joomla\StyleHelper::copy($table, $old, $new);
+        }
+    }
+
+    public function onExtensionAfterDelete($context, $table)
+    {
+        if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
+            return;
+        }
+
+        $template = $table->template;
+
+        $gantry = $this->load($template);
+
+        Gantry\Joomla\StyleHelper::delete($table->id);
+    }
+
     public function onContentPrepareData($context, $data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
@@ -410,10 +445,7 @@ class plgSystemGantry5 extends JPlugin
             $list = array();
 
             foreach ($templates as $template) {
-                if (file_exists(JPATH_SITE . "/templates/{$template->template}/gantry/theme.yaml")) {
-                    $params = new \Joomla\Registry\Registry;
-                    $params->loadString($template->params);
-
+                if ($this->isGantryTemplate($template->template)) {
                     $list[$template->id] = true;
                 }
             }
@@ -422,5 +454,39 @@ class plgSystemGantry5 extends JPlugin
         }
 
         return $list;
+    }
+
+    private function isGantryTemplate($name)
+    {
+        return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
+    }
+
+    protected function load($name)
+    {
+        Gantry5\Loader::setup();
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        if (!isset($gantry['theme.name']) || $name !== $gantry['theme.name']) {
+            // Restart Gantry and initialize it.
+            $gantry = Gantry\Framework\Gantry::restart();
+            $gantry['theme.name'] = $name;
+            $gantry['streams']->register();
+
+            $patform = $gantry['platform'];
+            $locator = $gantry['locator'];
+
+            // Initialize theme stream.
+            $details = new Gantry\Component\Theme\ThemeDetails($name);
+            $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
+
+            // Initialize theme cache stream.
+            $cachePath = $patform->getCachePath() . '/' . $name;
+            Gantry\Component\FileSystem\Folder::create($cachePath);
+            $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
+            $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        }
+
+        return $gantry;
     }
 }
