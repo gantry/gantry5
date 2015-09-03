@@ -5,9 +5,13 @@
     3. [](#bugfix)
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
         - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
+        - Fix 'mkdir(): File exists' exception when copying existing folder structure (#225)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)
+        - Fix 'Parameter 1 to PlgSystemRedirect::handleError() expected to be a reference' (#755)
+        - Fix blank custom pages when format is not HTML (#786)
+        - Duplicating outlines does not copy everything (#470)
 
 # 5.1.2
 ## 31/08/2015
