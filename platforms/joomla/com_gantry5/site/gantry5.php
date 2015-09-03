@@ -29,8 +29,8 @@ if (!$menuItem) {
     JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 }
 
-// Handle error page.
-if ($input->getCmd('view') === 'error') {
+// Handle non-html formats and error page.
+if ($input->getCmd('format') !== 'html' || $input->getCmd('view') === 'error') {
     JError::raiseError(404, 'Page not found');
 }
 

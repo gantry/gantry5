@@ -9,6 +9,7 @@
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)
         - Fix 'Parameter 1 to PlgSystemRedirect::handleError() expected to be a reference' (#755)
+        - Fix blank custom pages when format is not HTML (#786)
 
 # 5.1.2
 ## 31/08/2015
