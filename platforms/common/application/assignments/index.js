@@ -148,6 +148,24 @@ var Map         = map,
             asyncForEach(search, function(item) {
                 Assignments.filterSection(e, $(item), value, 'global');
             });
+        },
+
+        // chrome workaround for overflow and columns
+        chromeFix: function() {
+            if (!Assignments.isChrome()) { return; }
+            var panels = $('#assignments .settings-param-wrapper'), height, maxHeight;
+            if (!panels) { return; }
+
+            panels.forEach(function(panel){
+                panel = $(panel);
+                maxHeight = parseInt(panel.compute('max-height'), 10);
+                height = panel[0].getBoundingClientRect().height;
+                panel.style({overflow: height >= maxHeight ? 'auto' : 'visible'});
+            });
+        },
+
+        isChrome: function() {
+            return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
         }
     };
 
@@ -158,6 +176,9 @@ ready(function() {
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+
+    // chrome workaround for overflow and columns
+    if (Assignments.isChrome()) Assignments.chromeFix();
 });
 
-module.exports = {};
+module.exports = Assignments;
