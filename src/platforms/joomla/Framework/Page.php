@@ -45,8 +45,8 @@ class Page extends Base\Page
         $templateParams = $app->getTemplate(true);
         $this->outline = $templateParams->params->get('configuration', !empty($templateParams->id) ? $templateParams->id : 0);
         $this->sitename = $app->get('sitename');
-        $this->theme = $document->template;
-        $this->baseUrl = $document->baseurl;
+        $this->theme = $templateParams->template;
+        $this->baseUrl = \JUri::base(true);
         $this->title = $document->title;
         $this->description = $document->description;
         $this->language = $document->language;
