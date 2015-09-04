@@ -98,6 +98,10 @@ We try to ensure that any Gantry theme and the Gantry Plugin specifically will w
 * MySQL 3.23 (5+ recommended)
 * Apache 1.3 (2.2+ recommended)
 
+= Is there any documentation available ? =
+
+Yes of course! And it's getting better and better with every day! Please visit our [Gantry 5 Documentation](http://docs.gantry.org/ "Gantry 5 Documentation") site to get a better understanding on how Gantry 5 works. If you feel like some parts of documentation could be changed or you want to add something, please feel free to do so, as the whole documentation is placed on [GitHub](https://github.com/gantry/docs "GitHub") and anyone is free to contribute.
+
 = Where are the options of the plugin ? =
 
 Gantry 5 plugin is a framework working in the background providing the functionality to the Gantry powered themes, allowing them to control everything per-theme basis. You can download a basic Gantry theme from the official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
