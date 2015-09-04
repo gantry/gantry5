@@ -42,6 +42,9 @@ class Theme extends Base\Theme
         add_action( 'admin_print_styles', [ $this, 'print_styles' ], 200 );
         add_action( 'admin_print_scripts', [ $this, 'print_scripts' ], 200 );
         add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
+        add_action( 'widgets_init', function() {
+             register_widget( '\Gantry\WordPress\Widget\Particle' );
+        });
 
         // Offline support.
         $global = $gantry['global'];

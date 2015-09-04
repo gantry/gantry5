@@ -1,0 +1,31 @@
+{% extends "@gantry-admin/partials/page.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css')|e }}" type="text/css" />
+    {{ parent() }}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% block gantry_content_wrapper %}
+        <div data-g5-content-wrapper="">
+            <div class="g-grid">
+                <div class="g-block">
+                    <div class="g-content" data-g5-content="">
+                        {% block gantry %}
+                            {{ content|raw }}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block footer_section %}
+{% endblock %}
