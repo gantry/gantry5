@@ -16,7 +16,7 @@
 {% endset %}
 
 {% if offcanvas|trim %}
-<div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }} data-g-offcanvas-swipe="{{ segment.attributes.swipe|default('1') }}">
+<div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }} data-g-offcanvas-swipe="{{ segment.attributes.swipe }}">
     {{ offcanvas|raw }}
 </div>
 {% endif %}
