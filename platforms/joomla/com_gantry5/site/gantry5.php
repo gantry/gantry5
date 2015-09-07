@@ -30,7 +30,7 @@ if (!$menuItem) {
 }
 
 // Handle non-html formats and error page.
-if ($input->getCmd('format') !== 'html' || $input->getCmd('view') === 'error') {
+if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error') {
     JError::raiseError(404, 'Page not found');
 }
 
