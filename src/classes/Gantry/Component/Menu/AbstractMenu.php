@@ -340,7 +340,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             $item['parent_id'] = implode('/', $parentTree);
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && !in_array($tree[$start - 2], $route))) {
+                // TODO: Improve. In the mean time Item::add() handles this part.
+                // || ($start > 1 && !in_array($tree[$start - 2], $tree))
+            ) {
                 continue;
             }
             $item = new Item($this, $route, $item);
