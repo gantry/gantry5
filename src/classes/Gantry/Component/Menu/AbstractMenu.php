@@ -275,7 +275,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
         } elseif (!$this->items['']->count()) {
-            $this->items['']->addChild($item);
+            $this->items[$item->parent_id] = $this->items[''];
+            $this->items[$item->parent_id]->addChild($item);
         }
 
         return $this;

@@ -6,6 +6,7 @@
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
         - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
         - Fix 'mkdir(): File exists' exception when copying existing folder structure (#225)
+        - Only the first menu item is showing up when menu is starting at level > 1 (#780)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)
