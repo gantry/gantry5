@@ -547,7 +547,7 @@ trait ThemeTrait
                     }
                     if (round($dynamicSize, 1) != 100) {
                         $fraction = 0;
-                        $multiplier = (100 - $fixedSize) / $dynamicSize;
+                        $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                         foreach ($item->children as $child) {
                             if (!empty($child->attributes->fixed)) {
                                 continue;

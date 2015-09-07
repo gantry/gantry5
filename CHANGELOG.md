@@ -8,6 +8,7 @@
         - Fix 'mkdir(): File exists' exception when copying existing folder structure (#225)
         - Only the first menu item is showing up when menu is starting at level > 1 (#780)
         - Error in menu starting at level > 1: in_array() expects parameter 2 to be array, string given (#803)
+        - Fixed `Division by zero` error when setting a Block to `Fixed` and when that block is the only one, at 100%, in the grid (#804)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)
