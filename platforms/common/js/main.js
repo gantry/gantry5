@@ -4097,7 +4097,8 @@ var StepTwo = function(data, content, button) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        //uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        uri = getAjaxURL(item.type + '/' + item[item.type]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
@@ -8824,7 +8825,16 @@ var Modal = new prime({
 
         // inject the dialog in the DOM
         var container = $(options.appendNode);
-        container = $(container[container.length - 1]);
+
+        if (container.length > 1) {
+            container.forEach(function(c){
+                c = $(c);
+                var parent = c.parent('.widget');
+                if (parent && !parent.matches('[id$="__i__"]')) {
+                    container = c;
+                }
+            });
+        }
         container.appendChild(elements.container);
 
         options.elements = elements;

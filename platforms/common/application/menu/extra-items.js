@@ -107,7 +107,8 @@ var StepTwo = function(data, content, button) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        //uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        uri = getAjaxURL(item.type + '/' + item[item.type]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {

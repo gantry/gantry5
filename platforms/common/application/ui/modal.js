@@ -213,7 +213,16 @@ var Modal = new prime({
 
         // inject the dialog in the DOM
         var container = $(options.appendNode);
-        container = $(container[container.length - 1]);
+
+        if (container.length > 1) {
+            container.forEach(function(c){
+                c = $(c);
+                var parent = c.parent('.widget');
+                if (parent && !parent.matches('[id$="__i__"]')) {
+                    container = c;
+                }
+            });
+        }
         container.appendChild(elements.container);
 
         options.elements = elements;
