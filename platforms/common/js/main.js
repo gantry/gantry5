@@ -8823,7 +8823,9 @@ var Modal = new prime({
         }, this));
 
         // inject the dialog in the DOM
-        $(options.appendNode).appendChild(elements.container);
+        var container = $(options.appendNode);
+        container = $(container[container.length - 1]);
+        container.appendChild(elements.container);
 
         options.elements = elements;
 
