@@ -214,15 +214,15 @@ var Modal = new prime({
         // inject the dialog in the DOM
         var container = $(options.appendNode);
 
-        if (container.length > 1) {
-            container.forEach(function(c){
-                c = $(c);
-                var parent = c.parent('.widget');
-                if (parent && !parent.matches('[id$="__i__"]')) {
-                    container = c;
-                }
-            });
+        if (GANTRY_PLATFORM == 'wordpress') {
+            container = $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
+            if ('#' + container.id() != options.appendNode) {
+                var sibling = container.nextSibling(options.appendNode),
+                    workaround = sibling ? sibling : zen('div' + options.appendNode).after(container);
+                container = workaround;
+            }
         }
+        
         container.appendChild(elements.container);
 
         options.elements = elements;
