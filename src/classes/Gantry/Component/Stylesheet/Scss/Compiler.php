@@ -61,6 +61,27 @@ class Compiler extends BaseCompiler
         return $args;
     }
 
+    /**
+     * Get variable
+     *
+     * @api
+     *
+     * @param string    $name
+     * @param boolean   $shouldThrow
+     * @param \stdClass $env
+     *
+     * @return mixed
+     */
+    public function get($name, $shouldThrow = true, $env = null)
+    {
+        try {
+            return parent::get($name, $shouldThrow, $env);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . "\n";
+            return ['string', '', ['']];
+        }
+    }
+
     public function libUrl(array $args, Compiler $compiler)
     {
         // Function has a single parameter.
