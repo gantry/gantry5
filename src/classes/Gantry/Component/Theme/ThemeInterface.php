@@ -41,9 +41,10 @@ interface ThemeInterface
      * Set current layout.
      *
      * @param string $name
+     * @param bool $force
      * @return $this
      */
-    public function setLayout($name = null);
+    public function setLayout($name = null, $force = false);
 
     /**
      * Get current preset.
