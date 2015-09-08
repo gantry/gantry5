@@ -6,6 +6,7 @@ var ready        = require('elements/domready'),
     forEach      = require('mout/array/forEach'),
     trim         = require('mout/string/trim'),
     $            = require('../utils/elements.utils'),
+    decouple     = require('../utils/decouple'),
     asyncForEach = require('../utils/async-foreach');
 
 var Map         = map,
@@ -161,6 +162,14 @@ var Map         = map,
                 maxHeight = parseInt(panel.compute('max-height'), 10);
                 height = panel[0].getBoundingClientRect().height;
                 panel.style({overflow: height >= maxHeight ? 'auto' : 'visible'});
+
+                if (height >= maxHeight) {
+                    var alt = 100;
+                    decouple(panel, 'scroll', function() {
+                        alt = alt == 100 ? 100.01 : 100;
+                        panel.parent('.card').style('width', alt + '%');
+                    });
+                }
             });
         },
 

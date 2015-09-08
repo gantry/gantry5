@@ -99,6 +99,7 @@ var ready        = require('elements/domready'),
     forEach      = require('mout/array/forEach'),
     trim         = require('mout/string/trim'),
     $            = require('../utils/elements.utils'),
+    decouple     = require('../utils/decouple'),
     asyncForEach = require('../utils/async-foreach');
 
 var Map         = map,
@@ -254,6 +255,14 @@ var Map         = map,
                 maxHeight = parseInt(panel.compute('max-height'), 10);
                 height = panel[0].getBoundingClientRect().height;
                 panel.style({overflow: height >= maxHeight ? 'auto' : 'visible'});
+
+                if (height >= maxHeight) {
+                    var alt = 100;
+                    decouple(panel, 'scroll', function() {
+                        alt = alt == 100 ? 100.01 : 100;
+                        panel.parent('.card').style('width', alt + '%');
+                    });
+                }
             });
         },
 
@@ -276,7 +285,7 @@ ready(function() {
 
 module.exports = Assignments;
 
-},{"../utils/async-foreach":54,"../utils/elements.utils":56,"elements/domready":96,"mout/array/forEach":139,"mout/object/merge":199,"mout/string/trim":233,"prime/map":264}],3:[function(require,module,exports){
+},{"../utils/async-foreach":54,"../utils/decouple":55,"../utils/elements.utils":56,"elements/domready":96,"mout/array/forEach":139,"mout/object/merge":199,"mout/string/trim":233,"prime/map":264}],3:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
