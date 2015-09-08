@@ -95,8 +95,14 @@ class Particle extends \WP_Widget
                 'picker_label' => 'Pick a Particle',
                 'overridable' => false
             ],
-            'value' => isset($instance) ? (array) $instance : []
+            'value' => is_array($instance) ? $instance : []
         ];
+
+        $title = ! empty($instance['title']) ? $instance['title'] : __('Undefined', 'gantry5');
+        $fieldId = $this->get_field_id('title');
+        $fieldName = $this->get_field_name('title');
+
+        echo "<input id=\"{$fieldId}\" name=\"{$fieldName}\" type=\"hidden\" value=\"" . esc_attr($title) . "\" />";
 
         $params = [
             'content' => $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
