@@ -221,7 +221,7 @@ class Menu extends AbstractMenu
         //}
 
         if (1) {
-            $path    = $this->base->tree;
+            $tree    = $this->base->tree;
             $start   = $params['startLevel'];
             $max     = $params['maxLevels'];
             $end     = $max ? $start + $max - 1 : 0;
@@ -238,7 +238,7 @@ class Menu extends AbstractMenu
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
-                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $path))) {
+                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
                     continue;
                 }
 
