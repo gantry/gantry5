@@ -17,6 +17,9 @@
         - Fix blank custom pages when format is not HTML (#786)
         - Duplicating outlines does not copy everything (#470)
         - Deleting outline may cause 500 errors in the backend (#774)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Implement a particle Widget (#714)
 
 # 5.1.2
 ## 31/08/2015

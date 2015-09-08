@@ -24,7 +24,7 @@ class Particle extends \WP_Widget
 
         parent::__construct(
             'particle_widget',
-            __( 'Particle Instance', 'gantry5' ),
+            __( 'Particle', 'gantry5' ),
             ['description' => __( 'Displays Gantry 5 particle instance in a widget position.', 'gantry5' )]
         );
 
@@ -32,7 +32,8 @@ class Particle extends \WP_Widget
             $this->container = Gantry::instance();
         } catch (Exception $e) {}
 
-        if (is_admin() && in_array($pagenow, ['widgets.php', 'customize.php'])) {
+        $ajax = ($pagenow === 'admin-ajax.php' && $_POST['action'] === 'save-widget');
+        if (is_admin() && (in_array($pagenow, ['widgets.php', 'customize.php']) || $ajax)) {
             // Initialize administrator if already not done that.
             if (!isset($this->container['router'])) {
                 $this->container['router'] = function ($c) {
@@ -87,14 +88,14 @@ class Particle extends \WP_Widget
         $field = [
             'layout' => 'input',
             'scope' => '',
-            'name' => $this->name,
+            'name' => $this->get_field_name('particle'),
             'field' => [
                 'type' => 'gantry.particle',
                 'class' => 'input-small',
                 'picker_label' => 'Pick a Particle',
                 'overridable' => false
             ],
-            'value' => [] //json_decode($this->value, true)
+            'value' => isset($instance) ? (array) $instance : []
         ];
 
         $params = [
@@ -112,7 +113,7 @@ class Particle extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-        $instance = $new_instance;
+        $instance = isset($new_instance['particle']) ? json_decode($new_instance['particle'], true) : [];
 
         return $instance;
     }
