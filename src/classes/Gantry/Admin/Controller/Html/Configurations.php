@@ -117,7 +117,7 @@ class Configurations extends HtmlController
         if ($configuration && $configuration[0] == '_') {
             $preset = $configurations->preset($configuration);
             if (empty($preset)) {
-                throw new \RuntimeException('Preset not found');
+                throw new \RuntimeException('Preset not found', 404);
             }
             $id = $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
 
