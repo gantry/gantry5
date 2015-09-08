@@ -68,7 +68,7 @@ class Menu extends AbstractMenu
 
         if ($items === null) {
             require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-            $items = \MenusHelper::getMenuTypes();
+            $items = (array) \MenusHelper::getMenuTypes();
         }
 
         return $items;

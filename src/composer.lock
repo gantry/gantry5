@@ -232,16 +232,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64"
+                "reference": "4bcaed23664897db093a50e99b93e078f3a31a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64",
-                "reference": "7df0b8c0d14cdb99fc4a0f32d919faabdd2dda64",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/4bcaed23664897db093a50e99b93e078f3a31a2d",
+                "reference": "4bcaed23664897db093a50e99b93e078f3a31a2d",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2015-08-25 15:37:56"
+            "time": "2015-09-07 01:04:49"
         },
         {
             "name": "pimple/pimple",
@@ -390,12 +390,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730"
+                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d7246885b7fe4cb5a2786bda34362d2f0e40b730",
-                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
+                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
                 "shasum": ""
             },
             "require": {
@@ -440,7 +440,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-24 15:32:32"
+            "time": "2015-08-24 07:18:02"
         },
         {
             "name": "symfony/yaml",
@@ -497,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558"
+                "reference": "825bdc1afcccdc88c2d641343f8df4fc5afe214d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558",
-                "reference": "0a19aab4a193eeb48c3b5dbd7ff76cedf0ab5558",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/825bdc1afcccdc88c2d641343f8df4fc5afe214d",
+                "reference": "825bdc1afcccdc88c2d641343f8df4fc5afe214d",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-31 15:44:05"
+            "time": "2015-09-06 06:45:56"
         }
     ],
     "packages-dev": null,
