@@ -16,6 +16,7 @@
         - Fix 'Parameter 1 to PlgSystemRedirect::handleError() expected to be a reference' (#755)
         - Fix blank custom pages when format is not HTML (#786)
         - Duplicating outlines does not copy everything (#470)
+        - Deleting outline may cause 500 errors in the backend (#774)
 
 # 5.1.2
 ## 31/08/2015

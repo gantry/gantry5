@@ -30,9 +30,10 @@ class Router extends BaseRouter
         $app = \JFactory::getApplication();
         $input = $app->input;
 
-        // If style is set, resolve the template and load it.
-        $style = $input->getInt('style', 0);
-        $this->setStyle($style);
+        // TODO: Remove style variable.
+        $style = $input->getInt('style');
+        $theme = $input->getCmd('theme');
+        $this->setTheme($theme, $style);
 
         /** @var Request $request */
         $request = $this->container['request'];
@@ -55,27 +56,30 @@ class Router extends BaseRouter
         return $this;
     }
 
-    public function setStyle($style)
+    public function setTheme($theme, $style)
     {
-        $style = $style ? $style : StyleHelper::getDefaultStyle()->id;
         if ($style) {
             \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
             $table = \JTable::getInstance('Style', 'TemplatesTable');
             $table->load(['id' => $style, 'client_id' => 0]);
 
-            $template = $table->template;
-            $path = JPATH_SITE . '/templates/' . $template;
-
-            $this->container['theme.path'] = $path;
-            $this->container['theme.name'] = $template;
-
-            // Load language file for the template.
-            $languageFile = 'tpl_' . $template;
-            $lang = \JFactory::getLanguage();
-            $lang->load($languageFile, JPATH_SITE)
-                || $lang->load($languageFile, $path)
-                || $lang->load($languageFile, $path, 'en-GB');
+            $theme = $table->template;
         }
+        if (!$theme) {
+            $theme = StyleHelper::getDefaultStyle()->template;
+        }
+
+        $path = JPATH_SITE . '/templates/' . $theme;
+
+        $this->container['theme.path'] = $path;
+        $this->container['theme.name'] = $theme;
+
+        // Load language file for the template.
+        $languageFile = 'tpl_' . $theme;
+        $lang = \JFactory::getLanguage();
+        $lang->load($languageFile, JPATH_SITE)
+            || $lang->load($languageFile, $path)
+            || $lang->load($languageFile, $path, 'en-GB');
 
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';
 
@@ -84,10 +88,10 @@ class Router extends BaseRouter
         $token = \JSession::getFormToken();
 
         $this->container['routes'] = [
-            '1' => "&view=%s&style={$style}&{$token}=1",
+            '1' => "&view=%s&theme={$theme}&{$token}=1",
 
             'themes' => '&view=themes',
-            'picker/layouts' => "&view=layouts&style={$style}&{$token}=1",
+            'picker/layouts' => "&view=layouts&theme={$theme}&{$token}=1",
         ];
 
         return $this;

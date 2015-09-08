@@ -181,7 +181,7 @@ class plgSystemGantry5 extends JPlugin
 
             if ($cid) {
                 $styles = $this->getStyles();
-                $selected = array_intersect(array_keys($styles), $cid);
+                $selected = array_intersect_key($styles, array_flip($cid));
 
                 // If no Gantry templates were selected, just let com_templates deal with the request.
                 if (!$selected) {
@@ -190,12 +190,11 @@ class plgSystemGantry5 extends JPlugin
 
                 // Special handling for tasks coming from com_template.
                 if ($task == 'style.edit') {
-                    $id = (int) array_shift($cid);
-
-                    if (isset($styles[$id])) {
-                        $token = JSession::getFormToken();
-                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&style={$id}&{$token}=1");
-                    }
+                    $item = each($selected);
+                    $id = $item['key'];
+                    $theme = $item['value'];
+                    $token = JSession::getFormToken();
+                    $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
             }
         }
@@ -426,14 +425,14 @@ class plgSystemGantry5 extends JPlugin
     private function getStyles()
     {
         $cache = JFactory::getCache('com_templates', '');
-        $list = $cache->get('gantry-templates');
+        $list = $cache->get('gantry-templates-1');
 
         if ($list === false) {
             // Load styles
             $db    = JFactory::getDbo();
             $query = $db
                 ->getQuery(true)
-                ->select('s.id, s.template, s.params')
+                ->select('s.id, s.template')
                 ->from('#__template_styles as s')
                 ->where('s.client_id = 0')
                 ->where('e.enabled = 1')
@@ -446,11 +445,11 @@ class plgSystemGantry5 extends JPlugin
 
             foreach ($templates as $template) {
                 if ($this->isGantryTemplate($template->template)) {
-                    $list[$template->id] = true;
+                    $list[$template->id] = $template->template;
                 }
             }
 
-            $cache->store($list, 'gantry-templates');
+            $cache->store($list, 'gantry-templates-1');
         }
 
         return $list;
