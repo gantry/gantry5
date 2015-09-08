@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Gantry 5 Framework
  * Plugin URI: http://gantry.org/
- * Description: Framework for Gantry 5 based templates.
+ * Description: Framework for Gantry 5 based themes.
  * Version: @version@
  * Author: RocketTheme, LLC
  * Author URI: http://rockettheme.com/
