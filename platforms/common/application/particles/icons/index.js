@@ -70,6 +70,8 @@ domready(function() {
                     container.find('.particle-search-total').text(total ? total.length : 0);
                 };
 
+                container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
+
                 container.delegate('click', '[data-g-icon]', function(event, element) {
                     if (event && event.preventDefault) { event.preventDefault(); }
                     element = $(element);
@@ -78,12 +80,15 @@ domready(function() {
                     if (active) { active.removeClass('active'); }
 
                     element.addClass('active');
+                    container.find('[data-g-select]').disabled(null);
 
                     updatePreview();
                 });
 
                 container.delegate('click', '[data-g-select]', function(event){
                     event.preventDefault();
+
+                    if (!container.find('[data-g-icon].active')) { return false; }
 
                     var output = container.find('.g-icon-preview i');
                     field.value(output.attribute('class'));

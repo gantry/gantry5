@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Icons Picker doesn't allow to select icons when none of them is actually selected (#813)
     3. [](#bugfix)
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
         - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
