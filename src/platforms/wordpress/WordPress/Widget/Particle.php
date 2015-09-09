@@ -24,7 +24,7 @@ class Particle extends \WP_Widget
 
         parent::__construct(
             'particle_widget',
-            __( 'Particle', 'gantry5' ),
+            __( 'Gantry 5 Particle', 'gantry5' ),
             ['description' => __( 'Displays Gantry 5 particle instance in a widget position.', 'gantry5' )]
         );
 
@@ -74,7 +74,7 @@ class Particle extends \WP_Widget
         );
 
         echo $args['before_widget'];
-        echo $theme->render("@nucleus/content/particle.html.twig", $context);
+        echo apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
         echo $args['after_widget'];
     }
 
@@ -92,13 +92,13 @@ class Particle extends \WP_Widget
             'field' => [
                 'type' => 'gantry.particle',
                 'class' => 'input-small',
-                'picker_label' => 'Pick a Particle',
+                'picker_label' => __('Pick a Particle', 'gantry5'),
                 'overridable' => false
             ],
             'value' => is_array($instance) ? $instance : []
         ];
 
-        $title = ! empty($instance['title']) ? $instance['title'] : __('Undefined', 'gantry5');
+        $title = !empty($instance['title']) ? $instance['title'] : __('Undefined', 'gantry5');
         $fieldId = $this->get_field_id('title');
         $fieldName = $this->get_field_name('title');
 
