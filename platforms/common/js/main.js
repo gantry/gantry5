@@ -7635,7 +7635,7 @@ ready(function() {
                 if (select) { select.data('g-instancepicker', JSON.stringify(elementData)); }
                 else {
                     var form = content.find('form'),
-                        fakeDOM = zen('div').html(response.body.html).find('form'),
+                        fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
                         submit = content.find('input[type="submit"], button[type="submit"]'),
                         dataString = [];
 
@@ -8835,15 +8835,22 @@ var Modal = new prime({
         // inject the dialog in the DOM
         var container = $(options.appendNode);
 
+        // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
             container = $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
             if ('#' + container.id() != options.appendNode) {
-                var sibling = container.nextSibling(options.appendNode),
-                    workaround = sibling ? sibling : zen('div' + options.appendNode).after(container);
+                var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
+                if (wpwrap.id() == 'wpwrap') {
+                    sibling = wpwrap.nextSibling(options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).after(wpwrap);
+                } else {
+                    sibling = wpwrap.find('> ' + options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).top(wpwrap);
+                }
                 container = workaround;
             }
         }
-        
+
         container.appendChild(elements.container);
 
         options.elements = elements;
@@ -9214,11 +9221,30 @@ var Popover = new prime({
         if (!this.options.arrow && target.find('.g-arrow')) {
             target.find('.g-arrow').remove();
         }
+
+        var container = $(this.options.where);
+
+        // wordpress workaround for out-of-scope cases
+        if (GANTRY_PLATFORM == 'wordpress') {
+            container = $('#customize-preview') || $('#widgets-right') || $(this.options.where);
+            if ('#' + container.id() != this.options.where) {
+                var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
+                if (wpwrap.id() == 'wpwrap') {
+                    sibling = wpwrap.nextSibling(this.options.where);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + this.options.where).after(wpwrap);
+                } else {
+                    sibling = wpwrap.find('> ' + this.options.where);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + this.options.where).top(wpwrap);
+                }
+                container = workaround;
+            }
+        }
+
         target.remove().style({
             top: -1000,
             left: -1000,
             display: 'block'
-        }).bottom(this.options.where);
+        }).bottom(container);
 
         if (this.options.style) {
             if (typeof this.options.style === 'string') {

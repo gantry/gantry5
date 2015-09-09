@@ -214,15 +214,22 @@ var Modal = new prime({
         // inject the dialog in the DOM
         var container = $(options.appendNode);
 
+        // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
             container = $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
             if ('#' + container.id() != options.appendNode) {
-                var sibling = container.nextSibling(options.appendNode),
-                    workaround = sibling ? sibling : zen('div' + options.appendNode).after(container);
+                var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
+                if (wpwrap.id() == 'wpwrap') {
+                    sibling = wpwrap.nextSibling(options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).after(wpwrap);
+                } else {
+                    sibling = wpwrap.find('> ' + options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).top(wpwrap);
+                }
                 container = workaround;
             }
         }
-        
+
         container.appendChild(elements.container);
 
         options.elements = elements;

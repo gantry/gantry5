@@ -119,3 +119,24 @@ body.gantry5 {
     }
 
 }
+
+#g5-container.g5wp-out-of-scope {
+    z-index: 9995;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    &:empty {
+        display: none;
+    }
+
+    .g5-popover {
+        z-index: 99999;
+    }
+
+    .wp-customizer & {
+        z-index: 600000;
+    }
+}

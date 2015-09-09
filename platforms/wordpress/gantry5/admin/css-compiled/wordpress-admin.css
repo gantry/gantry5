@@ -169,6 +169,24 @@ body.gantry5 input[type="checkbox"][readonly] {
   background-color: transparent;
 }
 
+#g5-container.g5wp-out-of-scope {
+  z-index: 9995;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#g5-container.g5wp-out-of-scope:empty {
+  display: none;
+}
+#g5-container.g5wp-out-of-scope .g5-popover {
+  z-index: 99999;
+}
+.wp-customizer #g5-container.g5wp-out-of-scope {
+  z-index: 600000;
+}
+
 body.gantry5.admin-color-fresh #g5-container .button-primary {
   background: #0073AA;
   color: #fff;
