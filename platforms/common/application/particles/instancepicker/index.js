@@ -102,7 +102,7 @@ ready(function() {
                 if (select) { select.data('g-instancepicker', JSON.stringify(elementData)); }
                 else {
                     var form = content.find('form'),
-                        fakeDOM = zen('div').html(response.body.html).find('form'),
+                        fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
                         submit = content.find('input[type="submit"], button[type="submit"]'),
                         dataString = [];
 
