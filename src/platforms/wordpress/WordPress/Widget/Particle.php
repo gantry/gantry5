@@ -98,7 +98,7 @@ class Particle extends \WP_Widget
             'value' => is_array($instance) ? $instance : []
         ];
 
-        $title = !empty($instance['title']) ? $instance['title'] : __('Undefined', 'gantry5');
+        $title = !empty($instance['title']) ? $instance['title'] : '';
         $fieldId = $this->get_field_id('title');
         $fieldName = $this->get_field_name('title');
 
@@ -107,6 +107,8 @@ class Particle extends \WP_Widget
         $params = [
             'content' => $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
+
+        echo '<p>' . __('Click on the button below to choose a Particle.', 'gantry5') . '</p>';
 
         echo $this->container['admin.theme']->render('@gantry-admin/partials/inline.html.twig', $params);
     }
