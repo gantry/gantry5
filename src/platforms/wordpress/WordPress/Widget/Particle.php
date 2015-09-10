@@ -32,7 +32,7 @@ class Particle extends \WP_Widget
             $this->container = Gantry::instance();
         } catch (Exception $e) {}
 
-        $ajax = ($pagenow === 'admin-ajax.php' && $_POST['action'] === 'save-widget');
+        $ajax = ($pagenow === 'admin-ajax.php' && ( isset( $_POST['action'] ) && $_POST['action'] === 'save-widget' ) );
         if (is_admin() && (in_array($pagenow, ['widgets.php', 'customize.php']) || $ajax)) {
             // Initialize administrator if already not done that.
             if (!isset($this->container['router'])) {
