@@ -257,7 +257,7 @@ var ColorPicker = new prime({
     },
 
     updateFromInput: function(dontFireEvent, element) {
-        element = this.element || element;
+        element = $(element) || this.element;
         var value = element.value(),
             opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;
