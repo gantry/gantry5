@@ -38,7 +38,9 @@ class Content
             $this->content = [];
             foreach ($files as $key => $file) {
                 $filename = key($file);
-                $this->content[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+                $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+                $this->content[$key] = $file->content();
+                $file->free();
             }
         }
 
@@ -73,7 +75,9 @@ class Content
         }
 
         $filename = key($files[$id]);
-        $item = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+        $item = $file->content();
+        $file->free();
 
         return $item;
     }

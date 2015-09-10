@@ -204,6 +204,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
         $file->save(['preset' => $this->preset, 'children' => json_decode(json_encode($this->items), true)]);
+        $file->free();
 
         $this->exists = true;
 
@@ -244,6 +245,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $file->save($index);
             $file->unlock();
         }
+        $file->free();
 
         static::$indexes['name'] = $index;
 
@@ -470,7 +472,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Attempt to load the index file.
         $indexFile = $locator("gantry-config://{$name}/index.yaml");
         if ($indexFile) {
-            $index = CompiledYamlFile::instance($indexFile)->content();
+            $file = CompiledYamlFile::instance($indexFile);
+            $index = $file->content();
+            $file->free();
         }
 
         // Find out the currently used layout file.

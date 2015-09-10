@@ -183,7 +183,9 @@ class Layout extends HtmlController
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
-            $blueprints = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
+            $blueprints = new BlueprintsForm($file->content());
+            $file->free();
         } else {
             $particle = true;
             $hasBlock = true;
@@ -194,7 +196,9 @@ class Layout extends HtmlController
         }
 
         if ($hasBlock) {
-            $extra = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+            $extra = new BlueprintsForm($file->content());
+            $file->free();
         }
 
         // TODO: Use blueprints to merge configuration.
@@ -306,7 +310,9 @@ class Layout extends HtmlController
         if ($particle == 'section' || $particle == 'container' || $particle == 'grid' || $particle == 'offcanvas') {
             $type = $particle;
             $particle = null;
-            $validator->embed('options', CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml")->content());
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
+            $validator->embed('options', $file->content());
+            $file->free();
             $defaults = [];
         } else {
             $type = in_array($particle, ['spacer', 'pagecontent', 'position']) ? $particle :  'particle';

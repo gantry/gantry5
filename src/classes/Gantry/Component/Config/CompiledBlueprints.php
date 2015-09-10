@@ -52,5 +52,6 @@ class CompiledBlueprints extends CompiledBase
     {
         $file = CompiledYamlFile::instance($filename);
         $this->object->embed($name, $file->content(), '/');
+        $file->free();
     }
 }

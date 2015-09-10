@@ -347,7 +347,7 @@ abstract class CssCompiler implements CssCompilerInterface
         if ($metaFile->locked() !== false) {
             $metaFile->save($data);
             $metaFile->unlock();
-            $metaFile->free();
         }
+        $metaFile->free();
     }
 }

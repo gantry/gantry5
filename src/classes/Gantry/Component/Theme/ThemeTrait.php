@@ -274,8 +274,9 @@ trait ThemeTrait
             $locator = $gantry['locator'];
 
             $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
-
-            $presets = new Config(CompiledYamlFile::instance($filename)->content());
+            $file = CompiledYamlFile::instance($filename);
+            $presets = new Config($file->content());
+            $file->free();
         }
 
         return $presets;

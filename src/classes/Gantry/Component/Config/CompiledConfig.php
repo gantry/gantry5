@@ -95,5 +95,6 @@ class CompiledConfig extends CompiledBase
     {
         $file = CompiledYamlFile::instance($filename);
         $this->object->join($name, $file->content(), '/');
+        $file->free();
     }
 }

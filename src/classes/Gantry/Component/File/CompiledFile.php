@@ -96,6 +96,7 @@ trait CompiledFile
                     $file->unlock();
                 }
             }
+            $file->free();
 
             $this->content = $cache['data'];
         }

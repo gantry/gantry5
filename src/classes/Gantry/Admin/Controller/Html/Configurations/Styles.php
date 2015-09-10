@@ -201,6 +201,7 @@ class Styles extends HtmlController
 
         $file = YamlFile::instance($filename);
         $file->save($data);
+        $file->free();
 
         // Fire save event.
         $event = new Event;

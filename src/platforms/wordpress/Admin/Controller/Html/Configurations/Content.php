@@ -231,6 +231,7 @@ class Content extends HtmlController
 
             $file->save($config->toArray());
         }
+        $file->free();
     }
 
     public function reset($group, $id)

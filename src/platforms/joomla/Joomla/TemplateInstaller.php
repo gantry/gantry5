@@ -364,7 +364,9 @@ class TemplateInstaller
             $name = $this->extension->name;
             $path = JPATH_SITE . '/templates/' . $name;
 
-            $menus = (array) YamlFile::instance($path . '/install/menus.yaml')->content();
+            $file = YamlFile::instance($path . '/install/menus.yaml');
+            $menus = (array) $file->content();
+            $file->free();
         }
 
         foreach ($menus as $menutype => $menu) {

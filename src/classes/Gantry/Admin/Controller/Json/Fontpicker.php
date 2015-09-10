@@ -41,7 +41,9 @@ class Fontpicker extends JsonController
     public function loadGoogleFonts()
     {
         $data = new \stdClass();
-        $fonts = JsonFile::instance($this->google_fonts)->content()['items'];
+        $file = JsonFile::instance($this->google_fonts);
+        $fonts = $file->content()['items'];
+        $file->free();
 
         $data->categories = [];
         $data->subsets = [];

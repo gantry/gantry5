@@ -42,8 +42,10 @@ class Layouts extends JsonController
 
         $response = ['layouts'];
         foreach($files as $name => $structure) {
-            $content = JsonFile::instance($structure)->content();
+            $file = JsonFile::instance($structure);
+            $content = $file->content();
             $response['layouts'][$name] = $content;
+            $file->free();
         }
 
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/picker.html.twig', ['presets' => $response]);

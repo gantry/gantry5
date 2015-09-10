@@ -130,6 +130,7 @@ WARN;
 
         $file->save($css);
         $file->unlock();
+        $file->free();
 
         $this->createMeta($out, md5($css));
 

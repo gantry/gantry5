@@ -37,9 +37,11 @@ class Styles
             $files = $this->locateBlocks();
 
             $this->blocks = [];
-            foreach ($files as $key => $file) {
-                $filename = key($file);
-                $this->blocks[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+            foreach ($files as $key => $fileArray) {
+                $filename = key($fileArray);
+                $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+                $this->blocks[$key] = $file->content();
+                $file->free();
             }
         }
 
@@ -72,7 +74,9 @@ class Styles
         }
 
         $filename = key($files[$id]);
-        $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+        $particle = $file->content();
+        $file->free();
 
         return $particle;
     }

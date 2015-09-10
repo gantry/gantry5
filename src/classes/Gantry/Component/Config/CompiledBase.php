@@ -215,5 +215,6 @@ abstract class CompiledBase
 
         $file->save($cache);
         $file->unlock();
+        $file->free();
     }
 }

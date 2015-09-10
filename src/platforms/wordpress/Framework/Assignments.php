@@ -76,6 +76,7 @@ class Assignments
 
         $file = YamlFile::instance($filename);
         $file->save($data);
+        $file->free();
     }
 
     public function types()

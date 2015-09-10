@@ -169,8 +169,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
             $menu = $this->params['menu'];
 
-            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+            $file = CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"));
+            $this->config = new Config($file->content());
             $this->config->def('settings.title', ucfirst($menu));
+            $file->free();
         }
 
         return $this->config;

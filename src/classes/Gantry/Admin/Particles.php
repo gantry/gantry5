@@ -37,9 +37,11 @@ class Particles
             $files = $this->locateParticles();
 
             $this->particles = [];
-            foreach ($files as $key => $file) {
-                $filename = key($file);
-                $this->particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+            foreach ($files as $key => $fileArray) {
+                $filename = key($fileArray);
+                $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+                $this->particles[$key] = $file->content();
+                $file->free();
             }
         }
 
@@ -75,8 +77,10 @@ class Particles
         }
 
         $filename = key($files[$id]);
-        $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+        $particle = $file->content();
         $particle['subtype'] = $id; // TODO: can this be done better or is it fine like that?
+        $file->free();
 
         return $particle;
     }

@@ -231,6 +231,7 @@ class Settings extends HtmlController
 
             $file->save($config->toArray());
         }
+        $file->free();
     }
 
     public function reset($id)

@@ -81,6 +81,7 @@ class EventListener implements EventSubscriberInterface
 
         $ini = IniFile::instance($locator->findResource($filename, true, true));
         $ini->save($translations);
+        $ini->free();
     }
 
     public function onAssignmentsSave(Event $event)

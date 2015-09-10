@@ -160,6 +160,7 @@ class Menu extends HtmlController
         $file = YamlFile::instance($filename);
         $file->settings(['inline' => 99]);
         $file->save($data->toArray());
+        $file->free();
     }
 
     public function editItem($id)
@@ -214,8 +215,10 @@ class Menu extends HtmlController
 
         $name = isset($data['particle']) ? $data['particle'] : null;
 
-        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml");
+        $block = new BlueprintsForm($file->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $file->free();
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -429,7 +432,11 @@ class Menu extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        return new BlueprintsForm(CompiledYamlFile::instance($filename)->content());
+        $file = CompiledYamlFile::instance($filename);
+        $content = new BlueprintsForm($file->content());
+        $file->free();
+
+        return $content;
     }
 
 
