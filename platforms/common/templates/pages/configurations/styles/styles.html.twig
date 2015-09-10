@@ -2,6 +2,7 @@
 
 {% block gantry %}
 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
+{% set defaultStyles = defaults.get('styles') %}
 
 <div id="styles">
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
@@ -19,7 +20,7 @@
             <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
         </h2>
 
-        <div class="swatches-container{{ collapsed ? ' g-collapsed' : '' }}">
+        <div class="swatches-container{{ collapsed ? ' g-collapsed' : '' }}"{% if defaultStyles %} data-g-styles-defaults="{{ defaultStyles|json_encode|escape('html_attr') }}"{% endif %}>
             <div class="swatches-block">
                 {% set presetKey = gantry.config.get('styles.preset') %}
 
