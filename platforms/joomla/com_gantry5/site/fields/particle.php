@@ -49,8 +49,9 @@ class JFormFieldParticle extends JFormField
 
         // FIXME: Better style detection.
         $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
+        $theme = \Gantry\Joomla\StyleHelper::getDefaultStyle()->template;
 
-        $this->container['router']->setStyle($style->id)->load();
+        $this->container['router']->setTheme($theme, $style->id)->load();
 
         $field = [
             'default' => true,
