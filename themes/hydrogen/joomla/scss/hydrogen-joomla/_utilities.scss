@@ -128,3 +128,11 @@ a.text-info:hover,
 a.text-info:focus {
 	color: darken($info-color, 5%);
 }
+
+// Resets
+@include breakpoint(mobile-only) {
+    body {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
