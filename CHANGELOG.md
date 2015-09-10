@@ -5,6 +5,7 @@
     2. [](#improved)
         - Icons Picker doesn't allow to select icons when none of them is actually selected (#813)
         - Reduce overall memory usage
+        - Twig url(): Add support for timestamp max age (#821)
     3. [](#bugfix)
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
         - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
