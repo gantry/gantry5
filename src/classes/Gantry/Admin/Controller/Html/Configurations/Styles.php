@@ -210,8 +210,7 @@ class Styles extends HtmlController
         $event->data = $data;
         $this->container->fireEvent('admin.styles.save', $event);
 
-        // Apply new styles to the current configuration and compile CSS.
-        $config->join('styles', $data);
+        // Compile CSS.
         $warnings = $this->compileSettings();
 
         if (empty($this->params['ajax'])) {
@@ -233,27 +232,15 @@ class Styles extends HtmlController
         }
     }
 
+    /**
+     * @returns array
+     */
     protected function compileSettings()
     {
         /** @var Theme $theme */
         $theme = $this->container['theme'];
         $configuration = $this->params['configuration'];
 
-        if ($configuration === 'default') {
-            $warnings = $theme->updateCss();
-        } else {
-            $compiler = $theme->compiler();
-            $compiler->setVariables($this->container['config']->flatten('styles', '-'));
-            $compiler->compileAll();
-
-            $results = $compiler->getWarnings();
-            if ($results) {
-                $warnings[$configuration] = $results;
-            } else {
-                $warnings = [];
-            }
-        }
-
-        return $warnings;
+        return $theme->updateCss($configuration !== 'default' ? [$configuration] : null);
     }
 }

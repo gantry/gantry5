@@ -29,6 +29,9 @@ class Cache extends HtmlController
         Folder::delete($locator('gantry-cache://theme'), false);
         Folder::delete($locator('gantry-cache://admin'), false);
 
+        // Make sure that PHP has the latest data of the files.
+        clearstatcache();
+
         return new JsonResponse(['html' => 'Cache was successfully cleared', 'title' => 'Cache Cleared']);
     }
 }
