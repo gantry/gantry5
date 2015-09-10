@@ -628,6 +628,7 @@ var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
     storage    = require('prime/map'),
     deepEquals = require('mout/lang/deepEquals'),
+    hasOwn     = require('mout/object/has'),
     forEach    = require('mout/collection/forEach'),
     invoke     = require('mout/array/invoke'),
     History    = require('../utils/history'),
@@ -636,7 +637,10 @@ var ready      = require('elements/domready'),
 
 var originals,
     collectFieldsValues = function(keys) {
-        var map = new storage();
+        var map = new storage(),
+            defaults = $('[data-g-styles-defaults]');
+
+        defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
 
         if (keys) {
             var field;
@@ -655,9 +659,11 @@ var originals,
 
         fields.forEach(function(field) {
             field = $(field);
+            var key = field.attribute('name'),
+                isInput = !hasOwn(defaults, key);
 
             if (field.type() == 'checkbox' && !field.value().length) { field.value('0'); }
-            map.set(field.attribute('name'), field.value());
+            map.set(key, isInput ? field.value() : defaults[key]);
         }, this);
 
         return map;
@@ -806,7 +812,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"prime/map":264}],7:[function(require,module,exports){
+},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"mout/object/has":196,"prime/map":264}],7:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -5672,7 +5678,7 @@ var ColorPicker = new prime({
     },
 
     updateFromInput: function(dontFireEvent, element) {
-        element = this.element || element;
+        element = $(element) || this.element;
         var value = element.value(),
             opacity = value.replace(/\s/g, '').match(/^rgba?\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(.+)\)/),
             hex, hsb;

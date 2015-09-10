@@ -16,6 +16,7 @@
         - Fixed checkbox field issue not storing the off state in `YAML`, needed for things such as Swipe gesture option (fixes #802)
         - Saving outline style will not properly update CSS in some platforms (#816)
         - SCSS Compiler issue: White page if compiler gets interrupted (#805)
+        - Fixed override logic in admin for the Styles panel where switching between Presets wasn't taking into account defaults from Base (#818, #820)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)
