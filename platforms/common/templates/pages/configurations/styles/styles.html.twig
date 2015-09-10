@@ -2,7 +2,7 @@
 
 {% block gantry %}
 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
-{% set defaultStyles = defaults.get('styles') %}
+{% set defaultStyles = defaults.flatten('styles', '][', 'styles') %}
 
 <div id="styles">
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
