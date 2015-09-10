@@ -32,6 +32,13 @@ ol.unstyled {
   margin-top: 0;
 }
 
+.g-loginform fieldset.login-data {
+  padding: 0;
+}
+.g-loginform .login-pretext p, .g-loginform .login-posttext p {
+  margin: 0.5rem 0;
+}
+
 .alignnone {
   margin: 5px 20px 20px 0;
 }

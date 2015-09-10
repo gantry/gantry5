@@ -26,6 +26,9 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Implement a particle Widget (#714)
+        - Added Login Form particle
+    2. [](#improved)
+        - Added WooCommerce support in themes declaration
     3. [](#bugfix)
         - Load style.css on all pages (#819)
 

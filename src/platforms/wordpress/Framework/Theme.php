@@ -29,6 +29,7 @@ class Theme extends Base\Theme
         add_theme_support( 'post-thumbnails' );
         add_theme_support( 'menus' );
         add_theme_support( 'widgets' );
+        add_theme_support( 'woocommerce' );
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
         add_action( 'template_redirect', [ $this, 'set_template_layout' ], -10000 );
