@@ -25,6 +25,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Implement a particle Widget (#714)
+    3. [](#bugfix)
+        - Load style.css on all pages (#819)
 
 # 5.1.2
 ## 31/08/2015
