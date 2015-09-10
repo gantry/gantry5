@@ -5361,6 +5361,7 @@ html.g5-dialog-open {
   position: absolute;
   top: 10px;
   right: 10px;
+  z-index: 2;
 }
 #g5-container .colorpicker.light-text input, #g5-container .colorpicker.light-text i {
   color: #fff;
