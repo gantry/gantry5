@@ -19,26 +19,26 @@
 
                 <fieldset class="login-data">
                     <p id="login-username">
-                        <label for="username">{{ __('User Name', 'g5_ethereal') }}</label>
+                        <label for="username">{{ __('User Name', 'gantry5') }}</label>
                         <input id="username" type="text" name="log" class="inputbox" alt="username" size="18" value="" />
                     </p>
                     <p id="login-password">
-                        <label for="passwd">{{ __('Password', 'g5_ethereal') }}</label>
+                        <label for="passwd">{{ __('Password', 'gantry5') }}</label>
                         <input id="passwd" type="password" name="pwd" class="inputbox" size="18" alt="password" value="" />
                     </p>
                     <p id="login-remember">
-                        <label for="remember">{{ __('Remember me', 'g5_ethereal') }}</label>
                         <input id="remember" type="checkbox" name="rememberme" class="inputbox" />
+                        <label for="remember">{{ __('Remember me', 'gantry5') }}</label>
                     </p>
-                    <input type="submit" value="{{ __('Log In', 'g5_ethereal') }}" class="button" name="submit" />
+                    <input type="submit" value="{{ __('Log In', 'gantry5') }}" class="button" name="submit" />
                 </fieldset>
-                <ul>
+                <ul class="login-extra">
                     <li>
-                        <a href="{{ function('wp_lostpassword_url') }}">{{ __('Forgot your password ?', 'g5_ethereal') }}</a>
+                        <a href="{{ function('wp_lostpassword_url') }}">{{ __('Forgot your password ?', 'gantry5') }}</a>
                     </li>
                     {% if function('get_option', 'users_can_register') %}
                         <li>
-                            <a href="{{ function('wp_registration_url') }}">{{ __('Register', 'g5_ethereal') }}</a>
+                            <a href="{{ function('wp_registration_url') }}">{{ __('Register', 'gantry5') }}</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -59,7 +59,7 @@
                     <p>{{ particle.greeting|format(current_user.display_name) }}</p>
                 </div>
                 <div class="logout-button">
-                    <input type="submit" name="submit" class="button" value="{{ __('Log Out', 'g5_ethereal') }}" />
+                    <input type="submit" name="submit" class="button" value="{{ __('Log Out', 'gantry5') }}" />
                 </div>
             </form>
 
