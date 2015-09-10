@@ -13,6 +13,7 @@
         - Fixed `Division by zero` error when setting a Block to `Fixed` and when that block is the only one, at 100%, in the grid (#804)
         - Fixed checkbox field issue not storing the off state in `YAML`, needed for things such as Swipe gesture option (fixes #802)
         - Saving outline style will not properly update CSS in some platforms (#816)
+        - SCSS Compiler issue: White page if compiler gets interrupted (#805)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)

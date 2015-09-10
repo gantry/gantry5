@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6f74bc0e62b1e869121ff74971f176db",
+    "hash": "d508c8e80c9ce11d2d2875aa6be6c557",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "949c0156f24efd740ac1c2c15ffbbb6e858c4d44"
+                "reference": "211f5ce98c1fc2848890a75b1f67f59e0b31d522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/949c0156f24efd740ac1c2c15ffbbb6e858c4d44",
-                "reference": "949c0156f24efd740ac1c2c15ffbbb6e858c4d44",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/211f5ce98c1fc2848890a75b1f67f59e0b31d522",
+                "reference": "211f5ce98c1fc2848890a75b1f67f59e0b31d522",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2015-08-31 19:14:04"
+            "time": "2015-09-10 10:52:57"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -390,12 +390,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15"
+                "reference": "69b6037050614d129fee27e17951ec7968f6567e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
-                "reference": "8deea7a9f5560b7e70eab8d72e5e8f2d45564d15",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/69b6037050614d129fee27e17951ec7968f6567e",
+                "reference": "69b6037050614d129fee27e17951ec7968f6567e",
                 "shasum": ""
             },
             "require": {
@@ -440,7 +440,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:18:02"
+            "time": "2015-09-09 18:05:45"
         },
         {
             "name": "symfony/yaml",
@@ -497,12 +497,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "825bdc1afcccdc88c2d641343f8df4fc5afe214d"
+                "reference": "4ff8b3f002b91f56a36e63fa236148ce0a5c9a24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/825bdc1afcccdc88c2d641343f8df4fc5afe214d",
-                "reference": "825bdc1afcccdc88c2d641343f8df4fc5afe214d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/4ff8b3f002b91f56a36e63fa236148ce0a5c9a24",
+                "reference": "4ff8b3f002b91f56a36e63fa236148ce0a5c9a24",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-06 06:45:56"
+            "time": "2015-09-10 09:13:50"
         }
     ],
     "packages-dev": null,
