@@ -100,32 +100,6 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
-     * Parse raw html.
-     *
-     * @param  string  $str
-     * @return string
-     */
-    public function htmlFilter($str)
-    {
-        $str = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $str);
-        $str = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $str);
-
-        return $str;
-    }
-
-    public function linkHandler(array $matches)
-    {
-        $url = $this->urlFunc($matches[3]);
-        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
-    }
-
-    public function urlHandler(array $matches)
-    {
-        $url = $this->urlFunc(trim($matches[2]), '"\'');
-        return "{$matches[1]}url({$url})";
-    }
-
-    /**
      * Translate string.
      *
      * @param  string  $str
@@ -226,6 +200,20 @@ class TwigExtension extends \Twig_Extension
     public function urlFunc($input, $domain = false, $timestamp_age = null)
     {
         return Document::url(trim((string) $input), $domain, $timestamp_age);
+    }
+
+    /**
+     * Filter stream URLs from HTML input.
+     *
+     * @param  string $html         HTML input to be filtered.
+     * @param  bool $domain         True to include domain name.
+     * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
+     *                              Use value <= 0 to disable the feature.
+     * @return string               Returns modified HTML.
+     */
+    public function htmlFilter($str, $domain = false, $timestamp_age = null)
+    {
+        return Document::urlFilter($str, $domain, $timestamp_age);
     }
 
     /**

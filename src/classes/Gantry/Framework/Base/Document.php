@@ -22,6 +22,7 @@ class Document
     use GantryTrait;
 
     public static $timestamp_age = 604800;
+    public static $urlFilterParams;
 
     protected static $scripts = [];
     protected static $styles = [];
@@ -286,6 +287,51 @@ class Document
         }
 
         return static::domain($domain) . $uri;
+    }
+
+    /**
+     * Filter stream URLs from HTML.
+     *
+     * @param  string $html         HTML input to be filtered.
+     * @param  bool $domain         True to include domain name.
+     * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
+     *                              Use value <= 0 to disable the feature.
+     * @return string               Returns modified HTML.
+     */
+    public static function urlFilter($html, $domain = false, $timestamp_age = null)
+    {
+        static::$urlFilterParams = [$domain, $timestamp_age];
+
+        $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', 'static::linkHandler', $html);
+        $html = preg_replace_callback('^(\s)url\((.*?)\)^', 'static::urlHandler', $html);
+
+        return $html;
+    }
+
+    /**
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public static function linkHandler(array $matches)
+    {
+        list($domain, $timestamp_age) = static::$urlFilterParams;
+        $url = static::url(trim($matches[3]), $domain, $timestamp_age);
+
+        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
+    }
+
+    /**
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public static function urlHandler(array $matches)
+    {
+        list($domain, $timestamp_age) = static::$urlFilterParams;
+        $url = static::url(trim($matches[2], '"\''), $domain, $timestamp_age);
+
+        return "{$matches[1]}url({$url})";
     }
 
     /**
