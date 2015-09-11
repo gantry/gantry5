@@ -6,7 +6,7 @@
         - Icons Picker doesn't allow to select icons when none of them is actually selected (#813)
         - Reduce overall memory usage
         - Twig url(): Add support for timestamp max age (#821)
-        - Added notice to Custom JS/CSS atom that inline code should be stripped out of <script> and <style> tags.
+        - Added notice to Custom JS/CSS atom that inline code should be stripped out of &lt;script&gt; and &lt;style&gt; tags.
     3. [](#bugfix)
         - Fixed "View on GitHub" button in the Changelog modal that was taking you nowhere
         - Equalized blocks sizes are now always rounded to 1 decimal digit and will only be supported this way (fixes #776)
@@ -35,7 +35,7 @@
         - Added missing the_excerpt filter to excerpts in Hydrogen
     3. [](#bugfix)
         - Load style.css on all pages (#819)
-        - Add missing `dir="rtl"` to `<html>` tag when WordPress is in the RTL mode
+        - Add missing `dir="rtl"` to &lt;html&gt; tag when WordPress is in the RTL mode
 
 # 5.1.2
 ## 31/08/2015
