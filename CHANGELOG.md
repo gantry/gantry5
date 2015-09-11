@@ -30,6 +30,7 @@
         - Implement a particle Widget (#714)
         - Added Login Form particle
         - Hook streams URL filter into the_content, the_excerpt, widget_text and widget_content filters (#779)
+        - Added new stream for wp-content directory
     2. [](#improved)
         - Added WooCommerce support in themes declaration
         - Added missing the_excerpt filter to excerpts in Hydrogen

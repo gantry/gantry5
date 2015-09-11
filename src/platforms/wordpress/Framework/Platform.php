@@ -27,6 +27,9 @@ class Platform extends BasePlatform
 
         // Add wp-includes directory to the streams
         $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
+
+        // Add wp-content directory to the streams
+        $this->items['streams']['wp-content'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->content_dir]];
     }
 
     public function getCachePath()
