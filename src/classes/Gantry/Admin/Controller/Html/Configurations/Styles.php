@@ -242,6 +242,6 @@ class Styles extends HtmlController
         $theme = $this->container['theme'];
         $configuration = $this->params['configuration'];
 
-        return $theme->updateCss($configuration !== 'default' ? [$configuration] : null);
+        return $theme->updateCss($configuration !== 'default' ? [$configuration => ucfirst($configuration)] : null);
     }
 }
