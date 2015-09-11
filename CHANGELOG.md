@@ -35,6 +35,7 @@
         - Added missing the_excerpt filter to excerpts in Hydrogen
     3. [](#bugfix)
         - Load style.css on all pages (#819)
+        - Add missing `dir="rtl"` to `<html>` tag when WordPress is in the RTL mode
 
 # 5.1.2
 ## 31/08/2015

@@ -6,10 +6,17 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $site = Gantry::instance()['site'];
+
+        $dir = [];
+        if(function_exists('is_rtl') && is_rtl()) {
+            $dir['dir'] = 'rtl';
+        }
+
         $attributes = [
-                'lang' => (string) $site->language
-            ]
-            + (array) $this->config->get('page.html', []);
+                'lang' => (string) $site->language,
+              ]
+              + (array) $dir
+              + (array) $this->config->get('page.html', []);
 
         return $this->getAttributes($attributes);
     }
