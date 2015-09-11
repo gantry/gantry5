@@ -21,7 +21,9 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Request\Request;
+use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Component\Response\Response;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
@@ -57,6 +59,7 @@ class Menu extends HtmlController
             '/select/particle'   => 'selectParticle',
             '/select/module'     => 'selectModule',
             '/select/widget'     => 'selectWidget',
+            '/widget'            => 'widget',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -303,7 +306,18 @@ class Menu extends HtmlController
 
     public function selectWidget()
     {
+        $this->params['next'] = 'menu/widget';
+
         return $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
+    }
+
+    public function widget()
+    {
+        $data = $this->request->post->getJson('item');
+        $path = [$data->widget];
+        $this->params['scope'] = 'menu';
+
+        return $this->executeForward('widget', 'POST', $path, $this->params);
     }
 
     public function selectParticle()
@@ -504,5 +518,25 @@ class Menu extends HtmlController
         }
 
         return $list;
+    }
+
+    protected function executeForward($resource, $method = 'GET', $path, $params = [])
+    {
+        $class = '\\Gantry\\Admin\\Controller\\Json\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
+        if (!class_exists($class)) {
+            throw new \RuntimeException('Page not found', 404);
+        }
+
+        /** @var HtmlController $controller */
+        $controller = new $class($this->container);
+
+        // Execute action.
+        $response = $controller->execute($method, $path, $params);
+
+        if (!$response instanceof Response) {
+            $response = new HtmlResponse($response);
+        }
+
+        return $response;
     }
 }

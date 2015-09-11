@@ -2,7 +2,7 @@
 
 widget.[id | title | description]
 #}
-<div data-mm-particle-stepone="{{ gantry.route('widget') }}" class="menu-editor-extras">
+<div data-mm-particle-stepone="{{ gantry.route(next|default('widget')) }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
             {{ 'Pick a Widget'|trans }}

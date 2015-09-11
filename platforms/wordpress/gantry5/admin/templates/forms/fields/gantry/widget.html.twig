@@ -4,13 +4,14 @@
     <div class="settings-block"><div class="input-group">
                 {% set label = field.picker_label|default('Pick a Widget'|trans) %}
                 {% set alt_label = field.picker_label_alt|default('Edit Widget'|trans) %}
-                {% set value_json = value ? value|json_decode|e('html_attr') : false %}
-                <span class="g-instancepicker-title">{{ value_json.title|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'widget', field: (scope ~ name)|fieldName }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
+                {% set value_array = value and value is iterable ? value : value|json_decode %}
+                {% set value_json = value and value is iterable ? value|json_encode : value %}
+                <span class="g-instancepicker-title">{{ value_array.title|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'widget', field: (scope ~ name)|fieldName }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
                 <input
                         type="hidden"
                         name="{{ (scope ~ name)|fieldName }}"
                         {# value="{{ value ? value|json_encode(constant('JSON_UNESCAPED_UNICODE')) }}" #}
-                        value="{{ value }}"
+                        value="{{ value_json }}"
                         {# global attribute structures #}
                         {{ block('global_attributes') }}
                         {# non-gloval attribute structures #}
