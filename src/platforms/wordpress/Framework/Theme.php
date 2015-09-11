@@ -30,8 +30,14 @@ class Theme extends Base\Theme
         add_theme_support( 'menus' );
         add_theme_support( 'widgets' );
         add_theme_support( 'woocommerce' );
+
         add_filter( 'timber_context', [ $this, 'add_to_context' ] );
         add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
+        add_filter( 'the_content', [ $this, 'url_filter' ], 0 );
+        add_filter( 'the_excerpt', [ $this, 'url_filter' ], 0 );
+        add_filter( 'widget_text', [ $this, 'url_filter' ], 0 );
+        add_filter( 'widget_content', [ $this, 'url_filter' ], 0 );
+
         add_action( 'template_redirect', [ $this, 'set_template_layout' ], -10000 );
         add_action( 'init', [ $this, 'register_post_types' ] );
         add_action( 'init', [ $this, 'register_taxonomies' ] );
@@ -175,6 +181,11 @@ class Theme extends Base\Theme
                 ) );
             }
         }
+    }
+
+    public function url_filter($text)
+    {
+        return Document::urlFilter($text, true, 0);
     }
 
     public function register_post_types()

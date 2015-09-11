@@ -29,6 +29,7 @@
     1. [](#new)
         - Implement a particle Widget (#714)
         - Added Login Form particle
+        - Hook streams URL filter into the_content, the_excerpt, widget_text and widget_content filters (#779)
     2. [](#improved)
         - Added WooCommerce support in themes declaration
     3. [](#bugfix)
