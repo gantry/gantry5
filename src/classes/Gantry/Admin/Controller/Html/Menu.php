@@ -42,6 +42,7 @@ class Menu extends HtmlController
             '/select'            => 'undefined',
             '/select/particle'   => 'selectParticle',
             '/select/module'     => 'selectModule',
+            '/select/widget'     => 'selectWidget',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -55,6 +56,7 @@ class Menu extends HtmlController
             '/select'            => 'undefined',
             '/select/particle'   => 'selectParticle',
             '/select/module'     => 'selectModule',
+            '/select/widget'     => 'selectWidget',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -297,6 +299,11 @@ class Menu extends HtmlController
     public function selectModule()
     {
         return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
+    }
+
+    public function selectWidget()
+    {
+        return $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
     }
 
     public function selectParticle()

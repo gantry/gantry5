@@ -31,7 +31,7 @@ class Widget extends JsonController
             '/*'                 => 'widget',
         ],
         'POST'   => [
-            '/'                  => 'undefined',
+            '/'                  => 'widget',
             '/*'                 => 'widget',
             '/*/validate'        => 'validate',
         ]
@@ -54,7 +54,7 @@ class Widget extends JsonController
      * @return JsonResponse
      * @throws \RuntimeException
      */
-    public function widget($name)
+    public function widget($name = null)
     {
         $data = $this->request->post['item'];
         if ($data) {
@@ -83,6 +83,10 @@ class Widget extends JsonController
                     $instance[$key] = intval($field);
                 }
             }
+        }
+
+        if (is_null($name)) {
+            $name = $data['widget'];
         }
 
         $widgetType = $this->getWidgetType($name);
