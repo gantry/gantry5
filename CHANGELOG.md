@@ -32,6 +32,7 @@
         - Hook streams URL filter into the_content, the_excerpt, widget_text and widget_content filters (#779)
     2. [](#improved)
         - Added WooCommerce support in themes declaration
+        - Added missing the_excerpt filter to excerpts in Hydrogen
     3. [](#bugfix)
         - Load style.css on all pages (#819)
 

@@ -43,7 +43,7 @@
 
                 {# Begin Tease #}
                 {% if post.post_excerpt is not empty %}
-                    <p class="tease excerpt">{{ post.post_excerpt }}</p>
+                    <p class="tease excerpt">{{ post.post_excerpt|apply_filters('the_excerpt') }}</p>
                 {% else %}
                     {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
                     {% if readmore %}
