@@ -38,6 +38,11 @@ form:
           label: Inline CSS
           description: Adds inline CSS for quick snippets.
 
+        _info:
+          type: separator.note
+          class: alert alert-info
+          content: Please note that inline CSS code should be stripped out of &lt;style&gt;&lt;/style&gt; tags as Atom is automatically adding them.
+
         .extra:
           type: collection.keyvalue
           label: Tag attributes
@@ -72,6 +77,11 @@ form:
           type: textarea.textarea
           label: Inline JavaScript
           description: Adds inline JavaScript for quick snippets.
+
+        _info:
+          type: separator.note
+          class: alert alert-info
+          content: Please note that inline JavaScript code should be stripped out of &lt;script&gt;&lt;/script&gt; tags as Atom is automatically adding them.
 
         .in_footer:
           type: input.checkbox
