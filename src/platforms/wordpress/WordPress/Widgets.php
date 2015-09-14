@@ -113,8 +113,13 @@ abstract class Widgets
                 elseif ( is_object($cn) )
                     $classname .= '_' . get_class($cn);
             }
+            $classname = ltrim($classname, '_');
+        } else {
+            // If widget couldn't be found, just remove identifier from the end of id.
+            $classname = 'widget_' . preg_replace('/-+[0-9]+$/', '', $id);
         }
-        return ltrim($classname, '_');
+
+        return $classname;
     }
 
     protected static function getWidgetClass($id)
