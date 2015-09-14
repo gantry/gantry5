@@ -220,29 +220,31 @@ body.g-prime {
 } // end wrapper
 
 // Footer
-#footer {
-    background-color: #e7e7e7;
-    padding: 1em 0 3rem;
-    margin-bottom: 0;
-    color: #aaa;
-    text-align: center;
-    font-weight: $font-weight-medium;
-    border-top: 1px solid #dedede;
-    font-family: $font-family-default;
-    font-size: $core-font-size;
-    line-height: $core-line-height;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.com_gantry5, .gantry5 {
+    #footer {
+        background-color: #e7e7e7;
+        padding: 1em 0 3rem;
+        margin-bottom: 0;
+        color: #aaa;
+        text-align: center;
+        font-weight: $font-weight-medium;
+        border-top: 1px solid #dedede;
+        font-family: $font-family-default;
+        font-size: $core-font-size;
+        line-height: $core-line-height;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
 
-    .g-version, .g-version-date {
-        color: $update-header-bg;
-    }
+        .g-version, .g-version-date {
+            color: $update-header-bg;
+        }
 
-    a {
-        color: $core-accent !important;
-        text-decoration: none;
-        &:hover {
-            color: darken($core-accent, 20%) !important;
+        a {
+            color: $core-accent !important;
+            text-decoration: none;
+            &:hover {
+                color: darken($core-accent, 20%) !important;
+            }
         }
     }
 }
