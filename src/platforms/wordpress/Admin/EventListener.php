@@ -124,7 +124,7 @@ class EventListener implements EventSubscriberInterface
         $ordering = $this->flattenOrdering($menu['ordering']);
 
         foreach ($menu['items'] as $key => $item) {
-            if (!empty($item['id']) && $menu_items[$item['id']]) {
+            if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 $wpItem = $menu_items[$item['id']];
 
                 $args = [
@@ -177,7 +177,7 @@ class EventListener implements EventSubscriberInterface
         $group = isset($ordering[0]);
         foreach ($ordering as $id => $children) {
             $tree = $parents;
-            if (!$group && !preg_match('/^__particle/', $id)) {
+            if (!$group && !preg_match('/^(__particle|__widget)/', $id)) {
                 $tree[] = $id;
                 $name = implode('/', $tree);
                 $list[$name] = ++$i;
