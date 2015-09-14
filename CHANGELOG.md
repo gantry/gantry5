@@ -38,6 +38,7 @@
     3. [](#bugfix)
         - Load style.css on all pages (#819)
         - Add missing `dir="rtl"` to &lt;html&gt; tag when WordPress is in the RTL mode
+        - Error on displaying widget modal: strtolower() expects to be string, array given (#831)
 
 # 5.1.2
 ## 31/08/2015

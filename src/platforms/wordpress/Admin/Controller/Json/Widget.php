@@ -87,18 +87,7 @@ class Widget extends JsonController
         }
 
         if (!empty($cast)) {
-            // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
-            // TODO: in order to avoid casting. Main issue is that "true" could also be valid text string.
-            // Convert strings back to native values.
-            foreach ($instance as $key => $field) {
-                if (strtolower($field) === 'true') {
-                    $instance[$key] = true;
-                } elseif (strtolower($field) === 'false') {
-                    $instance[$key] = false;
-                } elseif ((string) $field === (string)(int) $field) {
-                    $instance[$key] = intval($field);
-                }
-            }
+            $instance = $this->castInput($instance);
         }
 
         $widgetType = $this->getWidgetType($name);
@@ -239,5 +228,25 @@ class Widget extends JsonController
         $file->free();
 
         return $content;
+    }
+
+    protected function castInput(array $input)
+    {
+        // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
+        // TODO: in order to avoid casting. Main issue is that "true" could also be valid text string.
+        // Convert strings back to native values.
+        foreach ($input as $key => $field) {
+            if (is_array($field)) {
+                $input[$key] = $this->castInput($field);
+            } elseif (strtolower($field) === 'true') {
+                $input[$key] = true;
+            } elseif (strtolower($field) === 'false') {
+                $input[$key] = false;
+            } elseif ((string) $field === (string)(int) $field) {
+                $input[$key] = intval($field);
+            }
+        }
+
+        return $input;
     }
 }
