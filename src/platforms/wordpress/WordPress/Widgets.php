@@ -102,24 +102,22 @@ abstract class Widgets
 
     protected static function getWidgetClassname($id)
     {
-        global $wp_registered_widgets;
-
-        // Substitute HTML id and class attributes into before_widget
-        $classname = '';
-        if (!empty($wp_registered_widgets[$id])) {
-            foreach ( (array) $wp_registered_widgets[$id]['classname'] as $cn ) {
-                if ( is_string($cn) )
-                    $classname .= '_' . $cn;
-                elseif ( is_object($cn) )
-                    $classname .= '_' . get_class($cn);
-            }
-            $classname = ltrim($classname, '_');
+        if (is_string($id)) {
+            $classes = !empty($GLOBALS['wp_registered_widgets'][$id]) ? $GLOBALS['wp_registered_widgets'][$id]['classname'] : null;
         } else {
-            // If widget couldn't be found, just remove identifier from the end of id.
-            $classname = 'widget_' . preg_replace('/-+[0-9]+$/', '', $id);
+            $classes = is_object($id) && !empty($id->widget_options) ? $id->widget_options['classname'] : null;
         }
 
-        return $classname;
+        // Substitute HTML id and class attributes into before_widget.
+        $classname = '';
+        foreach ( (array) $classes as $cn ) {
+            if ( is_string($cn) )
+                $classname .= '_' . $cn;
+            elseif ( is_object($cn) )
+                $classname .= '_' . get_class($cn);
+        }
+
+        return ltrim($classname, '_');
     }
 
     protected static function getWidgetClass($id)
@@ -150,7 +148,7 @@ abstract class Widgets
             $chromeArgs['before_widget'] = sprintf(
                 $chromeArgs['before_widget'],
                 $widgetObj->id,
-                static::getWidgetClassname($widgetObj->id)
+                static::getWidgetClassname($widgetObj)
             );
         }
 
