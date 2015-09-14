@@ -49,8 +49,9 @@ class Outlines extends AbstractOutlineCollection
             $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
-        if (!isset($files['default'])) {
-            throw new \RuntimeException('Fatal error: Theme does not have default layout');
+        // In case if someone removed default from custom configuration, make sure it doesn't count.
+        if (!isset($files['default']) && !is_dir($path . '/default')) {
+            throw new \RuntimeException('Fatal error: Theme does not have Base Outline');
         }
 
         unset($files['default']);
