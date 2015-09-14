@@ -126,7 +126,7 @@ abstract class Widgets
         return $widgets[$id]['class'];
     }
 
-    protected static function getChromeArgs($chrome)
+    protected static function getChromeArgs($chrome = 'gantry')
     {
         /** @var Theme $theme */
         $theme = static::gantry()['theme'];
