@@ -49,6 +49,11 @@ class AssignmentsContext implements AssignmentsInterface
             }
         }
 
+        // Workaround for when is_front_page is missing in the $wp_query
+        if(is_front_page() === true) {
+            $rules['is_front_page'] = $this->priority;
+        }
+
         return [$rules];
     }
 
