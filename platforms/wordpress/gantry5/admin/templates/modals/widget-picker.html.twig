@@ -16,6 +16,7 @@ widget.[id | title | description]
                 <div class="modules-wrapper">
                     <ul>
                         {% for widget in gantry.platform.listWidgets %}
+                        {% if widget.id != 'particle_widget' %}
                         <li data-lm-nodrag
                             data-mm-type="widget"
                             data-lm-subtype="{{ widget.id }}"
@@ -23,6 +24,7 @@ widget.[id | title | description]
                             data-mm-filter="{{ widget.title }}">
                             <span title="{{ widget.description|raw }}">{{ widget.title }}</span>
                         </li>
+                        {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
