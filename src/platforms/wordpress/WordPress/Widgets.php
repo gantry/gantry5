@@ -55,6 +55,10 @@ abstract class Widgets
         $options = $instance['options'];
 
         $widgetClass = static::getWidgetClass($instance['widget']);
+        if (!$widgetClass) {
+            return '';
+        }
+
         $args = static::getWidgetChrome($widgetClass, $params['chrome']);
 
         ob_start();
@@ -141,6 +145,7 @@ abstract class Widgets
         global $wp_widget_factory;
 
         $widgetObj = $wp_widget_factory->widgets[$widgetClass];
+        var_dump($widgetObj);
 
         $chromeArgs = static::getChromeArgs($chrome);
 
