@@ -53,9 +53,6 @@ abstract class Widgets
         }
 
         $options = $instance['options'];
-        if (empty($options['enabled'])) {
-            return null;
-        }
 
         $widgetClass = static::getWidgetClass($instance['widget']);
         $args = static::getWidgetChrome($widgetClass, $params['chrome']);

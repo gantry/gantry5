@@ -165,10 +165,10 @@ class Widget extends JsonController
             'type' => 'widget',
             'widget' => $name,
             'title' => $this->request->post['title'] ?: $widgetType->name,
-            'options' => []
+            'options' => [
+                'widget' => $instance
+            ]
         ]);
-        $data->def('options.enabled', 1);
-        $data->set('options.widget', $instance);
 
         if ($block) {
             $menuitem = [
@@ -176,7 +176,10 @@ class Widget extends JsonController
                 'particle' => 'widget',
                 'title' => $data['title'],
                 'options' => [
-                    'particle' => $data['options'],
+                    'particle' => [
+                        'enabled' => 1,
+                        'widget' => $data->toArray(),
+                    ],
                     'block' => $block
                 ]
             ];
