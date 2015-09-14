@@ -43,6 +43,17 @@ abstract class Widgets
         return $html;
     }
 
+    protected static function displayWidgetId($next = false)
+    {
+        static $id = -1;
+
+        if ($next) {
+            $id--;
+        }
+
+        return $id;
+    }
+
     public static function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
@@ -61,8 +72,10 @@ abstract class Widgets
 
         $args = static::getWidgetChrome($widgetClass, $params['chrome']);
 
+        $id = static::displayWidgetId(true);
+
         ob_start();
-        \the_widget($widgetClass, $options['widget'], $args);
+        \the_widget($widgetClass, $options['widget'] + ['widget_id' => $id], $args);
         $html = ob_get_clean();
 
         if (trim($html)) {
@@ -144,7 +157,9 @@ abstract class Widgets
     {
         global $wp_widget_factory;
 
-        $widgetObj = $wp_widget_factory->widgets[$widgetClass];
+        $widgetObj = clone $wp_widget_factory->widgets[$widgetClass];
+        $widgetObj->number = static::displayWidgetId();
+        $widgetObj->id = "{$widgetObj->id_base}-{$widgetObj->number}";
 
         $chromeArgs = static::getChromeArgs($chrome);
 
