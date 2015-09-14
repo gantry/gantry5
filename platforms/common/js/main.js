@@ -4197,6 +4197,8 @@ var StepTwo = function(data, content, button) {
                         while (menumanager.items[path + id]) { id = randomID(5); }
 
                         menumanager.items[path + id] = response.body.item;
+                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
                         menumanager.ordering[base][col].splice(index, 1, path + id);
                         element.data('mm-id', path + id);
 
@@ -4840,6 +4842,21 @@ var MenuManager = new prime({
             originalLevel = this.block.data('mm-level');
 
         if (this.isParticle && (targetType === 'main' && !dataLevel)) {
+            this.dragdrop.matched = false;
+            return;
+        }
+
+        // Support for nested new particles/modules/widgets 
+        if (dataLevel === null && this.type === 'columns_items' && this.isParticle && this.isNewParticle) {
+            var submenu_items = target.find('.submenu-items');
+            if (!submenu_items) {
+                this.dragdrop.matched = false;
+                return;
+            }
+
+            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            this.addNewItem = submenu_items;
+            this.targetLevel = 2;
             this.dragdrop.matched = false;
             return;
         }

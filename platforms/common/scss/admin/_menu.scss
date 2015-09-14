@@ -311,7 +311,6 @@ $submenu-ratio:                 60px;
             .parent-indicator {
                 &:before {
                     content: "\f054";
-                    float: right;
                     font-size: $core-font-size - 0.2;
                     line-height: $core-line-height + 0.5;
                     margin-right: 10px;

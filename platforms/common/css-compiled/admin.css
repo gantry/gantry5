@@ -4449,7 +4449,6 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 #g5-container .submenu-selector .submenu-items li .parent-indicator:before {
   content: "\f054";
-  float: right;
   font-size: 0.8rem;
   line-height: 2;
   margin-right: 10px;

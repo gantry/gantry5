@@ -199,6 +199,21 @@ var MenuManager = new prime({
             return;
         }
 
+        // Support for nested new particles/modules/widgets 
+        if (dataLevel === null && this.type === 'columns_items' && this.isParticle && this.isNewParticle) {
+            var submenu_items = target.find('.submenu-items');
+            if (!submenu_items) {
+                this.dragdrop.matched = false;
+                return;
+            }
+
+            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            this.addNewItem = submenu_items;
+            this.targetLevel = 2;
+            this.dragdrop.matched = false;
+            return;
+        }
+
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
             var submenu_items = target.find('.submenu-items');

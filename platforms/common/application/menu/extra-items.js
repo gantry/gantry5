@@ -192,6 +192,8 @@ var StepTwo = function(data, content, button) {
                         while (menumanager.items[path + id]) { id = randomID(5); }
 
                         menumanager.items[path + id] = response.body.item;
+                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
                         menumanager.ordering[base][col].splice(index, 1, path + id);
                         element.data('mm-id', path + id);
 
