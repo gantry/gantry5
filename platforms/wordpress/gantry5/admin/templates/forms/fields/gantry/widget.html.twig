@@ -11,7 +11,7 @@
                         type="hidden"
                         name="{{ (scope ~ name)|fieldName }}"
                         {# value="{{ value ? value|json_encode(constant('JSON_UNESCAPED_UNICODE')) }}" #}
-                        value="{{ value_json }}"
+                        value="{{ value_json|e('html_attr') }}"
                         {# global attribute structures #}
                         {{ block('global_attributes') }}
                         {# non-gloval attribute structures #}
