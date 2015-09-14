@@ -19,6 +19,7 @@
         - SCSS Compiler issue: White page if compiler gets interrupted (#805)
         - Fixed override logic in admin for the Styles panel where switching between Presets wasn't taking into account defaults from Base (#818, #820)
         - Global context is not available for particles in the menu
+        - Cached index.yaml.php files are getting updated on every request (#834)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Object returned by JApplicationSite::getTemplate(true) is not compatible (#499)

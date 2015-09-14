@@ -494,6 +494,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // If layout index file doesn't exist or is not up to date, build it.
         if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
+            $layout->timestamp = $timestamp;
             $index = $layout->buildIndex();
         }
 
