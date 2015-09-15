@@ -15,6 +15,10 @@ class JFormFieldWarning extends JFormField
     protected function getInput()
     {
         $app = JFactory::getApplication();
-        $app->enqueueMessage(JText::_('GANTRY5_THEME_INSTALL_GANTRY'), 'error');
+        if ($app->isAdmin()) {
+            $app->enqueueMessage(JText::_('GANTRY5_THEME_INSTALL_GANTRY'), 'error');
+        } else {
+            $app->enqueueMessage(JText::_('GANTRY5_THEME_FRONTEND_SETTINGS_DISABLED'), 'warning');
+        }
     }
 }
