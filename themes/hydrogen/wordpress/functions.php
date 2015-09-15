@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
 // Note: This file must be PHP 5.2 compatible.
 
 // Bootstrap Gantry framework or fail gracefully.
-$gantry = include_once dirname(__FILE__) . '/includes/gantry.php';
+$gantry = include_once dirname( __FILE__ ) . '/includes/gantry.php';
 
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry[ 'theme' ];
