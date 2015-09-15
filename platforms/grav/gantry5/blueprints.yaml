@@ -1,9 +1,18 @@
 name: Gantry 5 Template Framework
-version: 1.0.0
+version: 5.1.3
 description: Allows Gantry 5 templates to run.
-validation: strict
+icon: tint
+author:
+  name: RocketTheme
+  email: support@rockettheme.com
+  url: http://www.rockettheme.com
+homepage: http://gantry.org
+keywords: gantry, gantry5, theme, theme framework
+bugs: https://github.com/gantry/gantry5/issues
+license: MIT
 
 form:
+  validation: strict
   fields:
     enabled:
         type: toggle

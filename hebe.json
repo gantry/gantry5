@@ -178,7 +178,7 @@
                 ],
                 "themes":[
                     {
-                        "source":"/themes/hydrogen/prime",
+                        "source":"/themes/hydrogen/grav",
                         "destination":"/user/themes/hydrogen"
                     },
                     {

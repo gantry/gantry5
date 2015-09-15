@@ -1,10 +1,16 @@
 name: Hydrogen
-version: "@version@"
-author: RocketTheme
-url: http://www.rockettheme.com
-email: support@rockettheme.com
-description: Default Gantry 5 theme.
-validation: loose
+version: 5.1.3
+description: "Default Gantry 5 theme."
+icon: paper-plane
+author:
+  name: RocketTheme
+  email: support@rockettheme.com
+  url: http://www.rockettheme.com
+homepage: http://gantry.org
+keywords: gantry, gantry5, theme
+bugs: https://github.com/gantry/gantry5/issues
+license: MIT
 
 form:
+  validation: loose
   fields:

@@ -12,7 +12,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Framework\Base\ThemeTrait as GantryThemeTrait;
+use Gantry\Component\Theme\ThemeTrait;
 use Grav\Common\Theme as BaseTheme;
 use Grav\Common\Grav;
 use Grav\Common\Config\Config as GravConfig;
@@ -20,7 +20,7 @@ use RocketTheme\Toolbox\File\YamlFile;
 
 class Theme extends BaseTheme
 {
-    use GantryThemeTrait;
+    use ThemeTrait;
 
     /**
      * @var ThemeDetails
