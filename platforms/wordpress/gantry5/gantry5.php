@@ -16,6 +16,14 @@ defined( 'ABSPATH' ) or die;
 
 // NOTE: This file needs to be PHP 5.2 compatible.
 
+// Fail safe version check for PHP <5.4.0.
+if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    if (is_admin()) {
+        add_action('admin_notices', 'gantry5_php_version_warning');
+    }
+    return;
+}
+
 require_once dirname(__FILE__) . '/src/Loader.php';
 
 if ( !defined( 'GANTRY5_PATH' ) ) {
@@ -67,4 +75,10 @@ function modify_gantry5_locale( $locale, $domain ) {
     }
 
     return $locale;
+}
+
+function gantry5_php_version_warning() {
+    echo '<div class="error"><p>';
+    echo sprintf("You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.", PHP_VERSION, '5.4.0');
+    echo '</p></div>';
 }
