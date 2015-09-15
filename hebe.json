@@ -148,6 +148,46 @@
                 ]
             }
         },
+        "grav":{
+            "nodes":{
+                "admin":[
+                    {
+                        "source":"/platforms/grav/gantry5",
+                        "destination":"/user/plugins/gantry5"
+                    },
+                    {
+                        "source":"/platforms/common",
+                        "destination":"/user/plugins/gantry5/common"
+                    }
+                ],
+                "libraries":[
+                    {
+                        "source":"/src",
+                        "destination":"/user/plugins/gantry5/src"
+                    }
+                ],
+                "assets":[
+                    {
+                        "source":"/engines",
+                        "destination":"/user/gantry5/engines"
+                    },
+                    {
+                        "source":"/assets",
+                        "destination":"/user/gantry5/assets"
+                    }
+                ],
+                "themes":[
+                    {
+                        "source":"/themes/hydrogen/prime",
+                        "destination":"/user/themes/hydrogen"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/user/themes/hydrogen/common"
+                    }
+                ]
+            }
+        },
         "prime":{
             "nodes":{
                 "admin":[
