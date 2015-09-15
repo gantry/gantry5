@@ -70,12 +70,12 @@ abstract class Widgets
             return '';
         }
 
-        $args = static::getWidgetChrome($widgetClass, $params['chrome']);
-
         $id = static::displayWidgetId(true);
 
+        $args = static::getWidgetChrome($widgetClass, $params['chrome']);
+
         ob_start();
-        \the_widget($widgetClass, $options['widget'] + ['widget_id' => $id], $args);
+        \the_widget($widgetClass, $options['widget'], $args);
         $html = ob_get_clean();
 
         if (trim($html)) {
@@ -188,6 +188,6 @@ abstract class Widgets
             $args[$key] = $arg;
         }
 
-        return $args;
+        return $args + ['widget_id' => $widgetObj->number, 'widget_name' => $widgetObj->name];
     }
 }
