@@ -41,6 +41,7 @@ class Theme extends Base\Theme
         add_action( 'template_redirect', [ $this, 'set_template_layout' ], -10000 );
         add_action( 'init', [ $this, 'register_post_types' ] );
         add_action( 'init', [ $this, 'register_taxonomies' ] );
+        add_action( 'template_redirect', [ $this, 'disable_wpautop' ], 10000 );
         add_action( 'widgets_init', [ $this, 'widgets_init' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -196,6 +197,18 @@ class Theme extends Base\Theme
     public function register_taxonomies()
     {
         //this is where you can register custom taxonomies
+    }
+
+    public function disable_wpautop()
+    {
+        $gantry = Gantry::instance();
+
+        $wpautop = $gantry['config']->get('content.general.wpautop.enabled', '1');
+
+        if($wpautop == '0') {
+            remove_filter('the_content', 'wpautop');
+            remove_filter('comment_text', 'wpautop');
+        }
     }
 
     public function enqueue_scripts()

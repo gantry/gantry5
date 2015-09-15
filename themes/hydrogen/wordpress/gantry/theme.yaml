@@ -82,6 +82,8 @@ admin:
     core:
       - base
   content:
+    general:
+      - wpautop
     blog:
       - heading
       - featured-image

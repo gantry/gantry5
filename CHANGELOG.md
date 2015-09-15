@@ -34,6 +34,7 @@
         - Hook streams URL filter into the_content, the_excerpt, widget_text and widget_content filters (#779)
         - Added new stream for wp-content directory
         - Added ability to use Widgets in menu (#726)
+        - Added wpautop enabler in Hydrogen settings
     2. [](#improved)
         - Added WooCommerce support in themes declaration
         - Added missing the_excerpt filter to excerpts in Hydrogen
