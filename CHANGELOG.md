@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#bugifx)
+        - Fixed tab lavel for Offcanvas Section
 2. [Joomla](#joomla)
 3. [WordPress](#wordpress)
 
