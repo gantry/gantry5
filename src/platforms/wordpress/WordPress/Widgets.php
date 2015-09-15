@@ -188,6 +188,6 @@ abstract class Widgets
             $args[$key] = $arg;
         }
 
-        return $args + ['widget_id' => $widgetObj->number, 'widget_name' => $widgetObj->name];
+        return $args + ['widget_id' => $widgetObj->id, 'widget_name' => $widgetObj->name];
     }
 }
