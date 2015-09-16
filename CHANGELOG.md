@@ -8,6 +8,7 @@
     2. [](#bugifx)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
         - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor
+        - Updated Hydrogen template thumbnail and preview images
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added Gantry streams to the `kses` allowed protocols
