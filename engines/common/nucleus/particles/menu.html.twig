@@ -62,7 +62,7 @@
                     {% if item.type == 'particle' %}
                         {{ SELF.displayParticle(item, context) }}
                     {% elseif item.type == 'heading' %}
-                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ item.title|e }}</span>
+                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% endif %}

@@ -6,10 +6,11 @@
         - Fixed tab lavel for Offcanvas Section
 2. [Joomla](#joomla)
     2. [](#bugifx)
-        - Update minimum Joomla version requirement to 3.4.1 (fixes issues with ```JModuleHelper::getModuleList()``` missing)
+        - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
+        - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Added Gantry streams to the kses allowed protocols
+        - Added Gantry streams to the `kses` allowed protocols
 
 # 5.1.3
 ## 15/09/2015
