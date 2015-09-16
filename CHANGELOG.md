@@ -6,6 +6,8 @@
         - Fixed tab lavel for Offcanvas Section
 2. [Joomla](#joomla)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added Gantry streams to the kses allowed protocols
 
 # 5.1.3
 ## 15/09/2015

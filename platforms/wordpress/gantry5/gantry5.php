@@ -58,6 +58,29 @@ function gantry5_plugin_defaults() {
     update_option( 'gantry5_plugin', $option + $defaults );
 }
 
+add_filter( 'kses_allowed_protocols', 'add_gantry5_streams_to_kses' );
+
+function add_gantry5_streams_to_kses( $protocols ) {
+    $streams = [
+        'gantry-cache',
+        'gantry-themes',
+        'gantry-theme',
+        'gantry-assets',
+        'gantry-media',
+        'gantry-engines',
+        'gantry-engine',
+        'gantry-layouts',
+        'gantry-particles',
+        'gantry-blueprints',
+        'gantry-config',
+        'wp-includes',
+        'wp-content',
+    ];
+
+    $protocols = array_merge( $protocols, $streams );
+    return $protocols;
+}
+
 // Initialize plugin language and fallback to en_US if the .mo file can't be found
 $domain = 'gantry5';
 $languages_path = basename( GANTRY5_PATH ) . '/admin/languages';

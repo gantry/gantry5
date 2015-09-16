@@ -25,6 +25,11 @@ class Platform extends BasePlatform
 
         parent::__construct($container);
 
+        /**
+         * Please remember to add the newly added streams to the add_gantry5_streams_to_kses()
+         * in gantry5.php so they would get added to the allowed kses protocols.
+         */
+
         // Add wp-includes directory to the streams
         $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
 
