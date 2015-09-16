@@ -2,10 +2,10 @@
 ## XX/XX/2015
 
 1. [Common](#common)
-    2. [](#bugifx)
+    2. [](#bugfix)
         - Fixed tab lavel for Offcanvas Section
 2. [Joomla](#joomla)
-    2. [](#bugifx)
+    2. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
         - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor
         - Updated Hydrogen template thumbnail and preview images
