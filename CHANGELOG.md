@@ -4,6 +4,7 @@
 1. [Common](#common)
     2. [](#bugfix)
         - Fixed tab lavel for Offcanvas Section
+        - Removed unnecessary margin from select fields in admin
 2. [Joomla](#joomla)
     2. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
