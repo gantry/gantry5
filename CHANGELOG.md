@@ -12,6 +12,7 @@
         - Updated Hydrogen template thumbnail and preview images
 3. [WordPress](#wordpress)
     1. [](#new)
+        - Ability to set custom cache path when hosting company doesn't allow PHP files in `wp-content/cache` ie. WPEngine
         - Added Gantry streams to the `kses` allowed protocols
 
 # 5.1.3

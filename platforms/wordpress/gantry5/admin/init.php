@@ -159,6 +159,14 @@ function gantry5_plugin_settings() {
                                 <input id="offline_message" type="text" value="<?php echo $option[ 'offline_message' ]; ?>" class="regular-text" name="gantry5_plugin[offline_message]" />
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="cache_path"><?php _e( 'Cache Path', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="cache_path" type="text" value="<?php echo $option[ 'cache_path' ]; ?>" placeholder="wp-cache://" class="regular-text" name="gantry5_plugin[cache_path]" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
