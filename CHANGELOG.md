@@ -2,16 +2,20 @@
 ## XX/XX/2015
 
 1. [Common](#common)
-    2. [](#bugifx)
+    2. [](#bugfix)
         - Fixed tab lavel for Offcanvas Section
+        - Removed unnecessary margin from select fields in admin
 2. [Joomla](#joomla)
-    2. [](#bugifx)
-        - Update minimum Joomla version requirement to 3.4.1 (fixes issues with ```JModuleHelper::getModuleList()``` missing)
+    2. [](#bugfix)
+        - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
+        - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor
+        - Updated Hydrogen template thumbnail and preview images
         - Adding dropdown width in Menu breaks the menu (#850)
         - Menu items missing after upgrade (#843)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Added Gantry streams to the kses allowed protocols
+        - Ability to set custom cache path when hosting company doesn't allow PHP files in `wp-content/cache` ie. WPEngine
+        - Added Gantry streams to the `kses` allowed protocols
 
 # 5.1.3
 ## 15/09/2015

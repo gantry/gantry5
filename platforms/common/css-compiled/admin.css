@@ -2557,7 +2557,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   border-color: #ddd;
 }
 #g5-container .settings-block select {
-  margin: 0 0 10px;
+  margin: 0;
   display: inline-block;
   height: 38px;
 }
