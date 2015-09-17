@@ -7,6 +7,8 @@
 2. [Joomla](#joomla)
     2. [](#bugifx)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with ```JModuleHelper::getModuleList()``` missing)
+        - Adding dropdown width in Menu breaks the menu (#850)
+        - Menu items missing after upgrade (#843)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added Gantry streams to the kses allowed protocols

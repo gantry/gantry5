@@ -116,16 +116,16 @@ class Menu extends AbstractMenu
 
     public function isActive($item)
     {
-        $path = $this->base->tree;
+        $tree = $this->base->tree;
 
-        if (in_array($item->id, $path)) {
+        if (in_array($item->id, $tree)) {
             return true;
         } elseif ($item->type == 'alias') {
             $aliasToId = $item->link_id;
 
-            if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
+            if (count($tree) > 0 && $aliasToId == $tree[count($tree) - 1]) {
                 return (bool) $this->params['highlightAlias'];
-            } elseif (in_array($aliasToId, $path)) {
+            } elseif (in_array($aliasToId, $tree)) {
                 return (bool) $this->params['highlightParentAlias'];
             }
         }
