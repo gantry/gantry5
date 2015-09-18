@@ -21,6 +21,8 @@
     1. [](#new)
         - Ability to set custom cache path when hosting company doesn't allow PHP files in `wp-content/cache` ie. WPEngine
         - Added Gantry streams to the `kses` allowed protocols
+    3. [](#bugfix)
+        - Fixed Offline Mode not working properly
 
 # 5.1.3
 ## 15/09/2015
