@@ -34,7 +34,7 @@
             {% endif %}
             {% if file.isImage %}
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
-                    <div style="background-image: url({{ url(file.pathname) }})"></div>
+                    <div style="background-image: url('{{ url(file.pathname) }}')"></div>
                 </div>
             {% else %}
                 <div class="g-thumb">{{ file.extension }}</div>
