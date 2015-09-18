@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     2. [](#bugfix)
-        - Fixed tab lavel for Offcanvas Section
+        - Fixed tab level for Offcanvas Section
         - Removed unnecessary margin from select fields in admin
         - Theme list displays wrong version number on each theme (#849)
         - Adding dropdown width in Menu breaks the menu (#850)

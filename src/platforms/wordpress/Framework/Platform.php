@@ -39,7 +39,9 @@ class Platform extends BasePlatform
 
     public function getCachePath()
     {
-        return WP_CONTENT_DIR . '/cache/gantry5';
+        $global = $this->container['global'];
+
+        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5';
     }
 
     public function getThemesPaths()
