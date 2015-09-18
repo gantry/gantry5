@@ -13,7 +13,6 @@
         - Menu items missing after upgrade (#843)
         - Clicking on new Modules/Widgets/Particles in menu throw 400 Bad Request (#837)
         - Menu Manager `Dropdown Style` = `Extended` should ignore value in `Dropdown Width` (#852)
-
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
