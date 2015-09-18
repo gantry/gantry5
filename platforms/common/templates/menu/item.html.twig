@@ -1,8 +1,12 @@
 {% set ajaxTarget = (item.level > 1) ? 'data-g5-ajaxify-target-parent=".submenu-column"' : 'data-g5-ajaxify-target="[data-g5-menu-columns]"' %}
 
-{% set attributes = 'data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget ~ ' href="' ~ gantry.route('menu', id, item.path)|e ~ '"' %}
+{% set attributes = 'data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget %}
 
-<a {{ attributes|raw }} class="menu-item">
+{% if item.path %}
+<a {{ attributes|raw }} href="{{ gantry.route('menu', id, item.path) }}" class="menu-item">
+{% else %}
+<span class="menu-item">
+{% endif %}
 {% if item.type == 'particle' %}
     <span class="menu-item-content">
         <span class="menu-item-title">{{ item.title|e }}</span>
@@ -25,7 +29,11 @@
         <span class="parent-indicator"></span>
     {%- endif %}
 {% endif %}
+{% if not item.path %}
+</span>
+{% else %}
 </a>
+{% endif %}
 <a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle')|e : gantry.route('menu/edit', id, item.path)|e }}">
     <i aria-label="Menu Item Settings" class="fa fa-cog"></i>
 </a>
