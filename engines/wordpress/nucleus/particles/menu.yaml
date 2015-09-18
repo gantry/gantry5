@@ -16,12 +16,6 @@ form:
       class: alert alert-info
       content: GANTRY5_PARTICLE_MENU_INFO
 
-    base:
-      type: input.text
-      label: Base Path
-      description: Select the base path.
-      default: /
-
     menu:
       type: menu.list
       label: Menu
@@ -30,7 +24,15 @@ form:
       selectize:
           allowEmptyOption: true
       options:
-        '':  '- Select Menu -'
+        '': Use Default Menu
+
+    base:
+      type: menu.item
+      label: Base Item
+      description: "Select a menu item to always be used as the base for the menu display. You must set the Start Level to the same level or higher than the level of the base item. This will cause the menu to be always displayed."
+      default: '/'
+      options:
+        '/': - Select -
 
     startLevel:
       type: input.text

@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Menu Particle: Implement base item support (#666)
     3. [](#bugfix)
         - Fixed tab level for Offcanvas Section
         - Removed unnecessary margin from select fields in admin
@@ -9,8 +11,6 @@
         - Adding dropdown width in Menu breaks the menu (#850)
         - Menu items missing after upgrade (#843)
 2. [Joomla](#joomla)
-    2. [](#improved)
-        - Menu Particle: Implement base item support (#666)
     3. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
         - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor

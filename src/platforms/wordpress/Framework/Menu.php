@@ -42,6 +42,31 @@ class Menu extends AbstractMenu
         return $list;
     }
 
+    public function getGroupedItems()
+    {
+        $groups = array();
+
+        $menus = $this->getMenus();
+
+        foreach ($menus as $menu) {
+            // Initialize the group.
+            $groups[$menu] = array();
+
+            $items = $this->getItemsFromPlatform(['menu' => $menu]);
+
+            // Build the groups arrays.
+            foreach ($items as $item) {
+                // Build the options array.
+                $groups[$menu][$item->db_id] = [
+                    'spacing' => str_repeat('&nbsp; ', $item->level),
+                    'label' => $item->title
+                ];
+            }
+        }
+
+        return $groups;
+    }
+
     /**
      * Get menu configuration.
      *
