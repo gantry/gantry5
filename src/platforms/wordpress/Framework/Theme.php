@@ -55,15 +55,17 @@ class Theme extends Base\Theme
         });
 
         // Offline support.
-        if( $global->get( 'offline' ) && !( is_super_admin() || current_user_can( 'manage_options' ) || $pagenow == 'wp-login.php' ) ) {
-            if( locate_template( [ 'offline.php' ] ) ) {
-                add_filter( 'template_include', function () {
-                    return locate_template( [ 'offline.php' ] );
-                });
-            } else {
-                wp_die( $global->get( 'offline_message' ), get_bloginfo( 'title' ) );
+        add_action( 'init', function() use ( $global, $pagenow ) {
+            if( $global->get( 'offline' ) && !( is_super_admin() || current_user_can( 'manage_options' ) || $pagenow == 'wp-login.php' ) ) {
+                if( locate_template( [ 'offline.php' ] ) ) {
+                    add_filter( 'template_include', function () {
+                        return locate_template( [ 'offline.php' ] );
+                    });
+                } else {
+                    wp_die( $global->get( 'offline_message' ), get_bloginfo( 'title' ) );
+                }
             }
-        }
+        });
     }
 
     public function init()
