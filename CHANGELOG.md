@@ -5,6 +5,7 @@
     2. [](#bugfix)
         - Fixed tab lavel for Offcanvas Section
         - Removed unnecessary margin from select fields in admin
+        - Theme list displays wrong version number on each theme (#849)
 2. [Joomla](#joomla)
     2. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)

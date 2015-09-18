@@ -28,7 +28,7 @@
                                             <div class="theme card">
                                                 <div class="theme-id">
                                                     {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
-                                                    {{ theme.title|e }} <span class="theme-info">(v{{ gantry.theme.version }} / {{ theme.name|e }})</span>
+                                                    {{ theme.title|e }} <span class="theme-info">(v{{ theme.details.version }} / {{ theme.name|e }})</span>
                                                 </div>
                                                 <div class="theme-screenshot">
                                                     <a href="{{ theme.admin_url|e }}">
