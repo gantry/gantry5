@@ -4,8 +4,8 @@
 <div class="alert alert-error">{{ e.getMessage }}</div>
 {% endtry %}
 
-{% macro getCustomWidth(item, menu, mode, dropdown) -%}
-    {%- if (item.width|default('auto') != 'auto') and not (dropdown == 'fullwidth' and item.level > 1) -%}
+{% macro getCustomWidth(item, menu, mode, dropdown_type) -%}
+    {%- if (item.width|default('auto') != 'auto') and not (dropdown_type == 'fullwidth' and item.level > 1) -%}
         {%- if mode == 'item' -%}
             style="position: relative;"
         {%- elseif mode == 'submenu' -%}
@@ -34,7 +34,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro displayItem(item, menu, context, dropdown) %}
+{% macro displayItem(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     {% if item.visible %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
@@ -75,13 +75,13 @@
             {% if item.url %}</a>
             {% else %}</div>{% endif %}
             {% if (item.children) -%}
-                {{ SELF.displaySubmenu(item, menu, context, dropdown) }}
+                {{ SELF.displaySubmenu(item, menu, context, dropdown_type) }}
             {%- endif %}
         </li>
     {% endif %}
 {% endmacro %}
 
-{% macro displayContainers(item, menu, context, dropdown) %}
+{% macro displayContainers(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     <div class="g-grid">
         {% set groups = item.getDropdown() == 'standard' ? [item] : item.groups %}
@@ -91,27 +91,27 @@
                 <li class="g-level-{{ item.level|e }} g-go-back">
                     <a class="g-menu-item-container" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
-                {{ SELF.displayItems(items, menu, context, dropdown) }}
+                {{ SELF.displayItems(items, menu, context, dropdown_type) }}
             </ul>
         </div>
         {% endfor %}
     </div>
 {% endmacro %}
 
-{% macro displayItems(items, menu, context, dropdown) %}
+{% macro displayItems(items, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     {% for item in items %}
-        {% if item.level == 1 %}{% set dropdown = item.getDropdown() %}{% endif %}
-        {{ SELF.displayItem(item, menu, context, dropdown) }}
+        {% if item.level == 1 %}{% set dropdown_type = item.dropdown %}{% endif %}
+        {{ SELF.displayItem(item, menu, context, dropdown_type) }}
     {% endfor %}
 {% endmacro %}
 
-{% macro displaySubmenu(item, menu, context, dropdown) %}
+{% macro displaySubmenu(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     {% if not item.dropdown_hide %}
-        <ul class="g-dropdown g-inactive {{ context.gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown) }}>
+        <ul class="g-dropdown g-inactive {{ context.gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
             <li class="g-dropdown-column">
-                {{ SELF.displayContainers(item, menu, context, dropdown) }}
+                {{ SELF.displayContainers(item, menu, context, dropdown_type) }}
             </li>
         </ul>
     {% endif %}
