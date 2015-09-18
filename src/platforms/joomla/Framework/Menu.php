@@ -74,6 +74,30 @@ class Menu extends AbstractMenu
         return $items;
     }
 
+    public function getGroupedItems()
+    {
+        $groups = array();
+
+        // Get the menu items.
+        $items = \MenusHelper::getMenuLinks();
+
+        // Build the groups arrays.
+        foreach ($items as $item) {
+            // Initialize the group.
+            $groups[$item->menutype] = array();
+
+            // Build the options array.
+            foreach ($item->links as $link) {
+                $groups[$item->menutype][$link->value] = [
+                    'spacing' => str_repeat('&nbsp; ', $link->level-1),
+                    'label' => $link->text
+                ];
+            }
+        }
+
+        return $groups;
+    }
+
     /**
      * Return default menu.
      *
