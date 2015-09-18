@@ -55,7 +55,6 @@ class Theme extends Base\Theme
         });
 
         // Offline support.
-        $global = $gantry['global'];
         if ($global->get('offline') && !is_super_admin() && !current_user_can('manage_options')
             && $pagenow != 'wp-login.php') {
             if (locate_template(['offline.php'])) {
