@@ -26,6 +26,7 @@
         - Added Gantry streams to the `kses` allowed protocols
     3. [](#bugfix)
         - Fixed Offline Mode not working properly
+        - Added missing Hydrogen block variations
 
 # 5.1.3
 ## 15/09/2015
