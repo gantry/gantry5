@@ -6,13 +6,13 @@
         - Fixed tab lavel for Offcanvas Section
         - Removed unnecessary margin from select fields in admin
         - Theme list displays wrong version number on each theme (#849)
+        - Adding dropdown width in Menu breaks the menu (#850)
+        - Menu items missing after upgrade (#843)
 2. [Joomla](#joomla)
     2. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
         - Fixed `Menu Heading` item type not displaying subtitles when set from Menu Editor
         - Updated Hydrogen template thumbnail and preview images
-        - Adding dropdown width in Menu breaks the menu (#850)
-        - Menu items missing after upgrade (#843)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Ability to set custom cache path when hosting company doesn't allow PHP files in `wp-content/cache` ie. WPEngine
