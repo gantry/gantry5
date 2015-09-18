@@ -29,7 +29,7 @@ form:
     base:
       type: menu.item
       label: Base Item
-      description: "Select a menu item to always be used as the base for the menu display. You must set the Start Level to the same level or higher than the level of the base item. This will cause the menu to be always displayed."
+      description: "Select a menu item to always be used as the base for the menu display."
       default: '/'
       options:
         '/': - Select -
