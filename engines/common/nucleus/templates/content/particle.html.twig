@@ -15,10 +15,15 @@
         {% endif %}
     {% endset %}
 
+    {% set classes = ((not inContent ? 'g-content ' : '') ~ segment.classes|join(' '))|trim %}
     {% if html|trim %}
-    <div class="{{ not inContent ? 'g-content' : '' }}{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    {% if classes %}
+    <div class="{{ classes }}">
         {{ html|raw }}
     </div>
+    {% else %}
+        {{ html|raw }}
+    {% endif %}
     {% endif %}
 
 {% catch %}

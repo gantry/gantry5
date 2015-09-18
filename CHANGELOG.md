@@ -10,6 +10,7 @@
         - Theme list displays wrong version number on each theme (#849)
         - Adding dropdown width in Menu breaks the menu (#850)
         - Menu items missing after upgrade (#843)
+        - Empty class div on Particle Module/Widget (#778)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
