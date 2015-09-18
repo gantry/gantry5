@@ -76,6 +76,7 @@ configuration:
       align-left: Align Left
       center: Center
       full-width: Full Width
+      equal-height: Equal Height
       nomarginall: No Margin
       nopaddingall: No Padding
 

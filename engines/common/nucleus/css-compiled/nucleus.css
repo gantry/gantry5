@@ -1640,6 +1640,16 @@ input[type="submit"] {
     display: none !important;
   }
 }
+.equal-height {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 #g-offcanvas {
   position: fixed;
   top: 0;

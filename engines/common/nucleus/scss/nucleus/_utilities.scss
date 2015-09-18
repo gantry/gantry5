@@ -123,3 +123,8 @@
 	   display: none !important;
 	}
 }
+
+// Same Height for Box Variations
+.equal-height {
+    @include display(flex);
+}
