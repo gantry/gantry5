@@ -11,6 +11,7 @@
         - Theme list displays wrong version number on each theme (#849)
         - Adding dropdown width in Menu breaks the menu (#850)
         - Menu items missing after upgrade (#843)
+        - Clicking on new Modules/Widgets/Particles in menu throw 400 Bad Request (#837)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
