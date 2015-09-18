@@ -91,9 +91,12 @@ var MenuManager = new prime({
             return true;
         }
 
-        var siblings = element.siblings();
-        element.addClass('active');
-        if (siblings) { siblings.removeClass('active'); }
+        if (element.find('[data-g5-ajaxify]')) {
+            var siblings = element.siblings();
+            element.addClass('active');
+            if (siblings) { siblings.removeClass('active'); }
+        }
+
         element.emit('click');
 
         var link = element.find('a');
@@ -171,18 +174,19 @@ var MenuManager = new prime({
             this.dragdrop.element = this.original;
         }
 
-        // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (type && type.match(/__(module|particle|widget)(-[a-z0-9]{5,})?$/i))) {
-            this.eraser.show();
-        }
-
         if (this.type == 'column') {
             root.search('.g-block > *').style({ 'pointer-events': 'none' });
         }
     },
 
-    moveOnce: function(/*element*/) {
+    moveOnce: function(element) {
+        var type = $(element).data('mm-id');
         if (this.original) { this.original.style({ opacity: 0.5 }); }
+
+        // it's a module or a particle and we allow for them to be deleted
+        if (!this.isNewParticle && (type && type.match(/__(module|particle|widget)(-[a-z0-9]{5,})?$/i))) {
+            this.eraser.show();
+        }
     },
 
     location: function(event, location, target/*, element*/) {
@@ -199,7 +203,7 @@ var MenuManager = new prime({
             return;
         }
 
-        // Support for nested new particles/modules/widgets 
+        // Support for nested new particles/modules/widgets
         if (dataLevel === null && this.type === 'columns_items' && this.isParticle && this.isNewParticle) {
             var submenu_items = target.find('.submenu-items');
             if (!submenu_items) {
