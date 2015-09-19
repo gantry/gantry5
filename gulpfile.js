@@ -114,7 +114,6 @@ paths = {
 
 var compileCSS = function(app) {
     var _in = app.in,
-        _out = app.out.split(/[\\/]/).pop(),
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
         _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
@@ -122,7 +121,6 @@ var compileCSS = function(app) {
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
 
     var options = {
-        container: _out,
         sourcemap: !prod,
         loadPath: _load,
         style: prod ? 'compact' : 'expanded',
