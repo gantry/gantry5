@@ -2,6 +2,8 @@
 ## 18/09/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated Google Fonts library (+4 fonts)
     2. [](#improved)
         - Menu Particle: Implement base item support (#666)
         - Remove empty class div on Particle Module/Widget (#778)
