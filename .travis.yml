@@ -112,7 +112,7 @@ after_deploy:
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
       git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
     fi
-  - export WPREPO=$TRAVIS_BUILD_DIR../wprepo
+  - export WPREPO=$TRAVIS_BUILD_DIR/../wprepo
   - if [ ! -z "$TRAVIS_TAG" ]; then
       mkdir $WPREPO && cd $WPREPO;
       svn checkout $G5_WP_REPO --no-auth-cache --non-interactive --depth empty https://plugins.svn.wordpress.org/gantry5 .;
