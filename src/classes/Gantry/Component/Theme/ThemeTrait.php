@@ -528,7 +528,8 @@ trait ThemeTrait
                 case 'position':
                 case 'spacer':
                     $item->content = $this->renderContent($item);
-                    if (!$item->content) {
+                    // Note that content can also be null (postpone rendering).
+                    if ($item->content === '') {
                         unset($items[$i]);
                     }
 
@@ -579,12 +580,14 @@ trait ThemeTrait
      * Function is used to pre-render content.
      *
      * @param object $item
-     * @return string
+     * @return string|null
      */
     protected function renderContent($item)
     {
-        $context = $this->add_to_context(['segment' => $item]);
+        $context = $this->add_to_context(['segment' => $item, 'prepare_layout' => true]);
 
-        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+
+        return !strstr($html, '@@DEFERRED@@') ? $html : null;
     }
 }

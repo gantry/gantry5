@@ -22,6 +22,11 @@ abstract class Widgets
 
     public static function displayPosition($key, array $params = [])
     {
+        // Do not do anything if we are only preparing layout.
+        if (!empty($params['prepare_layout'])) {
+            return '@@DEFERRED@@';
+        }
+
         static::$chromeArgs = static::getChromeArgs($params['chrome']);
 
         \add_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
@@ -56,6 +61,11 @@ abstract class Widgets
 
     public static function displayWidget($instance = [], array $params = [])
     {
+        // Do not do anything if we are only preparing layout.
+        if (!empty($params['prepare_layout'])) {
+            return '@@DEFERRED@@';
+        }
+
         if (is_string($instance)) {
             $instance = json_decode($instance, true);
         }
