@@ -3,12 +3,12 @@
 
 1. [Common](#common)
     3. [](#bugfix)
-        - If `layout.yaml` file is missing, wrong layout preset gets loaded (#859)
+        - If `layout.yaml` file is missing, wrong layout preset gets loaded
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        - Duplicating home outline causes 'Preset not found' error (#859)
+        - Duplicating outline may cause 'Preset not found' error (#859)
 
 # 5.1.4
 ## 18/09/2015
