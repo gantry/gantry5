@@ -12,6 +12,8 @@ env:
   global:
     # GH_TOKEN
     - secure: "GIFHCpRBw07hm/RwDUbeh1EZS3nUCRFnsAhyeBm02a5dKbCCIrAUoI5HVjTPyFiG/UKaRo3u/7byA3ROmXgVE48Hg5n4E3+ga8zOwdRdXql7V6pwu4bII4Kr+4qFgIDkn8ca1Ut1bxKQZI/NP/FR73pZ/pst/rtw27M4Au/PZSHAtAkMF1KSqcRSfvggAtqnhh3xFTFx13XvakX7zpP1AyD1Yft4dHhhZN+BHTxQgRrl+fJLky1MAwIwOl1xOF1VH+RQDdh3yXLHMfbznTjdeE9vJCiEjnZPUgZ+aXusLj1bJoNgrRNVCCikrOMLFK854YxxzGuzRtN/6xhcB/8LeFypw8jhHNnswJ5TX8heB7i4Jbu/7OTCk5/Ew0uG6kveTtvWsAOmVZZAqSl4Z/hZowCAavXy2X1DmZpsjQ0ljxZC271a5UQpI5HF7EKVoFhzvxyxZrxlUYSSDFTOoNGauKvsZbtgz6A0eAQOpjtuWXRTYnbxsOEZFuZCuOwUU6EdDtSA0RIpxnUI3qwn26+GzGTaaxjwTQ+ZtytmHaddC3jgKZ9EfZB6yOUeXXdnI+h0coSR8lp4yjOU/ZWnA9n96+fMqwnR5zCbxJeErhI8RJFWJL1/so1k0wq3t4OixVjDGY1rJkkugD8AnIUEPgB/gfGtF5t6J4WGrpFhWzej9/c="
+    # G5_WP_REPO
+    - secure: "uDjqM6QMdeUHN6Ky+jFma2hV4prdra5WTREiK9+24xnq7cLKQiRAXuSZgYj574buD/kbSj5dMdnhpRRVHn5cv6U3I8mF9FPymu76rv9uNveQHw3Go1HFetiMuD8q3ZFsUpzFXH7JTrMq13g3K7W3EJM/uM0lSUQM+v0/NFK8pO3fgx0sIl5DPIsGB1rUVtmHir3Sz/GTTlmdOSzSIUJ5pz8Ucbf0CoqTGbDWKf0eKT5o7tJ/Ly9EmXaY4rYo0yb8VejOhxvw/Wnh/+8Xzk8sFXwI+hRd2wmRQYuG1QOJTAVg01dslKtHaglbNYTIOEXtzGtP7b+pXzgURQrkOTgWWyWiQ2Z7qONUDiHufbAqxX+nQZ2Y22a5+IptTndi5pKD+FgsQ+450+1CZSo7pUo4nU/gU/AVzVDa2H9BEVIYVpY6vjiDQp6G2k7ZRNcSi1aB9ld8C1nx8OMohw8PxfoW7PqPBFpwbGRsrurgIUKDyXaX5cdpLLKTN4VBJHMWPEz51yVEiDPpSqr83Dwt29sSegiBTA4J9XiGoHyEoYB64A8j4K4khRJP0SwjYpQN3K0x19yQitKI0ZORFPehDVjy0q69hhQp/bIQ4QbemTSKfocNEIWZCqN+u/GeyFnfABGzoNSnKRJiA/XQj2Qjja2fF0BGmxrWF66TYj8xOSWBq40="
 before_install:
   - composer self-update
   - if [ ! -z "$TRAVIS_TAG" ]; then
@@ -30,15 +32,15 @@ script:
   - echo "Branch ($TRAVIS_BRANCH)"
   - cd $TRAVIS_BUILD_DIR/bin/build
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
-      php build.php dev -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
+      php build.php dev -Dpackage_dir=$TRAVIS_BUILD_DIR/../repo_pkgs -Dxml.version=dev-$SHORT_COMMIT -Dstr.fileversion=_develop;
     elif [ ! -z "$TRAVIS_TAG" ]; then
-      php build.php prod -Dpackage_dir=$TRAVIS_BUILD_DIR/repo_pkgs -Dxml.version=$TRAVIS_TAG;
+      php build.php prod -Dpackage_dir=$TRAVIS_BUILD_DIR/../repo_pkgs -Dxml.version=$TRAVIS_TAG;
     else
       echo "($TRAVIS_BRANCH) is not a supported branch for builds";
     fi
 before_deploy:
-  - export PROJ_PKGS_PATH=$TRAVIS_BUILD_DIR/repo_pkgs
-  - export PROJ_PKGS=$HOME/build/$TRAVIS_REPO_SLUG/repo_pkgs/*.zip
+  - export PROJ_PKGS_PATH=$TRAVIS_BUILD_DIR/../repo_pkgs
+  - export PROJ_PKGS=$HOME/build/$TRAVIS_REPO_SLUG/../repo_pkgs/*.zip
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
         FILES_PATH=$PROJ_PKGS_PATH;
         JSON="{";
@@ -100,7 +102,6 @@ after_deploy:
   - if [ ! -z "$TRAVIS_TAG" ]; then
       git config user.email "bot@travis-ci.org";
       git config user.name "Travis CI";
-      rm -rf $PROJ_PKGS_PATH;
       git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
       git fetch --quiet;
       git checkout develop;
@@ -110,6 +111,19 @@ after_deploy:
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
       git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
+    fi
+  - export WPREPO=$TRAVIS_BUILD_DIR../wprepo
+  - if [ ! -z "$TRAVIS_TAG" ]; then
+      mkdir $WPREPO && cd $WPREPO;
+      svn checkout $G5_WP_REPO --no-auth-cache --non-interactive --depth empty https://plugins.svn.wordpress.org/gantry5 .;
+      svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth empty tags;
+      svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth infinity trunk;
+      unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && rm -rf trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
+      svn status | grep ^\? | awk '{print $2}' | xargs svn add;
+      svn status | grep ^\! | awk '{print $2}' | xargs svn delete --force;
+      svn commit $G5_WP_REPO -m "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
+      svn copy trunk tags/$TRAVIS_TAG;
+      svn commit $G5_WP_REPO -m "[automatic] Created Gantry $TRAVIS_TAG Tag";
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;
