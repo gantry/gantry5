@@ -7,6 +7,8 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Changes indicator is now showing in Widgets and Customizer, whenever an instance gets modified and in order to remind of saving (#822)
     3. [](#bugfix)
         - Duplicating outline may cause 'Preset not found' error (#859)
         - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (#855)

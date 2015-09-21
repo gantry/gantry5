@@ -66,8 +66,8 @@ ready(function() {
     originals = collectFieldsValues();
 
     compare.single = function(event, element) {
-        var parent = element.parent('.settings-param') || element.parent('h4'),
-            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title')) : null,
+        var parent = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
+            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
             isOverride = parent ? parent.find('.settings-param-toggle') : false;
 
         if (!parent) { return; }
