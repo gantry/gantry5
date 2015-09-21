@@ -27,8 +27,37 @@ abstract class Widgets
             return null;
         }
 
-        // Do not do anything if we are only preparing layout.
+        // Only pre-render Gantry widgets on prepare layout.
         if (!empty($params['prepare_layout'])) {
+            global $wp_registered_sidebars, $wp_registered_widgets;
+
+            $sidebar = $wp_registered_sidebars[$key];
+            $sidebars_widgets = wp_get_sidebars_widgets();
+            $widgets = !empty($sidebars_widgets[$key]) ? $sidebars_widgets[$key] : [];
+
+            foreach ($widgets as $id) {
+                // Make sure we have Gantry 5 compatible widget.
+                if (empty($wp_registered_widgets[$id]['gantry5'])) {
+                    continue;
+                }
+
+                $callback = $wp_registered_widgets[$id]['callback'];
+
+                // Pre-render Gantry widget.
+                if (is_callable($callback)) {
+                    $name = $wp_registered_widgets[$id]['name'];
+
+                    $args = array_merge(
+                        [array_merge( $sidebar, array('widget_id' => $id, 'widget_name' => $name, 'muted' => true))],
+                        (array) $wp_registered_widgets[$id]['params']
+                    );
+
+                    $args = apply_filters('dynamic_sidebar_params', $args);
+
+                    call_user_func_array($callback, $args);
+                }
+            }
+
             return '@@DEFERRED@@';
         }
 

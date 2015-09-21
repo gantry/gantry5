@@ -28,7 +28,10 @@ class Particle extends \WP_Widget
         parent::__construct(
             'particle_widget',
             __( 'Gantry 5 Particle', 'gantry5' ),
-            ['description' => __( 'Displays Gantry 5 particle instance in a widget position.', 'gantry5' )]
+            [
+                'description' => __( 'Displays Gantry 5 particle instance in a widget position.', 'gantry5' ),
+                'gantry5' => true
+            ]
         );
 
         try {
@@ -57,7 +60,7 @@ class Particle extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-        $md5 = md5(json_encode((array) $args) . json_encode((array) $instance));
+        $md5 = md5(json_encode((array) $instance));
         if (!isset($this->content[$md5])) {
             /** @var Theme $theme */
             $theme = $this->container['theme'];
@@ -81,9 +84,11 @@ class Particle extends \WP_Widget
             $this->content[$md5] = apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
         }
 
-        echo $args['before_widget'];
-        echo $this->content[$md5];
-        echo $args['after_widget'];
+        if (empty($args['muted'])) {
+            echo $args['before_widget'];
+            echo $this->content[$md5];
+            echo $args['after_widget'];
+        }
     }
 
     /**
