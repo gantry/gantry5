@@ -1,5 +1,11 @@
 {%- do gantry.theme.setLayout() -%}
 
+{%- set page_head %}
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
+{% endset -%}
+
 {%- set content %}
     {% if gantry.theme.hasContent() %}
         {% block content %}
@@ -39,12 +45,6 @@
 {%- set page_bottom %}
     {% block page_bottom %}
     {% endblock %}
-{% endset -%}
-
-{%- set page_head %}
-    {% block page_head -%}
-        {% include 'partials/page_head.html.twig' %}
-    {%- endblock %}
 {% endset -%}
 
 {%- set page_footer %}
