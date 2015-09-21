@@ -243,12 +243,6 @@ class Theme extends Base\Theme
 
     public function add_to_context( array $context )
     {
-        static $wp_head;
-
-        if (!isset($wp_head)) {
-            $wp_head = \wp_head();
-        }
-
         $context = parent::add_to_context( $context );
 
         $this->url = $context['site']->theme->link;
@@ -258,7 +252,6 @@ class Theme extends Base\Theme
         }
 
         $context['current_user'] = $this->user;
-        $context['wp_head'] = $wp_head;
 
         if( function_exists( 'is_rtl' ) ) {
             $context['is_rtl'] = is_rtl();
