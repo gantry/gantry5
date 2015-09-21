@@ -16,10 +16,13 @@ defined( 'ABSPATH' ) or die;
 
 $chooser = new \Gantry\Framework\OutlineChooser;
 
-/** @var \Gantry\Framework\Theme $theme */
+$gantry = Gantry\Framework\Gantry::instance();
 $theme = $gantry[ 'theme' ];
+
 $theme->setLayout( $chooser->select( '_offline' ), true );
 
+// We need to render contents of <head> before plugin content gets added.
 $context = Timber::get_context();
+$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
 
 Timber::render( 'offline.html.twig', $context );

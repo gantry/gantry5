@@ -16,7 +16,13 @@ defined( 'ABSPATH' ) or die;
 
 global $wp_query;
 
+$gantry = Gantry\Framework\Gantry::instance();
+$theme = $gantry[ 'theme' ];
+
+// We need to render contents of <head> before plugin content gets added.
 $context = Timber::get_context();
+$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+
 $context[ 'posts' ] = Timber::get_posts();
 
 if( isset( $authordata ) ) {

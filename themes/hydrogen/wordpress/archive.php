@@ -19,7 +19,12 @@ defined( 'ABSPATH' ) or die;
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
+$gantry = Gantry\Framework\Gantry::instance();
+$theme = $gantry[ 'theme' ];
+
+// We need to render contents of <head> before plugin content gets added.
 $context = Timber::get_context();
+$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
 
 $templates = [ 'archive.html.twig', 'index.html.twig' ];
 
