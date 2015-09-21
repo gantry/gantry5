@@ -16,7 +16,10 @@ use Gantry\Framework\Theme;
 
 class Particle extends \WP_Widget
 {
+    public $gantry5 = true;
+
     protected $container;
+    protected $content = [];
 
     public function __construct()
     {
@@ -54,6 +57,11 @@ class Particle extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        $md5 = md5(json_encode((array) $args) . json_encode((array) $instance));
+        if (isset($this->content[$md5])) {
+            return $this->content[$md5];
+        }
+
         /** @var Theme $theme */
         $theme = $this->container['theme'];
 
@@ -73,9 +81,13 @@ class Particle extends \WP_Widget
             )
         );
 
-        echo $args['before_widget'];
-        echo apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
-        echo $args['after_widget'];
+        $content = $args['before_widget']
+            . apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
+            . $args['after_widget'];
+
+        $this->content[$md5] = $content;
+
+        return $content;
     }
 
     /**
