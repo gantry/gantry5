@@ -22,6 +22,11 @@ abstract class Widgets
 
     public static function displayPosition($key, array $params = [])
     {
+        // Do nothing if sidebar is not active.
+        if (!is_active_sidebar($key)) {
+            return null;
+        }
+
         // Do not do anything if we are only preparing layout.
         if (!empty($params['prepare_layout'])) {
             return '@@DEFERRED@@';
