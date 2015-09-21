@@ -58,32 +58,30 @@ class Particle extends \WP_Widget
     public function widget($args, $instance)
     {
         $md5 = md5(json_encode((array) $args) . json_encode((array) $instance));
-        if (isset($this->content[$md5])) {
-            return $this->content[$md5];
+        if (!isset($this->content[$md5])) {
+            /** @var Theme $theme */
+            $theme = $this->container['theme'];
+
+            $instance += [
+                'type' => 'particle',
+                'particle' => 'none',
+                'options' =>  ['particle' => []],
+            ];
+
+            $context = array(
+                'gantry' => $this->container,
+                'inContent' => true,
+                'segment' => array(
+                    'type' => $instance['type'],
+                    'subtype' => $instance['particle'],
+                    'attributes' =>  $instance['options']['particle'],
+                )
+            );
+
+            $this->content[$md5] = $args['before_widget']
+                . apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context))
+                . $args['after_widget'];
         }
-
-        /** @var Theme $theme */
-        $theme = $this->container['theme'];
-
-        $instance += [
-            'type' => 'particle',
-            'particle' => 'none',
-            'options' =>  ['particle' => []],
-        ];
-
-        $context = array(
-            'gantry' => $this->container,
-            'inContent' => true,
-            'segment' => array(
-                'type' => $instance['type'],
-                'subtype' => $instance['particle'],
-                'attributes' =>  $instance['options']['particle'],
-            )
-        );
-
-        $this->content[$md5] = $args['before_widget']
-            . apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context))
-            . $args['after_widget'];
 
         echo $this->content[$md5];
     }
