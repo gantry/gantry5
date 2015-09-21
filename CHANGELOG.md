@@ -9,6 +9,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Duplicating outline may cause 'Preset not found' error (#859)
+        - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (#855)
 
 # 5.1.4
 ## 18/09/2015
