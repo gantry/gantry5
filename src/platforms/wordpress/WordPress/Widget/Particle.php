@@ -81,13 +81,11 @@ class Particle extends \WP_Widget
             )
         );
 
-        $content = $args['before_widget']
+        $this->content[$md5] = $args['before_widget']
             . apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context))
             . $args['after_widget'];
 
-        $this->content[$md5] = $content;
-
-        return $content;
+        echo $this->content[$md5];
     }
 
     /**

@@ -61,11 +61,6 @@ abstract class Widgets
 
     public static function displayWidget($instance = [], array $params = [])
     {
-        // Do not do anything if we are only preparing layout.
-        if (!empty($params['prepare_layout'])) {
-            return '@@DEFERRED@@';
-        }
-
         if (is_string($instance)) {
             $instance = json_decode($instance, true);
         }
@@ -75,9 +70,17 @@ abstract class Widgets
 
         $options = $instance['options'];
 
-        $widgetClass = static::getWidgetClass($instance['widget']);
-        if (!$widgetClass) {
+        $widgetData = static::getWidgetData($instance['widget']);
+        if (!$widgetData) {
             return '';
+        }
+        $widgetClass = $widgetData['class'];
+        $widgetObj = $widgetData['widget'];
+        $gantry5Widget = !empty($widgetObj->gantry5);
+
+        // Do not do anything yet if we are only preparing layout and widget isn't Gantry 5 compatible.
+        if (!$gantry5Widget && !empty($params['prepare_layout'])) {
+            return '@@DEFERRED@@';
         }
 
         $id = static::displayWidgetId(true);
@@ -88,7 +91,7 @@ abstract class Widgets
         \the_widget($widgetClass, $options['widget'], $args);
         $html = ob_get_clean();
 
-        if (trim($html)) {
+        if (trim($html) && !$gantry5Widget) {
             /** @var Theme $theme */
             $theme = static::gantry()['theme'];
             $theme->wordpress(true);
@@ -147,13 +150,13 @@ abstract class Widgets
         return ltrim($classname, '_');
     }
 
-    protected static function getWidgetClass($id)
+    protected static function getWidgetData($id)
     {
         $widgets = static::listWidgets();
         if (!isset($widgets[$id])) {
             return null;
         }
-        return $widgets[$id]['class'];
+        return $widgets[$id];
     }
 
     protected static function getChromeArgs($chrome = 'gantry')
