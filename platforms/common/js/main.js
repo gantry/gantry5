@@ -4869,7 +4869,8 @@ var MenuManager = new prime({
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
             var submenu_items = target.find('.submenu-items');
-            if (!submenu_items || submenu_items.children() || originalLevel > 2) {
+
+            if ((!target.hasClass('g-block') || target.find(this.block)) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }

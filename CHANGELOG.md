@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Enhanced the droppable areas for Menu Editor in the sublevels (#132)
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
 2. [Joomla](#joomla)
