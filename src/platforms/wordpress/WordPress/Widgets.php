@@ -48,7 +48,7 @@ abstract class Widgets
                     $name = $wp_registered_widgets[$id]['name'];
 
                     $args = array_merge(
-                        [array_merge( $sidebar, array('widget_id' => $id, 'widget_name' => $name, 'muted' => true))],
+                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name, 'muted' => true))],
                         (array) $wp_registered_widgets[$id]['params']
                     );
 
