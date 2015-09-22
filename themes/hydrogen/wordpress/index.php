@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The main template file
@@ -18,24 +18,24 @@ defined( 'ABSPATH' ) or die;
  * E.g., it puts together the home page when no home.php file exists
  */
 
-if ( !class_exists( 'Timber' ) ) {
-	_e('Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>', 'g5_hydrogen');
-	return;
+if (!class_exists('Timber')) {
+    _e('Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>', 'g5_hydrogen');
+    return;
 }
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme = $gantry[ 'theme' ];
+$theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
-$context = Timber::get_context();
-$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$context[ 'posts' ] = Timber::get_posts();
+$context['posts'] = Timber::get_posts();
 
-$templates = [ 'index.html.twig' ];
+$templates = ['index.html.twig'];
 
-if ( is_home() ) {
-	array_unshift( $templates, 'home.html.twig' );
+if (is_home()) {
+    array_unshift($templates, 'home.html.twig');
 }
 
-Timber::render( $templates, $context );
+Timber::render($templates, $context);

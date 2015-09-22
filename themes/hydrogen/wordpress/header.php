@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * Third party plugins that hijack the theme will call wp_head() to get the header template.
@@ -16,12 +16,12 @@ defined( 'ABSPATH' ) or die;
  */
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme = $gantry[ 'theme' ];
+$theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
-$context = Timber::get_context();
-$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$GLOBALS[ 'timberContext' ] = $context;
+$GLOBALS['timberContext'] = $context;
 
 ob_start();

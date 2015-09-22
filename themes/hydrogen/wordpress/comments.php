@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying comments
@@ -16,11 +16,11 @@ defined( 'ABSPATH' ) or die;
 
 $context = Timber::get_context();
 
-$post = new TimberPost();
-$context[ 'post' ] = $post;
+$post            = new TimberPost();
+$context['post'] = $post;
 
-if( post_password_required( $post ) ) {
+if (post_password_required($post)) {
     return;
 }
 
-Timber::render( [ 'partials/comments-' . $post->ID . '.html.twig', 'partials/comments-' . $post->post_type . '.html.twig', 'partials/comments.html.twig' ], $context );
+Timber::render(['partials/comments-' . $post->ID . '.html.twig', 'partials/comments-' . $post->post_type . '.html.twig', 'partials/comments.html.twig'], $context);

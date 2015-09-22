@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template to display when page is offline
@@ -17,12 +17,12 @@ defined( 'ABSPATH' ) or die;
 $chooser = new \Gantry\Framework\OutlineChooser;
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme = $gantry[ 'theme' ];
+$theme  = $gantry['theme'];
 
-$theme->setLayout( $chooser->select( '_offline' ), true );
+$theme->setLayout($chooser->select('_offline'), true);
 
 // We need to render contents of <head> before plugin content gets added.
-$context = Timber::get_context();
-$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-Timber::render( 'offline.html.twig', $context );
+Timber::render('offline.html.twig', $context);

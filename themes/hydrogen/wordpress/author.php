@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying Author Archive pages
@@ -17,18 +17,18 @@ defined( 'ABSPATH' ) or die;
 global $wp_query;
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme = $gantry[ 'theme' ];
+$theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
-$context = Timber::get_context();
-$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$context[ 'posts' ] = Timber::get_posts();
+$context['posts'] = Timber::get_posts();
 
-if( isset( $authordata ) ) {
-	$author = new TimberUser( $authordata->ID );
-	$context[ 'author' ] = $author;
-	$context[ 'title' ] = __( 'Author:', 'g5_hydrogen' ) . ' ' . $author->name();
+if (isset($authordata)) {
+    $author            = new TimberUser($authordata->ID);
+    $context['author'] = $author;
+    $context['title']  = __('Author:', 'g5_hydrogen') . ' ' . $author->name();
 }
 
-Timber::render( [ 'author.html.twig', 'archive.html.twig', 'index.html.twig' ], $context );
+Timber::render(['author.html.twig', 'archive.html.twig', 'index.html.twig'], $context);

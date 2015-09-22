@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying all pages.
@@ -27,13 +27,13 @@ defined( 'ABSPATH' ) or die;
  */
 
 $gantry = Gantry\Framework\Gantry::instance();
-$theme = $gantry[ 'theme' ];
+$theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
-$context = Timber::get_context();
-$context[ 'page_head' ] = $theme->render( 'partials/page_head.html.twig', $context );
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$post = new TimberPost();
-$context[ 'post' ] = $post;
+$post            = new TimberPost();
+$context['post'] = $post;
 
-Timber::render( [ 'page-' . $post->post_name . '.html.twig', 'page.html.twig' ], $context );
+Timber::render(['page-' . $post->post_name . '.html.twig', 'page.html.twig'], $context);

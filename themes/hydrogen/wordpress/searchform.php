@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying Search Form in Search widget
@@ -16,4 +16,4 @@ defined( 'ABSPATH' ) or die;
 
 $context = Timber::get_context();
 
-Timber::render( 'searchform.html.twig', $context );
+Timber::render('searchform.html.twig', $context);
