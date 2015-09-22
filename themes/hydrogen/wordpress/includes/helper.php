@@ -4,14 +4,14 @@
  */
 
 // Extend Timber context
-add_filter( 'timber_context', [ 'G5ThemeHelper', 'add_to_context' ] );
+add_filter( 'timber_context', array( 'G5ThemeHelper', 'add_to_context' ) );
 
 // Modify the default Admin Bar margins to render properly in the mobile mode
-add_theme_support( 'admin-bar', [ 'callback' => [ 'G5ThemeHelper', 'admin_bar_margins' ] ] );
+add_theme_support( 'admin-bar', array( 'callback' => array( 'G5ThemeHelper', 'admin_bar_margins' ) ) );
 
 // Add comments pagination link attributes
-add_filter( 'previous_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
-add_filter( 'next_comments_link_attributes', [ 'G5ThemeHelper', 'comments_pagination_attributes' ] );
+add_filter( 'previous_comments_link_attributes', array( 'G5ThemeHelper', 'comments_pagination_attributes' ) );
+add_filter( 'next_comments_link_attributes', array( 'G5ThemeHelper', 'comments_pagination_attributes' ) );
 
 class G5ThemeHelper {
     /**
@@ -66,7 +66,7 @@ class G5ThemeHelper {
 
                     <?php comment_text(); ?>
 
-                    <?php comment_reply_link( array_merge( $args, [ 'before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ] ) ); ?>
+                    <?php comment_reply_link( array_merge( $args, array( 'before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args[ 'max_depth' ] ) ) ); ?>
                 </section>
 
             </article>

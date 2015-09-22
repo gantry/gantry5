@@ -62,7 +62,7 @@ function gantry5_plugin_defaults() {
 add_filter( 'kses_allowed_protocols', 'add_gantry5_streams_to_kses' );
 
 function add_gantry5_streams_to_kses( $protocols ) {
-    $streams = [
+    $streams = array(
         'gantry-cache',
         'gantry-themes',
         'gantry-theme',
@@ -76,7 +76,7 @@ function add_gantry5_streams_to_kses( $protocols ) {
         'gantry-config',
         'wp-includes',
         'wp-content',
-    ];
+    );
 
     $protocols = array_merge( $protocols, $streams );
     return $protocols;
