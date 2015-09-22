@@ -1,0 +1,18 @@
+name: Theme Details
+description: Describes theme details
+type: theme
+
+form:
+  fields:
+
+    styles:
+      type: input.hidden
+      array: true
+
+    settings:
+      type: input.hidden
+      array: true
+
+    content:
+      type: input.hidden
+      array: true
