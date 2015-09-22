@@ -16,6 +16,7 @@ use Pimple\Container;
 class Platform extends BasePlatform
 {
     protected $name = 'wordpress';
+    protected $file = 'gantry5/gantry5.php';
 
     public function __construct(Container $container)
     {
@@ -105,6 +106,24 @@ class Platform extends BasePlatform
     public function settings()
     {
         return admin_url('plugins.php?page=g5-settings');
+    }
+
+    public function update()
+    {
+        return esc_url(wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=') . $this->file, 'upgrade-plugin_' . $this->file));
+    }
+
+    public function updates()
+    {
+        $plugin = get_site_transient('update_plugins');
+        $list = [];
+        if (!isset($plugin->response[$this->file]) || version_compare(GANTRY5_VERSION, 0) < 0 || !current_user_can('update_plugins')) { return $list; }
+
+        $response = $plugin->response[$this->file];
+
+        $list[] = 'Gantry ' . $response->new_version;
+
+        return $list;
     }
 
     // getCategories logic for the categories selectize field
