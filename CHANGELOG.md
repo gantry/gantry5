@@ -14,7 +14,7 @@
         - Gantry updates are now available and interactive in the Admin via a Purple bar notification (#718)
     3. [](#bugfix)
         - Duplicating outline may cause 'Preset not found' error (#859)
-        - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (#855)
+        - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (requires theme update) (#855)
         - Fixed fatal errors with PHP <= 5.3, causing Hydrogen and Gantry to not display the proper errors of PHP incompatibility (#833)
 # 5.1.4
 ## 18/09/2015
