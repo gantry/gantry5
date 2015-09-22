@@ -197,7 +197,11 @@ var Menu = new prime({
             roots = topLevel.search(' >' + selectors.item);
 
         if (roots) { roots.removeClass(states.selected); }
-        if (topLevel) { this.closeDropdown(topLevel); }
+        if (topLevel) {
+            var allRoots = topLevel.search('> ' + this.options.selectors.item);
+            if (allRoots) { allRoots.forEach(this.closeDropdown.bind(this)); }
+            this.closeDropdown(topLevel);
+        }
 
         this.toggleOverlay(topLevel);
     },

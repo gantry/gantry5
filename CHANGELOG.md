@@ -6,6 +6,7 @@
         - Enhanced the droppable areas for Menu Editor in the sublevels (#132)
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
+        - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
