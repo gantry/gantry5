@@ -43,7 +43,7 @@ class Outlines extends AbstractOutlineCollection
         $files = [];
         /** @var FilesystemIterator $info */
         foreach ($iterator as $name => $info) {
-            if (!$info->isDir() || $name[0] == '.') {
+            if (!$info->isDir() || $name[0] == '.' || !is_file($info->getPathname() . '/index.yaml')) {
                 continue;
             }
             $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
@@ -167,7 +167,7 @@ class Outlines extends AbstractOutlineCollection
         $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
 
         try {
-            Folder::copy($path, $newPath);
+            Folder::copy($path, $newPath, '/assignments/');
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }

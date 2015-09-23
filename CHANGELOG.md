@@ -7,6 +7,7 @@
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
         - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
+        - Fatal error if there is empty outline directory (#867)
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
