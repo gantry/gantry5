@@ -146,7 +146,7 @@ class Theme extends AbstractTheme
                 register_sidebar([
                     'name'          => __($title, 'gantry5'),
                     'id'            => $name,
-                    'before_widget' => '<div id="%1s" class="widget %2s">',
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h2 class="widgettitle">',
                     'after_title'   => '</h2>',

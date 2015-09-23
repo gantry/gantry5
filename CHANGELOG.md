@@ -6,6 +6,7 @@
         - Enhanced the droppable areas for Menu Editor in the sublevels (#132)
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
+        - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
@@ -16,6 +17,7 @@
         - Duplicating outline may cause 'Preset not found' error (#859)
         - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (requires theme update) (#855)
         - Fixed fatal errors with PHP <= 5.3, causing Hydrogen and Gantry to not display the proper errors of PHP incompatibility (#833)
+        - Fixed customizer JS errors thrown due to wrongly formatted `before_widget` (#864)
 
 # 5.1.4
 ## 18/09/2015

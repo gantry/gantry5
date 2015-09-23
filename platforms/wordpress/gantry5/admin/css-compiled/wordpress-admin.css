@@ -731,27 +731,27 @@ body.gantry5 #g5-container nav.navbar * {
   border-color: rgba(221, 130, 59, 0.5);
 }
 
-body.wp-admin.widgets-php #g5-container .g-content {
+body.wp-admin.widgets-php #g5-container .g-content, body.wp-customizer #g5-container .g-content {
   margin: 0 0 0.625rem;
   padding: 0 0 0.938rem;
 }
-body.wp-admin.widgets-php #g5-container .g-content .settings-block .settings-param-field {
+body.wp-admin.widgets-php #g5-container .g-content .settings-block .settings-param-field, body.wp-customizer #g5-container .g-content .settings-block .settings-param-field {
   margin-left: 0;
 }
-body.wp-admin.widgets-php #g5-container .g5-dialog {
+body.wp-admin.widgets-php #g5-container .g5-dialog, body.wp-customizer #g5-container .g5-dialog {
   z-index: 99999;
 }
-body.wp-admin.widgets-php #g5-container .g5-dialog .settings-block {
+body.wp-admin.widgets-php #g5-container .g5-dialog .settings-block, body.wp-customizer #g5-container .g5-dialog .settings-block {
   max-width: 100%;
 }
-body.wp-admin.widgets-php #g5-container .g5-dialog .g-tabs ul li {
+body.wp-admin.widgets-php #g5-container .g5-dialog .g-tabs ul li, body.wp-customizer #g5-container .g5-dialog .g-tabs ul li {
   margin-bottom: 0;
 }
-body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"] {
+body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"], body.wp-customizer #g5-container .g5-dialog input[type="checkbox"] {
   height: 16px;
   top: 8px;
 }
-body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"]:checked:before {
+body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"]:checked:before, body.wp-customizer #g5-container .g5-dialog input[type="checkbox"]:checked:before {
   height: 16px;
 }
 
