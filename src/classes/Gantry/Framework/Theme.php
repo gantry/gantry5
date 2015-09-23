@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,7 +13,14 @@
 
 namespace Gantry\Framework;
 
-class Theme extends Base\Theme
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
+
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+abstract class Theme extends AbstractTheme
 {
-    public function render($file, array $context = array()) {}
+    use ThemeTrait;
 }

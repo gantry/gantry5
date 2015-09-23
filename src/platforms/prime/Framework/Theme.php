@@ -1,53 +1,58 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   MIT
+ *
+ * http://opensource.org/licenses/MIT
+ */
+
 namespace Gantry\Framework;
 
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Theme extends Base\Theme
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+class Theme extends AbstractTheme
 {
-    protected $renderer;
+    use ThemeTrait;
 
-    public function __construct($path, $name = '')
+    /**
+     * @var string
+     */
+    public $url;
+
+    /**
+     * @see AbstractTheme::init()
+     */
+    protected function init()
     {
-        parent::__construct($path, $name);
+        parent::init();
 
         $this->url = dirname($_SERVER['SCRIPT_NAME']);
     }
 
-    public function renderer()
+    /**
+     * @see AbstractTheme::setTwigLoaderPaths()
+     *
+     * @param \Twig_Loader_Filesystem $loader
+     */
+    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
     {
-        if (!$this->renderer) {
-            $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = static::gantry();
 
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
 
-            $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
-            $loader->setPaths($locator->findResources('gantry-pages://'), 'pages');
-            $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
+        $loader->setPaths($locator->findResources('gantry-engine://twig'));
+        $loader->setPaths($locator->findResources('gantry-pages://'), 'pages');
+        $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
 
-            $params = array(
-                'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => true,
-                'auto_reload' => true,
-                'autoescape' => 'html'
-            );
-
-            $twig = new \Twig_Environment($loader, $params);
-
-            $this->add_to_twig($twig);
-
-            $this->renderer = $twig;
-        }
-
-        return $this->renderer;
-    }
-
-    public function render($file, array $context = array())
-    {
-        // Include Gantry specific things to the context.
-        $context = $this->add_to_context($context);
-
-        return $this->renderer()->render($file, $context);
+        parent::setTwigLoaderPaths($loader);
     }
 }

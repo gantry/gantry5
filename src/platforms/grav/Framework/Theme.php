@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,21 +10,20 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Theme\ThemeTrait;
 use Grav\Common\Theme as BaseTheme;
 use Grav\Common\Grav;
 use Grav\Common\Config\Config as GravConfig;
-use RocketTheme\Toolbox\File\YamlFile;
 
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
 class Theme extends BaseTheme
 {
     use ThemeTrait;
 
-    /**
-     * @var ThemeDetails
-     */
-    protected $details;
+    public $url;
 
     public function __construct(Grav $grav, GravConfig $config, $name)
     {
@@ -38,6 +36,4 @@ class Theme extends BaseTheme
         $this->path = THEMES_DIR . $name;
         $this->url = $baseUrlRelative .'/'. USER_PATH . basename(THEMES_DIR) .'/'. $this->name;
     }
-
-    public function render($file, array $context = array()) {}
 }

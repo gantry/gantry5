@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -17,34 +16,76 @@ namespace Gantry\Component\Theme;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\Export;
-use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ThemeDetails
+ * @package Gantry\Component\Theme
+ */
 class ThemeDetails implements \ArrayAccess
 {
-    use NestedArrayAccess, Export;
+    use NestedArrayAccessWithGetters, Export;
 
     protected $items;
 
+    /**
+     * Create new theme details.
+     *
+     * @param string $theme
+     */
     public function __construct($theme)
     {
         $gantry = Gantry::instance();
+
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
         $filename = $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
+        if (!$filename) {
+            throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
+        }
+
         $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
 
         $file = CompiledYamlFile::instance($filename);
         $this->items = $file->setCachePath($cache)->content();
-        $this->offsetSet('name', $theme);
         $file->free();
 
-        $parent = $this->offsetGet('configuration.theme.parent') ?: $theme;
+        $this->offsetSet('name', $theme);
 
-        $this->offsetSet('parent', $theme !== $parent ? $parent : null);
+        $parent = (string) $this->offsetGet('configuration.theme.parent', $theme);
+        $parent = $parent != $theme ? $parent : null;
+
+        $this->offsetSet('parent', $parent);
     }
 
+    /**
+     * Get parent theme details if theme has a parent.
+     *
+     * @return ThemeDetails|null
+     * @throws \RuntimeException
+     */
+    public function parent()
+    {
+        $parent = $this->offsetGet('parent');
+
+        if ($parent && !$this->parent) {
+            try {
+                $this->parent = new ThemeDetails($parent);
+            } catch (\RuntimeException $e) {
+                throw new \RuntimeException(sprintf('Parent theme %s not found', $parent), 404);
+            }
+        }
+
+        return $this->parent;
+    }
+
+    /**
+     * Get all possible paths to the theme.
+     *
+     * @return array
+     */
     public function getPaths()
     {
         $paths = array_merge(
@@ -53,7 +94,7 @@ class ThemeDetails implements \ArrayAccess
             (array) $this->get('configuration.theme.base', 'gantry-theme://common')
         );
 
-        $parent = $this->getParent();
+        $parent = $this->offsetGet('parent');
         if ($parent) {
             // Stream needs to be valid URL.
             $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $parent);
@@ -63,6 +104,12 @@ class ThemeDetails implements \ArrayAccess
         return $this->parsePaths($paths);
     }
 
+    /**
+     * Convert theme path into stream URI.
+     *
+     * @param string $path
+     * @return string
+     */
     public function getUrl($path)
     {
         $uri = (string) $this->offsetGet($path);
@@ -81,13 +128,13 @@ class ThemeDetails implements \ArrayAccess
         return $uri;
     }
 
-    public function getParent()
-    {
-        $parent = (string) $this->offsetGet('configuration.theme.parent');
-        return $parent && $parent != $this->offsetGet('name') ? $parent : null;
-    }
-
-    protected function parsePaths(array $items)
+    /**
+     * Turn list of theme paths to be universal, so they can be used outside of the theme.
+     *
+     * @param array $items
+     * @return array
+     */
+    public function parsePaths(array $items)
     {
         foreach ($items as &$item) {
             $item = $this->parsePath($item);
@@ -96,6 +143,12 @@ class ThemeDetails implements \ArrayAccess
         return $items;
     }
 
+    /**
+     * Convert theme paths to be universal, so they can be used outside of the theme.
+     *
+     * @param string $path
+     * @return string
+     */
     public function parsePath($path)
     {
         if (strpos($path, 'gantry-theme://') === 0) {
@@ -110,45 +163,11 @@ class ThemeDetails implements \ArrayAccess
     }
 
     /**
-     * Magic setter method
-     *
-     * @param mixed $offset Asset name value
-     * @param mixed $value  Asset value
+     * @return string|null
+     * @deprecated 5.1.5
      */
-    public function __set($offset, $value)
+    public function getParent()
     {
-        $this->offsetSet($offset, $value);
-    }
-
-    /**
-     * Magic getter method
-     *
-     * @param  mixed $offset Asset name value
-     * @return mixed         Asset value
-     */
-    public function __get($offset)
-    {
-        return $this->offsetGet($offset);
-    }
-
-    /**
-     * Magic method to determine if the attribute is set
-     *
-     * @param  mixed   $offset Asset name value
-     * @return boolean         True if the value is set
-     */
-    public function __isset($offset)
-    {
-        return $this->offsetExists($offset);
-    }
-
-    /**
-     * Magic method to unset the attribute
-     *
-     * @param mixed $offset The name value to unset
-     */
-    public function __unset($offset)
-    {
-        $this->offsetUnset($offset);
+        return $this->offsetGet('parent');
     }
 }

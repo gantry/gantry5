@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,10 +26,42 @@ use Gantry\Component\Stylesheet\CssCompilerInterface;
  */
 interface ThemeInterface
 {
+    // AbstractTheme class
+
     /**
-     * Initialize theme.
+     * Get context for render().
+     *
+     * @param array $context
+     * @return array
      */
-    public function init();
+    public function getContext(array $context);
+
+    /**
+     * Define twig environment.
+     *
+     * @param \Twig_Environment $twig
+     * @param \Twig_Loader_Filesystem $loader
+     * @return \Twig_Environment
+     */
+    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null);
+
+    /**
+     * Returns renderer.
+     *
+     * @return \Twig_Environment
+     */
+    public function renderer();
+
+    /**
+     * Render a template file.
+     *
+     * @param string $file
+     * @param array $context
+     * @return string
+     */
+    public function render($file, array $context = array());
+
+    // ThemeTrait class
 
     /**
      * Update all CSS files in the theme.
@@ -95,6 +126,14 @@ interface ThemeInterface
     public function presets();
 
     /**
+     * Return name of the used layout preset.
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function type();
+
+    /**
      * Load current layout and its configuration.
      *
      * @param string $name
@@ -103,7 +142,12 @@ interface ThemeInterface
      */
     public function loadLayout($name = null);
 
-    public function add_to_context(array $context);
+    /**
+     * Check whether layout has content bock.
+     *
+     * @return bool
+     */
+    public function hasContent();
 
     /**
      * Returns all non-empty segments from the layout.
@@ -112,7 +156,6 @@ interface ThemeInterface
      */
     public function segments();
 
-    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null);
     /**
      * Returns details of the theme.
      *
@@ -134,20 +177,4 @@ interface ThemeInterface
      * @return string
      */
     public function toGrid($text);
-
-    /**
-     * Returns renderer.
-     *
-     * @return \Twig_Environment
-     */
-    public function renderer();
-
-    /**
-     * Render a template file.
-     *
-     * @param string $file
-     * @param array $context
-     * @return string
-     */
-    public function render($file, array $context = array());
 }

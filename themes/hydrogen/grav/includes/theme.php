@@ -31,7 +31,7 @@ class Hydrogen extends GantryTheme
     public function onTwigInitialized()
     {
         $env = $this->grav['twig'];
-        $this->add_to_twig($env->twig(), $env->loader());
+        $this->extendTwig($env->twig(), $env->loader());
     }
 
     /**
@@ -40,6 +40,6 @@ class Hydrogen extends GantryTheme
     public function onTwigSiteVariables()
     {
         $twig = $this->grav['twig'];
-        $twig->twig_vars = $this->add_to_context($twig->twig_vars);
+        $twig->twig_vars = $this->getContext($twig->twig_vars);
     }
 }

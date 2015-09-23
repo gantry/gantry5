@@ -1,132 +1,103 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 namespace Gantry\Framework;
 
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Theme extends Base\Theme
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+class Theme extends AbstractTheme
 {
-    public $path;
+    use ThemeTrait;
+
+    /**
+     * @var string
+     */
+    public $url;
+
+    /**
+     * @var bool
+     * @deprecated 5.1.5
+     */
     protected $wordpress = false;
+
     protected $user;
 
-    public function __construct( $path, $name = '' )
+    /**
+     * @param array $context
+     * @return array
+     */
+    public function getContext(array $context)
     {
-        global $pagenow;
-
-        parent::__construct($path, $name);
+        $context = parent::getContext($context);
 
         $gantry = Gantry::instance();
-        $global = $gantry['global'];
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        $context['site'] = $gantry['site'];
 
-        \Timber::$locations = $locator->findResources('gantry-engine://views');
+        if (!$this->user) {
+            $this->user = new \TimberUser;
+        }
 
-        add_theme_support( 'html5', [ 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets' ] );
-        add_theme_support( 'title-tag' );
-        add_theme_support( 'post-formats' );
-        add_theme_support( 'post-thumbnails' );
-        add_theme_support( 'menus' );
-        add_theme_support( 'widgets' );
-        add_theme_support( 'woocommerce' );
+        $context['current_user'] = $this->user;
 
-        add_filter( 'timber_context', [ $this, 'add_to_context' ] );
-        add_filter( 'get_twig', [ $this, 'add_to_twig' ] );
-        add_filter( 'the_content', [ $this, 'url_filter' ], 0 );
-        add_filter( 'the_excerpt', [ $this, 'url_filter' ], 0 );
-        add_filter( 'widget_text', [ $this, 'url_filter' ], 0 );
-        add_filter( 'widget_content', [ $this, 'url_filter' ], 0 );
+        if (function_exists('is_rtl')) {
+            $context['is_rtl'] = is_rtl();
+        }
 
-        add_action( 'template_redirect', [ $this, 'set_template_layout' ], -10000 );
-        add_action( 'init', [ $this, 'register_post_types' ] );
-        add_action( 'init', [ $this, 'register_taxonomies' ] );
-        add_action( 'template_redirect', [ $this, 'disable_wpautop' ], 10000 );
-        add_action( 'widgets_init', [ $this, 'widgets_init' ] );
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-        add_action( 'wp_head', [ $this, 'print_styles' ], 20 );
-        add_action( 'wp_head', [ $this, 'print_scripts' ], 30 );
-        add_action( 'admin_print_styles', [ $this, 'print_styles' ], 200 );
-        add_action( 'admin_print_scripts', [ $this, 'print_scripts' ], 200 );
-        add_action( 'wp_footer', [ $this, 'print_inline_scripts' ] );
-        add_action( 'widgets_init', function() {
-             register_widget( '\Gantry\WordPress\Widget\Particle' );
-        });
-
-        // Offline support.
-        add_action( 'init', function() use ( $global, $pagenow ) {
-            if( $global->get( 'offline' ) && !( is_super_admin() || current_user_can( 'manage_options' ) || $pagenow == 'wp-login.php' ) ) {
-                if( locate_template( [ 'offline.php' ] ) ) {
-                    add_filter( 'template_include', function () {
-                        return locate_template( [ 'offline.php' ] );
-                    });
-                } else {
-                    wp_die( $global->get( 'offline_message' ), get_bloginfo( 'title' ) );
-                }
-            }
-        });
+        return $context;
     }
 
-    public function init()
+
+    /**
+     * @see AbstractTheme::extendTwig()
+     *
+     * @param \Twig_Environment $twig
+     * @param \Twig_Loader_Filesystem $loader
+     * @return \Twig_Environment
+     */
+    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
     {
-        parent::init();
+        parent::extendTwig($twig, $loader);
 
-        $this->preset_styles_init();
+        // FIXME: Get timezone from WP.
+        //$timezone = 'UTC';
+        //$twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
 
-        // Load theme text domains
-        $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
-        load_theme_textdomain( $domain, $this->path . '/languages' );
+        return $twig;
     }
 
     /**
-     * @deprecated 5.0.2
+     * @see AbstractTheme::renderer()
      */
-    public function debug()
-    {
-        return Gantry::instance()->debug();
-    }
-
     public function renderer()
     {
         if (!$this->renderer) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $loader = new \Twig_Loader_Filesystem(\Timber::$locations);
-
-            $params = array(
-                'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => $gantry->debug(),
-                'auto_reload' => true,
-                'autoescape' => 'html'
-            );
-
-            $twig = new \Twig_Environment($loader, $params);
-
-            if ($gantry->debug()) {
-                $twig->addExtension(new \Twig_Extension_Debug());
-            }
-
+            $twig = parent::renderer();
             $twig = apply_filters('twig_apply_filters', $twig);
             $twig = apply_filters('timber/twig/filters', $twig);
             $twig = apply_filters('timber/loader/twig', $twig);
-
-            // FIXME: Get timezone from WP.
-            //$timezone = 'UTC';
-            //$twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
-
-            $this->add_to_twig($twig);
-
             $this->renderer = $twig;
         }
 
         return $this->renderer;
     }
 
-
+    /**
+     * @see AbstractTheme::render()
+     */
     public function render($file, array $context = [])
     {
         static $timberContext;
@@ -148,8 +119,8 @@ class Theme extends Base\Theme
         $chooser = new OutlineChooser;
 
         /** @var Theme $theme */
-        $theme = $gantry[ 'theme' ];
-        $theme->setLayout( $chooser->select() );
+        $theme = $gantry['theme'];
+        $theme->setLayout($chooser->select());
     }
 
     public function widgets_init()
@@ -162,24 +133,24 @@ class Theme extends Base\Theme
 
         if (!$positions) {
             // No positions are set; display notification in admin.
-            add_action( 'load-widgets.php',
+            add_action('load-widgets.php',
                 function() {
-                    add_action( 'admin_notices', function() {
+                    add_action('admin_notices', function() {
                         echo '<div class="error"><p>' . __('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
-                    } );
-                } );
+                    });
+                });
         } else {
-            foreach ( $positions as $name => $title ) {
+            foreach ($positions as $name => $title) {
                 // We are just registering positions with defaults; there is an event to override chrome based on the
                 // template settings. See \Gantry\Wordpress\Widgets for more information.
-                register_sidebar( array(
-                    'name'          => __( $title, 'gantry5' ),
+                register_sidebar([
+                    'name'          => __($title, 'gantry5'),
                     'id'            => $name,
                     'before_widget' => '<div id="%1s" class="widget %2s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h2 class="widgettitle">',
                     'after_title'   => '</h2>',
-                ) );
+                ]);
             }
         }
     }
@@ -219,16 +190,16 @@ class Theme extends Base\Theme
     public function print_styles()
     {
         $styles = Gantry::instance()->styles();
-        if ( $styles ) {
-            echo implode( "\n    ", $styles ) . "\n";
+        if ($styles) {
+            echo implode("\n    ", $styles) . "\n";
         }
     }
 
     public function print_scripts()
     {
         $scripts = Gantry::instance()->scripts();
-        if ( $scripts ) {
-            echo implode( "\n    ", $scripts ) . "\n";
+        if ($scripts) {
+            echo implode("\n    ", $scripts) . "\n";
         }
     }
 
@@ -236,37 +207,9 @@ class Theme extends Base\Theme
     {
         Document::registerScripts('footer');
         $scripts = Gantry::instance()->scripts('footer');
-        if ( $scripts ) {
-            echo implode( "\n    ", $scripts ) . "\n";
+        if ($scripts) {
+            echo implode("\n    ", $scripts) . "\n";
         }
-    }
-
-    public function add_to_context( array $context )
-    {
-        $context = parent::add_to_context( $context );
-
-        $this->url = $context['site']->theme->link;
-
-        if (!$this->user) {
-            $this->user = new \TimberUser;
-        }
-
-        $context['current_user'] = $this->user;
-
-        if( function_exists( 'is_rtl' ) ) {
-            $context['is_rtl'] = is_rtl();
-        }
-
-        return $context;
-    }
-
-    public function wordpress($enable = null)
-    {
-        if ($enable) {
-            $this->wordpress = (bool) $enable;
-        }
-
-        return $this->wordpress;
     }
 
     public function preset_styles_init()
@@ -310,11 +253,111 @@ class Theme extends Base\Theme
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    /**
+     * @see AbstractTheme::init()
+     */
+    protected function init()
+    {
+        parent::init();
+
+        $gantry = Gantry::instance();
+        $global = $gantry['global'];
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        \Timber::$locations = $locator->findResources('gantry-engine://views');
+
+        add_theme_support('html5', ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets']);
+        add_theme_support('title-tag');
+        add_theme_support('post-formats');
+        add_theme_support('post-thumbnails');
+        add_theme_support('menus');
+        add_theme_support('widgets');
+        add_theme_support('woocommerce');
+
+        add_filter('timber_context', [$this, 'getContext']);
+        add_filter('get_twig', [$this, 'extendTwig'], 100);
+        add_filter('the_content', [$this, 'url_filter'], 0);
+        add_filter('the_excerpt', [$this, 'url_filter'], 0);
+        add_filter('widget_text', [$this, 'url_filter'], 0);
+        add_filter('widget_content', [$this, 'url_filter'], 0);
+
+        add_action('template_redirect', [$this, 'set_template_layout'], -10000);
+        add_action('init', [$this, 'register_post_types']);
+        add_action('init', [$this, 'register_taxonomies']);
+        add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
+        add_action('widgets_init', [$this, 'widgets_init']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_head', [$this, 'print_styles'], 20);
+        add_action('wp_head', [$this, 'print_scripts'], 30);
+        add_action('admin_print_styles', [$this, 'print_styles'], 200);
+        add_action('admin_print_scripts', [$this, 'print_scripts'], 200);
+        add_action('wp_footer', [$this, 'print_inline_scripts']);
+        add_action('widgets_init', function() {
+            register_widget('\Gantry\WordPress\Widget\Particle');
+        });
+
+        // Offline support.
+        add_action('init', function() use ($global) {
+            if($global->get('offline') && !(is_super_admin() || current_user_can('manage_options') || $_GLOBALS['pagenow'] == 'wp-login.php')) {
+                if(locate_template(['offline.php'])) {
+                    add_filter('template_include', function () {
+                        return locate_template(['offline.php']);
+                    });
+                } else {
+                    wp_die($global->get('offline_message'), get_bloginfo('title'));
+                }
+            }
+        });
+
+        $this->preset_styles_init();
+
+        // Load theme text domains
+        $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
+        load_theme_textdomain($domain, $this->path . '/languages');
+
+        $this->url = $gantry['site']->theme->link;
+    }
+
+    /**
+     * @see AbstractTheme::setTwigLoaderPaths()
+     *
+     * @param \Twig_Loader_Filesystem $loader
+     */
+    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    {
+        $gantry = static::gantry();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $paths = $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
+
+        // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
+        $loader->setPaths($paths);
+
+        parent::setTwigLoaderPaths($loader);
+    }
+
     protected function updateCookie($name, $value, $expire = 0)
     {
         $path   = SITECOOKIEPATH;
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    /**
+     * @deprecated 5.1.5
+     */
+    public function wordpress($enable = null)
+    {
+        if ($enable) {
+            $this->wordpress = (bool) $enable;
+        }
+
+        return $this->wordpress;
     }
 }

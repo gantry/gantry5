@@ -42,7 +42,7 @@ class twig extends \phpbb\template\twig\twig
         $style = 'gantry';
         $this->gantry = require_once $this->phpbb_root_path . "styles/{$style}/gantry.php";
         $this->gantry['streams'];
-        $this->gantry['theme']->add_to_twig($this->twig);
+        $this->gantry['theme']->extendTwig($this->twig);
 
         if (defined('ADMIN_START')) {
             // We are in admin.
@@ -111,7 +111,7 @@ class twig extends \phpbb\template\twig\twig
     */
     protected function get_template_vars()
     {
-        $vars = $this->gantry['theme']->add_to_context(parent::get_template_vars());
+        $vars = $this->gantry['theme']->getContext(parent::get_template_vars());
 
         $locator = $this->gantry['locator'];
         $loader = $this->twig->getLoader();

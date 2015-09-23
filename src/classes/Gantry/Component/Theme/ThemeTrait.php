@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,7 +13,6 @@
 
 namespace Gantry\Component\Theme;
 
-use Composer\Util\Filesystem;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -22,15 +20,12 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use Gantry\Framework\Services\ErrorServiceProvider;
-use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class ThemeTrait
- * @package Gantry\Framework\Base
+ * @package Gantry\Component
  *
  * @property string $path
  * @property string $layout
@@ -46,32 +41,9 @@ trait ThemeTrait
     protected $compiler;
 
     /**
-     * Initialize theme.
+     * @var ThemeDetails
      */
-    public function init()
-    {
-        $gantry = static::gantry();
-        $gantry['streams']->register();
-
-        // Only add error service if development or debug mode has been enabled or user is admin.
-        if (!$gantry['global']->get('production', 0) || $gantry->debug() || $gantry->admin()) {
-            $gantry->register(new ErrorServiceProvider);
-        }
-
-        /** @var Platform $patform */
-        $patform = $gantry['platform'];
-
-        // Initialize theme cache stream.
-        $cachePath = $patform->getCachePath() . '/' . $this->name;
-
-        Folder::create($cachePath);
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
-
-        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-    }
+    protected $details;
 
     /**
      * Update all CSS files in the theme.
@@ -328,17 +300,11 @@ trait ThemeTrait
         return $this->layoutObject;
     }
 
-    public function add_to_context(array $context)
-    {
-        $gantry = static::gantry();
-
-        $context['gantry'] = $gantry;
-        $context['site'] = $gantry['site'];
-        $context['theme'] = $this;
-
-        return $context;
-    }
-
+    /**
+     * Check whether layout has content bock.
+     *
+     * @return bool
+     */
     public function hasContent()
     {
         $layout = $this->loadLayout();
@@ -360,25 +326,6 @@ trait ThemeTrait
         }
 
         return $this->segments;
-    }
-
-    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
-    {
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        if (!$loader) {
-            $loader = $twig->getLoader();
-        }
-        $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
-        $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
-
-        $twig->addExtension(new \Twig_Extension_Debug());
-        $twig->addExtension(new TwigExtension);
-        $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
-        return $twig;
     }
 
     /**
@@ -498,7 +445,6 @@ trait ThemeTrait
         $this->details()->offsetUnset('details.' . $offset);
     }
 
-
     /**
      * Prepare layout by loading all the positions and particles.
      *
@@ -584,7 +530,7 @@ trait ThemeTrait
      */
     protected function renderContent($item)
     {
-        $context = $this->add_to_context(['segment' => $item, 'prepare_layout' => true]);
+        $context = $this->getContext(['segment' => $item, 'prepare_layout' => true]);
 
         $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,22 +10,85 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Framework\Base\Theme as BaseTheme;
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Theme extends BaseTheme
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+class Theme extends AbstractTheme
 {
+    use ThemeTrait;
+
+    /**
+     * @var string
+     */
+    public $url;
+
+    /**
+     * @var bool
+     */
     protected $joomla = false;
-    protected $renderer;
 
-    public function __construct($path, $name = '')
+    /**
+     * If parameter is set to true, loads bootstrap. Returns true if bootstrap has been loaded.
+     *
+     * @param bool|null $enable
+     * @return bool
+     */
+    public function joomla($enable = null)
     {
-        parent::__construct($path, $name);
+        if ($enable && !$this->joomla) {
+            // Workaround for Joomla! not loading bootstrap when it needs it.
+            \JHtml::_('bootstrap.framework');
 
-        $this->url = \JUri::root(true) . '/templates/' . $this->name;
+            $this->joomla = true;
+        }
+
+        return $this->joomla;
     }
 
-    public function init()
+    /**
+     * @see AbstractTheme::extendTwig()
+     *
+     * @param \Twig_Environment $twig
+     * @param \Twig_Loader_Filesystem $loader
+     * @return \Twig_Environment
+     */
+    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    {
+        parent::extendTwig($twig, $loader);
+
+        // Get user timezone and if not set, use Joomla default.
+        $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
+
+        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+
+        return $twig;
+    }
+
+    /**
+     * @see AbstractTheme::extendTwig()
+     *
+     * @param array $context
+     * @return array
+     */
+    public function getContext(array $context)
+    {
+        $gantry = static::gantry();
+
+        $context = parent::getContext($context);
+        $context['site'] = $gantry['site'];
+
+        return $context;
+    }
+
+    /**
+     * @see AbstractTheme::init()
+     */
+    protected function init()
     {
         parent::init();
 
@@ -54,73 +116,27 @@ class Theme extends BaseTheme
                 $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
             }
         }
-    }
 
-    public function renderer()
-    {
-        if (!$this->renderer) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $loader = new \Twig_Loader_Filesystem($locator->findResources('gantry-engine://twig'));
-
-            $params = array(
-                'cache' => $locator->findResource('gantry-cache://theme/twig', true, true),
-                'debug' => $gantry->debug(),
-                'auto_reload' => true,
-                'autoescape' => 'html'
-            );
-
-            // Get user timezone and if not set, use Joomla default.
-            $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
-
-            $twig = new \Twig_Environment($loader, $params);
-
-            if ($gantry->debug()) {
-                $twig->addExtension(new \Twig_Extension_Debug());
-            }
-
-            $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
-
-            $this->add_to_twig($twig);
-
-            $doc = \JFactory::getDocument();
-            $this->language = $doc->language;
-            $this->direction = $doc->direction;
-
-            $this->renderer = $twig;
-        }
-
-        return $this->renderer;
-    }
-
-    public function render($file, array $context = array())
-    {
-        // Include Gantry specific things to the context.
-        $context = $this->add_to_context($context);
-
-        return $this->renderer()->render($file, $context);
+        $doc = \JFactory::getDocument();
+        $this->language = $doc->language;
+        $this->direction = $doc->direction;
+        $this->url = \JUri::root(true) . '/templates/' . $this->name;
     }
 
     /**
-     * @deprecated 5.0.2
+     * @see AbstractTheme::setTwigLoaderPaths()
+     *
+     * @param \Twig_Loader_Filesystem $loader
      */
-    public function debug()
+    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
     {
-        return $gantry = Gantry::instance()->debug();
-    }
+        $gantry = static::gantry();
 
-    public function joomla($enable = null)
-    {
-        if ($enable) {
-            // Workaround for Joomla! not loading bootstrap when it needs it.
-            \JHtml::_('bootstrap.framework');
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
 
-            $this->joomla = (bool) $enable;
-        }
+        $loader->setPaths($locator->findResources('gantry-engine://twig'));
 
-        return $this->joomla;
+        parent::setTwigLoaderPaths($loader);
     }
 }
