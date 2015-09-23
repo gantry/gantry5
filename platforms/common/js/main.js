@@ -16069,7 +16069,7 @@ var Response = prime({
 })
 
 var methods  = "get|post|put|delete|head|patch|options",
-    rMethods = new RegExp("^" + methods + "$", "i")
+    rMethods = new RegExp("^(" + methods + ")$", "i")
 
 var agent = function(method, url, data, callback){
     var request = new Request()

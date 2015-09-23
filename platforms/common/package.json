@@ -2,7 +2,7 @@
   "name": "gantry5-admin",
   "version": "1.0.0",
   "dependencies": {
-    "agent": "^0.2.1",
+    "agent": "w00fz/agent#patch-1",
     "dropzone": "^4.0.1",
     "elements": "w00fz/elements",
     "moofx": "^3.2.0",
