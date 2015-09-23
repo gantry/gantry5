@@ -190,9 +190,10 @@ abstract class Folder
      *
      * @param  string $source
      * @param  string $target
+     * @param  string $ignore  Ignore files matching pattern (regular expression).
      * @throws \RuntimeException
      */
-    public static function copy($source, $target)
+    public static function copy($source, $target, $ignore = null)
     {
         $source = rtrim($source, '\\/');
         $target = rtrim($target, '\\/');
@@ -209,6 +210,9 @@ abstract class Folder
         // Go through all sub-directories and copy everything.
         $files = self::all($source);
         foreach ($files as $file) {
+            if ($ignore && preg_match($ignore, $file)) {
+                continue;
+            }
             $src = $source .'/'. $file;
             $dst = $target .'/'. $file;
 
