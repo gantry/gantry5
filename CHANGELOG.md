@@ -22,6 +22,7 @@
         - Fixed fatal errors with PHP <= 5.3, causing Hydrogen and Gantry to not display the proper errors of PHP incompatibility (#833)
         - Fixed customizer JS errors thrown due to wrongly formatted `before_widget` (#864)
         - Newly cloned Outline should not have any assignments (#866)
+        - Fixed duplicated `<title>` tag in head (#870)
 
 # 5.1.4
 ## 18/09/2015
