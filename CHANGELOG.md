@@ -11,6 +11,7 @@
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
 2. [Joomla](#joomla)
     3. [](#bugfix)
+        - Added missing Module Class Suffix entry field for the Gantry Particle Module (#871)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Changes indicator is now showing in Widgets and Customizer, whenever an instance gets modified and in order to remind of saving (#822)
