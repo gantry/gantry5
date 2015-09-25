@@ -81,6 +81,7 @@ class Theme extends AbstractTheme
 
         $context = parent::getContext($context);
         $context['site'] = $gantry['site'];
+        $context['joomla'] = $gantry['platform'];
 
         return $context;
     }
