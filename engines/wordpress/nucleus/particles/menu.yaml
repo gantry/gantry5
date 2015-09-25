@@ -24,7 +24,7 @@ form:
       selectize:
           allowEmptyOption: true
       options:
-        '': Use Default Menu
+        '': Please Select Menu
 
     base:
       type: menu.item
