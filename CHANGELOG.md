@@ -7,7 +7,7 @@
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
         - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
-        - Fatal error if there is empty outline directory (#867)
+        - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
 2. [Joomla](#joomla)
     3. [](#bugfix)
