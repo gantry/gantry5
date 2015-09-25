@@ -23,6 +23,7 @@
         - Fixed customizer JS errors thrown due to wrongly formatted `before_widget` (#864)
         - Newly cloned Outline should not have any assignments (#866)
         - Fixed duplicated `<title>` tag in head (#870)
+        - Fixed 404 and Offline in Hydrogen loading assigned outline rather than hardcoded layout
 
 # 5.1.4
 ## 18/09/2015
