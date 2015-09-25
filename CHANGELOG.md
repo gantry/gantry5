@@ -10,6 +10,8 @@
         - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
 2. [Joomla](#joomla)
+    1. [](#new)
+        -  Implement support for Joomla objects in twig (#873)
     3. [](#bugfix)
         - Added missing Module Class Suffix entry field for the Gantry Particle Module (#871)
 3. [WordPress](#wordpress)

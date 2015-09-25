@@ -294,4 +294,22 @@ class Platform extends BasePlatform
 
         return $list;
     }
+
+    public function factory()
+    {
+        $args = func_get_args();
+        $method = ['JFactory', 'get'. ucfirst((string) array_shift($args))];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
+    public function instance()
+    {
+        $args = func_get_args();
+        $class = ucfirst((string) array_shift($args));
+        if (class_exists('J'. $class)) {
+            $class = 'J'. $class;
+        }
+        $method = [$class, 'getInstance'];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
 }
