@@ -60,6 +60,9 @@ class Particle extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        if (!is_array($instance)) {
+            $instance = [];
+        }
         $md5 = md5(json_encode((array) $instance));
         if (!isset($this->content[$md5])) {
             /** @var Theme $theme */

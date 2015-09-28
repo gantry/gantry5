@@ -60,6 +60,7 @@
     3. [](#bugfix)
         - Fixed Offline Mode not working properly
         - Added missing Hydrogen block variations
+        - Widget Particle: widget call without an instance fails (#880)
 
 # 5.1.3
 ## 15/09/2015
