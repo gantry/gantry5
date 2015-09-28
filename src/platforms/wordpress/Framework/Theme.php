@@ -253,6 +253,16 @@ class Theme extends AbstractTheme
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    public function loadposition_shortcode($atts, $content = null)
+    {
+        extract(shortcode_atts(['id' => ''], $atts));
+
+        $gantry = Gantry::instance();
+        $platform = $gantry['platform'];
+
+        return $platform->displayWidgets($id);
+    }
+
     /**
      * @see AbstractTheme::init()
      */
@@ -298,6 +308,8 @@ class Theme extends AbstractTheme
         add_action('widgets_init', function() {
             register_widget('\Gantry\WordPress\Widget\Particle');
         });
+
+        add_shortcode('loadposition', [$this, 'loadposition_shortcode']);
 
         // Offline support.
         add_action('init', function() use ($global) {
