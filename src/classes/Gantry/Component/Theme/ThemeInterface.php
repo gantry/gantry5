@@ -66,7 +66,7 @@ interface ThemeInterface
     /**
      * Update all CSS files in the theme.
      */
-    public function updateCss();
+    public function updateCss(array $configurations = null);
 
     /**
      * Set current layout.

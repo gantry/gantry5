@@ -9,6 +9,7 @@
         - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
         - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
+        - Fixed Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss() in PHP 5.4
 2. [Joomla](#joomla)
     1. [](#new)
         - Implement support for Joomla objects in twig (#873)
