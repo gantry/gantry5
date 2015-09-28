@@ -10,6 +10,7 @@
         - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
         - Fixed Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss() in PHP 5.4
+        - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
 2. [Joomla](#joomla)
     1. [](#new)
         - Implement support for Joomla objects in twig (#873)
@@ -28,6 +29,7 @@
         - Newly cloned Outline should not have any assignments (#866)
         - Fixed duplicated `<title>` tag in head (#870)
         - Fixed 404 and Offline in Hydrogen loading assigned outline rather than hardcoded layout
+        - Widget Particle: widget call without an instance fails (#880)
 
 # 5.1.4
 ## 18/09/2015
@@ -48,7 +50,6 @@
         - Clicking on new Modules/Widgets/Particles in menu throw 400 Bad Request (#837)
         - Menu Manager `Dropdown Style` = `Extended` should ignore value in `Dropdown Width` (#852)
         - Filepicker thumbnail preview now renders if the image contains spaces
-        - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Update minimum Joomla version requirement to 3.4.1 (fixes issues with `JModuleHelper::getModuleList()` missing)
@@ -61,7 +62,6 @@
     3. [](#bugfix)
         - Fixed Offline Mode not working properly
         - Added missing Hydrogen block variations
-        - Widget Particle: widget call without an instance fails (#880)
 
 # 5.1.3
 ## 15/09/2015
