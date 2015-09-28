@@ -11,9 +11,11 @@
 {%- endblock %}
 
 {% block head_platform -%}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/wordpress.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-theme://style.css') }}" type="text/css" />
 {%- endblock %}
 
 {% block head -%}
+    {{ parent() }}
 {%- endblock %}
