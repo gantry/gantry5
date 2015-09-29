@@ -27,8 +27,14 @@ abstract class Widgets
             return null;
         }
 
-        // Only pre-render Gantry widgets on prepare layout.
+        // Set chrome for the filter we add.
+        static::$chromeArgs = static::getChromeArgs(isset($params['chrome']) ? $params['chrome'] : null);
+
+        // Add sidebar params filter to give more options.
+        \add_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
+
         if (!empty($params['prepare_layout'])) {
+            // Only pre-render Gantry widgets on prepare layout.
             global $wp_registered_sidebars, $wp_registered_widgets;
 
             $sidebar = $wp_registered_sidebars[$key];
@@ -69,26 +75,17 @@ abstract class Widgets
                 }
             }
 
-            return '@@DEFERRED@@';
+            $html = '@@DEFERRED@@';
+
+        } else {
+            // Display whole sidebar.
+            ob_start();
+            \dynamic_sidebar($key);
+            $html = ob_get_clean();
         }
 
-        static::$chromeArgs = static::getChromeArgs($params['chrome']);
-
-        \add_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
-
-        ob_start();
-        \dynamic_sidebar($key);
-        $html = ob_get_clean();
-
+        // Remove sidebar params filter.
         \remove_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
-
-        static::$chromeArgs = [];
-
-        if (trim($html)) {
-            /** @var Theme $theme */
-            $theme = static::gantry()['theme'];
-            $theme->wordpress(true);
-        }
 
         return $html;
     }
