@@ -37,7 +37,9 @@ abstract class Widgets
 
             foreach ($widgets as $id) {
                 // Make sure we have Gantry 5 compatible widget.
-                if (empty($wp_registered_widgets[$id]['gantry5']) && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options') {
+                if (empty($wp_registered_widgets[$id]['gantry5'])
+                    && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options'
+                    && $wp_registered_widgets[$id]['classname'] !== 'rokgallery_options') {
                     continue;
                 }
 
