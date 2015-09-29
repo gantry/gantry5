@@ -1,5 +1,7 @@
 {% extends "@nucleus/page_head.html.twig" %}
 
+{% do gantry.theme.prepare() %}
+
 {% block head_title -%}
     <meta http-equiv="Content-Type" content="text/html; charset={{ site.charset }}" />
     <meta name="description" content="{{ site.description }}">

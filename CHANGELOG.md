@@ -12,7 +12,7 @@
         - Fixed `Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss()` in PHP 5.4
         - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
         - Fixed improperly rendered blocks sizes when equalized (ie, `33.3 | 33.3 | 33.3`) (#881)
-        - Fixed `str_repear(): Second argument has to be greater than or equal to 0` happening sometimes in admin
+        - Fixed `str_repeat(): Second argument has to be greater than or equal to 0` happening sometimes in admin
 2. [Joomla](#joomla)
     1. [](#new)
         - Implement support for Joomla objects in twig (#873)

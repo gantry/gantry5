@@ -330,6 +330,14 @@ trait ThemeTrait
     }
 
     /**
+     * Prepare layout for rendering. Initializes all CSS/JS in particles.
+     */
+    public function prepare()
+    {
+        $this->segments();
+    }
+
+    /**
      * Returns details of the theme.
      *
      * @return ThemeDetails
