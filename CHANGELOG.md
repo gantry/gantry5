@@ -11,6 +11,7 @@
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
         - Fixed Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss() in PHP 5.4
         - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
+        - Fixed improperly rendered blocks sizes when equalized (ie, `33.3 | 33.3 | 33.3`) (#881)
 2. [Joomla](#joomla)
     1. [](#new)
         - Implement support for Joomla objects in twig (#873)
