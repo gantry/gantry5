@@ -50,14 +50,19 @@ abstract class Widgets
                     $name = $wp_registered_widgets[$id]['name'];
 
                     $args = array_merge(
-                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name, 'muted' => true))],
+                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name))],
                         (array) $wp_registered_widgets[$id]['params']
                     );
 
-                    // TODO: Do we need this filter? Using it breaks rokbox.
-                    //$args = apply_filters('dynamic_sidebar_params', $args);
+                    $args = apply_filters('dynamic_sidebar_params', $args);
 
+                    ob_start();
                     call_user_func_array($callback, $args);
+                    echo $contents = ob_get_clean();
+
+                    $wp_registered_widgets[$id]['callback'] = function() use ($contents) {
+                        echo $contents;
+                    };
                 }
             }
 
