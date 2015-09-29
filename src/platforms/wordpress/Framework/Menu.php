@@ -58,7 +58,7 @@ class Menu extends AbstractMenu
             foreach ($items as $item) {
                 // Build the options array.
                 $groups[$menu][$item->db_id] = [
-                    'spacing' => str_repeat('&nbsp; ', $item->level),
+                    'spacing' => str_repeat('&nbsp; ', max(0, $item->level)),
                     'label' => $item->title
                 ];
             }

@@ -121,7 +121,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             foreach($terms as $term) {
                 $items[] = [
                     'name'     => $term->term_id,
-                    'label'    => $term->level > 0 ? str_repeat('—', $term->level) . ' ' . $term->name : $term->name,
+                    'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level)) . ' ' . $term->name : $term->name,
                     'disabled' => false
                 ];
             }

@@ -123,7 +123,7 @@ class AssignmentsMenu implements AssignmentsInterface
             foreach($menu_items as $menu_item) {
                 $items[] = [
                     'name'     => $menu_item->ID,
-                    'label'    => $menu_item->level > 0 ? str_repeat('—', $menu_item->level) . ' ' . $menu_item->title : $menu_item->title,
+                    'label'    => $menu_item->level > 0 ? str_repeat('—', max(0, $menu_item->level)) . ' ' . $menu_item->title : $menu_item->title,
                     'disabled' => false
                 ];
             }

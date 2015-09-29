@@ -89,7 +89,7 @@ class Menu extends AbstractMenu
             // Build the options array.
             foreach ($item->links as $link) {
                 $groups[$item->menutype][$link->value] = [
-                    'spacing' => str_repeat('&nbsp; ', $link->level-1),
+                    'spacing' => str_repeat('&nbsp; ', max(0, $link->level-1)),
                     'label' => $link->text
                 ];
             }

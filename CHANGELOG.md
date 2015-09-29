@@ -9,9 +9,10 @@
         - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
         - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
-        - Fixed Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss() in PHP 5.4
+        - Fixed `Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss()` in PHP 5.4
         - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
         - Fixed improperly rendered blocks sizes when equalized (ie, `33.3 | 33.3 | 33.3`) (#881)
+        - Fixed `str_repear(): Second argument has to be greater than or equal to 0` happening sometimes in admin
 2. [Joomla](#joomla)
     1. [](#new)
         - Implement support for Joomla objects in twig (#873)
