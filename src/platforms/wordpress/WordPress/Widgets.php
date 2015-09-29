@@ -54,12 +54,15 @@ abstract class Widgets
                         (array) $wp_registered_widgets[$id]['params']
                     );
 
+                    // Apply sidebar filter for rokbox and other plugins.
                     $args = apply_filters('dynamic_sidebar_params', $args);
 
+                    // Grab the content of the plugin.
                     ob_start();
                     call_user_func_array($callback, $args);
-                    echo $contents = ob_get_clean();
+                    $contents = ob_get_clean();
 
+                    // As we already rendered content, we can later just display it.
                     $wp_registered_widgets[$id]['callback'] = function() use ($contents) {
                         echo $contents;
                     };
