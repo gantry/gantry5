@@ -77,7 +77,7 @@ ready(function() {
             element.value(Number(element.checked()).toString());
         }
 
-        if (originals.get(element.attribute('name')) == null) {
+        if (originals && originals.get(element.attribute('name')) == null) {
             originals.set(element.attribute('name'), element.value());
             isNewWidget = true;
         }
