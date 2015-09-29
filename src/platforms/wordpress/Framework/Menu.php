@@ -206,8 +206,7 @@ class Menu extends AbstractMenu
                 throw new \RuntimeException("Menu item parent ($id) cannot be found");
             }
             $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
-            $slug = str_replace(' ', '-', strtolower($slug));
-            $slug = preg_replace('/[^a-z0-9-_]*/u', '', $slug);
+            $slug = preg_replace('|[ /]|u', '-', $slug);
             $result[] = $slug;
         }
 
