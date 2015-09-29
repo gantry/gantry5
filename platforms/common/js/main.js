@@ -3222,11 +3222,24 @@ var LayoutManager = new prime({
             // we need to compensate the remaining blocks on the FROM with the leaving particle size
             if (multiLocationResize.from) {
                 diff = size / multiLocationResize.from.length;
+                var total = 0, curSize;
                 multiLocationResize.from.forEach(function(sibling) {
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
-                    block.setSize(block.getSize() + diff, true);
+                    curSize = block.getSize() + diff;
+                    block.setSize(curSize, true);
+                    total += curSize;
                 }, this);
+
+                if (total !== 100) {
+                    diff = (100 - total) / multiLocationResize.from.length;
+                    multiLocationResize.from.forEach(function(sibling) {
+                        sibling = $(sibling);
+                        block = get(this.builder.map, sibling.data('lm-id'));
+                        curSize = block.getSize() + diff;
+                        block.setSize(curSize, true);
+                    }, this);
+                }
             }
 
             // the TO is receiving a new block so we are going to evenize
