@@ -37,7 +37,7 @@ abstract class Widgets
 
             foreach ($widgets as $id) {
                 // Make sure we have Gantry 5 compatible widget.
-                if (empty($wp_registered_widgets[$id]['gantry5'])) {
+                if (empty($wp_registered_widgets[$id]['gantry5']) && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options') {
                     continue;
                 }
 
@@ -52,7 +52,8 @@ abstract class Widgets
                         (array) $wp_registered_widgets[$id]['params']
                     );
 
-                    $args = apply_filters('dynamic_sidebar_params', $args);
+                    // TODO: Do we need this filter? Using it breaks rokbox.
+                    //$args = apply_filters('dynamic_sidebar_params', $args);
 
                     call_user_func_array($callback, $args);
                 }
