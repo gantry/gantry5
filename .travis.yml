@@ -119,6 +119,8 @@ after_deploy:
       svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth empty tags;
       svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth infinity trunk;
       unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && rm -rf trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
+      svn delete --keep-local trunk;
+      svn add trunk;
       svn status | grep '^?' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn add;
       svn status | grep '^!' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn delete --force;
       svn commit $G5_WP_REPO $WPREPO --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
