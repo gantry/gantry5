@@ -207,6 +207,9 @@ class Menu extends AbstractMenu
             }
             $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
             $slug = preg_replace('|[ /]|u', '-', $slug);
+            if (preg_match('|^[a-zA-Z0-9-_]+$|', $slug)) {
+                $slug = \strtolower($slug);
+            }
             $result[] = $slug;
         }
 
