@@ -37,6 +37,7 @@
         - Widget Particle: widget call without an instance fails (#880)
         - Using only characters from foreign alphabets like greek or hebrew is breaking menu (#691)
         - Menu name containing foreign alphabets causes issues in admin
+        - Fixed a bug causing presets in the menu to show up vertically instead of horizontally
 
 # 5.1.4
 ## 18/09/2015

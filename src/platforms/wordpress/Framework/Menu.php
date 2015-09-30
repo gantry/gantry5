@@ -273,6 +273,9 @@ class Menu extends AbstractMenu
             if (isset($itemMap[$menuItem->db_id])) {
                 // ID found, use it.
                 $itemParams += $itemMap[$menuItem->db_id];
+            } elseif (isset($items[$slugPath])) {
+                // Otherwise use the slug path.
+                $itemParams += $items[$slugPath];
             }
 
             // And if not available in configuration, default to WordPress.
