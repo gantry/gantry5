@@ -53,6 +53,17 @@ class Page extends Base\Page
         $this->direction = $document->direction;
     }
 
+    public function url(array $args = [])
+    {
+        $url = \JUri::getInstance();
+
+        foreach ($args as $key => $val) {
+            $url->setVar($key, $val);
+        }
+
+        return $url->toString();
+    }
+
     public function htmlAttributes()
     {
         $attributes = [

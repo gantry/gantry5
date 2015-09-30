@@ -3,6 +3,11 @@ namespace Gantry\Framework;
 
 class Page extends Base\Page
 {
+    public function url(array $args = [])
+    {
+        return home_url(add_query_arg($args, $GLOBALS['wp']->request));
+    }
+
     public function htmlAttributes()
     {
         $site = Gantry::instance()['site'];

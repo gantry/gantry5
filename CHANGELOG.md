@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Add support for twig `{{ gantry.page.url({'var': 'value'}) }}` to request current URL with extra attributes (#875)
     2. [](#improved)
         - Enhanced the droppable areas for Menu Editor in the sublevels (#132)
     3. [](#bugfix)
