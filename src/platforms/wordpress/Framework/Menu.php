@@ -35,7 +35,7 @@ class Menu extends AbstractMenu
             $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
-                $list[$menu->term_id] = $menu->slug;
+                $list[$menu->term_id] = urldecode($menu->slug);
             }
         }
 
@@ -89,7 +89,7 @@ class Menu extends AbstractMenu
 
     protected function getWPMenu($params) {
         if (!isset($this->wp_menu)) {
-            $this->wp_menu = new \TimberMenu($params['menu']);
+            $this->wp_menu = new \TimberMenu(urlencode($params['menu']));
         }
 
         return $this->wp_menu;
@@ -263,8 +263,6 @@ class Menu extends AbstractMenu
                 'attr_title' => $menuItem->attr_title,
                 // TODO: use
                 'xfn' => $menuItem->xfn,
-                'path' => $slugPath,
-                'alias' => basename($slugPath),
                 'level' => $menuItem->level + 1
             ];
 

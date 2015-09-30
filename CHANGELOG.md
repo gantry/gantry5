@@ -36,6 +36,7 @@
         - Fixed 404 and Offline in Hydrogen loading assigned outline rather than hardcoded layout
         - Widget Particle: widget call without an instance fails (#880)
         - Using only characters from foreign alphabets like greek or hebrew is breaking menu (#691)
+        - Menu name containing foreign alphabets causes issues in admin
 
 # 5.1.4
 ## 18/09/2015
