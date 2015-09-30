@@ -6253,6 +6253,7 @@ html.g5-dialog-open {
   font-size: 0.8rem;
   vertical-align: middle;
   padding: 0 2px;
+  white-space: normal;
 }
 #g5-container #g-changelog .g-changelog-toggle {
   font-size: 0.85rem;
