@@ -23,7 +23,7 @@
         - Added missing Module Class Suffix entry field for the Gantry Particle Module (#871)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - New [loadposition id=&quot;&quot;][/loadposition] shortcode for loading widgets inside of content
+        - New `[loadposition id=""][/loadposition]` shortcode for loading widgets inside of content
     2. [](#improved)
         - Changes indicator is now showing in Widgets and Customizer, whenever an instance gets modified and in order to remind of saving (#822)
         - Gantry updates are now available and interactive in the Admin via a Purple bar notification (#718)
