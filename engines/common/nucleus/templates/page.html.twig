@@ -1,16 +1,16 @@
 {%- do gantry.theme.setLayout() -%}
 
-{%- set page_head %}
-    {% block page_head -%}
-        {% include 'partials/page_head.html.twig' %}
-    {%- endblock %}
-{% endset -%}
-
 {%- set content %}
     {% if gantry.theme.hasContent() %}
         {% block content %}
         {% endblock %}
     {% endif %}
+{% endset -%}
+
+{%- set page_head %}
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
 {% endset -%}
 
 {%- set offcanvas = null -%}

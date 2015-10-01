@@ -23,11 +23,6 @@ class Theme extends AbstractTheme
     use ThemeTrait;
 
     /**
-     * @var string
-     */
-    public $url;
-
-    /**
      * @var bool
      */
     protected $joomla = false;
