@@ -1,3 +1,12 @@
+# 5.1.6
+## XX/XX/XXX
+
+1. [Common](#common)
+2. [Joomla](#joomla)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Enable shortcodes in Text Widget (#887)
+
 # 5.1.5
 ## 30/09/2015
 
