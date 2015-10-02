@@ -155,6 +155,18 @@ class Theme extends AbstractTheme
         }
     }
 
+    public function register_menus()
+    {
+        $gantry = Gantry::instance();
+
+        $menuLocations = $gantry['configurations']->menuLocations();
+
+        if ($menuLocations) {
+            register_nav_menus($menuLocations);
+        }
+    }
+
+
     public function url_filter($text)
     {
         return Document::urlFilter($text, true, 0);
@@ -297,6 +309,7 @@ class Theme extends AbstractTheme
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
+        add_action('init', [$this, 'register_menus']);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
