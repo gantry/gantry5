@@ -22,6 +22,8 @@ abstract class Widgets
 
     public static function displayPosition($key, array $params = [])
     {
+        $key = sanitize_title($key);
+
         // Do nothing if sidebar is not active.
         if (!is_active_sidebar($key)) {
             return null;

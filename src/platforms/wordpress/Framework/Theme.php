@@ -145,7 +145,7 @@ class Theme extends AbstractTheme
                 // template settings. See \Gantry\Wordpress\Widgets for more information.
                 register_sidebar([
                     'name'          => __($title, 'gantry5'),
-                    'id'            => $name,
+                    'id'            => sanitize_title($name),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h2 class="widgettitle">',

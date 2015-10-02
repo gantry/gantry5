@@ -6,6 +6,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Enable shortcodes in Text Widget (#887)
+    3. [](#bugfix)
+        - Widget positions with upper case letters are always empty (#889)
 
 # 5.1.5
 ## 30/09/2015
