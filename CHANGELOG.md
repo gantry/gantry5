@@ -3,6 +3,8 @@
 
 1. [Common](#common)
 2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
 3. [WordPress](#wordpress)
     1. [](#new)
         - Enable shortcodes in Text Widget (#887)
