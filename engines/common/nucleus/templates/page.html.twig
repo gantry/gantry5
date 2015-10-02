@@ -7,12 +7,6 @@
     {% endif %}
 {% endset -%}
 
-{%- set page_head %}
-    {% block page_head -%}
-        {% include 'partials/page_head.html.twig' %}
-    {%- endblock %}
-{% endset -%}
-
 {%- set offcanvas = null -%}
 {%- for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
     {%- set offcanvas = segment -%}
@@ -45,6 +39,14 @@
 {%- set page_bottom %}
     {% block page_bottom %}
     {% endblock %}
+{% endset -%}
+
+{# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
+
+{%- set page_head %}
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
 {% endset -%}
 
 {%- set page_footer %}
