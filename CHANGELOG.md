@@ -1,7 +1,10 @@
 # 5.1.6
-## XX/XX/XXXX
+## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Displaying Assignments' action bar in the footer like in the other sections
+        - Minor style enhancements to the key/value field
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
