@@ -314,6 +314,7 @@
     ul {
         @extend %list-reset;
         margin: 5px 0;
+        border-spacing: 0 5px;
         display: table;
 
         li {

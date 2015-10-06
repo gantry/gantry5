@@ -2676,6 +2676,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
   margin: 5px 0;
+  border-spacing: 0 5px;
   display: table;
 }
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
@@ -6076,6 +6077,9 @@ html.g5-dialog-open {
   word-wrap: break-word;
 }
 
+#g5-container .settings-block .g-keyvalue-field ul:empty {
+  margin-top: -8px;
+}
 #g5-container .settings-block .g-keyvalue-field ul li {
   margin: 5px 0;
 }
@@ -6127,6 +6131,7 @@ html.g5-dialog-open {
 #g5-container .settings-block .g-keyvalue-field ul [data-keyvalue-remove] {
   cursor: pointer;
   display: none;
+  margin-right: -1rem;
 }
 #g5-container .settings-block .g-keyvalue-field.g-keyvalue-small ul .g-keyvalue-sep {
   left: 35%;

@@ -1,5 +1,9 @@
 #g5-container .settings-block .g-keyvalue-field {
     ul {
+        &:empty {
+            margin-top: -8px;
+        }
+
         li {
             margin: 5px 0;
 
@@ -66,6 +70,7 @@
         [data-keyvalue-remove] {
             cursor: pointer;
             display: none;
+            margin-right: -1rem;
         }
     }
 
