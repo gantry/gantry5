@@ -267,6 +267,12 @@ msgstr "Save Settings"
 msgid "GANTRY5_PLATFORM_SETTINGS"
 msgstr "Settings"
 
+msgid "GANTRY5_PLATFORM_SAVE_PAGESETTINGS"
+msgstr "Save Page Settings"
+
+msgid "GANTRY5_PLATFORM_PAGESETTINGS"
+msgstr "Page Settings"
+
 msgid "GANTRY5_PLATFORM_COLLAPSE_ALL"
 msgstr "Collapse All"
 

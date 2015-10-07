@@ -1,0 +1,16 @@
+name: Generics
+description: Settings that can be applied to the page.
+type: generics
+
+form:
+  fields:
+
+    api.typekit:
+      type: input.text
+      label: TypeKit API
+      default: 123456
+
+    api.ga:
+      type: input.text
+      label: Google Analytics API
+      default: abcdefg

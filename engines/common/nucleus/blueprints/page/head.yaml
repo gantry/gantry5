@@ -1,0 +1,19 @@
+name: Head Properties
+description: Settings that can be applied to the page.
+type: head
+
+form:
+  fields:
+
+    favicon:
+       type: input.imagepicker
+       label: Favicon
+       filter: '.(jpe?g|gif|png|svg|ico)$'
+
+    meta:
+      type: collection.keyvalue
+      label: Meta Tags
+      description: Meta Tags for extras such as Facebook and Twitter.
+      key_placeholder: og:title, og:site_name, twitter:site
+      value_placeholder: Value
+

@@ -40,6 +40,10 @@ class Theme extends AbstractTheme
             return new Styles($c);
         };
 
+        $gantry['page'] = function ($c) {
+            return new Page($c);
+        };
+
         $gantry['defaults'] = function($c) {
             /** @var UniformResourceLocator $locator */
             $locator = $c['locator'];
