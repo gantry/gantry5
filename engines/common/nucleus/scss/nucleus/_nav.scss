@@ -132,6 +132,10 @@
 .g-menu-item-container {
 	display: block;
 	position: relative;
+
+	input, textarea {
+		color: #666;
+	}
 }
 
 // Standard Dropdown Settings

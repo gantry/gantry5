@@ -1080,6 +1080,9 @@
   display: block;
   position: relative;
 }
+#g5-container .g-menu-item-container input, #g5-container .g-menu-item-container textarea {
+  color: #666;
+}
 #g5-container .g-main-nav .g-standard {
   position: relative;
 }

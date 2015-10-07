@@ -7,6 +7,7 @@
         - Minor style enhancements to the key/value field
     3. [](#bugfix)
         - Fixed an Internal Server Error that could occur when site has no menus and user tries to access Settings tab (#898)
+        - Fixed text color for inputs and textareas when appearing in the menu (#)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
