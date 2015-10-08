@@ -77,20 +77,22 @@ class Format2
                 $scope = 1;
             }
             // Extract id.
-            if ($type == 'section' && in_array($section, $this->structure)) {
+            if ($type == 'div' || ($type == 'section' && in_array($section, $this->structure))) {
                 $id = array_pop($list);
             } else {
                 $id = $section_id;
             }
 
             // Build object.
-            $result = (object) [
-                'id' => $id,
+            $result = isset($this->data['structure'][$section_id]) ? (array) $this->data['structure'][$section_id] : [];
+            $result += [
+                'id' => 'g-' . $id,
                 'type' => $type,
                 'subtype' => $type !== $section ? $section : false,
                 'title' => ucfirst($id),
                 'attributes' => (object) []
             ];
+            $result = (object) $result;
 
             if ($size) {
                 $result->size = $size;
@@ -142,10 +144,6 @@ class Format2
 
         $title = ucfirst($subtype ?: $type);
 
-        $attributes = new \stdClass;
-
-        $attributes->enabled = 1;
-
         if ($type === 'system' && $subtype === 'messages') {
             $subtype = 'system-messages';
             $type = 'pagecontent';
@@ -162,23 +160,23 @@ class Format2
                 $subtype = "{$type}-{$subtype}";
                 $title = ucfirst($subtype);
             }
-            $attributes->key = $subtype;
+            $key = $subtype;
             $subtype = false;
         }
 
-        if ($subtype) {
-            $result = ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
-        } else {
-            $result = ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => false, 'attributes' => $attributes];
-        }
+        $result = isset($this->data['content'][$type_subtype]) ? (array) $this->data['content'][$type_subtype] : [];
+        $result += ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
+        $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
         $result = (object) $result;
 
+        if (isset($key)) {
+            $result->attributes->key = $key;
+        }
         if ($scope > 1) {
             if ($size) {
                 $result->attributes->size = $size;
             }
-            return $result;
         }
         if ($scope <= 1) {
             $result = (object) ['id' => $this->id(), 'type' => 'block', 'subtype' => false, 'children' => [$result], 'attributes' => new \stdClass];
