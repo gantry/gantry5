@@ -1,6 +1,6 @@
 name: Generics
 description: Settings that can be applied to the page.
-type: generics
+type: global
 
 form:
   fields:

@@ -119,6 +119,8 @@
             display: inline-block;
             opacity: 0;
             cursor: pointer;
+            margin: 0 5px;
+            vertical-align: top;
 
             @include transition(opacity 0.2s ease-in-out);
         }
@@ -167,6 +169,7 @@
         font-size: $core-font-size;
         line-height: $core-line-height;
         border-radius: $core-border-radius;
+        vertical-align: middle;
 
         &:focus {
             border-color: rgba($core-accent, .5);

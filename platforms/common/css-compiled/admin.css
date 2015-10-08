@@ -2519,6 +2519,8 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: inline-block;
   opacity: 0;
   cursor: pointer;
+  margin: 0 5px;
+  vertical-align: top;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
@@ -2558,6 +2560,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.1875rem;
+  vertical-align: middle;
 }
 #g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
   border-color: rgba(67, 154, 134, 0.5);

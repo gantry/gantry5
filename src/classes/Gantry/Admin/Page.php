@@ -75,10 +75,10 @@ class Page
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $particle = $file->content();
+        $setting = $file->content();
         $file->free();
 
-        return $particle;
+        return $setting;
     }
 
     protected function sort(array $blocks)

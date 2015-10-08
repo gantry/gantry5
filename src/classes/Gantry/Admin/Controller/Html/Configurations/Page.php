@@ -31,6 +31,18 @@ class Page extends HtmlController
     protected $httpVerbs = [
         'GET' => [
             '/'                 => 'index'
+        ],
+        'POST' => [
+            '/'                 => 'save'
+        ],
+        'PUT' => [
+            '/'            => 'save'
+        ],
+        'PATCH' => [
+            '/'            => 'save'
+        ],
+        'DELETE' => [
+            '/'            => 'forbidden'
         ]
     ];
 
@@ -45,12 +57,55 @@ class Page extends HtmlController
             $this->params['overrideable'] = true;
         }
 
-        $this->params['particles'] = $this->container['page']->group();
+        $this->params['page'] = $this->container['page']->group();
         $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
         $this->params['page_id'] = $configuration;
 
         //$this->params['layout'] = LayoutObject::instance($configuration);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
+    }
+
+    public function save($id = null)
+    {
+        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('page');
+
+        foreach ($data as $name => $values) {
+            $this->saveItem($name, $values);
+        }
+
+        // Fire save event.
+        $event = new Event;
+        $event->gantry = $this->container;
+        $event->theme = $this->container['theme'];
+        $event->controller = $this;
+        $event->data = $data;
+        $this->container->fireEvent('admin.page.save', $event);
+
+        return $id ? $this->display($id) : $this->index();
+    }
+
+    protected function saveItem($id, $data)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $configuration = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$configuration}/page", true, true);
+        $filename = "{$save_dir}/{$id}.yaml";
+
+        $file = YamlFile::instance($filename);
+        if (!is_array($data)) {
+            if ($file->exists()) {
+                $file->delete();
+            }
+        } else {
+            $blueprints = new BlueprintsForm($this->container['page']->get($id));
+            $config = new Config($data, function() use ($blueprints) { return $blueprints; });
+
+            $file->save($config->toArray());
+        }
+        $file->free();
     }
 }
