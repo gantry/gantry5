@@ -14,6 +14,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Enable shortcodes in Text Widget (#887)
+    2. [](#improved)
+        - Particles should be now prepared on wp_enqueue_scripts so the WordPress scripts checks should work properly
     3. [](#bugfix)
         - Widget positions with upper case letters are always empty (#889)
 
