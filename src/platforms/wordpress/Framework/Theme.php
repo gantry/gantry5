@@ -79,6 +79,12 @@ class Theme extends AbstractTheme
         return $twig;
     }
 
+    public function prepare_particles()
+    {
+        $gantry = Gantry::instance();
+        $gantry['theme']->prepare();
+    }
+
     /**
      * @see AbstractTheme::renderer()
      */
@@ -312,8 +318,9 @@ class Theme extends AbstractTheme
         add_action('init', [$this, 'register_menus']);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_enqueue_scripts', [$this, 'prepare_particles']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
         add_action('wp_head', [$this, 'print_styles'], 20);
         add_action('wp_head', [$this, 'print_scripts'], 30);
         add_action('admin_print_styles', [$this, 'print_styles'], 200);
