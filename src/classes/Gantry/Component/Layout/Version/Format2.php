@@ -102,6 +102,9 @@ class Format2
         if (!empty($content)) {
             $result->children = [];
             foreach ($content as $child => &$params) {
+                if (!$params && !is_array($params)) {
+                    $params = [];
+                }
                 if (is_array($params)) {
                     $child = $this->parse($child, $params, $scope);
                 } else {

@@ -36,6 +36,8 @@ atoms:
   - custom
 
 structure:
+  offcanvas-toggle:
+    type: div
   div-page-surround:
     type: container
     attributes:
