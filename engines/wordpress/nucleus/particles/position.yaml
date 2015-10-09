@@ -15,6 +15,7 @@ form:
       type: input.text
       label: Key
       description: Position name.
+      pattern: '[a-z0-9-]+'
       overridable: false
 
     chrome:

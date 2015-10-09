@@ -35,7 +35,7 @@ class Menu extends AbstractMenu
             $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
-                $list[$menu->term_id] = $menu->slug;
+                $list[$menu->term_id] = urldecode($menu->slug);
             }
         }
 
@@ -58,7 +58,7 @@ class Menu extends AbstractMenu
             foreach ($items as $item) {
                 // Build the options array.
                 $groups[$menu][$item->db_id] = [
-                    'spacing' => str_repeat('&nbsp; ', $item->level),
+                    'spacing' => str_repeat('&nbsp; ', max(0, $item->level)),
                     'label' => $item->title
                 ];
             }
@@ -89,7 +89,7 @@ class Menu extends AbstractMenu
 
     protected function getWPMenu($params) {
         if (!isset($this->wp_menu)) {
-            $this->wp_menu = new \TimberMenu($params['menu']);
+            $this->wp_menu = new \TimberMenu(urlencode($params['menu']));
         }
 
         return $this->wp_menu;
@@ -206,8 +206,10 @@ class Menu extends AbstractMenu
                 throw new \RuntimeException("Menu item parent ($id) cannot be found");
             }
             $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
-            $slug = str_replace(' ', '-', strtolower($slug));
-            $slug = preg_replace('/[^a-z0-9-_]*/u', '', $slug);
+            $slug = preg_replace('|[ /]|u', '-', $slug);
+            if (preg_match('|^[a-zA-Z0-9-_]+$|', $slug)) {
+                $slug = \strtolower($slug);
+            }
             $result[] = $slug;
         }
 
@@ -264,8 +266,6 @@ class Menu extends AbstractMenu
                 'attr_title' => $menuItem->attr_title,
                 // TODO: use
                 'xfn' => $menuItem->xfn,
-                'path' => $slugPath,
-                'alias' => basename($slugPath),
                 'level' => $menuItem->level + 1
             ];
 
@@ -273,6 +273,9 @@ class Menu extends AbstractMenu
             if (isset($itemMap[$menuItem->db_id])) {
                 // ID found, use it.
                 $itemParams += $itemMap[$menuItem->db_id];
+            } elseif (isset($items[$slugPath])) {
+                // Otherwise use the slug path.
+                $itemParams += $items[$slugPath];
             }
 
             // And if not available in configuration, default to WordPress.

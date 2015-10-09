@@ -694,7 +694,8 @@ ready(function() {
     compare.single = function(event, element) {
         var parent = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
             target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
-            isOverride = parent ? parent.find('.settings-param-toggle') : false;
+            isOverride = parent ? parent.find('.settings-param-toggle') : false,
+            isNewWidget = false;
 
         if (!parent) { return; }
 
@@ -702,8 +703,13 @@ ready(function() {
             element.value(Number(element.checked()).toString());
         }
 
+        if (originals && originals.get(element.attribute('name')) == null) {
+            originals.set(element.attribute('name'), element.value());
+            isNewWidget = true;
+        }
+
         if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
-        if (originals.get(element.attribute('name')) !== element.value()) {
+        if (originals.get(element.attribute('name')) !== element.value() || isNewWidget) {
             if (isOverride && event.forceOverride && !isOverride.checked()) { isOverride[0].click(); }
             target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw');
         } else {
@@ -3216,11 +3222,24 @@ var LayoutManager = new prime({
             // we need to compensate the remaining blocks on the FROM with the leaving particle size
             if (multiLocationResize.from) {
                 diff = size / multiLocationResize.from.length;
+                var total = 0, curSize;
                 multiLocationResize.from.forEach(function(sibling) {
                     sibling = $(sibling);
                     block = get(this.builder.map, sibling.data('lm-id'));
-                    block.setSize(block.getSize() + diff, true);
+                    curSize = block.getSize() + diff;
+                    block.setSize(curSize, true);
+                    total += curSize;
                 }, this);
+
+                if (total !== 100) {
+                    diff = (100 - total) / multiLocationResize.from.length;
+                    multiLocationResize.from.forEach(function(sibling) {
+                        sibling = $(sibling);
+                        block = get(this.builder.map, sibling.data('lm-id'));
+                        curSize = block.getSize() + diff;
+                        block.setSize(curSize, true);
+                    }, this);
+                }
             }
 
             // the TO is receiving a new block so we are going to evenize

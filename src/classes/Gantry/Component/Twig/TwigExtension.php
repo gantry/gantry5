@@ -126,7 +126,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function repeatFilter($str, $count)
     {
-        return str_repeat($str, (int) $count);
+        return str_repeat($str, max(0, (int) $count));
     }
 
 

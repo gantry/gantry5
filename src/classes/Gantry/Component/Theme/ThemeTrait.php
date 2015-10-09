@@ -39,6 +39,7 @@ trait ThemeTrait
     protected $preset;
     protected $cssCache;
     protected $compiler;
+    protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
 
     /**
      * @var ThemeDetails
@@ -329,6 +330,14 @@ trait ThemeTrait
     }
 
     /**
+     * Prepare layout for rendering. Initializes all CSS/JS in particles.
+     */
+    public function prepare()
+    {
+        $this->segments();
+    }
+
+    /**
      * Returns details of the theme.
      *
      * @return ThemeDetails
@@ -489,6 +498,7 @@ trait ThemeTrait
 
                     $dynamicSize = 0;
                     $fixedSize = 0;
+                    $childrenCount = count($item->children);
                     foreach ($item->children as $child) {
                         if (!isset($child->attributes->size)) {
                             $child->attributes->size = 100 / count($item->children);
@@ -499,7 +509,12 @@ trait ThemeTrait
                             $fixedSize += $child->attributes->size;
                         }
                     }
-                    if (round($dynamicSize, 1) != 100) {
+
+                    $roundSize = round($dynamicSize, 1);
+                    $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
+
+                    // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
+                    if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
                         $fraction = 0;
                         $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                         foreach ($item->children as $child) {

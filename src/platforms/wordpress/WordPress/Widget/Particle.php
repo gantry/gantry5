@@ -60,6 +60,9 @@ class Particle extends \WP_Widget
      */
     public function widget($args, $instance)
     {
+        if (!is_array($instance)) {
+            $instance = [];
+        }
         $md5 = md5(json_encode((array) $instance));
         if (!isset($this->content[$md5])) {
             /** @var Theme $theme */
@@ -84,11 +87,9 @@ class Particle extends \WP_Widget
             $this->content[$md5] = apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
         }
 
-        if (empty($args['muted'])) {
-            echo $args['before_widget'];
-            echo $this->content[$md5];
-            echo $args['after_widget'];
-        }
+        echo $args['before_widget'];
+        echo $this->content[$md5];
+        echo $args['after_widget'];
     }
 
     /**

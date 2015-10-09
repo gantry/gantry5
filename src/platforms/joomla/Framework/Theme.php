@@ -23,11 +23,6 @@ class Theme extends AbstractTheme
     use ThemeTrait;
 
     /**
-     * @var string
-     */
-    public $url;
-
-    /**
      * @var bool
      */
     protected $joomla = false;
@@ -81,6 +76,7 @@ class Theme extends AbstractTheme
 
         $context = parent::getContext($context);
         $context['site'] = $gantry['site'];
+        $context['joomla'] = $gantry['platform'];
 
         return $context;
     }

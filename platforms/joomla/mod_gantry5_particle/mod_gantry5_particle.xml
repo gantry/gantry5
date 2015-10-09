@@ -26,6 +26,12 @@
             </fieldset>
             <fieldset name="advanced">
                 <field
+                    name="moduleclass_sfx"
+                    type="text"
+                    label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                    description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+                <field
                         name="cache"
                         type="list"
                         default="1"

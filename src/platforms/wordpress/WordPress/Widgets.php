@@ -22,13 +22,21 @@ abstract class Widgets
 
     public static function displayPosition($key, array $params = [])
     {
+        $key = sanitize_title($key);
+
         // Do nothing if sidebar is not active.
         if (!is_active_sidebar($key)) {
             return null;
         }
 
-        // Only pre-render Gantry widgets on prepare layout.
+        // Set chrome for the filter we add.
+        static::$chromeArgs = static::getChromeArgs(isset($params['chrome']) ? $params['chrome'] : null);
+
+        // Add sidebar params filter to give more options.
+        \add_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
+
         if (!empty($params['prepare_layout'])) {
+            // Only pre-render Gantry widgets on prepare layout.
             global $wp_registered_sidebars, $wp_registered_widgets;
 
             $sidebar = $wp_registered_sidebars[$key];
@@ -37,7 +45,9 @@ abstract class Widgets
 
             foreach ($widgets as $id) {
                 // Make sure we have Gantry 5 compatible widget.
-                if (empty($wp_registered_widgets[$id]['gantry5'])) {
+                if (empty($wp_registered_widgets[$id]['gantry5'])
+                    && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options'
+                    && $wp_registered_widgets[$id]['classname'] !== 'rokgallery_options') {
                     continue;
                 }
 
@@ -48,36 +58,36 @@ abstract class Widgets
                     $name = $wp_registered_widgets[$id]['name'];
 
                     $args = array_merge(
-                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name, 'muted' => true))],
+                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name))],
                         (array) $wp_registered_widgets[$id]['params']
                     );
 
+                    // Apply sidebar filter for rokbox and other plugins.
                     $args = apply_filters('dynamic_sidebar_params', $args);
 
+                    // Grab the content of the plugin.
+                    ob_start();
                     call_user_func_array($callback, $args);
+                    $contents = ob_get_clean();
+
+                    // As we already rendered content, we can later just display it.
+                    $wp_registered_widgets[$id]['callback'] = function() use ($contents) {
+                        echo $contents;
+                    };
                 }
             }
 
-            return '@@DEFERRED@@';
+            $html = '@@DEFERRED@@';
+
+        } else {
+            // Display whole sidebar.
+            ob_start();
+            \dynamic_sidebar($key);
+            $html = ob_get_clean();
         }
 
-        static::$chromeArgs = static::getChromeArgs($params['chrome']);
-
-        \add_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
-
-        ob_start();
-        \dynamic_sidebar($key);
-        $html = ob_get_clean();
-
+        // Remove sidebar params filter.
         \remove_filter('dynamic_sidebar_params', ['Gantry\Wordpress\Widgets', 'sidebarChromeFilter'], -1000);
-
-        static::$chromeArgs = [];
-
-        if (trim($html)) {
-            /** @var Theme $theme */
-            $theme = static::gantry()['theme'];
-            $theme->wordpress(true);
-        }
 
         return $html;
     }

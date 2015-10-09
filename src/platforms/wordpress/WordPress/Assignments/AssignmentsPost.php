@@ -152,7 +152,7 @@ class AssignmentsPost implements AssignmentsInterface
 
                 $items[] = [
                     'name'     => $post->ID,
-                    'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
+                    'label'    => $post->level > 0 ? str_repeat('—', max(0, $post->level)) . ' ' . $post_title : $post_title,
                     'disabled' => false
                 ];
             }
@@ -213,7 +213,7 @@ class AssignmentsPost implements AssignmentsInterface
                 foreach($terms as $term) {
                     $items[] = [
                         'name'     => $term->taxonomy . '-' . $term->term_id,
-                        'label'    => $term->level > 0 ? str_repeat('—', $term->level + 1) . ' ' . $term->name : '— ' . $term->name,
+                        'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
                         'taxonomy' => $term->taxonomy,
                         'disabled' => false
                     ];

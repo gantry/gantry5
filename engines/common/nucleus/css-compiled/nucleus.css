@@ -1177,6 +1177,9 @@ th {
   display: block;
   position: relative;
 }
+.g-menu-item-container input, .g-menu-item-container textarea {
+  color: #666;
+}
 
 .g-main-nav .g-standard {
   position: relative;

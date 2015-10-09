@@ -79,6 +79,12 @@ class Theme extends AbstractTheme
         return $twig;
     }
 
+    public function prepare_particles()
+    {
+        $gantry = Gantry::instance();
+        $gantry['theme']->prepare();
+    }
+
     /**
      * @see AbstractTheme::renderer()
      */
@@ -145,7 +151,7 @@ class Theme extends AbstractTheme
                 // template settings. See \Gantry\Wordpress\Widgets for more information.
                 register_sidebar([
                     'name'          => __($title, 'gantry5'),
-                    'id'            => $name,
+                    'id'            => sanitize_title($name),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget'  => '</div>',
                     'before_title'  => '<h2 class="widgettitle">',
@@ -154,6 +160,18 @@ class Theme extends AbstractTheme
             }
         }
     }
+
+    public function register_menus()
+    {
+        $gantry = Gantry::instance();
+
+        $menuLocations = $gantry['configurations']->menuLocations();
+
+        if ($menuLocations) {
+            register_nav_menus($menuLocations);
+        }
+    }
+
 
     public function url_filter($text)
     {
@@ -253,6 +271,16 @@ class Theme extends AbstractTheme
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    public function loadposition_shortcode($atts, $content = null)
+    {
+        extract(shortcode_atts(['id' => ''], $atts));
+
+        $gantry = Gantry::instance();
+        $platform = $gantry['platform'];
+
+        return $platform->displayWidgets($id);
+    }
+
     /**
      * @see AbstractTheme::init()
      */
@@ -282,14 +310,17 @@ class Theme extends AbstractTheme
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
         add_filter('widget_text', [$this, 'url_filter'], 0);
         add_filter('widget_content', [$this, 'url_filter'], 0);
+        add_filter('widget_text', 'do_shortcode');
 
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
+        add_action('init', [$this, 'register_menus']);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_enqueue_scripts', [$this, 'prepare_particles']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
         add_action('wp_head', [$this, 'print_styles'], 20);
         add_action('wp_head', [$this, 'print_scripts'], 30);
         add_action('admin_print_styles', [$this, 'print_styles'], 200);
@@ -298,6 +329,8 @@ class Theme extends AbstractTheme
         add_action('widgets_init', function() {
             register_widget('\Gantry\WordPress\Widget\Particle');
         });
+
+        add_shortcode('loadposition', [$this, 'loadposition_shortcode']);
 
         // Offline support.
         add_action('init', function() use ($global) {

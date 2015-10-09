@@ -1,10 +1,5 @@
 {%- do gantry.theme.setLayout() -%}
-
-{%- set page_head %}
-    {% block page_head -%}
-        {% include 'partials/page_head.html.twig' %}
-    {%- endblock %}
-{% endset -%}
+{%- set segments = gantry.theme.segments -%}
 
 {%- set content %}
     {% if gantry.theme.hasContent() %}
@@ -14,7 +9,7 @@
 {% endset -%}
 
 {%- set offcanvas = null -%}
-{%- for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
+{%- for segment in segments if segment.type == 'offcanvas' %}
     {%- set offcanvas = segment -%}
 {% endfor -%}
 
@@ -31,7 +26,7 @@
 
 {%- set page_layout %}
     {% block page_layout %}
-    {% for segment in gantry.theme.segments if segment.type != 'offcanvas' %}
+    {% for segment in segments if segment.type != 'offcanvas' %}
         {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
     {% endfor %}
     {% endblock %}
@@ -45,6 +40,14 @@
 {%- set page_bottom %}
     {% block page_bottom %}
     {% endblock %}
+{% endset -%}
+
+{# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
+
+{%- set page_head %}
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
 {% endset -%}
 
 {%- set page_footer %}

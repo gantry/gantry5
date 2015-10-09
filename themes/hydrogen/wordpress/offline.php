@@ -19,10 +19,10 @@ $chooser = new \Gantry\Framework\OutlineChooser;
 $gantry = Gantry\Framework\Gantry::instance();
 $theme  = $gantry['theme'];
 
-$theme->setLayout($chooser->select('_offline'), true);
+$theme->setLayout('_offline', true);
 
 // We need to render contents of <head> before plugin content gets added.
 $context              = Timber::get_context();
-$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
+$context['page_head'] = $gantry->isCompatible('5.1.5') ? $theme->render('partials/page_head.html.twig', $context) : null;
 
 Timber::render('offline.html.twig', $context);

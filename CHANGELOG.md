@@ -1,26 +1,66 @@
-# 5.1.5
+# 5.1.6
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Displaying Assignments' action bar in the footer like in the other sections
+        - Minor style enhancements to the key/value field
+    3. [](#bugfix)
+        - Fixed an Internal Server Error that could occur when site has no menus and user tries to access Settings tab (#898)
+        - Fixed text color for inputs and textareas when appearing in the menu (#)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Enable shortcodes in Text Widget (#887)
+    2. [](#improved)
+        - Particles should be now prepared on wp_enqueue_scripts so the WordPress scripts checks should work properly
+    3. [](#bugfix)
+        - Widget positions with upper case letters are always empty (#889)
+
+# 5.1.5
+## 30/09/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Add support for twig `{{ gantry.page.url({'var': 'value'}) }}` to request current URL with extra attributes (#875)
     2. [](#improved)
         - Enhanced the droppable areas for Menu Editor in the sublevels (#132)
     3. [](#bugfix)
         - If `layout.yaml` file is missing, wrong layout preset gets loaded
         - Fixed issue with multiple dropdown menu items not closing properly in some scenarios (#863)
-        - Fatal error if there is empty outline directory (#867)
+        - Fatal error if there is empty outline configuration directory (#867)
         - Fixed issue with ajax calls where in some scenarios the URL would match a `method` causing the Ajax to fail (#865)
+        - Fixed `Declaration of ThemeTrait::updateCss() must be compatible with ThemeInterface::updateCss()` in PHP 5.4
+        - Extending `{% block head_platform %}` from platform independent file does not have any effect (#876)
+        - Fixed improperly rendered blocks sizes when equalized (ie, `33.3 | 33.3 | 33.3`) (#881)
+        - Fixed `str_repeat(): Second argument has to be greater than or equal to 0` happening sometimes in admin
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Implement support for Joomla objects in twig (#873)
+        - Implement support for static Joomla function calls in twig (#874)
     3. [](#bugfix)
+        - Added missing Module Class Suffix entry field for the Gantry Particle Module (#871)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - New `[loadposition id=""][/loadposition]` shortcode for loading widgets inside of content
     2. [](#improved)
         - Changes indicator is now showing in Widgets and Customizer, whenever an instance gets modified and in order to remind of saving (#822)
         - Gantry updates are now available and interactive in the Admin via a Purple bar notification (#718)
+        - Improve widget rendering for particles, roksprocket and rokgallery
     3. [](#bugfix)
         - Duplicating outline may cause 'Preset not found' error (#859)
         - Fix WooCommerce and some other plugins from having missing CSS and JavaScript (requires theme update) (#855)
         - Fixed fatal errors with PHP <= 5.3, causing Hydrogen and Gantry to not display the proper errors of PHP incompatibility (#833)
         - Fixed customizer JS errors thrown due to wrongly formatted `before_widget` (#864)
         - Newly cloned Outline should not have any assignments (#866)
+        - Fixed duplicated `<title>` tag in head (#870)
+        - Fixed 404 and Offline in Hydrogen loading assigned outline rather than hardcoded layout
+        - Widget Particle: widget call without an instance fails (#880)
+        - Using only characters from foreign alphabets like greek or hebrew is breaking menu (#691)
+        - Menu name containing foreign alphabets causes issues in admin
+        - Fixed a bug causing presets in the menu to show up vertically instead of horizontally
 
 # 5.1.4
 ## 18/09/2015

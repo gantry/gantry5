@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,13 +10,23 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Assignments\AssignmentFilter;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class OutlineChooser
 {
-    protected $method;
+    protected $filter;
+    protected $candidates;
+    protected $page;
+
+    public function __construct()
+    {
+        $this->filter = new AssignmentFilter;
+        $this->candidates = $this->loadAssignments();
+        $this->page = $this->getPage();
+    }
 
     public function select($default = 'default')
     {
@@ -28,38 +37,12 @@ class OutlineChooser
 
     public function scores()
     {
-        $matches = $this->matches();
-
-        $scores = [];
-        foreach ($matches as $type => $candidate) {
-            $scores[$type] = $this->getScore($candidate);
-        }
-
-        arsort($scores);
-
-        return $scores;
+        return $this->filter->scores($this->candidates, $this->page);
     }
 
     public function matches()
     {
-        $candidates = static::loadAssignments();
-        $page = static::getPage();
-
-        $matches = [];
-        foreach ($candidates as $type => $candidate) {
-            foreach ($candidate as $section => $list) {
-                foreach ($list as $name => $rules) {
-                    if (isset($page[$section][$name])) {
-                        $match =\array_intersect_key($page[$section][$name], $rules);
-                        if ($match) {
-                            $matches[$type][$section][$name] = $match;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $matches;
+        return $this->filter->matches($this->candidates, $this->page);
     }
 
     // TODO: We might want to make this list more dynamic.
@@ -91,7 +74,7 @@ class OutlineChooser
 
         $config = new CompiledConfig($cache, [$files]);
 
-        return $config->load();
+        return $config->load()->toArray();
     }
 
     public function getPage()
@@ -113,88 +96,5 @@ class OutlineChooser
         do_action('g5_assignments_page', $list);
 
         return $list;
-    }
-
-    /**
-     * Returns the calculated score for the assignment.
-     *
-     * @param array $matches
-     * @param string $method
-     * @return int
-     */
-    protected function getScore(array &$matches, $method = 'max')
-    {
-        $this->method = 'calc' . ucfirst($method);
-
-        if (!method_exists($this, $this->method)) {
-            $this->method = 'calcOr';
-        }
-
-        return $this->calcArray(null, $matches);
-    }
-
-    protected function calcArray($carry, $item)
-    {
-        if (is_array($item)) {
-            return array_reduce($item, [$this, 'calcArray'], $carry);
-        }
-
-        $method = $this->method;
-        return $this->{$method}($carry, $item);
-    }
-
-    /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
-     * @internal
-     */
-    protected function calcOr($carry, $item)
-    {
-        return (int) ($carry || $item);
-    }
-
-    /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
-     * @internal
-     */
-    protected function calcMin($carry, $item)
-    {
-        return isset($carry) ? min($carry, $item) : $item;
-    }
-
-    /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
-     * @internal
-     */
-    protected function calcMax($carry, $item)
-    {
-        return max($carry, $item);
-    }
-
-    /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
-     * @internal
-     */
-    protected function calcSum($carry, $item)
-    {
-        return $carry + $item;
-    }
-
-    /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
-     * @internal
-     */
-    protected function calcMul($carry, $item)
-    {
-        return isset($carry) ? $carry * $item : $item;
     }
 }

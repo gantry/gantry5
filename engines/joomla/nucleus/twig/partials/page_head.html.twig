@@ -8,6 +8,7 @@
 {%- endblock %}
 
 {% block head_platform -%}
+    {{ parent() }}
     {% if gantry.theme.joomla %}
         <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap-gantry.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla.css') }}" type="text/css" />
@@ -22,4 +23,5 @@
 {%- endblock %}
 
 {% block head -%}
+    {{ parent() }}
 {%- endblock %}

@@ -294,4 +294,39 @@ class Platform extends BasePlatform
 
         return $list;
     }
+
+    public function factory()
+    {
+        $args = func_get_args();
+        $method = ['JFactory', 'get'. ucfirst((string) array_shift($args))];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
+    public function instance()
+    {
+        $args = func_get_args();
+        $class = ucfirst((string) array_shift($args));
+        if (!$class) {
+            return null;
+        }
+        if (class_exists('J'. $class)) {
+            $class = 'J'. $class;
+        }
+        $method = [$class, 'getInstance'];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
+    public function route()
+    {
+        return call_user_func_array(['JRoute', '_'], func_get_args());
+    }
+
+    public function html()
+    {
+        $args = func_get_args();
+        if (isset($args[0]) && method_exists('JHtml', $args[0])) {
+            return call_user_func_array(['JHtml', array_shift($args)], $args);
+        }
+        return call_user_func_array(['JHtml', '_'], $args);
+    }
 }

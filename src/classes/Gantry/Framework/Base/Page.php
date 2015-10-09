@@ -14,7 +14,7 @@
 
 namespace Gantry\Framework\Base;
 
-class Page
+abstract class Page
 {
     protected $container;
     protected $config;
@@ -29,6 +29,8 @@ class Page
     {
         return $this->config->get('page.doctype');
     }
+
+    abstract public function url(array $args = []);
 
     public function preset()
     {
