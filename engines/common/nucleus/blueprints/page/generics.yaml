@@ -4,11 +4,7 @@ type: global
 
 form:
   fields:
-
-    api.typekit:
-      type: input.text
-      label: TypeKit API
-
+  
     api.ga:
       type: input.text
       label: Google Analytics UA
