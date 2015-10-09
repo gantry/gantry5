@@ -55,4 +55,9 @@
     {% endblock -%}
 
     {% block head %}{% endblock %}
+    {% block head_custom %}
+        {% if gantry.config.page.head.head_bottom %}
+        {{ gantry.config.page.head.head_bottom|raw }}
+        {% endif %}
+    {% endblock %}
 </head>

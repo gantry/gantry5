@@ -22,6 +22,6 @@ form:
 
     head_bottom:
       type: textarea.textarea
-      label: Custom Properties
+      label: Custom Content
       description: Anything in this field will be appended to the <head>
 
