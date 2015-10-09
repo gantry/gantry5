@@ -44,7 +44,7 @@ class Page
 
     public function bodyAttributes($attributes = [])
     {
-        return $this->getAttributes($this->config->get('page.body'), $attributes);
+        return $this->getAttributes($this->config->get('page.body.attribs'), $attributes);
     }
 
     protected function getAttributes($params, $extra = [])
@@ -53,8 +53,17 @@ class Page
 
         $list = [];
         foreach ($params as $param => $value) {
-            $value = array_filter(array_unique((array) $value));
-            $list[] = $param . '="' . implode(' ', $value) . '"';
+            if (!is_array($value) || !count(array_filter($value, 'is_array'))) {
+                $value = array_filter(array_unique((array) $value));
+                $list[] = $param . '="' . implode(' ', $value) . '"';
+            } else {
+                $values = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($value));
+                foreach ($values as $param => $value) {
+                    $value = array_filter(array_unique((array) $value));
+                    $list[] = $param . '="' . implode(' ', $value) . '"';
+                }
+            }
+
         }
 
         return $list ? ' ' . implode(' ', $list) : '';

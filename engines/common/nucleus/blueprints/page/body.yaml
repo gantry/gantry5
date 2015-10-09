@@ -10,17 +10,17 @@ form:
       label: Doctype
       default: html
 
-    body.id:
+    attribs.id:
       type: input.text
       label: Body Id
       default:
 
-    body.class:
+    attribs.class:
       type: input.selectize
       label: Body Classes
       default: gantry
 
-    body.extra:
+    attribs.extra:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
@@ -28,12 +28,12 @@ form:
       value_placeholder: Value
       exclude: ['id', 'class']
 
-    body.after_open:
+    body_top:
       type: textarea.textarea
       label: After <body>
       description: Anything in this field will be appended to the <head>
 
-    body.before_close:
+    body_bottom:
       type: textarea.textarea
       label: Before </body>
       description: Anything in this field will be appended to the <head>

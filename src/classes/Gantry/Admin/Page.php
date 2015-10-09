@@ -88,6 +88,9 @@ class Page
         /** @var SiteTheme $theme */
         $theme = $this->container['theme'];
         $ordering = (array) $theme->details()['admin.page'];
+        if (!count($ordering)) {
+            $ordering = ['global' => ['head', 'generics', 'body']];
+        }
 
         ksort($blocks);
 

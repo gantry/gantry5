@@ -54,7 +54,7 @@
 {% endset -%}
 
 {%- block page -%}
-<!DOCTYPE {{ gantry.page.doctype|default('html')|raw }}>
+<!DOCTYPE {{ gantry.config.page.doctype|default('html')|raw }}>
 <html{{ gantry.page.htmlAttributes|raw }}>
     {{ page_head|raw }}
     {% block page_body -%}

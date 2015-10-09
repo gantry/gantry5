@@ -32,6 +32,6 @@ class Page extends Base\Page
             $attributes['class'] = array_merge_recursive($attributes['class'], $wp_body_class);
         }
 
-        return $this->getAttributes((array) $this->config->get('page.body'), $attributes);
+        return $this->getAttributes((array) $this->config->get('page.body.attribs'), $attributes);
     }
 }

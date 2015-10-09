@@ -24,7 +24,7 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        $baseAttributes = (array) $this->config->get('page.body', []);
+        $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         if (!empty($baseAttributes['class'])) {
             $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], explode(' ', $this->getBodyClass()));
         } else {
