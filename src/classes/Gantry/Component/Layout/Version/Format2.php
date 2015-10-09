@@ -19,7 +19,7 @@ namespace Gantry\Component\Layout\Version;
 class Format2
 {
     protected $scopes = [0 => 'grid', 1 => 'block'];
-    protected $section = ['grid', 'block', 'offcanvas', 'div'];
+    protected $section = ['container', 'grid', 'block', 'offcanvas', 'div'];
     protected $structure = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer'];
 
     protected $data;
