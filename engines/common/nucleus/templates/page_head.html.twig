@@ -23,7 +23,14 @@
 <head>
     {%- block head_meta -%}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% if gantry.config.page.head.meta %}
+            {% for attributes in gantry.config.page.head.meta %}
+                {% for key, value in attributes %}
+                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e('html_attr') }}" />
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
         {% if gantry.config.styles.base.favicon %}
         <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.styles.base.favicon) }}" />
         {% endif %}
