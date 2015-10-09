@@ -20,6 +20,10 @@
     {% endblock -%}
 {% endassets -%}
 
+{% if gantry.config.page.assets.css %}
+    {% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets } %}
+{% endif %}
+
 <head>
     {% block head_meta %}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

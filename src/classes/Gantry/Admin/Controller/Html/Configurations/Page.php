@@ -33,7 +33,9 @@ class Page extends HtmlController
             '/'                 => 'index'
         ],
         'POST' => [
-            '/'                 => 'save'
+            '/'                 => 'save',
+            '/*'      => 'save',
+            '/*/**'   => 'formfield'
         ],
         'PUT' => [
             '/'            => 'save'
@@ -58,12 +60,39 @@ class Page extends HtmlController
         }
 
         $this->params['page'] = $this->container['page']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
+        $this->params['route']  = "configurations.{$this->params['configuration']}";
         $this->params['page_id'] = $configuration;
 
         //$this->params['layout'] = LayoutObject::instance($configuration);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
+    }
+
+    public function validate($setting)
+    {
+        $path = implode('.', array_slice(func_get_args(), 1, -1));
+
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        // Load particle blueprints.
+        $validator = $this->container['particles']->get($setting);
+
+        // Create configuration from the defaults.
+        $data = new Config(
+            [],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->join($path, $this->request->post->getArray('data'));
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->get($path)]);
     }
 
     public function save($id = null)
@@ -107,5 +136,65 @@ class Page extends HtmlController
             $file->save($config->toArray());
         }
         $file->free();
+    }
+
+    public function formfield($id)
+    {
+        $path = func_get_args();
+
+        if (end($path) == 'validate') {
+            return call_user_func_array([$this, 'validate'], $path);
+        }
+
+        $setting = $this->container['page']->get($id);
+
+        // Load blueprints.
+        $blueprints = new BlueprintsForm($setting);
+
+        list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
+
+        if (!$fields) {
+            throw new \RuntimeException('Page Not Found', 404);
+        }
+
+        $data = $this->request->post->getJsonArray('data');
+
+        $offset = "page.{$id}." . implode('.', $path);
+        if ($value !== null) {
+            $parent = $fields;
+            $fields = ['fields' => $fields['fields']];
+            $offset .= '.' . $value;
+            $data   = $data ?: $this->container['config']->get($offset);
+            $data   = ['data' => $data];
+            $prefix = 'data.';
+        } else {
+            $data   = $data ?: $this->container['config']->get($offset);
+            $prefix = 'data';
+        }
+
+        $fields['is_current'] = true;
+
+        array_pop($path);
+
+        $configuration = "configurations/{$this->params['configuration']}";
+        $this->params  = [
+                'configuration' => $configuration,
+                'blueprints'    => $fields,
+                'data'          => $data,
+                'prefix'        => $prefix,
+                'parent'        => $path
+                    ? "$configuration/page/{$id}/" . implode('/', $path)
+                    : "$configuration/page/{$id}",
+                'route'         => $offset
+            ] + $this->params;
+
+        if (isset($parent['key'])) {
+            $this->params['key'] = $parent['key'];
+        }
+        if (isset($parent['value'])) {
+            $this->params['title'] = $parent['value'];
+        }
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 }
