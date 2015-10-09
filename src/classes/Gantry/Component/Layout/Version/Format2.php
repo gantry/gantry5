@@ -19,7 +19,7 @@ namespace Gantry\Component\Layout\Version;
 class Format2
 {
     protected $scopes = [0 => 'grid', 1 => 'block'];
-    protected $section = ['container', 'grid', 'block', 'offcanvas', 'div'];
+    protected $section = ['atoms', 'container', 'grid', 'block', 'offcanvas', 'div'];
     protected $structure = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer'];
 
     protected $data;
@@ -33,6 +33,20 @@ class Format2
     {
         $data = &$this->data;
 
+        // Create atoms section to the layout if it doesn't exist.
+        if (!isset($data['atoms'])) {
+            $data['atoms'] = [];
+        }
+        $data['layout']['atoms'] =& $data['atoms'];
+
+        // Add atom-prefix to all atoms.
+        foreach ($data['atoms'] as &$atom) {
+            if (strpos($atom, 'atom-') !== 0) {
+                $atom = "atom-{$atom}";
+            }
+        }
+
+        // Parse layout.
         $result = [];
         foreach ($data['layout'] as $field => &$params) {
             if (!is_array($params)) {

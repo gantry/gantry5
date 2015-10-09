@@ -34,7 +34,7 @@ layout:
       - position-14
 
 atoms:
-  - custom
+  - assets
 
 structure:
   offcanvas-toggle:
