@@ -34,6 +34,11 @@
         {% if gantry.config.page.head.favicon %}
         <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.head.favicon) }}" />
         {% endif %}
+
+        {% if gantry.config.page.head.touchicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url(gantry.config.page.head.touchicon) }}">
+        <link rel="icon" sizes="192x192" href="{{ url(gantry.config.page.head.touchicon) }}">
+        {% endif %}
     {% endblock %}
 
     {%- block head_title -%}

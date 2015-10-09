@@ -4,7 +4,7 @@ type: global
 
 form:
   fields:
-  
+
     api.ga:
       type: input.text
       label: Google Analytics UA

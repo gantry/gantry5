@@ -6,9 +6,15 @@ form:
   fields:
 
     favicon:
-       type: input.imagepicker
-       label: Favicon
-       filter: '.(jpe?g|gif|png|svg|ico)$'
+      type: input.imagepicker
+      label: Favicon
+      filter: '.(jpe?g|gif|png|svg|ico)$'
+
+    touchicon:
+      type: input.imagepicker
+      label: Touch Icon
+      description: A PNG only image that will be used as icon for Touch Devices. Recommended 180x180 or 192x192.
+      filter: '.png$'
 
     meta:
       type: collection.keyvalue
