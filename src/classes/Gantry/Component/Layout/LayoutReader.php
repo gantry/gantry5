@@ -45,13 +45,7 @@ class LayoutReader
     public static function data(array $data)
     {
         $version = static::version($data);
-        $class = "Gantry\\Component\\Layout\\Version\\Format{$version}";
-
-        if (!class_exists($class)) {
-            throw new \RuntimeException('Layout file cound not be read: unsupported version {$version}.');
-        }
-
-        $reader = new $class($data);
+        $reader = static::getClass($version, $data);
         $result = $reader->load();
 
         // Make sure that all preset values are set by defining defaults.
@@ -80,5 +74,37 @@ class LayoutReader
         $file->free();
 
         return static::data($content);
+    }
+
+    /**
+     * Convert layout into file format.
+     *
+     * @param array $preset
+     * @param array $structure
+     * @param int $version
+     * @return mixed
+     */
+    public static function store(array $preset, array $structure, $version = 1)
+    {
+        $reader = static::getClass($version);
+
+        return $reader->store($preset, $structure);
+    }
+
+    /**
+     * @param int $version
+     * @param array $data
+     * @return object
+     */
+    protected static function getClass($version, array $data = [])
+    {
+        $class = "Gantry\\Component\\Layout\\Version\\Format{$version}";
+
+        if (!class_exists($class)) {
+            throw new \RuntimeException('Layout file cound not be read: unsupported version {$version}.');
+        }
+
+        return new $class($data);
+
     }
 }

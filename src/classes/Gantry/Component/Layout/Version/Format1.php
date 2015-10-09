@@ -59,6 +59,11 @@ class Format1
         return ['preset' => $preset] + $result;
     }
 
+    public function store(array $preset, array $structure)
+    {
+        return ['preset' => $preset, 'children' => $structure];
+    }
+
     protected function normalize(&$item)
     {
         if (isset($item->attributes->boxed)) {
