@@ -315,6 +315,10 @@
 // collections
 .collection-list .settings-param-field, .collection-keyvalue .settings-param-field .g-keyvalue-field {
     ul {
+        &:empty {
+            margin-top: -8px;
+        }
+
         @extend %list-reset;
         margin: 5px 0;
         border-spacing: 0 5px;

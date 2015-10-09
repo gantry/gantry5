@@ -38,9 +38,9 @@
                     {% endblock %}
                 </span>
                 <div class="settings-param-field" data-field-name="{{ field.name|e }}">
-                    {% block input %}
+                    {% block input -%}
                         <ul>
-                        {% if field.fields %}
+                        {%- if field.fields -%}
                                 {% for key, val in value %}
                                     {% if (field.ajax == true) %}
                                         <li data-collection-item="{{ field.value|e }}">
@@ -79,7 +79,7 @@
                                         {% endblock %}
                                     {% endif %}
                                 {% endfor %}
-                        {% endif %}
+                        {%- endif -%}
                     </ul>
                     <div>
                         <ul style="display: none">
