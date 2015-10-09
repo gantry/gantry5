@@ -31,13 +31,13 @@
             {%- endfor -%}
         {%- endif -%}
 
-        {% if gantry.config.page.head.favicon %}
-        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.head.favicon) }}" />
+        {% if gantry.config.page.assets.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
         {% endif %}
 
-        {% if gantry.config.page.head.touchicon %}
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ url(gantry.config.page.head.touchicon) }}">
-        <link rel="icon" sizes="192x192" href="{{ url(gantry.config.page.head.touchicon) }}">
+        {% if gantry.config.page.assets.touchicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url(gantry.config.page.assets.touchicon) }}">
+        <link rel="icon" sizes="192x192" href="{{ url(gantry.config.page.assets.touchicon) }}">
         {% endif %}
     {% endblock %}
 

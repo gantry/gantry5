@@ -2682,6 +2682,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   border-spacing: 0 5px;
   display: table;
 }
+#g5-container .collection-list .settings-param-field ul:empty, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul:empty {
+  margin-top: -8px;
+}
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   position: relative;
   display: table-row;
