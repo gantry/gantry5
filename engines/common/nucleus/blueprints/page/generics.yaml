@@ -8,9 +8,8 @@ form:
     api.typekit:
       type: input.text
       label: TypeKit API
-      default: 123456
 
     api.ga:
       type: input.text
-      label: Google Analytics API
-      default: abcdefg
+      label: Google Analytics UA
+      description: Enter the Google UA tracking code for analytics.
