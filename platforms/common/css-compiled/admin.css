@@ -2678,7 +2678,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   border-radius: 3px;
 }
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
-  margin: 5px 0;
+  margin: 0 0 5px;
   border-spacing: 0 5px;
   display: table;
 }
