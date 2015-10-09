@@ -31,8 +31,8 @@
             {%- endfor -%}
         {%- endif -%}
 
-        {% if gantry.config.styles.base.favicon %}
-        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.styles.base.favicon) }}" />
+        {% if gantry.config.page.head.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.head.favicon) }}" />
         {% endif %}
     {% endblock %}
 
