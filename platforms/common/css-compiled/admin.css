@@ -1080,6 +1080,9 @@
   display: block;
   position: relative;
 }
+#g5-container .g-menu-item-container input, #g5-container .g-menu-item-container textarea {
+  color: #666;
+}
 #g5-container .g-main-nav .g-standard {
   position: relative;
 }
@@ -6264,6 +6267,7 @@ html.g5-dialog-open {
   font-size: 0.8rem;
   vertical-align: middle;
   padding: 0 2px;
+  white-space: normal;
 }
 #g5-container #g-changelog .g-changelog-toggle {
   font-size: 0.85rem;
