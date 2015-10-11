@@ -2709,7 +2709,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   opacity: 1;
 }
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
-  color: #439A86;
+  color: #000;
 }
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
