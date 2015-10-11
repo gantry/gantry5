@@ -1,3 +1,12 @@
+# 5.2.0
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Page Settings: Implemented new feature that allows to specify global and/or per-outline overrides for Meta Tags, Body attributes, Assets, Favicons, etc.
+    2. [](#improved)
+        - Minor Collections CSS tweaks
+
 # 5.1.6
 ## XX/XX/2015
 
