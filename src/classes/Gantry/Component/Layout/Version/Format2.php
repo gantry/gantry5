@@ -172,13 +172,16 @@ class Format2
         $type_subtype = array_shift($list);
         $size = ((float) array_shift($list)) ?: null;
 
-        // Extract sub-type if it exists: "[type]-[subtype]".
-        $list = explode('-', $type_subtype, 2);
+        // Extract sub-type if it exists: "[type]-[subtype]-[id]".
+        $list = explode('-', $type_subtype);
 
-        // Get type and subtype.
+        // Get type, subtype and id.
         $type = reset($list);
+        $test = end($list);
+        $id = ((string)(int) $test === (string) $test) ? array_pop($list) : null;
         if (in_array($type, ['system', 'position', 'particle', 'atom'])) {
-            $subtype = array_pop($list);
+            array_shift($list);
+            $subtype = implode('-', $list);
         } else {
             $type = 'particle';
             $subtype = $type_subtype;
@@ -198,8 +201,8 @@ class Format2
         }
 
         if ($type === 'position') {
-            if (is_numeric($subtype)) {
-                $subtype = "{$type}-{$subtype}";
+            if ($id !== null) {
+                $subtype = "{$type}-{$id}";
                 $title = ucfirst($subtype);
             }
             $key = $subtype;
@@ -207,7 +210,7 @@ class Format2
         }
 
         $result = isset($this->data['content'][$type_subtype]) ? (array) $this->data['content'][$type_subtype] : [];
-        $result += ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
+        $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
         $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
         $result = (object) $result;
@@ -221,13 +224,13 @@ class Format2
             }
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id(), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id($type, false), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
                 $result->attributes->size = $size;
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => $this->id(), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id($type, false), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;
@@ -307,14 +310,32 @@ class Format2
         return $result;
     }
 
-    protected function id()
+    protected function id($type, $subtype, $id = null)
     {
-        // TODO: improve
-        $key = md5(rand());
+        static $keys = [];
 
-        $args = str_split($key, 4);
-        array_unshift($args, '%s%s-%s-%s-%s-%s%s%s');
+        // Special handling for pagecontent.
+       if ($type === 'pagecontent') {
+           $type = 'system';
+           $subtype = $subtype === 'pagecontent' ? 'content' : 'messages';
+        }
 
-        return call_user_func_array('sprintf', $args);
+        $result = [];
+        if ($type !== 'particle' && $type !== 'atom') {
+            $result[] = $type;
+        }
+        if ($subtype) {
+            $result[] = $subtype;
+        }
+        $key = implode('-', $result);
+        if ($id !== null) {
+            return $key . '-'. $id;
+        }
+
+        if (!isset($keys[$key])) {
+            $keys[$key] = 0;
+        }
+
+        return $key . '-'. ++$keys[$key];
     }
 }
