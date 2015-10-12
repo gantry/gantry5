@@ -120,7 +120,7 @@
             opacity: 0;
             cursor: pointer;
             margin: 0 5px;
-            vertical-align: top;
+            vertical-align: middle;
 
             @include transition(opacity 0.2s ease-in-out);
         }
@@ -129,6 +129,10 @@
             display: table-cell;
             vertical-align: middle;
             padding-left: 4px; // 4px is the display: inline-block gap
+        }
+        
+        textarea + .g-reset-field {
+            vertical-align: top;
         }
 
         &:hover {

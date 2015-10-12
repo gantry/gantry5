@@ -2523,7 +2523,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   opacity: 0;
   cursor: pointer;
   margin: 0 5px;
-  vertical-align: top;
+  vertical-align: middle;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
@@ -2532,6 +2532,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: table-cell;
   vertical-align: middle;
   padding-left: 4px;
+}
+#g5-container .settings-block .settings-param-field textarea + .g-reset-field {
+  vertical-align: top;
 }
 #g5-container .settings-block .settings-param-field:hover .g-reset-field {
   opacity: 1;
