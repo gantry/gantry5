@@ -6496,6 +6496,21 @@ var FilePicker = new prime({
             }, this));
         }, this));
 
+        content.delegate('click', '[data-g-file-preview]', bind(function(event, element) {
+            event.preventDefault();
+            event.stopPropagation();
+            var parent    = element.parent('[data-file]'),
+                data      = JSON.parse(parent.data('file'));
+
+            if (data.isImage) {
+                var thumb = parent.find('.g-thumb > div');
+                modal.open({
+                    className: 'g5-dialog-theme-default g5-modal-filepreview center',
+                    content: '<img src="' + thumb[0].style.backgroundImage.slice(4, -1).replace(/"/g, '') + '" />'
+                });
+            }
+        }, this));
+
         content.delegate('click', '[data-g-file-delete]', bind(function(event, element) {
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
@@ -6526,9 +6541,10 @@ var FilePicker = new prime({
         content.delegate('click', '[data-file]', bind(function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var target = $(event.target),
-                remove = target.data('g-file-delete') !== null || target.parent('[data-g-file-delete]');
+                remove = target.data('g-file-delete') !== null || target.parent('[data-g-file-delete]'),
+                preview = target.data('g-file-preview') !== null || target.parent('[data-g-file-preview]');
 
-            if (element.hasClass('g-file-error') || element.hasClass('g-file-uploading') || remove) { return; }
+            if (element.hasClass('g-file-error') || element.hasClass('g-file-uploading') || remove || preview) { return; }
             var data = JSON.parse(element.data('file'));
 
             files.search('[data-file]').removeClass('selected');
