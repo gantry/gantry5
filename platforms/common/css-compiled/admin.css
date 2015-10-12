@@ -1384,10 +1384,10 @@
   white-space: nowrap;
   border: inherit;
 }
-#g5-container .float-left, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title {
+#g5-container .float-left, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
   float: left !important;
 }
-#g5-container .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions {
+#g5-container .float-right, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions {
   float: right !important;
 }
 #g5-container .hide, #g5-container body .g-offcanvas-hide {
@@ -2905,7 +2905,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container #configurations .outline-is-default {
   border-color: #48B0D7;
 }
-#g5-container #configurations .outline-is-default .float-right.font-small, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .float-right.g-collapse, #g5-container .card h4[data-g-collapse] #configurations .outline-is-default .float-right.g-collapse, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-collapse.container-actions, #g5-container .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] .g-collapse.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .g-filters-bar label.float-right, #g5-container .g-filters-bar #configurations .outline-is-default label.float-right, #g5-container #configurations .outline-is-default .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper label.container-actions, #g5-container .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar label.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .font-small.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .font-small.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content .container-actions.menu-item-subtitle, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper li.container-actions, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .float-right.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .float-right.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .float-right.menu-item-subtitle, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.float-right, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.float-right {
+#g5-container #configurations .outline-is-default .float-right.font-small, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .float-right.g-collapse, #g5-container .card h4[data-g-collapse] #configurations .outline-is-default .float-right.g-collapse, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-collapse.container-actions, #g5-container .card h4[data-g-collapse] .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] .g-collapse.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .g-filters-bar label.float-right, #g5-container .g-filters-bar #configurations .outline-is-default label.float-right, #g5-container #configurations .outline-is-default .g-filters-bar .lm-blocks [data-lm-blocktype="container"] .container-wrapper label.container-actions, #g5-container .g-filters-bar .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-filters-bar label.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-filters-bar #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .font-small.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .font-small.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content .container-actions.menu-item-subtitle, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks [data-lm-blocktype="container"] .container-wrapper li.container-actions, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .float-right.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .float-right.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .float-right.menu-item-subtitle, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.float-right, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.float-right {
   color: #48B0D7;
 }
 #g5-container #configurations h4 {
@@ -2921,7 +2921,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks > [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
+#g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
   margin-top: 5px;
   color: #999999;
 }
@@ -3534,35 +3534,35 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks.moving .g-grid > .g-block:after, #g5-container .lm-blocks.moving .g-grid > .g-block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .g-grid:hover > .g-block [data-lm-blocktype]:not(:empty):after {
   display: none;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] {
+#g5-container .lm-blocks [data-lm-blocktype="container"] {
   position: relative;
   padding: 8px;
   background: #e0e0e0;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper {
   padding: 0 4px 8px;
   color: #888;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
   text-transform: capitalize;
   font-size: 0.95rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title .changes-indicator {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title .changes-indicator {
   margin-right: 5px;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:before {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:before {
   right: 0.1rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:after {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:after {
   right: -0.2rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions i {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions i {
   cursor: pointer;
   -webkit-transition: color 0.2s;
   -moz-transition: color 0.2s;
   transition: color 0.2s;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:hover, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions i:hover {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:hover, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions i:hover {
   color: #4d4d4d;
 }
 #g5-container .lm-blocks .g-grid .g-block .section:first-child {
@@ -3571,10 +3571,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .g-grid .g-block .section:last-child {
   margin-bottom: 0;
 }
-#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
-  background: #fff;
-  margin: 14px 0;
+#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section, #g5-container .lm-blocks .wrapper-section {
   padding: 8px;
+}
+#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
+  margin: 14px 0;
+  background: #fff;
 }
 #g5-container .lm-blocks .section .section-header, #g5-container .lm-blocks .atoms-section .section-header, #g5-container .lm-blocks .offcanvas-section .section-header {
   font-size: 22px;
@@ -3719,29 +3721,29 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   opacity: 0;
   visibility: hidden;
 }
-#g5-container .lm-blocks .offcanvas-section .g-grid:empty:after {
+#g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
 }
-#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block {
+#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block {
   margin-right: 14px;
   background: #fff;
   padding-bottom: 50px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section {
+#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section {
   border-bottom: 14px solid #eee;
   margin-top: 0;
   margin-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section:last-child {
+#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section:last-child {
   border-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size {
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size {
   margin-right: 0;
   position: absolute;
   bottom: 12px;
   right: 12px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size i {
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size i {
   margin-right: 5px;
 }
 #g5-container .lm-blocks .g-grid:hover > .g-block > .particle:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .position:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .spacer:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .pagecontent:after {
@@ -3755,10 +3757,10 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   cursor: col-resize;
   z-index: 10;
 }
-#g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .atom {
+#g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .atom {
   margin-right: 0;
 }
-#g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .pagecontent:after {
+#g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .pagecontent:after {
   display: none;
 }
 #g5-container .lm-blocks .g-grid > .g-block:last-child {
@@ -3822,7 +3824,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   margin-top: -3px;
   margin-bottom: -3px;
 }
-#g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .particle .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle .container-actions, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .position .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .position .container-actions, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .spacer .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .pagecontent .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions, #g5-container .lm-blocks .atom .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .atom .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .atom .container-actions {
+#g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .particle [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle .container-actions, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .position [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .position .container-actions, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .spacer [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .pagecontent [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions, #g5-container .lm-blocks .atom .float-right, #g5-container .lm-blocks .atom [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .atom .container-actions {
   position: absolute;
   right: 13px;
   top: 0;
@@ -3830,7 +3832,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   line-height: 50px;
   float: inherit;
 }
-#g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .particle .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle .container-actions i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .position .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .position .container-actions i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .spacer .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .pagecontent .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions i, #g5-container .lm-blocks .atom .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .atom .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .atom .container-actions i {
+#g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .particle [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle .container-actions i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .position [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .position .container-actions i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .spacer [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .pagecontent [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions i, #g5-container .lm-blocks .atom .float-right i, #g5-container .lm-blocks .atom [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .atom .container-actions i {
   line-height: 52px;
   cursor: pointer;
   position: relative;
@@ -3920,7 +3922,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .atoms-section .placeholder.in-between {
   margin-bottom: 6px;
 }
-#g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
+#g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.wrapper-section):not(.g-lm-container) {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
 }
 #g5-container .lm-blocks .block-has-changes.g-lm-container {
@@ -5719,10 +5721,10 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label {
   font-size: 0.75em;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
   width: auto !important;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
   width: 245px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
