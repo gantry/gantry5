@@ -81,8 +81,10 @@ class Theme extends AbstractTheme
 
     public function prepare_particles()
     {
-        $gantry = Gantry::instance();
-        $gantry['theme']->prepare();
+        if(!is_admin()) {
+            $gantry = Gantry::instance();
+            $gantry['theme']->prepare();
+        }
     }
 
     /**
@@ -304,6 +306,7 @@ class Theme extends AbstractTheme
         add_theme_support('widgets');
         add_theme_support('woocommerce');
 
+        add_filter('script_loader_tag', ['Gantry\Framework\Document', 'script_add_attributes'], 10, 2);
         add_filter('timber_context', [$this, 'getContext']);
         add_filter('get_twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
@@ -311,6 +314,7 @@ class Theme extends AbstractTheme
         add_filter('widget_text', [$this, 'url_filter'], 0);
         add_filter('widget_content', [$this, 'url_filter'], 0);
         add_filter('widget_text', 'do_shortcode');
+        add_filter('widget_content', 'do_shortcode');
 
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);

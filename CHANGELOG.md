@@ -20,17 +20,18 @@
         - Minor style enhancements to the key/value field
     3. [](#bugfix)
         - Fixed an Internal Server Error that could occur when site has no menus and user tries to access Settings tab (#898)
-        - Fixed text color for inputs and textareas when appearing in the menu (#)
+        - Fixed text color for inputs and textareas when appearing in the menu (#896)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Enable shortcodes in Text Widget (#887)
+        - Enable shortcodes in Text Widget and widgets that use `widget_content` filter (#887)
     2. [](#improved)
         - Particles should be now prepared on wp_enqueue_scripts so the WordPress scripts checks should work properly
     3. [](#bugfix)
         - Widget positions with upper case letters are always empty (#889)
+        - Tag attributes aren't rendered in CSS/JS Atom, even though they're there (#888)
 
 # 5.1.5
 ## 30/09/2015
