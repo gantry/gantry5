@@ -311,6 +311,7 @@ class Theme extends AbstractTheme
         add_filter('widget_text', [$this, 'url_filter'], 0);
         add_filter('widget_content', [$this, 'url_filter'], 0);
         add_filter('widget_text', 'do_shortcode');
+        add_filter('widget_content', 'do_shortcode');
 
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);

@@ -13,7 +13,7 @@
         - Restored the old behavior from Gantry 5.1.4 where Bootstrap CSS/JS isn't loaded unless needed by the page content
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Enable shortcodes in Text Widget (#887)
+        - Enable shortcodes in Text Widget and widgets that use `widget_content` filter (#887)
     2. [](#improved)
         - Particles should be now prepared on wp_enqueue_scripts so the WordPress scripts checks should work properly
     3. [](#bugfix)
