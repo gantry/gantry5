@@ -272,13 +272,13 @@ class Format2
                 $array = 'structure';
             }
             // Clean up defaults.
-            unset ($child['id'], $child['children']);
-            if (!$child['title'] || $child['title'] === 'Untitled') {
+            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === ucfirst($child['id'])) {
                 unset ($child['title']);
             }
             if (!$child['subtype']) {
                 unset ($child['subtype']);
             }
+            unset ($child['id'], $child['children']);
             // Embed size into array key/value.
             if ($id && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
                 $size = $content['attributes']['size'];
@@ -302,7 +302,7 @@ class Format2
                     $result[] = $value;
                 }
             }
-            if ($id) {
+            if ($id && count($child) > 1) {
                 $this->{$array}[$id] = $child;
             }
         }
