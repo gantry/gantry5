@@ -8,6 +8,8 @@
         - Tags / Multiselection now include an `[x]` button to easily remove items via click
     2. [](#improved)
         - Minor Collections CSS tweaks
+    3. [](#bugfix)
+        - Fixed issue where Tag fields wouldn't trigger the indicator change
 
 # 5.1.6
 ## XX/XX/2015
