@@ -8,6 +8,7 @@ class Document extends BaseDocument
 {
     public static $wp_styles = [];
     public static $wp_scripts = ['head' => [], 'footer' => []];
+    protected static $script_info = [];
 
     public static function registerAssets()
     {
@@ -62,6 +63,7 @@ class Document extends BaseDocument
                         $src = array_shift($array);
                         $version = array_shift($array) ?: false;
                         $name = basename($src, '.js');
+                        self::$script_info[$name] = $script;
                         \wp_enqueue_script($name, $src, array(), $version, $in_footer);
                         break;
                     case 'inline':
@@ -113,5 +115,30 @@ class Document extends BaseDocument
         }
 
         return $path;
+    }
+
+    public static function script_add_attributes($tag, $handle)
+    {
+        if (!isset(self::$script_info[$handle])) {
+            return $tag;
+        }
+
+        $script = self::$script_info[$handle];
+
+        $append = [];
+        if ($script['defer']) {
+            $append = 'defer="defer"';
+        }
+        if ($script['async']) {
+            $append = 'async="async"';
+        }
+
+        if (!$append) {
+            return $tag;
+        }
+
+        $append = implode(' ', $append);
+
+        return str_replace(' src=', " {$append} src=", $tag);
     }
 }

@@ -18,6 +18,7 @@
         - Particles should be now prepared on wp_enqueue_scripts so the WordPress scripts checks should work properly
     3. [](#bugfix)
         - Widget positions with upper case letters are always empty (#889)
+        - Tag attributes aren't rendered in CSS/JS Atom, even though they're there (#888)
 
 # 5.1.5
 ## 30/09/2015
