@@ -81,8 +81,10 @@ class Theme extends AbstractTheme
 
     public function prepare_particles()
     {
-        $gantry = Gantry::instance();
-        $gantry['theme']->prepare();
+        if(!is_admin()) {
+            $gantry = Gantry::instance();
+            $gantry['theme']->prepare();
+        }
     }
 
     /**
