@@ -170,4 +170,11 @@ abstract class Platform
     public function finalize()
     {
     }
+
+    public function call()
+    {
+        $args = func_get_args();
+        $callable = array_shift($args);
+        return is_callable($callable) ? call_user_func_array($callable, $args) : null;
+    }
 }
