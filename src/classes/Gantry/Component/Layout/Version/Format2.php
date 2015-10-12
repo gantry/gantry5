@@ -19,7 +19,7 @@ namespace Gantry\Component\Layout\Version;
 class Format2
 {
     protected $scopes = [0 => 'grid', 1 => 'block'];
-    protected $sections = ['atoms', 'container', 'section', 'grid', 'block', 'offcanvas', 'div'];
+    protected $sections = ['atoms', 'wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
     protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer'];
 
     protected $data;
@@ -118,7 +118,7 @@ class Format2
                 $scope = 0;
             }
             // Extract id.
-            if ($type == 'div' || ($type == 'section' && in_array($section, $this->structures))) {
+            if ($type == 'section' && in_array($section, $this->structures)) {
                 $id = array_pop($list);
             } else {
                 $id = $section_id;
