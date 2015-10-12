@@ -11467,6 +11467,7 @@ var Selectize = new prime({
 
             var dummy = zen('div').html(this.render('item', this.Options[value]));
             $item = dummy.firstChild();
+            if (inputMode !== 'multi') $item.find('.remove-single-item').remove();
 
             // ARIA
             $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
