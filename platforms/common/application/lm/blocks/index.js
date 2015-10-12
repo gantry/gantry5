@@ -3,6 +3,7 @@ module.exports = {
     atom: require('./atom'),
     section: require('./section'),
     offcanvas: require('./offcanvas'),
+    wrapper: require('./wrapper'),
     atoms: require('./atoms'),
     grid: require('./grid'),
     container: require('./container'),

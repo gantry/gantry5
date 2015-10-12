@@ -55,7 +55,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             display: none;
         }
 
-        > [data-lm-blocktype="container"] {
+        [data-lm-blocktype="container"] {
             position: relative;
             padding: 8px;
             background: #e0e0e0;
@@ -108,10 +108,13 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section, .atoms-section, .offcanvas-section {
-            background: $white;
-            margin: 14px 0;
+        .section, .atoms-section, .offcanvas-section, .wrapper-section {
             padding: 8px;
+        }
+
+        .section, .atoms-section, .offcanvas-section {
+            margin: 14px 0;
+            background: $white;
 
             .section-header {
                 font-size: 22px;
@@ -284,13 +287,13 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             */
         }
 
-        .offcanvas-section {
+        .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
             }
         }
 
-        > .g-grid > .g-block, > .g-lm-container > .g-grid > .g-block {
+        > .g-grid > .g-block, .g-lm-container > .g-grid > .g-block {
             margin-right: 14px;
             background: $white;
             padding-bottom: 50px;
@@ -335,7 +338,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, {
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, .wrapper-section > .g-grid > .g-block:last-child {
             .particle, .position, .spacer, .pagecontent, .atom {
                 margin-right: 0;
             }
@@ -530,7 +533,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .block-has-changes {
-            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.wrapper-section):not(.g-lm-container) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 
