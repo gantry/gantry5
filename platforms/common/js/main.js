@@ -2364,7 +2364,7 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width the blocks in this grid' : 'Sort or Move the Grid',
+        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
             tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
 
         if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
