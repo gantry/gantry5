@@ -10191,7 +10191,6 @@ var Selectize = new prime({
     inherits: Emitter,
 
     options: {
-        plugins: [],
         delimiter: ' ',
         splitOn: null, // regexp or string for splitting up values from a paste command
         persist: true,
@@ -10409,6 +10408,7 @@ var Selectize = new prime({
 
         $control.on('mousedown', bind(function() { return this.onMouseDown.apply(this, arguments); }, this));
         $control.on('click', bind(function() { return this.onClick.apply(this, arguments); }, this));
+        $control.delegate('click', '.remove-single-item', bind(function() { return this.onItemRemoveViaX.apply(this, arguments); }, this));
 
         $control_input.on('mousedown', function(e) { e.stopPropagation(); });
         $control_input.on('keydown', bind(function() { return this.onKeyDown.apply(this, arguments); }, this));
@@ -10536,7 +10536,7 @@ var Selectize = new prime({
                 return '<div class="option">' + escape(data[field_label]) + '</div>';
             },
             'item': function(data, escape) {
-                return '<div class="item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '</div>';
+                return '<div class="item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '<span  class="remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
             },
             'option_create': function(data, escape) {
                 return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
@@ -10854,11 +10854,22 @@ var Selectize = new prime({
     },
 
     onItemSelect: function(e, element) {
-
         if (this.isLocked) return;
         if (this.options.mode === 'multi') {
             e.preventDefault();
             this.setActiveItem(element || e.currentTarget, e);
+        }
+    },
+
+    onItemRemoveViaX: function(e, element) {
+        console.log(e, element);
+        e.preventDefault();
+        if (this.isLocked || this.options.mode == 'single') return;
+
+        var $item = element.parent();
+        this.setActiveItem($item);
+        if (this.deleteSelection()) {
+            this.setCaret(this.items.length);
         }
     },
 

@@ -5,6 +5,7 @@
     1. [](#new)
         - Page Settings: Implemented new feature that allows to specify global and/or per-outline overrides for Meta Tags, Body attributes, Assets, Favicons, etc.
         - File Picker: It is now possible to preview the images from the thumbnails list
+        - Tags / Multiselection now include an `[x]` button to easily remove items via click
     2. [](#improved)
         - Minor Collections CSS tweaks
 
