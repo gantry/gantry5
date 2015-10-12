@@ -95,7 +95,7 @@ class Format2
     {
         if (is_numeric($field))  {
             // Row or block
-            $result = (object) ['id' => null, 'type' => $this->scopes[$scope], 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
+            $result = (object) ['id' => $this->id($this->scopes[$scope]), 'type' => $this->scopes[$scope], 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
 
         } else {
@@ -113,6 +113,9 @@ class Format2
 
             if ($type == 'grid') {
                 $scope = 1;
+            }
+            if ($type == 'block') {
+                $scope = 0;
             }
             // Extract id.
             if ($type == 'div' || ($type == 'section' && in_array($section, $this->structures))) {
@@ -181,11 +184,10 @@ class Format2
         $id = ((string)(int) $test === (string) $test) ? array_pop($list) : null;
         if (in_array($type, ['system', 'position', 'particle', 'atom'])) {
             array_shift($list);
-            $subtype = implode('-', $list);
         } else {
             $type = 'particle';
-            $subtype = $type_subtype;
         }
+        $subtype = implode('-', $list);
 
         $title = ucfirst($subtype ?: $type);
 
@@ -201,12 +203,10 @@ class Format2
         }
 
         if ($type === 'position') {
-            if ($id !== null) {
-                $subtype = "{$type}-{$id}";
-                $title = ucfirst($subtype);
-            }
-            $key = $subtype;
+            $key = $type . ($subtype ? "-{$subtype}" : '') . ($id !== null ? "-{$id}" : '');
             $subtype = false;
+            $id = $key;
+            $title = ucfirst($key);
         }
 
         $result = isset($this->data['content'][$type_subtype]) ? (array) $this->data['content'][$type_subtype] : [];
@@ -224,13 +224,13 @@ class Format2
             }
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id($type, false), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
                 $result->attributes->size = $size;
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => $this->id($type, false), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;
@@ -239,12 +239,15 @@ class Format2
     protected function build(&$content)
     {
         $result = [];
+        $ctype = isset($content['type']) ? $content['type'] : null;
 
         foreach ($content['children'] as $child) {
             $value = null;
+            $size = null;
             $id = $child['id'];
             $type = $child['type'];
             if ($type === 'atom') {
+                // Handle atoms.
                 $this->atoms[] = $id;
                 $array = 'content';
             } elseif (!in_array($type, $this->sections)) {
@@ -268,6 +271,7 @@ class Format2
                 $value = $this->build($child);
                 $array = 'structure';
             }
+            // Clean up defaults.
             unset ($child['id'], $child['children']);
             if (!$child['title'] || $child['title'] === 'Untitled') {
                 unset ($child['title']);
@@ -275,13 +279,13 @@ class Format2
             if (!$child['subtype']) {
                 unset ($child['subtype']);
             }
+            // Embed size into array key/value.
+            if ($id && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
+                $size = $content['attributes']['size'];
+            }
             if (isset($child['attributes']['size'])) {
-                if ($child['attributes']['size'] != 100) {
-                    if (!is_string($value)) {
-                        $id .= ' ' . $child['attributes']['size'];
-                    } else {
-                        $value .= ' ' . $child['attributes']['size'];
-                    }
+                if ($child['attributes']['size'] != 100 && is_string($value)) {
+                    $value .= ' ' . $child['attributes']['size'];
                 }
                 unset ($child['attributes']['size']);
             }
@@ -293,7 +297,7 @@ class Format2
             }
             if ($value) {
                 if ($id) {
-                    $result[$id] = $value;
+                    $result[trim("{$id} {$size}")] = $value;
                 } else {
                     $result[] = $value;
                 }
@@ -303,14 +307,14 @@ class Format2
             }
         }
 
-        if ((!isset($content['type']) || in_array($content['type'], ['grid', 'block'])) && count($result) <= 1) {
+        if ($ctype && in_array($ctype, ['grid', 'block']) && count($result) <= 1 && key($result) === 0) {
             unset ($this->structure[$content['id']]);
             return reset($result) ?: null;
         }
         return $result;
     }
 
-    protected function id($type, $subtype, $id = null)
+    protected function id($type, $subtype = null, $id = null)
     {
         static $keys = [];
 
