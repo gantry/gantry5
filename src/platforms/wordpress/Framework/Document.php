@@ -127,10 +127,10 @@ class Document extends BaseDocument
 
         $append = [];
         if ($script['defer']) {
-            $append = 'defer="defer"';
+            $append[] = 'defer="defer"';
         }
         if ($script['async']) {
-            $append = 'async="async"';
+            $append[] = 'async="async"';
         }
 
         if (!$append) {
