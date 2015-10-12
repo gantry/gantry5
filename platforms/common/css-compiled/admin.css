@@ -2459,7 +2459,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   background: rgba(0, 0, 0, 0.05);
 }
 .selectize-control.multi .items [data-value].active .remove-single-item {
-  border-left-color: rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(0, 0, 0, 0.2);
 }
 .selectize-control.multi .items .disabled [data-value] .remove-single-item:hover {
   background: none;
