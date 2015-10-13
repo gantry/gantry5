@@ -138,8 +138,11 @@ class Outlines extends AbstractOutlineCollection
 
         $name = $this->findFreeName($name);
 
+        // Load preset.
+        $preset = Layout::preset($preset);
+
         // Create index file for the new layout.
-        $layout = new Layout($name, Layout::preset($preset));
+        $layout = new Layout($name, $preset);
         $layout->saveIndex();
 
         return $name;

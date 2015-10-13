@@ -135,10 +135,7 @@ class Layout extends HtmlController
         $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
-        $layout = new LayoutObject(
-            $configuration,
-            LayoutReader::data(['preset' => $preset, 'children' => $layout])
-        );
+        $layout = new LayoutObject($configuration, $layout, $preset);
 
         // Save layout and its index.
         $layout->save()->saveIndex();
@@ -274,12 +271,12 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        $layout = LayoutObject::preset($id);
-        if (!$layout) {
+        $preset = LayoutObject::preset($id);
+        if (!$preset) {
             throw new \RuntimeException('Preset not found', 404);
         }
 
-        $layout = new LayoutObject($id, $layout);
+        $layout = new LayoutObject($id, $preset);
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];

@@ -203,7 +203,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $filename = $locator->findResource("gantry-config://{$name}/layout.yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
-        $file->save(['preset' => $this->preset, 'children' => json_decode(json_encode($this->items), true)]);
+        $file->save(LayoutReader::store($this->preset, $this->items));
         $file->free();
 
         $this->exists = true;

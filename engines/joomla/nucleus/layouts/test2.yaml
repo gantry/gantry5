@@ -1,0 +1,113 @@
+version: 2
+preset:
+  image: gantry-admin://images/layouts/3-col.png
+
+layout:
+  offcanvas:
+    - mobile-menu
+
+  wrapper-page-surround:
+    -
+      -
+        offcanvas-toggle:
+        header:
+          - [logo 20, position-0 80]
+        navigation:
+          - menu
+
+        container-main-wrapper:
+          -
+            - sidebar 20:
+              - position-7
+              - position-4
+              - position-5
+            - main 60:
+              - position-2
+              - position-12
+              - system-messages
+              - system-content
+            - aside 20:
+              - position-6
+              - position-8
+              - position-3
+
+        footer:
+          - [position-9 30, position-10 40, position-11 30]
+          - position-14
+
+atoms:
+  - assets
+
+structure:
+  offcanvas-toggle:
+    type: div
+  wrapper-page-surround:
+    attributes:
+      class: g-page-surround
+  container-main-wrapper:
+    attributes:
+      id: g-main-wrapper
+      boxed: 1
+
+content:
+  mobile-menu:
+    type: particle
+    name: mobile-menu
+  logo:
+    type: particle
+    name: logo
+    attributes:
+      foo: bar
+  menu:
+    type: particle
+    name: menu
+  position-0:
+    type: position
+  position-7:
+    type: position
+    attributes:
+      key: position-7
+  position-4:
+    type: position
+    attributes:
+      key: position-4
+  position-5:
+    type: position
+    attributes:
+      key: position-5
+  position-2:
+    type: position
+    attributes:
+      key: position-2
+  position-12:
+    type: position
+    attributes:
+      key: position-12
+  position-6:
+    type: position
+    attributes:
+      key: position-6
+  position-8:
+    type: position
+    attributes:
+      key: position-8
+  position-3:
+    type: position
+    attributes:
+      key: position-3
+  position-9:
+    type: position
+    attributes:
+      key: position-9
+  position-10:
+    type: position
+    attributes:
+      key: position-10
+  position-11:
+    type: position
+    attributes:
+      key: position-11
+  position-14:
+    type: position
+    attributes:
+      key: position-14
