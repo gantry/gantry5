@@ -2,6 +2,12 @@
 {% set attr_id = segment.title|lower|replace({' ': '-'}) %}
 {% set attr_extra = '' %}
 {% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
+{% set boxed = gantry.config.page.body.layout.sections %}
+{% set boxed_segment = segment.attributes.boxed %}
+
+{% if boxed_segment >= 0 %}
+    {% set boxed = boxed_segment %}
+{% endif %}
 
 {% if segment.attributes.extra %}
     {% for attributes in segment.attributes.extra %}
@@ -20,9 +26,9 @@
 {% endset %}
 
 {% if html|trim %}
-    {% if (segment.attributes.boxed is defined and not segment.attributes.boxed) %}
+    {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 1)) %}
         {% set html %}
-        <div class="g-container">{{ html|raw }}</div>
+        <div class="g-container{{ boxed == 1 ? ' g-flushed' }}">{{ html|raw }}</div>
         {% endset %}
     {% endif %}
 
@@ -32,7 +38,7 @@
     </{{ tag_type }}>
     {% endset %}
 
-    {% if (segment.attributes.boxed) %}
+    {% if (boxed == 2) %}
     <div class="g-container">{{ html|raw }}</div>
     {% else %}
     {{ html|raw }}

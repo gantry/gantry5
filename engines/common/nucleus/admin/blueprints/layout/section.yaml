@@ -9,9 +9,12 @@ form:
       label: Layout
       description: Select between a Fullwidth and Boxed.
       isset: true
+      default: -1
       options:
-        0: Fullwidth
-        1: Boxed
+        -1: Default
+        0: Fullwidth (Boxed Content)
+        1: Fullwidth (Flushed Content)
+        2: Boxed
 
     class:
       type: input.selectize
