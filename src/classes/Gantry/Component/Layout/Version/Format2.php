@@ -132,9 +132,10 @@ class Format2
                 'type' => $type,
                 'subtype' => $type !== $section ? $section : false,
                 'title' => ucfirst($id),
-                'attributes' => (object) []
+                'attributes' => []
             ];
             $result = (object) $result;
+            $result->attributes = (object) $result->attributes;
 
             if ($size) {
                 $result->size = $size;
