@@ -32,7 +32,7 @@ form:
       type: select.selectize
       label: Sections Layout
       description: Default layout behavior for Sections
-      default: fullwidth
+      default: 0
       options:
         0: Fullwidth (Boxed Content)
         2: Fullwidth (Flushed Content)
