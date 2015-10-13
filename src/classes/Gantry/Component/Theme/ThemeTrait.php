@@ -475,6 +475,7 @@ trait ThemeTrait
 
             // TODO: remove hard coded types.
             switch ($item->type) {
+                case 'system':
                 case 'pagecontent':
                     break;
 

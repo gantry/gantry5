@@ -1,0 +1,20 @@
+{% set subtype = segment.subtype|default(segment.type) %}
+{% set enabled = gantry.config.get('particles.' ~ subtype ~ '.enabled', 1) %}
+
+{% set html %}
+    {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
+        {% if subtype == 'content' %}
+            {% set class = 'g-content' %}
+            {{ content|raw }}
+        {% elseif subtype == 'messages' %}
+            {% set class = 'g-system-messages' %}
+            {{ gantry.platform.displaySystemMessages()|raw }}
+        {% endif %}
+    {% endif %}
+{% endset %}
+
+{% if html|trim %}
+    <div class="{{ class ~ (segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')) }}">
+        {{ html|raw }}
+    </div>
+{% endif %}
