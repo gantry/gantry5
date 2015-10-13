@@ -1,4 +1,4 @@
-{% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
+{% set attr_class = segment.attributes.class ? segment.attributes.class|e %}
 {% set attr_id = segment.title|lower|replace({' ': '-'}) %}
 {% set attr_extra = '' %}
 {% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
@@ -28,11 +28,13 @@
 {% if html|trim %}
     {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 2)) %}
         {% set html %}
-        <div class="g-container{{ boxed == 2 ? ' g-flushed' }}">{{ html|raw }}</div>
+        <div class="g-container">{{ html|raw }}</div>
         {% endset %}
     {% endif %}
 
     {% set html %}
+    {% if boxed == 2 %}{% set attr_class = attr_class ~ ' g-flushed' %}{% endif %}
+    {% set attr_class = attr_class ? 'class="' ~ attr_class|trim ~ '"' %}
     <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class|raw }}{{ attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
