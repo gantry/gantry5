@@ -19,7 +19,7 @@
         {% endfor %}
     {% endif %}
 
-    {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 1)) %}
+    {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 2)) %}
         {% set html %}
         <div class="g-container{{ boxed == 2 ? ' g-flushed' }}">{{ html|raw }}</div>
         {% endset %}
