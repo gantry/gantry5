@@ -26,9 +26,9 @@
 {% endset %}
 
 {% if html|trim %}
-    {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 1)) %}
+    {% if ((boxed is defined or boxed_segment is defined) and (not boxed or boxed == 2)) %}
         {% set html %}
-        <div class="g-container{{ boxed == 1 ? ' g-flushed' }}">{{ html|raw }}</div>
+        <div class="g-container{{ boxed == 2 ? ' g-flushed' }}">{{ html|raw }}</div>
         {% endset %}
     {% endif %}
 
@@ -38,7 +38,7 @@
     </{{ tag_type }}>
     {% endset %}
 
-    {% if (boxed == 2) %}
+    {% if (boxed == 1) %}
     <div class="g-container">{{ html|raw }}</div>
     {% else %}
     {{ html|raw }}

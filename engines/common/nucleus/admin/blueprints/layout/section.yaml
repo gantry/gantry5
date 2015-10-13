@@ -13,8 +13,8 @@ form:
       options:
         -1: Default
         0: Fullwidth (Boxed Content)
-        1: Fullwidth (Flushed Content)
-        2: Boxed
+        2: Fullwidth (Flushed Content)
+        1: Boxed
 
     class:
       type: input.selectize
