@@ -1446,6 +1446,16 @@
 #g5-container .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
 }
+#g5-container .g-flushed {
+  padding: 0 !important;
+}
+#g5-container .g-flushed .g-content {
+  padding: 0;
+  margin: 0;
+}
+#g5-container .g-flushed .g-container {
+  width: 100%;
+}
 #g5-container .full-width {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -3767,6 +3777,22 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: none;
   opacity: 0;
   visibility: hidden;
+}
+#g5-container .lm-blocks .atoms-notice {
+  background-color: #9055AF;
+  border: 4px solid #fff;
+  color: #fff;
+  padding: 0.938rem;
+  margin: 0.625rem;
+  text-align: center;
+}
+#g5-container .lm-blocks .atoms-notice a {
+  color: #d4bde0;
+  border-bottom: 1px dotted #d4bde0;
+  font-weight: bold;
+}
+#g5-container .lm-blocks .atoms-notice a:hover {
+  color: white;
 }
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
