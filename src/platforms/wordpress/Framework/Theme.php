@@ -322,7 +322,7 @@ class Theme extends AbstractTheme
         add_action('init', [$this, 'register_menus']);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
-        add_action('wp_enqueue_scripts', [$this, 'prepare_particles']);
+        add_action('wp_enqueue_scripts', [$this, 'prepare_particles'], 15);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts'], 20);
         add_action('wp_head', [$this, 'print_styles'], 20);
