@@ -12,7 +12,7 @@
         - Fixed issue where Tag fields wouldn't trigger the indicator change
 
 # 5.1.6
-## XX/XX/2015
+## 14/10/2015
 
 1. [Common](#common)
     2. [](#improved)
