@@ -7,7 +7,7 @@ form:
     boxed:
       type: select.selectize
       label: Layout
-      description: Select between a Fullwidth and Boxed.
+      description: Select the Layout behavior. Default refers to Page Settings.
       isset: true
       default: -1
       options:
