@@ -1,7 +1,7 @@
-{% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
-{% set attr_id = segment.title|lower|replace({' ': '-'}) %}
+{% set tag_type = segment.subtype|default('section') %}
+{% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
+{% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class ~ '"' %}
 {% set attr_extra = '' %}
-{% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
 
 {% if segment.attributes.extra %}
     {% for attributes in segment.attributes.extra %}
@@ -27,7 +27,7 @@
     {% endif %}
 
     {% set html %}
-    <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class|raw }}{{ attr_extra|raw }}>
+    <{{ tag_type }} id="{{ attr_id }}"{{ attr_class|raw }}{{ attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
     {% endset %}

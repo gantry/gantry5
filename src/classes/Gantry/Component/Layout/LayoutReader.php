@@ -84,7 +84,7 @@ class LayoutReader
      * @param int $version
      * @return mixed
      */
-    public static function store(array $preset, array $structure, $version = 1)
+    public static function store(array $preset, array $structure, $version = 2)
     {
         $reader = static::getClass($version);
 

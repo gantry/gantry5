@@ -20,7 +20,7 @@ class Format2
 {
     protected $scopes = [0 => 'grid', 1 => 'block'];
     protected $sections = ['atoms', 'wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
-    protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer'];
+    protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer', 'main'];
 
     protected $data;
     protected $atoms;
@@ -130,7 +130,7 @@ class Format2
                 'id' => $section_id,
                 'layout' => true,
                 'type' => $type,
-                'subtype' => $type !== $section ? $section : false,
+                'subtype' => in_array($section, $this->sections) ? $section : 'section',
                 'title' => ucfirst($id),
                 'attributes' => []
             ];
@@ -250,7 +250,6 @@ class Format2
             if ($type === 'atom') {
                 // Handle atoms.
                 $this->atoms[] = $id;
-                $array = 'content';
             } elseif (!in_array($type, $this->sections)) {
                 // Special handling for pagecontent.
                if ($type === 'pagecontent') {
@@ -260,28 +259,29 @@ class Format2
                 // Special handling for positions.
                 if ($type === 'position') {
                     $id = $child['attributes']['key'];
+                    if (strpos($id, 'position-') !== 0) {
+                        $id = 'position-' . $id;
+                    }
                     unset ($child['attributes']['title'], $child['attributes']['key']);
                 }
                 $value = $id;
-                $id = null;
-                $array = 'content';
                 if (!empty($child['attributes']['enabled'])) {
                     unset ($child['attributes']['enabled']);
                 }
             } else {
                 $value = $this->build($child);
-                $array = 'structure';
             }
             // Clean up defaults.
-            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === ucfirst($child['id'])) {
+            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === ucfirst($id)) {
                 unset ($child['title']);
             }
+            $subtype = $child['subtype'];
             if (!$child['subtype']) {
                 unset ($child['subtype']);
             }
             unset ($child['id'], $child['children']);
             // Embed size into array key/value.
-            if ($id && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
+            if (!is_string($value) && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
                 $size = $content['attributes']['size'];
             }
             if (isset($child['attributes']['size'])) {
@@ -297,14 +297,16 @@ class Format2
                 $id = null;
             }
             if ($value) {
-                if ($id) {
+                if ($id && !is_string($value)) {
                     $result[trim("{$id} {$size}")] = $value;
                 } else {
                     $result[] = $value;
                 }
             }
-            if ($id && count($child) > 1) {
-                $this->{$array}[$id] = $child;
+            if ($id && !is_string($value) && count($child) > 1) {
+                $this->structure[$id] = $child;
+            } elseif (($subtype && $id !== $subtype) || count($child) > 1) {
+                $this->content[$id] = $child;
             }
         }
 

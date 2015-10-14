@@ -5,7 +5,7 @@
 {% endset %}
 
 {% if html|trim %}
-    {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e %}
+    {% set id = segment.attributes.id|default('g-' ~ segment.id) %}
     {% set attr_extra = '' %}
 
     {% if segment.attributes.extra %}
@@ -16,7 +16,7 @@
         {% endfor %}
     {% endif %}
 
-    <div{{ attr_extra|raw }} class="g-wrapper{{ classes }}">
+    <div id="{{ id }}"{{ attr_extra|raw }} class="{{ segment.attributes.class|default(id) }}">
         {{ html|raw }}
     </div>
 {% endif %}

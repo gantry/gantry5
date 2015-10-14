@@ -66,9 +66,7 @@ class Format0 extends Format1
                 $item->children = $this->object($item->children, false);
             }
 
-            if ($container) {
-                $this->normalize($item);
-            }
+            $this->normalize($item, $container);
         }
 
         return $items;

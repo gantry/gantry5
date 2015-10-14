@@ -22,6 +22,8 @@ class Format1
 
     protected $data;
 
+    protected $ci = 0;
+
     public function __construct(array $data)
     {
         $this->data = $data;
@@ -64,12 +66,26 @@ class Format1
         return ['preset' => $preset, 'children' => $structure];
     }
 
-    protected function normalize(&$item)
+    protected function normalize(&$item, $container = false)
     {
-        if (isset($item->attributes->boxed)) {
+        // Update section to match the new standards.
+        if ($item->type === 'section') {
+            $section = strtolower($item->title);
+            $item->id = $section;
+            $item->subtype = (in_array($section, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $section : 'section');
+        }
+        if ($item->type === 'offcanvas') {
+            $item->id = $item->type;
+        }
+        if ($item->type === 'container') {
+            $item->id = $item->type . '-' . ++$this->ci;
+        }
+
+        if (!$container || isset($item->attributes->boxed)) {
             return;
         }
 
+        // Update boxed model to match the new standards.
         if (isset($item->children) && count($item->children) === 1) {
             $child = reset($item->children);
             if ($item->type === 'container') {
@@ -118,9 +134,9 @@ class Format1
             $result = (object) [
                 'id' => $this->id(),
                 'type' => (in_array($field, ['atoms', 'offcanvas']) ? $field : 'section'),
-                'subtype' => false,
+                'subtype' => (in_array($field, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $field : 'section'),
                 'title' => ucfirst($field),
-                'attributes' => (object) []
+                'attributes' => (object) ['id' => 'g-' . $field]
             ];
 
             if ($size) {
@@ -144,11 +160,9 @@ class Format1
             }
         }
 
-        if ($container) {
-            $this->normalize($result);
-        }
+        $this->normalize($result, $container);
 
-        return (object) $result;
+        return $result;
     }
 
     /**
