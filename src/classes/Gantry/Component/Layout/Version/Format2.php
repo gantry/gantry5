@@ -109,7 +109,8 @@ class Format2
 
             // Get section and its type.
             $section = reset($list);
-            $type = (in_array($section, $this->sections) ? $section : 'section');
+            $type = (in_array($section, $this->sections)) ? $section : 'section';
+            $subtype = ($type !== 'section' || in_array($section, $this->sections)) ? $section : 'section';
 
             if ($type == 'grid') {
                 $scope = 1;
@@ -130,8 +131,8 @@ class Format2
                 'id' => $section_id,
                 'layout' => true,
                 'type' => $type,
-                'subtype' => in_array($section, $this->sections) ? $section : 'section',
-                'title' => ucfirst($id),
+                'subtype' => $subtype,
+                'title' => $this->getTitle($type, $subtype, $id),
                 'attributes' => []
             ];
             $result = (object) $result;
@@ -164,6 +165,41 @@ class Format2
         return $result;
     }
 
+    protected function getTitle($type, $subtype, $id)
+    {
+        if (in_array($type, $this->sections)) {
+            if ($type === 'offcanvas') {
+                return 'Offcanvas';
+            }
+
+            return ucfirst($id);
+        }
+
+        if ($type === 'position') {
+            return ucfirst($id);
+        }
+
+        if ($type === 'system') {
+            if ($subtype === 'messages') {
+                return 'System Messages';
+            }
+            if ($subtype === 'content') {
+                return 'Page Content';
+            }
+        }
+
+        // TODO: remove
+        if ($type === 'pagecontent') {
+            if ($subtype == 'system-messages') {
+                return 'System Messages';
+            } else {
+                return 'Page Content';
+            }
+        }
+
+        return ucfirst($subtype ?: $type);
+    }
+
     /**
      * @param string $field
      * @param int $scope
@@ -190,25 +226,24 @@ class Format2
         }
         $subtype = implode('-', $list);
 
-        $title = ucfirst($subtype ?: $type);
-
-        if ($type === 'system' && $subtype === 'messages') {
-            $subtype = 'system-messages';
-            $type = 'pagecontent';
-            $title = 'System Messages';
-        }
-        if ($type === 'system' && $subtype === 'content') {
-            $subtype = 'pagecontent';
-            $type = 'pagecontent';
-            $title = 'Page Content';
+        if ($type === 'system') {
+            if ($subtype === 'messages') {
+                $type = 'pagecontent';
+                $subtype = 'system-messages';
+            }
+            if ($subtype === 'content') {
+                $type = 'pagecontent';
+                $subtype = 'pagecontent';
+            }
         }
 
         if ($type === 'position') {
             $key = $type . ($subtype ? "-{$subtype}" : '') . ($id !== null ? "-{$id}" : '');
             $subtype = false;
             $id = $key;
-            $title = ucfirst($key);
         }
+
+        $title = $this->getTitle($type, $subtype, $id);
 
         $result = isset($this->data['content'][$type_subtype]) ? (array) $this->data['content'][$type_subtype] : [];
         $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
@@ -242,11 +277,14 @@ class Format2
         $result = [];
         $ctype = isset($content['type']) ? $content['type'] : null;
 
+        // Clean up all items for saving.
         foreach ($content['children'] as $child) {
             $value = null;
             $size = null;
             $id = $child['id'];
             $type = $child['type'];
+            $subtype = $child['subtype'];
+
             if ($type === 'atom') {
                 // Handle atoms.
                 $this->atoms[] = $id;
@@ -254,8 +292,9 @@ class Format2
                 // Special handling for pagecontent.
                if ($type === 'pagecontent') {
                    $child['type'] = $type = 'system';
-                   $child['subtype'] = $child['subtype'] === 'pagecontent' ? 'content' : 'messages';
+                   $child['subtype'] = $subtype = ($subtype === 'pagecontent') ? 'content' : 'messages';
                 }
+
                 // Special handling for positions.
                 if ($type === 'position') {
                     $id = $child['attributes']['key'];
@@ -264,22 +303,35 @@ class Format2
                     }
                     unset ($child['attributes']['title'], $child['attributes']['key']);
                 }
+
                 $value = $id;
                 if (!empty($child['attributes']['enabled'])) {
                     unset ($child['attributes']['enabled']);
                 }
             } else {
+                // Recursively handle structure.
                 $value = $this->build($child);
+
+                if ($id === 'atoms') {
+                    continue;
+                }
             }
+
             // Clean up defaults.
-            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === ucfirst($id)) {
+            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === $this->getTitle($type, $subtype, $id)) {
                 unset ($child['title']);
             }
-            $subtype = $child['subtype'];
-            if (!$child['subtype']) {
+            if (!$subtype) {
                 unset ($child['subtype']);
             }
+
+            // Remove id and children as we store data in flat structure with id being the key.
             unset ($child['id'], $child['children']);
+
+            if ($type === 'offcanvas' && isset($child['attributes']['name'])) {
+                unset ($child['attributes']['name']);
+            }
+
             // Embed size into array key/value.
             if (!is_string($value) && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
                 $size = $content['attributes']['size'];
@@ -290,22 +342,33 @@ class Format2
                 }
                 unset ($child['attributes']['size']);
             }
+
+            // Remove attributes if there aren't any.
             if (!$child['attributes']) {
                 unset ($child['attributes']);
             }
-            if (in_array($child['type'], ['grid', 'block']) && count($child) === 1) {
+
+            // Special handling for grid and block elements.
+            if (in_array($type, ['grid', 'block']) && count($child) === 1) {
                 $id = null;
             }
+
+            // Add item to the layout (skip atoms).
             if ($value) {
                 if ($id && !is_string($value)) {
+                    // Add structural item.
                     $result[trim("{$id} {$size}")] = $value;
                 } else {
+                    // Add content or simple grid / block item.
                     $result[] = $value;
                 }
             }
-            if ($id && !is_string($value) && count($child) > 1) {
+
+            // Add item configuration if not empty.
+            $count = count($child) - intval(isset($child['type'])) - intval(isset($child['subtype']));
+            if ($id && !is_string($value) && $count && $type !== 'atom') {
                 $this->structure[$id] = $child;
-            } elseif (($subtype && $id !== $subtype) || count($child) > 1) {
+            } elseif (($subtype && $id !== $subtype) || $count) {
                 $this->content[$id] = $child;
             }
         }
@@ -324,7 +387,7 @@ class Format2
         // Special handling for pagecontent.
        if ($type === 'pagecontent') {
            $type = 'system';
-           $subtype = $subtype === 'pagecontent' ? 'content' : 'messages';
+           $subtype = $subtype === 'system-messages' ? 'messages' : 'content';
         }
 
         $result = [];
