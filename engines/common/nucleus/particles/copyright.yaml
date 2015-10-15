@@ -35,7 +35,7 @@ form:
     target:
       type: select.selectize
       label: Link Target
-      description: Open the link in a new window, or self
+      description: Open the link in a new window or self
       default: _self
       options:
         _blank: New Window
