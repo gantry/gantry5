@@ -1,0 +1,24 @@
+<h2 class="page-title">
+    <span class="title">Atoms</span>
+</h2>
+
+<div>
+[{{ atoms|join('] [') }}]
+
+{% if atoms_stored is not null %}
+    {# Deprecated Atoms from Layout (< 5.2.0) #}
+    <p>These atoms have been retrieved from Layout. They need to be stored in the new format / location / value and removed from the Layout</p>
+    <ul>
+    {% for atom in atoms_stored %}
+        <li>
+            <strong>{{ atom.title }}</strong> (<small>{{ atom.subtype }}</small>)
+            <br />
+            Attributes: <pre><code>{{ atom.attributes|json_encode }}</code></pre>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    empty
+{% endif %}
+
+</div>

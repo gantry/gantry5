@@ -20,3 +20,5 @@ form:
       label: Custom Content
       description: Anything in this field will be appended to the <head>
 
+    atoms:
+      type: input.hidden

@@ -18,6 +18,7 @@ use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Layout\Layout;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
@@ -29,44 +30,24 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Page extends HtmlController
 {
     protected $httpVerbs = [
-        'GET' => [
-            '/'                 => 'index'
+        'GET'    => [
+            '/' => 'index'
         ],
-        'POST' => [
-            '/'                 => 'save',
-            '/*'      => 'save',
-            '/*/**'   => 'formfield'
+        'POST'   => [
+            '/'     => 'save',
+            '/*'    => 'save',
+            '/*/**' => 'formfield'
         ],
-        'PUT' => [
-            '/'            => 'save'
+        'PUT'    => [
+            '/' => 'save'
         ],
-        'PATCH' => [
-            '/'            => 'save'
+        'PATCH'  => [
+            '/' => 'save'
         ],
         'DELETE' => [
-            '/'            => 'forbidden'
+            '/' => 'forbidden'
         ]
     ];
-
-    public function index()
-    {
-        $configuration = $this->params['configuration'];
-
-        if($configuration == 'default') {
-            $this->params['overrideable'] = false;
-        } else {
-            $this->params['defaults'] = $this->container['defaults'];
-            $this->params['overrideable'] = true;
-        }
-
-        $this->params['page'] = $this->container['page']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}";
-        $this->params['page_id'] = $configuration;
-
-        //$this->params['layout'] = LayoutObject::instance($configuration);
-
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
-    }
 
     public function validate($setting)
     {
@@ -104,11 +85,11 @@ class Page extends HtmlController
         }
 
         // Fire save event.
-        $event = new Event;
-        $event->gantry = $this->container;
-        $event->theme = $this->container['theme'];
+        $event             = new Event;
+        $event->gantry     = $this->container;
+        $event->theme      = $this->container['theme'];
         $event->controller = $this;
-        $event->data = $data;
+        $event->data       = $data;
         $this->container->fireEvent('admin.page.save', $event);
 
         return $id ? $this->display($id) : $this->index();
@@ -121,8 +102,8 @@ class Page extends HtmlController
 
         // Save layout into custom directory for the current theme.
         $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}/page", true, true);
-        $filename = "{$save_dir}/{$id}.yaml";
+        $save_dir      = $locator->findResource("gantry-config://{$configuration}/page", true, true);
+        $filename      = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
         if (!is_array($data)) {
@@ -131,11 +112,77 @@ class Page extends HtmlController
             }
         } else {
             $blueprints = new BlueprintsForm($this->container['page']->get($id));
-            $config = new Config($data, function() use ($blueprints) { return $blueprints; });
+            $config     = new Config($data, function () use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
         }
         $file->free();
+    }
+
+    public function index()
+    {
+        $configuration = $this->params['configuration'];
+
+        if ($configuration == 'default') {
+            $this->params['overrideable'] = false;
+        } else {
+            $this->params['defaults']     = $this->container['defaults'];
+            $this->params['overrideable'] = true;
+        }
+
+        $this->params['page']         = $this->container['page']->group();
+        $this->params['atoms']        = $this->getAtoms();
+        $this->params['atoms_stored'] = $this->getDeprecatedAtoms();
+        $this->params['route']        = "configurations.{$this->params['configuration']}";
+        $this->params['page_id']      = $configuration;
+
+        //$this->params['layout'] = LayoutObject::instance($configuration);
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
+    }
+
+    protected function getAtoms($onlyEnabled = false)
+    {
+        $config = $this->container['config'];
+
+        $atoms = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($atoms as $name => $atom) {
+            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
+            $atomName = isset($atom['name']) ? $atom['name'] : $name;
+
+            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
+                $list[$type][$name] = $atomName;
+            }
+        }
+
+        return $list['atom'];
+    }
+
+    protected function getDeprecatedAtoms()
+    {
+        $id     = $this->params['configuration'];
+        $layout = $this->getLayout($id);
+        $list   = null;
+
+        $atoms = array_filter($layout->toArray(), function ($section) {
+            return $section->type == 'atoms' && isset($section->children) && count($section->children[0]->children);
+        });
+
+        if (count($atoms)) {
+            $list = [];
+            foreach (array_shift($atoms)->children[0]->children as $block) {
+                $list[] = $block->children[0];
+            }
+        }
+
+        return $list;
+    }
+
+    protected function getLayout($name)
+    {
+        return Layout::instance($name);
     }
 
     public function formfield($id)
