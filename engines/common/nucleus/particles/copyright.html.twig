@@ -7,5 +7,9 @@
 Copyright &copy;
 {% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
 {{ end_date|e }}
+{% if particle.link %}
+<a href="{{ particle.link }}" target="{{ particle.target }}">{{ particle.owner|e }}</a>
+{% else %}
 {{ particle.owner|e }}
+{% endif %}
 {% endblock %}
