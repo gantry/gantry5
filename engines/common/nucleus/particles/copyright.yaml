@@ -26,3 +26,17 @@ form:
       type: input.text
       label: Copyright owner
       description: Add copyright owner name.
+    
+    link:
+      type: input.text
+      label: Link
+      description: Copyright Owner Link
+    
+    target:
+      type: select.selectize
+      label: Link Target
+      description: Open the link in a new window, or self
+      default: _self
+      options:
+        _blank: New Window
+        _self: Self
