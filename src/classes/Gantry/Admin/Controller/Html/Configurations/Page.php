@@ -130,34 +130,20 @@ class Page extends HtmlController
             $this->params['overrideable'] = true;
         }
 
-        $this->params['page']         = $this->container['page']->group();
-        $this->params['atoms']        = $this->getAtoms();
-        $this->params['atoms_stored'] = $this->getDeprecatedAtoms();
-        $this->params['route']        = "configurations.{$this->params['configuration']}";
-        $this->params['page_id']      = $configuration;
+        $deprecated = $this->getDeprecatedAtoms();
+        if ($deprecated) {
+            $this->container['config']->set('page.head.atoms', json_encode($deprecated));
+        }
+
+        $this->params['page']             = $this->container['page']->group();
+        $this->params['atoms']            = $this->getAtoms();
+        $this->params['atoms_deprecated'] = $deprecated;
+        $this->params['route']            = "configurations.{$this->params['configuration']}";
+        $this->params['page_id']          = $configuration;
 
         //$this->params['layout'] = LayoutObject::instance($configuration);
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
-    }
-
-    protected function getAtoms($onlyEnabled = false)
-    {
-        $config = $this->container['config'];
-
-        $atoms = $this->container['particles']->all();
-
-        $list = [];
-        foreach ($atoms as $name => $atom) {
-            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
-            $atomName = isset($atom['name']) ? $atom['name'] : $name;
-
-            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
-                $list[$type][$name] = $atomName;
-            }
-        }
-
-        return $list['atom'];
     }
 
     protected function getDeprecatedAtoms()
@@ -183,6 +169,25 @@ class Page extends HtmlController
     protected function getLayout($name)
     {
         return Layout::instance($name);
+    }
+
+    protected function getAtoms($onlyEnabled = false)
+    {
+        $config = $this->container['config'];
+
+        $atoms = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($atoms as $name => $atom) {
+            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
+            $atomName = isset($atom['name']) ? $atom['name'] : $name;
+
+            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
+                $list[$type][$name] = $atomName;
+            }
+        }
+
+        return $list['atom'];
     }
 
     public function formfield($id)

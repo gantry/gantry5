@@ -5,11 +5,11 @@
 <div>
 [{{ atoms|join('] [') }}]
 
-{% if atoms_stored is not null %}
+{% if atoms_deprecated is not null %}
     {# Deprecated Atoms from Layout (< 5.2.0) #}
     <p>These atoms have been retrieved from Layout. They need to be stored in the new format / location / value and removed from the Layout</p>
     <ul>
-    {% for atom in atoms_stored %}
+    {% for atom in atoms_deprecated %}
         <li>
             <strong>{{ atom.title }}</strong> (<small>{{ atom.subtype }}</small>)
             <br />
@@ -18,7 +18,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    empty
+    <div>empty</div>
 {% endif %}
-
+{{ dump(atoms_deprecated|json_encode) }}
 </div>
