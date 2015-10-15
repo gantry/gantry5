@@ -246,10 +246,14 @@ class Format1
         }
         $key = implode('-', $result);
 
-        if (!isset($this->keys[$key])) {
-            $this->keys[$key] = 0;
+        while ($id = rand(1000, 9999)) {
+            if (!isset($this->keys[$key][$id])) {
+                break;
+            }
         }
 
-        return $key . '-'. ++$this->keys[$key];
+        $this->keys[$key][$id] = true;
+
+        return $key . '-'. $id;
     }
 }
