@@ -52,10 +52,6 @@ class Format0 extends Format1
         foreach ($items as &$item) {
             $item = (object) $item;
 
-            if (!isset($item->id)) {
-                $item->id = $this->id();
-            }
-
             if (isset($item->attributes) && (is_array($item->attributes) || is_object($item->attributes))) {
                 $item->attributes = (object) $item->attributes;
             } else {

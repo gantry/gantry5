@@ -22,7 +22,7 @@ class Format1
 
     protected $data;
 
-    protected $ci = 0;
+    protected $keys = [];
 
     public function __construct(array $data)
     {
@@ -68,17 +68,18 @@ class Format1
 
     protected function normalize(&$item, $container = false)
     {
-        // Update section to match the new standards.
         if ($item->type === 'section') {
+            // Update section to match the new standards.
             $section = strtolower($item->title);
             $item->id = $section;
             $item->subtype = (in_array($section, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $section : 'section');
-        }
-        if ($item->type === 'offcanvas') {
+        } elseif ($item->type === 'offcanvas') {
             $item->id = $item->type;
-        }
-        if ($item->type === 'container') {
-            $item->id = $item->type . '-' . ++$this->ci;
+            unset ($item->attributes->name, $item->attributes->boxed);
+            return;
+        } else {
+            // Update all ids to match the new standards.
+            $item->id = $this->id($item->type, $item->subtype);
         }
 
         if (!$container || isset($item->attributes->boxed)) {
@@ -116,11 +117,13 @@ class Format1
     {
         if (is_numeric($field))  {
             // Row or block
-            $result = (object) ['id' => $this->id(), 'type' => $this->scopes[$scope], 'subtype' => false, 'attributes' => (object) []];
+            $type = $this->scopes[$scope];
+            $result = (object) ['id' => null, 'type' => $type, 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
         } elseif (substr($field, 0, 9) == 'container') {
             // Container
-            $result = (object) ['id' => $this->id(), 'type' => 'container', 'subtype' => false, 'attributes' => (object) []];
+            $type = 'container';
+            $result = (object) ['id' => null, 'type' => $type, 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
             $id = substr($field, 10) ?: null;
             if ($id !== null) {
                 $result->attributes->id = $id;
@@ -130,11 +133,14 @@ class Format1
             $list = explode(' ', $field, 2);
             $field = array_shift($list);
             $size = ((float) array_shift($list)) ?: null;
+            $type = in_array($field, ['atoms', 'offcanvas']) ? $field : 'section';
+            $subtype = in_array($field, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $field : 'section';
 
             $result = (object) [
-                'id' => $this->id(),
-                'type' => (in_array($field, ['atoms', 'offcanvas']) ? $field : 'section'),
-                'subtype' => (in_array($field, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $field : 'section'),
+                'id' => null,
+                'type' => $type,
+                'subtype' => $subtype,
+                'layout' => true,
                 'title' => ucfirst($field),
                 'attributes' => (object) ['id' => 'g-' . $field]
             ];
@@ -176,16 +182,19 @@ class Format1
         $list2 = explode('-', array_shift($list), 2);
         $size = ((float) array_shift($list)) ?: null;
         $type = array_shift($list2);
-        $subtype = array_shift($list2);
+        $subtype = array_shift($list2) ?: false;
         $title = ucfirst($subtype ?: $type);
 
         $attributes = new \stdClass;
 
         $attributes->enabled = 1;
 
+        if ($type === 'pagecontent') {
+            $title = 'Page Content';
+        }
         if ($type === 'system' && $subtype === 'messages') {
-            $subtype = $type . '-' . $subtype;
             $type = 'pagecontent';
+            $subtype = 'system-messages';
             $title = 'System Messages';
         }
 
@@ -194,13 +203,7 @@ class Format1
             $subtype = false;
         }
 
-        if ($subtype) {
-            $result = ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
-        } else {
-            $result = ['id' => $this->id(), 'title' => $title, 'type' => $type, 'subtype' => false, 'attributes' => $attributes];
-        }
-
-        $result = (object) $result;
+        $result = (object) ['id' => $this->id($type, $subtype), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
 
         if ($scope > 1) {
             if ($size) {
@@ -209,26 +212,44 @@ class Format1
             return $result;
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id(), 'type' => 'block', 'subtype' => false, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
                 $result->attributes->size = $size;
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => $this->id(), 'type' => 'grid', 'subtype' => false, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;
     }
 
-    protected function id()
+
+    protected function id($type, $subtype = null)
     {
-        // TODO: improve
-        $key = md5(rand());
+        if ($type === 'atoms') {
+            return $type;
+        }
 
-        $args = str_split($key, 4);
-        array_unshift($args, '%s%s-%s-%s-%s-%s%s%s');
+        // Special handling for pagecontent.
+        if ($type === 'pagecontent') {
+            $type = 'system';
+            $subtype = ($subtype === 'system-messages' ? 'messages' : 'content');
+        }
 
-        return call_user_func_array('sprintf', $args);
+        $result = [];
+        if ($type !== 'particle' && $type !== 'atom') {
+            $result[] = $type;
+        }
+        if ($subtype) {
+            $result[] = $subtype;
+        }
+        $key = implode('-', $result);
+
+        if (!isset($this->keys[$key])) {
+            $this->keys[$key] = 0;
+        }
+
+        return $key . '-'. ++$this->keys[$key];
     }
 }
