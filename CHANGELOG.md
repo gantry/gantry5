@@ -1,3 +1,14 @@
+# 5.2.0
+## XX/XX/2015
+1. [Common](#common)
+    1. [](#new)
+        - Layouts: New file syntax, which combines the best of both existing file syntaxes into a single format
+        - Layouts: Add support for nested wrapper divs with customizable id and classes (#548)
+        - Moved atoms from Layout into Page Settings
+    2. [](#improved)
+        - Layouts: Add support for customizing section ids (was bound to title before)
+    3. [](#bugfix)
+
 # 5.1.6
 ## 14/10/2015
 
