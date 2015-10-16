@@ -1,3 +1,9 @@
+# 5.1.7
+## XX/XX/2015
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
 # 5.1.6
 ## 14/10/2015
 
