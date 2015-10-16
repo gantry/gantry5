@@ -115,17 +115,25 @@ after_deploy:
   - export WPREPO=$TRAVIS_BUILD_DIR/../wprepo
   - if [ ! -z "$TRAVIS_TAG" ]; then
       mkdir $WPREPO && cd $WPREPO;
+      echo "# Checking out WP Plugin";
       svn checkout $G5_WP_REPO --no-auth-cache --non-interactive --depth empty https://plugins.svn.wordpress.org/gantry5 .;
+      echo "# Checking out Tags and Trunk";
       svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth empty tags;
       svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth infinity trunk;
-      unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && rm -rf trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
-      svn delete --keep-local trunk;
-      svn add trunk;
-      svn status | grep '^?' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn add;
-      svn status | grep '^!' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn delete --force;
-      svn commit $G5_WP_REPO $WPREPO --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
-      svn copy trunk tags/$TRAVIS_TAG;
-      svn commit $G5_WP_REPO $WPREPO --message "[automatic] Created Gantry $TRAVIS_TAG Tag";
+      echo "# Unzipping Release into emptied Trunk";
+      unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && svn delete trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
+      echo "# Adding and Removing based on svn status";
+      cd $WPREPO/trunk;
+      svn status | grep '^?' | awk '{print $2}' | xargs svn add;
+      svn status | grep '^!' | awk '{print $2}' | xargs svn delete --force;
+      echo "# Committing changes to Trunk";
+      svn commit $G5_WP_REPO --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
+      echo "# Creating Tag";
+      cd $WPREPO;
+      svn copy trunk/ tags/$TRAVIS_TAG/;
+      echo "# Committing Tag";
+      cd $WPREPO/tags/$TRAVIS_TAG;
+      svn commit $G5_WP_REPO --message "[automatic] Created Gantry $TRAVIS_TAG Tag";
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;

@@ -123,7 +123,9 @@ abstract class Widgets
         $gantry5Widget = !empty($widgetObj->gantry5);
 
         // Do not do anything yet if we are only preparing layout and widget isn't Gantry 5 compatible.
-        if (!$gantry5Widget && !empty($params['prepare_layout'])) {
+        if (!$gantry5Widget && !empty($params['prepare_layout'])
+            && $widgetData['id'] !== 'roksprocket_options'
+            && $widgetData['id'] !== 'rokgallery_options') {
             return '@@DEFERRED@@';
         }
 
