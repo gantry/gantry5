@@ -7,5 +7,5 @@
 Copyright &copy;
 {% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
 {{ end_date|e }}
-{{ particle.owner|e }}
+{{ particle.owner|raw }}
 {% endblock %}
