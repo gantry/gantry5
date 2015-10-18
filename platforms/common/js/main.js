@@ -370,11 +370,39 @@ var $             = require('elements'),
     request       = require('agent'),
 
     modal         = require('../ui').modal,
+    guid          = require('mout/random/guid'),
     trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxURL    = require('../utils/get-ajax-url').global;
+    getAjaxURL    = require('../utils/get-ajax-url').global,
+
+    History       = require('../utils/history'),
+    getParam      = require('mout/queryString/getParam'),
+    setParam      = require('mout/queryString/setParam');
+
+
+var refreshWordpressLinks = function (title, value) {
+    if (GANTRY_PLATFORM == 'wordpress') {
+        // refresh URIs with new configuration name
+        var replace = title.replace(/[^a-z\d_-\s]/i, '_').toLowerCase(),
+            find = $('[href*="/' + value + '/"]'),
+            currentURI = History.getPageUrl(),
+            currentView = getParam(currentURI, 'view');
+
+        if (find) {
+            find.forEach(function(lnk){
+                lnk = $(lnk);
+                var href = lnk.href().replace('/' + value + '/', '/' + replace + '/');
+                lnk.href(href);
+            });
+        }
+
+        currentView = currentView.replace('/' + value + '/', '/' + replace + '/');
+        currentURI = setParam(currentURI, 'view', currentView);
+        History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+    }
+}
 
 ready(function() {
     var body = $('body');
@@ -430,6 +458,9 @@ ready(function() {
                         editable.style('display', 'none')
                     }
 
+                    // fix Wordpress non unique IDs by refreshing all hrefs
+                    refreshWordpressLinks(title, value);
+
                     element.removeClass('disabled');
                     element.removeClass('fa-spin-fast fa-spinner').addClass('fa-pencil');
                 });
@@ -446,7 +477,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"agent":67,"elements":98,"elements/domready":96,"mout/string/trim":233}],5:[function(require,module,exports){
+},{"../ui":46,"../utils/get-ajax-suffix":60,"../utils/get-ajax-url":61,"../utils/history":64,"agent":67,"elements":98,"elements/domready":96,"mout/queryString/getParam":209,"mout/queryString/setParam":211,"mout/random/guid":213,"mout/string/trim":233}],5:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -629,6 +660,8 @@ var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
     storage    = require('prime/map'),
     deepEquals = require('mout/lang/deepEquals'),
+    is         = require('mout/lang/is'),
+    isString   = require('mout/lang/isString'),
     hasOwn     = require('mout/object/has'),
     forEach    = require('mout/collection/forEach'),
     invoke     = require('mout/array/invoke'),
@@ -638,7 +671,7 @@ var ready      = require('elements/domready'),
 
 var originals,
     collectFieldsValues = function(keys) {
-        var map = new storage(),
+        var map      = new storage(),
             defaults = $('[data-g-styles-defaults]');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
@@ -660,7 +693,7 @@ var originals,
 
         fields.forEach(function(field) {
             field = $(field);
-            var key = field.attribute('name'),
+            var key     = field.attribute('name'),
                 isInput = !hasOwn(defaults, key);
 
             if (field.type() == 'checkbox' && !field.value().length) { field.value('0'); }
@@ -692,9 +725,9 @@ ready(function() {
     originals = collectFieldsValues();
 
     compare.single = function(event, element) {
-        var parent = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
-            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
-            isOverride = parent ? parent.find('.settings-param-toggle') : false,
+        var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
+            target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
+            isOverride  = parent ? parent.find('.settings-param-toggle') : false,
             isNewWidget = false;
 
         if (!parent) { return; }
@@ -718,13 +751,19 @@ ready(function() {
         }
 
         compare.blanks(event, parent.find('.settings-param-field'));
-        compare.whole();
+        compare.whole('force');
         compare.presets();
     };
 
-    compare.whole = function() {
-        var equals = deepEquals(originals, collectFieldsValues()),
-            save = $('[data-save]');
+    compare.whole = function(force) {
+        var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
+                if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
+                    return a.toLowerCase() == b.toLowerCase();
+                } else {
+                    return is(a, b);
+                }
+            }),
+            save   = $('[data-save]');
 
         if (!save) { return; }
 
@@ -819,7 +858,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"mout/object/has":196,"prime/map":264}],7:[function(require,module,exports){
+},{"../utils/flags-state":59,"../utils/history":64,"elements/attributes":93,"elements/domready":96,"mout/array/invoke":143,"mout/collection/forEach":152,"mout/lang/deepEquals":165,"mout/lang/is":166,"mout/lang/isString":175,"mout/object/has":196,"prime/map":264}],7:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -12816,7 +12855,6 @@ domready(function() {
         if (currentNonce !== GANTRY_AJAX_NONCE) {
             currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
             History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
-            window.HHH = History;
         }
     }
 
