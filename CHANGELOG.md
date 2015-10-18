@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908) 
     3. [](#bugfix)
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
         - Fixed Admin Styles issue where indicator wouldn't show in certain cases. 
