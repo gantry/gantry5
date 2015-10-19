@@ -49,76 +49,6 @@ class Page extends HtmlController
         ]
     ];
 
-    public function validate($setting)
-    {
-        $path = implode('.', array_slice(func_get_args(), 1, -1));
-
-        // Validate only exists for JSON.
-        if (empty($this->params['ajax'])) {
-            $this->undefined();
-        }
-
-        // Load particle blueprints.
-        $validator = $this->container['particles']->get($setting);
-
-        // Create configuration from the defaults.
-        $data = new Config(
-            [],
-            function () use ($validator) {
-                return $validator;
-            }
-        );
-
-        $data->join($path, $this->request->post->getArray('data'));
-
-        // TODO: validate
-
-        return new JsonResponse(['data' => $data->get($path)]);
-    }
-
-    public function save($id = null)
-    {
-        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('page');
-
-        foreach ($data as $name => $values) {
-            $this->saveItem($name, $values);
-        }
-
-        // Fire save event.
-        $event             = new Event;
-        $event->gantry     = $this->container;
-        $event->theme      = $this->container['theme'];
-        $event->controller = $this;
-        $event->data       = $data;
-        $this->container->fireEvent('admin.page.save', $event);
-
-        return $id ? $this->display($id) : $this->index();
-    }
-
-    protected function saveItem($id, $data)
-    {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
-        $save_dir      = $locator->findResource("gantry-config://{$configuration}/page", true, true);
-        $filename      = "{$save_dir}/{$id}.yaml";
-
-        $file = YamlFile::instance($filename);
-        if (!is_array($data)) {
-            if ($file->exists()) {
-                $file->delete();
-            }
-        } else {
-            $blueprints = new BlueprintsForm($this->container['page']->get($id));
-            $config     = new Config($data, function () use ($blueprints) { return $blueprints; });
-
-            $file->save($config->toArray());
-        }
-        $file->free();
-    }
-
     public function index()
     {
         $configuration = $this->params['configuration'];
@@ -141,53 +71,26 @@ class Page extends HtmlController
         $this->params['route']            = "configurations.{$this->params['configuration']}";
         $this->params['page_id']          = $configuration;
 
-        //$this->params['layout'] = LayoutObject::instance($configuration);
-
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
 
-    protected function getDeprecatedAtoms()
+    public function save($id = null)
     {
-        $id     = $this->params['configuration'];
-        $layout = $this->getLayout($id);
-        $list   = null;
+        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('page');
 
-        $atoms = array_filter($layout->toArray(), function ($section) {
-            return $section->type == 'atoms' && isset($section->children) && count($section->children[0]->children);
-        });
-
-        if (count($atoms)) {
-            $list = [];
-            foreach (array_shift($atoms)->children[0]->children as $block) {
-                $list[] = $block->children[0];
-            }
+        foreach ($data as $name => $values) {
+            $this->saveItem($name, $values);
         }
 
-        return $list;
-    }
+        // Fire save event.
+        $event             = new Event;
+        $event->gantry     = $this->container;
+        $event->theme      = $this->container['theme'];
+        $event->controller = $this;
+        $event->data       = $data;
+        $this->container->fireEvent('admin.page.save', $event);
 
-    protected function getLayout($name)
-    {
-        return Layout::instance($name);
-    }
-
-    protected function getAtoms($onlyEnabled = false)
-    {
-        $config = $this->container['config'];
-
-        $atoms = $this->container['particles']->all();
-
-        $list = [];
-        foreach ($atoms as $name => $atom) {
-            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
-            $atomName = isset($atom['name']) ? $atom['name'] : $name;
-
-            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
-                $list[$type][$name] = $atomName;
-            }
-        }
-
-        return $list['atom'];
+        return $id ? $this->display($id) : $this->index();
     }
 
     public function formfield($id)
@@ -248,5 +151,95 @@ class Page extends HtmlController
         }
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+    }
+
+    protected function validate($setting)
+    {
+        $path = implode('.', array_slice(func_get_args(), 1, -1));
+
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        // Load particle blueprints.
+        $validator = $this->container['particles']->get($setting);
+
+        // Create configuration from the defaults.
+        $data = new Config(
+            [],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->join($path, $this->request->post->getArray('data'));
+
+        // TODO: validate
+
+        return new JsonResponse(['data' => $data->get($path)]);
+    }
+
+    protected function saveItem($id, $data)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $configuration = $this->params['configuration'];
+        $save_dir      = $locator->findResource("gantry-config://{$configuration}/page", true, true);
+        $filename      = "{$save_dir}/{$id}.yaml";
+
+        $file = YamlFile::instance($filename);
+        if (!is_array($data)) {
+            if ($file->exists()) {
+                $file->delete();
+            }
+        } else {
+            $blueprints = new BlueprintsForm($this->container['page']->get($id));
+            $config     = new Config($data, function () use ($blueprints) { return $blueprints; });
+
+            $file->save($config->toArray());
+        }
+        $file->free();
+    }
+
+    protected function getDeprecatedAtoms()
+    {
+        $id     = $this->params['configuration'];
+        $layout = Layout::instance($id);
+        $list   = null;
+
+        $atoms = array_filter($layout->toArray(), function ($section) {
+            return $section->type == 'atoms' && isset($section->children) && count($section->children[0]->children);
+        });
+
+        if (count($atoms)) {
+            $list = [];
+            foreach (array_shift($atoms)->children[0]->children as $block) {
+                $list[] = $block->children[0];
+            }
+        }
+
+        return $list;
+    }
+
+    protected function getAtoms($onlyEnabled = false)
+    {
+        $config = $this->container['config'];
+
+        $atoms = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($atoms as $name => $atom) {
+            $type     = isset($atom['type']) ? $atom['type'] : 'atom';
+            $atomName = isset($atom['name']) ? $atom['name'] : $name;
+
+            if (!$onlyEnabled || $config->get("particles.{$name}.enabled", true)) {
+                $list[$type][$name] = $atomName;
+            }
+        }
+
+        return $list['atom'];
     }
 }
