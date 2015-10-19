@@ -1652,6 +1652,9 @@ input[type="submit"] {
   display: -ms-flexbox;
   display: flex;
 }
+.equal-height .g-content {
+  width: 100%;
+}
 
 #g-offcanvas {
   position: fixed;

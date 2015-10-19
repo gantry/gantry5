@@ -9,7 +9,8 @@
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
     3. [](#bugfix)
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
-        - Fixed Admin Styles issue where indicator wouldn't show in certain cases. 
+        - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
+        - Fixed `.equal-height` utility not fully expanding the content (#902)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
