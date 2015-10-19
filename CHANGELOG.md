@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Updated Gantry logo with the new one! Thanks Henning!
+        - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
     2. [](#improved)
         - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908) 
     3. [](#bugfix)
