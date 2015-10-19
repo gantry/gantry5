@@ -33,7 +33,7 @@ $theme  = $gantry['theme'];
 $context              = Timber::get_context();
 $context['page_head'] = $gantry->isCompatible('5.1.5') ? $theme->render('partials/page_head.html.twig', $context) : null;
 
-$post            = new TimberPost();
+$post            = Timber::query_post();
 $context['post'] = $post;
 
 Timber::render(['page-' . $post->post_name . '.html.twig', 'page.html.twig'], $context);
