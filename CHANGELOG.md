@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated Gantry logo with the new one! Thanks Henning!
     2. [](#improved)
         - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908) 
     3. [](#bugfix)
