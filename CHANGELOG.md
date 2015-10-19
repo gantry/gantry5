@@ -5,7 +5,8 @@
     1. [](#new)
         - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
     2. [](#improved)
-        - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908) 
+        - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
+        - Default Outline now shows a 'default' tag in the Outlines Page (#926)
     3. [](#bugfix)
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
         - Fixed Admin Styles issue where indicator wouldn't show in certain cases. 
