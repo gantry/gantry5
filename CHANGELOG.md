@@ -23,6 +23,7 @@
         - Improved URL comparing on menu item Assignments when permalinks are enabled
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
+        - Fixed issue in Hydrogen where Visual Composer wouldn't work on Pages
 
 # 5.1.6
 ## 14/10/2015
