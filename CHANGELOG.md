@@ -28,9 +28,16 @@
         - Reverted Assignments scrollbars due to Chrome issue [we will re-enable the functionality as soon as the bug is fixed] (#851)
         - Logo / Image Particle: the `rel` attribute will now smartly be added for `home` only if the URL matches the Site root.
         - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
+        - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Disable caching from Particle Module by default (#925)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved URL comparing on menu item Assignments when permalinks are enabled
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
+        - Fixed issue in Hydrogen where Visual Composer wouldn't work on Pages
 
 # 5.1.6
 ## 14/10/2015
