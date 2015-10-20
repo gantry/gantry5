@@ -1503,6 +1503,9 @@
   display: -ms-flexbox;
   display: flex;
 }
+#g5-container .equal-height .g-content {
+  width: 100%;
+}
 #g5-container #g-offcanvas {
   position: fixed;
   top: 0;
@@ -2845,9 +2848,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 }
 #g5-container #assignments .settings-param-wrapper {
   min-width: 100%;
-  max-height: 455px;
+  /*max-height: 455px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden;*/
   margin: 0 -10px -10px;
 }
 #g5-container #assignments .settings-param {

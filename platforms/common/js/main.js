@@ -281,7 +281,7 @@ ready(function() {
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
 
     // chrome workaround for overflow and columns
-    if (Assignments.isChrome()) Assignments.chromeFix();
+    //if (Assignments.isChrome()) Assignments.chromeFix();
 });
 
 module.exports = Assignments;

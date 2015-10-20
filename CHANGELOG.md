@@ -11,6 +11,7 @@
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
         - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
         - Fixed `.equal-height` utility not fully expanding the content (#902)
+        - Reverted Assignments scrollbars due to Chrome issue [we will re-enable the functionality as soon as the bug is fixed] (#851)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
