@@ -20,6 +20,8 @@
     3. [](#bugfix)
         - Disable caching from Particle Module by default (#925)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved URL comparing on menu item Assignments when permalinks are enabled
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
 
