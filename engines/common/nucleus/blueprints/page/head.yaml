@@ -22,3 +22,4 @@ form:
 
     atoms:
       type: input.hidden
+      array: true

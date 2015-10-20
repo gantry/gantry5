@@ -62,7 +62,7 @@ class Page extends HtmlController
 
         $deprecated = $this->getDeprecatedAtoms();
         if ($deprecated) {
-            $this->container['config']->set('page.head.atoms', json_encode($deprecated));
+            $this->container['config']->set('page.head.atoms', $deprecated);
         }
 
         $this->params['page']             = $this->container['page']->group();
@@ -208,27 +208,8 @@ class Page extends HtmlController
     {
         $id     = $this->params['configuration'];
         $layout = Layout::instance($id);
-        $list   = null;
 
-        $atoms = array_filter($layout->toArray(), function ($section) {
-            return $section->type == 'atoms' && !empty($section->children);
-        });
-        $atoms = array_shift($atoms);
-
-        if (!empty($atoms->children)) {
-            $list = [];
-            foreach ($atoms->children as $grid) {
-                if (!empty($grid->children)) {
-                    foreach ($grid->children as $block) {
-                        if (!empty($block->children)) {
-                            $list[] = $block->children[0];
-                        }
-                    }
-                }
-            }
-        }
-
-        return $list;
+        return $layout->atoms();
     }
 
     protected function getAtoms($onlyEnabled = false)
