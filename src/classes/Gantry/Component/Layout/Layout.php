@@ -304,6 +304,38 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * Return atoms from the layout.
+     *
+     * @return array|null
+     * @deprecated
+     */
+    public function atoms()
+    {
+        $list   = null;
+
+        $atoms = array_filter($this->toArray(), function ($section) {
+            return $section->type == 'atoms' && !empty($section->children);
+        });
+        $atoms = array_shift($atoms);
+
+        if (!empty($atoms->children)) {
+            $list = [];
+            foreach ($atoms->children as $grid) {
+                if (!empty($grid->children)) {
+                    foreach ($grid->children as $block) {
+                        if (isset($block->children[0])) {
+                            $item = $block->children[0];
+                            $list[] = ['title' => $item->title, 'type' => $item->subtype, 'attributes' => $item->attributes];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * @param string $id
      * @return \stdClass
      */
