@@ -250,7 +250,6 @@ domready(function() {
         if (currentNonce !== GANTRY_AJAX_NONCE) {
             currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
             History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
-            window.HHH = History;
         }
     }
 

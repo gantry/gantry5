@@ -118,3 +118,9 @@ We provide a few handy tasks as well:
   3. `$ gulp watch --css` / `$ gulp watch --js`: Starts the compilers in `watch` mode and listens to only **SCSS** or **JS** changes. Useful if you are only focusing on one and not the other.
   4. `$ gulp css` / `$ gulp js`: Compiles all of either CSS or JS files, in case you are only working on one and not the other.
   5. `$ gulp —prod`: Compiles every CSS and JS in production mode. The compiled files won’t have source maps and will be compressed (this usually takes slightly longer than normal mode).
+
+## License
+Gantry Framework v5.0 or later is licensed under a dual license system ([MIT](http://www.opensource.org/licenses/mit-license.php) or [GPL version 2 or later](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html). This means you are free to choose which license (MIT or GPL version 2 or later) is appropriate for your needs.
+
+| [More Details](http://docs.gantry.org/gantry5/basics/license-and-usage) |
+|:-----------------------------------------------------------------------:|

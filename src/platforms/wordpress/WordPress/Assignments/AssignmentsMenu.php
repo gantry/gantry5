@@ -39,6 +39,10 @@ class AssignmentsMenu implements AssignmentsInterface
             if($menu_items) {
                 $current_url = $this->_curPageURL();
 
+                if(get_option('permalink_structure') != '' && !is_search()) {
+                    $current_url = strtok($current_url, '?');
+                }
+
                 foreach($menu_items as $menu_item) {
                     if($menu_item->url == $current_url) {
                         $rules[$menu->slug][$menu_item->ID] = $this->priority;

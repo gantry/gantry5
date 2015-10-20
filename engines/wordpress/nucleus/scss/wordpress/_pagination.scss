@@ -10,6 +10,12 @@
             display: inline-block;
         }
     }
+
+    @include breakpoint('mobile-only') {
+        p.counter {
+            display: none;
+        }
+    }
 }
 
 .page-links {

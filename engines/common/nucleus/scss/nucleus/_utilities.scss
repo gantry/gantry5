@@ -140,4 +140,8 @@
 // Same Height for Box Variations
 .equal-height {
     @include display(flex);
+
+	.g-content {
+		width: 100%;
+	}
 }

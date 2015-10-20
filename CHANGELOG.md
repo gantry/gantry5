@@ -11,6 +11,27 @@
     3. [](#bugfix)
         - Fixed issue where Tag fields wouldn't trigger the indicator change
 
+# 5.1.7
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
+    2. [](#improved)
+        - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
+        - Default Outline now shows a 'default' tag in the Outlines Page (#926)
+        - Logo Particle is renamed to Logo / Image Particle.
+    3. [](#bugfix)
+        - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
+        - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
+        - Fixed `.equal-height` utility not fully expanding the content (#902)
+        - Reverted Assignments scrollbars due to Chrome issue [we will re-enable the functionality as soon as the bug is fixed] (#851)
+        - Logo / Image Particle: the `rel` attribute will now smartly be added for `home` only if the URL matches the Site root.
+        - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
+
 # 5.1.6
 ## 14/10/2015
 
