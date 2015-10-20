@@ -211,13 +211,20 @@ class Page extends HtmlController
         $list   = null;
 
         $atoms = array_filter($layout->toArray(), function ($section) {
-            return $section->type == 'atoms' && isset($section->children) && count($section->children[0]->children);
+            return $section->type == 'atoms' && !empty($section->children);
         });
+        $atoms = array_shift($atoms);
 
-        if (count($atoms)) {
+        if (!empty($atoms->children)) {
             $list = [];
-            foreach (array_shift($atoms)->children[0]->children as $block) {
-                $list[] = $block->children[0];
+            foreach ($atoms->children as $grid) {
+                if (!empty($grid->children)) {
+                    foreach ($grid->children as $block) {
+                        if (!empty($block->children)) {
+                            $list[] = $block->children[0];
+                        }
+                    }
+                }
             }
         }
 
