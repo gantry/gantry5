@@ -187,6 +187,15 @@ class Page extends HtmlController
 
         // Save layout into custom directory for the current theme.
         $configuration = $this->params['configuration'];
+
+        // Move atoms out of layout.
+        if ($id === 'head') {
+            $layout = Layout::instance($configuration);
+            if (is_array($layout->atoms())) {
+                $layout->save(false);
+            }
+        }
+
         $save_dir      = $locator->findResource("gantry-config://{$configuration}/page", true, true);
         $filename      = "{$save_dir}/{$id}.yaml";
 
