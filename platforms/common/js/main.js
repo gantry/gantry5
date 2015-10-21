@@ -5299,6 +5299,7 @@ var $             = require('elements'),
     request       = require('agent'),
     /*lastItem      = require('mout/array/last'),
      indexOf       = require('mout/array/indexOf'),*/
+    indexOf       = require('mout/array/indexOf'),
     simpleSort    = require('sortablejs'),
 
     trim          = require('mout/string/trim'),
@@ -5330,7 +5331,7 @@ var Atoms = {
             output.push(JSON.parse(item.data('atom-picked')));
         });
 
-        return JSON.stringify(output);
+        return JSON.stringify(output).replace(/\//g, '\\/');
     },
 
     createSortables: function(element) {
@@ -5343,7 +5344,7 @@ var Atoms = {
                 group: groupOption,
                 scroll: false,
                 forceFallback: true,
-                animation: 150,
+                animation: 100,
 
                 onStart: function(event) {
                     var item = $(event.item);
@@ -5357,12 +5358,12 @@ var Atoms = {
 
                 onSort: function() {
                     var serial = Atoms.serialize(),
-                        field  = $('[name="' + AtomsField + '"]');
+                        field  = $(AtomsField);
 
                     if (!field) { throw new Error('Field "' + AtomsField + '" not found in the DOM.'); }
 
                     field.value(serial);
-                    // check if field value is different than original and trigger indicators change
+                    $('body').emit('change', { target: field });
                 }
             });
 
@@ -5375,122 +5376,118 @@ var Atoms = {
 };
 
 var AttachSettings = function() {
-    $('body').delegate('click', '.atoms-list [data-atom-picked] .config-cog', function(event, element) {
-            if (event && event.preventDefault) { event.preventDefault(); }
+    var body = $('body');
 
-            var parent    = element.parent('[data-atom-picked]'),
-                dataField = $(AtomsField),
-                data      = dataField.value(),
-                itemData  = parent.data('atom-picked');
+    body.delegate('click', '.atoms-list [data-atom-picked] .config-cog', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
 
-            modal.open({
-                content: 'Loading',
-                method: 'post',
-                data: { data: itemData },
-                remote: element.attribute('href') + getAjaxSuffix(),
-                remoteLoaded: function(response, content) {
-                    var form       = content.elements.content.find('form'),
-                        fakeDOM    = zen('div').html(response.body.html).find('form'),
-                        submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                        dataString = [],
-                        invalid    = [],
-                        dataValue  = JSON.parse(data);
+        var list      = element.parent('ul'),
+            dataField = $(AtomsField),
+            data      = dataField.value(),
+            items     = list.search('> [data-atom-picked]'),
+            item      = element.parent('[data-atom-picked]'),
+            itemData  = item.data('atom-picked');
 
-                    if (modal.getAll().length > 1) {
-                        var applyAndSave = content.elements.content.search('[data-apply-and-save]');
-                        if (applyAndSave) { applyAndSave.remove(); }
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            data: { data: itemData },
+            remote: element.attribute('href') + getAjaxSuffix(),
+            remoteLoaded: function(response, content) {
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
+                    dataString = [],
+                    invalid    = [],
+                    dataValue  = JSON.parse(data);
+
+                if (modal.getAll().length > 1) {
+                    var applyAndSave = content.elements.content.search('[data-apply-and-save]');
+                    if (applyAndSave) { applyAndSave.remove(); }
+                }
+
+                if ((!form && !fakeDOM) || !submit) {
+                    return true;
+                }
+
+                // Atom Settings apply
+                submit.on('click', function(e) {
+                    e.preventDefault();
+
+                    var target = $(e.target);
+
+                    dataString = [];
+                    invalid = [];
+
+                    target.hideIndicator();
+                    target.showIndicator();
+
+                    $(fakeDOM[0].elements).forEach(function(input) {
+                        input = $(input);
+                        var name = input.attribute('name');
+                        if (!name || input.disabled()) { return; }
+
+                        input = content.elements.content.find('[name="' + name + '"]');
+                        var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                            parent   = input.parent('.settings-param'),
+                            override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        if (override && !override.checked()) { return; }
+                        if (!validateField(input)) { invalid.push(input); }
+                        dataString.push(name + '=' + encodeURIComponent(value));
+                    });
+
+                    var title = content.elements.content.find('h4 [data-title-editable]');
+                    if (title) {
+                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
                     }
 
-                    if ((!form && !fakeDOM) || !submit) {
-                        return true;
-                    }
-
-                    // Atom Settings apply
-                    submit.on('click', function(e) {
-                        e.preventDefault();
-
-                        var target = $(e.target);
-
-                        dataString = [];
-                        invalid = [];
-
+                    if (invalid.length) {
                         target.hideIndicator();
-                        target.showIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        return;
+                    }
 
-                        $(fakeDOM[0].elements).forEach(function(input) {
-                            input = $(input);
-                            var name = input.attribute('name');
-                            if (!name || input.disabled()) { return; }
-
-                            input = content.elements.content.find('[name="' + name + '"]');
-                            var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                                parent   = input.parent('.settings-param'),
-                                override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                            if (override && !override.checked()) { return; }
-                            if (!validateField(input)) { invalid.push(input); }
-                            dataString.push(name + '=' + encodeURIComponent(value));
-                        });
-
-                        var titles = content.elements.content.search('[data-title-editable]'), key;
-                        if (titles) {
-                            titles.forEach(function(title) {
-                                title = $(title);
-                                key = title.data('collection-key') || 'title';
-                                dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
                             });
-                        }
+                        } else {
+                            var index = indexOf(items, item[0]);
+                            dataValue[index] = response.body.item;
 
-                        if (invalid.length) {
-                            target.hideIndicator();
-                            target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                            toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
-                            return;
-                        }
+                            dataField.value(JSON.stringify(dataValue).replace(/\//g, '\\/'));
+                            item.find('.atom-title').text(dataValue[index].title);
+                            item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
-                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
-                            if (!response.body.success) {
-                                modal.open({
-                                    content: response.body.html || response.body,
-                                    afterOpen: function(container) {
-                                        if (!response.body.html) { container.style({ width: '90%' }); }
-                                    }
-                                });
-                            } else {
-                                if (item) { // single editing
-                                    dataValue[indexOf(items, item[0])] = response.body.data;
-                                } else { // multi editing
-                                    dataValue = response.body.data;
-                                }
+                            // toggle enabled/disabled status as needed
+                            var enabled = Number(dataValue[index].attributes.enabled);
+                            item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
+                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
 
-                                dataField.value(JSON.stringify(dataValue));
-                                body.emit('change', { target: dataField });
+                            body.emit('change', { target: dataField });
 
-                                element.parent('.settings-param-field').search('ul > [data-collection-item]').forEach(function(item, index) {
-                                    item = $(item);
-                                    var label = item.find('[data-title-editable]'),
-                                        text  = dataValue[index][item.data('collection-item')];
-
-                                    label.data('title-editable', text).text(text);
-                                });
-
-                                // if it's apply and save we also save the panel
-                                if (target.data('apply-and-save') !== null) {
-                                    var save = $('body').find('.button-save');
-                                    if (save) { body.emit('click', { target: save }); }
-                                }
-
-                                modal.close();
-                                toastr.success('Collection Item updated', 'Item Updated');
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
                             }
 
-                            target.hideIndicator();
-                        });
+                            modal.close();
+                            toastr.success('Ato Item updated', 'Item Updated');
+                        }
+
+                        target.hideIndicator();
                     });
-                }
-            });
-        }
-    );
+                });
+            }
+        });
+    });
 };
 
 ready(function() {
@@ -5502,7 +5499,7 @@ ready(function() {
 });
 
 module.exports = Atoms;
-},{"../ui":48,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/string/trim":235,"sortablejs":271}],34:[function(require,module,exports){
+},{"../ui":48,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/array/indexOf":142,"mout/string/trim":235,"sortablejs":271}],34:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),

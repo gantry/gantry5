@@ -47,7 +47,7 @@
                     @include transition(background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out);
                 }
 
-                &.atom-dragging {
+                &.atom-dragging:not(.atom-disabled) {
                     border-color: $atom;
                     background-color: $atom;
                     color: $white;
@@ -55,6 +55,13 @@
                     .atom-settings {
                         color: $white;
                     }
+                }
+
+                &.atom-disabled {
+                    @extend .particle-disabled;
+                    border-color: rgba(0, 0, 0, 0.1);
+                    color: $dark-gray;
+                    opacity: 0.7;
                 }
             }
         }

@@ -4022,7 +4022,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g-filters-bar label, #g5-container .g-filters-bar .lm-blocks .block-has-changes > span label, #g5-container .lm-blocks .block-has-changes > span .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks .block-has-changes > span .menu-item-subtitle, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
-#g5-container .particle-disabled, #g5-container [data-lm-disabled] {
+#g5-container .particle-disabled, #g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled, #g5-container [data-lm-disabled] {
   background: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background-size: 50px 50px !important;
@@ -4319,13 +4319,18 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
-#g5-container #page-settings #atoms .atoms-picker li.atom-dragging, #g5-container #page-settings #atoms .atoms-list li.atom-dragging {
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled), #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) {
   border-color: #9055AF;
   background-color: #9055AF;
   color: #fff;
 }
-#g5-container #page-settings #atoms .atoms-picker li.atom-dragging .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging .atom-settings {
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
   color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled {
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #666;
+  opacity: 0.7;
 }
 #g5-container #page-settings #atoms .atoms-picker li {
   color: #666;
