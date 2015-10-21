@@ -17,6 +17,7 @@ namespace Gantry\Admin\Controller\Html\Configurations;
 use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Request\Request;
@@ -34,9 +35,12 @@ class Page extends HtmlController
             '/' => 'index'
         ],
         'POST'   => [
-            '/'     => 'save',
-            '/*'    => 'save',
-            '/*/**' => 'formfield'
+            '/'                 => 'save',
+            '/*'                => 'save',
+            '/*/**'             => 'formfield',
+            '/atoms'            => 'undefined',
+            '/atoms/*'          => 'atom',
+            '/atoms/*/validate' => 'atomValidate'
         ],
         'PUT'    => [
             '/' => 'save'
@@ -178,6 +182,89 @@ class Page extends HtmlController
         // TODO: validate
 
         return new JsonResponse(['data' => $data->get($path)]);
+    }
+
+    public function atom($name)
+    {
+        $configuration = $this->params['configuration'];
+
+        $data = $this->request->post['data'];
+        if ($data) {
+            $data = json_decode($data, true);
+        } else {
+            $data = $this->request->post->getArray();
+        }
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Load particle blueprints and default settings.
+        $validator = new BlueprintsForm([]);
+        $callable = function () use ($validator) {
+            return $validator;
+        };
+
+        // Create configuration from the defaults.
+        $item = new Config($data, $callable);
+        $item->def('type', $name);
+        $item->def('title', $blueprints->get('name'));
+        $item->def('attributes', []);
+
+        $this->params += [
+            'item'          => $item,
+            'data'          => ['particles' => [$name => $item->attributes]],
+            'blueprints'    => $blueprints,
+            'parent'        => 'settings',
+            'prefix'        => "particles.{$name}.",
+            'route'         => "configurations.default.settings",
+            'action'        => "configurations/{$configuration}/page/atoms/{$name}/validate"
+        ];
+
+        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
+    }
+
+    /**
+     * Validate data for the atom.
+     *
+     * @param string $name
+     * @return JsonResponse
+     */
+    public function atomValidate($name)
+    {
+        // Load particle blueprints and default settings.
+        $validator = new Blueprints();
+        $validator->embed('options', $this->container['particles']->get($name));
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Create configuration from the defaults.
+        $data = new Config([],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->set('type', $name);
+        $data->set('title', $this->request->post['title'] ?: $blueprints->get('name'));
+        $data->set('attributes', $this->request->post->getArray("particles.{$name}"));
+        $data->def('attributes.enabled', 1);
+
+        $block = $this->request->post->getArray('block');
+        foreach ($block as $key => $param) {
+            if ($param === '') {
+                unset($block[$key]);
+            }
+        }
+
+        if ($block) {
+            $data->join('options.block', $block);
+        }
+
+        // TODO: validate
+
+        // Fill parameters to be passed to the template file.
+        $this->params['item'] = (object) $data->toArray();
+
+        return new JsonResponse(['item' => $data->toArray()]);
     }
 
     protected function saveItem($id, $data)
