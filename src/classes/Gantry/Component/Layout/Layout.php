@@ -225,7 +225,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Remove atoms from the layout.
         foreach ($this->items as $key => $section) {
             if ($section->type === 'atoms') {
-                print_r($section);die();
                 unset ($this->items[$key]);
             }
         }
