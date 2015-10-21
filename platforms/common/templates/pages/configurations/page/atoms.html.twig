@@ -16,7 +16,7 @@
     {% if gantry.config.get('page.head.atoms') %}
         <div class="card settings-block">
             <ul class="atoms-list">
-            {%- for atom in atoms_deprecated -%}
+            {%- for atom in gantry.config.get('page.head.atoms') -%}
                 <li data-atom-picked="{{ atom|json_encode|e('html_attr') }}" data-atom-type="{{ atom.type }}">
                     <i class="fa fa-fw fa-arrows-alt drag-indicator"></i>
                     <span class="atom-title">{{- atom.title -}}</span>
