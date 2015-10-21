@@ -17,7 +17,7 @@
   overflow: visible;
 }
 
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -49,7 +49,7 @@
   visibility: visible;
   overflow: visible;
 }
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -4280,6 +4280,56 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   #g5-container .g5-lm-particles-picker.particles-absolute {
     position: absolute;
   }
+}
+
+#g5-container #page-settings #atoms .atoms-picker .atom-settings {
+  display: none;
+}
+#g5-container #page-settings #atoms .atoms-list {
+  margin: 0.5rem;
+}
+#g5-container #page-settings #atoms .atoms-list .drag-indicator {
+  display: none;
+}
+#g5-container #page-settings #atoms .atoms-picker .atom-settings, #g5-container #page-settings #atoms .atoms-list .atom-settings {
+  color: #666;
+  opacity: 0.7;
+  cursor: pointer;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+#g5-container #page-settings #atoms .atoms-picker .atom-settings:hover, #g5-container #page-settings #atoms .atoms-list .atom-settings:hover {
+  opacity: 1;
+}
+#g5-container #page-settings #atoms .atoms-picker .drag-indicator, #g5-container #page-settings #atoms .atoms-list .drag-indicator {
+  opacity: 0.5;
+}
+#g5-container #page-settings #atoms .atoms-picker li, #g5-container #page-settings #atoms .atoms-list li {
+  cursor: move;
+  display: inline-block;
+  border-radius: 0.1875rem;
+  color: #9055AF;
+  border: 2px solid #9055AF;
+  padding: 0.469rem;
+  margin: 0.3125rem;
+}
+#g5-container #page-settings #atoms .atoms-picker li:not(.atom-force-style), #g5-container #page-settings #atoms .atoms-list li:not(.atom-force-style) {
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging, #g5-container #page-settings #atoms .atoms-list li.atom-dragging {
+  border-color: #9055AF;
+  background-color: #9055AF;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging .atom-settings {
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li {
+  color: #666;
+  border-color: #666;
 }
 
 #g5-container #menu-editor .parent-indicator:before {

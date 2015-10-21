@@ -349,7 +349,8 @@ var modules = {
     domready: require('elements/domready'),
     particles: require('./particles'),
     zen: require('elements/zen'),
-    moofx: require('moofx')
+    moofx: require('moofx'),
+    atoms: require('./pagesettings')
 };
 
 window.G5 = modules;

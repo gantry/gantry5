@@ -1,0 +1,67 @@
+#g5-container {
+    // wrapper
+    #page-settings #atoms {
+
+        .atoms-picker {
+            @extend %list-reset;
+
+            .atom-settings {
+                display: none;
+            }
+        }
+        
+        .atoms-list {
+            margin: 0.5rem;
+
+            .drag-indicator {
+                display: none;
+            }
+        }
+
+        .atoms-picker, .atoms-list {
+            .atom-settings {
+                color: $core-text;
+                opacity: 0.7;
+                cursor: pointer;
+                @include transition(opacity 0.2s ease-in-out);
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .drag-indicator {
+                opacity: 0.5;
+            }
+
+            li {
+                cursor: move;
+                display: inline-block;
+                border-radius: $core-border-radius;
+                color: $atom;
+                border: 2px solid $atom;
+                padding: $content-padding / 2;
+                margin: $content-margin / 2;
+
+                &:not(.atom-force-style) {
+                    @include transition(background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out);
+                }
+
+                &.atom-dragging {
+                    border-color: $atom;
+                    background-color: $atom;
+                    color: $white;
+
+                    .atom-settings {
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        .atoms-picker li {
+            color: $dark-gray;
+            border-color: $dark-gray;
+        }
+    }
+}
