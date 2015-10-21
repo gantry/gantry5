@@ -14,7 +14,6 @@
 
 namespace Gantry\Component\Layout;
 
-use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -212,12 +211,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $filename = $locator->findResource("gantry-config://{$name}/page/head.yaml", true, true);
 
                 $file = YamlFile::instance($filename);
-                $blueprints = new BlueprintsForm($gantry['page']->get($name));
-                $config = new Config($file->content(), function () use ($blueprints) {
-                    return $blueprints;
-                });
+                $config = new Config($file->content());
 
-                $file->save($config->join('atoms', $atoms)->toArray());
+                $file->save($config->set('atoms', json_decode(json_encode($atoms), true))->toArray());
                 $file->free();
             }
         }
