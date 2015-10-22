@@ -38,6 +38,7 @@ form:
           'l': Date10
           'l j F Y': Date11
           'j F Y': Date12
+          'F d, Y': Date13
 
     prefix:
       type: input.text
