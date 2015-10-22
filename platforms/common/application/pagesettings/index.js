@@ -237,7 +237,7 @@ var AttachSettings = function() {
                             }
 
                             modal.close();
-                            toastr.success('Ato Item updated', 'Item Updated');
+                            toastr.success('Atom Item updated', 'Item Updated');
                         }
 
                         target.hideIndicator();

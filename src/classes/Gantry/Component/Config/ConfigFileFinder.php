@@ -201,9 +201,9 @@ class ConfigFileFinder
                 $find = ($lookup ?: $name) . '.yaml';
                 $filename = "{$path}/{$name}/{$find}";
 
-                if (file_exists($filename)) {
+                if (file_exists(GANTRY5_ROOT . '/' . $filename)) {
                     $basename = $this->base . $name;
-                    $list[$basename] = ['file' => $filename, 'modified' => filemtime($filename)];
+                    $list[$basename] = ['file' => $filename, 'modified' => filemtime(GANTRY5_ROOT . '/' .$filename)];
                 }
             }
         }

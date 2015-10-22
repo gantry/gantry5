@@ -18,6 +18,7 @@
         - Minor Collections CSS tweaks
         - Layouts: Add support for customizing section ids (was bound to title before)
     3. [](#bugfix)
+        - Fixed the config files lookup using relative instead of absolute paths
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
         - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
         - Fixed `.equal-height` utility not fully expanding the content (#902)
