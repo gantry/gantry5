@@ -287,6 +287,25 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             */
         }
 
+        .atoms-notice {
+            background-color: $atom;
+            border: 4px solid $white;
+            color: $white;
+            padding: $content-padding;
+            margin: $content-margin;
+            text-align: center;
+
+            a {
+                color: lighten($atom, 30);
+                border-bottom: 1px dotted lighten($atom, 30);
+                font-weight: bold;
+
+                &:hover {
+                    color: lighten($atom, 60);
+                }
+            }
+        }
+
         .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";

@@ -2,4 +2,9 @@
 .g-content {
 	margin: $content-margin;
 	padding: $content-padding;
+
+	.g-flushed & {
+		margin: 0;
+		padding: 0;
+	}
 }

@@ -183,6 +183,8 @@ ready(function() {
                             parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
+                        override = override || $(input.data('override-target'));
+
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
@@ -349,7 +351,8 @@ var modules = {
     domready: require('elements/domready'),
     particles: require('./particles'),
     zen: require('elements/zen'),
-    moofx: require('moofx')
+    moofx: require('moofx'),
+    atoms: require('./pagesettings')
 };
 
 window.G5 = modules;

@@ -6,30 +6,47 @@
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
                     <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'styles')|e }}"><i class="fa fa-fw fa-adjust"></i><span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span></a>
+                        <a data-g5-ajaxify data-g5-nav="styles" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'styles')|e }}"><i class="fa fa-fw fa-adjust"></i><span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span></a>
                     </li>
                     <li {{ (location == 'configurations/settings') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'settings')|e }}"><i class="fa fa-fw fa-wrench"></i><span>{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span></a>
+                        <a data-g5-ajaxify data-g5-nav="settings" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'settings')|e }}"><i class="fa fa-fw fa-wrench"></i><span>{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span></a>
+                    </li>
+                    <li {{ (location == 'configurations/page') ? 'class="active"' }}>
+                        <a data-g5-ajaxify data-g5-nav="page" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'page')|e }}"><i class="fa fa-fw fa-list-alt"></i><span>{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span></a>
                     </li>
                     {% if (configuration and configuration != 'default') or not gantry.platform.no_base_layout %}
                     <li {{ (location == 'configurations/layout') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'layout')|e }}"><i class="fa fa-fw fa-columns"></i><span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span></a>
+                        <a data-g5-ajaxify data-g5-nav="layout" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'layout')|e }}"><i class="fa fa-fw fa-columns"></i><span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span></a>
                     </li>
                     {% endif %}
                     {% if configuration and configuration != 'default' %}
                     <li {{ (location == 'configurations/assignments') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'assignments')|e }}"><i class="fa fa-fw fa-check-square-o"></i><span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span></a>
+                        <a data-g5-ajaxify data-g5-nav="assignments" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'assignments')|e }}"><i class="fa fa-fw fa-check-square-o"></i><span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span></a>
                     </li>
                     {% endif %}
                 </ul>
             </section>
         </nav>
         <a href="{{ gantry.route('themes') }}" aria-hidden="true" tabindex="-1">
-            <svg id="gantry-logo" viewBox="0 0 81 28" style="background-color:#ffffff00" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
-                x="0px" y="0px" width="81px" height="28px"
-            >
-                <path d="M 81 8.3154 L 81 21.1282 L 80.9604 21.1282 C 80.5835 24.9821 77.2055 28 73.0896 28 L 73.0896 24.8375 C 75.6117 24.8375 77.6642 22.8814 77.6977 20.469 C 76.3986 21.3647 74.811 21.898 73.0896 21.898 C 68.8478 21.898 65.3955 18.6908 65.1997 14.6657 L 65.1809 14.6657 L 65.1809 8.3154 L 68.4728 8.3154 L 68.4728 14.5715 L 68.4909 14.5821 C 68.6382 16.8962 70.6415 18.7355 73.0896 18.7355 C 75.5393 18.7355 77.5461 16.8913 77.6891 14.574 L 77.7064 14.5689 L 77.7064 8.3154 L 81 8.3154 ZM 12.7501 8.3154 L 15.8191 8.3154 L 15.8191 20.4111 C 15.8191 24.6017 12.2791 28 7.9104 28 L 7.9104 24.8375 C 10.4326 24.8375 12.4854 22.8814 12.5186 20.469 C 11.22 21.3647 9.6318 21.898 7.9104 21.898 C 3.5415 21.898 0 18.5006 0 14.3084 C 0 10.1175 3.5415 6.7196 7.9104 6.7196 C 9.7361 6.7196 11.4118 7.3189 12.7501 8.3154 ZM 12.5247 14.3084 C 12.5247 11.8671 10.4533 9.8813 7.9104 9.8813 C 5.3659 9.8813 3.2967 11.8671 3.2967 14.3084 C 3.2967 16.749 5.3659 18.7355 7.9104 18.7355 C 10.4533 18.7355 12.5247 16.749 12.5247 14.3084 ZM 32.3021 14.3084 C 32.3021 14.3456 32.2968 14.3804 32.2965 14.4176 L 32.3021 14.4176 L 32.3021 20.2688 L 29.2791 20.2688 C 27.9331 21.2862 26.2388 21.898 24.3921 21.898 C 20.0231 21.898 16.4821 18.5006 16.4821 14.3084 C 16.4821 10.1175 20.0231 6.7196 24.3921 6.7196 C 28.761 6.7196 32.3021 10.1175 32.3021 14.3084 ZM 29.0059 14.3084 C 29.0059 11.8671 26.9362 9.8813 24.3921 9.8813 C 21.8479 9.8813 19.7774 11.8671 19.7774 14.3084 C 19.7774 16.749 21.8479 18.7355 24.3921 18.7355 C 26.9362 18.7355 29.0059 16.749 29.0059 14.3084 ZM 54.1749 5.1396 L 54.1749 0 L 50.8813 0 L 50.8813 5.1396 L 48.6289 5.1396 L 48.6289 8.2988 L 50.8813 8.2988 L 50.8813 20.2688 L 54.1749 20.2688 L 54.1749 8.2988 L 56.4274 8.2988 L 56.4274 5.1396 L 54.1749 5.1396 ZM 41.3108 6.7196 C 39.5768 6.7196 37.9783 7.2614 36.6745 8.169 L 33.4003 8.169 L 33.4003 20.2688 L 36.6935 20.2688 L 36.6935 14.4176 L 36.7017 14.4176 C 36.7017 14.3804 36.6965 14.3456 36.6965 14.3084 C 36.6965 11.8671 38.7661 9.8813 41.3108 9.8813 C 43.8544 9.8813 45.925 11.8671 45.925 14.3084 C 45.925 14.3456 45.9189 14.3804 45.9189 14.4176 L 45.9267 14.4176 L 45.9267 20.2688 L 49.2212 20.2688 L 49.2212 14.4176 L 49.2151 14.4176 C 49.2151 14.3804 49.2212 14.3456 49.2212 14.3084 C 49.2212 10.1175 45.6792 6.7196 41.3108 6.7196 ZM 56.4274 8.2988 L 56.4274 20.2688 L 59.7202 20.2688 L 59.7202 14.4176 L 59.7287 14.4176 C 59.7287 14.3804 59.7236 14.3456 59.7236 14.3084 C 59.7236 11.8671 61.7933 9.8813 64.3378 9.8813 L 64.3378 6.7196 C 62.5225 6.7196 60.8554 7.3126 59.5203 8.2988 L 56.4274 8.2988 Z" fill="#AAAAAA"></path>
+            <svg version="1.1" id="gantry-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="81px" height="28.239px" viewBox="0 0 81 28.239" style="enable-background:new 0 0 81 28.239;" xml:space="preserve">
+                <g>
+                    <path style="fill:#a0a0a0;" d="M8.101,26.332c2.639-0.358,4.636-2.603,4.672-5.311l0.008-1.451l-1.184,0.847
+                        c-1.255,0.903-2.734,1.38-4.27,1.38C3.288,21.797,0,18.511,0,14.471c0-4.039,3.286-7.325,7.325-7.325
+                        c1.633,0,3.182,0.483,4.481,1.491l0.198,0.104h2.694V20.95c0,3.792-2.969,6.92-6.597,7.289V26.332z M7.325,9.039
+                        c-2.995,0-5.432,2.437-5.432,5.432c0,2.996,2.437,5.433,5.432,5.433s5.432-2.437,5.432-5.433
+                        C12.757,11.476,10.32,9.039,7.325,9.039 M74.403,26.332c2.639-0.358,4.683-2.603,4.719-5.311l0.032-1.451l-1.172,0.847
+                        c-1.256,0.903-2.725,1.38-4.26,1.38c-3.914,0-7.07-3.024-7.235-6.938V14.37V8.741H68.3v6.418c0.275,2.577,2.682,4.768,5.413,4.768
+                        c2.692,0,5.331-2.28,5.467-4.589h0.005V8.741H81v12.507l-0.014,0.395c-0.169,1.807-1.016,3.48-2.359,4.711
+                        c-1.171,1.073-2.575,1.728-4.224,1.885V26.332z M24.114,21.797c-4.039,0-7.325-3.286-7.325-7.326c0-4.039,3.286-7.325,7.325-7.325
+                        c4.037,0,7.404,3.282,7.407,7.319v0.014c-0.002,0.033,0,0.838,0,0.838v4.641h-2.683l-0.199,0.212
+                        C27.333,21.198,25.768,21.797,24.114,21.797 M24.114,9.039c-2.996,0-5.433,2.437-5.433,5.432c0,2.996,2.437,5.433,5.433,5.433
+                        s5.432-2.437,5.432-5.433C29.546,11.476,27.109,9.039,24.114,9.039 M57.415,19.957V8.741h2.732l0.167-0.111
+                        c1.099-0.846,2.379-1.313,3.698-1.448v1.906c-2.474,0.332-4.319,2.328-4.598,4.799l-0.015,0.228l-0.005,0.473v5.37H57.415z
+                         M51.808,19.957V7.422h-2.309V5.443h2.309V0h1.979v5.443h2.144v1.979h-2.144v12.535H51.808z M46.695,19.957v-6.103
+                        c-0.16-2.616-2.559-4.816-5.347-4.816c-2.787,0-5.539,2.518-5.539,4.828v0.836v0.74v4.515h-1.814V8.576h2.868l0.192-0.085
+                        c1.261-0.915,2.746-1.372,4.292-1.372c4.037,0,7.32,3.294,7.326,7.329l0.002,0.016c-0.003,0.038-0.002,0.083-0.002,0.124v0.768
+                        v4.602H46.695z"/>
+                </g>
             </svg>
         </a>
     </div>

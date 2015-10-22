@@ -26,6 +26,7 @@
                     {% if field.id is defined %} id="{{ field.id }}" {% endif %}
                     {% if field.style is defined %} style="{{ field.style }}" {% endif %}
                     {% if field.title is defined %} title="{{ field.title }}" {% endif %}
+                    {% if field.override_target is defined %} data-override-target="{{ field.override_target|e('html_attr') }}" {% endif %}
                     aria-label="{{ (scope ~ name)|replace({'.': ' '})|title|trim }}"
                 {% endblock %}
                 />

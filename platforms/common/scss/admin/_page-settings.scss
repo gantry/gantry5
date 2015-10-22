@@ -1,0 +1,98 @@
+#g5-container {
+    // wrapper
+    #page-settings #atoms {
+
+        .card {
+            position: relative;
+        }
+
+        .atoms-picker {
+            @extend %list-reset;
+
+            .atom-settings {
+                display: none;
+            }
+        }
+        
+        .atoms-list {
+            min-height: 3.5rem;
+            margin: 0.5rem;
+
+            .drag-indicator {
+                display: none;
+            }
+
+            &:empty {
+                background-color: #f6f6f6;
+
+                &:after {
+                    content: "Drop atoms here...";
+                    display: block;
+                    text-align: center;
+                    margin: 0 auto;
+                    position: relative;
+                    vertical-align: middle;
+                    color: #bababa;
+                    line-height: 3.5rem;
+                }
+            }
+        }
+
+        .atoms-picker, .atoms-list {
+            .atom-settings {
+                color: $core-text;
+                opacity: 0.7;
+                cursor: pointer;
+                @include transition(opacity 0.2s ease-in-out);
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .drag-indicator {
+                opacity: 0.5;
+            }
+
+            li {
+                cursor: move;
+                display: inline-block;
+                border-radius: $core-border-radius;
+                color: $atom;
+                border: 2px solid $atom;
+                padding: $content-padding / 2;
+                margin: $content-margin / 2;
+
+                &:not(.atom-force-style) {
+                    @include transition(background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out);
+                }
+
+                &.atom-dragging:not(.atom-disabled) {
+                    border-color: $atom;
+                    background-color: $atom;
+                    color: $white;
+
+                    .atom-settings {
+                        color: $white;
+                    }
+                }
+
+                &.atom-disabled {
+                    @extend .particle-disabled;
+                    border-color: rgba(0, 0, 0, 0.1);
+                    color: $dark-gray;
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .atoms-picker li {
+            color: $dark-gray;
+            border-color: $dark-gray;
+        }
+
+        &.atoms-override .atoms-list {
+            margin: 0.5rem 2rem 0.5rem 0.5rem;
+        }
+    }
+}

@@ -236,7 +236,7 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width the blocks in this grid' : 'Sort or Move the Grid',
+        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
             tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
 
         if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
@@ -504,6 +504,8 @@ ready(function() {
                         var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        override = override || $(input.data('override-target'));
 
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }

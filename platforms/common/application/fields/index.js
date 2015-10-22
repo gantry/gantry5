@@ -3,6 +3,8 @@ var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
     storage    = require('prime/map'),
     deepEquals = require('mout/lang/deepEquals'),
+    is         = require('mout/lang/is'),
+    isString   = require('mout/lang/isString'),
     hasOwn     = require('mout/object/has'),
     forEach    = require('mout/collection/forEach'),
     invoke     = require('mout/array/invoke'),
@@ -12,7 +14,7 @@ var ready      = require('elements/domready'),
 
 var originals,
     collectFieldsValues = function(keys) {
-        var map = new storage(),
+        var map      = new storage(),
             defaults = $('[data-g-styles-defaults]');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
@@ -34,7 +36,7 @@ var originals,
 
         fields.forEach(function(field) {
             field = $(field);
-            var key = field.attribute('name'),
+            var key     = field.attribute('name'),
                 isInput = !hasOwn(defaults, key);
 
             if (field.type() == 'checkbox' && !field.value().length) { field.value('0'); }
@@ -66,9 +68,9 @@ ready(function() {
     originals = collectFieldsValues();
 
     compare.single = function(event, element) {
-        var parent = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
-            target = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
-            isOverride = parent ? parent.find('.settings-param-toggle') : false,
+        var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
+            target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
+            isOverride  = parent ? parent.find('.settings-param-toggle') : false,
             isNewWidget = false;
 
         if (!parent) { return; }
@@ -92,13 +94,19 @@ ready(function() {
         }
 
         compare.blanks(event, parent.find('.settings-param-field'));
-        compare.whole();
+        compare.whole('force');
         compare.presets();
     };
 
-    compare.whole = function() {
-        var equals = deepEquals(originals, collectFieldsValues()),
-            save = $('[data-save]');
+    compare.whole = function(force) {
+        var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
+                if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
+                    return a.toLowerCase() == b.toLowerCase();
+                } else {
+                    return is(a, b);
+                }
+            }),
+            save   = $('[data-save]');
 
         if (!save) { return; }
 
@@ -142,7 +150,7 @@ ready(function() {
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
-    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name]', compare.single);
+    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name]', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
         var previous = element.parent('.settings-param').siblings();

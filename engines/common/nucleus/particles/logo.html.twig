@@ -1,7 +1,11 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-<a href="{{ url(particle.url)|default(gantry.siteUrl()) }}" title="{{ particle.text }}" rel="home" class="{{ particle.class }}">
+    {% set url = url(particle.url)|default(gantry.siteUrl()) %}
+    {% if (url == gantry.siteUrl()) %}{% set rel='rel="home"' %}{% endif %}
+    {% set class=(particle.class ? 'class="'~ particle.class ~'"') %}
+
+<a href="{{ url }}" title="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
     {% set image = url(particle.image) %}
     {% if image %}
     <img src="{{ url(particle.image) }}" alt="{{ particle.text }}" />

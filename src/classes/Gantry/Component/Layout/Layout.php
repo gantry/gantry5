@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Layout;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Outlines;
@@ -23,6 +24,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\File\JsonFile;
+use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -185,20 +187,43 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Save layout.
      *
+     * @param bool $cascade
      * @return $this
      */
-    public function save()
+    public function save($cascade = true)
     {
         if (!$this->name) {
             throw new \LogicException('Cannot save unnamed layout');
         }
+
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
 
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
+        // If there are atoms in the layout, copy them into outline configuration.
+        $atoms = $this->atoms();
+        if (is_array($atoms)) {
+            if ($cascade) {
+                // Save layout into custom directory for the current theme.
+                $filename = $locator->findResource("gantry-config://{$name}/page/head.yaml", true, true);
+
+                $file = YamlFile::instance($filename);
+                $config = new Config($file->content());
+
+                $file->save($config->set('atoms', json_decode(json_encode($atoms), true))->toArray());
+                $file->free();
+            }
+        }
+
+        // Remove atoms from the layout.
+        foreach ($this->items as $key => $section) {
+            if ($section->type === 'atoms') {
+                unset ($this->items[$key]);
+            }
+        }
 
         $filename = $locator->findResource("gantry-config://{$name}/layout.yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
@@ -298,6 +323,38 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 continue;
             }
             $list[$position->attributes->key] = $position->title;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return atoms from the layout.
+     *
+     * @return array|null
+     * @deprecated
+     */
+    public function atoms()
+    {
+        $list   = null;
+
+        $atoms = array_filter($this->items, function ($section) {
+            return $section->type == 'atoms' && !empty($section->children);
+        });
+        $atoms = array_shift($atoms);
+
+        if (!empty($atoms->children)) {
+            $list = [];
+            foreach ($atoms->children as $grid) {
+                if (!empty($grid->children)) {
+                    foreach ($grid->children as $block) {
+                        if (isset($block->children[0])) {
+                            $item = $block->children[0];
+                            $list[] = ['title' => $item->title, 'type' => $item->subtype, 'attributes' => $item->attributes];
+                        }
+                    }
+                }
+            }
         }
 
         return $list;

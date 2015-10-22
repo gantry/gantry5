@@ -124,7 +124,7 @@ class Content
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-theme://blueprints/content');
+            $paths = $locator->findResources('gantry-blueprints://content');
             if (!$paths) {
                 // Deprecated in Gantry 5.1.1
                 $paths = $locator->findResources('gantry-admin://blueprints/content');
