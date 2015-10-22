@@ -63,7 +63,7 @@ var Atoms = {
         Atoms.attachEraser();
 
         groupOptions.forEach(function(groupOption, i) {
-            list = !i ? '.atoms-picker' : (i == 1 ? '.atoms-list' : '#atoms');
+            list = !i ? '.atoms-picker' : (i == 1 ? '.atoms-list' : '#trash');
             list = $(list);
             sort = simpleSort.create(list[0], {
                 sort: i == 1,
@@ -124,7 +124,7 @@ var Atoms = {
             });
 
             Atoms.lists[!i ? 'picker' : 'items'] = sort;
-            if (i) {
+            if (i == 1) {
                 element.SimpleSort = sort;
             }
         });
@@ -187,6 +187,8 @@ var AttachSettings = function() {
                         var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        override = override || $(input.data('override-target'));
 
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }

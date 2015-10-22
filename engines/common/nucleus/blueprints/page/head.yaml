@@ -22,4 +22,5 @@ form:
 
     atoms:
       type: input.hidden
+      override_target: '#atoms .atoms-list + input[type="checkbox"]'
       array: true

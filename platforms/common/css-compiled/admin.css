@@ -4282,6 +4282,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   }
 }
 
+#g5-container #page-settings #atoms .card {
+  position: relative;
+}
 #g5-container #page-settings #atoms .atoms-picker .atom-settings {
   display: none;
 }
@@ -4349,6 +4352,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container #page-settings #atoms .atoms-picker li {
   color: #666;
   border-color: #666;
+}
+#g5-container #page-settings #atoms.atoms-override .atoms-list {
+  margin: 0.5rem 2rem 0.5rem 0.5rem;
 }
 
 #g5-container #menu-editor .parent-indicator:before {

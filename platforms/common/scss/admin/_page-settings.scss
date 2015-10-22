@@ -2,6 +2,10 @@
     // wrapper
     #page-settings #atoms {
 
+        .card {
+            position: relative;
+        }
+
         .atoms-picker {
             @extend %list-reset;
 
@@ -85,6 +89,10 @@
         .atoms-picker li {
             color: $dark-gray;
             border-color: $dark-gray;
+        }
+
+        &.atoms-override .atoms-list {
+            margin: 0.5rem 2rem 0.5rem 0.5rem;
         }
     }
 }
