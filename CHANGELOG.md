@@ -3,24 +3,15 @@
 
 1. [Common](#common)
     1. [](#new)
+        - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
         - Page Settings: Implemented new feature that allows to specify global and/or per-outline overrides for Meta Tags, Body attributes, Assets, Favicons, etc.
         - File Picker: It is now possible to preview the images from the thumbnails list
         - Tags / Multiselection now include an `[x]` button to easily remove items via click
     2. [](#improved)
-        - Minor Collections CSS tweaks
-    3. [](#bugfix)
-        - Fixed issue where Tag fields wouldn't trigger the indicator change
-
-# 5.1.7
-## XX/XX/2015
-
-1. [Common](#common)
-    1. [](#new)
-        - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
-    2. [](#improved)
         - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
         - Logo Particle is renamed to Logo / Image Particle.
+        - Minor Collections CSS tweaks
     3. [](#bugfix)
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
         - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
@@ -29,6 +20,7 @@
         - Logo / Image Particle: the `rel` attribute will now smartly be added for `home` only if the URL matches the Site root.
         - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
         - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
+        - Fixed issue where Tag fields wouldn't trigger the indicator change
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Disable caching from Particle Module by default (#925)
