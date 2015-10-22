@@ -1,6 +1,6 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 {# If values contains a plain list of items, we need to reindex them. #}
-{% set value = not field.key and value is iterable ? value|values : value %}
+{% set value = not field.key and value is iterable and value|length ? value|values : value|default(field.default) %}
 
 {% block field %}
     {% if field.is_current %}

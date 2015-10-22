@@ -24,6 +24,7 @@
         - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
         - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
         - Fixed issue where Tag fields wouldn't trigger the indicator change
+        - Fixed Collections not loading the default values defined in the `yaml` 
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Disable caching from Particle Module by default (#925)
