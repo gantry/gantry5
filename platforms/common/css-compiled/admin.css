@@ -4286,10 +4286,24 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: none;
 }
 #g5-container #page-settings #atoms .atoms-list {
+  min-height: 3.5rem;
   margin: 0.5rem;
 }
 #g5-container #page-settings #atoms .atoms-list .drag-indicator {
   display: none;
+}
+#g5-container #page-settings #atoms .atoms-list:empty {
+  background-color: #f6f6f6;
+}
+#g5-container #page-settings #atoms .atoms-list:empty:after {
+  content: "Drop atoms here...";
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  vertical-align: middle;
+  color: #bababa;
+  line-height: 3.5rem;
 }
 #g5-container #page-settings #atoms .atoms-picker .atom-settings, #g5-container #page-settings #atoms .atoms-list .atom-settings {
   color: #666;

@@ -5,9 +5,8 @@ var $             = require('elements'),
     zen           = require('elements/zen'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
+    Eraser        = require('../ui/eraser'),
     request       = require('agent'),
-    /*lastItem      = require('mout/array/last'),
-     indexOf       = require('mout/array/indexOf'),*/
     indexOf       = require('mout/array/indexOf'),
     simpleSort    = require('sortablejs'),
 
@@ -20,10 +19,12 @@ var $             = require('elements'),
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
         { name: 'atoms', pull: 'clone', put: false },
-        { name: 'atoms', pull: false, put: true }
+        { name: 'atoms', pull: true, put: true },
+        { name: 'atoms', pull: false, put: false }
     ];
 
 var Atoms = {
+    eraser: null,
     lists: {
         picker: null,
         items: null
@@ -31,11 +32,15 @@ var Atoms = {
 
     serialize: function() {
         var output = [],
-            list   = $('.atoms-list [data-atom-picked]');
+            list   = $('.atoms-list'),
+            atoms  = list.search('[data-atom-picked]');
 
-        if (!list) { return false; }
+        if (!atoms) {
+            list.empty();
+            return '';
+        }
 
-        list.forEach(function(item) {
+        atoms.forEach(function(item) {
             item = $(item);
             output.push(JSON.parse(item.data('atom-picked')));
         });
@@ -43,12 +48,25 @@ var Atoms = {
         return JSON.stringify(output).replace(/\//g, '\\/');
     },
 
+    attachEraser: function() {
+        if (Atoms.eraser) {
+            Atoms.eraser.element = $('[data-atoms-erase]');
+            return;
+        }
+
+        Atoms.eraser = new Eraser('[data-atoms-erase]');
+    },
+
     createSortables: function(element) {
         var list, sort;
+
+        Atoms.attachEraser();
+
         groupOptions.forEach(function(groupOption, i) {
-            list = $('.atoms-' + (!i ? 'picker' : 'list'));
+            list = !i ? '.atoms-picker' : (i == 1 ? '.atoms-list' : '#atoms');
+            list = $(list);
             sort = simpleSort.create(list[0], {
-                sort: i > 0,
+                sort: i == 1,
                 filter: '[data-atom-ignore]',
                 group: groupOption,
                 scroll: false,
@@ -56,13 +74,31 @@ var Atoms = {
                 animation: 100,
 
                 onStart: function(event) {
+                    Atoms.attachEraser();
+
                     var item = $(event.item);
                     item.addClass('atom-dragging');
+
+                    if ($(event.from).hasClass('atoms-list')) {
+                        Atoms.eraser.show();
+                    }
                 },
 
                 onEnd: function(event) {
                     var item = $(event.item);
+                    var target = $(this.originalEvent.target);
+                    if (target.matches('#trash') || target.parent('#trash')) {
+                        item.remove();
+                        Atoms.eraser.hide();
+                        this.options.onSort();
+                        return;
+                    }
+
                     item.removeClass('atom-dragging');
+
+                    if ($(event.from).hasClass('atoms-list')) {
+                        Atoms.eraser.hide();
+                    }
                 },
 
                 onSort: function() {
@@ -73,6 +109,17 @@ var Atoms = {
 
                     field.value(serial);
                     $('body').emit('change', { target: field });
+                },
+
+                onOver: function(evt) {
+                    if (!$(evt.from).matches('.atoms-list')) { return; }
+
+                    var over = $(evt.newIndex);
+                    if (over.matches('#trash') || over.parent('#trash')) {
+                        Atoms.eraser.over();
+                    } else {
+                        Atoms.eraser.out();
+                    }
                 }
             });
 
