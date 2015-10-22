@@ -1,0 +1,25 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route(action) }}">
+    <div class="card settings-block">
+        <h4>
+            <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title }) }}" data-title-edit></i>
+            <span class="badge font-small">{{ item.type }}</span>
+            {% if blueprints.form.fields.enabled %}
+            {% include 'forms/fields/enable/enable.html.twig' with {'name': prefix ~ 'enabled', 'field': blueprints.form.fields.enabled, 'value': item.attributes.enabled, 'default': 1} %}
+            {% endif %}
+        </h4>
+
+        <div class="inner-params">
+            {% include 'forms/fields.html.twig' with {'blueprints': blueprints.form, 'data': data, 'prefix': prefix, 'skip': ['enabled']} %}
+        </div>
+    </div>
+
+    <div class="g-modal-actions">
+        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
+    </div>
+</form>
+{% endblock %}

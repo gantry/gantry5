@@ -1,13 +1,38 @@
-# 5.1.7
+# 5.2.0
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
+        - Page Settings: Implemented new feature that allows to specify global and/or per-outline overrides for Meta Tags, Body attributes, Assets, Favicons, etc.
+        - Atoms are moved from Layout to Page Settings. Migration is automatic and backward compatibility proof
+        - File Picker: It is now possible to preview the images from the thumbnails list
+        - Tags / Multiselection now include an `[x]` button to easily remove items via click
+    2. [](#improved)
+        - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
+        - Default Outline now shows a 'default' tag in the Outlines Page (#926)
+        - Logo Particle is renamed to Logo / Image Particle.
+        - Minor Collections CSS tweaks
+        - Date Particle: Added commonly used option `October 22, 2015`
     3. [](#bugfix)
+        - Fixed the config files lookup using relative instead of absolute paths
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
-        - Fixed Admin Styles issue where indicator wouldn't show in certain cases. 
+        - Fixed Admin Styles issue where indicator wouldn't show in certain cases.
+        - Fixed `.equal-height` utility not fully expanding the content (#902)
+        - Reverted Assignments scrollbars due to Chrome issue [we will re-enable the functionality as soon as the bug is fixed] (#851)
+        - Logo / Image Particle: the `rel` attribute will now smartly be added for `home` only if the URL matches the Site root.
+        - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
+        - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
+        - Fixed issue where Tag fields wouldn't trigger the indicator change
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Disable caching from Particle Module by default (#925)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved URL comparing on menu item Assignments when permalinks are enabled
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
+        - Fixed issue in Hydrogen where Visual Composer wouldn't work on Pages
 
 # 5.1.6
 ## 14/10/2015

@@ -77,6 +77,19 @@
 	}
 }
 
+.g-flushed {
+	padding: 0 !important;
+
+	.g-content {
+		padding: 0;
+		margin: 0;
+	}
+
+	.g-container {
+		width: 100%;
+	}
+}
+
 
 // Size Adjustment
 .full-width {
@@ -127,4 +140,8 @@
 // Same Height for Box Variations
 .equal-height {
     @include display(flex);
+
+	.g-content {
+		width: 100%;
+	}
 }

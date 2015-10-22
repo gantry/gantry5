@@ -119,6 +119,8 @@
             display: inline-block;
             opacity: 0;
             cursor: pointer;
+            margin: 0 5px;
+            vertical-align: middle;
 
             @include transition(opacity 0.2s ease-in-out);
         }
@@ -127,6 +129,10 @@
             display: table-cell;
             vertical-align: middle;
             padding-left: 4px; // 4px is the display: inline-block gap
+        }
+        
+        textarea + .g-reset-field {
+            vertical-align: top;
         }
 
         &:hover {
@@ -167,6 +173,7 @@
         font-size: $core-font-size;
         line-height: $core-line-height;
         border-radius: $core-border-radius;
+        vertical-align: middle;
 
         &:focus {
             border-color: rgba($core-accent, .5);
@@ -312,8 +319,12 @@
 // collections
 .collection-list .settings-param-field, .collection-keyvalue .settings-param-field .g-keyvalue-field {
     ul {
+        &:empty {
+            margin-top: -8px;
+        }
+
         @extend %list-reset;
-        margin: 5px 0;
+        margin: 0 0 5px;
         border-spacing: 0 5px;
         display: table;
 
@@ -350,7 +361,7 @@
         }
 
         &[data-collection-item]:hover a {
-            color: $core-accent;
+            color: $black;
         }
     }
 

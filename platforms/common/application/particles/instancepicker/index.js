@@ -126,6 +126,7 @@ ready(function() {
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
+                            override = override || $(input.data('override-target'));
 
                             if (override && !override.checked()) { return; }
 

@@ -1586,6 +1586,17 @@ input[type="submit"] {
   padding-bottom: 0 !important;
 }
 
+.g-flushed {
+  padding: 0 !important;
+}
+.g-flushed .g-content {
+  padding: 0;
+  margin: 0;
+}
+.g-flushed .g-container {
+  width: 100%;
+}
+
 .full-width {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -1651,6 +1662,9 @@ input[type="submit"] {
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
+}
+.equal-height .g-content {
+  width: 100%;
 }
 
 #g-offcanvas {

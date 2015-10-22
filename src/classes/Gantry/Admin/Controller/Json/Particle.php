@@ -174,7 +174,9 @@ class Particle extends JsonController
             }
         }
 
-        $data->join('options.block', $block);
+        if ($block) {
+            $data->join('options.block', $block);
+        }
 
         // TODO: validate
 

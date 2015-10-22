@@ -1,5 +1,5 @@
-name: Logo
-description: Display a logo.
+name: Logo / Image
+description: Display a logo or an image.
 type: particle
 
 form:

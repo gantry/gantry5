@@ -1,5 +1,9 @@
 "use strict";
+// deprecated (5.2.0)
 var prime   = require('prime'),
+    $       = require('elements'),
+    zen     = require('elements/zen'),
+    bind    = require('mout/function/bind'),
     Section = require('./section');
 
 var Atoms = new prime({
@@ -12,7 +16,9 @@ var Atoms = new prime({
     },
 
     layout: function() {
-        return '<div class="atoms-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
+        this.deprecated = '<div class="atoms-notice">Looking for Atoms? To make it easier we moved them in the <a href="#">Page Settings</a>, this way here you can focus on the content.</div>';
+
+        return '<div class="atoms-section" style="display: none;" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
     },
 
     getId: function() {
@@ -20,10 +26,43 @@ var Atoms = new prime({
     },
 
     onDone: function(event) {
+        // Gantry 5.2.0: Remove atoms section if empty to keep the layout clear
+        if (!this.block.search('[data-lm-blocktype="atom"]')) {
+            var ids = [this.getId()], segments = this.block.search('[data-lm-id]');
+            if (segments) {
+                segments.forEach(function(element) {
+                    ids.push($(element).data('lm-id'));
+                });
+            }
+
+            ids.reverse().forEach(bind(function(id) {
+                this.options.builder.remove(id);
+            }, this));
+
+            this.block.empty()[0].outerHTML = this.deprecated;
+            this._attachRedirect();
+
+            return;
+        }
+
         if (!this.block.search('[data-lm-id]')) {
             this.grid.insert(this.block, 'bottom');
             this.options.builder.add(this.grid);
         }
+
+        zen('div').html(this.deprecated).firstChild().after(this.block);
+
+        this._attachRedirect();
+    },
+
+    _attachRedirect: function() {
+        var item = $('[data-g5-nav="page"]');
+        if (!item) { return; }
+
+        $('.atoms-notice a').on('click', function(event) {
+            event.preventDefault();
+            $('body').emit('click', { target: item });
+        });
     }
 });
 

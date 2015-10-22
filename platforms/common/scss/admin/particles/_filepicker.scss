@@ -141,7 +141,7 @@
                 @include transition(transform 0.2s ease-out);
                 @extend .font-small;
 
-                .g-file-delete {
+                .g-file-delete, .g-file-preview {
                     position: absolute;
                     z-index: 2;
                     background-color: $red;
@@ -152,6 +152,13 @@
                     line-height: 1rem;
                     padding: 2px;
                     opacity: 0;
+                    cursor: pointer;
+                }
+
+                .g-file-preview {
+                    right: inherit;
+                    left: 2px;
+                    background-color: $blue;
                 }
 
                 &.g-file-deleted {
@@ -163,7 +170,7 @@
                     vertical-align: middle;
                 }
 
-                &:hover .g-file-delete {
+                &:hover .g-file-delete, &:hover .g-file-preview {
                     opacity: 1;
                 }
             }
@@ -176,6 +183,14 @@
                 i {
                     font-size: 1rem;
                 }
+            }
+
+            .g-file-name {
+                font-size: 0.7rem;
+                margin: 0.5em -6px 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             &.g-filemode-thumbnails {
@@ -226,12 +241,7 @@
                     }
 
                     .g-file-name {
-                        font-size: 0.7rem;
-                        margin: 0.5em -6px 0;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
                         max-width: $max-width;
-                        white-space: nowrap;
                     }
 
                     .g-file-size, .g-file-mtime {
@@ -279,7 +289,7 @@
                         }
                     }
 
-                    &.selected span:not(.g-file-delete) {
+                    &.selected span:not(.g-file-delete):not(.g-file-preview) {
                         @extend .badge;
                         background-color: $core-accent !important;
                         color: $white !important;
@@ -294,9 +304,18 @@
                     display: block;
                     padding: 4px;
 
-                    > span:not(.g-file-name) {
+                    > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
                         color: #aaa;
                         text-align: center;
+                    }
+
+                    .g-file-preview {
+                        left: inherit;
+                        right: 2px;
+                    }
+
+                    .g-file-delete + .g-file-preview {
+                        right: 26px;
                     }
 
                     .g-thumb {
@@ -304,6 +323,7 @@
                     }
 
                     .g-file-name {
+                        margin: 0;
                         width: 50%;
                     }
 
@@ -324,7 +344,7 @@
                         background-color: $core-accent !important;
                         color: $white !important;
 
-                        > span:not(.g-file-name) {
+                        > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
                             color: lighten($core-accent, 15%);
                         }
                     }

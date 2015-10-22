@@ -90,16 +90,14 @@ class Layout extends HtmlController
 
         $groups = [
             'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
-            'Particles' => ['particle' => []],
-            'Atoms' => ['atom' => []]
+            'Particles' => ['particle' => []]
         ];
 
         $particles = [
             'position'    => [],
             'spacer'      => [],
             'pagecontent' => [],
-            'particle' => [],
-            'atom' => []
+            'particle' => []
         ];
 
         $particles = array_replace($particles, $this->getParticles());
@@ -154,6 +152,8 @@ class Layout extends HtmlController
 
     public function particle($type, $id)
     {
+        if ($type == 'atom') { return ''; }
+
         $page = $this->params['configuration'];
         $layout = $this->getLayout($page);
         if (!$layout) {
@@ -219,8 +219,7 @@ class Layout extends HtmlController
         ];
 
         if ($particle) {
-            $typeLayout = $type == 'atom' ? $type : 'particle';
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
+            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
                 $this->params);
         } else {
             $typeLayout = $type == 'container' ? 'container' : 'section';
