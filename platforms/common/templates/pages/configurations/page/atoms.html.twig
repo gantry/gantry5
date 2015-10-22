@@ -6,7 +6,7 @@
     <ul class="atoms-picker">
         {%- for atom, label in atoms -%}
         <li data-atom-type="{{ atom }}" data-atom-picked="{{ { 'title': label, 'type': atom, 'attributes': null } |json_encode|e('html_attr')}}">
-            <i class="fa fa-fw fa-arrows-alt drag-indicator"></i>
+            <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
             <span class="atom-title">{{ label }}</span>
             <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom)|e }}" class="atom-settings config-cog"><i aria-label="Configure Atom Settings" class="fa fa-cog"></i></a>
         </li>
@@ -19,7 +19,7 @@
             {%- for atom in gantry.config.get('page.head.atoms') -%}
                 {% set status = atom.attributes.enabled ?: 'class="atom-disabled" title="This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete."' %}
                 <li data-atom-picked="{{ atom|json_encode|e('html_attr') }}" {{ status|raw }} data-atom-type="{{ atom.type }}">
-                    <i class="fa fa-fw fa-arrows-alt drag-indicator"></i>
+                    <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
                     <span class="atom-title">{{- atom.title -}}</span>
                     <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom.type)|e }}" class="atom-settings config-cog"><i aria-label="Configure Atom Settings" class="fa fa-cog"></i></a>
                 </li>

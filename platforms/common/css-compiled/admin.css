@@ -4372,7 +4372,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: block;
   opacity: 0.8;
 }
-#g5-container #menu-editor li[data-mm-original-type] .fa-arrows-alt {
+#g5-container #menu-editor li[data-mm-original-type] .fa-hand-stop-o {
   display: none;
 }
 #g5-container #menu-editor .card.full-width {
