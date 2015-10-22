@@ -13,6 +13,7 @@
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
         - Logo Particle is renamed to Logo / Image Particle.
         - Minor Collections CSS tweaks
+        - Date Particle: Added commonly used option `October 22, 2015`
     3. [](#bugfix)
         - Fixed the config files lookup using relative instead of absolute paths
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline
