@@ -5,6 +5,7 @@
     1. [](#new)
         - Updated Hydrogen and Admin with the new Gantry logo. Thanks Henning!
         - Page Settings: Implemented new feature that allows to specify global and/or per-outline overrides for Meta Tags, Body attributes, Assets, Favicons, etc.
+        - Atoms are moved from Layout to Page Settings. Migration is automatic and backward compatibility proof
         - File Picker: It is now possible to preview the images from the thumbnails list
         - Tags / Multiselection now include an `[x]` button to easily remove items via click
     2. [](#improved)
