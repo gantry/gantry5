@@ -90,7 +90,7 @@ class Page extends Base\Page
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
         if ($this->outline) $classes[] = 'outline-' . $this->outline;
 
-        $baseAttributes = (array) $this->config->get('page.body', []);
+        $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         if (!empty($baseAttributes['class'])) {
             $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], $classes);
         } else {

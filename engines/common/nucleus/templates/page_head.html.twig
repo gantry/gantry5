@@ -20,14 +20,32 @@
     {% endblock -%}
 {% endassets -%}
 
+{% if gantry.config.page.head.atoms %}
+    {% for atom in gantry.config.page.head.atoms %}
+        {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
+    {% endfor %}
+{% endif %}
+
 <head>
-    {%- block head_meta -%}
+    {% block head_meta %}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {% if gantry.config.styles.base.favicon %}
-        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.styles.base.favicon) }}" />
+        {% if gantry.config.page.head.meta -%}
+            {% for attributes in gantry.config.page.head.meta -%}
+                {%- for key, value in attributes %}
+                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e('html_attr') }}" />
+                {% endfor -%}
+            {%- endfor -%}
+        {%- endif -%}
+
+        {% if gantry.config.page.assets.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
         {% endif %}
-    {%- endblock %}
+
+        {% if gantry.config.page.assets.touchicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url(gantry.config.page.assets.touchicon) }}">
+        <link rel="icon" sizes="192x192" href="{{ url(gantry.config.page.assets.touchicon) }}">
+        {% endif %}
+    {% endblock %}
 
     {%- block head_title -%}
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,8 +53,8 @@
     {%- endblock %}
 
     {% block head_application -%}
-        {{ gantry.styles('head')|join("\n    ")|raw }}
-        {{ gantry.scripts('head')|join("\n    ")|raw }}
+        {{ gantry.styles('head')|join("\n")|raw }}
+        {{ gantry.scripts('head')|join("\n")|raw }}
     {%- endblock %}
 
     {% block head_ie_stylesheets -%}
@@ -48,4 +66,9 @@
     {% endblock -%}
 
     {% block head %}{% endblock %}
+    {% block head_custom %}
+        {% if gantry.config.page.head.head_bottom %}
+        {{ gantry.config.page.head.head_bottom|raw }}
+        {% endif %}
+    {% endblock %}
 </head>

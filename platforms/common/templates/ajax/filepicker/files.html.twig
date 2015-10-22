@@ -28,11 +28,12 @@
 </ul>
 <ul>
     {% for index,file in files %}
-        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}"{{ file.pathname == value ? ' class="selected"' : '' }}>
+        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}"{{ file.pathname == value ? ' class="selected"' : '' }} title="{{ file.filename }} ({{ _self.bytesToSize(file.size) }})">
             {% if file.isInCustom %}
-                <span class="g-file-delete" data-g-file-delete data-dz-remove><i class="fa fa-fw fa-trash-o"></i></span>
+                <span class="g-file-delete" data-g-file-delete data-dz-remove title="Remove File"><i class="fa fa-fw fa-trash-o"></i></span>
             {% endif %}
             {% if file.isImage %}
+                <span class="g-file-preview" data-g-file-preview title="Preview File"><i class="fa fa-fw fa-eye"></i></span>
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url('{{ url(file.pathname) }}')"></div>
                 </div>

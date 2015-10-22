@@ -57,11 +57,12 @@
 {% endset -%}
 
 {%- block page -%}
-<!DOCTYPE {{ gantry.page.doctype|default('html')|raw }}>
+<!DOCTYPE {{ gantry.config.page.doctype|default('html')|raw }}>
 <html{{ gantry.page.htmlAttributes|raw }}>
     {{ page_head|raw }}
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
+        {{ gantry.config.page.body.body_top|raw }}
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
@@ -73,6 +74,7 @@
         </div>
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
         {{ page_footer|raw }}
+        {{ gantry.config.page.body.body_bottom|raw }}
     </body>
     {%- endblock %}
 

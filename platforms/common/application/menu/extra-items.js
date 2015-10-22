@@ -160,6 +160,8 @@ var StepTwo = function(data, content, button) {
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
+                override = override || $(input.data('override-target'));
+
                 if (override && !override.checked()) { return; }
                 if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
                     dataString.push(name + '=' + encodeURIComponent(value));

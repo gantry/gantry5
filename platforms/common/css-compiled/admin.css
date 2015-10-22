@@ -17,7 +17,7 @@
   overflow: visible;
 }
 
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -49,7 +49,7 @@
   visibility: visible;
   overflow: visible;
 }
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1384,10 +1384,10 @@
   white-space: nowrap;
   border: inherit;
 }
-#g5-container .float-left, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title {
+#g5-container .float-left, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
   float: left !important;
 }
-#g5-container .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions {
+#g5-container .float-right, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions {
   float: right !important;
 }
 #g5-container .hide, #g5-container body .g-offcanvas-hide {
@@ -1445,6 +1445,16 @@
 }
 #g5-container .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
+}
+#g5-container .g-flushed {
+  padding: 0 !important;
+}
+#g5-container .g-flushed .g-content {
+  padding: 0;
+  margin: 0;
+}
+#g5-container .g-flushed .g-container {
+  width: 100%;
 }
 #g5-container .full-width {
   -webkit-box-flex: 0;
@@ -1691,7 +1701,7 @@ body.g-prime {
   overflow: hidden;
   height: 0;
 }
-#g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete) {
+#g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete):not(.g-file-preview) {
   border-radius: 100px;
   background-color: #eee;
   color: #9d9d9d;
@@ -2432,6 +2442,44 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   padding: 5px 14px !important;
 }
 
+.selectize-control.multi .items [data-value] {
+  position: relative;
+  padding-right: 24px !important;
+  overflow: visible;
+}
+.selectize-control.multi .items [data-value] .remove-single-item {
+  z-index: 1;
+  /* fixes ie bug (see #392) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 17px;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 2px 0 0 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0 2px 2px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selectize-control.multi .items [data-value] .remove-single-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.selectize-control.multi .items [data-value].active .remove-single-item {
+  border-left-color: rgba(0, 0, 0, 0.2);
+}
+.selectize-control.multi .items .disabled [data-value] .remove-single-item:hover {
+  background: none;
+}
+.selectize-control.multi .items .disabled [data-value] .remove-single-item {
+  border-left-color: rgba(77, 77, 77, 0);
+}
+
 #g5-container #settings h2:first-child {
   margin-top: 0.5rem;
 }
@@ -2439,7 +2487,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   width: 100%;
   min-width: inherit;
 }
-#g5-container .settings-block.card .badge, #g5-container .settings-block.card .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .settings-block.card span:not(.g-file-delete) {
+#g5-container .settings-block.card .badge, #g5-container .settings-block.card .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete):not(.g-file-preview), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .settings-block.card span:not(.g-file-delete):not(.g-file-preview) {
   margin-left: 4px;
 }
 #g5-container .settings-block.disabled {
@@ -2524,6 +2572,8 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: inline-block;
   opacity: 0;
   cursor: pointer;
+  margin: 0 5px;
+  vertical-align: middle;
   -webkit-transition: opacity 0.2s ease-in-out;
   -moz-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
@@ -2532,6 +2582,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: table-cell;
   vertical-align: middle;
   padding-left: 4px;
+}
+#g5-container .settings-block .settings-param-field textarea + .g-reset-field {
+  vertical-align: top;
 }
 #g5-container .settings-block .settings-param-field:hover .g-reset-field {
   opacity: 1;
@@ -2563,6 +2616,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.1875rem;
+  vertical-align: middle;
 }
 #g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
   border-color: rgba(67, 154, 134, 0.5);
@@ -2680,9 +2734,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   border-radius: 3px;
 }
 #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul {
-  margin: 5px 0;
+  margin: 0 0 5px;
   border-spacing: 0 5px;
   display: table;
+}
+#g5-container .collection-list .settings-param-field ul:empty, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul:empty {
+  margin-top: -8px;
 }
 #g5-container .collection-list .settings-param-field ul li, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul li {
   position: relative;
@@ -2705,7 +2762,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   opacity: 1;
 }
 #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li[data-collection-item]:hover a {
-  color: #439A86;
+  color: #000;
 }
 #g5-container .collection-list .settings-param-field [data-collection-item] a {
   color: #666;
@@ -2907,7 +2964,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container #configurations .outline-is-default {
   border-color: #48B0D7;
 }
-#g5-container #configurations .outline-is-default .float-right.font-small, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .float-right.g-collapse, #g5-container .card h4[data-g-collapse] #configurations .outline-is-default .float-right.g-collapse, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-collapse.container-actions, #g5-container .card h4[data-g-collapse] .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] .g-collapse.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .g-filters-bar label.float-right, #g5-container .g-filters-bar #configurations .outline-is-default label.float-right, #g5-container #configurations .outline-is-default .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper label.container-actions, #g5-container .g-filters-bar .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar label.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g-filters-bar #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .font-small.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .font-small.container-actions, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content .container-actions.menu-item-subtitle, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper li.container-actions, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .float-right.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .float-right.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .float-right.menu-item-subtitle, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.float-right, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.float-right {
+#g5-container #configurations .outline-is-default .float-right.font-small, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .float-right.g-collapse, #g5-container .card h4[data-g-collapse] #configurations .outline-is-default .float-right.g-collapse, #g5-container #configurations .outline-is-default .card h4[data-g-collapse] .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-collapse.container-actions, #g5-container .card h4[data-g-collapse] .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] .g-collapse.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .card h4[data-g-collapse] #configurations .outline-is-default .g-collapse.container-actions, #g5-container #configurations .outline-is-default .g-filters-bar label.float-right, #g5-container .g-filters-bar #configurations .outline-is-default label.float-right, #g5-container #configurations .outline-is-default .g-filters-bar .lm-blocks [data-lm-blocktype="container"] .container-wrapper label.container-actions, #g5-container .g-filters-bar .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-filters-bar label.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g-filters-bar #configurations .outline-is-default label.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .font-small.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .font-small.container-actions, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content .container-actions.menu-item-subtitle, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default .container-actions.menu-item-subtitle, #g5-container #configurations .outline-is-default .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks [data-lm-blocktype="container"] .container-wrapper li.container-actions, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations .outline-is-default li.container-actions, #g5-container #configurations .outline-is-default .float-right.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default .float-right.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #configurations .outline-is-default #menu-editor li .menu-item .menu-item-content .float-right.menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content #configurations .outline-is-default .float-right.menu-item-subtitle, #g5-container #configurations .outline-is-default .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.float-right, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files #configurations .outline-is-default li.float-right {
   color: #48B0D7;
 }
 #g5-container #configurations .outline-is-default:after {
@@ -2934,7 +2991,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks > [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
+#g5-container #configurations h4 > *.float-right, #g5-container #configurations .lm-blocks [data-lm-blocktype="container"] .container-wrapper h4 > *.container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper #configurations h4 > *.container-actions {
   margin-top: 5px;
   color: #999999;
 }
@@ -3547,35 +3604,35 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks.moving .g-grid > .g-block:after, #g5-container .lm-blocks.moving .g-grid > .g-block > [data-lm-blocktype]:after, #g5-container .lm-blocks.moving .g-grid:hover > .g-block [data-lm-blocktype]:not(:empty):after {
   display: none;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] {
+#g5-container .lm-blocks [data-lm-blocktype="container"] {
   position: relative;
   padding: 8px;
   background: #e0e0e0;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper {
   padding: 0 4px 8px;
   color: #888;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
   text-transform: capitalize;
   font-size: 0.95rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-title .changes-indicator {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title .changes-indicator {
   margin-right: 5px;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:before {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:before {
   right: 0.1rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:after {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:after {
   right: -0.2rem;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions i {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions i {
   cursor: pointer;
   -webkit-transition: color 0.2s;
   -moz-transition: color 0.2s;
   transition: color 0.2s;
 }
-#g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:hover, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions i:hover {
+#g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:hover, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions i:hover {
   color: #4d4d4d;
 }
 #g5-container .lm-blocks .g-grid .g-block .section:first-child {
@@ -3584,10 +3641,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .g-grid .g-block .section:last-child {
   margin-bottom: 0;
 }
-#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
-  background: #fff;
-  margin: 14px 0;
+#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section, #g5-container .lm-blocks .wrapper-section {
   padding: 8px;
+}
+#g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
+  margin: 14px 0;
+  background: #fff;
 }
 #g5-container .lm-blocks .section .section-header, #g5-container .lm-blocks .atoms-section .section-header, #g5-container .lm-blocks .offcanvas-section .section-header {
   font-size: 22px;
@@ -3732,29 +3791,45 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   opacity: 0;
   visibility: hidden;
 }
-#g5-container .lm-blocks .offcanvas-section .g-grid:empty:after {
+#g5-container .lm-blocks .atoms-notice {
+  background-color: #9055AF;
+  border: 4px solid #fff;
+  color: #fff;
+  padding: 0.938rem;
+  margin: 0.625rem;
+  text-align: center;
+}
+#g5-container .lm-blocks .atoms-notice a {
+  color: #d4bde0;
+  border-bottom: 1px dotted #d4bde0;
+  font-weight: bold;
+}
+#g5-container .lm-blocks .atoms-notice a:hover {
+  color: white;
+}
+#g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
 }
-#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block {
+#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block {
   margin-right: 14px;
   background: #fff;
   padding-bottom: 50px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section {
+#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section {
   border-bottom: 14px solid #eee;
   margin-top: 0;
   margin-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .section:last-child {
+#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section:last-child {
   border-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size {
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size {
   margin-right: 0;
   position: absolute;
   bottom: 12px;
   right: 12px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks > .g-lm-container > .g-grid > .g-block > .particle-size i {
+#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size i {
   margin-right: 5px;
 }
 #g5-container .lm-blocks .g-grid:hover > .g-block > .particle:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .position:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .spacer:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .pagecontent:after {
@@ -3768,10 +3843,10 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   cursor: col-resize;
   z-index: 10;
 }
-#g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .atom {
+#g5-container .lm-blocks .section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child .atom, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .particle, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .position, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .spacer, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .pagecontent, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child .atom {
   margin-right: 0;
 }
-#g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .pagecontent:after {
+#g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .section > .g-lm-container > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .offcanvas-section > .g-grid > .g-block:last-child > .pagecontent:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .particle:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .position:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .spacer:after, #g5-container .lm-blocks .wrapper-section > .g-grid > .g-block:last-child > .pagecontent:after {
   display: none;
 }
 #g5-container .lm-blocks .g-grid > .g-block:last-child {
@@ -3835,7 +3910,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   margin-top: -3px;
   margin-bottom: -3px;
 }
-#g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .particle .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle .container-actions, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .position .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .position .container-actions, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .spacer .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .pagecontent .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions, #g5-container .lm-blocks .atom .float-right, #g5-container .lm-blocks > [data-lm-blocktype="container"] .atom .container-wrapper .container-actions, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .atom .container-actions {
+#g5-container .lm-blocks .particle .float-right, #g5-container .lm-blocks .particle [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle .container-actions, #g5-container .lm-blocks .position .float-right, #g5-container .lm-blocks .position [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .position .container-actions, #g5-container .lm-blocks .spacer .float-right, #g5-container .lm-blocks .spacer [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions, #g5-container .lm-blocks .pagecontent .float-right, #g5-container .lm-blocks .pagecontent [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions, #g5-container .lm-blocks .atom .float-right, #g5-container .lm-blocks .atom [data-lm-blocktype="container"] .container-wrapper .container-actions, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .atom .container-actions {
   position: absolute;
   right: 13px;
   top: 0;
@@ -3843,7 +3918,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   line-height: 50px;
   float: inherit;
 }
-#g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .particle .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle .container-actions i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .position .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .position .container-actions i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .spacer .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .pagecontent .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions i, #g5-container .lm-blocks .atom .float-right i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .atom .container-wrapper .container-actions i, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .atom .container-actions i {
+#g5-container .lm-blocks .particle .float-right i, #g5-container .lm-blocks .particle [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle .container-actions i, #g5-container .lm-blocks .position .float-right i, #g5-container .lm-blocks .position [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .position .container-actions i, #g5-container .lm-blocks .spacer .float-right i, #g5-container .lm-blocks .spacer [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .spacer .container-actions i, #g5-container .lm-blocks .pagecontent .float-right i, #g5-container .lm-blocks .pagecontent [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .pagecontent .container-actions i, #g5-container .lm-blocks .atom .float-right i, #g5-container .lm-blocks .atom [data-lm-blocktype="container"] .container-wrapper .container-actions i, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .atom .container-actions i {
   line-height: 52px;
   cursor: pointer;
   position: relative;
@@ -3933,7 +4008,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .atoms-section .placeholder.in-between {
   margin-bottom: 6px;
 }
-#g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
+#g5-container .lm-blocks .block-has-changes:not(.section):not(.atoms-section):not(.offcanvas-section):not(.wrapper-section):not(.g-lm-container) {
   box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
 }
 #g5-container .lm-blocks .block-has-changes.g-lm-container {
@@ -3947,7 +4022,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g-filters-bar label, #g5-container .g-filters-bar .lm-blocks .block-has-changes > span label, #g5-container .lm-blocks .block-has-changes > span .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks .block-has-changes > span .menu-item-subtitle, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li {
   margin-left: 15px;
 }
-#g5-container .particle-disabled, #g5-container [data-lm-disabled] {
+#g5-container .particle-disabled, #g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled, #g5-container [data-lm-disabled] {
   background: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
   background-size: 50px 50px !important;
@@ -4207,6 +4282,81 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   }
 }
 
+#g5-container #page-settings #atoms .card {
+  position: relative;
+}
+#g5-container #page-settings #atoms .atoms-picker .atom-settings {
+  display: none;
+}
+#g5-container #page-settings #atoms .atoms-list {
+  min-height: 3.5rem;
+  margin: 0.5rem;
+}
+#g5-container #page-settings #atoms .atoms-list .drag-indicator {
+  display: none;
+}
+#g5-container #page-settings #atoms .atoms-list:empty {
+  background-color: #f6f6f6;
+}
+#g5-container #page-settings #atoms .atoms-list:empty:after {
+  content: "Drop atoms here...";
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  vertical-align: middle;
+  color: #bababa;
+  line-height: 3.5rem;
+}
+#g5-container #page-settings #atoms .atoms-picker .atom-settings, #g5-container #page-settings #atoms .atoms-list .atom-settings {
+  color: #666;
+  opacity: 0.7;
+  cursor: pointer;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+#g5-container #page-settings #atoms .atoms-picker .atom-settings:hover, #g5-container #page-settings #atoms .atoms-list .atom-settings:hover {
+  opacity: 1;
+}
+#g5-container #page-settings #atoms .atoms-picker .drag-indicator, #g5-container #page-settings #atoms .atoms-list .drag-indicator {
+  opacity: 0.5;
+}
+#g5-container #page-settings #atoms .atoms-picker li, #g5-container #page-settings #atoms .atoms-list li {
+  cursor: move;
+  display: inline-block;
+  border-radius: 0.1875rem;
+  color: #9055AF;
+  border: 2px solid #9055AF;
+  padding: 0.469rem;
+  margin: 0.3125rem;
+}
+#g5-container #page-settings #atoms .atoms-picker li:not(.atom-force-style), #g5-container #page-settings #atoms .atoms-list li:not(.atom-force-style) {
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled), #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) {
+  border-color: #9055AF;
+  background-color: #9055AF;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled {
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #666;
+  opacity: 0.7;
+}
+#g5-container #page-settings #atoms .atoms-picker li {
+  color: #666;
+  border-color: #666;
+}
+#g5-container #page-settings #atoms.atoms-override .atoms-list {
+  margin: 0.5rem 2rem 0.5rem 0.5rem;
+}
+
 #g5-container #menu-editor .parent-indicator:before {
   font-family: FontAwesome;
   vertical-align: middle;
@@ -4228,7 +4378,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container #menu-editor li .menu-item .title {
   font-size: 1rem;
 }
-#g5-container #menu-editor li .menu-item .badge, #g5-container #menu-editor .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .menu-item span:not(.g-file-delete), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails #menu-editor li.selected .menu-item span:not(.g-file-delete) {
+#g5-container #menu-editor li .menu-item .badge, #g5-container #menu-editor .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected .menu-item span:not(.g-file-delete):not(.g-file-preview), #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails #menu-editor li.selected .menu-item span:not(.g-file-delete):not(.g-file-preview) {
   background-color: #aaa;
   color: #fff;
   margin-left: 0.5em;
@@ -4242,7 +4392,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: block;
   opacity: 0.8;
 }
-#g5-container #menu-editor li[data-mm-original-type] .fa-arrows-alt {
+#g5-container #menu-editor li[data-mm-original-type] .fa-hand-stop-o {
   display: none;
 }
 #g5-container #menu-editor .card.full-width {
@@ -5732,10 +5882,10 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header label {
   font-size: 0.75em;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-right input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions input, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .container-actions input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header select {
   width: auto !important;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks > [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .float-left.particle-search-wrapper input, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .lm-blocks [data-lm-blocktype="container"] .container-wrapper .particle-search-wrapper.container-title input, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .g-particles-header .particle-search-wrapper.container-title input {
   width: 245px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper {
@@ -5890,7 +6040,7 @@ html.g5-dialog-open {
   -moz-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li .g-file-delete {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li .g-file-delete, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li .g-file-preview {
   position: absolute;
   z-index: 2;
   background-color: #ed5565;
@@ -5901,6 +6051,12 @@ html.g5-dialog-open {
   line-height: 1rem;
   padding: 2px;
   opacity: 0;
+  cursor: pointer;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li .g-file-preview {
+  right: inherit;
+  left: 2px;
+  background-color: #3288e6;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.g-file-deleted {
   -webkit-transform: scale(0);
@@ -5913,7 +6069,7 @@ html.g5-dialog-open {
   display: inline-block;
   vertical-align: middle;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li:hover .g-file-delete {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li:hover .g-file-delete, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li:hover .g-file-preview {
   opacity: 1;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .g-list-labels {
@@ -5921,6 +6077,13 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .g-file-error i {
   font-size: 1rem;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .g-file-name {
+  font-size: 0.7rem;
+  margin: 0.5em -6px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li {
   display: inline-block;
@@ -5961,12 +6124,7 @@ html.g5-dialog-open {
   border-radius: 0.1875rem;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-name {
-  font-size: 0.7rem;
-  margin: 0.5em -6px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 100px;
-  white-space: nowrap;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime {
   display: none;
@@ -6005,7 +6163,7 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.g-file-uploading .g-file-progress {
   display: block;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete) {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete):not(.g-file-preview) {
   background-color: #439A86 !important;
   color: #fff !important;
   padding: 0 6px !important;
@@ -6017,14 +6175,22 @@ html.g5-dialog-open {
   display: block;
   padding: 4px;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li > span:not(.g-file-name) {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
   color: #aaa;
   text-align: center;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-preview {
+  left: inherit;
+  right: 2px;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-delete + .g-file-preview {
+  right: 26px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-thumb {
   display: none;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-name {
+  margin: 0;
   width: 50%;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-size {
@@ -6041,7 +6207,7 @@ html.g5-dialog-open {
   background-color: #439A86 !important;
   color: #fff !important;
 }
-#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected > span:not(.g-file-name) {
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.selected > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
   color: #6bbfab;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-mtime, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li.g-file-uploading .g-file-progress-text {

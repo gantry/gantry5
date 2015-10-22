@@ -1,4 +1,5 @@
 "use strict";
+// deprecated 5.2.0
 var prime      = require('prime'),
     $          = require('elements'),
     Base       = require('./base'),

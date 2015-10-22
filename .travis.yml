@@ -124,8 +124,9 @@ after_deploy:
       unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && svn delete trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
       echo "# Adding and Removing based on svn status";
       cd $WPREPO/trunk;
-      svn status | grep '^?' | awk '{print $2}' | xargs svn add;
-      svn status | grep '^!' | awk '{print $2}' | xargs svn delete --force;
+      svn add . --force;
+      svn status | grep '^?' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn add;
+      svn status | grep '^!' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn delete --force;
       echo "# Committing changes to Trunk";
       svn commit $G5_WP_REPO --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
       echo "# Creating Tag";

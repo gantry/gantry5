@@ -18,7 +18,7 @@ class Page extends Base\Page
     {
         $classes = ['nojs', 'notouch', 'section-{SCRIPT_NAME}', '{S_CONTENT_DIRECTION}', '{BODY_CLASS}'];
 
-        $baseAttributes = (array) $this->config->get('page.body', []);
+        $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         $baseAttributes['id'] = 'phpbb';
 
         if (!empty($baseAttributes['class'])) {
