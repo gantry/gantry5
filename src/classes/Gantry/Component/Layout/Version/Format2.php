@@ -19,11 +19,10 @@ namespace Gantry\Component\Layout\Version;
 class Format2
 {
     protected $scopes = [0 => 'grid', 1 => 'block'];
-    protected $sections = ['atoms', 'wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
+    protected $sections = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
     protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer', 'main'];
 
     protected $data;
-    protected $atoms;
     protected $structure;
     protected $content;
     protected $keys;
@@ -42,19 +41,6 @@ class Format2
     public function load()
     {
         $data = &$this->data;
-
-        // Create atoms section to the layout if it doesn't exist.
-        if (!isset($data['atoms'])) {
-            $data['atoms'] = [];
-        }
-        $data['layout']['atoms'] =& $data['atoms'];
-
-        // Add atom-prefix to all atoms.
-        foreach ($data['atoms'] as &$atom) {
-            if (strpos($atom, 'atom-') !== 0) {
-                $atom = "atom-{$atom}";
-            }
-        }
 
         // Parse layout.
         $result = [];
@@ -78,7 +64,6 @@ class Format2
      */
     public function store(array $preset, array $structure)
     {
-        $this->atoms = [];
         $this->structure = [];
         $this->content = [];
 
@@ -91,9 +76,6 @@ class Format2
             'layout' => $structure
         ];
 
-        if ($this->atoms) {
-            $result['atoms'] = $this->atoms;
-        }
         if ($this->structure) {
             $result['structure'] = $this->structure;
         }
@@ -216,16 +198,12 @@ class Format2
 
         // Clean up all items for saving.
         foreach ($content['children'] as $child) {
-            $value = null;
             $size = null;
             $id = $child['id'];
             $type = $child['type'];
             $subtype = $child['subtype'];
 
-            if ($type === 'atom') {
-                // Handle atoms.
-                $this->atoms[] = $id;
-            } elseif (!in_array($type, $this->sections)) {
+            if (!in_array($type, $this->sections)) {
                 // Special handling for pagecontent.
                if ($type === 'pagecontent') {
                    $child['subtype'] = $subtype = (!$subtype || $subtype === 'pagecontent') ? 'content' : 'messages';
@@ -248,10 +226,6 @@ class Format2
             } else {
                 // Recursively handle structure.
                 $value = $this->build($child);
-
-                if ($id === 'atoms') {
-                    continue;
-                }
             }
 
             // Clean up defaults.
@@ -300,28 +274,26 @@ class Format2
 
             // Add item configuration if not empty.
             if ($id && !empty($child)) {
-                if (!is_string($value) && $type !== 'atom') {
+                if (!is_string($value)) {
                     $this->structure[$id] = $child;
                 } else {
                     $this->content[$id] = $child;
                 }
             }
 
-            // Add item to the layout (skip atoms).
-            if ($value) {
-                if (!is_string($value)) {
-                    // Add structural item.
-                    if ($id) {
-                        // Sections and other complex items.
-                        $result[trim("{$id} {$size}")] = $value;
-                    } else {
-                        // Simple grid / block item.
-                        $result[] = $value;
-                    }
+            // Add item to the layout.
+            if (!is_string($value)) {
+                // Add structural item.
+                if ($id) {
+                    // Sections and other complex items.
+                    $result[trim("{$id} {$size}")] = $value;
                 } else {
-                    // Add content item.
-                    $result[] = trim("{$value} {$size}");
+                    // Simple grid / block item.
+                    $result[] = $value;
                 }
+            } else {
+                // Add content item.
+                $result[] = trim("{$value} {$size}");
             }
         }
 
@@ -380,7 +352,7 @@ class Format2
         $type = reset($list);
         $test = end($list);
         $id = ((string)(int) $test === (string) $test) ? array_pop($list) : null;
-        if (in_array($type, ['system', 'position', 'particle', 'atom'])) {
+        if (in_array($type, ['system', 'position', 'particle'])) {
             array_shift($list);
         } else {
             $type = 'particle';
@@ -463,7 +435,7 @@ class Format2
         }
 
         $result = [];
-        if ($type !== 'particle' && $type !== 'atom') {
+        if ($type !== 'particle') {
             $result[] = $type;
         }
         if ($subtype) {

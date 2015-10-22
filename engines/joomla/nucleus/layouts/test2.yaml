@@ -35,9 +35,6 @@ layout:
           - [position-9 30, position-10 40, position-11 30]
           - position-14
 
-atoms:
-  - assets
-
 structure:
   offcanvas-toggle:
     type: div
