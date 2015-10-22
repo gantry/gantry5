@@ -20,8 +20,10 @@
     {% endblock -%}
 {% endassets -%}
 
-{% if gantry.config.page.assets.css %}
-    {% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets } %}
+{% if gantry.config.page.head.atoms %}
+    {% for atom in gantry.config.page.head.atoms %}
+        {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
+    {% endfor %}
 {% endif %}
 
 <head>
@@ -51,8 +53,8 @@
     {%- endblock %}
 
     {% block head_application -%}
-        {{ gantry.styles('head')|join("\n    ")|raw }}
-        {{ gantry.scripts('head')|join("\n    ")|raw }}
+        {{ gantry.styles('head')|join("\n")|raw }}
+        {{ gantry.scripts('head')|join("\n")|raw }}
     {%- endblock %}
 
     {% block head_ie_stylesheets -%}

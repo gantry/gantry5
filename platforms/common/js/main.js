@@ -5328,7 +5328,7 @@ var Atoms = {
 
         if (!atoms) {
             list.empty();
-            return '';
+            return '[]';
         }
 
         atoms.forEach(function(item) {
