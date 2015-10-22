@@ -124,7 +124,7 @@ class Layout extends HtmlController
 
     public function save()
     {
-        $layout = $this->request->post->getJsonArray('layout');
+        $layout = $this->request->post->getJson('layout');
         if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
