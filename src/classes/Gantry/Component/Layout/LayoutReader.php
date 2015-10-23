@@ -179,7 +179,7 @@ class LayoutReader
             }
         }
         if (!isset($item->attributes->boxed)) {
-            $item->attributes->boxed = -1;
+            $item->attributes->boxed = '';
         }
     }
 
