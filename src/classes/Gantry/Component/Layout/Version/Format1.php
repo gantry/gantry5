@@ -102,7 +102,7 @@ class Format1
             }
         }
         if (!isset($item->attributes->boxed)) {
-            $item->attributes->boxed = 0;
+            $item->attributes->boxed = -1;
         }
     }
 

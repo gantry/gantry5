@@ -16,6 +16,7 @@
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
         - Logo Particle is renamed to Logo / Image Particle.
         - Minor Collections CSS tweaks
+        - Date Particle: Added commonly used option `October 22, 2015`
         - Layouts: Add support for customizing section ids (was bound to title before)
     3. [](#bugfix)
         - Fixed the config files lookup using relative instead of absolute paths
@@ -27,6 +28,7 @@
         - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
         - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
         - Fixed issue where Tag fields wouldn't trigger the indicator change
+        - Fixed Collections not loading the default values defined in the `yaml` 
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Disable caching from Particle Module by default (#925)
