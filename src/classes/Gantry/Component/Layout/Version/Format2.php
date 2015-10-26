@@ -92,7 +92,7 @@ class Format2
      * @param int $scope
      * @return array
      */
-    protected function parse($field, array &$content, $scope = 0)
+    protected function parse($field, array &$content, $scope = 0, $parent = null)
     {
         if (is_numeric($field)) {
             // Row or block
@@ -110,17 +110,23 @@ class Format2
             }
 
             // Build object.
-            $result = isset($this->data['structure'][$section_id]) ? (array)$this->data['structure'][$section_id] : [];
+            $result = isset($this->data['structure'][$section_id]) ? (array) $this->data['structure'][$section_id] : [];
             $result += [
                 'id' => $section_id,
                 'layout' => true,
                 'type' => $type,
                 'subtype' => $subtype,
                 'title' => $this->getTitle($type, $subtype, $id),
-                'attributes' => []
+                'attributes' => [],
+                'block' => []
             ];
-            $result = (object)$result;
-            $result->attributes = (object)$result->attributes;
+            if ($parent && $parent->type === 'block' && $result['block']) {
+                $parent->attributes = (object) ($result['block'] + (array) $parent->attributes);
+            }
+            unset ($result['block']);
+
+            $result = (object) $result;
+            $result->attributes = (object) $result->attributes;
 
             if ($size) {
                 $result->size = $size;
@@ -134,9 +140,9 @@ class Format2
                     $params = [];
                 }
                 if (is_array($params)) {
-                    $child = $this->parse($child, $params, $scope);
+                    $child = $this->parse($child, $params, $scope, $result);
                 } else {
-                    $child = $this->resolve($params, $scope);
+                    $child = $this->resolve($params, $scope, $result);
                 }
                 if (!empty($child->size)) {
                     $result->attributes->size = $child->size;
@@ -154,7 +160,7 @@ class Format2
      * @param int $scope
      * @return array
      */
-    protected function resolve($field, $scope)
+    protected function resolve($field, $scope, $parent)
     {
         list ($type, $subtype, $id, $size, $content_id) = $this->parseContentString($field);
 
@@ -164,18 +170,30 @@ class Format2
         $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
         $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
+
+        if (isset($result['block'])) {
+            $block = $result['block'];
+            unset ($result['block']);
+        }
+
         $result = (object) $result;
 
         if ($type === 'position') {
             $result->attributes->key = $id;
         }
         if ($scope > 1) {
+            if ($parent->type === 'block' && !empty($block)) {
+                $parent->attributes = (object) ($block + (array) $parent->attributes);
+            }
             if ($size) {
                 $result->attributes->size = $size;
             }
         }
         if ($scope <= 1) {
             $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            if (!empty($block)) {
+                $result->attributes = (object) $block;
+            }
             if ($size) {
                 $result->attributes->size = $size;
             }
@@ -241,12 +259,13 @@ class Format2
                 unset ($child['attributes']['name']);
             }
 
-            // Embed size into array key/value.
-            if (!is_string($value) && $ctype === 'block') {
-                if (isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
+            if ($ctype === 'block') {
+                // Embed size into array key/value.
+                if (!is_string($value) && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
                     $size = $content['attributes']['size'];
-                    unset ($content['attributes']['size']);
                 }
+                unset ($content['attributes']['size']);
+                // Embed parent block.
                 if (!empty($content['attributes'])) {
                     $child['block'] = $content['attributes'];
                     unset ($content['attributes']);
@@ -270,12 +289,12 @@ class Format2
             }
 
             // Remove attributes if there aren't any.
-            if (!$child['attributes']) {
+            if (empty($child['attributes'])) {
                 unset ($child['attributes']);
             }
 
             // Special handling for grid and block elements.
-            if (in_array($type, ['grid', 'block']) && count($child) === 1) {
+            if (in_array($type, ['grid', 'block']) && count($child) === 1 && isset($child['type'])) {
                 $id = null;
             }
 
