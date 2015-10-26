@@ -118,9 +118,8 @@ class Format2
                 'subtype' => $subtype,
                 'title' => $this->getTitle($type, $subtype, $id),
                 'attributes' => [],
-                'block' => []
             ];
-            if ($parent && $parent->type === 'block' && $result['block']) {
+            if ($parent && $parent->type === 'block' && !empty($result['block'])) {
                 $parent->attributes = (object) ($result['block'] + (array) $parent->attributes);
             }
             unset ($result['block']);
@@ -214,6 +213,20 @@ class Format2
         $result = [];
         $ctype = isset($content['type']) ? $content['type'] : null;
 
+        if ($ctype === 'block') {
+            if (empty($content['attributes']['extra'])) {
+                unset ($content['attributes']['extra']);
+            }
+            if (empty($content['attributes']['fixed'])) {
+                unset ($content['attributes']['fixed']);
+            }
+        }
+        if ($ctype === 'section') {
+            if (empty($content['attributes']['extra'])) {
+                unset ($content['attributes']['extra']);
+            }
+        }
+
         // Clean up all items for saving.
         foreach ($content['children'] as &$child) {
             $size = null;
@@ -269,15 +282,6 @@ class Format2
                 if (!empty($content['attributes'])) {
                     $child['block'] = $content['attributes'];
                     unset ($content['attributes']);
-                }
-            }
-
-            if ($type === 'block') {
-                if (empty($child['attributes']['extra'])) {
-                    unset ($child['attributes']['extra']);
-                }
-                if (empty($child['attributes']['fixed'])) {
-                    unset ($child['attributes']['fixed']);
                 }
             }
 
