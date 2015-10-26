@@ -2,7 +2,7 @@
 
 var paths,
     gulp         = require('gulp'),
-    fs           = require('fs'),
+    fs   = require('fs'),
     convertBytes = function(bytes) {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         if (bytes == 0) return '0 Byte';
@@ -18,12 +18,12 @@ if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|
         paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
         var exec = require('child_process').exec, child, stat;
         paths.forEach(function(path) {
-            var nodes = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
+            var nodes  = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
                 method = 'install',
                 exists = false;
 
             try { exists = fs.lstatSync(nodes).isDirectory(); }
-            catch(e) {}
+            catch (e) {}
             if (exists) { method = 'update --save --save-dev'; }
 
             console.log((exists ? 'Updating' : "Installing") + " JS dependencies in: " + path);
@@ -43,6 +43,7 @@ var argv       = require('yargs').argv,
     gutil      = require('gulp-util'),
     gulpif     = require('gulp-if'),
     uglify     = require('gulp-uglify'),
+    rename     = require('gulp-rename'),
     buffer     = require('vinyl-buffer'),
     source     = require('vinyl-source-stream'),
     merge      = require('merge-stream'),
@@ -70,17 +71,17 @@ paths = {
     css: [
         { // admin
             in: './platforms/common/scss/admin.scss',
-            out: './platforms/common/css-compiled/admin.css',
+            out: './platforms/common/css-compiled/g-admin.css',
             load: './engines/common/nucleus/scss'
         },
         { // admin - joomla
             in: './platforms/joomla/com_gantry5/admin/scss/joomla-admin.scss',
-            out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-admin.css',
+            out: './platforms/joomla/com_gantry5/admin/css-compiled/joomla-g-admin.css',
             load: './engines/common/nucleus/scss'
         },
         { // admin - wordpress
             in: './platforms/wordpress/gantry5/admin/scss/wordpress-admin.scss',
-            out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-admin.css',
+            out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-g-admin.css',
             load: './engines/common/nucleus/scss'
         },
         { // nucleus
@@ -113,9 +114,10 @@ paths = {
 // -- DO NOT EDIT BELOW --
 
 var compileCSS = function(app) {
-    var _in = app.in,
+    var _in   = app.in,
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
+        _out  = app.out.split(/[\\/]/).pop(),
         _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
@@ -134,12 +136,13 @@ var compileCSS = function(app) {
         })
         .on('error', gutil.log)
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
+        .pipe(rename(_out))
         .pipe(gulp.dest(_dest));
 };
 
 var compileJS = function(app, watching) {
-    var _in = app.in,
-        _out = app.out.split(/[\\/]/).pop(),
+    var _in   = app.in,
+        _out  = app.out.split(/[\\/]/).pop(),
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
         _maps = './' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
@@ -175,7 +178,7 @@ var compileJS = function(app, watching) {
 
 var bundleShare = function(bundle, _in, _out, _maps, _dest) {
     return bundle.bundle()
-        .on('error', function(error){
+        .on('error', function(error) {
             gutil.log('Browserify', '' + error);
         })
         .on('end', function() {
@@ -196,7 +199,7 @@ var minifyJS = function() {
     paths.minify.forEach(function(app) {
         var _file = app.in.substring(app.in.lastIndexOf('/')).split(/[\\/]/).pop(),
             _dest = app.out.substring(0, app.out.lastIndexOf('/')),
-            _ext = _file.split('.').pop();
+            _ext  = _file.split('.').pop();
 
         gutil.log(gutil.colors.blue('*'), 'Minifying', app.in);
 
