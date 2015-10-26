@@ -1,6 +1,6 @@
 name: System Messages
 description: Display system messages.
-type: pagecontent
+type: system
 hidden: false
 
 form:

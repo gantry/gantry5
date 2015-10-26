@@ -1,6 +1,6 @@
 name: Page Content
 description: Display the main page content in the layout.
-type: pagecontent
+type: system
 hidden: false
 
 form:

@@ -89,14 +89,14 @@ class Layout extends HtmlController
         }
 
         $groups = [
-            'Positions' => ['position' => [], 'spacer' => [], 'pagecontent' => []],
+            'Positions' => ['position' => [], 'spacer' => [], 'system' => []],
             'Particles' => ['particle' => []]
         ];
 
         $particles = [
             'position'    => [],
             'spacer'      => [],
-            'pagecontent' => [],
+            'system' => [],
             'particle' => []
         ];
 

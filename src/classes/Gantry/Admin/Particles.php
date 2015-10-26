@@ -55,7 +55,7 @@ class Particles
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
-            if (in_array($type, ['spacer', 'pagecontent'])) {
+            if (in_array($type, ['spacer', 'system'])) {
                 $type = 'position';
             }
             $list[$type][$name] = $particle;
@@ -93,7 +93,7 @@ class Particles
         $theme = $this->container['theme'];
         $ordering = (array) $theme->details()['admin.settings'] ?: [
                 'particle' => [],
-                'position' => ['module', 'spacer', 'pagecontent'],
+                'position' => ['position', 'spacer', 'messages', 'content'],
                 'atom' => []
             ];
 
