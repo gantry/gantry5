@@ -6,10 +6,8 @@
 
 {% macro getCustomWidth(item, menu, mode, dropdown_type) -%}
     {%- if (item.width|default('auto') != 'auto') and not (dropdown_type == 'fullwidth' and item.level > 1) -%}
-        {%- if mode == 'item' -%}
-            style="position: relative;"
-        {%- elseif mode == 'submenu' -%}
-            style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
+        {%- if mode == 'item' %} style="position: relative;"
+        {%- elseif mode == 'submenu' %} style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
         {%- endif %}
     {%- endif %}
 {%- endmacro %}
