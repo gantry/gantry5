@@ -197,13 +197,14 @@ class Format2
         $ctype = isset($content['type']) ? $content['type'] : null;
 
         // Clean up all items for saving.
-        foreach ($content['children'] as $child) {
+        foreach ($content['children'] as &$child) {
             $size = null;
             $id = $child['id'];
             $type = $child['type'];
             $subtype = $child['subtype'];
+            $isSection = in_array($type, $this->sections);
 
-            if (!in_array($type, $this->sections)) {
+            if (!$isSection) {
                 // Special handling for pagecontent.
                if ($type === 'pagecontent') {
                    $child['subtype'] = $subtype = (!$subtype || $subtype === 'pagecontent') ? 'content' : 'messages';
@@ -212,11 +213,14 @@ class Format2
 
                 // Special handling for positions.
                 if ($type === 'position') {
-                    $id = isset($child['attributes']['key']) ? $child['attributes']['key'] : 'position-' . rand(1000,9999);
-                    if (strpos($id, 'position-') !== 0) {
-                        $id = 'position-' . $id;
+                    if (!$subtype || $subtype === 'position') {
+                        $id = isset($child['attributes']['key']) ? $child['attributes']['key'] : "position-" . rand(1000,9999);
+                        if (strpos($id, 'position-') !== 0) {
+                            $id = 'position-' . $id;
+                        }
+                        unset ($child['attributes']['key']);
                     }
-                    unset ($child['attributes']['title'], $child['attributes']['key']);
+                    unset ($child['attributes']['title']);
                 }
 
                 $value = $id;
@@ -244,9 +248,26 @@ class Format2
             }
 
             // Embed size into array key/value.
-            if (!is_string($value) && $ctype === 'block' && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
-                $size = $content['attributes']['size'];
+            if (!is_string($value) && $ctype === 'block') {
+                if (isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
+                    $size = $content['attributes']['size'];
+                    unset ($content['attributes']['size']);
+                }
+                if (!empty($content['attributes'])) {
+                    $child['block'] = $content['attributes'];
+                    unset ($content['attributes']);
+                }
             }
+
+            if ($type === 'block') {
+                if (empty($child['attributes']['extra'])) {
+                    unset ($child['attributes']['extra']);
+                }
+                if (empty($child['attributes']['fixed'])) {
+                    unset ($child['attributes']['fixed']);
+                }
+            }
+
             if (isset($child['attributes']['size'])) {
                 if ($child['attributes']['size'] != 100 && is_string($value)) {
                     $size = $child['attributes']['size'];
