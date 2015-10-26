@@ -190,11 +190,11 @@ class Format1
         $attributes->enabled = 1;
 
         if ($type === 'pagecontent') {
+            $type = 'system';
+            $subtype = 'content';
             $title = 'Page Content';
         }
         if ($type === 'system' && $subtype === 'messages') {
-            $type = 'pagecontent';
-            $subtype = 'system-messages';
             $title = 'System Messages';
         }
 

@@ -205,12 +205,6 @@ class Format2
             $isSection = in_array($type, $this->sections);
 
             if (!$isSection) {
-                // Special handling for pagecontent.
-               if ($type === 'pagecontent') {
-                   $child['subtype'] = $subtype = (!$subtype || $subtype === 'pagecontent') ? 'content' : 'messages';
-                   $child['type'] = $type = 'system';
-                }
-
                 // Special handling for positions.
                 if ($type === 'position') {
                     if (!$subtype || $subtype === 'position') {
@@ -380,18 +374,6 @@ class Format2
         }
         $subtype = implode('-', $list);
 
-        // TODO: remove
-        if ($type === 'system') {
-            if ($subtype === 'messages') {
-                $type = 'pagecontent';
-                $subtype = 'system-messages';
-            }
-            if ($subtype === 'content') {
-                $type = 'pagecontent';
-                $subtype = 'pagecontent';
-            }
-        }
-
         if ($type === 'position') {
             $id = $type . ($subtype ? "-{$subtype}" : '') . ($id !== null ? "-{$id}" : '');
             $subtype = false;
@@ -429,15 +411,6 @@ class Format2
             }
         }
 
-        // TODO: remove
-        if ($type === 'pagecontent') {
-            if ($subtype == 'system-messages') {
-                return 'System Messages';
-            } else {
-                return 'Page Content';
-            }
-        }
-
         return ucfirst($subtype ?: $type);
     }
 
@@ -449,12 +422,6 @@ class Format2
      */
     protected function id($type, $subtype = null, $id = null)
     {
-        // Special handling for pagecontent.
-       if ($type === 'pagecontent') {
-           $type = 'system';
-           $subtype = $subtype === 'system-messages' ? 'messages' : 'content';
-        }
-
         $result = [];
         if ($type !== 'particle') {
             $result[] = $type;
