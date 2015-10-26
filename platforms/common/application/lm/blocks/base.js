@@ -3,10 +3,10 @@ var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
     Bound    = require('prime-util/prime/bound'),
     Emitter = require('prime/emitter'),
-    guid    = require('mout/random/guid'),
     zen     = require('elements/zen'),
     trim    = require('mout/string/trim'),
     $       = require('elements'),
+    ID      = require('../id'),
 
     get     = require('mout/object/get'),
     has     = require('mout/object/has'),
@@ -25,7 +25,7 @@ var Base = new prime({
         this.setOptions(options);
 
         this.fresh = !this.options.id;
-        this.id = this.options.id || this.guid();
+        this.id = this.options.id || ID(this.options);
         this.attributes = this.options.attributes || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
@@ -40,7 +40,7 @@ var Base = new prime({
     },
 
     getId: function() {
-        return this.id || (this.id = this.guid());
+        return this.id || (this.id = ID(this.options));
     },
 
     getType: function() {
