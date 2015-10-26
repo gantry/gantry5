@@ -5,6 +5,7 @@ var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     gulpif     = require('gulp-if'),
     uglify     = require('gulp-uglify'),
+    rename     = require('gulp-rename'),
     buffer     = require('vinyl-buffer'),
     source     = require('vinyl-source-stream'),
     merge      = require('merge-stream'),
@@ -32,6 +33,7 @@ var compileCSS = function(app) {
     var _in = app.in,
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
+        _out  = app.out.split(/[\\/]/).pop(),
         _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
@@ -50,6 +52,7 @@ var compileCSS = function(app) {
         })
         .on('error', gutil.log)
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
+        .pipe(rename(_out))
         .pipe(gulp.dest(_dest));
 };
 

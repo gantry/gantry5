@@ -1,7 +1,7 @@
 $particle: #2A82B7;
 $position: #359AD9;
 $spacer: #eee;
-$pagecontent: #20A085;
+$system: #20A085;
 $atom: #9055AF;
 $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
 
@@ -264,7 +264,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         display: none;
                         opacity: 0;
@@ -280,7 +280,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
 
                 &:last-child {
-                .particle, .position, .spacer, .pagecontent {
+                .particle, .position, .spacer, .system {
                     margin-right: 0;
                 }
             }
@@ -341,7 +341,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .g-grid {
             &:hover > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         content: "";
                         top: 0;
@@ -358,11 +358,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, .wrapper-section > .g-grid > .g-block:last-child {
-            .particle, .position, .spacer, .pagecontent, .atom {
+            .particle, .position, .spacer, .system, .atom {
                 margin-right: 0;
             }
 
-            > .particle, > .position, > .spacer, > .pagecontent {
+            > .particle, > .position, > .spacer, > .system {
                 &:after {
                     display: none;
                 }
@@ -395,7 +395,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .particle, .position, .spacer, .pagecontent, .atom {
+        .particle, .position, .spacer, .system, .atom {
             cursor: move;
             padding: 6px 13px;
             color: $white;
@@ -505,8 +505,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background-color: $atom;
         }
 
-        .pagecontent {
-            background-color: $pagecontent;
+        .system {
+            background-color: $system;
         }
 
         .placeholder {
@@ -843,9 +843,9 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 background-color: $particle;
             }
 
-            &[data-lm-blocktype="pagecontent"] {
+            &[data-lm-blocktype="system"] {
                 color: #fff;
-                background-color: $pagecontent;
+                background-color: $system;
             }
 
             &[data-lm-blocktype="atom"] {

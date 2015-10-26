@@ -13,6 +13,7 @@
     "browserify": "^11.1.0",
     "gulp": "^3.9.0",
     "gulp-if": "^2.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.5",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.1",
@@ -20,7 +21,7 @@
     "merge-stream": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.4.0",
+    "watchify": "^3.5.0",
     "yargs": "^3.29.0"
   }
 }
