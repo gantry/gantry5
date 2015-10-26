@@ -4168,11 +4168,11 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
   box-flex: 0;
-  -webkit-flex: 0 170px;
-  -moz-flex: 0 170px;
-  -ms-flex: 0 170px;
-  flex: 0 170px;
-  width: 170px;
+  -webkit-flex: 0 200px;
+  -moz-flex: 0 200px;
+  -ms-flex: 0 200px;
+  flex: 0 200px;
+  width: 200px;
 }
 @media only all and (max-width: 47.938rem) {
   #g5-container .particles-sidebar-block {
@@ -4209,11 +4209,12 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   cursor: pointer !important;
 }
 #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker li {
-  padding: 0.31267rem;
-  margin: 0.31267rem 0;
-  text-align: center;
+  padding: 0.469rem;
+  margin: 0.469rem 0;
+  text-align: left;
   border-radius: 0.1875rem;
   cursor: move;
+  position: relative;
 }
 #g5-container .g5-lm-particles-picker li[data-lm-nodrag], #g5-container .g5-lm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-particles-picker li[data-lm-nodrag], #g5-container .g5-mm-particles-picker li[data-mm-nodrag], #g5-container .g5-mm-modules-picker li[data-lm-nodrag], #g5-container .g5-mm-modules-picker li[data-mm-nodrag], #g5-container .g5-mm-widgets-picker li[data-lm-nodrag], #g5-container .g5-mm-widgets-picker li[data-mm-nodrag] {
   cursor: default;
@@ -4230,24 +4231,62 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   margin-bottom: 0;
 }
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="spacer"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="spacer"] {
-  background-color: #eee;
   color: #666;
-  border: 1px solid #d0d0d0;
+  border: 2px solid #d0d0d0;
+}
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="spacer"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="spacer"].original-placeholder {
+  background-color: #eee;
+}
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="spacer"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="spacer"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="spacer"] .particle-icon {
+  background-color: #d0d0d0;
 }
 #g5-container .g5-lm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-lm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-particles-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-particles-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-modules-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-modules-picker li.g5-mm-particle-spacer[data-mm-disabled], #g5-container .g5-mm-widgets-picker li.g5-lm-particle-spacer[data-lm-disabled], #g5-container .g5-mm-widgets-picker li.g5-mm-particle-spacer[data-mm-disabled] {
   color: #fff;
 }
+#g5-container .g5-lm-particles-picker li .particle-icon, #g5-container .g5-mm-particles-picker li .particle-icon, #g5-container .g5-mm-modules-picker li .particle-icon, #g5-container .g5-mm-widgets-picker li .particle-icon {
+  float: left;
+  margin: -0.469rem 0.469rem -0.469rem -0.469rem;
+  display: inline-block;
+  height: 2.2rem;
+  vertical-align: middle;
+  width: 1.7em;
+  text-align: center;
+  line-height: 1.5rem;
+}
+#g5-container .g5-lm-particles-picker li .particle-icon i, #g5-container .g5-mm-particles-picker li .particle-icon i, #g5-container .g5-mm-modules-picker li .particle-icon i, #g5-container .g5-mm-widgets-picker li .particle-icon i {
+  position: relative;
+  top: 50%;
+  transform: translateY(-100%);
+}
+#g5-container .g5-lm-particles-picker li.original-placeholder .particle-icon, #g5-container .g5-mm-particles-picker li.original-placeholder .particle-icon, #g5-container .g5-mm-modules-picker li.original-placeholder .particle-icon, #g5-container .g5-mm-widgets-picker li.original-placeholder .particle-icon {
+  border-radius: 3px;
+}
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-lm-particles-picker li[data-lm-blocktype="widget"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="widget"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="position"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="position"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="module"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="module"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="widget"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="widget"] {
-  color: #fff;
+  color: #359AD9;
+  border: 2px solid #359AD9;
+}
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="position"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="position"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="module"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="module"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="widget"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="widget"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="widget"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="position"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="position"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="module"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="module"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="position"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="position"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="module"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="module"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="position"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="position"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="position"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="position"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="module"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="module"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="module"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="module"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="widget"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="widget"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="widget"] .particle-icon {
+  border: 0;
   background-color: #359AD9;
+  color: #fff;
 }
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="particle"], #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="particle"] {
-  color: #fff;
+  color: #2A82B7;
+  border: 2px solid #2A82B7;
+}
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="particle"] .particle-icon, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-mm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-mm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-mm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="particle"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="particle"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-mm-blocktype="particle"] .particle-icon {
+  border: 0;
   background-color: #2A82B7;
+  color: #fff;
 }
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="system"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="system"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="system"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="system"] {
-  color: #fff;
+  color: #20A085;
+  border: 2px solid #20A085;
+}
+#g5-container .g5-lm-particles-picker li[data-lm-blocktype="system"].original-placeholder, #g5-container .g5-lm-particles-picker li[data-lm-blocktype="system"] .particle-icon, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="system"].original-placeholder, #g5-container .g5-mm-particles-picker li[data-lm-blocktype="system"] .particle-icon, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="system"].original-placeholder, #g5-container .g5-mm-modules-picker li[data-lm-blocktype="system"] .particle-icon, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="system"].original-placeholder, #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="system"] .particle-icon {
+  border: 0;
   background-color: #20A085;
+  color: #fff;
 }
 #g5-container .g5-lm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-particles-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-modules-picker li[data-lm-blocktype="atom"], #g5-container .g5-mm-widgets-picker li[data-lm-blocktype="atom"] {
   color: #fff;

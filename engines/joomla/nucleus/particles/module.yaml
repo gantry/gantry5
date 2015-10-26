@@ -1,6 +1,7 @@
 name: Module Instance
 description: Display a module instance.
 type: position
+icon: fa-object-ungroup
 hidden: false
 
 form:

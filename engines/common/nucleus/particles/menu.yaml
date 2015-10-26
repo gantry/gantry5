@@ -1,6 +1,7 @@
 name: Menu
 description: Gantry menu
 type: particle
+icon: fa-bars
 
 form:
   fields:

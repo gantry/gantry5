@@ -751,8 +751,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     }
 
     .particles-sidebar-block {
-        @include flex(0 170px);
-        width: 170px;
+        @include flex(0 200px);
+        width: 200px;
 
         @include breakpoint(mobile-only) {
             @include flex(0 100%);
@@ -799,11 +799,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         li {
-            padding: $content-padding / 3;
-            margin: ($content-padding / 3) 0;
-            text-align: center;
+            padding: $content-padding / 2;
+            margin: ($content-padding / 2) 0;
+            text-align: left;
             border-radius: $core-border-radius;
             cursor: move;
+            position: relative;
 
             &[data-lm-nodrag], &[data-mm-nodrag] {
                 cursor: default;
@@ -822,30 +823,76 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-                background-color: $spacer;
                 color: #666;
-                border: 1px solid darken($medium-gray, 5);
+                border: 2px solid darken($medium-gray, 5);
+
+                &.original-placeholder {
+                    background-color: $spacer;
+                }
+
+                .particle-icon {
+                    background-color: darken($medium-gray, 5);
+                }
             }
 
             &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
                 color: #fff;
             }
 
+            .particle-icon {
+                float: left;
+                margin: (-$content-padding / 2) ($content-padding / 2) (-$content-padding / 2) (-$content-padding / 2);
+                display: inline-block;
+                height: 2.2rem;
+                vertical-align: middle;
+                width: 1.7em;
+                text-align: center;
+                line-height: 1.5rem;
+
+                i {
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-100%);
+                }
+            }
+
+            &.original-placeholder .particle-icon {
+                border-radius: 3px;
+            }
+
             &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
             &[data-lm-blocktype="module"], &[data-mm-blocktype="module"],
             &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"] {
-                color: #fff;
-                background-color: $position;
+                color: $position;
+                border: 2px solid $position;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $position;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
-                color: #fff;
-                background-color: $particle;
+                color: $particle;
+                border: 2px solid $particle;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $particle;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="system"] {
-                color: #fff;
-                background-color: $system;
+                color: $system;
+                border: 2px solid $system;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $system;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="atom"] {

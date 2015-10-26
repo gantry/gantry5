@@ -1,6 +1,7 @@
 name: Copyright
 description: Display copyright information.
 type: particle
+icon: fa-copyright
 
 form:
   fields:

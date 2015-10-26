@@ -1,6 +1,7 @@
 name: Custom CSS / JS
 description: Configure custom CSS and Javascript.
 type: atom
+icon: fa-file-code-o
 
 form:
   fields:

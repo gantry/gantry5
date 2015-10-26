@@ -28,7 +28,10 @@
                                 data-lm-blocktype="{{ type|e }}"
                                 data-lm-subtype="{{ item_key|e }}"
                                 {% if not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}data-lm-disabled data-lm-nodrag title="{{ 'GANTRY5_PLATFORM_PARTICLE_DISABLED'|trans }}"{% endif %}>
-                                {{ item|e }}
+                                <span class="particle-icon">
+                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i>
+                                </span>
+                                <span class="particle-title">{{ item.name|e }}</span>
                             </li>
                         {%  endfor %}
                     {% endfor %}

@@ -1,6 +1,7 @@
 name: Widget Position
 description: Display a widget position.
 type: position
+icon: fa-object-group
 hidden: false
 
 form:

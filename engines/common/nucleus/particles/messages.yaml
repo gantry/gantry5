@@ -1,6 +1,7 @@
 name: System Messages
 description: Display system messages.
 type: system
+icon: fa-exclamation-circle
 hidden: false
 
 form:

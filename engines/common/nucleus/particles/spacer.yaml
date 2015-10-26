@@ -1,6 +1,7 @@
 name: Spacer
 description: Add empty column to the row.
 type: spacer
+icon: fa-arrows-h
 hidden: false
 
 form:

@@ -1,6 +1,7 @@
 name: Module Position
 description: Display a module position.
 type: position
+icon: fa-object-group
 hidden: false
 
 form:

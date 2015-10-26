@@ -1,6 +1,7 @@
 name: To Top
 description: Scroll back to top.
 type: particle
+icon: fa-chevron-up
 
 form:
   fields:

@@ -1,6 +1,7 @@
 name: Social
 description: Display social buttons.
 type: particle
+icon: fa-share-alt
 
 form:
   fields:

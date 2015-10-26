@@ -1,6 +1,7 @@
 name: Page Content
 description: Display the main page content in the layout.
 type: system
+icon: fa-file-text-o
 hidden: false
 
 form:

@@ -1,6 +1,7 @@
 name: Custom HTML
 description: Display custom HTML block.
 type: particle
+icon: fa-code
 
 form:
   fields:

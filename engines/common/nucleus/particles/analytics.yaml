@@ -1,6 +1,7 @@
 name: Google Analytics
 description: Configure Google Analytics.
 type: atom
+icon: fa-area-chart
 
 form:
   fields:
