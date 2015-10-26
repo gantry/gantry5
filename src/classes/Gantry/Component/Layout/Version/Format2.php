@@ -212,7 +212,7 @@ class Format2
 
                 // Special handling for positions.
                 if ($type === 'position') {
-                    $id = $child['attributes']['key'];
+                    $id = isset($child['attributes']['key']) ? $child['attributes']['key'] : 'position-' . rand(1000,9999);
                     if (strpos($id, 'position-') !== 0) {
                         $id = 'position-' . $id;
                     }
