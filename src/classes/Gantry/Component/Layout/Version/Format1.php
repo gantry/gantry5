@@ -68,6 +68,18 @@ class Format1
 
     protected function normalize(&$item, $container = false)
     {
+        if ($item->type === 'pagecontent') {
+            // Update pagecontent to match the new standards.
+            $item->type = 'system';
+            if (!$item->subtype) {
+                $item->subtype = 'content';
+                $item->title = 'Page Content';
+            } else {
+                $item->subtype ='messages';
+                $item->title = 'System Messages';
+            }
+        }
+
         if ($item->type === 'section') {
             // Update section to match the new standards.
             $section = strtolower($item->title);
@@ -189,15 +201,6 @@ class Format1
 
         $attributes->enabled = 1;
 
-        if ($type === 'pagecontent') {
-            $type = 'system';
-            $subtype = 'content';
-            $title = 'Page Content';
-        }
-        if ($type === 'system' && $subtype === 'messages') {
-            $title = 'System Messages';
-        }
-
         if ($subtype && $type === 'position') {
             $attributes->key = $subtype;
             $subtype = false;
@@ -229,12 +232,6 @@ class Format1
     {
         if ($type === 'atoms') {
             return $type;
-        }
-
-        // Special handling for pagecontent.
-        if ($type === 'pagecontent') {
-            $type = 'system';
-            $subtype = ($subtype === 'system-messages' ? 'messages' : 'content');
         }
 
         $result = [];
