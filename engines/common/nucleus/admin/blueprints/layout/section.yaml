@@ -9,9 +9,11 @@ form:
       label: Layout
       description: Select the Layout behavior. Default refers to Page Settings.
       isset: true
-      default: -1
+      default: ''
+      selectize:
+        allowEmptyOption: true
       options:
-        -1: Default
+        '': Default
         0: Fullwidth (Boxed Content)
         2: Fullwidth (Flushed Content)
         1: Boxed

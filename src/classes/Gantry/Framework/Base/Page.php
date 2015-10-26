@@ -55,6 +55,7 @@ abstract class Page
 
         $list = [];
         foreach ($params as $param => $value) {
+            if (!$value) { continue; }
             if (!is_array($value) || !count(array_filter($value, 'is_array'))) {
                 $value = array_filter(array_unique((array) $value));
                 $list[] = $param . '="' . implode(' ', $value) . '"';
