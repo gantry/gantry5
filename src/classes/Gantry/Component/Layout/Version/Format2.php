@@ -239,10 +239,7 @@ class Format2
                 // Special handling for positions.
                 if ($type === 'position') {
                     if (!$subtype || $subtype === 'position') {
-                        $id = isset($child['attributes']['key']) ? $child['attributes']['key'] : "position-" . rand(1000,9999);
-                        if (strpos($id, 'position-') !== 0) {
-                            $id = 'position-' . $id;
-                        }
+                        $id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
                         unset ($child['attributes']['key']);
                     }
                     unset ($child['attributes']['title']);
@@ -398,7 +395,7 @@ class Format2
         $subtype = implode('-', $list);
 
         if ($type === 'position') {
-            $id = $type . ($subtype ? "-{$subtype}" : '') . ($id !== null ? "-{$id}" : '');
+            $id = $subtype . ($id !== null ? "-{$id}" : '');
             $subtype = false;
         }
 
