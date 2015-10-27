@@ -23,7 +23,7 @@ require('elements/traversal');
 
 
 // start Debug
-var DEBUG  = true,
+var DEBUG  = false,
     rpad   = require('mout/string/rpad'),
     repeat = require('mout/string/repeat');
 // end   Debug
