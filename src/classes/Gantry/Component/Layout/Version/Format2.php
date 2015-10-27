@@ -271,7 +271,7 @@ class Format2
 
             if ($ctype === 'block') {
                 // Embed size into array key/value.
-                if (!is_string($value) && isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
+                if (isset($content['attributes']['size']) && $content['attributes']['size'] != 100) {
                     $size = $content['attributes']['size'];
                 }
                 unset ($content['attributes']['size']);
