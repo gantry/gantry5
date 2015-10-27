@@ -309,7 +309,7 @@ trait ThemeTrait
     public function hasContent()
     {
         $layout = $this->loadLayout();
-        $content = $layout->referencesByType('pagecontent', 'pagecontent');
+        $content = $layout->referencesByType('system', 'content');
 
         return !empty($content);
     }
@@ -476,7 +476,6 @@ trait ThemeTrait
             // TODO: remove hard coded types.
             switch ($item->type) {
                 case 'system':
-                case 'pagecontent':
                     break;
 
                 case 'atom':

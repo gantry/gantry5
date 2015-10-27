@@ -60,8 +60,8 @@ class Particle extends JsonController
         $particles = [
             'position'    => [],
             'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
+            'system'      => [],
+            'particle'    => [],
         ];
 
         $particles = array_replace($particles, $this->getParticles());

@@ -392,7 +392,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $this->children = $this->clearChildren($item->children);
             }
 
-            if (empty($item->children) && in_array($item->type, ['grid', 'block', 'particle', 'position', 'spacer', 'pagecontent'])) {
+            if (empty($item->children) && in_array($item->type, ['grid', 'block', 'particle', 'position', 'spacer', 'system'])) {
                 unset($items[$key]);
             }
         }

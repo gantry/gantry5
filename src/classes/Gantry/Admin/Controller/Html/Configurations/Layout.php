@@ -311,7 +311,7 @@ class Layout extends HtmlController
             $file->free();
             $defaults = [];
         } else {
-            $type = in_array($particle, ['spacer', 'pagecontent', 'position']) ? $particle :  'particle';
+            $type = in_array($particle, ['spacer', 'system', 'position']) ? $particle :  'particle';
             $validator->embed('options', $this->container['particles']->get($particle));
             $defaults = (array) $this->container['config']->get("particles.{$particle}");
         }
