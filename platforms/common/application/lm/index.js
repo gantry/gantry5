@@ -420,7 +420,8 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent ? parent.data('lm-id') : false;
+            parentID = parent ? parent.data('lm-id') : false,
+            parentType = parent ? parent.data('lm-blocktype') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
@@ -428,7 +429,7 @@ ready(function() {
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }

@@ -20,6 +20,10 @@ var Wrapper = new prime({
 
     hasChanged: function() {},
 
+    getSize: function() {
+        return false;
+    },
+
     getId: function() {
         return this.id || (this.id = this.options.type);
     }

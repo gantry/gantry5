@@ -81,8 +81,10 @@ var Section = new prime({
 
         if (!sibling) { return [100, 100]; }
 
-        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
-            sizes = {
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id'));
+        if (siblingBlock.getType() !== 'block') { return false; }
+
+        var sizes = {
                 current: this.getParent().getSize(),
                 sibling: siblingBlock.getSize()
             };

@@ -1612,8 +1612,10 @@ var Section = new prime({
 
         if (!sibling) { return [100, 100]; }
 
-        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
-            sizes = {
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id'));
+        if (siblingBlock.getType() !== 'block') { return false; }
+
+        var sizes = {
                 current: this.getParent().getSize(),
                 sibling: siblingBlock.getSize()
             };
@@ -1679,6 +1681,10 @@ var Wrapper = new prime({
     },
 
     hasChanged: function() {},
+
+    getSize: function() {
+        return false;
+    },
 
     getId: function() {
         return this.id || (this.id = this.options.type);
@@ -2678,7 +2684,8 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent ? parent.data('lm-id') : false;
+            parentID = parent ? parent.data('lm-id') : false,
+            parentType = parent ? parent.data('lm-blocktype') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
@@ -2686,7 +2693,7 @@ ready(function() {
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
