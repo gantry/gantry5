@@ -117,6 +117,7 @@
         - Menu Particle: Implement base item support (#666)
         - Remove empty class div on Particle Module/Widget (#778)
         - Added additional utility block variation to provide equal heights when using box variations side by side (#845)
+        - All Particles now show a dedicated Icon in the Layout Manager and UI enhancements have been made on the Particles Picker (#935)
     3. [](#bugfix)
         - Fixed tab level for Offcanvas Section
         - Removed unnecessary margin from select fields in admin

@@ -436,6 +436,15 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     text-overflow: ellipsis;
                 }
 
+                .icon {
+                    width: auto;
+                    float: left;
+                    line-height: 2.5rem;
+                    margin-right: 13px;
+                    opacity: 0.7;
+                }
+
+
                 .font-small {
                     line-height: $core-line-height - 0.2;
                     overflow: hidden;
@@ -566,7 +575,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 12px;
             }
 
-            > span .title, > span .font-small {
+            > span .title, > span .font-small, > span .icon {
                 margin-left: 15px;
             }
         }
