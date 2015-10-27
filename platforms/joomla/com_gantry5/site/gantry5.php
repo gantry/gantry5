@@ -78,6 +78,7 @@ $context = [
     'noConfig' => true,
     'inContent' => true,
     'segment' => [
+        'id' => 'main-particle',
         'type' => $data['type'],
         'classes' => $params->get('pageclass_sfx'),
         'subtype' => $data['particle'],

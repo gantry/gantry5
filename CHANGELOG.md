@@ -19,6 +19,7 @@
         - Date Particle: Added commonly used option `October 22, 2015`
         - Layouts: Add support for customizing section ids (was bound to title before)
         - Prefixed Admin CSS file to appear more specific and possibly avoid potential conflicts (g-admin.css) (#)
+        - All particles have now unique id: `{{ id }}`
     3. [](#bugfix)
         - Fixed the config files lookup using relative instead of absolute paths
         - Fixed issue in admin where overrides for Enabled toggle wouldn't be showing checked, causing the value to reset to Base Outline

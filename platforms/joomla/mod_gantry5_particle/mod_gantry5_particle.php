@@ -31,6 +31,7 @@ $context = array(
     'gantry' => $gantry,
     'inContent' => true,
     'segment' => array(
+        'id' => "module-{$data['particle']}-{$module->id}",
         'type' => $data['type'],
         'subtype' => $data['particle'],
         'attributes' =>  $data['options']['particle'],

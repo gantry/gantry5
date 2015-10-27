@@ -1,4 +1,5 @@
 {% try %}
+    {% set id = segment.id %}
     {% if noConfig %}
         {% set enabled = true %}
         {% set particle = segment.attributes %}
