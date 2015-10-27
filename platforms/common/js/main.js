@@ -2699,6 +2699,7 @@ ready(function() {
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
             if (!size(data.options)) { delete data.options; }
+            if (!size(data.block)) { delete data.block; }
         }
 
         modal.open({
