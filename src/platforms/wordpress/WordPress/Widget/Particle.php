@@ -63,7 +63,8 @@ class Particle extends \WP_Widget
         if (!is_array($instance)) {
             $instance = [];
         }
-        $md5 = md5(json_encode((array) $instance));
+        $md5 = md5(json_encode($instance));
+        $id = isset($instance['id']) ? $instance['id'] : "widget-{$md5}";
         if (!isset($this->content[$md5])) {
             /** @var Theme $theme */
             $theme = $this->container['theme'];
@@ -78,6 +79,7 @@ class Particle extends \WP_Widget
                 'gantry' => $this->container,
                 'inContent' => true,
                 'segment' => array(
+                    'id' => "widget-{$instance['particle']}-{$id}",
                     'type' => $instance['type'],
                     'subtype' => $instance['particle'],
                     'attributes' =>  $instance['options']['particle'],
