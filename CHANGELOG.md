@@ -10,7 +10,6 @@
         - Tags / Multiselection now include an `[x]` button to easily remove items via click
         - Layouts: New file syntax, which combines the best of both existing file syntaxes into a single format
         - Layouts: Add support for nested wrapper divs with customizable id and classes (#548)
-        - Moved atoms from Layout into Page Settings
     2. [](#improved)
         - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
