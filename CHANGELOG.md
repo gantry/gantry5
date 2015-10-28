@@ -41,6 +41,7 @@
     3. [](#bugfix)
         - Renaming of Outlines from navigation bar will now properly refresh all links with the new value (#912)
         - Fixed issue in Hydrogen where Visual Composer wouldn't work on Pages
+        - Fixed open_basedir warning in admin when getting list of Gantry themes
 
 # 5.1.6
 ## 14/10/2015

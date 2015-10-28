@@ -26,6 +26,9 @@ class ThemeList
         ksort($files);
 
         foreach ($files as $theme) {
+            if (!is_dir($theme)) {
+                continue;
+            }
             if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
                 $details = new ThemeDetails($theme);
 
