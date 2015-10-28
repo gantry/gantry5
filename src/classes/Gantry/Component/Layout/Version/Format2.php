@@ -387,7 +387,7 @@ class Format2
         $type = reset($list);
         $test = end($list);
         $id = ((string)(int) $test === (string) $test) ? array_pop($list) : null;
-        if (in_array($type, ['system', 'position', 'particle'])) {
+        if (in_array($type, ['system', 'position', 'particle', 'spacer'])) {
             array_shift($list);
         } else {
             $type = 'particle';
