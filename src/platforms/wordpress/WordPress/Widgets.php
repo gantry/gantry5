@@ -258,6 +258,8 @@ abstract class Widgets
     public static function widgetCustomClassesForm($widget, $return, $instance)
     {
         $instance = wp_parse_args($instance, ['g5_classes' => '']);
+
+        // TODO: Move this HTML to a Twig file ?
         ?>
         <p>
             <label for="<?php echo $widget->get_field_id('g5_classes'); ?>"><?php _e('Custom class(es):', 'gantry5'); ?></label>
