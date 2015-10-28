@@ -451,11 +451,7 @@ class Format2
         }
         $key = implode('-', $result);
 
-        if ($id) {
-            if (isset($this->keys[$key][$id])) {
-                throw new \RuntimeException("Layout has non-unique id: {$key}-{$id}");
-            }
-        } else {
+        if (!$id || isset($this->keys[$key][$id])) {
             while ($id = rand(1000, 9999)) {
                 if (!isset($this->keys[$key][$id])) {
                     break;
