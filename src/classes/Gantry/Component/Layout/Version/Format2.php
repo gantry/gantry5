@@ -100,7 +100,7 @@ class Format2
             $scope = ($scope + 1) % 2;
 
         } else {
-            list ($type, $subtype, $id, $size, $section_id) = $this->parseSectionString($field);
+            list ($type, $subtype, $id, $size, $section_id, $boxed) = $this->parseSectionString($field);
 
             if ($type == 'grid') {
                 $scope = 1;
@@ -119,6 +119,9 @@ class Format2
                 'title' => $this->getTitle($type, $subtype, $id),
                 'attributes' => [],
             ];
+            if (isset($boxed)) {
+                $result['attributes']['boxed'] = $boxed;
+            }
             if ($parent && $parent->type === 'block' && !empty($result['block'])) {
                 $parent->attributes = (object) ($result['block'] + (array) $parent->attributes);
             }
@@ -351,6 +354,12 @@ class Format2
         $section_id = array_shift($list);
         $size = ((float) array_shift($list)) ?: null;
 
+        // Extract slashes from "/[section-id]/".
+        $boxedLeft = $section_id[0] === '/';
+        $boxedRight = $section_id[strlen($section_id)-1] === '/';
+        $boxed = ($boxedLeft && $boxedRight ? '' : ($boxedLeft ? '1' : ($boxedRight ? '0' : null)));
+        $section_id = trim($section_id, '/');
+
         // Extract section id if it exists: "[section]-[id]".
         $list = explode('-', $section_id, 2);
 
@@ -366,7 +375,7 @@ class Format2
             $id = $section_id;
         }
 
-        return [$type, $subtype, $id, $size, $section_id];
+        return [$type, $subtype, $id, $size, $section_id, $boxed];
     }
 
     /**

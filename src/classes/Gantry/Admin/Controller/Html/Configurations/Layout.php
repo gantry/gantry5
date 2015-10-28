@@ -174,7 +174,7 @@ class Layout extends HtmlController
 
         $attributes = $this->request->post->getArray('options');
 
-        if ($type == 'section' || $type == 'container' || $type == 'grid' || $type == 'offcanvas') {
+        if (in_array($type, ['section', 'container', 'grid', 'offcanvas'])) {
             $particle = false;
             $hasBlock = $type == 'section' && !empty($block);
             $prefix = "particles.{$type}";
