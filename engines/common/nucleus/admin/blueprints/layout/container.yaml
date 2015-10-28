@@ -9,7 +9,6 @@ form:
       label: Layout
       description: Select the Layout behavior. Default refers to Page Settings.
       isset: true
-      default: ''
       selectize:
         allowEmptyOption: true
       options:
