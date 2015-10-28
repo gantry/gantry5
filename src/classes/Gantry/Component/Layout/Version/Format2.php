@@ -177,7 +177,7 @@ class Format2
 
         $result = (object) $result;
 
-        if ($type === 'position') {
+        if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
             $result->attributes->key = $id;
         }
         if ($scope > 1) {
@@ -394,7 +394,7 @@ class Format2
         }
         $subtype = implode('-', $list);
 
-        if ($type === 'position') {
+        if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
             $id = $subtype . ($id !== null ? "-{$id}" : '');
             $subtype = false;
         }
@@ -418,7 +418,7 @@ class Format2
             return ucfirst($id);
         }
 
-        if ($type === 'position') {
+        if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
             return ucfirst(preg_replace('/^position-(.*?[a-z])/ui', '\1', $id));
         }
 
