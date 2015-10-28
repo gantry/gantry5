@@ -405,7 +405,7 @@ class Format2
         $subtype = implode('-', $list);
 
         if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
-            $id = $subtype . ($id !== null ? "-{$id}" : '');
+            $id = ($subtype ?: $type) . ($id !== null ? "-{$id}" : '');
             $subtype = false;
         }
 
