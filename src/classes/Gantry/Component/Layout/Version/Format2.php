@@ -415,7 +415,7 @@ class Format2
                 return 'Offcanvas';
             }
 
-            return ucfirst($id);
+            return ucfirst((string)(int) $id === (string) $id ? ($subtype ?: $type) . "-{$id}" : $id);
         }
 
         if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
