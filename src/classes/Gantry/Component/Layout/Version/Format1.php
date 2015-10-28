@@ -207,6 +207,7 @@ class Format1
         }
 
         $result = (object) ['id' => $this->id($type, $subtype), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => $attributes];
+        $this->normalize($result);
 
         if ($scope > 1) {
             if ($size) {
