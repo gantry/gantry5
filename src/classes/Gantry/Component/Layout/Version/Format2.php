@@ -119,7 +119,7 @@ class Format2
                 'title' => $this->getTitle($type, $subtype, $id),
                 'attributes' => [],
             ];
-            if (isset($boxed)) {
+            if (isset($boxed) && !isset($result['attributes']['boxed'])) {
                 $result['attributes']['boxed'] = $boxed;
             }
             if ($parent && $parent->type === 'block' && !empty($result['block'])) {
@@ -324,6 +324,7 @@ class Format2
                 // Add structural item.
                 if ($id) {
                     // Sections and other complex items.
+                    $id = isset($child['attributes']['boxed']) ? "/{$id}/" : $id;
                     $result[trim("{$id} {$size}")] = $value;
                 } else {
                     // Simple grid / block item.
