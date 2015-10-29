@@ -94,6 +94,20 @@ class Format1
             $item->id = $this->id($item->type, $item->subtype);
         }
 
+        if (!empty($item->attributes->extra)) {
+            foreach ($item->attributes->extra as $i => $extra) {
+                list ($k, $v) = each($extra);
+                if ($k === 'id') {
+                    $item->id = preg_replace('/^g-/', '', $v);
+                    $item->attributes->id = $v;
+                    unset ($item->attributes->extra[$i]);
+                }
+            }
+            if (empty($item->attributes->extra)) {
+                unset ($item->attributes->extra);
+            }
+        }
+
         $item->subtype = $item->subtype ?: $item->type;
         $item->layout = in_array($item->type, ['container', 'section', 'grid', 'block', 'offcanvas']);
 
