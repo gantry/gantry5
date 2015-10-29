@@ -1,5 +1,5 @@
 # 5.2.0
-## XX/XX/2015
+## 29/10/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -17,7 +17,7 @@
         - Minor Collections CSS tweaks
         - Date Particle: Added commonly used option `October 22, 2015`
         - Layouts: Add support for customizing section ids (was bound to title before)
-        - Prefixed Admin CSS file to appear more specific and possibly avoid potential conflicts (g-admin.css) (#)
+        - Prefixed Admin CSS file to appear more specific and possibly avoid potential conflicts (g-admin.css) (#944)
         - All particles have now unique id: `{{ id }}`
         - Make sidebars in default layout presets to have fixed width (size will not change when another sidebar is inactive)
     3. [](#bugfix)
