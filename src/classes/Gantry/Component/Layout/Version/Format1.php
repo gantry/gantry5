@@ -111,9 +111,13 @@ class Format1
         $item->subtype = $item->subtype ?: $item->type;
         $item->layout = in_array($item->type, ['container', 'section', 'grid', 'block', 'offcanvas']);
 
-        if (!$container || isset($item->attributes->boxed)) {
-            // Change boxed=0 to boxed='' to use default settings.
+        if (isset($item->attributes->boxed)) {
+            // Boxed already set, just change boxed=0 to boxed='' to use default settings.
             $item->attributes->boxed = $item->attributes->boxed ?: '';
+            return;
+        }
+
+        if (!$container) {
             return;
         }
 
