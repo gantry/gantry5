@@ -41,6 +41,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public $name;
     public $timestamp = 0;
     public $preset = [];
+    public $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
+
     protected $exists;
     protected $items;
     protected $references;
@@ -483,6 +485,71 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);
+                }
+            }
+        }
+    }
+
+    /**
+     * Prepare block width sizes.
+     *
+     * @return $this
+     */
+    public function prepareWidths()
+    {
+        $this->calcWidths($this->items);
+
+        return $this;
+    }
+
+    /**
+     * Recalculate block widths.
+     *
+     * @param array $items
+     * @internal
+     */
+    protected function calcWidths(array &$items)
+    {
+        foreach ($items as $i => &$item) {
+            if (empty($item->children)) {
+                continue;
+            }
+
+            $this->calcWidths($item->children);
+
+            $dynamicSize = 0;
+            $fixedSize = 0;
+            $childrenCount = count($item->children);
+            foreach ($item->children as $child) {
+                if (!isset($child->attributes->size)) {
+                    $child->attributes->size = 100 / count($item->children);
+                }
+                if (empty($child->attributes->fixed)) {
+                    $dynamicSize += $child->attributes->size;
+                } else {
+                    $fixedSize += $child->attributes->size;
+                }
+            }
+
+            $roundSize = round($dynamicSize, 1);
+            $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
+
+            // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
+            if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
+                $fraction = 0;
+                $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
+                foreach ($item->children as $child) {
+                    if (!empty($child->attributes->fixed)) {
+                        continue;
+                    }
+
+                    // Calculate size for the next item by taking account the rounding error from the last item.
+                    // This will allow us to approximate cumulating error and fix it when rounding error grows
+                    // over the rounding treshold.
+                    $size = ($child->attributes->size * $multiplier) + $fraction;
+                    $newSize = round($size);
+                    $fraction = $size - $newSize;
+                    $child->attributes->size = $newSize;
                 }
             }
         }

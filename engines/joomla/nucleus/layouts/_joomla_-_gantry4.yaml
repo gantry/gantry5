@@ -40,7 +40,6 @@ layout:
         - position-sidebar-b
         - position-sidebar-c
 
-
   /mainbottom/:
     - [position-mainbottom-a 33.3,position-mainbottom-b 33.3,position-mainbottom-c 33.3]
 

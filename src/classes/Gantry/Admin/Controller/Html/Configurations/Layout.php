@@ -75,7 +75,7 @@ class Layout extends HtmlController
             throw new \RuntimeException('Preset not found', 404);
         }
         $this->params['page_id'] = $id;
-        $this->params['layout'] = $layout->toArray();
+        $this->params['layout'] = $layout->prepareWidths()->toArray();
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
     }
@@ -112,7 +112,7 @@ class Layout extends HtmlController
         }
 
         $this->params['page_id'] = $id;
-        $this->params['layout'] = $layout->toArray();
+        $this->params['layout'] = $layout->prepareWidths()->toArray();
         $this->params['preset'] = $layout->preset;
         $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset['name'])));
         $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
@@ -258,7 +258,7 @@ class Layout extends HtmlController
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $layout->preset['name']))),
             'preset' => json_encode($layout->preset),
-            'data' => $layout->toJson(),
+            'data' => $layout->prepareWidths()->toJson(),
             'deleted' => $deleted,
             'message' => $message
     ]   );
@@ -287,7 +287,7 @@ class Layout extends HtmlController
         return new JsonResponse([
             'title' => ucwords(trim(str_replace('_', ' ', $id))),
             'preset' => json_encode($layout->preset),
-            'data' => $layout->toJson(),
+            'data' => $layout->prepareWidths()->toJson(),
             'deleted' => $deleted,
             'message' => $message
         ]);
