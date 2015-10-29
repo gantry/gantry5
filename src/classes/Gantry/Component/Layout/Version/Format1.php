@@ -95,6 +95,7 @@ class Format1
         }
 
         $item->subtype = $item->subtype ?: $item->type;
+        $item->layout = in_array($item->type, ['container', 'section', 'grid', 'block', 'offcanvas']);
 
         if (!$container || isset($item->attributes->boxed)) {
             return;

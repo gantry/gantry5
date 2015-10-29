@@ -174,7 +174,8 @@ class Layout extends HtmlController
 
         $attributes = $this->request->post->getArray('options');
 
-        if (in_array($type, ['section', 'container', 'grid', 'offcanvas'])) {
+        if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+            $name = $type;
             $particle = false;
             $hasBlock = $type == 'section' && !empty($block);
             $prefix = "particles.{$type}";
@@ -303,7 +304,7 @@ class Layout extends HtmlController
         $validator = new Blueprints();
 
         $name = $particle;
-        if ($particle == 'section' || $particle == 'container' || $particle == 'grid' || $particle == 'offcanvas') {
+        if (in_array($particle, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
             $type = $particle;
             $particle = null;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
