@@ -10,7 +10,6 @@
         - Tags / Multiselection now include an `[x]` button to easily remove items via click
         - Layouts: New file syntax, which combines the best of both existing file syntaxes into a single format
         - Layouts: Add support for nested wrapper divs with customizable id and classes (#548)
-        - Moved atoms from Layout into Page Settings
     2. [](#improved)
         - Copyright Particle now allows the `owner` field to contain HTML (thank you @topwebs / #906, #908)
         - Default Outline now shows a 'default' tag in the Outlines Page (#926)
@@ -30,12 +29,14 @@
         - Logo / Image Particle: the `class` attribute will not render empty anymore if there are no classes assigned.
         - Fixed issue where Settings in Outlines overrides could potentially never remove the stored `yaml`, making it impossible to reset an entire section to Default (#929)
         - Fixed issue where Tag fields wouldn't trigger the indicator change
-        - Fixed Collections not loading the default values defined in the `yaml` 
+        - Fixed Collections not loading the default values defined in the `yaml`
         - Fixed bad html output in menu particle
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Disable caching from Particle Module by default (#925)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Ability to add custom CSS classes to Widgets
     2. [](#improved)
         - Improved URL comparing on menu item Assignments when permalinks are enabled
     3. [](#bugfix)
