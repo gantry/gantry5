@@ -407,30 +407,31 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         /** @var Layout $old */
-        $old = new static($this->name, $old);
+        $old = new static('tmp', $old);
 
         $leftover = [];
 
         // Copy normal sections.
-        $data = $old->referencesByType('section', 'section');
-        if (isset($this->types['section']['section'])) {
-            $sections = &$this->types['section']['section'];
+        $data = $old->referencesByType('section');
+
+        if (isset($this->types['section'])) {
+            $sections = &$this->types['section'];
 
             $this->copyData($data, $sections, $leftover);
         }
 
         // Copy offcanvas.
-        $data = $old->referencesByType('offcanvas', 'offcanvas');
-        if (isset($this->types['offcanvas']['offcanvas'])) {
-            $offcanvas = &$this->types['offcanvas']['offcanvas'];
+        $data = $old->referencesByType('offcanvas');
+        if (isset($this->types['offcanvas'])) {
+            $offcanvas = &$this->types['offcanvas'];
 
             $this->copyData($data, $offcanvas, $leftover);
         }
 
         // Copy atoms.
-        $data = $old->referencesByType('atoms', 'atoms');
-        if (isset($this->types['atoms']['atoms'])) {
-            $atoms = &$this->types['atoms']['atoms'];
+        $data = $old->referencesByType('atoms');
+        if (isset($this->types['atoms'])) {
+            $atoms = &$this->types['atoms'];
 
             $this->copyData($data, $atoms, $leftover);
         }
@@ -440,17 +441,21 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected function copyData(array $data, array &$sections, array &$leftover)
     {
-        foreach ($data as $item) {
-            $found = false;
-            foreach ($sections as &$section) {
-                if ($section->title === $item->title) {
-                    $found = true;
-                    $section = $item;
-                    break;
+        foreach ($data as $type => $items) {
+            foreach ($items as $item) {
+                $found = false;
+                if (isset($sections[$type])) {
+                    foreach ($sections[$type] as &$section) {
+                        if ($section->id === $item->id) {
+                            $found = true;
+                            $section->children = $item->children;
+                            break;
+                        }
+                    }
                 }
-            }
-            if (!$found && !empty($item->children)) {
-                $leftover[] = $item->title;
+                if (!$found && !empty($item->children)) {
+                    $leftover[$item->id] = $item->title;
+                }
             }
         }
     }

@@ -96,7 +96,7 @@ class Format2
     {
         if (is_numeric($field)) {
             // Row or block
-            $result = (object)['id' => $this->id($this->scopes[$scope]), 'type' => $this->scopes[$scope], 'subtype' => false, 'layout' => true, 'attributes' => (object)[]];
+            $result = (object)['id' => $this->id($this->scopes[$scope]), 'type' => $this->scopes[$scope], 'subtype' => $this->scopes[$scope], 'layout' => true, 'attributes' => (object)[]];
             $scope = ($scope + 1) % 2;
 
         } else {
@@ -192,7 +192,7 @@ class Format2
             }
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if (!empty($block)) {
                 $result->attributes = (object) $block;
             }
@@ -201,7 +201,7 @@ class Format2
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;
@@ -409,7 +409,7 @@ class Format2
             $subtype = 'position';
         }
 
-        return [$type, $subtype, $id, $size, $content_id];
+        return [$type, $subtype ?: $type, $id, $size, $content_id];
     }
 
     /**
@@ -456,7 +456,7 @@ class Format2
         if ($type !== 'particle') {
             $result[] = $type;
         }
-        if ($subtype) {
+        if ($subtype && $subtype !== $type) {
             $result[] = $subtype;
         }
         $key = implode('-', $result);

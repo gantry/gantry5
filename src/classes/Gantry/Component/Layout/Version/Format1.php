@@ -94,6 +94,8 @@ class Format1
             $item->id = $this->id($item->type, $item->subtype);
         }
 
+        $item->subtype = $item->subtype ?: $item->type;
+
         if (!$container || isset($item->attributes->boxed)) {
             return;
         }
@@ -130,12 +132,12 @@ class Format1
         if (is_numeric($field))  {
             // Row or block
             $type = $this->scopes[$scope];
-            $result = (object) ['id' => null, 'type' => $type, 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
+            $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
         } elseif (substr($field, 0, 9) == 'container') {
             // Container
             $type = 'container';
-            $result = (object) ['id' => null, 'type' => $type, 'subtype' => false, 'layout' => true, 'attributes' => (object) []];
+            $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
             $id = substr($field, 10) ?: null;
             if ($id !== null) {
                 $result->attributes->id = $id;
@@ -216,13 +218,13 @@ class Format1
             return $result;
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
                 $result->attributes->size = $size;
             }
         }
         if ($scope == 0) {
-            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => false, 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
         return $result;
@@ -239,7 +241,7 @@ class Format1
         if ($type !== 'particle' && $type !== 'atom') {
             $result[] = $type;
         }
-        if ($subtype) {
+        if ($subtype && $subtype !== $type) {
             $result[] = $subtype;
         }
         $key = implode('-', $result);
