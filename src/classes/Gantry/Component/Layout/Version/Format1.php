@@ -98,6 +98,8 @@ class Format1
         $item->layout = in_array($item->type, ['container', 'section', 'grid', 'block', 'offcanvas']);
 
         if (!$container || isset($item->attributes->boxed)) {
+            // Change boxed=0 to boxed='' to use default settings.
+            $item->attributes->boxed = $item->attributes->boxed ?: '';
             return;
         }
 
@@ -112,12 +114,9 @@ class Format1
                 }
             } elseif ($child->type === 'container') {
                 // Remove child container.
-                $item->attributes->boxed = 0;
+                $item->attributes->boxed = '';
                 $item->children = $child->children;
             }
-        }
-        if (!isset($item->attributes->boxed)) {
-            $item->attributes->boxed = '';
         }
     }
 
