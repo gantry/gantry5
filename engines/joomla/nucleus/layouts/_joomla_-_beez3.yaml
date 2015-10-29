@@ -36,3 +36,8 @@ layout:
 structure:
   sidebar:
     subtype: aside
+    block:
+      fixed: 1
+  aside:
+    block:
+      fixed: 1

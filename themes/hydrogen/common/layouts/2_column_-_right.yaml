@@ -29,3 +29,5 @@ layout:
 structure:
   sidebar:
     subtype: aside
+    block:
+      fixed: 1
