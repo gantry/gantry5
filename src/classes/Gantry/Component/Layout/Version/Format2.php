@@ -367,7 +367,7 @@ class Format2
         // Get section and its type.
         $section = reset($list);
         $type = (in_array($section, $this->sections)) ? $section : 'section';
-        $subtype = ($type !== 'section' || in_array($section, $this->sections)) ? $section : 'section';
+        $subtype = ($type !== 'section' || in_array($section, $this->structures)) ? $section : 'section';
 
         // Extract id.
         if ($type == 'section' && in_array($section, $this->structures)) {
@@ -406,7 +406,7 @@ class Format2
 
         if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
             $id = ($subtype ?: $type) . ($id !== null ? "-{$id}" : '');
-            $subtype = false;
+            $subtype = 'position';
         }
 
         return [$type, $subtype, $id, $size, $content_id];
