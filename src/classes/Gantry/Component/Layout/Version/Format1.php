@@ -71,7 +71,7 @@ class Format1
         if ($item->type === 'pagecontent') {
             // Update pagecontent to match the new standards.
             $item->type = 'system';
-            if (!$item->subtype) {
+            if (!$item->subtype || $item->subtype == 'pagecontent') {
                 $item->subtype = 'content';
                 $item->title = 'Page Content';
             } else {
