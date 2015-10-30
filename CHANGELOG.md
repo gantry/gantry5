@@ -9,6 +9,7 @@
     3. [](#bugfix)
         - Fixed regression in Layout Manager where a malformed JSON ouptut was preventing from drag and dropping particles around (#959)
         - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
+        - Fixed deprecated use of `Twig_Filter_Function` (fixes #961)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         -  Upgrading Gantry may cause `g-container` to disappear (#957)

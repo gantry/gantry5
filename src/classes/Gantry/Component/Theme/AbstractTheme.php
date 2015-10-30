@@ -98,7 +98,8 @@ abstract class AbstractTheme
         $twig->addExtension(new TwigExtension);
 
         if (method_exists($this, 'toGrid')) {
-            $twig->addFilter('toGrid', new \Twig_Filter_Function([$this, 'toGrid']));
+            $filter = new \Twig_SimpleFilter('toGrid', [$this, 'toGrid']);
+            $twig->addFilter($filter);
         }
 
         return $twig;
