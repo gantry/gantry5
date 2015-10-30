@@ -511,7 +511,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected function calcWidths(array &$items)
     {
         foreach ($items as $i => &$item) {
-            if (empty($item->children)) {
+            if (empty($item->children) || $item->type !== 'block') {
                 continue;
             }
 
