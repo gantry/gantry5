@@ -31,6 +31,11 @@ if (!$gantry->isCompatible($requiredGantryVersion)) {
     }
 }
 
+// TODO: Placeholder for clearing cache after plugin update
+add_action('upgrader_process_complete', function($upgrader_object, $options) {
+    // inspect $options
+}, 10, 2);
+
 /** @var \Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
