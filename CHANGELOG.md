@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
+    2. [](#improved)
+        - Added particle icons for Particle Picker in the Menu Editor
     3. [](#bugfix)
         - Fixed regression in Layout Manager where a malformed JSON ouptut was preventing from drag and dropping particles around (#959)
         - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
@@ -13,6 +15,7 @@
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Removed Hydrogen conditional tags for loading `page_head.html.twig` file
+        - Added particle icons for Login Form and Menu
     3. [](#bugfix)
         - Fixed a `Fatal error: Cannot use object of type Closure as array` that could occur with some widgets
 
