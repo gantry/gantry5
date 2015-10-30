@@ -172,7 +172,9 @@ domready(function() {
                     }
                 });
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }
         });
     });

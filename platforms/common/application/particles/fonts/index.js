@@ -106,7 +106,9 @@ var Fonts = new prime({
                 this.updateTotal();
                 this.selectFromValue();
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }, this)
         });
     },

@@ -4255,7 +4255,9 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
 
-                search[0].focus();
+                setTimeout(function(){
+                    search[0].focus();
+                }, 5);
             }
         });
     }
@@ -7179,7 +7181,9 @@ var Fonts = new prime({
                 this.updateTotal();
                 this.selectFromValue();
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }, this)
         });
     },
@@ -7990,7 +7994,9 @@ domready(function() {
                     }
                 });
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }
         });
     });
@@ -8108,7 +8114,9 @@ ready(function() {
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
 
-                    search[0].focus();
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));

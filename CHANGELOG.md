@@ -6,6 +6,7 @@
         - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
     3. [](#bugfix)
         - Fixed regression in Layout Manager where a malformed JSON ouptut was preventing from drag and dropping particles around (#959)
+        - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
 2. [Joomla](#joomla)
     3. [](#bugfix)
         -  Upgrading Gantry may cause `g-container` to disappear (#957)

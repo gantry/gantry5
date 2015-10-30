@@ -87,7 +87,9 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
 
-                search[0].focus();
+                setTimeout(function(){
+                    search[0].focus();
+                }, 5);
             }
         });
     }
