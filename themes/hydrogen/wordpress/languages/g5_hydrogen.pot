@@ -24,7 +24,11 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: functions.php:26
+#: functions.php:23
+msgid "Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!"
+msgstr ""
+
+#: functions.php:44
 msgid "Error locating %s for inclusion"
 msgstr ""
 

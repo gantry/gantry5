@@ -20,7 +20,7 @@ $requiredGantryVersion = '5.2.0';
 
 if (!$gantry->isCompatible($requiredGantryVersion)) {
     $current_theme = wp_get_theme();
-    $error = sprintf(__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', 'g5_requiem'), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
+    $error = sprintf(__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', 'g5_hydrogen'), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
 
     if(is_admin()) {
         add_action('admin_notices', function () use ($error) {
