@@ -8,6 +8,8 @@
         - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
     2. [](#improved)
         - Removed Hydrogen conditional tags for loading page_head.html.twig file
+    3. [](#bugfix)
+        - Fixed a `Fatal error: Cannot use object of type Closure as array` that could occur with some widgets
 
 # 5.2.0
 ## 29/10/2015
