@@ -195,7 +195,7 @@ var Resizer = new prime({
         elements.forEach(function(element) {
             element = $(element);
             block = this.getBlock(element);
-            if (block && block.hasAttribute('size')) {
+            if (block && block.hasAttribute('size') && block.hasOwnProperty('getSize')) {
                 block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
             } else {
                 if (element) { element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' }); }

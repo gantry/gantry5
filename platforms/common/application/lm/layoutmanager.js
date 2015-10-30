@@ -469,7 +469,7 @@ var LayoutManager = new prime({
             if (plus) { plus.emit('click'); }
         }
 
-        if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
+        if (this.block.hasAttribute('size') && this.block.hasOwnProperty('getSize')) { this.block.setSize(this.placeholder.compute('flex')); }
 
         this.block.insert(this.placeholder);
         this.placeholder.remove();
