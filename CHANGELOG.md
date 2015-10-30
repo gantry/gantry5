@@ -5,6 +5,8 @@
     1. [](#new)
         - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
 2. [Joomla](#joomla)
+    3. [](#bugfix)
+        -  Upgrading Gantry may cause g-container to disappear (#957)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Removed Hydrogen conditional tags for loading page_head.html.twig file
