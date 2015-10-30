@@ -21,7 +21,7 @@ $theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
 $context              = Timber::get_context();
-$context['page_head'] = $gantry->isCompatible('5.1.5') ? $theme->render('partials/page_head.html.twig', $context) : null;
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
 $context['posts'] = Timber::get_posts();
 

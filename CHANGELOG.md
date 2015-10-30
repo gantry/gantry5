@@ -1,3 +1,14 @@
+# 5.2.1
+## XX/XX/XXXX
+
+1. [Common](#common)
+2. [Joomla](#joomla)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
+    2. [](#improved)
+        - Removed Hydrogen conditional tags for loading page_head.html.twig file
+
 # 5.2.0
 ## 29/10/2015
 
