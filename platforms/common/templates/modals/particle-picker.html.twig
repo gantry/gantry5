@@ -19,9 +19,10 @@
                                         data-lm-nodrag
                                         data-mm-type="particle"
                                         data-lm-blocktype="{{ type|e }}"
-                                        data-mm-filter="{{ item|e }}"
+                                        data-mm-filter="{{ item.name|e }}"
                                         data-lm-subtype="{{ item_key|e }}">
-                                        {{ item|e }}
+                                        <span class="icon"><i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i></span>
+                                        <span class="title">{{ item.name|e }}</span>
                                     </li>
                                 {%  endfor %}
                             {% endfor %}
