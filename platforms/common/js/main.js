@@ -2128,7 +2128,7 @@ var Resizer = new prime({
         elements.forEach(function(element) {
             element = $(element);
             block = this.getBlock(element);
-            if (block && block.hasAttribute('size') && block.hasOwnProperty('getSize')) {
+            if (block && block.hasAttribute('size') && typeof block.getSize === 'function') {
                 block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
             } else {
                 if (element) { element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' }); }
@@ -3340,7 +3340,7 @@ var LayoutManager = new prime({
             if (plus) { plus.emit('click'); }
         }
 
-        if (this.block.hasAttribute('size') && this.block.hasOwnProperty('getSize')) { this.block.setSize(this.placeholder.compute('flex')); }
+        if (this.block.hasAttribute('size') && typeof this.block.getSize === 'function') { this.block.setSize(this.placeholder.compute('flex')); }
 
         this.block.insert(this.placeholder);
         this.placeholder.remove();
