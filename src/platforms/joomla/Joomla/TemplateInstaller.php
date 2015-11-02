@@ -341,8 +341,11 @@ class TemplateInstaller
         $details = new ThemeDetails($name);
         $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
 
-        // Initialize theme cache stream.
+        // Initialize theme cache stream and clear theme cache.
         $cachePath = $patform->getCachePath() . '/' . $name;
+        if (is_dir($cachePath)) {
+            Folder::delete($cachePath);
+        }
         Folder::create($cachePath);
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
         $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);

@@ -6,6 +6,8 @@
         - Hydrogen now requires Gantry 5.2.0 or higher and will display a notice if theme requirements aren't met
     2. [](#improved)
         - Added particle icons for Particle Picker in the Menu Editor
+        - Clear Gantry cache after Gantry upgrade
+        - Clear theme cache after theme upgrade
     3. [](#bugfix)
         - Fixed regression in Layout Manager where a malformed JSON ouptut was preventing from drag and dropping particles around (#959)
         - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
