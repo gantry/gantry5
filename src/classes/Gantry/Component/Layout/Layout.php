@@ -511,7 +511,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected function calcWidths(array &$items)
     {
         foreach ($items as $i => &$item) {
-            if (empty($item->children) || $item->type !== 'block') {
+            if (empty($item->children)) {
                 continue;
             }
 
@@ -519,8 +519,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
             $dynamicSize = 0;
             $fixedSize = 0;
-            $childrenCount = count($item->children);
+            $childrenCount = 0;
             foreach ($item->children as $child) {
+                if ($child->type !== 'block') {
+                    continue;
+                }
+                $childrenCount++;
                 if (!isset($child->attributes->size)) {
                     $child->attributes->size = 100 / count($item->children);
                 }
@@ -531,6 +535,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
             }
 
+            if (!$childrenCount) {
+                continue;
+            }
+
             $roundSize = round($dynamicSize, 1);
             $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
 
@@ -539,6 +547,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $fraction = 0;
                 $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                 foreach ($item->children as $child) {
+                    if ($child->type !== 'block') {
+                        continue;
+                    }
                     if (!empty($child->attributes->fixed)) {
                         continue;
                     }
