@@ -128,13 +128,13 @@ after_deploy:
       svn status | grep '^?' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn add;
       svn status | grep '^!' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn delete --force;
       echo "# Committing changes to Trunk";
-      svn commit $WPREPO/trunk $G5_WP_REPO --no-auth-cache --non-interactive --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
+      svn commit $WPREPO/trunk $G5_WP_REPO --no-auth-cache --non-interactive --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG" https://plugins.svn.wordpress.org/gantry5;
       echo "# Creating Tag";
       cd $WPREPO;
       svn copy trunk/ tags/$TRAVIS_TAG/;
       echo "# Committing Tag";
       cd $WPREPO/tags/$TRAVIS_TAG;
-      svn commit $WPREPO/tags/$TRAVIS_TAG $G5_WP_REPO --no-auth-cache --non-interactive --message "[automatic] Created Gantry $TRAVIS_TAG Tag";
+      svn commit $WPREPO/tags/$TRAVIS_TAG $G5_WP_REPO --no-auth-cache --non-interactive --message "[automatic] Created Gantry $TRAVIS_TAG Tag" https://plugins.svn.wordpress.org/gantry5;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;
