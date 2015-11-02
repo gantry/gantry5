@@ -100,7 +100,7 @@ class Pkg_Gantry5InstallerScript
 
         // Clear Gantry5 cache.
         $path = JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
-        if (!is_dir($path)) {
+        if (is_dir($path)) {
             JFolder::delete($path);
         }
 
