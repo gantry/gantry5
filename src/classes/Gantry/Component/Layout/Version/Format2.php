@@ -180,7 +180,7 @@ class Format2
 
         $result = (object) $result;
 
-        if ($type === 'position' && !in_array($subtype, ['module', 'widget'])) {
+        if ($type === 'position' && !isset($result->attributes->key) && !in_array($subtype, ['module', 'widget'])) {
             $result->attributes->key = $id;
         }
         if ($scope > 1) {

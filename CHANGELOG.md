@@ -12,7 +12,8 @@
         - Fixed regression in Layout Manager where a malformed JSON output was preventing from drag and dropping particles around (#959)
         - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
         - Fixed deprecated use of `Twig_Filter_Function` (fixes #961)
-        - Fix saving two or more positions using the same key 
+        - Fix saving two or more positions using the same key
+        - New Layout Format: Fix loading position with different key to id
 2. [Joomla](#joomla)
     3. [](#bugfix)
         -  Upgrading Gantry may cause `g-container` to disappear (#957)
