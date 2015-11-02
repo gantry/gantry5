@@ -242,8 +242,9 @@ class Format2
                 // Special handling for positions.
                 if ($type === 'position') {
                     if (!$subtype || $subtype === 'position') {
-                        $id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
-                        unset ($child['attributes']['key']);
+                        // TODO: we may want to simplify position id, but we need to take into account multiple instances of the same position key.
+                        //$id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
+                        //unset ($child['attributes']['key']);
                     }
                     unset ($child['attributes']['title']);
                 }
