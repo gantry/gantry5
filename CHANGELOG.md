@@ -9,7 +9,7 @@
         - Clear Gantry cache after Gantry upgrade
         - Clear theme cache after theme upgrade
     3. [](#bugfix)
-        - Fixed regression in Layout Manager where a malformed JSON ouptut was preventing from drag and dropping particles around (#959)
+        - Fixed regression in Layout Manager where a malformed JSON output was preventing from drag and dropping particles around (#959)
         - Restored auto focus on Search fields for Icons, Fonts and Module/Widget Pickers
         - Fixed deprecated use of `Twig_Filter_Function` (fixes #961)
 2. [Joomla](#joomla)
