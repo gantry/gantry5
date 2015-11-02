@@ -31,7 +31,8 @@ if (!defined('GANTRY5_PATH')) {
     define('GANTRY5_PATH', rtrim(WP_PLUGIN_DIR, '/\\') . '/gantry5');
 }
 
-add_action('upgrader_process_complete', 'gantry5_install_clear_cache', 10, 3);
+//add_action('upgrader_package_options', 'gantry5_install_prepare_options', 10, 1);
+add_action('upgrader_process_complete', 'gantry5_install_clear_cache', 10, 2);
 
 if (!is_admin()) {
     return;
@@ -113,7 +114,13 @@ function gantry5_php_version_warning()
     echo '</p></div>';
 }
 
-function gantry5_install_clear_cache($upgrader, $options, $result)
+function gantry5_install_prepare_options($options)
+{
+//    $options['abort_if_destination_exists'] = 0;
+    return $options;
+}
+
+function gantry5_install_clear_cache($upgrader, $options)
 {
     // Clear gantry cache after plugin / theme installs.
     if (isset($options['type']) && in_array($options['type'], ['plugin', 'theme'])) {
@@ -124,6 +131,7 @@ function gantry5_install_clear_cache($upgrader, $options, $result)
         if ($wp_filesystem->is_dir($path)) {
             $wp_filesystem->rmdir($path);
         }
+        $upgrader->skin->feedback('Gantry 5 cache cleared.');
     }
 }
 
