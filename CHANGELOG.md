@@ -1,3 +1,13 @@
+# 5.2.2
+## XX/XX/2015
+
+1. [Common](#common)
+    3. [](#bugfix)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+
 # 5.2.1
 ## 02/11/2015
 
