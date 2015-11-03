@@ -10,30 +10,12 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Theme\ThemeTrait;
-use Grav\Common\Theme as BaseTheme;
-use Grav\Common\Grav;
-use Grav\Common\Config\Config as GravConfig;
+use Gantry\Component\Theme\AbstractTheme;
 
 /**
  * Class Theme
  * @package Gantry\Framework
  */
-class Theme extends BaseTheme
+class Theme extends AbstractTheme
 {
-    use ThemeTrait;
-
-    public $url;
-
-    public function __construct(Grav $grav, GravConfig $config, $name)
-    {
-        parent::__construct($grav, $config, $name);
-
-        // $this->init();
-
-        $baseUrlRelative = $grav['base_url_relative'];
-        $this->name = $name;
-        $this->path = THEMES_DIR . $name;
-        $this->url = $baseUrlRelative .'/'. USER_PATH . basename(THEMES_DIR) .'/'. $this->name;
-    }
 }
