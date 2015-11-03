@@ -11,6 +11,7 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Grav\Common\Grav;
 
 class Gantry extends Base\Gantry
@@ -39,13 +40,25 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
+        // Use locator from Grav.
+        $container['locator'] = function($c) {
+            return Grav::instance()['locator'];
+        };
+
         $container['site'] = function ($c) {
             return new Site;
         };
 
-        // Use locator from Grav.
-        $container['locator'] = function($c) {
-             return Grav::instance()['locator'];
+        $container['menu'] = function ($c) {
+            return new Menu;
+        };
+
+        $container['page'] = function ($c) {
+            return new Page($c);
+        };
+
+        $container['global'] = function ($c) {
+            return new Config([]);
         };
 
         return $container;

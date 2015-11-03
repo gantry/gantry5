@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
 
 /**
  * Class Theme
@@ -18,4 +19,5 @@ use Gantry\Component\Theme\AbstractTheme;
  */
 class Theme extends AbstractTheme
 {
+    use ThemeTrait;
 }

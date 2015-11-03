@@ -3,13 +3,12 @@ namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
-use Gantry\Framework\Base\ThemeTrait;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
-use Grav\Common\Themes;
-use Grav\Common\Twig;
+use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry5Plugin extends Plugin
@@ -18,15 +17,22 @@ class Gantry5Plugin extends Plugin
     protected $template;
 
     /**
+     * @var Theme
+     */
+    protected $theme;
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents()
     {
         return [
             'onPluginsInitialized' => [
-                ['initialize', 1000],
-                ['detectGantryAdmin', 900]
-            ]
+                ['initialize', 1000]
+            ],
+            'onThemeInitialized' => [
+                ['initializeGantryTheme', -10]
+            ],
         ];
     }
 
@@ -42,12 +48,75 @@ class Gantry5Plugin extends Plugin
      *
      * Disables system cache.
      */
-    public function detectGantryAdmin()
+    public function initializeGantryTheme()
     {
-        if (!isset($this->grav['admin'])) {
+        if (!class_exists('Gantry\Framework\Gantry')) {
             return;
         }
 
+        $gantry = Gantry::instance();
+
+        // Initialize theme stream.
+        $gantry['platform']->set(
+            'streams.gantry-theme.prefixes',
+            ['' => [
+                "gantry-themes://{$gantry['theme.name']}/custom",
+                "gantry-themes://{$gantry['theme.name']}",
+                "gantry-themes://{$gantry['theme.name']}/common"
+            ]]
+        );
+
+        $gantry['streams'];
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+        $version = isset($this->grav['theme']->gantry) ? $this->grav['theme']->gantry : 0;
+
+        if (!$gantry->isCompatible($version)) {
+            $message = "Theme requires Gantry v{$version} (or later) in order to work! Please upgrade Gantry Framework.";
+            if ($this->isAdmin()) {
+                $messages = $this->grav['messages'];
+                $messages->add($message, 'error');
+                return;
+            } else {
+                throw new \LogicException($message);
+            }
+        }
+
+        $this->theme = $theme;
+
+        if (isset($this->grav['admin'])) {
+            $this->enable([
+                'onThemeInitialized' => [
+                    ['detectGantryAdmin', -20]
+                ],
+            ]);
+        } else {
+            $this->enable([
+                'onThemeInitialized' => [
+                    ['detectGantrySite', -20]
+                ],
+            ]);
+        }
+    }
+
+    public function detectGantrySite()
+    {
+        $this->theme->setLayout('default');
+
+        $this->enable([
+            'onTwigInitialized' => ['onThemeTwigInitialized', 0],
+            'onTwigSiteVariables' => ['onThemeTwigVariables', 0]
+        ]);
+    }
+
+        /**
+     * Initialize administration plugin if admin path matches.
+     *
+     * Disables system cache.
+     */
+    public function detectGantryAdmin()
+    {
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $this->grav['admin'];
         if ($admin->location != 'themes' || !$admin->route) {
@@ -68,17 +137,12 @@ class Gantry5Plugin extends Plugin
         $this->config->set('system.pages.theme', $theme);
 
         $this->enable([
-            'onThemeInitialized' => ['runAdmin', 0],
+            'onThemeInitialized' => ['runAdmin', -30],
         ]);
     }
 
     public function runAdmin()
     {
-        $theme = $this->grav['theme'];
-        if (!($theme instanceof \Gantry\Framework\Theme)) {
-            return;
-        }
-
         $gantry = Gantry::instance();
         $gantry['base_url'] = $this->base;
         $gantry['router'] = function ($c) {
@@ -92,8 +156,8 @@ class Gantry5Plugin extends Plugin
 
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 900],
-            'onTwigInitialized' => ['onTwigInitialized', 900],
-            'onTwigSiteVariables' => ['onTwigSiteVariables', 900]
+            'onTwigInitialized' => ['onAdminTwigInitialized', 900],
+            'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
         ]);
     }
 
@@ -113,7 +177,7 @@ class Gantry5Plugin extends Plugin
     /**
      * Add twig paths to plugin templates.
      */
-    public function onTwigInitialized()
+    public function onAdminTwigInitialized()
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
@@ -130,7 +194,7 @@ class Gantry5Plugin extends Plugin
     /**
      * Set all twig variables for generating output.
      */
-    public function onTwigSiteVariables()
+    public function onAdminTwigVariables()
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
@@ -139,5 +203,25 @@ class Gantry5Plugin extends Plugin
 
         $twig->twig_vars['location'] = $this->template;
         $twig->twig_vars['gantry_url'] = $this->base;
+    }
+
+    /**
+     * Initialize nucleus layout engine.
+     */
+    public function onThemeTwigInitialized()
+    {
+        /** @var Twig $twig */
+        $twig = $this->grav['twig'];
+        $this->theme->extendTwig($twig->twig(), $twig->loader());
+    }
+
+    /**
+     * Load current layout.
+     */
+    public function onThemeTwigVariables()
+    {
+        /** @var Twig $twig */
+        $twig = $this->grav['twig'];
+        $twig->twig_vars = $this->theme->getContext($twig->twig_vars);
     }
 }
