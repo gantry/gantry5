@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -8,6 +7,7 @@
  *
  * http://opensource.org/licenses/MIT
  */
+
 
 namespace Gantry\Framework;
 

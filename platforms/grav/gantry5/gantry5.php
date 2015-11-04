@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   MIT
+ *
+ * http://opensource.org/licenses/MIT
+ */
+
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
