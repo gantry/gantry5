@@ -41,8 +41,8 @@ $theme = $gantry['theme'];
 
 try {
     // Render the page.
-    echo $theme->render('@pages/' . PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
+    echo $theme->setLayout('default')->render('@pages/' . PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
 } catch (Twig_Error_Loader $e) {
     // Or display error if template file couldn't be found.
-    echo $theme->render('@pages/_error.html.twig', ['error' => $e]);
+    echo $theme->setLayout('_error')->render('@pages/_error.html.twig', ['error' => $e]);
 }

@@ -166,9 +166,6 @@ abstract class AbstractTheme
             $gantry->register(new ErrorServiceProvider);
         }
 
-        /** @var Platform $patform */
-        $patform = $gantry['platform'];
-
         // Initialize theme cache stream.
         $cachePath = $this->getCachePath();
 

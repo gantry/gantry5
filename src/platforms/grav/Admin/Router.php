@@ -62,7 +62,7 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        // FIXME: Add security token when it has been added to Grav admin.
-        return '';
+        // TODO: add CSRF check.
+        return true;
     }
 }
