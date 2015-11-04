@@ -17,9 +17,11 @@ namespace Gantry\Component\Twig;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Document;
+use Gantry\Framework\Exception;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TwigExtension extends \Twig_Extension
@@ -52,6 +54,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
+            new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
         ];
     }
 
@@ -70,6 +73,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
             new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
         ];
     }
 
@@ -142,6 +146,23 @@ class TwigExtension extends \Twig_Extension
     public function jsonDecodeFilter($str, $assoc = false, $depth = 512, $options = 0)
     {
         return json_decode($str, $assoc, $depth, $options);
+    }
+
+    public function imageSize($src, $attrib = true)
+    {
+        $width = $height = null;
+        $sizes = ['width' => $width, 'height' => $height];
+        $attr = '';
+        if (File::instance($src)->exists()) {
+            try {
+                list($width, $height, $type, $attr) = getimagesize($src);
+            } catch (Exception $e) {}
+
+            $sizes['width'] = $width;
+            $sizes['height'] = $height;
+        }
+
+        return $attrib ? $attr : $sizes;
     }
 
     /**

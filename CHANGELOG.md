@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Added new `|imagesize` Twig Filter that returns `width="X" height="Y"` as attributes for images
     3. [](#bugfix)
 2. [Joomla](#joomla)
     3. [](#bugfix)
