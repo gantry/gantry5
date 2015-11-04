@@ -137,6 +137,8 @@ abstract class Folder
         $levels = isset($params['levels']) ? $params['levels'] : -1;
         $key = isset($params['key']) ? 'get' . $params['key'] : null;
         $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
+        $folders = isset($params['folders']) ? $params['folders'] : true;
+        $files = isset($params['files']) ? $params['files'] : true;
 
         if ($recursive) {
             $directory = new \RecursiveDirectoryIterator($path,
@@ -153,6 +155,12 @@ abstract class Folder
         foreach ($iterator as $file) {
             // Ignore hidden files.
             if ($file->getFilename()[0] == '.') {
+                continue;
+            }
+            if (!$folders && $file->isDir()) {
+                continue;
+            }
+            if (!$files && $file->isFile()) {
                 continue;
             }
             if ($compare && $pattern && !preg_match($pattern, $file->{$compare}())) {

@@ -108,15 +108,14 @@ class ThemeList
                 }
 
                 $params = new \JRegistry($template->params);
-                $token = \JSession::getFormToken();
 
                 $details['id'] = $template->id;
                 $details['extension_id'] = $template->extension_id;
                 $details['name'] = $template->name;
                 $details['title'] = $details['details.name'];
                 $details['style'] = $template->title;
-                $details['preview_url'] = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
-                $details['admin_url'] = \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$template->name}&{$token}=1" , false);
+                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($template->id);
+                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($template->name);
                 $details['params'] = $params->toArray();
 
                 $list[$template->id] = $details;

@@ -90,6 +90,28 @@ class Platform extends BasePlatform
         return ['' => ['media']];
     }
 
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return rtrim(PRIME_URI, '/') . '/' . $theme;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
+    }
+
     public function getModules($position)
     {
         /** @var UniformResourceLocator $locator */

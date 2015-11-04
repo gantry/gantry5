@@ -3,7 +3,7 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ThemeList
@@ -18,7 +18,7 @@ class ThemeList
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $files = Folder::all('gantry-themes://', ['recursive' => false]);
+        $files = Folder::all('gantry-themes://', ['recursive' => false, 'files' => false]);
 
         /** @var array|ThemeDetails[] $list */
         $list = [];
@@ -26,9 +26,6 @@ class ThemeList
         ksort($files);
 
         foreach ($files as $theme) {
-            if (!is_dir($theme)) {
-                continue;
-            }
             if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
                 $details = new ThemeDetails($theme);
 
@@ -40,9 +37,8 @@ class ThemeList
 
                 $details['name'] = $theme;
                 $details['title'] = $details['details.name'];
-                $details['preview_url'] = $locator('gantry-themes://' . $theme);
-                // FIXME:
-                $details['admin_url'] = 'FIXME';
+                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
+                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
                 $details['params'] = [];
 
                 $list[$details->name] = $details;

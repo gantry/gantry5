@@ -137,6 +137,22 @@ abstract class Platform
         return [];
     }
 
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemePreviewUrl($theme);
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemeAdminUrl($theme);
+
     public function settings()
     {
         return null;

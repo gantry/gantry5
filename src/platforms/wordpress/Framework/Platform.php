@@ -80,6 +80,28 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', $this->gantry_dir . '/assets']];
     }
 
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return null
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return null;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        return null;
+    }
+
     public function filter($text)
     {
         return \do_shortcode($text);

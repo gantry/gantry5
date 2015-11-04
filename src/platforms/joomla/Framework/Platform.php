@@ -70,6 +70,29 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return \JUri::root(false) . 'index.php?templateStyle=' . $theme;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        $token = \JSession::getFormToken();
+        return \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
+    }
+
     public function filter($text)
     {
         \JPluginHelper::importPlugin('content');
