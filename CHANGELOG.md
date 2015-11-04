@@ -5,6 +5,7 @@
     1. [](#new)
         - Added new `|imagesize` Twig Filter that returns `width="X" height="Y"` as attributes for images
     3. [](#bugfix)
+        - Fixed again compatibility for PHP 5.3 and prevent from failing with the error "Parse error: syntax error, unexpected '[' in ..." 
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)

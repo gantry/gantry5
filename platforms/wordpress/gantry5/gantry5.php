@@ -123,7 +123,7 @@ function gantry5_install_prepare_options($options)
 function gantry5_install_clear_cache($upgrader, $options)
 {
     // Clear gantry cache after plugin / theme installs.
-    if (isset($options['type']) && in_array($options['type'], ['plugin', 'theme'])) {
+    if (isset($options['type']) && in_array($options['type'], array('plugin', 'theme'))) {
         global $wp_filesystem;
 
         $gantry = \Gantry\Framework\Gantry::instance();
