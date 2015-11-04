@@ -86,17 +86,9 @@ class Gantry5Plugin extends Plugin
         $this->theme = $theme;
 
         if (isset($this->grav['admin'])) {
-            $this->enable([
-                'onThemeInitialized' => [
-                    ['detectGantryAdmin', -20]
-                ],
-            ]);
+            $this->detectGantryAdmin();
         } else {
-            $this->enable([
-                'onThemeInitialized' => [
-                    ['detectGantrySite', -20]
-                ],
-            ]);
+            $this->detectGantrySite();
         }
     }
 
@@ -136,9 +128,7 @@ class Gantry5Plugin extends Plugin
 
         $this->config->set('system.pages.theme', $theme);
 
-        $this->enable([
-            'onThemeInitialized' => ['runAdmin', -30],
-        ]);
+        $this->runAdmin();
     }
 
     public function runAdmin()
@@ -173,7 +163,6 @@ class Gantry5Plugin extends Plugin
         $this->grav['page'] = $page;
     }
 
-
     /**
      * Add twig paths to plugin templates.
      */
@@ -184,8 +173,8 @@ class Gantry5Plugin extends Plugin
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->grav['locator'];
-        $locator->addPath('gantry-admin', '', ['user/plugins/gantry5', 'user/plugins/gantry5/common']);
-        $locator->addPath('gantry-admin', 'assets', ['user/plugins/gantry5/common']);
+        $locator->addPath('gantry-admin', '', ['plugins://gantry5', 'plugins://gantry5/common']);
+        $locator->addPath('gantry-admin', 'assets', ['plugins://gantry5/common']);
 
         $loader = $twig->loader();
         $loader->setPaths($locator->findResources('gantry-admin://templates'), 'gantry-admin');
@@ -199,7 +188,7 @@ class Gantry5Plugin extends Plugin
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
 
-        $twig->template = "@gantry-admin/pages/{$this->template}.html.twig";
+        $twig->template = "@gantry-admin/pages/about/{$this->template}.html.twig";
 
         $twig->twig_vars['location'] = $this->template;
         $twig->twig_vars['gantry_url'] = $this->base;

@@ -21,15 +21,6 @@ class Router extends BaseRouter
         /** @var Request $request */
         $request = $this->container['request'];
 
-        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
-
-        if ($theme) {
-            $this->container['theme.path'] = GRAV_ROOT . '/themes/' . $theme;
-            $this->container['theme.name'] = $theme;
-        }
-
-        $this->load();
-
         $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
 
         // Second parameter is the resource.
@@ -46,7 +37,7 @@ class Router extends BaseRouter
             'location' => $this->resource,
             'method' => $this->method,
             'format' => $this->format,
-            'params' => $request->post->getJsonArray('params');
+            'params' => $request->post->getJsonArray('params')
         ];
 
         $this->container['ajax_suffix'] = '.json';
@@ -57,5 +48,11 @@ class Router extends BaseRouter
 
             'picker/layouts' => '/layouts',
         ];
+    }
+
+    protected function checkSecurityToken()
+    {
+        // FIXME: Add security token when it has been added to Grav admin.
+        return '';
     }
 }
