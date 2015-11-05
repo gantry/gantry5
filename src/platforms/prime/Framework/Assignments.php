@@ -34,7 +34,7 @@ class Assignments
                     'name' => 'page[' . $page . ']',
                     'field' => ['id', 'link-' . preg_replace('|[^a-zA-Z0-9-]|', '-', $page)],
                     'value' => 0, // TODO
-                    'label' => str_repeat('- ', count($path)) . ucwords(end($path))
+                    'label' => str_repeat('- ', count($path)) . ucwords(trim(end($path), '_'))
                 ];
             }
         }
