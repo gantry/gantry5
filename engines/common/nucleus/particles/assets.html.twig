@@ -11,7 +11,9 @@
             {% endfor %}
         {% endif %}
 
-        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
+        {% if css.location %}
+            <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
+        {% endif %}
 
         {% if css.inline %}
             <style type="text/css"{{ attr_extra|raw }}>{{ css.inline|raw }}</style>
@@ -31,7 +33,9 @@
                 {% endfor %}
             {% endif %}
 
-            <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+            {% if script.location %}
+                <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+            {% endif %}
 
             {% if script.inline %}
                 <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
@@ -53,7 +57,9 @@
                 {% endfor %}
             {% endif %}
 
-            <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+            {% if script.location %}
+                <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+            {% endif %}
 
             {% if script.inline %}
                 <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
