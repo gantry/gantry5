@@ -17,7 +17,6 @@ namespace Gantry\Component\Twig;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Document;
-use Gantry\Framework\Exception;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
@@ -148,15 +147,18 @@ class TwigExtension extends \Twig_Extension
         return json_decode($str, $assoc, $depth, $options);
     }
 
-    public function imageSize($src, $attrib = true)
+    public function imageSize($src, $attrib = true, $remote = false)
     {
+        // TODO: need to better handle absolute and relative paths
+        //$url = Document::url(trim((string) $src), false, false);
         $width = $height = null;
         $sizes = ['width' => $width, 'height' => $height];
         $attr = '';
-        if (File::instance($src)->exists()) {
+
+        if (@is_file($src) || $remote) {
             try {
-                list($width, $height, $type, $attr) = getimagesize($src);
-            } catch (Exception $e) {}
+                list($width, $height, $type, $attr) = @getimagesize($src);
+            } catch (\Exception $e) {}
 
             $sizes['width'] = $width;
             $sizes['height'] = $height;
