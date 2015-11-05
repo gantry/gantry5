@@ -111,7 +111,7 @@ abstract class Router implements RouterInterface
         static $loaded = false;
 
         if ($loaded) {
-            return;
+            return $this;
         }
 
         $loaded = true;
