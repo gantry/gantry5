@@ -94,7 +94,7 @@ class plgSystemGantry5 extends JPlugin
             $data = $db->loadObjectList();
 
             if (sizeof($data) > 0) {
-                $this->modules = [];
+                $this->modules = array();
                 $body = $this->app->getBody();
 
                 foreach ($data as $module) {
@@ -292,8 +292,8 @@ class plgSystemGantry5 extends JPlugin
         $template = $table->template;
 
         $gantry = $this->load($template);
-
-        $old = (int) (new Joomla\Registry\Registry($table->params))->get('configuration', 0);
+        $registry = new Joomla\Registry\Registry($table->params);
+        $old = (int) $registry->get('configuration', 0);
         $new = (int) $table->id;
 
         if ($old && $old !== $new) {
@@ -482,7 +482,7 @@ class plgSystemGantry5 extends JPlugin
             // Initialize theme cache stream.
             $cachePath = $patform->getCachePath() . '/' . $name;
             Gantry\Component\FileSystem\Folder::create($cachePath);
-            $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
+            $locator->addPath('gantry-cache', 'theme', array($cachePath), true, true);
             $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
         }
 
