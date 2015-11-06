@@ -7,6 +7,7 @@
     3. [](#bugfix)
         - Fixed again compatibility for PHP 5.3 and prevent from failing with the error "Parse error: syntax error, unexpected '[' in ..."
         - Fixed CSS and JavaScript, potentially rendering empty when only inline was specified without any location
+        - Fixed some themes having full width containers after upgrade to Gantry 5.2 (#967)
 2. [Joomla](#joomla)
     3. [](#bugfix)
 3. [WordPress](#wordpress)

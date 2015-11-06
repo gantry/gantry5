@@ -130,6 +130,7 @@ class Format1
                     $child->attributes->boxed = 1;
                     $item = $child;
                 }
+                $item->attributes->boxed = '';
             } elseif ($child->type === 'container') {
                 // Remove child container.
                 $item->attributes->boxed = '';
