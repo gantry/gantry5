@@ -13,8 +13,10 @@
     3. [](#bugfix)
         - Disable frontend editing for Gantry particle module, fixes 404 error (#966)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Greatly improve page load time (#738)
     3. [](#bugfix)
-        - Hydrogen: Fix fatal error if Gantry hasn't been loaded (#983) 
+        - Hydrogen: Fix fatal error if Gantry hasn't been loaded (#983)
 
 # 5.2.1
 ## 02/11/2015

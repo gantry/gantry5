@@ -359,6 +359,9 @@ class Theme extends AbstractTheme
         load_theme_textdomain($domain, $this->path . '/languages');
 
         $this->url = $gantry['site']->theme->link;
+
+        // Enable caching in Timber.
+        \Timber::$cache = true;
     }
 
     /**
