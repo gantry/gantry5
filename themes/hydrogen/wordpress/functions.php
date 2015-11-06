@@ -12,13 +12,16 @@ defined('ABSPATH') or die;
 
 // Note: This file must be PHP 5.2 compatible.
 
-// Bootstrap Gantry framework or fail gracefully.
-$gantry = include_once dirname(__FILE__) . '/includes/gantry.php';
-
 // Check min. required version of Gantry 5
 $requiredGantryVersion = '5.2.0';
 
-if ($gantry && !$gantry->isCompatible($requiredGantryVersion)) {
+// Bootstrap Gantry framework or fail gracefully.
+$gantry = include_once dirname(__FILE__) . '/includes/gantry.php';
+if (!$gantry) {
+    return;
+}
+
+if (!$gantry->isCompatible($requiredGantryVersion)) {
     $current_theme = wp_get_theme();
     $error = sprintf(__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', 'g5_hydrogen'), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
 
