@@ -11,6 +11,7 @@
         - Fixed some themes having full width containers after upgrade to Gantry 5.2 (#967)
 2. [Joomla](#joomla)
     3. [](#bugfix)
+        - Disable frontend editing for Gantry particle module, fixes 404 error (#966)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
 

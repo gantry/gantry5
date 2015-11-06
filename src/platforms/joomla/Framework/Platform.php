@@ -142,7 +142,7 @@ class Platform extends BasePlatform
         $frontEditing = ($app->isSite() && $app->get('frontediting', 1) && !$user->guest);
         $menusEditing = ($app->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 
-        if ($frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
+        if (!$isGantry && $frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
             $displayData = [
                 'moduleHtml' => &$html,
                 'module' => $module,
