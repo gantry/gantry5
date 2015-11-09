@@ -1,70 +1,76 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block stylesheets %}
-    {% for css in particle.css %}
-        {% set attr_extra = '' %}
-        {% if css.extra %}
-            {% for attributes in css.extra %}
-                {% for key, value in attributes %}
-                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+    {% if (particle.enabled) %}
+        {% for css in particle.css %}
+            {% set attr_extra = '' %}
+            {% if css.extra %}
+                {% for attributes in css.extra %}
+                    {% for key, value in attributes %}
+                        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        {% endif %}
+            {% endif %}
 
-        {% if css.location %}
-            <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
-        {% endif %}
+            {% if css.location %}
+                <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
+            {% endif %}
 
-        {% if css.inline %}
-            <style type="text/css"{{ attr_extra|raw }}>{{ css.inline|raw }}</style>
-        {% endif %}
-    {% endfor %}
+            {% if css.inline %}
+                <style type="text/css"{{ attr_extra|raw }}>{{ css.inline|raw }}</style>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block javascript %}
-    {% for script in particle.javascript %}
-        {% if script.in_footer == false %}
-            {% set attr_extra = '' %}
-            {% if script.extra %}
-                {% for attributes in script.extra %}
-                    {% for key, value in attributes %}
-                        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+    {% if particle.enabled %}
+        {% for script in particle.javascript %}
+            {% if script.in_footer == false %}
+                {% set attr_extra = '' %}
+                {% if script.extra %}
+                    {% for attributes in script.extra %}
+                        {% for key, value in attributes %}
+                            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            {% endif %}
+                {% endif %}
 
-            {% if script.location %}
-                <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-            {% endif %}
+                {% if script.location %}
+                    <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+                {% endif %}
 
-            {% if script.inline %}
-                <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
+                {% if script.inline %}
+                    <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block javascript_footer %}
-    {% for script in particle.javascript %}
-        {% if script.in_footer == true %}
-            {% set attr_extra = '' %}
+    {% if particle.enabled %}
+        {% for script in particle.javascript %}
+            {% if script.in_footer == true %}
+                {% set attr_extra = '' %}
 
-            {% if script.extra %}
-                {% for attributes in script.extra %}
-                    {% for key, value in attributes %}
-                        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                {% if script.extra %}
+                    {% for attributes in script.extra %}
+                        {% for key, value in attributes %}
+                            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            {% endif %}
+                {% endif %}
 
-            {% if script.location %}
-                <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-            {% endif %}
+                {% if script.location %}
+                    <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+                {% endif %}
 
-            {% if script.inline %}
-                <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
+                {% if script.inline %}
+                    <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 

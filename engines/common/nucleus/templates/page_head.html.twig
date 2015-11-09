@@ -26,7 +26,7 @@
     {% endfor %}
 {% endif %}
 
-{% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets } %}
+{% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } %}
 
 <head>
     {% block head_meta %}
