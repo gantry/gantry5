@@ -220,9 +220,11 @@ var MenuManager = new prime({
 
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
-            var submenu_items = target.find('.submenu-items');
+            var submenu_items = target.find('.submenu-items'),
+                submenu_items_level = submenu_items.data('mm-base-level');
 
-            if ((!target.hasClass('g-block') || target.find(this.block)) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
+            // extend drop areas and ensure items cannot be dragged between different levels
+            if ((!target.hasClass('g-block') || target.find(this.block)) || (!this.isParticle && originalLevel != submenu_items_level) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }

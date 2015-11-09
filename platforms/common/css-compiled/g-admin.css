@@ -4590,7 +4590,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .submenu-selector .g-block .submenu-reorder {
   position: absolute;
   background: #DADADA;
-  bottom: 45px;
+  bottom: 40px;
   width: 50px;
   vertical-align: middle;
   line-height: 22px;
@@ -4604,6 +4604,19 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   cursor: ew-resize;
   opacity: 0;
 }
+#g5-container .submenu-selector .g-block .submenu-level {
+  position: absolute;
+  font-size: 0.8rem;
+  font-weight: bold;
+  bottom: 60px;
+  z-index: 5;
+  right: 6px;
+  text-align: center;
+  background-color: #48B0D7;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px 0 0 0;
+}
 #g5-container .submenu-selector .g-block:hover .submenu-reorder {
   opacity: 1;
 }
@@ -4615,6 +4628,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   display: none;
 }
 #g5-container .submenu-selector .g-block:last-child .submenu-column .submenu-items:after {
+  right: 0;
+}
+#g5-container .submenu-selector .g-block:last-child .submenu-level {
   right: 0;
 }
 #g5-container .submenu-selector .g-block:only-child:hover #g5-container .submenu-selector .g-block:only-child:before, #g5-container .submenu-selector .g-block:only-child .submenu-ratio .percentage, #g5-container .submenu-selector .g-block:only-child .submenu-reorder {
@@ -4642,7 +4658,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container .submenu-selector .submenu-items {
   list-style: none;
   margin: 0;
-  padding: 0.469rem 0;
+  padding: 0.938rem 0 1.538rem;
   position: relative;
 }
 #g5-container .submenu-selector .submenu-items:after {

@@ -5,11 +5,14 @@
     1. [](#new)
         - Added new `|imagesize` Twig Filter that returns `width="X" height="Y"` as attributes for images
         - Add notification message on missing particle in frontend (#185) 
+    2. [](#improved)
+        - Menu Editor now displays the current level of a column while navigating through it (#985)
     3. [](#bugfix)
         - Fixed again compatibility for PHP 5.3 and prevent from failing with the error "Parse error: syntax error, unexpected '[' in ..."
         - Fixed CSS and JavaScript, potentially rendering empty when only inline was specified without any location
         - Fixed some themes having full width containers after upgrade to Gantry 5.2 (#967)
         - Fixed check for enabled/disabled for Atoms and Assets (#988)
+        - Fixed Menu Editor where items could be dragged between different levels (#985)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Disable frontend editing for Gantry particle module, fixes 404 error (#966)

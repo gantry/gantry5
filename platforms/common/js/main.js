@@ -4623,6 +4623,8 @@ ready(function() {
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
+        block.find('[data-mm-base-level]').data('mm-base-level', 1);
+        block.find('.submenu-level').text('Level 1');
         block.after(last);
 
         if (!menumanager.ordering[path]) {
@@ -5043,9 +5045,11 @@ var MenuManager = new prime({
 
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
-            var submenu_items = target.find('.submenu-items');
+            var submenu_items = target.find('.submenu-items'),
+                submenu_items_level = submenu_items.data('mm-base-level');
 
-            if ((!target.hasClass('g-block') || target.find(this.block)) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
+            // extend drop areas and ensure items cannot be dragged between different levels
+            if ((!target.hasClass('g-block') || target.find(this.block)) || (!this.isParticle && originalLevel != submenu_items_level) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }
