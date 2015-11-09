@@ -9,6 +9,7 @@
         right: $content-padding + $content-margin;
         top: $content-padding;
         position: absolute;
+        z-index: 1;
         @include breakpoint(tablet-range) {
             display: none;
         }
@@ -34,6 +35,9 @@
         li:not(.config-select-wrap) {
             display: inline-block;
             margin-right: -4px;
+            background-color: $navbar-bg;
+            position: relative;
+            z-index: 2;
             @include transition (background-color 0.2s ease-in-out);
 
             &:hover {

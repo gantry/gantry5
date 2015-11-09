@@ -3227,6 +3227,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   right: 1.563rem;
   top: 0.938rem;
   position: absolute;
+  z-index: 1;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .navbar-block #gantry-logo {
@@ -3250,6 +3251,9 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
 #g5-container #navbar ul li:not(.config-select-wrap), #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap), #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) {
   display: inline-block;
   margin-right: -4px;
+  background-color: #DADADA;
+  position: relative;
+  z-index: 2;
   -webkit-transition: background-color 0.2s ease-in-out;
   -moz-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
