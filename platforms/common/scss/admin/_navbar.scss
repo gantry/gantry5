@@ -9,7 +9,6 @@
         right: $content-padding + $content-margin;
         top: $content-padding;
         position: absolute;
-        z-index: 1;
         @include breakpoint(tablet-range) {
             display: none;
         }

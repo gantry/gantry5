@@ -3227,7 +3227,6 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   right: 1.563rem;
   top: 0.938rem;
   position: absolute;
-  z-index: 1;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .navbar-block #gantry-logo {
