@@ -1,20 +1,3 @@
-{% extends "partials/base.html.twig" %}
-
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/g-admin.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css') }}" type="text/css" />
-    {{ parent() }}
-    <style>
-        #admin-main .content-padding { padding: 0; }
-        #admin-main .admin-block { padding: 0; }
-    </style>
-{% endblock %}
-
-{% block javascript %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
-{% endblock %}
-
 {% block content %}
     <div id="g5-container" class="g-container">
         <div class="g-grid">

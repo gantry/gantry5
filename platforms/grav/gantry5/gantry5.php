@@ -42,6 +42,9 @@ class Gantry5Plugin extends Plugin
             'onThemeInitialized' => [
                 ['initializeGantryTheme', -10]
             ],
+            'onAdminMenu' => [
+                ['onAdminMenu', -10]
+            ],
         ];
     }
 
@@ -95,6 +98,9 @@ class Gantry5Plugin extends Plugin
         $this->theme = $theme;
 
         if (isset($this->grav['admin'])) {
+            $this->enable([
+                'onAdminMenu' => ['onAdminMenu', 0]
+            ]);
             $this->detectGantryAdmin();
         } else {
             $this->detectGantrySite();
@@ -148,9 +154,6 @@ class Gantry5Plugin extends Plugin
             return new Router($c);
         };
 
-        // Dispatch to the controller.
-        //$gantry['router']->dispatch();
-
         $this->grav['gantry5'] = $gantry;
 
         $this->enable([
@@ -160,6 +163,14 @@ class Gantry5Plugin extends Plugin
         ]);
     }
 
+        /**
+     * Add navigation item to the admin plugin
+     */
+    public function onAdminMenu()
+    {
+        $this->grav['twig']->plugins_hooked_nav['Gantry'] = ['route' => 'gantry', 'icon' => 'fa-tint'];
+    }
+
     /**
      * Replaces page object with admin one.
      */
@@ -167,9 +178,17 @@ class Gantry5Plugin extends Plugin
     {
         // Create admin page.
         $page = new Page;
-        $page->init(new \SplFileInfo(__DIR__ . "/pages/gantry5.md"));
+        $page->init(new \SplFileInfo(__DIR__ . "/pages/gantry.md"));
         $page->slug($this->template);
-        $this->grav['page'] = $page;
+
+        ob_start();
+        $gantry = Gantry::instance();
+        $gantry['router']->dispatch();
+        $content = ob_get_clean();
+
+        $page->content($content);
+
+        $this->grav['page'] = function () use ($page) { return $page; };
     }
 
     /**
