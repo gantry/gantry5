@@ -3,10 +3,11 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Add updates support for Joomla! 3.5 (#999)
     2. [](#improved)
     3. [](#bugfix)
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Add updates support for Joomla! 3.5 (#999)
     3. [](#bugfix)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
