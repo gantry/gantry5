@@ -284,6 +284,16 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Timber cache location filter.
+     *
+     * @return string
+     */
+    public function timber_cache_location()
+    {
+        return $this->getCachePath('twig');
+    }
+
+    /**
      * @see AbstractTheme::init()
      */
     protected function init()
@@ -296,7 +306,15 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
+        // Set lookup locations for Timber.
         \Timber::$locations = $locator->findResources('gantry-engine://views');
+
+        // Enable caching in Timber.
+        \Timber::$twig_cache = true;
+        \Timber::$cache = false;
+
+        // Set autoescape in Timber.
+        \Timber::$autoescape = false;
 
         add_theme_support('html5', ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets']);
         add_theme_support('title-tag');
@@ -308,6 +326,7 @@ class Theme extends AbstractTheme
 
         add_filter('script_loader_tag', ['Gantry\Framework\Document', 'script_add_attributes'], 10, 2);
         add_filter('timber_context', [$this, 'getContext']);
+        add_filter('timber/cache/location', [$this, 'timber_cache_location']);
         add_filter('get_twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
@@ -359,9 +378,6 @@ class Theme extends AbstractTheme
         load_theme_textdomain($domain, $this->path . '/languages');
 
         $this->url = $gantry['site']->theme->link;
-
-        // Enable caching in Timber.
-        \Timber::$cache = true;
     }
 
     /**

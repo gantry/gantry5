@@ -11,6 +11,7 @@
     3. [](#bugfix)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
+        - **Clear Cache** does not clear Timber Twig files (#995)
 
 # 5.2.2
 ## 10/11/2015
