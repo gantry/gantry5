@@ -1,3 +1,16 @@
+# 5.2.3
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Add updates support for Joomla! 3.5 (#999)
+    2. [](#improved)
+    3. [](#bugfix)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+
 # 5.2.2
 ## 10/11/2015
 
