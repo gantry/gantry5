@@ -78,17 +78,34 @@ class Particle extends \WP_Widget
 
             $instance += [
                 'type' => 'particle',
-                'particle' => 'none',
+                'particle' => 'undefined',
                 'options' =>  ['particle' => []],
             ];
+
+            $type = $instance['type'];
+            $particle = $instance['particle'];
+
+            if ($this->container->debug()) {
+                $enabled_outline = $this->container['config']->get("particles.{$particle}.enabled", true);
+                $enabled = isset($instance['options']['particle']['enabled']) ? $instance['options']['particle']['enabled'] : true;
+                $location = (!$enabled_outline ? 'Outline' : (!$enabled ? 'Widget' : null));
+
+                if ($location) {
+                    echo $args['before_widget'];
+                    echo '<div class="alert alert-error">The Particle has been disabled from the ' . $location . ' and won\'t render.</div>';
+                    echo $args['after_widget'];
+                    return;
+                }
+            }
+
 
             $context = array(
                 'gantry' => $this->container,
                 'inContent' => true,
                 'segment' => array(
-                    'id' => "widget-{$instance['particle']}-{$id}",
-                    'type' => $instance['type'],
-                    'subtype' => $instance['particle'],
+                    'id' => "widget-{$particle}-{$id}",
+                    'type' => $type,
+                    'subtype' => $particle,
                     'attributes' =>  $instance['options']['particle'],
                 )
             );
@@ -96,9 +113,11 @@ class Particle extends \WP_Widget
             $this->content[$md5] = apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
         }
 
-        echo $args['before_widget'];
-        echo $this->content[$md5];
-        echo $args['after_widget'];
+        if (trim($this->content[$md5])) {
+            echo $args['before_widget'];
+            echo $this->content[$md5];
+            echo $args['after_widget'];
+        }
     }
 
     /**

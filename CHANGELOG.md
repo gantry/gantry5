@@ -9,9 +9,11 @@
     1. [](#new)
         - Add updates support for Joomla! 3.5 (#999)
     3. [](#bugfix)
+        - Gantry 5 module still renders title and container when particle is disabled (#991)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - **Clear Cache** does not clear Timber Twig files (#995)
+        - Gantry 5 widget still renders title and container when particle is disabled (#991)
 
 # 5.2.2
 ## 10/11/2015
