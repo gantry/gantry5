@@ -178,26 +178,29 @@ class TemplateInstaller
         $component_id = $this->getComponent();
 
         $table = \JTable::getInstance('menu');
+        $date = new \JDate();
 
         // Defaults for the item.
         $item += [
-            'menutype'     => 'mainmenu',
-            'title'        => 'Home',
-            'alias'        => 'gantry5',
-            'note'         => '',
-            'link'         => 'index.php?option=com_gantry5&view=custom',
-            'type'         => 'component',
-            'published'    => 1,
-            'parent_id'    => $parent_id,
+            'menutype' => 'mainmenu',
+            'title' => 'Home',
+            'alias' => 'gantry5',
+            'note' => '',
+            'link' => 'index.php?option=com_gantry5&view=custom',
+            'type' => 'component',
+            'published' => 1,
+            'parent_id' => $parent_id,
             'component_id' => $component_id,
-            'browserNav'   => 0,
-            'access'       => 1,
-            'img'          => '',
+            'checked_out' => 0,
+            'checked_out_time' => $date->toSql(),
+            'browserNav' => 0,
+            'access' => 1,
+            'img' => '',
             'template_style_id' => 0,
-            'params'       => '{}',
-            'home'         => 0,
-            'language'     => '*',
-            'client_id'    => 0
+            'params' => '{}',
+            'home' => 0,
+            'language' => '*',
+            'client_id' => 0
         ];
 
         if (in_array($item['type'], ['separator', 'heading'])) {
