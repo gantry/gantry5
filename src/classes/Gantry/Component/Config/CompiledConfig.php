@@ -42,21 +42,16 @@ class CompiledConfig extends CompiledBase
     protected $withDefaults;
 
     /**
-     * @param  string $cacheFolder  Cache folder to be used.
-     * @param  array  $files  List of files as returned from ConfigFileFinder class.
-     * @param  callable  $blueprints  Lazy load function for blueprints.
-     * @throws \BadMethodCallException
+     * Set blueprints for the configuration.
+     *
+     * @param callable $blueprints
+     * @return $this
      */
-    public function __construct($cacheFolder, array $files, callable $blueprints = null)
+    public function setBlueprints(callable $blueprints)
     {
-        /*
-        if (is_null($blueprints)) {
-            throw new \BadMethodCallException('You cannot instantiate configuration without blueprints.');
-        }
-        */
-        parent::__construct($cacheFolder, $files);
-
         $this->callable = $blueprints;
+
+        return $this;
     }
 
     /**

@@ -48,6 +48,11 @@ abstract class CompiledBase
     protected $files;
 
     /**
+     * @var string
+     */
+    protected $path;
+
+    /**
      * @var mixed  Configuration object.
      */
     protected $object;
@@ -55,9 +60,10 @@ abstract class CompiledBase
     /**
      * @param  string $cacheFolder  Cache folder to be used.
      * @param  array  $files  List of files as returned from ConfigFileFinder class.
+     * @param string $path  Base path for the file list.
      * @throws \BadMethodCallException
      */
-    public function __construct($cacheFolder, array $files)
+    public function __construct($cacheFolder, array $files, $path = GANTRY5_ROOT)
     {
         if (!$cacheFolder) {
             throw new \BadMethodCallException('Cache folder not defined.');
@@ -65,6 +71,7 @@ abstract class CompiledBase
 
         $this->cacheFolder = $cacheFolder;
         $this->files = $files;
+        $this->path = $path ? rtrim($path, '\\/') . '/' : '';
     }
 
     /**
@@ -141,7 +148,7 @@ abstract class CompiledBase
 
         foreach (array_reverse($this->files) as $files) {
             foreach ($files as $name => $item) {
-                $this->loadFile($name, GANTRY5_ROOT . '/' . $item['file']);
+                $this->loadFile($name, $this->path . $item['file']);
             }
         }
 

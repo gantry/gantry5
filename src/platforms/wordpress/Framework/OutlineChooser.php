@@ -72,7 +72,7 @@ class OutlineChooser
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
 
-        $config = new CompiledConfig($cache, [$files]);
+        $config = new CompiledConfig($cache, [$files], GANTRY5_ROOT);
 
         return $config->load()->toArray();
     }

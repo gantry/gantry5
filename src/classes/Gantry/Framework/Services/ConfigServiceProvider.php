@@ -55,7 +55,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $paths = $locator->findResources('gantry-blueprints://');
         $files += (new ConfigFileFinder)->locateFiles($paths);
 
-        $config = new CompiledBlueprints($cache, $files);
+        $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
 
         return $config->load();
     }
@@ -82,7 +82,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 
-        $config = new CompiledConfig($cache, $files, function() use ($container) {
+        $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
+        $config->setBlueprints(function() use ($container) {
             return $container['blueprints'];
         });
 

@@ -53,7 +53,8 @@ class Theme extends AbstractTheme
 
             $files = (new ConfigFileFinder)->locateFiles($paths);
 
-            $config = new CompiledConfig($cache, $files, function() use ($c) {
+            $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
+            $config->setBlueprints(function() use ($c) {
                 return $c['blueprints'];
             });
 
