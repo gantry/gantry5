@@ -284,6 +284,17 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * @param \Twig_Environment $twig
+     * @return \Twig_Environment
+     */
+    public function timber_loader_twig(\Twig_Environment $twig)
+    {
+        $twig->enableAutoReload();
+
+        return $twig;
+    }
+
+    /**
      * Timber cache location filter.
      *
      * @return string
@@ -326,6 +337,7 @@ class Theme extends AbstractTheme
 
         add_filter('script_loader_tag', ['Gantry\Framework\Document', 'script_add_attributes'], 10, 2);
         add_filter('timber_context', [$this, 'getContext']);
+        add_filter('timber/loader/twig', [$this, 'timber_loader_twig']);
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
         add_filter('get_twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
