@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "3ad28fd40ba31ed9f46dfa709eb497a9",
-    "content-hash": "62ebfaaf36d438e4f71719cf9b0d1c63",
     "packages": [
         {
             "name": "erusev/parsedown",

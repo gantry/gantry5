@@ -31,6 +31,18 @@ ol.unstyled {
 .platform-content .entries .tease.sticky .entry-title {
   margin-top: 0;
 }
+.platform-content .post-thumbnail {
+  display: block;
+  margin: 0.65rem 0;
+  min-width: 0;
+  min-height: 0;
+}
+.platform-content .post-thumbnail .float-left {
+  margin: 0 1rem 0.65rem 0;
+}
+.platform-content .post-thumbnail .float-right {
+  margin: 0 0 0.65rem 1rem;
+}
 
 .g-loginform fieldset.login-data {
   padding: 0;
