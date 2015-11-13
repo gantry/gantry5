@@ -1,16 +1,14 @@
 {
     "name": "gantry",
-    "version":"5.0.0@dev",
     "description": "Gantry Framework Library",
     "license": "MIT",
-    "minimum-stability": "dev",
 
     "require": {
         "php": ">=5.4.0",
         "symfony/yaml": "~2.7",
         "twig/twig": "~1.18",
         "pimple/pimple": "~3.0",
-        "filp/whoops": "~1.2",
+        "filp/whoops": "~1.2@dev",
         "rockettheme/toolbox": "dev-develop",
         "leafo/scssphp": "0.3.0",
         "leafo/lessphp": "~0.5",
