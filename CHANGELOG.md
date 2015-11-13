@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
+        - Offcanvas section now adds an option to switch between CSS3 and CSS2 animations, CSS3 being default and fastest. An HTML class is also added as CSS hook (`g-offcanvas-css3` / `g-offcanvas-css2`). When dealing with fixed elements in the page (such as headroom), it might be necessary to switch to CSS2. (Thanks @under24, @JoomFX, @adi8i and @ramon12)
     2. [](#improved)
     3. [](#bugfix)
 2. [Joomla](#joomla)
