@@ -5,8 +5,8 @@
         {# Begin Entry Header #}
         <section class="entry-header">
 
+            {# Begin Entry Title #}
             {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
-                {# Begin Entry Title #}
                 <h2 class="entry-title">
                     {% if gantry.config.get('content.' ~ scope ~ '.title.link', '0') %}
                         <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
@@ -14,11 +14,11 @@
                         {{ post.title }}
                     {% endif %}
                 </h2>
-                {# End Entry Title #}
             {% endif %}
+            {# End Entry Title #}
 
             {# Begin Entry Meta #}
-            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') %}
+            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
                 {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
             {% endif %}
             {# End Entry Meta #}

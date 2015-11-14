@@ -19,6 +19,7 @@
     3. [](#bugfix)
         - **Clear Cache** does not clear Timber Twig files (#995)
         - Gantry 5 widget still renders title and container when particle is disabled (#991)
+        - Fixed meta conditional checks in single post layout in Hydrogen
 
 # 5.2.2
 ## 10/11/2015
