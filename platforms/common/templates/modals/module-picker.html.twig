@@ -24,6 +24,7 @@ module.[id | title | position | enabled | access]
                                 <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">
                                     {{ module.title }}
                                 </span>
+                                <span class="sub-title font-small"><strong>ID</strong>: {{ module.id|default('unknown') }}</span>
                                 <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>{{ 'GANTRY5_PLATFORM_TYPE'|trans }}</strong>: {{ module.module|default('none') }}</span>
                                 <span class="sub-title font-small"><strong>{{ 'GANTRY5_PLATFORM_POSITION'|trans }}</strong>: {{ module.position|default('none') }}</span>
                             </span>

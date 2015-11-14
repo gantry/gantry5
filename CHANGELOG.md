@@ -9,6 +9,7 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Add updates support for Joomla! 3.5 (#999)
+        - Module Picker now shows also the Module ID (#1002)
     3. [](#bugfix)
         - Gantry 5 module still renders title and container when particle is disabled (#991)
         - Fix template installation if using PostgreSQL
