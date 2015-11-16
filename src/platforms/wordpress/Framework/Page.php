@@ -31,8 +31,12 @@ class Page extends Base\Page
         // TODO: we might need something like
         // class="{{body_class}}" data-template="{{ twigTemplate|default('base.twig') }}"
 
-        $text_direction = (is_rtl()) ? 'dir-rtl' : 'dir-ltr';
-        $wp_body_class = get_body_class($text_direction);
+        $body_classes = apply_filters('gantry5_body_classes', [
+                'site'
+            ]);
+
+        (is_rtl()) ? $body_classes[] = 'dir-rtl' : $body_classes[] = 'dir-ltr';
+        $wp_body_class = get_body_class($body_classes);
 
         if(is_array($wp_body_class) && !empty($wp_body_class)) {
             $attributes['class'] = array_merge_recursive($attributes['class'], $wp_body_class);
