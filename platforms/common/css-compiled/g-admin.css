@@ -2523,8 +2523,8 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   padding: 6px 8px;
 }
 #g5-container .settings-block .settings-param .button.button-simple:hover {
-  background-color: #d4d4d4;
-  color: #6e6e6e;
+  background-color: #d5d5d5;
+  color: #6f6f6f;
 }
 #g5-container .settings-block .g-instancepicker-title {
   margin-right: 0.5rem;
@@ -3452,7 +3452,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   color: #fff;
 }
 #g5-container .button.disabled, #g5-container .button[disabled] {
-  background: #d6d6d6;
+  background: #d7d7d7;
   color: #fff;
   cursor: default;
 }

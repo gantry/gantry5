@@ -267,13 +267,13 @@ body.gantry5.admin-color-fresh #g5-container [data-mode-indicator="production"] 
   background-color: #0073AA;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle {
-  background: #005077;
+  background: #005177;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header .dev-mode-toggle a {
-  background: #00a7f6;
+  background: #00a7f7;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header .button-save {
-  background: #00a7f6;
+  background: #00a7f7;
   color: #fff;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.gantry5.admin-color-fresh #g5-container #main-header .button-save:focus {
@@ -287,7 +287,7 @@ body.gantry5.admin-color-fresh #g5-container #main-header ul li:hover a {
   background: #005781;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header ul li.active a {
-  background: #003f5d;
+  background: #003f5e;
 }
 body.gantry5.admin-color-fresh #g5-container #main-header .settings-state {
   background: #0073AA;
