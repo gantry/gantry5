@@ -347,7 +347,7 @@ class Theme extends AbstractTheme
         add_filter('widget_text', 'do_shortcode');
         add_filter('widget_content', 'do_shortcode');
         add_filter('widget_update_callback', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesUpdate'], 10, 4);
-        add_filter('dynamic_sidebar_params', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesSidebarParams']);
+        add_filter('dynamic_sidebar_params', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesSidebarParams'], 9);
 
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);
