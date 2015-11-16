@@ -16,6 +16,7 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added body classes `dir-ltr` and `dir-rtl` based on current text direction settings in WordPress
+        - Added new body class specific to the currently used outline
     3. [](#bugfix)
         - **Clear Cache** does not clear Timber Twig files (#995)
         - Gantry 5 widget still renders title and container when particle is disabled (#991)
