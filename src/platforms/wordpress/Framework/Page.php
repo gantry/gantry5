@@ -32,7 +32,8 @@ class Page extends Base\Page
         // class="{{body_class}}" data-template="{{ twigTemplate|default('base.twig') }}"
 
         $body_classes = apply_filters('gantry5_body_classes', [
-                'site'
+                'site',
+                'outline-' . Gantry::instance()['configuration'],
             ]);
 
         (is_rtl()) ? $body_classes[] = 'dir-rtl' : $body_classes[] = 'dir-ltr';
