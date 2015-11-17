@@ -5925,13 +5925,13 @@ var ColorPicker = new prime({
         var body = $('body');
 
         MOUSEDOWN.forEach(bind(function(mousedown) {
-            body.delegate(mousedown, '.colorpicker i', this.bound('iconClick'));
+            body.delegate(mousedown, '.g-colorpicker i', this.bound('iconClick'));
         }, this));
 
-        body.delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+        body.delegate(FOCUSIN, '.g-colorpicker input', this.bound('show'), true);
 
 
-        body.delegate('keydown', '.colorpicker input', bind(function(event, element) {
+        body.delegate('keydown', '.g-colorpicker input', bind(function(event, element) {
             switch (event.keyCode) {
                 case 9: // tab
                     this.hide();
@@ -5946,13 +5946,13 @@ var ColorPicker = new prime({
         }, this));
 
         // Update on keyup
-        body.delegate('keyup', '.colorpicker input', bind(function(event, element) {
+        body.delegate('keyup', '.g-colorpicker input', bind(function(event, element) {
             this.updateFromInput(true, element);
             return true;
         }, this));
 
         // Update on paste
-        body.delegate('paste', '.colorpicker input', bind(function(event, element) {
+        body.delegate('paste', '.g-colorpicker input', bind(function(event, element) {
             setTimeout(bind(function() {
                 this.updateFromInput(true, element);
             }, this), 1);
@@ -6022,7 +6022,7 @@ var ColorPicker = new prime({
 
     bodyClick: function(event) {
         var target = $(event.target);
-        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
+        if (!target.parent('.cp-wrapper') && !target.parent('.g-colorpicker')) {
             this.hide();
         }
     },
@@ -6614,7 +6614,7 @@ ready(function() {
             element.style({ backgroundColor: hex });
         }
 
-        element.parent('.colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
+        element.parent('.g-colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
 
         this.timer = setTimeout(function() {
             element.emit('input');

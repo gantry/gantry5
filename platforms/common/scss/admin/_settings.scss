@@ -180,7 +180,7 @@
         }
     }
 
-    .colorpicker {
+    .g-colorpicker {
         input {
             &:focus {
                 border-color: $medium-gray;
@@ -194,7 +194,7 @@
         height: 38px;
     }
 
-    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
+    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .g-colorpicker, .multi.selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;

@@ -8,7 +8,7 @@
 
 {% block input %}
         {% set field = field|merge({'style': 'background-color: ' ~ value, 'pattern': '^#([a-fA-F0-9]{6})|(rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0.[0-9]+)|[01])\\s*\\))$'}) %}
-        <div class="colorpicker {{ _self.contrast(colorContrast(value|lower)) }}">
+        <div class="g-colorpicker {{ _self.contrast(colorContrast(value|lower)) }}">
         <input
             {# required attribute structures #}
             type="text"

@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    2. [](#improved)
+        - Prefixed `.colorpicker` class name to avoid potential conflicts
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed Particles picked from Menu Item of type `Gantry 5 Themes » custom` filtering out HTML
