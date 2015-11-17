@@ -1,3 +1,12 @@
+# 5.2.4
+## XX/XX/2015
+
+1. [Common](#common)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed Particles picked from Menu Item of type `Gantry 5 Themes » custom` filtering out HTML
+3. [Wordpress](#wordpress)
+
 # 5.2.3
 ## 16/11/2015
 

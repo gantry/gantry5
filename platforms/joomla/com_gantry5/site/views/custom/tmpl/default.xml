@@ -9,6 +9,7 @@
                 <field
                         name="particle"
                         type="particle"
+                        filter="raw"
                         label="GANTRY5_FIELD_PARTICLE_LABEL"
                         description="GANTRY5_FIELD_PARTICLE_DESC" />
             </fieldset>
