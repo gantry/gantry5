@@ -47,7 +47,7 @@ class JFormFieldParticle extends JFormField
             return '';
         }
 
-        // FIXME: Better style detection.
+        // FIXME: Use better style detection (via js by using: style_id_field).
         $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
         $theme = \Gantry\Joomla\StyleHelper::getDefaultStyle()->template;
 
