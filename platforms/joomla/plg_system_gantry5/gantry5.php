@@ -20,14 +20,18 @@ class plgSystemGantry5 extends JPlugin
 
     public function __construct(&$subject, $config = array())
     {
+        $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
+        $this->_type = isset($config['type']) ? $config['type'] : 'system';
+
         $this->app = JFactory::getApplication();
+
+        $this->loadLanguage('plg_system_gantry5.sys');
 
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
             if ($this->app->isAdmin()) {
-                $this->loadLanguage('plg_system_gantry5.sys');
                 $this->app->enqueueMessage(
                     JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
                     'warning'
@@ -130,7 +134,14 @@ class plgSystemGantry5 extends JPlugin
 
         if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
-            include_once $gantryPath;
+            $gantry = include $gantryPath;
+
+            if (!$gantry) {
+                throw new \RuntimeException(
+                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $template, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
+                    500
+                );
+            }
 
         } else {
 

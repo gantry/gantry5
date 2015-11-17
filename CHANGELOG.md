@@ -7,6 +7,8 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed Particles picked from Menu Item of type `Gantry 5 Themes » custom` filtering out HTML
+        - Fixed `Undefined variable: gantry` in some sites
+        - Fixed missing translations in **System - Gantry 5** plugin
 3. [Wordpress](#wordpress)
 
 # 5.2.3
