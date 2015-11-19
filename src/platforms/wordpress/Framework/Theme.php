@@ -46,6 +46,7 @@ class Theme extends AbstractTheme
         $gantry = Gantry::instance();
 
         $context['site'] = $gantry['site'];
+        $context['wordpress'] = $gantry['platform'];
 
         if (!$this->user) {
             $this->user = new \TimberUser;
