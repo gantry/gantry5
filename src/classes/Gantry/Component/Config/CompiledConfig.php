@@ -24,7 +24,7 @@ class CompiledConfig extends CompiledBase
     /**
      * @var int Version number for the compiled file.
      */
-    public $version = 1;
+    public $version = 2;
 
     /**
      * @var Config  Configuration object.
@@ -79,6 +79,11 @@ class CompiledConfig extends CompiledBase
 
         $this->object = new Config($data, $this->callable);
     }
+
+    /**
+     * Finalize configuration object.
+     */
+    protected function finalizeObject() {}
 
     /**
      * Load single configuration file and append it to the correct position.

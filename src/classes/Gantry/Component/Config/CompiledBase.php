@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -28,6 +27,11 @@ abstract class CompiledBase
     public $version = 1;
 
     /**
+     * @var string  Filename (base name) of the compiled configuration.
+     */
+    public $name;
+
+    /**
      * @var string|bool  Configuration checksum.
      */
     public $checksum;
@@ -36,11 +40,6 @@ abstract class CompiledBase
      * @var string Cache folder to be used.
      */
     protected $cacheFolder;
-
-    /**
-     * @var string  Filename
-     */
-    protected $filename;
 
     /**
      * @var array  List of files to load.
@@ -75,6 +74,26 @@ abstract class CompiledBase
     }
 
     /**
+     * Get filename for the compiled PHP file.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function name($name = null)
+    {
+        if (!$this->name) {
+            $this->name = $name ?: md5(json_encode(array_keys($this->files)));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Function gets called when cached configuration is saved.
+     */
+    public function modified() {}
+
+    /**
      * Load the configuration.
      *
      * @return mixed
@@ -85,7 +104,7 @@ abstract class CompiledBase
             return $this->object;
         }
 
-        $filename = $this->filename();
+        $filename = $this->createFilename();
         if (!$this->loadCompiledFile($filename) && $this->loadFiles()) {
             $this->saveCompiledFile($filename);
         }
@@ -109,16 +128,9 @@ abstract class CompiledBase
         return $this->checksum;
     }
 
-    /**
-     * Get filename for the compiled PHP file.
-     *
-     * @return string
-     */
-    protected function filename()
+    protected function createFilename()
     {
-        $name = md5(json_encode(array_keys($this->files)));
-
-        return "{$this->cacheFolder}/{$name}.php";
+        return "{$this->cacheFolder}/{$this->name()->name}.php";
     }
 
     /**
@@ -127,6 +139,11 @@ abstract class CompiledBase
      * @param  array  $data
      */
     abstract protected function createObject(array $data = []);
+
+    /**
+     * Finalize configuration object.
+     */
+    abstract protected function finalizeObject();
 
     /**
      * Load single configuration file and append it to the correct position.
@@ -146,11 +163,14 @@ abstract class CompiledBase
     {
         $this->createObject();
 
-        foreach (array_reverse($this->files) as $files) {
+        $list = array_reverse($this->files);
+        foreach ($list as $files) {
             foreach ($files as $name => $item) {
                 $this->loadFile($name, $this->path . $item['file']);
             }
         }
+
+        $this->finalizeObject();
 
         return true;
     }
@@ -223,5 +243,7 @@ abstract class CompiledBase
         $file->save($cache);
         $file->unlock();
         $file->free();
+
+        $this->modified();
     }
 }
