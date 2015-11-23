@@ -16,7 +16,7 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Gantry\Joomla\StyleHelper;
-use Joomla\Registry\Registry;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Gantry administration router for Joomla.
@@ -71,15 +71,14 @@ class Router extends BaseRouter
 
         $path = JPATH_SITE . '/templates/' . $theme;
 
-        $this->container['theme.path'] = $path;
-        $this->container['theme.name'] = $theme;
+        if (!is_file("{$path}/gantry/theme.yaml")) {
+            $theme = null;
+            $this->container['streams']->register();
 
-        // Load language file for the template.
-        $languageFile = 'tpl_' . $theme;
-        $lang = \JFactory::getLanguage();
-        $lang->load($languageFile, JPATH_SITE)
-            || $lang->load($languageFile, $path)
-            || $lang->load($languageFile, $path, 'en-GB');
+            /** @var UniformResourceLocator $locator */
+            $locator = $this->container['locator'];
+            $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        }
 
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';
 
@@ -93,6 +92,20 @@ class Router extends BaseRouter
             'themes' => '&view=themes',
             'picker/layouts' => "&view=layouts&theme={$theme}&{$token}=1",
         ];
+
+        if (!$theme) {
+            return $this;
+        }
+
+        $this->container['theme.path'] = $path;
+        $this->container['theme.name'] = $theme;
+
+        // Load language file for the template.
+        $languageFile = 'tpl_' . $theme;
+        $lang = \JFactory::getLanguage();
+        $lang->load($languageFile, JPATH_SITE)
+            || $lang->load($languageFile, $path)
+            || $lang->load($languageFile, $path, 'en-GB');
 
         return $this;
     }

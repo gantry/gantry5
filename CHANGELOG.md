@@ -7,7 +7,12 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed Particles picked from Menu Item of type `Gantry 5 Themes » custom` filtering out HTML
+        - Fixed `Undefined variable: gantry` in some sites
+        - Fixed missing translations in **System - Gantry 5** plugin
+        - Fixed fatal error in **Particle Module** if default style does not point to Gantry template
 3. [Wordpress](#wordpress)
+    3. [](#bugfix)
+        - Add missing variable `wordpress` in Twig context
 
 # 5.2.3
 ## 16/11/2015
