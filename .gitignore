@@ -31,3 +31,4 @@ themes/*/*/custom
 **/*.map
 **/node_modules/*
 platforms/**/cache
+npm-debug.log
