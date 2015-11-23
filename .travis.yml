@@ -39,7 +39,6 @@ script:
       echo "($TRAVIS_BRANCH) is not a supported branch for builds";
     fi
 before_deploy:
-  - rvm 1.9.3 do gem install mime-types -v 2.6.2
   - export PROJ_PKGS_PATH=$TRAVIS_BUILD_DIR/../repo_pkgs
   - export PROJ_PKGS=$HOME/build/$TRAVIS_REPO_SLUG/../repo_pkgs/*.zip
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
