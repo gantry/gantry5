@@ -3,7 +3,7 @@
 {% set attributes = 'data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget %}
 
 {% if item.path %}
-<a {{ attributes|raw }} href="{{ gantry.route('menu', id, item.path) }}" class="menu-item">
+<a {{ attributes|raw }} href="{{ gantry.route('menu', id, item.path|url_encode) }}" class="menu-item">
 {% else %}
 <span class="menu-item">
 {% endif %}
@@ -34,6 +34,6 @@
 {% else %}
 </a>
 {% endif %}
-<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle')|e : gantry.route('menu/edit', id, item.path)|e }}">
+<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle')|e : gantry.route('menu/edit', id, item.path|url_encode)|e }}">
     <i aria-label="Menu Item Settings" class="fa fa-cog"></i>
 </a>

@@ -13,6 +13,7 @@
 3. [Wordpress](#wordpress)
     3. [](#bugfix)
         - Add missing variable `wordpress` in Twig context
+        - URL Encoding Menu Items to allow use of special characters such as plus (#1017)
 
 # 5.2.3
 ## 16/11/2015
