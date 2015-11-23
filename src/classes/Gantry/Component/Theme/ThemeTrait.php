@@ -38,6 +38,9 @@ trait ThemeTrait
     protected $segments;
     protected $preset;
     protected $cssCache;
+    /**
+     * @var CssCompilerInterface
+     */
     protected $compiler;
     protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
 

@@ -49,7 +49,7 @@ abstract class AbstractTheme
     /**
      * Construct theme object.
      *
-     * @param sting $path
+     * @param string $path
      * @param string $name
      */
     public function __construct($path, $name = null)

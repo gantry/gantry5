@@ -78,6 +78,7 @@ class Gantry5Plugin extends Plugin
             ]]
         );
 
+        $gantry['locator'];
         $gantry['streams'];
 
         /** @var \Gantry\Framework\Theme $theme */
