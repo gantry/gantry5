@@ -66,7 +66,7 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['user://gantry5']];
+        return ['' => ['gantry-theme://images', 'pages://images', 'user://gantry5/media']];
     }
 
     public function getEnginesPaths()
@@ -118,5 +118,10 @@ class Platform extends BasePlatform
     public function getThemeAdminUrl($theme)
     {
         return null;
+    }
+
+    public function finalize()
+    {
+        Document::registerAssets();
     }
 }

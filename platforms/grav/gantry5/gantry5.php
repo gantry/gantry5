@@ -72,7 +72,7 @@ class Gantry5Plugin extends Plugin
         $gantry['platform']->set(
             'streams.gantry-theme.prefixes',
             ['' => [
-                "gantry-themes://{$gantry['theme.name']}/custom",
+                "user://gantry5/themes/{$gantry['theme.name']}",
                 "gantry-themes://{$gantry['theme.name']}",
                 "gantry-themes://{$gantry['theme.name']}/common"
             ]]
