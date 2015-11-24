@@ -10,6 +10,9 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Url\Url;
+use Grav\Common\Grav;
+
 class Page extends Base\Page
 {
     public $theme;
@@ -20,7 +23,13 @@ class Page extends Base\Page
 
     public function url(array $args = [])
     {
-        // FIXME: implement
+        $grav = Grav::instance();
+        $url = $grav['uri']->url;
+
+        $parts = Url::parse($url, true);
+        $parts['vars'] = array_replace($parts['vars'], $args);
+
+        return Url::build($parts);
     }
 
     public function htmlAttributes()
@@ -36,7 +45,12 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        $classes = ['site'];
+        $gantry = Gantry::instance();
+        $classes = [
+            'site',
+            "dir-{$this->direction}",
+            "outline-{$gantry['configuration']}",
+        ];
 
         $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         if (!empty($baseAttributes['class'])) {

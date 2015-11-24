@@ -15,6 +15,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Url\Url;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Document
@@ -213,7 +214,7 @@ class Document
             return $url;
         }
 
-        $parts = self::parseUrl($url);
+        $parts = Url::parse($url);
 
         if (!is_array($parts)) {
             // URL could not be parsed, return null.
@@ -332,52 +333,5 @@ class Document
         $url = static::url(trim($matches[2], '"\''), $domain, $timestamp_age);
 
         return "{$matches[1]}url({$url})";
-    }
-
-    /**
-     * UTF8 aware parse_url().
-     *
-     * @param  string $url
-     * @return array|bool
-     */
-    protected static function parseUrl($url)
-    {
-        $encodedUrl = preg_replace_callback(
-            '%[^:/@?&=#]+%usD',
-            function ($matches) { return urlencode($matches[0]); },
-            $url
-        );
-
-        // PHP versions below 5.4.7 have troubles with URLs without scheme, so lets help by fixing that.
-        // TODO: This is not needed in PHP >= 5.4.7, but for now we need to test if the function works.
-        if ('/' === $encodedUrl[0] && false !== strpos($encodedUrl, '://')) {
-            $schemeless = true;
-
-            // Fix the path so that parse_url() will not return false.
-            $parts = parse_url('fake://fake.com' . $encodedUrl);
-
-            // Remove the fake values.
-            unset($parts['scheme'], $parts['host']);
-
-        } else {
-            $parts = parse_url($encodedUrl);
-        }
-
-        if (!$parts) {
-            return false;
-        }
-
-        // PHP versions below 5.4.7 do not understand schemeless URLs starting with // either.
-        if (isset($schemeless) && !isset($parts['host']) && '//' == substr($encodedUrl, 0, 2)) {
-            // Path is stored in format: //[host]/[path], so let's fix it.
-            list($parts['host'], $path) = explode('/', substr($parts['path'], 2), 2);
-            $parts['path'] = "/{$path}";
-        }
-
-        foreach($parts as $name => $value) {
-            $parts[$name] = urldecode($value);
-        }
-
-        return $parts;
     }
 }
