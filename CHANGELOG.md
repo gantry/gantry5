@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated FontAwesome to v4.5.0 (+20 icons)
     2. [](#improved)
         - Prefixed `.colorpicker` class name to avoid potential conflicts
 2. [Joomla](#joomla)
