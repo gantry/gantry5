@@ -21,8 +21,7 @@ class Gantry extends Base\Gantry
      */
     public function debug()
     {
-        // TODO:
-        return true;
+        return $this['global']->get('debug', false);
     }
 
     /**
@@ -58,7 +57,10 @@ class Gantry extends Base\Gantry
         };
 
         $container['global'] = function ($c) {
-            return new Config([]);
+            $grav = Grav::instance();
+            $config = $grav['config']->get('plugins.gantry5');
+
+            return new Config($config);
         };
 
         return $container;

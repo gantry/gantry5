@@ -15,12 +15,57 @@ form:
   validation: strict
   fields:
     enabled:
-        type: toggle
-        label: Plugin status
-        highlight: 1
-        default: 1
-        options:
-          1: Enabled
-          0: Disabled
-        validate:
-          type: bool
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    production:
+      type: toggle
+      label: Production Mode
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    asset_timestamps:
+      type: toggle
+      label: Asset Timestamps
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    asset_timestamps_period:
+      type: text
+      label: Timestamp Period
+      default: 7
+      validate:
+        type: float
+
+    route:
+      type: text
+      label: Route
+      default: '/admin/gantry5'
+
+    debug:
+      type: toggle
+      label: Debug Mode
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool

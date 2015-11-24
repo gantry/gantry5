@@ -16,13 +16,6 @@ use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
 {
-    public static function rootUri()
-    {
-        $grav = Grav::instance();
-        return rtrim($grav['base_url'], '/');
-    }
-
-
     public static function registerAssets()
     {
         static::registerStyles();
@@ -82,5 +75,11 @@ class Document extends BaseDocument
                 }
             }
         }
+    }
+
+    public static function rootUri()
+    {
+        $grav = Grav::instance();
+        return rtrim($grav['base_url'], '/');
     }
 }
