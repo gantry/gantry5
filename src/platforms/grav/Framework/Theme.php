@@ -22,7 +22,7 @@ class Theme extends AbstractTheme
 {
     use ThemeTrait;
 
-        /**
+    /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_Loader_Filesystem $loader
@@ -40,5 +40,21 @@ class Theme extends AbstractTheme
         $loader->setPaths($paths);
 
         parent::setTwigLoaderPaths($loader);
+    }
+
+    /**
+     * @see AbstractTheme::getContext()
+     *
+     * @param array $context
+     * @return array
+     */
+    public function getContext(array $context)
+    {
+        $gantry = static::gantry();
+
+        $context = parent::getContext($context);
+        $context['site'] = $gantry['site'];
+
+        return $context;
     }
 }

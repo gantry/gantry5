@@ -65,7 +65,7 @@ class Theme extends AbstractTheme
     }
 
     /**
-     * @see AbstractTheme::extendTwig()
+     * @see AbstractTheme::getContext()
      *
      * @param array $context
      * @return array
