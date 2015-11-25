@@ -12,14 +12,15 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Request\Request;
 use Gantry\Component\Router\Router as BaseRouter;
-use Grav\Common\GPM\Remote\Grav;
+use Grav\Common\Grav;
 use Grav\Common\Uri;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Router extends BaseRouter
 {
     public function boot()
     {
-        $grav = Grav::getGrav();
+        $grav = Grav::instance();
 
         /** @var Uri $uri */
         $uri = $grav['uri'];
@@ -31,6 +32,10 @@ class Router extends BaseRouter
         $request = $this->container['request'];
 
         $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
+
+        // Set theme.
+        $theme = array_shift($parts);
+        $this->setTheme($theme);
 
         // Second parameter is the resource.
         $this->resource = array_shift($parts) ?: 'about';
@@ -57,6 +62,39 @@ class Router extends BaseRouter
 
             'picker/layouts' => '/layouts',
         ];
+    }
+
+    public function setTheme($theme)
+    {
+        $grav = Grav::instance();
+        if (!$theme) {
+            $theme = $grav['config']->get('system.theme');
+        }
+
+        $path = "themes://{$theme}";
+
+        if (!is_file("{$path}/gantry/theme.yaml")) {
+            $theme = null;
+            $this->container['streams']->register();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $this->container['locator'];
+            $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        }
+
+        // TODO: set base url
+        $this->container['base_url'] = '';
+
+        if (!$theme) {
+            return $this;
+        }
+
+        $this->container['theme.path'] = $path;
+        $this->container['theme.name'] = $theme;
+
+        // TODO: Load language file for the template.
+
+        return $this;
     }
 
     protected function checkSecurityToken()
