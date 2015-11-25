@@ -70,13 +70,15 @@ class Document
                     $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
                     $defer = isset($element['defer']) ? true : false;
                     $async = isset($element['async']) ? true : false;
+                    $handle = !empty($element['handle']) ? $element['handle'] : '';
 
                     static::$scripts[$location][$priority][md5($src).sha1($src)]= [
                         ':type' => 'file',
                         'src' => $src,
                         'type' => $type,
                         'defer' => $defer,
-                        'async' => $async
+                        'async' => $async,
+                        'handle' => $handle
                     ];
 
                     return true;
