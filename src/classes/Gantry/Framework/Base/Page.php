@@ -61,9 +61,9 @@ abstract class Page
                 $list[] = $param . '="' . implode(' ', $value) . '"';
             } else {
                 $values = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($value));
-                foreach ($values as $param => $value) {
-                    $value = array_filter(array_unique((array) $value));
-                    $list[] = $param . '="' . implode(' ', $value) . '"';
+                foreach ($values as $iparam => $ivalue) {
+                    $ivalue = array_filter(array_unique((array) $ivalue));
+                    $list[] = $iparam . '="' . implode(' ', $ivalue) . '"';
                 }
             }
 
