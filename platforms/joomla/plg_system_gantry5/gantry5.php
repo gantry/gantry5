@@ -48,7 +48,7 @@ class plgSystemGantry5 extends JPlugin
      */
     public function onGantryGlobalConfig(&$global)
     {
-        $global = new \Gantry\Component\Config\Config($this->params->toArray());
+        $global = $this->params->toArray();
     }
 
     /**
