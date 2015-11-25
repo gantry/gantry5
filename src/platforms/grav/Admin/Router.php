@@ -8,7 +8,6 @@
  * http://opensource.org/licenses/MIT
  */
 
-
 namespace Gantry\Admin;
 
 use Gantry\Component\Request\Request;

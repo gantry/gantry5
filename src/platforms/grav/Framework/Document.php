@@ -8,7 +8,6 @@
  * http://opensource.org/licenses/MIT
  */
 
-
 namespace Gantry\Framework;
 
 use Grav\Common\Grav;

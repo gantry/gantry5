@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -189,7 +188,6 @@ class Document
     {
         return '';
     }
-
 
     /**
      * Return URL to the resource.
