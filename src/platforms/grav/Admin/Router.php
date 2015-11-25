@@ -82,8 +82,9 @@ class Router extends BaseRouter
             $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
         }
 
-        // TODO: set base url
-        $this->container['base_url'] = '';
+        $plugin = $grav['gantry5_plugin'];
+
+        $this->container['base_url'] = $plugin->base;
 
         if (!$theme) {
             return $this;

@@ -22,7 +22,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry5Plugin extends Plugin
 {
-    protected $base;
+    public $base;
     protected $template;
 
     /**
@@ -53,6 +53,8 @@ class Gantry5Plugin extends Plugin
         /** @var ClassLoader $loader */
         $loader = $this->grav['loader'];
         $loader->addClassMap(['Gantry5\\Loader' => __DIR__ . '/src/Loader.php']);
+
+        $this->grav['gantry5_plugin'] = $this;
     }
 
     /**
