@@ -157,7 +157,7 @@
                     },
                     {
                         "source":"/platforms/common",
-                        "destination":"/user/plugins/gantry5/common"
+                        "destination":"/user/plugins/gantry5/admin/common"
                     }
                 ],
                 "libraries":[
