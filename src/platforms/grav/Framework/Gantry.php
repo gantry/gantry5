@@ -8,10 +8,8 @@
  * http://opensource.org/licenses/MIT
  */
 
-
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config;
 use Grav\Common\Grav;
 
 class Gantry extends Base\Gantry
@@ -28,13 +26,15 @@ class Gantry extends Base\Gantry
             return Grav::instance()['locator'];
         };
 
-        $container['global'] = function ($c) {
-            $grav = Grav::instance();
-            $config = $grav['config']->get('plugins.gantry5');
-
-            return new Config($config);
-        };
-
         return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected static function loadGlobal()
+    {
+        $grav = Grav::instance();
+        return (array) $grav['config']->get('plugins.gantry5');
     }
 }

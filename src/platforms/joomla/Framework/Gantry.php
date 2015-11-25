@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -52,22 +51,16 @@ class Gantry extends Base\Gantry
     }
 
     /**
-     * @throws \LogicException
+     * @return array
      */
-    protected static function load()
+    protected static function loadGlobal()
     {
-        $container = parent::load();
+        $global = null;
 
-        $container['global'] = function ($c) {
-            $global = null;
+        // Trigger the event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
 
-            // Trigger the event.
-            $dispatcher = \JEventDispatcher::getInstance();
-            $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
-
-            return $global;
-        };
-
-        return $container;
+        return $global;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,19 +15,4 @@ namespace Gantry\Framework;
 
 class Gantry extends Base\Gantry
 {
-    /**
-     * @return boolean
-     */
-    public function debug()
-    {
-        return true;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function admin()
-    {
-        return false;
-    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,6 +13,7 @@
 
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Config\Config;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
@@ -189,15 +189,15 @@ abstract class Gantry extends Container
             return new Translator;
         };
 
-        $container['site'] = function ($c) {
+        $instance['site'] = function ($c) {
             return new Site;
         };
 
-        $container['menu'] = function ($c) {
+        $instance['menu'] = function ($c) {
             return new Menu;
         };
 
-        $container['page'] = function ($c) {
+        $instance['page'] = function ($c) {
             return new Page($c);
         };
 
@@ -210,6 +210,17 @@ abstract class Gantry extends Container
 
             return $collection->copy();
         });
+
+        $instance['global'] = function ($c) {
+            $data = static::loadGlobal() + [
+                    'debug' => false,
+                    'production' => false,
+                    'asset_timestamps' => true,
+                    'asset_timestamps_period' => 7
+                ];
+
+            return new Config($data);
+        };
 
         return $instance;
     }
@@ -274,5 +285,13 @@ abstract class Gantry extends Container
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    protected static function loadGlobal()
+    {
+        return [];
     }
 }

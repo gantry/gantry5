@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
@@ -36,24 +45,27 @@ class Gantry extends Base\Gantry
     }
 
     /**
+     * @return Gantry
      * @throws \LogicException
      */
     protected static function load()
     {
 
         // Make sure Timber plugin has been loaded.
-        if ( !class_exists( 'Timber' ) ) {
+        if (!class_exists('Timber')) {
             $action = 'install-plugin';
             $slug = 'timber-library';
-            throw new \LogicException( '<strong>Timber not activated</strong>. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'update.php' ) ), $action.'_'.$slug ) . '"><strong>here</strong></a> to install it or go to the <a href=" ' . admin_url( 'plugins.php#timber' ) . '"><strong>Installed Plugins</strong></a> page to activate it, if already installed.' );
+            throw new \LogicException('<strong>Timber not activated</strong>. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'update.php' ) ), $action.'_'.$slug ) . '"><strong>here</strong></a> to install it or go to the <a href=" ' . admin_url('plugins.php#timber') . '"><strong>Installed Plugins</strong></a> page to activate it, if already installed.');
         }
 
-        $container = parent::load();
+        return parent::load();
+    }
 
-        $container['global'] = function ($c) {
-            return new Config((array) \get_option('gantry5_plugin'));
-        };
-
-        return $container;
+    /**
+     * @return array
+     */
+    protected static function loadGlobal()
+    {
+        return (array) \get_option('gantry5_plugin');
     }
 }
