@@ -72,6 +72,9 @@ class Document extends BaseDocument
                         $src = array_shift($array);
                         $version = array_shift($array) ?: false;
                         $name = basename($src, '.js');
+                        if(!empty($script['handle'])) {
+                            $name = $script['handle'];
+                        }
                         self::$script_info[$name] = $script;
                         \wp_enqueue_script($name, $src, array(), $version, $in_footer);
                         break;
