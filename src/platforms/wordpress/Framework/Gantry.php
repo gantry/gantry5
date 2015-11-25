@@ -8,16 +8,6 @@ class Gantry extends Base\Gantry
     /**
      * @return boolean
      */
-    public function debug()
-    {
-        $option = (array) get_option('gantry5_plugin');
-
-        return !empty($option['debug']);
-    }
-
-    /**
-     * @return boolean
-     */
     public function admin()
     {
         return \is_admin();
@@ -59,18 +49,6 @@ class Gantry extends Base\Gantry
         }
 
         $container = parent::load();
-
-        $container['site'] = function ( $c ) {
-            return new Site;
-        };
-
-        $container['page'] = function ( $c ) {
-            return new Page( $c );
-        };
-
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
 
         $container['global'] = function ($c) {
             return new Config((array) \get_option('gantry5_plugin'));

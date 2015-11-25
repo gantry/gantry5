@@ -58,18 +58,6 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
-        $container['site'] = function ($c) {
-            return new Site;
-        };
-
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
-
-        $container['page'] = function ($c) {
-            return new Page($c);
-        };
-
         $container['global'] = function ($c) {
             $global = null;
 

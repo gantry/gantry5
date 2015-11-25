@@ -17,22 +17,6 @@ use Grav\Common\Grav;
 class Gantry extends Base\Gantry
 {
     /**
-     * @return boolean
-     */
-    public function debug()
-    {
-        return $this['global']->get('debug', false);
-    }
-
-    /**
-     * @return boolean
-     */
-    public function admin()
-    {
-        return defined('GANTRYADMIN_PATH');
-    }
-
-    /**
      * @throws \LogicException
      */
     protected static function load()
@@ -42,18 +26,6 @@ class Gantry extends Base\Gantry
         // Use locator from Grav.
         $container['locator'] = function($c) {
             return Grav::instance()['locator'];
-        };
-
-        $container['site'] = function ($c) {
-            return new Site;
-        };
-
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
-
-        $container['page'] = function ($c) {
-            return new Page($c);
         };
 
         $container['global'] = function ($c) {

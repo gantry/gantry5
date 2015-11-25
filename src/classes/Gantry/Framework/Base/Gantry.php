@@ -14,12 +14,15 @@
 
 namespace Gantry\Framework\Base;
 
+use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
+use Gantry\Framework\Page;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
+use Gantry\Framework\Site;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
@@ -59,14 +62,21 @@ abstract class Gantry extends Container
      *
      * @return boolean
      */
-    public abstract function debug();
+    public function debug()
+    {
+        return $this['global']->get('debug', false);
+    }
 
     /**
      * Returns true if we are in administration.
      *
      * @return boolean
      */
-    public abstract function admin();
+    public function admin()
+    {
+        return defined('GANTRYADMIN_PATH');
+    }
+
 
     /**
      * @return string
@@ -177,6 +187,18 @@ abstract class Gantry extends Container
 
         $instance['translator'] = function ($c) {
             return new Translator;
+        };
+
+        $container['site'] = function ($c) {
+            return new Site;
+        };
+
+        $container['menu'] = function ($c) {
+            return new Menu;
+        };
+
+        $container['page'] = function ($c) {
+            return new Page($c);
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.

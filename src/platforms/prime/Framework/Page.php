@@ -23,8 +23,7 @@ class Page extends Base\Page
 
     public function url(array $args = [])
     {
-        $grav = Grav::instance();
-        $url = $grav['uri']->url;
+        $url = PRIME_URI;
 
         $parts = Url::parse($url, true);
         $parts['vars'] = array_replace($parts['vars'], $args);
@@ -36,7 +35,6 @@ class Page extends Base\Page
     {
         $attributes = [
                 'lang' => 'en-GB',
-                // TODO:
                 'dir' => 'ltr'
             ]
             + (array) $this->config->get('page.html', []);
@@ -49,7 +47,6 @@ class Page extends Base\Page
         $gantry = Gantry::instance();
         $classes = [
             'site',
-            // TODO:
             "dir-ltr",
             "outline-{$gantry['configuration']}",
         ];

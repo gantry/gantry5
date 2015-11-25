@@ -2,25 +2,10 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
 
 class Gantry extends Base\Gantry
 {
-    /**
-     * @return boolean
-     */
-    public function debug()
-    {
-        return true;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function admin()
-    {
-        return true;
-    }
-
     /**
      * @throws \LogicException
      */
@@ -28,16 +13,17 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
-        $container['site'] = function ($c) {
-            return new Site;
-        };
-
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
-
         $container['global'] = function ($c) {
-            return new Config([]);
+            $file = CompiledYamlFile::instance(PRIME_ROOT . '/config/global.yaml');
+            $data = (array) $file->content() + [
+                    'debug' => true,
+                    'production' => false,
+                    'asset_timestamps' => true,
+                    'asset_timestamps_period' => 7
+                ];
+            $file->free();
+
+            return new Config($data);
         };
 
         return $container;
