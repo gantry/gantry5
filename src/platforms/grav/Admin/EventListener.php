@@ -8,19 +8,10 @@
  * http://opensource.org/licenses/MIT
  */
 
-
 namespace Gantry\Admin;
 
-use Gantry\Component\Layout\Layout;
-use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Outlines;
-use Gantry\Joomla\CacheHelper;
-use Gantry\Joomla\Manifest;
-use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
-use RocketTheme\Toolbox\File\IniFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class EventListener implements EventSubscriberInterface
 {
