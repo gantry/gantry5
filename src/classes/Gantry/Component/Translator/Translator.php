@@ -14,6 +14,8 @@
 namespace Gantry\Component\Translator;
 
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Framework\Gantry;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Translator implements TranslatorInterface
 {
@@ -71,6 +73,11 @@ class Translator implements TranslatorInterface
 
     protected function load($language, $section)
     {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
         $section = strtolower($section);
         $filename = 'gantry-admin://translations/' . $language . '/' . $section . '.yaml';
         $file = CompiledYamlFile::instance($filename);
@@ -80,7 +87,8 @@ class Translator implements TranslatorInterface
             $file = CompiledYamlFile::instance($filename);
         }
 
-        $translations = (array) $file->content();
+        $cachePath = $locator->findResource('gantry-cache://translations', true, true);
+        $translations = (array) $file->setCachePath($cachePath)->content();
         $file->free();
 
         return $translations;
