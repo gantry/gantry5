@@ -10,9 +10,9 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Translator\TranslatorInterface;
+use Gantry\Component\Translator\Translator as BaseTranslator;
 
-class Translator implements TranslatorInterface
+class Translator extends BaseTranslator
 {
     public function translate($string)
     {

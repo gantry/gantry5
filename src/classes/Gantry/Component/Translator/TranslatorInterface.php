@@ -15,5 +15,17 @@ namespace Gantry\Component\Translator;
 
 interface TranslatorInterface
 {
+    /**
+     * @param string $string
+     * @return string
+     */
     public function translate($string);
+
+    /**
+     * Set new active language if given and return previous active language.
+     *
+     * @param  string  $language  Language code. If not given, current language is kept.
+     * @return string  Previously active language.
+     */
+    public function active($language = null);
 }
