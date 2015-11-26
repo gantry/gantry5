@@ -27,7 +27,7 @@ class Translator implements TranslatorInterface
         list($domain, $section, $code) = explode('_', $string, 3);
 
         if ($domain === 'GANTRY5') {
-            $translation = ($this->find($this->active, $section, $string) ?: $this->find($this->active, $section, $string)) ?: $code;
+            $translation = ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $code;
         } else {
             $translation = $string;
         }
@@ -55,7 +55,15 @@ class Translator implements TranslatorInterface
     protected function find($language, $section, $string)
     {
         if (!isset($this->sections[$language][$section])) {
-            $this->sections[$language][$section] = $this->load($language, $section);
+            $translations = $this->load($language, $section);
+
+            if (isset($this->translations[$language])) {
+                $this->translations[$language] += $translations;
+            } else {
+                $this->translations[$language] = $translations;
+            }
+
+            $this->sections[$language][$section] = !empty($translations);
         }
 
         return isset($this->translations[$language][$string]) ? $this->translations[$language][$string] : null;
@@ -63,19 +71,18 @@ class Translator implements TranslatorInterface
 
     protected function load($language, $section)
     {
-        $filename = 'gantry-admin://translations/' . strtolower($language) . '/' . strtolower($section) . '.yaml';
+        $section = strtolower($section);
+        $filename = 'gantry-admin://translations/' . $language . '/' . $section . '.yaml';
         $file = CompiledYamlFile::instance($filename);
-        if ($file->exists()) {
-            if (isset($this->translations[$language])) {
-                $this->translations[$language] += (array)$file->content();
-            } else {
-                $this->translations[$language] = (array)$file->content();
-            }
-            $file->free();
 
-            return true;
+        if (!$file->exists() && ($pos = strpos($language, '-')) > 0) {
+            $filename = 'gantry-admin://translations/' . substr($language, 0, $pos) . '/' . $section . '.yaml';
+            $file = CompiledYamlFile::instance($filename);
         }
 
-        return false;
+        $translations = (array) $file->content();
+        $file->free();
+
+        return $translations;
     }
 }
