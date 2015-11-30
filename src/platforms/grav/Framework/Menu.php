@@ -18,8 +18,9 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
-use Gantry\Prime\Pages;
+use Grav\Common\Grav;
 use Grav\Common\GravTrait;
+use Grav\Common\Page\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -113,11 +114,38 @@ class Menu extends AbstractMenu
             return [];
         }
 
+        $grav = Grav::instance();
+
         // Initialize pages.
-        $pages = new Pages;
+        $pages = $grav['pages'];
 
         // Return flat list of routes.
-        return array_keys($pages->toArray());
+        $list = [];
+        foreach ($pages->all()->visible() as $name => $item) {
+            $id = preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root';
+            $parent_id = dirname($name) != '.' ? preg_replace('|[^a-z0-9]|i', '-', dirname($name)) : 'root';
+            $list[$name] = [
+                'id' => $id,
+                'type' => $item->isPage() ? 'link' : 'separator',
+                'path' => $name,
+                'alias' => $item->slug(),
+                'title' => $item->title(),
+                'link' => $item->url(),
+                'parent_id' => $parent_id,
+                'layout' => 'list',
+                'target' => '_self',
+                'dropdown' => '',
+                'icon' => '',
+                'image' => '',
+                'subtitle' => '',
+                'icon_only' => false,
+                'visible' => true,
+                'group' => 0,
+                'columns' => [],
+                'level' => substr_count($name, '/') + 1,
+            ];
+        }
+        return $list;
     }
 
     /**
@@ -157,19 +185,19 @@ class Menu extends AbstractMenu
         $max     = $params['maxLevels'];
         $end     = $max ? $start + $max - 1 : 0;
 
-        $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
-        sort($menuItems);
+        $menuItems = array_merge_recursive($this->getItemsFromPlatform($start <= $end ? $end : -1), $items) ;
+        ksort($menuItems);
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
-        foreach ($menuItems as $name) {
-            $parent = dirname($name);
-            $level = substr_count($name, '/') + 1;
+        foreach ($menuItems as $name => $item) {
+            $parent = $item['parent_id'];
+            $level = $item['level'];
+
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && strpos(dirname($parent), $this->base) !== 0)
-                || (!$name || $name[0] == '_' || strpos($name, '_'))
+                || ($start > 1 && strpos($parent, $this->base) !== 0)
             ) {
                 continue;
             }
@@ -196,11 +224,11 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    if ($item->link == 'home') {
+                    if ($item->link == '/home') {
                         // Deal with home page.
-                        $item->url('/' . trim(PRIME_URI . '/' . THEME, '/'));
+                        $item->url('/');
                     } else {
-                        $item->url('/' . trim(PRIME_URI . '/' . THEME . '/' . $item->link, '/'));
+                        $item->url('/' . $item->link);
                     }
             }
         }
