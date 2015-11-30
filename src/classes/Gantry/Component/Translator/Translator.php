@@ -26,15 +26,13 @@ class Translator implements TranslatorInterface
 
     public function translate($string)
     {
-        list($domain, $section, $code) = explode('_', $string, 3);
-
-        if ($domain === 'GANTRY5') {
-            $translation = ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $code;
-        } else {
-            $translation = $string;
+        if (!preg_match('|^GANTRY5(_[A-Z0-9]+){2,}$|', $string)) {
+            return $string;
         }
 
-        return $translation;
+        list($domain, $section, $code) = explode('_', $string, 3);
+
+        return ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $code;
     }
 
     /**
