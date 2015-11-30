@@ -20,7 +20,7 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
 use Grav\Common\GravTrait;
-use Grav\Common\Page\Pages;
+use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -121,6 +121,7 @@ class Menu extends AbstractMenu
 
         // Return flat list of routes.
         $list = [];
+        /** @var Page $item */
         foreach ($pages->all()->visible() as $name => $item) {
             $id = preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root';
             $parent_id = dirname($name) != '.' ? preg_replace('|[^a-z0-9]|i', '-', dirname($name)) : 'root';
