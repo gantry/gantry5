@@ -22,14 +22,11 @@ class Router extends BaseRouter
     {
         $grav = Grav::instance();
 
-        /** @var Uri $uri */
-        $uri = $grav['uri'];
-
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $grav['admin'];
 
-        /** @var Request $request */
-        $request = $this->container['request'];
+        /** @var Uri $uri */
+        $uri = $grav['uri'];
 
         $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
 
@@ -37,12 +34,13 @@ class Router extends BaseRouter
         $theme = array_shift($parts);
         $this->setTheme($theme);
 
-        // Second parameter is the resource.
-        $this->resource = array_shift($parts) ?: 'about';
+        /** @var Request $request */
+        $request = $this->container['request'];
 
         // Figure out the action we want to make.
         $this->method = $request->getMethod();
         $this->path = $parts;
+        $this->resource = $theme ? (array_shift($this->path) ?: 'about') : 'themes';
         $this->format = $uri->extension('html');
         $ajax = ($this->format == 'json');
 
@@ -53,6 +51,8 @@ class Router extends BaseRouter
             'format' => $this->format,
             'params' => $request->post->getJsonArray('params')
         ];
+
+        $this->container['base_url'] = $grav['gantry5_plugin']->base;
 
         $this->container['ajax_suffix'] = '.json';
 

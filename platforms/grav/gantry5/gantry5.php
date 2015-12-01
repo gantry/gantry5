@@ -139,11 +139,9 @@ class Gantry5Plugin extends Plugin
         }
 
         $base = rtrim($this->grav['base_url'], '/');
-        $results = explode('/', $admin->route, 3);
+        $results = explode('/', $admin->route, 2);
         $theme = array_shift($results);
 
-        $this->template = $theme ? (array_shift($results) ?: 'about') : 'themes';
-        $this->route = array_shift($results);
         $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
 
         if ($theme) {
@@ -186,7 +184,7 @@ class Gantry5Plugin extends Plugin
         // Create admin page.
         $page = new Page;
         $page->init(new \SplFileInfo(__DIR__ . "/pages/gantry.md"));
-        $page->slug($this->template);
+        $page->slug('gantry');
 
         // Dispatch Gantry in output buffer.
         ob_start();
@@ -225,7 +223,6 @@ class Gantry5Plugin extends Plugin
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
 
-        $twig->twig_vars['location'] = $this->template;
         $twig->twig_vars['gantry_url'] = $this->base;
     }
 

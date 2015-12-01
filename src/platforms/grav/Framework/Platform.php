@@ -117,7 +117,8 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        return null;
+        $grav = Grav::instance();
+        return $grav['gantry5_plugin']->base . '/' . $theme;
     }
 
     public function finalize()
