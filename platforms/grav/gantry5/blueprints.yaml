@@ -12,7 +12,7 @@ bugs: https://github.com/gantry/gantry5/issues
 license: MIT
 
 form:
-  validation: strict
+  validation: loose
   fields:
     enabled:
       type: toggle
@@ -69,3 +69,6 @@ form:
         0: Disabled
       validate:
         type: bool
+
+    _redirect:
+      type: hidden

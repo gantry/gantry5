@@ -125,4 +125,11 @@ class Platform extends BasePlatform
     {
         Document::registerAssets();
     }
+
+
+    public function settings()
+    {
+        $grav = Grav::instance();
+        return $grav['admin']->base . '/plugins/gantry5';
+    }
 }

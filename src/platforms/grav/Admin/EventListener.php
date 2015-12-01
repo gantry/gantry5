@@ -10,8 +10,11 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
+use RocketTheme\Toolbox\File\YamlFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class EventListener implements EventSubscriberInterface
 {
@@ -29,6 +32,18 @@ class EventListener implements EventSubscriberInterface
 
     public function onGlobalSave(Event $event)
     {
+        $gantry = Gantry::instance();
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $filename = 'config://plugins/gantry5.yaml';
+        $file = YamlFile::instance($locator->findResource($filename, true, true));
+
+        $content = $file->content();
+        $content['production'] = (bool) $event->data['production'];
+
+        $file->save($content);
+        $file->free();
     }
 
     public function onStylesSave(Event $event)
