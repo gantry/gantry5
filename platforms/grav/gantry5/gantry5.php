@@ -40,8 +40,8 @@ class Gantry5Plugin extends Plugin
                 ['initialize', 1000]
             ],
             'onThemeInitialized' => [
-                ['initializeGantryTheme', -20],
-                ['initializeGantryAdmin', -10]
+                ['initializeGantryAdmin', -10],
+                ['initializeGantryTheme', -20]
             ],
             'onAdminMenu' => [
                 ['onAdminMenu', -10]
@@ -142,11 +142,13 @@ class Gantry5Plugin extends Plugin
         $results = explode('/', $admin->route, 3);
         $theme = array_shift($results);
 
-        $this->template = array_shift($results) ?: 'about';
+        $this->template = $theme ? (array_shift($results) ?: 'about') : 'themes';
         $this->route = array_shift($results);
-        $this->base =  "{$base}{$admin->base}/{$admin->location}/{$theme}";
+        $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
 
-        $this->config->set('system.pages.theme', $theme);
+        if ($theme) {
+            $this->config->set('system.pages.theme', $theme);
+        }
 
         $this->runAdmin();
     }
@@ -209,10 +211,7 @@ class Gantry5Plugin extends Plugin
         $twig = $this->grav['twig'];
 
         /** @var UniformResourceLocator $locator */
-        // TODO: get rid of these and use the ones in admin template class.
         $locator = $this->grav['locator'];
-        $locator->addPath('gantry-admin', '', ['plugins://gantry5/admin', 'plugins://gantry5/admin/common']);
-        $locator->addPath('gantry-admin', 'assets', ['plugins://gantry5/admin/common']);
 
         $loader = $twig->loader();
         $loader->prependPath($locator->findResource('plugins://gantry5/templates'));
@@ -225,8 +224,6 @@ class Gantry5Plugin extends Plugin
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
-
-        //$twig->template = "@gantry-admin/pages/about/{$this->template}.html.twig";
 
         $twig->twig_vars['location'] = $this->template;
         $twig->twig_vars['gantry_url'] = $this->base;

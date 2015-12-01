@@ -70,7 +70,11 @@ class Theme extends AbstractTheme
         $locator = $gantry['locator'];
 
         $nucleus = $patform->getEnginePaths('nucleus')[''];
-        $relpath = Folder::getRelativePath($this->path);
+        if (strpos($this->path, '://')) {
+            $relpath = $this->path;
+        } else {
+            $relpath = Folder::getRelativePath($this->path);
+        }
         $patform->set(
             'streams.gantry-admin.prefixes', [
                 ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
