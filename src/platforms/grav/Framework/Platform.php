@@ -66,7 +66,7 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['gantry-theme://images', 'pages://images', 'user://gantry5/media']];
+        return ['' => ['gantry-theme://images', 'page://images', 'user://gantry5/media']];
     }
 
     public function getEnginesPaths()
