@@ -1,13 +1,13 @@
 name: Gantry 5 Framework
-version: 5.3.0
+version: '@version@'
 description: Theme framework.
-icon: tint
+icon: rocket
 author:
   name: RocketTheme
   email: support@rockettheme.com
   url: http://www.rockettheme.com
 homepage: http://gantry.org
-keywords: gantry, gantry5, theme, theme framework
+keywords: gantry, gantry5, theme, framework
 bugs: https://github.com/gantry/gantry5/issues
 license: MIT
 
