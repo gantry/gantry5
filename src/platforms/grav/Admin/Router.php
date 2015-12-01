@@ -16,6 +16,7 @@ use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
+use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Router extends BaseRouter
@@ -58,12 +59,21 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '.json';
 
+
         $this->container['routes'] = [
             '1' => '/%s',
             'themes' => '',
 
             'picker/layouts' => '/layouts',
         ];
+
+        // TODO: Add support for nonces.
+        //$nonce = Utils::getNonce('gantry-admin');
+        //$this->container['routes'] = [
+        //    '1' => '/%s?nonce=' . $nonce,
+        //    'themes' => '',
+        //    'picker/layouts' => '/layouts?nonce=' . $nonce,
+        //];
     }
 
     public function setTheme($theme)
@@ -102,7 +112,11 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        // TODO: add CSRF check.
+        // TODO: Add support for nonces.
+        /** @var Request $request */
+        //$request = $this->container['request'];
+        //$nonce = $request['nonce'];
+        //return isset($nonce) && Utils::verifyNonce($nonce, 'gantry-admin');
         return true;
     }
 
