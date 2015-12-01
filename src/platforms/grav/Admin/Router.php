@@ -11,6 +11,8 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Request\Request;
+use Gantry\Component\Response\JsonResponse;
+use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
@@ -101,6 +103,26 @@ class Router extends BaseRouter
     protected function checkSecurityToken()
     {
         // TODO: add CSRF check.
+        return true;
+    }
+
+    protected function send(Response $response)
+    {
+        // Output HTTP header.
+        header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
+        header("Content-Type: {$response->mimeType}; charset={$response->charset}");
+        foreach ($response->getHeaders() as $key => $values) {
+            foreach ($values as $value) {
+                header("{$key}: {$value}");
+            }
+        }
+
+        echo $response;
+
+        if ($response instanceof JsonResponse) {
+            exit();
+        }
+
         return true;
     }
 }
