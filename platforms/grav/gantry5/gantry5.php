@@ -187,7 +187,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onAdminMenu()
     {
-        $this->grav['twig']->plugins_hooked_nav['Gantry'] = ['route' => 'gantry', 'icon' => 'fa-rocket'];
+        $this->grav['twig']->plugins_hooked_nav['Gantry'] = ['route' => 'gantry', 'icon' => 'fa-gantry'];
     }
 
     /**

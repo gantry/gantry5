@@ -1,7 +1,7 @@
 name: Gantry 5 Framework
 version: '@version@'
 description: Theme framework.
-icon: rocket
+icon: gantry
 author:
   name: RocketTheme
   email: support@rockettheme.com
