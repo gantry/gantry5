@@ -122,7 +122,8 @@ class Menu extends AbstractMenu
         // Return flat list of routes.
         $list = [];
         /** @var Page $item */
-        foreach ($pages->all()->visible() as $name => $item) {
+        foreach ($pages->all()->visible() as $item) {
+            $name = trim($item->route(), '/');
             $id = preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root';
             $parent_id = dirname($name) != '.' ? preg_replace('|[^a-z0-9]|i', '-', dirname($name)) : 'root';
             $list[$name] = [
@@ -146,6 +147,7 @@ class Menu extends AbstractMenu
                 'level' => substr_count($name, '/') + 1,
             ];
         }
+
         return $list;
     }
 
