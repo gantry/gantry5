@@ -2066,19 +2066,21 @@ body.g-prime {
   src: url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff") format("woff"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf") format("truetype"), url("../fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg#roboto") format("svg");
 }
 @font-face {
-  font-family: "grav";
+  font-family: "rockettheme-apps";
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/grav/grav.eot");
-  src: url("../fonts/grav/grav.eot?#iefix") format("embedded-opentype"), url("../fonts/grav/grav.woff") format("woff"), url("../fonts/grav/grav.ttf") format("truetype"), url("../fonts/grav/grav.svg#grav") format("svg");
+  src: url("../fonts/rockettheme-apps/rockettheme-apps.eot");
+  src: url("../fonts/rockettheme-apps/rockettheme-apps.eot?#iefix") format("embedded-opentype"), url("../fonts/rockettheme-apps/rockettheme-apps.woff") format("woff"), url("../fonts/rockettheme-apps/rockettheme-apps.ttf") format("truetype"), url("../fonts/rockettheme-apps/rockettheme-apps.svg#rockettheme-apps") format("svg");
 }
 .font-small, #g5-container .card h4[data-g-collapse] .g-collapse, #g5-container .g-filters-bar label, #g5-container .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, .fa.font-small, #g5-container .card h4[data-g-collapse] .fa.g-collapse, #g5-container .g-filters-bar label.fa, #g5-container .fa.g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .fa.g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container #menu-editor li .menu-item .menu-item-content .fa.menu-item-subtitle, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li.fa {
   font-size: 0.8rem;
   vertical-align: middle;
 }
 
-i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
-  font-family: 'grav';
+i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full,
+i.fa-grav-logo, i.fa-grav-symbol, i.fa-grav-logo-both, i.fa-grav-both,
+i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-gantry-both {
+  font-family: 'rockettheme-apps';
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -2090,16 +2092,28 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.fa-grav-full:before {
-  content: "\e600";
+.fa-grav-logo:before, .fa-grav-text:before {
+  content: "\61";
 }
 
-.fa-grav-text:before {
-  content: "\e601";
+.fa-grav-symbol:before, .fa-grav:before, .fa-grav-spaceman:before {
+  content: "\62";
 }
 
-.fa-grav:before, .fa-grav-spaceman:before {
-  content: "\e602";
+.fa-grav-logo-both:before, .fa-grav-both:before, .fa-grav-full:before {
+  content: "\66";
+}
+
+.fa-gantry-logo:before {
+  content: "\64";
+}
+
+.fa-gantry:before, .fa-gantry-symbol:before {
+  content: "\63";
+}
+
+.fa-gantry-logo-both:before, .fa-gantry-both:before {
+  content: "\65";
 }
 
 #g5-container .main-block {
