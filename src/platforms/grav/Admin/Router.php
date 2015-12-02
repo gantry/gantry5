@@ -15,6 +15,7 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
+use Grav\Common\Theme;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -79,13 +80,17 @@ class Router extends BaseRouter
     public function setTheme($theme)
     {
         $grav = Grav::instance();
+        $plugin = $grav['gantry5_plugin'];
+
+        $this->container['base_url'] = $plugin->base;
+
         if (!$theme) {
             $theme = $grav['config']->get('system.theme');
         }
 
         $path = "themes://{$theme}";
 
-        if (!is_file("{$path}/gantry/theme.yaml")) {
+        if (!$theme || !is_file("{$path}/gantry/theme.yaml") || !is_file("{$path}/theme.php")) {
             $theme = null;
             $this->container['streams']->register();
 
@@ -93,19 +98,6 @@ class Router extends BaseRouter
             $locator = $this->container['locator'];
             $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
         }
-
-        $plugin = $grav['gantry5_plugin'];
-
-        $this->container['base_url'] = $plugin->base;
-
-        if (!$theme) {
-            return $this;
-        }
-
-        $this->container['theme.path'] = $path;
-        $this->container['theme.name'] = $theme;
-
-        // TODO: Load language file for the template.
 
         return $this;
     }

@@ -17,6 +17,7 @@ use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Themes;
 use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -37,10 +38,10 @@ class Gantry5Plugin extends Plugin
     {
         return [
             'onPluginsInitialized' => [
-                ['initialize', 1000]
+                ['initialize', 1000],
+                ['initializeGantryAdmin', -100]
             ],
             'onThemeInitialized' => [
-                ['initializeGantryAdmin', -10],
                 ['initializeGantryTheme', -20]
             ],
             'onAdminMenu' => [
@@ -49,6 +50,9 @@ class Gantry5Plugin extends Plugin
         ];
     }
 
+    /**
+     * Bootstrap Gantry loader.
+     */
     public function initialize()
     {
         /** @var ClassLoader $loader */
@@ -56,6 +60,48 @@ class Gantry5Plugin extends Plugin
         $loader->addClassMap(['Gantry5\\Loader' => __DIR__ . '/src/Loader.php']);
 
         $this->grav['gantry5_plugin'] = $this;
+    }
+
+    /**
+     * Initialize Gantry admin if in Grav admin.
+     */
+    public function initializeGantryAdmin()
+    {
+        if (!$this->isAdmin()) {
+            return;
+        }
+
+        $this->enable([
+            'onAdminMenu' => ['onAdminMenu', 0]
+        ]);
+
+        /** @var \Grav\Plugin\Admin $admin */
+        $admin = $this->grav['admin'];
+        if ($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route)) {
+            return;
+        }
+
+        $this->enable([
+            'onAdminThemeInitialized' => ['runAdmin', 0]
+        ]);
+
+        // Setup Gantry 5 Framework or throw exception.
+        \Gantry5\Loader::setup();
+
+        if (!defined('GANTRYADMIN_PATH')) {
+            define('GANTRYADMIN_PATH', 'plugins://gantry5/admin');
+        }
+
+        $base = rtrim($this->grav['base_url'], '/');
+        $results = explode('/', $admin->route, 2);
+        $theme = array_shift($results);
+
+        $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
+
+        if ($theme) {
+            // Switch theme and initialize it.
+            $this->config->set('system.pages.theme', $theme);
+        }
     }
 
     /**
@@ -70,7 +116,6 @@ class Gantry5Plugin extends Plugin
         }
 
         $gantry = Gantry::instance();
-
         if (!isset($gantry['theme.name'])) {
             return;
         }
@@ -107,52 +152,21 @@ class Gantry5Plugin extends Plugin
 
         $this->theme->setLayout('default');
 
-        if (!isset($this->grav['admin'])) {
+        if (!$this->isAdmin()) {
             $this->enable([
                 'onTwigInitialized' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0]
             ]);
         }
-    }
 
-    public function initializeGantryAdmin()
-    {
-        if (!isset($this->grav['admin'])) {
-            return;
-        }
-
-        $this->enable([
-            'onAdminMenu' => ['onAdminMenu', 0]
-        ]);
-
-        /** @var \Grav\Plugin\Admin $admin */
-        $admin = $this->grav['admin'];
-        if ($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route)) {
-            return;
-        }
-
-        // Setup Gantry 5 Framework or throw exception.
-        \Gantry5\Loader::setup();
-
-        if (!defined('GANTRYADMIN_PATH')) {
-            define('GANTRYADMIN_PATH', 'plugins://gantry5/admin');
-        }
-
-        $base = rtrim($this->grav['base_url'], '/');
-        $results = explode('/', $admin->route, 2);
-        $theme = array_shift($results);
-
-        $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
-
-        if ($theme) {
-            $this->config->set('system.pages.theme', $theme);
-        }
-
-        $this->runAdmin();
     }
 
     public function runAdmin()
     {
+        /** @var Themes $themes */
+        $themes = $this->grav['themes'];
+        $themes->initTheme();
+
         $gantry = Gantry::instance();
         $gantry['base_url'] = $this->base;
         $gantry['router'] = function ($c) {
@@ -162,24 +176,24 @@ class Gantry5Plugin extends Plugin
         $this->grav['gantry5'] = $gantry;
 
         $this->enable([
-            'onPagesInitialized' => ['onPagesInitialized', 900],
+            'onPagesInitialized' => ['onAdminPagesInitialized', 900],
             'onTwigInitialized' => ['onAdminTwigInitialized', 900],
             'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
         ]);
     }
 
-        /**
+    /**
      * Add navigation item to the admin plugin
      */
     public function onAdminMenu()
     {
-        $this->grav['twig']->plugins_hooked_nav['Gantry'] = ['route' => 'gantry', 'icon' => 'fa-tint'];
+        $this->grav['twig']->plugins_hooked_nav['Gantry'] = ['route' => 'gantry', 'icon' => 'fa-rocket'];
     }
 
     /**
      * Replaces page object with admin one.
      */
-    public function onPagesInitialized()
+    public function onAdminPagesInitialized()
     {
         // Create admin page.
         $page = new Page;
