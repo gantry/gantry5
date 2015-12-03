@@ -1,0 +1,142 @@
+body #admin-main .admin-block {
+  padding: 0;
+}
+
+#g5-container {
+  position: static;
+}
+#g5-container .inner-container {
+  margin: 0;
+  box-shadow: none;
+  color: inherit;
+}
+#g5-container #main-header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 20%;
+  height: 4.2rem;
+}
+#g5-container #main-header .g-content {
+  padding: 0 3em !important;
+}
+#g5-container #main-header .theme-title {
+  line-height: 4.2rem;
+}
+#g5-container #main-header ul li a {
+  padding: 1.33rem 0.938rem;
+}
+#g5-container .g5-popover-extras.in {
+  position: fixed;
+  top: 4rem !important;
+  right: 1rem !important;
+  left: inherit !important;
+}
+
+#g5-container .button-primary {
+  background: #3180c2;
+  color: #fff;
+}
+#g5-container .button-primary:not(.disabled):not([disabled]):hover, #g5-container .button-primary:focus {
+  background: #2b70aa;
+  color: #fff;
+}
+
+#g5-container [data-mode-indicator="production"] {
+  background-color: transparent;
+}
+#g5-container #main-header .g-content {
+  padding: 0 1.563rem;
+}
+#g5-container #main-header .dev-mode-toggle {
+  background: #277265;
+}
+#g5-container #main-header .dev-mode-toggle a {
+  background: #54c5b0;
+}
+#g5-container #main-header .button-save {
+  background: #54c5b0;
+  color: #fff;
+}
+#g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, #g5-container #main-header .button-save:focus {
+  background: #40baa4;
+  color: #fff;
+}
+#g5-container #main-header ul li a:focus {
+  background: #2a7a6b;
+}
+#g5-container #main-header ul li:hover a {
+  background: #2a7a6b;
+}
+#g5-container #main-header ul li.active a {
+  background: #215f54;
+}
+#g5-container #navbar {
+  padding: 0 0.625rem;
+}
+#g5-container .inner-header {
+  background-color: #222;
+  color: #3180c2;
+}
+#g5-container .settings-state {
+  background: #349886;
+  color: #fff;
+}
+#g5-container .button.button-update {
+  background: #633679;
+  color: #fff;
+}
+#g5-container .button.button-update:not(.disabled):not([disabled]):hover, #g5-container .button.button-update:focus {
+  background: #522c64;
+  color: #fff;
+}
+#g5-container .tooltip {
+  position: static;
+  opacity: 1;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+#g5-container .overview-header .theme-title {
+  color: #3180c2;
+}
+
+#g5-container h1 {
+  font-size: 2.25rem;
+}
+#g5-container h2 {
+  font-size: 1.9rem;
+}
+#g5-container h3 {
+  font-size: 1.5rem;
+}
+#g5-container h4 {
+  font-size: 1.15rem;
+}
+#g5-container h5 {
+  font-size: 1rem;
+}
+#g5-container h6 {
+  font-size: 0.85rem;
+}
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  line-height: inherit;
+}
+#g5-container .page-title {
+  color: inherit;
+  text-shadow: none;
+  line-height: inherit;
+}
+
+body.com_gantry5 #g5-container .navbar-block #gantry-logo {
+  right: 2.1rem;
+}
+
+#g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
+  border-color: rgba(49, 128, 194, 0.5);
+}
+
+
+
+/*# sourceMappingURL=grav-admin.css.map */

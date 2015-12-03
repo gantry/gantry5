@@ -1,15 +1,6 @@
 {% assets with { priority: 10 } %}
     {% block stylesheets %}
-        <style>
-#admin-main .admin-block {
-    padding: 0;
-}
-#g5-container .inner-container {
-    margin: 0;
-    box-shadow: 0px 0px 0px #000;
-
-}
-        </style>
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/grav-g-admin.css') }}" type="text/css" />
     {% endblock %}
 
     {% block javascript %}

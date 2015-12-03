@@ -84,6 +84,11 @@ paths = {
             out: './platforms/wordpress/gantry5/admin/css-compiled/wordpress-g-admin.css',
             load: './engines/common/nucleus/scss'
         },
+        { // admin - grav
+            in: './platforms/grav/gantry5/admin/scss/grav-admin.scss',
+            out: './platforms/grav/gantry5/admin/css-compiled/grav-g-admin.css',
+            load: './engines/common/nucleus/scss'
+        },
         { // nucleus
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'

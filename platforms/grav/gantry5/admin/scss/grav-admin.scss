@@ -1,0 +1,24 @@
+// Load Admin Configuration
+@import "configuration/admin/base";
+
+// Core
+@import "grav-admin/core";
+
+// Buttons
+@import "grav-admin/buttons";
+
+// Headers
+@import "grav-admin/headers";
+
+// Overview
+@import "grav-admin/overview";
+
+// Typography
+@import "grav-admin/typography";
+
+// Assignments
+@import "grav-admin/navbar";
+
+// Settings
+@import "grav-admin/settings";
+
