@@ -3481,10 +3481,12 @@ var initSizes = function() {
 ready(function() {
     initSizes();
 
-    decouple(window, 'scroll', function() {
+    var scrollElement = $(GANTRY_PLATFORM == 'grav' ? '#admin-main .content-padding' : window) || [window];
+
+    decouple(scrollElement[0], 'scroll', function() {
         if (!container || !sidebar) { return; }
 
-        var scrollTop       = this.scrollY,
+        var scrollTop       = this.scrollY || this.scrollTop,
             containerBounds = container[0].getBoundingClientRect(),
             limit           = containerBounds.top + containerBounds.height,
             sidebarCoords   = sidebar[0].getBoundingClientRect(),
