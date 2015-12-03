@@ -3,25 +3,22 @@
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
  * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
- * @license   GNU/GPLv2 and later
+ * @license   MIT
  *
- * http://www.gnu.org/licenses/gpl-2.0.html
+ * http://opensource.org/licenses/MIT
  */
 
 namespace Gantry\Framework;
 
 use Gantry\Component\Gantry\GantryTrait;
-use Gantry\WordPress\Assignments\AssignmentsWalker;
-use Gantry\WordPress\Assignments\AssignmentsContext;
-use Gantry\WordPress\Assignments\AssignmentsMenu;
-use Gantry\WordPress\Assignments\AssignmentsPost;
-use Gantry\WordPress\Assignments\AssignmentsArchive;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Assignments
 {
     protected $configuration;
+    protected $className = '\Gantry\%s\Assignments\Assignments%s';
+    protected $platform = 'Grav';
 
     public function __construct($configuration)
     {
@@ -80,15 +77,24 @@ class Assignments
 
     public function types()
     {
-        // TODO:
-        return [];
+        return ['page'];
     }
 
     public function getTypes()
     {
         $list = [];
 
-        // TODO:
+        foreach($this->types() as $type) {
+            $class = sprintf($this->className, $this->platform, ucfirst($type));
+
+            if (!class_exists($class)) {
+                throw new \RuntimeException("Assignment type '{$type}' is missing");
+            }
+
+            $instance = new $class;
+            $list[$type] = $instance->listRules();
+            unset($instance);
+        }
 
         return $list;
     }
