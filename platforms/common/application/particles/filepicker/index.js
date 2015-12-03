@@ -44,7 +44,7 @@ var FilePicker = new prime({
             data: this.data,
             content: 'Loading',
             className: 'g5-dialog-theme-default g5-modal-filepicker',
-            remote: getAjaxURL('filepicker') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()),
             remoteLoaded: bind(this.loaded, this),
             afterClose: bind(function() {
                 if (this.dropzone) { this.dropzone.destroy(); }

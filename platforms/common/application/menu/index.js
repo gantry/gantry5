@@ -205,7 +205,7 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
-            remote: $(element).attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
