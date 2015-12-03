@@ -199,9 +199,9 @@ class Menu extends AbstractMenu
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
-        foreach ($menuItems as $name => $item) {
-            $parent = $item['parent_id'];
-            $level = $item['level'];
+        foreach ($menuItems as $name => $data) {
+            $parent = $data['parent_id'];
+            $level = $data['level'];
 
             if (($start && $start > $level)
                 || ($end && $level > $end)
@@ -210,7 +210,7 @@ class Menu extends AbstractMenu
                 continue;
             }
 
-            $item = new Item($this, $name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
+            $item = new Item($this, $name, $data);
             $this->add($item);
 
             // Placeholder page.
