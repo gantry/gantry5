@@ -3,7 +3,17 @@ body #admin-main .admin-block {
 }
 
 #g5-container {
+  font-family: inherit;
   position: static;
+}
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  font-size: inherit;
+}
+#g5-container h1, #g5-container h2 {
+  margin: 1.5rem 0 !important;
+}
+#g5-container .button i {
+  margin-right: 0 !important;
 }
 #g5-container .inner-container {
   margin: 0;

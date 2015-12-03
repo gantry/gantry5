@@ -194,7 +194,7 @@
         height: 38px;
     }
 
-    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .g-colorpicker, .multi.selectize-control {
+    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
@@ -220,7 +220,7 @@
         }
     }
 
-    .selectize-control.single {
+    .g-selectize-control.g-single {
         width: 250px !important;
         @include breakpoint(tablet-range) {
             width: 100% !important;
