@@ -20,10 +20,6 @@ class Hydrogen extends Theme
      */
     public static function getSubscribedEvents()
     {
-        if (defined('GRAV_CLI')) {
-            return [];
-        }
-
         return [
             'onThemeInitialized' => ['onThemeInitialized', 0]
         ];
