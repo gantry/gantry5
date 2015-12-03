@@ -35,4 +35,16 @@
 			}
 		}
 	}
+
+	a {
+		color: $grav-link-color;
+		&:hover {
+			color: $grav-link-hover;
+		}
+	}
+}
+
+.notice.alert {
+	border-radius: 0;
+	border: 0;
 }

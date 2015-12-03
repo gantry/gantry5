@@ -1870,7 +1870,7 @@ body.g-prime {
   border-top: 1px solid #ddd;
 }
 
-.com_gantry5 #footer, .gantry5 #footer {
+.com_gantry5 #footer, .gantry5 #footer, .admin-block #footer {
   background-color: #e7e7e7;
   padding: 1em 0 3rem;
   margin-bottom: 0;
@@ -1884,14 +1884,14 @@ body.g-prime {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.com_gantry5 #footer .g-version, .com_gantry5 #footer .g-version-date, .gantry5 #footer .g-version, .gantry5 #footer .g-version-date {
+.com_gantry5 #footer .g-version, .com_gantry5 #footer .g-version-date, .gantry5 #footer .g-version, .gantry5 #footer .g-version-date, .admin-block #footer .g-version, .admin-block #footer .g-version-date {
   color: #8F4DAE;
 }
-.com_gantry5 #footer a, .gantry5 #footer a {
+.com_gantry5 #footer a, .gantry5 #footer a, .admin-block #footer a {
   color: #439A86 !important;
   text-decoration: none;
 }
-.com_gantry5 #footer a:hover, .gantry5 #footer a:hover {
+.com_gantry5 #footer a:hover, .gantry5 #footer a:hover, .admin-block #footer a:hover {
   color: #245348 !important;
 }
 
