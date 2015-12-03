@@ -189,7 +189,7 @@ body #admin-main .admin-block {
   line-height: inherit;
 }
 #g5-container h1, #g5-container h2 {
-  margin: 1.5rem 0 !important;
+  margin: 0.5rem 0 1.5rem !important;
 }
 #g5-container .page-title {
   color: inherit;
