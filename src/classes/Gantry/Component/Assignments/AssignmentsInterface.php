@@ -8,7 +8,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Gantry\WordPress\Assignments;
+namespace Gantry\Component\Assignments;
 
 interface AssignmentsInterface
 {

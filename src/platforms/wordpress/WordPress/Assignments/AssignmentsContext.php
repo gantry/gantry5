@@ -10,6 +10,8 @@
 
 namespace Gantry\WordPress\Assignments;
 
+use Gantry\Component\Assignments\AssignmentsInterface;
+
 class AssignmentsContext implements AssignmentsInterface
 {
     public $type = 'context';
