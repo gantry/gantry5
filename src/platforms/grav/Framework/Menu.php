@@ -236,7 +236,7 @@ class Menu extends AbstractMenu
                         // Deal with home page.
                         $item->url('/');
                     } else {
-                        $item->url('/' . $item->link);
+                        $item->url($item->link);
                     }
             }
         }
