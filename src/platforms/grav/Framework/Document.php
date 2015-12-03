@@ -78,7 +78,10 @@ class Document extends BaseDocument
 
     public static function rootUri()
     {
-        $grav = Grav::instance();
-        return rtrim($grav['base_url'], '/');
+        // TODO: investigate why this is not needed.
+        //$grav = Grav::instance();
+        //return rtrim($grav['base_url'], '/');
+
+        return '';
     }
 }
