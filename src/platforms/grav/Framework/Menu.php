@@ -27,6 +27,8 @@ class Menu extends AbstractMenu
 {
     use GantryTrait, GravTrait;
 
+    protected $pages = [];
+
     public function __construct()
     {
         $this->default = 'home';
@@ -117,12 +119,13 @@ class Menu extends AbstractMenu
         $grav = Grav::instance();
 
         // Initialize pages.
-        $pages = $grav['pages'];
+        $pages = $grav['pages']->all()->visible();
 
         // Return flat list of routes.
         $list = [];
+        $this->pages = [];
         /** @var Page $item */
-        foreach ($pages->all()->visible() as $item) {
+        foreach ($pages as $item) {
             $name = trim($item->route(), '/') ?: 'home';
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
             $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
@@ -145,8 +148,10 @@ class Menu extends AbstractMenu
                 'visible' => true,
                 'group' => 0,
                 'columns' => [],
-                'level' => substr_count($name, '/') + 1,
+                'level' => substr_count($item->route(), '/'),
             ];
+
+            $this->pages[$name] = 1;
         }
 
         return $list;
