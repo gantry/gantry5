@@ -69,12 +69,12 @@ class Router extends BaseRouter
         ];
 
         // TODO: Add support for nonces.
-        //$nonce = Utils::getNonce('gantry-admin');
-        //$this->container['routes'] = [
-        //    '1' => '/%s?nonce=' . $nonce,
-        //    'themes' => '',
-        //    'picker/layouts' => '/layouts?nonce=' . $nonce,
-        //];
+        $nonce = Utils::getNonce('gantry-admin');
+        $this->container['routes'] = [
+            '1' => '/%s?nonce=' . $nonce,
+            'themes' => '',
+            'picker/layouts' => '/layouts?nonce=' . $nonce,
+        ];
     }
 
     public function setTheme($theme)
