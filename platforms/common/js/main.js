@@ -3453,7 +3453,7 @@ var initSizes = function() {
     heightBottom = 0;
     initialSidebarCoords = sidebar[0].getBoundingClientRect();
     realSidebarTop = sidebar.position().top;
-    excludeTop = $('body.admin.com_gantry5 nav.navbar-fixed-top, #wpadminbar, #admin-main #titlebar');
+    excludeTop = $('body.admin.com_gantry5 nav.navbar-fixed-top, #wpadminbar, #admin-main #titlebar, #admin-main .grav-update.grav');
     excludeBottom = $('body.admin.com_gantry5 #status');
 
     if (excludeTop) {
