@@ -13,44 +13,20 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Prime\Pages;
+use Gantry\Component\Assignments\AbstractAssignments;
 
-class Assignments
+class Assignments extends AbstractAssignments
 {
-    protected $configuration_id;
-    protected $pages;
+    protected $platform = 'Prime';
 
-    public function __construct($configuration_id)
-    {
-        $this->configuration_id = $configuration_id;
-    }
-
-    public function get()
-    {
-        if (!$this->pages) {
-            $pages = new Pages();
-            $this->pages = [];
-            foreach ($pages as $page => $file) {
-                $path = explode('/', $page);
-                $this->pages[] = [
-                    'name' => 'page[' . $page . ']',
-                    'field' => ['id', 'link-' . preg_replace('|[^a-zA-Z0-9-]|', '-', $page)],
-                    'value' => 0, // TODO
-                    'label' => str_repeat('- ', count($path)) . ucwords(trim(end($path), '_'))
-                ];
-            }
-        }
-
-        return [['label' => 'Pages', 'items' => $this->pages]];
-    }
-
-    public function set($data)
-    {
-    }
-
+    /**
+     * Get all assignment types.
+     *
+     * @return array
+     */
     public function types()
     {
-        return ['pages'];
+        return ['page'];
     }
 
     public function getAssignment()
