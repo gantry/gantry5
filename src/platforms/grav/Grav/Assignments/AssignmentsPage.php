@@ -46,7 +46,7 @@ class AssignmentsPage implements AssignmentsInterface
                 'items' => $this->getItems()
         ];
 
-        return $list;
+        return [$list];
     }
 
     protected function getItems()
@@ -62,9 +62,8 @@ class AssignmentsPage implements AssignmentsInterface
         foreach ($pages as $page) {
             $route = trim($page->route(), '/');
             $items[] = [
-                'name' => 'page[' . $route . ']',
+                'name' => $route,
                 'field' => ['id', 'link/' . $route],
-                'value' => false,
                 'disabled' => !$page->isPage(),
                 'label' => str_repeat('—', substr_count($route, '/')) . ' ' . $page->title(),
             ];
