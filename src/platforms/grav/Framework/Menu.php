@@ -30,7 +30,7 @@ class Menu extends AbstractMenu
     public function __construct()
     {
         $this->default = 'home';
-        $this->active  = static::getGrav()['page'];
+        $this->active  = trim(static::getGrav()['page']->route(), '/');
     }
 
     /**
@@ -123,9 +123,10 @@ class Menu extends AbstractMenu
         $list = [];
         /** @var Page $item */
         foreach ($pages->all()->visible() as $item) {
-            $name = trim($item->route(), '/');
-            $id = preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root';
-            $parent_id = dirname($name) != '.' ? preg_replace('|[^a-z0-9]|i', '-', dirname($name)) : 'root';
+            $name = trim($item->route(), '/') ?: 'home';
+            $id = preg_replace('|[^a-z0-9]|i', '-', $name);
+            $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
+
             $list[$name] = [
                 'id' => $id,
                 'type' => $item->isPage() ? 'link' : 'separator',
@@ -189,7 +190,6 @@ class Menu extends AbstractMenu
         $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = array_merge_recursive($this->getItemsFromPlatform($start <= $end ? $end : -1), $items) ;
-        ksort($menuItems);
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
