@@ -18,4 +18,21 @@
 		font-size: 0.75em;
 	}
 
+	.alert {
+		margin: ($content-padding / 2) 0 !important;
+		padding: 1rem;
+
+		p {
+			padding: 0;
+			margin: 1rem 0;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
 }

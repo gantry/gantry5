@@ -1,5 +1,9 @@
 // Load Admin Configuration
 @import "configuration/admin/base";
+@import "configuration/nucleus/layout";
+
+// Load Optional Nucleus Assets
+@import "nucleus/theme/alerts";
 
 // Core
 @import "grav-admin/core";
