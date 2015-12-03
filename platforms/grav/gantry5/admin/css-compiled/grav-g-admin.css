@@ -89,6 +89,9 @@ body #admin-main .admin-block {
   box-shadow: none;
   color: inherit;
 }
+#g5-container #menu-editor li.block.in-between.placeholder {
+  flex: inherit;
+}
 #g5-container #main-header {
   position: fixed;
   z-index: 1;

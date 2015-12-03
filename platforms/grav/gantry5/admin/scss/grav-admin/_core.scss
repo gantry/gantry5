@@ -18,6 +18,12 @@ body #admin-main .admin-block {
         color: inherit;
     }
 
+    #menu-editor {
+        li.block.in-between.placeholder {
+            flex: inherit;
+        }
+    }
+
     #main-header {
         $grav-header-height: 4.2rem;
         position: fixed;
