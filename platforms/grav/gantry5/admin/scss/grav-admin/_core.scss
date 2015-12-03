@@ -6,15 +6,8 @@ body #admin-main .admin-block {
 // G5 Container
 #g5-container {
     font-family: inherit;
+    font-weight: inherit;
     position: static;
-
-    h1, h2, h3, h4, h5, h6 {
-        font-size: inherit;
-    }
-
-    h1, h2 {
-        margin: 1.5rem 0 !important;
-    }
 
     .button i {
         margin-right: 0 !important;

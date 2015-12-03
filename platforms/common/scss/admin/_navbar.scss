@@ -104,6 +104,11 @@
             @include breakpoint(tablet-range) {
                 padding: 0 $content-padding - 0.2;
             }
+
+            #configuration-selector {
+                display: inline-block;
+                margin-bottom: 0;
+            }
         }
     }
 

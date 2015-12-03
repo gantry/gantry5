@@ -4,13 +4,8 @@ body #admin-main .admin-block {
 
 #g5-container {
   font-family: inherit;
+  font-weight: inherit;
   position: static;
-}
-#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
-  font-size: inherit;
-}
-#g5-container h1, #g5-container h2 {
-  margin: 1.5rem 0 !important;
 }
 #g5-container .button i {
   margin-right: 0 !important;
@@ -112,31 +107,20 @@ body #admin-main .admin-block {
   color: #3180c2;
 }
 
-#g5-container h1 {
-  font-size: 2.25rem;
-}
-#g5-container h2 {
-  font-size: 1.9rem;
-}
-#g5-container h3 {
-  font-size: 1.5rem;
-}
-#g5-container h4 {
-  font-size: 1.15rem;
-}
-#g5-container h5 {
-  font-size: 1rem;
-}
-#g5-container h6 {
-  font-size: 0.85rem;
-}
 #g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  font-size: inherit;
   line-height: inherit;
+}
+#g5-container h1, #g5-container h2 {
+  margin: 1.5rem 0 !important;
 }
 #g5-container .page-title {
   color: inherit;
   text-shadow: none;
   line-height: inherit;
+}
+#g5-container .g-optgroup-header {
+  font-size: 0.75em;
 }
 
 body.com_gantry5 #g5-container .navbar-block #gantry-logo {
