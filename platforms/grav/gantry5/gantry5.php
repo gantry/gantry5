@@ -82,6 +82,13 @@ class Gantry5Plugin extends Plugin
         if ($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route)) {
             return;
         }
+        $results = explode('/', $admin->route, 2);
+        $theme = array_shift($results);
+
+        // Do not initialize Gantry on non-Gantry themes.
+        if ($theme && !is_file("themes://{$theme}/gantry/theme.yaml")) {
+            return;
+        }
 
         $this->enable([
             'onAdminThemeInitialized' => ['runAdmin', 0]
@@ -95,9 +102,6 @@ class Gantry5Plugin extends Plugin
         }
 
         $base = rtrim($this->grav['base_url'], '/');
-        $results = explode('/', $admin->route, 2);
-        $theme = array_shift($results);
-
         $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
 
         if ($theme) {
