@@ -12,6 +12,8 @@ namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
+use Gantry\Component\Filesystem\Streams;
+use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
@@ -120,18 +122,29 @@ class Gantry5Plugin extends Plugin
             return;
         }
 
-        // Initialize theme stream.
-        $gantry['platform']->set(
-            'streams.gantry-theme.prefixes',
-            ['' => [
-                "user://gantry5/themes/{$gantry['theme.name']}",
-                "gantry-themes://{$gantry['theme.name']}",
-                "gantry-themes://{$gantry['theme.name']}/common"
-            ]]
-        );
+        $theme = $gantry['theme.name'];
 
-        $gantry['locator'];
-        $gantry['streams'];
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+
+        $details = new ThemeDetails($theme);
+
+        // Initialize theme stream.;
+        $locator->addPath('gantry-theme', '', ["user://gantry5/themes/{$theme}"] + $details->getPaths());
+
+        while ($parent = $details->parent()) {
+            $details = new ThemeDetails($parent);
+
+            // Initialize parent theme stream.
+            $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $parent);
+            if (!$locator->schemeExists($streamName)) {
+                $streams->add([$streamName => ['paths' => $details->getPaths()]]);
+            }
+        }
+        $streams->register();
 
         /** @var \Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
@@ -158,8 +171,7 @@ class Gantry5Plugin extends Plugin
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0]
             ]);
         }
-
-    }
+   }
 
     public function runAdmin()
     {
