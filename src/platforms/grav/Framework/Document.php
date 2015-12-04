@@ -21,6 +21,13 @@ class Document extends BaseDocument
         static::registerScripts('head');
     }
 
+    public static function rootUri()
+    {
+        $grav = Grav::instance();
+
+        return rtrim($grav['base_url'], '/') ?: '/';
+    }
+
     public static function registerStyles()
     {
         if (empty(self::$styles['head'])) {
@@ -35,7 +42,7 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        $grav['assets']->addCss($style['href'], 100 + $priority);
+                        $grav['assets']->addCss(static::getRelativeUrl($style['href']), 100 + $priority);
                         break;
                     case 'inline':
                         $grav['assets']->addInlineCss($style['content'], 100 + $priority);
@@ -59,7 +66,7 @@ class Document extends BaseDocument
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
-                        $grav['assets']->AddJs($script['src'], [
+                        $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
                             'priority' => 100 + $priority,
                             'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
                             'group' => $group,
@@ -76,12 +83,13 @@ class Document extends BaseDocument
         }
     }
 
-    public static function rootUri()
+    protected static function getRelativeUrl($url)
     {
-        // TODO: investigate why this is not needed.
-        //$grav = Grav::instance();
-        //return rtrim($grav['base_url'], '/');
+        $base = rtrim(static::rootUri(), '/') . '/';
 
-        return '';
+        if (strpos($url, $base) === 0) {
+            return substr($url, strlen($base));
+        }
+        return $url;
     }
 }
