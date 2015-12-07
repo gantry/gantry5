@@ -6,13 +6,14 @@
         - Added support for [Grav](http://getgrav.org)
     2. [](#improved)
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
+        - Layout Manager: Add Row and Section Settings action icons are now always visible
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Fixed dismissal links alignment for alerts (fixes #1022)  
+        - Fixed dismissal links alignment for alerts (fixes #1022)
 4. [Grav](#grav)
     1. [](#new)
         - Welcome to the family!
-        
+
 # 5.2.4
 ## 30/11/2015
 

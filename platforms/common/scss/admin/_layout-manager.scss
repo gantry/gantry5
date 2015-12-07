@@ -137,7 +137,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             .section-actions {
-                opacity: 0;
+                opacity: 0.5;
                 @include transition(opacity 0.2s ease-out);
 
                 i {
