@@ -6,6 +6,9 @@
         - Added support for [Grav](http://getgrav.org)
     2. [](#improved)
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed dismissal links alignment for alerts (fixes #1022)  
 4. [Grav](#grav)
     1. [](#new)
         - Welcome to the family!
