@@ -26,11 +26,14 @@ class AssignmentsPage implements AssignmentsInterface
      */
     public function getRules()
     {
+        $grav = Grav::instance();
+        $route = trim($grav['page']->route(), '/');
+
         $rules = [];
 
-        // TODO:
+        $rules[$route ?: 'home'] = $this->priority;
 
-        return $rules;
+        return [$rules];
     }
 
     /**

@@ -15,6 +15,7 @@ use Gantry\Admin\Router;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\OutlineChooser;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
@@ -167,10 +168,9 @@ class Gantry5Plugin extends Plugin
 
         $this->theme = $theme;
 
-        $this->theme->setLayout('default');
-
         if (!$this->isAdmin()) {
             $this->enable([
+                'onPagesInitialized' => ['onThemePagesInitialized', 0],
                 'onTwigInitialized' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0]
             ]);
@@ -254,6 +254,21 @@ class Gantry5Plugin extends Plugin
         $twig = $this->grav['twig'];
 
         $twig->twig_vars['gantry_url'] = $this->base;
+    }
+
+    /**
+     * Replaces page object with admin one.
+     */
+    public function onThemePagesInitialized()
+    {
+        $gantry = Gantry::instance();
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+
+        $chooser = new OutlineChooser;
+
+        $theme->setLayout($chooser->select());
     }
 
     /**

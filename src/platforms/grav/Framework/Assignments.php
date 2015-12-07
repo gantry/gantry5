@@ -23,7 +23,7 @@ class Assignments extends AbstractAssignments
      */
     public function types()
     {
-        return ['page'];
+        return OutlineChooser::types();
     }
 
     public function getAssignment()
