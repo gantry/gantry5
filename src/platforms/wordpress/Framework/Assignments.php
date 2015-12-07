@@ -16,28 +16,26 @@ class Assignments extends AbstractAssignments
 {
     protected $platform = 'WordPress';
 
-    /**
-     * Get all assignment types.
-     *
-     * @return array
-     */
     public function types()
     {
-        return OutlineChooser::types();
+        $types = [
+            'context',
+            'menu',
+            'post',
+            'taxonomy',
+            'archive'
+        ];
+
+        return apply_filters('g5_assignments_types', $types);
     }
 
-    public function getAssignment()
-    {
-        return 'default';
-    }
 
-    public function setAssignment($value)
+    public function getPage()
     {
-        throw new \RuntimeException('Not implemented');
-    }
+        $list = parent::getPage();
 
-    public function assignmentOptions()
-    {
-        return [];
+        do_action('g5_assignments_page', $list);
+
+        return $list;
     }
 }

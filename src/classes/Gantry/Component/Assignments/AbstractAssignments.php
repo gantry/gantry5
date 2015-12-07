@@ -13,6 +13,8 @@
 
 namespace Gantry\Component\Assignments;
 
+use Gantry\Component\Config\CompiledConfig;
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -20,11 +22,40 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class AbstractAssignments
 {
+    /**
+     * @var string
+     */
     protected $configuration;
+
+    /**
+     * @var string
+     */
     protected $className = '\Gantry\%s\Assignments\Assignments%s';
+
+    /**
+     * @var string
+     */
     protected $platform;
 
-    public function __construct($configuration)
+    /**
+     * @var AssignmentFilter
+     */
+    protected $filter;
+
+    /**
+     * @var array
+     */
+    protected $candidates;
+
+    /**
+     * @var array
+     */
+    protected $page;
+
+    /**
+     * @param string $configuration
+     */
+    public function __construct($configuration = null)
     {
         $this->configuration = $configuration;
     }
@@ -45,6 +76,89 @@ abstract class AbstractAssignments
     public function set(array $data)
     {
         $this->save($data);
+    }
+
+    /**
+     * Select assigned outline.
+     *
+     * @param string $default
+     * @return string
+     */
+    public function select($default = 'default')
+    {
+        $scores = $this->scores();
+
+        return key($scores) ?: $default;
+    }
+
+    /**
+     * List matching outlines sorted by score.
+     *
+     * @return array
+     */
+    public function scores()
+    {
+        $this->init();
+        return $this->filter->scores($this->candidates, $this->page);
+    }
+
+    /**
+     * List matching outlines with matched assignments.
+     *
+     * @return array
+     */
+    public function matches()
+    {
+        $this->init();
+        return $this->filter->matches($this->candidates, $this->page);
+    }
+
+    /**
+     * Load all assignments.
+     *
+     * @return array
+     */
+    public function loadAssignments()
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        // Find all the assignment files.
+        $paths = $locator->findResources("gantry-config://");
+        $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
+
+        $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
+
+        $config = new CompiledConfig($cache, [$files], GANTRY5_ROOT);
+
+        return $config->load()->toArray();
+    }
+
+    /**
+     * Get all assignments for the current page.
+     *
+     * @return array
+     */
+    public function getPage()
+    {
+        $list = [];
+
+        foreach($this->types() as $type) {
+            $class = sprintf($this->className, $this->platform, ucfirst($type));
+
+            if (!class_exists($class)) {
+                throw new \RuntimeException("Assignment type {$type} is missing");
+            }
+
+            /** @var AssignmentsInterface $instance */
+            $instance = new $class;
+            $list[$type] = $instance->getRules();
+            unset($instance);
+        }
+
+        return $list;
     }
 
     /**
@@ -88,12 +202,10 @@ abstract class AbstractAssignments
     }
 
     /**
-     * Get all assignment types.
+     * Get list of all assignment types for assignments form.
      *
      * @return array
      */
-    abstract public function types();
-
     public function getTypes()
     {
         $list = [];
@@ -113,4 +225,20 @@ abstract class AbstractAssignments
 
         return $list;
     }
+
+    protected function init()
+    {
+        if (!$this->filter) {
+            $this->filter = new AssignmentFilter;
+            $this->candidates = $this->loadAssignments();
+            $this->page = $this->getPage();
+        }
+    }
+
+    /**
+     * Return list of assignment types.
+     *
+     * @return array
+     */
+    abstract public function types();
 }

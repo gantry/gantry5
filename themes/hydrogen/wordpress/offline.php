@@ -14,8 +14,6 @@ defined('ABSPATH') or die;
  * The template to display when page is offline
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
 $gantry = Gantry\Framework\Gantry::instance();
 $theme  = $gantry['theme'];
 

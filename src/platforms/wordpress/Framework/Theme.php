@@ -125,11 +125,11 @@ class Theme extends AbstractTheme
     {
         $gantry = Gantry::instance();
 
-        $chooser = new OutlineChooser;
+        $assignments = new Assignments;
 
         /** @var Theme $theme */
         $theme = $gantry['theme'];
-        $theme->setLayout($chooser->select());
+        $theme->setLayout($assignments->select());
     }
 
     public function widgets_init()

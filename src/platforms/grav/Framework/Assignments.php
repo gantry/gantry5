@@ -17,27 +17,14 @@ class Assignments extends AbstractAssignments
     protected $platform = 'Grav';
 
     /**
-     * Get all assignment types.
+     * Return list of assignment types.
      *
      * @return array
      */
     public function types()
     {
-        return OutlineChooser::types();
-    }
+        $types = ['page'];
 
-    public function getAssignment()
-    {
-        return 'default';
-    }
-
-    public function setAssignment($value)
-    {
-        throw new \RuntimeException('Not implemented');
-    }
-
-    public function assignmentOptions()
-    {
-        return [];
+        return $types;
     }
 }

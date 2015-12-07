@@ -14,8 +14,6 @@ defined('ABSPATH') or die;
  * The template for displaying 404 pages (Not Found)
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
-
 $gantry = Gantry\Framework\Gantry::instance();
 $theme  = $gantry['theme'];
 

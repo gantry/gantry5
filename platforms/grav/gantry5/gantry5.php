@@ -14,8 +14,8 @@ use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Assignments;
 use Gantry\Framework\Gantry;
-use Gantry\Framework\OutlineChooser;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
@@ -266,9 +266,9 @@ class Gantry5Plugin extends Plugin
         /** @var \Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
-        $chooser = new OutlineChooser;
+        $assignments = new Assignments();
 
-        $theme->setLayout($chooser->select());
+        $theme->setLayout($assignments->select());
     }
 
     /**
