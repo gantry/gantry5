@@ -35,7 +35,7 @@ class ThemeList
         /** @var array|ThemeDetails[] $list */
         $list = [];
 
-        ksort($files);
+        natsort($files);
 
         foreach ($files as $theme) {
             if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
