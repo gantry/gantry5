@@ -44,7 +44,14 @@ class Router extends BaseRouter
         // Figure out the action we want to make.
         $this->method = $request->getMethod();
         $this->path = $parts;
-        $this->resource = $theme ? (array_shift($this->path) ?: 'about') : 'themes';
+        if (!$theme) {
+            $this->resource = array_shift($this->path) ?: 'themes';
+        } else {
+            if (!$this->path) {
+                $this->path = ['configurations', 'styles'];
+            }
+            $this->resource = array_shift($this->path);
+        }
         $this->format = $uri->extension('html');
         $ajax = ($this->format == 'json');
 
