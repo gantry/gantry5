@@ -226,6 +226,35 @@ abstract class AbstractAssignments
         return $list;
     }
 
+    /**
+     * Get selected assignment option.
+     *
+     * @return string
+     */
+    public function getAssignment()
+    {
+        return 'default';
+    }
+
+    /**
+     * Set extra options for assignments.
+     *
+     * @param $value
+     */
+    public function setAssignment($value)
+    {
+    }
+
+    /**
+     * Get extra options for assignments.
+     *
+     * @return array
+     */
+    public function assignmentOptions()
+    {
+        return [];
+    }
+
     protected function init()
     {
         if (!$this->filter) {

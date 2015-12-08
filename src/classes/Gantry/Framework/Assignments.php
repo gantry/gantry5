@@ -13,37 +13,11 @@
 
 namespace Gantry\Framework;
 
-class Assignments
+use Gantry\Component\Assignments\AbstractAssignments;
+
+class Assignments extends AbstractAssignments
 {
-    public function __construct()
-    {
-    }
-
-    public function get()
-    {
-        return [];
-    }
-
-    public function set($data)
-    {
-    }
-
     public function types()
-    {
-        return [];
-    }
-
-    public function getAssignment()
-    {
-        return 'default';
-    }
-
-    public function setAssignment($value)
-    {
-        throw new \RuntimeException('Not implemented');
-    }
-
-    public function assignmentOptions()
     {
         return [];
     }
