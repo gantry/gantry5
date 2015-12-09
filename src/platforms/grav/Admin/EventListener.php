@@ -11,6 +11,8 @@
 namespace Gantry\Admin;
 
 use Gantry\Framework\Gantry;
+use Grav\Common\Grav;
+use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -64,5 +66,87 @@ class EventListener implements EventSubscriberInterface
 
     public function onMenusSave(Event $event)
     {
+        $defaults = [
+            'id' => 0,
+            'layout' => 'list',
+            'target' => '_self',
+            'dropdown' => '',
+            'icon' => '',
+            'image' => '',
+            'subtitle' => '',
+            'icon_only' => false,
+            'visible' => true,
+            'group' => 0,
+            'columns' => []
+        ];
+
+        $menu = $event->menu;
+
+        // Each menu level has ordering from 1..n counting all menu items in the same level.
+        $ordering = $this->flattenOrdering($menu['ordering']);
+
+        $grav = Grav::instance();
+
+        // Initialize pages.
+        $pages = $grav['pages']->all()->visible();
+
+        /** @var Page $page */
+        foreach ($pages as $page) {
+            $key = trim($page->route(), '/');
+            $order = isset($ordering[$key]) ? $ordering[$key] : 0;
+            if ($order) {
+                $page->order($order);
+            }
+
+            $page->title($menu["items.{$key}.title"]);
+
+            // Remove fields stored in Grav.
+            if (isset($menu["items.{$key}"])) {
+                unset($menu["items.{$key}.type"], $menu["items.{$key}.link"], $menu["items.{$key}.title"]);
+            }
+        }
+
+        foreach ($menu['items'] as $key => $item) {
+            // Do not save default values.
+            foreach ($defaults as $var => $value) {
+                if (isset($item[$var]) && $item[$var] == $value) {
+                    unset($item[$var]);
+                }
+            }
+
+            // Do not save derived values.
+            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
+
+            // Particles have no link.
+            if (isset($item['type']) && $item['type'] === 'particle') {
+                unset($item['link']);
+            }
+
+            if ($item) {
+                $event->menu["items.{$key}"] = $item;
+            } else {
+                unset($menu["items.{$key}"]);
+            }
+        }
+    }
+
+    protected function flattenOrdering(array $ordering, $parents = [])
+    {
+        $list = [];
+        $i = 0;
+        $group = isset($ordering[0]);
+        foreach ($ordering as $id => $children) {
+            $tree = $parents;
+            if (!$group && !preg_match('/^(__particle|__widget)/', $id)) {
+                $tree[] = $id;
+                $name = implode('/', $tree);
+                $list[$name] = ++$i;
+            }
+            if (is_array($children)) {
+                $list += $this->flattenOrdering($children, $tree);
+            }
+        }
+
+        return $list;
     }
 }
