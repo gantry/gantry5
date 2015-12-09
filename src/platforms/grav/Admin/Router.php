@@ -75,7 +75,6 @@ class Router extends BaseRouter
             'picker/layouts' => '/layouts',
         ];
 
-        // TODO: Add support for nonces.
         $nonce = Utils::getNonce('gantry-admin');
         $this->container['routes'] = [
             '1' => '/%s?nonce=' . $nonce,
@@ -111,12 +110,10 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        // TODO: Add support for nonces.
         /** @var Request $request */
-        //$request = $this->container['request'];
-        //$nonce = $request['nonce'];
-        //return isset($nonce) && Utils::verifyNonce($nonce, 'gantry-admin');
-        return true;
+        $request = $this->container['request'];
+        $nonce = $request->get->get('nonce');
+        return isset($nonce) && Utils::verifyNonce($nonce, 'gantry-admin');
     }
 
     protected function send(Response $response)
