@@ -50,6 +50,20 @@ trait ThemeTrait
     protected $details;
 
     /**
+     * Register Theme stream.
+     *
+     * @param string $savePath
+     */
+    public function registerStream($savePath = null)
+    {
+        $streamName = $this->details()->addStreams();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = self::$gantry['locator'];
+        $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
+    }
+
+    /**
      * Update all CSS files in the theme.
      *
      * @param array $configurations
