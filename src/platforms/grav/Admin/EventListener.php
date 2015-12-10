@@ -86,24 +86,34 @@ class EventListener implements EventSubscriberInterface
         $ordering = $this->flattenOrdering($menu['ordering']);
 
         $grav = Grav::instance();
+        $pages = $grav['pages'];
 
         // Initialize pages.
-        $pages = $grav['pages']->all()->visible();
+        $visible = $pages->all()->visible();
+        $list = [];
 
         /** @var Page $page */
-        foreach ($pages as $page) {
-            $key = trim($page->route(), '/');
-            $order = isset($ordering[$key]) ? $ordering[$key] : 0;
+        foreach ($visible as $page) {
+            $route = trim($page->route(), '/');
+            $order = isset($ordering[$route]) ? $ordering[$route] : 0;
+            $parent = $page->parent();
             if ($order) {
+                $list[] = $page = $page->move($parent);
                 $page->order($order);
+            } else {
+                $list[] = $page;
             }
 
-            $page->title($menu["items.{$key}.title"]);
+            $page->title($menu["items.{$route}.title"]);
 
             // Remove fields stored in Grav.
-            if (isset($menu["items.{$key}"])) {
-                unset($menu["items.{$key}.type"], $menu["items.{$key}.link"], $menu["items.{$key}.title"]);
+            if (isset($menu["items.{$route}"])) {
+                unset($menu["items.{$route}.type"], $menu["items.{$route}.link"], $menu["items.{$route}.title"]);
             }
+        }
+
+        foreach ($list as $page) {
+            $page->save(true);
         }
 
         foreach ($menu['items'] as $key => $item) {
