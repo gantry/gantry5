@@ -57,8 +57,8 @@ var compileCSS = function(app) {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
         .on('error', gutil.log)
-        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
         .pipe(rename(_out))
+        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; } })))
         .pipe(gulp.dest(_dest));
 };
 
