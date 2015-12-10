@@ -13,7 +13,7 @@
     "sifter": "^0.4.5",
     "slick": "^1.12.2",
     "sortablejs": "w00fz/Sortable#events-patch",
-    "webfontloader": "^1.6.15"
+    "webfontloader": "^1.6.16"
   },
   "devDependencies": {
     "browserify": "^12.0.1",
@@ -28,6 +28,6 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.1",
-    "yargs": "^3.30.0"
+    "yargs": "^3.31.0"
   }
 }
