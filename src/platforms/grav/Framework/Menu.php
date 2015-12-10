@@ -32,7 +32,10 @@ class Menu extends AbstractMenu
     public function __construct()
     {
         $this->default = 'home';
-        $this->active  = trim(static::getGrav()['page']->route(), '/');
+
+        $grav = static::getGrav();
+        $page = $grav['page'];
+        $this->active  = $page ? trim($page->route(), '/') : null;
     }
 
     /**
