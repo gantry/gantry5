@@ -18,7 +18,7 @@ module.[id | title | position | enabled | access]
                         {% for module in gantry.platform.listModules %}
                         <li data-mm-module="{{ module.id }}" data-mm-type="module">
                             <span class="module-infos">
-                                <span class="g-tooltip g-tooltip-right g-tooltip-bottom" data-title="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}"><i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}"></i></span>
+                                <span data-title="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}" data-tip="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}" data-tip-place="top-left"><i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}"></i></span>
                             </span>
                             <span class="module-wrapper">
                                 <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">

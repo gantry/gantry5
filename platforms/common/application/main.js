@@ -134,7 +134,10 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        var feedback = 'Last Saved: ' + prettyDate.format(element.lastSaved);
+        element
+            .data('tip', feedback)
+            .data('title', feedback);
     });
 
     // Save
@@ -352,7 +355,8 @@ var modules = {
     particles: require('./particles'),
     zen: require('elements/zen'),
     moofx: require('moofx'),
-    atoms: require('./pagesettings')
+    atoms: require('./pagesettings'),
+    tips: require('./ui/tooltips')
 };
 
 window.G5 = modules;

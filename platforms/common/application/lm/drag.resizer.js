@@ -51,7 +51,7 @@ var Resizer = new prime({
     start: function(event, element, siblings, offset) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection

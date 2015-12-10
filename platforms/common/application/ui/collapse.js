@@ -9,7 +9,7 @@ var Cookie = {
         var date = new Date();
         date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
 
-        var host = window.location.host.toString(),
+        var host   = window.location.host.toString(),
             domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
 
         if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
@@ -26,7 +26,7 @@ var Cookie = {
 };
 
 var loadFromStorage = function() {
-    var storage = Cookie.read('g5-collapsed') || {},
+    var storage    = Cookie.read('g5-collapsed') || {},
         collapsers = $('[data-g-collapse]');
     if (!collapsers) { return false; }
 
@@ -39,7 +39,9 @@ var loadFromStorage = function() {
         handle = data.handle ? item.find(data.handle) : item.find('.g-collapse');
         panel = data.target ? item.find(data.target) : item;
         card = item.parent('.card') || panel;
-        handle.data('title', value ? data.expand : data.collapse);
+        handle
+            .data('title', value ? data.expand : data.collapse)
+            .data('tip', value ? data.expand : data.collapse);
 
         panel.attribute('style', null);
         card[!value ? 'removeClass' : 'addClass']('g-collapsed');
@@ -67,8 +69,8 @@ ready(function() {
         }
 
         var collapsed = storage[data.id],
-            panel = data.target ? element.find(data.target) : element,
-            card = panel.parent('.card') || panel;
+            panel     = data.target ? element.find(data.target) : element,
+            card      = panel.parent('.card') || panel;
 
         if (card && card.hasClass('g-collapsed')) {
             card.removeClass('g-collapsed');
@@ -88,7 +90,9 @@ ready(function() {
                 element.attribute('style', null);
             }
 
-            data.handle.data('title', !collapsed ? data.expand : data.collapse);
+            data.handle
+                .data('title', !collapsed ? data.expand : data.collapse)
+                .data('tip', !collapsed ? data.expand : data.collapse);
             storage[data.id] = !collapsed;
             data.collapsed = !collapsed;
 
@@ -116,11 +120,11 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode = element.data('g-collapse-all') == 'true',
-            parent = element.parent('.g-filter-actions'),
-            container = parent.nextSibling(),
+        var mode       = element.data('g-collapse-all') == 'true',
+            parent     = element.parent('.g-filter-actions'),
+            container  = parent.nextSibling(),
             collapsers = container.search('[data-g-collapse]'),
-            storage = Cookie.read('g5-collapsed') || {},
+            storage    = Cookie.read('g5-collapsed') || {},
             panel, data, handle, card;
 
         if (!collapsers) { return; }
@@ -144,17 +148,17 @@ ready(function() {
 
     // filter by card title
     body.delegate('input', '[data-g-collapse-filter]', function(event, element) {
-        var parent = element.parent('.g-filter-actions'),
+        var parent    = element.parent('.g-filter-actions'),
             container = parent.nextSibling(),
-            cards = container.search('.card'),
-            value = element.value();
+            cards     = container.search('.card'),
+            value     = element.value();
 
         if (!cards) { return; }
 
         if (!value) { cards.attribute('style', null); }
         cards.forEach(function(element, index) {
             element = $(element);
-            var title = trim(element.find('h4 .g-title').text()),
+            var title   = trim(element.find('h4 .g-title').text()),
                 matches = title.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
             if (matches) { element.attribute('style', null); }

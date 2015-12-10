@@ -128,8 +128,17 @@ ready(function() {
             parent[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
-            wrapper[excluded || duplicate ? 'addClass' : 'removeClass']('g-tooltip');
-            wrapper.data('title', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null));
+            wrapper
+                .data('tip', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null))
+                .data('tip-place', 'top-right')
+                .data('tip-spacing', 2)
+                .data('tip-offset', 8);
+
+            if (excluded || duplicate) {
+                window.G5.tips.get(wrapper[0]).show();
+            } else {
+                window.G5.tips.remove(wrapper[0]);
+            }
         }
 
         if (keyValue && !excluded && !duplicate) {

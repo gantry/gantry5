@@ -61,7 +61,8 @@ paths = {
     js: [
         { // admin
             in: './platforms/common/application/main.js',
-            out: './platforms/common/js/main.js'
+            out: './platforms/common/js/main.js',
+            expose: [{lib: './platforms/common/js/tooltips.js', require: 'ext/tooltips'}]
         },
         { // frontend
             in: './assets/common/application/main.js',
@@ -151,6 +152,7 @@ var compileCSS = function(app) {
 var compileJS = function(app, watching) {
     var _in   = app.in,
         _out  = app.out.split(/[\\/]/).pop(),
+        _exp  = app.expose,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
         _maps = './' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
@@ -167,6 +169,13 @@ var compileJS = function(app, watching) {
         packageCache: {},
         fullPaths: false
     });
+
+    if (_exp) {
+        _exp.forEach(function(expose){
+            bundle.require(expose.lib, { expose: expose.require });
+        });
+    }
+
 
     if (watching) {
         bundle = watchify(bundle);

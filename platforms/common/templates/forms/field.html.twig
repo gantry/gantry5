@@ -25,7 +25,7 @@
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        <span class="g-tooltip" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
+                        <span data-tip="{{ field.description|raw }}" data-tip-place="top-right" aria-label="{{ field.description|e }}" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
                     {% else %}
                         {{ field.label|e }}
                     {% endif %}

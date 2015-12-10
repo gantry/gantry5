@@ -28,8 +28,7 @@ var ready          = require('elements/domready'),
 
 require('../ui/popover');
 
-var builder, layoutmanager, lmhistory, savestate;
-
+var builder, layoutmanager, lmhistory, savestate, Tips;
 
 builder = new Builder();
 lmhistory = new LMHistory();
@@ -210,7 +209,7 @@ ready(function() {
     // Grid same widths button (evenize, equalize)
     ['click', 'touchend'].forEach(function(evt){
         body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
-            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            window.G5.tips.hide(element[0]);
             var clientRect = element[0].getBoundingClientRect();
             if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
@@ -236,20 +235,19 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
-            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid';
 
-        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({
-            position: 'absolute',
-            top: 26
-        }).style(tooltips.equalize ? 'right' : 'left', -30);
+        element.data('tip', msg).data('tip-offset', -30);
 
-        element.LMTooltip = tooltip;
+        window.G5.tips
+            .get(element[0])
+            .content(msg)
+            .place(tooltips.equalize ? 'top-left' : 'top-right')
+            .show();
     });
 
     body.delegate('mouseout', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
     });
 
     // Clear Layout

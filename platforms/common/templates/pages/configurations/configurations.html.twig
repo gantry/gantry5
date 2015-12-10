@@ -52,10 +52,10 @@
                             </span>
                             <span class="float-right">23 positions</span>#}
                             <div class="center">
-                                <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
+                                <a data-tip="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
                                     <i class="fa fa-fw fa-pencil"></i>
                                 </a>
-                                <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
+                                <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary">
                                     <i class="fa fa-fw fa-copy"></i>
                                 </button>
                             </div>

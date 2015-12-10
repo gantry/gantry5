@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -286,7 +286,7 @@ ready(function() {
 
 module.exports = Assignments;
 
-},{"../utils/async-foreach":56,"../utils/decouple":57,"../utils/elements.utils":58,"elements/domready":99,"mout/array/forEach":141,"mout/object/merge":201,"mout/string/trim":235,"prime/map":266}],3:[function(require,module,exports){
+},{"../utils/async-foreach":57,"../utils/decouple":58,"../utils/elements.utils":59,"elements/domready":100,"mout/array/forEach":142,"mout/object/merge":202,"mout/string/trim":236,"prime/map":267}],3:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -362,7 +362,7 @@ ready(function() {
     });
 });
 
-},{"../ui":48,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"elements":101,"elements/domready":99,"elements/zen":104,"mout/string/interpolate":224,"mout/string/trim":235}],4:[function(require,module,exports){
+},{"../ui":48,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"elements":102,"elements/domready":100,"elements/zen":105,"mout/string/interpolate":225,"mout/string/trim":236}],4:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -477,7 +477,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"../utils/history":66,"agent":69,"elements":101,"elements/domready":99,"mout/queryString/getParam":211,"mout/queryString/setParam":213,"mout/random/guid":215,"mout/string/trim":235}],5:[function(require,module,exports){
+},{"../ui":48,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"../utils/history":67,"agent":70,"elements":102,"elements/domready":100,"mout/queryString/getParam":212,"mout/queryString/setParam":214,"mout/random/guid":216,"mout/string/trim":236}],5:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -654,7 +654,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./dropdown-edit":4,"agent":69,"elements":101,"elements/domready":99,"elements/zen":104,"mout/object/keys":200,"mout/string/trim":235}],6:[function(require,module,exports){
+},{"../ui":48,"../utils/flags-state":62,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"./dropdown-edit":4,"agent":70,"elements":102,"elements/domready":100,"elements/zen":105,"mout/object/keys":201,"mout/string/trim":236}],6:[function(require,module,exports){
 "use strict";
 var ready      = require('elements/domready'),
     $          = require('elements/attributes'),
@@ -858,7 +858,7 @@ module.exports = {
     collect: collectFieldsValues
 };
 
-},{"../utils/flags-state":61,"../utils/history":66,"elements/attributes":96,"elements/domready":99,"mout/array/invoke":145,"mout/collection/forEach":154,"mout/lang/deepEquals":167,"mout/lang/is":168,"mout/lang/isString":177,"mout/object/has":198,"prime/map":266}],7:[function(require,module,exports){
+},{"../utils/flags-state":62,"../utils/history":67,"elements/attributes":97,"elements/domready":100,"mout/array/invoke":146,"mout/collection/forEach":155,"mout/lang/deepEquals":168,"mout/lang/is":169,"mout/lang/isString":178,"mout/object/has":199,"prime/map":267}],7:[function(require,module,exports){
 "use strict";
 // deprecated 5.2.0
 var prime      = require('prime'),
@@ -912,7 +912,7 @@ var Atom = new prime({
 
 module.exports = Atom;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":101,"elements/zen":104,"prime":265}],8:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./base":9,"elements":102,"elements/zen":105,"prime":266}],8:[function(require,module,exports){
 "use strict";
 // deprecated (5.2.0)
 var prime   = require('prime'),
@@ -983,7 +983,7 @@ var Atoms = new prime({
 
 module.exports = Atoms;
 
-},{"./section":17,"elements":101,"elements/zen":104,"mout/function/bind":157,"prime":265}],9:[function(require,module,exports){
+},{"./section":17,"elements":102,"elements/zen":105,"mout/function/bind":158,"prime":266}],9:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Options = require('prime-util/prime/options'),
@@ -1139,7 +1139,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"../id":24,"elements":101,"elements/traversal":103,"elements/zen":104,"mout/object/get":197,"mout/object/has":198,"mout/object/set":205,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],10:[function(require,module,exports){
+},{"../id":24,"elements":102,"elements/traversal":104,"elements/zen":105,"mout/object/get":198,"mout/object/has":199,"mout/object/set":206,"mout/string/trim":236,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],10:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1254,7 +1254,7 @@ var Block = new prime({
 
 module.exports = Block;
 
-},{"../../utils/elements.utils":58,"./base":9,"elements/zen":104,"mout/function/bind":157,"mout/number/enforcePrecision":188,"prime":265}],11:[function(require,module,exports){
+},{"../../utils/elements.utils":59,"./base":9,"elements/zen":105,"mout/function/bind":158,"mout/number/enforcePrecision":189,"prime":266}],11:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base = require('./base'),
@@ -1305,13 +1305,13 @@ var Container = new prime({
             actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
-        actions.html('<span class="g-tooltip g-tooltip-right" data-title="Container settings"><i aria-label="Configure Container Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
+        actions.html('<span data-tip="Container settings" data-tip-place="top-left"><i aria-label="Configure Container Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 
 module.exports = Container;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":101,"elements/zen":104,"prime":265}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./base":9,"elements":102,"elements/zen":105,"prime":266}],12:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
@@ -1360,7 +1360,7 @@ var Grid = new prime({
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":101,"prime":265}],13:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./base":9,"elements":102,"prime":266}],13:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -1395,7 +1395,7 @@ var Offcanvas = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
-        return '<div class="offcanvas-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span class="g-tooltip g-tooltip-right" data-title="Adds a new row in the offcanvas"><i class="fa fa-plus"></i></span> <span class="g-tooltip g-tooltip-right" data-title="Offcanvas settings"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        return '<div class="offcanvas-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the offcanvas" data-tip-place="top-left"><i class="fa fa-plus"></i></span> <span data-tip="Offcanvas settings" data-tip-place="top-left"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
     },
 
     getId: function() {
@@ -1405,7 +1405,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":63,"./section":17,"prime":265}],15:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./section":17,"prime":266}],15:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
@@ -1488,7 +1488,7 @@ var Particle = new prime({
 
 module.exports = Particle;
 
-},{"../../utils/get-ajax-url":63,"./atom":7,"elements":101,"mout/function/bind":157,"mout/number/enforcePrecision":188,"prime":265}],16:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./atom":7,"elements":102,"mout/function/bind":158,"mout/number/enforcePrecision":189,"prime":266}],16:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     trim     = require('mout/string/trim'),
@@ -1528,7 +1528,7 @@ var Position = new prime({
 
 module.exports = Position;
 
-},{"./particle":15,"mout/string/trim":235,"prime":265}],17:[function(require,module,exports){
+},{"./particle":15,"mout/string/trim":236,"prime":266}],17:[function(require,module,exports){
 "use strict";
 var prime = require('prime'),
     Base  = require('./base'),
@@ -1560,7 +1560,7 @@ var Section = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="g-tooltip g-tooltip-right" data-title="Adds a new row in the section"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="g-tooltip g-tooltip-right" data-title="Section settings"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
     },
 
     adopt: function(child) {
@@ -1626,7 +1626,7 @@ var Section = new prime({
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"./grid":12,"elements":101,"elements/insertion":102,"elements/zen":104,"mout/function/bind":157,"prime":265,"prime-util/prime/bound":261}],18:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./base":9,"./grid":12,"elements":102,"elements/insertion":103,"elements/zen":105,"mout/function/bind":158,"prime":266,"prime-util/prime/bound":262}],18:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1644,7 +1644,7 @@ var Spacer = new prime({
 
 module.exports = Spacer;
 
-},{"./particle":15,"prime":265}],19:[function(require,module,exports){
+},{"./particle":15,"prime":266}],19:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1659,7 +1659,7 @@ var System = new prime({
 
 module.exports = System;
 
-},{"./particle":15,"prime":265}],20:[function(require,module,exports){
+},{"./particle":15,"prime":266}],20:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     Section = require('./section'),
@@ -1693,7 +1693,7 @@ var Wrapper = new prime({
 
 module.exports = Wrapper;
 
-},{"../../utils/get-ajax-url":63,"./section":17,"prime":265}],21:[function(require,module,exports){
+},{"../../utils/get-ajax-url":64,"./section":17,"prime":266}],21:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     $       = require('elements'),
@@ -1930,7 +1930,7 @@ var Builder = new prime({
 
 module.exports = Builder;
 
-},{"./blocks/":13,"./id":24,"elements":101,"elements/attributes":96,"elements/traversal":103,"mout/array/flatten":140,"mout/collection/forEach":154,"mout/collection/size":156,"mout/lang/isArray":169,"mout/object/deepFillIn":190,"mout/object/forOwn":196,"mout/object/get":197,"mout/object/omit":204,"mout/object/set":205,"mout/object/unset":208,"mout/string/repeat":229,"mout/string/rpad":232,"prime":265,"prime/emitter":264}],22:[function(require,module,exports){
+},{"./blocks/":13,"./id":24,"elements":102,"elements/attributes":97,"elements/traversal":104,"mout/array/flatten":141,"mout/collection/forEach":155,"mout/collection/size":157,"mout/lang/isArray":170,"mout/object/deepFillIn":191,"mout/object/forOwn":197,"mout/object/get":198,"mout/object/omit":205,"mout/object/set":206,"mout/object/unset":209,"mout/string/repeat":230,"mout/string/rpad":233,"prime":266,"prime/emitter":265}],22:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -1984,7 +1984,7 @@ var Resizer = new prime({
     start: function(event, element, siblings, offset) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection
@@ -2139,7 +2139,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":46,"../utils/elements.utils":58,"elements/delegation":98,"elements/events":100,"mout/function/bind":157,"mout/lang/isString":177,"mout/math/clamp":182,"mout/math/map":184,"mout/number/enforcePrecision":188,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],23:[function(require,module,exports){
+},{"../ui/drag.events":46,"../utils/elements.utils":59,"elements/delegation":99,"elements/events":101,"mout/function/bind":158,"mout/lang/isString":178,"mout/math/clamp":183,"mout/math/map":185,"mout/number/enforcePrecision":189,"mout/object/get":198,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],23:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
@@ -2232,7 +2232,7 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":149,"mout/lang/deepEquals":167,"mout/object/merge":201,"prime":265,"prime/emitter":264}],24:[function(require,module,exports){
+},{"mout/array/slice":150,"mout/lang/deepEquals":168,"mout/object/merge":202,"prime":266,"prime/emitter":265}],24:[function(require,module,exports){
 'use strict';
 
 var keys     = require('mout/object/keys'),
@@ -2261,7 +2261,7 @@ var ID = function(options) {
 };
 
 module.exports = ID;
-},{"mout/array/contains":133,"mout/object/keys":200,"mout/random/randInt":218}],25:[function(require,module,exports){
+},{"mout/array/contains":134,"mout/object/keys":201,"mout/random/randInt":219}],25:[function(require,module,exports){
 "use strict";
 var ready          = require('elements/domready'),
     $              = require('elements/attributes'),
@@ -2292,8 +2292,7 @@ var ready          = require('elements/domready'),
 
 require('../ui/popover');
 
-var builder, layoutmanager, lmhistory, savestate;
-
+var builder, layoutmanager, lmhistory, savestate, Tips;
 
 builder = new Builder();
 lmhistory = new LMHistory();
@@ -2474,7 +2473,7 @@ ready(function() {
     // Grid same widths button (evenize, equalize)
     ['click', 'touchend'].forEach(function(evt){
         body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
-            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            window.G5.tips.hide(element[0]);
             var clientRect = element[0].getBoundingClientRect();
             if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
@@ -2500,20 +2499,19 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
-            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid';
 
-        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({
-            position: 'absolute',
-            top: 26
-        }).style(tooltips.equalize ? 'right' : 'left', -30);
+        element.data('tip', msg).data('tip-offset', -30);
 
-        element.LMTooltip = tooltip;
+        window.G5.tips
+            .get(element[0])
+            .content(msg)
+            .place(tooltips.equalize ? 'top-left' : 'top-right')
+            .show();
     });
 
     body.delegate('mouseout', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
     });
 
     // Clear Layout
@@ -2868,7 +2866,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":48,"../ui/popover":50,"../utils/field-validation":60,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"../utils/history":66,"../utils/save-state":68,"./builder":21,"./history":23,"./layoutmanager":26,"./particles-sidebar":27,"agent":69,"elements/attributes":96,"elements/domready":99,"elements/zen":104,"mout/array/contains":133,"mout/collection/forEach":154,"mout/collection/size":156,"mout/number/enforcePrecision":188,"mout/string/properCase":227,"mout/string/replace":230,"mout/string/trim":235}],26:[function(require,module,exports){
+},{"../ui":48,"../ui/popover":50,"../utils/field-validation":61,"../utils/flags-state":62,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"../utils/history":67,"../utils/save-state":69,"./builder":21,"./history":23,"./layoutmanager":26,"./particles-sidebar":27,"agent":70,"elements/attributes":97,"elements/domready":100,"elements/zen":105,"mout/array/contains":134,"mout/collection/forEach":155,"mout/collection/size":157,"mout/number/enforcePrecision":189,"mout/string/properCase":228,"mout/string/replace":231,"mout/string/trim":236}],26:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3427,7 +3425,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":58,"../utils/flags-state":61,"./blocks":13,"./drag.resizer":22,"elements/zen":104,"mout/array/every":136,"mout/collection/find":153,"mout/function/bind":157,"mout/lang/deepEquals":167,"mout/lang/isArray":169,"mout/lang/isObject":174,"mout/number/enforcePrecision":188,"mout/object/get":197,"mout/object/keys":200,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],27:[function(require,module,exports){
+},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":59,"../utils/flags-state":62,"./blocks":13,"./drag.resizer":22,"elements/zen":105,"mout/array/every":137,"mout/collection/find":154,"mout/function/bind":158,"mout/lang/deepEquals":168,"mout/lang/isArray":170,"mout/lang/isObject":175,"mout/number/enforcePrecision":189,"mout/object/get":198,"mout/object/keys":201,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],27:[function(require,module,exports){
 "use strict";
 
 var ready          = require('elements/domready'),
@@ -3533,7 +3531,7 @@ ready(function() {
 
 module.exports = initSizes;
 
-},{"../utils/decouple":57,"../utils/get-scrollbar-width":64,"elements":101,"elements/domready":99}],28:[function(require,module,exports){
+},{"../utils/decouple":58,"../utils/get-scrollbar-width":65,"elements":102,"elements/domready":100}],28:[function(require,module,exports){
 "use strict";
 var $              = require('elements'),
     zen            = require('elements/zen'),
@@ -3670,7 +3668,10 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        var feedback = 'Last Saved: ' + prettyDate.format(element.lastSaved);
+        element
+            .data('tip', feedback)
+            .data('title', feedback);
     });
 
     // Save
@@ -3888,13 +3889,14 @@ var modules = {
     particles: require('./particles'),
     zen: require('elements/zen'),
     moofx: require('moofx'),
-    atoms: require('./pagesettings')
+    atoms: require('./pagesettings'),
+    tips: require('./ui/tooltips')
 };
 
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":25,"./menu":31,"./pagesettings":33,"./particles":39,"./styles":43,"./ui":48,"./ui/popover":50,"./utils/ajaxify-links":55,"./utils/field-validation":60,"./utils/flags-state":61,"./utils/get-ajax-suffix":62,"./utils/get-ajax-url":63,"./utils/rAF-polyfill":67,"agent":69,"elements":101,"elements/attributes":96,"elements/delegation":98,"elements/domready":99,"elements/events":100,"elements/insertion":102,"elements/traversal":103,"elements/zen":104,"moofx":105,"mout/queryString/setParam":213,"mout/string/interpolate":224,"mout/string/trim":235}],29:[function(require,module,exports){
+},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":25,"./menu":31,"./pagesettings":33,"./particles":39,"./styles":43,"./ui":48,"./ui/popover":50,"./ui/tooltips":55,"./utils/ajaxify-links":56,"./utils/field-validation":61,"./utils/flags-state":62,"./utils/get-ajax-suffix":63,"./utils/get-ajax-url":64,"./utils/rAF-polyfill":68,"agent":70,"elements":102,"elements/attributes":97,"elements/delegation":99,"elements/domready":100,"elements/events":101,"elements/insertion":103,"elements/traversal":104,"elements/zen":105,"moofx":106,"mout/queryString/setParam":214,"mout/string/interpolate":225,"mout/string/trim":236}],29:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -4167,7 +4169,7 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":46,"../utils/elements.utils":58,"elements/delegation":98,"elements/events":100,"mout/function/bind":157,"mout/lang/isString":177,"mout/math/clamp":182,"mout/math/map":184,"mout/number/enforcePrecision":188,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],30:[function(require,module,exports){
+},{"../ui/drag.events":46,"../utils/elements.utils":59,"elements/delegation":99,"elements/events":101,"mout/function/bind":158,"mout/lang/isString":178,"mout/math/clamp":183,"mout/math/map":185,"mout/number/enforcePrecision":189,"mout/object/get":198,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],30:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -4475,7 +4477,7 @@ ready(function() {
 
 module.exports = StepOne;
 
-},{"../ui":48,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":101,"elements/domready":99,"elements/zen":104,"mout/array/indexOf":142,"mout/lang/deepEquals":167,"mout/string/trim":235}],31:[function(require,module,exports){
+},{"../ui":48,"../utils/flags-state":62,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"agent":70,"elements":102,"elements/domready":100,"elements/zen":105,"mout/array/indexOf":143,"mout/lang/deepEquals":168,"mout/string/trim":236}],31:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -4824,7 +4826,7 @@ module.exports = {
     menumanager: menumanager
 };
 
-},{"../ui":48,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./extra-items":30,"./menumanager":32,"agent":69,"elements":101,"elements/domready":99,"elements/zen":104,"mout/array/contains":133,"mout/math/clamp":182,"mout/string/trim":235}],32:[function(require,module,exports){
+},{"../ui":48,"../utils/field-validation":61,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"./extra-items":30,"./menumanager":32,"agent":70,"elements":102,"elements/domready":100,"elements/zen":105,"mout/array/contains":134,"mout/math/clamp":183,"mout/string/trim":236}],32:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -5339,7 +5341,7 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":58,"./drag.resizer":29,"elements/zen":104,"mout/array/every":136,"mout/array/indexOf":142,"mout/array/last":146,"mout/function/bind":157,"mout/lang/deepClone":166,"mout/lang/isArray":169,"mout/lang/isObject":174,"mout/object/equals":192,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],33:[function(require,module,exports){
+},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":59,"./drag.resizer":29,"elements/zen":105,"mout/array/every":137,"mout/array/indexOf":143,"mout/array/last":147,"mout/function/bind":158,"mout/lang/deepClone":167,"mout/lang/isArray":170,"mout/lang/isObject":175,"mout/object/equals":193,"mout/object/get":198,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],33:[function(require,module,exports){
 'use strict';
 var $             = require('elements'),
     ready         = require('elements/domready'),
@@ -5599,7 +5601,7 @@ ready(function() {
 });
 
 module.exports = Atoms;
-},{"../ui":48,"../ui/eraser":47,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":101,"elements/domready":99,"elements/zen":104,"mout/array/indexOf":142,"mout/string/trim":235,"sortablejs":271}],34:[function(require,module,exports){
+},{"../ui":48,"../ui/eraser":47,"../utils/field-validation":61,"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"agent":70,"elements":102,"elements/domready":100,"elements/zen":105,"mout/array/indexOf":143,"mout/string/trim":236,"sortablejs":272}],34:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -5889,7 +5891,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/field-validation":60,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements":101,"elements/domready":99,"elements/insertion":102,"elements/zen":104,"mout/array/indexOf":142,"mout/array/last":146,"mout/string/trim":235,"sortablejs":271}],35:[function(require,module,exports){
+},{"../../ui":48,"../../utils/field-validation":61,"../../utils/get-ajax-suffix":63,"../../utils/get-ajax-url":64,"agent":70,"elements":102,"elements/domready":100,"elements/insertion":103,"elements/zen":105,"mout/array/indexOf":143,"mout/array/last":147,"mout/string/trim":236,"sortablejs":272}],35:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -6628,7 +6630,7 @@ ready(function() {
 
 module.exports = ColorPicker;
 
-},{"../../ui/drag.events":46,"elements":101,"elements/domready":99,"elements/zen":104,"mout/collection/forEach":154,"mout/function/bind":157,"mout/math/clamp":182,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],36:[function(require,module,exports){
+},{"../../ui/drag.events":46,"elements":102,"elements/domready":100,"elements/zen":105,"mout/collection/forEach":155,"mout/function/bind":158,"mout/math/clamp":183,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],36:[function(require,module,exports){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -7087,7 +7089,7 @@ domready(function() {
 
 module.exports = FilePicker;
 
-},{"../../ui":48,"../../utils/elements.utils":58,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"dropzone":95,"elements/domready":99,"elements/zen":104,"mout/function/bind":157,"mout/lang/deepClone":166,"mout/object/deepFillIn":190,"mout/string/rtrim":233,"prime":265}],37:[function(require,module,exports){
+},{"../../ui":48,"../../utils/elements.utils":59,"../../utils/get-ajax-suffix":63,"../../utils/get-ajax-url":64,"agent":70,"dropzone":96,"elements/domready":100,"elements/zen":105,"mout/function/bind":158,"mout/lang/deepClone":167,"mout/object/deepFillIn":191,"mout/string/rtrim":234,"prime":266}],37:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime         = require('prime'),
@@ -7834,7 +7836,7 @@ domready(function() {
 
 module.exports = Fonts;
 
-},{"../../ui":48,"../../utils/async-foreach":56,"../../utils/decouple":57,"../../utils/elements.utils":58,"../../utils/elements.viewport":59,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements/domready":99,"elements/zen":104,"mout/array/append":131,"mout/array/combine":132,"mout/array/contains":133,"mout/array/find":138,"mout/array/forEach":141,"mout/array/insert":143,"mout/array/intersection":144,"mout/array/last":146,"mout/array/map":147,"mout/array/removeAll":148,"mout/array/split":151,"mout/function/bind":157,"mout/object/merge":201,"mout/string/properCase":227,"mout/string/trim":235,"mout/string/unhyphenate":238,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266,"webfontloader":272}],38:[function(require,module,exports){
+},{"../../ui":48,"../../utils/async-foreach":57,"../../utils/decouple":58,"../../utils/elements.utils":59,"../../utils/elements.viewport":60,"../../utils/get-ajax-suffix":63,"../../utils/get-ajax-url":64,"agent":70,"elements/domready":100,"elements/zen":105,"mout/array/append":132,"mout/array/combine":133,"mout/array/contains":134,"mout/array/find":139,"mout/array/forEach":142,"mout/array/insert":144,"mout/array/intersection":145,"mout/array/last":147,"mout/array/map":148,"mout/array/removeAll":149,"mout/array/split":152,"mout/function/bind":158,"mout/object/merge":202,"mout/string/properCase":228,"mout/string/trim":236,"mout/string/unhyphenate":239,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265,"prime/map":267,"webfontloader":273}],38:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
@@ -8019,7 +8021,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/elements.utils":58,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"elements/domready":99,"mout/array/contains":133,"mout/string/trim":235}],39:[function(require,module,exports){
+},{"../../ui":48,"../../utils/elements.utils":59,"../../utils/get-ajax-suffix":63,"../../utils/get-ajax-url":64,"elements/domready":100,"mout/array/contains":134,"mout/string/trim":236}],39:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -8210,7 +8212,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements":101,"elements/domready":99,"elements/zen":104,"mout/string/trim":235}],41:[function(require,module,exports){
+},{"../../ui":48,"../../utils/get-ajax-suffix":63,"../../utils/get-ajax-url":64,"agent":70,"elements":102,"elements/domready":100,"elements/zen":105,"mout/string/trim":236}],41:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -8341,8 +8343,17 @@ ready(function() {
             parent[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
-            wrapper[excluded || duplicate ? 'addClass' : 'removeClass']('g-tooltip');
-            wrapper.data('title', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null));
+            wrapper
+                .data('tip', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null))
+                .data('tip-place', 'top-right')
+                .data('tip-spacing', 2)
+                .data('tip-offset', 8);
+
+            if (excluded || duplicate) {
+                window.G5.tips.get(wrapper[0]).show();
+            } else {
+                window.G5.tips.remove(wrapper[0]);
+            }
         }
 
         if (keyValue && !excluded && !duplicate) {
@@ -8359,7 +8370,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/get-ajax-suffix":62,"agent":69,"elements":101,"elements/domready":99,"elements/insertion":102,"elements/zen":104,"mout/array/contains":133,"mout/array/indexOf":142,"mout/array/last":146,"mout/array/some":150,"mout/object/has":198,"mout/string/escapeUnicode":223,"mout/string/trim":235,"sortablejs":271}],42:[function(require,module,exports){
+},{"../../ui":48,"../../utils/get-ajax-suffix":63,"agent":70,"elements":102,"elements/domready":100,"elements/insertion":103,"elements/zen":105,"mout/array/contains":134,"mout/array/indexOf":143,"mout/array/last":147,"mout/array/some":151,"mout/object/has":199,"mout/string/escapeUnicode":224,"mout/string/trim":236,"sortablejs":272}],42:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
@@ -8375,7 +8386,7 @@ domready(function() {
 });
 
 module.exports = {};
-},{"../../utils/elements.utils":58,"elements/domready":99}],43:[function(require,module,exports){
+},{"../../utils/elements.utils":59,"elements/domready":100}],43:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $ = require('elements/attributes'),
@@ -8437,7 +8448,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../ui/popover":50,"elements/attributes":96,"elements/domready":99,"mout/array/contains":133,"mout/collection/forEach":154}],44:[function(require,module,exports){
+},{"../ui":48,"../ui/popover":50,"elements/attributes":97,"elements/domready":100,"mout/array/contains":134,"mout/collection/forEach":155}],44:[function(require,module,exports){
 "use strict";
 var ready  = require('elements/domready'),
     trim   = require('mout/string/trim'),
@@ -8449,7 +8460,7 @@ var Cookie = {
         var date = new Date();
         date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
 
-        var host = window.location.host.toString(),
+        var host   = window.location.host.toString(),
             domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
 
         if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
@@ -8466,7 +8477,7 @@ var Cookie = {
 };
 
 var loadFromStorage = function() {
-    var storage = Cookie.read('g5-collapsed') || {},
+    var storage    = Cookie.read('g5-collapsed') || {},
         collapsers = $('[data-g-collapse]');
     if (!collapsers) { return false; }
 
@@ -8479,7 +8490,9 @@ var loadFromStorage = function() {
         handle = data.handle ? item.find(data.handle) : item.find('.g-collapse');
         panel = data.target ? item.find(data.target) : item;
         card = item.parent('.card') || panel;
-        handle.data('title', value ? data.expand : data.collapse);
+        handle
+            .data('title', value ? data.expand : data.collapse)
+            .data('tip', value ? data.expand : data.collapse);
 
         panel.attribute('style', null);
         card[!value ? 'removeClass' : 'addClass']('g-collapsed');
@@ -8507,8 +8520,8 @@ ready(function() {
         }
 
         var collapsed = storage[data.id],
-            panel = data.target ? element.find(data.target) : element,
-            card = panel.parent('.card') || panel;
+            panel     = data.target ? element.find(data.target) : element,
+            card      = panel.parent('.card') || panel;
 
         if (card && card.hasClass('g-collapsed')) {
             card.removeClass('g-collapsed');
@@ -8528,7 +8541,9 @@ ready(function() {
                 element.attribute('style', null);
             }
 
-            data.handle.data('title', !collapsed ? data.expand : data.collapse);
+            data.handle
+                .data('title', !collapsed ? data.expand : data.collapse)
+                .data('tip', !collapsed ? data.expand : data.collapse);
             storage[data.id] = !collapsed;
             data.collapsed = !collapsed;
 
@@ -8556,11 +8571,11 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode = element.data('g-collapse-all') == 'true',
-            parent = element.parent('.g-filter-actions'),
-            container = parent.nextSibling(),
+        var mode       = element.data('g-collapse-all') == 'true',
+            parent     = element.parent('.g-filter-actions'),
+            container  = parent.nextSibling(),
             collapsers = container.search('[data-g-collapse]'),
-            storage = Cookie.read('g5-collapsed') || {},
+            storage    = Cookie.read('g5-collapsed') || {},
             panel, data, handle, card;
 
         if (!collapsers) { return; }
@@ -8584,17 +8599,17 @@ ready(function() {
 
     // filter by card title
     body.delegate('input', '[data-g-collapse-filter]', function(event, element) {
-        var parent = element.parent('.g-filter-actions'),
+        var parent    = element.parent('.g-filter-actions'),
             container = parent.nextSibling(),
-            cards = container.search('.card'),
-            value = element.value();
+            cards     = container.search('.card'),
+            value     = element.value();
 
         if (!cards) { return; }
 
         if (!value) { cards.attribute('style', null); }
         cards.forEach(function(element, index) {
             element = $(element);
-            var title = trim(element.find('h4 .g-title').text()),
+            var title   = trim(element.find('h4 .g-title').text()),
                 matches = title.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
             if (matches) { element.attribute('style', null); }
@@ -8609,7 +8624,7 @@ ready(function() {
 
 module.exports = loadFromStorage;
 
-},{"elements":101,"elements/domready":99,"mout/object/forOwn":196,"mout/string/trim":235}],45:[function(require,module,exports){
+},{"elements":102,"elements/domready":100,"mout/object/forOwn":197,"mout/string/trim":236}],45:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -8997,7 +9012,7 @@ var DragDrop = new prime({
 
 module.exports = DragDrop;
 
-},{"../utils/elements.utils":58,"./drag.events":46,"elements/delegation":98,"elements/events":100,"mout/array/contains":133,"mout/function/bind":157,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],46:[function(require,module,exports){
+},{"../utils/elements.utils":59,"./drag.events":46,"elements/delegation":99,"elements/events":101,"mout/array/contains":134,"mout/function/bind":158,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],46:[function(require,module,exports){
 "use strict";
 var getSupportedEvent = function(events) {
     events = events.split(' ');
@@ -9113,7 +9128,7 @@ var Eraser = new prime({
 
 module.exports = Eraser;
 
-},{"../utils/elements.utils":58,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],48:[function(require,module,exports){
+},{"../utils/elements.utils":59,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],48:[function(require,module,exports){
 "use strict";
 
 var Selectize = require('./selectize');
@@ -9515,7 +9530,7 @@ var modal = new Modal();
 
 module.exports = modal;
 
-},{"../utils/elements.utils":58,"agent":69,"elements/domready":99,"elements/zen":104,"mout/array/forEach":141,"mout/array/last":146,"mout/array/map":147,"mout/function/bind":157,"mout/object/merge":201,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],50:[function(require,module,exports){
+},{"../utils/elements.utils":59,"agent":70,"elements/domready":100,"elements/zen":105,"mout/array/forEach":142,"mout/array/last":147,"mout/array/map":148,"mout/function/bind":158,"mout/object/merge":202,"mout/string/trim":236,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265,"prime/map":267}],50:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -10154,7 +10169,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../utils/elements.utils":58,"agent":69,"elements/domready":99,"elements/zen":104,"mout/array/forEach":141,"mout/array/last":146,"mout/array/map":147,"mout/function/bind":157,"mout/lang/isFunction":171,"mout/object/merge":201,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],51:[function(require,module,exports){
+},{"../utils/elements.utils":59,"agent":70,"elements/domready":100,"elements/zen":105,"mout/array/forEach":142,"mout/array/last":147,"mout/array/map":148,"mout/function/bind":158,"mout/lang/isFunction":172,"mout/object/merge":202,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265,"prime/map":267}],51:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -10338,7 +10353,7 @@ var Progresser = new prime({
 
 module.exports = Progresser;
 
-},{"elements":101,"elements/zen":104,"moofx":105,"mout/function/bind":157,"mout/lang/isArray":169,"mout/lang/isNumber":173,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],52:[function(require,module,exports){
+},{"elements":102,"elements/zen":105,"moofx":106,"mout/function/bind":158,"mout/lang/isArray":170,"mout/lang/isNumber":174,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265}],52:[function(require,module,exports){
 "use strict";
 // selectize (v0.12.1)
 
@@ -12620,7 +12635,7 @@ ready(function() {
 
 module.exports = Selectize;
 
-},{"../utils/elements.utils":58,"elements/domready":99,"elements/zen":104,"moofx":105,"mout/array/indexOf":142,"mout/array/last":146,"mout/collection/forEach":154,"mout/function/bind":157,"mout/function/debounce":158,"mout/lang/isArray":169,"mout/lang/isBoolean":170,"mout/object/merge":201,"mout/object/size":206,"mout/object/unset":208,"mout/object/values":209,"mout/string/escapeHtml":222,"mout/string/slugify":234,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"sifter":267}],53:[function(require,module,exports){
+},{"../utils/elements.utils":59,"elements/domready":100,"elements/zen":105,"moofx":106,"mout/array/indexOf":143,"mout/array/last":147,"mout/collection/forEach":155,"mout/function/bind":158,"mout/function/debounce":159,"mout/lang/isArray":170,"mout/lang/isBoolean":171,"mout/object/merge":202,"mout/object/size":207,"mout/object/unset":209,"mout/object/values":210,"mout/string/escapeHtml":223,"mout/string/slugify":235,"mout/string/trim":236,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265,"sifter":268}],53:[function(require,module,exports){
 "use strict";
 
 var prime   = require('prime'),
@@ -12946,7 +12961,7 @@ var toaster = new Toaster();
 
 module.exports = toaster;
 
-},{"../utils/elements.utils.js":58,"elements/zen":104,"mout/function/bind":157,"mout/object/merge":201,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],54:[function(require,module,exports){
+},{"../utils/elements.utils.js":59,"elements/zen":105,"mout/function/bind":158,"mout/object/merge":202,"prime":266,"prime-util/prime/bound":262,"prime-util/prime/options":263,"prime/emitter":265,"prime/map":267}],54:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     $             = require('elements'),
@@ -13025,7 +13040,40 @@ ready(function() {
 
 module.exports = {};
 
-},{"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./modal":49,"./toastr":53,"agent":69,"elements":101,"elements/domready":99}],55:[function(require,module,exports){
+},{"../utils/get-ajax-suffix":63,"../utils/get-ajax-url":64,"./modal":49,"./toastr":53,"agent":70,"elements":102,"elements/domready":100}],55:[function(require,module,exports){
+"use strict";
+
+var ready    = require('elements/domready'),
+    tooltips = require('ext/tooltips');
+
+tooltips.defaults = {
+    baseClass: 'g-tips',
+    typeClass: null,
+    effectClass: 'g-fade',
+    inClass: 'g-tip-in',
+    place: 'top',
+    spacing: 10,
+    offset: -3,
+    auto: 1
+};
+
+var Instance = null;
+
+ready(function() {
+    Instance = new tooltips(document, {
+        tooltip: tooltips.defaults,
+        key: 'tip',
+        showOn: 'mouseenter',
+        hideOn: 'mouseleave',
+        observe: 1
+    });
+
+    window.G5.tips = Instance;
+});
+
+module.exports = Instance;
+
+},{"elements/domready":100,"ext/tooltips":"ext/tooltips"}],56:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),
@@ -13450,7 +13498,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../assignments":2,"../lm":25,"../menu":31,"../ui":48,"../ui/popover":50,"../utils/elements.utils":58,"./flags-state":61,"./get-ajax-suffix":62,"./get-ajax-url":63,"./history":66,"agent":69,"elements/domready":99,"elements/zen":104,"mout/array/indexOf":142,"mout/collection/size":156,"mout/object/keys":200,"mout/object/merge":201,"mout/queryString/encode":210,"mout/queryString/getParam":211,"mout/queryString/setParam":213,"mout/random/guid":215,"mout/string/contains":221,"prime":265,"prime/map":266}],56:[function(require,module,exports){
+},{"../assignments":2,"../lm":25,"../menu":31,"../ui":48,"../ui/popover":50,"../utils/elements.utils":59,"./flags-state":62,"./get-ajax-suffix":63,"./get-ajax-url":64,"./history":67,"agent":70,"elements/domready":100,"elements/zen":105,"mout/array/indexOf":143,"mout/collection/size":157,"mout/object/keys":201,"mout/object/merge":202,"mout/queryString/encode":211,"mout/queryString/getParam":212,"mout/queryString/setParam":214,"mout/random/guid":216,"mout/string/contains":222,"prime":266,"prime/map":267}],57:[function(require,module,exports){
 "use strict";
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
@@ -13505,7 +13553,7 @@ var asyncForEach = function(arr, eachFn, doneFn) {
 
 module.exports = asyncForEach;
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -13539,7 +13587,7 @@ var decouple = function(element, event, callback) {
 };
 
 module.exports = decouple;
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 var $          = require('elements'),
     moofx      = require('moofx'),
@@ -13722,7 +13770,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../ui/progresser":51,"elements":101,"elements/zen":104,"moofx":105,"mout/array/map":147,"mout/function/series":162,"slick":269}],59:[function(require,module,exports){
+},{"../ui/progresser":51,"elements":102,"elements/zen":105,"moofx":106,"mout/array/map":148,"mout/function/series":163,"slick":270}],60:[function(require,module,exports){
 "use strict";
 var $     = require('elements');
 
@@ -13787,7 +13835,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":101}],60:[function(require,module,exports){
+},{"elements":102}],61:[function(require,module,exports){
 "use strict";
 
 var $ = require('elements');
@@ -13868,7 +13916,7 @@ var validate = function(field) {
 
 module.exports = fieldValidation;
 
-},{"elements":101}],61:[function(require,module,exports){
+},{"elements":102}],62:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),
@@ -13941,7 +13989,7 @@ var FlagsState = new prime({
 
 module.exports = new FlagsState();
 
-},{"../ui":48,"./get-ajax-suffix":62,"./get-ajax-url":63,"prime":265,"prime/emitter":264,"prime/map":266}],62:[function(require,module,exports){
+},{"../ui":48,"./get-ajax-suffix":63,"./get-ajax-url":64,"prime":266,"prime/emitter":265,"prime/map":267}],63:[function(require,module,exports){
 "use strict";
 
 var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
@@ -13950,7 +13998,7 @@ var getAjaxSuffix = function() {
 };
 
 module.exports = getAjaxSuffix;
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 "use strict";
 var unescapeHtml  = require('mout/string/unescapeHtml'),
     getAjaxSuffix = require('./get-ajax-suffix'),
@@ -14003,7 +14051,7 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
-},{"./get-ajax-suffix":62,"mout/queryString/getParam":211,"mout/queryString/getQuery":212,"mout/queryString/setParam":213,"mout/string/unescapeHtml":237}],64:[function(require,module,exports){
+},{"./get-ajax-suffix":63,"mout/queryString/getParam":212,"mout/queryString/getQuery":213,"mout/queryString/setParam":214,"mout/string/unescapeHtml":238}],65:[function(require,module,exports){
 "use strict";
 
 var zen = require('elements/zen');
@@ -14030,7 +14078,7 @@ var cached            = null,
 
 module.exports = getScrollbarWidth;
 
-},{"elements/zen":104}],65:[function(require,module,exports){
+},{"elements/zen":105}],66:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -14094,7 +14142,7 @@ if (typeof History.init !== 'undefined') {
 }
 
 module.exports = History;
-},{"elements":101,"elements/domready":99}],66:[function(require,module,exports){
+},{"elements":102,"elements/domready":100}],67:[function(require,module,exports){
 "use strict";
 
 // ========================================================================
@@ -16135,7 +16183,7 @@ if (typeof History.init === 'undefined') {
 }
 
 module.exports = History;
-},{"./history-adapter":65}],67:[function(require,module,exports){
+},{"./history-adapter":66}],68:[function(require,module,exports){
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -16162,7 +16210,7 @@ module.exports = History;
 }());
 
 module.exports = {};
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var prime      = require('prime'),
     deepClone  = require('mout/lang/deepClone');
 
@@ -16213,7 +16261,7 @@ var SaveState = new prime({
 
 module.exports = SaveState;
 
-},{"mout/lang/deepClone":166,"prime":265}],69:[function(require,module,exports){
+},{"mout/lang/deepClone":167,"prime":266}],70:[function(require,module,exports){
 /*
 Agent
 - heavily inspired by superagent by visionmedia https://github.com/visionmedia/superagent, released under the MIT license
@@ -16620,7 +16668,7 @@ agent.Response = Response
 
 module.exports = agent
 
-},{"mout/array/forEach":70,"mout/array/remove":72,"mout/lang/isArray":74,"mout/lang/isFunction":75,"mout/lang/isObject":77,"mout/lang/isString":78,"mout/object/forIn":81,"mout/object/mixIn":84,"mout/string/trim":88,"mout/string/upperCase":89,"prime":93,"prime/emitter":92}],70:[function(require,module,exports){
+},{"mout/array/forEach":71,"mout/array/remove":73,"mout/lang/isArray":75,"mout/lang/isFunction":76,"mout/lang/isObject":78,"mout/lang/isString":79,"mout/object/forIn":82,"mout/object/mixIn":85,"mout/string/trim":89,"mout/string/upperCase":90,"prime":94,"prime/emitter":93}],71:[function(require,module,exports){
 
 
     /**
@@ -16645,7 +16693,7 @@ module.exports = agent
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 
     /**
@@ -16675,7 +16723,7 @@ module.exports = agent
     module.exports = indexOf;
 
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -16690,7 +16738,7 @@ var indexOf = require('./indexOf');
     module.exports = remove;
 
 
-},{"./indexOf":71}],73:[function(require,module,exports){
+},{"./indexOf":72}],74:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -16710,7 +16758,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":84}],74:[function(require,module,exports){
+},{"../object/mixIn":85}],75:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16720,7 +16768,7 @@ var isKind = require('./isKind');
     module.exports = isArray;
 
 
-},{"./isKind":76}],75:[function(require,module,exports){
+},{"./isKind":77}],76:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16730,7 +16778,7 @@ var isKind = require('./isKind');
     module.exports = isFunction;
 
 
-},{"./isKind":76}],76:[function(require,module,exports){
+},{"./isKind":77}],77:[function(require,module,exports){
 var kindOf = require('./kindOf');
     /**
      * Check if value is from a specific "kind".
@@ -16741,7 +16789,7 @@ var kindOf = require('./kindOf');
     module.exports = isKind;
 
 
-},{"./kindOf":79}],77:[function(require,module,exports){
+},{"./kindOf":80}],78:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16751,7 +16799,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":76}],78:[function(require,module,exports){
+},{"./isKind":77}],79:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16761,7 +16809,7 @@ var isKind = require('./isKind');
     module.exports = isString;
 
 
-},{"./isKind":76}],79:[function(require,module,exports){
+},{"./isKind":77}],80:[function(require,module,exports){
 
 
     var _rKind = /^\[object (.*)\]$/,
@@ -16783,7 +16831,7 @@ var isKind = require('./isKind');
     module.exports = kindOf;
 
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 
     /**
@@ -16798,7 +16846,7 @@ var isKind = require('./isKind');
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 
     var _hasDontEnumBug,
@@ -16876,7 +16924,7 @@ var hasOwn = require('./hasOwn');
 
 
 
-},{"./hasOwn":83}],82:[function(require,module,exports){
+},{"./hasOwn":84}],83:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var forIn = require('./forIn');
 
@@ -16897,7 +16945,7 @@ var forIn = require('./forIn');
 
 
 
-},{"./forIn":81,"./hasOwn":83}],83:[function(require,module,exports){
+},{"./forIn":82,"./hasOwn":84}],84:[function(require,module,exports){
 
 
     /**
@@ -16911,7 +16959,7 @@ var forIn = require('./forIn');
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -16941,7 +16989,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":82}],85:[function(require,module,exports){
+},{"./forOwn":83}],86:[function(require,module,exports){
 
     /**
      * Contains all Unicode white-spaces. Taken from
@@ -16955,7 +17003,7 @@ var forOwn = require('./forOwn');
     ];
 
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -16991,7 +17039,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = ltrim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85}],87:[function(require,module,exports){
+},{"../lang/toString":81,"./WHITE_SPACES":86}],88:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -17026,7 +17074,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = rtrim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85}],88:[function(require,module,exports){
+},{"../lang/toString":81,"./WHITE_SPACES":86}],89:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
 var ltrim = require('./ltrim');
@@ -17043,7 +17091,7 @@ var rtrim = require('./rtrim');
     module.exports = trim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85,"./ltrim":86,"./rtrim":87}],89:[function(require,module,exports){
+},{"../lang/toString":81,"./WHITE_SPACES":86,"./ltrim":87,"./rtrim":88}],90:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * "Safer" String.toUpperCase()
@@ -17055,7 +17103,7 @@ var toString = require('../lang/toString');
     module.exports = upperCase;
 
 
-},{"../lang/toString":80}],90:[function(require,module,exports){
+},{"../lang/toString":81}],91:[function(require,module,exports){
 
 
     /**
@@ -17075,7 +17123,7 @@ var toString = require('../lang/toString');
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -17194,7 +17242,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":1,"mout/array/forEach":70,"mout/array/indexOf":71,"mout/lang/kindOf":79,"mout/time/now":90}],92:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":71,"mout/array/indexOf":72,"mout/lang/kindOf":80,"mout/time/now":91}],93:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -17260,7 +17308,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":91,"./index":93,"mout/array/forEach":70,"mout/array/indexOf":71}],93:[function(require,module,exports){
+},{"./defer":92,"./index":94,"mout/array/forEach":71,"mout/array/indexOf":72}],94:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -17352,7 +17400,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":73,"mout/lang/kindOf":79,"mout/object/hasOwn":83,"mout/object/mixIn":84}],94:[function(require,module,exports){
+},{"mout/lang/createObject":74,"mout/lang/kindOf":80,"mout/object/hasOwn":84,"mout/object/mixIn":85}],95:[function(require,module,exports){
 
 module.exports = function(x1, y1, x2, y2, epsilon){
 
@@ -17405,7 +17453,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
 
 };
 
-},{}],95:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 
 /*
  *
@@ -19159,7 +19207,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
 
 }).call(this);
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 /*
 attributes
 */"use strict"
@@ -19378,7 +19426,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":97,"mout/array/filter":137,"mout/array/forEach":141,"mout/array/indexOf":142,"mout/string/trim":235}],97:[function(require,module,exports){
+},{"./base":98,"mout/array/filter":138,"mout/array/forEach":142,"mout/array/indexOf":143,"mout/string/trim":236}],98:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -19509,7 +19557,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":136,"mout/array/filter":137,"mout/array/forEach":141,"mout/array/map":147,"mout/array/some":150,"prime":265}],98:[function(require,module,exports){
+},{"mout/array/every":137,"mout/array/filter":138,"mout/array/forEach":142,"mout/array/map":148,"mout/array/some":151,"prime":266}],99:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -19592,7 +19640,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":100,"./traversal":103,"prime/map":266}],99:[function(require,module,exports){
+},{"./events":101,"./traversal":104,"prime/map":267}],100:[function(require,module,exports){
 /*
 domready
 */"use strict"
@@ -19692,7 +19740,7 @@ module.exports = function(ready){
     return null
 }
 
-},{"./events":100}],100:[function(require,module,exports){
+},{"./events":101}],101:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -19772,7 +19820,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":97,"prime/emitter":264}],101:[function(require,module,exports){
+},{"./base":98,"prime/emitter":265}],102:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -19786,7 +19834,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":96,"./base":97,"./delegation":98,"./events":100,"./insertion":102,"./traversal":103}],102:[function(require,module,exports){
+},{"./attributes":97,"./base":98,"./delegation":99,"./events":101,"./insertion":103,"./traversal":104}],103:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -19880,7 +19928,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":97}],103:[function(require,module,exports){
+},{"./base":98}],104:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -19985,7 +20033,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":97,"mout/array/map":147,"slick":269}],104:[function(require,module,exports){
+},{"./base":98,"mout/array/map":148,"slick":270}],105:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -20043,7 +20091,7 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":97,"mout/array/forEach":141,"mout/array/map":147,"slick/parser":270}],105:[function(require,module,exports){
+},{"./base":98,"mout/array/forEach":142,"mout/array/map":148,"slick/parser":271}],106:[function(require,module,exports){
 /*          .-   3
 .-.-..-..-.-|-._.
 ' ' '`-'`-' ' ' '
@@ -20072,7 +20120,7 @@ moofx.color = color
 
 module.exports = moofx
 
-},{"./lib/browser":106,"./lib/color":107,"./lib/frame":108,"./lib/fx":109}],106:[function(require,module,exports){
+},{"./lib/browser":107,"./lib/color":108,"./lib/frame":109,"./lib/fx":110}],107:[function(require,module,exports){
 (function (global){
 /*
 MooFx
@@ -21010,7 +21058,7 @@ module.exports = moofx
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./color":107,"./frame":108,"./fx":109,"./unmatrix2d":110,"elements":111,"prime":118,"prime/array/forEach":114,"prime/array/indexOf":115,"prime/array/map":116,"prime/string/camelize":125,"prime/string/capitalize":126,"prime/string/clean":127,"prime/string/hyphenate":128}],107:[function(require,module,exports){
+},{"./color":108,"./frame":109,"./fx":110,"./unmatrix2d":111,"elements":112,"prime":119,"prime/array/forEach":115,"prime/array/indexOf":116,"prime/array/map":117,"prime/string/camelize":126,"prime/string/capitalize":127,"prime/string/clean":128,"prime/string/hyphenate":129}],108:[function(require,module,exports){
 /*
 color
 */"use strict"
@@ -21137,7 +21185,7 @@ color.x = RegExp([skeys, shex, srgb + slist, shsl + slist].join("|"), "gi")
 
 module.exports = color
 
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 (function (global){
 /*
 requestFrame / cancelFrame
@@ -21181,7 +21229,7 @@ exports.cancel = cancel
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime/array/indexOf":115}],109:[function(require,module,exports){
+},{"prime/array/indexOf":116}],110:[function(require,module,exports){
 /*
 fx
 */"use strict"
@@ -21417,7 +21465,7 @@ fx.prototype = Fx.prototype
 
 module.exports = fx
 
-},{"./frame":108,"cubic-bezier":94,"prime":118,"prime/array/map":116}],110:[function(require,module,exports){
+},{"./frame":109,"cubic-bezier":95,"prime":119,"prime/array/map":117}],111:[function(require,module,exports){
 /*
 Unmatrix 2d
  - a crude implementation of the slightly bugged pseudo code in http://www.w3.org/TR/css3-2d-transforms/#matrix-decomposition
@@ -21493,7 +21541,7 @@ module.exports = function(a, b, c, d, tx, ty){
 
 }
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 (function (global){
 /*
 elements
@@ -21618,7 +21666,7 @@ module.exports = $
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime":118,"prime/array/every":112,"prime/array/filter":113,"prime/array/forEach":114,"prime/array/map":116,"prime/array/some":117}],112:[function(require,module,exports){
+},{"prime":119,"prime/array/every":113,"prime/array/filter":114,"prime/array/forEach":115,"prime/array/map":117,"prime/array/some":118}],113:[function(require,module,exports){
 /*
 array:every
 */"use strict"
@@ -21632,7 +21680,7 @@ var every = function(self, method, context){
 
 module.exports = every
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /*
 array:filter
 */"use strict"
@@ -21648,7 +21696,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*
 array:forEach
 */"use strict"
@@ -21662,7 +21710,7 @@ var forEach = function(self, method, context){
 
 module.exports = forEach
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 /*
 array:indexOf
 */"use strict"
@@ -21676,7 +21724,7 @@ var indexOf = function(self, item, from){
 
 module.exports = indexOf
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 /*
 array:map
 */"use strict"
@@ -21691,7 +21739,7 @@ var map = function(self, method, context){
 
 module.exports = map
 
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 /*
 array:some
 */"use strict"
@@ -21705,7 +21753,7 @@ var some = function(self, method, context){
 
 module.exports = some
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -21794,7 +21842,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"./object/create":119,"./object/filter":120,"./object/forIn":121,"./object/hasOwn":123,"./object/mixIn":124,"./type":130}],119:[function(require,module,exports){
+},{"./object/create":120,"./object/filter":121,"./object/forIn":122,"./object/hasOwn":124,"./object/mixIn":125,"./type":131}],120:[function(require,module,exports){
 /*
 object:create
 */"use strict"
@@ -21807,7 +21855,7 @@ var create = function(self){
 
 module.exports = create
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 /*
 object:filter
 */"use strict"
@@ -21824,7 +21872,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{"./forIn":121}],121:[function(require,module,exports){
+},{"./forIn":122}],122:[function(require,module,exports){
 /*
 object:forIn
 */"use strict"
@@ -21854,7 +21902,7 @@ if (!({valueOf: 0}).propertyIsEnumerable("valueOf")){ // fix for stupid IE enume
 
 module.exports = forIn
 
-},{"./hasOwn":123}],122:[function(require,module,exports){
+},{"./hasOwn":124}],123:[function(require,module,exports){
 /*
 object:forOwn
 */"use strict"
@@ -21871,7 +21919,7 @@ var forOwn = function(self, method, context){
 
 module.exports = forOwn
 
-},{"./forIn":121,"./hasOwn":123}],123:[function(require,module,exports){
+},{"./forIn":122,"./hasOwn":124}],124:[function(require,module,exports){
 /*
 object:hasOwn
 */"use strict"
@@ -21884,7 +21932,7 @@ var hasOwn = function(self, key){
 
 module.exports = hasOwn
 
-},{}],124:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 /*
 object:mixIn
 */"use strict"
@@ -21902,7 +21950,7 @@ var mixIn = function(self){
 
 module.exports = mixIn
 
-},{"./forOwn":122}],125:[function(require,module,exports){
+},{"./forOwn":123}],126:[function(require,module,exports){
 /*
 string:camelize
 */"use strict"
@@ -21915,7 +21963,7 @@ var camelize = function(self){
 
 module.exports = camelize
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 /*
 string:capitalize
 */"use strict"
@@ -21928,7 +21976,7 @@ var capitalize = function(self){
 
 module.exports = capitalize
 
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 /*
 string:clean
 */"use strict"
@@ -21941,7 +21989,7 @@ var clean = function(self){
 
 module.exports = clean
 
-},{"./trim":129}],128:[function(require,module,exports){
+},{"./trim":130}],129:[function(require,module,exports){
 /*
 string:hyphenate
 */"use strict"
@@ -21954,7 +22002,7 @@ var hyphenate = function(self){
 
 module.exports = hyphenate
 
-},{}],129:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 /*
 string:trim
 */"use strict"
@@ -21965,7 +22013,7 @@ var trim = function(self){
 
 module.exports = trim
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 /*
 type
 */"use strict"
@@ -21983,7 +22031,7 @@ var type = function(object){
 
 module.exports = type
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 
 
     /**
@@ -22006,7 +22054,7 @@ module.exports = type
     module.exports = append;
 
 
-},{}],132:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -22030,7 +22078,7 @@ var indexOf = require('./indexOf');
     module.exports = combine;
 
 
-},{"./indexOf":142}],133:[function(require,module,exports){
+},{"./indexOf":143}],134:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -22042,7 +22090,7 @@ var indexOf = require('./indexOf');
     module.exports = contains;
 
 
-},{"./indexOf":142}],134:[function(require,module,exports){
+},{"./indexOf":143}],135:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var some = require('./some');
@@ -22067,7 +22115,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":133,"./filter":137,"./slice":149,"./some":150,"./unique":152}],135:[function(require,module,exports){
+},{"./contains":134,"./filter":138,"./slice":150,"./some":151,"./unique":153}],136:[function(require,module,exports){
 var is = require('../lang/is');
 var isArray = require('../lang/isArray');
 var every = require('./every');
@@ -22099,7 +22147,7 @@ var every = require('./every');
 
 
 
-},{"../lang/is":168,"../lang/isArray":169,"./every":136}],136:[function(require,module,exports){
+},{"../lang/is":169,"../lang/isArray":170,"./every":137}],137:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22128,7 +22176,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = every;
 
 
-},{"../function/makeIterator_":160}],137:[function(require,module,exports){
+},{"../function/makeIterator_":161}],138:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22156,7 +22204,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160}],138:[function(require,module,exports){
+},{"../function/makeIterator_":161}],139:[function(require,module,exports){
 var findIndex = require('./findIndex');
 
     /**
@@ -22171,7 +22219,7 @@ var findIndex = require('./findIndex');
 
 
 
-},{"./findIndex":139}],139:[function(require,module,exports){
+},{"./findIndex":140}],140:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22196,7 +22244,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = findIndex;
 
 
-},{"../function/makeIterator_":160}],140:[function(require,module,exports){
+},{"../function/makeIterator_":161}],141:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var append = require('./append');
 
@@ -22243,11 +22291,11 @@ var append = require('./append');
 
 
 
-},{"../lang/isArray":169,"./append":131}],141:[function(require,module,exports){
-arguments[4][70][0].apply(exports,arguments)
-},{"dup":70}],142:[function(require,module,exports){
+},{"../lang/isArray":170,"./append":132}],142:[function(require,module,exports){
 arguments[4][71][0].apply(exports,arguments)
 },{"dup":71}],143:[function(require,module,exports){
+arguments[4][72][0].apply(exports,arguments)
+},{"dup":72}],144:[function(require,module,exports){
 var difference = require('./difference');
 var slice = require('./slice');
 
@@ -22264,7 +22312,7 @@ var slice = require('./slice');
     module.exports = insert;
 
 
-},{"./difference":134,"./slice":149}],144:[function(require,module,exports){
+},{"./difference":135,"./slice":150}],145:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var every = require('./every');
@@ -22290,7 +22338,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":133,"./every":136,"./filter":137,"./slice":149,"./unique":152}],145:[function(require,module,exports){
+},{"./contains":134,"./every":137,"./filter":138,"./slice":150,"./unique":153}],146:[function(require,module,exports){
 var slice = require('./slice');
 
     /**
@@ -22315,7 +22363,7 @@ var slice = require('./slice');
     module.exports = invoke;
 
 
-},{"./slice":149}],146:[function(require,module,exports){
+},{"./slice":150}],147:[function(require,module,exports){
 
 
     /**
@@ -22333,7 +22381,7 @@ var slice = require('./slice');
 
 
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22357,7 +22405,7 @@ var makeIterator = require('../function/makeIterator_');
      module.exports = map;
 
 
-},{"../function/makeIterator_":160}],148:[function(require,module,exports){
+},{"../function/makeIterator_":161}],149:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -22374,7 +22422,7 @@ var indexOf = require('./indexOf');
     module.exports = removeAll;
 
 
-},{"./indexOf":142}],149:[function(require,module,exports){
+},{"./indexOf":143}],150:[function(require,module,exports){
 
 
     /**
@@ -22411,7 +22459,7 @@ var indexOf = require('./indexOf');
 
 
 
-},{}],150:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22440,7 +22488,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = some;
 
 
-},{"../function/makeIterator_":160}],151:[function(require,module,exports){
+},{"../function/makeIterator_":161}],152:[function(require,module,exports){
 
 
     /**
@@ -22477,7 +22525,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = split;
 
 
-},{}],152:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 var filter = require('./filter');
 
     /**
@@ -22504,7 +22552,7 @@ var filter = require('./filter');
 
 
 
-},{"./filter":137}],153:[function(require,module,exports){
+},{"./filter":138}],154:[function(require,module,exports){
 var make = require('./make_');
 var arrFind = require('../array/find');
 var objFind = require('../object/find');
@@ -22516,7 +22564,7 @@ var objFind = require('../object/find');
 
 
 
-},{"../array/find":138,"../object/find":194,"./make_":155}],154:[function(require,module,exports){
+},{"../array/find":139,"../object/find":195,"./make_":156}],155:[function(require,module,exports){
 var make = require('./make_');
 var arrForEach = require('../array/forEach');
 var objForEach = require('../object/forOwn');
@@ -22527,7 +22575,7 @@ var objForEach = require('../object/forOwn');
 
 
 
-},{"../array/forEach":141,"../object/forOwn":196,"./make_":155}],155:[function(require,module,exports){
+},{"../array/forEach":142,"../object/forOwn":197,"./make_":156}],156:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -22548,7 +22596,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":149}],156:[function(require,module,exports){
+},{"../array/slice":150}],157:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var objSize = require('../object/size');
 
@@ -22569,7 +22617,7 @@ var objSize = require('../object/size');
 
 
 
-},{"../lang/isArray":169,"../object/size":206}],157:[function(require,module,exports){
+},{"../lang/isArray":170,"../object/size":207}],158:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -22590,7 +22638,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":149}],158:[function(require,module,exports){
+},{"../array/slice":150}],159:[function(require,module,exports){
 
 
     /**
@@ -22624,7 +22672,7 @@ var slice = require('../array/slice');
 
 
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 
 
     /**
@@ -22638,7 +22686,7 @@ var slice = require('../array/slice');
 
 
 
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 var identity = require('./identity');
 var prop = require('./prop');
 var deepMatches = require('../object/deepMatches');
@@ -22674,7 +22722,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{"../object/deepMatches":191,"./identity":159,"./prop":161}],161:[function(require,module,exports){
+},{"../object/deepMatches":192,"./identity":160,"./prop":162}],162:[function(require,module,exports){
 
 
     /**
@@ -22690,7 +22738,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],162:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 
     /**
@@ -22714,7 +22762,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 
 
     // Reference to the global context (works on ES3 and ES5-strict mode)
@@ -22723,7 +22771,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -22774,9 +22822,9 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":202,"./isPlainObject":175,"./kindOf":178}],165:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"../object/mixIn":202,"dup":73}],166:[function(require,module,exports){
+},{"../object/mixIn":203,"./isPlainObject":176,"./kindOf":179}],166:[function(require,module,exports){
+arguments[4][74][0].apply(exports,arguments)
+},{"../object/mixIn":203,"dup":74}],167:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -22826,7 +22874,7 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":196,"./clone":164,"./isPlainObject":175,"./kindOf":178}],167:[function(require,module,exports){
+},{"../object/forOwn":197,"./clone":165,"./isPlainObject":176,"./kindOf":179}],168:[function(require,module,exports){
 var is = require('./is');
 var isObject = require('./isObject');
 var isArray = require('./isArray');
@@ -22858,7 +22906,7 @@ var arrEquals = require('../array/equals');
 
 
 
-},{"../array/equals":135,"../object/equals":192,"./is":168,"./isArray":169,"./isObject":174}],168:[function(require,module,exports){
+},{"../array/equals":136,"../object/equals":193,"./is":169,"./isArray":170,"./isObject":175}],169:[function(require,module,exports){
 
 
     /**
@@ -22883,9 +22931,9 @@ var arrEquals = require('../array/equals');
 
 
 
-},{}],169:[function(require,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"./isKind":172,"dup":74}],170:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
+arguments[4][75][0].apply(exports,arguments)
+},{"./isKind":173,"dup":75}],171:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22895,11 +22943,11 @@ var isKind = require('./isKind');
     module.exports = isBoolean;
 
 
-},{"./isKind":172}],171:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./isKind":172,"dup":75}],172:[function(require,module,exports){
+},{"./isKind":173}],172:[function(require,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"./kindOf":178,"dup":76}],173:[function(require,module,exports){
+},{"./isKind":173,"dup":76}],173:[function(require,module,exports){
+arguments[4][77][0].apply(exports,arguments)
+},{"./kindOf":179,"dup":77}],174:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22909,9 +22957,9 @@ var isKind = require('./isKind');
     module.exports = isNumber;
 
 
-},{"./isKind":172}],174:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"./isKind":172,"dup":77}],175:[function(require,module,exports){
+},{"./isKind":173}],175:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./isKind":173,"dup":78}],176:[function(require,module,exports){
 
 
     /**
@@ -22926,7 +22974,7 @@ arguments[4][77][0].apply(exports,arguments)
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 
 
     /**
@@ -22949,11 +22997,11 @@ arguments[4][77][0].apply(exports,arguments)
 
 
 
-},{}],177:[function(require,module,exports){
-arguments[4][78][0].apply(exports,arguments)
-},{"./isKind":172,"dup":78}],178:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],179:[function(require,module,exports){
+},{"./isKind":173,"dup":79}],179:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],180:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var GLOBAL = require('./GLOBAL');
 
@@ -22985,7 +23033,7 @@ var GLOBAL = require('./GLOBAL');
     module.exports = toArray;
 
 
-},{"./GLOBAL":163,"./kindOf":178}],180:[function(require,module,exports){
+},{"./GLOBAL":164,"./kindOf":179}],181:[function(require,module,exports){
 var isArray = require('./isArray');
 
     /**
@@ -23007,9 +23055,9 @@ var isArray = require('./isArray');
 
 
 
-},{"./isArray":169}],181:[function(require,module,exports){
-arguments[4][80][0].apply(exports,arguments)
-},{"dup":80}],182:[function(require,module,exports){
+},{"./isArray":170}],182:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"dup":81}],183:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -23020,7 +23068,7 @@ arguments[4][80][0].apply(exports,arguments)
     module.exports = clamp;
 
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -23033,7 +23081,7 @@ arguments[4][80][0].apply(exports,arguments)
     module.exports = lerp;
 
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -23046,7 +23094,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":183,"./norm":185}],185:[function(require,module,exports){
+},{"./lerp":184,"./norm":186}],186:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -23061,7 +23109,7 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 /**
  * @constant Maximum 32-bit signed integer value. (2^31 - 1)
  */
@@ -23069,7 +23117,7 @@ var norm = require('./norm');
     module.exports = 2147483647;
 
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 /**
  * @constant Minimum 32-bit signed integer value (-2^31).
  */
@@ -23077,7 +23125,7 @@ var norm = require('./norm');
     module.exports = -2147483648;
 
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var toNumber = require('../lang/toNumber');
     /**
      * Enforce a specific amount of decimal digits and also fix floating
@@ -23091,7 +23139,7 @@ var toNumber = require('../lang/toNumber');
     module.exports = enforcePrecision;
 
 
-},{"../lang/toNumber":180}],189:[function(require,module,exports){
+},{"../lang/toNumber":181}],190:[function(require,module,exports){
 
 
     /**
@@ -23110,7 +23158,7 @@ var toNumber = require('../lang/toNumber');
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isPlainObject = require('../lang/isPlainObject');
 
@@ -23145,7 +23193,7 @@ var isPlainObject = require('../lang/isPlainObject');
 
 
 
-},{"../lang/isPlainObject":175,"./forOwn":196}],191:[function(require,module,exports){
+},{"../lang/isPlainObject":176,"./forOwn":197}],192:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isArray = require('../lang/isArray');
 
@@ -23202,7 +23250,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":169,"./forOwn":196}],192:[function(require,module,exports){
+},{"../lang/isArray":170,"./forOwn":197}],193:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var every = require('./every');
 var isObject = require('../lang/isObject');
@@ -23237,7 +23285,7 @@ var is = require('../lang/is');
     module.exports = equals;
 
 
-},{"../lang/is":168,"../lang/isObject":174,"./every":193,"./hasOwn":199}],193:[function(require,module,exports){
+},{"../lang/is":169,"../lang/isObject":175,"./every":194,"./hasOwn":200}],194:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23262,7 +23310,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./forOwn":196}],194:[function(require,module,exports){
+},{"../function/makeIterator_":161,"./forOwn":197}],195:[function(require,module,exports){
 var some = require('./some');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23285,11 +23333,11 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./some":207}],195:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":199,"dup":81}],196:[function(require,module,exports){
+},{"../function/makeIterator_":161,"./some":208}],196:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":195,"./hasOwn":199,"dup":82}],197:[function(require,module,exports){
+},{"./hasOwn":200,"dup":82}],197:[function(require,module,exports){
+arguments[4][83][0].apply(exports,arguments)
+},{"./forIn":196,"./hasOwn":200,"dup":83}],198:[function(require,module,exports){
 var isPrimitive = require('../lang/isPrimitive');
 
     /**
@@ -23311,7 +23359,7 @@ var isPrimitive = require('../lang/isPrimitive');
 
 
 
-},{"../lang/isPrimitive":176}],198:[function(require,module,exports){
+},{"../lang/isPrimitive":177}],199:[function(require,module,exports){
 var get = require('./get');
 
     var UNDEF;
@@ -23328,9 +23376,9 @@ var get = require('./get');
 
 
 
-},{"./get":197}],199:[function(require,module,exports){
-arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],200:[function(require,module,exports){
+},{"./get":198}],200:[function(require,module,exports){
+arguments[4][84][0].apply(exports,arguments)
+},{"dup":84}],201:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23348,7 +23396,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],201:[function(require,module,exports){
+},{"./forOwn":197}],202:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -23390,9 +23438,9 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":166,"../lang/isObject":174,"./hasOwn":199}],202:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":196,"dup":84}],203:[function(require,module,exports){
+},{"../lang/deepClone":167,"../lang/isObject":175,"./hasOwn":200}],203:[function(require,module,exports){
+arguments[4][85][0].apply(exports,arguments)
+},{"./forOwn":197,"dup":85}],204:[function(require,module,exports){
 var forEach = require('../array/forEach');
 
     /**
@@ -23413,7 +23461,7 @@ var forEach = require('../array/forEach');
 
 
 
-},{"../array/forEach":141}],204:[function(require,module,exports){
+},{"../array/forEach":142}],205:[function(require,module,exports){
 var slice = require('../array/slice');
 var contains = require('../array/contains');
 
@@ -23436,7 +23484,7 @@ var contains = require('../array/contains');
 
 
 
-},{"../array/contains":133,"../array/slice":149}],205:[function(require,module,exports){
+},{"../array/contains":134,"../array/slice":150}],206:[function(require,module,exports){
 var namespace = require('./namespace');
 
     /**
@@ -23455,7 +23503,7 @@ var namespace = require('./namespace');
 
 
 
-},{"./namespace":203}],206:[function(require,module,exports){
+},{"./namespace":204}],207:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23473,7 +23521,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],207:[function(require,module,exports){
+},{"./forOwn":197}],208:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23496,7 +23544,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./forOwn":196}],208:[function(require,module,exports){
+},{"../function/makeIterator_":161,"./forOwn":197}],209:[function(require,module,exports){
 var has = require('./has');
 
     /**
@@ -23521,7 +23569,7 @@ var has = require('./has');
 
 
 
-},{"./has":198}],209:[function(require,module,exports){
+},{"./has":199}],210:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23539,7 +23587,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],210:[function(require,module,exports){
+},{"./forOwn":197}],211:[function(require,module,exports){
 var forOwn = require('../object/forOwn');
 var isArray = require('../lang/isArray');
 var forEach = require('../array/forEach');
@@ -23568,7 +23616,7 @@ var forEach = require('../array/forEach');
     module.exports = encode;
 
 
-},{"../array/forEach":141,"../lang/isArray":169,"../object/forOwn":196}],211:[function(require,module,exports){
+},{"../array/forEach":142,"../lang/isArray":170,"../object/forOwn":197}],212:[function(require,module,exports){
 var typecast = require('../string/typecast');
 var getQuery = require('./getQuery');
 
@@ -23585,7 +23633,7 @@ var getQuery = require('./getQuery');
     module.exports = getParam;
 
 
-},{"../string/typecast":236,"./getQuery":212}],212:[function(require,module,exports){
+},{"../string/typecast":237,"./getQuery":213}],213:[function(require,module,exports){
 
 
     /**
@@ -23600,7 +23648,7 @@ var getQuery = require('./getQuery');
     module.exports = getQuery;
 
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 
 
     /**
@@ -23630,7 +23678,7 @@ var getQuery = require('./getQuery');
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 var randInt = require('./randInt');
 var isArray = require('../lang/isArray');
 
@@ -23647,7 +23695,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":169,"./randInt":218}],215:[function(require,module,exports){
+},{"../lang/isArray":170,"./randInt":219}],216:[function(require,module,exports){
 var randHex = require('./randHex');
 var choice = require('./choice');
 
@@ -23673,7 +23721,7 @@ var choice = require('./choice');
   module.exports = guid;
 
 
-},{"./choice":214,"./randHex":217}],216:[function(require,module,exports){
+},{"./choice":215,"./randHex":218}],217:[function(require,module,exports){
 var random = require('./random');
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
@@ -23690,7 +23738,7 @@ var MAX_INT = require('../number/MAX_INT');
     module.exports = rand;
 
 
-},{"../number/MAX_INT":186,"../number/MIN_INT":187,"./random":219}],217:[function(require,module,exports){
+},{"../number/MAX_INT":187,"../number/MIN_INT":188,"./random":220}],218:[function(require,module,exports){
 var choice = require('./choice');
 
     var _chars = '0123456789abcdef'.split('');
@@ -23711,7 +23759,7 @@ var choice = require('./choice');
 
 
 
-},{"./choice":214}],218:[function(require,module,exports){
+},{"./choice":215}],219:[function(require,module,exports){
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
 var rand = require('./rand');
@@ -23731,7 +23779,7 @@ var rand = require('./rand');
     module.exports = randInt;
 
 
-},{"../number/MAX_INT":186,"../number/MIN_INT":187,"./rand":216}],219:[function(require,module,exports){
+},{"../number/MAX_INT":187,"../number/MIN_INT":188,"./rand":217}],220:[function(require,module,exports){
 
 
     /**
@@ -23751,9 +23799,9 @@ var rand = require('./rand');
 
 
 
-},{}],220:[function(require,module,exports){
-arguments[4][85][0].apply(exports,arguments)
-},{"dup":85}],221:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"dup":86}],222:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23769,7 +23817,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],222:[function(require,module,exports){
+},{"../lang/toString":182}],223:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23789,7 +23837,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],223:[function(require,module,exports){
+},{"../lang/toString":182}],224:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23812,7 +23860,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],224:[function(require,module,exports){
+},{"../lang/toString":182}],225:[function(require,module,exports){
 var toString = require('../lang/toString');
 var get = require('../object/get');
 
@@ -23833,7 +23881,7 @@ var get = require('../object/get');
 
 
 
-},{"../lang/toString":181,"../object/get":197}],225:[function(require,module,exports){
+},{"../lang/toString":182,"../object/get":198}],226:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * "Safer" String.toLowerCase()
@@ -23846,9 +23894,9 @@ var toString = require('../lang/toString');
     module.exports = lowerCase;
 
 
-},{"../lang/toString":181}],226:[function(require,module,exports){
-arguments[4][86][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"dup":86}],227:[function(require,module,exports){
+},{"../lang/toString":182}],227:[function(require,module,exports){
+arguments[4][87][0].apply(exports,arguments)
+},{"../lang/toString":182,"./WHITE_SPACES":221,"dup":87}],228:[function(require,module,exports){
 var toString = require('../lang/toString');
 var lowerCase = require('./lowerCase');
 var upperCase = require('./upperCase');
@@ -23863,7 +23911,7 @@ var upperCase = require('./upperCase');
     module.exports = properCase;
 
 
-},{"../lang/toString":181,"./lowerCase":225,"./upperCase":239}],228:[function(require,module,exports){
+},{"../lang/toString":182,"./lowerCase":226,"./upperCase":240}],229:[function(require,module,exports){
 var toString = require('../lang/toString');
     // This pattern is generated by the _build/pattern-removeNonWord.js script
     var PATTERN = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
@@ -23879,7 +23927,7 @@ var toString = require('../lang/toString');
     module.exports = removeNonWord;
 
 
-},{"../lang/toString":181}],229:[function(require,module,exports){
+},{"../lang/toString":182}],230:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toInt = require('../number/toInt');
 
@@ -23907,7 +23955,7 @@ var toInt = require('../number/toInt');
 
 
 
-},{"../lang/toString":181,"../number/toInt":189}],230:[function(require,module,exports){
+},{"../lang/toString":182,"../number/toInt":190}],231:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toArray = require('../lang/toArray');
 
@@ -23942,7 +23990,7 @@ var toArray = require('../lang/toArray');
 
 
 
-},{"../lang/toArray":179,"../lang/toString":181}],231:[function(require,module,exports){
+},{"../lang/toArray":180,"../lang/toString":182}],232:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
     * Replaces all accented chars with regular ones
@@ -23980,7 +24028,7 @@ var toString = require('../lang/toString');
     module.exports = replaceAccents;
 
 
-},{"../lang/toString":181}],232:[function(require,module,exports){
+},{"../lang/toString":182}],233:[function(require,module,exports){
 var toString = require('../lang/toString');
 var repeat = require('./repeat');
 
@@ -23997,9 +24045,9 @@ var repeat = require('./repeat');
 
 
 
-},{"../lang/toString":181,"./repeat":229}],233:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"dup":87}],234:[function(require,module,exports){
+},{"../lang/toString":182,"./repeat":230}],234:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"../lang/toString":182,"./WHITE_SPACES":221,"dup":88}],235:[function(require,module,exports){
 var toString = require('../lang/toString');
 var replaceAccents = require('./replaceAccents');
 var removeNonWord = require('./removeNonWord');
@@ -24025,9 +24073,9 @@ var trim = require('./trim');
     module.exports = slugify;
 
 
-},{"../lang/toString":181,"./removeNonWord":228,"./replaceAccents":231,"./trim":235}],235:[function(require,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"./ltrim":226,"./rtrim":233,"dup":88}],236:[function(require,module,exports){
+},{"../lang/toString":182,"./removeNonWord":229,"./replaceAccents":232,"./trim":236}],236:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"../lang/toString":182,"./WHITE_SPACES":221,"./ltrim":227,"./rtrim":234,"dup":89}],237:[function(require,module,exports){
 
 
     var UNDEF;
@@ -24058,7 +24106,7 @@ arguments[4][88][0].apply(exports,arguments)
     module.exports = typecast;
 
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -24078,7 +24126,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],238:[function(require,module,exports){
+},{"../lang/toString":182}],239:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * Replaces hyphens with spaces. (only hyphens between word chars)
@@ -24090,15 +24138,15 @@ var toString = require('../lang/toString');
     module.exports = unhyphenate;
 
 
-},{"../lang/toString":181}],239:[function(require,module,exports){
-arguments[4][89][0].apply(exports,arguments)
-},{"../lang/toString":181,"dup":89}],240:[function(require,module,exports){
+},{"../lang/toString":182}],240:[function(require,module,exports){
 arguments[4][90][0].apply(exports,arguments)
-},{"dup":90}],241:[function(require,module,exports){
-arguments[4][149][0].apply(exports,arguments)
-},{"dup":149}],242:[function(require,module,exports){
-arguments[4][157][0].apply(exports,arguments)
-},{"../array/slice":241,"dup":157}],243:[function(require,module,exports){
+},{"../lang/toString":182,"dup":90}],241:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"dup":91}],242:[function(require,module,exports){
+arguments[4][150][0].apply(exports,arguments)
+},{"dup":150}],243:[function(require,module,exports){
+arguments[4][158][0].apply(exports,arguments)
+},{"../array/slice":242,"dup":158}],244:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -24149,41 +24197,41 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":253,"./isPlainObject":247,"./kindOf":248}],244:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"../object/forOwn":250,"./clone":243,"./isPlainObject":247,"./kindOf":248,"dup":166}],245:[function(require,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"./kindOf":248,"dup":76}],246:[function(require,module,exports){
+},{"../object/mixIn":254,"./isPlainObject":248,"./kindOf":249}],245:[function(require,module,exports){
+arguments[4][167][0].apply(exports,arguments)
+},{"../object/forOwn":251,"./clone":244,"./isPlainObject":248,"./kindOf":249,"dup":167}],246:[function(require,module,exports){
 arguments[4][77][0].apply(exports,arguments)
-},{"./isKind":245,"dup":77}],247:[function(require,module,exports){
-arguments[4][175][0].apply(exports,arguments)
-},{"dup":175}],248:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],249:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":251,"dup":81}],250:[function(require,module,exports){
+},{"./kindOf":249,"dup":77}],247:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"./isKind":246,"dup":78}],248:[function(require,module,exports){
+arguments[4][176][0].apply(exports,arguments)
+},{"dup":176}],249:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],250:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":249,"./hasOwn":251,"dup":82}],251:[function(require,module,exports){
+},{"./hasOwn":252,"dup":82}],251:[function(require,module,exports){
 arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],252:[function(require,module,exports){
-arguments[4][201][0].apply(exports,arguments)
-},{"../lang/deepClone":244,"../lang/isObject":246,"./hasOwn":251,"dup":201}],253:[function(require,module,exports){
+},{"./forIn":250,"./hasOwn":252,"dup":83}],252:[function(require,module,exports){
 arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":250,"dup":84}],254:[function(require,module,exports){
-arguments[4][93][0].apply(exports,arguments)
-},{"dup":93,"mout/lang/createObject":255,"mout/lang/kindOf":256,"mout/object/hasOwn":259,"mout/object/mixIn":260}],255:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"../object/mixIn":260,"dup":73}],256:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],257:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":259,"dup":81}],258:[function(require,module,exports){
+},{"dup":84}],253:[function(require,module,exports){
+arguments[4][202][0].apply(exports,arguments)
+},{"../lang/deepClone":245,"../lang/isObject":247,"./hasOwn":252,"dup":202}],254:[function(require,module,exports){
+arguments[4][85][0].apply(exports,arguments)
+},{"./forOwn":251,"dup":85}],255:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"dup":94,"mout/lang/createObject":256,"mout/lang/kindOf":257,"mout/object/hasOwn":260,"mout/object/mixIn":261}],256:[function(require,module,exports){
+arguments[4][74][0].apply(exports,arguments)
+},{"../object/mixIn":261,"dup":74}],257:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],258:[function(require,module,exports){
 arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":257,"./hasOwn":259,"dup":82}],259:[function(require,module,exports){
+},{"./hasOwn":260,"dup":82}],259:[function(require,module,exports){
 arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],260:[function(require,module,exports){
+},{"./forIn":258,"./hasOwn":260,"dup":83}],260:[function(require,module,exports){
 arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":258,"dup":84}],261:[function(require,module,exports){
+},{"dup":84}],261:[function(require,module,exports){
+arguments[4][85][0].apply(exports,arguments)
+},{"./forOwn":259,"dup":85}],262:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -24203,7 +24251,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":242,"prime":254}],262:[function(require,module,exports){
+},{"mout/function/bind":243,"prime":255}],263:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -24222,7 +24270,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":252,"prime":254}],263:[function(require,module,exports){
+},{"mout/object/merge":253,"prime":255}],264:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -24341,7 +24389,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":1,"mout/array/forEach":141,"mout/array/indexOf":142,"mout/lang/kindOf":178,"mout/time/now":240}],264:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":142,"mout/array/indexOf":143,"mout/lang/kindOf":179,"mout/time/now":241}],265:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -24412,7 +24460,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":263,"./index":265,"mout/array/forEach":141,"mout/array/indexOf":142}],265:[function(require,module,exports){
+},{"./defer":264,"./index":266,"mout/array/forEach":142,"mout/array/indexOf":143}],266:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -24504,7 +24552,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":165,"mout/lang/kindOf":178,"mout/object/hasOwn":199,"mout/object/mixIn":202}],266:[function(require,module,exports){
+},{"mout/lang/createObject":166,"mout/lang/kindOf":179,"mout/object/hasOwn":200,"mout/object/mixIn":203}],267:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -24630,7 +24678,7 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":265,"mout/array/indexOf":142}],267:[function(require,module,exports){
+},{"./index":266,"mout/array/indexOf":143}],268:[function(require,module,exports){
 /**
  * sifter.js
  * Copyright (c) 2013 Brian Reavis & contributors
@@ -25103,7 +25151,7 @@ module.exports = map
 }));
 
 
-},{}],268:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -25934,7 +25982,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":270}],269:[function(require,module,exports){
+},{"./parser":271}],270:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -25944,7 +25992,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":268,"./parser":270}],270:[function(require,module,exports){
+},{"./finder":269,"./parser":271}],271:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -26196,7 +26244,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 /**!
  * Sortable
  * @author	RubaXa   <trash@rubaxa.org>
@@ -27450,7 +27498,7 @@ module.exports = parse
 	return Sortable;
 });
 
-},{}],272:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 /* Web Font Loader v1.6.16 - (c) Adobe Systems, Google. License: Apache 2.0 */
 (function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var p=Date.now||function(){return+new Date};function r(a,b){this.F=a;this.k=b||a;this.H=this.k.document}var ca=!!window.FontFace;r.prototype.createElement=function(a,b,c){a=this.H.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.H.createTextNode(c));return a};function s(a,b,c){a=a.H.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}
 function t(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function u(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
@@ -27469,6 +27517,1628 @@ ta.prototype.parse=function(){for(var a=this.o.length,b=0;b<a;b++){var c=this.o[
 W.prototype.load=function(a){var b=this.c.id,c=this.a.k,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,l=c.fonts.length;g<l;++g){var h=c.fonts[g];d.X.push(new E(h.name,ea("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.X)},y(this.a,this.B(b),function(b){b&&a([])})):a([])};function X(a,b){this.a=a;this.c=b}X.prototype.B=function(a){return(this.c.api||"https://use.typekit.net")+"/"+a+".js"};X.prototype.load=function(a){var b=this.c.id,c=this.a.k;b?y(this.a,this.B(b),function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],l=b[f+1],h=0;h<l.length;h++)e.push(new E(g,l[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(k){}a(e)}},2E3):a([])};function Y(a,b){this.a=a;this.c=b}Y.prototype.B=function(a,b){var c=v(this.a),d=(this.c.api||"fast.fonts.net/jsapi").replace(/^.*http(s?):(\/\/)?/,"");return c+"//"+d+"/"+a+".js"+(b?"?v="+b:"")};
 Y.prototype.load=function(a){function b(){if(e["__mti_fntLst"+c]){var d=e["__mti_fntLst"+c](),g=[],l;if(d)for(var h=0;h<d.length;h++){var k=d[h].fontfamily;void 0!=d[h].fontStyle&&void 0!=d[h].fontWeight?(l=d[h].fontStyle+d[h].fontWeight,g.push(new E(k,l))):g.push(new E(k))}a(g)}else setTimeout(function(){b()},50)}var c=this.c.projectId,d=this.c.version;if(c){var e=this.a.k;y(this.a,this.B(c,d),function(c){c?a([]):b()}).id="__MonotypeAPIScript__"+c}else a([])};function Aa(a,b){this.a=a;this.c=b}Aa.prototype.load=function(a){var b,c,d=this.c.urls||[],e=this.c.families||[],f=this.c.testStrings||{},g=new z;b=0;for(c=d.length;b<c;b++)x(this.a,d[b],A(g));var l=[];b=0;for(c=e.length;b<c;b++)if(d=e[b].split(":"),d[1])for(var h=d[1].split(","),k=0;k<h.length;k+=1)l.push(new E(d[0],h[k]));else l.push(new E(d[0]));C(g,function(){a(l,f)})};var Z=new na(window);Z.q.t.custom=function(a,b){return new Aa(b,a)};Z.q.t.fontdeck=function(a,b){return new W(b,a)};Z.q.t.monotype=function(a,b){return new Y(b,a)};Z.q.t.typekit=function(a,b){return new X(b,a)};Z.q.t.google=function(a,b){return new ya(b,a)};var $={load:n(Z.load,Z)};"function"===typeof define&&define.amd?define(function(){return $}):"undefined"!==typeof module&&module.exports?module.exports=$:(window.WebFont=$,window.WebFontConfig&&Z.load(window.WebFontConfig));}());
 
+
+},{}],"ext/tooltips":[function(require,module,exports){
+/*!
+ * tooltips 0.1.0 - 20th Dec 2013
+ * https://github.com/darsain/tooltip
+ *
+ * Licensed under the MIT license.
+ * http://opensource.org/licenses/MIT
+ *
+ * @modified by Djamil Legato
+ */
+;(function(){
+
+    /**
+     * Require the given path.
+     *
+     * @param {String} path
+     * @return {Object} exports
+     * @api public
+     */
+
+    function fakeRequire(path, parent, orig) {
+        var resolved = fakeRequire.resolve(path);
+
+        // lookup failed
+        if (null == resolved) {
+            orig = orig || path;
+            parent = parent || 'root';
+            var err = new Error('Failed to fakeRequire "' + orig + '" from "' + parent + '"');
+            err.path = orig;
+            err.parent = parent;
+            err.fakeRequire = true;
+            throw err;
+        }
+
+        var module = fakeRequire.modules[resolved];
+
+        // perform real fakeRequire()
+        // by invoking the module's
+        // registered function
+        if (!module._resolving && !module.exports) {
+            var mod = {};
+            mod.exports = {};
+            mod.client = mod.component = true;
+            module._resolving = true;
+            module.call(this, mod.exports, fakeRequire.relative(resolved), mod);
+            delete module._resolving;
+            module.exports = mod.exports;
+        }
+
+        return module.exports;
+    }
+
+    /**
+     * Registered modules.
+     */
+
+    fakeRequire.modules = {};
+
+    /**
+     * Registered aliases.
+     */
+
+    fakeRequire.aliases = {};
+
+    /**
+     * Resolve `path`.
+     *
+     * Lookup:
+     *
+     *   - PATH/index.js
+     *   - PATH.js
+     *   - PATH
+     *
+     * @param {String} path
+     * @return {String} path or null
+     * @api private
+     */
+
+    fakeRequire.resolve = function(path) {
+        if (path.charAt(0) === '/') path = path.slice(1);
+
+        var paths = [
+            path,
+            path + '.js',
+            path + '.json',
+            path + '/index.js',
+            path + '/index.json'
+        ];
+
+        for (var i = 0; i < paths.length; i++) {
+            var path = paths[i];
+            if (fakeRequire.modules.hasOwnProperty(path)) return path;
+            if (fakeRequire.aliases.hasOwnProperty(path)) return fakeRequire.aliases[path];
+        }
+    };
+
+    /**
+     * Normalize `path` relative to the current path.
+     *
+     * @param {String} curr
+     * @param {String} path
+     * @return {String}
+     * @api private
+     */
+
+    fakeRequire.normalize = function(curr, path) {
+        var segs = [];
+
+        if ('.' != path.charAt(0)) return path;
+
+        curr = curr.split('/');
+        path = path.split('/');
+
+        for (var i = 0; i < path.length; ++i) {
+            if ('..' == path[i]) {
+                curr.pop();
+            } else if ('.' != path[i] && '' != path[i]) {
+                segs.push(path[i]);
+            }
+        }
+
+        return curr.concat(segs).join('/');
+    };
+
+    /**
+     * Register module at `path` with callback `definition`.
+     *
+     * @param {String} path
+     * @param {Function} definition
+     * @api private
+     */
+
+    fakeRequire.register = function(path, definition) {
+        fakeRequire.modules[path] = definition;
+    };
+
+    /**
+     * Alias a module definition.
+     *
+     * @param {String} from
+     * @param {String} to
+     * @api private
+     */
+
+    fakeRequire.alias = function(from, to) {
+        if (!fakeRequire.modules.hasOwnProperty(from)) {
+            throw new Error('Failed to alias "' + from + '", it does not exist');
+        }
+        fakeRequire.aliases[to] = from;
+    };
+
+    /**
+     * Return a fakeRequire function relative to the `parent` path.
+     *
+     * @param {String} parent
+     * @return {Function}
+     * @api private
+     */
+
+    fakeRequire.relative = function(parent) {
+        var p = fakeRequire.normalize(parent, '..');
+
+        /**
+         * lastIndexOf helper.
+         */
+
+        function lastIndexOf(arr, obj) {
+            var i = arr.length;
+            while (i--) {
+                if (arr[i] === obj) return i;
+            }
+            return -1;
+        }
+
+        /**
+         * The relative fakeRequire() itself.
+         */
+
+        function localRequire(path) {
+            var resolved = localRequire.resolve(path);
+            return fakeRequire(resolved, parent, path);
+        }
+
+        /**
+         * Resolve relative to the parent.
+         */
+
+        localRequire.resolve = function(path) {
+            var c = path.charAt(0);
+            if ('/' == c) return path.slice(1);
+            if ('.' == c) return fakeRequire.normalize(p, path);
+
+            // resolve deps by returning
+            // the dep in the nearest "deps"
+            // directory
+            var segs = parent.split('/');
+            var i = lastIndexOf(segs, 'deps') + 1;
+            if (!i) i = 0;
+            path = segs.slice(0, i + 1).join('/') + '/deps/' + path;
+            return path;
+        };
+
+        /**
+         * Check if module is defined at `path`.
+         */
+
+        localRequire.exists = function(path) {
+            return fakeRequire.modules.hasOwnProperty(localRequire.resolve(path));
+        };
+
+        return localRequire;
+    };
+    fakeRequire.register("darsain-position/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = position;\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var win = window;\n\
+        var doc = win.document;\n\
+        var docEl = doc.documentElement;\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Checks whether object is window.\n\
+         *\n\
+         * @param {Object} obj\n\
+         *\n\
+         * @return {Boolean}\n\
+         */\n\
+        function isWin(obj) {\n\
+        \treturn obj && obj.setInterval != null;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Returns element's object with `left`, `top`, `bottom`, `right`, `width`, and `height`\n\
+         * properties indicating the position and dimensions of element on a page.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function position(element) {\n\
+        \tvar winTop = win.pageYOffset || docEl.scrollTop;\n\
+        \tvar winLeft = win.pageXOffset || docEl.scrollLeft;\n\
+        \tvar box = { left: 0, right: 0, top: 0, bottom: 0, width: 0, height: 0 };\n\
+        \n\
+        \tif (isWin(element)) {\n\
+        \t\tbox.width = win.innerWidth || docEl.clientWidth;\n\
+        \t\tbox.height = win.innerHeight || docEl.clientHeight;\n\
+        \t} else if (docEl.contains(element) && element.getBoundingClientRect != null) {\n\
+        \t\textend(box, element.getBoundingClientRect());\n\
+        \t\t// width & height don't exist in <IE9\n\
+        \t\tbox.width = box.right - box.left;\n\
+        \t\tbox.height = box.bottom - box.top;\n\
+        \t} else {\n\
+        \t\treturn box;\n\
+        \t}\n\
+        \n\
+        \tbox.top = box.top + winTop - docEl.clientTop;\n\
+        \tbox.left = box.left + winLeft - docEl.clientLeft;\n\
+        \tbox.right = box.left + box.width;\n\
+        \tbox.bottom = box.top + box.height;\n\
+        \n\
+        \treturn box;\n\
+        }//@ sourceURL=darsain-position/index.js"
+    ));
+    fakeRequire.register("component-classes/index.js", Function("exports, fakeRequire, module",
+        "/**\n\
+         * Module dependencies.\n\
+         */\n\
+        \n\
+        var index = fakeRequire('indexof');\n\
+        \n\
+        /**\n\
+         * Whitespace regexp.\n\
+         */\n\
+        \n\
+        var re = /\\s+/;\n\
+        \n\
+        /**\n\
+         * toString reference.\n\
+         */\n\
+        \n\
+        var toString = Object.prototype.toString;\n\
+        \n\
+        /**\n\
+         * Wrap `el` in a `ClassList`.\n\
+         *\n\
+         * @param {Element} el\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        module.exports = function(el){\n\
+          return new ClassList(el);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Initialize a new ClassList for `el`.\n\
+         *\n\
+         * @param {Element} el\n\
+         * @api private\n\
+         */\n\
+        \n\
+        function ClassList(el) {\n\
+          if (!el) throw new Error('A DOM element reference is fakeRequired');\n\
+          this.el = el;\n\
+          this.list = el.classList;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Add class `name` if not already present.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.add = function(name){\n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.add(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          var arr = this.array();\n\
+          var i = index(arr, name);\n\
+          if (!~i) arr.push(name);\n\
+          this.el.className = arr.join(' ');\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove class `name` when present, or\n\
+         * pass a regular expression to remove\n\
+         * any which match.\n\
+         *\n\
+         * @param {String|RegExp} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.remove = function(name){\n\
+          if ('[object RegExp]' == toString.call(name)) {\n\
+            return this.removeMatching(name);\n\
+          }\n\
+        \n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.remove(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          var arr = this.array();\n\
+          var i = index(arr, name);\n\
+          if (~i) arr.splice(i, 1);\n\
+          this.el.className = arr.join(' ');\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove all classes matching `re`.\n\
+         *\n\
+         * @param {RegExp} re\n\
+         * @return {ClassList}\n\
+         * @api private\n\
+         */\n\
+        \n\
+        ClassList.prototype.removeMatching = function(re){\n\
+          var arr = this.array();\n\
+          for (var i = 0; i < arr.length; i++) {\n\
+            if (re.test(arr[i])) {\n\
+              this.remove(arr[i]);\n\
+            }\n\
+          }\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Toggle class `name`.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.toggle = function(name){\n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.toggle(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          if (this.has(name)) {\n\
+            this.remove(name);\n\
+          } else {\n\
+            this.add(name);\n\
+          }\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Return an array of classes.\n\
+         *\n\
+         * @return {Array}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.array = function(){\n\
+          var str = this.el.className.replace(/^\\s+|\\s+$/g, '');\n\
+          var arr = str.split(re);\n\
+          if ('' === arr[0]) arr.shift();\n\
+          return arr;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Check if class `name` is present.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.has =\n\
+        ClassList.prototype.contains = function(name){\n\
+          return this.list\n\
+            ? this.list.contains(name)\n\
+            : !! ~index(this.array(), name);\n\
+        };\n\
+        //@ sourceURL=component-classes/index.js"
+    ));
+    fakeRequire.register("darsain-tooltip/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Dependencies.\n\
+         */\n\
+        var evt = fakeRequire('event');\n\
+        var classes = fakeRequire('classes');\n\
+        var indexOf = fakeRequire('indexof');\n\
+        var position = fakeRequire('position');\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var win = window;\n\
+        var doc = win.document;\n\
+        var body = doc.body;\n\
+        var verticalPlaces = ['top', 'bottom'];\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = Tooltip;\n\
+        \n\
+        /**\n\
+         * Prototypal inheritance.\n\
+         *\n\
+         * @param {Object} o\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        var objectCreate = Object.create || (function () {\n\
+        \tfunction F() {}\n\
+        \treturn function (o) {\n\
+        \t\tF.prototype = o;\n\
+        \t\treturn new F();\n\
+        \t};\n\
+        })();\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Parse integer from strings like '-50px'.\n\
+         *\n\
+         * @param {Mixed} value\n\
+         *\n\
+         * @return {Integer}\n\
+         */\n\
+        function parsePx(value) {\n\
+        \treturn 0 | Math.round(String(value).replace(/[^\\-0-9.]/g, ''));\n\
+        }\n\
+        \n\
+        /**\n\
+         * Get computed style of element.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @type {String}\n\
+         */\n\
+        var style = win.getComputedStyle ? function style(element, name) {\n\
+        \treturn win.getComputedStyle(element, null)[name];\n\
+        } : function style(element, name) {\n\
+        \treturn element.currentStyle[name];\n\
+        };\n\
+        \n\
+        /**\n\
+         * Returns transition duration of element in ms.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Int}\n\
+         */\n\
+        function transitionDuration(element) {\n\
+        \tvar duration = String(style(element, transitionDuration.propName));\n\
+        \tvar match = duration.match(/([0-9.]+)([ms]{1,2})/);\n\
+        \tif (match) {\n\
+        \t\tduration = Number(match[1]);\n\
+        \t\tif (match[2] === 's') {\n\
+        \t\t\tduration *= 1000;\n\
+        \t\t}\n\
+        \t}\n\
+        \treturn 0|duration;\n\
+        }\n\
+        transitionDuration.propName = (function () {\n\
+        \tvar element = doc.createElement('div');\n\
+        \tvar names = ['transitionDuration', 'webkitTransitionDuration'];\n\
+        \tvar value = '1s';\n\
+        \tfor (var i = 0; i < names.length; i++) {\n\
+        \t\telement.style[names[i]] = value;\n\
+        \t\tif (element.style[names[i]] === value) {\n\
+        \t\t\treturn names[i];\n\
+        \t\t}\n\
+        \t}\n\
+        }());\n\
+        \n\
+        /**\n\
+         * Tooltip construnctor.\n\
+         *\n\
+         * @param {String|Element} content\n\
+         * @param {Object}         options\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        function Tooltip(content, options) {\n\
+        \tif (!(this instanceof Tooltip)) {\n\
+        \t\treturn new Tooltip(content, options);\n\
+        \t}\n\
+        \tthis.hidden = 1;\n\
+        \tthis.options = extend(objectCreate(Tooltip.defaults), options);\n\
+        \tthis._createElement();\n\
+        \tthis.content(content);\n\
+        }\n\
+        \n\
+        /**\n\
+         * Creates a tooltip element.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._createElement = function () {\n\
+        \tthis.element = doc.createElement('div');\n\
+        \tthis.classes = classes(this.element);\n\
+        \tthis.classes.add(this.options.baseClass);\n\
+        \tvar propName;\n\
+        \tfor (var i = 0; i < Tooltip.classTypes.length; i++) {\n\
+        \t\tpropName = Tooltip.classTypes[i] + 'Class';\n\
+        \t\tif (this.options[propName]) {\n\
+        \t\t\tthis.classes.add(this.options[propName]);\n\
+        \t\t}\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes tooltip's type class type.\n\
+         *\n\
+         * @param {String} name\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.type = function (name) {\n\
+        \treturn this.changeClassType('type', name);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes tooltip's effect class type.\n\
+         *\n\
+         * @param {String} name\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.effect = function (name) {\n\
+        \treturn this.changeClassType('effect', name);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes class type.\n\
+         *\n\
+         * @param {String} propName\n\
+         * @param {String} newClass\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.changeClassType = function (propName, newClass) {\n\
+        \tpropName += 'Class';\n\
+        \tif (this.options[propName]) {\n\
+        \t\tthis.classes.remove(this.options[propName]);\n\
+        \t}\n\
+        \tthis.options[propName] = newClass;\n\
+        \tif (newClass) {\n\
+        \t\tthis.classes.add(newClass);\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Updates tooltip's dimensions.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.updateSize = function () {\n\
+        \tif (this.hidden) {\n\
+        \t\tthis.element.style.visibility = 'hidden';\n\
+        \t\tbody.appendChild(this.element);\n\
+        \t}\n\
+        \tthis.width = this.element.offsetWidth;\n\
+        \tthis.height = this.element.offsetHeight;\n\
+        \tif (this.spacing == null) {\n\
+        \t\tthis.spacing = this.options.spacing != null ? this.options.spacing : parsePx(style(this.element, 'top'));\n\
+        \t}\n\
+        \tif (this.offset == null) {\n\
+        \t\tthis.offset = this.options.offset != null ? this.options.offset : 0;\n\
+    \t}\n\
+        \tif (this.hidden) {\n\
+        \t\tbody.removeChild(this.element);\n\
+        \t\tthis.element.style.visibility = '';\n\
+        \t} else {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Change tooltip content.\n\
+         *\n\
+         * When tooltip is visible, its size is automatically\n\
+         * synced and tooltip correctly repositioned.\n\
+         *\n\
+         * @param {String|Element} content\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.content = function (content) {\n\
+        \tif (typeof content === 'object') {\n\
+        \t\tthis.element.innerHTML = '';\n\
+        \t\tthis.element.appendChild(content);\n\
+        \t} else {\n\
+        \t\tthis.element.innerHTML = content;\n\
+        \t}\n\
+        \tthis.updateSize();\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Pick new place tooltip should be displayed at.\n\
+         *\n\
+         * When the tooltip is visible, it is automatically positioned there.\n\
+         *\n\
+         * @param {String} place\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.place = function (place) {\n\
+        \tthis.options.place = place;\n\
+        \tif (!this.hidden) {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Attach tooltip to an element.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.attach = function (element) {\n\
+        \tthis.attachedTo = element;\n\
+        \tif (!this.hidden) {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Detach tooltip from element.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.detach = function () {\n\
+        \tthis.hide();\n\
+        \tthis.attachedTo = null;\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Pick the most reasonable place for target position.\n\
+         *\n\
+         * @param {Object} target\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype._pickPlace = function (target) {\n\
+        \tif (!this.options.auto) {\n\
+        \t\treturn this.options.place;\n\
+        \t}\n\
+        \tvar winPos = position(win);\n\
+        \tvar place = this.options.place.split('-');\n\
+        \tvar spacing = this.spacing;\n\
+        \n\
+        \tif (~indexOf(verticalPlaces, place[0])) {\n\
+        \t\tif (target.top - this.height - spacing <= winPos.top) {\n\
+        \t\t\tplace[0] = 'bottom';\n\
+        \t\t} else if (target.bottom + this.height + spacing >= winPos.bottom) {\n\
+        \t\t\tplace[0] = 'top';\n\
+        \t\t}\n\
+        \t\tswitch (place[1]) {\n\
+        \t\t\tcase 'left':\n\
+        \t\t\t\tif (target.right - this.width <= winPos.left) {\n\
+        \t\t\t\t\tplace[1] = 'right';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tcase 'right':\n\
+        \t\t\t\tif (target.left + this.width >= winPos.right) {\n\
+        \t\t\t\t\tplace[1] = 'left';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tdefault:\n\
+        \t\t\t\tif (target.left + target.width / 2 + this.width / 2 >= winPos.right) {\n\
+        \t\t\t\t\tplace[1] = 'left';\n\
+        \t\t\t\t} else if (target.right - target.width / 2 - this.width / 2 <= winPos.left) {\n\
+        \t\t\t\t\tplace[1] = 'right';\n\
+        \t\t\t\t}\n\
+        \t\t}\n\
+        \t} else {\n\
+        \t\tif (target.left - this.width - spacing <= winPos.left) {\n\
+        \t\t\tplace[0] = 'right';\n\
+        \t\t} else if (target.right + this.width + spacing >= winPos.right) {\n\
+        \t\t\tplace[0] = 'left';\n\
+        \t\t}\n\
+        \t\tswitch (place[1]) {\n\
+        \t\t\tcase 'top':\n\
+        \t\t\t\tif (target.bottom - this.height <= winPos.top) {\n\
+        \t\t\t\t\tplace[1] = 'bottom';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tcase 'bottom':\n\
+        \t\t\t\tif (target.top + this.height >= winPos.bottom) {\n\
+        \t\t\t\t\tplace[1] = 'top';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tdefault:\n\
+        \t\t\t\tif (target.top + target.height / 2 + this.height / 2 >= winPos.bottom) {\n\
+        \t\t\t\t\tplace[1] = 'top';\n\
+        \t\t\t\t} else if (target.bottom - target.height / 2 - this.height / 2 <= winPos.top) {\n\
+        \t\t\t\t\tplace[1] = 'bottom';\n\
+        \t\t\t\t}\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \treturn place.join('-');\n\
+        };\n\
+        \n\
+        /**\n\
+         * Position the element to an element or a specific coordinates.\n\
+         *\n\
+         * @param {Integer|Element} x\n\
+         * @param {Integer}         y\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.position = function (x, y) {\n\
+        \tif (this.attachedTo) {\n\
+        \t\tx = this.attachedTo;\n\
+        \t}\n\
+        \tif (x == null && this._p) {\n\
+        \t\tx = this._p[0];\n\
+        \t\ty = this._p[1];\n\
+        \t} else {\n\
+        \t\tthis._p = arguments;\n\
+        \t}\n\
+        \tvar target = typeof x === 'number' ? {\n\
+        \t\tleft: 0|x,\n\
+        \t\tright: 0|x,\n\
+        \t\ttop: 0|y,\n\
+        \t\tbottom: 0|y,\n\
+        \t\twidth: 0,\n\
+        \t\theight: 0\n\
+        \t} : position(x);\n\
+        \tvar spacing = Number(this.spacing), offset = Number(this.offset);\n\
+        \tvar newPlace = this._pickPlace(target);\n\
+        \n\
+        \t// Add/Change place class when necessary\n\
+        \tif (newPlace !== this.curPlace) {\n\
+        \t\tif (this.curPlace) {\n\
+        \t\t\tthis.classes.remove(this.curPlace);\n\
+        \t\t}\n\
+        \t\tthis.classes.add(newPlace);\n\
+        \t\tthis.curPlace = newPlace;\n\
+        \t}\n\
+        \n\
+        \t// Position the tip\n\
+        \tvar top, left;\n\
+        \tswitch (this.curPlace) {\n\
+        \t\tcase 'top':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.left + target.width / 2 - this.width / 2;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'top-left':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.right - this.width - offset;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'top-right':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.left + offset;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'bottom':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.left + target.width / 2 - this.width / 2;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'bottom-left':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.right - this.width - offset;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'bottom-right':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.left + offset;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'left':\n\
+        \t\t\ttop = target.top + target.height / 2 - this.height / 2;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'left-top':\n\
+        \t\t\ttop = target.bottom - this.height;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'left-bottom':\n\
+        \t\t\ttop = target.top;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'right':\n\
+        \t\t\ttop = target.top + target.height / 2 - this.height / 2;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'right-top':\n\
+        \t\t\ttop = target.bottom - this.height;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'right-bottom':\n\
+        \t\t\ttop = target.top;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t}\n\
+        \n\
+        \t// Set tip position & class\n\
+        \tthis.element.style.top = Math.round(top) + 'px';\n\
+        \tthis.element.style.left = Math.round(left) + 'px';\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Show the tooltip.\n\
+         *\n\
+         * @param {Integer|Element} x\n\
+         * @param {Integer}         y\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.show = function (x, y) {\n\
+        \tx = this.attachedTo ? this.attachedTo : x;\n\
+        \n\
+        \t// Clear potential ongoing animation\n\
+        \tclearTimeout(this.aIndex);\n\
+        \n\
+        \t// Position the element when requested\n\
+        \tif (x != null) {\n\
+        \t\tthis.position(x, y);\n\
+        \t}\n\
+        \n\
+        \t// Stop here if tip is already visible\n\
+        \tif (this.hidden) {\n\
+        \t\tthis.hidden = 0;\n\
+        \t\tbody.appendChild(this.element);\n\
+        \t}\n\
+        \n\
+        \t// Make tooltip aware of window resize\n\
+        \tif (this.attachedTo) {\n\
+        \t\tthis._aware();\n\
+        \t}\n\
+        \n\
+        \t// Trigger layout and kick in the transition\n\
+        \tif (this.options.inClass) {\n\
+        \t\tif (this.options.effectClass) {\n\
+        \t\t\tvoid this.element.clientHeight;\n\
+        \t\t}\n\
+        \t\tthis.classes.add(this.options.inClass);\n\
+        \t}\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Hide the tooltip.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.hide = function () {\n\
+        \tif (this.hidden) {\n\
+        \t\treturn;\n\
+        \t}\n\
+        \n\
+        \tvar self = this;\n\
+        \tvar duration = 0;\n\
+        \n\
+        \t// Remove .in class and calculate transition duration if any\n\
+        \tif (this.options.inClass) {\n\
+        \t\tthis.classes.remove(this.options.inClass);\n\
+        \t\tif (this.options.effectClass) {\n\
+        \t\t\tduration = transitionDuration(this.element);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t// Remove tip from window resize awareness\n\
+        \tif (this.attachedTo) {\n\
+        \t\tthis._unaware();\n\
+        \t}\n\
+        \n\
+        \t// Remove the tip from the DOM when transition is done\n\
+        \tclearTimeout(this.aIndex);\n\
+        \tthis.aIndex = setTimeout(function () {\n\
+        \t\tself.aIndex = 0;\n\
+        \t\tbody.removeChild(self.element);\n\
+        \t\tself.hidden = 1;\n\
+        \t}, duration);\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        Tooltip.prototype.toggle = function (x, y) {\n\
+        \treturn this[this.hidden ? 'show' : 'hide'](x, y);\n\
+        };\n\
+        \n\
+        Tooltip.prototype.destroy = function () {\n\
+        \tclearTimeout(this.aIndex);\n\
+        \tthis._unaware();\n\
+        \tif (!this.hidden) {\n\
+        \t\tbody.removeChild(this.element);\n\
+        \t}\n\
+        \tthis.element = this.options = null;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Make the tip window resize aware.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._aware = function () {\n\
+        \tvar index = indexOf(Tooltip.winAware, this);\n\
+        \tif (!~index) {\n\
+        \t\tTooltip.winAware.push(this);\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove the window resize awareness.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._unaware = function () {\n\
+        \tvar index = indexOf(Tooltip.winAware, this);\n\
+        \tif (~index) {\n\
+        \t\tTooltip.winAware.splice(index, 1);\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Handles repositioning of tooltips on window resize.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.reposition = (function () {\n\
+        \tvar rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (fn) {\n\
+        \t\treturn setTimeout(fn, 17);\n\
+        \t};\n\
+        \tvar rIndex;\n\
+        \n\
+        \tfunction requestReposition() {\n\
+        \t\tif (rIndex || !Tooltip.winAware.length) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\trIndex = rAF(reposition, 17);\n\
+        \t}\n\
+        \n\
+        \tfunction reposition() {\n\
+        \t\trIndex = 0;\n\
+        \t\tvar tip;\n\
+        \t\tfor (var i = 0, l = Tooltip.winAware.length; i < l; i++) {\n\
+        \t\t\ttip = Tooltip.winAware[i];\n\
+        \t\t\ttip.position();\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \treturn requestReposition;\n\
+        }());\n\
+        Tooltip.winAware = [];\n\
+        \n\
+        // Bind winAware repositioning to window resize event\n\
+        evt.bind(window, 'resize', Tooltip.reposition);\n\
+        evt.bind(window, 'scroll', Tooltip.reposition);\n\
+        \n\
+        /**\n\
+         * Array with dynamic class types.\n\
+         *\n\
+         * @type {Array}\n\
+         */\n\
+        Tooltip.classTypes = ['type', 'effect'];\n\
+        \n\
+        /**\n\
+         * Default options for Tooltip constructor.\n\
+         *\n\
+         * @type {Object}\n\
+         */\n\
+        Tooltip.defaults = {\n\
+        \tbaseClass:   'tooltip', // Base tooltip class name.\n\
+        \ttypeClass:   null,      // Type tooltip class name.\n\
+        \teffectClass: null,      // Effect tooltip class name.\n\
+        \tinClass:     'in',      // Class used to transition stuff in.\n\
+        \tplace:       'top',     // Default place.\n\
+        \tspacing:     null,      // Gap between target and tooltip.\n\
+        \toffset:      null,      // Horizontal offset to align arrow\n\
+        \tauto:        0          // Whether to automatically adjust place to fit into window.\n\
+        };//@ sourceURL=darsain-tooltip/index.js"
+    ));
+    fakeRequire.register("darsain-event/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Bind `el` event `type` to `fn`.\n\
+         *\n\
+         * @param {Element}  el\n\
+         * @param {String}   type\n\
+         * @param {Function} fn\n\
+         * @param {Boolean}  capture\n\
+         *\n\
+         * @return {Function}\n\
+         */\n\
+        exports.bind = window.addEventListener ? function (el, type, fn, capture) {\n\
+        \tel.addEventListener(type, fn, capture || false);\n\
+        \treturn fn;\n\
+        } : function (el, type, fn) {\n\
+        \tvar fnid = type + fn;\n\
+        \tel[fnid] = el[fnid] || function () {\n\
+        \t\tvar event = window.event;\n\
+        \t\tevent.target = event.srcElement;\n\
+        \t\tevent.preventDefault = function () {\n\
+        \t\t\tevent.returnValue = false;\n\
+        \t\t};\n\
+        \t\tevent.stopPropagation = function () {\n\
+        \t\t\tevent.cancelBubble = true;\n\
+        \t\t};\n\
+        \t\tfn.call(el, event);\n\
+        \t};\n\
+        \tel.attachEvent('on' + type, el[fnid]);\n\
+        \treturn fn;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Unbind `el` event `type`'s callback `fn`.\n\
+         *\n\
+         * @param {Element}  el\n\
+         * @param {String}   type\n\
+         * @param {Function} fn\n\
+         * @param {Boolean}  capture\n\
+         *\n\
+         * @return {Function}\n\
+         */\n\
+        exports.unbind = window.removeEventListener ? function (el, type, fn, capture) {\n\
+        \tel.removeEventListener(type, fn, capture || false);\n\
+        \treturn fn;\n\
+        } : function (el, type, fn) {\n\
+        \tvar fnid = type + fn;\n\
+        \tel.detachEvent('on' + type, el[fnid]);\n\
+        \ttry {\n\
+        \t\tdelete el[fnid];\n\
+        \t} catch (err) {\n\
+        \t\t// can't delete window object properties\n\
+        \t\tel[fnid] = undefined;\n\
+        \t}\n\
+        \treturn fn;\n\
+        };//@ sourceURL=darsain-event/index.js"
+    ));
+    fakeRequire.register("component-indexof/index.js", Function("exports, fakeRequire, module",
+        "module.exports = function(arr, obj){\n\
+          if (arr.indexOf) return arr.indexOf(obj);\n\
+          for (var i = 0; i < arr.length; ++i) {\n\
+            if (arr[i] === obj) return i;\n\
+          }\n\
+          return -1;\n\
+        };//@ sourceURL=component-indexof/index.js"
+    ));
+    fakeRequire.register("code42day-dataset/index.js", Function("exports, fakeRequire, module",
+        "module.exports=dataset;\n\
+        \n\
+        /*global document*/\n\
+        \n\
+        \n\
+        // replace namesLikeThis with names-like-this\n\
+        function toDashed(name) {\n\
+          return name.replace(/([A-Z])/g, function(u) {\n\
+            return \"-\" + u.toLowerCase();\n\
+          });\n\
+        }\n\
+        \n\
+        var fn;\n\
+        \n\
+        if (document.head.dataset) {\n\
+          fn = {\n\
+            set: function(node, attr, value) {\n\
+               if (!node.dataset) return;\
+               node.dataset[attr] = value;\n\
+            },\n\
+            get: function(node, attr) {\n\
+              return node.dataset && node.dataset[attr];\n\
+            }\n\
+          };\n\
+        } else {\n\
+          fn = {\n\
+            set: function(node, attr, value) {\n\
+              node.setAttribute('data-' + toDashed(attr), value);\n\
+            },\n\
+            get: function(node, attr) {\n\
+              return node.getAttribute('data-' + toDashed(attr));\n\
+            }\n\
+          };\n\
+        }\n\
+        \n\
+        function dataset(node, attr, value) {\n\
+          var self = {\n\
+            set: set,\n\
+            get: get\n\
+          };\n\
+        \n\
+          function set(attr, value) {\n\
+            fn.set(node, attr, value);\n\
+            return self;\n\
+          }\n\
+        \n\
+          function get(attr) {\n\
+            return fn.get(node, attr);\n\
+          }\n\
+        \n\
+          if (arguments.length === 3) {\n\
+            return set(attr, value);\n\
+          }\n\
+          if (arguments.length == 2) {\n\
+            return get(attr);\n\
+          }\n\
+        \n\
+          return self;\n\
+        }//@ sourceURL=code42day-dataset/index.js"
+    ));
+    fakeRequire.register("tooltips/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Dependencies.\n\
+         */\n\
+        var evt = fakeRequire('event');\n\
+        var indexOf = fakeRequire('indexof');\n\
+        var Tooltip = fakeRequire('tooltip');\n\
+        var dataset = fakeRequire('dataset');\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = Tooltips;\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var MObserver = window.MutationObserver || window.WebkitMutationObserver;\n\
+        \n\
+        /**\n\
+         * Prototypal inheritance.\n\
+         *\n\
+         * @param {Object} o\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        var objectCreate = Object.create || (function () {\n\
+        \tfunction F() {}\n\
+        \treturn function (o) {\n\
+        \t\tF.prototype = o;\n\
+        \t\treturn new F();\n\
+        \t};\n\
+        })();\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Capitalize the first letter of a string.\n\
+         *\n\
+         * @param {String} string\n\
+         *\n\
+         * @return {String}\n\
+         */\n\
+        function ucFirst(string) {\n\
+        \treturn string.charAt(0).toUpperCase() + string.slice(1);\n\
+        }\n\
+        \n\
+        /**\n\
+         * Tooltips constructor.\n\
+         *\n\
+         * @param {Element} container\n\
+         * @param {Object}  options\n\
+         *\n\
+         * @return {Tooltips}\n\
+         */\n\
+        function Tooltips(container, options) {\n\
+        \tif (!(this instanceof Tooltips)) {\n\
+        \t\treturn new Tooltips(container, options);\n\
+        \t}\n\
+        \n\
+        \tvar self = this;\n\
+        \tvar observer, TID;\n\
+        \n\
+        \t/**\n\
+        \t * Show tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.show = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'show');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Hide tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.hide = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'hide');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Toggle tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.toggle = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'toggle');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Retrieve tooltip attached to an element and call it's method.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t * @param {String}  method\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tfunction callTooltipMethod(element, method) {\n\
+        \t\tvar tip = self.get(element);\n\
+        \t\tif (tip) {\n\
+        \t\t\ttip[method]();\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Return a tooltip attached to an element. Tooltip is created if it doesn't exist yet.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltip}\n\
+        \t */\n\
+        \tself.get = function (element) {\n\
+        \t\tvar tip = !!element && (element[TID] || createTip(element));\n\
+        \t\tif (tip && !element[TID]) {\n\
+        \t\t\telement[TID] = tip;\n\
+        \t\t}\n\
+        \t\treturn tip;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Add element(s) to Tooltips instance.\n\
+        \t *\n\
+        \t * @param {[type]} element Can be element, or container containing elements to be added.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.add = function (element) {\n\
+        \t\tif (!element || element.nodeType !== 1) {\n\
+        \t\t\treturn self;\n\
+        \t\t}\n\
+        \t\tif (dataset(element).get(options.key)) {\n\
+        \t\t\tbindElement(element);\n\
+        \t\t} else if (element.children) {\n\
+        \t\t\tbindElements(element.querySelectorAll(self.selector));\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Remove element(s) from Tooltips instance.\n\
+        \t *\n\
+        \t * @param {Element} element Can be element, or container containing elements to be removed.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.remove = function (element) {\n\
+        \t\tif (!element || element.nodeType !== 1) {\n\
+        \t\t\treturn self;\n\
+        \t\t}\n\
+        \t\tif (dataset(element).get(options.key)) {\n\
+        \t\t\tunbindElement(element);\n\
+        \t\t} else if (element.children) {\n\
+        \t\t\tunbindElements(element.querySelectorAll(self.selector));\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Reload Tooltips instance.\n\
+        \t *\n\
+        \t * Unbinds current tooltipped elements, than selects the\n\
+        \t * data-key elements from container and binds them again.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.reload = function () {\n\
+        \t\t// Unbind old elements\n\
+        \t\tunbindElements(self.elements);\n\
+        \t\t// Bind new elements\n\
+        \t\tbindElements(self.container.querySelectorAll(self.selector));\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Destroy Tooltips instance.\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tself.destroy = function () {\n\
+        \t\tunbindElements(this.elements);\n\
+        \t\tif (observer) {\n\
+        \t\t\tobserver.disconnect();\n\
+        \t\t}\n\
+        \t\tthis.container = this.elements = this.options = observer = null;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Create a tip from element data attributes.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltip}\n\
+        \t */\n\
+        \tfunction createTip(element) {\n\
+        \t\tvar data = dataset(element);\n\
+        \t\tvar content = data.get(options.key);\n\
+        \t\tif (!content) {\n\
+        \t\t\treturn false;\n\
+        \t\t}\n\
+        \t\tvar tipOptions = objectCreate(options.tooltip);\n\
+        \t\tvar keyData;\n\
+        \t\tfor (var key in Tooltip.defaults) {\n\
+        \t\t\tkeyData = data.get(options.key + ucFirst(key.replace(/Class$/, '')));\n\
+        \t\t\tif (!keyData) {\n\
+        \t\t\t\tcontinue;\n\
+        \t\t\t}\n\
+        \t\t\ttipOptions[key] = keyData;\n\
+        \t\t}\n\
+        \t\treturn new Tooltip(content, tipOptions).attach(element);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Bind Tooltips events to Array/NodeList of elements.\n\
+        \t *\n\
+        \t * @param {Array} elements\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction bindElements(elements) {\n\
+        \t\tfor (var i = 0, l = elements.length; i < l; i++) {\n\
+        \t\t\tbindElement(elements[i]);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Bind Tooltips events to element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction bindElement(element) {\n\
+        \t\tif (element[TID] || ~indexOf(self.elements, element)) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\tevt.bind(element, options.showOn, eventHandler);\n\
+        \t\tevt.bind(element, options.hideOn, eventHandler);\n\
+        \t\tself.elements.push(element);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Unbind Tooltips events from Array/NodeList of elements.\n\
+        \t *\n\
+        \t * @param {Array} elements\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction unbindElements(elements) {\n\
+        \t\tif (self.elements === elements) {\n\
+        \t\t\telements = elements.slice();\n\
+        \t\t}\n\
+        \t\tfor (var i = 0, l = elements.length; i < l; i++) {\n\
+        \t\t\tunbindElement(elements[i]);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Unbind Tooltips events from element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction unbindElement(element) {\n\
+        \t\tvar index = indexOf(self.elements, element);\n\
+        \t\tif (!~index) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\tif (element[TID]) {\n\
+        \t\t\telement[TID].destroy();\n\
+        \t\t\tdelete element[TID];\n\
+        \t\t}\n\
+        \t\tevt.unbind(element, options.showOn, eventHandler);\n\
+        \t\tevt.unbind(element, options.hideOn, eventHandler);\n\
+        \t\tself.elements.splice(index, 1);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Tooltips events handler.\n\
+        \t *\n\
+        \t * @param {Event} event\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction eventHandler(event) {\n\
+        \t\t/*jshint validthis:true */\n\
+        \t\tif (options.showOn === options.hideOn) {\n\
+        \t\t\tself.toggle(this);\n\
+        \t\t} else {\n\
+        \t\t\tself[event.type === options.showOn ? 'show' : 'hide'](this);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Mutations handler.\n\
+        \t *\n\
+        \t * @param {Array} mutations\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction mutationsHandler(mutations) {\n\
+        \t\tvar added, removed, i, l;\n\
+        \t\tfor (var m = 0, ml = mutations.length; m < ml; m++) {\n\
+        \t\t\tadded = mutations[m].addedNodes;\n\
+        \t\t\tremoved = mutations[m].removedNodes;\n\
+        \t\t\tfor (i = 0, l = added.length; i < l; i++) {\n\
+        \t\t\t\tself.add(added[i]);\n\
+        \t\t\t}\n\
+        \t\t\tfor (i = 0, l = removed.length; i < l; i++) {\n\
+        \t\t\t\tself.remove(removed[i]);\n\
+        \t\t\t}\n\
+        \t\t\tif (mutations[m].type == 'attributes' && mutations[m].attributeName == 'data-title'){\n\
+        \t\t\t\tif (!self.get(mutations[m])) { self.add(mutations[m].target); }\n\
+        \t\t\t\tself.get(mutations[m].target).content(dataset(mutations[m].target).get('title'));\n\
+        \t\t\t}\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t// Construct\n\
+        \t(function () {\n\
+        \t\tself.container = container;\n\
+        \t\tself.options = options = extend(objectCreate(Tooltips.defaults), options);\n\
+        \t\tself.ID = TID = options.key + Math.random().toString(36).slice(2);\n\
+        \t\tself.elements = [];\n\
+        \n\
+        \t\t// Create tips selector\n\
+        \t\tself.selector = '[data-' + options.key + ']';\n\
+        \n\
+        \t\t// Load tips\n\
+        \t\tself.reload();\n\
+        \n\
+        \t\t// Create mutations observer\n\
+        \t\tif (options.observe && MObserver) {\n\
+        \t\t\tobserver = new MObserver(mutationsHandler);\n\
+        \t\t\tobserver.observe(self.container, {\n\
+        \t\t\t\tchildList: true,\n\
+        \t\t\t\tsubtree: true,\n\
+        \t\t\t\tattributes: true\n\
+        \t\t\t});\n\
+        \t\t}\n\
+        \t}());\n\
+        }\n\
+        \n\
+        /**\n\
+         * Expose Tooltip.\n\
+         */\n\
+        Tooltips.Tooltip = Tooltip;\n\
+        \n\
+        /**\n\
+         * Default Tooltips options.\n\
+         *\n\
+         * @type {Object}\n\
+         */\n\
+        Tooltips.defaults = {\n\
+        \ttooltip:    {},          // Options for individual Tooltip instances.\n\
+        \tkey:       'tooltip',    // Tooltips data attribute key.\n\
+        \tshowOn:    'mouseenter', // Show tooltip event.\n\
+        \thideOn:    'mouseleave', // Hide tooltip event.\n\
+        \tobserve:   0             // Enable mutation observer (used only when supported).\n\
+        };//@ sourceURL=tooltips/index.js"
+    ));
+
+
+
+
+
+
+
+
+
+
+    fakeRequire.alias("darsain-tooltip/index.js", "tooltips/deps/tooltip/index.js");
+    fakeRequire.alias("darsain-tooltip/index.js", "tooltip/index.js");
+    fakeRequire.alias("darsain-event/index.js", "darsain-tooltip/deps/event/index.js");
+
+    fakeRequire.alias("darsain-position/index.js", "darsain-tooltip/deps/position/index.js");
+
+    fakeRequire.alias("component-classes/index.js", "darsain-tooltip/deps/classes/index.js");
+    fakeRequire.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+    fakeRequire.alias("component-indexof/index.js", "darsain-tooltip/deps/indexof/index.js");
+
+    fakeRequire.alias("darsain-event/index.js", "tooltips/deps/event/index.js");
+    fakeRequire.alias("darsain-event/index.js", "event/index.js");
+
+    fakeRequire.alias("component-indexof/index.js", "tooltips/deps/indexof/index.js");
+    fakeRequire.alias("component-indexof/index.js", "indexof/index.js");
+
+    fakeRequire.alias("code42day-dataset/index.js", "tooltips/deps/dataset/index.js");
+    fakeRequire.alias("code42day-dataset/index.js", "dataset/index.js");
+    if (typeof exports == "object") {
+        module.exports = fakeRequire("tooltips");
+    } else if (typeof define == "function" && define.amd) {
+        define(function(){ return fakeRequire("tooltips"); });
+    } else {
+        this["Tooltips"] = fakeRequire("tooltips");
+    }})();
 
 },{}]},{},[28])
 

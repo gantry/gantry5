@@ -8,6 +8,7 @@
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
         - Layout Manager: Add Row and Section Settings action icons are now always visible
         - Decimal size classes (`size-33-3`) are also using flexgrid (#1047 - thanks @adi8i)
+        - Reworked all tooltips. They are now JS based instead of CSS making the behavior more predictable as well as allowing longer text and HTML as content.
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed dismissal links alignment for alerts (fixes #1022)
