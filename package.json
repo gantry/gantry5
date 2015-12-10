@@ -21,7 +21,7 @@
     "yargs": "^3.31.0"
   },
   "scripts": {
-    "install-gantry": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && npm install && cd assets/common && npm install && cd ../../ && cd platforms/common && npm install && cd ../../ && cd engines/common/nucleus && npm install && cd ../../../"
+    "build-assets": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && npm install && cd assets/common && npm install && cd ../../ && cd platforms/common && npm install && cd ../../ && cd engines/common/nucleus && npm install && cd ../../../"
   },
   "repository": {
     "type": "git",

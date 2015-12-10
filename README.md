@@ -101,7 +101,9 @@ The next step is to install all of the JS module dependencies. To do so, make su
 
 Once that’s done, you can install **Gulp**. We recommend installing Gulp globally so you can use the command from any folder. Here is the command to do so: `sudo npm install gulp --global`
 
-Because we have different sets of JS and SCSS applications for admin, site, nucleus, you will also need to install the node modules for all of them. Still, from the root of your project you can run the command `gulp -up` which will take care of all the sub projects.
+Gantry has different sets of JS and CSS that can be recompiled from the root. The first time you get started with Gantry, or if you ever need to reset and reinstall all the modules, you can run the command `npm run build-assets`. This operation will remove all the `node_modules` folders and re-run `npm install` in all the project folders. It will take a while.
+
+An alternative method which won't remove all the `node_modules` folders is via `gulp -up`.
 
 > Along with the `-up` command, you can alternatively use `-update`, `--update`, `-up`, `--up`, `-install`,
 > `--install`, `-inst`, `--inst`, `-go`, `--go`, `-deps`, `--deps`.
