@@ -21,7 +21,6 @@
 }
 
 .alert .close {
-  position: relative;
   top: -2px;
   right: -21px;
   line-height: 20px;
@@ -248,4 +247,4 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
 
 
 
-/*# sourceMappingURL=grav-admin.css.map */
+/*# sourceMappingURL=grav-g-admin.css.map */
