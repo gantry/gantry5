@@ -51,19 +51,6 @@ class Platform extends BasePlatform
         return $locator->getPaths('themes');
     }
 
-    /**
-     * @return array
-     */
-    public function getThemePaths()
-    {
-        $grav = Grav::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $grav['locator'];
-
-        return $locator->getPaths('theme');
-    }
-
     public function getMediaPaths()
     {
         return ['' => ['gantry-theme://images', 'page://images', 'user://gantry5/media']];
