@@ -1,10 +1,8 @@
 @mixin size-x {
 	@for $i from 5 through 95 {
-	.size-#{$i} { -webkit-flex: 0 1 $i * 1%;-moz-flex: 0 1 $i * 1%; -ms-flex: 0 1 $i * 1%;flex: 0 $i * 1%;width: $i * 1%; }
+	    .size-#{$i} {
+            @include flex(0 $i * 1%);
+            width: $i * 1%;
+        }
 	}
-}
-
-// Support for non flex browsers
-.size-100 {
-	width: 100%;
 }
