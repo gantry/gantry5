@@ -785,7 +785,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
     }
 
-    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker {
+    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker, #positions {
 
         ul, li {
             @extend %list-reset;

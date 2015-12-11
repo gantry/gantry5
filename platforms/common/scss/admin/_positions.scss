@@ -1,0 +1,46 @@
+#g5-container {
+    #positions {
+
+        .button-simple {
+            padding: 0 2px;
+        }
+
+        .g-grid > li {
+            &:first-child, &:last-child {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .inner-params li {
+            @include align-items(center);
+            @include display(flex);
+            @include flex-direction(row);
+            @include justify-content(flex-start);
+
+        }
+
+        [data-mm-blocktype] {
+            margin: $content-margin ($content-margin * 2);
+        }
+
+        .item-reorder, .item-settings, .title-status {
+            color: #bbb;
+            text-align: left;
+            line-height: 1.2rem;
+
+            &:hover {
+                color: #444;
+            }
+        }
+
+        .title-status, .title-status:hover {
+            color: inherit;
+        }
+
+        .item-settings {
+            cursor: pointer;
+            text-align: right;
+        }
+    }
+}

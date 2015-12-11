@@ -19,6 +19,7 @@ use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
 use Gantry\Framework\Page;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Positions;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
@@ -206,6 +207,15 @@ abstract class Gantry extends Container
             static $collection;
             if (!$collection) {
                 $collection = (new Outlines($c))->load();
+            }
+
+            return $collection->copy();
+        });
+
+        $instance['positions'] = $instance->factory(function ($c) {
+            static $collection;
+            if (!$collection) {
+                $collection = (new Positions($c))->load();
             }
 
             return $collection->copy();

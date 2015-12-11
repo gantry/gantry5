@@ -19,6 +19,7 @@ var $              = require('elements'),
     lm             = require('./lm'),
     mm             = require('./menu'),
     configurations = require('./configurations'),
+    positions      = require('./positions'),
     changelog      = require('./changelog');
 
 require('elements/attributes');
