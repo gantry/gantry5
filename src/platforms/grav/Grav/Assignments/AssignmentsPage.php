@@ -57,7 +57,7 @@ class AssignmentsPage implements AssignmentsInterface
         $grav = Grav::instance();
 
         // Initialize pages.
-        $pages = $grav['pages']->all()->visible();
+        $pages = $grav['pages']->all()->routable();
 
         $items = [];
 
