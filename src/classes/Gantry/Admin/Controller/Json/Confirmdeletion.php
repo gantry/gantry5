@@ -26,7 +26,9 @@ class Confirmdeletion extends JsonController
 
     public function index()
     {
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/confirm-deletion.html.twig')];
+        $pageType = $this->request->get->get('page_type', 'OUTLINE');
+        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/confirm-deletion.html.twig', ['page_type' => $pageType])];
+
         return new JsonResponse($response);
     }
 }

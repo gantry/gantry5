@@ -21,7 +21,7 @@ ready(function() {
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
     // Handles Configurations Duplicate / Remove
-    body.delegate('click', '[data-g-config]', function(event, element) {
+    body.delegate('click', '#configurations [data-g-config]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
             encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
@@ -130,7 +130,7 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    element.parent('h4').data('title', title);
+                    element.data('title', title).data('tip', title);
 
                     // refresh ID label and actions buttons
                     var dummy = zen('div').html(response.body.outline),
