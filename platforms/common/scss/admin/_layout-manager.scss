@@ -675,7 +675,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin: -1rem -1rem 1rem !important;
             border-radius: $core-border-radius $core-border-radius 0 0;
 
-            li:first-child {
+            li:first-child, li:first-child a {
                 border-radius: $core-border-radius 0 0 0;
             }
         }

@@ -4507,7 +4507,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-#g5-container .g5-dialog .g-tabs ul li:first-child, #g5-container .g5-popover-content .g-tabs ul li:first-child {
+#g5-container .g5-dialog .g-tabs ul li:first-child, #g5-container .g5-dialog .g-tabs ul li:first-child a, #g5-container .g5-popover-content .g-tabs ul li:first-child, #g5-container .g5-popover-content .g-tabs ul li:first-child a {
   border-radius: 0.1875rem 0 0 0;
 }
 #g5-container .g5-popover-content .g-tabs ul {
