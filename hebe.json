@@ -169,11 +169,11 @@
                 "assets":[
                     {
                         "source":"/engines",
-                        "destination":"/user/gantry5/engines"
+                        "destination":"/user/plugins/gantry5/engines"
                     },
                     {
                         "source":"/assets",
-                        "destination":"/user/gantry5/assets"
+                        "destination":"/user/plugins/gantry5/assets"
                     }
                 ],
                 "themes":[
