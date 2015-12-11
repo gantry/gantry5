@@ -197,7 +197,7 @@ class Menu extends AbstractMenu
         $max     = $params['maxLevels'];
         $end     = $max ? $start + $max - 1 : 0;
 
-        $menuItems = array_merge_recursive($this->getItemsFromPlatform($start <= $end ? $end : -1), $items) ;
+        $menuItems = array_replace_recursive($this->getItemsFromPlatform($start <= $end ? $end : -1), $items) ;
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
