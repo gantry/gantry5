@@ -63,11 +63,11 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
-        if (is_link($locator('user://gantry5/engines'))) {
+        if (is_link($locator('plugin://gantry5/engines'))) {
             // Development environment.
-            return ['' => ["user://gantry5/engines/{$this->name}", 'user://gantry5/engines/common']];
+            return ['' => ["plugin://gantry5/engines/{$this->name}", 'plugin://gantry5/engines/common']];
         }
-        return ['' => ['user://gantry5/engines']];
+        return ['' => ['plugin://gantry5/engines']];
     }
 
     public function getAssetsPaths()
@@ -77,12 +77,12 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
-        if (is_link($locator('user://gantry5/assets'))) {
+        if (is_link($locator('plugin://gantry5/assets'))) {
             // Development environment.
-            return ['' => ['gantry-theme://', "user://gantry5/assets/{$this->name}", 'user://gantry5/assets/common']];
+            return ['' => ['gantry-theme://', "plugin://gantry5/assets/{$this->name}", 'plugin://gantry5/assets/common']];
         }
 
-        return ['' => ['gantry-theme://', 'user://gantry5/assets']];
+        return ['' => ['gantry-theme://', 'plugin://gantry5/assets']];
     }
 
     /**
