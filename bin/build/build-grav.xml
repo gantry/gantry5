@@ -60,8 +60,7 @@
         <copy todir="${tmp_dir}/packages/gantry5" overwrite="true">
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/grav/gantry5">
-                <include name="*.xml"/>
-                <include name="readme.txt" />
+                <include name="blueprints.yaml"/>
                 <include name="gantry5.php" />
             </fileset>
         </copy>
@@ -199,9 +198,9 @@
                 <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
                     <filterchain refid="filter"/>
                     <fileset dir="${path.themes}/${directory}/grav">
-                        <include name="**/*.xml"/>
+                        <include name="blueprints.yaml"/>
                         <include name="gantry/theme.yaml"/>
-                        <include name="style.css" />
+                        <include name="theme.php" />
                     </fileset>
                 </copy>
 
