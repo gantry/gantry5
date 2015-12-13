@@ -1,3 +1,5 @@
+$wp-zindex: 99999;
+
 body.gantry5 {
     margin: 0;
     padding: 0;
@@ -11,6 +13,10 @@ body.gantry5 {
 
     color: $light-gray;
     background-color: $body-bg;
+
+    .g-tips {
+        z-index: $wp-zindex;
+    }
 
     #g5-container {
         a:focus {
@@ -68,7 +74,7 @@ body.gantry5 {
         }
 
         .g5-dialog, .g5-popover.g5-popover-above-modal {
-            z-index: 99999;
+            z-index: $wp-zindex;
         }
 
         #assignments {
@@ -121,7 +127,7 @@ body.gantry5 {
 }
 
 #g5-container.g5wp-out-of-scope {
-    z-index: 99999;
+    z-index: $wp-zindex;
     position: fixed;
     top: 0;
     left: 0;
@@ -133,7 +139,7 @@ body.gantry5 {
     }
 
     .g5-popover {
-        z-index: 99999;
+        z-index: $wp-zindex;
     }
 
     .wp-customizer & {

@@ -82,6 +82,9 @@ body.gantry5 {
 body.gantry5.auto-fold #wpcontent {
   padding-left: 0;
 }
+body.gantry5 .g-tips {
+  z-index: 99999;
+}
 body.gantry5 #g5-container a:focus {
   box-shadow: none;
 }
