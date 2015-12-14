@@ -12,6 +12,9 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed dismissal links alignment for alerts (fixes #1022)
+3. [Wordpress](#wordpress)
+    3. [](#bugfix)
+        - Fix plugin settings being disabled when theme failed to load
 4. [Grav](#grav)
     1. [](#new)
         - Welcome to the family!
