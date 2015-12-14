@@ -1,0 +1,27 @@
+name: Hydrogen
+icon: paper-plane
+
+author:
+  name: RocketTheme, LLC
+  email: support@rockettheme.com
+  link: http://www.rockettheme.com
+
+documentation:
+  link: http://www.rockettheme.com/docs/joomla/templates/hydrogen
+
+support:
+  link: http://www.rockettheme.com/forum/joomla-template-hydrogen
+
+updates:
+  link: http://updates.rockettheme.com/themes/hydrogen.yaml
+
+news:
+  link: http://news.rockettheme.com/prime/themes.yaml
+
+copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+license: GPLv2
+description: Hydrogen Theme
+
+images:
+  thumbnail: admin/images/preset1.png
+  preview: admin/images/preset1.png

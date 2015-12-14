@@ -1,0 +1,28 @@
+gantry:
+  platform: grav
+  engine: nucleus
+
+theme:
+  parent: hydrogen
+  base: gantry-theme://common
+  file: gantry-theme://include/theme.php
+  class: \Gantry\Framework\Theme
+
+fonts:
+  roboto:
+    400: 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont'
+    500: 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont'
+    700: 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont'
+
+css:
+  compiler: \Gantry\Component\Stylesheet\ScssCompiler
+  paths:
+    - gantry-theme://scss
+    - gantry-engine://scss
+  files:
+    - hydrogen
+    - custom
+  persistent:
+    - hydrogen
+  overrides:
+    - custom
