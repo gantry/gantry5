@@ -4,7 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Added support for [Grav](http://getgrav.org)
-        - Menu items have a new `Dropdown Direction` option, along with new mixins (`dropdown-left`, `dropdown-center`, `dropdown-right`), that will allow to configure where a dropdown should open to, relative to its parent. (thanks @Bokelmann, @JoomFX and @ramon12 - #1058)
+        - Menu items have a new `Dropdown Direction` option, along with new mixins (`dropdown-left`, `dropdown-center`, `dropdown-right`), that will allow to configure where a dropdown should open to, relative to its parent. (thanks @Bokelmann , @JoomFX and @ramon12 - #1058)
     2. [](#improved)
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
         - Layout Manager: Add Row and Section Settings action icons are now always visible

@@ -6,7 +6,7 @@ use Gantry\Framework\Theme as GantryTheme;
 use Grav\Common\Theme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Hydrogen extends Theme
+class G5_Hydrogen extends Theme
 {
     public $gantry = '5.3.0';
 

@@ -179,11 +179,11 @@
                 "themes":[
                     {
                         "source":"/themes/hydrogen/grav",
-                        "destination":"/user/themes/hydrogen"
+                        "destination":"/user/themes/g5_hydrogen"
                     },
                     {
                         "source":"/themes/hydrogen/common",
-                        "destination":"/user/themes/hydrogen/common"
+                        "destination":"/user/themes/g5_hydrogen/common"
                     }
                 ]
             }
