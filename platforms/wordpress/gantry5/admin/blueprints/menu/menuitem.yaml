@@ -63,6 +63,16 @@ form:
             standard: Simple
             fullwidth: Extended
 
+        .dropdown_dir:
+          type: select.selectize
+          label: Dropdown Direction
+          description: Where the dropdown should open relative to the menu item
+          default: 'right'
+          options:
+            left: Expand Left
+            center: Keep Centered
+            right: Expand Right
+
         .dropdown_hide:
           type: input.checkbox
           label: Disable Dropdowns

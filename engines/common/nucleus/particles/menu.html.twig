@@ -107,7 +107,10 @@
 {% macro displaySubmenu(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     {% if not item.dropdown_hide %}
-        <ul class="g-dropdown g-inactive {{ context.gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
+        {% set animation = context.gantry.config.get('styles.menu.animation')|default('g-fade') %}
+        {% set dropdown_dir = item.dropdown_dir|default('right') %}
+        {% if (dropdown_type == 'standard') %}{% set dropdown_dir = 'g-dropdown-' ~ dropdown_dir %}{% endif %}
+        <ul class="g-dropdown g-inactive {{ animations }}{{ dropdown_dir }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
             <li class="g-dropdown-column">
                 {{ SELF.displayContainers(item, menu, context, dropdown_type) }}
             </li>
