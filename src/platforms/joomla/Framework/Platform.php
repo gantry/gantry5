@@ -338,6 +338,20 @@ class Platform extends BasePlatform
         return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
     }
 
+    public function method()
+    {
+        $args = func_get_args();
+        $class = ucfirst((string) array_shift($args));
+        if (!$class) {
+            return null;
+        }
+        if (!class_exists($class)) {
+            return null;
+        }        
+        $method = [$class, array_shift($args)];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
     public function route()
     {
         return call_user_func_array(['JRoute', '_'], func_get_args());
