@@ -97,7 +97,7 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        return null;
+        return Document::url('wp-admin/customize.php?theme=' . $theme);
     }
 
     /**
@@ -108,6 +108,9 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
+        if ($theme === Gantry::instance()['theme.name']) {
+            return Document::url('wp-admin/admin.php?page=layout-manager');
+        }
         return null;
     }
 
