@@ -363,7 +363,7 @@ class Theme extends AbstractTheme
         add_action('wp_head', [$this, 'print_scripts'], 30);
         add_action('admin_print_styles', [$this, 'print_styles'], 200);
         add_action('admin_print_scripts', [$this, 'print_scripts'], 200);
-        add_action('wp_footer', [$this, 'print_inline_scripts']);
+        add_action('wp_footer', [$this, 'print_inline_scripts'], 100);
         add_action('in_widget_form', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesForm'], 10, 3);
         add_action('widgets_init', function() {
             register_widget('\Gantry\WordPress\Widget\Particle');

@@ -17,7 +17,8 @@
     3. [](#bugfix)
         - Fixed plugin settings being disabled when theme failed to load
         - Fixed `Cannot use object of type Closure as array` (#1046)
-        - Fixed XFN (rel) missing from menu HTML output (#1064) 
+        - Fixed XFN (rel) missing from menu HTML output (#1064)
+        - Fixed inline JavaScript in Footer block gets loaded before the files (#1060)
 4. [Grav](#grav)
     1. [](#new)
         - Welcome to the family!
