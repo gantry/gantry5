@@ -372,14 +372,18 @@ class Theme extends AbstractTheme
         add_shortcode('loadposition', [$this, 'loadposition_shortcode']);
 
         // Offline support.
-        add_action('init', function() use ($global) {
-            if($global->get('offline') && !(is_super_admin() || current_user_can('manage_options') || $_GLOBALS['pagenow'] == 'wp-login.php')) {
-                if(locate_template(['offline.php'])) {
-                    add_filter('template_include', function () {
-                        return locate_template(['offline.php']);
-                    });
+        add_action('init', function() use ($gantry, $global) {
+            if ($global->get('offline')) {
+                if (!(is_super_admin() || current_user_can('manage_options') || $_GLOBALS['pagenow'] == 'wp-login.php')) {
+                    if (locate_template(['offline.php'])) {
+                        add_filter('template_include', function () {
+                            return locate_template(['offline.php']);
+                        });
+                    } else {
+                        wp_die($global->get('offline_message'), get_bloginfo('title'));
+                    }
                 } else {
-                    wp_die($global->get('offline_message'), get_bloginfo('title'));
+                    $gantry['messages']->add(__('Site is currently in offline mode.'), 'warning');
                 }
             }
         });

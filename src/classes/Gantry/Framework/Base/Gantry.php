@@ -14,6 +14,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\System\Messages;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
@@ -196,6 +197,10 @@ abstract class Gantry extends Container
 
         $instance['menu'] = function ($c) {
             return new Menu;
+        };
+
+        $instance['messages'] = function ($c) {
+            return new Messages();
         };
 
         $instance['page'] = function ($c) {

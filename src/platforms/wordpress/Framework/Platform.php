@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\WordPress\Widgets;
 use Pimple\Container;
@@ -194,5 +195,22 @@ class Platform extends BasePlatform
     public function listWidgets()
     {
         return Widgets::listWidgets();
+    }
+
+    public function displaySystemMessages($params = [])
+    {
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        /** @var Messages $messages */
+        $messages = $this->container['messages'];
+
+        $context = [
+            'messages' => $messages->get(),
+            'params' => $params
+        ];
+        $messages->clean();
+
+        return $theme->render('partials/messages.html.twig', $context);
     }
 }
