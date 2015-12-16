@@ -27,7 +27,6 @@
         - Display notification for the logged in user when site is offline (#760) 
     3. [](#bugfix)
         - Fixed plugin settings being disabled when theme failed to load
-        - Fixed `Cannot use object of type Closure as array` (#1046)
         - Fixed XFN (rel) missing from menu HTML output (#1064)
         - Fixed inline JavaScript in Footer block gets loaded before the files (#1060)
         - Fixed empty assignments being reloaded from theme configuration (#884)
