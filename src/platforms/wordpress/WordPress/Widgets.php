@@ -288,7 +288,7 @@ abstract class Widgets
         $widget_id  = $params[0]['widget_id'];
         $widget_obj = $wp_registered_widgets[$widget_id];
 
-        if (!is_array($widget_obj['callback']) || !isset($widget_obj['callback'][0]) || !is_object($widget_obj['callback'][0])) {
+        if (!is_array($widget_obj['callback']) || !isset($widget_obj['callback'][0]->option_name)) {
             return $params;
         }
 
