@@ -33,3 +33,5 @@ themes/*/*/custom
 **/node_modules/*
 platforms/**/cache
 npm-debug.log
+themes/hydrogen/grav/config
+themes/hydrogen/grav/templates
