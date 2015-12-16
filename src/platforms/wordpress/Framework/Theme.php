@@ -383,7 +383,7 @@ class Theme extends AbstractTheme
                         wp_die($global->get('offline_message'), get_bloginfo('title'));
                     }
                 } else {
-                    $gantry['messages']->add(__('Site is currently in offline mode.'), 'warning');
+                    $gantry['messages']->add(__('Site is currently in offline mode.', 'gantry5'), 'warning');
                 }
             }
         });
