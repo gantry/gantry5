@@ -4,6 +4,15 @@
 1. [Common](#common)
     1. [](#new)
         - Added support for [Grav](http://getgrav.org)
+4. [Grav](#grav)
+    1. [](#new)
+        - Welcome to the family!
+
+# 5.2.5
+## XX/XX/2015
+
+1. [Common](#common)
+    1. [](#new)
         - Menu items have a new `Dropdown Direction` option, along with new mixins (`dropdown-left`, `dropdown-center`, `dropdown-right`), that will allow to configure where a dropdown should open to, relative to its parent. (thanks @Bokelmann , @JoomFX and @ramon12 - #1058)
     2. [](#improved)
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
@@ -19,9 +28,6 @@
         - Fixed `Cannot use object of type Closure as array` (#1046)
         - Fixed XFN (rel) missing from menu HTML output (#1064)
         - Fixed inline JavaScript in Footer block gets loaded before the files (#1060)
-4. [Grav](#grav)
-    1. [](#new)
-        - Welcome to the family!
 
 # 5.2.4
 ## 30/11/2015
