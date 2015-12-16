@@ -12,6 +12,7 @@ namespace Gantry\WordPress;
 
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Theme;
+use Gantry\WordPress\Widget\Rendered;
 
 abstract class Widgets
 {
@@ -71,9 +72,7 @@ abstract class Widgets
                     $contents = ob_get_clean();
 
                     // As we already rendered content, we can later just display it.
-                    $wp_registered_widgets[$id]['callback'] = function () use ($contents) {
-                        echo $contents;
-                    };
+                    $wp_registered_widgets[$id]['callback'] = [new Rendered($callback, $contents), 'display_callback'];
                 }
             }
 

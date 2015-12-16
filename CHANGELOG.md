@@ -16,6 +16,7 @@
 3. [Wordpress](#wordpress)
     3. [](#bugfix)
         - Fix plugin settings being disabled when theme failed to load
+        - Cannot use object of type Closure as array (#1046)
 4. [Grav](#grav)
     1. [](#new)
         - Welcome to the family!
