@@ -168,7 +168,12 @@ abstract class AbstractAssignments
      */
     public function save(array $data)
     {
-        $data = $data['assignments'];
+        $types = [];
+        foreach ($this->types() as $type) {
+            $types[$type] = [];
+        }
+
+        $data = $types + $data['assignments'];
         foreach ($data as $tname => &$type) {
             foreach ($type as $gname => &$group) {
                 foreach ($group as $key => $value) {
@@ -181,9 +186,6 @@ abstract class AbstractAssignments
                 if (empty($group)) {
                     unset($type[$gname]);
                 }
-            }
-            if (empty($type)) {
-                unset($data[$tname]);
             }
         }
 
