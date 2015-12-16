@@ -157,7 +157,7 @@ class EventListener implements EventSubscriberInterface
             unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
 
             // Do not save WP variables we do not use.
-            unset($item['xfn'], $item['attr_title']);
+            unset($item['rel'], $item['attr_title']);
 
             // Particles have no link.
             if (isset($item['type']) && $item['type'] === 'particle') {
