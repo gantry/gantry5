@@ -33,7 +33,7 @@ form:
       description: "Select a menu item to always be used as the base for the menu display."
       default: '/'
       options:
-        '/': - Select -
+        '/': Active
 
     startLevel:
       type: input.text
