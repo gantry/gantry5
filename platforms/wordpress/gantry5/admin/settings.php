@@ -3,6 +3,7 @@ defined('ABSPATH') or die;
 
 add_action( 'admin_init', 'gantry5_register_admin_settings' );
 add_action( 'admin_menu', 'gantry5_manage_settings' );
+add_action( 'network_admin_menu', 'gantry5_manage_settings' );
 add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 add_filter( 'network_admin_plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 
@@ -39,7 +40,7 @@ function gantry5_plugin_settings() {
 
     <div id="g5-options-main">
         <div class="wrap">
-            <form method="post" action="options.php">
+            <form method="post" action="<?php echo admin_url('options.php'); ?>">
                 <?php settings_fields( 'gantry5_plugin_options' ); ?>
 
                 <h1 class="available-options"><?php _e( 'Gantry 5 Settings', 'gantry5' ); ?></h1>
