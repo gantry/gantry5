@@ -1,3 +1,10 @@
+# 5.2.6
+## XX/XX/2015
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed typo in menu particle that was preventing the rendering of the animation class
+
 # 5.2.5
 ## 17/12/2015
 
