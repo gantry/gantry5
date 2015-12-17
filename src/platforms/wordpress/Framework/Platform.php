@@ -32,7 +32,7 @@ class Platform extends BasePlatform
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
-        $this->multisite = is_multisite() ? '/blog-' . get_current_blog_id() : '';
+        $this->multisite = get_current_blog_id() !== 1 ? '/blog-' . get_current_blog_id() : '';
 
         parent::__construct($container);
 
