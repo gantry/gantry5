@@ -133,6 +133,9 @@ class Format2
             if ($size) {
                 $result->size = $size;
             }
+            if (($type === 'grid' || $type === 'block') && !isset($result->attributes->id)) {
+                $result->attributes->id = $section_id;
+            }
         }
 
         if (!empty($content)) {
@@ -424,6 +427,10 @@ class Format2
         if (in_array($type, $this->sections)) {
             if ($type === 'offcanvas') {
                 return 'Offcanvas';
+            }
+
+            if ($type === 'grid' || $type === 'block') {
+                return null;
             }
 
             return ucfirst((string)(int) $id === (string) $id ? ($subtype ?: $type) . "-{$id}" : $id);

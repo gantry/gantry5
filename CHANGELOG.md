@@ -19,6 +19,7 @@
         - Layout Manager: Add Row and Section Settings action icons are now always visible
         - Decimal size classes (`size-33-3`) are also using flexgrid (thanks @adi8i - #1047)
         - Reworked all tooltips. They are now JS based instead of CSS making the behavior more predictable as well as allowing longer text and HTML as content.
+        - Allow theme developer to assign attributes to grid element in layout preset file
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed dismissal links alignment for alerts (#1022)
