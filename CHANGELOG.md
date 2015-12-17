@@ -22,6 +22,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed dismissal links alignment for alerts (#1022)
+        - Fixed Production / Development Mode switch if file caching is turned on (#1051)
 3. [Wordpress](#wordpress)
     2. [](#improved)
         - Display notification for the logged in user when site is offline (#760) 

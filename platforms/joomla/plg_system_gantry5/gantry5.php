@@ -254,7 +254,7 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Clean the cache.
-        $this->cleanCache();
+        \Gantry\Joomla\CacheHelper::cleanPlugin();
 
         // Trigger the onExtensionAfterSave event.
         $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
@@ -382,28 +382,6 @@ class plgSystemGantry5 extends JPlugin
         }
 
         return true;
-    }
-
-    /**
-     * Clean plugin cache just as if we were saving plugin from the plugin manager.
-     *
-     * @see JModelLegacy::cleanCache()
-     */
-    protected function cleanCache($group = 'com_plugins', $client_id = 0)
-    {
-        // Initialise variables;
-        $conf = JFactory::getConfig();
-        $dispatcher = JEventDispatcher::getInstance();
-
-        $options = array(
-            'defaultgroup' => $group,
-            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'));
-
-        $cache = JCache::getInstance('callback', $options);
-        $cache->clean();
-
-        // Trigger the onContentCleanCache event.
-        $dispatcher->trigger('onContentCleanCache', $options);
     }
 
     /**
