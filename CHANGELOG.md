@@ -1,13 +1,3 @@
-# 5.3.0
-## XX/XX/2015
-
-1. [Common](#common)
-    1. [](#new)
-        - Added support for [Grav](http://getgrav.org)
-4. [Grav](#grav)
-    1. [](#new)
-        - Welcome to the family!
-
 # 5.2.5
 ## XX/XX/2015
 
@@ -26,9 +16,9 @@
         - Fixed Production / Development Mode switch if file caching is turned on (#1051)
 3. [Wordpress](#wordpress)
     1. [](#new)
-        - Separate configuration for each Multi Site blog (#921) 
+        - Separate configuration for each Multi Site blog (#921)
     2. [](#improved)
-        - Display notification for the logged in user when site is offline (#760) 
+        - Display notification for the logged in user when site is offline (#760)
     3. [](#bugfix)
         - Fixed plugin settings being disabled when theme failed to load
         - Fixed XFN (rel) missing from menu HTML output (#1064)
