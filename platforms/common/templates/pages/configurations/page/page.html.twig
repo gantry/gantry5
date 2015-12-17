@@ -9,7 +9,7 @@
                     <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}">
                         <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PAGESETTINGS'|trans }}</span></button>
                 </span>
-                {% for group, list in page %}
+                {% for group, list in page if (group != 'hidden') %}
                     <h2 class="page-title">
                         <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span>
                     </h2>
