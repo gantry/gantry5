@@ -116,6 +116,11 @@ abstract class Platform
     abstract public function getAssetsPaths();
     abstract public function getMediaPaths();
 
+    public function init()
+    {
+        return $this;
+    }
+
     public function getThemePaths()
     {
         return ['' => []];

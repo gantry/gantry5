@@ -25,6 +25,8 @@
         - Fixed dismissal links alignment for alerts (#1022)
         - Fixed Production / Development Mode switch if file caching is turned on (#1051)
 3. [Wordpress](#wordpress)
+    1. [](#new)
+        - Separate configuration for each Multi Site blog (#921) 
     2. [](#improved)
         - Display notification for the logged in user when site is offline (#760) 
     3. [](#bugfix)
@@ -35,6 +37,7 @@
         - Fixed broken links in `Available Themes` page (#1004)
         - Fixed Base Item in Menu particle being empty (#1033)
         - Fixed Saving menu failed: Failed to update main-menu (#1055)
+        - Fixed frontend showing wrong menu items
 
 # 5.2.4
 ## 30/11/2015

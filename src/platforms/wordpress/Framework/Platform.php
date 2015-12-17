@@ -32,6 +32,7 @@ class Platform extends BasePlatform
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
+        $this->multisite = !is_multisite() ? '/blog-' . get_current_blog_id() : '';
 
         parent::__construct($container);
 
@@ -47,11 +48,23 @@ class Platform extends BasePlatform
         $this->items['streams']['wp-content'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->content_dir]];
     }
 
+    public function init()
+    {
+        if ($this->multisite) {
+            $theme = $this->get('streams.gantry-theme.prefixes..0');
+            if ($theme) {
+                $this->set('streams.gantry-theme.prefixes..0', $theme . $this->multisite);
+            }
+        }
+
+        return parent::init();
+    }
+
     public function getCachePath()
     {
         $global = $this->container['global'];
 
-        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5';
+        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5' . $this->multisite;
     }
 
     public function getThemesPaths()
@@ -63,7 +76,7 @@ class Platform extends BasePlatform
     {
         return ['' => [
             'gantry-theme://images',
-            $this->content_dir . '/uploads',
+            trim(wp_upload_dir()['relative'], '/'),
             $this->gantry_dir
             ]
         ];
