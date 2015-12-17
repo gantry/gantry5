@@ -99,7 +99,10 @@ class Menu extends AbstractMenu
 
     protected function getWPMenu($params) {
         if (!isset($this->wp_menu)) {
-            $this->wp_menu = new \TimberMenu(urlencode($params['menu']));
+            $menus = array_flip($this->getMenus());
+            if (isset($menus[$params['menu']])) {
+                $this->wp_menu = new \TimberMenu($menus[$params['menu']]);
+            }
         }
 
         return $this->wp_menu;

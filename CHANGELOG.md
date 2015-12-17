@@ -34,6 +34,7 @@
         - Fixed empty assignments being reloaded from theme configuration (#884)
         - Fixed broken links in `Available Themes` page (#1004)
         - Fixed Base Item in Menu particle being empty (#1033)
+        - Fixed Saving menu failed: Failed to update main-menu (#1055)
 
 # 5.2.4
 ## 30/11/2015
