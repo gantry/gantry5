@@ -4,6 +4,9 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed typo in menu particle that was preventing the rendering of the animation class
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added missing default configuration for Home outline in Hydrogen
 
 # 5.2.5
 ## 17/12/2015
