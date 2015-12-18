@@ -340,6 +340,10 @@ $submenu-ratio:                 60px;
                 a, span {
                     color: $white;
                 }
+
+                &:not([data-mm-id]) {
+                    cursor: pointer;
+                }
             }
 
             &.placeholder {

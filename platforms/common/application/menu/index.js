@@ -10,11 +10,12 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     validateField = require('../utils/field-validation');
 
-var menumanager, map;
+var menumanager;
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
@@ -25,7 +26,7 @@ ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('[data-mm-container]', {
-        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
@@ -42,7 +43,7 @@ ready(function() {
     menumanager.setRoot();
 
     // Refresh ordering/items on menu type change or Menu navigation link
-    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(/*event, element*/) {
         menumanager.setRoot();
         menumanager.refresh();
 
@@ -61,7 +62,7 @@ ready(function() {
         element[0].select();
     }, true);
 
-    body.delegate('keydown', '.percentage input', function(event, element) {
+    body.delegate('keydown', '.percentage input', function(event/*, element*/) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
                 // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
             (event.keyCode == 65 && (event.ctrlKey === true || event.ctrlKey === true)) ||
@@ -176,10 +177,11 @@ ready(function() {
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
-                var parent = element.parent('[data-mm-id]'),
-                    index  = parent.data('mm-id').match(/\d+$/)[0],
-                    active = $('.menu-selector .active'),
-                    path   = active ? active.data('mm-id') : null;
+                var parent    = element.parent('[data-mm-id]'),
+                    container = parent.parent('.submenu-selector').children('[data-mm-id]'),
+                    index     = indexOf(container, parent),
+                    active    = $('.menu-selector .active'),
+                    path      = active ? active.data('mm-id') : null;
 
                 parent.remove();
                 siblings = $('.submenu-selector > [data-mm-id]');
@@ -222,13 +224,13 @@ ready(function() {
 
                 var editable = content.elements.content.find('[data-title-editable]');
                 if (editable) {
-                    editable.on('title-edit-end', function(title, original, canceled) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
                         title = trim(title);
                         if (!title) {
                             title = trim(original) || 'Title';
                             this.text(title).data('title-editable', title);
 
-                            return;
+                            return true;
                         }
                     });
                 }
