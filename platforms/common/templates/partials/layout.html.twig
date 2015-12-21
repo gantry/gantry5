@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
+    <script type="text/javascript" defer="defer" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
     {{ parent() }}
 {% endblock %}
 

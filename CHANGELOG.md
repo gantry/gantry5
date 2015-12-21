@@ -9,6 +9,7 @@
         - Improve Google analytics atom tooltip and placeholder (#1079)
     3. [](#bugfix)
         - Fixed typo in menu particle that was preventing the rendering of the animation class
+        - Fixed admin js to deferred, guaranteeing global variables to be available (#1076)
 2. [Joomla](#joomla)
     1. [](#new)
         - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057)

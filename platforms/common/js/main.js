@@ -14161,12 +14161,13 @@ module.exports = new FlagsState();
 },{"../ui":49,"./get-ajax-suffix":64,"./get-ajax-url":65,"prime":267,"prime/emitter":266,"prime/map":268}],64:[function(require,module,exports){
 "use strict";
 
-var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
 var getAjaxSuffix = function() {
+    var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
     return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
 };
 
 module.exports = getAjaxSuffix;
+
 },{}],65:[function(require,module,exports){
 "use strict";
 var unescapeHtml  = require('mout/string/unescapeHtml'),
