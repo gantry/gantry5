@@ -23,6 +23,4 @@ $configurations = $gantry['configurations'];
 $context = array();
 
 // Render the page.
-echo $theme
-    ->setLayout($configurations->current())
-    ->render('index.html.twig', $context);
+echo $theme->render('index.html.twig', $context);
