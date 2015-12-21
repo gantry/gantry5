@@ -14,6 +14,7 @@
         - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057) 
     3. [](#bugfix)
         - Hydrogen: Fixed assigning outline from a plugin having no effect (#1080)
+        - Fixed outline id in body tag being wrong for some pages, like error page
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added missing default configuration for Home outline in Hydrogen

@@ -42,7 +42,7 @@ class Page extends Base\Page
             }
         }
         $templateParams = $app->getTemplate(true);
-        $this->outline = $templateParams->params->get('configuration', !empty($templateParams->id) ? $templateParams->id : 0);
+        $this->outline = Gantry::instance()['configuration'];
         $this->sitename = $app->get('sitename');
         $this->theme = $templateParams->template;
         $this->baseUrl = \JUri::base(true);
