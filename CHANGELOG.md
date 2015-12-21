@@ -2,6 +2,8 @@
 ## XX/XX/2015
 
 1. [Common](#common)
+    1. [](#new)
+        - Implement `Remove Container` mode to make section to use all the available space (#549)
     2. [](#improved)
         - index of the column being deleted is now based on DOM rather than list id, making it more accurate (#1071)
     3. [](#bugfix)

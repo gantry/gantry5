@@ -22,7 +22,7 @@
         {% endfor %}
     {% endif %}
 
-    {% if boxed is not null and boxed != 1 %}
+    {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
         <div class="g-container{{ boxed == 2 ? ' g-flushed' }}">{{ html|raw }}</div>
         {% endset %}

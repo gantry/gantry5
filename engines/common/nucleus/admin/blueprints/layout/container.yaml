@@ -7,7 +7,7 @@ form:
     boxed:
       type: select.selectize
       label: Layout
-      description: Select the Layout behavior. 'Inherit' refers to Page Settings.
+      description: Select the Layout container behavior. 'Inherit' refers to Page Settings.
       isset: true
       selectize:
         allowEmptyOption: true
@@ -16,6 +16,7 @@ form:
         0: Fullwidth (Boxed Content)
         2: Fullwidth (Flushed Content)
         1: Boxed
+        3: Remove Container
 
     class:
       type: input.selectize
