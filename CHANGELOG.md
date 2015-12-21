@@ -6,17 +6,18 @@
         - Implement `Remove Container` mode to make section to use all the available space (#549)
     2. [](#improved)
         - index of the column being deleted is now based on DOM rather than list id, making it more accurate (#1071)
-        - Improve google analytics atom tooltip and placeholder (#1079) 
+        - Improve Google analytics atom tooltip and placeholder (#1079)
     3. [](#bugfix)
         - Fixed typo in menu particle that was preventing the rendering of the animation class
 2. [Joomla](#joomla)
     1. [](#new)
-        - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057) 
+        - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057)
     3. [](#bugfix)
         - Hydrogen: Fixed assigning outline from a plugin having no effect (#1080)
         - Fixed outline id in body tag being wrong for some pages, like error page
 3. [WordPress](#wordpress)
     1. [](#new)
+        - Create atom to load jQuery from WordPress and Bootstrap and Mootools from CDN (#1057)
         - Added missing default configuration for Home outline in Hydrogen
 
 # 5.2.5
