@@ -6,6 +6,7 @@
         - Implement `Remove Container` mode to make section to use all the available space (#549)
     2. [](#improved)
         - index of the column being deleted is now based on DOM rather than list id, making it more accurate (#1071)
+        - Improve google analytics atom tooltip and placeholder (#1079) 
     3. [](#bugfix)
         - Fixed typo in menu particle that was preventing the rendering of the animation class
 2. [Joomla](#joomla)
