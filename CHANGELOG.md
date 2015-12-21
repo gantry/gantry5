@@ -6,6 +6,9 @@
         - index of the column being deleted is now based on DOM rather than list id, making it more accurate (#1071)
     3. [](#bugfix)
         - Fixed typo in menu particle that was preventing the rendering of the animation class
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057) 
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added missing default configuration for Home outline in Hydrogen
