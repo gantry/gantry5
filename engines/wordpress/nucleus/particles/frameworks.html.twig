@@ -9,7 +9,7 @@
 {% endif %}
 
 {% if particle.bootstrap.enabled %}
-    {{ wordpress.call('wp_enqueue_script', 'bootstrap3', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') }}
+    {{ wordpress.call('wp_enqueue_script', 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') }}
 {% endif %}
 
 {% if particle.mootools.enabled %}
