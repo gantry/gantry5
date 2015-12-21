@@ -43,6 +43,11 @@ abstract class Widgets
             $widgets          = !empty($sidebars_widgets[$key]) ? $sidebars_widgets[$key] : [];
 
             foreach ($widgets as $id) {
+                // TODO: This should display an error
+                if (empty($wp_registered_widgets[$id])) {
+                    continue;
+                }
+
                 // Make sure we have Gantry 5 compatible widget.
                 if (empty($wp_registered_widgets[$id]['gantry5'])
                     && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options'
