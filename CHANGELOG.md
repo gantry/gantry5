@@ -1,3 +1,10 @@
+# 5.2.7
+## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed Menu option "Render Titles" not rendering titles at all
+
 # 5.2.6
 ## 21/12/2015
 
