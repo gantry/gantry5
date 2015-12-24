@@ -14176,11 +14176,8 @@ var unescapeHtml  = require('mout/string/unescapeHtml'),
     getParam      = require('mout/queryString/getParam'),
     setParam      = require('mout/queryString/setParam');
 
-var GANTRY_AJAX_URL      = window.GANTRY_AJAX_URL || '',
-    GANTRY_AJAX_CONF_URL = window.GANTRY_AJAX_CONF_URL || '',
-    GANTRY_PLATFORM      = window.GANTRY_PLATFORM || '';
-
 var getAjaxURL = function(view, search) {
+    var GANTRY_AJAX_URL = window.GANTRY_AJAX_URL || '';
     if (!search) { search = '%ajax%'; }
     var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_URL == 'undefined' ? '' : GANTRY_AJAX_URL;
@@ -14189,6 +14186,7 @@ var getAjaxURL = function(view, search) {
 };
 
 var getConfAjaxURL = function(view, search) {
+    var GANTRY_AJAX_CONF_URL = window.GANTRY_AJAX_CONF_URL || '';
     if (!search) { search = '%ajax%'; }
     var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_CONF_URL == 'undefined' ? '' : GANTRY_AJAX_CONF_URL;
@@ -14197,7 +14195,9 @@ var getConfAjaxURL = function(view, search) {
 };
 
 var parseAjaxURI = function(uri) {
-    var platform = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM;
+    var GANTRY_PLATFORM = window.GANTRY_PLATFORM || '',
+        platform        = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM;
+
     switch (platform) {
         case 'wordpress':
             uri = uri.replace(/themes\.php/ig, 'admin-ajax.php');
@@ -14221,6 +14221,7 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
+
 },{"./get-ajax-suffix":64,"mout/queryString/getParam":213,"mout/queryString/getQuery":214,"mout/queryString/setParam":215,"mout/string/unescapeHtml":239}],66:[function(require,module,exports){
 "use strict";
 
