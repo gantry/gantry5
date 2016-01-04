@@ -32,7 +32,7 @@ class Gantry extends Base\Gantry
     /**
      * @return array
      */
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         $grav = Grav::instance();
         return (array) $grav['config']->get('plugins.gantry5');

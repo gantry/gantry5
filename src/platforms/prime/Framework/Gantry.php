@@ -17,7 +17,7 @@ use Gantry\Component\File\CompiledYamlFile;
 
 class Gantry extends Base\Gantry
 {
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         $file = CompiledYamlFile::instance(PRIME_ROOT . '/config/global.yaml');
         $data = (array) $file->setCachePath(PRIME_ROOT . '/cache/global')->content();

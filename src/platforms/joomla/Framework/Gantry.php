@@ -53,7 +53,7 @@ class Gantry extends Base\Gantry
     /**
      * @return array
      */
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         $global = null;
 

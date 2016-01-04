@@ -64,7 +64,7 @@ class Gantry extends Base\Gantry
     /**
      * @return array
      */
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         return (array) \get_option('gantry5_plugin');
     }

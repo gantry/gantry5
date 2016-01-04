@@ -227,7 +227,7 @@ abstract class Gantry extends Container
         });
 
         $instance['global'] = function ($c) {
-            $data = static::loadGlobal() + [
+            $data = $c->loadGlobal() + [
                     'debug' => false,
                     'production' => false,
                     'asset_timestamps' => true,
@@ -305,7 +305,7 @@ abstract class Gantry extends Container
     /**
      * @return array
      */
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         return [];
     }

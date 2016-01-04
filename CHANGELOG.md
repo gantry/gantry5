@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fixed Menu option "Render Titles" not rendering titles at all
         - Fixed potential 404 response in admin when trying to access Particle Settings via modal (#1088)
+        - Worked around PHP 5.5 bug on loading global configuration
 
 # 5.2.6
 ## 21/12/2015
