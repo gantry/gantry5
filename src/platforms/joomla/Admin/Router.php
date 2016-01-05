@@ -142,13 +142,13 @@ class Router extends BaseRouter
             $app->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
             $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
             $app->setHeader('Pragma', 'no-cache');
+            $app->sendHeaders();
         }
 
         // Output Gantry response.
         echo $response;
 
         if ($response instanceof JsonResponse) {
-            $app->sendHeaders();
             $app->close();
         }
     }
