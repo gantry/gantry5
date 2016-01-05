@@ -11,6 +11,7 @@
     3. [](#bugfix)
         - Remove RokGallery and RokSprocket from the Widget Picker (#1092)
         - Fix Timbers `render_string()` and `compile_string()` functions (#1077)
+        - Removed description meta tag to avoid duplications of it. This should be handled by plugins (#892)
 
 # 5.2.6
 ## 21/12/2015
