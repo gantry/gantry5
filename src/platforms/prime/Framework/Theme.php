@@ -43,10 +43,14 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */

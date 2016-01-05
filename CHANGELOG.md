@@ -9,7 +9,8 @@
         - Fixed caching of admin AJAX requests (#1078)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        - Remove RokGallery and RokSprocket from the Widget Picker (#1092) 
+        - Remove RokGallery and RokSprocket from the Widget Picker (#1092)
+        - Fix Timbers `render_string()` and `compile_string()` functions (#1077)
 
 # 5.2.6
 ## 21/12/2015

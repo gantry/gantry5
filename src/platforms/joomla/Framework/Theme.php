@@ -49,10 +49,10 @@ class Theme extends AbstractTheme
      * @see AbstractTheme::extendTwig()
      *
      * @param \Twig_Environment $twig
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @return \Twig_Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
         parent::extendTwig($twig, $loader);
 
@@ -122,10 +122,14 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */

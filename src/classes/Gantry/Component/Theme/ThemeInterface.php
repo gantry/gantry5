@@ -40,10 +40,10 @@ interface ThemeInterface
      * Define twig environment.
      *
      * @param \Twig_Environment $twig
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @return \Twig_Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null);
+    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null);
 
     /**
      * Returns renderer.
