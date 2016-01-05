@@ -16,7 +16,7 @@ widget.[id | title | description]
                 <div class="modules-wrapper">
                     <ul>
                         {% for widget in gantry.platform.listWidgets %}
-                        {% if widget.id != 'particle_widget' %}
+                        {% if widget.id not in ['particle_widget', 'roksprocket_options', 'rokgallery_options'] %}
                         <li data-lm-nodrag
                             data-mm-type="widget"
                             data-lm-subtype="{{ widget.id }}"
