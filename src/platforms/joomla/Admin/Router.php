@@ -127,8 +127,8 @@ class Router extends BaseRouter
         $document->setMimeEncoding($response->mimeType);
 
         // Output HTTP header.
-        header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
-        header("Content-Type: {$response->mimeType}; charset={$response->charset}");
+        $app->setHeader('Status', $response->getStatus());
+        $app->setHeader('Content-Type', $response->mimeType . '; charset=' . $response->charset);
         foreach ($response->getHeaders() as $key => $values) {
             $replace = true;
             foreach ($values as $value) {
@@ -137,13 +137,17 @@ class Router extends BaseRouter
             }
         }
 
+        if ($response instanceof JsonResponse) {
+            $app->setHeader('Expires', 'Wed, 17 Aug 2005 00:00:00 GMT', true);
+            $app->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
+            $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            $app->setHeader('Pragma', 'no-cache');
+        }
+
         // Output Gantry response.
         echo $response;
 
         if ($response instanceof JsonResponse) {
-            // It is much faster and safer to exit now than to let Joomla to send the response.
-            $app->setHeader('Cache-Control', 'no-cache', false);
-            $app->setHeader('Pragma', 'no-cache');
             $app->sendHeaders();
             $app->close();
         }

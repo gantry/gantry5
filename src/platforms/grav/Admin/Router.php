@@ -127,12 +127,16 @@ class Router extends BaseRouter
             }
         }
 
+        if ($response instanceof JsonResponse) {
+            header('Expires: Wed, 17 Aug 2005 00:00:00 GMT', true);
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT', true);
+            header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            header('Pragma: no-cache');
+        }
+
         echo $response;
 
         if ($response instanceof JsonResponse) {
-            header('Cache-Control: no-cache', false);
-            header('Pragma: no-cache');
-
             exit();
         }
 
