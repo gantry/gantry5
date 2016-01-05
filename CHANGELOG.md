@@ -1,3 +1,10 @@
+# 5.2.8
+## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed defer attribute for JavaScript
+
 # 5.2.7
 ## 05/01/2016
 

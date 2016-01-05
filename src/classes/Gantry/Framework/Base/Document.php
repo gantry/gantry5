@@ -157,7 +157,7 @@ class Document
                             $attribs .= ' async="async"';
                         }
                         if ($script['defer']) {
-                            $attribs .= ' async="defer"';
+                            $attribs .= ' defer="defer"';
                         }
                         $html[] = "<script type=\"{$script['type']}\"{$attribs} src=\"{$script['src']}\"></script>";
                         break;
