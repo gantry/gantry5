@@ -130,6 +130,9 @@ class Router extends BaseRouter
         echo $response;
 
         if ($response instanceof JsonResponse) {
+            header('Cache-Control: no-cache', false);
+            header('Pragma: no-cache');
+
             exit();
         }
 

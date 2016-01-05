@@ -118,6 +118,10 @@ class Router extends BaseRouter
         if ($response instanceof JsonResponse) {
             // Output Gantry JSON response.
             echo $response;
+
+            header('Cache-Control: no-cache', false);
+            header('Pragma: no-cache');
+
             die();
         }
 

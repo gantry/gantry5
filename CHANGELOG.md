@@ -6,6 +6,7 @@
         - Fixed Menu option "Render Titles" not rendering titles at all
         - Fixed potential 404 response in admin when trying to access Particle Settings via modal (#1088)
         - Worked around PHP 5.5 bug on loading global configuration
+        - Fixed caching of admin AJAX requests (#1078)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Remove RokGallery and RokSprocket from the Widget Picker (#1092) 

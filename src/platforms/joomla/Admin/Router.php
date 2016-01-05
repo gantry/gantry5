@@ -142,6 +142,8 @@ class Router extends BaseRouter
 
         if ($response instanceof JsonResponse) {
             // It is much faster and safer to exit now than to let Joomla to send the response.
+            $app->setHeader('Cache-Control', 'no-cache', false);
+            $app->setHeader('Pragma', 'no-cache');
             $app->sendHeaders();
             $app->close();
         }
