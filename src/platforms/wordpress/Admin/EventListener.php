@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -157,7 +157,7 @@ class EventListener implements EventSubscriberInterface
             unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
 
             // Do not save WP variables we do not use.
-            unset($item['xfn'], $item['attr_title']);
+            unset($item['rel'], $item['attr_title']);
 
             // Particles have no link.
             if (isset($item['type']) && $item['type'] === 'particle') {

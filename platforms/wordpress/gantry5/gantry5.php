@@ -38,6 +38,9 @@ if (!is_admin()) {
     return;
 }
 
+// Load plugin settings.
+require_once dirname(__FILE__) . '/admin/settings.php';
+
 if (!defined('GANTRYADMIN_PATH')) {
     // Works also with symlinks.
     define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');

@@ -31,12 +31,13 @@ form:
     layout.sections:
       type: select.selectize
       label: Sections Layout
-      description: Default layout behavior for Sections
+      description: Default layout container behavior for Sections
       default: 0
       options:
         0: Fullwidth (Boxed Content)
         2: Fullwidth (Flushed Content)
         1: Boxed
+        3: Remove Container
 
     body_top:
       type: textarea.textarea

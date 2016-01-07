@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +14,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\System\Messages;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
@@ -198,6 +199,10 @@ abstract class Gantry extends Container
             return new Menu;
         };
 
+        $instance['messages'] = function ($c) {
+            return new Messages();
+        };
+
         $instance['page'] = function ($c) {
             return new Page($c);
         };
@@ -222,7 +227,7 @@ abstract class Gantry extends Container
         });
 
         $instance['global'] = function ($c) {
-            $data = static::loadGlobal() + [
+            $data = $c->loadGlobal() + [
                     'debug' => false,
                     'production' => false,
                     'asset_timestamps' => true,
@@ -300,7 +305,7 @@ abstract class Gantry extends Container
     /**
      * @return array
      */
-    protected static function loadGlobal()
+    protected function loadGlobal()
     {
         return [];
     }

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -40,10 +40,10 @@ interface ThemeInterface
      * Define twig environment.
      *
      * @param \Twig_Environment $twig
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @return \Twig_Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null);
+    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null);
 
     /**
      * Returns renderer.

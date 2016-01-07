@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -132,6 +132,9 @@ class Format2
 
             if ($size) {
                 $result->size = $size;
+            }
+            if (($type === 'grid' || $type === 'block') && !isset($result->attributes->id)) {
+                $result->attributes->id = $section_id;
             }
         }
 
@@ -424,6 +427,10 @@ class Format2
         if (in_array($type, $this->sections)) {
             if ($type === 'offcanvas') {
                 return 'Offcanvas';
+            }
+
+            if ($type === 'grid' || $type === 'block') {
+                return null;
             }
 
             return ucfirst((string)(int) $id === (string) $id ? ($subtype ?: $type) . "-{$id}" : $id);

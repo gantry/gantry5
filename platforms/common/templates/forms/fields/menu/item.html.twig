@@ -2,7 +2,7 @@
 
 {% block options %}
     {{ parent() }}
-    {% if gantry.menu is not empty %}
+    {% if gantry.menu is not null %}
         {% for group, items in gantry.menu.getGroupedItems() %}
             {% if items|length %}
             <optgroup label="{{ group|capitalize }}">

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -31,7 +31,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             return new UniformResourceLocator(GANTRY5_ROOT);
         };
         $gantry['streams'] = function($c) use ($sp) {
-            $schemes = (array) $c['platform']->get('streams');
+            $schemes = (array) $c['platform']->init()->get('streams');
 
             /** @var UniformResourceLocator $locator */
             $locator = $c['locator'];

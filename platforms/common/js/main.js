@@ -4491,11 +4491,12 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     validateField = require('../utils/field-validation');
 
-var menumanager, map;
+var menumanager;
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
@@ -4506,7 +4507,7 @@ ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('[data-mm-container]', {
-        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
@@ -4523,7 +4524,7 @@ ready(function() {
     menumanager.setRoot();
 
     // Refresh ordering/items on menu type change or Menu navigation link
-    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(/*event, element*/) {
         menumanager.setRoot();
         menumanager.refresh();
 
@@ -4542,7 +4543,7 @@ ready(function() {
         element[0].select();
     }, true);
 
-    body.delegate('keydown', '.percentage input', function(event, element) {
+    body.delegate('keydown', '.percentage input', function(event/*, element*/) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
                 // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
             (event.keyCode == 65 && (event.ctrlKey === true || event.ctrlKey === true)) ||
@@ -4657,10 +4658,11 @@ ready(function() {
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
-                var parent = element.parent('[data-mm-id]'),
-                    index  = parent.data('mm-id').match(/\d+$/)[0],
-                    active = $('.menu-selector .active'),
-                    path   = active ? active.data('mm-id') : null;
+                var parent    = element.parent('[data-mm-id]'),
+                    container = parent.parent('.submenu-selector').children('[data-mm-id]'),
+                    index     = indexOf(container, parent),
+                    active    = $('.menu-selector .active'),
+                    path      = active ? active.data('mm-id') : null;
 
                 parent.remove();
                 siblings = $('.submenu-selector > [data-mm-id]');
@@ -4703,13 +4705,13 @@ ready(function() {
 
                 var editable = content.elements.content.find('[data-title-editable]');
                 if (editable) {
-                    editable.on('title-edit-end', function(title, original, canceled) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
                         title = trim(title);
                         if (!title) {
                             title = trim(original) || 'Title';
                             this.text(title).data('title-editable', title);
 
-                            return;
+                            return true;
                         }
                     });
                 }
@@ -4827,7 +4829,7 @@ module.exports = {
     menumanager: menumanager
 };
 
-},{"../ui":49,"../utils/field-validation":62,"../utils/get-ajax-suffix":64,"../utils/get-ajax-url":65,"./extra-items":30,"./menumanager":32,"agent":71,"elements":103,"elements/domready":101,"elements/zen":106,"mout/array/contains":135,"mout/math/clamp":184,"mout/string/trim":237}],32:[function(require,module,exports){
+},{"../ui":49,"../utils/field-validation":62,"../utils/get-ajax-suffix":64,"../utils/get-ajax-url":65,"./extra-items":30,"./menumanager":32,"agent":71,"elements":103,"elements/domready":101,"elements/zen":106,"mout/array/contains":135,"mout/array/indexOf":144,"mout/math/clamp":184,"mout/string/trim":237}],32:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -14159,12 +14161,13 @@ module.exports = new FlagsState();
 },{"../ui":49,"./get-ajax-suffix":64,"./get-ajax-url":65,"prime":267,"prime/emitter":266,"prime/map":268}],64:[function(require,module,exports){
 "use strict";
 
-var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
 var getAjaxSuffix = function() {
+    var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
     return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
 };
 
 module.exports = getAjaxSuffix;
+
 },{}],65:[function(require,module,exports){
 "use strict";
 var unescapeHtml  = require('mout/string/unescapeHtml'),
@@ -14173,11 +14176,8 @@ var unescapeHtml  = require('mout/string/unescapeHtml'),
     getParam      = require('mout/queryString/getParam'),
     setParam      = require('mout/queryString/setParam');
 
-var GANTRY_AJAX_URL      = window.GANTRY_AJAX_URL || '',
-    GANTRY_AJAX_CONF_URL = window.GANTRY_AJAX_CONF_URL || '',
-    GANTRY_PLATFORM      = window.GANTRY_PLATFORM || '';
-
 var getAjaxURL = function(view, search) {
+    var GANTRY_AJAX_URL = window.GANTRY_AJAX_URL || '';
     if (!search) { search = '%ajax%'; }
     var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_URL == 'undefined' ? '' : GANTRY_AJAX_URL;
@@ -14186,6 +14186,7 @@ var getAjaxURL = function(view, search) {
 };
 
 var getConfAjaxURL = function(view, search) {
+    var GANTRY_AJAX_CONF_URL = window.GANTRY_AJAX_CONF_URL || '';
     if (!search) { search = '%ajax%'; }
     var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_CONF_URL == 'undefined' ? '' : GANTRY_AJAX_CONF_URL;
@@ -14194,7 +14195,9 @@ var getConfAjaxURL = function(view, search) {
 };
 
 var parseAjaxURI = function(uri) {
-    var platform = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM;
+    var GANTRY_PLATFORM = window.GANTRY_PLATFORM || '',
+        platform        = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM;
+
     switch (platform) {
         case 'wordpress':
             uri = uri.replace(/themes\.php/ig, 'admin-ajax.php');
@@ -14218,6 +14221,7 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
+
 },{"./get-ajax-suffix":64,"mout/queryString/getParam":213,"mout/queryString/getQuery":214,"mout/queryString/setParam":215,"mout/string/unescapeHtml":239}],66:[function(require,module,exports){
 "use strict";
 

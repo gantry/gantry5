@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -43,6 +43,11 @@ abstract class Widgets
             $widgets          = !empty($sidebars_widgets[$key]) ? $sidebars_widgets[$key] : [];
 
             foreach ($widgets as $id) {
+                // TODO: This should display an error
+                if (empty($wp_registered_widgets[$id])) {
+                    continue;
+                }
+
                 // Make sure we have Gantry 5 compatible widget.
                 if (empty($wp_registered_widgets[$id]['gantry5'])
                     && $wp_registered_widgets[$id]['classname'] !== 'roksprocket_options'
@@ -73,8 +78,7 @@ abstract class Widgets
                     // As we already rendered content, we can later just display it.
                     $wp_registered_widgets[$id]['callback'] = function () use ($contents) {
                         echo $contents;
-                    };
-                }
+                    };                }
             }
 
             $html = '@@DEFERRED@@';
@@ -289,7 +293,7 @@ abstract class Widgets
         $widget_id  = $params[0]['widget_id'];
         $widget_obj = $wp_registered_widgets[$widget_id];
 
-        if (!is_array($widget_obj['callback']) || !isset($widget_obj['callback'][0]) || !is_object($widget_obj['callback'][0])) {
+        if (!is_array($widget_obj['callback']) || !isset($widget_obj['callback'][0]->option_name)) {
             return $params;
         }
 

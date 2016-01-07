@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -43,10 +43,14 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */

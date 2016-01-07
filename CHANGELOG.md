@@ -1,20 +1,80 @@
-# 5.3.0
-## XX/XX/2015
+# 5.2.8
+## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed defer attribute for JavaScript
+
+# 5.2.7
+## 05/01/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed Menu option "Render Titles" not rendering titles at all
+        - Fixed potential 404 response in admin when trying to access Particle Settings via modal (#1088)
+        - Worked around PHP 5.5 bug on loading global configuration
+        - Fixed caching of admin AJAX requests (#1078)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Remove RokGallery and RokSprocket from the Widget Picker (#1092)
+        - Fix Timbers `render_string()` and `compile_string()` functions (#1077)
+        - Removed description meta tag to avoid duplications of it. This should be handled by plugins (#892)
+
+# 5.2.6
+## 21/12/2015
 
 1. [Common](#common)
     1. [](#new)
-        - Added support for [Grav](http://getgrav.org)
+        - Implement `Remove Container` mode to make section to use all the available space (#549)
+    2. [](#improved)
+        - Index of the column being deleted is now based on DOM rather than list id, making it more accurate (#1071)
+        - Improve Google analytics atom tooltip and placeholder (#1079)
+        - Updated Google Fonts
+    3. [](#bugfix)
+        - Fixed typo in menu particle that was preventing the rendering of the animation class
+        - Fixed admin js to deferred, guaranteeing global variables to be available (#1076)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Create atom to load jQuery, Bootstrap and Mootools from Joomla (#1057)
+    3. [](#bugfix)
+        - Hydrogen: Fixed assigning outline from a plugin having no effect (#1080)
+        - Fixed outline id in body tag being wrong for some pages, like error page
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Create atom to load jQuery from WordPress and Bootstrap and Mootools from CDN (#1057)
+        - Added missing default configuration for Home outline in Hydrogen
+
+# 5.2.5
+## 17/12/2015
+
+1. [Common](#common)
+    1. [](#new)
+        - Menu items have a new `Dropdown Direction` option, along with new mixins (`dropdown-left`, `dropdown-center`, `dropdown-right`), that will allow to configure where a dropdown should open to, relative to its parent. (thanks @Bokelmann , @JoomFX and @ramon12 - #1058)
     2. [](#improved)
         - Selectize is now name-spaced with a `g-` prefix to avoid potential conflicts
         - Layout Manager: Add Row and Section Settings action icons are now always visible
-        - Decimal size classes (`size-33-3`) are also using flexgrid (#1047 - thanks @adi8i)
+        - Decimal size classes (`size-33-3`) are also using flexgrid (thanks @adi8i - #1047)
         - Reworked all tooltips. They are now JS based instead of CSS making the behavior more predictable as well as allowing longer text and HTML as content.
+        - Allow theme developer to assign attributes to grid element in layout preset file
+        - Styles, Settings and Page groups of type `hidden` will now get properly hidden from the view
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Fixed dismissal links alignment for alerts (fixes #1022)
-4. [Grav](#grav)
+        - Fixed dismissal links alignment for alerts (#1022)
+        - Fixed Production / Development Mode switch if file caching is turned on (#1051)
+3. [Wordpress](#wordpress)
     1. [](#new)
-        - Welcome to the family!
+        - Separate configuration for each Multi Site blog (#921)
+    2. [](#improved)
+        - Display notification for the logged in user when site is offline (#760)
+    3. [](#bugfix)
+        - Fixed plugin settings being disabled when theme failed to load
+        - Fixed XFN (rel) missing from menu HTML output (#1064)
+        - Fixed inline JavaScript in Footer block gets loaded before the files (#1060)
+        - Fixed empty assignments being reloaded from theme configuration (#884)
+        - Fixed broken links in `Available Themes` page (#1004)
+        - Fixed Base Item in Menu particle being empty (#1033)
+        - Fixed Saving menu failed: Failed to update main-menu (#1055)
+        - Fixed frontend showing wrong menu items
 
 # 5.2.4
 ## 30/11/2015

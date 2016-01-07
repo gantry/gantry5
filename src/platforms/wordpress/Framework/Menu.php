@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
@@ -98,7 +99,10 @@ class Menu extends AbstractMenu
 
     protected function getWPMenu($params) {
         if (!isset($this->wp_menu)) {
-            $this->wp_menu = new \TimberMenu(urlencode($params['menu']));
+            $menus = array_flip($this->getMenus());
+            if (isset($menus[$params['menu']])) {
+                $this->wp_menu = new \TimberMenu($menus[$params['menu']]);
+            }
         }
 
         return $this->wp_menu;
@@ -273,8 +277,7 @@ class Menu extends AbstractMenu
                 'link' => is_admin() ? $menuItem->url : $menuItem->link(),
                 // TODO: use
                 'attr_title' => $menuItem->attr_title,
-                // TODO: use
-                'xfn' => $menuItem->xfn,
+                'rel' => $menuItem->xfn,
                 'level' => $menuItem->level + 1
             ];
 

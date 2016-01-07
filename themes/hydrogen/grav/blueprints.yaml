@@ -1,7 +1,7 @@
 name: Hydrogen
 version: "@version@"
 description: "Default Gantry 5 theme."
-icon: tint
+icon: gantry
 author:
   name: RocketTheme
   email: support@rockettheme.com

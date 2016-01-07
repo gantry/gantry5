@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,4 @@ $configurations = $gantry['configurations'];
 $context = array();
 
 // Render the page.
-echo $theme
-    ->setLayout($configurations->current())
-    ->render('index.html.twig', $context);
+echo $theme->render('index.html.twig', $context);

@@ -12,6 +12,13 @@
     -webkit-user-select: none;
     user-select: none;
     pointer-events: none;
+
+    code {
+        background: #2a3c46;
+        color: $white;
+        border-color: lighten(#2a3c46, 20);
+        font-size: 1em;
+    }
 }
 
 /* Arrow styles */

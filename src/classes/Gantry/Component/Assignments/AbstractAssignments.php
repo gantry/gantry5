@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -168,7 +168,12 @@ abstract class AbstractAssignments
      */
     public function save(array $data)
     {
-        $data = $data['assignments'];
+        $types = [];
+        foreach ($this->types() as $type) {
+            $types[$type] = [];
+        }
+
+        $data = array_replace($types, $data['assignments']);
         foreach ($data as $tname => &$type) {
             foreach ($type as $gname => &$group) {
                 foreach ($group as $key => $value) {
@@ -181,9 +186,6 @@ abstract class AbstractAssignments
                 if (empty($group)) {
                     unset($type[$gname]);
                 }
-            }
-            if (empty($type)) {
-                unset($data[$tname]);
             }
         }
 

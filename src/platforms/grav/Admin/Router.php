@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -125,6 +125,13 @@ class Router extends BaseRouter
             foreach ($values as $value) {
                 header("{$key}: {$value}");
             }
+        }
+
+        if ($response instanceof JsonResponse) {
+            header('Expires: Wed, 17 Aug 2005 00:00:00 GMT', true);
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT', true);
+            header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            header('Pragma: no-cache');
         }
 
         echo $response;

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -157,7 +157,7 @@ class Document
                             $attribs .= ' async="async"';
                         }
                         if ($script['defer']) {
-                            $attribs .= ' async="defer"';
+                            $attribs .= ' defer="defer"';
                         }
                         $html[] = "<script type=\"{$script['type']}\"{$attribs} src=\"{$script['src']}\"></script>";
                         break;

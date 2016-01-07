@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\WordPress\Widgets;
 use Pimple\Container;
@@ -31,6 +32,7 @@ class Platform extends BasePlatform
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
+        $this->multisite = get_current_blog_id() !== 1 ? '/blog-' . get_current_blog_id() : '';
 
         parent::__construct($container);
 
@@ -46,11 +48,23 @@ class Platform extends BasePlatform
         $this->items['streams']['wp-content'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->content_dir]];
     }
 
+    public function init()
+    {
+        if ($this->multisite) {
+            $theme = $this->get('streams.gantry-theme.prefixes..0');
+            if ($theme) {
+                $this->set('streams.gantry-theme.prefixes..0', $theme . $this->multisite);
+            }
+        }
+
+        return parent::init();
+    }
+
     public function getCachePath()
     {
         $global = $this->container['global'];
 
-        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5';
+        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5' . $this->multisite;
     }
 
     public function getThemesPaths()
@@ -62,7 +76,7 @@ class Platform extends BasePlatform
     {
         return ['' => [
             'gantry-theme://images',
-            $this->content_dir . '/uploads',
+            trim(wp_upload_dir()['relative'], '/'),
             $this->gantry_dir
             ]
         ];
@@ -96,7 +110,7 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        return null;
+        return Document::url('wp-admin/customize.php?theme=' . $theme);
     }
 
     /**
@@ -107,6 +121,9 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
+        if ($theme === Gantry::instance()['theme.name']) {
+            return Document::url('wp-admin/admin.php?page=layout-manager');
+        }
         return null;
     }
 
@@ -194,5 +211,22 @@ class Platform extends BasePlatform
     public function listWidgets()
     {
         return Widgets::listWidgets();
+    }
+
+    public function displaySystemMessages($params = [])
+    {
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        /** @var Messages $messages */
+        $messages = $this->container['messages'];
+
+        $context = [
+            'messages' => $messages->get(),
+            'params' => $params
+        ];
+        $messages->clean();
+
+        return $theme->render('partials/messages.html.twig', $context);
     }
 }

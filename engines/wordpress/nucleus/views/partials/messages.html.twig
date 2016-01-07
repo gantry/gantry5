@@ -1,0 +1,11 @@
+<div id="system-message-container">
+    <div id="system-message">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.type }}">
+            <div>
+                <p>{{ message.message }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

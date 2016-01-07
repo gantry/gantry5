@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -84,10 +84,10 @@ abstract class AbstractTheme
      * Define twig environment.
      *
      * @param \Twig_Environment $twig
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @return \Twig_Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
         if (!$loader) {
             $loader = $twig->getLoader();
@@ -181,11 +181,15 @@ abstract class AbstractTheme
     /**
      * Set twig lookup paths to the loader.
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @internal
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
@@ -232,7 +236,7 @@ abstract class AbstractTheme
     /**
      * @deprecated 5.1.5
      */
-    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    public function add_to_twig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
         return $this->extendTwig($twig, $loader);
     }

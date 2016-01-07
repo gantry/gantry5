@@ -9,9 +9,10 @@
                 <li {{ (location == 'configurations') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('configurations')|e }}"><i class="fa fa-fw fa-th"></i> {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a>
                 </li>
-                <li {{ (location == 'positions') ? 'class="active"' }}>
+                {#TODO: Hide positions for the moment#}
+                {#<li {{ (location == 'positions') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('positions')|e }}"><i class="fa fa-fw fa-object-group"></i> {{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}</a>
-                </li>
+                </li>#}
                 <li {{ (location == 'menu') ? 'class="active"' }}>
                     <a data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu')|e }}"><i class="fa fa-fw fa-bars"></i> <span>{{ 'GANTRY5_PLATFORM_MENU'|trans }}</span></a>
                 </li>
