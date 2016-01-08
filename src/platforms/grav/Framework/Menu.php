@@ -201,10 +201,9 @@ class Menu extends AbstractMenu
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
-
         foreach ($menuItems as $name => $data) {
-            $parent = $data['parent_id'];
-            $level = $data['level'];
+            $parent =  isset($data['parent_id']) ? $data['parent_id'] : 'root';
+            $level = isset($data['level']) ? $data['level'] : 1;
 
             if (($start && $start > $level)
                 || ($end && $level > $end)
