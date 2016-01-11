@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fixed defer attribute for JavaScript
         - Ignore missing atom if debug has not been enabled (#1106)
+        - Fix `Custom CSS / JS` Atom having bad HTML with non-existing file path (#1105) 
 
 # 5.2.7
 ## 05/01/2016

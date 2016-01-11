@@ -19,7 +19,7 @@
             {% include '@nucleus/layout/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } -%}
         {% endif %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
 {%- set page_offcanvas = page_offcanvas|trim ?: '' %}
 {%- set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' -%}
