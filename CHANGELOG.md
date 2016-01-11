@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed defer attribute for JavaScript
+        - Ignore missing atom if debug has not been enabled (#1106)
 
 # 5.2.7
 ## 05/01/2016
