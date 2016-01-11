@@ -68,6 +68,36 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * @return array
+     */
+    public function getGroupedItems()
+    {
+        $groups = array();
+
+        $grav = Grav::instance();
+
+        // Get the menu items.
+        $pages = $grav['pages']->all()->visible();
+
+        // Initialize the group.
+        $groups['mainmenu'] = array();
+
+        // Build the options array.
+        /** @var Page $page */
+        foreach ($pages as $page) {
+            $name = trim($page->route(), '/') ?: 'home';
+            $path = explode('/', $name);
+
+            $groups['mainmenu'][$name] = [
+                'spacing' => str_repeat('&nbsp; ', count($path)-1),
+                'label' => $page->title()
+            ];
+        }
+
+        return $groups;
+    }
+
+    /**
      * Return default menu.
      *
      * @return string
