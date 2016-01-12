@@ -229,9 +229,11 @@ abstract class Gantry extends Container
         $instance['global'] = function ($c) {
             $data = $c->loadGlobal() + [
                     'debug' => false,
-                    'production' => false,
+                    'production' => true,
                     'asset_timestamps' => true,
-                    'asset_timestamps_period' => 7
+                    'asset_timestamps_period' => 7,
+                    'compile_yaml' => true,
+                    'compile_twig' => true
                 ];
 
             return new Config($data);

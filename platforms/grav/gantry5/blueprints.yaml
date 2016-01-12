@@ -70,5 +70,29 @@ form:
       validate:
         type: bool
 
+    compile_yaml:
+      type: toggle
+      label: Compile YAML
+      description: Compile YAML configuration files into PHP, making page loads significally faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    compile_twig:
+      type: toggle
+      label: Compile Twig
+      description: Compile Twig template files into PHP, making page loads significally faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
     _redirect:
       type: hidden

@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\File;
 
+use Gantry\Component\Config\Config;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 
@@ -25,6 +26,13 @@ class CompiledYamlFile extends YamlFile
         parent::__construct();
 
         $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if (!$global->get('compile_yaml', 1)) {
+            $this->caching(false);
+        }
 
         if (isset($gantry['file.yaml.cache.path'])) {
             $this->setCachePath($gantry['file.yaml.cache.path']);

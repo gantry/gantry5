@@ -27,6 +27,7 @@ use RocketTheme\Toolbox\File\PhpFile;
 trait CompiledFile
 {
     protected $cachePath;
+    protected $caching = true;
 
     /**
      * @param string $path
@@ -37,6 +38,15 @@ trait CompiledFile
         $this->cachePath = $path;
 
         return $this;
+    }
+
+    public function caching($enabled = null)
+    {
+        if (null !== $enabled) {
+            $this->caching = (bool) $enabled;
+        }
+
+        return $this->caching;
     }
 
     /**
@@ -54,13 +64,14 @@ trait CompiledFile
 
         // If nothing has been loaded, attempt to get pre-compiled version of the file first.
         if ($var === null && $this->raw === null && $this->content === null) {
-            $key = md5($this->filename);
-            $file = PhpFile::instance($this->cachePath . "/{$key}{$this->extension}.php");
             $modified = $this->modified();
 
-            if (!$modified) {
+            if (!$modified || !$this->caching) {
                 return $this->decode($this->raw());
             }
+
+            $key = md5($this->filename);
+            $file = PhpFile::instance($this->cachePath . "/{$key}{$this->extension}.php");
 
             $class = get_class($this);
 
