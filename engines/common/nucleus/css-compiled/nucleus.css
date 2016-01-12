@@ -1680,6 +1680,7 @@ th {
   -ms-transform: translateX(0);
   -o-transform: translateX(0);
   transform: translateX(0);
+  z-index: 0;
 }
 #g-mobilemenu-container .g-toplevel .g-dropdown .g-go-back {
   display: block;
@@ -1697,6 +1698,15 @@ th {
 #g-mobilemenu-container .g-toplevel .g-dropdown-column {
   float: none;
   padding: 0;
+}
+#g-mobilemenu-container .g-toplevel .g-dropdown-column [class*="size-"] {  
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 1 100%;
+  -moz-flex: 0 1 100%;
+  -ms-flex: 0 1 100%;
+  flex: 0 1 100%;
 }
 #g-mobilemenu-container .g-sublevel {
   cursor: default;
