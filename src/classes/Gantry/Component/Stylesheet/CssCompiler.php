@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -30,6 +29,8 @@ abstract class CssCompiler implements CssCompilerInterface
     protected $name;
 
     protected $debug = false;
+
+    protected $warnings = [];
 
     /**
      * @var array
@@ -75,6 +76,11 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // In production mode we do not need to do any other checks.
         $this->production = (bool) $global->get('production');
+    }
+
+    public function getWarnings()
+    {
+        return $this->warnings;
     }
 
     /**
@@ -228,6 +234,7 @@ abstract class CssCompiler implements CssCompilerInterface
         }
 
         $content = $metaFile->content();
+        $metaFile->free();
 
         // Check if filename in meta file matches.
         if (empty($content['file']) || $content['file'] != $out) {
@@ -321,13 +328,25 @@ abstract class CssCompiler implements CssCompilerInterface
 
         $uri = basename($out);
         $metaFile = PhpFile::instance($locator->findResource("gantry-cache://theme/scss/{$uri}.php", true, true));
-        $metaFile->save([
+        $data = [
             'file' => $out,
             'timestamp' => filemtime($locator->findResource($out)),
             'md5' => $md5,
             'variables' => $this->getVariables(),
             'imports' => $this->compiler->getParsedFiles()
-        ]);
+        ];
+
+        // Attempt to lock the file for writing.
+        try {
+            $metaFile->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
+        // If meta file wasn't already locked by another process, save it.
+        if ($metaFile->locked() !== false) {
+            $metaFile->save($data);
+            $metaFile->unlock();
+        }
         $metaFile->free();
     }
 }

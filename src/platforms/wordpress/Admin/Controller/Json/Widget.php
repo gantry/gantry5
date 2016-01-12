@@ -2,13 +2,10 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
- * @license   Dual License: MIT or GNU/GPLv2 and later
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
  *
- * http://opensource.org/licenses/MIT
  * http://www.gnu.org/licenses/gpl-2.0.html
- *
- * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
 namespace Gantry\Admin\Controller\Json;
@@ -70,19 +67,24 @@ class Widget extends JsonController
 
         $instance = isset($data['options']['widget']) ? $data['options']['widget'] : [];
 
+        if (isset($this->params['scope'])) {
+            $scope = $this->params['scope'];
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/{$scope}/block.yaml");
+            $block = new BlueprintsForm($file->content());
+            $file->free();
+
+            // Load particle blueprints.
+            $validator = $this->loadBlueprints($scope);
+            $callable = function () use ($validator) {
+                return $validator;
+            };
+        } else {
+            $block = null;
+            $callable = null;
+        }
+
         if (!empty($cast)) {
-            // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
-            // TODO: in order to avoid casting. Main issue is that "true" could also be valid text string.
-            // Convert strings back to native values.
-            foreach ($instance as $key => $field) {
-                if (strtolower($field) === 'true') {
-                    $instance[$key] = true;
-                } elseif (strtolower($field) === 'false') {
-                    $instance[$key] = false;
-                } elseif ((string) $field === (string)(int) $field) {
-                    $instance[$key] = intval($field);
-                }
-            }
+            $instance = $this->castInput($instance);
         }
 
         $widgetType = $this->getWidgetType($name);
@@ -97,7 +99,7 @@ class Widget extends JsonController
         $form = ob_get_clean();
 
         // Create configuration from the defaults.
-        $item = new Config($data);
+        $item = new Config($data, $callable);
         $item->def('type', 'particle');
         $item->def('title', $widgetType->name);
         $item->def('options.type', $widgetType->id_base);
@@ -106,6 +108,7 @@ class Widget extends JsonController
 
         $this->params += [
             'item'          => $item,
+            'block'         => $block,
             'data'          => $data,
             'form'          => $form,
             'prefix'        => "widget.{$name}.",
@@ -147,16 +150,46 @@ class Widget extends JsonController
             throw new \RuntimeException('Filter prevented widget from being saved.', 403);
         }
 
+        $block = $this->request->post->getArray('block');
+        foreach ($block as $key => $param) {
+            if ($param === '') {
+                unset($block[$key]);
+            }
+        }
+
         // Create configuration from the defaults.
         $data = new Config([
             'type' => 'widget',
             'widget' => $name,
             'title' => $this->request->post['title'] ?: $widgetType->name,
+            'options' => [
+                'widget' => $instance
+            ]
         ]);
-        $data->set('options.widget', $instance);
-        $data->def('options.enabled', 1);
 
-        return new JsonResponse(['item' => $data->toArray()]);
+        if ($block) {
+            $menuitem = [
+                'type' => 'particle',
+                'particle' => 'widget',
+                'title' => $data['title'],
+                'options' => [
+                    'particle' => [
+                        'enabled' => 1,
+                        'widget' => $data->toArray(),
+                    ],
+                    'block' => $block
+                ]
+            ];
+
+            // Fill parameters to be passed to the template file.
+            $this->params['item'] = $menuitem;
+
+            $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+
+            return new JsonResponse(['item' => $menuitem, 'html' => $html]);
+        }
+
+       return new JsonResponse(['item' => $data->toArray()]);
     }
 
     /**
@@ -168,7 +201,7 @@ class Widget extends JsonController
     {
         $widgets = $this->container['platform']->listWidgets();
         if (!isset($widgets[$name])) {
-            throw new \RuntimeException("Widget '{$name} not found", 404);
+            throw new \RuntimeException("Widget '{$name}' not found", 404);
         }
 
         /** @var \WP_Widget $widget */
@@ -176,5 +209,44 @@ class Widget extends JsonController
         $widget->number = 0;
 
         return $widget;
+    }
+
+    /**
+     * Load blueprints.
+     *
+     * @param string $name
+     *
+     * @return BlueprintsForm
+     */
+    protected function loadBlueprints($name = 'menu')
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
+        $file = CompiledYamlFile::instance($filename);
+        $content = new BlueprintsForm($file->content());
+        $file->free();
+
+        return $content;
+    }
+
+    protected function castInput(array $input)
+    {
+        // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
+        // TODO: in order to avoid casting. Main issue is that "true" could also be valid text string.
+        // Convert strings back to native values.
+        foreach ($input as $key => $field) {
+            if (is_array($field)) {
+                $input[$key] = $this->castInput($field);
+            } elseif (strtolower($field) === 'true') {
+                $input[$key] = true;
+            } elseif (strtolower($field) === 'false') {
+                $input[$key] = false;
+            } elseif ((string) $field === (string)(int) $field) {
+                $input[$key] = intval($field);
+            }
+        }
+
+        return $input;
     }
 }

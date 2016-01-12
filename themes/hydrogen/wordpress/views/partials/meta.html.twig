@@ -5,7 +5,7 @@
     {% block meta %}
 
         {# Begin Meta - Date #}
-        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') and post.date %}
             <div class="meta-date">
                 <i class="fa fa-clock-o"></i>
 
@@ -25,7 +25,7 @@
         {# End Meta - Date #}
 
         {# Begin Meta - Author #}
-        {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') %}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') and post.author.name %}
             <div class="meta-author">
                 <i class="fa fa-pencil"></i>
 
@@ -59,7 +59,7 @@
                     {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_hydrogen') %}
                 {% endif %}
 
-                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '1') %}
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '0') %}
                     <a href="{{ post.link ~ '#comments' }}" title="{{ post.comment_count }}" class="meta-comments-link"><span class="comment-count">{{ comment_count }}</span></a>
                 {% else %}
                     <span class="comments-count">{{ comment_count }}</span>

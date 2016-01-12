@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +12,7 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Joomla\Registry\Registry;
@@ -61,6 +60,7 @@ class EventListener implements EventSubscriberInterface
         $theme = $event->gantry['theme.name'];
 
         $positions = $event->gantry['configurations']->positions();
+        $positions['debug'] = 'Debug';
 
         $manifest = new Manifest($theme);
         $manifest->setPositions(array_keys($positions));
@@ -80,6 +80,7 @@ class EventListener implements EventSubscriberInterface
 
         $ini = IniFile::instance($locator->findResource($filename, true, true));
         $ini->save($translations);
+        $ini->free();
     }
 
     public function onAssignmentsSave(Event $event)

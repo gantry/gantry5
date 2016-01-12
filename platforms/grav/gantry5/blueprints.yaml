@@ -1,17 +1,98 @@
-name: Gantry 5 Template Framework
-version: 1.0.0
-description: Allows Gantry 5 templates to run.
-validation: strict
+name: Gantry 5 Framework
+version: '@version@'
+description: Theme framework.
+icon: gantry
+author:
+  name: RocketTheme
+  email: support@rockettheme.com
+  url: http://www.rockettheme.com
+homepage: http://gantry.org
+keywords: gantry, gantry5, theme, framework
+bugs: https://github.com/gantry/gantry5/issues
+license: MIT
 
 form:
+  validation: loose
   fields:
     enabled:
-        type: toggle
-        label: Plugin status
-        highlight: 1
-        default: 1
-        options:
-          1: Enabled
-          0: Disabled
-        validate:
-          type: bool
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    production:
+      type: toggle
+      label: Production Mode
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    asset_timestamps:
+      type: toggle
+      label: Asset Timestamps
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    asset_timestamps_period:
+      type: text
+      label: Timestamp Period
+      default: 7
+      validate:
+        type: float
+
+    route:
+      type: text
+      label: Route
+      default: '/admin/gantry5'
+
+    debug:
+      type: toggle
+      label: Debug Mode
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    compile_yaml:
+      type: toggle
+      label: Compile YAML
+      description: Compile YAML configuration files into PHP, making page loads significally faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    compile_twig:
+      type: toggle
+      label: Compile Twig
+      description: Compile Twig template files into PHP, making page loads significally faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    _redirect:
+      type: hidden

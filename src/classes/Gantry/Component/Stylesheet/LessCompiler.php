@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -75,6 +74,7 @@ class LessCompiler extends CssCompiler
     {
         // Buy some extra time as compilation may take a lot of time in shared environments.
         @set_time_limit(30);
+        ob_start();
 
         $gantry = Gantry::instance();
 
@@ -83,6 +83,20 @@ class LessCompiler extends CssCompiler
 
         $out = $this->getCssUrl($in);
         $path = $locator->findResource($out, true, true);
+
+        $file = File::instance($path);
+
+        // Attempt to lock the file for writing.
+        try {
+            $file->lock(false);
+        } catch (\Exception $e) {
+            // Another process has locked the file; we will check this in a bit.
+        }
+
+        if ($file->locked() === false) {
+            // File was already locked by another process, lets avoid compiling the same file twice.
+            return false;
+        }
 
         $paths = $locator->mergeResources($this->paths);
 
@@ -93,6 +107,11 @@ class LessCompiler extends CssCompiler
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
         $css = $this->compiler->compileFile($in . '.less"');
+
+        $warnings = trim(ob_get_clean());
+        if ($warnings) {
+            $this->warnings[$in] = explode("\n", $warnings);
+        }
 
         if (!$this->production) {
             $warning = <<<WARN
@@ -109,23 +128,9 @@ WARN;
             $css = $warning . "\n\n" . $css;
         }
 
-        $file = File::instance($path);
-
-        // Attempt to lock the file for writing.
-        try {
-            $file->lock(false);
-        } catch (\Exception $e) {
-            // Another process has locked the file; we will check this in a bit.
-        }
-
-        //TODO: Better way to handle double writing files at same time.
-        if ($file->locked() === false) {
-            // File was already locked by another process.
-            return false;
-        }
-
         $file->save($css);
         $file->unlock();
+        $file->free();
 
         $this->createMeta($out, md5($css));
 

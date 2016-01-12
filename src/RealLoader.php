@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -50,10 +50,6 @@ abstract class RealLoader
 
         if (!defined('DS')) {
             define('DS', DIRECTORY_SEPARATOR);
-        }
-
-        if (!defined('GANTRY5_DEBUG')) {
-            define('GANTRY5_DEBUG', false);
         }
 
         return self::autoload();

@@ -22,6 +22,10 @@ var Grid = new prime({
 
     onRendered: function() {
         var parent = this.block.parent();
+        if (parent && parent.data('lm-blocktype') == 'atoms') {
+            this.block.removeClass('nowrap');
+        }
+
         if (parent && parent.data('lm-root') || (parent.data('lm-blocktype') == 'container' && parent.parent().data('lm-root'))) {
             this.removeDropzone();
         }

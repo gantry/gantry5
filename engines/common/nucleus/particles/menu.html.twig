@@ -4,27 +4,26 @@
 <div class="alert alert-error">{{ e.getMessage }}</div>
 {% endtry %}
 
-{% macro getCustomWidth(item, root, mode) -%}
-    {%- if (item.width|default('auto') != 'auto') and not (root.getDropdown() == 'fullwidth' and item.level > 1) -%}
-        {%- if mode == 'item' -%}
-            style="position: relative;"
-        {%- elseif mode == 'submenu' -%}
-            style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
+{% macro getCustomWidth(item, menu, mode, dropdown_type) -%}
+    {%- if (item.width|default('auto') != 'auto') and not (dropdown_type == 'fullwidth' and item.level > 1) -%}
+        {%- if mode == 'item' %} style="position: relative;"
+        {%- elseif mode == 'submenu' %} style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
         {%- endif %}
     {%- endif %}
 {%- endmacro %}
 
-{% macro displayParticle(item, gantry) %}
+{% macro displayParticle(item, context) %}
     {% if item.options.particle.enabled is null or item.options.particle.enabled %}
+        {% set context = context|merge({ particle: item.options.particle }) %}
         {% set classes = item.options.block.class %}
         <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
         {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
-        ignore missing with {gantry: gantry, particle: item.options.particle } only %}
+        ignore missing with context only %}
         </div>
     {% endif %}
 {% endmacro %}
 
-{% macro displayTitle(item, gantry) %}
+{% macro displayTitle(item) %}
     {% if not item.icon_only or not (item.image or item.icon) %}
         <span class="g-menu-item-title">{{ item.title|e }}</span>
         {% if item.subtitle %}
@@ -33,18 +32,20 @@
     {% endif %}
 {% endmacro %}
 
-{% macro displayItem(item, root, menu, gantry) %}
+{% macro displayItem(item, menu, context, dropdown_type) %}
+    {% import _self as SELF %}
     {% if item.visible %}
-        {% import _self as SELF %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
+        {% set rel = item.rel ? ' rel="' ~ item.rel ~ '"' %}
 
-
-        <li id="g-menu-item-{{ item.id|e }}" class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if item.dropdown != 'disabled' %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if item.dropdown != 'disabled' %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"{{ SELF.getCustomWidth(item, root, 'item') }} title="{{ item.title|e }}">
-            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target)|raw }}>
+        <li class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if not item.dropdown_hide %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"
+                {{- SELF.getCustomWidth(item, menu, 'item', dropdown) }}
+                {%- if context.particle.renderTitles|default(0) %} title="{{ item.title|e }}"{% endif %}>
+            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target ~ rel)|raw }}>
             {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent="">{% endif %}
                 {% if item.image %}
                     <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
@@ -53,16 +54,16 @@
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">
-                        {{ SELF.displayTitle(item, gantry) }}
+                        {{ SELF.displayTitle(item) }}
                     </span>
-                    {% if (item.children) and item.dropdown != 'disabled' -%}
+                    {% if (item.children) and not item.dropdown_hide -%}
                         <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
                     {% if item.type == 'particle' %}
-                        {{ SELF.displayParticle(item, gantry) }}
+                        {{ SELF.displayParticle(item, context) }}
                     {% elseif item.type == 'heading' %}
-                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ item.title|e }}</span>
+                        <span class="g-nav-header g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% endif %}
@@ -73,13 +74,13 @@
             {% if item.url %}</a>
             {% else %}</div>{% endif %}
             {% if (item.children) -%}
-                {{ SELF.displaySubmenu(item, root, menu, gantry) }}
+                {{ SELF.displaySubmenu(item, menu, context, dropdown_type) }}
             {%- endif %}
         </li>
     {% endif %}
 {% endmacro %}
 
-{% macro displayContainers(item, root, menu, gantry) %}
+{% macro displayContainers(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     <div class="g-grid">
         {% set groups = item.getDropdown() == 'standard' ? [item] : item.groups %}
@@ -89,26 +90,29 @@
                 <li class="g-level-{{ item.level|e }} g-go-back">
                     <a class="g-menu-item-container" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
-                {{ SELF.displayItems(items, menu, gantry, root) }}
+                {{ SELF.displayItems(items, menu, context, dropdown_type) }}
             </ul>
         </div>
         {% endfor %}
     </div>
 {% endmacro %}
 
-{% macro displayItems(items, menu, gantry, root) %}
+{% macro displayItems(items, menu, context, dropdown_type) %}
     {% import _self as SELF %}
     {% for item in items %}
-        {{ SELF.displayItem(item, root, menu, gantry) }}
+        {% if item.level == 1 %}{% set dropdown_type = item.dropdown %}{% endif %}
+        {{ SELF.displayItem(item, menu, context, dropdown_type) }}
     {% endfor %}
 {% endmacro %}
 
-{% macro displaySubmenu(item, root, menu, gantry) %}
+{% macro displaySubmenu(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
-    {% if item.dropdown != 'disabled' %}
-        <ul class="g-dropdown g-inactive {{ gantry.config.get('styles.menu.animation')|default('g-fade') }}"{{ SELF.getCustomWidth(item, root, 'submenu') }}>
+    {% if not item.dropdown_hide %}
+        {% set animation = context.gantry.config.get('styles.menu.animation')|default('g-fade') %}
+        {% if ((item.groups|length == 1 and not dropdown_type == 'fullwidth') or dropdown_type == 'standard') %}{% set dropdown_dir = 'g-dropdown-' ~ item.dropdown_dir|default('right') %}{% endif %}
+        <ul class="g-dropdown g-inactive {{ animation }} {{ dropdown_dir }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
             <li class="g-dropdown-column">
-                {{ SELF.displayContainers(item, root, menu, gantry) }}
+                {{ SELF.displayContainers(item, menu, context, dropdown_type) }}
             </li>
         </ul>
     {% endif %}
@@ -117,7 +121,7 @@
 {% if menu.root.count() %}
 <nav class="g-main-nav" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }}>
     <ul class="g-toplevel">
-        {{ _self.displayItems(menu.root, menu, gantry) }}
+        {{ _self.displayItems(menu.root, menu, _context) }}
     </ul>
 </nav>
 {% endif %}

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +12,22 @@ namespace Gantry\Framework;
 
 class Gantry extends Base\Gantry
 {
+    /**
+     * @return boolean
+     */
+    public function debug()
+    {
+        return JDEBUG;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function admin()
+    {
+        return \JFactory::getApplication()->isAdmin();
+    }
+
     /**
      * @param string $location
      * @param bool   $force
@@ -36,34 +51,16 @@ class Gantry extends Base\Gantry
     }
 
     /**
-     * @throws \LogicException
+     * @return array
      */
-    protected static function load()
+    protected function loadGlobal()
     {
-        $container = parent::load();
+        $global = null;
 
-        $container['site'] = function ($c) {
-            return new Site;
-        };
+        // Trigger the event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
 
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
-
-        $container['page'] = function ($c) {
-            return new Page($c);
-        };
-
-        $container['global'] = function ($c) {
-            $global = null;
-
-            // Trigger the event.
-            $dispatcher = \JEventDispatcher::getInstance();
-            $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
-
-            return $global;
-        };
-
-        return $container;
+        return $global;
     }
 }

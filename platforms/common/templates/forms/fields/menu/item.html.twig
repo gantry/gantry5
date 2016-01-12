@@ -1,0 +1,22 @@
+{% extends 'forms/fields/select/selectize.html.twig' %}
+
+{% block options %}
+    {{ parent() }}
+    {% if gantry.menu is not null %}
+        {% for group, items in gantry.menu.getGroupedItems() %}
+            {% if items|length %}
+            <optgroup label="{{ group|capitalize }}">
+            {% for key, item in items %}
+            <option
+                    {# required attribute structures #}
+                    {% if key == value %}selected="selected"{% endif %}
+                    value="{{ key|e }}"
+                    {# non-gloval attribute structures #}
+                    {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                    >{{ item.spacing|raw }}{{ item.label|e }}</option>
+            {% endfor %}
+            </optgroup>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

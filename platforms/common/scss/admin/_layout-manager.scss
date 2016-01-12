@@ -1,7 +1,7 @@
 $particle: #2A82B7;
 $position: #359AD9;
 $spacer: #eee;
-$pagecontent: #20A085;
+$system: #20A085;
 $atom: #9055AF;
 $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
 
@@ -55,7 +55,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             display: none;
         }
 
-        > [data-lm-blocktype="container"] {
+        [data-lm-blocktype="container"] {
             position: relative;
             padding: 8px;
             background: #e0e0e0;
@@ -108,10 +108,13 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section, .atoms-section, .offcanvas-section {
-            background: $white;
-            margin: 14px 0;
+        .section, .atoms-section, .offcanvas-section, .wrapper-section {
             padding: 8px;
+        }
+
+        .section, .atoms-section, .offcanvas-section {
+            margin: 14px 0;
+            background: $white;
 
             .section-header {
                 font-size: 22px;
@@ -134,7 +137,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             .section-actions {
-                opacity: 0;
+                opacity: 0.5;
                 @include transition(opacity 0.2s ease-out);
 
                 i {
@@ -256,8 +259,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
+            .g-block {
+                min-width: 20%;
+            }
+
             > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         display: none;
                         opacity: 0;
@@ -266,20 +273,46 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
             }
 
-            .g-block:last-child {
-                .particle, .position, .spacer, .pagecontent, .atom {
+            /* sets the atoms margin-right to 0 for the last item or in case of nowrap to every 5th
+            .g-block
+                &:nth-child(5n+5) .atom {
                     margin-right: 0;
+                }
+
+                &:last-child {
+                .particle, .position, .spacer, .system {
+                    margin-right: 0;
+                }
+            }
+            */
+        }
+
+        .atoms-notice {
+            background-color: $atom;
+            border: 4px solid $white;
+            color: $white;
+            padding: $content-padding;
+            margin: $content-margin;
+            text-align: center;
+
+            a {
+                color: lighten($atom, 30);
+                border-bottom: 1px dotted lighten($atom, 30);
+                font-weight: bold;
+
+                &:hover {
+                    color: lighten($atom, 60);
                 }
             }
         }
 
-        .offcanvas-section {
+        .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
             }
         }
 
-        > .g-grid > .g-block, > .g-lm-container > .g-grid > .g-block {
+        > .g-grid > .g-block, .g-lm-container > .g-grid > .g-block {
             margin-right: 14px;
             background: $white;
             padding-bottom: 50px;
@@ -308,7 +341,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .g-grid {
             &:hover > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         content: "";
                         top: 0;
@@ -324,12 +357,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, {
-            .particle, .position, .spacer, .pagecontent, .atom {
+        .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, .wrapper-section > .g-grid > .g-block:last-child {
+            .particle, .position, .spacer, .system, .atom {
                 margin-right: 0;
             }
 
-            > .particle, > .position, > .spacer, > .pagecontent {
+            > .particle, > .position, > .spacer, > .system {
                 &:after {
                     display: none;
                 }
@@ -362,7 +395,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .particle, .position, .spacer, .pagecontent, .atom {
+        .particle, .position, .spacer, .system, .atom {
             cursor: move;
             padding: 6px 13px;
             color: $white;
@@ -403,6 +436,15 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     text-overflow: ellipsis;
                 }
 
+                .icon {
+                    width: auto;
+                    float: left;
+                    line-height: 2.5rem;
+                    margin-right: 13px;
+                    opacity: 0.7;
+                }
+
+
                 .font-small {
                     line-height: $core-line-height - 0.2;
                     overflow: hidden;
@@ -427,6 +469,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     z-index: 2;
                 }
             }
+        }
+
+        .atom {
+            margin: 0 6px 6px 0px;
         }
 
         .particle-size {
@@ -468,8 +514,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             background-color: $atom;
         }
 
-        .pagecontent {
-            background-color: $pagecontent;
+        .system {
+            background-color: $system;
         }
 
         .placeholder {
@@ -510,8 +556,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
+        .atoms-section .placeholder.in-between {
+            margin-bottom: 6px;
+        }
+
         .block-has-changes {
-            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.g-lm-container) {
+            &:not(.section):not(.atoms-section):not(.offcanvas-section):not(.wrapper-section):not(.g-lm-container) {
                 box-shadow: inset 20px 0 rgba(0, 0, 0, 0.2);
             }
 
@@ -525,7 +575,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 12px;
             }
 
-            > span .title, > span .font-small {
+            > span .title, > span .font-small, > span .icon {
                 margin-left: 15px;
             }
         }
@@ -625,7 +675,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin: -1rem -1rem 1rem !important;
             border-radius: $core-border-radius $core-border-radius 0 0;
 
-            li:first-child {
+            li:first-child, li:first-child a {
                 border-radius: $core-border-radius 0 0 0;
             }
         }
@@ -710,8 +760,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     }
 
     .particles-sidebar-block {
-        @include flex(0 170px);
-        width: 170px;
+        @include flex(0 200px);
+        width: 200px;
 
         @include breakpoint(mobile-only) {
             @include flex(0 100%);
@@ -735,7 +785,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
     }
 
-    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker {
+    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker, #positions {
 
         ul, li {
             @extend %list-reset;
@@ -758,11 +808,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         li {
-            padding: $content-padding / 3;
-            margin: ($content-padding / 3) 0;
-            text-align: center;
+            padding: $content-padding / 2;
+            margin: ($content-padding / 2) 0;
+            text-align: left;
             border-radius: $core-border-radius;
             cursor: move;
+            position: relative;
 
             &[data-lm-nodrag], &[data-mm-nodrag] {
                 cursor: default;
@@ -781,30 +832,76 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-                background-color: $spacer;
                 color: #666;
-                border: 1px solid darken($medium-gray, 5);
+                border: 2px solid darken($medium-gray, 5);
+
+                &.original-placeholder {
+                    background-color: $spacer;
+                }
+
+                .particle-icon {
+                    background-color: darken($medium-gray, 5);
+                }
             }
 
             &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
                 color: #fff;
             }
 
+            .particle-icon {
+                float: left;
+                margin: (-$content-padding / 2) ($content-padding / 2) (-$content-padding / 2) (-$content-padding / 2);
+                display: inline-block;
+                height: 2.2rem;
+                vertical-align: middle;
+                width: 1.7em;
+                text-align: center;
+                line-height: 1.5rem;
+
+                i {
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-100%);
+                }
+            }
+
+            &.original-placeholder .particle-icon {
+                border-radius: 3px;
+            }
+
             &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
             &[data-lm-blocktype="module"], &[data-mm-blocktype="module"],
             &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"] {
-                color: #fff;
-                background-color: $position;
+                color: $position;
+                border: 2px solid $position;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $position;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
-                color: #fff;
-                background-color: $particle;
+                color: $particle;
+                border: 2px solid $particle;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $particle;
+                    color: #fff;
+                }
             }
 
-            &[data-lm-blocktype="pagecontent"] {
-                color: #fff;
-                background-color: $pagecontent;
+            &[data-lm-blocktype="system"] {
+                color: $system;
+                border: 2px solid $system;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $system;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="atom"] {

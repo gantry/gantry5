@@ -1,4 +1,4 @@
-{% set headStylesheets %}
+{% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
         <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
@@ -11,24 +11,50 @@
 
     {% block head_platform %}{% endblock %}
 
-     {% block head_overrides -%}
-         {% for css in gantry.theme.configuration.css.overrides %}
-             {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-             <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-         {% endif %}
-         {%- endfor %}
-     {% endblock -%}
-{% endset %}
-{% do parse_assets(headStylesheets, 'head', 10) -%}
+    {% block head_overrides -%}
+        {% for css in gantry.theme.configuration.css.overrides %}
+            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
+            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
+        {% endif %}
+        {%- endfor %}
+    {% endblock -%}
+{% endassets -%}
+
+{%- if gantry.config.page.head.atoms %}
+    {% set atoms %}
+        {% for atom in gantry.config.page.head.atoms %}
+            {% try %}
+                {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
+            {% catch %}
+                {# TODO: Add message if atom is missing. #}
+            {% endtry %}
+        {% endfor %}
+    {% endset %}
+{% endif -%}
+
+{%- include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } -%}
 
 <head>
-    {%- block head_meta -%}
+    {% block head_meta %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {% if gantry.config.styles.base.favicon %}
-        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.styles.base.favicon) }}" />
+        {% if gantry.config.page.head.meta -%}
+            {% for attributes in gantry.config.page.head.meta -%}
+                {%- for key, value in attributes %}
+                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e }}" />
+                {% endfor -%}
+            {%- endfor -%}
+        {%- endif -%}
+
+        {% if gantry.config.page.assets.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
         {% endif %}
-    {%- endblock %}
+
+        {% if gantry.config.page.assets.touchicon %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url(gantry.config.page.assets.touchicon) }}">
+        <link rel="icon" sizes="192x192" href="{{ url(gantry.config.page.assets.touchicon) }}">
+        {% endif %}
+    {% endblock %}
 
     {%- block head_title -%}
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -36,8 +62,8 @@
     {%- endblock %}
 
     {% block head_application -%}
-        {{ gantry.styles('head')|join("\n    ")|raw }}
-        {{ gantry.scripts('head')|join("\n    ")|raw }}
+        {{ gantry.styles('head')|join("\n")|raw }}
+        {{ gantry.scripts('head')|join("\n")|raw }}
     {%- endblock %}
 
     {% block head_ie_stylesheets -%}
@@ -49,4 +75,9 @@
     {% endblock -%}
 
     {% block head %}{% endblock %}
+    {% block head_custom %}
+        {% if gantry.config.page.head.head_bottom %}
+        {{ gantry.config.page.head.head_bottom|raw }}
+        {% endif %}
+    {% endblock %}
 </head>

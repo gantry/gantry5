@@ -1,7 +1,7 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-	{% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+    {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
     <div class="g-social {{ particle.css.class }}">
         {% for item in particle.items %}
             <a target="{{ particle.target|default('_blank')|e }}" href="{{ item.link|e }}" title="{{ item.text|e }}">

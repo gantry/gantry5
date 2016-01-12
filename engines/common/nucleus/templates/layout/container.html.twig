@@ -1,3 +1,9 @@
+{% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
+{% set boxed = segment.attributes.boxed %}
+{% if boxed is not null %}
+    {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
+{% endif %}
+
 {% set html %}
     {% for segment in segments %}
         {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
@@ -16,19 +22,19 @@
         {% endfor %}
     {% endif %}
 
-    {% if (segment.attributes.boxed is defined and not segment.attributes.boxed) %}
+    {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
-        <div class="g-container">{{ html|raw }}</div>
+        <div class="g-container{{ boxed == 2 ? ' g-flushed' }}">{{ html|raw }}</div>
         {% endset %}
     {% endif %}
 
     {% set html %}
-    <section{{ attr_extra|raw }} class="g-wrapper{{ classes }}">
+    <section id="{{ attr_id }}" class="g-wrapper{{ classes }}"{{ attr_extra|raw }}>
         {{ html|raw }}
     </section>
     {% endset %}
 
-    {% if (segment.attributes.boxed) %}
+    {% if boxed == 1 %}
         <div class="g-container">{{ html|raw }}</div>
     {% else %}
         {{ html|raw }}

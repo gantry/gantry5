@@ -9,18 +9,15 @@ details:
     link: http://www.rockettheme.com
 
   documentation:
-    link: http://www.rockettheme.com/docs/wordpress/theme/hydrogen
+    link: http://docs.gantry.org/gantry5
 
   support:
-    link: http://www.rockettheme.com/forum/wordpress-theme-hydrogen
+    link: https://gitter.im/gantry/gantry5
 
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml
 
-  news:
-    link: http://news.rockettheme.com/prime/themes.yaml
-
-  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Theme
   images:
@@ -37,6 +34,7 @@ configuration:
     base: gantry-theme://common
     file: gantry-theme://include/theme.php
     class: \Gantry\Framework\Theme
+    textdomain: g5_hydrogen
 
   fonts:
     roboto:
@@ -65,9 +63,30 @@ configuration:
     asset/font-awesome: 4.2
     particle/menu: 1.0.*
 
+  block-variations:
+    Box Variations:
+      box1: Box 1
+      box2: Box 2
+      box3: Box 3
+      box4: Box 4
+    Effects:
+      shadow: Shadow 1
+      shadow2: Shadow 2
+      rounded: Rounded
+      square: Square
+    Utility:
+      disabled: Disabled
+      align-right: Align Right
+      align-left: Align Left
+      center: Center
+      full-width: Full Width
+      equal-height: Equal Height
+      nomarginall: No Margin
+      nopaddingall: No Padding
+
 chrome:
   gantry:
-    before_widget: <div id="%1s" class="widget %2s">
+    before_widget: <div id="%1$s" class="widget %2$s">
     after_widget: </div>
     before_title: <h2 class="widgettitle">
     after_title: </h2>
@@ -81,9 +100,9 @@ admin:
     core:
       - base
   content:
+    general:
+      - wpautop
     blog:
-      - query
-      - post-content
       - heading
       - featured-image
       - title
@@ -93,7 +112,7 @@ admin:
       - meta-categories
       - meta-tags
       - read-more
-    post:
+    single:
       - featured-image
       - title
       - meta-date
@@ -107,7 +126,6 @@ admin:
       - meta-date
       - meta-author
     archive:
-      - post-content
       - heading
       - featured-image
       - title

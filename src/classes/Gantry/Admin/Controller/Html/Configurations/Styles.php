@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,7 +20,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
-use Gantry\Framework\Configurations;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
 use RocketTheme\Toolbox\Event\Event;
@@ -163,9 +162,20 @@ class Styles extends HtmlController
             $this->undefined();
         }
 
-        $this->compileSettings();
+        $warnings = $this->compileSettings();
 
-        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        if ($warnings) {
+            $this->params += ['warnings' => $warnings];
+            return new JsonResponse(
+                [
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
+                ]
+            );
+        } else {
+            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        }
     }
 
     public function save($id = null)
@@ -190,6 +200,7 @@ class Styles extends HtmlController
 
         $file = YamlFile::instance($filename);
         $file->save($data);
+        $file->free();
 
         // Fire save event.
         $event = new Event;
@@ -199,25 +210,37 @@ class Styles extends HtmlController
         $event->data = $data;
         $this->container->fireEvent('admin.styles.save', $event);
 
-        // Apply new styles to the current configuration and compile CSS.
-        $config->join('styles', $data);
-        $this->compileSettings();
+        // Compile CSS.
+        $warnings = $this->compileSettings();
 
-        return $id ? $this->display($id) : $this->index();
+        if (empty($this->params['ajax'])) {
+            // FIXME: HTML request: Output compiler warnings!!
+            return $id ? $this->display($id) : $this->index();
+        }
+
+        if ($warnings) {
+            $this->params += ['warnings' => $warnings];
+            return new JsonResponse(
+                [
+                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'warning' => true,
+                    'title'   => 'CSS Compiled With Warnings',
+                ]
+            );
+        } else {
+            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
+        }
     }
 
+    /**
+     * @returns array
+     */
     protected function compileSettings()
     {
         /** @var Theme $theme */
         $theme = $this->container['theme'];
         $configuration = $this->params['configuration'];
 
-        if ($configuration === 'default') {
-            $theme->updateCss();
-        } else {
-            $compiler = $theme->compiler();
-            $compiler->setVariables($this->container['config']->flatten('styles', '-'));
-            $compiler->compileAll();
-        }
+        return $theme->updateCss($configuration !== 'default' ? [$configuration => ucfirst($configuration)] : null);
     }
 }

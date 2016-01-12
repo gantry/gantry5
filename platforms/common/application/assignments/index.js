@@ -6,6 +6,7 @@ var ready        = require('elements/domready'),
     forEach      = require('mout/array/forEach'),
     trim         = require('mout/string/trim'),
     $            = require('../utils/elements.utils'),
+    decouple     = require('../utils/decouple'),
     asyncForEach = require('../utils/async-foreach');
 
 var Map         = map,
@@ -42,7 +43,7 @@ var Map         = map,
             });
         },
 
-        filterSection: function(e, element, value) {
+        filterSection: function(e, element, value, global) {
             if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
@@ -95,7 +96,7 @@ var Map         = map,
                 }
 
                 count++;
-                if (count == items.length) {
+                if (count == items.length && global) {
                     card.style('display', !on ? 'none' : 'inline-block');
                 }
             });
@@ -146,8 +147,34 @@ var Map         = map,
             if (!search && !onlyEnabled.checked()) { return; }
 
             asyncForEach(search, function(item) {
-                Assignments.filterSection(e, $(item), value);
+                Assignments.filterSection(e, $(item), value, 'global');
             });
+        },
+
+        // chrome workaround for overflow and columns
+        chromeFix: function() {
+            if (!Assignments.isChrome()) { return; }
+            var panels = $('#assignments .settings-param-wrapper'), height, maxHeight;
+            if (!panels) { return; }
+
+            panels.forEach(function(panel){
+                panel = $(panel);
+                maxHeight = parseInt(panel.compute('max-height'), 10);
+                height = panel[0].getBoundingClientRect().height;
+                panel.style({overflow: height >= maxHeight ? 'auto' : 'visible'});
+
+                if (height >= maxHeight) {
+                    var alt = 100;
+                    decouple(panel, 'scroll', function() {
+                        alt = alt == 100 ? 100.01 : 100;
+                        panel.parent('.card').style('width', alt + '%');
+                    });
+                }
+            });
+        },
+
+        isChrome: function() {
+            return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
         }
     };
 
@@ -158,6 +185,9 @@ ready(function() {
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+
+    // chrome workaround for overflow and columns
+    //if (Assignments.isChrome()) Assignments.chromeFix();
 });
 
-module.exports = {};
+module.exports = Assignments;

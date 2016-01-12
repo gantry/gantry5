@@ -87,7 +87,9 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
 
-                search[0].focus();
+                setTimeout(function(){
+                    search[0].focus();
+                }, 5);
             }
         });
     }
@@ -107,7 +109,8 @@ var StepTwo = function(data, content, button) {
         var item = JSON.parse(data.item);
         picker = JSON.parse(picker);
         delete(data.instancepicker);
-        uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        //uri = getAjaxURL(item.type + '/' + item[moduleType[GANTRY_PLATFORM]]);
+        uri = getAjaxURL(item.type + '/' + item[item.type]);
     }
 
     request('post', parseAjaxURI(uri + getAjaxSuffix()), data, function(error, response) {
@@ -159,6 +162,8 @@ var StepTwo = function(data, content, button) {
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
 
+                override = override || $(input.data('override-target'));
+
                 if (override && !override.checked()) { return; }
                 if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
                     dataString.push(name + '=' + encodeURIComponent(value));
@@ -191,6 +196,8 @@ var StepTwo = function(data, content, button) {
                         while (menumanager.items[path + id]) { id = randomID(5); }
 
                         menumanager.items[path + id] = response.body.item;
+                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
                         menumanager.ordering[base][col].splice(index, 1, path + id);
                         element.data('mm-id', path + id);
 

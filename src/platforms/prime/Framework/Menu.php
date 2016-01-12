@@ -1,4 +1,16 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   Dual License: MIT or GNU/GPLv2 and later
+ *
+ * http://opensource.org/licenses/MIT
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
+ */
+
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\ConfigFileFinder;
@@ -146,7 +158,8 @@ class Menu extends AbstractMenu
     public function getList(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = array_unique(array_merge($this->getItemsFromPlatform($start <= $end ? $end : -1), array_keys($items)));
         sort($menuItems);

@@ -6,23 +6,23 @@
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2016 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>PLG_SYSTEM_GANTRY5_DESCRIPTION</description>
 
     <files>
         <filename plugin="gantry5">gantry5.php</filename>
-        <filename>MD5SUM</filename>
+        <filename>MD5SUMS</filename>
         <folder>language</folder>
     </files>
 
     <config>
         <fields name="params">
-            <fieldset name="basic">
+            <fieldset name="basic" label="PLG_SYSTEM_GANTRY5">
                 <field name="production"
                        type="radio"
                        class="btn-group btn-group-yesno"
-                       default="0"
+                       default="1"
                        description="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_DESC"
                        label="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_LABEL">
                     <option value="1">JYES</option>
@@ -45,6 +45,26 @@
                        filter="float"
                        description="PLG_SYSTEM_GANTRY5_FIELD_ASSET_TIMESTAMPS_PERIOD_DESC"
                        label="PLG_SYSTEM_GANTRY5_FIELD_ASSET_TIMESTAMPS_PERIOD_LABEL"/>
+
+                <field name="compile_yaml"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       description="PLG_SYSTEM_GANTRY5_FIELD_COMPILE_YAML_DESC"
+                       label="PLG_SYSTEM_GANTRY5_FIELD_COMPILE_YAML_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field name="compile_twig"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       description="PLG_SYSTEM_GANTRY5_FIELD_COMPILE_TWIG_DESC"
+                       label="PLG_SYSTEM_GANTRY5_FIELD_COMPILE_TWIG_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
             </fieldset>
         </fields>
     </config>

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -117,6 +116,11 @@ abstract class Platform
     abstract public function getAssetsPaths();
     abstract public function getMediaPaths();
 
+    public function init()
+    {
+        return $this;
+    }
+
     public function getThemePaths()
     {
         return ['' => []];
@@ -136,6 +140,22 @@ abstract class Platform
     {
         return [];
     }
+
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemePreviewUrl($theme);
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemeAdminUrl($theme);
 
     public function settings()
     {
@@ -162,7 +182,19 @@ abstract class Platform
         return null;
     }
 
+    public function filter($text)
+    {
+        return $text;
+    }
+
     public function finalize()
     {
+    }
+
+    public function call()
+    {
+        $args = func_get_args();
+        $callable = array_shift($args);
+        return is_callable($callable) ? call_user_func_array($callable, $args) : null;
     }
 }

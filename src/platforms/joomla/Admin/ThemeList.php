@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +79,7 @@ class ThemeList
             ->from('#__template_styles AS s')
             ->where('s.client_id = 0')
             ->where('e.enabled = 1')
+            ->where('e.state = 0')
             ->leftJoin('#__extensions AS e ON e.element=s.template AND e.type='
             . $db->quote('template') . ' AND e.client_id=s.client_id');
 
@@ -107,15 +107,14 @@ class ThemeList
                 }
 
                 $params = new \JRegistry($template->params);
-                $token = \JSession::getFormToken();
 
                 $details['id'] = $template->id;
                 $details['extension_id'] = $template->extension_id;
                 $details['name'] = $template->name;
                 $details['title'] = $details['details.name'];
                 $details['style'] = $template->title;
-                $details['preview_url'] = \JUri::root(false) . 'index.php?templateStyle=' . $template->id;
-                $details['admin_url'] = \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&style={$template->id}&{$token}=1" , false);
+                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($template->id);
+                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($template->name);
                 $details['params'] = $params->toArray();
 
                 $list[$template->id] = $details;

@@ -63,7 +63,7 @@ ready(function() {
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
-            remote: getAjaxURL(uri) + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL(uri) + getAjaxSuffix()),
             remoteLoaded: function(response, modalInstance) {
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
@@ -94,7 +94,9 @@ ready(function() {
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
 
-                    search[0].focus();
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));
@@ -102,7 +104,7 @@ ready(function() {
                 if (select) { select.data('g-instancepicker', JSON.stringify(elementData)); }
                 else {
                     var form = content.find('form'),
-                        fakeDOM = zen('div').html(response.body.html).find('form'),
+                        fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
                         submit = content.find('input[type="submit"], button[type="submit"]'),
                         dataString = [];
 
@@ -126,6 +128,7 @@ ready(function() {
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
+                            override = override || $(input.data('override-target'));
 
                             if (override && !override.checked()) { return; }
 

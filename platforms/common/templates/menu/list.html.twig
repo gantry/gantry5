@@ -1,5 +1,6 @@
 {% set children = (item.level == 1 ? item.group(group) : item.children) %}
 
+<div class="submenu-level">Level {{ item.level }}</div>
 <ul class="submenu-items" data-mm-base="{{ item.path }}" data-mm-base-level="{{ item.level }}">
     {%- if item.level > 1 %}
         <li>

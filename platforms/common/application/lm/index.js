@@ -12,6 +12,7 @@ var ready          = require('elements/domready'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
     forEach        = require('mout/collection/forEach'),
+    precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
@@ -27,8 +28,7 @@ var ready          = require('elements/domready'),
 
 require('../ui/popover');
 
-var builder, layoutmanager, lmhistory, savestate;
-
+var builder, layoutmanager, lmhistory, savestate, Tips;
 
 builder = new Builder();
 lmhistory = new LMHistory();
@@ -104,7 +104,7 @@ ready(function() {
     var body = $('body'), root = $('[data-lm-root]'), data;
 
     // Layout Manager
-    layoutmanager = new LayoutManager('body', {
+    layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
         exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
@@ -133,6 +133,14 @@ ready(function() {
         event.preventDefault();
         return false;
     });
+    body.delegate('keydown', '.g-tabs a', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            body.emit('mouseup', event);
+            return false;
+        }
+    });
     body.delegate('mouseup', '.g-tabs a', function(event, element) {
         element = $(element);
         event.preventDefault();
@@ -150,6 +158,13 @@ ready(function() {
         parent.find('.active').removeClass('active');
         panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
         parent.find('li:nth-child(' + index + ')').addClass('active');
+
+        // ARIA
+        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+
+        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -165,6 +180,7 @@ ready(function() {
         builder.setStructure(data);
         builder.load();
 
+        layoutmanager.refresh();
         layoutmanager.history.setSession(builder.serialize(), JSON.parse(root.data('lm-preset')));
         layoutmanager.savestate.setSession(builder.serialize(null, true));
 
@@ -193,7 +209,7 @@ ready(function() {
     // Grid same widths button (evenize, equalize)
     ['click', 'touchend'].forEach(function(evt){
         body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
-            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            window.G5.tips.hide(element[0]);
             var clientRect = element[0].getBoundingClientRect();
             if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
@@ -219,20 +235,19 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width the blocks in this grid' : 'Sort or Move the Grid',
-            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid';
 
-        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({
-            position: 'absolute',
-            top: 26
-        }).style(tooltips.equalize ? 'right' : 'left', -30);
+        element.data('tip', msg).data('tip-offset', -30);
 
-        element.LMTooltip = tooltip;
+        window.G5.tips
+            .get(element[0])
+            .content(msg)
+            .place(tooltips.equalize ? 'top-left' : 'top-right')
+            .show();
     });
 
     body.delegate('mouseout', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
     });
 
     // Clear Layout
@@ -272,6 +287,14 @@ ready(function() {
     });
 
     // Switch Layout
+    body.delegate('keydown', '[data-switch]', function(event, element){
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space toggle
+            event.preventDefault();
+            body.emit('mousedown', event);
+        }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -395,7 +418,8 @@ ready(function() {
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent ? parent.data('lm-id') : false;
+            parentID = parent ? parent.data('lm-id') : false,
+            parentType = parent ? parent.data('lm-blocktype') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
@@ -403,10 +427,13 @@ ready(function() {
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
+            if (!size(data.options)) { delete data.options; }
+            if (!size(data.block)) { delete data.block; }
         }
 
         modal.open({
@@ -426,6 +453,35 @@ ready(function() {
 
                 var urlTemplate = content.elements.content.find('.g-urltemplate');
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                var blockSize = content.elements.content.find('[name="block[size]"]');
+
+                // logic for limits
+                if (blockSize && data.size_limits) {
+                    var note = content.elements.content.find('.blocksize-note'),
+                        min = precision(data.size_limits[0], 1),
+                        max = precision(data.size_limits[1], 1);
+
+                    blockSize.attribute('min', min);
+                    blockSize.attribute('max', max);
+
+                    if (note) {
+                        var noteHTML = note.html();
+                        noteHTML = noteHTML.replace(/#min#/g, min);
+                        noteHTML = noteHTML.replace(/#max#/g, max);
+
+                        note.html(noteHTML);
+                        note.find('.blocksize-' + (min == max ? 'range' : 'fixed')).addClass('hidden');
+                    }
+
+                    var isValid = function() {
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                    };
+
+                    blockSize.on('input', function(){
+                        blockSize[0].setCustomValidity(isValid());
+                    });
+                }
 
                 // Particle Settings apply
                 submit.on('click', function(e) {
@@ -449,12 +505,12 @@ ready(function() {
                             parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
+                        override = override || $(input.data('override-target'));
+
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }
 
-                        if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                            dataString.push(name + '=' + encodeURIComponent(value));
-                        }
+                        dataString.push(name + '=' + encodeURIComponent(value));
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');

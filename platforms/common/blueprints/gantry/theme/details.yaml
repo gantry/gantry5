@@ -1,0 +1,73 @@
+name: Theme Details
+description: Describes theme details
+type: theme
+
+form:
+  fields:
+
+    name:
+      type: input.text
+      label: Name
+
+    version:
+      type: input.text
+      label: Version
+      default: "@version@"
+
+    icon:
+      type: input.text
+      label: Icon
+      default: tint
+
+    date:
+      type: input.text
+      label: Release Date
+      default: "@versiondate@"
+
+    author.name:
+      type: input.text
+      label: Author
+
+    author.email:
+      type: input.text
+      label: Author Email
+
+    author.link:
+      type: input.text
+      label: Author Link
+
+    documentation.link:
+      type: input.text
+      label: Documentation Link
+
+    support.link:
+      type: input.text
+      label: Support Link
+
+    updates.link:
+      type: input.text
+      label: Updates Link
+
+    copyright:
+      type: input.text
+      label: Copyright
+      default: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
+
+    license:
+      type: input.text
+      label: License
+      default: MIT / GPLv2
+
+    description:
+      type: input.text
+      label: Description
+
+    images.thumbnail:
+      type: input.text
+      label: Thumbnail Image
+      default: admin/images/preset1.png
+
+    images.preview:
+      type: input.text
+      label: Preview Image
+      default: admin/images/preset1.png

@@ -3,7 +3,7 @@
 {% block input %}
     <div class="g-keyvalue-field{% if field.size %} g-keyvalue-{{ field.size }}{% endif %}">
         <ul>
-        {% if value %}
+        {%- if value %}
         {% for data in value %}
             {% for key, val in data %}
             <li data-keyvalue-item>
@@ -17,7 +17,7 @@
             </li>
             {% endfor %}
         {% endfor %}
-        {% endif %}
+        {% endif -%}
         </ul>
 
         <span class="button button-simple" data-keyvalue-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>

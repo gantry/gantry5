@@ -26,13 +26,24 @@ var MenuManager = new prime({
 
     inherits: Emitter,
 
+    options: {},
+
     constructor: function(element, options) {
+        this.setOptions(options);
+        this.refElement = element;
         this.map = {};
+
+        if (!element || !$(element)) { return; }
+
+        this.init(element);
+    },
+
+    init: function() {
         this.setRoot();
 
-        this.dragdrop = new DragDrop(element, options, this);
-        this.resizer = new Resizer(element, options, this);
-        this.eraser = new Eraser('[data-mm-eraseparticle]', options);
+        this.dragdrop = new DragDrop(this.refElement, this.options, this);
+        this.resizer = new Resizer(this.refElement, this.options, this);
+        this.eraser = new Eraser('[data-mm-eraseparticle]', this.options);
         this.dragdrop
             .on('dragdrop:click', this.bound('click'))
             .on('dragdrop:start', this.bound('start'))
@@ -43,8 +54,11 @@ var MenuManager = new prime({
             .on('dragdrop:stop:erase', this.bound('removeElement'))
             .on('dragdrop:stop', this.bound('stop'))
             .on('dragdrop:stop:animation', this.bound('stopAnimation'));
+    },
 
-        //console.log(this.ordering, this.items);
+    refresh: function() {
+        if (!this.refElement || !$(this.refElement)) { return; }
+        this.init();
     },
 
     setRoot: function() {
@@ -67,14 +81,22 @@ var MenuManager = new prime({
     },
 
     click: function(event, element) {
+        var target = $(event.target);
+        if (target.matches('.g-menu-addblock') || target.parent('.g-menu-addblock')) {
+            return false;
+        }
+
         if (element.hasClass('g-block')) {
             this.stopAnimation();
             return true;
         }
 
-        var siblings = element.siblings();
-        element.addClass('active');
-        if (siblings) { siblings.removeClass('active'); }
+        if (element.find('[data-g5-ajaxify]')) {
+            var siblings = element.siblings();
+            element.addClass('active');
+            if (siblings) { siblings.removeClass('active'); }
+        }
+
         element.emit('click');
 
         var link = element.find('a');
@@ -152,18 +174,19 @@ var MenuManager = new prime({
             this.dragdrop.element = this.original;
         }
 
-        // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (type && type.match(/__(module|particle)(-[a-z0-9]{5})?$/i))) {
-            this.eraser.show();
-        }
-
         if (this.type == 'column') {
             root.search('.g-block > *').style({ 'pointer-events': 'none' });
         }
     },
 
-    moveOnce: function(/*element*/) {
+    moveOnce: function(element) {
+        var type = $(element).data('mm-id');
         if (this.original) { this.original.style({ opacity: 0.5 }); }
+
+        // it's a module or a particle and we allow for them to be deleted
+        if (!this.isNewParticle && (type && type.match(/__(module|particle|widget)(-[a-z0-9]{5,})?$/i))) {
+            this.eraser.show();
+        }
     },
 
     location: function(event, location, target/*, element*/) {
@@ -180,10 +203,28 @@ var MenuManager = new prime({
             return;
         }
 
+        // Support for nested new particles/modules/widgets
+        if (dataLevel === null && this.type === 'columns_items' && this.isParticle && this.isNewParticle) {
+            var submenu_items = target.find('.submenu-items');
+            if (!submenu_items) {
+                this.dragdrop.matched = false;
+                return;
+            }
+
+            this.placeholder.style({ display: 'block' }).bottom(submenu_items);
+            this.addNewItem = submenu_items;
+            this.targetLevel = 2;
+            this.dragdrop.matched = false;
+            return;
+        }
+
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
-            var submenu_items = target.find('.submenu-items');
-            if (!submenu_items || submenu_items.children() || originalLevel > 2) {
+            var submenu_items = target.find('.submenu-items'),
+                submenu_items_level = submenu_items.data('mm-base-level');
+
+            // extend drop areas and ensure items cannot be dragged between different levels
+            if ((!target.hasClass('g-block') || target.find(this.block)) || (!this.isParticle && originalLevel != submenu_items_level) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }
@@ -264,7 +305,7 @@ var MenuManager = new prime({
 
         var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
 
-        if (!this.isNewParticle && this.itemID.match(/__(module|particle)(-[a-z0-9]{5})?$/i)) {
+        if (!this.isNewParticle && this.itemID.match(/__(module|particle|widget)(-[a-z0-9]{5})?$/i)) {
             target = $(target);
             if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;

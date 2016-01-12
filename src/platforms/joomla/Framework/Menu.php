@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -68,10 +67,34 @@ class Menu extends AbstractMenu
 
         if ($items === null) {
             require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-            $items = \MenusHelper::getMenuTypes();
+            $items = (array) \MenusHelper::getMenuTypes();
         }
 
         return $items;
+    }
+
+    public function getGroupedItems()
+    {
+        $groups = array();
+
+        // Get the menu items.
+        $items = \MenusHelper::getMenuLinks();
+
+        // Build the groups arrays.
+        foreach ($items as $item) {
+            // Initialize the group.
+            $groups[$item->menutype] = array();
+
+            // Build the options array.
+            foreach ($item->links as $link) {
+                $groups[$item->menutype][$link->value] = [
+                    'spacing' => str_repeat('&nbsp; ', max(0, $link->level-1)),
+                    'label' => $link->text
+                ];
+            }
+        }
+
+        return $groups;
     }
 
     /**
@@ -116,16 +139,16 @@ class Menu extends AbstractMenu
 
     public function isActive($item)
     {
-        $path = $this->base->tree;
+        $tree = $this->base->tree;
 
-        if (in_array($item->id, $path)) {
+        if (in_array($item->id, $tree)) {
             return true;
         } elseif ($item->type == 'alias') {
             $aliasToId = $item->link_id;
 
-            if (count($path) > 0 && $aliasToId == $path[count($path) - 1]) {
+            if (count($tree) > 0 && $aliasToId == $tree[count($tree) - 1]) {
                 return (bool) $this->params['highlightAlias'];
-            } elseif (in_array($aliasToId, $path)) {
+            } elseif (in_array($aliasToId, $tree)) {
                 return (bool) $this->params['highlightParentAlias'];
             }
         }
@@ -192,7 +215,7 @@ class Menu extends AbstractMenu
     /**
      * Get a list of the menu items.
      *
-     * Logic has been mostly copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
+     * Logic was originally copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
      * We should keep the contents of the function similar to Joomla in order to review it against any changes.
      *
      * @param  array  $params
@@ -221,9 +244,10 @@ class Menu extends AbstractMenu
         //}
 
         if (1) {
-            $path    = $this->base->tree;
+            $tree    = $this->base->tree;
             $start   = $params['startLevel'];
-            $end     = $params['endLevel'];
+            $max     = $params['maxLevels'];
+            $end     = $max ? $start + $max - 1 : 0;
 
             $menuItems = $this->getItemsFromPlatform($params);
 
@@ -237,7 +261,7 @@ class Menu extends AbstractMenu
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
-                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $path))) {
+                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
                     continue;
                 }
 

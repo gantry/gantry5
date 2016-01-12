@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
@@ -7,7 +16,8 @@ use Gantry\Framework\Base\Document as BaseDocument;
 class Document extends BaseDocument
 {
     public static $wp_styles = [];
-    public static $wp_scripts = [];
+    public static $wp_scripts = ['head' => [], 'footer' => []];
+    protected static $script_info = [];
 
     public static function registerAssets()
     {
@@ -16,7 +26,7 @@ class Document extends BaseDocument
         static::registerScripts('footer');
     }
 
-    protected static function registerStyles()
+    public static function registerStyles()
     {
         if (empty(self::$styles['head'])) {
             return;
@@ -28,17 +38,15 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        $href = preg_replace('/(\?.*)$/', '', $style['href']);
-                        \wp_register_style(basename($href, '.css'), $href, array(), false, $style['media']);
-                        \wp_enqueue_style(basename($href, '.css'));
+                        $array = explode('?', $style['href']);
+                        $href = array_shift($array);
+                        $version = array_shift($array) ?: false;
+                        $name = basename($href, '.css');
+                        \wp_enqueue_style($name, $href, array(), $version, $style['media']);
                         break;
                     case 'inline':
-                        if (is_admin()) {
-                            $type = !empty($style['type']) ? $style['type'] : 'text/css';
-                            self::$wp_styles[] = "<style type=\"{$type}\">{$style['content']}</style>";
-                        } else {
-                            \wp_add_inline_style( md5($style['content']), $style['content'] );
-                        }
+                        $type = !empty($style['type']) ? $style['type'] : 'text/css';
+                        self::$wp_styles[] = "<style type=\"{$type}\">{$style['content']}</style>";
                         break;
                 }
             }
@@ -47,7 +55,7 @@ class Document extends BaseDocument
         self::$styles['head'] = [];
     }
 
-    protected static function registerScripts($pos)
+    public static function registerScripts($pos)
     {
         if (empty(self::$scripts[$pos])) {
             return;
@@ -60,17 +68,19 @@ class Document extends BaseDocument
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
-                        $src = preg_replace('/(\?.*)$/', '', $script['src']);
-                        \wp_register_script(basename($src, '.js'), $src, array(), false, $in_footer);
-                        \wp_enqueue_script(basename($src, '.js'));
+                        $array = explode('?', $script['src']);
+                        $src = array_shift($array);
+                        $version = array_shift($array) ?: false;
+                        $name = basename($src, '.js');
+                        if(!empty($script['handle'])) {
+                            $name = $script['handle'];
+                        }
+                        self::$script_info[$name] = $script;
+                        \wp_enqueue_script($name, $src, array(), $version, $in_footer);
                         break;
                     case 'inline':
-                        if (is_admin()) {
-                            $type = !empty($script['type']) ? $script['type'] : 'text/css';
-                            self::$wp_scripts[] = "<script type=\"{$type}\">{$script['content']}</script>";
-                        } else {
-                            \wp_add_inline_script( md5($script['content']), $script['content'] );
-                        }
+                        $type = !empty($script['type']) ? $script['type'] : 'text/javascript';
+                        self::$wp_scripts[$pos][] = "<script type=\"{$type}\">{$script['content']}</script>";
                         break;
                 }
             }
@@ -117,5 +127,30 @@ class Document extends BaseDocument
         }
 
         return $path;
+    }
+
+    public static function script_add_attributes($tag, $handle)
+    {
+        if (!isset(self::$script_info[$handle])) {
+            return $tag;
+        }
+
+        $script = self::$script_info[$handle];
+
+        $append = [];
+        if ($script['defer']) {
+            $append[] = 'defer="defer"';
+        }
+        if ($script['async']) {
+            $append[] = 'async="async"';
+        }
+
+        if (!$append) {
+            return $tag;
+        }
+
+        $append = implode(' ', $append);
+
+        return str_replace(' src=', " {$append} src=", $tag);
     }
 }

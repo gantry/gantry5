@@ -1,7 +1,7 @@
 {% extends "@gantry-admin/partials/page.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/g-admin.css')|e }}" type="text/css" />
     <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css')|e }}" type="text/css" />
     {{ parent() }}
 {% endblock %}
@@ -43,5 +43,6 @@
         {% set version = constant('GANTRY5_VERSION') %}
         {% set version_date = constant('GANTRY5_VERSION_DATE') %}
         <div>Version: <span class="g-version">{{ version }}</span> / Released: <span class="g-version-date">{{ version_date}}</span></div>
+        <div><a href="#" data-changelog="{{ constant('GANTRY5_VERSION') }}">{{ 'GANTRY5_PLATFORM_CHANGELOG'|trans }}</a></div>
     </footer>
 {% endblock %}

@@ -1,0 +1,38 @@
+#comments {
+    // Comments List
+    ol.commentlist {
+
+        // Single Comment
+        li.comment {
+
+            .comment-body {
+                background-color: #f2f2f2;
+            }
+
+            .comment-author {
+                background-color: $navigation-background;
+                color: $navigation-text-color;
+
+                a {
+                    color: $navigation-text-color;
+                    &:hover {
+                        color: $showcase-background;
+                    }
+                }
+            }
+
+            &.bypostauthor {
+                > .comment-body {
+                    > .comment-author {
+                        background-color: $showcase-background;
+                        color: $showcase-text-color;
+
+                        a:hover {
+                            color: $accent-color-1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

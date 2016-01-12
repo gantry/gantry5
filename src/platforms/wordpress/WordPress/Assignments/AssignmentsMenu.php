@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,9 +10,12 @@
 
 namespace Gantry\WordPress\Assignments;
 
+use Gantry\Component\Assignments\AssignmentsInterface;
+
 class AssignmentsMenu implements AssignmentsInterface
 {
     public $type = 'menu';
+    public $priority = 3;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -38,9 +40,13 @@ class AssignmentsMenu implements AssignmentsInterface
             if($menu_items) {
                 $current_url = $this->_curPageURL();
 
+                if(get_option('permalink_structure') != '' && !is_search()) {
+                    $current_url = strtok($current_url, '?');
+                }
+
                 foreach($menu_items as $menu_item) {
                     if($menu_item->url == $current_url) {
-                        $rules[$menu->slug][$menu_item->ID] = 1;
+                        $rules[$menu->slug][$menu_item->ID] = $this->priority;
                     }
                 }
             }
@@ -122,7 +128,7 @@ class AssignmentsMenu implements AssignmentsInterface
             foreach($menu_items as $menu_item) {
                 $items[] = [
                     'name'     => $menu_item->ID,
-                    'label'    => $menu_item->level > 0 ? str_repeat('—', $menu_item->level) . ' ' . $menu_item->title : $menu_item->title,
+                    'label'    => $menu_item->level > 0 ? str_repeat('—', max(0, $menu_item->level)) . ' ' . $menu_item->title : $menu_item->title,
                     'disabled' => false
                 ];
             }

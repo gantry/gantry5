@@ -61,6 +61,7 @@ $close-color:               #000;
         border-radius: $border-radius-large;
         box-shadow: 0 2px 6px rgba(0,0,0,.15);
         color: #444;
+        outline: transparent;
 
         &.top,&.top-left,&.top-right     { margin-top: -$popover-arrow-width; }
         &.right,&.right-top,&.right-bottom   { margin-left: $popover-arrow-width; }
@@ -312,6 +313,10 @@ $close-color:               #000;
                 color: $core-text;
                 background-color: #eee;
                 border-radius: $border-radius-base;
+            }
+
+            &:focus {
+                outline: auto;
             }
         }
     }

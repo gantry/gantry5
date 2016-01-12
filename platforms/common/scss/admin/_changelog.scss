@@ -1,0 +1,95 @@
+#g5-container {// wrapper
+
+    #g-changelog {
+        max-height: 650px;
+        overflow: auto;
+        background-color: $white;
+        padding: 1em;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+
+        h1, h2 {
+            margin: 0;
+            text-align: center;
+            color: $update-header-bg;
+        }
+
+        h2 {
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            color: #999;
+        }
+
+        ul, ol {
+            @extend %list-reset;
+        }
+
+        > ol > li > a {
+            display: block;
+            font-size: 1.5rem;
+            color: #888;
+            text-align: center;
+            padding: 1rem 0 0;
+            text-transform: uppercase;
+        }
+
+        ol {
+            a[href='#bugfix'] + ul > li:before {
+                background-color: #fc2929;
+                content: 'Bugfix';
+            }
+            a[href='#new'] + ul > li:before {
+                background-color: #207de5;
+                content: 'New'
+            }
+
+            a[href='#improved'] + ul > li:before {
+                background-color: #fbca04;
+                color: #333;
+                content: 'Improved'
+            }
+
+            > li:last-child > ul > li:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid $light-gray;
+            padding-left: 6rem;
+
+            &:before {
+                margin-left: -6rem;
+                display: inline-block;
+                border-radius: 2px;
+                color: #fff;
+                font-weight: bold;
+                margin-right: 1rem;
+                text-align: center;
+                width: 5rem;
+                font-size: .8rem;
+                font-style: normal;
+            }
+        }
+
+        code {
+            font-size: 0.8rem;
+            vertical-align: middle;
+            padding: 0 2px;
+            white-space: normal;
+        }
+
+        .g-changelog-toggle {
+            font-size: 0.85rem;
+            vertical-align: middle;
+            display: inline-block;
+            margin: -6px 0 0 6px;
+            color: lighten(#888, 10%);
+        }
+    }
+
+    .g5-dialog.g5-dialog-theme-default.g5-modal-changelog .g5-content {
+        width: 700px;
+    }
+}

@@ -1,5 +1,13 @@
 {% extends "@nucleus/page.html.twig" %}
 
-{% block page_bottom %}
-    {{ function('wp_footer') }}
+{% block page_head -%}
+    {% if page_head %}
+        {{ page_head|raw }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock %}
+
+{% block page_footer %}
+    {{ wp_footer|raw }}
 {% endblock %}

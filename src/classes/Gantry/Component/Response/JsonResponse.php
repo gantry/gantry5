@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -54,7 +53,7 @@ class JsonResponse extends Response
         // Empty output buffer to make sure that the response is clean and valid.
         while (($output = ob_get_clean()) !== false) {
             // In debug mode send also output buffers (debug dumps, PHP notices and warnings).
-            if ($output && defined(GANTRY5_DEBUG)) {
+            if ($output && (GANTRY5_DEBUG || headers_sent())) {
                 $this->messages['php'][] = $output;
             }
         }
@@ -68,6 +67,9 @@ class JsonResponse extends Response
         }
         if ($this->exceptions) {
             $json['exceptions'] = $this->exceptions;
+        }
+        if (GANTRY5_DEBUG) {
+            $json['memory'] = ['peak' => memory_get_peak_usage(), 'current' => memory_get_usage()];
         }
         $json += $this->content;
 

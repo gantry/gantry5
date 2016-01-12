@@ -220,7 +220,11 @@ var Menu = new prime({
             roots = topLevel.search(' >' + selectors.item);
 
         if (roots) { roots.removeClass(states.selected); }
-        if (topLevel) { this.closeDropdown(topLevel); }
+        if (topLevel) {
+            var allRoots = topLevel.search('> ' + this.options.selectors.item);
+            if (allRoots) { allRoots.forEach(this.closeDropdown.bind(this)); }
+            this.closeDropdown(topLevel);
+        }
 
         this.toggleOverlay(topLevel);
     },
@@ -389,6 +393,7 @@ var Offcanvas = new prime({
         },
         padding: 0,
         touch: true,
+        css3: true,
 
         openClass: 'g-offcanvas-open',
         openingClass: 'g-offcanvas-opening',
@@ -424,8 +429,9 @@ var Offcanvas = new prime({
 
         if (!this.panel || !this.offcanvas) { return false; }
 
-        var swipe = this.offcanvas.data('g-offcanvas-swipe');
-        this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1) });
+        var swipe = this.offcanvas.data('g-offcanvas-swipe'),
+            css3 = this.offcanvas.data('g-offcanvas-css3');
+        this.setOptions({ touch: !!(swipe !== null ? parseInt(swipe) : 1), css3: !!(css3 !== null ? parseInt(css3) : 1) });
 
         if (!this.options.padding) {
             this.offcanvas[0].style.display = 'block';
@@ -436,6 +442,8 @@ var Offcanvas = new prime({
         }
 
         this.tolerance = typeof this.options.tolerance == 'function' ? this.options.tolerance.call(this, this.options.padding) : this.options.tolerance;
+
+        this.htmlEl.addClass('g-offcanvas-' + (this.options.css3 ? 'css3' : 'css2'));
 
         this.attach();
         this._checkTogglers();
@@ -532,6 +540,11 @@ var Offcanvas = new prime({
 
         this.overlay[0].style.opacity = 1;
 
+        if (this.options.css3) {
+            // for translate3d
+            this.panel[0].style[this.getOffcanvasPosition()] = 'inherit';
+        }
+
         this._setTransition();
         this._translateXTo((this.bodyEl.hasClass('g-offcanvas-right') ? -1 : 1) * this.options.padding);
         this.opened = true;
@@ -540,7 +553,7 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openingClass);
-            panel.style.transition = panel.style['-webkit-transition'] = '';
+            panel.style.transition = panel.style[prefix.css + 'transition'] = '';
         }, this), this.options.duration);
 
         return this;
@@ -568,7 +581,9 @@ var Offcanvas = new prime({
 
             this.htmlEl.removeClass(this.options.openClass);
             this.htmlEl.removeClass(this.options.closingClass);
-            panel.style.transition = panel.style['-webkit-transition'] = '';
+            panel.style.transition = panel.style[prefix.css + 'transition'] = '';
+            panel.style.transform = panel.style[prefix.css + 'transform'] = '';
+            panel.style[this.getOffcanvasPosition()] = '';
         }, this), this.options.duration);
 
 
@@ -582,18 +597,35 @@ var Offcanvas = new prime({
         return this[this.opened ? 'close' : 'open'](event, element);
     },
 
+    getOffcanvasPosition: function() {
+        return this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left';
+    },
+
     _setTransition: function() {
         var panel = this.panel[0];
 
-        panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
+        if (this.options.css3) {
+            // for translate3d
+            panel.style[prefix.css + 'transition'] = panel.style.transition = prefix.css + 'transform ' + this.options.duration + 'ms ' + this.options.effect;
+        } else {
+            // left/right transition
+            panel.style[prefix.css + 'transition'] = panel.style.transition = 'left ' + this.options.duration + 'ms ' + this.options.effect + ', right ' + this.options.duration + 'ms ' + this.options.effect;
+        }
     },
 
     _translateXTo: function(x) {
         var panel     = this.panel[0],
-            placement = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left');
+            placement = this.getOffcanvasPosition();
 
         this.offset.x.current = x;
-        panel.style[placement] = Math.abs(x) + 'px';
+
+        if (this.options.css3) {
+            // for translate3d
+            panel.style[prefix.css + 'transform'] = panel.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+        } else {
+            // left/right transition
+            panel.style[placement] = Math.abs(x) + 'px';
+        }
     },
 
     _bodyScroll: function() {
@@ -631,11 +663,15 @@ var Offcanvas = new prime({
 
     _touchMove: function(event) {
         if (isScrolling || this.preventOpen || !event.touches) { return; }
+        if (this.options.css3) {
+            this.panel[0].style[this.getOffcanvasPosition()] = 'inherit';
+        }
 
-        var placement  = (this.bodyEl.hasClass('g-offcanvas-right') ? 'right' : 'left'),
+        var placement  = this.getOffcanvasPosition(),
             diffX      = clamp(event.touches[0].clientX - this.offset.x.start, -this.options.padding, this.options.padding),
             translateX = this.offset.x.current = diffX,
-            diffY = Math.abs(event.touches[0].pageY - this.offset.y.start),
+            diffY  = Math.abs(event.touches[0].pageY - this.offset.y.start),
+            offset = placement == 'right' ? -1 : 1,
             overlayOpacity;
 
         if (Math.abs(translateX) > this.options.padding) { return; }
@@ -655,15 +691,20 @@ var Offcanvas = new prime({
             }
 
             if ((placement == 'left' && diffX <= 0) || (placement == 'right' && diffX >= 0)) {
-                var norm = placement == 'left' ? 1 : -1;
-                translateX = diffX + (norm * this.options.padding);
+                translateX = diffX + (offset * this.options.padding);
                 this.opening = false;
             }
 
             overlayOpacity = mapNumber(Math.abs(translateX), 0, this.options.padding, 0, 1);
-
-            this.panel[0].style[placement] = Math.abs(translateX) + 'px';
             this.overlay[0].style.opacity = overlayOpacity;
+
+            if (this.options.css3) {
+                // for translate3d
+                this.panel[0].style[prefix.css + 'transform'] = this.panel[0].style.transform = 'translate3d(' + translateX + 'px, 0, 0)';
+            } else {
+                // left/right transition
+                this.panel[0].style[placement] = Math.abs(translateX) + 'px';
+            }
 
             this.moved = true;
         }
@@ -4244,7 +4285,9 @@ function drainQueue() {
         currentQueue = queue;
         queue = [];
         while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
         queueIndex = -1;
         len = queue.length;
@@ -4296,7 +4339,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');

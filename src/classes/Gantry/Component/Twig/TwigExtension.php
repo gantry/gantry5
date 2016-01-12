@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,6 +19,7 @@ use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TwigExtension extends \Twig_Extension
@@ -33,7 +33,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'UrlExtension';
+        return 'GantryTwig';
     }
 
     /**
@@ -43,15 +43,17 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
+            new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
-        );
+            new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
+        ];
     }
 
     /**
@@ -61,14 +63,16 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-        );
+            new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
+        ];
     }
 
     /**
@@ -76,7 +80,12 @@ class TwigExtension extends \Twig_Extension
      */
     public function getTokenParsers()
     {
-        return array(new TokenParserTry());
+        return [
+            new TokenParserAssets(),
+            new TokenParserScripts(),
+            new TokenParserStyles(),
+            new TokenParserTry(),
+        ];
     }
 
     /**
@@ -90,32 +99,6 @@ class TwigExtension extends \Twig_Extension
         $path = explode('.', $str);
 
         return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
-    }
-
-    /**
-     * Parse raw html.
-     *
-     * @param  string  $str
-     * @return string
-     */
-    public function htmlFilter($str)
-    {
-        $str = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $str);
-        $str = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $str);
-
-        return $str;
-    }
-
-    public function linkHandler(array $matches)
-    {
-        $url = $this->urlFunc($matches[3]);
-        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
-    }
-
-    public function urlHandler(array $matches)
-    {
-        $url = $this->urlFunc(trim($matches[2]), '"\'');
-        return "{$matches[1]}url({$url})";
     }
 
     /**
@@ -145,7 +128,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function repeatFilter($str, $count)
     {
-        return str_repeat($str, (int) $count);
+        return str_repeat($str, max(0, (int) $count));
     }
 
 
@@ -161,6 +144,37 @@ class TwigExtension extends \Twig_Extension
     public function jsonDecodeFilter($str, $assoc = false, $depth = 512, $options = 0)
     {
         return json_decode($str, $assoc, $depth, $options);
+    }
+
+    public function imageSize($src, $attrib = true, $remote = false)
+    {
+        // TODO: need to better handle absolute and relative paths
+        //$url = Document::url(trim((string) $src), false, false);
+        $width = $height = null;
+        $sizes = ['width' => $width, 'height' => $height];
+        $attr = '';
+
+        if (@is_file($src) || $remote) {
+            try {
+                list($width, $height, $type, $attr) = @getimagesize($src);
+            } catch (\Exception $e) {}
+
+            $sizes['width'] = $width;
+            $sizes['height'] = $height;
+        }
+
+        return $attrib ? $attr : $sizes;
+    }
+
+    /**
+     * Reindexes values in array.
+     *
+     * @param array $array
+     * @return array
+     */
+    public function valuesFilter(array $array)
+    {
+        return array_values($array);
     }
 
     /**
@@ -199,13 +213,59 @@ class TwigExtension extends \Twig_Extension
      *
      * @example {{ url('theme://images/logo.png')|default('http://www.placehold.it/150x100/f4f4f4') }}
      *
-     * @param  string $input    Resource to be located.
-     * @param  bool $domain     True to include domain name.
-     * @return string|null      Returns url to the resource or null if resource was not found.
+     * @param  string $input       Resource to be located.
+     * @param  bool $domain        True to include domain name.
+     * @param  int $timestamp_age  Append timestamp to files that are less than x seconds old. Defaults to a week.
+     *                             Use value <= 0 to disable the feature.
+     * @return string|null         Returns url to the resource or null if resource was not found.
      */
-    public function urlFunc($input, $domain = false)
+    public function urlFunc($input, $domain = false, $timestamp_age = null)
     {
-        return Document::url(trim((string) $input), $domain);
+        return Document::url(trim((string) $input), $domain, $timestamp_age);
+    }
+
+    /**
+     * Filter stream URLs from HTML input.
+     *
+     * @param  string $html         HTML input to be filtered.
+     * @param  bool $domain         True to include domain name.
+     * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
+     *                              Use value <= 0 to disable the feature.
+     * @return string               Returns modified HTML.
+     */
+    public function htmlFilter($str, $domain = false, $timestamp_age = null)
+    {
+        return Document::urlFilter($str, $domain, $timestamp_age);
+    }
+
+    /**
+     * @param \libXMLError $error
+     * @param string $input
+     * @throws \RuntimeException
+     */
+    protected function dealXmlError(\libXMLError $error, $input)
+    {
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $level = 1;
+                $message = "DOM Warning {$error->code}: ";
+                break;
+            case LIBXML_ERR_ERROR:
+                $level = 2;
+                $message = "DOM Error {$error->code}: ";
+                break;
+            case LIBXML_ERR_FATAL:
+                $level = 3;
+                $message = "Fatal DOM Error {$error->code}: ";
+                break;
+        }
+        $message .= "{$error->message} while parsing:\n{$input}\n";
+
+        if ($level <= 2 && !Gantry::instance()->debug()) {
+            return;
+        }
+
+        throw new \RuntimeException($message, 500);
     }
 
     /**
@@ -219,16 +279,36 @@ class TwigExtension extends \Twig_Extension
      */
     public function parseAssetsFunc($input, $location = 'head', $priority = 0)
     {
+        if ($location == 'head') {
+            $scope = 'head';
+        } else {
+            $scope = 'body';
+        }
+        $html = "<html><{$scope}>{$input}</{$scope}></html>";
+
+        $internal = libxml_use_internal_errors(true);
+
         $doc = new \DOMDocument();
-        $doc->loadHTML('<html><head>' . $input . '</head><body></body></html>');
+        $doc->loadHTML($html);
+        foreach (libxml_get_errors() as $error) {
+            $this->dealXmlError($error, $html);
+        }
+
+        libxml_clear_errors();
+
+        libxml_use_internal_errors($internal);
+
         $raw = [];
         /** @var \DomElement $element */
-        foreach ($doc->getElementsByTagName('head')->item(0)->childNodes as $element) {
+        foreach ($doc->getElementsByTagName($scope)->item(0)->childNodes as $element) {
+            if (empty($element->tagName)) {
+                continue;
+            }
             $result = ['tag' => $element->tagName, 'content' => $element->textContent];
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $location, $priority);
+            $success = Document::addHeaderTag($result, $location, (int) $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

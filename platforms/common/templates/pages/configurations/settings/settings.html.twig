@@ -9,7 +9,7 @@
                     <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}">
                     <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_SETTINGS'|trans }}</span></button>
                 </span>
-                {% for group, list in particles %}
+                {% for group, list in particles if (group != 'hidden') %}
                     <h2 class="page-title">
                         <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span>
                     </h2>
@@ -17,11 +17,11 @@
                     <div class="g-filter-actions">
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
-                                <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}...">
+                                <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." role="search" />
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
-                            <div class="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</div>
-                            <div class="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</div>
+                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
 
@@ -32,17 +32,21 @@
                                 {% set collapsed = particle.form.collapsed or attribute(stored_data, prefix) %}
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
-                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}">
-                                        <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
+                                    <input type="hidden" name="particles[{{ id }}]"/>
+                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}"{{ overrideable ? ' class="card-overrideable"' : '' }}>
+                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw  fa-caret-up"></i></span>
                                         <span class="g-title">{{ particle.name }}</span>
-                                        <input type="hidden" name="particles[{{ id }}]"/>
                                         {% if particle.form.fields.enabled %}
                                             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
+
+                                            {% if overrideable %}
+                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': gantry.config.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
+                                            {% endif %}
                                         {% endif %}
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}

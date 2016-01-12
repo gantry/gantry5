@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,6 +21,11 @@ use Gantry\Component\File\CompiledYamlFile;
 class CompiledConfig extends CompiledBase
 {
     /**
+     * @var int Version number for the compiled file.
+     */
+    public $version = 2;
+
+    /**
      * @var Config  Configuration object.
      */
     protected $object;
@@ -32,21 +36,32 @@ class CompiledConfig extends CompiledBase
     protected $callable;
 
     /**
-     * @param  string $cacheFolder  Cache folder to be used.
-     * @param  array  $files  List of files as returned from ConfigFileFinder class.
-     * @param  callable  $blueprints  Lazy load function for blueprints.
-     * @throws \BadMethodCallException
+     * @var bool
      */
-    public function __construct($cacheFolder, array $files, callable $blueprints = null)
-    {
-        /*
-        if (is_null($blueprints)) {
-            throw new \BadMethodCallException('You cannot instantiate configuration without blueprints.');
-        }
-        */
-        parent::__construct($cacheFolder, $files);
+    protected $withDefaults;
 
+    /**
+     * Set blueprints for the configuration.
+     *
+     * @param callable $blueprints
+     * @return $this
+     */
+    public function setBlueprints(callable $blueprints)
+    {
         $this->callable = $blueprints;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $withDefaults
+     * @return mixed
+     */
+    public function load($withDefaults = false)
+    {
+        $this->withDefaults = $withDefaults;
+
+        return parent::load();
     }
 
     /**
@@ -56,8 +71,18 @@ class CompiledConfig extends CompiledBase
      */
     protected function createObject(array $data = [])
     {
+        if ($this->withDefaults && empty($data) && is_callable($this->callable)) {
+            $blueprints = $this->callable;
+            $data = $blueprints()->getDefaults();
+        }
+
         $this->object = new Config($data, $this->callable);
     }
+
+    /**
+     * Finalize configuration object.
+     */
+    protected function finalizeObject() {}
 
     /**
      * Load single configuration file and append it to the correct position.
@@ -69,5 +94,6 @@ class CompiledConfig extends CompiledBase
     {
         $file = CompiledYamlFile::instance($filename);
         $this->object->join($name, $file->content(), '/');
+        $file->free();
     }
 }

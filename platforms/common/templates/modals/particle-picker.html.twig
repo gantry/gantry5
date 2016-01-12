@@ -19,9 +19,10 @@
                                         data-lm-nodrag
                                         data-mm-type="particle"
                                         data-lm-blocktype="{{ type|e }}"
-                                        data-mm-filter="{{ item|e }}"
+                                        data-mm-filter="{{ item.name|e }}"
                                         data-lm-subtype="{{ item_key|e }}">
-                                        {{ item|e }}
+                                        <span class="icon"><i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i></span>
+                                        <span class="title">{{ item.name|e }}</span>
                                     </li>
                                 {%  endfor %}
                             {% endfor %}
@@ -34,6 +35,6 @@
     <div class="g-modal-actions">
         {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
         <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
-        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </div>

@@ -1,0 +1,34 @@
+.platform-content {
+    // Entries
+    .entries {
+        .tease {
+            margin: $content-margin 0;
+            padding: $content-padding 0;
+
+            // Sticky Posts
+            &.sticky {
+                padding: $content-padding;
+
+                .entry-title {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    // Post Thumbnails
+    .post-thumbnail {
+        display: block;
+        margin: 0.65rem 0;
+        min-width: 0;
+        min-height: 0;
+
+        .float-left {
+            margin: 0 1rem 0.65rem 0;
+        }
+
+        .float-right {
+            margin: 0 0 0.65rem 1rem;
+        }
+    }
+}

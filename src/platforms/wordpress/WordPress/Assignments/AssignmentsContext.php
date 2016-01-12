@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,9 +10,12 @@
 
 namespace Gantry\WordPress\Assignments;
 
+use Gantry\Component\Assignments\AssignmentsInterface;
+
 class AssignmentsContext implements AssignmentsInterface
 {
     public $type = 'context';
+    public $priority = 1;
 
     protected $context = [
         'is_404'            => '404 Not Found Page',
@@ -44,8 +46,13 @@ class AssignmentsContext implements AssignmentsInterface
         $rules = [];
         foreach($this->context as $var => $label) {
             if (isset($wp_query->$var) && $wp_query->$var === true) {
-                $rules[$var] = 1;
+                $rules[$var] = $this->priority;
             }
+        }
+
+        // Workaround for when is_front_page is missing in the $wp_query
+        if(is_front_page() === true) {
+            $rules['is_front_page'] = $this->priority;
         }
 
         return [$rules];

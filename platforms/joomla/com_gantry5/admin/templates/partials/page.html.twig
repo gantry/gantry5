@@ -1,6 +1,6 @@
-{% set headerContent %}
+{% assets with { priority: 10 } %}
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-admin.css')|e }}" type="text/css" />
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/joomla-g-admin.css')|e }}" type="text/css" />
     {% endblock %}
 
     {% block javascript %}
@@ -12,8 +12,7 @@
             var GANTRY_PLATFORM = 'joomla';
         </script>
     {% endblock %}
-{% endset %}
-{% do parse_assets(headerContent, 'head', 10) %}
+{% endassets -%}
 
 <div id="g5-container">
     {% block content %}

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,7 +18,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
-use Gantry\Framework\Configurations as ConfigurationsObject;
+use Gantry\Framework\Outlines as OutlinesObject;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController
@@ -71,7 +70,7 @@ class Configurations extends HtmlController
 
     public function create()
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
         $title = $this->request->post->get('title', 'Untitled');
@@ -84,12 +83,12 @@ class Configurations extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Configuration created.', 'id' => "outline-{$id}", 'outline' => $html]);
+        return new JsonResponse(['html' => 'Outline created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
     public function rename($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
 
@@ -105,19 +104,19 @@ class Configurations extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Configuration renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
+        return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
     }
 
     public function duplicate($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
         // Handle special case on duplicating a preset.
         if ($configuration && $configuration[0] == '_') {
             $preset = $configurations->preset($configuration);
             if (empty($preset)) {
-                throw new \RuntimeException('Preset not found');
+                throw new \RuntimeException('Preset not found', 404);
             }
             $id = $configurations->create(ucwords(trim(str_replace('_', ' ', $configuration))), $configuration);
 
@@ -134,12 +133,12 @@ class Configurations extends HtmlController
 
         $configurations->duplicate($configuration);
 
-        return new JsonResponse(['html' => 'Configuration duplicated.']);
+        return new JsonResponse(['html' => 'Outline duplicated.']);
     }
 
     public function delete($configuration)
     {
-        /** @var ConfigurationsObject $configurations */
+        /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
 
@@ -149,7 +148,7 @@ class Configurations extends HtmlController
 
         $configurations->delete($configuration);
 
-        return new JsonResponse(['html' => 'Configuration deleted.', 'outline' => $configuration]);
+        return new JsonResponse(['html' => 'Outline deleted.', 'outline' => $configuration]);
     }
 
     public function forward()

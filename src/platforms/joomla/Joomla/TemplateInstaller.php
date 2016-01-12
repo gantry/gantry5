@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,7 +10,13 @@
 
 namespace Gantry\Joomla;
 
+use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Outlines;
+use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TemplateInstaller
 {
@@ -172,23 +177,29 @@ class TemplateInstaller
         $component_id = $this->getComponent();
 
         $table = \JTable::getInstance('menu');
+        $date = new \JDate();
 
         // Defaults for the item.
         $item += [
-            'menutype'     => 'mainmenu',
-            'title'        => 'Home',
-            'alias'        => 'gantry5',
-            'link'         => 'index.php?option=com_gantry5&view=custom',
-            'type'         => 'component',
-            'published'    => 1,
-            'parent_id'    => $parent_id,
+            'menutype' => 'mainmenu',
+            'title' => 'Home',
+            'alias' => 'gantry5',
+            'note' => '',
+            'link' => 'index.php?option=com_gantry5&view=custom',
+            'type' => 'component',
+            'published' => 1,
+            'parent_id' => $parent_id,
             'component_id' => $component_id,
-            'access'       => 1,
+            'checked_out' => 0,
+            'checked_out_time' => $date->toSql(),
+            'browserNav' => 0,
+            'access' => 1,
+            'img' => '',
             'template_style_id' => 0,
-            'params'       => '{}',
-            'home'         => 0,
-            'language'     => '*',
-            'client_id'    => 0
+            'params' => '{}',
+            'home' => 0,
+            'language' => '*',
+            'client_id' => 0
         ];
 
         if (in_array($item['type'], ['separator', 'heading'])) {
@@ -302,10 +313,57 @@ class TemplateInstaller
         $name = $this->extension->name;
         $path = JPATH_SITE . '/templates/' . $name;
 
+        // Remove compiled CSS files if they exist.
         $cssPath = $path . '/custom/css-compiled';
         if (is_dir($cssPath)) {
             \JFolder::delete($cssPath);
+        } elseif (is_file($cssPath)) {
+            \JFile::delete($cssPath);
         }
+
+        // Remove wrongly named file if it exists.
+        $md5path = $path . '/MD5SUM';
+        if (is_file($md5path)) {
+            \JFile::delete($md5path);
+        }
+
+        // Restart Gantry and initialize it.
+        $gantry = Gantry::restart();
+        $gantry['theme.name'] = $name;
+        $gantry['streams']->register();
+
+        // Only add error service if debug mode has been enabled.
+        if ($gantry->debug()) {
+            $gantry->register(new ErrorServiceProvider);
+        }
+
+        /** @var Platform $patform */
+        $patform = $gantry['platform'];
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        // Initialize theme stream.
+        $details = new ThemeDetails($name);
+        $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
+
+        // Initialize theme cache stream and clear theme cache.
+        $cachePath = $patform->getCachePath() . '/' . $name;
+        if (is_dir($cachePath)) {
+            Folder::delete($cachePath);
+        }
+        Folder::create($cachePath);
+        $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
+        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+        /** @var Outlines $outlines */
+        $outlines = $gantry['configurations'];
+
+        // Update positions in manifest file.
+        $positions = $outlines->positions();
+
+        $manifest = new Manifest($name);
+        $manifest->setPositions(array_keys($positions));
+        $manifest->save();
     }
 
     public function installMenus(array $menus = null, $parent = 1)
@@ -314,7 +372,9 @@ class TemplateInstaller
             $name = $this->extension->name;
             $path = JPATH_SITE . '/templates/' . $name;
 
-            $menus = (array) YamlFile::instance($path . '/install/menus.yaml')->content();
+            $file = YamlFile::instance($path . '/install/menus.yaml');
+            $menus = (array) $file->content();
+            $file->free();
         }
 
         foreach ($menus as $menutype => $menu) {

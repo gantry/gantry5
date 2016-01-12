@@ -17,10 +17,7 @@ details:
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml
 
-  news:
-    link: http://news.rockettheme.com/prime/themes.yaml
-
-  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Theme
   images:
@@ -76,6 +73,7 @@ configuration:
       align-left: Align Left
       center: Center
       full-width: Full Width
+      equal-height: Equal Height
       nomarginall: No Margin
       nopaddingall: No Padding
 

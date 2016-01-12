@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -43,7 +42,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         'menu' => '',
         'base' => '/',
         'startLevel' => 1,
-        'endLevel' => 0,
+        'maxLevels' => 0,
         'showAllChildren' => true,
         'highlightAlias' => true,
         'highlightParentAlias' => true
@@ -169,8 +168,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
             $menu = $this->params['menu'];
 
-            $this->config = new Config(CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"))->content());
+            $file = CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"));
+            $this->config = new Config($file->content());
             $this->config->def('settings.title', ucfirst($menu));
+            $file->free();
         }
 
         return $this->config;
@@ -275,7 +276,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
         } elseif (!$this->items['']->count()) {
-            $this->items['']->addChild($item);
+            $this->items[$item->parent_id] = $this->items[''];
+            $this->items[$item->parent_id]->addChild($item);
         }
 
         return $this;
@@ -319,7 +321,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function addCustom(array $params, array $items)
     {
         $start   = $params['startLevel'];
-        $end     = $params['endLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
         $config = $this->config();
         $type = $config->get('settings.type');
@@ -338,7 +341,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             $item['parent_id'] = implode('/', $parentTree);
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && !in_array($tree[$start - 2], $route))) {
+                // TODO: Improve. In the mean time Item::add() handles this part.
+                // || ($start > 1 && !in_array($tree[$start - 2], $tree))
+            ) {
                 continue;
             }
             $item = new Item($this, $route, $item);

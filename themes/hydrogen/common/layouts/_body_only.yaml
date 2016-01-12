@@ -1,8 +1,9 @@
+version: 2
+
 preset:
   image: gantry-admin://images/layouts/body-only.png
 
 layout:
-  main:
-    container:
-      - system-messages
-      - pagecontent
+  /main/:
+    - system-messages
+    - system-content

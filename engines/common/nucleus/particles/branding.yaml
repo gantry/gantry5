@@ -1,6 +1,7 @@
 name: Branding
 description: Displays powered by link to Gantry Framework
 type: particle
+icon: fa-trademark
 
 form:
   fields:

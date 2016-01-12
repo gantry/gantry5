@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -48,10 +47,14 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $locator = $container['locator'];
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
-        $paths = $locator->findResources('gantry-blueprints://config');
-        $files = (new ConfigFileFinder)->locateFiles($paths);
 
-        $config = new CompiledBlueprints($cache, $files);
+        $files = [];
+        $paths = $locator->findResources('gantry-particles://');
+        $files += (new ConfigFileFinder)->setBase('particles')->locateFiles($paths);
+        $paths = $locator->findResources('gantry-blueprints://');
+        $files += (new ConfigFileFinder)->locateFiles($paths);
+
+        $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
 
         return $config->load();
     }
@@ -78,10 +81,11 @@ class ConfigServiceProvider implements ServiceProviderInterface
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 
-        $config = new CompiledConfig($cache, $files, function() use ($container) {
+        $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
+        $config->setBlueprints(function() use ($container) {
             return $container['blueprints'];
         });
 
-        return $config->load();
+        return $config->load(true);
     }
 }

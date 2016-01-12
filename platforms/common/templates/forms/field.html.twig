@@ -1,33 +1,31 @@
-{% set headerContent %}
-{% block stylesheets %}
-{% endblock %}
-{% block javascript %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(headerContent) %}
+{% assets %}
+    {% block stylesheets %}
+    {% endblock %}
 
-{% set footerContent %}
-{% block javascript_footer %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(footerContent, 'footer') %}
+    {% block javascript %}
+    {% endblock %}
+{% endassets -%}
 
-{% set name = (name is null ? field.name : name) %}
-{% set value = (value is null ? field.default : value) %}
-{% set default_value = (default_value is null ? field.default : default_value) %}
+{% assets in 'footer' %}
+    {% block javascript_footer %}
+    {% endblock %}
+{% endassets -%}
+
+{% set name = (name is null ? field.name : name) -%}
+{% set value = (value is null ? field.default : value) -%}
+{% set default_value = (default_value is null ? field.default : default_value) -%}
 
 {% block field %}
 {% if not field.isset or value is not null %}
     <div class="settings-param {{ field.type|replace('.', '-')|e }}">
         {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' and field.type != 'input.hidden' %}
-            <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
-            <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
+            {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
         {% endif %}
         {% block contents %}
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        <span class="g-tooltip" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
+                        <span data-tip="{{ field.description|raw }}" data-tip-place="top-right" aria-label="{{ field.description|e }}" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
                     {% else %}
                         {{ field.label|e }}
                     {% endif %}
@@ -47,6 +45,8 @@
                                     {% if field.id is defined %} id="{{ field.id|e }}" {% endif %}
                                     {% if field.style is defined %} style="{{ field.style|e }}" {% endif %}
                                     {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
+                                    {% if field.override_target is defined %} data-override-target="{{ field.override_target|e('html_attr') }}" {% endif %}
+                                    aria-label="{{ (scope ~ name)|replace({'.': ' '})|title|trim }}"
                                 {% endblock %}
                                 />
 

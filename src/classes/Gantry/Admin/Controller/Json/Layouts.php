@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -42,8 +41,10 @@ class Layouts extends JsonController
 
         $response = ['layouts'];
         foreach($files as $name => $structure) {
-            $content = JsonFile::instance($structure)->content();
+            $file = JsonFile::instance($structure);
+            $content = $file->content();
             $response['layouts'][$name] = $content;
+            $file->free();
         }
 
         $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/picker.html.twig', ['presets' => $response]);

@@ -1,0 +1,6 @@
+{% extends "@nucleus/page.html.twig" %}
+
+{% block page_footer %}
+    {{ parent() }}
+    <jdoc:include type="modules" name="debug" />
+{% endblock %}

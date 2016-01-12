@@ -1,26 +1,19 @@
 {
     "name": "gantry",
-    "version":"5.0.0@dev",
     "description": "Gantry Framework Library",
     "license": "MIT",
-    "minimum-stability": "dev",
 
     "require": {
         "php": ">=5.4.0",
-        "symfony/yaml": "~2.7",
-        "twig/twig": "~1.18",
+        "symfony/yaml": "~2.8",
+        "twig/twig": "~1.23",
         "pimple/pimple": "~3.0",
-        "filp/whoops": "~1.2",
-        "rockettheme/toolbox": "dev-develop",
-        "leafo/scssphp": "~0.1",
-        "leafo/lessphp": "~0.5"
+        "filp/whoops": "~1.2@dev",
+        "rockettheme/toolbox": "~1.2",
+        "leafo/scssphp": "0.3.0",
+        "leafo/lessphp": "~0.5",
+        "erusev/parsedown-extra": "~0.7"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rockettheme/toolbox"
-        }
-    ],
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },

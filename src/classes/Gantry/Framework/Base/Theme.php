@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,34 +13,13 @@
 
 namespace Gantry\Framework\Base;
 
-use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Component\Theme\ThemeInterface;
+use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 
-abstract class Theme implements ThemeInterface
+/**
+ * @deprecated 5.1.5
+ */
+abstract class Theme extends AbstractTheme
 {
     use ThemeTrait;
-
-    public $name;
-    public $url;
-    public $path;
-    public $layout;
-
-    /**
-     * @var ThemeDetails
-     */
-    protected $details;
-
-    public function __construct($path, $name = '')
-    {
-        if (!is_dir($path)) {
-            throw new \LogicException('Theme not found!');
-        }
-
-        $this->path = $path;
-        $this->name = $name ? $name : basename($path);
-        $this->init();
-    }
-
-    abstract public function render($file, array $context = array());
 }

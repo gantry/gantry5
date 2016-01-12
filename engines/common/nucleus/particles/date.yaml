@@ -1,6 +1,7 @@
 name: Date
 description: Display a date.
 type: particle
+icon: fa-calendar
 
 form:
   fields:
@@ -8,7 +9,7 @@ form:
       type: input.checkbox
       label: Enabled
       description: Globally enable date particles.
-      default: false
+      default: true
 
     css.class:
       type: input.selectize

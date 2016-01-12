@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +13,14 @@
 
 namespace Gantry\Framework;
 
-class Theme extends Base\Theme
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
+
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+abstract class Theme extends AbstractTheme
 {
-    public function render($file, array $context = array()) {}
+    use ThemeTrait;
 }

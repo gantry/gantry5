@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -37,9 +36,11 @@ class Particles
             $files = $this->locateParticles();
 
             $this->particles = [];
-            foreach ($files as $key => $file) {
-                $filename = key($file);
-                $this->particles[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+            foreach ($files as $key => $fileArray) {
+                $filename = key($fileArray);
+                $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+                $this->particles[$key] = $file->content();
+                $file->free();
             }
         }
 
@@ -53,7 +54,7 @@ class Particles
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
-            if (in_array($type, ['spacer', 'pagecontent'])) {
+            if (in_array($type, ['spacer', 'system'])) {
                 $type = 'position';
             }
             $list[$type][$name] = $particle;
@@ -75,8 +76,10 @@ class Particles
         }
 
         $filename = key($files[$id]);
-        $particle = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+        $particle = $file->content();
         $particle['subtype'] = $id; // TODO: can this be done better or is it fine like that?
+        $file->free();
 
         return $particle;
     }
@@ -89,7 +92,7 @@ class Particles
         $theme = $this->container['theme'];
         $ordering = (array) $theme->details()['admin.settings'] ?: [
                 'particle' => [],
-                'position' => ['module', 'spacer', 'pagecontent'],
+                'position' => ['position', 'spacer', 'messages', 'content'],
                 'atom' => []
             ];
 

@@ -29,6 +29,7 @@
 }
 
 @mixin enabler($on: $black, $off: $white, $size: 18px){
+    outline: transparent;
 
     .toggle {
         background-color: $off;

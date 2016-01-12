@@ -4,12 +4,19 @@
 {% endblock %}
 
 {% block input %}
+    {% if field.array %}
+        {% set name = name ~ '._json' %}
+        {% set value = value|default([])|json_encode %}
+        {% else %}
+        {% set value = value|join(', ') %}
+    {% endif %}
+
     <input
-            {# required attribute structures #}
-            type="hidden"
-            name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|e }}"
-            {# global attribute structures #}
-            {{ block('global_attributes') }}
-            />
+        {# required attribute structures #}
+        type="hidden"
+        name="{{ (scope ~ name)|fieldName }}"
+        value="{{ value }}"
+        {# global attribute structures #}
+        {{ block('global_attributes') }}
+    />
 {% endblock %}

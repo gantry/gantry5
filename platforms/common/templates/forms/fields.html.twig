@@ -13,7 +13,7 @@
             {% set name = name[1:] %}
         {% endif %}
 
-        {% if field.type and name not in skip and not field.skip %}
+        {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and field.overridable is same as(false)) %}
             {% set field = field + {'name': name} %}
             {% set value = nested(data, scope ~ name) %}
             {% set default_value = nested(defaults, scope ~ name) %}

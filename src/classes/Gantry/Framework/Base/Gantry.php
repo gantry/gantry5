@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,19 +13,25 @@
 
 namespace Gantry\Framework\Base;
 
-use Gantry\Framework\Configurations;
+use Gantry\Component\Config\Config;
+use Gantry\Component\System\Messages;
+use Gantry\Framework\Menu;
+use Gantry\Framework\Outlines;
 use Gantry\Framework\Document as RealDocument;
+use Gantry\Framework\Page;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Positions;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
+use Gantry\Framework\Site;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Gantry extends Container
+abstract class Gantry extends Container
 {
     /**
      * @var static
@@ -38,10 +43,42 @@ class Gantry extends Container
     {
         if (!self::$instance) {
             self::$instance = static::load();
+
+            if (!defined('GANTRY5_DEBUG')) {
+                define('GANTRY5_DEBUG', self::$instance->debug());
+            }
         }
 
         return self::$instance;
     }
+
+    public static function restart()
+    {
+        self::$instance = null;
+
+        return static::instance();
+    }
+
+    /**
+     * Returns true if debug mode has been enabled.
+     *
+     * @return boolean
+     */
+    public function debug()
+    {
+        return $this['global']->get('debug', false);
+    }
+
+    /**
+     * Returns true if we are in administration.
+     *
+     * @return boolean
+     */
+    public function admin()
+    {
+        return defined('GANTRYADMIN_PATH');
+    }
+
 
     /**
      * @return string
@@ -154,15 +191,53 @@ class Gantry extends Container
             return new Translator;
         };
 
+        $instance['site'] = function ($c) {
+            return new Site;
+        };
+
+        $instance['menu'] = function ($c) {
+            return new Menu;
+        };
+
+        $instance['messages'] = function ($c) {
+            return new Messages();
+        };
+
+        $instance['page'] = function ($c) {
+            return new Page($c);
+        };
+
         // Make sure that nobody modifies the original collection by making it a factory.
         $instance['configurations'] = $instance->factory(function ($c) {
             static $collection;
             if (!$collection) {
-                $collection = (new Configurations($c))->load();
+                $collection = (new Outlines($c))->load();
             }
 
             return $collection->copy();
         });
+
+        $instance['positions'] = $instance->factory(function ($c) {
+            static $collection;
+            if (!$collection) {
+                $collection = (new Positions($c))->load();
+            }
+
+            return $collection->copy();
+        });
+
+        $instance['global'] = function ($c) {
+            $data = $c->loadGlobal() + [
+                    'debug' => false,
+                    'production' => true,
+                    'asset_timestamps' => true,
+                    'asset_timestamps_period' => 7,
+                    'compile_yaml' => true,
+                    'compile_twig' => true
+                ];
+
+            return new Config($data);
+        };
 
         return $instance;
     }
@@ -227,5 +302,13 @@ class Gantry extends Container
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadGlobal()
+    {
+        return [];
     }
 }

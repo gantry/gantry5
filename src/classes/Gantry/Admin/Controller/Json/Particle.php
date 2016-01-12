@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -60,8 +60,8 @@ class Particle extends JsonController
         $particles = [
             'position'    => [],
             'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
+            'system'      => [],
+            'particle'    => [],
         ];
 
         $particles = array_replace($particles, $this->getParticles());
@@ -107,7 +107,9 @@ class Particle extends JsonController
         }
 
         // TODO: add support for other block types as well, like menu.
-        // $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml")->content());
+        // $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+        // $block = new BlueprintsForm($file->content());
+        // $file->free();
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
         // Load particle blueprints and default settings.
@@ -172,7 +174,9 @@ class Particle extends JsonController
             }
         }
 
-        $data->join('options.block', $block);
+        if ($block) {
+            $data->join('options.block', $block);
+        }
 
         // TODO: validate
 
@@ -190,7 +194,8 @@ class Particle extends JsonController
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
             $particleName = isset($particle['name']) ? $particle['name'] : $name;
-            $list[$type][$name] = $particleName;
+            $particleIcon = isset($particle['icon']) ? $particle['icon'] : null;
+            $list[$type][$name] = ['name' => $particleName, 'icon' => $particleIcon];
         }
 
         return $list;
@@ -209,6 +214,10 @@ class Particle extends JsonController
         $locator = $this->container['locator'];
 
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        return new BlueprintsForm(CompiledYamlFile::instance($filename)->content());
+        $file = CompiledYamlFile::instance($filename);
+        $blueprints = new BlueprintsForm($file->content());
+        $file->free();
+
+        return $blueprints;
     }
 }

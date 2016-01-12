@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -70,6 +69,35 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'media/gantry5/assets']];
     }
 
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return \JUri::root(false) . 'index.php?templateStyle=' . $theme;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        $token = \JSession::getFormToken();
+        return \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
+    }
+
+    public function filter($text)
+    {
+        \JPluginHelper::importPlugin('content');
+        return \JHtml::_('content.prepare', $text, '', 'mod_custom.content');
+    }
+
     public function finalize()
     {
         Document::registerAssets();
@@ -113,7 +141,7 @@ class Platform extends BasePlatform
         $frontEditing = ($app->isSite() && $app->get('frontediting', 1) && !$user->guest);
         $menusEditing = ($app->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 
-        if ($frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
+        if (!$isGantry && $frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
             $displayData = [
                 'moduleHtml' => &$html,
                 'module' => $module,
@@ -246,9 +274,8 @@ class Platform extends BasePlatform
 
     public function updates()
     {
-        if (defined('GANTRY5_VERSION') && (GANTRY5_VERSION == '@version@' || substr(GANTRY5_VERSION, 0, 4) == 'dev-')) { return []; }
-
         $styles = ThemeList::getThemes();
+
         $extension_ids = array_unique(array_map(
             function($item) {
                 return (int) $item->extension_id;
@@ -269,15 +296,59 @@ class Platform extends BasePlatform
         $updates = $db->loadObjectList();
 
         $list = [];
-        foreach ($updates as $update)
-        {
-            // Remove number from Gantry 5.
+        foreach ($updates as $update) {
             if ($update->element == 'pkg_gantry5') {
-                $update->name = preg_replace('|[\d\s]|', '', $update->name);
+                // Rename Gantry 5 package.
+                $update->name = 'Gantry';
+                // Ignore git and CI installs.
+                if (version_compare(GANTRY5_VERSION, 0) < 0) {
+                    continue;
+                }
+            } else {
+                // Check if templates need to be updated.
+                $version = isset($styles[$update->element]) ? $styles[$update->element]->get('details.version') : null;
+                if (version_compare($version, 0) < 0 || version_compare($update->version, $version) <= 0) {
+                    continue;
+                }
             }
             $list[] = $update->name . ' ' . $update->version;
         }
 
         return $list;
+    }
+
+    public function factory()
+    {
+        $args = func_get_args();
+        $method = ['JFactory', 'get'. ucfirst((string) array_shift($args))];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
+    public function instance()
+    {
+        $args = func_get_args();
+        $class = ucfirst((string) array_shift($args));
+        if (!$class) {
+            return null;
+        }
+        if (class_exists('J'. $class)) {
+            $class = 'J'. $class;
+        }
+        $method = [$class, 'getInstance'];
+        return method_exists($method[0], $method[1]) ? call_user_func_array($method, $args) : null;
+    }
+
+    public function route()
+    {
+        return call_user_func_array(['JRoute', '_'], func_get_args());
+    }
+
+    public function html()
+    {
+        $args = func_get_args();
+        if (isset($args[0]) && method_exists('JHtml', $args[0])) {
+            return call_user_func_array(['JHtml', array_shift($args)], $args);
+        }
+        return call_user_func_array(['JHtml', '_'], $args);
     }
 }

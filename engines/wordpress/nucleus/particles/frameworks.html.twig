@@ -1,0 +1,17 @@
+{% if particle.jquery.enabled %}
+    {{ wordpress.call('wp_enqueue_script', 'jquery') }}
+    {% if particle.jquery.ui_core %}
+        {{ wordpress.call('wp_enqueue_script', 'jquery-ui-core') }}
+    {% endif %}
+    {% if particle.jquery.ui_sortable %}
+        {{ wordpress.call('wp_enqueue_script', 'jquery-ui-sortable') }}
+    {% endif %}
+{% endif %}
+
+{% if particle.bootstrap.enabled %}
+    {{ wordpress.call('wp_enqueue_script', 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') }}
+{% endif %}
+
+{% if particle.mootools.enabled %}
+    {{ wordpress.call('wp_enqueue_script', 'mootools', 'https://ajax.googleapis.com/ajax/libs/mootools/1.5.1/mootools-yui-compressed.js') }}
+{% endif %}

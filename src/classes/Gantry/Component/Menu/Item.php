@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -48,8 +47,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     {
         $this->menu = $menu;
 
-        $parent = dirname($name);
-        $alias = basename($name);
+        $tree = explode('/', $name);
+        $alias = array_pop($tree);
+        $parent = implode('/', $tree);
 
         // As we always calculate parent (it can change), prevent old one from being inserted.
         unset($item['parent_id']);
@@ -223,11 +223,11 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
                 switch ((string) $ordering) {
                     case 'abc':
                         // Alphabetical ordering.
-                        ksort($children);
+                        ksort($children, SORT_NATURAL);
                         break;
                     case 'cba':
                         // Reversed alphabetical ordering.
-                        krsort($children);
+                        krsort($children, SORT_NATURAL);
                         break;
                 }
             }

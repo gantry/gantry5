@@ -1,4 +1,5 @@
 {%- do gantry.theme.setLayout() -%}
+{%- set segments = gantry.theme.segments -%}
 
 {%- set content %}
     {% if gantry.theme.hasContent() %}
@@ -8,7 +9,7 @@
 {% endset -%}
 
 {%- set offcanvas = null -%}
-{%- for segment in gantry.theme.segments if segment.type == 'offcanvas' %}
+{%- for segment in segments if segment.type == 'offcanvas' %}
     {%- set offcanvas = segment -%}
 {% endfor -%}
 
@@ -18,14 +19,14 @@
             {% include '@nucleus/layout/' ~ offcanvas.type ~ '.html.twig' with { 'segment': offcanvas } -%}
         {% endif %}
     {% endblock %}
-{% endset %}
+{% endset -%}
 
 {%- set page_offcanvas = page_offcanvas|trim ?: '' %}
 {%- set offcanvas_position = page_offcanvas ? offcanvas.attributes.position|default('g-offcanvas-left') : '' -%}
 
 {%- set page_layout %}
     {% block page_layout %}
-    {% for segment in gantry.theme.segments if segment.type != 'offcanvas' %}
+    {% for segment in segments if segment.type != 'offcanvas' %}
         {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
     {% endfor %}
     {% endblock %}
@@ -38,18 +39,30 @@
 
 {%- set page_bottom %}
     {% block page_bottom %}
+    {% endblock %}
+{% endset -%}
+
+{# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
+
+{%- set page_head %}
+    {% block page_head -%}
+        {% include 'partials/page_head.html.twig' %}
+    {%- endblock %}
+{% endset -%}
+
+{%- set page_footer %}
+    {% block page_footer %}
         {{ gantry.scripts('footer')|join("\n    ")|raw }}
     {% endblock %}
 {% endset -%}
 
 {%- block page -%}
-<!DOCTYPE {{ gantry.page.doctype|default('html')|raw }}>
+<!DOCTYPE {{ gantry.config.page.doctype|default('html')|raw }}>
 <html{{ gantry.page.htmlAttributes|raw }}>
-    {% block page_head -%}
-        {% include 'partials/page_head.html.twig' %}
-    {%- endblock %}
+    {{ page_head|raw }}
     {% block page_body -%}
-    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, 'g-style-' ~ gantry.theme.preset]})|raw }}>
+    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
+        {{ gantry.config.page.body.body_top|raw }}
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
@@ -60,6 +73,8 @@
             {{ page_bottom|raw }}
         </div>
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
+        {{ page_footer|raw }}
+        {{ gantry.config.page.body.body_bottom|raw }}
     </body>
     {%- endblock %}
 

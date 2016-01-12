@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -47,10 +47,11 @@ class JFormFieldParticle extends JFormField
             return '';
         }
 
-        // FIXME: Better style detection.
+        // FIXME: Use better style detection (via js by using: style_id_field).
         $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
+        $theme = \Gantry\Joomla\StyleHelper::getDefaultStyle()->template;
 
-        $this->container['router']->setStyle($style->id)->load();
+        $this->container['router']->setTheme($theme, $style->id)->load();
 
         $field = [
             'default' => true,

@@ -1,0 +1,74 @@
+name: Theme Details
+description: Describes theme details
+type: theme
+
+form:
+  fields:
+
+    gantry.platform:
+      type: input.text
+      label: Platform
+
+    gantry.engine:
+      type: input.text
+      label: Engine
+      default: nucleus
+
+    theme.parent:
+      type: input.text
+      label: Parent Theme
+
+    theme.base:
+      type: input.text
+      label: Base Theme
+      default: gantry-theme://common
+
+    theme.file:
+      type: input.text
+      label: Theme Loader
+      default: gantry-theme://include/theme.php
+
+    theme.class:
+      type: input.text
+      label: Theme Class
+      default: \Gantry\Framework\Theme
+
+    fonts:
+      type: input.hidden
+      array: true
+
+    css.compiler:
+      type: input.text
+      label: CSS Compiler
+      default: \Gantry\Component\Stylesheet\ScssCompiler
+
+    css.paths:
+      type: input.text
+      label: CSS Lookup Paths
+      array: true
+      default:
+        - gantry-theme://scss
+        - gantry-engine://scss
+
+    css.files:
+      type: input.text
+      label: CSS Files
+      array: true
+
+    css.persistent:
+      type: input.text
+      label: Persistent CSS
+      array: true
+
+    css.overrides:
+      type: input.text
+      label: Override CSS
+      array: true
+
+    block-variations:
+      type: input.hidden
+      array: true
+
+    dependencies:
+      type: input.hidden
+      array: true

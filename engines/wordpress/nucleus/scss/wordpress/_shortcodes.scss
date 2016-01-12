@@ -1,0 +1,25 @@
+// Gallery shortcode
+.gallery {
+    @include display(flex);
+    @include flex-flow(row wrap);
+
+    @for $i from 1 through 10 {
+        &.gallery-columns-#{$i} {
+            .gallery-item {
+                @include flex(0 100% / $i);
+                width: 100% / $i;
+            }
+        }
+    }
+
+    .gallery-item {
+        min-width: 0;
+        min-height: 0;
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .gallery-caption {
+        margin-left: 0;
+    }
+}

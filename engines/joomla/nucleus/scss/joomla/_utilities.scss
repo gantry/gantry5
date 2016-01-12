@@ -99,15 +99,6 @@ th .tooltip-inner {
 	line-height: 14px;
 }
 
-// Calendar
-.calendar {
-	.button {
-		display: table-cell;
-		background: inherit;
-		color: inherit;
-	}
-}
-
 // Article Images
 .pull-right {
     &.item-image {
@@ -119,6 +110,112 @@ th .tooltip-inner {
     &.item-image {
         margin: 0 $leading-margin $leading-margin 0;
     }
+}
+
+#imageForm, #uploadForm {
+    button {
+        &:hover {
+            border-color: inherit;
+        }
+    }
+}
+
+// Calendar
+.calendar {
+    .title {
+        border: none;
+    }
+    thead {
+        .name {
+            padding: 2px;
+        }
+        .button {
+            color: #000 !important;
+            font-weight: normal;
+            border: 1px solid transparent;
+            display: table-cell;
+            background: inherit;
+        }
+        .hilite {
+            border-radius: 0;
+            padding: 2px;
+        }
+    }
+}
+
+// Size Classes
+.width-10 {
+    width: 10px;
+}
+.width-20 {
+    width: 20px;
+}
+.width-30 {
+    width: 30px;
+}
+.width-40 {
+    width: 40px;
+}
+.width-50 {
+    width: 50px;
+}
+.width-60 {
+    width: 60px;
+}
+.width-70 {
+    width: 70px;
+}
+.width-80 {
+    width: 80px;
+}
+.width-90 {
+    width: 90px;
+}
+.width-100 {
+    width: 100px;
+}
+.height-10 {
+    height: 10px;
+}
+.height-20 {
+    height: 20px;
+}
+.height-30 {
+    height: 30px;
+}
+.height-40 {
+    height: 40px;
+}
+.height-50 {
+    height: 50px;
+}
+.height-60 {
+    height: 60px;
+}
+.height-70 {
+    height: 70px;
+}
+.height-80 {
+    height: 80px;
+}
+.height-90 {
+    height: 90px;
+}
+.height-100 {
+    height: 100px;
+}
+
+// Modals
+.view-mailto, .print-mode {
+    .formelm {
+        label {
+            display: block;
+        }
+    }
+}
+
+.contentpane.modal {
+    padding: $leading-margin;
 }
 
 // Third Party Resets

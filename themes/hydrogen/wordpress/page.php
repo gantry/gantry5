@@ -2,13 +2,13 @@
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying all pages.
@@ -26,14 +26,14 @@ defined( 'ABSPATH' ) or die;
  * (in which case you'll want to duplicate this file and save to the above path)
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
+$gantry = Gantry\Framework\Gantry::instance();
+$theme  = $gantry['theme'];
 
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
+// We need to render contents of <head> before plugin content gets added.
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$context = Timber::get_context();
-$post = new TimberPost();
-$context[ 'post' ] = $post;
+$post            = Timber::query_post();
+$context['post'] = $post;
 
-Timber::render( array( 'page-' . $post->post_name . '.html.twig', 'page.html.twig' ), $context );
+Timber::render(['page-' . $post->post_name . '.html.twig', 'page.html.twig'], $context);

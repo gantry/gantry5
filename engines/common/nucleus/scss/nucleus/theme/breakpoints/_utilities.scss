@@ -3,12 +3,18 @@
 	.visible-large {
 		display: inherit !important;
 	}
+    .g-block.visible-large {
+        display: block !important;
+    }
 	.hidden-large {
 		display: none !important;
 	}
 	.visible-desktop {
 		display: inherit !important;
 	}
+    .g-block.visible-desktop {
+        display: block !important;
+    }
 	.hidden-desktop {
 		display: none !important;
 	}
@@ -21,9 +27,15 @@
 	.hidden-large {
 		display: inherit !important;
 	}
+    .g-block.hidden-large {
+        display: block !important;
+    }
 	.visible-desktop {
 		display: inherit !important;
 	}
+    .g-block.visible-desktop {
+        display: block !important;
+    }
 	.hidden-desktop {
 		display: none !important;
 	}
@@ -33,12 +45,18 @@
 	.visible-tablet {
 		display: inherit !important;
 	}
+    .g-block.visible-tablet {
+        display: block !important;
+    }
 	.hidden-tablet {
 		display: none !important;
 	}
 	.hidden-desktop {
 		display: inherit !important;
 	}
+    .g-block.hidden-desktop {
+        display: block !important;
+    }
 	.visible-desktop {
 		display: none !important;
 	}
@@ -48,24 +66,36 @@
 	.hidden-large {
 		display: inherit !important;
 	}
+    .g-block.hidden-large {
+        display: block !important;
+    }
 }
 
 @include breakpoint(mobile-only) {
 	.visible-phone {
 		display: inherit !important;
 	}
+    .g-block.visible-phone {
+        display: block !important;
+    }
 	.hidden-phone {
 		display: none !important;
 	}
 	.hidden-desktop {
 		display: inherit !important;
 	}
+    .g-block.hidden-desktop {
+        display: block !important;
+    }
 	.visible-desktop {
 		display: none !important;
 	}
 	.hidden-large {
 		display: inherit !important;
 	}
+    .g-block.hidden-large {
+        display: block !important;
+    }
 	.visible-large {
 		display: none !important;
 	}

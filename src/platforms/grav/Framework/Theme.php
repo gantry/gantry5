@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -11,33 +10,55 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Framework\Base\ThemeTrait as GantryThemeTrait;
-use Grav\Common\Theme as BaseTheme;
-use Grav\Common\Grav;
-use Grav\Common\Config\Config as GravConfig;
-use RocketTheme\Toolbox\File\YamlFile;
+use Gantry\Component\Theme\AbstractTheme;
+use Gantry\Component\Theme\ThemeTrait;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Theme extends BaseTheme
+/**
+ * Class Theme
+ * @package Gantry\Framework
+ */
+class Theme extends AbstractTheme
 {
-    use GantryThemeTrait;
+    use ThemeTrait;
 
     /**
-     * @var ThemeDetails
+     * @see AbstractTheme::setTwigLoaderPaths()
+     *
+     * @param \Twig_LoaderInterface $loader
      */
-    protected $details;
-
-    public function __construct(Grav $grav, GravConfig $config, $name)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        parent::__construct($grav, $config, $name);
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
 
-        // $this->init();
+        $gantry = static::gantry();
 
-        $baseUrlRelative = $grav['base_url_relative'];
-        $this->name = $name;
-        $this->path = THEMES_DIR . $name;
-        $this->url = $baseUrlRelative .'/'. USER_PATH . basename(THEMES_DIR) .'/'. $this->name;
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $paths = $locator->mergeResources(['gantry-theme://templates', 'gantry-engine://templates']);
+
+        // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
+        $loader->setPaths($paths);
+
+        parent::setTwigLoaderPaths($loader);
     }
 
-    public function render($file, array $context = array()) {}
+    /**
+     * @see AbstractTheme::getContext()
+     *
+     * @param array $context
+     * @return array
+     */
+    public function getContext(array $context)
+    {
+        $gantry = static::gantry();
+
+        $context = parent::getContext($context);
+        $context['site'] = $gantry['site'];
+
+        return $context;
+    }
 }

@@ -1,4 +1,5 @@
 {% try %}
+    {% set id = segment.id %}
     {% if noConfig %}
         {% set enabled = true %}
         {% set particle = segment.attributes %}
@@ -10,15 +11,20 @@
     {% set html %}
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
             {% include ['particles/' ~ segment.subtype ~ '.html.twig',
-            '@particles/' ~ segment.subtype ~ '.html.twig']
-            ignore missing with {gantry: gantry, particle: particle } only %}
+            '@particles/' ~ segment.subtype ~ '.html.twig',
+            '@nucleus/content/missing.html.twig'] %}
         {% endif %}
     {% endset %}
 
+    {% set classes = ((not inContent ? 'g-content ' : '') ~ segment.classes|join(' '))|trim %}
     {% if html|trim %}
-    <div class="{{ not inContent ? 'g-content' : '' }}{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
+    {% if classes %}
+    <div class="{{ classes }}">
         {{ html|raw }}
     </div>
+    {% else %}
+        {{ html|raw }}
+    {% endif %}
     {% endif %}
 
 {% catch %}

@@ -1,15 +1,11 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
- * @license   Dual License: MIT or GNU/GPLv2 and later
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
  *
- * http://opensource.org/licenses/MIT
  * http://www.gnu.org/licenses/gpl-2.0.html
- *
- * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
 namespace Gantry\Admin;
@@ -38,7 +34,9 @@ class Content
             $this->content = [];
             foreach ($files as $key => $file) {
                 $filename = key($file);
-                $this->content[$key] = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+                $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+                $this->content[$key] = $file->content();
+                $file->free();
             }
         }
 
@@ -73,7 +71,9 @@ class Content
         }
 
         $filename = key($files[$id]);
-        $item = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename)->content();
+        $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
+        $item = $file->content();
+        $file->free();
 
         return $item;
     }
@@ -120,7 +120,11 @@ class Content
         if (!$this->files) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $paths = $locator->findResources('gantry-admin://blueprints/content');
+            $paths = $locator->findResources('gantry-blueprints://content');
+            if (!$paths) {
+                // Deprecated in Gantry 5.1.1
+                $paths = $locator->findResources('gantry-admin://blueprints/content');
+            }
 
             $this->files = (new ConfigFileFinder)->listFiles($paths);
         }

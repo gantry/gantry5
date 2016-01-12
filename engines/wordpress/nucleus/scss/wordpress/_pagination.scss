@@ -1,0 +1,23 @@
+// Pagination
+.pagination, .page-links {
+    margin: 1.5rem 0;
+
+    ul.pagination-list {
+        list-style: none;
+        margin: 0;
+
+        li.pagination-list-item {
+            display: inline-block;
+        }
+    }
+
+    @include breakpoint('mobile-only') {
+        p.counter {
+            display: none;
+        }
+    }
+}
+
+.page-links {
+    text-align: center;
+}

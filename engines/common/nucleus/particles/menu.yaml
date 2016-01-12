@@ -1,6 +1,7 @@
 name: Menu
 description: Gantry menu
 type: particle
+icon: fa-bars
 
 form:
   fields:
@@ -16,12 +17,6 @@ form:
       class: alert alert-info
       content: GANTRY5_PARTICLE_MENU_INFO
 
-    base:
-      type: input.text
-      label: Base Path
-      description: Select the base path.
-      default: /
-
     menu:
       type: menu.list
       label: Menu
@@ -33,16 +28,30 @@ form:
         '': Use Default Menu
         '-active-': Use Active Menu
 
+    base:
+      type: menu.item
+      label: Base Item
+      description: "Select a menu item to always be used as the base for the menu display."
+      default: '/'
+      options:
+        '/': Active
+
     startLevel:
       type: input.text
       label: Start Level
       description: Set the start level of the menu.
       default: 1
 
-    endLevel:
+    maxLevels:
       type: input.text
       label: Max Levels
       description: Set the maximum number of menu levels to display.
+      default: 0
+
+    renderTitles:
+      type: input.checkbox
+      label: Render Titles
+      description: Renders the titles/tooltips of the Menu Items for accessibility.
       default: 0
 
     mobileTarget:

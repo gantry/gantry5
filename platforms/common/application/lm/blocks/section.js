@@ -29,7 +29,7 @@ var Section = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="g-tooltip g-tooltip-right" data-title="Adds a new row in the section"><i class="fa fa-plus"></i></span> <span class="g-tooltip g-tooltip-right" data-title="Section settings"><i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
     },
 
     adopt: function(child) {
@@ -66,6 +66,30 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+    },
+
+    getParent: function() {
+        var parent = this.block.parent('[data-lm-id]');
+
+        return this.options.builder.get(parent.data('lm-id'));
+    },
+
+    getLimits: function(parent) {
+        if (!parent) { return false; }
+
+        var sibling = parent.block.nextSibling() || parent.block.previousSibling() || false;
+
+        if (!sibling) { return [100, 100]; }
+
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id'));
+        if (siblingBlock.getType() !== 'block') { return false; }
+
+        var sizes = {
+                current: this.getParent().getSize(),
+                sibling: siblingBlock.getSize()
+            };
+
+        return [5, (sizes.current + sizes.sibling) - 5];
     }
 });
 

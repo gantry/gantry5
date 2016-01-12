@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -137,6 +136,8 @@ abstract class Folder
         $levels = isset($params['levels']) ? $params['levels'] : -1;
         $key = isset($params['key']) ? 'get' . $params['key'] : null;
         $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
+        $folders = isset($params['folders']) ? $params['folders'] : true;
+        $files = isset($params['files']) ? $params['files'] : true;
 
         if ($recursive) {
             $directory = new \RecursiveDirectoryIterator($path,
@@ -155,6 +156,12 @@ abstract class Folder
             if ($file->getFilename()[0] == '.') {
                 continue;
             }
+            if (!$folders && $file->isDir()) {
+                continue;
+            }
+            if (!$files && $file->isFile()) {
+                continue;
+            }
             if ($compare && $pattern && !preg_match($pattern, $file->{$compare}())) {
                 continue;
             }
@@ -162,7 +169,8 @@ abstract class Folder
             $filePath = $file->{$value}();
             if ($filters) {
                 if (isset($filters['key'])) {
-                    $fileKey = preg_replace($filters['key'], '', $fileKey);
+                    $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
+                    $fileKey = $pre . preg_replace($filters['key'], '', $fileKey);
                 }
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];
@@ -189,9 +197,10 @@ abstract class Folder
      *
      * @param  string $source
      * @param  string $target
+     * @param  string $ignore  Ignore files matching pattern (regular expression).
      * @throws \RuntimeException
      */
-    public static function copy($source, $target)
+    public static function copy($source, $target, $ignore = null)
     {
         $source = rtrim($source, '\\/');
         $target = rtrim($target, '\\/');
@@ -208,12 +217,17 @@ abstract class Folder
         // Go through all sub-directories and copy everything.
         $files = self::all($source);
         foreach ($files as $file) {
+            if ($ignore && preg_match($ignore, $file)) {
+                continue;
+            }
             $src = $source .'/'. $file;
             $dst = $target .'/'. $file;
 
             if (is_dir($src)) {
-                // Create current directory.
-                $success &= @mkdir($dst, 0777, true);
+                // Create current directory (if it doesn't exist).
+                if (!is_dir($dst)) {
+                    $success &= @mkdir($dst, 0777, true);
+                }
             } else {
                 // Or copy current file.
                 $success &= @copy($src, $dst);

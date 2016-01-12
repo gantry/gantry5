@@ -2,7 +2,7 @@
 
 widget.[id | title | description]
 #}
-<div data-mm-particle-stepone="{{ gantry.route('widget') }}" class="menu-editor-extras">
+<div data-mm-particle-stepone="{{ gantry.route(next|default('widget')) }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
             {{ 'Pick a Widget'|trans }}
@@ -16,6 +16,7 @@ widget.[id | title | description]
                 <div class="modules-wrapper">
                     <ul>
                         {% for widget in gantry.platform.listWidgets %}
+                        {% if widget.id not in ['particle_widget', 'roksprocket_options', 'rokgallery_options'] %}
                         <li data-lm-nodrag
                             data-mm-type="widget"
                             data-lm-subtype="{{ widget.id }}"
@@ -23,6 +24,7 @@ widget.[id | title | description]
                             data-mm-filter="{{ widget.title }}">
                             <span title="{{ widget.description|raw }}">{{ widget.title }}</span>
                         </li>
+                        {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -31,6 +33,6 @@ widget.[id | title | description]
     </div>
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
-        <a class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</a>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </div>

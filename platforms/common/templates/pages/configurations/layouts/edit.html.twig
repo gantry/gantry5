@@ -8,14 +8,14 @@
 
 {% else %}
 
-<div class="g-grid">
+<div class="g-grid" data-lm-container>
     <div class="g-block sidebar-block particles-sidebar-block">
         <h2 class="page-title">
             <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLES'|trans }}</span>
         </h2>
         <div class="g5-lm-particles-picker">
             <div class="search settings-block">
-                <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" />
+                <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" role="search"/>
                 <i class="fa fa-fw fa-search"></i>
             </div>
             <div class="particles-container">
@@ -27,8 +27,12 @@
                             <li class="g5-lm-particle-{{ type|e }}"
                                 data-lm-blocktype="{{ type|e }}"
                                 data-lm-subtype="{{ item_key|e }}"
+                                data-lm-icon="{{ item.icon|default('fa-cube')|e }}"
                                 {% if not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}data-lm-disabled data-lm-nodrag title="{{ 'GANTRY5_PLATFORM_PARTICLE_DISABLED'|trans }}"{% endif %}>
-                                {{ item|e }}
+                                <span class="particle-icon">
+                                    <i class="fa fa-fw {{ item.icon|default('fa-cube')|e }}"></i>
+                                </span>
+                                <span class="particle-title">{{ item.name|e }}</span>
                             </li>
                         {%  endfor %}
                     {% endfor %}
@@ -41,9 +45,9 @@
         <span class="float-right">
             {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
             <a href="#" class="button"><i class="fa fa-fw fa-sign-out"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>#}
-            <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}"><i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span></a>
-            <a href="#" class="button" data-lm-clear><i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span></a>
-            <a href="#" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span></a>
+            <button href="#" class="button" role="button" data-lm-switcher="{{ gantry.route(switcher_url)|e }}" aria-label="{{ 'GANTRY5_PLATFORM_LOAD'|trans }} Preset"><i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span></button>
+            <button href="#" class="button" role="button" data-lm-clear aria-label="{{ 'GANTRY5_PLATFORM_CLEAR'|trans }} Layout"><i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span></button>
+            <button href="#" class="button button-primary button-save" role="button" data-save="{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span></button>
         </span>
         <h2 class="page-title layout-title">
             <span class="title">{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }} <small>({{ preset_title|default('Unknown') }})</small></span>
@@ -52,9 +56,9 @@
         <div class="lm-newblocks clearfix" data-lm-blocktypes>
             {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle><i class="fa fa-plus"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>#}
             <span class="float-right">
-                <a data-lm-back href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</a>
+                <button data-lm-back href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
                 {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
-                <a data-lm-forward href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></a>
+                <button data-lm-forward href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></button>
             </span>
         </div>
         <div id="page">

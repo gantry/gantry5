@@ -1,7 +1,11 @@
-{% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
-{% set attr_id = segment.title|lower|replace({' ': '-'}) %}
+{% set tag_type = segment.subtype|default('section') %}
+{% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
+{% set attr_class = segment.attributes.class %}
 {% set attr_extra = '' %}
-{% set tag_type = (attr_id in ['aside', 'footer', 'header', 'main']) ? attr_id : 'section' %}
+{% set boxed = segment.attributes.boxed %}
+{% if boxed is not null %}
+    {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
+{% endif %}
 
 {% if segment.attributes.extra %}
     {% for attributes in segment.attributes.extra %}
@@ -20,19 +24,21 @@
 {% endset %}
 
 {% if html|trim %}
-    {% if (segment.attributes.boxed is defined and not segment.attributes.boxed) %}
+    {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
         <div class="g-container">{{ html|raw }}</div>
         {% endset %}
     {% endif %}
 
     {% set html %}
-    <{{ tag_type }} id="g-{{ attr_id }}" {{ attr_class|raw }}{{ attr_extra|raw }}>
+    {% if boxed == 2 %}{% set attr_class = attr_class ~ ' g-flushed' %}{% endif %}
+    {% set attr_class = attr_class ? ' class="' ~ attr_class|trim ~ '"' %}
+    <{{ tag_type }} id="{{ attr_id }}"{{ attr_class|raw }}{{ attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
     {% endset %}
 
-    {% if (segment.attributes.boxed) %}
+    {% if boxed == 1 %}
     <div class="g-container">{{ html|raw }}</div>
     {% else %}
     {{ html|raw }}

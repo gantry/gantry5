@@ -1,0 +1,17 @@
+{% if particle.jquery.enabled %}
+    {% do joomla.html('jquery.framework') %}
+    {% if particle.jquery.ui_core %}
+        {% do joomla.html('jquery.ui', ['core']) %}
+    {% endif %}
+    {% if particle.jquery.ui_sortable %}
+        {% do joomla.html('jquery.ui', ['sortable']) %}
+    {% endif %}
+{% endif %}
+
+{% if particle.bootstrap.enabled %}
+    {% do joomla.html('bootstrap.framework') %}
+{% endif %}
+
+{% if particle.mootools.enabled %}
+    {% do joomla.html('behavior.framework', particle.mootools.more|default(false)) %}
+{% endif %}

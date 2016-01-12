@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,10 +10,13 @@
 
 namespace Gantry\WordPress\Assignments;
 
+use Gantry\Component\Assignments\AssignmentsInterface;
+
 class AssignmentsTaxonomy implements AssignmentsInterface
 {
     public $type = 'taxonomy';
     public $label = 'Taxonomies: %s';
+    public $priority = 8;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -30,10 +32,12 @@ class AssignmentsTaxonomy implements AssignmentsInterface
         $queried_object = get_queried_object();
 
         if((is_archive() || is_tax()) && $queried_object !== null) {
-            $taxonomy = $queried_object->taxonomy;
-            $id = $queried_object->term_id;
+            if(isset($queried_object->taxonomy) && isset($queried_object->term_id)) {
+                $taxonomy = $queried_object->taxonomy;
+                $id = $queried_object->term_id;
 
-            $rules[$taxonomy][$id] = 1;
+                $rules[$taxonomy][$id] = $this->priority;
+            }
         }
 
         return $rules;
@@ -118,7 +122,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             foreach($terms as $term) {
                 $items[] = [
                     'name'     => $term->term_id,
-                    'label'    => $term->level > 0 ? str_repeat('—', $term->level) . ' ' . $term->name : $term->name,
+                    'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level)) . ' ' . $term->name : $term->name,
                     'disabled' => false
                 ];
             }

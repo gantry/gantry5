@@ -1,0 +1,15 @@
+#g5-container {
+    #footer {
+        background: $white;
+        margin-top: 1rem;
+        border-top: 1px solid darken($white, 20);
+        padding: 1rem 0;
+
+        a {
+            color: $grav-link-color !important;
+            &:hover {
+                color: $grav-link-hover !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+body.wp-admin.widgets-php, body.wp-customizer {
+    #g5-container {
+        .g-content {
+            margin: 0 0 0.625rem;
+            padding: 0 0 0.938rem;
+
+            .settings-block {
+                .settings-param-field {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .g5-dialog {
+            z-index: 99999;
+
+            .button-primary {
+                text-shadow: none;
+            }
+
+            .settings-block {
+                max-width: 100%;
+            }
+
+            .g-tabs {
+                ul {
+                    li {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            input[type="checkbox"] {
+                height: 16px;
+                top: 8px;
+
+                &:checked:before {
+                    height: 16px;
+                }
+            }
+        }
+    }
+}

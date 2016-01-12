@@ -1,6 +1,7 @@
 name: Google Analytics
 description: Configure Google Analytics.
 type: atom
+icon: fa-area-chart
 
 form:
   fields:
@@ -8,12 +9,13 @@ form:
       type: input.checkbox
       label: Enabled
       description: Globally enable analytic particles.
-      default: false
+      default: true
 
     ua.code:
       type: input.text
-      description: Enter the Google UA tracking code for analytics.
+      description: Enter the Google UA tracking code for analytics (UA-XXXXXXXX-X)
       label: UA Code
+      placeholder: UA-XXXXXXXX-X
 
     ua.anonym:
       type: input.checkbox

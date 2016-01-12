@@ -1,4 +1,16 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   Dual License: MIT or GNU/GPLv2 and later
+ *
+ * http://opensource.org/licenses/MIT
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
+ */
+
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\ConfigFileFinder;
@@ -88,6 +100,28 @@ class Platform extends BasePlatform
     public function getMediaPaths()
     {
         return ['' => ['media']];
+    }
+
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return rtrim(PRIME_URI, '/') . '/' . $theme;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
     }
 
     public function getModules($position)

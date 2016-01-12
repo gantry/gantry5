@@ -1,20 +1,19 @@
-{% set headerContent %}
-{% block stylesheets %}
-{% endblock %}
-{% block javascript %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(headerContent) %}
+{% assets %}
+    {% block stylesheets %}
+    {% endblock %}
 
-{% set footerContent %}
-{% block javascript_footer %}
-{% endblock %}
-{% endset %}
-{% do parse_assets(footerContent, 'footer') %}
+    {% block javascript %}
+    {% endblock %}
+{% endassets -%}
 
-{% set name = (name is null ? field.name : name) %}
-{% set value = (value is null ? field.default : value) %}
-{% set default_value = (default_value is null ? field.default : default_value) %}
+{% assets in 'footer' %}
+    {% block javascript_footer %}
+    {% endblock %}
+{% endassets -%}
+
+{% set name = (name is null ? field.name : name) -%}
+{% set value = (value is null ? field.default : value) -%}
+{% set default_value = (default_value is null ? field.default : default_value) -%}
 
 {% block field %}
     {% if not field.isset or value is not null %}
@@ -31,6 +30,8 @@
                             {% if field.id is defined %} id="{{ field.id|e }}" {% endif %}
                             {% if field.style is defined %} style="{{ field.style|e }}" {% endif %}
                             {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
+                            {% if field.override_target is defined %} data-override-target="{{ field.override_target|e('html_attr') }}" {% endif %}
+                            aria-label="{{ (scope ~ name)|replace({'.': ' '})|title|trim }}"
                         {% endblock %}
                         />
 

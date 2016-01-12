@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -52,22 +51,9 @@ class Platform extends BasePlatform
         return $locator->getPaths('themes');
     }
 
-    /**
-     * @return array
-     */
-    public function getThemePaths()
-    {
-        $grav = Grav::instance();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $grav['locator'];
-
-        return $locator->getPaths('theme');
-    }
-
     public function getMediaPaths()
     {
-        return ['' => ['user://gantry5']];
+        return ['' => ['gantry-theme://images', 'page://images', 'user://gantry5/media']];
     }
 
     public function getEnginesPaths()
@@ -77,11 +63,11 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
-        if (is_link($locator('user://gantry5/engines'))) {
+        if (is_link($locator('plugin://gantry5/engines'))) {
             // Development environment.
-            return ['' => ["user://gantry5/engines/{$this->name}", 'user://gantry5/engines/common']];
+            return ['' => ["plugin://gantry5/engines/{$this->name}", 'plugin://gantry5/engines/common']];
         }
-        return ['' => ['user://gantry5/engines']];
+        return ['' => ['plugin://gantry5/engines']];
     }
 
     public function getAssetsPaths()
@@ -91,11 +77,46 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
-        if (is_link($locator('user://gantry5/assets'))) {
+        if (is_link($locator('plugin://gantry5/assets'))) {
             // Development environment.
-            return ['' => ['gantry-theme://', "user://gantry5/assets/{$this->name}", 'user://gantry5/assets/common']];
+            return ['' => ['gantry-theme://', "plugin://gantry5/assets/{$this->name}", 'plugin://gantry5/assets/common']];
         }
 
-        return ['' => ['gantry-theme://', 'user://gantry5/assets']];
+        return ['' => ['gantry-theme://', 'plugin://gantry5/assets']];
+    }
+
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return null
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return null;
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        $grav = Grav::instance();
+        return $grav['gantry5_plugin']->base . '/' . $theme;
+    }
+
+    public function finalize()
+    {
+        Document::registerAssets();
+    }
+
+
+    public function settings()
+    {
+        $grav = Grav::instance();
+        return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
     }
 }

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +26,7 @@ class Page extends Base\Page
         $document = \JFactory::getDocument();
         $input = $app->input;
 
+        $this->tmpl     = $input->getCmd('tmpl', '');
         $this->option   = $input->getCmd('option', '');
         $this->view     = $input->getCmd('view', '');
         $this->layout   = $input->getCmd('layout', '');
@@ -42,14 +42,25 @@ class Page extends Base\Page
             }
         }
         $templateParams = $app->getTemplate(true);
-        $this->outline = $templateParams->id;
+        $this->outline = Gantry::instance()['configuration'];
         $this->sitename = $app->get('sitename');
-        $this->theme = $document->template;
-        $this->baseUrl = $document->baseurl;
+        $this->theme = $templateParams->template;
+        $this->baseUrl = \JUri::base(true);
         $this->title = $document->title;
         $this->description = $document->description;
         $this->language = $document->language;
         $this->direction = $document->direction;
+    }
+
+    public function url(array $args = [])
+    {
+        $url = \JUri::getInstance();
+
+        foreach ($args as $key => $val) {
+            $url->setVar($key, $val);
+        }
+
+        return $url->toString();
     }
 
     public function htmlAttributes()
@@ -65,16 +76,20 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        $classes = ['site', $this->option, "view-{$this->view}"];
-        $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
-        $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
+        if ($this->tmpl == 'component') {
+            $classes = ['contentpane', 'modal'];
+        } else {
+            $classes = ['site', $this->option, "view-{$this->view}"];
+            $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
+            $classes[] = $this->task ? 'task-' . $this->task : 'no-task';
+        }
         $classes[] = 'dir-' . $this->direction;
         if ($this->class) $classes[] = $this->class;
         if ($this->printing) $classes[] = 'print-mode';
         if ($this->itemid) $classes[] = 'itemid-' . $this->itemid;
         if ($this->outline) $classes[] = 'outline-' . $this->outline;
 
-        $baseAttributes = (array) $this->config->get('page.body', []);
+        $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         if (!empty($baseAttributes['class'])) {
             $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], $classes);
         } else {

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,7 +20,9 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Request\Request;
+use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Component\Response\Response;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
@@ -42,6 +43,7 @@ class Menu extends HtmlController
             '/select'            => 'undefined',
             '/select/particle'   => 'selectParticle',
             '/select/module'     => 'selectModule',
+            '/select/widget'     => 'selectWidget',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -55,6 +57,8 @@ class Menu extends HtmlController
             '/select'            => 'undefined',
             '/select/particle'   => 'selectParticle',
             '/select/module'     => 'selectModule',
+            '/select/widget'     => 'selectWidget',
+            '/widget'            => 'widget',
             '/edit'              => 'undefined',
             '/edit/*'            => 'edit',
             '/edit/*/**'         => 'editItem',
@@ -74,7 +78,11 @@ class Menu extends HtmlController
     public function item($id = null)
     {
         // Load the menu.
-        $resource = $this->loadResource($id, $this->build($this->request->post));
+        try {
+            $resource = $this->loadResource($id, $this->build($this->request->post));
+        } catch (\Exception $e) {
+            return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
+        }
 
         // All extra arguments become the path.
         $path = array_slice(func_get_args(), 1);
@@ -156,6 +164,7 @@ class Menu extends HtmlController
         $file = YamlFile::instance($filename);
         $file->settings(['inline' => 99]);
         $file->save($data->toArray());
+        $file->free();
     }
 
     public function editItem($id)
@@ -210,8 +219,10 @@ class Menu extends HtmlController
 
         $name = isset($data['particle']) ? $data['particle'] : null;
 
-        $block = new BlueprintsForm(CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml")->content());
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml");
+        $block = new BlueprintsForm($file->content());
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $file->free();
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -292,6 +303,22 @@ class Menu extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
     }
 
+    public function selectWidget()
+    {
+        $this->params['next'] = 'menu/widget';
+
+        return $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
+    }
+
+    public function widget()
+    {
+        $data = $this->request->post->getJson('item');
+        $path = [$data->widget];
+        $this->params['scope'] = 'menu';
+
+        return $this->executeForward('widget', 'POST', $path, $this->params);
+    }
+
     public function selectParticle()
     {
         $groups = [
@@ -301,8 +328,8 @@ class Menu extends HtmlController
         $particles = [
             'position'    => [],
             'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
+            'system'      => [],
+            'particle'    => [],
         ];
 
         $particles = array_replace($particles, $this->getParticles());
@@ -425,7 +452,11 @@ class Menu extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        return new BlueprintsForm(CompiledYamlFile::instance($filename)->content());
+        $file = CompiledYamlFile::instance($filename);
+        $content = new BlueprintsForm($file->content());
+        $file->free();
+
+        return $content;
     }
 
 
@@ -482,9 +513,30 @@ class Menu extends HtmlController
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
             $particleName = isset($particle['name']) ? $particle['name'] : $name;
-            $list[$type][$name] = $particleName;
+            $particleIcon = isset($particle['icon']) ? $particle['icon'] : null;
+            $list[$type][$name] = ['name' => $particleName, 'icon' => $particleIcon];
         }
 
         return $list;
+    }
+
+    protected function executeForward($resource, $method = 'GET', $path, $params = [])
+    {
+        $class = '\\Gantry\\Admin\\Controller\\Json\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
+        if (!class_exists($class)) {
+            throw new \RuntimeException('Page not found', 404);
+        }
+
+        /** @var HtmlController $controller */
+        $controller = new $class($this->container);
+
+        // Execute action.
+        $response = $controller->execute($method, $path, $params);
+
+        if (!$response instanceof Response) {
+            $response = new HtmlResponse($response);
+        }
+
+        return $response;
     }
 }

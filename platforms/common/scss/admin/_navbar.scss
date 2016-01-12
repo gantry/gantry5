@@ -34,10 +34,14 @@
         li:not(.config-select-wrap) {
             display: inline-block;
             margin-right: -4px;
+            background-color: $navbar-bg;
+            position: relative;
+            z-index: 2;
             @include transition (background-color 0.2s ease-in-out);
 
             &:hover {
-                background-color: darken($navbar-bg, 3%);
+                background-color: darken($navbar-bg, 7%);
+                color: darken ($navbar-color, 15%);
             }
 
             &.active {
@@ -45,6 +49,11 @@
 
                 a {
                     color: $navbar-active-color;
+
+                    &:focus {
+                        background-color: inherit;
+                        color: $navbar-active-color;
+                    }
                 }
             }
 
@@ -61,6 +70,11 @@
                 @include breakpoint(mobile-only) {
                     text-align: center;
                     padding: $content-padding $content-padding + 0.1;
+                }
+
+                &:focus {
+                    background-color: darken($navbar-bg, 7%);
+                    color: darken ($navbar-color, 15%);
                 }
 
                 i {
@@ -89,6 +103,11 @@
             float: left;
             @include breakpoint(tablet-range) {
                 padding: 0 $content-padding - 0.2;
+            }
+
+            #configuration-selector {
+                display: inline-block;
+                margin-bottom: 0;
             }
         }
     }

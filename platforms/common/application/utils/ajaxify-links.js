@@ -23,7 +23,9 @@ var prime         = require('prime'),
     flags         = require('./flags-state'),
     parseAjaxURI  = require('./get-ajax-url').parse,
     getAjaxSuffix = require('./get-ajax-suffix'),
-    mm            = require('../menu');
+    lm            = require('../lm'),
+    mm            = require('../menu'),
+    assignments   = require('../assignments');
 
 require('../ui/popover');
 
@@ -118,6 +120,7 @@ History.Adapter.bind(window, 'statechange', function() {
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
                 fader.style({ opacity: 0 });
+                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
                 $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
@@ -140,6 +143,7 @@ History.Adapter.bind(window, 'statechange', function() {
         var selects = $('[data-selectize]');
         if (selects) { selects.selectize(); }
         selectorChangeEvent();
+        assignments.chromeFix();
 
         body.emit('statechangeEnd');
     });
@@ -233,10 +237,19 @@ domready(function() {
     // Update NONCE if any
     if (GANTRY_AJAX_NONCE) {
         var currentURI = History.getPageUrl(),
-            currentNonce = getParam(currentURI, '_wpnonce');
+            currentNonce = getParam(currentURI, '_wpnonce'),
+            currentView = getParam(currentURI, 'view');
+
+        // hack to inject the default view in WP in case it's missing
+        if (!currentView) {
+            currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+        }
+
+        // refresh nonce
         if (currentNonce !== GANTRY_AJAX_NONCE) {
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE));
-            window.HHH = History;
+            currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
+            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
         }
     }
 
@@ -262,6 +275,7 @@ domready(function() {
                             modal.close();
 
                             body.emit('click', { target: item });
+                            navbar.attribute('tabindex', null).attribute('aria-hidden', 'false');
                             navbar.slideDown();
                         };
 
@@ -299,6 +313,7 @@ domready(function() {
         }
 
         body.emit('click', { target: item });
+        navbar.attribute('tabindex', null);
         navbar.slideDown();
     });
 

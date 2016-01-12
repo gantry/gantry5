@@ -10,7 +10,7 @@ var forOwn     = require('mout/object/forOwn'),
     size       = require('mout/collection/size'),
     isArray    = require('mout/lang/isArray'),
     flatten    = require('mout/array/flatten'),
-    guid       = require('mout/random/guid'),
+    ID         = require('./id'),
 
     set        = require('mout/object/set'),
     unset      = require('mout/object/unset'),
@@ -208,7 +208,7 @@ var Builder = new prime({
         forEach(data, function(value/*, key, object*/) {
 
             if (!value.id) {
-                value.id = guid();
+                value.id = ID({ builder: { map: this.map }, type: value.type, subtype: value.subtype });
             }
 
             // debug (flat view of the structure)

@@ -3,7 +3,7 @@
 <!--
     Gantry phing build file.
 
-    @copyright (C) 2015 RocketTheme, LLC. All rights reserved
+    @copyright (C) 2015 - 2016 RocketTheme, LLC. All rights reserved
     @copyright (C) 2014 Joshua Weiss, coder4life (@github)
 
     The following parameters can be defined inside the PHPSTORM build task as Arguments. They
@@ -77,6 +77,7 @@
     <!-- Importing platforms targets -->
     <import file="build-joomla.xml" />
     <import file="build-wordpress.xml" />
+    <import file="build-grav.xml" />
 
     <!-- Preflight check to see if we can even run the build script -->
     <target name="preflight">
@@ -154,6 +155,14 @@
         <phingcall target="build-wordpress-themes" />
     </target>
 
+    <target name="grav">
+        <phingcall target="cleanup" />
+        <phingcall target="mkdir" />
+
+        <phingcall target="build-grav-plugin" />
+        <phingcall target="build-grav-themes" />
+    </target>
+
     <target name="reset-git">
         <echo message="Restoring Git repository to HEAD..." />
         <exec command="git fetch origin &amp;&amp; git reset --hard &amp;&amp; git clean -f" checkreturn="true" error="${phing.dir}/gulp-git-restore-error.txt" />
@@ -207,20 +216,19 @@
     </target>
 
     <target name="checksum">
-        <manifest file="${source}/MD5SUM" checksum="md5">
+        <manifest file="${source}/MD5SUMS" checksum="md5">
             <fileset dir="${source}" />
         </manifest>
     </target>
 
 
-    <target name="dev" depends="preflight,info,mkdir,joomla,wordpress,cleanup,postflight" />
+    <target name="dev" depends="preflight,info,mkdir,joomla,wordpress,grav,cleanup,postflight" />
     <target name="prod" depends="preflight,info,mkdir,assets-prod,joomla,wordpress,cleanup,postflight" />
     <target name="joomla-dev" depends="preflight,info,mkdir,joomla,cleanup,postflight" />
     <target name="wordpress-dev" depends="preflight,info,mkdir,wordpress,cleanup,postflight" />
+    <target name="grav-dev" depends="preflight,info,mkdir,grav,cleanup,postflight" />
     <target name="joomla-prod" depends="preflight,info,mkdir,assets-prod,joomla,cleanup,postflight" />
     <target name="wordpress-prod" depends="preflight,info,mkdir,assets-prod,wordpress,cleanup,postflight" />
-
-    <!--<target name="old_prod" depends="preflight,info,mkdir,assets-prod,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,reset-git,package,cleanup,postflight" />
-    <target name="old_dev" depends="preflight,info,mkdir,build-installer,build-component,build-library,build-nucleus,build-plugins,build-themes,package,cleanup,postflight" />-->
+    <target name="grav-prod" depends="preflight,info,mkdir,assets-prod,grav,cleanup,postflight" />
 
 </project>

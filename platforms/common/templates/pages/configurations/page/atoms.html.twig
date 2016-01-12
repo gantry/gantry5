@@ -1,0 +1,45 @@
+<h2 class="page-title">
+    <span class="title">Atoms</span>
+</h2>
+
+<div id="atoms"{{ overrideable ? ' class="atoms-override"' }}>
+    <ul class="atoms-picker">
+        {%- for atom, label in atoms -%}
+        <li data-atom-type="{{ atom }}" data-atom-picked="{{ { 'title': label, 'type': atom, 'attributes': gantry.config.get('particles.' ~ atom) } |json_encode|e('html_attr')}}">
+            <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
+            <span class="atom-title">{{ label }}</span>
+            <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom)|e }}" class="atom-settings config-cog"><i aria-label="Configure Atom Settings" class="fa fa-cog"></i></a>
+        </li>
+        {%- endfor -%}
+    </ul>
+
+    <div class="card settings-block">
+        {% if gantry.config.get('page.head.atoms') %}
+                <ul class="atoms-list">
+                {%- for atom in gantry.config.get('page.head.atoms') -%}
+                    {% set status = atom.attributes.enabled ? '' : 'class="atom-disabled" title="This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete."' %}
+                    <li data-atom-picked="{{ atom|json_encode|e('html_attr') }}" {{ status|raw }} data-atom-type="{{ atom.type }}">
+                        <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
+                        <span class="atom-title">{{- atom.title -}}</span>
+                        <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom.type)|e }}" class="atom-settings config-cog"><i aria-label="Configure Atom Settings" class="fa fa-cog"></i></a>
+                    </li>
+                {%- endfor -%}
+                </ul>
+        {% else %}
+            <ul class="atoms-list"></ul>
+        {% endif %}
+
+        {% if overrideable %}
+            {% set prefix = 'page.head.' %}
+            {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'atoms', 'default_value': attribute(defaults, prefix ~ 'atoms'), 'value': gantry.config.get(prefix ~ 'atoms'), 'field': {'label': 'Enabled of the field Atoms' }} %}
+        {% endif %}
+    </div>
+
+    {# Deprecated Atoms from Layout (< 5.2.0) #}
+    {% if atoms_deprecated is not null and atoms_deprecated|length and gantry.config.get('page.head.atoms') %}
+        <p class="alert alert-notice">The above Atoms have been imported from the current Outline Layout. Since Gantry 5.2.0 Atoms are no longer located in the Layout Manager. While we are automatically migrating the Atoms for you, please ensure all the settings are correct and resave the Page Settings, as well as the Layout, if needed.</p>
+    {% endif %}
+
+    <div id="trash" data-atoms-erase><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+    {#{{ dump(atoms_deprecated|json_encode) }}#}
+</div>

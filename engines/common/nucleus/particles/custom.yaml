@@ -1,6 +1,7 @@
 name: Custom HTML
 description: Display custom HTML block.
 type: particle
+icon: fa-code
 
 form:
   fields:
@@ -14,3 +15,8 @@ form:
       type: textarea.textarea
       label: Custom HTML
       description: Enter custom HTML into here.
+
+    filter:
+      type: input.checkbox
+      label: Process shortcodes
+      description: Enable shortcode processing / filtering in the content.

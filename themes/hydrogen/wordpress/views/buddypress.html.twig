@@ -1,0 +1,17 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'buddypress.html.twig' %}
+{% set scope = 'buddypress' %}
+
+{% block content %}
+
+    <div class="platform-content">
+        <div class="buddypress-content">
+
+            <article class="g-content {{ post.class }}" id="content-{{ scope }}">
+                {{ content|raw }}
+            </article>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -13,6 +13,14 @@
 //-------------------------------------------
 
 // WORDPRESS
+@import "wordpress/typography";
+@import "wordpress/core";
+@import "wordpress/particles";
 @import "wordpress/utilities";
 @import "wordpress/captions";
 @import "wordpress/screen-readers";
+@import "wordpress/shortcodes";
+@import "wordpress/meta";
+@import "wordpress/pagination";
+@import "wordpress/comments";
+@import "wordpress/widgets";

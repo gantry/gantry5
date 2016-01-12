@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,9 +10,12 @@
 
 namespace Gantry\WordPress\Assignments;
 
+use Gantry\Component\Assignments\AssignmentsInterface;
+
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
+    public $priority = 6;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -47,7 +49,7 @@ class AssignmentsPost implements AssignmentsInterface
                     $terms = wp_get_post_terms($id, $tax, $args);
 
                     foreach($terms as $term) {
-                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = 1;
+                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = $this->priority;
                     }
                 }
             }
@@ -151,7 +153,7 @@ class AssignmentsPost implements AssignmentsInterface
 
                 $items[] = [
                     'name'     => $post->ID,
-                    'label'    => $post->level > 0 ? str_repeat('—', $post->level) . ' ' . $post_title : $post_title,
+                    'label'    => $post->level > 0 ? str_repeat('—', max(0, $post->level)) . ' ' . $post_title : $post_title,
                     'disabled' => false
                 ];
             }
@@ -212,7 +214,7 @@ class AssignmentsPost implements AssignmentsInterface
                 foreach($terms as $term) {
                     $items[] = [
                         'name'     => $term->taxonomy . '-' . $term->term_id,
-                        'label'    => $term->level > 0 ? str_repeat('—', $term->level + 1) . ' ' . $term->name : '— ' . $term->name,
+                        'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
                         'taxonomy' => $term->taxonomy,
                         'disabled' => false
                     ];

@@ -1,0 +1,17 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'bbpress.html.twig' %}
+{% set scope = 'bbpress' %}
+
+{% block content %}
+
+    <div class="platform-content">
+        <div class="bbpress-content">
+
+            <article class="g-content {{ post.class }}" id="content-{{ scope }}">
+                {{ content|raw }}
+            </article>
+
+        </div>
+    </div>
+
+{% endblock %}

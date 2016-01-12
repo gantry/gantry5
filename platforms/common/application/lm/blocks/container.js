@@ -48,7 +48,7 @@ var Container = new prime({
             actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
-        actions.html('<span class="g-tooltip g-tooltip-right" data-title="Container settings"><i class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
+        actions.html('<span data-tip="Container settings" data-tip-place="top-left"><i aria-label="Configure Container Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 

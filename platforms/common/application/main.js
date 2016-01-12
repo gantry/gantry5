@@ -11,13 +11,16 @@ var $              = require('elements'),
     toastr         = ui.toastr,
 
     parseAjaxURI   = require('./utils/get-ajax-url').parse,
+    getAjaxURL     = require('./utils/get-ajax-url').global,
     getAjaxSuffix  = require('./utils/get-ajax-suffix'),
 
     flags          = require('./utils/flags-state'),
     validateField  = require('./utils/field-validation'),
     lm             = require('./lm'),
     mm             = require('./menu'),
-    configurations = require('./configurations');
+    configurations = require('./configurations'),
+    positions      = require('./positions'),
+    changelog      = require('./changelog');
 
 require('elements/attributes');
 require('elements/events');
@@ -29,9 +32,9 @@ require('./ui/popover');
 require('./utils/ajaxify-links');
 require('./utils/rAF-polyfill');
 
-var createHandler = function(divisor,noun,restOfString){
-    return function(diff){
-        var n = Math.floor(diff/divisor);
+var createHandler = function(divisor, noun, restOfString) {
+    return function(diff) {
+        var n = Math.floor(diff / divisor);
         var pluralizedNoun = noun + ( n > 1 ? 's' : '' );
         return "" + n + " " + pluralizedNoun + " " + restOfString;
     }
@@ -58,10 +61,10 @@ var formatters = [
 ];
 
 var prettyDate = {
-    format: function (date) {
+    format: function(date) {
         var diff = (((new Date()).getTime() - date.getTime()) / 1000);
-        for( var i=0; i<formatters.length; i++ ){
-            if( diff < formatters[i].threshold ){
+        for (var i = 0; i < formatters.length; i++) {
+            if (diff < formatters[i].threshold) {
                 return formatters[i].handler(diff);
             }
         }
@@ -69,7 +72,7 @@ var prettyDate = {
     }
 };
 
-window.onbeforeunload = function(){
+window.onbeforeunload = function() {
     if (flags.get('pending')) {
         return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
     }
@@ -91,7 +94,7 @@ ready(function() {
     });
 
     // Extras
-    body.delegate('click', '[data-g-extras]', function(event, element){
+    body.delegate('click', '[data-g-extras]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
@@ -102,19 +105,27 @@ ready(function() {
                     content: zen('ul').html(content.html())[0].outerHTML,
                     allowElementsClick: '.toggle'
                 });
+            element.on('shown.popover', function(popover){
+                element.attribute('aria-expanded', true).attribute('aria-hidden', false);
+                element.find('.enabler')[0].focus();
+            });
+
+            element.on('hide.popover', function(popover){
+                element.attribute('aria-expanded', false).attribute('aria-hidden', true);
+            });
 
             element.getPopover().show();
         }
     });
 
     // Platform Settings redirect
-    body.delegate('mousedown', '[data-settings-key]', function(event, element){
+    body.delegate('mousedown', '[data-settings-key]', function(event, element) {
         var key = element.data('settings-key');
         if (!key) { return true; }
 
         var redirect = window.location.search,
             settings = element.attribute('href'),
-            uri = window.location.href.split('?');
+            uri      = window.location.href.split('?');
         if (uri.length > 1 && uri[0].match(/index.php$/)) { redirect = 'index.php' + redirect; }
 
         redirect = setParam(settings, key, btoa(redirect));
@@ -122,9 +133,12 @@ ready(function() {
     });
 
     // Save Tooltip
-    body.delegate('mouseover', '.button-save', function(event, element){
+    body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        var feedback = 'Last Saved: ' + prettyDate.format(element.lastSaved);
+        element
+            .data('tip', feedback)
+            .data('title', feedback);
     });
 
     // Save
@@ -170,16 +184,16 @@ ready(function() {
                         input = $(input);
                         var name     = input.attribute('name'),
                             value    = input.value(),
-                            parent   = input.parent('.settings-param'),
+                            parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        override = override || $(input.data('override-target'));
 
                         if (!name || input.disabled() || (override && !override.checked())) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
                 }
-
-                if ($('#styles')) { extras = '<br />The CSS was successfully compiled!'; }
         }
 
         if (invalid.length) {
@@ -202,7 +216,12 @@ ready(function() {
                 });
             } else {
                 modal.close();
-                toastr.success(interpolate(sentence, {
+
+                if ($('#styles')) {
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                }
+
+                toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
@@ -223,6 +242,14 @@ ready(function() {
     });
 
     // Editable titles
+    body.delegate('keydown', '[data-title-edit]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key == 32 || key == 13) { // ARIA support: Space / Enter toggle
+            event.preventDefault();
+            body.emit('click', event);
+        }
+    });
+
     body.delegate('click', '[data-title-edit]', function(event, element) {
         element = $(element);
         if (element.hasClass('disabled')) { return false; }
@@ -303,7 +330,7 @@ ready(function() {
                 indicator.hideIndicator();
                 return false;
             } else {
-                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                toastr[response.body.warning ? 'warning' : 'success'](response.body.html || 'Action successfully completed.', response.body.title || '');
             }
 
             indicator.hideIndicator();
@@ -328,7 +355,9 @@ var modules = {
     domready: require('elements/domready'),
     particles: require('./particles'),
     zen: require('elements/zen'),
-    moofx: require('moofx')
+    moofx: require('moofx'),
+    atoms: require('./pagesettings'),
+    tips: require('./ui/tooltips')
 };
 
 window.G5 = modules;

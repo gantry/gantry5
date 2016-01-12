@@ -173,7 +173,7 @@ ready(function() {
             method: 'post',
             className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
             data: dataPost,
-            remote: element.attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -217,6 +217,8 @@ ready(function() {
                         var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+                        override = override || $(input.data('override-target'));
 
                         if (override && !override.checked()) { return; }
                         if (!validateField(input)) { invalid.push(input); }

@@ -1,29 +1,28 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   Dual License: MIT or GNU/GPLv2 and later
+ *
+ * http://opensource.org/licenses/MIT
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
+ */
+
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
 
 class Gantry extends Base\Gantry
 {
-    /**
-     * @throws \LogicException
-     */
-    protected static function load()
+    protected function loadGlobal()
     {
-        $container = parent::load();
+        $file = CompiledYamlFile::instance(PRIME_ROOT . '/config/global.yaml');
+        $data = (array) $file->setCachePath(PRIME_ROOT . '/cache/global')->content();
+        $file->free();
 
-        $container['site'] = function ($c) {
-            return new Site;
-        };
-
-        $container['menu'] = function ($c) {
-            return new Menu;
-        };
-
-        $container['global'] = function ($c) {
-            return new Config([]);
-        };
-
-        return $container;
+        return $data;
     }
 }

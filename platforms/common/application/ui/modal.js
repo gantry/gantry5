@@ -15,6 +15,7 @@ var prime    = require('prime'),
     forEach  = require('mout/array/forEach'),
     last     = require('mout/array/last'),
     merge    = require('mout/object/merge'),
+    trim     = require('mout/string/trim'),
 
     request  = require('agent');
 
@@ -112,7 +113,12 @@ var Modal = new prime({
         elements.container = zen('div')
             .addClass(options.baseClassNames.container)
             .addClass(options.className)
-            .style(options.css);
+            .style(options.css)
+            .attribute('tabindex', '0')
+            .attribute('role', 'dialog')
+            .attribute('aria-hidden', 'true')
+            .attribute('aria-labelledby', 'g-modal-labelledby')
+            .attribute('aria-describedby', 'g-modal-describedby');
 
         storage.set(elements.container, { dialog: options });
 
@@ -136,6 +142,8 @@ var Modal = new prime({
             .addClass(options.baseClassNames.content)
             .addClass(options.contentClassName)
             .style(options.contentCSS)
+            .attribute('aria-live', 'assertive')
+            .attribute('tabindex', '0')
             .html(options.content);
 
         storage.set(elements.content, { dialog: options });
@@ -163,7 +171,7 @@ var Modal = new prime({
                     return;
                 }
 
-                elements.content.html(response.body.html || /<body.*?>([\s\S]*)<\/body>/.exec(response.body)[1] || response.body);
+                elements.content.html(response.body.html || response.body);
 
                 if (!response.body.success) {
                     if (!response.body.html) { elements.content.style({ width: '90%' }); }
@@ -174,9 +182,15 @@ var Modal = new prime({
                     options.remoteLoaded(response, options);
                 }
 
+                elements.container.attribute('aria-hidden', 'false');
+                setTimeout(function(){ elements.content[0].focus(); }, 0);
+
                 var selects = $('[data-selectize]');
                 if (selects) { selects.selectize(); }
             }, this));
+        } else {
+            elements.container.attribute('aria-hidden', 'false');
+            setTimeout(function(){ elements.content[0].focus(); }, 0);
         }
 
         // close button
@@ -184,6 +198,7 @@ var Modal = new prime({
             elements.closeButton = zen('div')
                 .addClass(options.baseClassNames.close)
                 .addClass(options.closeClassName)
+                .attribute('role', 'button').attribute('aria-label', 'Close')
                 .style(options.closeCSS);
 
             storage.set(elements.closeButton, { dialog: options });
@@ -197,7 +212,25 @@ var Modal = new prime({
         }, this));
 
         // inject the dialog in the DOM
-        $(options.appendNode).appendChild(elements.container);
+        var container = $(options.appendNode);
+
+        // wordpress workaround for out-of-scope cases
+        if (GANTRY_PLATFORM == 'wordpress') {
+            container = $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
+            if ('#' + container.id() != options.appendNode) {
+                var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
+                if (wpwrap.id() == 'wpwrap') {
+                    sibling = wpwrap.nextSibling(options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).after(wpwrap);
+                } else {
+                    sibling = wpwrap.find('> ' + options.appendNode);
+                    workaround =  sibling ? sibling : zen('div.g5wp-out-of-scope' + options.appendNode).top(wpwrap);
+                }
+                container = workaround;
+            }
+        }
+
+        container.appendChild(elements.container);
 
         options.elements = elements;
 

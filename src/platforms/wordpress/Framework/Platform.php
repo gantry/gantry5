@@ -1,7 +1,17 @@
 <?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 namespace Gantry\Framework;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\WordPress\Widgets;
 use Pimple\Container;
@@ -12,35 +22,68 @@ use Pimple\Container;
  * @author RocketTheme
  * @license MIT
  */
-
-class Platform extends BasePlatform {
+class Platform extends BasePlatform
+{
     protected $name = 'wordpress';
+    protected $file = 'gantry5/gantry5.php';
 
-    public function __construct(Container $container) {
+    public function __construct(Container $container)
+    {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
+        $this->includes_dir = Folder::getRelativePath(WPINC);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
+        $this->multisite = get_current_blog_id() !== 1 ? '/blog-' . get_current_blog_id() : '';
 
         parent::__construct($container);
+
+        /**
+         * Please remember to add the newly added streams to the add_gantry5_streams_to_kses()
+         * in gantry5.php so they would get added to the allowed kses protocols.
+         */
+
+        // Add wp-includes directory to the streams
+        $this->items['streams']['wp-includes'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->includes_dir]];
+
+        // Add wp-content directory to the streams
+        $this->items['streams']['wp-content'] = ['type' => 'ReadOnlyStream', 'prefixes' => ['' => $this->content_dir]];
     }
 
-    public function getCachePath() {
-        return WP_CONTENT_DIR . '/cache/gantry5';
+    public function init()
+    {
+        if ($this->multisite) {
+            $theme = $this->get('streams.gantry-theme.prefixes..0');
+            if ($theme) {
+                $this->set('streams.gantry-theme.prefixes..0', $theme . $this->multisite);
+            }
+        }
+
+        return parent::init();
     }
 
-    public function getThemesPaths() {
+    public function getCachePath()
+    {
+        $global = $this->container['global'];
+
+        return $global->get('cache_path') ?: WP_CONTENT_DIR . '/cache/gantry5' . $this->multisite;
+    }
+
+    public function getThemesPaths()
+    {
         return ['' => Folder::getRelativePath(get_theme_root())];
     }
 
-    public function getMediaPaths() {
+    public function getMediaPaths()
+    {
         return ['' => [
             'gantry-theme://images',
-            $this->content_dir . '/uploads',
+            trim(wp_upload_dir()['relative'], '/'),
             $this->gantry_dir
             ]
         ];
     }
 
-    public function getEnginesPaths() {
+    public function getEnginesPaths()
+    {
         if (is_link(GANTRY5_PATH . '/engines')) {
             // Development environment.
             return ['' => [$this->gantry_dir . "/engines/{$this->name}", $this->gantry_dir . '/engines/common']];
@@ -49,7 +92,8 @@ class Platform extends BasePlatform {
         return ['' => [$this->gantry_dir . '/engines']];
     }
 
-    public function getAssetsPaths() {
+    public function getAssetsPaths()
+    {
         if (is_link(GANTRY5_PATH . '/assets')) {
             // Development environment.
             return ['' => ['gantry-theme://', $this->gantry_dir . "/assets/{$this->name}", $this->gantry_dir . '/assets/common']];
@@ -58,11 +102,43 @@ class Platform extends BasePlatform {
         return ['' => ['gantry-theme://', $this->gantry_dir . '/assets']];
     }
 
-    public function finalize() {
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return null
+     */
+    public function getThemePreviewUrl($theme)
+    {
+        return Document::url('wp-admin/customize.php?theme=' . $theme);
+    }
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    public function getThemeAdminUrl($theme)
+    {
+        if ($theme === Gantry::instance()['theme.name']) {
+            return Document::url('wp-admin/admin.php?page=layout-manager');
+        }
+        return null;
+    }
+
+    public function filter($text)
+    {
+        return \do_shortcode($text);
+    }
+
+    public function finalize()
+    {
         Document::registerAssets();
     }
 
-    public function errorHandlerPaths() {
+    public function errorHandlerPaths()
+    {
         // Catch errors in Gantry cache, plugin and theme only.
         $paths = ['#[\\\/]wp-content[\\\/](cache|plugins)[\\\/]gantry5[\\\/]#', '#[\\\/]wp-content[\\\/]themes[\\\/]#'];
 
@@ -74,8 +150,32 @@ class Platform extends BasePlatform {
         return $paths;
     }
 
+    public function settings()
+    {
+        return admin_url('plugins.php?page=g5-settings');
+    }
+
+    public function update()
+    {
+        return esc_url(wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=') . $this->file, 'upgrade-plugin_' . $this->file));
+    }
+
+    public function updates()
+    {
+        $plugin = get_site_transient('update_plugins');
+        $list = [];
+        if (!isset($plugin->response[$this->file]) || version_compare(GANTRY5_VERSION, 0) < 0 || !current_user_can('update_plugins')) { return $list; }
+
+        $response = $plugin->response[$this->file];
+
+        $list[] = 'Gantry ' . $response->new_version;
+
+        return $list;
+    }
+
     // getCategories logic for the categories selectize field
-    public function getCategories( $args = [] ) {
+    public function getCategories( $args = [] )
+    {
         $default = [
             'type'                     => 'post',
             'orderby'                  => 'name',
@@ -111,5 +211,22 @@ class Platform extends BasePlatform {
     public function listWidgets()
     {
         return Widgets::listWidgets();
+    }
+
+    public function displaySystemMessages($params = [])
+    {
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        /** @var Messages $messages */
+        $messages = $this->container['messages'];
+
+        $context = [
+            'messages' => $messages->get(),
+            'params' => $params
+        ];
+        $messages->clean();
+
+        return $theme->render('partials/messages.html.twig', $context);
     }
 }

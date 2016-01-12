@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,14 +20,18 @@ class plgSystemGantry5 extends JPlugin
 
     public function __construct(&$subject, $config = array())
     {
+        $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
+        $this->_type = isset($config['type']) ? $config['type'] : 'system';
+
         $this->app = JFactory::getApplication();
+
+        $this->loadLanguage('plg_system_gantry5.sys');
 
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
             if ($this->app->isAdmin()) {
-                $this->loadLanguage('plg_system_gantry5.sys');
                 $this->app->enqueueMessage(
                     JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
                     'warning'
@@ -44,7 +48,7 @@ class plgSystemGantry5 extends JPlugin
      */
     public function onGantryGlobalConfig(&$global)
     {
-        $global = new \Gantry\Component\Config\Config($this->params->toArray());
+        $global = $this->params->toArray();
     }
 
     /**
@@ -53,7 +57,7 @@ class plgSystemGantry5 extends JPlugin
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
-            $this->onAfterRouteSite();
+             $this->onAfterRouteSite();
 
         } elseif ($this->app->isAdmin()) {
             $this->onAfterRouteAdmin();
@@ -94,7 +98,7 @@ class plgSystemGantry5 extends JPlugin
             $data = $db->loadObjectList();
 
             if (sizeof($data) > 0) {
-                $this->modules = [];
+                $this->modules = array();
                 $body = $this->app->getBody();
 
                 foreach ($data as $module) {
@@ -120,17 +124,24 @@ class plgSystemGantry5 extends JPlugin
      */
     private function onAfterRouteSite()
     {
-        $template = $this->app->getTemplate(true);
+        $template = $this->app->getTemplate();
 
-        if (!file_exists(JPATH_THEMES . "/{$template->template}/gantry/theme.yaml")) {
+        if (!file_exists(JPATH_THEMES . "/{$template}/gantry/theme.yaml")) {
             return;
         }
 
-        $gantryPath = JPATH_THEMES . "/{$template->template}/includes/gantry.php";
+        $gantryPath = JPATH_THEMES . "/{$template}/includes/gantry.php";
 
         if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
-            include_once $gantryPath;
+            $gantry = include $gantryPath;
+
+            if (!$gantry) {
+                throw new \RuntimeException(
+                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $template, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
+                    500
+                );
+            }
 
         } else {
 
@@ -141,8 +152,8 @@ class plgSystemGantry5 extends JPlugin
             $gantry = Gantry\Framework\Gantry::instance();
 
             // Initialize the template.
-            $gantry['theme.path'] = JPATH_THEMES . "/{$template->template}";
-            $gantry['theme.name'] = $template->template;
+            $gantry['theme.path'] = JPATH_THEMES . "/{$template}";
+            $gantry['theme.name'] = $template;
 
             $themePath = $gantry['theme.path'] . '/includes/theme.php';
 
@@ -152,7 +163,7 @@ class plgSystemGantry5 extends JPlugin
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
-        /** @var \Gantry\Framework\Configurations $configurations */
+        /** @var \Gantry\Framework\Outlines $configurations */
         $configurations = $gantry['configurations'];
 
         $theme->setLayout($configurations->current());
@@ -181,7 +192,7 @@ class plgSystemGantry5 extends JPlugin
 
             if ($cid) {
                 $styles = $this->getStyles();
-                $selected = array_intersect(array_keys($styles), $cid);
+                $selected = array_intersect_key($styles, array_flip($cid));
 
                 // If no Gantry templates were selected, just let com_templates deal with the request.
                 if (!$selected) {
@@ -190,12 +201,11 @@ class plgSystemGantry5 extends JPlugin
 
                 // Special handling for tasks coming from com_template.
                 if ($task == 'style.edit') {
-                    $id = (int) array_shift($cid);
-
-                    if (isset($styles[$id])) {
-                        $token = JSession::getFormToken();
-                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&style={$id}&{$token}=1");
-                    }
+                    $item = each($selected);
+                    $id = $item['key'];
+                    $theme = $item['value'];
+                    $token = JSession::getFormToken();
+                    $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
             }
         }
@@ -244,7 +254,7 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Clean the cache.
-        $this->cleanCache();
+        \Gantry\Joomla\CacheHelper::cleanPlugin();
 
         // Trigger the onExtensionAfterSave event.
         $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
@@ -280,43 +290,98 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
-    public function onContentPrepareData($context, $data)
+    public function onExtensionAfterSave($context, $table, $isNew)
     {
-        if ($context !== 'com_menus.item') {
+        if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
             return;
         }
+
+        if (!$isNew) {
+            return;
+        }
+
+        $template = $table->template;
+
+        $gantry = $this->load($template);
+        $registry = new Joomla\Registry\Registry($table->params);
+        $old = (int) $registry->get('configuration', 0);
+        $new = (int) $table->id;
+
+        if ($old && $old !== $new) {
+            Gantry\Joomla\StyleHelper::copy($table, $old, $new);
+        }
+    }
+
+    public function onExtensionAfterDelete($context, $table)
+    {
+        if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
+            return;
+        }
+
+        $template = $table->template;
+
+        $gantry = $this->load($template);
+
+        Gantry\Joomla\StyleHelper::delete($table->id);
+    }
+
+    public function onContentPrepareData($context, $data)
+    {
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+        // Check that we are manipulating a valid form.
+        switch ($context) {
+            // TODO: Joomla seems to be missing support for component data manipulation!
+/*
+            case 'com_config.component':
+                // Add plugin parameters under plg_type_name.
+                if ($data instanceof JRegistry) {
+                    $data->set($name, $this->params->toObject());
+                }
+                break;
+*/
+
+            case 'com_menus.item':
+                break;
+        }
+
+        return true;
     }
 
     public function onContentPrepareForm($form, $data)
     {
+        // Check that we are manipulating a valid form.
+        if (!($form instanceof JForm)) {
+            $this->_subject->setError('JERROR_NOT_A_FORM');
+
+            return false;
+        }
+
+        $name = 'plg_' . $this->_type . '_' . $this->_name;
+
         switch ($form->getName()) {
+            // TODO: This part works, but Joomla seems to be missing support for component data manipulation!
+/*
+            case 'com_config.component':
+                // If we are editing configuration from Gantry component, add missing fields from system plugin.
+                $rules = $form->getField('rules');
+                if ($rules && $rules->getAttribute('component') == 'com_gantry5') {
+                    $this->loadLanguage('plg_system_gantry5.sys');
+                    // Add plugin fields to the form under plg_type_name.
+                    $file = file_get_contents(__DIR__."/{$this->_name}.xml");
+                    $file = preg_replace('/ name="params"/', " name=\"{$name}\"", $file);
+                    $form->load($file, false, '/extension/config');
+                }
+                break;
+*/
             case 'com_menus.items.filter':
                 break;
+
             case 'com_menus.item':
                 break;
         }
-    }
 
-    /**
-     * Clean plugin cache just as if we were saving plugin from the plugin manager.
-     *
-     * @see JModelLegacy::cleanCache()
-     */
-    protected function cleanCache($group = 'com_plugins', $client_id = 0)
-    {
-        // Initialise variables;
-        $conf = JFactory::getConfig();
-        $dispatcher = JEventDispatcher::getInstance();
-
-        $options = array(
-            'defaultgroup' => $group,
-            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'));
-
-        $cache = JCache::getInstance('callback', $options);
-        $cache->clean();
-
-        // Trigger the onContentCleanCache event.
-        $dispatcher->trigger('onContentCleanCache', $options);
+        return true;
     }
 
     /**
@@ -349,14 +414,14 @@ class plgSystemGantry5 extends JPlugin
     private function getStyles()
     {
         $cache = JFactory::getCache('com_templates', '');
-        $list = $cache->get('gantry-templates');
+        $list = $cache->get('gantry-templates-1');
 
         if ($list === false) {
             // Load styles
             $db    = JFactory::getDbo();
             $query = $db
                 ->getQuery(true)
-                ->select('s.id, s.template, s.params')
+                ->select('s.id, s.template')
                 ->from('#__template_styles as s')
                 ->where('s.client_id = 0')
                 ->where('e.enabled = 1')
@@ -368,17 +433,48 @@ class plgSystemGantry5 extends JPlugin
             $list = array();
 
             foreach ($templates as $template) {
-                if (file_exists(JPATH_SITE . "/templates/{$template->template}/gantry/theme.yaml")) {
-                    $params = new \Joomla\Registry\Registry;
-                    $params->loadString($template->params);
-
-                    $list[$template->id] = true;
+                if ($this->isGantryTemplate($template->template)) {
+                    $list[$template->id] = $template->template;
                 }
             }
 
-            $cache->store($list, 'gantry-templates');
+            $cache->store($list, 'gantry-templates-1');
         }
 
         return $list;
+    }
+
+    private function isGantryTemplate($name)
+    {
+        return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
+    }
+
+    protected function load($name)
+    {
+        Gantry5\Loader::setup();
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        if (!isset($gantry['theme.name']) || $name !== $gantry['theme.name']) {
+            // Restart Gantry and initialize it.
+            $gantry = Gantry\Framework\Gantry::restart();
+            $gantry['theme.name'] = $name;
+            $gantry['streams']->register();
+
+            $patform = $gantry['platform'];
+            $locator = $gantry['locator'];
+
+            // Initialize theme stream.
+            $details = new Gantry\Component\Theme\ThemeDetails($name);
+            $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
+
+            // Initialize theme cache stream.
+            $cachePath = $patform->getCachePath() . '/' . $name;
+            Gantry\Component\FileSystem\Folder::create($cachePath);
+            $locator->addPath('gantry-cache', 'theme', array($cachePath), true, true);
+            $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        }
+
+        return $gantry;
     }
 }

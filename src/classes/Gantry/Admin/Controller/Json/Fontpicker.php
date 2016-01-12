@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -41,7 +40,9 @@ class Fontpicker extends JsonController
     public function loadGoogleFonts()
     {
         $data = new \stdClass();
-        $fonts = JsonFile::instance($this->google_fonts)->content()['items'];
+        $file = JsonFile::instance($this->google_fonts);
+        $fonts = $file->content()['items'];
+        $file->free();
 
         $data->categories = [];
         $data->subsets = [];

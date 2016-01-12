@@ -2,13 +2,13 @@
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /*
  * The template for displaying Archive pages.
@@ -19,34 +19,32 @@ defined( 'ABSPATH' ) or die;
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  */
 
-$chooser = new \Gantry\Framework\OutlineChooser;
+$gantry = Gantry\Framework\Gantry::instance();
+$theme  = $gantry['theme'];
 
-/** @var \Gantry\Framework\Theme $theme */
-$theme = $gantry[ 'theme' ];
-$theme->setLayout( $chooser->select() );
+// We need to render contents of <head> before plugin content gets added.
+$context              = Timber::get_context();
+$context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
-$context = Timber::get_context();
+$templates = ['archive.html.twig', 'index.html.twig'];
 
-$templates = array( 'archive.html.twig', 'index.html.twig' );
-
-$context[ 'title' ] = 'Archive';
-if( is_day() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'j F Y' );
-} else if( is_month() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'F Y' );
-} else if( is_year() ) {
-    $context[ 'title' ] = 'Archive: ' . get_the_date( 'Y' );
-} else if( is_tag() ) {
-    $context[ 'title' ] = single_tag_title( '', false );
-} else if( is_category() ) {
-    $context[ 'title' ] = single_cat_title( '', false );
-    array_unshift( $templates, 'archive-' . get_query_var( 'cat' ) . '.html.twig' );
-} else if( is_post_type_archive() ) {
-    $context[ 'title' ] = post_type_archive_title( '', false );
-    array_unshift( $templates, 'archive-' . get_post_type() . '.html.twig' );
+$context['title'] = __('Archive', 'g5_hydrogen');
+if (is_day()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('j F Y');
+} else if (is_month()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('F Y');
+} else if (is_year()) {
+    $context['title'] = __('Archive:', 'g5_hydrogen') . ' ' . get_the_date('Y');
+} else if (is_tag()) {
+    $context['title'] = single_tag_title('', false);
+} else if (is_category()) {
+    $context['title'] = single_cat_title('', false);
+    array_unshift($templates, 'archive-' . get_query_var('cat') . '.html.twig');
+} else if (is_post_type_archive()) {
+    $context['title'] = post_type_archive_title('', false);
+    array_unshift($templates, 'archive-' . get_post_type() . '.html.twig');
 }
 
-$context[ 'posts' ] = Timber::get_posts();
-$context[ 'pagination' ] = Timber::get_pagination();
+$context['posts'] = Timber::get_posts();
 
-Timber::render( $templates, $context );
+Timber::render($templates, $context);

@@ -1,13 +1,13 @@
 
-<div class="g-tabs">
+<div class="g-tabs" role="tablist">
     <ul>
-        <li class="active"><a href="#">{{ 'GANTRY5_PLATFORM_PRESETS'|trans }}</a></li>
-        <li><a href="#">{{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a></li>
+        <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PRESETS'|trans }}</a></li>
+        <li><a href="#" id="g-switcher-platforms-outlines" role="presentation" aria-controls="g-switcher-outlines" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a></li>
     </ul>
 </div>
 
 <div class="g-panes">
-    <div class="g-pane clearfix active">
+    <div class="g-pane clearfix active" role="tabpanel" id="g-switcher-platforms" aria-labelledby="g-switcher-platforms-tab" aria-expanded="true">
         <div class="g-preserve-particles">
             <label>
                 <input data-g-preserve="preset" type="checkbox" checked="checked" />
@@ -16,16 +16,16 @@
         </div>
 
         {% for name, group in presets %}
-        <ul class="g-switch-presets{% if name == 'user' %} float-left{% else %} float-right{% endif %}">
-            <li class="g-switch-title">{{ name == 'user' ? 'User' : 'Platform' }}</li>
+        <ul class="g-switch-presets{% if name == 'user' %} float-left{% else %} float-right{% endif %}" role="tablist">
+            <li tabindex="0" class="g-switch-title" role="presentation">{{ name == 'user' ? 'User' : 'Platform' }}</li>
             {% for key, current in group %}
-            <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}" class="g-switch-preset">{{ current|e }}</li>
+            <li tabindex="0" aria-label="{{ current|e }} Preset" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}" class="g-switch-preset">{{ current|e }}</li>
             {% endfor %}
         </ul>
         {% endfor %}
     </div>
 
-    <div class="g-pane clearfix">
+    <div class="g-pane clearfix" role="tabpanel" id="g-switcher-outlines" aria-labelledby="g-switcher-outlines-tab" aria-expanded="false">
         {% set user_conf = gantry.configurations.copy.user %}
         {% set system_conf = gantry.configurations.system %}
 
@@ -35,18 +35,20 @@
                 {{ 'GANTRY5_PLATFORM_SWITCH_OUTLINE_DESC'|trans }}
             </label>
         </div>
-        <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}">
-            <li class="g-switch-title">User</li>
+        <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}" role="tablist">
+            <li  tabindex="0" class="g-switch-title" role="presentation">User</li>
             {% for key,current in user_conf %}
-                <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+                {% set label=current|replace('_', ' ')|trim|capitalize|e %}
+                <li tabindex="0" aria-label="{{ label }} Outline" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ label }}</li>
             {% endfor %}
         </ul>
 
         {% if system_conf.count %}
             <ul class="g-switch-conf-systems float-right">
-                <li class="g-switch-title">System</li>
+                <li tabindex="0" class="g-switch-title" role="presentation">System</li>
                 {% for key,current in system_conf %}
-                    <li data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ current|replace('_', ' ')|trim|capitalize|e }}</li>
+                    {% set label=current|replace('_', ' ')|trim|capitalize|e %}
+                    <li tabindex="0" aria-label="{{ label }} Outline" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ label }}</li>
                 {% endfor %}
             </ul>
         {% endif %}

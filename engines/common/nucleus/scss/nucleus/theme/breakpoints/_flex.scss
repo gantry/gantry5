@@ -13,6 +13,10 @@
 	@include breakpoint(small-mobile-range) {
 		width: $breakpoints-mobile-container;
 	}
+
+	&.g-flushed {
+		width: 100%;
+	}
 }
 
 // Grid Row and Column Setup

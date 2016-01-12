@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +13,6 @@
 
 namespace Gantry\Component\Theme;
 
-use Composer\Util\Filesystem;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -22,15 +20,12 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use Gantry\Framework\Services\ErrorServiceProvider;
-use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class ThemeTrait
- * @package Gantry\Framework\Base
+ * @package Gantry\Component
  *
  * @property string $path
  * @property string $layout
@@ -43,67 +38,88 @@ trait ThemeTrait
     protected $segments;
     protected $preset;
     protected $cssCache;
+    /**
+     * @var CssCompilerInterface
+     */
+    protected $compiler;
+    protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
 
     /**
-     * Initialize theme.
+     * @var ThemeDetails
      */
-    public function init()
+    protected $details;
+
+    /**
+     * Register Theme stream.
+     *
+     * @param string $savePath
+     */
+    public function registerStream($savePath = null)
     {
-        $gantry = static::gantry();
-        $gantry['streams']->register();
-        $gantry->register(new ErrorServiceProvider);
-
-        /** @var Platform $patform */
-        $patform = $gantry['platform'];
-
-        // Initialize theme cache stream.
-        $cachePath = $patform->getCachePath() . '/' . $this->name;
-
-        Folder::create($cachePath);
+        $streamName = $this->details()->addStreams();
 
         /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
-
-        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        $locator = self::$gantry['locator'];
+        $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
     }
 
     /**
      * Update all CSS files in the theme.
+     *
+     * @param array $configurations
+     * @return array List of CSS warnings.
      */
-    public function updateCss()
+    public function updateCss(array $configurations = null)
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $path = $locator->findResource($compiler->getTarget(), true, true);
+        if (is_null($configurations)) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+            $path = $locator->findResource($compiler->getTarget(), true, true);
 
-        // Make sure that all the CSS files get deleted.
-        if (is_dir($path)) {
-            Folder::delete($path, false);
+            // Make sure that all the CSS files get deleted.
+            if (is_dir($path)) {
+                Folder::delete($path, false);
+            }
+
+            $configurations = $gantry['configurations'];
         }
 
-        /** @var Configurations $configurations */
-        $configurations = $gantry['configurations'];
+        // Make sure that PHP has the latest data of the files.
+        clearstatcache();
+
+        $warnings = [];
         foreach ($configurations as $configuration => $title) {
             $config = ConfigServiceProvider::load($gantry, $configuration);
 
             $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
-            $compiler->compileAll();
+
+            $results = $compiler->compileAll()->getWarnings();
+            if ($results) {
+                $warnings[$configuration] = $results;
+            }
         }
+
+        return $warnings;
     }
 
     /**
-     * Set current layout.
+     * Set layout to be used.
      *
      * @param string $name
+     * @param bool $force
      * @return $this
      */
-    public function setLayout($name = null)
+    public function setLayout($name = null, $force = false)
     {
         $gantry = static::gantry();
+
+        // Force new layout to be set.
+        if ($force) {
+            unset($gantry['configuration']);
+        }
 
         // Set default name only if configuration has not been set before.
         if ($name === null && !isset($gantry['configuration'])) {
@@ -168,9 +184,7 @@ trait ThemeTrait
      */
     public function compiler()
     {
-        static $compiler;
-
-        if (!$compiler) {
+        if (!$this->compiler) {
             $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
 
             if (!class_exists($compilerClass)) {
@@ -180,8 +194,8 @@ trait ThemeTrait
             $details = $this->details();
 
             /** @var CssCompilerInterface $compiler */
-            $compiler = new $compilerClass();
-            $compiler
+            $this->compiler = new $compilerClass();
+            $this->compiler
                 ->setTarget($details->get('configuration.css.target'))
                 ->setPaths($details->get('configuration.css.paths'))
                 ->setFiles($details->get('configuration.css.files'))
@@ -190,13 +204,13 @@ trait ThemeTrait
 
         $preset = $this->preset(true);
         if ($preset) {
-            $compiler->setConfiguration($preset);
+            $this->compiler->setConfiguration($preset);
         } else {
             $gantry = static::gantry();
-            $compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
+            $this->compiler->setConfiguration(isset($gantry['configuration']) ? $gantry['configuration'] : 'default');
         }
 
-        return $compiler->reset();
+        return $this->compiler->reset();
     }
 
     /**
@@ -250,11 +264,28 @@ trait ThemeTrait
             $locator = $gantry['locator'];
 
             $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
-
-            $presets = new Config(CompiledYamlFile::instance($filename)->content());
+            $file = CompiledYamlFile::instance($filename);
+            $presets = new Config($file->content());
+            $file->free();
         }
 
         return $presets;
+    }
+
+    /**
+     * Return name of the used layout preset.
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function type()
+    {
+        if (!$this->layoutObject) {
+            throw new \RuntimeException('Function called too early');
+        }
+        $name = isset($this->layoutObject->preset['name']) ? $this->layoutObject->preset['name'] : 'unknown';
+
+        return $name;
     }
 
     /**
@@ -270,11 +301,11 @@ trait ThemeTrait
             try {
                 $name = static::gantry()['configuration'];
             } catch (\Exception $e) {
-                throw new \LogicException('Gantry: Configuration has not been defined yet', 500);
+                throw new \LogicException('Gantry: Outline has not been defined yet', 500);
             }
         }
 
-        if (!isset($this->layoutOpject) || $this->layoutObject->name != $name) {
+        if (!isset($this->layoutObject) || $this->layoutObject->name != $name) {
             $layout = Layout::instance($name);
 
             if (!$layout->exists()) {
@@ -287,21 +318,15 @@ trait ThemeTrait
         return $this->layoutObject;
     }
 
-    public function add_to_context(array $context)
-    {
-        $gantry = static::gantry();
-
-        $context['gantry'] = $gantry;
-        $context['site'] = $gantry['site'];
-        $context['theme'] = $this;
-
-        return $context;
-    }
-
+    /**
+     * Check whether layout has content bock.
+     *
+     * @return bool
+     */
     public function hasContent()
     {
         $layout = $this->loadLayout();
-        $content = $layout->referencesByType('pagecontent', 'pagecontent');
+        $content = $layout->referencesByType('system', 'content');
 
         return !empty($content);
     }
@@ -321,23 +346,12 @@ trait ThemeTrait
         return $this->segments;
     }
 
-    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    /**
+     * Prepare layout for rendering. Initializes all CSS/JS in particles.
+     */
+    public function prepare()
     {
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        if (!$loader) {
-            $loader = $twig->getLoader();
-        }
-        $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
-        $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
-
-        $twig->addExtension(new \Twig_Extension_Debug());
-        $twig->addExtension(new TwigExtension);
-        $twig->addFilter('toGrid', new \Twig_Filter_Function(array($this, 'toGrid')));
-        return $twig;
+        $this->segments();
     }
 
     /**
@@ -457,7 +471,6 @@ trait ThemeTrait
         $this->details()->offsetUnset('details.' . $offset);
     }
 
-
     /**
      * Prepare layout by loading all the positions and particles.
      *
@@ -479,7 +492,7 @@ trait ThemeTrait
 
             // TODO: remove hard coded types.
             switch ($item->type) {
-                case 'pagecontent':
+                case 'system':
                     break;
 
                 case 'atom':
@@ -487,7 +500,8 @@ trait ThemeTrait
                 case 'position':
                 case 'spacer':
                     $item->content = $this->renderContent($item);
-                    if (!$item->content) {
+                    // Note that content can also be null (postpone rendering).
+                    if ($item->content === '') {
                         unset($items[$i]);
                     }
 
@@ -501,16 +515,30 @@ trait ThemeTrait
 
                     $dynamicSize = 0;
                     $fixedSize = 0;
+                    $childrenCount = count($item->children);
                     foreach ($item->children as $child) {
                         if (!isset($child->attributes->size)) {
                             $child->attributes->size = 100 / count($item->children);
                         }
-                        $dynamicSize += $child->attributes->size;
+                        if (empty($child->attributes->fixed)) {
+                            $dynamicSize += $child->attributes->size;
+                        } else {
+                            $fixedSize += $child->attributes->size;
+                        }
                     }
-                    if (round($dynamicSize, 1) != 100) {
+
+                    $roundSize = round($dynamicSize, 1);
+                    $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
+
+                    // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
+                    if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
                         $fraction = 0;
-                        $multiplier = (100 - $fixedSize) / $dynamicSize;
+                        $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                         foreach ($item->children as $child) {
+                            if (!empty($child->attributes->fixed)) {
+                                continue;
+                            }
+
                             // Calculate size for the next item by taking account the rounding error from the last item.
                             // This will allow us to approximate cumulating error and fix it when rounding error grows
                             // over the rounding treshold.
@@ -530,12 +558,14 @@ trait ThemeTrait
      * Function is used to pre-render content.
      *
      * @param object $item
-     * @return string
+     * @return string|null
      */
     protected function renderContent($item)
     {
-        $context = $this->add_to_context(['segment' => $item]);
+        $context = $this->getContext(['segment' => $item, 'prepare_layout' => true]);
 
-        return trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+
+        return !strstr($html, '@@DEFERRED@@') ? $html : null;
     }
 }

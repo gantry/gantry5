@@ -6,14 +6,14 @@
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <copyright>(C) 2005 - 2015 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2016 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>COM_GANTRY5_DESCRIPTION</description>
 
     <files folder="site">
         <filename>gantry5.php</filename>
         <filename>router.php</filename>
-        <filename>MD5SUM</filename>
+        <filename>MD5SUMS</filename>
         <folder>fields</folder>
         <folder>views</folder>
     </files>
@@ -23,7 +23,7 @@
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <filename>gantry5.php</filename>
-            <filename>MD5SUM</filename>
+            <filename>MD5SUMS</filename>
             <folder>blueprints</folder>
             <folder>css-compiled</folder>
             <folder>fonts</folder>

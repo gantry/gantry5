@@ -46,6 +46,7 @@ form:
         .title:
           type: input.text
           label: Menu Title
+          required: true
 
         .target:
           type: select.selectize
@@ -65,7 +66,22 @@ form:
             '': - Use Default -
             standard: Simple
             fullwidth: Extended
-            disabled: Disabled
+
+        .dropdown_dir:
+          type: select.selectize
+          label: Dropdown Direction
+          description: Where the dropdown should open relative to the menu item
+          default: 'right'
+          options:
+            left: Expand Left
+            center: Keep Centered
+            right: Expand Right
+
+        .dropdown_hide:
+          type: input.checkbox
+          label: Disable Dropdowns
+          description: If checked and the item has dropdowns, they won't be rendered.
+          default: ''
 
         .width:
           type: input.text
@@ -82,6 +98,10 @@ form:
         .icon:
           type: input.icon
           label: Icon
+
+        .image:
+          type: input.imagepicker
+          label: Image
 
         .icon_only:
           type: input.checkbox

@@ -1,7 +1,7 @@
 {% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block input %}
-<span class="enabler">
+    <span class="enabler" role="checkbox" aria-checked="{{ value ? 'true' : 'false' }}" tabindex="0" aria-label="{{ disabled ? 'Disabled' : 'Enables ' ~ scope|replace({'.': ' '})|title|trim|default(title|trim) }}">
     <input
             {# required attribute structures #}
             type="hidden"

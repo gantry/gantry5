@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -22,15 +21,20 @@ class Gantry extends Base\Gantry
     {
         $container = parent::load();
 
-        $container['site'] = function ($c) {
-            return new Site;
-        };
-
         // Use locator from Grav.
         $container['locator'] = function($c) {
-             return Grav::instance()['locator'];
+            return Grav::instance()['locator'];
         };
 
         return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadGlobal()
+    {
+        $grav = Grav::instance();
+        return (array) $grav['config']->get('plugins.gantry5');
     }
 }

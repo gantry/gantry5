@@ -17,16 +17,18 @@ var Block = new prime({
 
     constructor: function(options) {
         Base.call(this, options);
+        if (options.attributes && options.attributes.size) this.setAttribute('size', precision(options.attributes.size, 1));
 
         this.on('changed', this.hasChanged);
     },
 
     getSize: function() {
-        return this.getAttribute('size');
+        return precision(this.getAttribute('size'), 1);
     },
 
     setSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }
@@ -42,6 +44,7 @@ var Block = new prime({
 
     setAnimatedSize: function(size, store) {
         size = typeof size === 'undefined' ? this.getSize() : Math.max(0, Math.min(100, parseFloat(size)));
+        size = precision(size, 1);
         if (store) {
             this.setAttribute('size', size);
         }
@@ -76,7 +79,7 @@ var Block = new prime({
         if (!parent) { return; }
 
         var grandpa = parent.block.parent();
-        if (grandpa.data('lm-root') || (grandpa.data('lm-blocktype') == 'container' && grandpa.parent().data('lm-root'))) {
+        if (grandpa.data('lm-root') || (grandpa.data('lm-blocktype') == 'container' && (grandpa.parent().data('lm-root') || grandpa.parent().data('lm-blocktype') == 'wrapper'))) {
             zen('span.particle-size').text(this.getSize() + '%').top(element.block);
             element.on('resized', this.bound('onResize'));
         }

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2015-07-23 14:46+0200\n"
+"PO-Revision-Date: 2015-12-10 17:42-0800\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 msgid "COM_GANTRY5"
@@ -50,6 +50,12 @@ msgstr "Delete Outline"
 
 msgid "GANTRY5_PLATFORM_DELETE_OUTLINE_DESC"
 msgstr "Are you sure you want to delete this Outline?"
+
+msgid "GANTRY5_PLATFORM_DELETE_POSITION"
+msgstr "Delete Position"
+
+msgid "GANTRY5_PLATFORM_DELETE_POSITION_DESC"
+msgstr "Are you sure you want to delete this Position?"
 
 msgid "GANTRY5_PLATFORM_CONFIRM"
 msgstr "Confirm"
@@ -126,6 +132,12 @@ msgstr "Presets"
 msgid "GANTRY5_PLATFORM_OUTLINES"
 msgstr "Outlines"
 
+msgid "GANTRY5_PLATFORM_ADD_NEW_OUTLINE"
+msgstr "Add New Outline"
+
+msgid "GANTRY5_PLATFORM_POSITIONS"
+msgstr "Positions"
+
 msgid "GANTRY5_PLATFORM_SWITCH_PRESET_DESC"
 msgstr "Keep the current Particles while changing Preset"
 
@@ -196,7 +208,7 @@ msgid "GANTRY5_PLATFORM_SELECT_ALL_MENU"
 msgstr "Selects all menu items"
 
 msgid "GANTRY5_PLATFORM_ASSIGN_BASE_DESC"
-msgstr "You cannot assign Base Outline to your menu items."
+msgstr "Base outline can not be assigned anywhere."
 
 msgid "GANTRY5_PLATFORM_NO_ASSIGNMENTS_DESC"
 msgstr "No assignments available!"
@@ -264,6 +276,12 @@ msgstr "Save Settings"
 msgid "GANTRY5_PLATFORM_SETTINGS"
 msgstr "Settings"
 
+msgid "GANTRY5_PLATFORM_SAVE_PAGESETTINGS"
+msgstr "Save Page Settings"
+
+msgid "GANTRY5_PLATFORM_PAGESETTINGS"
+msgstr "Page Settings"
+
 msgid "GANTRY5_PLATFORM_COLLAPSE_ALL"
 msgstr "Collapse All"
 
@@ -287,6 +305,12 @@ msgstr "Recompile CSS"
 
 msgid "GANTRY5_PLATFORM_STYLES"
 msgstr "Styles"
+
+msgid "GANTRY5_PLATFORM_STYLES_APPLY"
+msgstr "Apply"
+
+msgid "GANTRY5_PLATFORM_STYLES_PREVIEW"
+msgstr "Preview"
 
 msgid "GANTRY5_PLATFORM_CONTENT"
 msgstr "Content"
@@ -360,6 +384,9 @@ msgstr "Updates Available"
 msgid "GANTRY5_PLATFORM_UPDATE"
 msgstr "Update"
 
+msgid "GANTRY5_PLATFORM_CHANGELOG"
+msgstr "Changelog"
+
 msgid "GANTRY5_PLATFORM_SYSTEM_OUTLINES"
 msgstr "System Outlines"
 
@@ -377,3 +404,9 @@ msgstr "Search Font..."
 
 msgid "GANTRY5_PLATFORM_SEARCH_FONT"
 msgstr "Search Font"
+
+msgid "GANTRY5_PLATFORM_OVERRIDE_CHECKBOX"
+msgstr "Enables the override for the field '%s'"
+
+msgid "GANTRY5_PLATFORM_EDIT_TITLE"
+msgstr "Edit Title '%s'"

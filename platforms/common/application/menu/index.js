@@ -10,22 +10,23 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     validateField = require('../utils/field-validation');
 
-var menumanager, map;
+var menumanager;
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
-    FOCUSOUT  = isFirefox ? 'blur' : 'focusout';
+var FOCUSIN  = isFirefox ? 'focus' : 'focusin',
+    FOCUSOUT = isFirefox ? 'blur' : 'focusout';
 
 ready(function() {
     var body = $('body');
 
-    menumanager = new MenuManager('body', {
-        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+    menumanager = new MenuManager('[data-mm-container]', {
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
         exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
@@ -42,12 +43,15 @@ ready(function() {
     menumanager.setRoot();
 
     // Refresh ordering/items on menu type change or Menu navigation link
-    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(/*event, element*/) {
         menumanager.setRoot();
+        menumanager.refresh();
 
-        // refresh LM eraser
-        menumanager.eraser.element = $('[data-mm-eraseparticle]');
-        menumanager.eraser.hide();
+        // refresh MM eraser
+        if (menumanager.eraser) {
+            menumanager.eraser.element = $('[data-mm-eraseparticle]');
+            menumanager.eraser.hide();
+        }
     });
 
     body.delegate(FOCUSIN, '.percentage input', function(event, element) {
@@ -58,7 +62,7 @@ ready(function() {
         element[0].select();
     }, true);
 
-    body.delegate('keydown', '.percentage input', function(event, element) {
+    body.delegate('keydown', '.percentage input', function(event/*, element*/) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
                 // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
             (event.keyCode == 65 && (event.ctrlKey === true || event.ctrlKey === true)) ||
@@ -76,27 +80,27 @@ ready(function() {
 
     body.delegate('keydown', '.percentage input', function(event, element) {
         element = $(element);
-        var value = Number(element.value()),
-            min = Number(element.attribute('min')),
-            max = Number(element.attribute('max')),
+        var value  = Number(element.value()),
+            min    = Number(element.attribute('min')),
+            max    = Number(element.attribute('max')),
             upDown = event.keyCode == 38 || event.keyCode == 40;
 
         if (upDown) {
             value += event.keyCode == 38 ? +1 : -1;
             value = clamp(value, min, max);
             element.value(value);
-            body.emit('keyup', {target: element});
+            body.emit('keyup', { target: element });
         }
     });
 
     body.delegate('keyup', '.percentage input', function(event, element) {
         element = $(element);
         var value = Number(element.value()),
-            min = Number(element.attribute('min')),
-            max = Number(element.attribute('max'));
+            min   = Number(element.attribute('min')),
+            max   = Number(element.attribute('max'));
 
         var resizer = menumanager.resizer,
-            parent = element.parent('[data-mm-id]'),
+            parent  = element.parent('[data-mm-id]'),
             sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
 
         if (!value || value < min || value > max) { return; }
@@ -132,11 +136,11 @@ ready(function() {
         element = $(element);
 
         var container = element.parent('[data-g5-menu-columns]').find('.submenu-selector'),
-            children = container.children(),
-            last = container.find('> :last-child'),
-            count = children ? children.length : 0,
-            active = $('.menu-selector .active'),
-            path = active ? active.data('mm-id') : null;
+            children  = container.children(),
+            last      = container.find('> :last-child'),
+            count     = children ? children.length : 0,
+            active    = $('.menu-selector .active'),
+            path      = active ? active.data('mm-id') : null;
 
         // do not allow to create a new column if there's already one and it's empty
         if (count == 1 && !children.search('.submenu-items > [data-mm-id]')) { return false; }
@@ -144,6 +148,8 @@ ready(function() {
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
+        block.find('[data-mm-base-level]').data('mm-base-level', 1);
+        block.find('.submenu-level').text('Level 1');
         block.after(last);
 
         if (!menumanager.ordering[path]) {
@@ -155,12 +161,12 @@ ready(function() {
     });
 
     // Attach events to pseudo (x) for deleting a column
-    ['click', 'touchend'].forEach(function(evt){
+    ['click', 'touchend'].forEach(function(evt) {
         body.delegate(evt, '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
             var bounding = element[0].getBoundingClientRect(),
-                x = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
+                x        = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
                 siblings = $('.submenu-selector > [data-mm-id]'),
-                deleter = {
+                deleter  = {
                     width: 36,
                     height: 36
                 };
@@ -171,10 +177,11 @@ ready(function() {
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
-                var parent = element.parent('[data-mm-id]'),
-                    index = parent.data('mm-id').match(/\d+$/)[0],
-                    active = $('.menu-selector .active'),
-                    path = active ? active.data('mm-id') : null;
+                var parent    = element.parent('[data-mm-id]'),
+                    container = parent.parent('.submenu-selector').children('[data-mm-id]'),
+                    index     = indexOf(container, parent),
+                    active    = $('.menu-selector .active'),
+                    path      = active ? active.data('mm-id') : null;
 
                 parent.remove();
                 siblings = $('.submenu-selector > [data-mm-id]');
@@ -200,30 +207,33 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
-            remote: $(element).attribute('href') + getAjaxSuffix(),
+            remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                var form = content.elements.content.find('form'),
-                    fakeDOM = zen('div').html(response.body.html).find('form'),
-                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     dataString = [], invalid = [],
                     path;
 
-                var search = content.elements.content.find('.search input'),
-                    blocks = content.elements.content.search('[data-mm-type]'),
-                    filters = content.elements.content.search('[data-mm-filter]'),
+                var search      = content.elements.content.find('.search input'),
+                    blocks      = content.elements.content.search('[data-mm-type]'),
+                    filters     = content.elements.content.search('[data-mm-filter]'),
                     urlTemplate = content.elements.content.find('.g-urltemplate');
 
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
-                content.elements.content.find('[data-title-editable]').on('title-edit-end', function(title, original, canceled) {
-                    title = trim(title);
-                    if (!title) {
-                        title = trim(original) || 'Title';
-                        this.text(title).data('title-editable', title);
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
 
-                        return;
-                    }
-                });
+                            return true;
+                        }
+                    });
+                }
 
                 if (search && filters && blocks) {
                     search.on('input', function() {
@@ -246,6 +256,12 @@ ready(function() {
 
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
+                }
+
+                if (search) {
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
                 }
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
