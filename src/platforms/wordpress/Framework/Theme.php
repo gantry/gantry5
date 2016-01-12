@@ -322,7 +322,7 @@ class Theme extends AbstractTheme
         \Timber::$locations = $locator->findResources('gantry-engine://views');
 
         // Enable caching in Timber.
-        \Timber::$twig_cache = true;
+        \Timber::$twig_cache =  (bool) $global->get('compile_twig', 1);
         \Timber::$cache = false;
 
         // Set autoescape in Timber.
