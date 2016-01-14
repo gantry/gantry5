@@ -7,7 +7,9 @@
     3. [](#bugfix)
         - Fixed defer attribute for JavaScript
         - Ignore missing atom if debug has not been enabled (#1106)
-        - Fix `Custom CSS / JS` Atom having bad HTML with non-existing file path (#1105) 
+        - Fix `Custom CSS / JS` Atom having bad HTML with non-existing file path (#1105)
+        - Forcing Mobile Menu Items to always display full width no matter the breakpoint (thanks @JoomFX - #1109)
+        - Fixed zIndex issue in Mobile Menu in Firefox and IE (thanks @JoomFX - #1109)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         -  Internal Error in admin Settings tab when there are no menus (#1102)
