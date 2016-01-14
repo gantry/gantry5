@@ -8,7 +8,10 @@
         - Fixed defer attribute for JavaScript
         - Ignore missing atom if debug has not been enabled (#1106)
         - Fix `Custom CSS / JS` Atom having bad HTML with non-existing file path (#1105) 
-
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        -  Internal Error in admin Settings tab when there are no menus (#1102)
+    
 # 5.2.7
 ## 05/01/2016
 
