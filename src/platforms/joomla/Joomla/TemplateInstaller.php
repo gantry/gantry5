@@ -390,6 +390,7 @@ class TemplateInstaller
             }
 
             if (!empty($menu['items'])) {
+                $this->copyCustom('default', 'default');
                 $this->addMenuItems($menutype, $menu['items'], (int) $parent);
             }
         }
@@ -416,6 +417,9 @@ class TemplateInstaller
                     $style = $this->updateStyle($styleName, ['preset' => $item['layout']]);
                 }
 
+                // Copy configuration for the new layout.
+                $this->copyCustom($item['layout'], $style->id);
+
                 $item['template_style_id'] = $style->id;
             }
 
@@ -424,6 +428,17 @@ class TemplateInstaller
             if (!empty($item['items'])) {
                 $this->addMenuItems($menutype, $item['items'], $itemId);
             }
+        }
+    }
+
+    protected function copyCustom($layout, $id)
+    {
+        $path = JPATH_SITE . '/templates/' . $this->extension->name;
+
+        $src = $path . '/install/layouts/' . $layout;
+        $dst = $path . '/custom/config/' . $id;
+        if (is_dir($src) && !is_dir($dst)) {
+            \JFolder::copy($src, $dst);
         }
     }
 }
