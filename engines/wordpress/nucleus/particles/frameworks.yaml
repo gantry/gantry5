@@ -43,7 +43,7 @@ form:
           default: 0
 
     mootools:
-      label: Mootools
+      label: MooTools
       type: container.set
       fields:
         .enabled:
