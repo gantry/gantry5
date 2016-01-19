@@ -107,6 +107,10 @@ class Settings extends HtmlController
     {
         $path = func_get_args();
 
+        $end = end($path);
+        if ($end === '') {
+            array_pop($path);
+        }
         if (end($path) == 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
@@ -131,10 +135,10 @@ class Settings extends HtmlController
             $offset .= '.' . $value;
             $data = $data ?: $this->container['config']->get($offset);
             $data = ['data' => $data];
-            $prefix = 'data.';
+            $scope = 'data.';
         } else {
             $data = $data ?: $this->container['config']->get($offset);
-            $prefix = 'data';
+            $scope = 'data';
         }
 
         $fields['is_current'] = true;
@@ -146,11 +150,12 @@ class Settings extends HtmlController
                 'configuration' => $configuration,
                 'blueprints' => $fields,
                 'data' => $data,
-                'prefix' => $prefix,
+                'prefix' => '',
+                'scope' => $scope,
                 'parent' => $path
                     ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
                     : "$configuration/settings/particles/{$id}",
-                'route' => 'settings.' . $offset
+                'route' => "configurations.{$this->params['configuration']}.settings.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {

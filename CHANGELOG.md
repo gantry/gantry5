@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
+        - Add support for nested collections in particles (#924)
         - Add configuration options to disable Twig and YAML compiling / caching
     3. [](#bugfix)
         - Fixed defer attribute for JavaScript
