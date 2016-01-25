@@ -17,6 +17,7 @@
         - Template installer: Copy configuration for new outlines
     3. [](#bugfix)
         - JavaScript Frameworks Atom: Load also Bootstrap CSS when enabling Bootstrap Framework
+        - Compatibility fix for some plugins which require non-empty component output to work properly 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         -  Internal Error in admin Settings tab when there are no menus (#1102)
