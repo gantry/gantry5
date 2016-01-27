@@ -39,7 +39,7 @@
             <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('positions', title, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary">
                 <i class="fa fa-fw fa-copy"></i>
             </button>
-            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('positions', title)|e }}" data-g-config-method="DELETE" class="button red">
+            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('positions', title, 'delete')|e }}" data-g-config-method="POST" class="button red">
                 <i class="fa fa-fw fa-trash-o"></i>
             </button>
         </div>

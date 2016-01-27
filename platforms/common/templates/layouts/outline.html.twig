@@ -17,7 +17,7 @@
                 <i class="fa fa-fw fa-copy"></i>
             </button>
             {% if name != 'default' and gantry.configurations.canDelete(name) %}
-            <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('configurations', name)|e }}" data-g-config-method="DELETE" class="button red">
+            <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('configurations', name, 'delete')|e }}" data-g-config-method="POST" class="button red">
                 <i class="fa fa-fw fa-trash-o"></i>
             </button>
             {% endif %}

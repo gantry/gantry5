@@ -34,6 +34,7 @@ class Positions extends HtmlController
             '/create'      => 'create',
             '/*/rename'    => 'rename',
             '/*/duplicate' => 'duplicate',
+            '/*/delete'    => 'delete',
             '/*/**'        => 'forward',
         ],
         'PUT'    => [
@@ -43,11 +44,6 @@ class Positions extends HtmlController
         'PATCH'  => [
             '/'   => 'undefined',
             '/**' => 'forward'
-        ],
-        'DELETE' => [
-            '/'     => 'undefined',
-            '/*'    => 'delete',
-            '/*/**' => 'forward'
         ]
     ];
 
