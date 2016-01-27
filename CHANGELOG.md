@@ -1,3 +1,10 @@
+# 5.2.9
+## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed potential issue with deletion of Outlines when server doesn't support `DELETE` request method (#1124)
+
 # 5.2.8
 ## 27/01/2016
 
@@ -17,7 +24,7 @@
         - Template installer: Copy configuration for new outlines
     3. [](#bugfix)
         - JavaScript Frameworks Atom: Load also Bootstrap CSS when enabling Bootstrap Framework
-        - Compatibility fix for some plugins which require non-empty component output to work properly 
+        - Compatibility fix for some plugins which require non-empty component output to work properly
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Internal Error in admin Settings tab when there are no menus (#1102)
