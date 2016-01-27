@@ -20,7 +20,8 @@
         - Compatibility fix for some plugins which require non-empty component output to work properly 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        -  Internal Error in admin Settings tab when there are no menus (#1102)
+        - Internal Error in admin Settings tab when there are no menus (#1102)
+        - Fix footer scripts from main content (#1113)
 
 # 5.2.7
 ## 05/01/2016
