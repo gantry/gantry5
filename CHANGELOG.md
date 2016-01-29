@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fixed potential issue with deletion of Outlines when server doesn't support `DELETE` request method (#1124)
         - Fixed `404 Not Found` when adding an asset on page settings (#1126)
+        - Fixed the add button next to the Outlines title (#1116)
 
 # 5.2.8
 ## 27/01/2016
