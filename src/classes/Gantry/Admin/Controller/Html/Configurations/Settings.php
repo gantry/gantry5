@@ -61,16 +61,18 @@ class Settings extends HtmlController
     {
         $configuration = $this->params['configuration'];
 
-        if($configuration == 'default') {
+        if ($configuration == 'default') {
             $this->params['overrideable'] = false;
         } else {
             $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
         }
 
-        $this->params['particles'] = $this->container['particles']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.settings";
-        $this->params['page_id'] = $configuration;
+        $this->params += [
+            'particles' => $this->container['particles']->group(),
+            'route'  => "configurations.{$this->params['configuration']}.settings",
+            'page_id' => $configuration
+        ];
 
         //$this->params['layout'] = LayoutObject::instance($configuration);
 
