@@ -1,0 +1,22 @@
+{% extends "forms/fields/input/selectize.html.twig" %}
+
+{% block global_attributes %}
+    {% set post_type = field.post_type|default('page') %}
+    {% set array = {
+        'post_type': post_type,
+        'post_status':'publish',
+        'nopaging':'true',
+        'orderby':'title',
+        'order':'asc',
+    } %}
+    {% set posts = gantry.platform.call('Timber::get_posts', array) %}
+    {% set Options = field.selectize.Options %}
+    {% set options = [] %}
+        {% for id,post in posts %}
+            {% set id = post.id %}
+            {% set options = options|merge([{value: id, text: post.post_title}])  %}
+        {% endfor %}
+
+        {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options }}) %}
+    {{ parent() }}
+{% endblock %}
