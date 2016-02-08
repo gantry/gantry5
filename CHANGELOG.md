@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fix clearing cache on plugin update (Fixes #1125)
         - Clear opcache and statcache on plugin update
+        - Fix saving/applying widgets in menu (#1130)
 
 # 5.2.9
 ## 04/02/2016
