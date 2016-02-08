@@ -1,3 +1,10 @@
+# 5.2.10
+## XX/XX/2016
+
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        -  Fix clearing cache on plugin update (Fixes #1125)
+
 # 5.2.9
 ## 04/02/2016
 
@@ -9,7 +16,7 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - New selectize field that list all pages / posts (thanks @adi8i - #1131)
-        
+
 # 5.2.8
 ## 27/01/2016
 

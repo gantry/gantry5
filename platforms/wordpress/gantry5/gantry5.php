@@ -134,7 +134,7 @@ function gantry5_install_clear_cache($upgrader, $options)
         $gantry = \Gantry\Framework\Gantry::instance();
         $path = $gantry['platform']->getCachePath();
         if ($wp_filesystem->is_dir($path)) {
-            $wp_filesystem->rmdir($path);
+            $wp_filesystem->rmdir($path, true);
         }
         $upgrader->skin->feedback('Gantry 5 cache cleared.');
     }
