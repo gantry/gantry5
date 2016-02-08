@@ -1,5 +1,5 @@
 # 5.2.10
-## XX/XX/2016
+## 08/02/2016
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
