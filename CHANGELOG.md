@@ -3,7 +3,8 @@
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        -  Fix clearing cache on plugin update (Fixes #1125)
+        - Fix clearing cache on plugin update (Fixes #1125)
+        - Clear opcache and statcache on plugin update
 
 # 5.2.9
 ## 04/02/2016

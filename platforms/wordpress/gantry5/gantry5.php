@@ -136,6 +136,17 @@ function gantry5_install_clear_cache($upgrader, $options)
         if ($wp_filesystem->is_dir($path)) {
             $wp_filesystem->rmdir($path, true);
         }
+
+        // Make sure that PHP has the latest data of the files.
+        clearstatcache();
+
+        // Remove all compiled files from opcode cache.
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        } elseif (function_exists('apc_clear_cache')) {
+            @apc_clear_cache();
+        }
+
         $upgrader->skin->feedback('Gantry 5 cache cleared.');
     }
 }
