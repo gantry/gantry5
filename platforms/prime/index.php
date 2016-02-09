@@ -1,13 +1,17 @@
 <?php
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Framework\Gantry;
 
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
 define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
 date_default_timezone_set('UTC');
 
-// Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include_once PRIME_ROOT . '/includes/gantry.php';
+// Bootstrap Gantry framework.
+include_once PRIME_ROOT . '/src/bootstrap.php';
+
+// Initialize Gantry.
+$gantry = Gantry::instance();
 
 // Get current theme and path.
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI);

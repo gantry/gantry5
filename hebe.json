@@ -206,12 +206,6 @@
                         "destination":"/config"
                     }
                 ],
-                "includes":[
-                    {
-                        "source":"/platforms/prime/includes",
-                        "destination":"/includes"
-                    }
-                ],
                 "layouts":[
                     {
                         "source":"/platforms/prime/layouts",
