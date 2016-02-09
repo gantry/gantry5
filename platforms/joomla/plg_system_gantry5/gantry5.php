@@ -472,7 +472,9 @@ class plgSystemGantry5 extends JPlugin
             $cachePath = $patform->getCachePath() . '/' . $name;
             Gantry\Component\FileSystem\Folder::create($cachePath);
             $locator->addPath('gantry-cache', 'theme', array($cachePath), true, true);
-            $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+            \Gantry\Component\File\CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+            \Gantry\Component\File\CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
         }
 
         return $gantry;
