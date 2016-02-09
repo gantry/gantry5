@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Theme;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Twig\TwigExtension;
@@ -115,12 +116,17 @@ abstract class AbstractTheme
         if (!$this->renderer) {
             $gantry = static::gantry();
 
+            /** @var Config $global */
+            $global = $gantry['global'];
+
+            $cache = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
             $debug = $gantry->debug();
+            $production = (bool) $global->get('production', 1);
             $loader = new \Twig_Loader_Filesystem();
             $params = [
-                'cache' => $this->getCachePath('twig'),
+                'cache' => $cache,
                 'debug' => $debug,
-                'auto_reload' => true,
+                'auto_reload' => !$production,
                 'autoescape' => 'html'
             ];
 

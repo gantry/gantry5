@@ -1,9 +1,48 @@
-# 5.2.8
-## XX/XX/2016
+# 5.2.10
+## 08/02/2016
+
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fix clearing cache on plugin update (Fixes #1125)
+        - Clear opcache and statcache on plugin update
+        - Fix saving/applying widgets in menu (#1130)
+
+# 5.2.9
+## 04/02/2016
 
 1. [Common](#common)
     3. [](#bugfix)
+        - Fixed potential issue with deletion of Outlines when server doesn't support `DELETE` request method (#1124)
+        - Fixed `404 Not Found` when adding an asset on page settings (#1126)
+        - Fixed the add button next to the Outlines title (#1116)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - New selectize field that list all pages / posts (thanks @adi8i - #1131)
+
+# 5.2.8
+## 27/01/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Add support for nested collections in particles (#924)
+        - Add configuration options to disable Twig and YAML compiling / caching
+    3. [](#bugfix)
         - Fixed defer attribute for JavaScript
+        - Ignore missing atom if debug has not been enabled (#1106)
+        - Fix `Custom CSS / JS` Atom having bad HTML with non-existing file path (#1105)
+        - Forcing Mobile Menu Items to always display full width no matter the breakpoint (thanks @JoomFX - #1109)
+        - Fixed zIndex issue in Mobile Menu in Firefox and IE (thanks @JoomFX - #1109)
+        - Fixed "Keep Centered" Menu Items option that was instead showing up left aligned (fixes #1119)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Template installer: Copy configuration for new outlines
+    3. [](#bugfix)
+        - JavaScript Frameworks Atom: Load also Bootstrap CSS when enabling Bootstrap Framework
+        - Compatibility fix for some plugins which require non-empty component output to work properly
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Internal Error in admin Settings tab when there are no menus (#1102)
+        - Fix footer scripts from main content (#1113)
 
 # 5.2.7
 ## 05/01/2016

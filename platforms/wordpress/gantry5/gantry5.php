@@ -59,6 +59,8 @@ function gantry5_plugin_defaults()
         'offline'         => '0',
         'offline_message' => 'Site is currently in offline mode. Please try again later.',
         'cache_path'      => '',
+        'compile_yaml'    => '1',
+        'compile_twig'    => '1'
     );
 
     $option = (array)get_option('gantry5_plugin');
@@ -132,8 +134,19 @@ function gantry5_install_clear_cache($upgrader, $options)
         $gantry = \Gantry\Framework\Gantry::instance();
         $path = $gantry['platform']->getCachePath();
         if ($wp_filesystem->is_dir($path)) {
-            $wp_filesystem->rmdir($path);
+            $wp_filesystem->rmdir($path, true);
         }
+
+        // Make sure that PHP has the latest data of the files.
+        clearstatcache();
+
+        // Remove all compiled files from opcode cache.
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        } elseif (function_exists('apc_clear_cache')) {
+            @apc_clear_cache();
+        }
+
         $upgrader->skin->feedback('Gantry 5 cache cleared.');
     }
 }

@@ -70,6 +70,8 @@ if ($params->get('robots')) {
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);
 if (!$data) {
+    // Some plugins which require non-empty component output to work properly.
+    echo "\n";
     return;
 }
 

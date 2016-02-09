@@ -32,7 +32,7 @@
                     {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': item.options, 'prefix': 'block.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': block.form, 'data': item.options, 'scope': 'block.'} %}
                 </div>
             </div>
         </div>

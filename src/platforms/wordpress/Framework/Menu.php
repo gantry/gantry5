@@ -54,15 +54,15 @@ class Menu extends AbstractMenu
 
     public function getGroupedItems()
     {
-        $groups = array();
+        $groups = [];
 
-        $menus = $this->getMenus();
+        $menus = (array) $this->getMenus();
 
         foreach ($menus as $menu) {
             // Initialize the group.
-            $groups[$menu] = array();
+            $groups[$menu] = [];
 
-            $items = $this->getItemsFromPlatform(['menu' => $menu]);
+            $items = (array) $this->getItemsFromPlatform(['menu' => $menu]);
 
             // Build the groups arrays.
             foreach ($items as $item) {

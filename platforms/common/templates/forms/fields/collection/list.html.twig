@@ -6,9 +6,11 @@
     {% if field.is_current %}
         <div class="g-grid">
             {% for key, val in value %}
+                {% set title = (field.value == field.key ? key : val[field.value]) %}
                 <div class="card settings-block">
                     <h4>
-                        <span data-title-editable="{{ (field.value == field.key ? key : val[field.value])|e }}" data-collection-key="{{ (prefix ~ '.' ~ key ~ '.' ~ field.value)|fieldName|e }}" class="title">{{ (field.value == field.key ? key : val[field.value])|e }}</span> <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': (field.value == field.key ? key : val[field.value])|e}) }}" data-title-edit></i>
+                        <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="title">{{ title }}</span>
+                        <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -26,8 +28,8 @@
                 <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
             {% endif %}
             {% block contents %}
-                {% set field_route = (route ~ '.' ~ scope ~ '.' ~ field.name)|replace('.', '/') %}
-                    <span class="settings-param-title float-left">
+                {% set field_route = (route ~ '.' ~ prefix ~ '.' ~ field.name)|replace('.', '/') %}
+                <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
                             <span aria-label="{{ field.description|e }}" data-tip="{{ field.description|raw }}" data-tip-place="top-right">{{ field.label|e }}</span>
@@ -71,7 +73,7 @@
                                                              with {name: childName, field: child, value: key} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, value: childValue, default_value: childDefault} %}
+                                                             with {name: childName, field: child, value: childValue, default_value: childDefault, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}

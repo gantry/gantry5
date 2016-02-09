@@ -9,5 +9,6 @@
 {%- endblock %}
 
 {% block page_footer %}
+    {% do gantry.platform.finalize() %}
     {{ wp_footer|raw }}
 {% endblock %}

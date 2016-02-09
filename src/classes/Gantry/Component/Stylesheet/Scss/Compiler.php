@@ -91,7 +91,7 @@ class Compiler extends BaseCompiler
         }
 
         // Compile parsed value to string.
-        $url = trim($compiler->compileValue($parsed), '\'"');
+        $url = trim($this->compileValue($parsed), '\'"');
 
         // Handle ../ inside CSS files (points to current theme).
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
@@ -117,7 +117,7 @@ class Compiler extends BaseCompiler
      */
     public function userGetFontUrl($args, Compiler $compiler)
     {
-        $value = trim($compiler->compileValue(reset($args)), '\'"');
+        $value = trim($this->compileValue(reset($args)), '\'"');
 
         // It's a google font
         if (substr($value, 0, 7) === 'family=') {
@@ -143,7 +143,7 @@ class Compiler extends BaseCompiler
      */
     public function userGetFontFamily($args, Compiler $compiler)
     {
-        $value = trim($compiler->compileValue(reset($args)), '\'"');
+        $value = trim($this->compileValue(reset($args)), '\'"');
 
         return $this->encodeFonts($this->decodeFonts($value));
     }
@@ -185,7 +185,7 @@ class Compiler extends BaseCompiler
      */
     public function userGetLocalFontWeights($args, Compiler $compiler)
     {
-        $name = trim($compiler->compileValue(reset($args)), '\'"');
+        $name = trim($this->compileValue(reset($args)), '\'"');
 
         $weights = isset($this->fonts[$name]) ? array_keys($this->fonts[$name]) : [];
 

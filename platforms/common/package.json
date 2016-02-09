@@ -13,10 +13,10 @@
     "sifter": "^0.4.5",
     "slick": "^1.12.2",
     "sortablejs": "w00fz/Sortable#events-patch",
-    "webfontloader": "^1.6.16"
+    "webfontloader": "^1.6.20"
   },
   "devDependencies": {
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "gulp": "^3.9.0",
     "gulp-if": "^2.0.0",
     "gulp-rename": "^1.2.2",
@@ -27,7 +27,7 @@
     "merge-stream": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.6.1",
-    "yargs": "^3.31.0"
+    "watchify": "^3.7.0",
+    "yargs": "^3.32.0"
   }
 }

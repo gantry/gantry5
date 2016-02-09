@@ -59,7 +59,7 @@ class Page extends HtmlController
         if ($configuration == 'default') {
             $this->params['overrideable'] = false;
         } else {
-            $this->params['defaults']     = $this->container['defaults'];
+            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
         }
 
@@ -68,11 +68,13 @@ class Page extends HtmlController
             $this->container['config']->set('page.head.atoms', $deprecated);
         }
 
-        $this->params['page']             = $this->container['page']->group();
-        $this->params['atoms']            = $this->getAtoms();
-        $this->params['atoms_deprecated'] = $deprecated;
-        $this->params['route']            = "configurations.{$this->params['configuration']}";
-        $this->params['page_id']          = $configuration;
+        $this->params += [
+            'page' => $this->container['page']->group(),
+            'route'  => "configurations.{$this->params['configuration']}",
+            'page_id' => $configuration,
+            'atoms' => $this->getAtoms(),
+            'atoms_deprecated' => $deprecated
+        ];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
@@ -100,6 +102,10 @@ class Page extends HtmlController
     {
         $path = func_get_args();
 
+        $end = end($path);
+        if ($end === '') {
+            array_pop($path);
+        }
         if (end($path) == 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
@@ -122,12 +128,12 @@ class Page extends HtmlController
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
             $offset .= '.' . $value;
-            $data   = $data ?: $this->container['config']->get($offset);
-            $data   = ['data' => $data];
-            $prefix = 'data.';
+            $data = $data ?: $this->container['config']->get($offset);
+            $data = ['data' => $data];
+            $scope = 'data.';
         } else {
-            $data   = $data ?: $this->container['config']->get($offset);
-            $prefix = 'data';
+            $data = $data ?: $this->container['config']->get($offset);
+            $scope = 'data';
         }
 
         $fields['is_current'] = true;
@@ -135,15 +141,16 @@ class Page extends HtmlController
         array_pop($path);
 
         $configuration = "configurations/{$this->params['configuration']}";
-        $this->params  = [
+        $this->params = [
                 'configuration' => $configuration,
-                'blueprints'    => $fields,
-                'data'          => $data,
-                'prefix'        => $prefix,
-                'parent'        => $path
-                    ? "$configuration/page/{$id}/" . implode('/', $path)
-                    : "$configuration/page/{$id}",
-                'route'         => $offset
+                'blueprints' => $fields,
+                'data' => $data,
+                'prefix' => '',
+                'scope' => $scope,
+                'parent' => $path
+                    ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
+                    : "$configuration/settings/particles/{$id}",
+                'route' => "configurations.{$this->params['configuration']}.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -156,7 +163,7 @@ class Page extends HtmlController
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
-    protected function validate($setting)
+    public function validate($particle)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -1));
 
@@ -166,7 +173,7 @@ class Page extends HtmlController
         }
 
         // Load particle blueprints.
-        $validator = $this->container['particles']->get($setting);
+        $validator = $this->container['particles']->get($particle);
 
         // Create configuration from the defaults.
         $data = new Config(

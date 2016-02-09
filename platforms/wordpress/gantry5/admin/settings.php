@@ -60,17 +60,6 @@ function gantry5_plugin_settings() {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="debug1"><?php _e( 'Debug Mode', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="debug1" type="radio" <?php checked( $option[ 'debug' ], '1' ); ?> value="1" name="gantry5_plugin[debug]"/>
-                                <label for="debug1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
-                                <input id="debug2" class="second" type="radio" <?php checked( $option['debug'], '0' ); ?> value="0" name="gantry5_plugin[debug]"/>
-                                <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
                                 <label for="offline1"><?php _e( 'Offline Mode', 'gantry5' ); ?></label>
                             </th>
                             <td>
@@ -94,6 +83,39 @@ function gantry5_plugin_settings() {
                             </th>
                             <td>
                                 <input id="cache_path" type="text" value="<?php echo $option[ 'cache_path' ]; ?>" placeholder="<?php echo WP_CONTENT_DIR; ?>/cache/gantry5" class="regular-text" name="gantry5_plugin[cache_path]" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="debug1"><?php _e( 'Debug Mode', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="debug1" type="radio" <?php checked( $option[ 'debug' ], '1' ); ?> value="1" name="gantry5_plugin[debug]"/>
+                                <label for="debug1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="debug2" class="second" type="radio" <?php checked( $option['debug'], '0' ); ?> value="0" name="gantry5_plugin[debug]"/>
+                                <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="compile_yaml1"><?php _e( 'Compile YAML', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="compile_yaml1" type="radio" <?php checked( $option[ 'compile_yaml' ], '1' ); ?> value="1" name="gantry5_plugin[compile_yaml]"/>
+                                <label for="compile_yaml1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="compile_yaml2" class="second" type="radio" <?php checked( $option['compile_yaml'], '0' ); ?> value="0" name="gantry5_plugin[compile_yaml]"/>
+                                <label for="compile_yaml2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="compile_twig1"><?php _e( 'Compile Twig', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="compile_twig1" type="radio" <?php checked( $option[ 'compile_twig' ], '1' ); ?> value="1" name="gantry5_plugin[compile_twig]"/>
+                                <label for="compile_twig1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="compile_twig2" class="second" type="radio" <?php checked( $option['compile_twig'], '0' ); ?> value="0" name="gantry5_plugin[compile_twig]"/>
+                                <label for="compile_twig2"><?php _e( 'Disable', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                     </tbody>

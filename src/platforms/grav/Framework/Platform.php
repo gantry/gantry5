@@ -117,6 +117,6 @@ class Platform extends BasePlatform
     public function settings()
     {
         $grav = Grav::instance();
-        return $grav['admin']->base . '/plugins/gantry5';
+        return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
     }
 }

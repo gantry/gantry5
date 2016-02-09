@@ -184,6 +184,15 @@ abstract class CompiledBase
      */
     protected function loadCompiledFile($filename)
     {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if (!$global->get('compile_yaml', 1)) {
+            return false;
+        }
+
         if (!file_exists($filename)) {
             return false;
         }
@@ -218,6 +227,15 @@ abstract class CompiledBase
      */
     protected function saveCompiledFile($filename)
     {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if (!$global->get('compile_yaml', 1)) {
+            return;
+        }
+
         $file = PhpFile::instance($filename);
 
         // Attempt to lock the file for writing.

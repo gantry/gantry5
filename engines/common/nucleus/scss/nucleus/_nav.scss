@@ -345,6 +345,7 @@
 			@include transform(translateX(100%));
 			&.g-active {
 				@include transform(translateX(0));
+				z-index: 0;
 			}
 			.g-go-back {
 				display: block;
@@ -365,6 +366,9 @@
 		.g-dropdown-column {
 	    	float: none;
 	    	padding: 0;
+			[class*="size-"] {
+				@include flex(0 1 100%);
+			}
 	    }
 	}
 	.g-sublevel {
