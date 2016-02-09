@@ -5,6 +5,12 @@ type: configuration
 form:
   fields:
 
+    very-large-desktop-container:
+      type: input.text
+      label: Very Large Desktop
+      description: Set breakpoint size in rem, em, or px unit values
+      default: "120rem"
+      pattern: '\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc)'
     large-desktop-container:
       type: input.text
       label: Large Desktop
