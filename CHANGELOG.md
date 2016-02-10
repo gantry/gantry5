@@ -1,3 +1,10 @@
+# 5.2.11
+## XX/XX/XXXX
+
+1. [Common](#common)
+    1. [](#new)
+        - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
+
 # 5.2.10
 ## 08/02/2016
 
