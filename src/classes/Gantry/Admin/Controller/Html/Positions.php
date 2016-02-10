@@ -49,15 +49,7 @@ class Positions extends HtmlController
 
     public function index()
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $finder = new \Gantry\Component\Config\ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources('gantry-config://positions'));
-
-        $positions = array_keys($files);
-        sort($positions);
-
+        $positions = $this->container['configurations']->positions();
 
         $this->params['positions'] = $positions;
 
