@@ -17,6 +17,7 @@ use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
+use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -124,6 +125,12 @@ class Platform extends BasePlatform
         return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
     }
 
+
+    public function countModules($position)
+    {
+        return count($this->getModules($position));
+    }
+
     public function getModules($position)
     {
         /** @var UniformResourceLocator $locator */
@@ -131,7 +138,59 @@ class Platform extends BasePlatform
         $finder = new ConfigFileFinder;
         $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.html\.twig|', 0);
 
-        return array_keys($files);
+        $list = [];
+        foreach ($files as $name => $filename) {
+            $list[] = "$position/$name";
+        }
+
+        return $list;
+    }
+
+    public function displayModule($id, $attribs = [])
+    {
+        $module = is_object($id) ? $id : $this->getModule($id);
+
+        // Make sure that module really exists.
+        if (!is_object($module) || empty($module->filename)) {
+            return '';
+        }
+
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        $html = trim($theme->render($module->filename, $attribs));
+
+        if ($html) {
+            return '<div class="platform-content">' . $html . '</div>';
+        }
+
+        return $html;
+    }
+
+    public function displayModules($position, $attribs = [])
+    {
+        $html = '';
+        foreach ($this->getModules($position) as $module) {
+            $html .= $this->displayModule($module, $attribs);
+        }
+
+        return $html;
+    }
+
+    protected function getModule($id)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $filename = $locator("gantry-positions://{$id}.html.twig");
+
+        if (!$filename) {
+            return null;
+        }
+
+        return (object) [
+            'filename' => "@positions/{$id}.html.twig"
+        ];
     }
 
     public function settings()

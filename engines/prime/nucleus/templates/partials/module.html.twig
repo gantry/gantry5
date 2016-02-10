@@ -1,0 +1,23 @@
+{% assets %}
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascript %}
+    {% endblock %}
+{% endassets -%}
+
+{% assets in 'footer' %}
+    {% block javascript_footer %}
+    {% endblock %}
+{% endassets -%}
+
+<div class="module">
+    {% block title %}
+        {% if title %}
+            <h2>{{ title }}</h2>
+        {% endif %}
+    {% endblock %}
+
+    {% block module %}
+    {% endblock %}
+</div>
