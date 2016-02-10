@@ -23,6 +23,10 @@
         </div>
 
         <ul class="g-grid">
+            <li class="card g-block size-1-4">
+                {% set name = 'default' %}
+                {% include '@gantry-admin/layouts/outline.html.twig' %}
+            </li>
             {# TODO: Need to inject the Base Outline at the top of the list #}
             {% for name, title in gantry.configurations.user %}
                 <li class="card g-block size-1-4{{ gantry.configurations.isDefault(name) ? ' outline-is-default' : '' }}">

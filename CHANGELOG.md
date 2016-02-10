@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#new)
         - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Add Ability to Duplicate Base in Outlines (#846)
 
 # 5.2.10
 ## 08/02/2016

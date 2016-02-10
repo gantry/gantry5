@@ -123,7 +123,7 @@ class Configurations extends HtmlController
 
         $list = $configurations->user();
 
-        if (!isset($list[$configuration])) {
+        if (!isset($list[$configuration]) && $configuration !== 'default') {
             $this->forbidden();
         }
 
