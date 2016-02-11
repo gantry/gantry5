@@ -96,10 +96,11 @@ abstract class AbstractAssignments
      *
      * @return array
      */
-    public function scores()
+    public function scores(array $candidates = null)
     {
         $this->init();
-        return $this->filter->scores($this->candidates, $this->page);
+        $candidates = $candidates ?: $this->candidates;
+        return $this->filter->scores($candidates, $this->page);
     }
 
     /**
@@ -107,10 +108,11 @@ abstract class AbstractAssignments
      *
      * @return array
      */
-    public function matches()
+    public function matches(array $candidates = null)
     {
         $this->init();
-        return $this->filter->matches($this->candidates, $this->page);
+        $candidates = $candidates ?: $this->candidates;
+        return $this->filter->matches($candidates, $this->page);
     }
 
     /**

@@ -156,6 +156,18 @@ class Platform extends BasePlatform
             return '';
         }
 
+        if (isset($module['assignments'])) {
+            $assignments = $module['assignments'];
+            if (is_array($assignments)) {
+                // TODO: move Assignments to DI to speed it up.
+                if (!(new Assignments)->matches(['test' => $assignments])) {
+                    return '';
+                }
+            } elseif ($assignments !== 'all') {
+                return '';
+            }
+        }
+
         /** @var Theme $theme */
         $theme = $this->container['theme'];
 

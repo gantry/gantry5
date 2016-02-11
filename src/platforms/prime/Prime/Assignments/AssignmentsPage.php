@@ -27,9 +27,7 @@ class AssignmentsPage implements AssignmentsInterface
      */
     public function getRules()
     {
-        $rules = [];
-
-        // TODO:
+        $rules = [[PAGE_PATH => $this->priority]];
 
         return $rules;
     }

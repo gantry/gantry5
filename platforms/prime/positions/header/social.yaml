@@ -25,3 +25,8 @@ attributes:
       text: RSS
       link: 'http://www.rockettheme.com/product-updates?rss'
       name: RSS
+assignments:
+  page:
+    -
+      home: 1
+      features/typography: 1
