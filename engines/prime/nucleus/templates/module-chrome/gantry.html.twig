@@ -1,9 +1,11 @@
+{% set title %}
+    {% block title %}{% endblock %}
+{%- endset -%}
+
 <div class="module">
-    {% block title %}
-        {% if title %}
-            <h2>{{ title }}</h2>
-        {% endif %}
-    {% endblock %}
+    {% if title|trim %}
+        <h2>{{ title|trim }}</h2>
+    {% endif %}
 
     {% block module %}
     {% endblock %}

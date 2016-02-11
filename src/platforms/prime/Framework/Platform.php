@@ -14,6 +14,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
@@ -136,7 +137,7 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $finder = new ConfigFileFinder;
-        $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.html\.twig|', 0);
+        $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.yaml|', 0);
 
         $list = [];
         foreach ($files as $name => $filename) {
@@ -148,21 +149,17 @@ class Platform extends BasePlatform
 
     public function displayModule($id, $attribs = [])
     {
-        $module = is_object($id) ? $id : $this->getModule($id);
+        $module = is_array($id) ? $id : $this->getModule($id);
 
         // Make sure that module really exists.
-        if (!is_object($module) || empty($module->filename)) {
+        if (!is_array($module)) {
             return '';
         }
 
         /** @var Theme $theme */
         $theme = $this->container['theme'];
 
-        $html = trim($theme->render($module->filename, $attribs));
-
-        if ($html) {
-            return '<div class="platform-content">' . $html . '</div>';
-        }
+        $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['segment' => $module]));
 
         return $html;
     }
@@ -182,15 +179,15 @@ class Platform extends BasePlatform
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
-        $filename = $locator("gantry-positions://{$id}.html.twig");
+        $filename = $locator("gantry-positions://{$id}.yaml");
 
         if (!$filename) {
             return null;
         }
 
-        return (object) [
-            'filename' => "@positions/{$id}.html.twig"
-        ];
+        $file = CompiledYamlFile::instance($filename);
+
+        return $file->content();
     }
 
     public function settings()
