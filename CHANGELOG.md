@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#new)
         - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Admin: Fix potential fatal error in Outline Assignments page
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Add Ability to Duplicate Base in Outlines (#846)

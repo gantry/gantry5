@@ -89,6 +89,7 @@ class Assignments
             throw new \RuntimeException(\JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
+        \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
         $style = \JTable::getInstance('Style', 'TemplatesTable');
         if (!$style->load($this->style_id) || $style->client_id != 0) {
             throw new \RuntimeException('Template style does not exist');
