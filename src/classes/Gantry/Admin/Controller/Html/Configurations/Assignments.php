@@ -24,7 +24,7 @@ class Assignments extends HtmlController
     public function index()
     {
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration !== 'default') {
+        if ($configuration && $configuration !== 'default' && $configuration[0] !== '_') {
             $assignments = new AssignmentsObject($configuration);
 
             $this->params['assignments'] = $assignments->get();
@@ -38,7 +38,7 @@ class Assignments extends HtmlController
     public function store()
     {
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration === 'default') {
+        if ($configuration && ($configuration === 'default' || $configuration[0] === '_')) {
             $this->undefined();
         }
 

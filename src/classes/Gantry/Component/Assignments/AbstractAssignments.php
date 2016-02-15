@@ -131,6 +131,13 @@ abstract class AbstractAssignments
         $paths = $locator->findResources("gantry-config://");
         $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
 
+        // Make sure that base or system outlines aren't in the list.
+        foreach ($files as $key => $array) {
+            if ($key && (((string)$key[0]) === '_' || $key === 'default')) {
+                unset($files[$key]);
+            }
+        }
+
         $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
 
         $config = new CompiledConfig($cache, [$files], GANTRY5_ROOT);

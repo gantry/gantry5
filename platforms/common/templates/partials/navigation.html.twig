@@ -19,7 +19,7 @@
                         <a data-g5-ajaxify data-g5-nav="layout" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'layout')|e }}"><i class="fa fa-fw fa-columns"></i><span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span></a>
                     </li>
                     {% endif %}
-                    {% if configuration and configuration != 'default' %}
+                    {% if configuration and configuration != 'default' and not (configuration starts with '_') %}
                     <li {{ (location == 'configurations/assignments') ? 'class="active"' }}>
                         <a data-g5-ajaxify data-g5-nav="assignments" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'assignments')|e }}"><i class="fa fa-fw fa-check-square-o"></i><span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span></a>
                     </li>
