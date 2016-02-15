@@ -50,25 +50,134 @@ class Positions extends Collection
      * @return $this
      * @throws \RuntimeException
      */
-    public function load($path = 'gantry-config://positions')
+    public function load($path = 'gantry-positions://')
     {
         $this->path = $path;
 
         $iterator = $this->getFilesystemIterator($path);
 
-        $files = [];
+        $positions = $this->container['configurations']->positions();
+
         /** @var FilesystemIterator $info */
         foreach ($iterator as $name => $info) {
-            if ($info->isDir() || $info->isDot() || !is_file($info->getPathname())) {
+            if (isset($positions[$name]) || !$info->isDir() || $info->isDot()) {
                 continue;
             }
-            $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
+            $positions[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
-        asort($files);
 
-        $this->items = $files;
+        asort($positions);
+
+        $this->items = $positions;
 
         return $this;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function create($title = 'Untitled')
+    {
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+
+        if (!$name) {
+            throw new \RuntimeException("Position needs a name", 400);
+        }
+
+        $name = $this->findFreeName($name);
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+        $path = $locator->findResource("{$this->path}/{$name}", true, true);
+
+        Folder::create($path);
+
+        return $name;
+    }
+
+    /**
+     * @param string $id
+     * @param string $new
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function duplicate($id, $new = null)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $new = $this->findFreeName($new ? strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $new)) : $id);
+
+        $newPath = $locator->findResource("{$this->path}/{$new}", true, true);
+
+        $path = $locator->findResource("{$this->path}/{$id}");
+        try {
+            if (!$path || !is_dir($path)) {
+                Folder::create($newPath);
+            } else {
+                Folder::copy($path, $newPath);
+            }
+        } catch (\Exception $e) {
+            throw new \RuntimeException(sprintf('Duplicating Position failed: ', $e->getMessage()), 500, $e);
+        }
+
+        return basename($newPath);
+    }
+
+    /**
+     * @param string $id
+     * @param string $new
+     *
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function rename($id, $new)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $path = $locator->findResource("{$this->path}/{$id}", true, true);
+        if (!$path || !is_dir($path)) {
+            throw new \RuntimeException('Position not found', 404);
+        }
+
+        $new = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $new));
+
+        $newPath = $locator->findResource("{$this->path}/{$new}", true, true);
+        if (is_file($newPath)) {
+            throw new \RuntimeException("Position '{$new}' already exists.", 400);
+        }
+
+        try {
+            Folder::move($path, $newPath);
+        } catch (\Exception $e) {
+            throw new \RuntimeException(sprintf('Renaming Position failed: ', $e->getMessage()), 500, $e);
+        }
+
+        return $new;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @throws \RuntimeException
+     */
+    public function delete($id)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $path = $locator->findResource("{$this->path}/{$id}", true, true);
+
+        if (!is_dir($path)) {
+            return;
+        }
+
+        Folder::delete($path);
     }
 
     protected function getFilesystemIterator($path)
@@ -97,29 +206,6 @@ class Positions extends Collection
     }
 
     /**
-     * @param string $title
-     *
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function create($title = 'Untitled')
-    {
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
-
-        if (!$name) {
-            throw new \RuntimeException("Positions needs a name", 400);
-        }
-
-        $name = $this->findFreeName($name);
-
-        // Create index file for the new layout.
-        /*$layout = new Layout($name, $preset);
-        $layout->saveIndex();*/
-
-        return $name;
-    }
-
-    /**
      * Find unused name with number appended to it when duplicating an position.
      *
      * @param string $id
@@ -128,7 +214,7 @@ class Positions extends Collection
      */
     protected function findFreeName($id)
     {
-        if (!isset($this->items[$id . '.yaml'])) {
+        if (!isset($this->items[$id])) {
             return $id;
         }
 
@@ -146,94 +232,5 @@ class Positions extends Collection
         } while (isset($this->items["{$name}_{$count}"]));
 
         return "{$name}_{$count}";
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function duplicate($id)
-    {
-        $gantry = $this->container;
-        $title = $id;
-        $id = $id . '.yaml';
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $path = $locator->findResource("{$this->path}/{$id}");
-        if (!$path || is_dir($path)) {
-            throw new \RuntimeException('Position not found', 404);
-        }
-
-        $file = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title)));
-
-        $newPath = $locator->findResource("{$this->path}/{$file}.yaml", true, true);
-
-        try {
-            @copy($path, $newPath);
-        } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Duplicating Position failed: ', $e->getMessage()), 500, $e);
-        }
-
-        return basename($file);
-    }
-
-    /**
-     * @param string $id
-     * @param string $title
-     *
-     * @return string
-     * @throws \RuntimeException
-     */
-    public function rename($id, $title)
-    {
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $path = $locator->findResource("{$this->path}/{$id}", true, true);
-        if (!$path || is_dir($path)) {
-            throw new \RuntimeException('Position not found', 404);
-        }
-
-        $file = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
-
-        $newPath = $locator->findResource("{$this->path}/{$file}", true, true);
-        if (is_file($newPath)) {
-            throw new \RuntimeException("Position '$id' already exists.", 400);
-        }
-
-        try {
-            @rename($path, $newPath . '.yaml');
-        } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Renaming Position failed: ', $e->getMessage()), 500, $e);
-        }
-
-        return $file;
-    }
-
-    /**
-     * @param string $id
-     *
-     * @throws \RuntimeException
-     */
-    public function delete($id)
-    {
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        $path    = $locator->findResource("{$this->path}/{$id}", true, true);
-        if (is_dir($path)) {
-            throw new \RuntimeException('Position not found', 404);
-        }
-
-        if (file_exists($path)) {
-            @unlink($path);
-        }
     }
 }
