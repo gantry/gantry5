@@ -41,6 +41,7 @@
                 </span>
                 <div class="settings-param-field" data-field-name="{{ field.name|e }}">
                     {% block input -%}
+                        <div class="g5-collection-wrapper">
                         <ul>
                         {%- if field.fields -%}
                                 {% for key, val in value %}
@@ -83,6 +84,7 @@
                                 {% endfor %}
                         {%- endif -%}
                     </ul>
+                    </div>
                     <div>
                         <ul style="display: none">
                             <li data-collection-nosort data-collection-template="{{ field.value|e }}" style="display: none;">

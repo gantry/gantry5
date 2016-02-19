@@ -354,6 +354,11 @@
     }
 }
 
+.g5-collection-wrapper {
+    max-height: 350px;
+    overflow: auto;
+}
+
 .collection-list .settings-param-field {
     ul:not(.collection-sorting) li {
         &:hover [data-title-edit], &:hover [data-collection-remove] {
