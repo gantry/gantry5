@@ -7,6 +7,7 @@
     3. [](#bugfix)
         - System outlines should not be able to assign to pages (Fixes #1146)
         - Fixed frontend rendering if page settings have never been saved
+        - Fixed tooltips in IE Edge and in some circumstances on Firefox (#1154)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Admin: Fix potential fatal error when saving Outline Assignments
