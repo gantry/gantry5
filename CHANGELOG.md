@@ -5,6 +5,7 @@
     1. [](#new)
         - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
     3. [](#bugfix)
+        - [BC]: The `dependencies.scss` file does not import `nucleus/theme/base` anymore. **IMPORTANT**: if you are a theme developer, make sure you adjust your dependencies file and include the theme base at the top of your theme.scss (#1152)
         - System outlines should not be able to assign to pages (Fixes #1146)
         - Fixed frontend rendering if page settings have never been saved
         - Fixed tooltips in IE Edge and in some circumstances on Firefox (#1154)

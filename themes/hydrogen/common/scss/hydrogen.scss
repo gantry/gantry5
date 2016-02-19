@@ -1,9 +1,9 @@
 // REQUIRED DEPENDENCIES - DO NOT CHANGE
-
 @import "dependencies";
 
-
 // THEME COMPONENTS
+// Base
+@import "nucleus/theme/base";
 
 // Core
 @import "hydrogen/core";
