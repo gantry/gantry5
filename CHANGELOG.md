@@ -15,6 +15,9 @@
     3. [](#bugfix)
         - Admin: Fix potential fatal error when saving Outline Assignments
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Fixed Child Theme support in Hydrogen (requires update of Hydrogen theme) (#1149)
+        - Added sample Hydrogen Child theme (#1149)
     2. [](#improved)
         - Add Ability to Duplicate Base in Outlines (#846)
     3. [](#bugfix)

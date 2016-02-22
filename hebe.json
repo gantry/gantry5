@@ -139,11 +139,19 @@
                 "themes":[
                     {
                         "source":"/themes/hydrogen/wordpress",
-                        "destination":"/wp-content/themes/hydrogen"
+                        "destination":"/wp-content/themes/rt_hydrogen"
                     },
                     {
                         "source":"/themes/hydrogen/common",
-                        "destination":"/wp-content/themes/hydrogen/common"
+                        "destination":"/wp-content/themes/rt_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/hydrogen-child/wordpress",
+                        "destination":"/wp-content/themes/rt_hydrogen_child"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/wp-content/themes/rt_hydrogen_child/common"
                     }
                 ]
             }

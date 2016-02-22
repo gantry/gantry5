@@ -26,12 +26,13 @@ try {
     // Initialize the template if not done already.
     if (!isset($gantry['theme.name'])) {
         $gantry['theme.path'] = get_stylesheet_directory();
-        $gantry['theme.name'] = get_option('template');
+        $gantry['theme.parent'] = get_option('template');
+        $gantry['theme.name'] = get_option('stylesheet');
     }
 
     // Only a single template can be loaded at any time.
     if (!isset($gantry['theme'])) {
-        include_once __DIR__ . '/theme.php';
+        include_once $gantry['theme.path'] . '/includes/theme.php';
     }
 
 } catch (Exception $e) {
@@ -57,8 +58,8 @@ try {
 
 // Hook into administration.
 if (is_admin()) {
-    if (file_exists(__DIR__ . '/admin/init.php')) {
-        define('GANTRYADMIN_PATH', __DIR__ . '/admin');
+    if (file_exists($gantry['theme.path'] . '/admin/init.php')) {
+        define('GANTRYADMIN_PATH', $gantry['theme.path'] . '/admin');
     }
 
     add_action('init', function () {

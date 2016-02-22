@@ -1,5 +1,5 @@
 details:
-  name: Hydrogen
+  name: Hydrogen Child
   version: "@version@"
   icon: paper-plane
   date: @versiondate@
@@ -19,7 +19,7 @@ details:
 
   copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
   license: GPLv2
-  description: Hydrogen Theme
+  description: Hydrogen Child Theme
   images:
     thumbnail: admin/images/preset1.png
     preview: admin/images/preset1.png
@@ -30,7 +30,7 @@ configuration:
     engine: nucleus
 
   theme:
-    parent: hydrogen
+    parent: rt_hydrogen
     base: gantry-theme://common
     file: gantry-theme://includes/theme.php
     class: \Gantry\Framework\Theme
