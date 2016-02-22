@@ -17,11 +17,11 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Fixed Child Theme support in Hydrogen (requires update of Hydrogen theme) (#1149)
-        - Added sample Hydrogen Child theme (#1149)
+        - Added sample Hydrogen Child theme to git (#1149)
     2. [](#improved)
         - Add Ability to Duplicate Base in Outlines (#846)
     3. [](#bugfix)
-        - Fixed typo in `posts_per_page` custom wordpress field (thanks @adi8i - #1153)
+        - Fixed typo in `posts_per_page` custom WordPress field (thanks @adi8i - #1153)
 
 # 5.2.10
 ## 08/02/2016
