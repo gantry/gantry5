@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
+        - Added option to parse Twig in Custom HTML particle (#1144)
     2. [](#improved)
         - Collection Lists now have a maximum height set, triggering a scrollbar in case the amount of items is big (#1139)
     3. [](#bugfix)

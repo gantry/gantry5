@@ -161,6 +161,24 @@ abstract class AbstractTheme
     }
 
     /**
+     * Compile and render twig string.
+     *
+     * @param string $string
+     * @param array $context
+     * @return string
+     */
+    public function compile($string, array $context = [])
+    {
+        $renderer = $this->renderer();
+        $template = $renderer->createTemplate($string);
+
+        // Include Gantry specific things to the context.
+        $context = $this->getContext($context);
+
+        return $template->render($context);
+    }
+
+    /**
      * Initialize theme.
      */
     protected function init()

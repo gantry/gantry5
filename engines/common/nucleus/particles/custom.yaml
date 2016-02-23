@@ -16,6 +16,11 @@ form:
       label: Custom HTML
       description: Enter custom HTML into here.
 
+    twig:
+       type: input.checkbox
+       label: Process Twig
+       description: Enable Twig template processing in the content. Twig will be processed before shortcodes.
+
     filter:
       type: input.checkbox
       label: Process shortcodes
