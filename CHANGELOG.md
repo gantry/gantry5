@@ -8,15 +8,15 @@
     2. [](#improved)
         - Collection Lists now have a maximum height set, triggering a scrollbar in case the amount of items is big (#1139)
     3. [](#bugfix)
-        - [BC]: The `dependencies.scss` file does not import `nucleus/theme/base` anymore. **IMPORTANT**: if you are a theme developer, make sure you adjust your dependencies file and include the theme base at the top of your theme.scss (#1152)
+        - [CHANGE]: The `dependencies.scss` file does not import `nucleus/theme/base` anymore. **IMPORTANT**: if you are a theme developer, make sure you adjust your dependencies file and include the theme base at the top of your theme.scss (#1152)
         - System outlines should not be able to assign to pages (Fixes #1146)
         - Fixed frontend rendering if page settings have never been saved
         - Fixed tooltips in IE Edge and in some circumstances on Firefox (#1154)
-        - Fixed `404 Not Found` when creating new outline 
+        - Fixed `404 Not Found` when creating new outline
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Admin: Fix potential fatal error when saving Outline Assignments
-        - Update Joomla template style when saving layout 
+        - Update Joomla template style when saving layout
 3. [WordPress](#wordpress)
     1. [](#new)
         - Fixed Child Theme support in Hydrogen (requires update of Hydrogen theme) (#1149)
