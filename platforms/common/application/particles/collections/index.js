@@ -76,7 +76,7 @@ ready(function() {
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
         var param = element.parent('.settings-param'),
             list = param.find('ul'),
-            editall = list.parent().find('[data-collection-editall]'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
             tmpl = param.find('[data-collection-template]'),
             items = list.search('> [data-collection-item]') || [],
@@ -86,7 +86,7 @@ ready(function() {
 
         if (last) { clone.after(last); }
         else { clone.top(list); }
-
+        
         if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
