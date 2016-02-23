@@ -105,10 +105,10 @@ class TemplateInstaller
             $home = ($home !== null ? $home : $style->home);
             $params = (array) json_decode($style->params, true);
 
-            $data = array(
+            $data = [
                 'params' => json_encode($configuration + $params),
                 'home' => $home
-            );
+            ];
 
             $style->save($data);
         }

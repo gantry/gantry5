@@ -15,6 +15,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Admin: Fix potential fatal error when saving Outline Assignments
+        - Update Joomla template style when saving layout 
 3. [WordPress](#wordpress)
     1. [](#new)
         - Fixed Child Theme support in Hydrogen (requires update of Hydrogen theme) (#1149)

@@ -15,6 +15,7 @@ use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
+use Gantry\Joomla\StyleHelper;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -57,6 +58,13 @@ class EventListener implements EventSubscriberInterface
 
     public function onLayoutSave(Event $event)
     {
+        /** @var Layout $layout */
+        $layout = $event->layout;
+        $preset = isset($layout->preset['name']) ? $layout->preset['name'] : 'default';
+
+        // Update Joomla template style.
+        StyleHelper::update($layout->name, $preset);
+
         $theme = $event->gantry['theme.name'];
 
         $positions = $event->gantry['configurations']->positions();
