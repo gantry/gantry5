@@ -1,10 +1,7 @@
 // Breakpoints
 @mixin breakpoint($breakpoint, $media: all) {
-    @if $breakpoint == very-large-desktop-range {
-        @media only #{$media} and (min-width: $breakpoints-very-large-desktop-container) { @content; }
-    }
-	@elseif $breakpoint == large-desktop-range {
-		@media only #{$media} and (min-width: $breakpoints-large-desktop-container) and (max-width: $breakpoints-very-large-desktop-container - 0.062rem) { @content; }
+	@if $breakpoint == large-desktop-range {
+		@media only #{$media} and (min-width: $breakpoints-large-desktop-container) { @content; }
 	}
 	@else if $breakpoint == desktop-range {
 		@media only #{$media} and (min-width: $breakpoints-desktop-container) and (max-width: $breakpoints-large-desktop-container - 0.062rem) { @content; }

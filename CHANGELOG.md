@@ -1,3 +1,10 @@
+# 5.2.12
+## XX/XX/XXXX
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed a regression and removed `very-large-desktop-range` from `breakpoint` mixin
+
 # 5.2.11
 ## 23/01/2016
 
