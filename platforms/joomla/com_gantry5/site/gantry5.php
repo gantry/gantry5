@@ -70,8 +70,7 @@ if ($params->get('robots')) {
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);
 if (!$data) {
-    // Some plugins which require non-empty component output to work properly.
-    echo "\n";
+    // No component output.
     return;
 }
 
@@ -88,5 +87,5 @@ $context = [
     ]
 ];
 
-// Render the page.
-echo $theme->render("@nucleus/content/particle.html.twig", $context);
+// Render the particle.
+echo trim($theme->render("@nucleus/content/particle.html.twig", $context));

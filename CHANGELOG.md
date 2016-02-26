@@ -4,7 +4,10 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed a regression and removed `very-large-desktop-range` from `breakpoint` mixin
-
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Remove "always render component" workaround introduced in 5.2.8 (fixes #1157, thanks @JoomFx and @nonumber)
+    
 # 5.2.11
 ## 23/01/2016
 
