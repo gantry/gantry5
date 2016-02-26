@@ -23,3 +23,11 @@ form:
       type: input.colorpicker
       label: Toggle Color
       default: "#ffffff"
+    toggle-visibility:
+      type: select.selectize
+      label: Toggle Visibility
+      description: Choose the OffCanvas Toggle Visibility.
+      default: 1
+      options:
+        1: Mobile Menu
+        2: Always      
