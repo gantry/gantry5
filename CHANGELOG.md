@@ -1,7 +1,9 @@
 # 5.2.12
-## XX/XX/XXXX
+## 27/01/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Add support for toggling offcanvas visibility on non-mobile devices
     3. [](#bugfix)
         - Fixed a regression and removed `very-large-desktop-range` from `breakpoint` mixin
 2. [Joomla](#joomla)
