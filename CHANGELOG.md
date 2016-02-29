@@ -1,5 +1,12 @@
+# 5.2.13
+## XX/XX/2016
+
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Error on saving system outline layouts (#1167)
+
 # 5.2.12
-## 27/01/2016
+## 27/02/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -9,9 +16,9 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Remove "always render component" workaround introduced in 5.2.8 (fixes #1157, thanks @JoomFx and @nonumber)
-    
+
 # 5.2.11
-## 23/01/2016
+## 23/02/2016
 
 1. [Common](#common)
     1. [](#new)
