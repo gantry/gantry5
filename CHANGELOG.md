@@ -4,6 +4,9 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed error on saving system outline layouts (#1167)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
 
 # 5.2.12
 ## 27/02/2016
