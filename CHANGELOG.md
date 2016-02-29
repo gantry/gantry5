@@ -3,7 +3,7 @@
 
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Error on saving system outline layouts (#1167)
+        - Fixed error on saving system outline layouts (#1167)
 
 # 5.2.12
 ## 27/02/2016
