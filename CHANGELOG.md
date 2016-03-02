@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 2. [Joomla](#joomla)
+    2. [](#improved)
+        - Load template language overrides from `custom/language`
     3. [](#bugfix)
         - Fixed error on saving system outline layouts (#1167)
 
