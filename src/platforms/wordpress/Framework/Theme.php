@@ -306,6 +306,24 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Extend file type support in WP Theme Editor
+     *
+     * @param $default_types
+     * @param $theme
+     *
+     * @return array
+     */
+    public function extend_theme_editor_filetypes($default_types) {
+        $filetypes = [
+            'twig',
+            'yaml',
+            'scss'
+        ];
+
+        return $filetypes;
+    }
+
+    /**
      * @see AbstractTheme::init()
      */
     protected function init()
@@ -340,6 +358,7 @@ class Theme extends AbstractTheme
         add_filter('timber_context', [$this, 'getContext']);
         add_filter('timber/loader/twig', [$this, 'timber_loader_twig']);
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
+        add_filter('wp_theme_editor_filetypes', [$this, 'extend_theme_editor_filetypes']);
         add_filter('get_twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
