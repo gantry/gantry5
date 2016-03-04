@@ -4,6 +4,8 @@ defined('ABSPATH') or die;
 add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
 add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
 add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
+add_filter( 'upgrader_package_options', 'gantry5_upgrader_package_options', 10000 );
+add_filter( 'upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4 );
 
 // Check if Timber is active before displaying sidebar button
 if ( class_exists( 'Timber' ) ) {
@@ -77,4 +79,27 @@ function gantry5_layout_manager() {
         throw $e;
 //        wp_die( $e->getMessage() );
     }
+}
+
+// SimpleXmlElement is a weird class that acts like a boolean, we are going to take advantage from that.
+class Gantry5Truthy extends SimpleXmlElement { }
+
+function gantry5_upgrader_package_options($options) {
+    if ($options['abort_if_destination_exists'] && !$options['clear_destination']) {
+        $options['abort_if_destination_exists'] = new Gantry5Truthy('<bool><true></true></bool>');
+        $options['hook_extra']['gantry5_abort'] = $options['abort_if_destination_exists'];
+    }
+
+    return $options;
+}
+
+function gantry5_upgrader_source_selection($source, $remote_source, $this, $hook_extra) {
+    if (isset($hook_extra['gantry5_abort'])) {
+        // Allow upgrading Gantry themes from uploader.
+        if (file_exists($source . '/gantry/theme.yaml')) {
+            unset($hook_extra['gantry5_abort']->true);
+        }
+    }
+
+    return $source;
 }

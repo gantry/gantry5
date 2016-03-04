@@ -7,6 +7,8 @@
     3. [](#bugfix)
         - Fixed error on saving system outline layouts (#1167)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Allow Gantry theme upgrades from WordPress theme uploader (#1165)
     3. [](#bugfix)
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
 
