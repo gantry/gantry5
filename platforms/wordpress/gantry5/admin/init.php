@@ -87,24 +87,26 @@ function gantry5_layout_manager() {
 class Gantry5Truthy extends SimpleXmlElement { }
 
 function gantry5_upgrader_package_options($options) {
-    if (
-        ((isset($options['hook_extra']['type']) && $options['hook_extra']['type'] === 'theme'))
-        && $options['abort_if_destination_exists']
-        && !$options['clear_destination']
-    ) {
-        $options['abort_if_destination_exists'] = new Gantry5Truthy('<bool><true></true></bool>');
-        $options['hook_extra']['gantry5_abort'] = $options['abort_if_destination_exists'];
+    if (isset($options['hook_extra']['type']) && !$options['clear_destination']) {
+        if ($options['hook_extra']['type'] === 'theme' && $options['abort_if_destination_exists']) {
+            // Prepare for manual theme upgrade.
+            $options['abort_if_destination_exists'] = new Gantry5Truthy('<bool><true></true></bool>');
+            $options['hook_extra']['gantry5_abort'] = $options['abort_if_destination_exists'];
+        } elseif ($options['hook_extra']['type'] === 'plugin' && strstr(basename($options['package']), 'gantry5')) {
+            // Allow Gantry plugin to be manually upgraded / downgraded.
+            $options['clear_destination'] = true;
+        }
     }
 
     return $options;
 }
 
-function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $hook_extra) {
-    if (isset($hook_extra['gantry5_abort'])) {
+function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $options) {
+    if (isset($options['gantry5_abort'])) {
         // Allow upgrading Gantry themes from uploader.
         if (file_exists($source . '/gantry/theme.yaml')) {
             $upgrader->skin->feedback('Gantry 5 theme detected.');
-            unset($hook_extra['gantry5_abort']->true);
+            unset($options['gantry5_abort']->true);
         }
     }
 
