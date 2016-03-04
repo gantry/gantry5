@@ -11,6 +11,7 @@
         - Allow Gantry theme upgrades from WordPress theme uploader (#1165)
     3. [](#bugfix)
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
+        - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
 
 # 5.2.12
 ## 27/02/2016

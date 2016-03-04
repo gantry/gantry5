@@ -6,6 +6,8 @@ add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
 add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
 add_filter( 'upgrader_package_options', 'gantry5_upgrader_package_options', 10000 );
 add_filter( 'upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4 );
+add_action( 'upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3 );
+
 
 // Check if Timber is active before displaying sidebar button
 if ( class_exists( 'Timber' ) ) {
@@ -97,13 +99,43 @@ function gantry5_upgrader_package_options($options) {
     return $options;
 }
 
-function gantry5_upgrader_source_selection($source, $remote_source, $this, $hook_extra) {
+function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $hook_extra) {
     if (isset($hook_extra['gantry5_abort'])) {
         // Allow upgrading Gantry themes from uploader.
         if (file_exists($source . '/gantry/theme.yaml')) {
+            $upgrader->skin->feedback('Gantry 5 theme detected.');
             unset($hook_extra['gantry5_abort']->true);
         }
     }
 
     return $source;
 }
+
+function gantry5_upgrader_post_install($success, $options, $result) {
+    if ($success) {
+        $theme = isset($options['gantry5_abort']) && !$options['gantry5_abort'];
+        $plugin = $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5';
+
+        // Clear gantry cache after plugin / Gantry theme installs.
+        if ($theme || $plugin) {
+            global $wp_filesystem;
+
+            $gantry = \Gantry\Framework\Gantry::instance();
+            $path = $gantry['platform']->getCachePath();
+            if ($wp_filesystem->is_dir($path)) {
+                $wp_filesystem->rmdir($path, true);
+            }
+
+            // Make sure that PHP has the latest data of the files.
+            clearstatcache();
+
+            // Remove all compiled files from opcode cache.
+            if (function_exists('opcache_reset')) {
+                @opcache_reset();
+            } elseif (function_exists('apc_clear_cache')) {
+                @apc_clear_cache();
+            }
+        }
+    }
+}
+
