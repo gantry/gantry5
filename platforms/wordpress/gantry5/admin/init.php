@@ -85,7 +85,11 @@ function gantry5_layout_manager() {
 class Gantry5Truthy extends SimpleXmlElement { }
 
 function gantry5_upgrader_package_options($options) {
-    if ($options['abort_if_destination_exists'] && !$options['clear_destination']) {
+    if (
+        ((isset($options['hook_extra']['type']) && $options['hook_extra']['type'] === 'theme'))
+        && $options['abort_if_destination_exists']
+        && !$options['clear_destination']
+    ) {
         $options['abort_if_destination_exists'] = new Gantry5Truthy('<bool><true></true></bool>');
         $options['hook_extra']['gantry5_abort'] = $options['abort_if_destination_exists'];
     }
