@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Gantry_Adminblock>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Gantry_Adminblock>
-    </modules>
-</config>
