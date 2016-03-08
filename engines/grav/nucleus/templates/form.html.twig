@@ -1,10 +1,7 @@
-{% extends 'partials/base.html.twig' %}
-{% set layout = 'fullwidth' %}
+{% extends "@nucleus/page.html.twig" %}
 
-{% block content_full %}
-    <div class="content-padding">
-        {{ content }}
+{% block content %}
+    {{ content }}
 
-        {% include "forms/form.html.twig" %}
-    </div>
+    {% include "forms/form.html.twig" %}
 {% endblock %}
