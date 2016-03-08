@@ -26,7 +26,7 @@ class CompiledBlueprints extends CompiledBase
     public $version = 2;
 
     /**
-     * @var Blueprints  Blueprints object.
+     * @var BlueprintSchema  Blueprints object.
      */
     protected $object;
 
