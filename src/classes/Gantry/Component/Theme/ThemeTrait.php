@@ -59,7 +59,7 @@ trait ThemeTrait
         $streamName = $this->details()->addStreams();
 
         /** @var UniformResourceLocator $locator */
-        $locator = self::$gantry['locator'];
+        $locator = self::gantry()['locator'];
         $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
     }
 

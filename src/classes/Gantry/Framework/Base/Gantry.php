@@ -175,11 +175,11 @@ abstract class Gantry extends Container
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
-        $instance['request'] = function ($c) {
+        $instance['request'] = function () {
             return new Request;
         };
 
-        $instance['events'] = function ($c) {
+        $instance['events'] = function () {
             return new EventDispatcher;
         };
 
@@ -187,20 +187,20 @@ abstract class Gantry extends Container
             return new Platform($c);
         };
 
-        $instance['translator'] = function ($c) {
+        $instance['translator'] = function () {
             return new Translator;
         };
 
-        $instance['site'] = function ($c) {
+        $instance['site'] = function () {
             return new Site;
         };
 
-        $instance['menu'] = function ($c) {
+        $instance['menu'] = function () {
             return new Menu;
         };
 
-        $instance['messages'] = function ($c) {
-            return new Messages();
+        $instance['messages'] = function () {
+            return new Messages;
         };
 
         $instance['page'] = function ($c) {
