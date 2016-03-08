@@ -14,7 +14,7 @@
 namespace Gantry\Component\Config;
 
 use Gantry\Component\File\CompiledYamlFile;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\BlueprintSchema;
 
 /**
  * The Compiled Blueprints class.
@@ -27,7 +27,7 @@ class CompiledBlueprints extends CompiledBase
     public $version = 2;
 
     /**
-     * @var Blueprints  Blueprints object.
+     * @var BlueprintSchema  Blueprints object.
      */
     protected $object;
 
@@ -38,7 +38,7 @@ class CompiledBlueprints extends CompiledBase
      */
     protected function createObject(array $data = [])
     {
-        $this->object = new Blueprints($data);
+        $this->object = new BlueprintSchema($data);
     }
 
     /**

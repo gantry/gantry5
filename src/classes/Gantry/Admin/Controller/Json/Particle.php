@@ -13,14 +13,13 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Admin\Controller\Html\Settings;
 use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\BlueprintSchema;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Particle extends JsonController
@@ -149,7 +148,7 @@ class Particle extends JsonController
     public function validate($name)
     {
         // Load particle blueprints and default settings.
-        $validator = new Blueprints();
+        $validator = new BlueprintSchema();
         $validator->embed('options', $this->container['particles']->get($name));
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));

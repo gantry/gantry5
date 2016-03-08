@@ -20,7 +20,6 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
