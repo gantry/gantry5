@@ -20,35 +20,15 @@ use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Layouts
+ * @package Gantry\Admin\Controller\Json
+ * @deprecated
+ */
 class Layouts extends JsonController
 {
     public function index()
     {
         throw new \Exception('Deprecated');
-
-        $options = [
-            'compare' => 'Filename',
-            'pattern' => '|\.json|',
-            'filters' => ['key' => '|\.json|'],
-            'key' => 'SubPathname',
-            'value' => 'Pathname'
-        ];
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $files = Folder::all($locator->findResource('gantry-theme://layouts/presets'), $options);
-
-        $response = ['layouts'];
-        foreach($files as $name => $structure) {
-            $file = JsonFile::instance($structure);
-            $content = $file->content();
-            $response['layouts'][$name] = $content;
-            $file->free();
-        }
-
-        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/layouts/picker.html.twig', ['presets' => $response]);
-
-        return new JsonResponse($response);
     }
 }

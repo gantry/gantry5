@@ -49,11 +49,7 @@ class Request
 
     public function __construct()
     {
-        $this->get = new Input($_GET);
-        $this->post = new Input($_POST);
-        $this->cookie = new Input($_COOKIE);
-        $this->server = new Input($_SERVER);
-        $this->request = new Input($_REQUEST);
+        $this->init();
     }
 
     public function getMethod()
@@ -68,5 +64,14 @@ class Request
         }
 
         return $this->method;
+    }
+
+    protected function init()
+    {
+        $this->get = new Input($_GET);
+        $this->post = new Input($_POST);
+        $this->cookie = new Input($_COOKIE);
+        $this->server = new Input($_SERVER);
+        $this->request = new Input($_REQUEST);
     }
 }

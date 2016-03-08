@@ -97,6 +97,7 @@ class Router extends BaseRouter
      * Send response to the client.
      *
      * @param Response $response
+     * @return string
      */
     protected function send(Response $response)
     {

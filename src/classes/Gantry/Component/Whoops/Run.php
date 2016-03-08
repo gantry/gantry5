@@ -70,6 +70,7 @@ class Run extends \Whoops\Run
      * Handles an exception, ultimately generating a Whoops error page.
      *
      * @param  \Exception $exception
+     * @return void
      */
     public function handleException(\Exception $exception)
     {
@@ -78,7 +79,8 @@ class Run extends \Whoops\Run
             foreach ($this->registeredPatterns as $entry) {
                 $pathMatches = (bool) preg_match($entry["pattern"], $exception->getFile());
                 if ($pathMatches) {
-                    return parent::handleException($exception);
+                    parent::handleException($exception);
+                    return;
                 }
             }
         }

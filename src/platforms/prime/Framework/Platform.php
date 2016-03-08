@@ -18,7 +18,6 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
-use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**

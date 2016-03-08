@@ -19,6 +19,7 @@ class Url
      * UTF8 aware parse_url().
      *
      * @param  string $url
+     * @param  bool   $queryArray
      * @return array|bool
      */
     public static function parse($url, $queryArray = false)

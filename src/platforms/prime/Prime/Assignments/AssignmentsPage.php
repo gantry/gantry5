@@ -12,8 +12,6 @@ namespace Gantry\Prime\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Prime\Pages;
-use Grav\Common\Grav;
-use Grav\Common\Page\Page;
 
 class AssignmentsPage implements AssignmentsInterface
 {

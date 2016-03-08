@@ -92,6 +92,7 @@ class Response
 
     /**
      * @param int $code
+     * @param string $message
      * @return $this
      */
     public function setStatusCode($code, $message = null)

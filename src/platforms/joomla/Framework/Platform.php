@@ -13,7 +13,6 @@ namespace Gantry\Framework;
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
-use Joomla\Registry\Registry;
 
 /**
  * The Platform Configuration class contains configuration information.

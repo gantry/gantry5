@@ -94,6 +94,7 @@ abstract class AbstractAssignments
     /**
      * List matching outlines sorted by score.
      *
+     * @param array $candidates
      * @return array
      */
     public function scores(array $candidates = null)
@@ -106,6 +107,7 @@ abstract class AbstractAssignments
     /**
      * List matching outlines with matched assignments.
      *
+     * @param array $candidates
      * @return array
      */
     public function matches(array $candidates = null)

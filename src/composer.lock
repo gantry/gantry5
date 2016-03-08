@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "10731d66d2fd65d2a772bd21b02f2df0",
-    "content-hash": "f4841033cf60c83e9ca3616ee7f53066",
+    "hash": "67c04ef996c32adc90bb191d012c676c",
+    "content-hash": "a293fe7e0a3bf4f376e56af008586955",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -147,48 +147,6 @@
                 "zf2"
             ],
             "time": "2015-06-29 05:42:04"
-        },
-        {
-            "name": "ircmaxell/password-compat",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ircmaxell/password_compat.git",
-                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
-                "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/password.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anthony Ferrara",
-                    "email": "ircmaxell@php.net",
-                    "homepage": "http://blog.ircmaxell.com"
-                }
-            ],
-            "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
-            "homepage": "https://github.com/ircmaxell/password_compat",
-            "keywords": [
-                "hashing",
-                "password"
-            ],
-            "time": "2014-11-20 16:49:30"
         },
         {
             "name": "leafo/lessphp",
@@ -335,27 +293,26 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "0c7a3b4b6e4d73be8512e89f7acde6899334b7f2"
+                "reference": "034bc18226921e49867ea14a9b9a39baafce5c04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/0c7a3b4b6e4d73be8512e89f7acde6899334b7f2",
-                "reference": "0c7a3b4b6e4d73be8512e89f7acde6899334b7f2",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/034bc18226921e49867ea14a9b9a39baafce5c04",
+                "reference": "034bc18226921e49867ea14a9b9a39baafce5c04",
                 "shasum": ""
             },
             "require": {
-                "ircmaxell/password-compat": "1.0.*",
                 "php": ">=5.4.0",
                 "pimple/pimple": "~3.0",
-                "symfony/event-dispatcher": "~2.5",
-                "symfony/yaml": "~2.5"
+                "symfony/event-dispatcher": ">2.5",
+                "symfony/yaml": ">2.5"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.0.*"
+                "phpunit/phpunit": "~5.1.5"
             },
             "type": "library",
             "autoload": {
@@ -380,20 +337,20 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2015-11-24 17:04:24"
+            "time": "2016-03-07 18:06:15"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.2",
+            "version": "v2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "ee278f7c851533e58ca307f66305ccb9188aceda"
+                "reference": "78c468665c9568c3faaa9c416a7134308f2d85c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/ee278f7c851533e58ca307f66305ccb9188aceda",
-                "reference": "ee278f7c851533e58ca307f66305ccb9188aceda",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/78c468665c9568c3faaa9c416a7134308f2d85c3",
+                "reference": "78c468665c9568c3faaa9c416a7134308f2d85c3",
                 "shasum": ""
             },
             "require": {
@@ -440,20 +397,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-13 10:28:07"
+            "time": "2016-01-27 05:14:19"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.2",
+            "version": "v2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8"
+                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/34c8a4b51e751e7ea869b8262f883d008a2b81b8",
-                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
+                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
                 "shasum": ""
             },
             "require": {
@@ -489,7 +446,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-13 10:28:07"
+            "time": "2016-02-23 07:41:20"
         },
         {
             "name": "twig/twig",

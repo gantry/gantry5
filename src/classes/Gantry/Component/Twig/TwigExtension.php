@@ -156,7 +156,7 @@ class TwigExtension extends \Twig_Extension
 
         if (@is_file($src) || $remote) {
             try {
-                list($width, $height, $type, $attr) = @getimagesize($src);
+                list($width, $height,, $attr) = @getimagesize($src);
             } catch (\Exception $e) {}
 
             $sizes['width'] = $width;
@@ -227,7 +227,7 @@ class TwigExtension extends \Twig_Extension
     /**
      * Filter stream URLs from HTML input.
      *
-     * @param  string $html         HTML input to be filtered.
+     * @param  string $str          HTML input to be filtered.
      * @param  bool $domain         True to include domain name.
      * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                              Use value <= 0 to disable the feature.
@@ -258,6 +258,9 @@ class TwigExtension extends \Twig_Extension
                 $level = 3;
                 $message = "Fatal DOM Error {$error->code}: ";
                 break;
+            default:
+                $level = 3;
+                $message = "Unknown DOM Error {$error->code}: ";
         }
         $message .= "{$error->message} while parsing:\n{$input}\n";
 
@@ -360,7 +363,7 @@ class TwigExtension extends \Twig_Extension
     }
 
     public function pregMatch($pattern, $subject, &$matches = []) {
-        $preg_match = preg_match($pattern, $subject, $matches);
+        preg_match($pattern, $subject, $matches);
 
         if(isset($matches) && !empty($matches)) {
             return $matches;

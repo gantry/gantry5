@@ -78,6 +78,7 @@ class AssignmentsWalker {
      *
      * @param array $elements  An array of elements.
      * @param int   $max_depth The maximum hierarchical depth.
+     * @param array $walker_args
      * @return array The array of items with their depths and their direct children.
      */
     public function walk($elements, $max_depth, $walker_args = []) {

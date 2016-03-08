@@ -30,6 +30,7 @@ class Menu extends AbstractMenu
     /**
      * Return list of menus.
      *
+     * @param  array $args
      * @return array
      */
     public function getMenus($args = [])
@@ -111,7 +112,7 @@ class Menu extends AbstractMenu
     /**
      * Get menu items from the platform.
      *
-     * @param int $levels
+     * @param array $params
      * @return array    List of routes to the pages.
      */
     protected function getItemsFromPlatform($params)
@@ -256,8 +257,6 @@ class Menu extends AbstractMenu
         $this->base = $this->calcBase($params['base']);
 
         foreach ($menuItems as $menuItem) {
-            $parent = $menuItem->menu_item_parent;
-
             $slugPath = $this->getMenuSlug($menuItems, $menuItem->tree);
             $slugMap[$slugPath] = $menuItem->db_id;
 

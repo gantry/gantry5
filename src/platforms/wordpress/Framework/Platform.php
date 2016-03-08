@@ -14,7 +14,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\WordPress\Widgets;
-use Pimple\Container;
+use RocketTheme\Toolbox\DI\Container;
 
 /**
  * The Platform Configuration class contains configuration information.

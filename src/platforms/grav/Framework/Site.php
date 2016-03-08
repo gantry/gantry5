@@ -10,15 +10,13 @@
 
 namespace Gantry\Framework;
 
-use Grav\Common\GravTrait;
+use Grav\Common\Grav;
 
 class Site
 {
-    use GravTrait;
-
     public function __construct()
     {
-        $grav = static::$grav;
+        $grav = Grav::instance();
         $config = $grav['config'];
         $uri = $grav['uri'];
         $this->theme = $config->get('system.theme');

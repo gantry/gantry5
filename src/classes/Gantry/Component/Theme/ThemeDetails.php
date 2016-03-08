@@ -55,7 +55,7 @@ class ThemeDetails implements \ArrayAccess
 
         $this->offsetSet('name', $theme);
 
-        $parent = (string) $this->offsetGet('configuration.theme.parent', $theme);
+        $parent = (string) $this->get('configuration.theme.parent', $theme);
         $parent = $parent != $theme ? $parent : null;
 
         $this->offsetSet('parent', $parent);
@@ -140,7 +140,7 @@ class ThemeDetails implements \ArrayAccess
         $uri = (string) $this->offsetGet($path);
 
         if (strpos($uri, 'gantry-theme://') === 0) {
-            list ($scheme, $uri) = explode('://', $uri, 2);
+            list (, $uri) = explode('://', $uri, 2);
         }
         if (!strpos($uri, '://')) {
             $name = $this->offsetGet('name');
@@ -177,7 +177,7 @@ class ThemeDetails implements \ArrayAccess
     public function parsePath($path)
     {
         if (strpos($path, 'gantry-theme://') === 0) {
-            list ($scheme, $path) = explode('://', $path, 2);
+            list (, $path) = explode('://', $path, 2);
         }
         if (!strpos($path, '://')) {
             $name = $this->offsetGet('name');

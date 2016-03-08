@@ -230,7 +230,6 @@ abstract class AbstractTheme
      *
      * @param string $path
      * @return string
-     * @internal
      */
     protected function getCachePath($path = '')
     {

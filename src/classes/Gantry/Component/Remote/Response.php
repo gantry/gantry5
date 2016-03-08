@@ -83,8 +83,9 @@ class Response
     /**
      * Makes a request to the URL by using the preferred method
      *
-     * @param  string $uri     URL to call
-     * @param  array  $options An array of parameters for both `curl` and `fopen`
+     * @param  string   $uri     URL to call
+     * @param  array    $options An array of parameters for both `curl` and `fopen`
+     * @param  callable $callback
      *
      * @return string The response of the request
      */
@@ -122,9 +123,7 @@ class Response
     }
 
     /**
-     * Progress normalized for cURL and Fopen
-     *
-     * @param  args   Variable length of arguments passed in by stream method
+     * Progress normalized for cURL and fopen
      *
      * @return array Normalized array with useful data.
      *               Format: ['code' => int|false, 'filesize' => bytes, 'transferred' => bytes, 'percent' => int]
@@ -176,6 +175,8 @@ class Response
         if (self::isCurlAvailable()) {
             return self::getCurl(func_get_args());
         }
+
+        return '';
     }
 
     /**

@@ -197,9 +197,10 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     }
 
     /**
-     * @param $name
-     * @param $element
-     * @param $separator
+     * @param string $name
+     * @param array  $element
+     * @param string $separator
+     * @param string $prefix
      * @return array
      * @internal
      */

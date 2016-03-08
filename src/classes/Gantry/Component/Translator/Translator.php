@@ -30,7 +30,7 @@ class Translator implements TranslatorInterface
             return $string;
         }
 
-        list($domain, $section, $code) = explode('_', $string, 3);
+        list(, $section, $code) = explode('_', $string, 3);
 
         return ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $code;
     }

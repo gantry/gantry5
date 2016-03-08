@@ -16,7 +16,6 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
-use Grav\Common\Theme;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;

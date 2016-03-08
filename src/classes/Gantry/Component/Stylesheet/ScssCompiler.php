@@ -159,8 +159,9 @@ WARN;
         return $this;
     }
 
-
     /**
+     * @param string $url
+     * @return null|string
      * @internal
      */
     public function findImport($url)

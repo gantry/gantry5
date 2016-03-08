@@ -90,6 +90,7 @@ class Format2
      * @param int|string $field
      * @param array $content
      * @param int $scope
+     * @param object $parent
      * @return array
      */
     protected function parse($field, array &$content, $scope = 0, $parent = null)
@@ -163,6 +164,7 @@ class Format2
     /**
      * @param string $field
      * @param int $scope
+     * @param object $parent
      * @return array
      */
     protected function resolve($field, $scope, $parent)

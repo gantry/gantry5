@@ -22,7 +22,7 @@ class Gantry extends Base\Gantry
         $container = parent::load();
 
         // Use locator from Grav.
-        $container['locator'] = function($c) {
+        $container['locator'] = function() {
             return Grav::instance()['locator'];
         };
 

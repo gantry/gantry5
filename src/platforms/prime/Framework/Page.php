@@ -14,7 +14,6 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Url\Url;
-use Grav\Common\Grav;
 
 class Page extends Base\Page
 {

@@ -13,6 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
@@ -52,7 +53,7 @@ class Configurations extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
-        $finder = new \Gantry\Component\Config\ConfigFileFinder();
+        $finder = new ConfigFileFinder;
         $files = $finder->getFiles($locator->findResources('gantry-layouts://'));
         $layouts = array_keys($files);
         sort($layouts);

@@ -17,6 +17,7 @@ use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
@@ -119,7 +120,7 @@ class Filepicker extends JsonController
             }
 
             foreach ($bookmark as $folder) {
-                $this->isStream = $folder instanceof \RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
+                $this->isStream = $folder instanceof UniformResourceIterator;
 
                 if ($this->isStream) {
                     unset($bookmarks[$key]);

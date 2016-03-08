@@ -106,6 +106,10 @@ class Theme extends AbstractTheme
 
     /**
      * @see AbstractTheme::render()
+     *
+     * @param string $file
+     * @param array $context
+     * @return string
      */
     public function render($file, array $context = [])
     {
@@ -309,7 +313,6 @@ class Theme extends AbstractTheme
      * Extend file type support in WP Theme Editor
      *
      * @param $default_types
-     * @param $theme
      *
      * @return array
      */
@@ -449,6 +452,8 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * @param  bool $enable
+     * @return bool
      * @deprecated 5.1.5
      */
     public function wordpress($enable = null)
