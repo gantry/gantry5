@@ -12,6 +12,7 @@
     3. [](#bugfix)
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
         - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
+        - Fixed child comment reply input position in Hydrogen
 
 # 5.2.12
 ## 27/02/2016
