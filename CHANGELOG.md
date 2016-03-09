@@ -1,6 +1,9 @@
 # 5.2.13
 ## XX/XX/2016
 
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed menu item height difference between regular and parent menu items (#1183)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Load template language overrides from `custom/language`
