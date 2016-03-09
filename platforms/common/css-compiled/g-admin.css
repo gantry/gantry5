@@ -1352,6 +1352,7 @@
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
   display: inline-block;
   vertical-align: middle;
+  line-height: normal;
 }
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
   display: inline-block;
