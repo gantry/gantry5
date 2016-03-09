@@ -38,29 +38,32 @@
 }
 
 // Dropdown Side Offset
-@mixin dropdown-offset-x($offset: 5px, $direction: left) {
-	.g-main-nav {
-		.g-standard {
-			.g-dropdown {
-				margin-#{$direction}: $offset;
-				&:after {
-					content: "";
-				    position: absolute;
-				    display: block;
-				    top: 0;
-				    left: -$offset;
-				    right: -$offset;
-				    bottom: 0;
-				    border-left: $offset solid transparent;
-				    border-right: $offset solid transparent;
-				    z-index: -1;
-				}
-			}
-			> .g-dropdown {
-				margin-#{$direction}: 0;
-			}
-		}
-	}
+@mixin dropdown-offset-x($offset: 5px, $direction: left, $first_level: true) {
+    .g-main-nav {
+        .g-standard {
+            .g-dropdown {
+                margin-#{$direction}: $offset;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    left: -$offset;
+                    right: -$offset;
+                    bottom: 0;
+                    border-left: $offset solid transparent;
+                    border-right: $offset solid transparent;
+                    z-index: -1;
+                }
+            }
+
+            @if ($first_level == true or type-of($first_level) == number) {
+                > .g-dropdown {
+                    margin-#{$direction}: if(type-of($first_level) == bool, 0, $first_level);
+                }
+            }
+        }
+    }
 }
 
 // Dropdown expansion direction
