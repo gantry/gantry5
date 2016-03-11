@@ -1,6 +1,11 @@
 # 5.2.13
 ## XX/XX/2016
 
+1. [Common](#common)
+    2. [](#improved)
+        - The `dropdown-offset-x()` mixin now includes a 3rd option that allows to disable or customize the offsets for the first level dropdown child (fixes #1182, thanks @JoomFX)
+    3. [](#bugfix)
+        - Fixed menu item height difference between regular and parent menu items (#1183)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Load template language overrides from `custom/language`
@@ -13,6 +18,7 @@
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
         - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
         - Fixed child comment reply input position in Hydrogen
+        - Fixed `Undefined $_GLOBALS` on the WP login page when the Offline Mode is enabled
 
 # 5.2.12
 ## 27/02/2016
