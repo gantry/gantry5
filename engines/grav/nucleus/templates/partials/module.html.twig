@@ -1,0 +1,9 @@
+{% extends ['@nucleus/module-chrome/' ~ style ~ '.html.twig', '@nucleus/module-chrome/gantry.html.twig'] %}
+
+{% block title %}
+    {{ segment.title }}
+{% endblock %}
+
+{% block module %}
+    {% include '@nucleus/content/' ~ segment.type ~ '.html.twig' %}
+{% endblock %}

@@ -11,6 +11,9 @@
                 <i class="fa fa-fw fa-plus"></i>
             </button>
         </span>
+        <small>
+            ({{ position.name }})
+        </small>
     </h4>
     <div class="inner-params" style="height: 257px; overflow: auto;">
         <ul>
@@ -35,7 +38,7 @@
                 <div class="title size-80">
                     <div>
                         <span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span>
-                        {{ module.title|default(module.name) }}
+                        {{ module.title|default(module.name) }} ({{ module.subtype }})
                     </div>
                 </div>
                 <i class="fa item-settings fa-cog size-10"></i>

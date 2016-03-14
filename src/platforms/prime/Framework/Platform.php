@@ -127,7 +127,6 @@ class Platform extends BasePlatform
         return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
     }
 
-
     public function countModules($position)
     {
         return count($this->getModules($position));
