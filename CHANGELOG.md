@@ -14,6 +14,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Allow Gantry theme upgrades from WordPress theme uploader (#1165)
+    2. [](#improved)
+        - Removed hardcoded `h2` tag from Login Form particle title. You can still place your `HTML` code inside of the input field.
     3. [](#bugfix)
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
         - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
