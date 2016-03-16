@@ -4,6 +4,7 @@
 1. [Common](#common)
     2. [](#improved)
         - The `dropdown-offset-x()` mixin now includes a 3rd option that allows to disable or customize the offsets for the first level dropdown child (fixes #1182, thanks @JoomFX)
+        - Add possibility to target all particles with a single CSS rule `div.g-particle` (#909) 
     3. [](#bugfix)
         - Fixed menu item height difference between regular and parent menu items (#1183)
 2. [Joomla](#joomla)
