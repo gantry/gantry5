@@ -1,3 +1,9 @@
+# 5.2.14
+## XX/XX/2016
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed alignment of menu items with children, taking up a bit more space than orphans (#1183)
 # 5.2.13
 ## 16/03/2016
 
