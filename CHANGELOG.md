@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Implemented an universal method `gantry.load()` to include common JS frameworks from Twig on all platforms (#1132)
     2. [](#improved)
         - The `dropdown-offset-x()` mixin now includes a 3rd option that allows to disable or customize the offsets for the first level dropdown child (fixes #1182, thanks @JoomFX)
         - Add possibility to target all particles with a single CSS rule `div.g-particle` (#909) 

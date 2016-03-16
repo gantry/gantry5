@@ -33,9 +33,18 @@ form:
           label: UI Sortable
           default: 0
 
-    bootstrap:
+    bootstrap2:
       type: container.set
-      label: Bootstrap
+      label: Bootstrap 2
+      fields:
+        .enabled:
+          type: enable.enable
+          label: Framework
+          default: 0
+
+    bootstrap3:
+      type: container.set
+      label: Bootstrap 3
       fields:
         .enabled:
           type: enable.enable
@@ -43,10 +52,14 @@ form:
           default: 0
 
     mootools:
-      label: MooTools
+      label: Mootools
       type: container.set
       fields:
         .enabled:
           type: enable.enable
           label: Framework
+          default: 0
+        .more:
+          type: enable.enable
+          label: Mootools More
           default: 0
