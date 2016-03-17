@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
+        - Update Whoops to latest version (fixes PHP7 issues on error pages)
 
 # 5.2.13
 ## 16/03/2016
