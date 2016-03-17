@@ -4,8 +4,11 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
-        - Update Whoops to latest version (fixes PHP7 issues on error pages)
-
+        - Update Whoops to latest version (fixes PHP7 issues with fatal errors)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Duplicating template style while caching is turned on is not recognized as Gantry 5 outline (#1200)
+    
 # 5.2.13
 ## 16/03/2016
 
