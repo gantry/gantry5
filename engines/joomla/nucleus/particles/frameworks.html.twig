@@ -1,17 +1,20 @@
 {% if particle.jquery.enabled %}
-    {% do joomla.html('jquery.framework') %}
+    {% do gantry.load('jquery') %}
     {% if particle.jquery.ui_core %}
-        {% do joomla.html('jquery.ui', ['core']) %}
+        {% do gantry.load('jquery.ui.core') %}
     {% endif %}
     {% if particle.jquery.ui_sortable %}
-        {% do joomla.html('jquery.ui', ['sortable']) %}
+        {% do gantry.load('jquery.ui.sortable') %}
     {% endif %}
 {% endif %}
 
 {% if particle.bootstrap.enabled %}
-    {% do gantry.theme.joomla(true) %}
+    {% do gantry.load('bootstrap.2') %}
 {% endif %}
 
 {% if particle.mootools.enabled %}
-    {% do joomla.html('behavior.framework', particle.mootools.more|default(false)) %}
+    {% do gantry.load('mootools') %}
+    {% if particle.mootools.more %}
+        {% do gantry.load('mootools.more') %}
+    {% endif %}
 {% endif %}

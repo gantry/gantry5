@@ -4,6 +4,7 @@
     <div class="menu-header">
         <span class="float-right">
             <button class="button button-back-to-conf" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
+            <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_POSITIONS'|trans }}</span></button>
         </span>
         <h2 class="page-title">
             {{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}
@@ -15,7 +16,7 @@
 
     <div id="positions">
         <ul class="g-grid">
-            {% for name, title in positions %}
+            {% for name, position in positions %}
                 <li class="card g-block size-1-4">
                     {% include '@gantry-admin/layouts/position.html.twig' %}
                 </li>

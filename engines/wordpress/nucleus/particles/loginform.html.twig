@@ -2,7 +2,9 @@
 
 {% block particle %}
 
-    {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+    {% if particle.title %}
+        {{ particle.title|raw }}
+    {% endif %}
 
     <div class="g-loginform {{ particle.class|e }}">
 

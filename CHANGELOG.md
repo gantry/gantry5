@@ -1,6 +1,26 @@
-# 5.2.13
+# 5.2.14
 ## XX/XX/2016
 
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
+        - Update Whoops to latest version (fixes PHP7 issues with fatal errors)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Duplicating template style while caching is turned on is not recognized as Gantry 5 outline (#1200)
+    
+# 5.2.13
+## 16/03/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Implemented an universal method `gantry.load()` to include common JS frameworks from Twig on all platforms (#1132)
+    2. [](#improved)
+        - The `dropdown-offset-x()` mixin now includes a 3rd option that allows to disable or customize the offsets for the first level dropdown child (fixes #1182, thanks @JoomFX)
+        - Add possibility to target all particles with a single CSS rule `div.g-particle` (#909)
+    3. [](#bugfix)
+        - Fixed menu item height difference between regular and parent menu items (#1183)
+        - Remove unnecessary error: `Theme does not have Base Outline` (#1107)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Load template language overrides from `custom/language`
@@ -9,9 +29,13 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Allow Gantry theme upgrades from WordPress theme uploader (#1165)
+    2. [](#improved)
+        - Removed hardcoded `h2` tag from Login Form particle title. You can still place your `HTML` code inside of the input field.
     3. [](#bugfix)
         - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
         - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
+        - Fixed child comment reply input position in Hydrogen
+        - Fixed `Undefined $_GLOBALS` on the WP login page when the Offline Mode is enabled
 
 # 5.2.12
 ## 27/02/2016

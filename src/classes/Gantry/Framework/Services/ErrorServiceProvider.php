@@ -13,7 +13,7 @@
 
 namespace Gantry\Framework\Services;
 
-use Gantry\Component\Whoops\Run;
+use Gantry\Component\Whoops\System;
 use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -21,6 +21,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\PlainTextHandler;
+use Whoops\Run;
+use Whoops\Util\Misc;
 
 class ErrorServiceProvider implements ServiceProviderInterface
 {
@@ -33,8 +35,8 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $platform = $container['platform'];
 
         // Setup Whoops-based error handler
-        $errors = new Run;
-        $errors->registerPaths($platform->errorHandlerPaths());
+        $system = new System($platform->errorHandlerPaths());
+        $errors = new Run($system);
 
         $error_page = new PrettyPageHandler;
         $error_page->setPageTitle('Crikey! There was an error...');
@@ -44,12 +46,12 @@ class ErrorServiceProvider implements ServiceProviderInterface
         }
         $error_page->addCustomCss('whoops.css');
 
-        $json_page = new JsonResponseHandler;
-        $json_page->onlyForAjaxRequests(true);
+        $errors->pushHandler($error_page);
 
-        $errors->pushHandler($error_page, 'pretty');
-        $errors->pushHandler(new PlainTextHandler, 'text');
-        $errors->pushHandler($json_page, 'json');
+        $jsonRequest = $_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json';
+        if (Misc::isAjaxRequest() || $jsonRequest) {
+            $errors->pushHandler(new JsonResponseHandler);
+        }
 
         $errors->register();
 

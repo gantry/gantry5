@@ -395,8 +395,9 @@ class Theme extends AbstractTheme
 
         // Offline support.
         add_action('init', function() use ($gantry, $global) {
+            global $pagenow;
             if ($global->get('offline')) {
-                if (!(is_super_admin() || current_user_can('manage_options') || $_GLOBALS['pagenow'] == 'wp-login.php')) {
+                if (!(is_super_admin() || current_user_can('manage_options') || $pagenow == 'wp-login.php')) {
                     if (locate_template(['offline.php'])) {
                         add_filter('template_include', function () {
                             return locate_template(['offline.php']);

@@ -1,6 +1,6 @@
 type: particle
 subtype: social
-title:
+title: Social
 attributes:
   css:
     class: social-items

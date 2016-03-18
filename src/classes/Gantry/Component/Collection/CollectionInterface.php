@@ -53,7 +53,7 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
     public function offsetUnset($offset);
 
     /**
-     * @return int|void
+     * @return int
      */
     public function count();
 }

@@ -16,6 +16,8 @@ namespace Gantry\Framework;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Position\Module;
+use Gantry\Component\Position\Position;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -125,7 +127,6 @@ class Platform extends BasePlatform
         return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
     }
 
-
     public function countModules($position)
     {
         return count($this->getModules($position));
@@ -133,17 +134,7 @@ class Platform extends BasePlatform
 
     public function getModules($position)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $finder = new ConfigFileFinder;
-        $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.yaml|', 0);
-
-        $list = [];
-        foreach ($files as $name => $filename) {
-            $list[] = "$position/$name";
-        }
-
-        return $list;
+        return (new Position($position))->listModules();
     }
 
     public function displayModule($id, $attribs = [])
@@ -151,7 +142,7 @@ class Platform extends BasePlatform
         $module = is_array($id) ? $id : $this->getModule($id);
 
         // Make sure that module really exists.
-        if (!is_array($module)) {
+        if (!$module || !is_array($module)) {
             return '';
         }
 
@@ -187,18 +178,9 @@ class Platform extends BasePlatform
 
     protected function getModule($id)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
+        list($position, $module) = explode('/', $id, 2);
 
-        $filename = $locator("gantry-positions://{$id}.yaml");
-
-        if (!$filename) {
-            return null;
-        }
-
-        $file = CompiledYamlFile::instance($filename);
-
-        return $file->content();
+        return (new Module($module, $position))->toArray();
     }
 
     public function settings()

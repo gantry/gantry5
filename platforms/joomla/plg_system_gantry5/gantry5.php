@@ -302,7 +302,7 @@ class plgSystemGantry5 extends JPlugin
 
         $template = $table->template;
 
-        $gantry = $this->load($template);
+        $this->load($template);
         $registry = new Joomla\Registry\Registry($table->params);
         $old = (int) $registry->get('configuration', 0);
         $new = (int) $table->id;
@@ -320,7 +320,7 @@ class plgSystemGantry5 extends JPlugin
 
         $template = $table->template;
 
-        $gantry = $this->load($template);
+        $this->load($template);
 
         Gantry\Joomla\StyleHelper::delete($table->id);
     }
@@ -413,12 +413,11 @@ class plgSystemGantry5 extends JPlugin
      */
     private function getStyles()
     {
-        $cache = JFactory::getCache('com_templates', '');
-        $list = $cache->get('gantry-templates-1');
+        static $list;
 
-        if ($list === false) {
+        if ($list === null) {
             // Load styles
-            $db    = JFactory::getDbo();
+            $db = JFactory::getDbo();
             $query = $db
                 ->getQuery(true)
                 ->select('s.id, s.template')
@@ -428,7 +427,7 @@ class plgSystemGantry5 extends JPlugin
                 ->leftJoin('#__extensions as e ON e.element=s.template AND e.type=' . $db->quote('template') . ' AND e.client_id=s.client_id');
 
             $db->setQuery($query);
-            $templates = (array) $db->loadObjectList();
+            $templates = (array)$db->loadObjectList();
 
             $list = array();
 
@@ -437,8 +436,6 @@ class plgSystemGantry5 extends JPlugin
                     $list[$template->id] = $template->template;
                 }
             }
-
-            $cache->store($list, 'gantry-templates-1');
         }
 
         return $list;

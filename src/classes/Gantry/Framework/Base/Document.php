@@ -171,6 +171,11 @@ class Document
         return $html;
     }
 
+    public static function load($framework)
+    {
+        return false;
+    }
+
     public static function registerAssets()
     {
     }

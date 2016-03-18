@@ -42,7 +42,7 @@ abstract class Gantry extends Container
     public static function instance()
     {
         if (!self::$instance) {
-            self::$instance = static::load();
+            self::$instance = static::init();
 
             if (!defined('GANTRY5_DEBUG')) {
                 define('GANTRY5_DEBUG', self::$instance->debug());
@@ -107,6 +107,17 @@ abstract class Gantry extends Container
     }
 
     /**
+     * Load Javascript framework / extension in platform independent way.
+     *
+     * @param string $framework
+     * @return bool
+     */
+    public function load($framework)
+    {
+        return RealDocument::load($framework);
+    }
+
+    /**
      * Lock the variable against modification and return the value.
      *
      * @param string $id
@@ -167,7 +178,7 @@ abstract class Gantry extends Container
         return $this->wrapper;
     }
 
-    protected static function load()
+    protected static function init()
     {
         /** @var Gantry $instance */
         $instance = new static();
