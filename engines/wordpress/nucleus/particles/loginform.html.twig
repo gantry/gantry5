@@ -15,7 +15,7 @@
 
                 {% if particle.pretext is not empty %}
                     <div class="login-pretext">
-                        <p>{{ particle.pretext }}</p>
+                        <p>{{ particle.pretext|raw }}</p>
                     </div>
                 {% endif %}
 
@@ -47,7 +47,7 @@
 
                 {% if particle.posttext is not empty %}
                     <div class="login-posttext">
-                        <p>{{ particle.posttext }}</p>
+                        <p>{{ particle.posttext|raw }}</p>
                     </div>
                 {% endif %}
 
