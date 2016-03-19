@@ -256,6 +256,11 @@ abstract class CssCompiler implements CssCompilerInterface
             return true;
         }
 
+        // Preload all CSS files to locator cache.
+        foreach ($this->paths as $path) {
+            $locator->fillCache($path);
+        }
+
         // Check if any of the imported files have been changed.
         $imports = isset($content['imports']) ? $content['imports'] : [];
         foreach ($imports as $resource => $timestamp) {
