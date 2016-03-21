@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "234b39ae6c0a02957918845bcecb8b34",
-    "content-hash": "4c7406f7615deebc2a57c2e5b4a4eaf1",
+    "hash": "acaa8e0f87882c43fddc701bf0a4b996",
+    "content-hash": "6ffc830d1478eb514c616f028eb4eadf",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -295,16 +295,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.3.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "034bc18226921e49867ea14a9b9a39baafce5c04"
+                "reference": "c1da8d97b11e5a341d085bdbc83ca1b6721477a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/034bc18226921e49867ea14a9b9a39baafce5c04",
-                "reference": "034bc18226921e49867ea14a9b9a39baafce5c04",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/c1da8d97b11e5a341d085bdbc83ca1b6721477a5",
+                "reference": "c1da8d97b11e5a341d085bdbc83ca1b6721477a5",
                 "shasum": ""
             },
             "require": {
@@ -339,7 +339,7 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2016-03-07 18:06:15"
+            "time": "2016-03-21 06:47:31"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -515,7 +515,9 @@
     "packages-dev": null,
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rockettheme/toolbox": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
