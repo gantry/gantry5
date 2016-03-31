@@ -10,6 +10,8 @@
         "twig/twig": "~1.23",
         "pimple/pimple": "~3.0",
         "filp/whoops": "~2.0",
+        "maximebf/debugbar": "~1.10",
+        "symfony/polyfill-iconv": "~1.0",
         "rockettheme/toolbox": "dev-develop",
         "leafo/scssphp": "0.3.0",
         "leafo/lessphp": "~0.5",
