@@ -4,10 +4,11 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
-        - Update Whoops to latest version (fixes PHP7 issues with fatal errors)
+        - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Duplicating template style while caching is turned on is not recognized as Gantry 5 outline (#1200)
+        - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
+        - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
     
 # 5.2.13
 ## 16/03/2016

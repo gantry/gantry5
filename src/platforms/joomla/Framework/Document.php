@@ -101,6 +101,6 @@ class Document extends BaseDocument
 
     public static function rootUri()
     {
-        return rtrim(\JUri::root(true), '/');
+        return rtrim(\JUri::root(true), '/') ?: '/';
     }
 }
