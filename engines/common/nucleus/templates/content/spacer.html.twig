@@ -1,5 +1,7 @@
-{% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
-{% set spacer = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+{% if not particle %}
+    {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
+    {% set spacer = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+{% endif %}
 
 {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
     <div class="spacer{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}"></div>

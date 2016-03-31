@@ -16,3 +16,7 @@ form:
       type: separator.note
       class: alert alert-info
       content: Add empty spacer column to the row. Shows up as an empty space in your layout.
+
+    caching.type:
+      type: hidden
+      default: static

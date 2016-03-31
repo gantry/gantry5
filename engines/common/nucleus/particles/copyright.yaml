@@ -27,3 +27,7 @@ form:
       type: input.text
       label: Copyright owner
       description: Add copyright owner name.
+
+    caching.type:
+      type: hidden
+      default: static

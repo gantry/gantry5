@@ -22,3 +22,7 @@ form:
       label: CSS Classes
       description: CSS class name for the particle.
       default: branding
+
+    caching.type:
+      type: hidden
+      default: static

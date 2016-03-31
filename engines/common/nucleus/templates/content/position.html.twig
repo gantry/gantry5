@@ -1,6 +1,8 @@
 {% try %}
-    {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
-    {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+    {% if not particle %}
+        {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
+        {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+    {% endif %}
 
     {% set html %}
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}

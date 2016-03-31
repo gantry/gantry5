@@ -1,11 +1,13 @@
 {% try %}
     {% set id = segment.id %}
-    {% if noConfig %}
-        {% set enabled = true %}
-        {% set particle = segment.attributes %}
-    {% else %}
-        {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
-        {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+    {% if not particle %}
+        {% if noConfig %}
+            {% set enabled = true %}
+            {% set particle = segment.attributes %}
+        {% else %}
+            {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
+            {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+        {% endif %}
     {% endif %}
 
     {% set html %}

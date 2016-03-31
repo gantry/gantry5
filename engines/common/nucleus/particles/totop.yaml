@@ -27,3 +27,7 @@ form:
       label: Text
       description: The text to be displayed for the link. HTML is allowed.
       placeholder: To Top
+
+    caching.type:
+      type: hidden
+      default: static

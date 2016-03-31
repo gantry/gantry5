@@ -42,3 +42,7 @@ form:
       type: input.selectize
       label: CSS Classes
       description: Set a specific CSS class for custom styling.
+
+    caching.type:
+      type: hidden
+      default: static
