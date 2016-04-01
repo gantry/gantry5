@@ -10,6 +10,7 @@
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
         - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
         - Module instance edit fails with "You are not permitted to use that link to directly access that page" on J! 3.5 (#1215)
+        - Gantry update is shown even if the new version was just installed (#1204)
     
 # 5.2.13
 ## 16/03/2016

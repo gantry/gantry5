@@ -299,8 +299,8 @@ class Platform extends BasePlatform
             if ($update->element == 'pkg_gantry5') {
                 // Rename Gantry 5 package.
                 $update->name = 'Gantry';
-                // Ignore git and CI installs.
-                if (version_compare(GANTRY5_VERSION, 0) < 0) {
+                // Ignore git and CI installs and if the Gantry version is the same or higher than in the updates.
+                if (version_compare(GANTRY5_VERSION, 0) < 0 || version_compare($update->version, GANTRY5_VERSION) <= 0) {
                     continue;
                 }
             } else {
