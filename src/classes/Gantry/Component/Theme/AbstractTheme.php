@@ -120,7 +120,8 @@ abstract class AbstractTheme
             /** @var Config $global */
             $global = $gantry['global'];
 
-            $cache = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cache = new \Twig_Cache_Filesystem($cachePath, \Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION);
             $debug = $gantry->debug();
             $production = (bool) $global->get('production', 1);
             $loader = new \Twig_Loader_Filesystem();
