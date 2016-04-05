@@ -112,11 +112,13 @@ class TwigExtension extends \Twig_Extension
         /** @var TranslatorInterface $translator */
         static $translator;
 
+        $params = func_get_args();
+
         if (!$translator) {
             $translator = self::gantry()['translator'];
         }
 
-        return $translator->translate($str);
+        return call_user_func_array([$translator, 'translate'], $params);
     }
 
     /**

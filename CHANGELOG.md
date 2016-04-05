@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Implemented `sprintf()` style parameter support for twig `trans()` filter
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)

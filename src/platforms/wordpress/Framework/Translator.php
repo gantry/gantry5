@@ -16,6 +16,15 @@ class Translator extends BaseTranslator
 {
     public function translate($string)
     {
-        return \__($string, 'gantry5');
+        $string = \__($string, 'gantry5');
+
+        if (func_num_args() === 1) {
+            return $string;
+        }
+
+        $args = func_get_args();
+        $args[0] = $string;
+
+        return call_user_func_array('sprintf', $args);
     }
 }
