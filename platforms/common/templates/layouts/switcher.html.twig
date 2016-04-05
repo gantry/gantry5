@@ -1,8 +1,16 @@
 
 <div class="g-tabs" role="tablist">
     <ul>
-        <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PRESETS'|trans }}</a></li>
-        <li><a href="#" id="g-switcher-platforms-outlines" role="presentation" aria-controls="g-switcher-outlines" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}</a></li>
+        <li class="active">
+            <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
+                {{ 'GANTRY5_PLATFORM_PRESETS'|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="#" id="g-switcher-platforms-outlines" role="presentation" aria-controls="g-switcher-outlines" role="tab" aria-expanded="false">
+                {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
+            </a>
+        </li>
     </ul>
 </div>
 
@@ -17,9 +25,16 @@
 
         {% for name, group in presets %}
         <ul class="g-switch-presets{% if name == 'user' %} float-left{% else %} float-right{% endif %}" role="tablist">
-            <li tabindex="0" class="g-switch-title" role="presentation">{{ name == 'user' ? 'User' : 'Platform' }}</li>
+            <li tabindex="0" class="g-switch-title" role="presentation">
+                {{ name == 'user' ? 'GANTRY5_PLATFORM_LM_SWITCHER_USER'|trans : 'GANTRY5_PLATFORM_LM_SWITCHER_PLATFORM'|trans }}
+            </li>
             {% for key, current in group %}
-            <li tabindex="0" aria-label="{{ current|e }} Preset" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}" class="g-switch-preset">{{ current|e }}</li>
+            <li tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_X_PRESET'|trans(current) }}" role="button"
+                data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/preset/' ~ key) }}"
+                class="g-switch-preset"
+            >
+                {{ current }}
+            </li>
             {% endfor %}
         </ul>
         {% endfor %}
@@ -36,19 +51,33 @@
             </label>
         </div>
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}" role="tablist">
-            <li  tabindex="0" class="g-switch-title" role="presentation">User</li>
+            <li tabindex="0" class="g-switch-title" role="presentation">{{ 'GANTRY5_PLATFORM_LM_SWITCHER_USER'|trans }}</li>
             {% for key,current in user_conf %}
-                {% set label=current|replace('_', ' ')|trim|capitalize|e %}
-                <li tabindex="0" aria-label="{{ label }} Outline" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ label }}</li>
+                {% set label=current|replace('_', ' ')|trim|capitalize %}
+                <li tabindex="0"
+                    aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
+                    role="button"
+                    data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}"
+                    class="g-switch-configuration"
+                >
+                    {{ label }}
+                </li>
             {% endfor %}
         </ul>
 
         {% if system_conf.count %}
             <ul class="g-switch-conf-systems float-right">
-                <li tabindex="0" class="g-switch-title" role="presentation">System</li>
+                <li tabindex="0" class="g-switch-title" role="presentation">{{ 'GANTRY5_PLATFORM_LM_SWITCHER_SYSTEM'|trans }}</li>
                 {% for key,current in system_conf %}
                     {% set label=current|replace('_', ' ')|trim|capitalize|e %}
-                    <li tabindex="0" aria-label="{{ label }} Outline" role="button" data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}" class="g-switch-configuration">{{ label }}</li>
+                    <li tabindex="0"
+                        aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
+                        role="button"
+                        data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/' ~ key) }}"
+                        class="g-switch-configuration"
+                    >
+                        {{ label }}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}

@@ -4,8 +4,16 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs" role="tablist">
         <ul>
-            <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</a></li>
-            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            <li class="active">
+                <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
+                    {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -13,7 +21,8 @@
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             <div class="card settings-block">
                 <h4>
-                    <span data-title-editable="{{ item.title|trim|e }}" class="title">{{ item.title|trim|e }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title|trim|e }) }}" data-title-edit></i>
+                    <span data-title-editable="{{ item.title|trim }}" class="title">{{ item.title|trim }}</span>
+                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title|trim) }}" data-title-edit=""></i>
                     <span class="badge font-small">{{ particle.subtype }}</span>
                     {% if particle.form.fields.enabled %}
                     {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ particle.subtype ~ '.enabled', 'field': particle.form.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'disabled': not gantry.config.get('particles.' ~ particle.subtype ~ '.enabled', true)} %}

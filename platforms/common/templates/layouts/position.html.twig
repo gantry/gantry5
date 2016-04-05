@@ -1,13 +1,19 @@
 <div id="position-{{ position.name }}" class="page">
     <h4>
         <span data-g-config-href="{{ gantry.route('positions', position.name, 'rename') }}"
-              data-g-config-method="post" data-title-editable="{{ position.title }}" class="title"
-              data-tip="{{ position.title }}">
+              data-g-config-method="post"
+              data-title-editable="{{ position.title }}"
+              class="title"
+              data-tip="{{ position.title }}"
+        >
             {{ position.title }}
         </span>
-        <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': position.title|e}) }}" data-title-edit=""></i>
+        <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         <span class="float-right font-small">
-            <button class="button button-primary button-simple" title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}">
+            <button class="button button-primary button-simple"
+                    title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
+            >
                 <i class="fa fa-fw fa-plus"></i>
             </button>
         </span>
@@ -48,10 +54,24 @@
     </div>
     <div class="inner-params">
         <div class="center position-actions">
-            <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('positions', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary">
+            <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                    title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans(title) }}"
+                    data-g-config="duplicate"
+                    data-g-config-href="{{ gantry.route('positions', name, 'duplicate') }}"
+                    data-g-config-method="POST"
+                    class="button button-secondary"
+            >
                 <i class="fa fa-fw fa-copy"></i>
             </button>
-            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('positions', name, 'delete')|e }}" data-g-config-method="POST" class="button red">
+            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
+                    title="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans(title) }}"
+                    data-g-config="delete"
+                    data-g-config-href="{{ gantry.route('positions', name, 'delete') }}"
+                    data-g-config-method="POST"
+                    class="button red"
+            >
                 <i class="fa fa-fw fa-trash-o"></i>
             </button>
         </div>

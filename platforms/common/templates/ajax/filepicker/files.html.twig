@@ -28,12 +28,17 @@
 </ul>
 <ul>
     {% for index,file in files %}
-        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname|e }}"{{ file.pathname == value ? ' class="selected"' : '' }} title="{{ file.filename }} ({{ _self.bytesToSize(file.size) }})">
+        <li data-file="{{ file|json_encode()|e('html_attr') }}" data-file-url="{{ file.pathname }}"{{ file.pathname == value ? ' class="selected"' : '' }}
+            title="{{ file.filename }} ({{ _self.bytesToSize(file.size) }})">
             {% if file.isInCustom %}
-                <span class="g-file-delete" data-g-file-delete data-dz-remove title="Remove File"><i class="fa fa-fw fa-trash-o"></i></span>
+                <span class="g-file-delete" data-g-file-delete data-dz-remove title="{{ 'GANTRY5_PLATFORM_FILE_REMOVE'|trans }}">
+                    <i class="fa fa-fw fa-trash-o"></i>
+                </span>
             {% endif %}
             {% if file.isImage %}
-                <span class="g-file-preview" data-g-file-preview title="Preview File"><i class="fa fa-fw fa-eye"></i></span>
+                <span class="g-file-preview" data-g-file-preview title="{{ 'GANTRY5_PLATFORM_FILE_PREVIEW'|trans }}">
+                    <i class="fa fa-fw fa-eye"></i>
+                </span>
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url('{{ url(file.pathname) }}')"></div>
                 </div>
@@ -48,6 +53,6 @@
     {% endfor %}
 
     {% if files|length == 0 %}
-        <li class="no-files-found"><h2>Folder is Empty</h2></li>
+        <li class="no-files-found"><h2>{{ 'GANTRY5_PLATFORM_FOLDER_EMPTY'|trans }}</h2></li>
     {% endif %}
 </ul>

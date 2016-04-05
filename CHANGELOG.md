@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Implemented `sprintf()` style parameter support for twig `trans()` filter
+        - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
@@ -11,6 +11,7 @@
         - Downgrading PHP version causes fatal errors on cached twig files (#947)
         - Themes list: Fix fatal error if theme had a loop in parent themes
         - Admin: Rename `Settings` tab to `Particle Defaults` to avoid confusion
+        - Added language translations for all admin template files (part of #1212)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
