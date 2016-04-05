@@ -6,12 +6,12 @@
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}">
-                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_SETTINGS'|trans }}</span></button>
+                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}">
+                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                 </span>
                 {% for group, list in particles if (group != 'hidden') %}
                     <h2 class="page-title">
-                        <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span>
+                        <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</span>
                     </h2>
 
                     <div class="g-filter-actions">
@@ -56,8 +56,8 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}">
-                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_SETTINGS'|trans }}</span></button>
+                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}">
+                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                     </span>
                 </div>
             </div>
