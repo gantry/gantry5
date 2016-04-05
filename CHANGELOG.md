@@ -7,6 +7,7 @@
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
         - Fixed Zend opcache without file checks causes issues in admin (#1222)
         - Downgrading PHP version causes fatal errors on cached twig files (#947)
+        - Themes list: Fix fatal error if theme had a loop in parent themes
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)

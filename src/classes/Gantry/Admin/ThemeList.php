@@ -40,12 +40,7 @@ class ThemeList
         foreach ($files as $theme) {
             if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
                 $details = new ThemeDetails($theme);
-
-                // Stream needs to be valid URL.
-                $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $theme);
-                if (!$locator->schemeExists($streamName)) {
-                    $locator->addPath($streamName, '', $details->getPaths());
-                }
+                $details->addStreams();
 
                 $details['name'] = $theme;
                 $details['title'] = $details['details.name'];

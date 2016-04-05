@@ -99,12 +99,7 @@ class ThemeList
             if (file_exists(JPATH_SITE . '/templates/' . $template->name . '/gantry/theme.yaml'))
             {
                 $details = new ThemeDetails($template->name);
-
-                // Stream needs to be valid URL.
-                $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $template->name);
-                if (!$locator->schemeExists($streamName)) {
-                    $locator->addPath($streamName, '', $details->getPaths());
-                }
+                $details->addStreams();
 
                 $params = new \JRegistry($template->params);
 
