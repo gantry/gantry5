@@ -11,8 +11,10 @@
         - Downgrading PHP version causes fatal errors on cached twig files (#947)
         - Themes list: Fix fatal error if theme had a loop in parent themes
         - Admin: Rename `Settings` tab to `Particle Defaults` to avoid confusion
-        - Added language translations for all admin template files (part of #1212)
+        - Added missing language translations for all admin template files (part of #1212)
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Added support to have Joomla articles and categories in particles (#1225)
     3. [](#bugfix)
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
         - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)

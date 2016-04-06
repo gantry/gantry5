@@ -13,6 +13,9 @@ namespace Gantry\Framework;
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\Content\Content;
+use Gantry\Joomla\Content\ContentFinder;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -349,5 +352,25 @@ class Platform extends BasePlatform
             return call_user_func_array(['JHtml', array_shift($args)], $args);
         }
         return call_user_func_array(['JHtml', '_'], $args);
+    }
+
+    public function article($keys)
+    {
+        return Content::getInstance($keys);
+    }
+
+    public function finder($domain)
+    {
+        switch ($domain) {
+            case 'article':
+            case 'articles':
+            case 'content':
+                return (new ContentFinder)->authorised();
+            case 'category':
+            case 'categories':
+                return (new CategoryFinder)->extension('content')->authorised();
+        }
+
+        return null;
     }
 }
