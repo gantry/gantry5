@@ -10,6 +10,7 @@
 
 namespace Gantry\Joomla\Category;
 
+use Gantry\Framework\Gantry;
 use Gantry\Joomla\Object\Object;
 
 class Category extends Object
@@ -39,7 +40,7 @@ class Category extends Object
     {
         $parent = $this->parent();
 
-        return $parent ? array_merge([$parent], $parent->parents()) : [];
+        return $parent ? array_merge($parent->parents(), [$parent]) : [];
     }
 
     public function route()
@@ -47,5 +48,15 @@ class Category extends Object
         require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
         return \JRoute::_(\ContentHelperRoute::getCategoryRoute($this->id . '-' . $this->alias), false);
+    }
+
+    public function render($file)
+    {
+        return Gantry::instance()['theme']->render($file, ['category' => $this]);
+    }
+
+    public function compile($string)
+    {
+        return Gantry::instance()['theme']->compile($string, ['category' => $this]);
     }
 }

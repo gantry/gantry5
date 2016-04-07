@@ -45,9 +45,11 @@ abstract class Finder
     protected $skip = false;
 
     /**
-     * Constructor.
+     * Finder constructor.
+     *
+     * @param array $options
      */
-    public function __construct()
+    public function __construct(array $options = [])
     {
         if (!$this->table) {
             throw new \DomainException('Table name missing from ' . get_class($this));
@@ -56,16 +58,21 @@ abstract class Finder
         $this->db = \JFactory::getDbo();
         $this->query = $this->db->getQuery(true);
         $this->query->from($this->table . ' AS a');
+
+        if ($options) {
+            $this->parse($options);
+        }
     }
 
-    /**
-     * Alias to 'new Object()'.
-     *
-     * @return static
-     */
-    public static function create()
+    public function parse(array $options)
     {
-        return new static;
+        foreach ($options as $func => $params) {
+            if (method_exists($this, $func)) {
+                call_user_func_array([$this, $func], (array) $params);
+            }
+        }
+
+        return $this;
     }
 
     /**

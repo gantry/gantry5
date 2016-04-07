@@ -359,16 +359,17 @@ class Platform extends BasePlatform
         return Content::getInstance($keys);
     }
 
-    public function finder($domain)
+    public function finder($domain, $options = null)
     {
+        $options = (array) $options;
         switch ($domain) {
             case 'article':
             case 'articles':
             case 'content':
-                return (new ContentFinder)->authorised();
+                return (new ContentFinder($options))->authorised();
             case 'category':
             case 'categories':
-                return (new CategoryFinder)->extension('content')->authorised();
+                return (new CategoryFinder($options))->extension('content')->authorised();
         }
 
         return null;

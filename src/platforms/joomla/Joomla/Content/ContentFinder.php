@@ -12,11 +12,25 @@ namespace Gantry\Joomla\Content;
 
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
 
 class ContentFinder extends Finder
 {
     protected $table = '#__content';
+    protected $readonly = true;
+
+    /**
+     * Makes all created objects as readonly.
+     *
+     * @return $this
+     */
+    public function readonly($readonly = true)
+    {
+        $this->readonly = (bool)$readonly;
+
+        return $this;
+    }
 
     public function find($object = true)
     {
@@ -26,7 +40,7 @@ class ContentFinder extends Finder
             return $ids;
         }
 
-        return Content::getInstances($ids);
+        return Content::getInstances($ids, $this->readonly);
     }
 
     public function id($ids, $include = true)
@@ -47,22 +61,36 @@ class ContentFinder extends Finder
         return $this->where('a.created_by', $include ? 'IN' : 'NOT IN', $ids);
     }
 
-    public function language()
+    public function language($language = true)
     {
-        return $this->where('a.language', 'IN', [\JFactory::getLanguage()->getTag(), '*']);
+        if (!$language) {
+            return $this;
+        }
+        if (is_numeric($language)) {
+            $language = \JFactory::getLanguage()->getTag();
+        }
+        return $this->where('a.language', 'IN', [$language, '*']);
     }
 
     public function category($ids, $include = true)
     {
-        $ids = (array) $ids;
+        if ($ids instanceof Collection) {
+            $ids = $ids->toArray();
+        } else {
+            $ids = (array)$ids;
+        }
 
         array_walk($ids, function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
 
         return $this->where('a.catid', $include ? 'IN' : 'NOT IN', $ids);
     }
 
-    public function authorised()
+    public function authorised($authorised = true)
     {
+        if (!$authorised) {
+            return $this;
+        }
+
         $unpublished = CategoryFinder::getUnpublished('content');
         if ($unpublished) {
             $this->where('a.catid', 'NOT IN', $unpublished);

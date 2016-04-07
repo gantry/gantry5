@@ -41,6 +41,9 @@ abstract class Object extends \JObject
      */
     static protected $order;
 
+    /**
+     * @var int
+     */
     public $id;
 
     /**
@@ -48,6 +51,12 @@ abstract class Object extends \JObject
      * @var boolean
      */
     protected $_exists = false;
+
+    /**
+     * Readonly object.
+     * @var bool
+     */
+    protected $_readonly = false;
 
     /**
      * Class constructor, overridden in descendant classes.
@@ -78,14 +87,11 @@ abstract class Object extends \JObject
     protected function initialize() {}
 
     /**
-     * Create almost identical copy of the object ($new->id == null).
-     *
-     * New object will also return false on $new->exists() until it gets saved.
+     * Make instance as read only object.
      */
-    public function __clone()
+    public function readonly()
     {
-        $this->id = null;
-        $this->_exists = false;
+        $this->_readonly = true;
     }
 
     /**
@@ -239,7 +245,7 @@ abstract class Object extends \JObject
     public function save()
     {
         // Check the object.
-        if (!$this->check()) {
+        if ($this->_readonly || !$this->check()) {
             return false;
         }
 
@@ -291,7 +297,10 @@ abstract class Object extends \JObject
      */
     public function delete()
     {
-        // TODO: return false instead?
+        if ($this->_readonly) {
+            return false;
+        }
+
         if (!$this->_exists) {
             return true;
         }
@@ -339,10 +348,10 @@ abstract class Object extends \JObject
 
     static public function getAvailableInstances()
     {
-        return static::$instances;
+        return new Collection(static::$instances);
     }
 
-    static public function getInstances(array $ids)
+    static public function getInstances(array $ids, $readonly = true)
     {
         if (!$ids) {
             return array();
@@ -365,11 +374,15 @@ abstract class Object extends \JObject
 
         foreach ($ids as $id) {
             if (isset(static::$instances[$id])) {
-                $results[$id] = static::$instances[$id];
+                if ($readonly) {
+                    $results[$id] = clone static::$instances[$id];
+                } else {
+                    $results[$id] = static::$instances[$id];
+                }
             }
         }
 
-        return $results;
+        return new Collection($results);
     }
 
     // Internal functions

@@ -10,6 +10,7 @@
 
 namespace Gantry\Joomla\Content;
 
+use Gantry\Framework\Base\Gantry;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Object\Object;
 
@@ -42,7 +43,7 @@ class Content extends Object
     {
         $category = $this->category();
 
-        return array_merge([$category], $category->parents());
+        return array_merge($category->parents(), [$category]);
     }
 
     public function route()
@@ -52,5 +53,15 @@ class Content extends Object
         $category = $this->category();
 
         return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . '-' . $this->alias, $category->id . '-' . $category->alias), false);
+    }
+
+    public function render($file)
+    {
+        return Gantry::instance()['theme']->render($file, ['content' => $this]);
+    }
+
+    public function compile($string)
+    {
+        return Gantry::instance()['theme']->compile($string, ['content' => $this]);
     }
 }

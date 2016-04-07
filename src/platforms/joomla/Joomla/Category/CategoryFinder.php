@@ -16,6 +16,19 @@ class CategoryFinder extends Finder
 {
     protected $table = '#__categories';
     protected $extension = 'com_content';
+    protected $readonly = true;
+
+    /**
+     * Makes all created objects as readonly.
+     *
+     * @return $this
+     */
+    public function readonly($readonly = true)
+    {
+        $this->readonly = (bool)$readonly;
+
+        return $this;
+    }
 
     public function find($object = true)
     {
@@ -25,7 +38,7 @@ class CategoryFinder extends Finder
             return $ids;
         }
 
-        return Category::getInstances($ids);
+        return Category::getInstances($ids, $this->readonly);
     }
 
     public function id($ids, $levels = 0)
@@ -57,9 +70,15 @@ class CategoryFinder extends Finder
         return $this;
     }
 
-    public function language()
+    public function language($language = true)
     {
-        return $this->where('a.language', 'IN', [\JFactory::getLanguage()->getTag(), '*']);
+        if (!$language) {
+            return $this;
+        }
+        if (is_numeric($language)) {
+            $language = \JFactory::getLanguage()->getTag();
+        }
+        return $this->where('a.language', 'IN', [$language, '*']);
     }
 
     public function published($published = 1)
@@ -68,8 +87,12 @@ class CategoryFinder extends Finder
         return $this->where('a.published', '=', $published);
     }
 
-    public function authorised()
+    public function authorised($authorised = true)
     {
+        if (!$authorised) {
+            return $this;
+        }
+
         // Ignore unpublished categories.
         $unpublished = $this->getUnpublished($this->extension);
 
