@@ -154,8 +154,9 @@ abstract class Finder
                 $this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
                 break;
             case 'BETWEEN':
+            case 'NOT BETWEEN':
                 list($a, $b) = (array) $value;
-                $this->query->where("{$this->db->quoteName($field)} BETWEEN {$this->db->quote($a)} AND {$this->db->quote($b)}");
+                $this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($a)} AND {$this->db->quote($b)}");
                 break;
             case 'IN':
             case 'NOT IN':
