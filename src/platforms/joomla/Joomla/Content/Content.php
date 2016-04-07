@@ -27,6 +27,14 @@ class Content extends Object
         $this->urls = json_decode($this->urls);
         $this->attribs = json_decode($this->attribs);
         $this->metadata = json_decode($this->metadata);
+
+        $nullDate = \JFactory::getDbo()->getNullDate();
+        if ($this->modified === $nullDate) {
+            $this->modified = $this->created;
+        }
+        if ($this->publish_up === $nullDate) {
+            $this->publish_up = $this->created;
+        }
     }
 
     public function author()
@@ -44,6 +52,16 @@ class Content extends Object
         $category = $this->category();
 
         return array_merge($category->parents(), [$category]);
+    }
+
+    public function text()
+    {
+        return $this->introtext . ' ' . $this->fulltext;
+    }
+
+    public function readmore()
+    {
+        return strlen($this->fulltext);
     }
 
     public function route()
