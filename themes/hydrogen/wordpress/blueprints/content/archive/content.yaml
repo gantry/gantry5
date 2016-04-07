@@ -1,0 +1,15 @@
+name: Content
+description: Options for displaying Content in the view
+type: archive
+
+form:
+  fields:
+
+    type:
+      type: select.select
+      label: Content Type
+      description: What post should display by default
+      default: content
+      options:
+        content: Content
+        excerpt: Excerpt
