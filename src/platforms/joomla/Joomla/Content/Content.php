@@ -57,11 +57,11 @@ class Content extends Object
 
     public function render($file)
     {
-        return Gantry::instance()['theme']->render($file, ['content' => $this]);
+        return Gantry::instance()['theme']->render($file, ['article' => $this]);
     }
 
     public function compile($string)
     {
-        return Gantry::instance()['theme']->compile($string, ['content' => $this]);
+        return Gantry::instance()['theme']->compile($string, ['article' => $this]);
     }
 }
