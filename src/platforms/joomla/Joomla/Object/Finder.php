@@ -121,8 +121,12 @@ abstract class Finder
      */
     public function order($by, $direction = 1, $alias = 'a')
     {
-        $direction = $direction > 0 ? 'ASC' : 'DESC';
-        $by = $alias . '.' . $this->db->quoteName($by);
+        if (is_numeric($direction)) {
+            $direction = $direction > 0 ? 'ASC' : 'DESC';
+        } else {
+            $direction = strtolower((string)$direction) == 'desc' ? 'DESC' : 'ASC';
+        }
+        $by = (string)$alias . '.' . $this->db->quoteName($by);
         $this->query->order("{$by} {$direction}");
 
         return $this;
