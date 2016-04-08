@@ -366,10 +366,14 @@ class Platform extends BasePlatform
             case 'article':
             case 'articles':
             case 'content':
-                return (new ContentFinder($options))->authorised();
+                $finder = new ContentFinder($options);
+
+                return \JFactory::getApplication()->isSite() ? $finder->authorised() : $finder;
             case 'category':
             case 'categories':
-                return (new CategoryFinder($options))->extension('content')->authorised();
+                $finder = (new CategoryFinder($options))->extension('content');
+
+                return \JFactory::getApplication()->isSite() ? $finder->authorised() : $finder;
         }
 
         return null;
