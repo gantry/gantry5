@@ -196,14 +196,14 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
-     * Truncate text by number of characters but can cut off words.
+     * Truncate text by number of characters but can cut off words. Removes html tags.
      *
      * @param  string $string
      * @param  int    $limit       Max number of characters.
      *
      * @return string
      */
-    public function truncate($string, $limit = 150)
+    public function truncate_text($string, $limit = 150)
     {
         $platform = Gantry::instance()['platform'];
 
