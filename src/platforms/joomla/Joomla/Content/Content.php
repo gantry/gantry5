@@ -61,7 +61,7 @@ class Content extends Object
 
     public function readmore()
     {
-        return strlen($this->fulltext);
+        return (bool)strlen($this->fulltext);
     }
 
     public function route()

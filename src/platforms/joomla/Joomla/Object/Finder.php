@@ -143,6 +143,7 @@ abstract class Finder
      */
     public function where($field, $operation, $value)
     {
+        $db = $this->db;
         $operation = strtoupper($operation);
         switch ($operation)
         {
@@ -151,12 +152,17 @@ abstract class Finder
             case '<':
             case '<=':
             case '=':
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($value)}");
+                // Quote all non integer values.
+                $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value);
+                $this->query->where("{$this->db->quoteName($field)} {$operation} {$value}");
                 break;
             case 'BETWEEN':
             case 'NOT BETWEEN':
                 list($a, $b) = (array) $value;
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$this->db->quote($a)} AND {$this->db->quote($b)}");
+                // Quote all non integer values.
+                $a = (string)(int)$a === (string)$a ? (int)$a : $db->quote($a);
+                $b = (string)(int)$b === (string)$b ? (int)$b : $db->quote($b);
+                $this->query->where("{$this->db->quoteName($field)} {$operation} {$a} AND {$b}");
                 break;
             case 'IN':
             case 'NOT IN':
@@ -165,8 +171,8 @@ abstract class Finder
                     // WHERE field IN (nothing).
                     $this->query->where('0');
                 } else {
-                    $db = $this->db;
-                    array_walk($value, function (&$item) use ($db) { $item = $db->quote($item); });
+                    // Quote all non integer values.
+                    array_walk($value, function (&$value) use ($db) { $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value); });
                     $list = implode(',', $value);
                     $this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
                 }
@@ -190,8 +196,11 @@ abstract class Finder
             return array();
         }
 
-        $query = clone $this->query;
-        $this->build($query);
+        $baseQuery = clone $this->query;
+        $this->prepare();
+        $query = $this->query;
+        $this->query = $baseQuery;
+
         $query->select('a.' . $this->primaryKey);
         $this->db->setQuery($query, $this->start, $this->limit);
         $results = (array) $this->db->loadColumn();
@@ -206,8 +215,11 @@ abstract class Finder
      */
     public function count()
     {
-        $query = clone $this->query;
-        $this->build($query);
+        $baseQuery = clone $this->query;
+        $this->prepare();
+        $query = $this->query;
+        $this->query = $baseQuery;
+
         $query->select('COUNT(*)');
         $this->db->setQuery($query);
         $count = (int) $this->db->loadResult();
@@ -216,13 +228,11 @@ abstract class Finder
     }
 
     /**
-     * Override to include your own static filters.
-     *
-     * @param  \JDatabaseQuery  $query
+     * Override to include common where rules.
      *
      * @return void
      */
-    protected function build(\JDatabaseQuery $query)
+    protected function prepare()
     {
     }
 }

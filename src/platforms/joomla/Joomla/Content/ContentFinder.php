@@ -19,6 +19,7 @@ class ContentFinder extends Finder
 {
     protected $table = '#__content';
     protected $readonly = true;
+    protected $state = [];
 
     /**
      * Makes all created objects as readonly.
@@ -45,31 +46,12 @@ class ContentFinder extends Finder
 
     public function id($ids, $include = true)
     {
-        return $this->where('a.id', $include ? 'IN' : 'NOT IN', $ids);
-    }
-
-    public function featured($featured = true)
-    {
-        $featured = intval((bool)$featured);
-        $this->where('a.featured', '=', $featured);
-
-        return $this;
+        return $this->addToGroup('a.id', $ids, $include);
     }
 
     public function author($ids, $include = true)
     {
-        return $this->where('a.created_by', $include ? 'IN' : 'NOT IN', $ids);
-    }
-
-    public function language($language = true)
-    {
-        if (!$language) {
-            return $this;
-        }
-        if (is_numeric($language)) {
-            $language = \JFactory::getLanguage()->getTag();
-        }
-        return $this->where('a.language', 'IN', [$language, '*']);
+        return $this->addToGroup('a.created_by', $ids, $include);
     }
 
     public function category($ids, $include = true)
@@ -82,7 +64,26 @@ class ContentFinder extends Finder
 
         array_walk($ids, function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
 
-        return $this->where('a.catid', $include ? 'IN' : 'NOT IN', $ids);
+        return $this->addToGroup('a.catid', $ids, $include);
+    }
+
+    public function featured($featured = true)
+    {
+        $featured = intval((bool)$featured);
+        $this->where('a.featured', '=', $featured);
+
+        return $this;
+    }
+
+    public function language($language = true)
+    {
+        if (!$language) {
+            return $this;
+        }
+        if (is_numeric($language)) {
+            $language = \JFactory::getLanguage()->getTag();
+        }
+        return $this->where('a.language', 'IN', [$language, '*']);
     }
 
     public function authorised($authorised = true)
@@ -115,16 +116,25 @@ class ContentFinder extends Finder
         return $this->where('a.access', 'IN', $groups)->where('c.access', 'IN', $groups);
     }
 
-    /**
-     * Filter by time, either on first or last post.
-     *
-     * @param \JDate $starting  Starting date or null if older than ending date.
-     * @param \JDate $ending    Ending date or null if newer than starting date.
-     *
-     * @return $this
-     */
-    public function date(\JDate $starting = null, \JDate $ending = null)
+    protected function addToGroup($key, $ids, $include = true)
     {
-        // TODO
+        $op = $include ? 'IN' : 'NOT IN';
+
+        if (isset($this->state[$key][$op])) {
+            $this->state[$key][$op] = array_merge($this->state[$key][$op], $ids);
+        } else {
+            $this->state[$key][$op] = $ids;
+        }
+
+        return $this;
+    }
+
+    protected function prepare()
+    {
+        foreach ($this->state as $key => $list) {
+            foreach ($list as $op => $group) {
+                $this->where($key, $op, array_unique($group));
+            }
+        }
     }
 }
