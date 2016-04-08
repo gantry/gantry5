@@ -1,0 +1,192 @@
+name: Joomla Articles
+description: Display Joomla Articles.
+type: particle
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable Joomla Articles particles.
+      default: true
+
+    article_source:
+      type: joomla.categories
+      label: Categories
+      description: List the category ID the articles should be taken from.
+
+    article_limit:
+      type: select.select
+      label: Number of Articles
+      description: Select the number of articles to display.
+      placeholder: 'Select...'
+      default: 3
+      options:
+        1: 1
+        2: 2
+        3: 3
+        4: 4
+        5: 5
+        6: 6
+
+    article_order:
+      type: select.select
+      label: Order By
+      description: Select how the articles should be ordered by.
+      placeholder: 'Select...'
+      default: publish_up
+      options:
+        publish_up: Published Date
+        created: Created Date
+        modified: Last Modified Date
+        title: Title
+        ordering: Ordering
+        hits: Hits
+        id: ID
+        alias: Alias
+
+    article_order_filter:
+      type: select.select
+      label: Order Filter
+      description: Select the direction the articles should be ordered by.
+      placeholder: 'Select...'
+      default: ASC
+      options:
+        ASC: Ascending
+        DESC: Descending
+
+    article_featured:
+      type: select.select
+      label: Featured Articles
+      description: Select how Featured articles should be handled.
+      placeholder: 'Select...'
+      default: show
+      options:
+        show: Show
+        false: Hide
+        true: Show Only Featured
+
+    article_image:
+      type: select.select
+      label: Image
+      description: Select if the article image should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_title:
+      type: select.select
+      label: Title
+      description: Select if the article title should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_title_limit:
+      type: input.text
+      label: Title Limit
+      description: Type in the number of characters the article title should be limited to.
+
+    article_date:
+      type: select.select
+      label: Date
+      description: Select if the article date should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_date_format:
+      type: select.date
+      label: Date Format
+      description: Select preferred date format.
+      default: l, F d, Y
+      placeholder: 'Select...'
+      selectize:
+          allowEmptyOption: true
+      options:
+          'l, F d, Y': Date1
+          'l, d F': Date2
+          'D, d F': Date3
+          'F d': Date4
+          'd F': Date5
+          'd M': Date6
+          'D, M d, Y': Date7
+          'D, M d, y': Date8
+          'l': Date9
+          'l j F Y': Date10
+          'j F Y': Date11
+
+    article_author:
+      type: select.select
+      label: Author
+      description: Select if the article author should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_category:
+      type: select.select
+      label: Category
+      description: Select if the article category should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_category_link:
+      type: select.select
+      label: Category Link
+      description: Select if the article category link should be enabled or disabled.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Enabled
+        false: Disabled
+
+    article_hits:
+      type: select.select
+      label: Hits
+      description: Select if the article hits should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_text:
+      type: select.select
+      label: Text
+      description: Select if the article text should be shown or not.
+      placeholder: 'Select...'
+      default: true
+      options:
+        true: Show
+        false: Hide
+
+    article_text_limit:
+      type: input.text
+      label: Text Limit
+      description: Type in the number of characters the article text should be limited to.
+
+    css.class:
+      type: input.selectize
+      label: CSS Classes
+      description: CSS class name for the particle.
+      default: 
+
+    extra:
+      type: collection.keyvalue
+      label: Tag Attributes
+      description: Extra Tag attributes.
+      key_placeholder: Key (data-*, style, ...)
+      value_placeholder: Value
+      exclude: ['id', 'class']

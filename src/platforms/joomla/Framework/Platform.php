@@ -378,4 +378,9 @@ class Platform extends BasePlatform
 
         return null;
     }
+
+    public function truncate($text, $length, $html = false)
+    {
+        return \JHtml::_('string.truncate', $text, $length, true, $html);
+    }
 }

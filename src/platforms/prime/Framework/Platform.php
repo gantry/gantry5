@@ -192,4 +192,10 @@ class Platform extends BasePlatform
     {
         return null;
     }
+
+    public function truncate($text, $length, $html = false)
+    {
+        // TODO:
+        throw new \Exception('Not implemented');
+    }
 }

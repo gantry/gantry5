@@ -14,6 +14,7 @@ use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Grav\Common\Grav;
+use Grav\Common\Utils;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -193,5 +194,14 @@ class Platform extends BasePlatform
     {
         $grav = Grav::instance();
         return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
+    }
+
+    public function truncate($text, $length, $html = false)
+    {
+        if ($html) {
+            return Utils::truncate($text, $length);
+        } else {
+            return Utils::truncateHtml($text, $length);
+        }
     }
 }

@@ -229,4 +229,10 @@ class Platform extends BasePlatform
 
         return $theme->render('partials/messages.html.twig', $context);
     }
+
+    public function truncate($text, $length, $html = false)
+    {
+        // TODO:
+        throw new \Exception('Not implemented');
+    }
 }

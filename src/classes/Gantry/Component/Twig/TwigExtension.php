@@ -54,6 +54,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('split', [$this, 'splitFilter']),
+            new \Twig_SimpleFilter('truncate', [$this, 'truncate']),
+            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHTML']),
         ];
     }
 
@@ -191,6 +193,36 @@ class TwigExtension extends \Twig_Extension
     public function splitFilter($string, $delimiter = ',', $limit = null)
     {
         return (array) explode($delimiter, $string, $limit);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncate($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, false);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncate_html($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, true);
     }
 
     /**
