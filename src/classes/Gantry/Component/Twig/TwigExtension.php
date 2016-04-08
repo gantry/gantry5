@@ -53,6 +53,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFilter('split', [$this, 'splitFilter']),
         ];
     }
 
@@ -177,6 +178,19 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Split string into parts by using delimiter.
+     *
+     * @param string $string
+     * @param string $delimiter
+     * @param int $limit
+     * @return array
+     */
+    public function splitFilter($string, $delimiter = ',', $limit = null)
+    {
+        return (array) explode($delimiter, $string, $limit);
     }
 
     /**
