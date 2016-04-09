@@ -10,91 +10,104 @@
 {% endif %}
 
 {% block particle %}
-    {# Categoty Finder #}
-    {% set category_options = particle.article_source ? {id: [particle.article_source|split, 3]} : {} %}
-    {% set category_finder = joomla.finder('category', category_options) %}
-    {% set categories = category_finder.published(true).language(true).find() %}
+    {% set article_settings = particle.article %}
+    {% set filter = article_settings.filter %}
+    {% set sort = article_settings.sort %}
+    {% set limit = article_settings.limit %}
+    {% set display = article_settings.display %}
+
+    {# Category Finder #}
+    {% set category_options = filter.categories ? {id: [filter.categories|split, 0]} : {} %}
+    {% set categories = joomla.finder('category', category_options).published(true).language().find() %}
 
     {# Content Finder #}
-    {% if particle.article_featured|default('show') == 'show' %}
-        {% set article_options = {published: true} %}
-    {% else %}
-        {% set article_options = {published: true, featured: particle.article_featured} %}
+    {% set article_finder = joomla.finder('content').category(categories).language() %}
+
+    {% set featured = filter.featured|default('include') %}
+    {% if featured == 'exclude' %}
+        {% do article_finder.featured(false) %}
+    {% elseif featured == 'only' %}
+        {% do article_finder.featured(true) %}
     {% endif %}
-    {% set article_finder = joomla.finder('content', article_options) %}
-    {% set articles = article_finder.category(categories).language(true).order(particle.article_order, particle.article_order_filter).limit(particle.article_limit).find() %}
-{{ particle|json_encode }}
-    {# Article Item #}
-    {% set article_item %}
-        {% for article in articles %}
-            <div class="g-block">
-                <div class="g-content">
-                    {% if particle.article_image|default(true) and article.images.image_intro %}
-                        <div class="g-article-image">
-                            <a href="{{ article.route }}">
-                                <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }}>
-                            </a>
-                        </div>
-                    {% endif %}
-                    {% if particle.article_title|default(true) %}
-                        <div class="g-article-title">
-                            <h3><a href="{{ article.route }}">
-                                {% if particle.article_title_limit %}
-                                    {{ article.title|slice(0, particle.article_title_limit) }}
-                                {% else %}
-                                    {{ article.title }}
+
+    {% set articles = article_finder.order(sort.order, sort.direction).limit(limit.total).start(limit.start).find() %}
+
+    {# All Articles #}
+    <div class="g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+        {% for row in articles|batch(limit.row) %}
+            <div class="g-grid">
+                {% for article in row %}
+                    <div class="g-block">
+                        <div class="g-content">
+                            <div class="g-article">
+                                {% if display.image.enabled and article.images.image_intro %}
+                                    <div class="g-article-image">
+                                        <a href="{{ article.route }}">
+                                            <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }}>
+                                        </a>
+                                    </div>
                                 {% endif %}
-                            </a></h3>
+                                {% if display.title.enabled %}
+                                    <div class="g-article-title">
+                                        <h3 class="g-item-title"><a href="{{ article.route }}">
+                                            {{ display.title.limit ? article.title|truncate_text(display.title.limit) : article.title }}
+                                        </a></h3>
+                                    </div>
+                                {% endif %}
+                                {% if display.date.enabled or display.author.enabled or display.category.enabled or display.hits.enabled %}
+                                    <div class="g-article-details">
+                                        {% if display.date.enabled %}
+                                            <span class="g-article-date">
+                                                <i class="fa fa-clock-o"></i>{{ article.created|date(display.date.format) }}
+                                            </span>
+                                        {% endif %}
+                                        {% if display.author.enabled %}
+                                            <span class="g-article-author">
+                                                <i class="fa fa-user"></i>{{ article.author.name }}
+                                            </span>
+                                        {% endif %}
+                                        {% if display.category.enabled %}
+                                            {% set category_link = display.category.enabled == 'link' %}
+                                            <span class="g-article-category">
+                                                {% for category in article.categories %}
+                                                    {% if category_link %}
+                                                        <a href="{{ category.route }}"><i class="fa fa-folder-open"></i>{{ category.title }}</a>
+                                                    {% else %}
+                                                        <i class="fa fa-folder-open"></i>{{ category.title }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        {% endif %}
+                                        {% if display.hits.enabled %}
+                                            <span class="g-article-hits">
+                                                <i class="fa fa-eye"></i>{{ article.hits }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if display.text.type %}
+                                    {% set article_text = display.text.type == 'intro' ? article.introtext : article.text %}
+                                    <div class="g-article-text">
+                                        {% if display.text.formatting == 'text' %}
+                                            {{ article_text|truncate_text(display.text_limit) }}
+                                        {% else %}
+                                            {{ article_text|truncate_html(display.text_limit)|raw }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if display.read_more.enabled %}
+                                    <div class="g-article-read-more">
+                                        <a href="{{ article.route }}">
+                                            <button class="button">{{ display.read_more.title|default('Read More...') }}</button>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endif %}
-                    {% if particle.article_date|default(true) or particle.article_author|default(true) or particle.article_category|default(true) or particle.article_hits|default(true) %}
-                        <div class="g-article-details">
-                            {% if particle.article_date|default(true) %}
-                                <span class="g-article-date">
-                                    <i class="fa fa-clock-o"></i>{{ article.created|date(particle.article_date_format) }}
-                                </span>
-                            {% endif %}
-                            {% if particle.article_author|default(true) %}
-                                <span class="g-article-author">
-                                    <i class="fa fa-user"></i>{{ article.author.name }}
-                                </span>
-                            {% endif %}
-                            {% if particle.article_category|default(true) %}
-                            <span class="g-article-category">                            
-                                {% for category in article.categories %}
-                                    {% if particle.article_category_link|default(true) %}
-                                        <a href="{{ category.route }}"><i class="fa fa-folder-open"></i>{{ category.title }}</a>
-                                    {% else %}
-                                        <i class="fa fa-folder-open"></i>{{ category.title }}
-                                    {% endif %}
-                                {% endfor %}
-                            </span>
-                            {% endif %}
-                            {% if particle.article_hits|default(true) %}
-                            <span class="g-article-hits">
-                                <i class="fa fa-eye"></i>{{ article.hits }}
-                            </span>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                    {% if particle.article_text|default(true) %}
-                        <div class="g-article-text">
-                            {% if particle.article_text_limit %}
-                                {{ article.text|striptags|slice(0, particle.article_text_limit)|html|raw }}
-                            {% else %}
-                                {{ article.introtext|html|raw }}
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         {% endfor %}
-    {% endset %}
-
-    <div class="g-joomla-articles{% if particle.css.class %} {{ particle.css.class|e }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
-        <div class="g-grid">
-            {{ article_item }}
-        </div>
     </div>
 
 {% endblock %}

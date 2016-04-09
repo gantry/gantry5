@@ -16,6 +16,7 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Added support to have Joomla articles and categories in particles (#1225)
+        - Added `Joomla Articles` particle
     3. [](#bugfix)
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
         - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)

@@ -54,8 +54,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('split', [$this, 'splitFilter']),
-            new \Twig_SimpleFilter('truncate', [$this, 'truncate']),
-            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHTML']),
+            new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
+            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
         ];
     }
 
@@ -203,7 +203,7 @@ class TwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function truncate_text($string, $limit = 150)
+    public function truncateText($string, $limit = 150)
     {
         $platform = Gantry::instance()['platform'];
 
@@ -218,7 +218,7 @@ class TwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function truncate_html($string, $limit = 150)
+    public function truncateHtml($string, $limit = 150)
     {
         $platform = Gantry::instance()['platform'];
 
