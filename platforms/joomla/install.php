@@ -184,7 +184,7 @@ class Pkg_Gantry5InstallerScript
         return implode(',', array_keys($items));
     }
 
-    protected function checkRequirements()
+    protected function checkRequirements($gantryVersion)
     {
         $results = array();
         $this->checkVersion($results, 'PHP', phpversion());

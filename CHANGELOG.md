@@ -22,6 +22,7 @@
         - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
         - Module instance edit fails with "You are not permitted to use that link to directly access that page" on J! 3.5 (#1215)
         - Gantry update is shown even if the new version was just installed (#1204)
+        - Untranslated string `COM_GANTRY5_PARTICLE_NOT_INITIALIZED` (#1118)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
