@@ -72,13 +72,12 @@ class Filepicker extends JsonController
         foreach ($drives as $drive) {
             // cleanup of the path so it's chrooted.
             $drive  = str_replace('..', '', $drive);
-            $stream = explode('://', $drive);
 
             $isStream = $locator->isStream($drive);
             $path     = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
 
             // It's a stream but the scheme doesn't exist. we skip it.
-            if (!$isStream && (strpos($stream, '://') || !file_exists($path))) {
+            if (!$isStream && (strpos($drive, '://') || !file_exists($path))) {
                 continue;
             }
 
