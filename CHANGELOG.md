@@ -4,7 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
-        - Implemented '|split` filter for twig 
+        - Implemented `|split` filter for twig 
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
