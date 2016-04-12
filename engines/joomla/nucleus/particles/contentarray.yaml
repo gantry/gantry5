@@ -32,10 +32,10 @@ form:
       default: 2
       pattern: '\d{1,2}'
 
-    article.limit.row:
+    article.limit.columns:
       type: select.select
-      label: Articles per Row
-      description: Select the maximum number of articles per row.
+      label: Number of columns
+      description: Select the number of columns that you want articles to appear in.
       default: 2
       options:
         1: 1
@@ -52,7 +52,7 @@ form:
       default: 0
       pattern: '\d{1,2}'
 
-    article.sort.order:
+    article.sort.orderby:
       type: select.select
       label: Order By
       description: Select how the articles should be ordered by.
@@ -67,7 +67,7 @@ form:
         id: ID
         alias: Alias
 
-    article.sort.direction:
+    article.sort.ordering:
       type: select.select
       label: Ordering Direction
       description: Select the direction the articles should be ordered by.
@@ -194,17 +194,17 @@ form:
         show: Show
         '': Hide
 
-    article.display.read_more.title:
+    article.display.read_more.label:
       type: input.text
-      label: Read More Title
-      description: Type in the title for the 'Read More' button.
+      label: Read More Label
+      description: Type in the label for the 'Read More' button.
       placeholder: 'Read More...'
 
     css.class:
       type: input.selectize
       label: CSS Classes
       description: CSS class name for the particle.
-      default: 
+      default:
 
     extra:
       type: collection.keyvalue

@@ -30,64 +30,76 @@
         {% do article_finder.featured(true) %}
     {% endif %}
 
-    {% set articles = article_finder.order(sort.order, sort.direction).limit(limit.total).start(limit.start).find() %}
+    {% set articles = article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(limit.start).find() %}
 
     {# All Articles #}
-    <div class="g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
-        {% for row in articles|batch(limit.row) %}
+    <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+
+        {% for column in articles|batch(limit.columns) %}
             <div class="g-grid">
-                {% for article in row %}
+                {% for article in column %}
+
                     <div class="g-block">
                         <div class="g-content">
-                            <div class="g-article">
+                            <div class="g-array-item">
                                 {% if display.image.enabled and article.images.image_intro %}
-                                    <div class="g-article-image">
+                                    <div class="g-array-item-image">
                                         <a href="{{ article.route }}">
-                                            <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }}>
+                                            <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
                                         </a>
                                     </div>
                                 {% endif %}
+
                                 {% if display.title.enabled %}
-                                    <div class="g-article-title">
-                                        <h3 class="g-item-title"><a href="{{ article.route }}">
-                                            {{ display.title.limit ? article.title|truncate_text(display.title.limit) : article.title }}
-                                        </a></h3>
+                                    <div class="g-array-item-title">
+                                        <h3 class="g-item-title">
+                                            <a href="{{ article.route }}">
+                                                {{ display.title.limit ? article.title|truncate_text(display.title.limit) : article.title }}
+                                            </a>
+                                        </h3>
                                     </div>
                                 {% endif %}
+
                                 {% if display.date.enabled or display.author.enabled or display.category.enabled or display.hits.enabled %}
-                                    <div class="g-article-details">
+                                    <div class="g-array-item-details">
                                         {% if display.date.enabled %}
-                                            <span class="g-article-date">
+                                            <span class="g-array-item-date">
                                                 <i class="fa fa-clock-o"></i>{{ article.created|date(display.date.format) }}
                                             </span>
                                         {% endif %}
+
                                         {% if display.author.enabled %}
-                                            <span class="g-article-author">
+                                            <span class="g-array-item-author">
                                                 <i class="fa fa-user"></i>{{ article.author.name }}
                                             </span>
                                         {% endif %}
+
                                         {% if display.category.enabled %}
                                             {% set category_link = display.category.enabled == 'link' %}
-                                            <span class="g-article-category">
+                                            <span class="g-array-item-category">
                                                 {% for category in article.categories %}
                                                     {% if category_link %}
-                                                        <a href="{{ category.route }}"><i class="fa fa-folder-open"></i>{{ category.title }}</a>
+                                                        <a href="{{ category.route }}">
+                                                            <i class="fa fa-folder-open"></i>{{ category.title }}
+                                                        </a>
                                                     {% else %}
                                                         <i class="fa fa-folder-open"></i>{{ category.title }}
                                                     {% endif %}
                                                 {% endfor %}
                                             </span>
                                         {% endif %}
+
                                         {% if display.hits.enabled %}
-                                            <span class="g-article-hits">
+                                            <span class="g-array-item-hits">
                                                 <i class="fa fa-eye"></i>{{ article.hits }}
                                             </span>
                                         {% endif %}
                                     </div>
                                 {% endif %}
+
                                 {% if display.text.type %}
                                     {% set article_text = display.text.type == 'intro' ? article.introtext : article.text %}
-                                    <div class="g-article-text">
+                                    <div class="g-array-item-text">
                                         {% if display.text.formatting == 'text' %}
                                             {{ article_text|truncate_text(display.text_limit) }}
                                         {% else %}
@@ -95,16 +107,18 @@
                                         {% endif %}
                                     </div>
                                 {% endif %}
+
                                 {% if display.read_more.enabled %}
-                                    <div class="g-article-read-more">
+                                    <div class="g-array-item-read-more">
                                         <a href="{{ article.route }}">
-                                            <button class="button">{{ display.read_more.title|default('Read More...') }}</button>
+                                            <button class="button">{{ display.read_more.label|default('Read More...') }}</button>
                                         </a>
                                     </div>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
+
                 {% endfor %}
             </div>
         {% endfor %}
