@@ -27,7 +27,7 @@
     1. [](#new)
         - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
     3. [](#bugfix)
-        - Fixed bad value in `wp_upload_dir()['relative']` causing error in Image Picker (#1233) 
+        - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233) 
 
 # 5.2.13
 ## 16/03/2016
