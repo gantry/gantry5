@@ -1340,7 +1340,7 @@
   cursor: initial;
 }
 #g5-container .g-main-nav .g-toplevel > li .g-menu-item-content {
-  display: inline-block;
+  display: table-cell;
   vertical-align: middle;
   cursor: pointer;
 }
@@ -1350,7 +1350,7 @@
   transition: transform 0.2s ease-out;
 }
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
-  display: inline-block;
+  display: table-cell;
   vertical-align: middle;
   line-height: normal;
 }
