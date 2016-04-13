@@ -31,6 +31,7 @@ class Platform extends BasePlatform
     {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(WPINC);
+        $this->upload_dir = Folder::getRelativePath(wp_upload_dir()['basedir']);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
         $this->multisite = get_current_blog_id() !== 1 ? '/blog-' . get_current_blog_id() : '';
 
@@ -76,7 +77,7 @@ class Platform extends BasePlatform
     {
         return ['' => [
             'gantry-theme://images',
-            trim(wp_upload_dir()['relative'], '/'),
+            $this->upload_dir,
             $this->gantry_dir
             ]
         ];

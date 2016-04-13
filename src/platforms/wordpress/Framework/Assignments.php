@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Assignments\AbstractAssignments;
+use RocketTheme\Toolbox\Event\Event;
 
 class Assignments extends AbstractAssignments
 {
@@ -25,6 +26,11 @@ class Assignments extends AbstractAssignments
             'taxonomy',
             'archive'
         ];
+
+        $event = new Event;
+        $event->types = &$types;
+
+        Gantry::instance()->fireEvent('assignments.types', $event);
 
         return apply_filters('g5_assignments_types', $types);
     }

@@ -1,0 +1,73 @@
+<?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ * Contains WordPress core code.
+ */
+
+namespace Gantry\WordPress\Integration\WooCommerce;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
+use RocketTheme\Toolbox\Event\Event;
+use RocketTheme\Toolbox\Event\EventSubscriberInterface;
+
+/**
+ * Class WooCommerce
+ * @package Gantry\WordPress\Integration
+ */
+class WooCommerce implements ServiceProviderInterface, EventSubscriberInterface
+{
+    /**
+     * Register services to Gantry DI. Needed if you want to access something globally or from Twig template.
+     *
+     * Example: {{ gantry.woocommerce.do_something() }}
+     *
+     * @param Container $gantry
+     */
+    public function register(Container $gantry)
+    {
+        $loader = $gantry['loader'];
+        $loader->addClassMap(
+            [
+                'Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce' => __DIR__ . '/Assignments.php'
+            ]
+        );
+    }
+
+    /**
+     * Subscribe to Gantry events.
+     *
+     * @return array
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            'theme.init' => ['onThemeInit', 0],
+            'assignments.types' => ['onAssigmentsTypes', 0]
+        ];
+    }
+
+    /**
+     * Called from Theme::init()
+     *
+     * @param Event $event
+     */
+    public function onThemeInit(Event $event)
+    {
+        add_theme_support('woocommerce');
+    }
+
+    /**
+     * Called from Attachments::types()
+     *
+     * @param Event $event
+     */
+    public function onAssigmentsTypes(Event $event)
+    {
+        $event->types[] = 'woocommerce';
+    }
+}

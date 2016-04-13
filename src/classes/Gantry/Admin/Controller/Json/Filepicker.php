@@ -55,50 +55,42 @@ class Filepicker extends JsonController
         /** @var UniformResourceLocator $locator */
         $locator   = $this->container['locator'];
         $bookmarks = [];
-        $drives    = [DS];
+        $drives    = ['/'];
         $subfolder = false;
 
         $this->base = $locator->base;
 
         if ($this->method == 'POST') {
             $root         = $this->request->post['root'];
-            $drives       = isset($root) ? ($root !== 'false' ? $root : [DS]) : [DS];
+            $drives       = isset($root) ? ($root !== 'false' ? (array) $root : ['/']) : ['/'];
             $subfolder    = $this->request->post['subfolder'] ? true : false;
             $filter       = $this->request->post['filter'];
             $this->filter = isset($filter) ? ($filter !== 'false' ? $filter : false) : false;
             $this->value  = $this->request->post['value'] ?: '';
         }
 
-        if (!is_array($drives)) {
-            $drives = [$drives];
-        }
-
         foreach ($drives as $drive) {
             // cleanup of the path so it's chrooted.
             $drive  = str_replace('..', '', $drive);
-            $stream = explode('://', $drive);
-            $scheme = $stream[0];
 
-            $isStream = $locator->schemeExists($scheme);
-            $path     = rtrim($this->base, DS) . DS . ltrim($scheme, DS);
+            $isStream = $locator->isStream($drive);
+            $path     = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
 
             // It's a stream but the scheme doesn't exist. we skip it.
-            if (!$isStream && (count($stream) == 2 || !file_exists($path))) {
+            if (!$isStream && (strpos($drive, '://') || !file_exists($path))) {
                 continue;
             }
 
-            if ($isStream && !count($locator->findResources($drive, false))) {
+            if ($isStream && !$locator->findResources($drive)) {
                 continue;
             }
 
-            $key = $isStream
-                ? $drive
-                : preg_replace('#' . DS . '{2,}+#', DS, $drive);
+            $key = $isStream ? $drive : preg_replace('#/{2,}+#', '/', $drive);
 
             if (!array_key_exists($key, $bookmarks)) {
                 $bookmarks[$key] = $isStream
                     ? [$locator->getIterator($drive)]
-                    : [rtrim(Folder::getRelativePath($path), DS) . DS];
+                    : [rtrim(Folder::getRelativePath($path), '/') . '/'];
             }
         }
 
@@ -127,7 +119,7 @@ class Filepicker extends JsonController
                     $iterator = new \IteratorIterator($folder);
                     $folder   = $key;
                 } else {
-                    $iterator = new \DirectoryIterator($this->base . DS . ltrim($folder, DS));
+                    $iterator = new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
                 }
 
                 $folders[$key][$folder] = new \ArrayObject();
@@ -225,7 +217,7 @@ class Filepicker extends JsonController
     protected function listFiles($folder)
     {
         $locator  = $this->container['locator'];
-        $iterator = $this->isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . DS . ltrim($folder, DS));
+        $iterator = $this->isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
         $files    = new \ArrayObject();
 
         /** @var \SplFileInfo $info */

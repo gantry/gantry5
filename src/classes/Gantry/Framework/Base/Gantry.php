@@ -183,6 +183,8 @@ abstract class Gantry extends Container
         /** @var Gantry $instance */
         $instance = new static();
 
+        $instance['loader'] = \Gantry5\Loader::get();
+
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
