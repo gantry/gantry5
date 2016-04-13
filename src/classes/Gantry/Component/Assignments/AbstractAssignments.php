@@ -184,7 +184,7 @@ abstract class AbstractAssignments
             $types[$type] = [];
         }
 
-        $data = array_replace($types, $data['assignments']);
+        $data = array_replace($types, $data);
         foreach ($data as $tname => &$type) {
             foreach ($type as $gname => &$group) {
                 foreach ($group as $key => $value) {

@@ -59,7 +59,7 @@ class Assignments
             $items = [];
             foreach ($menu->links as $link) {
                 $items[] = [
-                    'name' => 'menu[' . $link->value . ']',
+                    'name' => 'menu.' . $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $this->style_id,
                     'disabled' => $link->type != 'component' || $link->checked_out && $link->checked_out != $userid,

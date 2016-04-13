@@ -42,8 +42,11 @@ class Assignments extends HtmlController
             $this->undefined();
         }
 
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
+        }
         $assignments = new AssignmentsObject($configuration);
-        $assignments->set($this->request->post->getArray());
+        $assignments->set($this->request->post->getArray('assignments'));
 
         // Fire save event.
         $event = new Event;

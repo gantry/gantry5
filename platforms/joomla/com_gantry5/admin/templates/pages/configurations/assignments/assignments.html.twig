@@ -43,7 +43,7 @@
 
                     {% if options %}
                         <div class="pull-right">
-                            {% include '@gantry-admin/forms/fields/select/selectize.html.twig' with {'layout': 'input', 'name': 'assignment', 'field': {'type': 'select.selectize', 'options': options}, 'value': assignment} only %}
+                            {% include '@gantry-admin/forms/fields/select/selectize.html.twig' with {'layout': 'input', 'name': 'assignments.assignment', 'field': {'type': 'select.selectize', 'options': options}, 'value': assignment} only %}
                         </div>
                     {% endif %}
                 </div>
@@ -68,7 +68,7 @@
                                     <label class="settings-param">
                                         {% include 'forms/fields/enable/enable.html.twig' with {
                                         'default': true,
-                                        'name': link.name,
+                                        'name': 'assignments.' ~ link.name,
                                         'field': link.field,
                                         'value': link.value,
                                         'disabled': link.disabled,
@@ -91,6 +91,7 @@
                 </button>
             </span>
                 </div>
+                <input type="hidden" name="_end" value="1" />
             </form>
         {% else %}
             <h2 class="page-title">{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</h2>

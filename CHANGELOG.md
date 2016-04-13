@@ -16,6 +16,7 @@
         - Prevent to close the modal of collections and forms (Particle Settings, Menu Settings) (#1227)
         - Fixed adding new rows and editing section/particle settings in LM on touch devices (#1218)
         - Fixed case in the colorpicker where potentially the opacity would go `-0` causing the field not to validate (#1217)
+        - Fixed outline assignments not staying set if `max_input_vars` has too small value; display error instead
 2. [Joomla](#joomla)
     1. [](#new)
         - Added support to have Joomla articles and categories in particles (#1225)
