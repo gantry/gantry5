@@ -39,7 +39,7 @@
 			}
 
 			.g-menu-item-content {
-				display: table-cell;
+				display: inline-block;
 				vertical-align: middle;
 				cursor: pointer;
 			}
@@ -51,7 +51,7 @@
 	    	// Menu Parent Indicator on Main TopLevel
 	    	&.g-parent {
 				.g-menu-parent-indicator {
-					display: table-cell;
+					display: inline-block;
 					vertical-align: middle;
                     line-height: normal;
 
@@ -262,9 +262,8 @@
 // Icons
 .g-menu-item-container {
 	> i {
-		display: table-cell;
 		vertical-align: middle;
-		padding-right: 0.2rem;
+		margin-right: 0.2rem;
 	}
 }
 
