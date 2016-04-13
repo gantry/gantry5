@@ -13,6 +13,7 @@
         - Themes list: Fix fatal error if theme had a loop in parent themes
         - Admin: Rename `Settings` tab to `Particle Defaults` to avoid confusion
         - Added missing language translations for all admin template files (part of #1212)
+        - Prevent to close the modal of collections and forms (Particle Settings, Menu Settings) (#1227)
 2. [Joomla](#joomla)
     1. [](#new)
         - Added support to have Joomla articles and categories in particles (#1225)
