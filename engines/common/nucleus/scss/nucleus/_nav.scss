@@ -262,8 +262,9 @@
 // Icons
 .g-menu-item-container {
 	> i {
+		display: table-cell;
 		vertical-align: middle;
-		margin-right: 0.2rem;
+		padding-right: 0.2rem;
 	}
 }
 
