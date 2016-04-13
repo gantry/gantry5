@@ -489,6 +489,7 @@ ready(function() {
                     e.preventDefault();
 
                     var target = $(e.target);
+                    target.disabled(true);
 
                     dataString = [];
                     invalid = [];
@@ -520,6 +521,7 @@ ready(function() {
                     }
 
                     if (invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
