@@ -19,6 +19,7 @@
         - Fixed Outline Assignments not staying set if `max_input_vars` has too small value; display error instead
         - Fixed Particle Defaults loosing values if `max_input_vars` has too small value; display error instead (#1226)
         - Prevent Applying / Saving multiple times when an occurrence is already running (#1185)
+        - Reverted fix from #1183 as it was causing severe problems with alignments in the menu
 2. [Joomla](#joomla)
     1. [](#new)
         - Added support to have Joomla articles and categories in particles (#1225)
