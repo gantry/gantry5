@@ -91,7 +91,7 @@ class AssignmentsWoocommerce implements AssignmentsInterface
     public static function addPageContextItem($context)
     {
         if (is_array($context)) {
-            $context['is_woocommerce'] = 'WooCommerce';
+            $context['is_woocommerce'] = 'WooCommerce Page';
         }
 
         return $context;
