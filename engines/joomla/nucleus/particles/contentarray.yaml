@@ -174,7 +174,7 @@ form:
       type: input.text
       label: Text Limit
       description: Type in the number of characters the article text should be limited to.
-      refault: ''
+      default: ''
       pattern: '\d+'
 
     article.display.text.formatting:

@@ -107,9 +107,9 @@
                                     {% set article_text = display.text.type == 'intro' ? article.introtext : article.text %}
                                     <div class="g-array-item-text">
                                         {% if display.text.formatting == 'text' %}
-                                            {{ article_text|truncate_text(display.text_limit) }}
+                                            {{ article_text|truncate_text(display.text.limit)|raw }}
                                         {% else %}
-                                            {{ article_text|truncate_html(display.text_limit)|raw }}
+                                            {{ article_text|truncate_html(display.text.limit)|raw }}
                                         {% endif %}
                                     </div>
                                 {% endif %}
