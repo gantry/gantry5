@@ -1340,7 +1340,7 @@
   cursor: initial;
 }
 #g5-container .g-main-nav .g-toplevel > li .g-menu-item-content {
-  display: table-cell;
+  display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
@@ -1350,7 +1350,7 @@
   transition: transform 0.2s ease-out;
 }
 #g5-container .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
-  display: table-cell;
+  display: inline-block;
   vertical-align: middle;
   line-height: normal;
 }
@@ -3133,7 +3133,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   max-height: 350px;
   overflow: auto;
 }
-#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
+#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-duplicate] {
   color: #666;
   opacity: 1;
 }
@@ -3147,7 +3147,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   display: table-cell;
   padding: 0.3rem 0.4rem;
 }
-#g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
+#g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove], #g5-container .collection-list .settings-param-field [data-collection-duplicate] {
   cursor: pointer;
   color: #cccccc;
   opacity: 0;
