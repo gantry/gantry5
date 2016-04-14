@@ -400,7 +400,9 @@ class Platform extends BasePlatform
             case 'platform.settings.manage':
                 return $user->authorise('core.admin', 'com_templates') || $user->authorise('core.admin', 'com_gantry5');
             case 'menu.manage':
-                return $user->authorise('core.manage', 'com_menus');
+                return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
+            case 'menu.edit':
+                return $user->authorise('core.edit', 'com_menus');
             case 'updates.manage':
                 return $user->authorise('core.manage', 'com_installer');
             case 'outline.create':
