@@ -64,7 +64,13 @@
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
-                                                <i class="fa fa-clock-o"></i>{{ article.created|date(display.date.format) }}
+                                                {% if display.date.enabled == 'published' %}
+                                                    <i class="fa fa-clock-o"></i>{{ article.publish_up|date(display.date.format) }}
+                                                {% elseif display.date.enabled == 'modified' %}
+                                                    <i class="fa fa-clock-o"></i>{{ article.modified|date(display.date.format) }}
+                                                {% else %}
+                                                    <i class="fa fa-clock-o"></i>{{ article.created|date(display.date.format) }}
+                                                {% endif %}
                                             </span>
                                         {% endif %}
 

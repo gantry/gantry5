@@ -1,6 +1,7 @@
 name: Joomla Articles
 description: Display Joomla Articles.
 type: particle
+icon: fa-joomla
 
 form:
   fields:
