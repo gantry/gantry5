@@ -55,6 +55,9 @@ class AssignmentsContext implements AssignmentsInterface
             $rules['is_front_page'] = $this->priority;
         }
 
+        // Allow to filter out rules by 3rd party plugin integration
+        $rules = apply_filters('g5_assignments_page_context_rules', $rules, $this->priority);
+
         return [$rules];
     }
 

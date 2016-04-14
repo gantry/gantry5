@@ -34,6 +34,7 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added `WordPress Posts` particle
+        - Extend Assignments with multiple `WooCommerce` conditionals (#1150)
         - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
     3. [](#bugfix)
         - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233)

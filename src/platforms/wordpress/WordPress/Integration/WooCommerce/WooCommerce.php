@@ -6,7 +6,6 @@
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
- * Contains WordPress core code.
  */
 
 namespace Gantry\WordPress\Integration\WooCommerce;
@@ -59,6 +58,9 @@ class WooCommerce implements ServiceProviderInterface, EventSubscriberInterface
     public function onThemeInit(Event $event)
     {
         add_theme_support('woocommerce');
+
+        add_filter('g5_assignments_page_context_array', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem'));
+        add_filter('g5_assignments_page_context_rules', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'), 10, 2);
     }
 
     /**

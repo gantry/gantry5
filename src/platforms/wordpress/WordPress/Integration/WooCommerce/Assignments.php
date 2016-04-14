@@ -19,6 +19,19 @@ use Gantry\Component\Assignments\AssignmentsInterface;
  */
 class AssignmentsWoocommerce implements AssignmentsInterface
 {
+    public $type = 'woocommerce';
+    public $priority = 4;
+
+    protected $context = [
+        'is_shop'             => 'Shop Page',
+        'is_product'          => 'Product Page',
+        'is_product_category' => 'Product Category',
+        'is_product_tag'      => 'Product Tag',
+        'is_cart'             => 'Cart Page',
+        'is_checkout'         => 'Checkout Page',
+        'is_account_page'     => 'Customer Account Page'
+    ];
+
     /**
      * Returns list of rules which apply to the current page.
      *
@@ -26,8 +39,15 @@ class AssignmentsWoocommerce implements AssignmentsInterface
      */
     public function getRules()
     {
-        // TODO
-        return [];
+        $rules = [];
+
+        foreach($this->context as $var => $label) {
+            if (call_user_func($var) === true) {
+                $rules[$var] = $this->priority;
+            }
+        }
+
+        return [$rules];
     }
 
     /**
@@ -37,7 +57,64 @@ class AssignmentsWoocommerce implements AssignmentsInterface
      */
     public function listRules()
     {
-        // TODO
-        return [];
+        // Get label and items for the context.
+        $list = [
+            'label' => 'WooCommerce',
+            'items' => $this->getItems()
+        ];
+
+        return [$list];
+    }
+
+    protected function getItems()
+    {
+        $items = [];
+        $context = $this->context;
+
+        foreach($context as $conditional => $label) {
+            $items[] = [
+                'name'  => $conditional,
+                'label' => $label
+            ];
+        }
+
+        return $items;
+    }
+
+    /**
+     * Add WooCommerce to the Page Context list
+     *
+     * @param $context
+     *
+     * @return array
+     */
+    public static function addPageContextItem($context)
+    {
+        if (is_array($context)) {
+            $context['is_woocommerce'] = 'WooCommerce';
+        }
+
+        return $context;
+    }
+
+    /**
+     * Add WooCommerce conditional tag check to the rules
+     *
+     * @param $rules
+     * @param $priority
+     *
+     * @return array
+     */
+    public static function addPageContextConditionals($rules, $priority = 1)
+    {
+        if (!isset($rules)) {
+            $rules = [];
+        }
+
+        if (is_woocommerce() === true) {
+            $rules['is_woocommerce'] = $priority;
+        }
+
+        return $rules;
     }
 }
