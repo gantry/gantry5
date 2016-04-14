@@ -193,6 +193,12 @@ form:
       description: Type in the label for the 'Read More' button.
       placeholder: 'Read More...'
 
+    post.display.read_more.css:
+      type: input.selectize
+      label: Button CSS Classes
+      description: CSS class name for the 'Read More' button.
+      default:
+
     css.class:
       type: input.selectize
       label: CSS Classes
