@@ -37,6 +37,10 @@ class Assignments extends HtmlController
 
     public function store()
     {
+        if (!$this->container->authorize('outline.assign')) {
+            $this->forbidden();
+        }
+
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
         if ($configuration && ($configuration === 'default' || $configuration[0] === '_')) {
             $this->undefined();

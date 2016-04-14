@@ -10,6 +10,7 @@
         </span>
             <h2 class="page-title">
                 {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
+                {% if gantry.authorize('outline.create') %}
                 <button data-g-config="create"
                         data-g-config-href="{{ gantry.route('configurations', 'create') }}"
                         title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
@@ -20,6 +21,7 @@
                 </button>
                 {# TODO: Adding a new outline should be a two step process: 1. you pick title and Layout, 2. creates it. #}
                 {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts') }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>#}
+                {% endif %}
             </h2>
         </div>
 
@@ -34,6 +36,7 @@
                     {% include '@gantry-admin/layouts/outline.html.twig' %}
                 </li>
             {% endfor %}
+            {% if gantry.authorize('outline.create') %}
             <li class="card g-block size-1-4 add-new">
                 <div class="page">
                     <a data-g-config="create"
@@ -47,6 +50,7 @@
                     {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-fw fa-plus"></i></a>#}
                 </div>
             </li>
+            {% endif %}
         </ul>
 
         <h2>{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}</h2>
@@ -78,6 +82,7 @@
                                    class="button button-primary">
                                     <i class="fa fa-fw fa-pencil"></i>
                                 </a>
+                                {% if gantry.authorize('outline.create') %}
                                 <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
                                         title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
                                         aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
@@ -86,6 +91,7 @@
                                         data-g-config-method="POST" class="button button-secondary">
                                     <i class="fa fa-fw fa-copy"></i>
                                 </button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

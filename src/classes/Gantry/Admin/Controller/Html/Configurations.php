@@ -67,6 +67,10 @@ class Configurations extends HtmlController
 
     public function create()
     {
+        if (!$this->container->authorize('outline.create')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
@@ -85,6 +89,10 @@ class Configurations extends HtmlController
 
     public function rename($configuration)
     {
+        if (!$this->container->authorize('outline.rename')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
@@ -106,6 +114,10 @@ class Configurations extends HtmlController
 
     public function duplicate($configuration)
     {
+        if (!$this->container->authorize('outline.create')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
@@ -135,6 +147,10 @@ class Configurations extends HtmlController
 
     public function delete($configuration)
     {
+        if (!$this->container->authorize('outline.delete')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();

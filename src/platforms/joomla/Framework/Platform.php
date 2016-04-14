@@ -266,6 +266,10 @@ class Platform extends BasePlatform
 
     public function settings()
     {
+        if (!$this->authorize('platform.settings.manage')) {
+            return '';
+        }
+
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
     }
 
@@ -276,6 +280,10 @@ class Platform extends BasePlatform
 
     public function updates()
     {
+        if (!$this->authorize('updates.manage')) {
+            return [];
+        }
+
         $styles = ThemeList::getThemes();
 
         $extension_ids = array_unique(array_map(
@@ -382,5 +390,31 @@ class Platform extends BasePlatform
     public function truncate($text, $length, $html = false)
     {
         return \JHtml::_('string.truncate', $text, $length, true, $html);
+    }
+
+    public function authorize($action)
+    {
+        $user = \JFactory::getUser();
+
+        switch ($action) {
+            case 'platform.settings.manage':
+                return $user->authorise('core.admin', 'com_templates') || $user->authorise('core.admin', 'com_gantry5');
+            case 'menu.manage':
+                return $user->authorise('core.manage', 'com_menus');
+            case 'updates.manage':
+                return $user->authorise('core.manage', 'com_installer');
+            case 'outline.create':
+                return $user->authorise('core.create', 'com_templates');
+            case 'outline.delete':
+                 return $user->authorise('core.delete', 'com_templates');
+            case 'outline.rename':
+                return $user->authorise('core.edit', 'com_templates');
+            case 'outline.assign':
+                return $user->authorise('core.edit.state', 'com_templates') && $user->authorise('core.edit', 'com_menu');
+            case 'outline.edit':
+                return true;
+        }
+
+        return true;
     }
 }

@@ -5,11 +5,15 @@
         {% if name == 'default' %}
             <span>{{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}</span>
         {% else %}
+            {% if gantry.authorize('outline.rename') %}
             <span data-g-config-href="{{ gantry.route('configurations', name, 'rename') }}" data-g-config-method="post"
                   data-title-editable="{{ title }}" class="title" data-tip="{{ title }}" data-tip-place="top-right">
                 {{ title }}
             </span>
             <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(title|e) }}" data-title-edit=""></i>
+            {% else %}
+                {{ title }}
+            {% endif %}
         {% endif %}
         <span class="float-right font-small">({{ 'GANTRY5_PLATFORM_ID_X'|trans(name) }})</span>
     </h4>
@@ -31,7 +35,7 @@
             >
                 <i class="fa fa-fw fa-pencil"></i>
             </a>
-            {% if gantry.configurations.canDuplicate(name) %}
+            {% if gantry.authorize('outline.create') and gantry.configurations.canDuplicate(name) %}
             <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
                     data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
                     aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
@@ -44,7 +48,7 @@
                 <i class="fa fa-fw fa-copy"></i>
             </button>
             {% endif %}
-            {% if name != 'default' and gantry.configurations.canDelete(name) %}
+            {% if name != 'default' and gantry.authorize('outline.delete') and gantry.configurations.canDelete(name) %}
             <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
                     data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
                     title="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"

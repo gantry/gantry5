@@ -24,11 +24,13 @@
                         <i class="fa fa-fw fa-object-group"></i> <span>{{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}</span>
                     </a>
                 </li>#}
+                {% if gantry.authorize('menu.manage') %}
                 <li {{ (location == 'menu') ? 'class="active"' }}>
                     <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu') }}">
                         <i class="fa fa-fw fa-bars"></i> <span>{{ 'GANTRY5_PLATFORM_MENU'|trans }}</span>
                     </a>
                 </li>
+                {% endif %}
                 <li {{ (location == 'about') ? 'class="active"' }}>
                     <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('about') }}">
                         <i class="fa fa-fw fa-question-circle"></i> <span>{{ 'GANTRY5_PLATFORM_ABOUT'|trans }}</span>

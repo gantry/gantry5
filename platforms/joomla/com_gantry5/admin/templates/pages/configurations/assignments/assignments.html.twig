@@ -1,14 +1,18 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
+{% set edit = gantry.authorize('outline.assign') %}
+
 {% block gantry %}
     <div id="assignments">
         {% if assignments %}
             <form method="post">
-        <span class="float-right">
-            <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
-                <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
-            </button>
-        </span>
+                {% if edit %}
+                <span class="float-right">
+                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
+                        <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                    </button>
+                </span>
+                {% endif %}
 
                 <h2 class="page-title">{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</h2>
 
@@ -18,6 +22,7 @@
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
                             <i class="fa fa-fw fa-search"></i>
                         </div>
+                        {% if edit %}
                         <span data-g-assignments-uncheck=""
                               data-role="button"
                               tabindex="0"
@@ -36,6 +41,7 @@
                         >
                             <i class="fa fa-fw fa-toggle-on"></i>
                         </span>
+                        {% endif %}
                     </div>
                     <label>
                         <input type="checkbox" data-assignments-enabledonly="" /> {{ 'GANTRY5_PLATFORM_HIDE_ASSIGNMENTS'|trans }}
@@ -58,8 +64,10 @@
                                         <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans ~ ' ' ~ type.label }}" role="search">
                                         <i class="fa fa-fw fa-search"></i>
                                     </div>
+                                    {% if edit %}
                                     <span data-g-assignments-uncheck="" data-role="button" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans ~ ' in ' ~ type.label  }}" data-tip="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans }}" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
                                     <span data-g-assignments-check="" data-role="button" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans ~ ' in ' ~ type.label  }}" data-tip="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans }}" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
+                                    {% endif %}
                                 </div>
                             </h4>
 
@@ -84,13 +92,15 @@
                     {% endfor %}
                 </div>
 
+                {% if edit %}
                 <div class="g-footer-actions">
-            <span class="float-right">
-                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
-                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
-                </button>
-            </span>
+                    <span class="float-right">
+                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
+                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                        </button>
+                    </span>
                 </div>
+                {% endif %}
                 <input type="hidden" name="_end" value="1" />
             </form>
         {% else %}
