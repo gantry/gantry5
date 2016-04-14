@@ -4,7 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
-        - Implemented `|split` filter for twig 
+        - Implemented `|split` filter for twig
         - Implemented `duplicate` action for collections items (#1220)
     1. [](#bugfix)
         - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
@@ -33,9 +33,10 @@
         - Untranslated string `COM_GANTRY5_PARTICLE_NOT_INITIALIZED` (#1118)
 3. [WordPress](#wordpress)
     1. [](#new)
+        - Added `WordPress Posts` particle
         - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
     3. [](#bugfix)
-        - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233) 
+        - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233)
 
 # 5.2.13
 ## 16/03/2016

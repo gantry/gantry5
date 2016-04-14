@@ -13,6 +13,7 @@ namespace Gantry\Framework;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\WordPress\Utilities;
 use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\DI\Container;
 
@@ -233,7 +234,14 @@ class Platform extends BasePlatform
 
     public function truncate($text, $length, $html = false)
     {
-        // TODO:
-        throw new \Exception('Not implemented');
+        if (!$html) {
+            $text = strip_tags($text);
+        }
+
+        if (!$length) {
+            return $text;
+        }
+
+        return Utilities::truncate($text, $length, '...', true, $html);
     }
 }
