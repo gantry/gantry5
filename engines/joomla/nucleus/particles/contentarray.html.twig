@@ -17,7 +17,7 @@
     {% set display = article_settings.display %}
 
     {# Category Finder #}
-    {% set category_options = filter.categories ? {id: [filter.categories|split, 0]} : {} %}
+    {% set category_options = filter.categories ? {id: [filter.categories|split(','), 0]} : {} %}
     {% set categories = joomla.finder('category', category_options).published(true).language().find() %}
 
     {# Content Finder #}
