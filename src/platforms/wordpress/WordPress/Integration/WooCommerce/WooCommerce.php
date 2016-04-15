@@ -61,8 +61,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             add_theme_support('woocommerce');
 
             add_filter('g5_assignments_page_context_array', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextItem'));
-            add_filter('g5_assignments_page_context_rules', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'), 10,
-                2);
+            add_filter('g5_assignments_page_context_rules', array('Gantry\\WordPress\\Assignments\\AssignmentsWoocommerce', 'addPageContextConditionals'), 10, 2);
         }
 
         /**
