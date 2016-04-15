@@ -205,13 +205,11 @@ form:
       type: input.selectize
       label: Button CSS Classes
       description: CSS class name for the 'Read More' button.
-      default:
 
     css.class:
       type: input.selectize
       label: CSS Classes
       description: CSS class name for the particle.
-      default:
 
     extra:
       type: collection.keyvalue

@@ -16,6 +16,15 @@ form:
       label: Categories
       description: Select the categories the posts should be taken from.
 
+    post.filter.sticky:
+      type: select.select
+      label: Sticky Posts
+      description: Shows sticky posts at the top of other posts.
+      default: ''
+      options:
+        show: Show
+        '': Hide
+
     post.limit.total:
       type: input.text
       label: Number of Posts
@@ -197,13 +206,11 @@ form:
       type: input.selectize
       label: Button CSS Classes
       description: CSS class name for the 'Read More' button.
-      default:
 
     css.class:
       type: input.selectize
       label: CSS Classes
       description: CSS class name for the particle.
-      default:
 
     extra:
       type: collection.keyvalue

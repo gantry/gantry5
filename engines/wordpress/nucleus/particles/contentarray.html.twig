@@ -16,6 +16,9 @@
     {% set limit = post_settings.limit %}
     {% set display = post_settings.display %}
 
+    {# Sticky Posts #}
+    {% set sticky_posts = filter.sticky ? false : true %}
+
     {# Query Posts #}
     {% set query_parameters = {
         'cat': filter.categories|replace(' ', ','),
@@ -23,7 +26,7 @@
         'offset': limit.start|default('0'),
         'orderby': sort.orderby,
         'order': sort.ordering,
-        'ignore_sticky_posts': 'true'
+        'ignore_sticky_posts': sticky_posts
     } %}
 
     {% set posts = wordpress.call('Timber::get_posts', query_parameters) %}
@@ -126,7 +129,7 @@
                                 {% if display.read_more.enabled %}
                                     <div class="g-array-item-read-more">
                                         <a href="{{ post.link }}">
-                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css|raw }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
                                         </a>
                                     </div>
                                 {% endif %}
