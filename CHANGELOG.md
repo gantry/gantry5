@@ -21,11 +21,12 @@
         - Fixed Particle Defaults loosing values if `max_input_vars` has too small value; display error instead (#1226)
         - Prevent Applying / Saving multiple times when an occurrence is already running (#1185)
         - Reverted fix from #1183 as it was causing severe problems with alignments in the menu
+        - Workaround to prevent embedded iframe to throw JS errors in same cases (#1224)
 2. [Joomla](#joomla)
     1. [](#new)
         - Added support to have Joomla articles and categories in particles (#1225)
         - Added `Joomla Articles` particle
-        - Added support for Joomla Template & Menu ACL in Gantry admin (#600) 
+        - Added support for Joomla Template & Menu ACL in Gantry admin (#600)
     3. [](#bugfix)
         - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
         - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
