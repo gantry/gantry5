@@ -200,6 +200,11 @@ ready(function() {
             overlayClickToClose: false,
             remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),

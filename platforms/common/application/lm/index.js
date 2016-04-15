@@ -443,7 +443,10 @@ ready(function() {
             overlayClickToClose: false,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),

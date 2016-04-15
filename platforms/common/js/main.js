@@ -2707,7 +2707,10 @@ ready(function() {
             overlayClickToClose: false,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -4701,6 +4704,11 @@ ready(function() {
             overlayClickToClose: false,
             remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -5820,6 +5828,11 @@ ready(function() {
             overlayClickToClose: false,
             remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -9610,6 +9623,22 @@ var Modal = new prime({
         }));
     },
 
+    getLast: function() {
+        var ids, id;
+
+        ids = map(this.getAll(), function(element) {
+            element = $(element);
+
+            return storage.get(element).dialog.id;
+        });
+
+        if (!ids.length) {
+            return false;
+        }
+
+        return Math.max.apply(Math, ids);
+    },
+
     close: function(id) {
         if (!id) {
             var element = $(last(this.getAll()));
@@ -9684,19 +9713,11 @@ var Modal = new prime({
     },
 
     closeByEscape: function() {
-        var ids, id;
+        var id = this.getLast();
 
-        ids = map(this.getAll(), function(element) {
-            element = $(element);
-
-            return storage.get(element).dialog.id;
-        });
-
-        if (!ids.length) {
+        if (id === false) {
             return false;
         }
-
-        id = Math.max.apply(Math, ids);
 
         var element = this.getByID(id);
 
@@ -9706,6 +9727,23 @@ var Modal = new prime({
 
         return this.closeByID(id);
 
+    },
+
+    enableCloseByOverlay: function() {
+        var id = this.getLast();
+
+        if (id === false) {
+            return false;
+        }
+
+        var elements = storage.get(this.getByID(id)).dialog.elements;
+
+        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
+        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
+
+        elements.content.on('click', function(/*e*/){
+            return true;
+        });
     },
 
     showLoading: function() {
