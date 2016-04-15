@@ -1,5 +1,5 @@
 # 5.2.14
-## XX/XX/2016
+## 15/04/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -7,7 +7,6 @@
         - Implemented `|split` filter for twig
         - Implemented `duplicate` action for collections items (#1220)
     1. [](#bugfix)
-        - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
         - Fixed Zend opcache without file checks causes issues in admin (#1222)
         - Downgrading PHP version causes fatal errors on cached twig files (#947)
@@ -20,7 +19,6 @@
         - Fixed Outline Assignments not staying set if `max_input_vars` has too small value; display error instead
         - Fixed Particle Defaults loosing values if `max_input_vars` has too small value; display error instead (#1226)
         - Prevent Applying / Saving multiple times when an occurrence is already running (#1185)
-        - Reverted fix from #1183 as it was causing severe problems with alignments in the menu
         - Workaround to prevent embedded iframe to throw JS errors in same cases (#1224)
 2. [Joomla](#joomla)
     1. [](#new)
