@@ -1,3 +1,10 @@
+# 5.2.15
+## XX/XX/2016
+
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Enable HTML5 document support from Joomla
+
 # 5.2.14
 ## 15/04/2016
 
