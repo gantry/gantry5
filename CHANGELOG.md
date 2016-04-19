@@ -4,6 +4,7 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable HTML5 document support from Joomla
+        - Updated FontAwesome to v4.6.1 (+23 icons)
 
 # 5.2.14
 ## 15/04/2016
