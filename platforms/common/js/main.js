@@ -8024,10 +8024,13 @@ domready(function() {
                 icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
+
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
                         html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
                     }
+
+                    html += '<h3>' + icon.data('g-icon') + '</h3>';
 
                     icon.popover({
                         content: html,

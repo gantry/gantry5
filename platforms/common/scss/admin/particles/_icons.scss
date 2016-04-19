@@ -20,6 +20,11 @@
         font-size: 1rem !important;
     }
 
+    .g5-popover-icons-preview h3 {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
     .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
         width: 650px;
 
@@ -79,6 +84,7 @@
                     padding: 4px;
                     margin: 2px 0;
                     border-radius: 3px;
+                    @include ellipsis(190px);
 
                     i {
                         color: #333;

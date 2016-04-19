@@ -6359,6 +6359,10 @@ html.g5-dialog-open {
   width: auto !important;
   font-size: 1rem !important;
 }
+#g5-container .g5-popover-icons-preview h3 {
+  text-align: center;
+  margin-bottom: 0;
+}
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
   width: 650px;
 }
@@ -6414,6 +6418,11 @@ html.g5-dialog-open {
   padding: 4px;
   margin: 2px 0;
   border-radius: 3px;
+  display: inline-block;
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
