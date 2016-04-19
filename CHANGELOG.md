@@ -6,7 +6,7 @@
         - Enable HTML5 document support from Joomla
         - Updated FontAwesome to v4.6.1 (+23 icons)
         - Icons Picker will now show the title of each icon when hovering to see the preview 
-
+        - Updated Google Fonts library
 # 5.2.14
 ## 15/04/2016
 
