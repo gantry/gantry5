@@ -7194,6 +7194,37 @@ html.g5-dialog-open {
   background: #be6464;
 }
 
+[dir="rtl"] #g5-container .g-selectize-control.g-single .g-selectize-input:after {
+  right: inherit;
+  left: 23px;
+}
+[dir="rtl"] #g5-container .settings-block.search i,
+[dir="rtl"] #g5-container .g-colorpicker i {
+  right: inherit;
+  left: 10px;
+}
+[dir="rtl"] #g5-container .card h4 .enabler {
+  float: left;
+}
+[dir="rtl"] #g5-container .float-right, [dir="rtl"] #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions {
+  float: left !important;
+}
+[dir="rtl"] #g5-container .float-left, [dir="rtl"] #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
+  float: right !important;
+}
+[dir="rtl"] #g5-container .settings-block .settings-param-field {
+  margin-left: 0;
+  margin-right: 175px;
+}
+[dir="rtl"] #g5-container #g-changelog ul li {
+  padding-left: 0;
+  padding-right: 6rem;
+}
+[dir="rtl"] #g5-container #g-changelog ul li:before {
+  margin-left: 1rem;
+  margin-right: -6rem;
+}
+
 
 
 /*# sourceMappingURL=g-admin.css.map */

@@ -8,7 +8,8 @@
         - Icons Picker will now show the title of each icon when hovering to see the preview 
         - Updated Google Fonts library
     1. [](#bugfix)
-        - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243) 
+        - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
+        - Various Admin RTL tweaks (#1195)
         
 # 5.2.14
 ## 15/04/2016
