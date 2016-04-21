@@ -10,6 +10,7 @@
         - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
         - Various Admin RTL tweaks (#1195)
         - Fixed expand / collapse in Filepicker (#1246)
+        - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable HTML5 document support from Joomla
