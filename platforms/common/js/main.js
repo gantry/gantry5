@@ -6927,7 +6927,7 @@ var FilePicker = new prime({
         }
 
         // g5 events
-        content.delegate('click', '.g-bookmark-title', function(e, element) {
+        content.delegate('click', '.g-bookmark-title', function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
                 parent  = element.parent('.g-bookmark');
