@@ -7,13 +7,14 @@
         - Icons Picker will now show the title of each icon when hovering to see the preview
         - Updated Google Fonts library
         - Sample Content Particle now include the ID and CSS fields for the individual items (#1199)
-    1. [](#bugfix)
+    3. [](#bugfix)
         - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
         - Various Admin RTL tweaks (#1195)
         - Fixed expand / collapse in Filepicker (#1246)
         - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
         - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
         - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
+        - [CHANGE]: Copyright Particle output now renders without the hardcoded `Copyright` word that couldn't be translated. Before: `Copyright © 2016 SiteOwner`, After: `SiteOwner © 2016` (#950)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla
