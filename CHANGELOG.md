@@ -6,6 +6,7 @@
         - Updated FontAwesome to v4.6.1 (+23 icons)
         - Icons Picker will now show the title of each icon when hovering to see the preview
         - Updated Google Fonts library
+        - Sample Content Particle now include the ID and CSS fields for the individual items (#1199)
     1. [](#bugfix)
         - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
         - Various Admin RTL tweaks (#1195)
