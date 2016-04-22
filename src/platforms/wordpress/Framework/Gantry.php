@@ -71,7 +71,7 @@ class Gantry extends Base\Gantry
                 continue;
             }
             $class = "Gantry\\WordPress\\Integration\\{$file->getBasename()}\\{$file->getBasename()}";
-            if (class_exists($class)) {
+            if (class_exists($class) && call_user_func([$class, 'enabled'])) {
                 $integration = new $class;
                 if ($integration instanceof ServiceProviderInterface) {
                     $container->register($integration);
