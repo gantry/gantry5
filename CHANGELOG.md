@@ -2,11 +2,22 @@
 ## XX/XX/2016
 
 1. [Common](#common)
-    3. [](#bugfix)
+    1. [](#new)
+        - Updated FontAwesome to v4.6.1 (+23 icons)
+        - Icons Picker will now show the title of each icon when hovering to see the preview
+        - Updated Google Fonts library
+    1. [](#bugfix)
+        - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
+        - Various Admin RTL tweaks (#1195)
+        - Fixed expand / collapse in Filepicker (#1246)
+        - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
         - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved current URL detection for Menu Item based Assignments with possibility of filtering custom server ports (#1208)
 
 # 5.2.14
 ## 15/04/2016
