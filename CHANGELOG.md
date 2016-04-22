@@ -12,6 +12,7 @@
         - Fixed expand / collapse in Filepicker (#1246)
         - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
         - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
+        - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla
