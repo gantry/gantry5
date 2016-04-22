@@ -16,6 +16,8 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla
+    3. [](#bugfix)
+        - Fixed case where multiple badges of the Particle type, could potentially show up in the Modules Manager
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Improved current URL detection for Menu Item based Assignments with possibility of filtering custom server ports (#1208)
@@ -27,7 +29,7 @@
     1. [](#new)
         - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
         - Implemented `duplicate` action for collections items (#1220)
-    1. [](#bugfix)
+    3. [](#bugfix)
         - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
         - Fixed Zend opcache without file checks causes issues in admin (#1222)
         - Downgrading PHP version causes fatal errors on cached twig files (#947)
