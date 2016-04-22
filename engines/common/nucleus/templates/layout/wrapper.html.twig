@@ -4,7 +4,7 @@
     {% endfor %}
 {% endset %}
 
-{% if html|trim %}
+{% if segment.attributes.sticky or html|trim %}
     {% set id = segment.attributes.id|default('g-' ~ segment.id) %}
     {% set attr_extra = '' %}
 

@@ -1,8 +1,11 @@
 # 5.2.15
 ## XX/XX/2016
 
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
 2. [Joomla](#joomla)
-    1. [](#new)
+    2. [](#improved)
         - Enable HTML5 document support from Joomla
 
 # 5.2.14
