@@ -1,0 +1,145 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set attr_extra = '' %}
+{% if particle.extra %}
+    {% for attributes in particle.extra %}
+        {% for key, value in attributes %}
+            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+{% block particle %}
+    {% set post_settings = particle.post %}
+    {% set filter = post_settings.filter %}
+    {% set sort = post_settings.sort %}
+    {% set limit = post_settings.limit %}
+    {% set display = post_settings.display %}
+
+    {# Sticky Posts #}
+    {% set sticky_posts = filter.sticky ? false : true %}
+
+    {# Query Posts #}
+    {% set query_parameters = {
+        'cat': filter.categories|replace(' ', ','),
+        'posts_per_page': limit.total|default('-1'),
+        'offset': limit.start|default('0'),
+        'orderby': sort.orderby,
+        'order': sort.ordering,
+        'ignore_sticky_posts': sticky_posts
+    } %}
+
+    {% set posts = wordpress.call('Timber::get_posts', query_parameters) %}
+
+    {# All Posts #}
+    <div class="g-content-array g-wordpress-posts{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+
+        {% for column in posts|batch(limit.columns) %}
+            <div class="g-grid">
+                {% for post in column %}
+
+                    <div class="g-block">
+                        <div class="g-content">
+                            <div class="g-array-item">
+                                {% if display.image.enabled and post.thumbnail.src %}
+                                    <div class="g-array-item-image">
+                                        <a href="{{ post.link }}">
+                                            <img src="{{ url(post.thumbnail.src) }}" />
+                                        </a>
+                                    </div>
+                                {% endif %}
+
+                                {% if display.title.enabled %}
+                                    <div class="g-array-item-title">
+                                        <h3 class="g-item-title">
+                                            <a href="{{ post.link }}">
+                                                {{ display.title.limit ? post.title|truncate_text(display.title.limit) : post.title }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                {% endif %}
+
+                                {% if display.date.enabled or display.author.enabled or display.category.enabled or display.comments.enabled %}
+                                    <div class="g-array-item-details">
+                                        {% if display.date.enabled %}
+                                            <span class="g-array-item-date">
+                                                {% if display.date.enabled == 'modified' %}
+                                                    <i class="fa fa-clock-o"></i>{{ post.post_modified|date(display.date.format) }}
+                                                {% else %}
+                                                    <i class="fa fa-clock-o"></i>{{ post.post_date|date(display.date.format) }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.author.enabled %}
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user"></i>{{ post.author.name }}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.category.enabled %}
+                                            {% set category_link = display.category.enabled == 'link' %}
+                                            {%- set post_categories -%}
+                                                {% for category in post.categories %}
+                                                    {%- if category_link -%}
+                                                        <a href="{{ category.link }}">
+                                                            {{ category.title }}
+                                                        </a>
+                                                    {%- else -%}
+                                                        {{ category.title }}
+                                                    {%- endif -%}
+                                                    {% if not loop.last %}{{ ','|trim }}{% endif %}
+                                                {% endfor %}
+                                            {%- endset -%}
+
+                                            <span class="g-array-item-category">
+                                                <i class="fa fa-folder-open"></i>{{ post_categories|raw }}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.comments.enabled %}
+                                            {%- set comment_count -%}
+                                                {%- if post.comment_count == '0' -%}
+                                                    {{ __('No comments', 'gantry5') }}
+                                                {%- elseif post.comment_count == '1' -%}
+                                                    {{ post.comment_count ~ ' ' ~ __('Comment', 'gantry5') }}
+                                                {%- else -%}
+                                                    {{ post.comment_count ~ ' ' ~ __('Comments', 'gantry5') }}
+                                                {%- endif -%}
+                                            {%- endset -%}
+
+                                            <span class="g-array-item-comments">
+                                                <i class="fa fa-comments"></i>{{ comment_count }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.text.type %}
+                                    {% set post_text = display.text.type == 'excerpt' ? post.post_excerpt : post.content %}
+                                    <div class="g-array-item-text">
+                                        {% if display.text.formatting == 'text' %}
+                                            {{ post_text|truncate_text(display.text.limit)|raw }}
+                                        {% else %}
+                                            {{ post_text|truncate_html(display.text.limit)|raw }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.read_more.enabled %}
+                                    <div class="g-array-item-read-more">
+                                        <a href="{{ post.link }}">
+                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

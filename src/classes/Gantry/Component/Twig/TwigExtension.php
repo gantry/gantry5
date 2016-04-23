@@ -53,6 +53,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
+            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
         ];
     }
 
@@ -112,11 +114,13 @@ class TwigExtension extends \Twig_Extension
         /** @var TranslatorInterface $translator */
         static $translator;
 
+        $params = func_get_args();
+
         if (!$translator) {
             $translator = self::gantry()['translator'];
         }
 
-        return $translator->translate($str);
+        return call_user_func_array([$translator, 'translate'], $params);
     }
 
     /**
@@ -175,6 +179,36 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words. Removes html tags.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateText($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, false);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateHtml($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, true);
     }
 
     /**

@@ -6,14 +6,14 @@
     "dropzone": "^4.3.0",
     "elements": "w00fz/elements",
     "moofx": "^3.2.0",
-    "mout": "~0.12.0",
+    "mout": "~1.0.0",
     "objectdiff": "^1.1.0",
     "prime": "^0.5.0",
     "prime-util": "^0.5.0",
     "sifter": "^0.4.5",
     "slick": "^1.12.2",
     "sortablejs": "w00fz/Sortable#events-patch",
-    "webfontloader": "^1.6.22"
+    "webfontloader": "^1.6.24"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
@@ -21,13 +21,13 @@
     "gulp-if": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
-    "gulp-sourcemaps": "^1.6.0",
+    "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "merge-stream": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^4.2.0"
+    "yargs": "^4.6.0"
   }
 }

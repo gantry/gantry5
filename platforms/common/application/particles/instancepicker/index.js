@@ -63,8 +63,14 @@ ready(function() {
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
+            overlayClickToClose: false,
             remote: parseAjaxURI(getAjaxURL(uri) + getAjaxSuffix()),
             remoteLoaded: function(response, modalInstance) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 

@@ -93,8 +93,9 @@ class Settings extends HtmlController
         }
 
         $this->params += [
+            'scope' => 'particle.',
             'particle' => $blueprints,
-            'data' =>  Gantry::instance()['config']->get($prefix),
+            'data' =>  ['particle' => Gantry::instance()['config']->get($prefix)],
             'id' => $id,
             'parent' => "configurations/{$this->params['configuration']}/settings",
             'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
@@ -198,7 +199,11 @@ class Settings extends HtmlController
 
     public function save($id = null)
     {
-        $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('particles');
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
+        }
+
+        $data = $id ? [$id => $this->request->post->getArray('particle')] : $this->request->post->getArray('particles');
 
         foreach ($data as $name => $values) {
             $this->saveItem($name, $values);

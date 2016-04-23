@@ -114,6 +114,7 @@ class EventListener implements EventSubscriberInterface
             'columns' => []
         ];
 
+        $gantry = $event->gantry;
         $menu = $event->menu;
 
         // Save global menu settings into Joomla.
@@ -126,7 +127,7 @@ class EventListener implements EventSubscriberInterface
             'title' => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
-        if (!$menuType->save($options)) {
+        if ($gantry->authorize('menu.edit') && !$menuType->save($options)) {
             throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
         }
 
@@ -174,7 +175,7 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
 
-                if ($modified) {
+                if ($modified && $gantry->authorize('menu.edit')) {
                     $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
                         throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);

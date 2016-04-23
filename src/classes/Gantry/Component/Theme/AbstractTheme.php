@@ -17,6 +17,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Twig\TwigCacheFilesystem;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -120,7 +121,8 @@ abstract class AbstractTheme
             /** @var Config $global */
             $global = $gantry['global'];
 
-            $cache = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cache = $cachePath ? new TwigCacheFilesystem($cachePath, \Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION) : null;
             $debug = $gantry->debug();
             $production = (bool) $global->get('production', 1);
             $loader = new \Twig_Loader_Filesystem();

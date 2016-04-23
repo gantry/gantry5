@@ -38,7 +38,7 @@ class AssignmentsMenu implements AssignmentsInterface
             }
 
             if($menu_items) {
-                $current_url = $this->_curPageURL();
+                $current_url = $this->_curPageURL($_SERVER);
 
                 if(get_option('permalink_structure') != '' && !is_search()) {
                     $current_url = strtok($current_url, '?');
@@ -138,19 +138,24 @@ class AssignmentsMenu implements AssignmentsInterface
         return apply_filters('g5_assignments_' . $menu->slug . '_menu_list_items', $items, $menu->slug, $this->type);
     }
 
-    function _curPageURL()
+    function _URLorigin($s, $use_forwarded_host = false)
     {
-        $pageURL = 'http';
-        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
-            $pageURL .= "s";
-        }
-        $pageURL .= "://";
-        if ($_SERVER["SERVER_PORT"] != "80") {
-            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
-        } else {
-            $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-        }
-        return $pageURL;
+        $s_port = apply_filters('gantry5_current_url_server_port', '80');
+        $s_ssl_port = apply_filters('gantry5_current_url_server_ssl_port', '443');
+
+        $ssl      = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on');
+        $sp       = strtolower($s['SERVER_PROTOCOL']);
+        $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+        $port     = $s['SERVER_PORT'];
+        $port     = ((!$ssl && $port == $s_port) || ($ssl && $port == $s_ssl_port)) ? '' : ':' . $port;
+        $host     = ($use_forwarded_host && isset($s['HTTP_X_FORWARDED_HOST'])) ? $s['HTTP_X_FORWARDED_HOST'] : (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : null);
+        $host     = isset($host) ? $host : $s['SERVER_NAME'] . $port;
+
+        return $protocol . '://' . $host;
     }
 
+    function _curPageURL($s, $use_forwarded_host = false)
+    {
+        return $this->_URLorigin($s, $use_forwarded_host) . $s['REQUEST_URI'];
+    }
 }

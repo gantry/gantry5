@@ -106,10 +106,10 @@ class System extends SystemFacade
     /**
      * Handles an exception, ultimately generating a Whoops error page.
      *
-     * @param  \Exception $exception
+     * @param  \Throwable $exception
      * @return void
      */
-    public function handleException(\Exception $exception)
+    public function handleException($exception)
     {
         $handler = $this->whoopsExceptionHandler;
 

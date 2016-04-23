@@ -51,6 +51,7 @@
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue|e }}" class="title">{{ itemValue|e }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
+                                            {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
                                             <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': itemValue|e}) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
@@ -91,6 +92,7 @@
                                 {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
+                                {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
                                 <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                             </li>
                         </ul>

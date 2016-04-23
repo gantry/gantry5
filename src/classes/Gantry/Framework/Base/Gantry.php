@@ -169,6 +169,11 @@ abstract class Gantry extends Container
         return preg_replace('|/+|', '/', '/' . $this->offsetGet('base_url') . sprintf($route, $path));
     }
 
+    public function authorize($action)
+    {
+        return $this['platform']->authorize($action);
+    }
+
     public function wrapper($value = null)
     {
         if ($value !== null ) {
@@ -182,6 +187,8 @@ abstract class Gantry extends Container
     {
         /** @var Gantry $instance */
         $instance = new static();
+
+        $instance['loader'] = \Gantry5\Loader::get();
 
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);

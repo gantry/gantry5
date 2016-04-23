@@ -361,7 +361,7 @@
 
 .collection-list .settings-param-field {
     ul:not(.collection-sorting) li {
-        &:hover [data-title-edit], &:hover [data-collection-remove] {
+        &:hover [data-title-edit], &:hover [data-collection-remove], &:hover [data-collection-duplicate] {
             color: $dark-gray;
             opacity: 1;
         }
@@ -379,7 +379,7 @@
         padding: 0.3rem 0.4rem;
     }
 
-    [data-title-edit], [data-collection-remove] {
+    [data-title-edit], [data-collection-remove], [data-collection-duplicate] {
         cursor: pointer;
         color: lighten($dark-gray, 40%);
         //float: right;

@@ -4,7 +4,10 @@
 <form method="post" action="{{ gantry.route('menu/edit', id, 'validate') }}">
     <div class="card settings-block">
         <h4>
-            <span data-title-editable="{{ data.settings.title }}" class="title">{{ data.settings.title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': data.settings.title }) }}" data-title-edit></i>
+            <span data-title-editable="{{ data.settings.title }}" class="title">
+                {{ data.settings.title }}
+            </span>
+            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.settings.title) }}" data-title-edit=""></i>
             {% if blueprints.form.fields.enabled %}
             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
             {% endif %}
@@ -16,7 +19,7 @@
     <div class="g-modal-actions">
         {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
         <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </form>

@@ -1,14 +1,70 @@
-# 5.2.14
+# 5.2.15
 ## XX/XX/2016
 
 1. [Common](#common)
-    1. [](#bugfix)
-        - Fixed alignment of menu items with children, taking up a bit more space than leaves (#1183)
-        - Update Whoops to latest version (fixes PHP7 issues with fatal errors)
-2. [Joomla](#joomla)
+    1. [](#new)
+        - Updated FontAwesome to v4.6.1 (+23 icons)
+        - Icons Picker will now show the title of each icon when hovering to see the preview
+        - Updated Google Fonts library
+        - Sample Content Particle now include the ID and CSS fields for the individual items (#1199)
     3. [](#bugfix)
-        - Duplicating template style while caching is turned on is not recognized as Gantry 5 outline (#1200)
-    
+        - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
+        - Various Admin RTL tweaks (#1195)
+        - Fixed expand / collapse in Filepicker (#1246)
+        - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
+        - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
+        - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
+        - [CHANGE]: Copyright Particle output now renders without the hardcoded `Copyright` word that couldn't be translated. Before: `Copyright © 2016 SiteOwner`, After: `SiteOwner © 2016` (#950)
+        - [REGRESSION] Disabling `Compile twig` attempts to write lots of directories to hard drive root (#1250)
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - Enable HTML5 document support from Joomla
+    3. [](#bugfix)
+        - Fixed case where multiple badges of the Particle type, could potentially show up in the Modules Manager
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved current URL detection for Menu Item based Assignments with possibility of filtering custom server ports (#1208)
+
+# 5.2.14
+## 15/04/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
+        - Implemented `duplicate` action for collections items (#1220)
+    3. [](#bugfix)
+        - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
+        - Fixed Zend opcache without file checks causes issues in admin (#1222)
+        - Downgrading PHP version causes fatal errors on cached twig files (#947)
+        - Themes list: Fix fatal error if theme had a loop in parent themes
+        - Admin: Rename `Settings` tab to `Particle Defaults` to avoid confusion
+        - Added missing language translations for all admin template files (part of #1212)
+        - Prevent to close the modal of collections and forms (Particle Settings, Menu Settings) (#1227)
+        - Fixed adding new rows and editing section/particle settings in LM on touch devices (#1218)
+        - Fixed case in the colorpicker where potentially the opacity would go `-0` causing the field not to validate (#1217)
+        - Fixed Outline Assignments not staying set if `max_input_vars` has too small value; display error instead
+        - Fixed Particle Defaults loosing values if `max_input_vars` has too small value; display error instead (#1226)
+        - Prevent Applying / Saving multiple times when an occurrence is already running (#1185)
+        - Workaround to prevent embedded iframe to throw JS errors in same cases (#1224)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Added support to have Joomla articles and categories in particles (#1225)
+        - Added `Joomla Articles` particle
+        - Added support for Joomla Template & Menu ACL in Gantry admin (#600)
+    3. [](#bugfix)
+        - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
+        - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
+        - Module instance edit fails with "You are not permitted to use that link to directly access that page" on J! 3.5 (#1215)
+        - Gantry update is shown even if the new version was just installed (#1204)
+        - Untranslated string `COM_GANTRY5_PARTICLE_NOT_INITIALIZED` (#1118)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added `WordPress Posts` particle
+        - Extend Assignments with multiple `WooCommerce` conditionals (#1150)
+        - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
+    3. [](#bugfix)
+        - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233)
+
 # 5.2.13
 ## 16/03/2016
 

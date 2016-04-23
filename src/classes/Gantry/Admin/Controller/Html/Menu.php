@@ -75,6 +75,15 @@ class Menu extends HtmlController
         ]
     ];
 
+    public function execute($method, array $path, array $params)
+    {
+        if (!$this->container->authorize('menu.manage')) {
+            $this->forbidden();
+        }
+
+        return parent::execute($method, $path, $params);
+    }
+
     public function item($id = null)
     {
         // Load the menu.

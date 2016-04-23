@@ -120,6 +120,9 @@ class Theme extends AbstractTheme
         }
 
         $doc = \JFactory::getDocument();
+        if ($doc instanceof \JDocumentHtml) {
+            $doc->setHtml5(true);
+        }
         $this->language = $doc->language;
         $this->direction = $doc->direction;
         $this->url = \JUri::root(true) . '/templates/' . $this->name;

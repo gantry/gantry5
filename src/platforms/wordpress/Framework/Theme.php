@@ -355,7 +355,6 @@ class Theme extends AbstractTheme
         add_theme_support('post-thumbnails');
         add_theme_support('menus');
         add_theme_support('widgets');
-        add_theme_support('woocommerce');
 
         add_filter('script_loader_tag', ['Gantry\Framework\Document', 'script_add_attributes'], 10, 2);
         add_filter('timber_context', [$this, 'getContext']);
@@ -418,6 +417,8 @@ class Theme extends AbstractTheme
         load_theme_textdomain($domain, $this->path . '/languages');
 
         $this->url = $gantry['site']->theme->link;
+
+        $gantry->fireEvent('theme.init');
     }
 
     /**

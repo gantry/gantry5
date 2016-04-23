@@ -1,13 +1,13 @@
 {% extends "@gantry-admin/partials/page.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/g-admin.css')|e }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/g-admin.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css') }}" type="text/css" />
     {{ parent() }}
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
+    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
     {{ parent() }}
 {% endblock %}
 
@@ -18,12 +18,12 @@
     <div class="inner-container">
         {% include "@gantry-admin/partials/updates.html.twig" %}
         {% block gantry_content_wrapper %}
-            <div data-g5-content-wrapper>
+            <div data-g5-content-wrapper="">
                 {% include "@gantry-admin/partials/navigation.html.twig" %}
                 <div class="g-grid">
                     <div class="g-block main-block">
                         <section id="g-main">
-                            <div class="g-content" data-g5-content>
+                            <div class="g-content" data-g5-content="">
                                 {% block gantry %}
                                 {% endblock %}
                             </div>
@@ -42,7 +42,11 @@
         </div>
         {% set version = constant('GANTRY5_VERSION') %}
         {% set version_date = constant('GANTRY5_VERSION_DATE') %}
-        <div>Version: <span class="g-version">{{ version }}</span> / Released: <span class="g-version-date">{{ version_date}}</span></div>
+        <div>
+            {{ 'GANTRY5_PLATFORM_FOOTER_VERSION'|trans }} <span class="g-version">{{ version }}</span>
+            /
+            {{ 'GANTRY5_PLATFORM_FOOTER_RELEASED'|trans }} <span class="g-version-date">{{ version_date}}</span>
+        </div>
         <div><a href="#" data-changelog="{{ constant('GANTRY5_VERSION') }}">{{ 'GANTRY5_PLATFORM_CHANGELOG'|trans }}</a></div>
     </footer>
 {% endblock %}

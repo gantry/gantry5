@@ -3133,7 +3133,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   max-height: 350px;
   overflow: auto;
 }
-#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove] {
+#g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-title-edit], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-remove], #g5-container .collection-list .settings-param-field ul:not(.collection-sorting) li:hover [data-collection-duplicate] {
   color: #666;
   opacity: 1;
 }
@@ -3147,7 +3147,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   display: table-cell;
   padding: 0.3rem 0.4rem;
 }
-#g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove] {
+#g5-container .collection-list .settings-param-field [data-title-edit], #g5-container .collection-list .settings-param-field [data-collection-remove], #g5-container .collection-list .settings-param-field [data-collection-duplicate] {
   cursor: pointer;
   color: #cccccc;
   opacity: 0;
@@ -6359,6 +6359,10 @@ html.g5-dialog-open {
   width: auto !important;
   font-size: 1rem !important;
 }
+#g5-container .g5-popover-icons-preview h3 {
+  text-align: center;
+  margin-bottom: 0;
+}
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
   width: 650px;
 }
@@ -6414,6 +6418,11 @@ html.g5-dialog-open {
   padding: 4px;
   margin: 2px 0;
   border-radius: 3px;
+  display: inline-block;
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul li i {
   color: #333;
@@ -7183,6 +7192,37 @@ html.g5-dialog-open {
 
 .g-tips.error {
   background: #be6464;
+}
+
+[dir="rtl"] #g5-container .g-selectize-control.g-single .g-selectize-input:after {
+  right: inherit;
+  left: 23px;
+}
+[dir="rtl"] #g5-container .settings-block.search i,
+[dir="rtl"] #g5-container .g-colorpicker i {
+  right: inherit;
+  left: 10px;
+}
+[dir="rtl"] #g5-container .card h4 .enabler {
+  float: left;
+}
+[dir="rtl"] #g5-container .float-right, [dir="rtl"] #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions {
+  float: left !important;
+}
+[dir="rtl"] #g5-container .float-left, [dir="rtl"] #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-title {
+  float: right !important;
+}
+[dir="rtl"] #g5-container .settings-block .settings-param-field {
+  margin-left: 0;
+  margin-right: 175px;
+}
+[dir="rtl"] #g5-container #g-changelog ul li {
+  padding-left: 0;
+  padding-right: 6rem;
+}
+[dir="rtl"] #g5-container #g-changelog ul li:before {
+  margin-left: 1rem;
+  margin-right: -6rem;
 }
 
 

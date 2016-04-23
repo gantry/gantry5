@@ -103,6 +103,7 @@ admin:
     general:
       - wpautop
     blog:
+      - content
       - heading
       - featured-image
       - title
@@ -126,6 +127,7 @@ admin:
       - meta-date
       - meta-author
     archive:
+      - content
       - heading
       - featured-image
       - title
