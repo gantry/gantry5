@@ -84,3 +84,7 @@ form:
         .variations:
           type: input.block-variations
           label: Variations
+
+    caching.type:
+      type: hidden
+      default: static
