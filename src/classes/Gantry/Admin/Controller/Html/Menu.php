@@ -26,7 +26,7 @@ use Gantry\Component\Response\Response;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Menu as MenuObject;
 use Gantry\Framework\Platform;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\BlueprintSchema;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -270,7 +270,7 @@ class Menu extends HtmlController
         }
 
         // Load particle blueprints and default settings.
-        $validator = new Blueprints();
+        $validator = new BlueprintSchema();
         $validator->embed('options', $this->container['particles']->get($name));
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));

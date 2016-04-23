@@ -21,7 +21,7 @@ use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\BlueprintSchema;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -300,7 +300,7 @@ class Layout extends HtmlController
         }
 
         // Load particle blueprints and default settings.
-        $validator = new Blueprints();
+        $validator = new BlueprintSchema();
 
         $name = $particle;
         if (in_array($particle, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {

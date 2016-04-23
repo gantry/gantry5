@@ -18,7 +18,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
+use RocketTheme\Toolbox\Blueprints\BlueprintSchema;
 
 /**
  * The Config class contains configuration information.
@@ -35,7 +35,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     protected $items;
 
     /**
-     * @var Blueprints|callable
+     * @var BlueprintSchema|callable
      */
     protected $blueprints;
 
@@ -227,12 +227,12 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     /**
      * Return blueprints.
      *
-     * @return Blueprints
+     * @return BlueprintSchema
      */
     public function blueprints()
     {
         if (!$this->blueprints){
-            $this->blueprints = new Blueprints;
+            $this->blueprints = new BlueprintSchema();
         } elseif (is_callable($this->blueprints)) {
             // Lazy load blueprints.
             $blueprints = $this->blueprints;
