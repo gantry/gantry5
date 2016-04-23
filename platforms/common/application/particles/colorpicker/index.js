@@ -270,7 +270,7 @@ var ColorPicker = new prime({
 
         if (this.built) {
             // opacity
-            this.opacity = opacity;
+            this.opacity = Math.max(opacity, 0);
             var sliderHeight = this.opacitySlider.position().height;
             this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
 
@@ -535,7 +535,7 @@ var ColorPicker = new prime({
 
         // Handle opacity
         if (target.hasClass('cp-opacity-slider')) {
-            this.opacity = parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2);
+            this.opacity = Math.max(parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2), 0);
         }
 
         // Adjust case

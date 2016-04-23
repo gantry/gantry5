@@ -4,7 +4,8 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="card settings-block">
         <h4>
-            <span data-title-editable="{{ item.title|trim|e }}" class="title">{{ item.title|trim|e }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title|trim|e }) }}" data-title-edit></i>
+            <span data-title-editable="{{ item.title|trim }}" class="title">{{ item.title|trim }}</span>
+            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title|trim) }}" data-title-edit=""></i>
             <span class="badge font-small">{{ particle.subtype }}</span>
             {% if particle.form.fields.enabled %}
                 {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ particle.subtype ~ '.enabled', 'field': particle.form.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'disabled': not gantry.config.get('particles.' ~ particle.subtype ~ '.enabled', true)} %}

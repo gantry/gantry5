@@ -4,9 +4,17 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs" role="tablist">
         <ul>
-            <li class="active"><a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</a></li>
+            <li class="active">
+                <a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">
+                    {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
+                </a>
+            </li>
             {% if block %}
-            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            <li>
+                <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                </a>
+            </li>
             {% endif %}
         </ul>
     </div>
@@ -15,7 +23,8 @@
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             <div class="card settings-block">
                 <h4>
-                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': item.title }) }}" data-title-edit></i>
+                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span>
+                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title) }}" data-title-edit=""></i>
                     <span class="badge font-small">{{ item.options.type }}</span>
                     {% if particle.form.fields.enabled %}
                     {% include 'forms/fields/enable/enable.html.twig' with {'name': prefix ~ 'enabled', 'field': particle.form.fields.enabled, 'value': item.options.particle.enabled, 'default': 1} %}
@@ -44,7 +53,7 @@
 
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
         <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </form>

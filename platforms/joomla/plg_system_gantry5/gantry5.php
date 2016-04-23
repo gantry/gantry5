@@ -385,7 +385,9 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
-     * @param array $matches
+     * @param array  $matches
+     * @param string $content
+     *
      * @return string
      */
     private function appendHtml(array $matches, $content = 'Gantry 5')
@@ -398,9 +400,10 @@ class plgSystemGantry5 extends JPlugin
 
             if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
+                $content = $content ?: 'No Particle Selected';
                 $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
 
-                if ($this->modules[$id]) { unset($this->modules[$id]); }
+                if (isset($this->modules[$id])) { unset($this->modules[$id]); }
                 else { unset($this->styles[$id]); }
             }
         }

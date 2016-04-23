@@ -1,16 +1,26 @@
 <section
-    {%- if particle.css.id %} id="{{ particle.css.id|e }}"{% endif %} class="menu-selector-bar{%- if particle.css.class %} {{ particle.css.class|e }}{% endif %}" role="navigation">
+    {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %} class="menu-selector-bar{%- if particle.css.class %} {{ particle.css.class }}{% endif %}" role="navigation">
     <ul class="g-grid g-toplevel menu-selector" data-mm-id="" data-mm-base="" data-mm-base-level="1">
         {% for child in item %}
             {% set active = (child.path|split('/')|first) == (path|split('/')|first) ? ' active' : '' %}
-            <li data-mm-id="{{ child.path }}" data-mm-level="{{ child.level }}"{% if child.type == 'particle' or child.type == 'module' %} class="g-menu-item-{{ child.type }}{{ active }}" data-mm-original-type="{{ child.type }}"{% else %} class="{{ active }}"{% endif %}>
+            <li data-mm-id="{{ child.path }}"
+                data-mm-level="{{ child.level }}"
+                {% if child.type == 'particle' or child.type == 'module' %}
+                class="g-menu-item-{{ child.type }}{{ active }}"
+                data-mm-original-type="{{ child.type }}"
+                {% else %}
+                class="{{ active }}"
+                {% endif %}
+            >
                 {% include 'menu/item.html.twig' with {'item': child, 'target': 'columns' } %}
             </li>
         {% endfor %}
     </ul>
+    {% if gantry.authorize('menu.edit') %}
     <a class="global-menu-settings" href="{{ gantry.route('menu/edit', id) }}">
-        <i aria-label="Global Menu Settings" class="fa fa-cog"></i>
+        <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_GLOBAL_SETTINGS'|trans }}" class="fa fa-cog"></i>
     </a>
+    {% endif %}
 </section>
 <div class="column-container" data-g5-menu-columns="">
     {% if columns %}

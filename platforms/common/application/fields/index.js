@@ -15,9 +15,23 @@ var ready      = require('elements/domready'),
 var originals,
     collectFieldsValues = function(keys) {
         var map      = new storage(),
-            defaults = $('[data-g-styles-defaults]');
+            defaults = $('[data-g-styles-defaults]'),
+            overridables = $('input[type="checkbox"].settings-param-toggle');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
+
+        // keep track of overrides getting enabled / disabled
+        // in order to detect if has changed
+        if (overridables) {
+            var overrides = {};
+
+            overridables.forEach(function(override) {
+                override = $(override);
+                overrides[override.id()] = override.checked();
+            });
+
+            map.set('__js__overrides', JSON.stringify(overrides));
+        }
 
         if (keys) {
             var field;
@@ -71,9 +85,14 @@ ready(function() {
         var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
             target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
             isOverride  = parent ? parent.find('.settings-param-toggle') : false,
-            isNewWidget = false;
+            isNewWidget = false,
+            isOverrideToggle = element.hasClass('settings-param-toggle');
 
         if (!parent) { return; }
+
+        if (isOverrideToggle) {
+            return compare.whole('force');
+        }
 
         if (element.type() == 'checkbox') {
             element.value(Number(element.checked()).toString());
@@ -99,6 +118,7 @@ ready(function() {
     };
 
     compare.whole = function(force) {
+        if (!originals) { return; }
         var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
                 if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
                     return a.toLowerCase() == b.toLowerCase();
@@ -150,7 +170,7 @@ ready(function() {
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
-    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name]', compare.single);
+    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name], .settings-block input[id][type="checkbox"].settings-param-toggle', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
         var previous = element.parent('.settings-param').siblings();

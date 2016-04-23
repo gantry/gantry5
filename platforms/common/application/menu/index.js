@@ -207,8 +207,14 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
+            overlayClickToClose: false,
             remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -271,6 +277,7 @@ ready(function() {
                     e.preventDefault();
 
                     var target = $(e.target);
+                    target.disabled(true);
 
                     dataString = [];
                     invalid = [];
@@ -295,6 +302,7 @@ ready(function() {
                     }
 
                     if (invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');

@@ -24,7 +24,7 @@ class Collection implements CollectionInterface
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     public static function __set_state($variables)
     {

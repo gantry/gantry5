@@ -13,6 +13,9 @@ namespace Gantry\Framework;
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\Content\Content;
+use Gantry\Joomla\Content\ContentFinder;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -263,6 +266,10 @@ class Platform extends BasePlatform
 
     public function settings()
     {
+        if (!$this->authorize('platform.settings.manage')) {
+            return '';
+        }
+
         return \JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
     }
 
@@ -273,6 +280,10 @@ class Platform extends BasePlatform
 
     public function updates()
     {
+        if (!$this->authorize('updates.manage')) {
+            return [];
+        }
+
         $styles = ThemeList::getThemes();
 
         $extension_ids = array_unique(array_map(
@@ -299,8 +310,8 @@ class Platform extends BasePlatform
             if ($update->element == 'pkg_gantry5') {
                 // Rename Gantry 5 package.
                 $update->name = 'Gantry';
-                // Ignore git and CI installs.
-                if (version_compare(GANTRY5_VERSION, 0) < 0) {
+                // Ignore git and CI installs and if the Gantry version is the same or higher than in the updates.
+                if (version_compare(GANTRY5_VERSION, 0) < 0 || version_compare($update->version, GANTRY5_VERSION) <= 0) {
                     continue;
                 }
             } else {
@@ -349,5 +360,63 @@ class Platform extends BasePlatform
             return call_user_func_array(['JHtml', array_shift($args)], $args);
         }
         return call_user_func_array(['JHtml', '_'], $args);
+    }
+
+    public function article($keys)
+    {
+        return Content::getInstance($keys);
+    }
+
+    public function finder($domain, $options = null)
+    {
+        $options = (array) $options;
+        switch ($domain) {
+            case 'article':
+            case 'articles':
+            case 'content':
+                $finder = new ContentFinder($options);
+
+                return \JFactory::getApplication()->isSite() ? $finder->authorised() : $finder;
+            case 'category':
+            case 'categories':
+                $finder = (new CategoryFinder($options))->extension('content');
+
+                return \JFactory::getApplication()->isSite() ? $finder->authorised() : $finder;
+        }
+
+        return null;
+    }
+
+    public function truncate($text, $length, $html = false)
+    {
+        return \JHtml::_('string.truncate', $text, $length, true, $html);
+    }
+
+    public function authorize($action)
+    {
+        $user = \JFactory::getUser();
+
+        switch ($action) {
+            case 'platform.settings.manage':
+                return $user->authorise('core.admin', 'com_templates') || $user->authorise('core.admin', 'com_gantry5');
+            case 'menu.manage':
+                return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
+            case 'menu.edit':
+                return $user->authorise('core.edit', 'com_menus');
+            case 'updates.manage':
+                return $user->authorise('core.manage', 'com_installer');
+            case 'outline.create':
+                return $user->authorise('core.create', 'com_templates');
+            case 'outline.delete':
+                 return $user->authorise('core.delete', 'com_templates');
+            case 'outline.rename':
+                return $user->authorise('core.edit', 'com_templates');
+            case 'outline.assign':
+                return $user->authorise('core.edit.state', 'com_templates') && $user->authorise('core.edit', 'com_menu');
+            case 'outline.edit':
+                return true;
+        }
+
+        return true;
     }
 }

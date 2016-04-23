@@ -198,4 +198,9 @@ abstract class Platform
         $callable = array_shift($args);
         return is_callable($callable) ? call_user_func_array($callable, $args) : null;
     }
+
+    public function authorize($action)
+    {
+        return true;
+    }
 }

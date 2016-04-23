@@ -15,7 +15,7 @@
     {% endfor %}
 {% endset %}
 
-{% if offcanvas|trim %}
+{% if segment.attributes.sticky or offcanvas|trim %}
 <div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }} data-g-offcanvas-swipe="{{ segment.attributes.swipe|default('1') }}" data-g-offcanvas-css3="{{ segment.attributes.css3animation|default('1') }}">
     {{ offcanvas|raw }}
 </div>

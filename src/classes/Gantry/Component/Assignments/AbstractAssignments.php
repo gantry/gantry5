@@ -156,8 +156,8 @@ abstract class AbstractAssignments
     {
         $list = [];
 
-        foreach($this->types() as $type) {
-            $class = sprintf($this->className, $this->platform, ucfirst($type));
+        foreach($this->types() as $class => $type) {
+            $class = is_numeric($class) ? sprintf($this->className, $this->platform, ucfirst($type)) : $class;
 
             if (!class_exists($class)) {
                 throw new \RuntimeException("Assignment type {$type} is missing");
@@ -184,7 +184,7 @@ abstract class AbstractAssignments
             $types[$type] = [];
         }
 
-        $data = array_replace($types, $data['assignments']);
+        $data = array_replace($types, $data);
         foreach ($data as $tname => &$type) {
             foreach ($type as $gname => &$group) {
                 foreach ($group as $key => $value) {
@@ -223,8 +223,8 @@ abstract class AbstractAssignments
     {
         $list = [];
 
-        foreach ($this->types() as $type) {
-            $class = sprintf($this->className, $this->platform, ucfirst($type));
+        foreach ($this->types() as $class => $type) {
+            $class = is_numeric($class) ? sprintf($this->className, $this->platform, ucfirst($type)) : $class;
 
             if (!class_exists($class)) {
                 throw new \RuntimeException("Assignment type '{$type}' is missing");

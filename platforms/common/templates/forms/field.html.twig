@@ -17,7 +17,7 @@
 
 {% block field %}
 {% if not field.isset or value is not null %}
-    <div class="settings-param {{ field.type|replace('.', '-')|e }}">
+    <div class="settings-param {{ field.type|replace('.', '-') }}">
         {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' and field.type != 'input.hidden' %}
             {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
         {% endif %}
@@ -25,9 +25,11 @@
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        <span data-tip="{{ field.description|raw }}" data-tip-place="top-right" aria-label="{{ field.description|e }}" data-title="{{ field.description|e }}">{{ field.label|e }}</span>
+                        <span data-tip="{{ field.description|raw }}" data-tip-place="top-right" aria-label="{{ field.description }}" data-title="{{ field.description }}">
+                            {{ field.label }}
+                        </span>
                     {% else %}
-                        {{ field.label|e }}
+                        {{ field.label }}
                     {% endif %}
                     {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                 {% endblock %}
@@ -37,14 +39,14 @@
                     {% block input %}
                         <input
                                 {# required attribute structures #}
-                                name="{{ (scope ~ name)|fieldName|e }}"
-                                value="{{ value|join(', ')|e }}"
+                                name="{{ (scope ~ name)|fieldName }}"
+                                value="{{ value|join(', ') }}"
                                 {# global attribute structures #}
                                 {% block global_attributes %}
-                                    {% if field.class is defined %} class="{{ field.class|e }}" {% endif %}
-                                    {% if field.id is defined %} id="{{ field.id|e }}" {% endif %}
-                                    {% if field.style is defined %} style="{{ field.style|e }}" {% endif %}
-                                    {% if field.title is defined %} title="{{ field.title|e }}" {% endif %}
+                                    {% if field.class is defined %} class="{{ field.class }}" {% endif %}
+                                    {% if field.id is defined %} id="{{ field.id }}" {% endif %}
+                                    {% if field.style is defined %} style="{{ field.style }}" {% endif %}
+                                    {% if field.title is defined %} title="{{ field.title }}" {% endif %}
                                     {% if field.override_target is defined %} data-override-target="{{ field.override_target|e('html_attr') }}" {% endif %}
                                     aria-label="{{ (scope ~ name)|replace({'.': ' '})|title|trim }}"
                                 {% endblock %}
@@ -52,7 +54,7 @@
 
                         {% block reset_field -%}
                             {% if field.reset_field is not defined or field.reset_field in ['on', 'true', 1] %}
-                                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName|e }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+                                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle"></i></span>
                             {% endif %}
                         {%- endblock %}
                     {% endblock %}

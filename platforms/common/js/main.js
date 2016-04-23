@@ -672,9 +672,23 @@ var ready      = require('elements/domready'),
 var originals,
     collectFieldsValues = function(keys) {
         var map      = new storage(),
-            defaults = $('[data-g-styles-defaults]');
+            defaults = $('[data-g-styles-defaults]'),
+            overridables = $('input[type="checkbox"].settings-param-toggle');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
+
+        // keep track of overrides getting enabled / disabled
+        // in order to detect if has changed
+        if (overridables) {
+            var overrides = {};
+
+            overridables.forEach(function(override) {
+                override = $(override);
+                overrides[override.id()] = override.checked();
+            });
+
+            map.set('__js__overrides', JSON.stringify(overrides));
+        }
 
         if (keys) {
             var field;
@@ -728,9 +742,14 @@ ready(function() {
         var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
             target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
             isOverride  = parent ? parent.find('.settings-param-toggle') : false,
-            isNewWidget = false;
+            isNewWidget = false,
+            isOverrideToggle = element.hasClass('settings-param-toggle');
 
         if (!parent) { return; }
+
+        if (isOverrideToggle) {
+            return compare.whole('force');
+        }
 
         if (element.type() == 'checkbox') {
             element.value(Number(element.checked()).toString());
@@ -756,6 +775,7 @@ ready(function() {
     };
 
     compare.whole = function(force) {
+        if (!originals) { return; }
         var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
                 if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
                     return a.toLowerCase() == b.toLowerCase();
@@ -807,7 +827,7 @@ ready(function() {
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
-    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name]', compare.single);
+    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name], .settings-block input[id][type="checkbox"].settings-param-toggle', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
         var previous = element.parent('.settings-param').siblings();
@@ -2371,7 +2391,7 @@ ready(function() {
     layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
-        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        exclude: '.section-header .button, .section-header .fa, .lm-newblocks .float-right .button, [data-lm-nodrag]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
         builder: builder,
         history: lmhistory,
@@ -2704,9 +2724,13 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
+            overlayClickToClose: false,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
@@ -2752,6 +2776,7 @@ ready(function() {
                     e.preventDefault();
 
                     var target = $(e.target);
+                    target.disabled(true);
 
                     dataString = [];
                     invalid = [];
@@ -2783,6 +2808,7 @@ ready(function() {
                     }
 
                     if (invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
@@ -3680,6 +3706,11 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var saves = $('.button-save');
 
+        if (saves.disabled()) {
+            return false;
+        }
+
+        saves.disabled(true);
         saves.hideIndicator();
         saves.showIndicator();
 
@@ -3731,6 +3762,7 @@ ready(function() {
         }
 
         if (invalid.length) {
+            saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
@@ -3762,6 +3794,7 @@ ready(function() {
                 }), type + ' Saved');
             }
 
+            saves.disabled(false);
             saves.hideIndicator();
             saves.forEach(function(save) {
                 $(save).lastSaved = new Date();
@@ -4688,8 +4721,14 @@ ready(function() {
             content: 'Loading',
             method: 'post',
             data: data,
+            overlayClickToClose: false,
             remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -4752,6 +4791,7 @@ ready(function() {
                     e.preventDefault();
 
                     var target = $(e.target);
+                    target.disabled(true);
 
                     dataString = [];
                     invalid = [];
@@ -4776,6 +4816,7 @@ ready(function() {
                     }
 
                     if (invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
@@ -4843,6 +4884,7 @@ var prime     = require('prime'),
     Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
+    ltrim     = require('mout/string/ltrim'),
     every     = require('mout/array/every'),
     last      = require('mout/array/last'),
     indexOf   = require('mout/array/indexOf'),
@@ -5284,8 +5326,13 @@ var MenuManager = new prime({
             // Refresh the origin if it's a particle
             base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
             if (this.isParticle && base && this.targetLevel != this.currentLevel) {
-                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0];
-                this.ordering[base.data('mm-base') || ''][list].splice(this.ParticleIndex, 1);
+                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0],
+                    location = base.data('mm-base') || '',
+                    currentLocation = ltrim([location, id].join('/'), ['/']);
+
+                this.ordering[location][list].splice(this.ParticleIndex, 1);
+                this.items[this.itemID] = this.items[currentLocation];
+                delete this.items[currentLocation];
             }
         }
 
@@ -5344,7 +5391,7 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":46,"../ui/eraser":48,"../utils/elements.utils":60,"./drag.resizer":29,"elements/zen":127,"mout/array/every":159,"mout/array/indexOf":165,"mout/array/last":169,"mout/function/bind":180,"mout/lang/deepClone":188,"mout/lang/isArray":191,"mout/lang/isObject":196,"mout/object/equals":214,"mout/object/get":219,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],33:[function(require,module,exports){
+},{"../ui/drag.drop":46,"../ui/eraser":48,"../utils/elements.utils":60,"./drag.resizer":29,"elements/zen":127,"mout/array/every":159,"mout/array/indexOf":165,"mout/array/last":169,"mout/function/bind":180,"mout/lang/deepClone":188,"mout/lang/isArray":191,"mout/lang/isObject":196,"mout/object/equals":214,"mout/object/get":219,"mout/string/ltrim":248,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],33:[function(require,module,exports){
 'use strict';
 var $             = require('elements'),
     ready         = require('elements/domready'),
@@ -5745,7 +5792,31 @@ ready(function() {
         data.splice(index, 1);
         dataField.value(JSON.stringify(data));
         item.remove();
-        if (items.length <= 2) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
+        if (items.length <= 2) { list.parent('[data-field-name]').find('[data-collection-editall]').style('display', 'none'); }
+        body.emit('change', { target: dataField });
+    });
+
+    // Duplicate item
+    body.delegate('click', '[data-collection-duplicate]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var param = element.parent('.settings-param'),
+            item = element.parent('[data-collection-item]'),
+            list = element.parent('ul'),
+            url = param.find('[data-collection-template]').find('a').href(),
+            items = list.search('> [data-collection-item]'),
+            index = indexOf(items, item[0]),
+            clone = $(item[0].cloneNode(true)).after(item),
+            dataField = element.parent('.settings-param').find('[data-collection-data]'),
+            data = dataField.value();
+
+        var re = new RegExp('%id%', 'g');
+        clone.find('a').href(url.replace(re, items.length + 1));
+
+        data = JSON.parse(data);
+        data.splice(index, 0, data[index]);
+        dataField.value(JSON.stringify(data));
+
+        if ((items.length + 1) <= 2) { list.parent('[data-field-name]').find('[data-collection-editall]').style('display', 'none'); }
         body.emit('change', { target: dataField });
     });
 
@@ -5780,8 +5851,14 @@ ready(function() {
             method: 'post',
             className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
             data: dataPost,
+            overlayClickToClose: false,
             remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -6167,7 +6244,7 @@ var ColorPicker = new prime({
 
         if (this.built) {
             // opacity
-            this.opacity = opacity;
+            this.opacity = Math.max(opacity, 0);
             var sliderHeight = this.opacitySlider.position().height;
             this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
 
@@ -6432,7 +6509,7 @@ var ColorPicker = new prime({
 
         // Handle opacity
         if (target.hasClass('cp-opacity-slider')) {
-            this.opacity = parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2);
+            this.opacity = Math.max(parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2), 0);
         }
 
         // Adjust case
@@ -6870,7 +6947,7 @@ var FilePicker = new prime({
         }
 
         // g5 events
-        content.delegate('click', '.g-bookmark-title', function(e, element) {
+        content.delegate('click', '.g-bookmark-title', function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
                 parent  = element.parent('.g-bookmark');
@@ -7973,10 +8050,13 @@ domready(function() {
                 icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
+
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
                         html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
                     }
+
+                    html += '<h3>' + icon.data('g-icon') + '</h3>';
 
                     icon.popover({
                         content: html,
@@ -8103,8 +8183,14 @@ ready(function() {
             content: 'Loading',
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
+            overlayClickToClose: false,
             remote: parseAjaxURI(getAjaxURL(uri) + getAjaxSuffix()),
             remoteLoaded: function(response, modalInstance) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 
@@ -9572,6 +9658,22 @@ var Modal = new prime({
         }));
     },
 
+    getLast: function() {
+        var ids, id;
+
+        ids = map(this.getAll(), function(element) {
+            element = $(element);
+
+            return storage.get(element).dialog.id;
+        });
+
+        if (!ids.length) {
+            return false;
+        }
+
+        return Math.max.apply(Math, ids);
+    },
+
     close: function(id) {
         if (!id) {
             var element = $(last(this.getAll()));
@@ -9646,19 +9748,11 @@ var Modal = new prime({
     },
 
     closeByEscape: function() {
-        var ids, id;
+        var id = this.getLast();
 
-        ids = map(this.getAll(), function(element) {
-            element = $(element);
-
-            return storage.get(element).dialog.id;
-        });
-
-        if (!ids.length) {
+        if (id === false) {
             return false;
         }
-
-        id = Math.max.apply(Math, ids);
 
         var element = this.getByID(id);
 
@@ -9668,6 +9762,23 @@ var Modal = new prime({
 
         return this.closeByID(id);
 
+    },
+
+    enableCloseByOverlay: function() {
+        var id = this.getLast();
+
+        if (id === false) {
+            return false;
+        }
+
+        var elements = storage.get(this.getByID(id)).dialog.elements;
+
+        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
+        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
+
+        elements.content.on('click', function(/*e*/){
+            return true;
+        });
     },
 
     showLoading: function() {
@@ -27797,7 +27908,7 @@ module.exports = parse
 });
 
 },{}],302:[function(require,module,exports){
-/* Web Font Loader v1.6.22 - (c) Adobe Systems, Google. License: Apache 2.0 */
+/* Web Font Loader v1.6.24 - (c) Adobe Systems, Google. License: Apache 2.0 */
 (function(){function aa(a,b,d){return a.call.apply(a.bind,arguments)}function ba(a,b,d){if(!a)throw Error();if(2<arguments.length){var c=Array.prototype.slice.call(arguments,2);return function(){var d=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(d,c);return a.apply(b,d)}}return function(){return a.apply(b,arguments)}}function p(a,b,d){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.m=b||a;this.c=this.m.document}var da=!!window.FontFace;function t(a,b,d,c){b=a.c.createElement(b);if(d)for(var e in d)d.hasOwnProperty(e)&&("style"==e?b.style.cssText=d[e]:b.setAttribute(e,d[e]));c&&b.appendChild(a.c.createTextNode(c));return b}function u(a,b,d){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(d,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
 function w(a,b,d){b=b||[];d=d||[];for(var c=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<c.length;g+=1)if(b[e]===c[g]){f=!0;break}f||c.push(b[e])}b=[];for(e=0;e<c.length;e+=1){f=!1;for(g=0;g<d.length;g+=1)if(c[e]===d[g]){f=!0;break}f||b.push(c[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var d=a.className.split(/\s+/),c=0,e=d.length;c<e;c++)if(d[c]==b)return!0;return!1}
 function z(a){if("string"===typeof a.f)return a.f;var b=a.m.location.protocol;"about:"==b&&(b=a.a.location.protocol);return"https:"==b?"https:":"http:"}function ea(a){return a.m.location.hostname||a.a.location.hostname}

@@ -4,9 +4,17 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs" role="tablist">
         <ul>
-            <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">{{ particle.name|trim|e }}</a></li>
+            <li class="active">
+                <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
+                    {{ particle.name|trim }}
+                </a>
+            </li>
             {% if extra %}
-            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
+            <li>
+                <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                </a>
+            </li>
             {% endif %}
         </ul>
     </div>
@@ -15,7 +23,7 @@
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             <div class="card settings-block">
                 <h4>
-                    {{ item.title|trim|e }}
+                    {{ item.title|trim }}
                 </h4>
 
                 <div class="inner-params">

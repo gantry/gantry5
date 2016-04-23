@@ -1,5 +1,8 @@
 <ul class="g-bookmark-folders fa-ul">
     {% for bookmarkFolder in folder %}
-        <li data-folder="{{ bookmarkFolder|json_encode()|e('html_attr') }}"{{ bookmarkFolder.pathname in active ? ' class="active"' : '' }}><i class="fa-li fa fa-folder-o"></i> <span class="path" title="{{ bookmarkFolder.filename }}">{{ bookmarkFolder.filename }}</span></li>
+        <li data-folder="{{ bookmarkFolder|json_encode()|e('html_attr') }}"{{ bookmarkFolder.pathname in active ? ' class="active"' : '' }}>
+            <i class="fa-li fa fa-folder-o"></i>
+            <span class="path" title="{{ bookmarkFolder.filename }}">{{ bookmarkFolder.filename }}</span>
+        </li>
     {% endfor %}
 </ul>

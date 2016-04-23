@@ -5,25 +5,58 @@
         {% if name == 'default' %}
             <span>{{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}</span>
         {% else %}
-            <span data-g-config-href="{{ gantry.route('configurations', name, 'rename')|e }}" data-g-config-method="post" data-title-editable="{{ title|e }}" class="title" data-tip="{{ title|e }}" data-tip-place="top-right">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title|e}) }}" data-title-edit=""></i>
+            {% if gantry.authorize('outline.rename') %}
+            <span data-g-config-href="{{ gantry.route('configurations', name, 'rename') }}" data-g-config-method="post"
+                  data-title-editable="{{ title }}" class="title" data-tip="{{ title }}" data-tip-place="top-right">
+                {{ title }}
+            </span>
+            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(title|e) }}" data-title-edit=""></i>
+            {% else %}
+                {{ title }}
+            {% endif %}
         {% endif %}
-        <span class="float-right font-small">(id: {{ name }})</span>
+        <span class="float-right font-small">({{ 'GANTRY5_PLATFORM_ID_X'|trans(name) }})</span>
     </h4>
     <div class="inner-params">
         <img src="{{ url(preset.image|default('gantry-admin://images/layouts/default.png')) }}" />
     </div>
     <div class="inner-params">
         <div class="center outline-actions">
-            <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" data-tip="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" role="button" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary">
+            <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}"
+               data-tip="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}"
+               role="button"
+               aria-label="{{ 'GANTRY5_PLATFORM_EDIT_X'|trans(title) }}"
+               title="{{ 'GANTRY5_PLATFORM_EDIT_X'|trans(title) }}"
+               data-g5-ajaxify=""
+               data-g5-ajaxify-target="[data-g5-content-wrapper]"
+               data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+               href="{{ gantry.route('configurations', name, 'styles') }}"
+               class="button button-primary"
+            >
                 <i class="fa fa-fw fa-pencil"></i>
             </a>
-            {% if gantry.configurations.canDuplicate(name) %}
-            <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary">
+            {% if gantry.authorize('outline.create') and gantry.configurations.canDuplicate(name) %}
+            <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+                    data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                    title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                    data-g-config="duplicate"
+                    data-g-config-href="{{ gantry.route('configurations', name, 'duplicate') }}"
+                    data-g-config-method="POST"
+                    class="button button-secondary"
+            >
                 <i class="fa fa-fw fa-copy"></i>
             </button>
             {% endif %}
-            {% if name != 'default' and gantry.configurations.canDelete(name) %}
-            <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('configurations', name, 'delete')|e }}" data-g-config-method="POST" class="button red">
+            {% if name != 'default' and gantry.authorize('outline.delete') and gantry.configurations.canDelete(name) %}
+            <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
+                    data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
+                    title="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"
+                    data-g-config="delete"
+                    data-g-config-href="{{ gantry.route('configurations', name, 'delete') }}"
+                    data-g-config-method="POST" class="button red"
+            >
                 <i class="fa fa-fw fa-trash-o"></i>
             </button>
             {% endif %}
