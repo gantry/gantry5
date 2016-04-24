@@ -59,7 +59,9 @@ class Debugger
         $this->renderer = $this->debugbar->getJavascriptRenderer();
         $this->renderer->setIncludeVendors(false);
 
-        list($css_files, $js_files) = $this->renderer->getAssets(null, JavascriptRenderer::RELATIVE_URL);
+        $base = $this->renderer->getBasePath();
+        list($css_files, $js_files) = $this->renderer->getAssets(null, null);
+
         foreach ($css_files as $css) {
             Document::addHeaderTag([
                 'tag' => 'link',

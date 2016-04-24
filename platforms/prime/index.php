@@ -2,7 +2,7 @@
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 
-define('PRIME_PROFILER', true);
+define('PRIME_PROFILER', false);
 
 
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
@@ -49,12 +49,8 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 $theme = $gantry['theme'];
 
 try {
-    $gantry['debugger']->assets();
-
     // Render the page.
     echo $theme->setLayout('default')->render('@pages/' . PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');
-
-    echo $gantry['debugger']->render();
 } catch (Twig_Error_Loader $e) {
     // Or display error if template file couldn't be found.
     echo $theme->setLayout('_error')->render('@pages/_error.html.twig', ['error' => $e]);
