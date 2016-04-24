@@ -61,7 +61,26 @@ class CompiledTheme extends CompiledBase
     /**
      * Finalize configuration object.
      */
-    protected function finalizeObject() {}
+    protected function finalizeObject()
+    {
+        $theme = $this->object->get('theme');
+
+        if ($theme) {
+            // Convert old file format into the new one.
+            $this->object->def('version.version', (string) $this->object->get('theme.details.version'));
+            $this->object->def('version.date', (string) $this->object->get('theme.details.date'));
+            $this->object->def('dependencies', (array) $this->object->get('theme.configuration.dependencies'));
+
+            $this->object->undef('theme.details.version');
+            $this->object->undef('theme.details.date');
+            $this->object->undef('theme.configuration.dependencies');
+
+            foreach ($theme as $key => $value) {
+                $this->object->def($key, $value);
+            }
+            $this->object->undef('theme');
+        }
+    }
 
     /**
      * Load single configuration file and append it to the correct position.
