@@ -13,8 +13,6 @@ namespace Gantry\Admin;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
-use RocketTheme\Toolbox\File\YamlFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class EventListener implements EventSubscriberInterface
 {

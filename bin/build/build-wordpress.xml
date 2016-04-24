@@ -172,6 +172,7 @@
         <!-- Process all themes -->
         <foreach param="directory" target="build-wordpress-theme">
             <fileset dir="${path.themes}">
+                <exclude name="*-child"/>
                 <type type="dir" />
                 <depth max="0" min="0" />
             </fileset>

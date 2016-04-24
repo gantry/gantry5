@@ -41,7 +41,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Returns input array. If there are any JSON encoded fields (key: _json), those will be decoded as well.
      *
-     * @param string  $name       Dot separated path to the requested value.
+     * @param string  $path       Dot separated path to the requested value.
      * @param mixed   $default    Default value (or null).
      * @param string  $separator  Separator, defaults to '.'
      * @return array
@@ -56,7 +56,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Returns JSON decoded input array.
      *
-     * @param string  $name       Dot separated path to the requested value.
+     * @param string  $path       Dot separated path to the requested value.
      * @param mixed   $default    Default value (or null).
      * @param string  $separator  Separator, defaults to '.'
      * @return array
@@ -69,7 +69,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Returns JSON decoded input. Accosiative arrays become objects.
      *
-     * @param string|null  $name       Dot separated path to the requested value.
+     * @param string|null  $path       Dot separated path to the requested value.
      * @param mixed        $default    Default value (or null).
      * @param string       $separator  Separator, defaults to '.'
      * @param bool         $assoc      True to return associative arrays instead of objects.

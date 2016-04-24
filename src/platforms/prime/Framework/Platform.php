@@ -14,7 +14,10 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Position\Module;
+use Gantry\Component\Position\Position;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -124,14 +127,60 @@ class Platform extends BasePlatform
         return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
     }
 
+    public function countModules($position)
+    {
+        return count($this->getModules($position));
+    }
+
     public function getModules($position)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $finder = new ConfigFileFinder;
-        $files = $finder->listFiles($locator->findResources('gantry-positions://' . $position), '|\.html\.twig|', 0);
+        return (new Position($position))->listModules();
+    }
 
-        return array_keys($files);
+    public function displayModule($id, $attribs = [])
+    {
+        $module = is_array($id) ? $id : $this->getModule($id);
+
+        // Make sure that module really exists.
+        if (!$module || !is_array($module)) {
+            return '';
+        }
+
+        if (isset($module['assignments'])) {
+            $assignments = $module['assignments'];
+            if (is_array($assignments)) {
+                // TODO: move Assignments to DI to speed it up.
+                if (!(new Assignments)->matches(['test' => $assignments])) {
+                    return '';
+                }
+            } elseif ($assignments !== 'all') {
+                return '';
+            }
+        }
+
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['segment' => $module]));
+
+        return $html;
+    }
+
+    public function displayModules($position, $attribs = [])
+    {
+        $html = '';
+        foreach ($this->getModules($position) as $module) {
+            $html .= $this->displayModule($module, $attribs);
+        }
+
+        return $html;
+    }
+
+    protected function getModule($id)
+    {
+        list($position, $module) = explode('/', $id, 2);
+
+        return (new Module($module, $position))->toArray();
     }
 
     public function settings()
@@ -142,5 +191,11 @@ class Platform extends BasePlatform
     public function settings_key()
     {
         return null;
+    }
+
+    public function truncate($text, $length, $html = false)
+    {
+        // TODO:
+        throw new \Exception('Not implemented');
     }
 }

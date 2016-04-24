@@ -17,7 +17,6 @@ use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Widget extends JsonController

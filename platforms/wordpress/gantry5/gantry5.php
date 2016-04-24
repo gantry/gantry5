@@ -31,9 +31,6 @@ if (!defined('GANTRY5_PATH')) {
     define('GANTRY5_PATH', rtrim(WP_PLUGIN_DIR, '/\\') . '/gantry5');
 }
 
-//add_action('upgrader_package_options', 'gantry5_install_prepare_options', 10, 1);
-add_action('upgrader_process_complete', 'gantry5_install_clear_cache', 10, 2);
-
 if (!is_admin()) {
     return;
 }
@@ -118,36 +115,3 @@ function gantry5_php_version_warning()
     echo sprintf("You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.", PHP_VERSION, '5.4.0');
     echo '</p></div>';
 }
-
-function gantry5_install_prepare_options($options)
-{
-//    $options['abort_if_destination_exists'] = 0;
-    return $options;
-}
-
-function gantry5_install_clear_cache($upgrader, $options)
-{
-    // Clear gantry cache after plugin / theme installs.
-    if (isset($options['type']) && in_array($options['type'], array('plugin', 'theme')) && class_exists('Gantry\Framework\Gantry')) {
-        global $wp_filesystem;
-
-        $gantry = \Gantry\Framework\Gantry::instance();
-        $path = $gantry['platform']->getCachePath();
-        if ($wp_filesystem->is_dir($path)) {
-            $wp_filesystem->rmdir($path, true);
-        }
-
-        // Make sure that PHP has the latest data of the files.
-        clearstatcache();
-
-        // Remove all compiled files from opcode cache.
-        if (function_exists('opcache_reset')) {
-            @opcache_reset();
-        } elseif (function_exists('apc_clear_cache')) {
-            @apc_clear_cache();
-        }
-
-        $upgrader->skin->feedback('Gantry 5 cache cleared.');
-    }
-}
-

@@ -1,45 +1,77 @@
-<div id="position-{{ title }}" class="page">
+<div id="position-{{ position.name }}" class="page">
     <h4>
-        <span data-g-config-href="{{ gantry.route('positions', title, 'rename')|e }}" data-g-config-method="post" data-title-editable="{{ title|e }}" class="title" data-tip="{{ title|e }}">{{ title|e }}</span> <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title|e}) }}" data-title-edit=""></i>
-        <span class="float-right font-small"><button class="button button-primary button-simple" title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"><i class="fa fa-fw fa-plus"></i></button></span>
+        <span data-g-config-href="{{ gantry.route('positions', position.name, 'rename') }}"
+              data-g-config-method="post"
+              data-title-editable="{{ position.title }}"
+              class="title"
+              data-tip="{{ position.title }}"
+        >
+            {{ position.title }}
+        </span>
+        <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
+        <span class="float-right font-small">
+            <button class="button button-primary button-simple"
+                    title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
+            >
+                <i class="fa fa-fw fa-plus"></i>
+            </button>
+        </span>
+        <small>
+            ({{ position.name }})
+        </small>
     </h4>
     <div class="inner-params" style="height: 257px; overflow: auto;">
         <ul>
-            {% set entries = {'Particle A': 'particle', 'Particle B': 'particle', 'Module A': 'module', 'Module B': 'module'} %}
-            {% if name == 1 %}{% set entries = {'Module A': 'module', 'Widget 1': 'widget', 'Particle A': 'particle', 'Particle B': 'particle', 'Widget 2': 'widget', 'Module B': 'module', 'Something': 'spacer', 'Module A': 'module', 'Widget 1': 'widget', 'Particle A': 'particle', 'Particle B': 'particle', 'Widget 2': 'widget', 'Module B': 'module', 'Something': 'spacer'} %}{% endif %}
-            {% set statuses = [
-                {
+            {% set statuses = {
+                all: {
                     'label': 'Assigned to all',
                     'icon': '<i class="fa item-status fa-fw fa-circle"></i>'
                 },
-                {
+                none: {
                     'label': 'Not assigned',
                     'icon': '<i class="fa item-status fa-fw fa-circle-o"></i>'
                 },
-                {
+                some: {
                     'label': 'Some assignments',
                     'icon': '<i class="fa item-status fa-fw fa-adjust"></i>'
                 }
-            ] %}
-            {% for entry, type in entries %}
-            <li data-mm-blocktype="{{ type }}">
-                {% set status = random([0, 1, 2]) %}
-                {% set status = attribute(statuses, status) %}
+            } %}
+            {% for module in position %}
+            <li data-mm-blocktype="{{ module.type }}">
+                {% set status = statuses[module.assigned] %}
                 <i class="fa fa-reorder font-small item-reorder size-10"></i>
                 <div class="title size-80">
-                    <div><span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span> {{ entry }}</div>
+                    <div>
+                        <span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span>
+                        {{ module.title|default(module.name) }} ({{ module.subtype }})
+                    </div>
                 </div>
                 <i class="fa item-settings fa-cog size-10"></i>
-            </i>
+            </li>
             {% endfor %}
         </ul>
     </div>
     <div class="inner-params">
         <div class="center position-actions">
-            <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('positions', title, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary">
+            <button data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                    title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans(title) }}"
+                    data-g-config="duplicate"
+                    data-g-config-href="{{ gantry.route('positions', name, 'duplicate') }}"
+                    data-g-config-method="POST"
+                    class="button button-secondary"
+            >
                 <i class="fa fa-fw fa-copy"></i>
             </button>
-            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans  ~ ' ' ~ title|e }}" data-g-config="delete" data-g-config-href="{{ gantry.route('positions', title, 'delete')|e }}" data-g-config-method="POST" class="button red">
+            <button data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
+                    title="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_DELETE'|trans(title) }}"
+                    data-g-config="delete"
+                    data-g-config-href="{{ gantry.route('positions', name, 'delete') }}"
+                    data-g-config-method="POST"
+                    class="button red"
+            >
                 <i class="fa fa-fw fa-trash-o"></i>
             </button>
         </div>

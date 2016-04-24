@@ -14,8 +14,8 @@ form:
 
     key:
       type: input.text
-      label: Key
-      description: Position name.
+      label: Position Id
+      description: Widget position id.
       pattern: '[a-z0-9-]+'
       overridable: false
 

@@ -302,7 +302,7 @@ class plgSystemGantry5 extends JPlugin
 
         $template = $table->template;
 
-        $gantry = $this->load($template);
+        $this->load($template);
         $registry = new Joomla\Registry\Registry($table->params);
         $old = (int) $registry->get('configuration', 0);
         $new = (int) $table->id;
@@ -320,7 +320,7 @@ class plgSystemGantry5 extends JPlugin
 
         $template = $table->template;
 
-        $gantry = $this->load($template);
+        $this->load($template);
 
         Gantry\Joomla\StyleHelper::delete($table->id);
     }
@@ -385,7 +385,9 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
-     * @param array $matches
+     * @param array  $matches
+     * @param string $content
+     *
      * @return string
      */
     private function appendHtml(array $matches, $content = 'Gantry 5')
@@ -398,9 +400,10 @@ class plgSystemGantry5 extends JPlugin
 
             if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
+                $content = $content ?: 'No Particle Selected';
                 $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
 
-                if ($this->modules[$id]) { unset($this->modules[$id]); }
+                if (isset($this->modules[$id])) { unset($this->modules[$id]); }
                 else { unset($this->styles[$id]); }
             }
         }
@@ -413,12 +416,11 @@ class plgSystemGantry5 extends JPlugin
      */
     private function getStyles()
     {
-        $cache = JFactory::getCache('com_templates', '');
-        $list = $cache->get('gantry-templates-1');
+        static $list;
 
-        if ($list === false) {
+        if ($list === null) {
             // Load styles
-            $db    = JFactory::getDbo();
+            $db = JFactory::getDbo();
             $query = $db
                 ->getQuery(true)
                 ->select('s.id, s.template')
@@ -428,7 +430,7 @@ class plgSystemGantry5 extends JPlugin
                 ->leftJoin('#__extensions as e ON e.element=s.template AND e.type=' . $db->quote('template') . ' AND e.client_id=s.client_id');
 
             $db->setQuery($query);
-            $templates = (array) $db->loadObjectList();
+            $templates = (array)$db->loadObjectList();
 
             $list = array();
 
@@ -437,8 +439,6 @@ class plgSystemGantry5 extends JPlugin
                     $list[$template->id] = $template->template;
                 }
             }
-
-            $cache->store($list, 'gantry-templates-1');
         }
 
         return $list;
@@ -472,7 +472,9 @@ class plgSystemGantry5 extends JPlugin
             $cachePath = $patform->getCachePath() . '/' . $name;
             Gantry\Component\FileSystem\Folder::create($cachePath);
             $locator->addPath('gantry-cache', 'theme', array($cachePath), true, true);
-            $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+            \Gantry\Component\File\CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+            \Gantry\Component\File\CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
         }
 
         return $gantry;

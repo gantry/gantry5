@@ -2,7 +2,9 @@
 
 {% block particle %}
 
-    {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+    {% if particle.title %}
+        {{ particle.title|raw }}
+    {% endif %}
 
     <div class="g-loginform {{ particle.class|e }}">
 
@@ -13,7 +15,7 @@
 
                 {% if particle.pretext is not empty %}
                     <div class="login-pretext">
-                        <p>{{ particle.pretext }}</p>
+                        <p>{{ particle.pretext|raw }}</p>
                     </div>
                 {% endif %}
 
@@ -45,7 +47,7 @@
 
                 {% if particle.posttext is not empty %}
                     <div class="login-posttext">
-                        <p>{{ particle.posttext }}</p>
+                        <p>{{ particle.posttext|raw }}</p>
                     </div>
                 {% endif %}
 

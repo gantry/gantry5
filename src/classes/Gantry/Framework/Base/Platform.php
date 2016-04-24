@@ -29,6 +29,7 @@ abstract class Platform
 {
     use NestedArrayAccess, Export;
 
+    protected $name;
     protected $settings_key;
     protected $items;
     protected $container;
@@ -196,5 +197,10 @@ abstract class Platform
         $args = func_get_args();
         $callable = array_shift($args);
         return is_callable($callable) ? call_user_func_array($callable, $args) : null;
+    }
+
+    public function authorize($action)
+    {
+        return true;
     }
 }

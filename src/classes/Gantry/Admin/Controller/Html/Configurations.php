@@ -13,6 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
@@ -52,7 +53,7 @@ class Configurations extends HtmlController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
-        $finder = new \Gantry\Component\Config\ConfigFileFinder();
+        $finder = new ConfigFileFinder;
         $files = $finder->getFiles($locator->findResources('gantry-layouts://'));
         $layouts = array_keys($files);
         sort($layouts);
@@ -66,6 +67,10 @@ class Configurations extends HtmlController
 
     public function create()
     {
+        if (!$this->container->authorize('outline.create')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
@@ -84,6 +89,10 @@ class Configurations extends HtmlController
 
     public function rename($configuration)
     {
+        if (!$this->container->authorize('outline.rename')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();
@@ -105,6 +114,10 @@ class Configurations extends HtmlController
 
     public function duplicate($configuration)
     {
+        if (!$this->container->authorize('outline.create')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
 
@@ -123,7 +136,7 @@ class Configurations extends HtmlController
 
         $list = $configurations->user();
 
-        if (!isset($list[$configuration])) {
+        if (!isset($list[$configuration]) && $configuration !== 'default') {
             $this->forbidden();
         }
 
@@ -134,6 +147,10 @@ class Configurations extends HtmlController
 
     public function delete($configuration)
     {
+        if (!$this->container->authorize('outline.delete')) {
+            $this->forbidden();
+        }
+
         /** @var OutlinesObject $configurations */
         $configurations = $this->container['configurations'];
         $list = $configurations->user();

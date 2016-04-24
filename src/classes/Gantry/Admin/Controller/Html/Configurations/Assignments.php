@@ -24,7 +24,7 @@ class Assignments extends HtmlController
     public function index()
     {
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration !== 'default') {
+        if ($configuration && $configuration !== 'default' && $configuration[0] !== '_') {
             $assignments = new AssignmentsObject($configuration);
 
             $this->params['assignments'] = $assignments->get();
@@ -37,13 +37,20 @@ class Assignments extends HtmlController
 
     public function store()
     {
+        if (!$this->container->authorize('outline.assign')) {
+            $this->forbidden();
+        }
+
         $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration === 'default') {
+        if ($configuration && ($configuration === 'default' || $configuration[0] === '_')) {
             $this->undefined();
         }
 
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
+        }
         $assignments = new AssignmentsObject($configuration);
-        $assignments->set($this->request->post->getArray());
+        $assignments->set($this->request->post->getArray('assignments'));
 
         // Fire save event.
         $event = new Event;

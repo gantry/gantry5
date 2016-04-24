@@ -15,8 +15,10 @@ use Gantry\Component\Request\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
-    public function __construct()
+    public function init()
     {
+        // Replaces parent contructor.
+
         $get = stripslashes_deep($_GET);
         $this->get = new Input($get);
 

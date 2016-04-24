@@ -53,6 +53,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
+            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
         ];
     }
 
@@ -112,11 +114,13 @@ class TwigExtension extends \Twig_Extension
         /** @var TranslatorInterface $translator */
         static $translator;
 
+        $params = func_get_args();
+
         if (!$translator) {
             $translator = self::gantry()['translator'];
         }
 
-        return $translator->translate($str);
+        return call_user_func_array([$translator, 'translate'], $params);
     }
 
     /**
@@ -156,7 +160,7 @@ class TwigExtension extends \Twig_Extension
 
         if (@is_file($src) || $remote) {
             try {
-                list($width, $height, $type, $attr) = @getimagesize($src);
+                list($width, $height,, $attr) = @getimagesize($src);
             } catch (\Exception $e) {}
 
             $sizes['width'] = $width;
@@ -175,6 +179,36 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words. Removes html tags.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateText($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, false);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateHtml($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, $limit, true);
     }
 
     /**
@@ -227,7 +261,7 @@ class TwigExtension extends \Twig_Extension
     /**
      * Filter stream URLs from HTML input.
      *
-     * @param  string $html         HTML input to be filtered.
+     * @param  string $str          HTML input to be filtered.
      * @param  bool $domain         True to include domain name.
      * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                              Use value <= 0 to disable the feature.
@@ -258,6 +292,9 @@ class TwigExtension extends \Twig_Extension
                 $level = 3;
                 $message = "Fatal DOM Error {$error->code}: ";
                 break;
+            default:
+                $level = 3;
+                $message = "Unknown DOM Error {$error->code}: ";
         }
         $message .= "{$error->message} while parsing:\n{$input}\n";
 
@@ -360,7 +397,7 @@ class TwigExtension extends \Twig_Extension
     }
 
     public function pregMatch($pattern, $subject, &$matches = []) {
-        $preg_match = preg_match($pattern, $subject, $matches);
+        preg_match($pattern, $subject, $matches);
 
         if(isset($matches) && !empty($matches)) {
             return $matches;

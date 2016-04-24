@@ -1,9 +1,9 @@
 // REQUIRED DEPENDENCIES - DO NOT CHANGE
-
 @import "dependencies";
 
-
 // THEME COMPONENTS
+// Base
+@import "nucleus/theme/base";
 
 // Core
 @import "hydrogen/core";
@@ -52,6 +52,9 @@
 
 // Sample Content
 @import "hydrogen/sample";
+
+// Content Array
+@import "hydrogen/contentarray";
 
 // Dropdown Animations
 @import "hydrogen/dropdownanimations";

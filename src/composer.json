@@ -5,11 +5,12 @@
 
     "require": {
         "php": ">=5.4.0",
+        "symfony/event-dispatcher": "~2.8",
         "symfony/yaml": "~2.8",
         "twig/twig": "~1.23",
         "pimple/pimple": "~3.0",
-        "filp/whoops": "~1.2@dev",
-        "rockettheme/toolbox": "~1.2",
+        "filp/whoops": "~2.0",
+        "rockettheme/toolbox": "dev-develop",
         "leafo/scssphp": "0.3.0",
         "leafo/lessphp": "~0.5",
         "erusev/parsedown-extra": "~0.7"

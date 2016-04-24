@@ -14,6 +14,7 @@
 namespace Gantry\Component\Router;
 
 use Gantry\Admin\EventListener;
+use Gantry\Admin\Theme;
 use Gantry\Component\Controller\BaseController;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
@@ -23,6 +24,7 @@ use Gantry\Component\Router\RouterInterface;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
+use Whoops\Exception\ErrorException;
 
 abstract class Router implements RouterInterface
 {
@@ -52,7 +54,7 @@ abstract class Router implements RouterInterface
         try {
             $response = static::execute($this->resource, $this->method, $this->path, $this->params, $this->format);
 
-        } catch (\Whoops\Exception\ErrorException $e) {
+        } catch (ErrorException $e) {
             throw $e;
 
         } catch (\Exception $e) {
@@ -129,7 +131,7 @@ abstract class Router implements RouterInterface
         }
 
         $this->container['admin.theme'] = function () {
-            return new \Gantry\Admin\Theme(GANTRYADMIN_PATH);
+            return new Theme(GANTRYADMIN_PATH);
         };
 
         // Boot the service.

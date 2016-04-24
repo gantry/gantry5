@@ -162,6 +162,7 @@ class Particle extends \WP_Widget
      *
      * @param array $new_instance The new options
      * @param array $old_instance The previous options
+     * @return array
      */
     public function update($new_instance, $old_instance)
     {

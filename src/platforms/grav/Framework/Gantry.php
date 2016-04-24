@@ -17,12 +17,12 @@ class Gantry extends Base\Gantry
     /**
      * @throws \LogicException
      */
-    protected static function load()
+    protected static function init()
     {
-        $container = parent::load();
+        $container = parent::init();
 
         // Use locator from Grav.
-        $container['locator'] = function($c) {
+        $container['locator'] = function() {
             return Grav::instance()['locator'];
         };
 

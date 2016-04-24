@@ -8,8 +8,8 @@ form:
     color-1:
       type: input.colorpicker
       label: Accent Color 1
-      default: "#439A86"
+      default: "#439a86"
     color-2:
       type: input.colorpicker
       label: Accent Color 2
-      default: "#8F4DAE"
+      default: "#8f4dae"

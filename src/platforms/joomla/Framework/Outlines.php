@@ -191,6 +191,19 @@ class Outlines extends BaseOutlines
      * @param string $id
      * @return boolean
      */
+    public function canDuplicate($id)
+    {
+        if (!$id || $id === 'default') {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $id
+     * @return boolean
+     */
     public function canDelete($id)
     {
         $model = StyleHelper::loadModel();

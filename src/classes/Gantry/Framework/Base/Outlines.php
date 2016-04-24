@@ -53,11 +53,6 @@ class Outlines extends AbstractOutlineCollection
             $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
-        // In case if someone removed default from custom configuration, make sure it doesn't count.
-        if (!isset($files['default']) && !$locator->findResource("{$path}/default")) {
-            throw new \RuntimeException('Fatal error: Theme does not have Base Outline');
-        }
-
         unset($files['default']);
         unset($files['menu']);
 
@@ -154,6 +149,10 @@ class Outlines extends AbstractOutlineCollection
      */
     public function duplicate($id)
     {
+        if (!$this->canDuplicate($id)) {
+            throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
+        }
+
         $gantry = $this->container;
 
         /** @var UniformResourceLocator $locator */
@@ -164,12 +163,12 @@ class Outlines extends AbstractOutlineCollection
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id)));
+        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id === 'default' ? 'untitled' : $id)));
 
         $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
 
         try {
-            Folder::copy($path, $newPath, '/assignments/');
+            Folder::copy($path, $newPath, $id === 'default' ? '/^(?!(index|layout)).*$/' : '/assignments/');
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
@@ -241,6 +240,19 @@ class Outlines extends AbstractOutlineCollection
         if (file_exists($path)) {
             Folder::delete($path);
         }
+    }
+
+    /**
+     * @param string $id
+     * @return boolean
+     */
+    public function canDuplicate($id)
+    {
+        if (!$id) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

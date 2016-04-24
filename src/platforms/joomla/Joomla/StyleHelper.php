@@ -58,6 +58,16 @@ class StyleHelper
         $installer->updateStyle($new, ['configuration' => $new]);
     }
 
+    public static function update($id, $preset)
+    {
+        $style = static::getStyle($id);
+
+        $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
+
+        $installer = new TemplateInstaller($extension);
+        $installer->updateStyle($id, ['configuration' => $id, 'preset' => $preset]);
+    }
+
     public static function delete($id)
     {
         $gantry = Gantry::instance();

@@ -29,6 +29,7 @@ class ThemeDetails implements \ArrayAccess
     use NestedArrayAccessWithGetters, Export;
 
     protected $items;
+    protected $parent;
 
     /**
      * Create new theme details.
@@ -55,7 +56,7 @@ class ThemeDetails implements \ArrayAccess
 
         $this->offsetSet('name', $theme);
 
-        $parent = (string) $this->offsetGet('configuration.theme.parent', $theme);
+        $parent = (string) $this->get('configuration.theme.parent', $theme);
         $parent = $parent != $theme ? $parent : null;
 
         $this->offsetSet('parent', $parent);
@@ -73,9 +74,13 @@ class ThemeDetails implements \ArrayAccess
 
         // Initialize parent theme streams.
         $details = $this;
-        while ($parent = $details->parent()) {
-            $details = new ThemeDetails($parent);
-            $this->addStream($parent, $details->getPaths());
+        $loaded = [$this->offsetGet('name')];
+        while ($details = $details->parent()) {
+            if (in_array($details->name, $loaded)) {
+                break;
+            }
+            $this->addStream($details->name, $details->getPaths());
+            $loaded[] = $details->name;
         }
 
         /** @var Streams $streams */
@@ -95,7 +100,7 @@ class ThemeDetails implements \ArrayAccess
     {
         $parent = $this->offsetGet('parent');
 
-        if ($parent && !$this->parent) {
+        if (!$this->parent && $parent) {
             try {
                 $this->parent = new ThemeDetails($parent);
             } catch (\RuntimeException $e) {
@@ -140,7 +145,7 @@ class ThemeDetails implements \ArrayAccess
         $uri = (string) $this->offsetGet($path);
 
         if (strpos($uri, 'gantry-theme://') === 0) {
-            list ($scheme, $uri) = explode('://', $uri, 2);
+            list (, $uri) = explode('://', $uri, 2);
         }
         if (!strpos($uri, '://')) {
             $name = $this->offsetGet('name');
@@ -177,7 +182,7 @@ class ThemeDetails implements \ArrayAccess
     public function parsePath($path)
     {
         if (strpos($path, 'gantry-theme://') === 0) {
-            list ($scheme, $path) = explode('://', $path, 2);
+            list (, $path) = explode('://', $path, 2);
         }
         if (!strpos($path, '://')) {
             $name = $this->offsetGet('name');
@@ -199,7 +204,7 @@ class ThemeDetails implements \ArrayAccess
     /**
      * @param string $name
      * @param array $paths
-     * @return string
+     * @return string|null
      */
     protected function addStream($name, $paths)
     {

@@ -68,8 +68,39 @@ class Document extends BaseDocument
         }
     }
 
+    public static function load($framework)
+    {
+        switch ($framework) {
+            case 'jquery':
+            case 'jquery.framework':
+                \JHtml::_('jquery.framework');
+                break;
+            case 'jquery.ui.core':
+                \JHtml::_('jquery.ui', ['core']);
+                break;
+            case 'jquery.ui.sortable':
+                \JHtml::_('jquery.ui', ['sortable']);
+                break;
+            case 'boostrap.2':
+                Gantry::instance()['theme']->joomla(true);
+                break;
+            case 'mootools':
+            case 'mootools.framework':
+            case 'mootools.core':
+                \JHtml::_('behavior.framework');
+                break;
+            case 'mootools.more':
+                \JHtml::_('behavior.framework', true);
+                break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
+
     public static function rootUri()
     {
-        return rtrim(\JUri::root(true), '/');
+        return rtrim(\JUri::root(true), '/') ?: '/';
     }
 }

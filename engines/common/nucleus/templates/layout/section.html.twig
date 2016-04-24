@@ -23,7 +23,7 @@
     {% endif %}
 {% endset %}
 
-{% if html|trim %}
+{% if segment.attributes.sticky or html|trim %}
     {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
         <div class="g-container">{{ html|raw }}</div>

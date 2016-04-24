@@ -146,6 +146,11 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var saves = $('.button-save');
 
+        if (saves.disabled()) {
+            return false;
+        }
+
+        saves.disabled(true);
         saves.hideIndicator();
         saves.showIndicator();
 
@@ -197,6 +202,7 @@ ready(function() {
         }
 
         if (invalid.length) {
+            saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
             toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
@@ -228,6 +234,7 @@ ready(function() {
                 }), type + ' Saved');
             }
 
+            saves.disabled(false);
             saves.hideIndicator();
             saves.forEach(function(save) {
                 $(save).lastSaved = new Date();

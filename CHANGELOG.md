@@ -1,3 +1,138 @@
+# 5.2.15
+## XX/XX/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated FontAwesome to v4.6.1 (+23 icons)
+        - Icons Picker will now show the title of each icon when hovering to see the preview
+        - Updated Google Fonts library
+        - Sample Content Particle now include the ID and CSS fields for the individual items (#1199)
+    3. [](#bugfix)
+        - Fixed loss of settings for Particles / Modules menu items when moved to a different menu level (#1243)
+        - Various Admin RTL tweaks (#1195)
+        - Fixed expand / collapse in Filepicker (#1246)
+        - Override checkboxes are now getting detected as changes when checked / unchecked (#333)
+        - Fixed rendering issue in layout if all blocks next to each other are `Fixed Size` and some of them have nothing in them
+        - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
+        - [CHANGE]: Copyright Particle output now renders without the hardcoded `Copyright` word that couldn't be translated. Before: `Copyright © 2016 SiteOwner`, After: `SiteOwner © 2016` (#950)
+        - [REGRESSION] Disabling `Compile twig` attempts to write lots of directories to hard drive root (#1250)
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - Enable HTML5 document support from Joomla
+    3. [](#bugfix)
+        - Fixed case where multiple badges of the Particle type, could potentially show up in the Modules Manager
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Improved current URL detection for Menu Item based Assignments with possibility of filtering custom server ports (#1208)
+
+# 5.2.14
+## 15/04/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Implemented `sprintf()` compatible parameter support for twig `trans()` filter
+        - Implemented `duplicate` action for collections items (#1220)
+    3. [](#bugfix)
+        - Updated Whoops to latest version (fixes PHP7 issues with some uncatched exceptions)
+        - Fixed Zend opcache without file checks causes issues in admin (#1222)
+        - Downgrading PHP version causes fatal errors on cached twig files (#947)
+        - Themes list: Fix fatal error if theme had a loop in parent themes
+        - Admin: Rename `Settings` tab to `Particle Defaults` to avoid confusion
+        - Added missing language translations for all admin template files (part of #1212)
+        - Prevent to close the modal of collections and forms (Particle Settings, Menu Settings) (#1227)
+        - Fixed adding new rows and editing section/particle settings in LM on touch devices (#1218)
+        - Fixed case in the colorpicker where potentially the opacity would go `-0` causing the field not to validate (#1217)
+        - Fixed Outline Assignments not staying set if `max_input_vars` has too small value; display error instead
+        - Fixed Particle Defaults loosing values if `max_input_vars` has too small value; display error instead (#1226)
+        - Prevent Applying / Saving multiple times when an occurrence is already running (#1185)
+        - Workaround to prevent embedded iframe to throw JS errors in same cases (#1224)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Added support to have Joomla articles and categories in particles (#1225)
+        - Added `Joomla Articles` particle
+        - Added support for Joomla Template & Menu ACL in Gantry admin (#600)
+    3. [](#bugfix)
+        - Fixed duplicating template style while caching was turned on not being recognized as Gantry 5 outline (#1200)
+        - Fixed logo particle link going to current page rather than home page on J! 3.5 (#1210)
+        - Module instance edit fails with "You are not permitted to use that link to directly access that page" on J! 3.5 (#1215)
+        - Gantry update is shown even if the new version was just installed (#1204)
+        - Untranslated string `COM_GANTRY5_PARTICLE_NOT_INITIALIZED` (#1118)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added `WordPress Posts` particle
+        - Extend Assignments with multiple `WooCommerce` conditionals (#1150)
+        - Add possibility of choosing if posts should display theirs content or excerpt on blog and archive-type pages in Hydrogen
+    3. [](#bugfix)
+        - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233)
+
+# 5.2.13
+## 16/03/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Implemented an universal method `gantry.load()` to include common JS frameworks from Twig on all platforms (#1132)
+    2. [](#improved)
+        - The `dropdown-offset-x()` mixin now includes a 3rd option that allows to disable or customize the offsets for the first level dropdown child (fixes #1182, thanks @JoomFX)
+        - Add possibility to target all particles with a single CSS rule `div.g-particle` (#909)
+    3. [](#bugfix)
+        - Fixed menu item height difference between regular and parent menu items (#1183)
+        - Remove unnecessary error: `Theme does not have Base Outline` (#1107)
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - Load template language overrides from `custom/language`
+    3. [](#bugfix)
+        - Fixed error on saving system outline layouts (#1167)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Allow Gantry theme upgrades from WordPress theme uploader (#1165)
+    2. [](#improved)
+        - Removed hardcoded `h2` tag from Login Form particle title. You can still place your `HTML` code inside of the input field.
+    3. [](#bugfix)
+        - Fixed Hydrogen Child theme to reference properly `g5_hydrogen` parent directory
+        - Fixed Gantry 5 Clear Cache fires during every plugin installation/update (#996)
+        - Fixed child comment reply input position in Hydrogen
+        - Fixed `Undefined $_GLOBALS` on the WP login page when the Offline Mode is enabled
+
+# 5.2.12
+## 27/02/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Add support for toggling offcanvas visibility on non-mobile devices
+    3. [](#bugfix)
+        - Fixed a regression and removed `very-large-desktop-range` from `breakpoint` mixin
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Remove "always render component" workaround introduced in 5.2.8 (fixes #1157, thanks @JoomFx and @nonumber)
+
+# 5.2.11
+## 23/02/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Added `very-large-desktop-range` to `breakpoint` mixin in order to be used when working with screen resolutions of 1920px+
+        - Added option to parse Twig in Custom HTML particle (#1144)
+    2. [](#improved)
+        - Collection Lists now have a maximum height set, triggering a scrollbar in case the amount of items is big (#1139)
+    3. [](#bugfix)
+        - [CHANGE]: The `dependencies.scss` file does not import `nucleus/theme/base` anymore. **IMPORTANT**: if you are a theme developer, make sure you adjust your dependencies file and include the theme base at the top of your theme.scss (#1152)
+        - System outlines should not be able to assign to pages (Fixes #1146)
+        - Fixed frontend rendering if page settings have never been saved
+        - Fixed tooltips in IE Edge and in some circumstances on Firefox (#1154)
+        - Fixed `404 Not Found` when creating new outline
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Admin: Fix potential fatal error when saving Outline Assignments
+        - Update Joomla template style when saving layout
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Fixed Child Theme support in Hydrogen (requires update of Hydrogen theme) (#1149)
+        - Added sample Hydrogen Child theme to git (#1149)
+    2. [](#improved)
+        - Add Ability to Duplicate Base in Outlines (#846)
+    3. [](#bugfix)
+        - Fixed typo in `posts_per_page` custom WordPress field (thanks @adi8i - #1153)
+
 # 5.2.10
 ## 08/02/2016
 

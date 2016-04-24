@@ -79,20 +79,19 @@ class Gantry5Plugin extends Plugin
 
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $this->grav['admin'];
-        if ($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route)) {
-            return;
+        $inAdmin = !($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route));
+
+        if (!$inAdmin) {
+            $theme = $this->config->get('system.pages.theme');
+        } else {
+            $results = explode('/', $admin->route, 2);
+            $theme = array_shift($results);
         }
-        $results = explode('/', $admin->route, 2);
-        $theme = array_shift($results);
 
         // Do not initialize Gantry on non-Gantry themes.
         if ($theme && !is_file("themes://{$theme}/gantry/theme.yaml")) {
             return;
         }
-
-        $this->enable([
-            'onAdminThemeInitialized' => ['runAdmin', 0]
-        ]);
 
         // Setup Gantry 5 Framework or throw exception.
         \Gantry5\Loader::setup();
@@ -103,6 +102,17 @@ class Gantry5Plugin extends Plugin
 
         $base = rtrim($this->grav['base_url'], '/');
         $this->base =  rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
+
+        if (!$inAdmin) {
+            $this->enable([
+                'onAdminThemeInitialized' => ['initAdmin', 0]
+            ]);
+            return;
+        }
+
+        $this->enable([
+            'onAdminThemeInitialized' => ['runAdmin', 0]
+        ]);
 
         if ($theme) {
             // Switch theme and initialize it.
@@ -144,6 +154,11 @@ class Gantry5Plugin extends Plugin
 
         $theme->registerStream("user://gantry5/themes/{$theme->name}");
 
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+        $locator->resetScheme('theme')->addPath('theme', '', 'gantry-theme://');
+        $locator->addPath('theme', 'blueprints', ['gantry-theme://blueprints', 'gantry-engine://blueprints/pages']);
+
         $this->theme = $theme;
 
         if (!$this->isAdmin()) {
@@ -155,7 +170,7 @@ class Gantry5Plugin extends Plugin
         }
    }
 
-    public function runAdmin()
+    public function initAdmin()
     {
         /** @var Themes $themes */
         $themes = $this->grav['themes'];
@@ -163,11 +178,17 @@ class Gantry5Plugin extends Plugin
 
         $gantry = Gantry::instance();
         $gantry['base_url'] = $this->base;
-        $gantry['router'] = function ($c) {
-            return new Router($c);
-        };
 
         $this->grav['gantry5'] = $gantry;
+    }
+
+    public function runAdmin()
+    {
+        $this->initAdmin();
+
+        $this->grav['gantry5']['router'] = function ($c) {
+            return new Router($c);
+        };
 
         $this->enable([
             'onPagesInitialized' => ['onAdminPagesInitialized', 900],

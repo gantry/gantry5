@@ -106,6 +106,10 @@ class Theme extends AbstractTheme
 
     /**
      * @see AbstractTheme::render()
+     *
+     * @param string $file
+     * @param array $context
+     * @return string
      */
     public function render($file, array $context = [])
     {
@@ -306,6 +310,23 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Extend file type support in WP Theme Editor
+     *
+     * @param $default_types
+     *
+     * @return array
+     */
+    public function extend_theme_editor_filetypes($default_types) {
+        $filetypes = [
+            'twig',
+            'yaml',
+            'scss'
+        ];
+
+        return $filetypes;
+    }
+
+    /**
      * @see AbstractTheme::init()
      */
     protected function init()
@@ -334,12 +355,12 @@ class Theme extends AbstractTheme
         add_theme_support('post-thumbnails');
         add_theme_support('menus');
         add_theme_support('widgets');
-        add_theme_support('woocommerce');
 
         add_filter('script_loader_tag', ['Gantry\Framework\Document', 'script_add_attributes'], 10, 2);
         add_filter('timber_context', [$this, 'getContext']);
         add_filter('timber/loader/twig', [$this, 'timber_loader_twig']);
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
+        add_filter('wp_theme_editor_filetypes', [$this, 'extend_theme_editor_filetypes']);
         add_filter('get_twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
@@ -373,8 +394,9 @@ class Theme extends AbstractTheme
 
         // Offline support.
         add_action('init', function() use ($gantry, $global) {
+            global $pagenow;
             if ($global->get('offline')) {
-                if (!(is_super_admin() || current_user_can('manage_options') || $_GLOBALS['pagenow'] == 'wp-login.php')) {
+                if (!(is_super_admin() || current_user_can('manage_options') || $pagenow == 'wp-login.php')) {
                     if (locate_template(['offline.php'])) {
                         add_filter('template_include', function () {
                             return locate_template(['offline.php']);
@@ -395,6 +417,8 @@ class Theme extends AbstractTheme
         load_theme_textdomain($domain, $this->path . '/languages');
 
         $this->url = $gantry['site']->theme->link;
+
+        $gantry->fireEvent('theme.init');
     }
 
     /**
@@ -430,6 +454,8 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * @param  bool $enable
+     * @return bool
      * @deprecated 5.1.5
      */
     public function wordpress($enable = null)

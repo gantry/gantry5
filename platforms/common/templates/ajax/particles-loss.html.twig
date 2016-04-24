@@ -1,7 +1,15 @@
+{% set sections = '<strong>' ~ particles|join('</strong>, <strong>')|raw ~ '</strong>' %}
+
 <div class="card settings-block">
-    <h4>Particles Loss</h4>
+    <h4>{{ 'GANTRY5_PLATFORM_LM_PARTICLE_LOSS_WARNING'|trans }}</h4>
     <div class="inner-params">
-        The section{{ particles|length > 1 ? 's' : '' }} <strong>{{ particles|join("</strong>, <strong>")|raw }}</strong> do{{ particles|length == 1 ? 'es' : '' }} not exist in the Layout that is about to get loaded. Any particles within those sections will be lost.
+
+        {% if particles|length > 1 %}
+        {{ 'GANTRY5_PLATFORM_LM_PARTICLE_LOSS_SECTIONS_X'|trans(sections)|raw }}
+        {% else %}
+        {{ 'GANTRY5_PLATFORM_LM_PARTICLE_LOSS_SECTION_X'|trans(sections)|raw }}
+        {% endif %}
+        {{ 'GANTRY5_PLATFORM_LM_PARTICLE_LOSS_TEXT'|trans }}
         <br /><br />
         {{ 'GANTRY5_PLATFORM_TO_CONTINUE'|trans }}
     </div>
@@ -9,5 +17,5 @@
 
 <div class="g-modal-actions">
     <button tabindex="0" class="button button-primary" role="button" data-g-delete-confirm>{{ 'GANTRY5_PLATFORM_CONTINUE'|trans }}</button>
-    <button class="button button-primary g5-dialog-close" role="button" data-g-delete-cancel>Close</button>
+    <button class="button button-primary g5-dialog-close" role="button" data-g-delete-cancel>{{ 'GANTRY5_PLATFORM_CLOSE'|trans }}</button>
 </div>

@@ -17,6 +17,7 @@ class Page extends Base\Page
     public $title;
     public $description;
     public $direction;
+    public $home = false;
 
     public function __construct($container)
     {
@@ -38,6 +39,7 @@ class Page extends Base\Page
         if ($this->itemid) {
             $menuItem = $app->getMenu()->getActive();
             if ($menuItem && $menuItem->id) {
+                $this->home = (bool) $menuItem->home;
                 $this->class = $menuItem->params->get('pageclass_sfx', '');
             }
         }

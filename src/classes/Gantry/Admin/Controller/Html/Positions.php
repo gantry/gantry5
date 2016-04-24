@@ -49,17 +49,7 @@ class Positions extends HtmlController
 
     public function index()
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $finder = new \Gantry\Component\Config\ConfigFileFinder();
-        $files = $finder->getFiles($locator->findResources('gantry-config://positions'));
-
-        $positions = array_keys($files);
-        sort($positions);
-
-
-        $this->params['positions'] = $positions;
+        $this->params['positions'] = $this->container['positions'];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
     }
@@ -78,19 +68,13 @@ class Positions extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Position created.', 'id' => "position-{$id}", 'position' => $html]);
+        return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'position' => $html]);
     }
 
     public function rename($position)
     {
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
-        $list = $positions->all();
-        $position = $position . '.yaml';
-
-        if (!isset($list[$position])) {
-            $this->forbidden();
-        }
 
         $title = $this->request->post['title'];
         $id = $positions->rename($position, $title);
@@ -100,79 +84,26 @@ class Positions extends HtmlController
             ['name' => $id, 'title' => $title]
         );
 
-        return new JsonResponse(['html' => 'Position renamed.', 'id' => "position-{$position}", 'position' => $html]);
+        return new JsonResponse(['html' => sprintf("Position renamed to '%s'.", $id), 'id' => "position-{$position}", 'position' => $html]);
     }
 
     public function duplicate($position)
     {
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
-        $list = $positions->all();;
 
-        if (!isset($list[$position . '.yaml'])) {
-            $this->forbidden();
-        }
+        $id = $positions->duplicate($position);
 
-        $positions->duplicate($position);
-
-        return new JsonResponse(['html' => 'Position duplicated.']);
+        return new JsonResponse(['html' => sprintf("Position duplicated as '%s'.", $id)]);
     }
 
     public function delete($position)
     {
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
-        $list = $positions->all();
-        $position = $position . '.yaml';
-
-        if (!isset($list[$position])) {
-            $this->forbidden();
-        }
 
         $positions->delete($position);
 
-        return new JsonResponse(['html' => 'Position deleted.', 'position' => $position]);
-    }
-
-    public function forward()
-    {
-        $path = func_get_args();
-
-        $positions = $this->container['positions']->toArray();
-
-        $configuration = isset($positions[$path[0]]) ? array_shift($path) : 'default';
-
-        $this->container['configuration'] = $configuration;
-
-        $method = $this->params['method'];
-        $page = (array_shift($path) ?: 'styles');
-        $resource = $this->params['location'] . '/'. $page;
-
-        $this->params['configuration'] = $configuration;
-        $this->params['location'] = $resource;
-        $this->params['configuration_page'] = $page;
-        $this->params['navbar'] = !empty($this->request->get['navbar']);
-
-        return $this->executeForward($resource, $method, $path, $this->params);
-    }
-
-    protected function executeForward($resource, $method = 'GET', $path, $params = [])
-    {
-        $class = '\\Gantry\\Admin\\Controller\\Html\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
-        if (!class_exists($class)) {
-            throw new \RuntimeException('Position not found', 404);
-        }
-
-        /** @var HtmlController $controller */
-        $controller = new $class($this->container);
-
-        // Execute action.
-        $response = $controller->execute($method, $path, $params);
-
-        if (!$response instanceof Response) {
-            $response = new HtmlResponse($response);
-        }
-
-        return $response;
+        return new JsonResponse(['html' => sprintf("Position '%s' deleted.", $position), 'position' => $position]);
     }
 }

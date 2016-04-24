@@ -342,7 +342,7 @@ var Menu = new prime({
 
 module.exports = Menu;
 
-},{"../utils/dollar-extras":6,"domready":7,"elements/zen":15,"mout/function/bind":23,"mout/function/timeout":27,"prime":71,"prime-util/prime/bound":67,"prime-util/prime/options":68}],3:[function(require,module,exports){
+},{"../utils/dollar-extras":6,"domready":7,"elements/zen":36,"mout/function/bind":40,"mout/function/timeout":44,"prime":85,"prime-util/prime/bound":81,"prime-util/prime/options":82}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.
 // Fast and optimized using CSS3 transitions
 // Based on the awesome Slideout.js <https://mango.github.io/slideout/>
@@ -755,7 +755,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../utils/decouple":5,"domready":7,"elements":12,"elements/zen":15,"mout/array/forEach":18,"mout/function/bind":23,"mout/function/timeout":27,"mout/math/clamp":33,"mout/math/map":35,"mout/string/trim":45,"prime":71,"prime-util/prime/bound":67,"prime-util/prime/options":68}],4:[function(require,module,exports){
+},{"../utils/decouple":5,"domready":7,"elements":12,"elements/zen":36,"mout/array/forEach":37,"mout/function/bind":40,"mout/function/timeout":44,"mout/math/clamp":49,"mout/math/map":51,"mout/string/trim":60,"prime":85,"prime-util/prime/bound":81,"prime-util/prime/options":82}],4:[function(require,module,exports){
 "use strict";
 
 var ready = require('domready'),
@@ -813,7 +813,9 @@ var decouple = function(element, event, callback) {
         tracking = false;
     };
 
-    element.addEventListener(event, capture, false);
+    try {
+        element.addEventListener(event, capture, false);
+    } catch (e) {}
 
     return capture;
 };
@@ -848,7 +850,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":12,"mout/array/map":20,"slick":74}],7:[function(require,module,exports){
+},{"elements":12,"mout/array/map":38,"slick":97}],7:[function(require,module,exports){
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -1099,7 +1101,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":9,"mout/array/filter":17,"mout/array/forEach":18,"mout/array/indexOf":19,"mout/string/trim":45}],9:[function(require,module,exports){
+},{"./base":9,"mout/array/filter":15,"mout/array/forEach":16,"mout/array/indexOf":17,"mout/string/trim":34}],9:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -1230,7 +1232,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":16,"mout/array/filter":17,"mout/array/forEach":18,"mout/array/map":20,"mout/array/some":22,"prime":71}],10:[function(require,module,exports){
+},{"mout/array/every":14,"mout/array/filter":15,"mout/array/forEach":16,"mout/array/map":18,"mout/array/some":19,"prime":85}],10:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -1313,7 +1315,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":11,"./traversal":14,"prime/map":72}],11:[function(require,module,exports){
+},{"./events":11,"./traversal":35,"prime/map":86}],11:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -1393,7 +1395,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":9,"prime/emitter":70}],12:[function(require,module,exports){
+},{"./base":9,"prime/emitter":84}],12:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -1407,7 +1409,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":8,"./base":9,"./delegation":10,"./events":11,"./insertion":13,"./traversal":14}],13:[function(require,module,exports){
+},{"./attributes":8,"./base":9,"./delegation":10,"./events":11,"./insertion":13,"./traversal":35}],13:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -1502,6 +1504,567 @@ $.implement({
 module.exports = $
 
 },{"./base":9}],14:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array every
+     */
+    function every(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = true;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (!callback(arr[i], i, arr) ) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = every;
+
+
+},{"../function/makeIterator_":21}],15:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array filter
+     */
+    function filter(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null) {
+            return results;
+        }
+
+        var i = -1, len = arr.length, value;
+        while (++i < len) {
+            value = arr[i];
+            if (callback(value, i, arr)) {
+                results.push(value);
+            }
+        }
+
+        return results;
+    }
+
+    module.exports = filter;
+
+
+
+},{"../function/makeIterator_":21}],16:[function(require,module,exports){
+
+
+    /**
+     * Array forEach
+     */
+    function forEach(arr, callback, thisObj) {
+        if (arr == null) {
+            return;
+        }
+        var i = -1,
+            len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
+                break;
+            }
+        }
+    }
+
+    module.exports = forEach;
+
+
+
+},{}],17:[function(require,module,exports){
+
+
+    /**
+     * Array.indexOf
+     */
+    function indexOf(arr, item, fromIndex) {
+        fromIndex = fromIndex || 0;
+        if (arr == null) {
+            return -1;
+        }
+
+        var len = arr.length,
+            i = fromIndex < 0 ? len + fromIndex : fromIndex;
+        while (i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (arr[i] === item) {
+                return i;
+            }
+
+            i++;
+        }
+
+        return -1;
+    }
+
+    module.exports = indexOf;
+
+
+},{}],18:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array map
+     */
+    function map(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null){
+            return results;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            results[i] = callback(arr[i], i, arr);
+        }
+
+        return results;
+    }
+
+     module.exports = map;
+
+
+},{"../function/makeIterator_":21}],19:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array some
+     */
+    function some(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = false;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback(arr[i], i, arr) ) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = some;
+
+
+},{"../function/makeIterator_":21}],20:[function(require,module,exports){
+
+
+    /**
+     * Returns the first argument provided to it.
+     */
+    function identity(val){
+        return val;
+    }
+
+    module.exports = identity;
+
+
+
+},{}],21:[function(require,module,exports){
+var identity = require('./identity');
+var prop = require('./prop');
+var deepMatches = require('../object/deepMatches');
+
+    /**
+     * Converts argument into a valid iterator.
+     * Used internally on most array/object/collection methods that receives a
+     * callback/iterator providing a shortcut syntax.
+     */
+    function makeIterator(src, thisObj){
+        if (src == null) {
+            return identity;
+        }
+        switch(typeof src) {
+            case 'function':
+                // function is the first to improve perf (most common case)
+                // also avoid using `Function#call` if not needed, which boosts
+                // perf a lot in some cases
+                return (typeof thisObj !== 'undefined')? function(val, i, arr){
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function(val){
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+        }
+    }
+
+    module.exports = makeIterator;
+
+
+
+},{"../object/deepMatches":27,"./identity":20,"./prop":22}],22:[function(require,module,exports){
+
+
+    /**
+     * Returns a function that gets a property of the passed object
+     */
+    function prop(name){
+        return function(obj){
+            return obj[name];
+        };
+    }
+
+    module.exports = prop;
+
+
+
+},{}],23:[function(require,module,exports){
+var isKind = require('./isKind');
+    /**
+     */
+    var isArray = Array.isArray || function (val) {
+        return isKind(val, 'Array');
+    };
+    module.exports = isArray;
+
+
+},{"./isKind":24}],24:[function(require,module,exports){
+var kindOf = require('./kindOf');
+    /**
+     * Check if value is from a specific "kind".
+     */
+    function isKind(val, kind){
+        return kindOf(val) === kind;
+    }
+    module.exports = isKind;
+
+
+},{"./kindOf":25}],25:[function(require,module,exports){
+
+
+    var _rKind = /^\[object (.*)\]$/,
+        _toString = Object.prototype.toString,
+        UNDEF;
+
+    /**
+     * Gets the "kind" of value. (e.g. "String", "Number", etc)
+     */
+    function kindOf(val) {
+        if (val === null) {
+            return 'Null';
+        } else if (val === UNDEF) {
+            return 'Undefined';
+        } else {
+            return _rKind.exec( _toString.call(val) )[1];
+        }
+    }
+    module.exports = kindOf;
+
+
+},{}],26:[function(require,module,exports){
+
+
+    /**
+     * Typecast a value to a String, using an empty string value for null or
+     * undefined.
+     */
+    function toString(val){
+        return val == null ? '' : val.toString();
+    }
+
+    module.exports = toString;
+
+
+
+},{}],27:[function(require,module,exports){
+var forOwn = require('./forOwn');
+var isArray = require('../lang/isArray');
+
+    function containsMatch(array, pattern) {
+        var i = -1, length = array.length;
+        while (++i < length) {
+            if (deepMatches(array[i], pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function matchArray(target, pattern) {
+        var i = -1, patternLength = pattern.length;
+        while (++i < patternLength) {
+            if (!containsMatch(target, pattern[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function matchObject(target, pattern) {
+        var result = true;
+        forOwn(pattern, function(val, key) {
+            if (!deepMatches(target[key], val)) {
+                // Return false to break out of forOwn early
+                return (result = false);
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * Recursively check if the objects match.
+     */
+    function deepMatches(target, pattern){
+        if (target && typeof target === 'object') {
+            if (isArray(target) && isArray(pattern)) {
+                return matchArray(target, pattern);
+            } else {
+                return matchObject(target, pattern);
+            }
+        } else {
+            return target === pattern;
+        }
+    }
+
+    module.exports = deepMatches;
+
+
+
+},{"../lang/isArray":23,"./forOwn":29}],28:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+
+    var _hasDontEnumBug,
+        _dontEnums;
+
+    function checkDontEnum(){
+        _dontEnums = [
+                'toString',
+                'toLocaleString',
+                'valueOf',
+                'hasOwnProperty',
+                'isPrototypeOf',
+                'propertyIsEnumerable',
+                'constructor'
+            ];
+
+        _hasDontEnumBug = true;
+
+        for (var key in {'toString': null}) {
+            _hasDontEnumBug = false;
+        }
+    }
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forIn(obj, fn, thisObj){
+        var key, i = 0;
+        // no need to check if argument is a real object that way we can use
+        // it for arrays, functions, date, etc.
+
+        //post-pone check till needed
+        if (_hasDontEnumBug == null) checkDontEnum();
+
+        for (key in obj) {
+            if (exec(fn, obj, key, thisObj) === false) {
+                break;
+            }
+        }
+
+
+        if (_hasDontEnumBug) {
+            var ctor = obj.constructor,
+                isProto = !!ctor && obj === ctor.prototype;
+
+            while (key = _dontEnums[i++]) {
+                // For constructor, if it is a prototype object the constructor
+                // is always non-enumerable unless defined otherwise (and
+                // enumerated above).  For non-prototype objects, it will have
+                // to be defined on this object, since it cannot be defined on
+                // any prototype objects.
+                //
+                // For other [[DontEnum]] properties, check if the value is
+                // different than Object prototype value.
+                if (
+                    (key !== 'constructor' ||
+                        (!isProto && hasOwn(obj, key))) &&
+                    obj[key] !== Object.prototype[key]
+                ) {
+                    if (exec(fn, obj, key, thisObj) === false) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function exec(fn, obj, key, thisObj){
+        return fn.call(thisObj, obj[key], key, obj);
+    }
+
+    module.exports = forIn;
+
+
+
+},{"./hasOwn":30}],29:[function(require,module,exports){
+var hasOwn = require('./hasOwn');
+var forIn = require('./forIn');
+
+    /**
+     * Similar to Array/forEach but works over object properties and fixes Don't
+     * Enum bug on IE.
+     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+     */
+    function forOwn(obj, fn, thisObj){
+        forIn(obj, function(val, key){
+            if (hasOwn(obj, key)) {
+                return fn.call(thisObj, obj[key], key, obj);
+            }
+        });
+    }
+
+    module.exports = forOwn;
+
+
+
+},{"./forIn":28,"./hasOwn":30}],30:[function(require,module,exports){
+
+
+    /**
+     * Safer Object.hasOwnProperty
+     */
+     function hasOwn(obj, prop){
+         return Object.prototype.hasOwnProperty.call(obj, prop);
+     }
+
+     module.exports = hasOwn;
+
+
+
+},{}],31:[function(require,module,exports){
+
+    /**
+     * Contains all Unicode white-spaces. Taken from
+     * http://en.wikipedia.org/wiki/Whitespace_character.
+     */
+    module.exports = [
+        ' ', '\n', '\r', '\t', '\f', '\v', '\u00A0', '\u1680', '\u180E',
+        '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006',
+        '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F',
+        '\u205F', '\u3000'
+    ];
+
+
+},{}],32:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from beginning of string.
+     */
+    function ltrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var start = 0,
+            len = str.length,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && start < len) {
+            found = false;
+            i = -1;
+            c = str.charAt(start);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    start++;
+                    break;
+                }
+            }
+        }
+
+        return (start >= len) ? '' : str.substr(start, len);
+    }
+
+    module.exports = ltrim;
+
+
+},{"../lang/toString":26,"./WHITE_SPACES":31}],33:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+    /**
+     * Remove chars from end of string.
+     */
+    function rtrim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+
+        var end = str.length - 1,
+            charLen = chars.length,
+            found = true,
+            i, c;
+
+        while (found && end >= 0) {
+            found = false;
+            i = -1;
+            c = str.charAt(end);
+
+            while (++i < charLen) {
+                if (c === chars[i]) {
+                    found = true;
+                    end--;
+                    break;
+                }
+            }
+        }
+
+        return (end >= 0) ? str.substring(0, end + 1) : '';
+    }
+
+    module.exports = rtrim;
+
+
+},{"../lang/toString":26,"./WHITE_SPACES":31}],34:[function(require,module,exports){
+var toString = require('../lang/toString');
+var WHITE_SPACES = require('./WHITE_SPACES');
+var ltrim = require('./ltrim');
+var rtrim = require('./rtrim');
+    /**
+     * Remove white-spaces from beginning and end of string.
+     */
+    function trim(str, chars) {
+        str = toString(str);
+        chars = chars || WHITE_SPACES;
+        return ltrim(rtrim(str, chars), chars);
+    }
+
+    module.exports = trim;
+
+
+},{"../lang/toString":26,"./WHITE_SPACES":31,"./ltrim":32,"./rtrim":33}],35:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -1606,7 +2169,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":9,"mout/array/map":20,"slick":74}],15:[function(require,module,exports){
+},{"./base":9,"mout/array/map":18,"slick":97}],36:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -1664,143 +2227,11 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":9,"mout/array/forEach":18,"mout/array/map":20,"slick/parser":75}],16:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array every
-     */
-    function every(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = true;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (!callback(arr[i], i, arr) ) {
-                result = false;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = every;
-
-
-},{"../function/makeIterator_":25}],17:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array filter
-     */
-    function filter(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null) {
-            return results;
-        }
-
-        var i = -1, len = arr.length, value;
-        while (++i < len) {
-            value = arr[i];
-            if (callback(value, i, arr)) {
-                results.push(value);
-            }
-        }
-
-        return results;
-    }
-
-    module.exports = filter;
-
-
-
-},{"../function/makeIterator_":25}],18:[function(require,module,exports){
-
-
-    /**
-     * Array forEach
-     */
-    function forEach(arr, callback, thisObj) {
-        if (arr == null) {
-            return;
-        }
-        var i = -1,
-            len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback.call(thisObj, arr[i], i, arr) === false ) {
-                break;
-            }
-        }
-    }
-
-    module.exports = forEach;
-
-
-
-},{}],19:[function(require,module,exports){
-
-
-    /**
-     * Array.indexOf
-     */
-    function indexOf(arr, item, fromIndex) {
-        fromIndex = fromIndex || 0;
-        if (arr == null) {
-            return -1;
-        }
-
-        var len = arr.length,
-            i = fromIndex < 0 ? len + fromIndex : fromIndex;
-        while (i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (arr[i] === item) {
-                return i;
-            }
-
-            i++;
-        }
-
-        return -1;
-    }
-
-    module.exports = indexOf;
-
-
-},{}],20:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array map
-     */
-    function map(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null){
-            return results;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            results[i] = callback(arr[i], i, arr);
-        }
-
-        return results;
-    }
-
-     module.exports = map;
-
-
-},{"../function/makeIterator_":25}],21:[function(require,module,exports){
+},{"./base":9,"mout/array/forEach":16,"mout/array/map":18,"slick/parser":98}],37:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16}],38:[function(require,module,exports){
+arguments[4][18][0].apply(exports,arguments)
+},{"../function/makeIterator_":42,"dup":18}],39:[function(require,module,exports){
 
 
     /**
@@ -1837,36 +2268,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{}],22:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array some
-     */
-    function some(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = false;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback(arr[i], i, arr) ) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = some;
-
-
-},{"../function/makeIterator_":25}],23:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -1887,73 +2289,13 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":21}],24:[function(require,module,exports){
-
-
-    /**
-     * Returns the first argument provided to it.
-     */
-    function identity(val){
-        return val;
-    }
-
-    module.exports = identity;
-
-
-
-},{}],25:[function(require,module,exports){
-var identity = require('./identity');
-var prop = require('./prop');
-var deepMatches = require('../object/deepMatches');
-
-    /**
-     * Converts argument into a valid iterator.
-     * Used internally on most array/object/collection methods that receives a
-     * callback/iterator providing a shortcut syntax.
-     */
-    function makeIterator(src, thisObj){
-        if (src == null) {
-            return identity;
-        }
-        switch(typeof src) {
-            case 'function':
-                // function is the first to improve perf (most common case)
-                // also avoid using `Function#call` if not needed, which boosts
-                // perf a lot in some cases
-                return (typeof thisObj !== 'undefined')? function(val, i, arr){
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function(val){
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-        }
-    }
-
-    module.exports = makeIterator;
-
-
-
-},{"../object/deepMatches":37,"./identity":24,"./prop":26}],26:[function(require,module,exports){
-
-
-    /**
-     * Returns a function that gets a property of the passed object
-     */
-    function prop(name){
-        return function(obj){
-            return obj[name];
-        };
-    }
-
-    module.exports = prop;
-
-
-
-},{}],27:[function(require,module,exports){
+},{"../array/slice":39}],41:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"dup":20}],42:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"../object/deepMatches":53,"./identity":41,"./prop":43,"dup":21}],43:[function(require,module,exports){
+arguments[4][22][0].apply(exports,arguments)
+},{"dup":22}],44:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -1972,85 +2314,15 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":21}],28:[function(require,module,exports){
-var mixIn = require('../object/mixIn');
-
-    /**
-     * Create Object using prototypal inheritance and setting custom properties.
-     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
-     * @param {object} parent    Parent Object.
-     * @param {object} [props] Object properties.
-     * @return {object} Created object.
-     */
-    function createObject(parent, props){
-        function F(){}
-        F.prototype = parent;
-        return mixIn(new F(), props);
-
-    }
-    module.exports = createObject;
-
-
-
-},{"../object/mixIn":41}],29:[function(require,module,exports){
-var isKind = require('./isKind');
-    /**
-     */
-    var isArray = Array.isArray || function (val) {
-        return isKind(val, 'Array');
-    };
-    module.exports = isArray;
-
-
-},{"./isKind":30}],30:[function(require,module,exports){
-var kindOf = require('./kindOf');
-    /**
-     * Check if value is from a specific "kind".
-     */
-    function isKind(val, kind){
-        return kindOf(val) === kind;
-    }
-    module.exports = isKind;
-
-
-},{"./kindOf":31}],31:[function(require,module,exports){
-
-
-    var _rKind = /^\[object (.*)\]$/,
-        _toString = Object.prototype.toString,
-        UNDEF;
-
-    /**
-     * Gets the "kind" of value. (e.g. "String", "Number", etc)
-     */
-    function kindOf(val) {
-        if (val === null) {
-            return 'Null';
-        } else if (val === UNDEF) {
-            return 'Undefined';
-        } else {
-            return _rKind.exec( _toString.call(val) )[1];
-        }
-    }
-    module.exports = kindOf;
-
-
-},{}],32:[function(require,module,exports){
-
-
-    /**
-     * Typecast a value to a String, using an empty string value for null or
-     * undefined.
-     */
-    function toString(val){
-        return val == null ? '' : val.toString();
-    }
-
-    module.exports = toString;
-
-
-
-},{}],33:[function(require,module,exports){
+},{"../array/slice":39}],45:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"./isKind":46,"dup":23}],46:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"./kindOf":47,"dup":24}],47:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],48:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"dup":26}],49:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -2061,7 +2333,7 @@ var kindOf = require('./kindOf');
     module.exports = clamp;
 
 
-},{}],34:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -2074,7 +2346,7 @@ var kindOf = require('./kindOf');
     module.exports = lerp;
 
 
-},{}],35:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -2087,7 +2359,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":34,"./norm":36}],36:[function(require,module,exports){
+},{"./lerp":50,"./norm":52}],52:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -2102,7 +2374,7 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],37:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isArray = require('../lang/isArray');
 
@@ -2144,7 +2416,8 @@ var isArray = require('../lang/isArray');
      * Recursively check if the objects match.
      */
     function deepMatches(target, pattern){
-        if (target && typeof target === 'object') {
+        if (target && typeof target === 'object' &&
+            pattern && typeof pattern === 'object') {
             if (isArray(target) && isArray(pattern)) {
                 return matchArray(target, pattern);
             } else {
@@ -2159,276 +2432,25 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":29,"./forOwn":39}],38:[function(require,module,exports){
-var hasOwn = require('./hasOwn');
-
-    var _hasDontEnumBug,
-        _dontEnums;
-
-    function checkDontEnum(){
-        _dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ];
-
-        _hasDontEnumBug = true;
-
-        for (var key in {'toString': null}) {
-            _hasDontEnumBug = false;
-        }
-    }
-
-    /**
-     * Similar to Array/forEach but works over object properties and fixes Don't
-     * Enum bug on IE.
-     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
-     */
-    function forIn(obj, fn, thisObj){
-        var key, i = 0;
-        // no need to check if argument is a real object that way we can use
-        // it for arrays, functions, date, etc.
-
-        //post-pone check till needed
-        if (_hasDontEnumBug == null) checkDontEnum();
-
-        for (key in obj) {
-            if (exec(fn, obj, key, thisObj) === false) {
-                break;
-            }
-        }
-
-
-        if (_hasDontEnumBug) {
-            var ctor = obj.constructor,
-                isProto = !!ctor && obj === ctor.prototype;
-
-            while (key = _dontEnums[i++]) {
-                // For constructor, if it is a prototype object the constructor
-                // is always non-enumerable unless defined otherwise (and
-                // enumerated above).  For non-prototype objects, it will have
-                // to be defined on this object, since it cannot be defined on
-                // any prototype objects.
-                //
-                // For other [[DontEnum]] properties, check if the value is
-                // different than Object prototype value.
-                if (
-                    (key !== 'constructor' ||
-                        (!isProto && hasOwn(obj, key))) &&
-                    obj[key] !== Object.prototype[key]
-                ) {
-                    if (exec(fn, obj, key, thisObj) === false) {
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    function exec(fn, obj, key, thisObj){
-        return fn.call(thisObj, obj[key], key, obj);
-    }
-
-    module.exports = forIn;
-
-
-
-},{"./hasOwn":40}],39:[function(require,module,exports){
-var hasOwn = require('./hasOwn');
-var forIn = require('./forIn');
-
-    /**
-     * Similar to Array/forEach but works over object properties and fixes Don't
-     * Enum bug on IE.
-     * based on: http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
-     */
-    function forOwn(obj, fn, thisObj){
-        forIn(obj, function(val, key){
-            if (hasOwn(obj, key)) {
-                return fn.call(thisObj, obj[key], key, obj);
-            }
-        });
-    }
-
-    module.exports = forOwn;
-
-
-
-},{"./forIn":38,"./hasOwn":40}],40:[function(require,module,exports){
-
-
-    /**
-     * Safer Object.hasOwnProperty
-     */
-     function hasOwn(obj, prop){
-         return Object.prototype.hasOwnProperty.call(obj, prop);
-     }
-
-     module.exports = hasOwn;
-
-
-
-},{}],41:[function(require,module,exports){
-var forOwn = require('./forOwn');
-
-    /**
-    * Combine properties from all the objects into first one.
-    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
-    * @param {object} target    Target Object
-    * @param {...object} objects    Objects to be combined (0...n objects).
-    * @return {object} Target Object.
-    */
-    function mixIn(target, objects){
-        var i = 0,
-            n = arguments.length,
-            obj;
-        while(++i < n){
-            obj = arguments[i];
-            if (obj != null) {
-                forOwn(obj, copyProp, target);
-            }
-        }
-        return target;
-    }
-
-    function copyProp(val, key){
-        this[key] = val;
-    }
-
-    module.exports = mixIn;
-
-
-},{"./forOwn":39}],42:[function(require,module,exports){
-
-    /**
-     * Contains all Unicode white-spaces. Taken from
-     * http://en.wikipedia.org/wiki/Whitespace_character.
-     */
-    module.exports = [
-        ' ', '\n', '\r', '\t', '\f', '\v', '\u00A0', '\u1680', '\u180E',
-        '\u2000', '\u2001', '\u2002', '\u2003', '\u2004', '\u2005', '\u2006',
-        '\u2007', '\u2008', '\u2009', '\u200A', '\u2028', '\u2029', '\u202F',
-        '\u205F', '\u3000'
-    ];
-
-
-},{}],43:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-    /**
-     * Remove chars from beginning of string.
-     */
-    function ltrim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-
-        var start = 0,
-            len = str.length,
-            charLen = chars.length,
-            found = true,
-            i, c;
-
-        while (found && start < len) {
-            found = false;
-            i = -1;
-            c = str.charAt(start);
-
-            while (++i < charLen) {
-                if (c === chars[i]) {
-                    found = true;
-                    start++;
-                    break;
-                }
-            }
-        }
-
-        return (start >= len) ? '' : str.substr(start, len);
-    }
-
-    module.exports = ltrim;
-
-
-},{"../lang/toString":32,"./WHITE_SPACES":42}],44:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-    /**
-     * Remove chars from end of string.
-     */
-    function rtrim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-
-        var end = str.length - 1,
-            charLen = chars.length,
-            found = true,
-            i, c;
-
-        while (found && end >= 0) {
-            found = false;
-            i = -1;
-            c = str.charAt(end);
-
-            while (++i < charLen) {
-                if (c === chars[i]) {
-                    found = true;
-                    end--;
-                    break;
-                }
-            }
-        }
-
-        return (end >= 0) ? str.substring(0, end + 1) : '';
-    }
-
-    module.exports = rtrim;
-
-
-},{"../lang/toString":32,"./WHITE_SPACES":42}],45:[function(require,module,exports){
-var toString = require('../lang/toString');
-var WHITE_SPACES = require('./WHITE_SPACES');
-var ltrim = require('./ltrim');
-var rtrim = require('./rtrim');
-    /**
-     * Remove white-spaces from beginning and end of string.
-     */
-    function trim(str, chars) {
-        str = toString(str);
-        chars = chars || WHITE_SPACES;
-        return ltrim(rtrim(str, chars), chars);
-    }
-
-    module.exports = trim;
-
-
-},{"../lang/toString":32,"./WHITE_SPACES":42,"./ltrim":43,"./rtrim":44}],46:[function(require,module,exports){
-
-
-    /**
-     * Get current time in miliseconds
-     */
-    function now(){
-        // yes, we defer the work to another function to allow mocking it
-        // during the tests
-        return now.get();
-    }
-
-    now.get = (typeof Date.now === 'function')? Date.now : function(){
-        return +(new Date());
-    };
-
-    module.exports = now;
-
-
-
-},{}],47:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}],48:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"../array/slice":47,"dup":23}],49:[function(require,module,exports){
+},{"../lang/isArray":45,"./forOwn":55}],54:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./hasOwn":56,"dup":28}],55:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"./forIn":54,"./hasOwn":56,"dup":29}],56:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],57:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"dup":31}],58:[function(require,module,exports){
+arguments[4][32][0].apply(exports,arguments)
+},{"../lang/toString":48,"./WHITE_SPACES":57,"dup":32}],59:[function(require,module,exports){
+arguments[4][33][0].apply(exports,arguments)
+},{"../lang/toString":48,"./WHITE_SPACES":57,"dup":33}],60:[function(require,module,exports){
+arguments[4][34][0].apply(exports,arguments)
+},{"../lang/toString":48,"./WHITE_SPACES":57,"./ltrim":58,"./rtrim":59,"dup":34}],61:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"dup":39}],62:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"../array/slice":61,"dup":40}],63:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -2479,7 +2501,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":59,"./isPlainObject":53,"./kindOf":54}],50:[function(require,module,exports){
+},{"../object/mixIn":73,"./isPlainObject":67,"./kindOf":68}],64:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -2529,9 +2551,9 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":56,"./clone":49,"./isPlainObject":53,"./kindOf":54}],51:[function(require,module,exports){
-arguments[4][30][0].apply(exports,arguments)
-},{"./kindOf":54,"dup":30}],52:[function(require,module,exports){
+},{"../object/forOwn":70,"./clone":63,"./isPlainObject":67,"./kindOf":68}],65:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"./kindOf":68,"dup":24}],66:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -2541,7 +2563,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":51}],53:[function(require,module,exports){
+},{"./isKind":65}],67:[function(require,module,exports){
 
 
     /**
@@ -2556,15 +2578,15 @@ var isKind = require('./isKind');
 
 
 
-},{}],54:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],55:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"./hasOwn":57,"dup":38}],56:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"./forIn":55,"./hasOwn":57,"dup":39}],57:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"dup":40}],58:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],69:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./hasOwn":71,"dup":28}],70:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"./forIn":69,"./hasOwn":71,"dup":29}],71:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],72:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -2606,9 +2628,37 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":50,"../lang/isObject":52,"./hasOwn":57}],59:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./forOwn":56,"dup":41}],60:[function(require,module,exports){
+},{"../lang/deepClone":64,"../lang/isObject":66,"./hasOwn":71}],73:[function(require,module,exports){
+var forOwn = require('./forOwn');
+
+    /**
+    * Combine properties from all the objects into first one.
+    * - This method affects target object in place, if you want to create a new Object pass an empty object as first param.
+    * @param {object} target    Target Object
+    * @param {...object} objects    Objects to be combined (0...n objects).
+    * @return {object} Target Object.
+    */
+    function mixIn(target, objects){
+        var i = 0,
+            n = arguments.length,
+            obj;
+        while(++i < n){
+            obj = arguments[i];
+            if (obj != null) {
+                forOwn(obj, copyProp, target);
+            }
+        }
+        return target;
+    }
+
+    function copyProp(val, key){
+        this[key] = val;
+    }
+
+    module.exports = mixIn;
+
+
+},{"./forOwn":70}],74:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -2700,19 +2750,37 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":61,"mout/lang/kindOf":62,"mout/object/hasOwn":65,"mout/object/mixIn":66}],61:[function(require,module,exports){
+},{"mout/lang/createObject":75,"mout/lang/kindOf":76,"mout/object/hasOwn":79,"mout/object/mixIn":80}],75:[function(require,module,exports){
+var mixIn = require('../object/mixIn');
+
+    /**
+     * Create Object using prototypal inheritance and setting custom properties.
+     * - Mix between Douglas Crockford Prototypal Inheritance <http://javascript.crockford.com/prototypal.html> and the EcmaScript 5 `Object.create()` method.
+     * @param {object} parent    Parent Object.
+     * @param {object} [props] Object properties.
+     * @return {object} Created object.
+     */
+    function createObject(parent, props){
+        function F(){}
+        F.prototype = parent;
+        return mixIn(new F(), props);
+
+    }
+    module.exports = createObject;
+
+
+
+},{"../object/mixIn":80}],76:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],77:[function(require,module,exports){
 arguments[4][28][0].apply(exports,arguments)
-},{"../object/mixIn":66,"dup":28}],62:[function(require,module,exports){
-arguments[4][31][0].apply(exports,arguments)
-},{"dup":31}],63:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"./hasOwn":65,"dup":38}],64:[function(require,module,exports){
-arguments[4][39][0].apply(exports,arguments)
-},{"./forIn":63,"./hasOwn":65,"dup":39}],65:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"dup":40}],66:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"./forOwn":64,"dup":41}],67:[function(require,module,exports){
+},{"./hasOwn":79,"dup":28}],78:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"./forIn":77,"./hasOwn":79,"dup":29}],79:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],80:[function(require,module,exports){
+arguments[4][73][0].apply(exports,arguments)
+},{"./forOwn":78,"dup":73}],81:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -2732,7 +2800,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":48,"prime":60}],68:[function(require,module,exports){
+},{"mout/function/bind":62,"prime":74}],82:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -2751,7 +2819,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":58,"prime":60}],69:[function(require,module,exports){
+},{"mout/object/merge":72,"prime":74}],83:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -2870,7 +2938,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":76,"mout/array/forEach":18,"mout/array/indexOf":19,"mout/lang/kindOf":31,"mout/time/now":46}],70:[function(require,module,exports){
+},{"_process":99,"mout/array/forEach":87,"mout/array/indexOf":88,"mout/lang/kindOf":90,"mout/time/now":95}],84:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -2941,7 +3009,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":69,"./index":71,"mout/array/forEach":18,"mout/array/indexOf":19}],71:[function(require,module,exports){
+},{"./defer":83,"./index":85,"mout/array/forEach":87,"mout/array/indexOf":88}],85:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -3033,7 +3101,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":28,"mout/lang/kindOf":31,"mout/object/hasOwn":40,"mout/object/mixIn":41}],72:[function(require,module,exports){
+},{"mout/lang/createObject":89,"mout/lang/kindOf":90,"mout/object/hasOwn":93,"mout/object/mixIn":94}],86:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -3159,7 +3227,43 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":71,"mout/array/indexOf":19}],73:[function(require,module,exports){
+},{"./index":85,"mout/array/indexOf":88}],87:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16}],88:[function(require,module,exports){
+arguments[4][17][0].apply(exports,arguments)
+},{"dup":17}],89:[function(require,module,exports){
+arguments[4][75][0].apply(exports,arguments)
+},{"../object/mixIn":94,"dup":75}],90:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],91:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./hasOwn":93,"dup":28}],92:[function(require,module,exports){
+arguments[4][29][0].apply(exports,arguments)
+},{"./forIn":91,"./hasOwn":93,"dup":29}],93:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"dup":30}],94:[function(require,module,exports){
+arguments[4][73][0].apply(exports,arguments)
+},{"./forOwn":92,"dup":73}],95:[function(require,module,exports){
+
+
+    /**
+     * Get current time in miliseconds
+     */
+    function now(){
+        // yes, we defer the work to another function to allow mocking it
+        // during the tests
+        return now.get();
+    }
+
+    now.get = (typeof Date.now === 'function')? Date.now : function(){
+        return +(new Date());
+    };
+
+    module.exports = now;
+
+
+
+},{}],96:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -3990,7 +4094,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":75}],74:[function(require,module,exports){
+},{"./parser":98}],97:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -4000,7 +4104,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":73,"./parser":75}],75:[function(require,module,exports){
+},{"./finder":96,"./parser":98}],98:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -4252,7 +4356,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],76:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

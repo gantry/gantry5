@@ -59,7 +59,7 @@ class Assignments
             $items = [];
             foreach ($menu->links as $link) {
                 $items[] = [
-                    'name' => 'menu[' . $link->value . ']',
+                    'name' => 'menu.' . $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $this->style_id,
                     'disabled' => $link->type != 'component' || $link->checked_out && $link->checked_out != $userid,
@@ -89,6 +89,7 @@ class Assignments
             throw new \RuntimeException(\JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
+        \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
         $style = \JTable::getInstance('Style', 'TemplatesTable');
         if (!$style->load($this->style_id) || $style->client_id != 0) {
             throw new \RuntimeException('Template style does not exist');

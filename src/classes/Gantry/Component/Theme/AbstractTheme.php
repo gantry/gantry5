@@ -14,8 +14,10 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Twig\TwigCacheFilesystem;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -119,7 +121,8 @@ abstract class AbstractTheme
             /** @var Config $global */
             $global = $gantry['global'];
 
-            $cache = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cache = $cachePath ? new TwigCacheFilesystem($cachePath, \Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION) : null;
             $debug = $gantry->debug();
             $production = (bool) $global->get('production', 1);
             $loader = new \Twig_Loader_Filesystem();
@@ -160,6 +163,24 @@ abstract class AbstractTheme
     }
 
     /**
+     * Compile and render twig string.
+     *
+     * @param string $string
+     * @param array $context
+     * @return string
+     */
+    public function compile($string, array $context = [])
+    {
+        $renderer = $this->renderer();
+        $template = $renderer->createTemplate($string);
+
+        // Include Gantry specific things to the context.
+        $context = $this->getContext($context);
+
+        return $template->render($context);
+    }
+
+    /**
      * Initialize theme.
      */
     protected function init()
@@ -181,7 +202,8 @@ abstract class AbstractTheme
         $locator = $gantry['locator'];
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
 
-        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
     }
 
     /**
@@ -210,7 +232,6 @@ abstract class AbstractTheme
      *
      * @param string $path
      * @return string
-     * @internal
      */
     protected function getCachePath($path = '')
     {

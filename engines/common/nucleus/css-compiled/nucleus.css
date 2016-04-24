@@ -1404,6 +1404,13 @@ th {
 
 .size-100 {
   width: 100%;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  -webkit-flex: 0 100%;
+  -moz-flex: 0 100%;
+  -ms-flex: 0 100%;
+  flex: 0 100%;
 }
 
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown {
@@ -1445,6 +1452,7 @@ th {
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator {
   display: inline-block;
   vertical-align: middle;
+  line-height: normal;
 }
 .g-main-nav .g-toplevel > li.g-parent .g-menu-parent-indicator:after {
   display: inline-block;

@@ -11,6 +11,8 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Pimple\ServiceProviderInterface;
+use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
 class Gantry extends Base\Gantry
 {
@@ -48,9 +50,8 @@ class Gantry extends Base\Gantry
      * @return Gantry
      * @throws \LogicException
      */
-    protected static function load()
+    protected static function init()
     {
-
         // Make sure Timber plugin has been loaded.
         if (!class_exists('Timber')) {
             $action = 'install-plugin';
@@ -58,7 +59,30 @@ class Gantry extends Base\Gantry
             throw new \LogicException('<strong>Timber not activated</strong>. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'update.php' ) ), $action.'_'.$slug ) . '"><strong>here</strong></a> to install it or go to the <a href=" ' . admin_url('plugins.php#timber') . '"><strong>Installed Plugins</strong></a> page to activate it, if already installed.');
         }
 
-        return parent::load();
+        $container = parent::init();
+
+
+        $lookup = $container['loader']->getPrefixesPsr4()['Gantry\\'];
+        $iterator = new \FilesystemIterator($lookup[0] . '/WordPress/Integration', \FilesystemIterator::SKIP_DOTS & \FilesystemIterator::UNIX_PATHS);
+
+        /** @var \FilesystemIterator $file */
+        foreach ($iterator as $file) {
+            if (!$file->isDir()) {
+                continue;
+            }
+            $class = "Gantry\\WordPress\\Integration\\{$file->getBasename()}\\{$file->getBasename()}";
+            if (class_exists($class) && call_user_func([$class, 'enabled'])) {
+                $integration = new $class;
+                if ($integration instanceof ServiceProviderInterface) {
+                    $container->register($integration);
+                }
+                if ($integration instanceof EventSubscriberInterface) {
+                    $container['events']->addSubscriber($integration);
+                }
+            }
+        }
+
+        return $container;
     }
 
     /**

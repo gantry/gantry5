@@ -17,7 +17,6 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
-use Leafo\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Compiler extends BaseCompiler

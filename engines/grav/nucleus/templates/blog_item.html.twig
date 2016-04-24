@@ -1,14 +1,5 @@
-{% extends 'partials/base.html.twig' %}
-{% set layout = 'sidebar' %}
+{% extends "@nucleus/page.html.twig" %}
 
-{% block breadcrumbs %}
-    {% include 'breadcrumbs.html.twig' %}
-{% endblock %}
-
-{% block content_sidebar %}
-    {% include 'partials/blog_item.html.twig' %}
-{% endblock %}
-
-{% block sidebar %}
-    {% include 'partials/blog_sidebar.html.twig' %}
+{% block content %}
+    {% include 'partials/blog_item.html.twig' with {'blog':page.parent, 'truncate':false} %}
 {% endblock %}

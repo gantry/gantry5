@@ -63,6 +63,18 @@ form:
           type: textarea.textarea
           label: Description
 
+        .id:
+          type: input.text
+          label: CSS ID
+          description: Enter the ID for the block without the hash (#) (ie. <code>your-id</code>. You can then reference the element via CSS as <code>#your-id</code>
+          default:
+
         .class:
+          type: input.selectize
+          label: CSS Classes
+          description: Enter CSS class names.
+          default:
+
+        .variations:
           type: input.block-variations
           label: Variations

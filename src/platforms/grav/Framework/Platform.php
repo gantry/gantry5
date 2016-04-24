@@ -10,8 +10,12 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Position\Module;
+use Gantry\Component\Position\Position;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Grav\Common\Grav;
+use Grav\Common\Utils;
+use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -24,6 +28,21 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Platform extends BasePlatform
 {
     protected $name = 'grav';
+
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        // Initialize custom streams for Prime.
+        $this->items['streams'] += [
+            'gantry-positions' => [
+                'type' => 'ReadOnlyStream',
+                'prefixes' => [
+                    '' => ['gantry-theme://positions']
+                ]
+            ]
+        ];
+    }
 
     /**
      * @return array
@@ -85,6 +104,63 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'plugin://gantry5/assets']];
     }
 
+
+    public function countModules($position)
+    {
+        return count($this->getModules($position));
+    }
+
+    public function getModules($position)
+    {
+        return (new Position($position))->listModules();
+    }
+
+    public function displayModule($id, $attribs = [])
+    {
+        $module = is_array($id) ? $id : $this->getModule($id);
+
+        // Make sure that module really exists.
+        if (!$module || !is_array($module)) {
+            return '';
+        }
+
+        if (isset($module['assignments'])) {
+            $assignments = $module['assignments'];
+            if (is_array($assignments)) {
+                // TODO: move Assignments to DI to speed it up.
+                if (!(new Assignments)->matches(['test' => $assignments])) {
+                    return '';
+                }
+            } elseif ($assignments !== 'all') {
+                return '';
+            }
+        }
+
+        /** @var Theme $theme */
+        $theme = $this->container['theme'];
+
+        $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['segment' => $module]));
+
+        return $html;
+    }
+
+    public function displayModules($position, $attribs = [])
+    {
+        $html = '';
+        foreach ($this->getModules($position) as $module) {
+            $html .= $this->displayModule($module, $attribs);
+        }
+
+        return $html;
+    }
+
+    protected function getModule($id)
+    {
+        list($position, $module) = explode('/', $id, 2);
+
+        return (new Module($module, $position))->toArray();
+    }
+
     /**
      * Get preview url for individual theme.
      *
@@ -118,5 +194,14 @@ class Platform extends BasePlatform
     {
         $grav = Grav::instance();
         return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
+    }
+
+    public function truncate($text, $length, $html = false)
+    {
+        if ($html) {
+            return Utils::truncate($text, $length);
+        } else {
+            return Utils::truncateHtml($text, $length);
+        }
     }
 }

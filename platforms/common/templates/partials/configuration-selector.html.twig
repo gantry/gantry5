@@ -7,7 +7,7 @@
             <option value="default"
                 {% if configuration == 'default' %}selected="selected"{% endif %}
                 data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                {{ 'Base Outline' }}
+                {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
             </option>
         </optgroup>
 
@@ -16,13 +16,14 @@
         <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
             {% for name, title in user_conf %}
                 {% if name == configuration %}
-                    {% set selected_title = title|e %}
-                    {% set selected_value = name|e %}
+                    {% set selected_title = title %}
+                    {% set selected_value = name %}
                 {% endif %}
-            <option value="{{ name|e }}"
+                <option value="{{ name }}"
                         {% if name == configuration %}selected="selected"{% endif %}
-                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                    {{ title|e }}
+                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+                >
+                    {{ title }}
                 </option>
             {% endfor %}
         </optgroup>
@@ -33,20 +34,31 @@
         <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
             {% for name, title in system_conf %}
                 {% if name == configuration %}
-                    {% set selected_title = title|e %}
-                    {% set selected_value = name|e %}
+                    {% set selected_title = title %}
+                    {% set selected_value = name %}
                     {% set selected_editable = false %}
                 {% endif %}
-                <option value="{{ name|e }}"
+                <option value="{{ name }}"
                         {% if name == configuration %}selected="selected"{% endif %}
-                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                    {{ title|e }}
+                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+                >
+                    {{ title }}
                 </option>
             {% endfor %}
         </optgroup>
         {% endif %}
     </select>
-    {% if selected_editable %}
-    <span data-title-editable="{{ selected_title }}" data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename')|e }}" class="title g-conf-title-edit">{{ selected_title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': selected_title}) }}"  data-title-editable="{{ selected_title }}" data-title-edit=""></i>
+    {% if selected_editable and gantry.authorize('outline.rename') %}
+    <span data-title-editable="{{ selected_title }}"
+          data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename') }}"
+          class="title g-conf-title-edit"
+    >
+        {{ selected_title }}
+    </span>
+    <i class="fa fa-pencil font-small"
+       tabindex="0"
+       aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(selected_title) }}"
+       data-title-editable="{{ selected_title }}"
+       data-title-edit=""></i>
     {% endif %}
 </li>

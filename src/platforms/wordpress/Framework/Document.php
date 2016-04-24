@@ -72,7 +72,7 @@ class Document extends BaseDocument
                         $src = array_shift($array);
                         $version = array_shift($array) ?: false;
                         $name = basename($src, '.js');
-                        if(!empty($script['handle'])) {
+                        if (!empty($script['handle'])) {
                             $name = $script['handle'];
                         }
                         self::$script_info[$name] = $script;
@@ -87,6 +87,40 @@ class Document extends BaseDocument
         }
 
         self::$scripts[$pos] = [];
+    }
+
+    public static function load($framework)
+    {
+        switch ($framework) {
+            case 'jquery':
+            case 'jquery.framework':
+                wp_enqueue_script('jquery');
+                break;
+            case 'jquery.ui.core':
+                wp_enqueue_script('jquery-ui-core');
+                break;
+            case 'jquery.ui.sortable':
+                wp_enqueue_script('jquery-ui-sortable');
+                break;
+            case 'bootstrap.2':
+                wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
+                break;
+            case 'bootstrap.3':
+                wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
+                break;
+            case 'mootools':
+            case 'mootools.framework':
+            case 'mootools.core':
+                wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
+                break;
+            case 'mootools.more':
+                wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 
     public static function domain($addDomain = false)

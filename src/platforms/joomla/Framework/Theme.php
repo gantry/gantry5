@@ -111,9 +111,18 @@ class Theme extends AbstractTheme
             if ($filename) {
                 $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
             }
+
+            // Load template language files, including overrides.
+            $paths = $locator->findResources('gantry-theme://language');
+            foreach (array_reverse($paths) as $path) {
+                $lang->load("tpl_{$this->name}", dirname($path));
+            }
         }
 
         $doc = \JFactory::getDocument();
+        if ($doc instanceof \JDocumentHtml) {
+            $doc->setHtml5(true);
+        }
         $this->language = $doc->language;
         $this->direction = $doc->direction;
         $this->url = \JUri::root(true) . '/templates/' . $this->name;

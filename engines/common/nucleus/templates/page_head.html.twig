@@ -20,8 +20,8 @@
     {% endblock -%}
 {% endassets -%}
 
-{%- if gantry.config.page.head.atoms %}
-    {% set atoms %}
+{%- set atoms %}
+    {% if gantry.config.page.head.atoms %}
         {% for atom in gantry.config.page.head.atoms %}
             {% try %}
                 {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
@@ -29,10 +29,12 @@
                 {# TODO: Add message if atom is missing. #}
             {% endtry %}
         {% endfor %}
-    {% endset %}
-{% endif -%}
+    {% endif %}
 
-{%- include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } -%}
+    {% if gantry.config.page.assets %}
+        {% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } %}
+    {% endif %}
+{% endset -%}
 
 <head>
     {% block head_meta %}

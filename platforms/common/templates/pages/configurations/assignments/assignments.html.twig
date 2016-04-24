@@ -1,26 +1,34 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
+{% set edit = gantry.authorize('outline.assign') %}
+
 {% block gantry %}
     <div id="assignments">
         {% if assignments %}
             <form method="post">
-        <span class="float-right">
-            <button type="submit" class="button button-primary button-save" data-save="Assignments"><i class="fa fa-fw fa-check"></i> <span>Save Assignments</span></button>
-        </span>
+                {% if edit %}
+                <span class="float-right">
+                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
+                        <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                    </button>
+                </span>
+                {% endif %}
 
-                <h2 class="page-title">Assignments</h2>
+                <h2 class="page-title">{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</h2>
 
                 <div class="g-filters-bar">
-                    <div class="g-panel-filters" data-g-global-filter>
+                    <div class="g-panel-filters" data-g-global-filter="">
                         <div class="search settings-block">
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
                             <i class="fa fa-fw fa-search"></i>
                         </div>
-                        <span data-g-assignments-uncheck data-tip="Unselect all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
-                        <span data-g-assignments-check data-tip="Selects all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
+                        {% if edit %}
+                        <span data-g-assignments-uncheck="" data-tip="Unselect all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
+                        <span data-g-assignments-check="" data-tip="Selects all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
+                        {% endif %}
                     </div>
                     <label>
-                        <input type="checkbox" data-assignments-enabledonly /> Hide Unassigned Items
+                        <input type="checkbox" data-assignments-enabledonly="" /> {{ 'GANTRY5_PLATFORM_ASSIGNMENTS_HIDE_UNASSIGNED'|trans }}
                     </label>
                 </div>
 
@@ -29,14 +37,20 @@
                         {% for name, list in types %}
                             <div class="card settings-block">
                                 <h4>
-                                    {{ list.label|e }}
+                                    {{ list.label }}
                                     <div class="g-panel-filters float-right align-right">
                                         <div class="search settings-block">
                                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">
                                             <i class="fa fa-fw fa-search"></i>
                                         </div>
-                                        <span data-g-assignments-uncheck data-tip="Unselect all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
-                                        <span data-g-assignments-check data-tip="Selects all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
+                                        {% if edit %}
+                                        <span data-g-assignments-uncheck="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}" data-tip-place="right">
+                                            <i class="fa fa-fw fa-toggle-off"></i>
+                                        </span>
+                                        <span data-g-assignments-check="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}" data-tip-place="right">
+                                            <i class="fa fa-fw fa-toggle-on"></i>
+                                        </span>
+                                        {% endif %}
                                     </div>
                                 </h4>
 
@@ -63,18 +77,23 @@
                     {% endfor %}
                 </div>
 
+                {% if edit %}
                 <div class="g-footer-actions">
-            <span class="float-right">
-                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span></button>
-            </span>
+                    <span class="float-right">
+                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
+                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                        </button>
+                    </span>
                 </div>
+                {% endif %}
+                <input type="hidden" name="_end" value="1" />
             </form>
         {% else %}
-            <h2 class="page-title">Assignments</h2>
+            <h2 class="page-title">{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</h2>
             {% if configuration == 'default' %}
-                <p>You cannot assign Base Outline.</p>
+                <p>{{ 'GANTRY5_PLATFORM_ASSIGN_BASE_DESC'|trans }}</p>
             {% else %}
-                <p>No assignments available!</p>
+                <p>{{ 'GANTRY5_PLATFORM_NO_ASSIGNMENTS_DESC'|trans }}</p>
             {% endif %}
         {% endif %}
     </div>

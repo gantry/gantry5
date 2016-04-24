@@ -17,7 +17,7 @@
                     <div class="g-filter-actions">
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
-                                <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." role="search" />
+                                <input type="text" data-g-collapse-filter="" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." role="search" />
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                             <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
@@ -33,7 +33,10 @@
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                                     <input type="hidden" name="page[{{ id }}]"/>
-                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}"{{ overrideable ? ' class="card-overrideable"' : '' }}>
+                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                                        data-g-collapse-id="{{ prefix }}"
+                                        {{ overrideable ? ' class="card-overrideable"' : '' }}
+                                    >
                                         <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw  fa-caret-up"></i></span>
                                         <span class="g-title">{{ particle.name }}</span>
                                         {% if particle.form.fields.enabled %}

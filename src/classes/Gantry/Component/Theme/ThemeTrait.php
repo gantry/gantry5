@@ -59,7 +59,7 @@ trait ThemeTrait
         $streamName = $this->details()->addStreams();
 
         /** @var UniformResourceLocator $locator */
-        $locator = self::$gantry['locator'];
+        $locator = self::gantry()['locator'];
         $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
     }
 
@@ -477,17 +477,25 @@ trait ThemeTrait
      * Action is needed before displaying the layout as it recalculates block widths based on the visible content.
      *
      * @param array $items
+     * @param bool  $temporary
+     * @param bool  $sticky
      * @internal
      */
-    protected function prepareLayout(array &$items)
+    protected function prepareLayout(array &$items, $temporary = false, $sticky = false)
     {
         foreach ($items as $i => &$item) {
             // Non-numeric items are meta-data which should be ignored.
             if (((string)(int) $i !== (string) $i) || !is_object($item)) {
                 continue;
             }
+
             if (!empty($item->children)) {
-                $this->prepareLayout($item->children);
+                $fixed = true;
+                foreach ($item->children as $child) {
+                    $fixed &= !empty($child->attributes->fixed);
+                }
+
+                $this->prepareLayout($item->children, $fixed, $temporary);
             }
 
             // TODO: remove hard coded types.
@@ -508,6 +516,11 @@ trait ThemeTrait
                     break;
 
                 default:
+                    if ($sticky) {
+                        $item->attributes->sticky = 1;
+                        break;
+                    }
+
                     if (empty($item->children)) {
                         unset($items[$i]);
                         break;

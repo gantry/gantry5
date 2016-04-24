@@ -10,12 +10,12 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
-use Grav\Common\Theme;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -102,7 +102,9 @@ class Router extends BaseRouter
 
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+            CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+            CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
         }
 
         return $this;

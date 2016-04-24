@@ -3,13 +3,13 @@
 {% block global_attributes %}
     {% set post_type = field.post_type|default('page') %}
     {% set post_status = field.post_status|default('publish') %}
-    {% set post_per_page = field.post_per_page|default('-1') %}
+    {% set posts_per_page = field.posts_per_page|default('-1') %}
     {% set orderby = field.orderby|default('title') %}
     {% set order = field.order|default('asc') %}
     {% set array = {
         'post_type': post_type,
         'post_status': post_status,
-        'post_per_page': post_per_page,
+        'posts_per_page': posts_per_page,
         'orderby': orderby,
         'order': order,
     } %}

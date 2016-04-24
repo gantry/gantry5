@@ -21,21 +21,17 @@ class CompiledYamlFile extends YamlFile
 {
     use CompiledFile;
 
+    static public $defaultCachePath;
+    static public $defaultCaching = true;
+
     protected function __construct()
     {
         parent::__construct();
 
-        $gantry = Gantry::instance();
+        $this->caching(static::$defaultCaching);
 
-        /** @var Config $global */
-        $global = $gantry['global'];
-
-        if (!$global->get('compile_yaml', 1)) {
-            $this->caching(false);
-        }
-
-        if (isset($gantry['file.yaml.cache.path'])) {
-            $this->setCachePath($gantry['file.yaml.cache.path']);
+        if (static::$defaultCachePath) {
+            $this->setCachePath(static::$defaultCachePath);
         }
     }
 }

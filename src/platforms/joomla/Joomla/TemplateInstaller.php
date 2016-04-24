@@ -10,6 +10,7 @@
 
 namespace Gantry\Joomla;
 
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
@@ -104,10 +105,10 @@ class TemplateInstaller
             $home = ($home !== null ? $home : $style->home);
             $params = (array) json_decode($style->params, true);
 
-            $data = array(
+            $data = [
                 'params' => json_encode($configuration + $params),
                 'home' => $home
-            );
+            ];
 
             $style->save($data);
         }
@@ -353,7 +354,9 @@ class TemplateInstaller
         }
         Folder::create($cachePath);
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
-        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+        CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
 
         /** @var Outlines $outlines */
         $outlines = $gantry['configurations'];

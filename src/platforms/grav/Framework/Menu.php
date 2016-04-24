@@ -19,13 +19,12 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
-use Grav\Common\GravTrait;
 use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
 {
-    use GantryTrait, GravTrait;
+    use GantryTrait;
 
     protected $pages = [];
 
@@ -33,7 +32,7 @@ class Menu extends AbstractMenu
     {
         $this->default = 'home';
 
-        $grav = static::getGrav();
+        $grav = Grav::instance();
         $page = $grav['page'];
         $this->active  = $page ? trim($page->route(), '/') : null;
     }

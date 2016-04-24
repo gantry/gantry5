@@ -137,6 +137,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $name
      * @param array $items
+     * @param array $preset
      */
     public function __construct($name, array $items = null, array $preset = null)
     {
@@ -599,6 +600,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param  string $name
+     * @param  bool   $autoSave
      * @return static
      */
     public static function loadIndex($name, $autoSave = false)

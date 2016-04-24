@@ -6,8 +6,8 @@
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="Content Settings">
-                    <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
+                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_CONTENT_SETTINGS'|trans }}">
+                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS'|trans }}</span></button>
                 </span>
                 {% for group, list in content %}
                     <h2 class="page-title">
@@ -17,7 +17,7 @@
                     <div class="g-filter-actions">
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
-                                <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
+                                <input type="text" data-g-collapse-filter="" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                             <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
@@ -33,8 +33,13 @@
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                                     <input type="hidden" name="content[{{ group }}][{{ id }}]"/>
-                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}"{{ overrideable ? ' class="card-overrideable"' : '' }}>
-                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw  fa-caret-up"></i></span>
+                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                                        data-g-collapse-id="{{ prefix }}"
+                                        {{ overrideable ? ' class="card-overrideable"' : '' }}
+                                    >
+                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right">
+                                            <i class="fa fa-fw  fa-caret-up"></i>
+                                        </span>
                                         <span class="g-title">{{ item.name }}</span>
                                         {% if item.form.fields.enabled %}
                                             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': item.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
@@ -56,8 +61,8 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="Content Settings">
-                            <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
+                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_CONTENT_SETTINGS'|trans }}">
+                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS'|trans }}</span></button>
                     </span>
                 </div>
             </div>

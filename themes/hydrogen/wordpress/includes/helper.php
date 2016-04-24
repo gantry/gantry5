@@ -70,7 +70,7 @@ class G5ThemeHelper
                 <?php comment_text(); ?>
 
                 <?php comment_reply_link(array_merge($args,
-                    array('before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
+                    array('add_below' => 'div-comment', 'before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
             </section>
 
         </article>

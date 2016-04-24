@@ -11,18 +11,18 @@
                 </div>
                 <ul>
                     {% for key, list in particles %}
-                        {{ key|capitalize|e }}
+                        {{ key|capitalize }}
                         <ul>
                             {% for type, particle in list %}
                                 {% for item_key, item in particle %}
-                                    <li class="g5-lm-particle-{{ type|e }}"
+                                    <li class="g5-lm-particle-{{ type }}"
                                         data-lm-nodrag
                                         data-mm-type="particle"
-                                        data-lm-blocktype="{{ type|e }}"
-                                        data-mm-filter="{{ item.name|e }}"
-                                        data-lm-subtype="{{ item_key|e }}">
+                                        data-lm-blocktype="{{ type }}"
+                                        data-mm-filter="{{ item.name }}"
+                                        data-lm-subtype="{{ item_key }}">
                                         <span class="icon"><i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i></span>
-                                        <span class="title">{{ item.name|e }}</span>
+                                        <span class="title">{{ item.name }}</span>
                                     </li>
                                 {%  endfor %}
                             {% endfor %}
@@ -34,7 +34,11 @@
     </div>
     <div class="g-modal-actions">
         {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
-        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
-        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
+        <button class="button button-primary" type="submit" data-mm-select="" disabled="disabled">
+            {{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i>
+        </button>
+        <button class="button g5-dialog-close">
+            {{ 'GANTRY5_PLATFORM_CANCEL'|trans }}
+        </button>
     </div>
 </div>

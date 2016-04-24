@@ -15,6 +15,7 @@ use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
+use Gantry\Joomla\StyleHelper;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -57,6 +58,15 @@ class EventListener implements EventSubscriberInterface
 
     public function onLayoutSave(Event $event)
     {
+        /** @var Layout $layout */
+        $layout = $event->layout;
+        if ($layout->name[0] !== '_') {
+            $preset = isset($layout->preset['name']) ? $layout->preset['name'] : 'default';
+
+            // Update Joomla template style.
+            StyleHelper::update($layout->name, $preset);
+        }
+
         $theme = $event->gantry['theme.name'];
 
         $positions = $event->gantry['configurations']->positions();
@@ -104,6 +114,7 @@ class EventListener implements EventSubscriberInterface
             'columns' => []
         ];
 
+        $gantry = $event->gantry;
         $menu = $event->menu;
 
         // Save global menu settings into Joomla.
@@ -116,7 +127,7 @@ class EventListener implements EventSubscriberInterface
             'title' => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
-        if (!$menuType->save($options)) {
+        if ($gantry->authorize('menu.edit') && !$menuType->save($options)) {
             throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
         }
 
@@ -164,7 +175,7 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
 
-                if ($modified) {
+                if ($modified && $gantry->authorize('menu.edit')) {
                     $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
                         throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);

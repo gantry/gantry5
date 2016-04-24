@@ -24,8 +24,6 @@ class AssignmentsPost implements AssignmentsInterface
      */
     public function getRules()
     {
-        global $wp_query;
-
         $rules = [];
 
         $queried_object = get_queried_object();

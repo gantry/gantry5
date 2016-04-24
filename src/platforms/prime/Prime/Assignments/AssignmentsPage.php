@@ -12,8 +12,6 @@ namespace Gantry\Prime\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Prime\Pages;
-use Grav\Common\Grav;
-use Grav\Common\Page\Page;
 
 class AssignmentsPage implements AssignmentsInterface
 {
@@ -27,9 +25,7 @@ class AssignmentsPage implements AssignmentsInterface
      */
     public function getRules()
     {
-        $rules = [];
-
-        // TODO:
+        $rules = [[PAGE_PATH => $this->priority]];
 
         return $rules;
     }

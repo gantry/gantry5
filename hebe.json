@@ -139,11 +139,19 @@
                 "themes":[
                     {
                         "source":"/themes/hydrogen/wordpress",
-                        "destination":"/wp-content/themes/hydrogen"
+                        "destination":"/wp-content/themes/g5_hydrogen"
                     },
                     {
                         "source":"/themes/hydrogen/common",
-                        "destination":"/wp-content/themes/hydrogen/common"
+                        "destination":"/wp-content/themes/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/hydrogen-child/wordpress",
+                        "destination":"/wp-content/themes/g5_hydrogen_child"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/wp-content/themes/g5_hydrogen_child/common"
                     }
                 ]
             }
@@ -204,12 +212,6 @@
                     {
                         "source":"/platforms/prime/config",
                         "destination":"/config"
-                    }
-                ],
-                "includes":[
-                    {
-                        "source":"/platforms/prime/includes",
-                        "destination":"/includes"
                     }
                 ],
                 "layouts":[

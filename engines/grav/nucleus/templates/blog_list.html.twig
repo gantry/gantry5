@@ -1,25 +1,23 @@
-{% extends 'partials/base.html.twig' %}
+{% extends "@nucleus/page.html.twig" %}
 
-{% set layout = 'sidebar' %}
 {% set collection = page.collection() %}
 
-{% block breadcrumbs %}
-    {% include 'breadcrumbs.html.twig' %}
-{% endblock %}
+{% block content %}
+    {% set blog_image = page.media.images|first.grayscale().contrast(20).brightness(-100).colorize(-35,81,122) %}
 
-{% block content_sidebar %}
-    {{ content }}
+    {% if blog_image %}
+    <div class="flush-top blog-header blog-header-image" style="background-image: url({{ blog_image.url }});">
+    {% else %}
+    <div class="blog-header">
+    {% endif %}
+        {{ page.content }}
+    </div>
+
     {% for child in collection %}
-        {% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
+        {% include 'partials/blog_item.html.twig' with {'blog':page, 'page':child, 'truncate':true} %}
     {% endfor %}
-{% endblock %}
 
-{% block sidebar %}
-    {% include 'partials/blog_sidebar.html.twig' %}
-{% endblock %}
-
-{% block pagination %}
-    {% if collection.params.pagination %}
-    {% include 'pagination.html.twig' with {'pagination':collection.params.pagination} %}
+    {% if config.plugins.pagination.enabled and collection.params.pagination %}
+        {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
     {% endif %}
 {% endblock %}

@@ -65,6 +65,9 @@ interface ThemeInterface
 
     /**
      * Update all CSS files in the theme.
+     *
+     * @param array $configurations
+     * @return array List of CSS warnings.
      */
     public function updateCss(array $configurations = null);
 

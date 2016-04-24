@@ -27,7 +27,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
     {
         $sp = $this;
 
-        $gantry['locator'] = function($c) use ($sp) {
+        $gantry['locator'] = function() use ($sp) {
             return new UniformResourceLocator(GANTRY5_ROOT);
         };
         $gantry['streams'] = function($c) use ($sp) {

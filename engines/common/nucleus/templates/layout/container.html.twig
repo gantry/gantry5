@@ -10,7 +10,7 @@
     {% endfor %}
 {% endset %}
 
-{% if html|trim %}
+{% if segment.attributes.sticky or html|trim %}
     {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e %}
     {% set attr_extra = '' %}
 

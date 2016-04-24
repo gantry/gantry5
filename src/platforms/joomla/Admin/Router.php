@@ -10,6 +10,7 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
@@ -76,7 +77,9 @@ class Router extends BaseRouter
 
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
-            $this->container['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+
+            CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+            CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
         }
 
         $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';
@@ -118,6 +121,7 @@ class Router extends BaseRouter
      * Send response to the client.
      *
      * @param Response $response
+     * @return string
      */
     protected function send(Response $response)
     {

@@ -16,7 +16,12 @@ defined('ABSPATH') or die;
 $requiredGantryVersion = '5.2.0';
 
 // Bootstrap Gantry framework or fail gracefully.
-$gantry = include_once dirname(__FILE__) . '/includes/gantry.php';
+$gantry_include = get_stylesheet_directory() . '/includes/gantry.php';
+if (!file_exists($gantry_include)) {
+    $gantry_include = get_template_directory() . '/includes/gantry.php';
+}
+$gantry = include_once $gantry_include;
+
 if (!$gantry) {
     return;
 }

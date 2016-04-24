@@ -31,7 +31,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     protected $active;
     protected $params;
     protected $override = false;
-    private $config;
+    protected $config;
 
     /**
      * @var array|Item[]

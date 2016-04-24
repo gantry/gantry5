@@ -645,7 +645,7 @@
         Tooltip.prototype.updateSize = function () {\n\
         \tif (this.hidden) {\n\
         \t\tthis.element.style.visibility = 'hidden';\n\
-        \t\tbody.appendChild(this.element);\n\
+        \t\twindow.document.body.appendChild(this.element);\n\
         \t}\n\
         \tthis.width = this.element.offsetWidth;\n\
         \tthis.height = this.element.offsetHeight;\n\
@@ -656,7 +656,7 @@
         \t\tthis.offset = this.options.offset != null ? this.options.offset : 0;\n\
     \t}\n\
         \tif (this.hidden) {\n\
-        \t\tbody.removeChild(this.element);\n\
+        \t\twindow.document.body.removeChild(this.element);\n\
         \t\tthis.element.style.visibility = '';\n\
         \t} else {\n\
         \t\tthis.position();\n\
@@ -919,7 +919,7 @@
         \t// Stop here if tip is already visible\n\
         \tif (this.hidden) {\n\
         \t\tthis.hidden = 0;\n\
-        \t\tbody.appendChild(this.element);\n\
+        \t\twindow.document.body.appendChild(this.element);\n\
         \t}\n\
         \n\
         \t// Make tooltip aware of window resize\n\
@@ -968,7 +968,7 @@
         \tclearTimeout(this.aIndex);\n\
         \tthis.aIndex = setTimeout(function () {\n\
         \t\tself.aIndex = 0;\n\
-        \t\tbody.removeChild(self.element);\n\
+        \t\twindow.document.body.removeChild(self.element);\n\
         \t\tself.hidden = 1;\n\
         \t}, duration);\n\
         \n\
@@ -983,7 +983,7 @@
         \tclearTimeout(this.aIndex);\n\
         \tthis._unaware();\n\
         \tif (!this.hidden) {\n\
-        \t\tbody.removeChild(this.element);\n\
+        \t\twindow.document.body.removeChild(this.element);\n\
         \t}\n\
         \tthis.element = this.options = null;\n\
         };\n\
