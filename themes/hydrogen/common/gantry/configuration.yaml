@@ -1,13 +1,3 @@
-gantry:
-  platform: grav
-  engine: nucleus
-
-theme:
-  parent: hydrogen
-  base: gantry-theme://common
-  file: gantry-theme://include/theme.php
-  class: \Gantry\Framework\Theme
-
 fonts:
   roboto:
     400: 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont'
@@ -26,3 +16,24 @@ css:
     - hydrogen
   overrides:
     - custom
+
+block-variations:
+  Box Variations:
+    box1: Box 1
+    box2: Box 2
+    box3: Box 3
+    box4: Box 4
+  Effects:
+    shadow: Shadow 1
+    shadow2: Shadow 2
+    rounded: Rounded
+    square: Square
+  Utility:
+    disabled: Disabled
+    align-right: Align Right
+    align-left: Align Left
+    center: Center
+    full-width: Full Width
+    equal-height: Equal Height
+    nomarginall: No Margin
+    nopaddingall: No Padding

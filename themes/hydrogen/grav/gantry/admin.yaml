@@ -1,7 +1,0 @@
-styles:
-  section:
-    - header
-    - showcase
-    - subfeature
-  core:
-    - base
