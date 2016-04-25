@@ -1,9 +1,13 @@
-platform: common
+name: Hydrogen
 version: "@version@"
 date: @versiondate@
-engine: nucleus
-parent: hydrogen
 
-base: gantry-theme://common
-file: gantry-theme://include/theme.php
-class: \Gantry\Framework\Theme
+gantry:
+  platform: common
+  engine: nucleus
+
+setup:
+  parent: hydrogen
+  base: gantry-theme://common
+  file: gantry-theme://include/theme.php
+  class: \Gantry\Framework\Theme
