@@ -6,7 +6,10 @@
         - Hydrogen: The template now includes the emoji fonts (thanks @810 - #1253)
     2. [](#improved)
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
-
+        - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
+    3. [](#bugfix)
+        - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
+    
 # 5.2.15
 ## 25/04/2016
 

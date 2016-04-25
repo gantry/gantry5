@@ -4876,11 +4876,19 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   -moz-transition: opacity 0.2s;
   transition: opacity 0.2s;
 }
+@media only all and (max-width: 59.938rem) {
+  #g5-container #menu-editor .config-cog {
+    opacity: 1;
+  }
+}
 #g5-container #menu-editor li:hover .config-cog {
   opacity: 1;
 }
 #g5-container #menu-editor li .menu-item {
   display: inline-block;
+}
+#g5-container #menu-editor li .menu-item.menu-item-back {
+  display: block;
 }
 #g5-container #menu-editor li .menu-item .title {
   font-size: 1rem;
@@ -4996,7 +5004,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .menu-selector li .config-cog {
   top: 4px;
-  right: 4px;
+  right: 0.738rem;
 }
 #g5-container .menu-selector li:hover, #g5-container .menu-selector li.active {
   background: #48B0D7;
@@ -5064,6 +5072,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   margin-left: -25px;
   cursor: ew-resize;
   opacity: 0;
+}
+@media only all and (max-width: 59.938rem) {
+  #g5-container .submenu-selector .g-block .submenu-reorder {
+    opacity: 1;
+  }
 }
 #g5-container .submenu-selector .g-block .submenu-level {
   position: absolute;
@@ -5142,7 +5155,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-size: 0.8rem;
 }
 #g5-container .submenu-selector .submenu-items li .config-cog {
-  right: 4px;
+  right: 0.738rem;
   top: 50%;
   margin-top: -12px;
 }

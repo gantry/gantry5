@@ -4542,7 +4542,7 @@ ready(function() {
     menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
-        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+        exclude: '[data-lm-nodrag], .menu-item-back, .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
