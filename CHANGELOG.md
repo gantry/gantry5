@@ -1,3 +1,10 @@
+# 5.2.16
+## XX/XX/2016
+
+1. [Common](#common)
+    2. [](#improved)
+        - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
+
 # 5.2.15
 ## 25/04/2016
 

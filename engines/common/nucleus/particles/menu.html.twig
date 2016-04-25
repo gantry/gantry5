@@ -109,7 +109,7 @@
     {% import _self as SELF %}
     {% if not item.dropdown_hide %}
         {% set animation = context.gantry.config.get('styles.menu.animation')|default('g-fade') %}
-        {% if ((item.groups|length == 1 and not dropdown_type == 'fullwidth') or dropdown_type == 'standard') %}{% set dropdown_dir = 'g-dropdown-' ~ item.dropdown_dir|default('right') %}{% endif %}
+        {% if ((item.groups|length == 1 and not dropdown_type == 'fullwidth') or dropdown_type == 'standard') or (item.width|default('auto') != 'auto' and dropdown_type == 'fullwidth')%}{% set dropdown_dir = 'g-dropdown-' ~ item.dropdown_dir|default('right') %}{% endif %}
         <ul class="g-dropdown g-inactive {{ animation }} {{ dropdown_dir }}"{{ SELF.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
             <li class="g-dropdown-column">
                 {{ SELF.displayContainers(item, menu, context, dropdown_type) }}

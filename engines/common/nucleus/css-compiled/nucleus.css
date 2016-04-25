@@ -1563,6 +1563,24 @@ th {
   left: 0;
   right: 0;
 }
+.g-main-nav .g-fullwidth .g-dropdown.g-dropdown-left {
+  right: 0;
+  left: inherit;
+}
+.g-main-nav .g-fullwidth .g-dropdown.g-dropdown-center {
+  left: inherit;
+  right: inherit;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.g-main-nav .g-fullwidth .g-dropdown.g-dropdown-right {
+  left: 0;
+  right: inherit;
+}
 .g-main-nav .g-fullwidth .g-dropdown .g-block {
   position: relative;
   overflow: hidden;
