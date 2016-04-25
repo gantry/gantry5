@@ -67,8 +67,8 @@ class CompiledTheme extends CompiledBase
 
         if ($theme) {
             // Convert old file format into the new one.
-            $this->object->def('version.version', (string) $this->object->get('theme.details.version'));
-            $this->object->def('version.date', (string) $this->object->get('theme.details.date'));
+            $this->object->def('theme.version', (string) $this->object->get('theme.details.version'));
+            $this->object->def('theme.date', (string) $this->object->get('theme.details.date'));
             $this->object->def('dependencies', (array) $this->object->get('theme.configuration.dependencies'));
 
             $this->object->undef('theme.details.version');
@@ -77,8 +77,8 @@ class CompiledTheme extends CompiledBase
 
             foreach ($theme as $key => $value) {
                 $this->object->def($key, $value);
+                $this->object->undef("theme.{$key}");
             }
-            $this->object->undef('theme');
         }
     }
 
