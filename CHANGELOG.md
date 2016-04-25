@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Hydrogen: The template now includes the emoji fonts (thanks @810 - #1253)
     2. [](#improved)
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
 
