@@ -16,6 +16,7 @@
         - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
         - [CHANGE]: Copyright Particle output now renders without the hardcoded `Copyright` word that couldn't be translated. Before: `Copyright © 2016 SiteOwner`, After: `SiteOwner © 2016` (#950)
         - [REGRESSION] Disabling `Compile twig` attempts to write lots of directories to hard drive root (#1250)
+        - Prevent resolving stream paths outside of defined scheme root
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla
