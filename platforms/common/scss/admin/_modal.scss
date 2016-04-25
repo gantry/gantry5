@@ -6,7 +6,7 @@ html.g5-dialog-open {
 
 #g5-container {
     .g5-dialog, .g5-dialog *, .g5-dialog *:before, .g5-dialog *:after {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
     .g5-dialog {

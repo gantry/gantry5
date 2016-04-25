@@ -10,8 +10,8 @@
         "twig/twig": "~1.23",
         "pimple/pimple": "~3.0",
         "filp/whoops": "~2.0",
-        "rockettheme/toolbox": "~1.3.1",
-        "leafo/scssphp": "0.3.0",
+        "rockettheme/toolbox": "dev-develop",
+        "leafo/scssphp": "dev-master",
         "leafo/lessphp": "~0.5",
         "erusev/parsedown-extra": "~0.7"
     },

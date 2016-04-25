@@ -9,11 +9,11 @@ html {
 	font-size: 100%;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 *, *::before, *::after {
-    @include box-sizing(inherit);
+    box-sizing: inherit;
 }
 
 body {

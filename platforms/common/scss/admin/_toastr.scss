@@ -8,7 +8,7 @@
         z-index: 999999;
 
         * {
-            @include box-sizing(border-box);
+            box-sizing: border-box;
         }
 
         > div {

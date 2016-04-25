@@ -1,44 +1,51 @@
-@mixin size($size) {
-  @if length($size) == 1 {
-    @if $size == auto {
-      width:  $size;
-      height: $size;
-    }
+@charset "UTF-8";
 
-    @else if unitless($size) {
-      width:  $size + px;
-      height: $size + px;
-    }
+/// Sets the `width` and `height` of the element.
+///
+/// @param {List} $size
+///   A list of at most 2 size values.
+///
+///   If there is only a single value in `$size` it is used for both width and height. All units are supported.
+///
+/// @example scss - Usage
+///   .first-element {
+///     @include size(2em);
+///   }
+///
+///   .second-element {
+///     @include size(auto 10em);
+///   }
+///
+/// @example css - CSS Output
+///   .first-element {
+///     width: 2em;
+///     height: 2em;
+///   }
+///
+///   .second-element {
+///     width: auto;
+///     height: 10em;
+///   }
+///
+/// @todo Refactor in 5.0.0 to use a comma-separated argument
 
-    @else if not(unitless($size)) {
-      width:  $size;
-      height: $size;
-    }
+@mixin size($value) {
+  $width: nth($value, 1);
+  $height: $width;
+
+  @if length($value) > 1 {
+    $height: nth($value, 2);
   }
 
-  // Width x Height
-  @if length($size) == 2 {
-    $width:  nth($size, 1);
-    $height: nth($size, 2);
+  @if is-size($height) {
+    height: $height;
+  } @else {
+    @warn "`#{$height}` is not a valid length for the `$height` parameter in the `size` mixin.";
+  }
 
-    @if $width == auto {
-      width: $width;
-    }
-    @else if not(unitless($width)) {
-      width: $width;
-    }
-    @else if unitless($width) {
-      width: $width + px;
-    }
-
-    @if $height == auto {
-      height: $height;
-    }
-    @else if not(unitless($height)) {
-      height: $height;
-    }
-    @else if unitless($height) {
-      height: $height + px;
-    }
+  @if is-size($width) {
+    width: $width;
+  } @else {
+    @warn "`#{$width}` is not a valid length for the `$width` parameter in the `size` mixin.";
   }
 }
