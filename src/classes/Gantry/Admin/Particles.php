@@ -29,7 +29,7 @@ class Particles
         $this->container = $container;
     }
 
-    public function overrides($configuration)
+    public function overrides($configuration, $particle = null)
     {
         if ($configuration === 'default') {
             return true;
@@ -37,6 +37,10 @@ class Particles
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
+
+        if ($particle) {
+            return !empty($locator->findResources("gantry-theme://config/{$configuration}/particles/{$particle}.yaml"));
+        }
 
         return !empty($locator->findResources("gantry-theme://config/{$configuration}/particles"));
     }
@@ -59,13 +63,16 @@ class Particles
         return $this->particles;
     }
 
-    public function group()
+    public function group($exclude = [], $override = false)
     {
         $particles = $this->all();
 
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            if (in_array($type, $exclude)) {
+                continue;
+            }
             if (in_array($type, ['spacer', 'system'])) {
                 $type = 'position';
             }

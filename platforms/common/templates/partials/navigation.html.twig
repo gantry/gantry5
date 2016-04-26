@@ -15,7 +15,7 @@
                             <i class="fa fa-fw fa-adjust"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
                         </a>
                     </li>
-                    {% if (gantry.particles.overrides(configuration)) %}
+                    {% if (location == 'configurations/settings' or gantry.particles.overrides(configuration)) %}
                     <li {{ (location == 'configurations/settings') ? 'class="active"' }}>
                         <a data-g5-ajaxify=""
                            data-g5-nav="settings"
