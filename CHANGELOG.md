@@ -5,6 +5,8 @@
     1. [](#new)
         - Update SCSS compiler to support version 3.4 (#1117)
         - Update Bourbon SCSS library to v4.2.7
+    2. [](#improved)
+        - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
 
 # 5.2.16
 ## XX/XX/2016

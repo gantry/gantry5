@@ -74,8 +74,6 @@ class Settings extends HtmlController
             'page_id' => $configuration
         ];
 
-        //$this->params['layout'] = LayoutObject::instance($configuration);
-
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
@@ -206,9 +204,17 @@ class Settings extends HtmlController
 
         $data = $id ? [$id => $this->request->post->getArray('particle')] : $this->request->post->getArray('particles');
 
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        // Save layout into custom directory for the current theme.
+        $configuration = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$configuration}/particles", true, true);
+
         foreach ($data as $name => $values) {
-            $this->saveItem($name, $values);
+            $this->saveItem($name, $values, $save_dir);
         }
+        @rmdir($save_dir);
 
         // Fire save event.
         $event = new Event;
@@ -221,14 +227,8 @@ class Settings extends HtmlController
         return $id ? $this->display($id) : $this->index();
     }
 
-    protected function saveItem($id, $data)
+    protected function saveItem($id, $data, $save_dir)
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}/particles", true, true);
         $filename = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);

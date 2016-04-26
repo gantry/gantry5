@@ -29,6 +29,18 @@ class Particles
         $this->container = $container;
     }
 
+    public function overrides($configuration)
+    {
+        if ($configuration === 'default') {
+            return true;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        return !empty($locator->findResources("gantry-theme://config/{$configuration}/particles"));
+    }
+
     public function all()
     {
         if (!$this->particles)
