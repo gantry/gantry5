@@ -181,3 +181,7 @@ GANTRY5_PLATFORM_WIDGET: "Widget"
 GANTRY5_PLATFORM_PICK_A_WIDGET: "Pick a Widget"
 GANTRY5_PLATFORM_CONTENT_SETTINGS: "Content Settings"
 GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS: "Save Content Settings"
+
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE: "You can define default options for Particles from <a %s href=\"%s\">%s</a>."
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING: "As of Gantry v5.3.0, the <strong>%s</strong> (previously known as <strong>Settings</strong>) tab in the Gantry admin has been hidden. This was done to cut down on any confusion as it presents an extra level of inheritance that is only needed for advanced usage cases."
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER: "If required, you can still enter to this administrative panel by <a %s href=\"%s\">clicking here</a>."
