@@ -1,6 +1,11 @@
 # 5.3.0
 ## XX/XX/2016
 
+1. [Common](#common)
+    1. [](#new)
+        - Update SCSS compiler to support version 3.4 (#1117)
+        - Update Bourbon SCSS library to v4.2.7
+
 # 5.2.16
 ## XX/XX/2016
 
