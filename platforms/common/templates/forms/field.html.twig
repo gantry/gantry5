@@ -18,7 +18,7 @@
 {% block field %}
 {% if not field.isset or value is not null %}
     <div class="settings-param {{ field.type|replace('.', '-') }}">
-        {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' and field.type != 'input.hidden' %}
+        {% if overrideable and (field.overridable is not defined or field.overridable == true or has_value) and field.type != 'container.set' and field.type != 'input.hidden' %}
             {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
         {% endif %}
         {% block contents %}

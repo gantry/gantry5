@@ -15,6 +15,7 @@ form:
       type: textarea.textarea
       label: Custom HTML
       description: Enter custom HTML into here.
+      overridable: false
 
     twig:
        type: input.checkbox

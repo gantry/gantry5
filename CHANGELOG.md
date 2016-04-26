@@ -8,6 +8,7 @@
     2. [](#improved)
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`
+        - Display only shared particle settings in `Particle Defaults`
 
 # 5.2.16
 ## XX/XX/2016

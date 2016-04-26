@@ -69,7 +69,7 @@ class Settings extends HtmlController
         }
 
         $this->params += [
-            'particles' => $this->container['particles']->group(['atom'], true),
+            'particles' => $this->container['particles']->group(['atom']),
             'route'  => "configurations.{$this->params['configuration']}.settings",
             'page_id' => $configuration
         ];

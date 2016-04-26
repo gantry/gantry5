@@ -63,7 +63,7 @@ class Particles
         return $this->particles;
     }
 
-    public function group($exclude = [], $override = false)
+    public function group($exclude = [])
     {
         $particles = $this->all();
 

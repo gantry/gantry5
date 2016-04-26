@@ -15,6 +15,7 @@ form:
       type: wordpress.categories
       label: Categories
       description: Select the categories the posts should be taken from.
+      overridable: false
 
     post.filter.sticky:
       type: select.select
@@ -24,6 +25,7 @@ form:
       options:
         show: Show
         '': Hide
+      overridable: false
 
     post.limit.total:
       type: input.text
@@ -31,6 +33,7 @@ form:
       description: Enter the maximum number of posts to display.
       default: 2
       pattern: '-?\d{1,2}'
+      overridable: false
 
     post.limit.columns:
       type: select.select
@@ -44,6 +47,7 @@ form:
         4: 4
         5: 5
         6: 6
+      overridable: false
 
     post.limit.start:
       type: input.text
@@ -51,6 +55,7 @@ form:
       description: Enter offset specifying the first post to return. The default is '0' (the first post).
       default: 0
       pattern: '\d{1,2}'
+      overridable: false
 
     post.sort.orderby:
       type: select.select
@@ -69,6 +74,7 @@ form:
         parent: Parent ID
         rand: Random
         none: None
+      overridable: false
 
     post.sort.ordering:
       type: select.select
@@ -78,6 +84,7 @@ form:
       options:
         ASC: Ascending
         DESC: Descending
+      overridable: false
 
     post.display.image.enabled:
       type: select.select
