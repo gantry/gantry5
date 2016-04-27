@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Hydrogen: The template now includes the emoji fonts (thanks @810 - #1253)
+        - Frontend: Exposed `G5.$` and `G5.ready` JavaScript utils (ref, #1256)
     2. [](#improved)
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
         - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
