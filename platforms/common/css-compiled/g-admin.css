@@ -4128,6 +4128,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   z-index: 6;
 }
 #g5-container .lm-blocks .section.g-inheriting .section-actions .section-settings i, #g5-container .lm-blocks .atoms-section.g-inheriting .section-actions .section-settings i, #g5-container .lm-blocks .offcanvas-section.g-inheriting .section-actions .section-settings i {
+  color: #737373;
+}
+#g5-container .lm-blocks .section.g-inheriting .section-actions .section-settings i:hover, #g5-container .lm-blocks .atoms-section.g-inheriting .section-actions .section-settings i:hover, #g5-container .lm-blocks .offcanvas-section.g-inheriting .section-actions .section-settings i:hover {
   color: #4d4d4d;
 }
 #g5-container .lm-blocks .section.g-inheriting:hover .section-actions, #g5-container .lm-blocks .atoms-section.g-inheriting:hover .section-actions, #g5-container .lm-blocks .offcanvas-section.g-inheriting:hover .section-actions {

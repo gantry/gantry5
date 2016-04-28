@@ -164,7 +164,11 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
                         position: relative;
                         z-index: 6;
                         i {
-                            color: darken($core-text, 10%);
+                            color: lighten($core-text, 5%);
+
+                            &:hover {
+                                color: darken($core-text, 10%);
+                            }
                         }
                     }
                 }
