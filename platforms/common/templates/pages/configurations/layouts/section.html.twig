@@ -4,22 +4,31 @@
 <form method="post" action="{{ gantry.route(action) }}">
     <div class="g-tabs" role="tablist">
         <ul>
+            {# Settings Tab #}
             <li class="active">
                 <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
-                    {{ particle.name|trim }}
+                    <i class="fa fa-fw fa-lock"></i> {{ particle.name|trim }}
                 </a>
             </li>
+            {# Block Tab (for nested sections only) #}
             {% if extra %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                    <i class="fa fa-fw fa-lock"></i> {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>
             {% endif %}
+            {# Inheritance Tab #}
+            <li>
+                <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
+                </a>
+            </li>
         </ul>
     </div>
 
     <div class="g-panes">
+        {# Settings Pane #}
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             <div class="card settings-block">
                 <h4>
@@ -32,6 +41,7 @@
             </div>
         </div>
 
+        {# Block Pane (for nested sections only) #}
         {% if extra %}
         <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
             <div class="card settings-block">
@@ -44,6 +54,18 @@
             </div>
         </div>
         {% endif %}
+
+        {# Inheritance Pane #}
+        <div class="g-pane" role="tabpanel" id="g-settings-inheritance" aria-labelledby="g-settings-inheritance-tab" aria-expanded="false">
+            <div class="card settings-block">
+                <h4>
+                    {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
+                </h4>
+                <div class="inner-params">
+                    Inheritance picker goes here
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="g-modal-actions">

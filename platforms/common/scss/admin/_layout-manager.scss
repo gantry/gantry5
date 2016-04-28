@@ -4,6 +4,7 @@ $spacer: #eee;
 $system: #20A085;
 $atom: #9055AF;
 $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
+$section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(transparentize(#ccc, 0.3), 3%) 25%, darken(transparentize(#ccc, 0.3), 3%) 50%, transparentize(#ccc, 0.3) 50%, transparentize(#ccc, 0.3) 75%, darken(transparentize(#ccc, 0.3), 3%) 75%, darken(transparentize(#ccc, 0.3), 3%));
 
 #g5-container {
     // wrapper
@@ -153,6 +154,31 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 .section-actions {
                     opacity: 1;
                     @include transition(opacity 0.2s ease-in);
+                }
+            }
+
+            &.g-inheriting {
+                .section-actions {
+                    opacity: 1;
+                    .section-settings {
+                        position: relative;
+                        z-index: 6;
+                        i {
+                            color: darken($core-text, 10%);
+                        }
+                    }
+                }
+
+                &:hover {
+                    .section-actions {
+                        opacity: 1;
+                    }
+                }
+                
+                > .g-grid {
+                    &:before, &:after {
+                        display: none !important;
+                    }
                 }
             }
 
@@ -668,7 +694,9 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
         @extend #navbar;
 
-        margin-right: 0 !important;
+        &, i {
+            margin-right: 0 !important;
+        }
 
         ul {
             background-color: $navbar-bg;
@@ -924,6 +952,31 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 50%;
                 margin-top: -12px;
             }
+        }
+    }
+
+    [data-lm-blocktype] {
+        position: relative;
+    }
+
+    .g-inherit {
+        @include background($section-stripes !important);
+        z-index: 5;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+
+        .g-inherit-content {
+            position: absolute;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 0.5rem;
+            border-radius: 3px;
         }
     }
 

@@ -1014,6 +1014,7 @@ var prime   = require('prime'),
     $       = require('elements'),
     ID      = require('../id'),
 
+    size    = require('mout/object/size'),
     get     = require('mout/object/get'),
     has     = require('mout/object/has'),
     set     = require('mout/object/set');
@@ -1033,6 +1034,7 @@ var Base = new prime({
         this.fresh = !this.options.id;
         this.id = this.options.id || ID(this.options);
         this.attributes = this.options.attributes || {};
+        this.inherit = this.options.inherit || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
 
@@ -1085,6 +1087,10 @@ var Base = new prime({
         return this.attributes || {};
     },
 
+    getInheritance: function() {
+        return this.inherit || {};
+    },
+
     updateTitle: function() {
         return this;
     },
@@ -1100,8 +1106,18 @@ var Base = new prime({
         return this;
     },
 
+    setInheritance: function(inheritance) {
+        this.inherit = inheritance;
+
+        return this;
+    },
+
     hasAttribute: function(key) {
         return has(this.attributes, key);
+    },
+
+    hasInheritance: function() {
+        return size(this.inherit);
     },
 
     disable: function() {
@@ -1159,7 +1175,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"../id":24,"elements":103,"elements/traversal":126,"elements/zen":127,"mout/object/get":219,"mout/object/has":220,"mout/object/set":227,"mout/string/trim":257,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],10:[function(require,module,exports){
+},{"../id":24,"elements":103,"elements/traversal":126,"elements/zen":127,"mout/object/get":219,"mout/object/has":220,"mout/object/set":227,"mout/object/size":228,"mout/string/trim":257,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],10:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1580,11 +1596,32 @@ var Section = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        return '<div class="section' + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
     },
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
+    },
+
+    enableInheritance: function() {
+        if (this.hasInheritance() && !this.block.find('> .g-inherit')) {
+            this.block.addClass('g-inheriting');
+            var inherit = zen('div.g-inherit.g-section-inherit'),
+                outline = $('#configuration-selector').selectizeInstance.Options[this.inherit.outline].text;
+
+            this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
+        }
+    },
+
+    disableInheritance: function() {
+        if (this.block.find('> .g-inherit')) {
+            var inherit = this.block.find('> .g-inherit.g-section-inherit');
+            if (inherit) {
+                inherit.remove();
+            }
+        }
+
+        this.block.removeClass('g-inheriting');
     },
 
     hasChanged: function(state, child) {
@@ -1617,6 +1654,8 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+
+        this.enableInheritance();
     },
 
     getParent: function() {
@@ -1828,6 +1867,7 @@ var Builder = new prime({
                 subtype: subtype,
                 title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
+                inherit: get(this.map, id) ? get(this.map, id).getInheritance() : {},
                 children: children
             };
 
@@ -1855,6 +1895,7 @@ var Builder = new prime({
         var Element = new (Blocks[value.type] || Blocks['section'])(deepFillIn({
             id: key,
             attributes: {},
+            inherit: {},
             subtype: value.subtype || false,
             builder: this
         }, omit(value, 'children')));

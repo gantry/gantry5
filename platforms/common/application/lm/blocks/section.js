@@ -29,11 +29,32 @@ var Section = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        return '<div class="section' + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
     },
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
+    },
+
+    enableInheritance: function() {
+        if (this.hasInheritance() && !this.block.find('> .g-inherit')) {
+            this.block.addClass('g-inheriting');
+            var inherit = zen('div.g-inherit.g-section-inherit'),
+                outline = $('#configuration-selector').selectizeInstance.Options[this.inherit.outline].text;
+
+            this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
+        }
+    },
+
+    disableInheritance: function() {
+        if (this.block.find('> .g-inherit')) {
+            var inherit = this.block.find('> .g-inherit.g-section-inherit');
+            if (inherit) {
+                inherit.remove();
+            }
+        }
+
+        this.block.removeClass('g-inheriting');
     },
 
     hasChanged: function(state, child) {
@@ -66,6 +87,8 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+
+        this.enableInheritance();
     },
 
     getParent: function() {
