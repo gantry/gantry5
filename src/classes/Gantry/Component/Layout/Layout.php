@@ -176,13 +176,13 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function buildIndex()
     {
-        $positions = $this->positions();
-
         return [
             'name' => $this->name,
             'timestamp' => $this->timestamp,
             'preset' => $this->preset,
-            'positions' => $positions
+            'positions' => $this->positions(),
+            'sections' => $this->sections(),
+            //'particles' => $this->particles()
         ];
     }
 
@@ -325,6 +325,50 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 continue;
             }
             $list[$position->attributes->key] = $position->title;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return list of positions (key) with their titles (value).
+     *
+     * @return array Array of position => title
+     */
+    public function sections()
+    {
+        $types = $this->referencesByType('section');
+
+
+        $list = [];
+        foreach ($types as $type => $sections) {
+            foreach ($sections as $id => $section) {
+                $list[$id] = $section->title;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return list of positions (key) with their titles (value).
+     *
+     * @return array Array of position => title
+     */
+    public function particles()
+    {
+        $blocks = $this->referencesByType('block', 'block');
+
+        $list = [];
+        foreach ($blocks as $blockId => $block) {
+            foreach ($block->children as $id => $particle) {
+                if (!empty($particle->layout)) {
+                    continue;
+                }
+                $particle = clone $particle;
+                $particle->block = $blockId;
+                $list[$particle->id] = $particle;
+            }
         }
 
         return $list;
@@ -475,13 +519,15 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         foreach ($items as $key => &$item) {
             if (is_object($item)) {
-                if (isset($item->id)) {
-                    $this->references[$item->id] = &$item;
-                }
                 $type = $item->type;
                 $subtype = !empty($item->subtype) ? $item->subtype : $type;
 
-                $this->types[$type][$subtype][] = &$item;
+                if (isset($item->id)) {
+                    $this->references[$item->id] = &$item;
+                    $this->types[$type][$subtype][$item->id] = &$item;
+                } else {
+                    $this->types[$type][$subtype][] = &$item;
+                }
 
                 if (isset($item->children) && is_array($item->children)) {
                     $this->initReferences($item->children);
@@ -632,8 +678,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Get timestamp for the layout file.
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
-        // If layout index file doesn't exist or is not up to date, build it.
-        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp) {
+        // If layout index file doesn't exist or is not up to date, rebuild it.
+        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['sections'])) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $layout->timestamp = $timestamp;
             $index = $layout->buildIndex();
@@ -650,7 +696,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 'name' => '',
                 'image' => 'gantry-admin://images/layouts/default.png'
             ],
-            'positions' => []
+            'positions' => [],
+            'sections' => []
         ];
 
         return $index;

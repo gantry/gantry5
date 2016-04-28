@@ -56,16 +56,18 @@
         {% endif %}
 
         {# Inheritance Pane #}
+        {% if inheritance %}
         <div class="g-pane" role="tabpanel" id="g-settings-inheritance" aria-labelledby="g-settings-inheritance-tab" aria-expanded="false">
             <div class="card settings-block">
                 <h4>
                     {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                 </h4>
                 <div class="inner-params">
-                    Inheritance picker goes here
+                    {% include 'forms/fields.html.twig' with {'blueprints': inheritance.form, 'data': {'block': item.inherit}, 'prefix': 'block.'} %}
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <div class="g-modal-actions">

@@ -80,6 +80,21 @@ class Outlines extends AbstractOutlineCollection
         return $list;
     }
 
+
+    public function getOutlinesWithSection($section)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+
+            if (isset($index['sections'][$section])) {
+                $list[$name] = $title;
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * @param int|string $id
      * @return int|string

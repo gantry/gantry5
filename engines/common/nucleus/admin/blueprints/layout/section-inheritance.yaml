@@ -1,0 +1,17 @@
+name: Inheritance
+description: Section inheritance tab
+type: section.inheritance
+
+form:
+  fields:
+    outline:
+      type: select.selectize
+      label: Outline
+      description: Outline to inherit from.
+      selectize:
+        allowEmptyOption: true
+      options:
+        '': - Select -
+
+    include:
+      type: hidden

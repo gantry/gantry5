@@ -176,7 +176,8 @@ class Layout extends HtmlController
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
             $name = $type;
             $particle = false;
-            $hasBlock = $type == 'section' && !empty($block);
+            $section = $type == 'section';
+            $hasBlock = $section && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
@@ -197,6 +198,15 @@ class Layout extends HtmlController
             $extra = new BlueprintsForm($file->content());
             $file->free();
         }
+        if (!empty($section)) {
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/section-inheritance.yaml");
+            $inheritance = new BlueprintsForm($file->content());
+            $file->free();
+
+            $list = (array) $inheritance->get('form.fields.outline.options') + (array) $this->container['configurations']->getOutlinesWithSection($item->id);
+            unset($list[$page]);
+            $inheritance->set('form.fields.outline.options', $list);
+        }
 
         // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) $attributes;
@@ -204,6 +214,7 @@ class Layout extends HtmlController
         $this->params['id'] = $name;
         $this->params += [
             'extra'         => isset($extra) ? $extra : null,
+            'inheritance'   => isset($inheritance) ? $inheritance : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],
