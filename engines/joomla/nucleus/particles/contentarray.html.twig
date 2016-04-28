@@ -42,12 +42,16 @@
                     <div class="g-block">
                         <div class="g-content">
                             <div class="g-array-item">
-                                {% if display.image.enabled and article.images.image_intro %}
-                                    <div class="g-array-item-image">
-                                        <a href="{{ article.route }}">
-                                            <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
-                                        </a>
-                                    </div>
+                                {% if display.image.enabled %}
+									<div class="g-array-item-image">
+										<a href="{{ article.route }}">
+											{% if display.image.enabled == 'intro' %} 
+												<img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
+											{% else %}
+												<img src="{{ url(article.images.image_fulltext) }}" {{ article.images.image_fulltext|imagesize|raw }} />
+											{% endif %}
+										</a>
+									</div>
                                 {% endif %}
 
                                 {% if display.title.enabled %}
