@@ -423,6 +423,7 @@ ready(function() {
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
+            data.id = builder.get(element.data('lm-id')).getId() || null;
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
