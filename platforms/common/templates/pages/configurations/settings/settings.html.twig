@@ -71,8 +71,8 @@
             {% set ajaxify %}data-g5-ajaxify="" data-g5-nav="settings" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"{% endset %}
             <h2 class="page-title">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</h2>
             <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE'|trans(ajaxify, gantry.route('configurations/default/settings'), 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans)|raw }}</p>
-            <p class="alert alert-notice">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING'|trans('GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans)|raw }}</p>
             <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER'|trans(ajaxify, gantry.route('configurations', configuration, 'settings') ~ '&enable=1')|raw }}</p>
+            <p class="alert alert-notice">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING'|trans('GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans)|raw }}</p>
         {% endif %}
     </div>
 {% endblock %}

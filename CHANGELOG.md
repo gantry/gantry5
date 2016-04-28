@@ -23,6 +23,9 @@
         - Included woff2 version of the local Roboto font
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Enable `Layout` tab for `Base Outline`
     
 # 5.2.15
 ## 25/04/2016
