@@ -4593,6 +4593,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   background-color: #eee;
   border-radius: 0.1875rem;
 }
+#g5-container .g5-dialog .g-pane .settings-block, #g5-container .g5-popover-content .g-pane .settings-block {
+  position: relative;
+}
 #g5-container .g5-popover-content .g-pane .g-switch-title {
   padding-bottom: 7px;
   font-weight: bold;

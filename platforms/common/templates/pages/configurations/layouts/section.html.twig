@@ -7,14 +7,14 @@
             {# Settings Tab #}
             <li class="active">
                 <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
-                    <i class="fa fa-fw fa-lock"></i> {{ particle.name|trim }}
+                    <i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i> {{ particle.name|trim }}
                 </a>
             </li>
             {# Block Tab (for nested sections only) #}
             {% if extra %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    <i class="fa fa-fw fa-lock"></i> {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                    <i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i> {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>
             {% endif %}
@@ -30,6 +30,7 @@
     <div class="g-panes">
         {# Settings Pane #}
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
+
             <div class="card settings-block">
                 <h4>
                     {{ item.title|trim }}
@@ -37,6 +38,12 @@
 
                 <div class="inner-params">
                     {% include 'forms/fields.html.twig' with {'overrideable': false, 'blueprints': particle.form} %}
+                </div>
+
+                <div class="g-inherit {{ (item.inherit and ('attributes' in item.inherit.include)) ? '' : 'hide' }}">
+                    <div class="g-inherit-content">
+                        Inheriting from <strong>{{ inheritance.form.fields.outline.options[item.inherit.outline] }}</strong>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,8 +55,15 @@
                 <h4>
                     {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </h4>
+
                 <div class="inner-params">
                     {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
+                </div>
+
+                <div class="g-inherit {{ (item.inherit and ('block' in item.inherit.include)) ? '' : 'hide' }}">
+                    <div class="g-inherit-content">
+                        Inheriting from <strong>{{ inheritance.form.fields.outline.options[item.inherit.outline] }}</strong>
+                    </div>
                 </div>
             </div>
         </div>

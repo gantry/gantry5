@@ -751,6 +751,10 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
                 border-radius: $core-border-radius;
             }
         }
+
+        .settings-block {
+            position: relative;
+        }
     }
 
     .g5-popover-content .g-pane {

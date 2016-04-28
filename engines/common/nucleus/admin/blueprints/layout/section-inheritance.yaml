@@ -11,7 +11,7 @@ form:
       selectize:
         allowEmptyOption: true
       options:
-        '': - Select -
+        '': No Inheritance
 
     include:
       type: hidden
