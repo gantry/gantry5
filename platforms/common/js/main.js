@@ -2752,12 +2752,14 @@ ready(function() {
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
+            data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
             data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
             if (!size(data.options)) { delete data.options; }
+            if (!size(data.inherit)) { delete data.inherit; }
             if (!size(data.block)) { delete data.block; }
         }
 
