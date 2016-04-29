@@ -80,11 +80,12 @@ form:
     article.display.image.enabled:
       type: select.select
       label: Image
-      description: Select if the image of the article should be shown.
-      default: show
+      description: Select if and what image of the article should be shown.
+      default: intro
       options:
-        show: Show
-        '': Hide
+        intro: Intro
+        full: Full
+        '': None
 
     article.display.title.enabled:
       type: select.select

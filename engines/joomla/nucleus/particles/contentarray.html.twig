@@ -42,13 +42,21 @@
                     <div class="g-block">
                         <div class="g-content">
                             <div class="g-array-item">
-                                {% if display.image.enabled and article.images.image_intro %}
-                                    <div class="g-array-item-image">
-                                        <a href="{{ article.route }}">
-                                            <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
-                                        </a>
-                                    </div>
-                                {% endif %}
+                                {% if display.image.enabled and article.images.image_intro or article.images.image_fulltext %}
+									{% if article.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %} 
+										<div class="g-array-item-image">
+											<a href="{{ article.route }}">
+												<img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
+											</a>
+										</div>
+									{% elseif article.images.image_fulltext and display.image.enabled == 'full' %}
+										<div class="g-array-item-image">
+											<a href="{{ article.route }}">
+												<img src="{{ url(article.images.image_fulltext) }}" {{ article.images.image_fulltext|imagesize|raw }} />
+											</a>
+										</div>
+									{% endif %}
+								{% endif %}
 
                                 {% if display.title.enabled %}
                                     <div class="g-array-item-title">
