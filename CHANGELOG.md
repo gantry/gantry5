@@ -11,7 +11,10 @@
         - Included woff2 version of the local Roboto font
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
-    
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
+        
 # 5.2.15
 ## 25/04/2016
 
