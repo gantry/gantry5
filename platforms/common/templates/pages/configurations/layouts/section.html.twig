@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route(action) }}">
+<form method="post" action="{{ gantry.route(action) }}" data-g-settings-id="{{ item.id }}">
     <div class="g-tabs" role="tablist">
         <ul>
             {# Settings Tab #}
@@ -77,7 +77,7 @@
                     {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                 </h4>
                 <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': inheritance.form, 'data': {'block': item.inherit}, 'prefix': 'block.'} %}
+                    {% include 'forms/fields.html.twig' with {'blueprints': inheritance.form, 'data': {'inherit': item.inherit}, 'prefix': 'inherit.'} %}
                 </div>
             </div>
         </div>
