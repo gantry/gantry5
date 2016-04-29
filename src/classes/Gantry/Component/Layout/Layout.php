@@ -618,6 +618,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public static function load($name)
     {
+        if (!$name) {
+            throw new \BadMethodCallException('Layout needs to have a name');
+        }
+
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */

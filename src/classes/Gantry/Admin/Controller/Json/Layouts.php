@@ -15,6 +15,7 @@ namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -29,6 +30,13 @@ class Layouts extends JsonController
 {
     public function index()
     {
-        throw new \Exception('Deprecated');
+        $post = $this->request->request;
+
+        $outline = $post['outline'];
+        $section = $post['section'];
+
+        $layout = Layout::instance($outline);
+
+        return new JsonResponse(['json' => $layout->find($section)]);
     }
 }
