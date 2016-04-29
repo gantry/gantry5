@@ -14,4 +14,12 @@ form:
         '': No Inheritance
 
     include:
-      type: hidden
+      type: select.selectize
+      label: Include
+      multiple: true
+      description: What portions of the Outline to inherit
+      selectize:
+        create: false
+      options:
+        attributes: Section Attributes
+        particles: Section Children
