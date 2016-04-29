@@ -1,16 +1,17 @@
 "use strict";
-var ready      = require('elements/domready'),
-    $          = require('elements/attributes'),
-    storage    = require('prime/map'),
-    deepEquals = require('mout/lang/deepEquals'),
-    is         = require('mout/lang/is'),
-    isString   = require('mout/lang/isString'),
-    hasOwn     = require('mout/object/has'),
-    forEach    = require('mout/collection/forEach'),
-    invoke     = require('mout/array/invoke'),
-    History    = require('../utils/history'),
-    flags      = require('../utils/flags-state');
+var ready         = require('elements/domready'),
+    $             = require('elements/attributes'),
+    storage       = require('prime/map'),
+    deepEquals    = require('mout/lang/deepEquals'),
+    is            = require('mout/lang/is'),
+    isString      = require('mout/lang/isString'),
+    hasOwn        = require('mout/object/has'),
+    forEach       = require('mout/collection/forEach'),
+    invoke        = require('mout/array/invoke'),
+    History       = require('../utils/history'),
+    flags         = require('../utils/flags-state');
 
+require('./multicheckbox');
 
 var originals,
     collectFieldsValues = function(keys) {

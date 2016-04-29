@@ -98,4 +98,15 @@
         }
     }
 
+    .input-multicheckbox .input-group {
+        input, span {
+            vertical-align: middle;
+        }
+
+        span {
+            line-height: 1.5rem;
+            margin-left: 5px;
+        }
+    }
+
 }//endwrapper

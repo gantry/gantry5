@@ -5,6 +5,7 @@
     1. [](#new)
         - Update SCSS compiler to support version 3.4 (#1117)
         - Update Bourbon SCSS library to v4.2.7
+        - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
     2. [](#improved)
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`
