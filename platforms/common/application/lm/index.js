@@ -27,6 +27,7 @@ var ready          = require('elements/domready'),
     SaveState      = require('../utils/save-state');
 
 require('../ui/popover');
+require('./inheritance');
 
 var builder, layoutmanager, lmhistory, savestate, Tips;
 
