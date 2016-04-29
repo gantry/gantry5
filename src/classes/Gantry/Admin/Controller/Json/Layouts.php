@@ -28,6 +28,12 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Layouts extends JsonController
 {
+    protected $httpVerbs = [
+        'POST' => [
+            '/' => 'index'
+        ]
+    ];
+    
     public function index()
     {
         $post = $this->request->request;
