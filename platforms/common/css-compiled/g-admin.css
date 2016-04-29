@@ -2959,7 +2959,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .settings-block .fa {
   width: 1rem;
-  height: 1rem;
+  vertical-align: middle;
   text-align: center;
 }
 #g5-container .settings-block .fa-lg {
