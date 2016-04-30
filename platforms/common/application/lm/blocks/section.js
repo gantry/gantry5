@@ -1,13 +1,14 @@
 "use strict";
-var prime = require('prime'),
-    Base  = require('./base'),
-    Bound = require('prime-util/prime/bound'),
-    Grid  = require('./grid'),
-    $     = require('elements'),
-    zen   = require('elements/zen'),
+var prime              = require('prime'),
+    Base               = require('./base'),
+    Bound              = require('prime-util/prime/bound'),
+    Grid               = require('./grid'),
+    $                  = require('elements'),
+    zen                = require('elements/zen'),
 
-    bind  = require('mout/function/bind'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    bind               = require('mout/function/bind'),
+    getAjaxURL         = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline-by-id');
 
 require('elements/insertion');
 
@@ -40,7 +41,7 @@ var Section = new prime({
         if (this.hasInheritance() && !this.block.find('> .g-inherit')) {
             this.block.addClass('g-inheriting');
             var inherit = zen('div.g-inherit.g-section-inherit'),
-                outline = $('#configuration-selector').selectizeInstance.Options[this.inherit.outline].text;
+                outline = getOutlineNameById(this.inherit.outline);
 
             this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
         }
@@ -108,9 +109,9 @@ var Section = new prime({
         if (siblingBlock.getType() !== 'block') { return false; }
 
         var sizes = {
-                current: this.getParent().getSize(),
-                sibling: siblingBlock.getSize()
-            };
+            current: this.getParent().getSize(),
+            sibling: siblingBlock.getSize()
+        };
 
         return [5, (sizes.current + sizes.sibling) - 5];
     }
