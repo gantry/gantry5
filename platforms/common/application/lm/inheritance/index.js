@@ -1,13 +1,17 @@
 "use strict";
 
-var $             = require('elements'),
-    ready         = require('elements/domready'),
-    request       = require('agent'),
-    modal         = require('../../ui').modal,
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
+    request            = require('agent'),
+    modal              = require('../../ui').modal,
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    parseAjaxURI  = require('../../utils/get-ajax-url').parse,
-    getAjaxURL    = require('../../utils/get-ajax-url').global;
+    forEach            = require('mout/collection/forEach'),
+    contains           = require('mout/array/contains'),
+
+    getAjaxSuffix      = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI       = require('../../utils/get-ajax-url').parse,
+    getAjaxURL         = require('../../utils/get-ajax-url').global,
+    getOutlineNameById = require('../../utils/get-outline-by-id');
 
 
 ready(function() {
@@ -37,7 +41,47 @@ ready(function() {
                 return;
             }
 
-            console.log(response);
+            var data     = response.body.json,
+                includes = section.find('[name="inherit[include]"]').value().split(',');
+
+            /*console.log(getOutlineNameById(value));
+             console.log(data, includes);*/
+
+            if (contains(includes, 'attributes')) {
+                forEach(data.attributes, function(value, key) {
+                    if (typeof value !== 'string') {
+                        value = JSON.stringify(value);
+                    }
+
+                    var field     = section.find('[name="particles[' + data.type + '][' + key + ']"]') || section.find('[name="particles[' + data.type + '][' + key + '][_json]"]'),
+                        selectize = field.selectizeInstance;
+
+                    //if (!field) { return; }
+
+                    if (field) {
+                        field.value(value);
+
+                        if (selectize) {
+                            if (selectize.options.mode == 'multi') {
+                                var input = [];
+                                value = value.split(selectize.options.delimiter);
+                                value.forEach(function(item) {
+                                    var inputItem = {};
+                                    inputItem[selectize.options.labelField] = item;
+                                    inputItem[selectize.options.valueField] = item;
+                                    input.push(inputItem);
+                                });
+
+                                selectize.addOption(input);
+                            }
+
+                            selectize.setValue(value);
+                        }
+
+                        body.emit('update', { target: field });
+                    }
+                });
+            }
         });
     });
 });
