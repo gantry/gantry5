@@ -55,7 +55,8 @@ class CategoryFinder extends Finder
                 ->select('sub.id')
                 ->from('#__categories AS sub')
                 ->join('INNER', '#__categories AS this ON sub.lft > this.lft AND sub.rgt < this.rgt')
-                ->where("this.id IN ({$idList})");
+                ->where("this.id IN ({$idList})")
+                ->limit(0);
 
             if (is_numeric($levels)) {
                 $subQuery->where('sub.level <= this.level + ' . (int) $levels);
