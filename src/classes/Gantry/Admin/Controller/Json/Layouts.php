@@ -30,13 +30,14 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Layouts extends JsonController
 {
-    /*
-     * protected $httpVerbs = [
+    protected $httpVerbs = [
+        'GET' => [
+            '/' => 'index'
+        ],
         'POST' => [
             '/' => 'index'
         ]
     ];
-    */
     
     public function index()
     {
