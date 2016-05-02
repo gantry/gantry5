@@ -20,6 +20,8 @@ form:
       options:
         attributes: Section Attributes
         particles: Section Children
+        block: Section Block
       default:
         - attributes
         - particles
+        - block
