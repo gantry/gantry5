@@ -19,9 +19,9 @@ form:
       description: What portions of the Outline to inherit
       options:
         attributes: Section Attributes
-        particles: Section Children
         block: Section Block
+        particles: Section Children
       default:
         - attributes
-        - particles
         - block
+        - particles
