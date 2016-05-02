@@ -49,38 +49,41 @@ class Layouts extends JsonController
 
         $layout = Layout::instance($outline);
         $item = $layout->find($section);
+        $title = isset($item->title) ? $item->title : [];
+        $attributes = isset($item->attributes) ? $item->attributes : [];
+        $block = isset($item->block) ? $item->block : [];
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/section.yaml");
         $blueprints = new BlueprintsForm($file->content());
         $file->free();
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        $block = new BlueprintsForm($file->content());
-        $file->free();
-
-
         $params = [
+            'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
-            'data'          => ['particles' => ['section' => $item->attributes]],
+            'data'          => ['particles' => ['section' => $attributes]],
             'prefix'        => 'particles.section.',
             'inherit'       => $name,
             'parent'        => 'settings',
             'route'         => 'configurations.section.settings'
         ];
 
-        if (isset($item->block)) {
+        $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $params);
+
+        if ($block) {
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+            $blockBlueprints = new BlueprintsForm($file->content());
+            $file->free();
+
             $paramsBlock = [
-                    'blueprints' => $block->get('form'),
-                    'data' => ['block' => $item->block],
+                    'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
+                    'blueprints' => $blockBlueprints->get('form'),
+                    'data' => ['block' => $block],
                     'prefix' => 'block.'
                 ] + $params;
-        }
 
-        $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $params);
-        if (isset($paramsBlock)) {
             $html['g-settings-block'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
         }
 
-        return new JsonResponse(['json' => $layout->find($section), 'html' => $html]);
+        return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 }
