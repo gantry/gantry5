@@ -37,7 +37,7 @@
                 blueprints: particle.form,
                 data: data,
                 prefix: prefix,
-                inherit: item.inherit and ('block' in item.inherit.include) ? inheritance.form.fields.outline.options[item.inherit.outline] : null
+                inherit: 'attributes' in item.inherit.include ? inheritance.form.fields.outline.options[item.inherit.outline] : null
             } only %}
         </div>
 
@@ -49,9 +49,8 @@
                 blueprints: extra.form,
                 data: {block: item.block},
                 prefix: 'block.',
-                inherit: item.inherit and ('block' in item.inherit.include) ? inheritance.form.fields.outline.options[item.inherit.outline] : null
+                inherit: 'block' in item.inherit.include ? inheritance.form.fields.outline.options[item.inherit.outline] : null
             } only %}
-            </div>
         </div>
         {% endif %}
 
