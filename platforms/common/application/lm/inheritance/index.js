@@ -15,7 +15,8 @@ var $                  = require('elements'),
 
 
 var IDsMap = {
-    attributes: 'g-settings-particle'
+    attributes: 'g-settings-particle',
+    block: 'g-settings-block'
 };
 
 ready(function() {
@@ -45,21 +46,19 @@ ready(function() {
                 return;
             }
 
-            var data     = response.body,
-                includes = section.find('[name="inherit[include]"]').value().split(',');
+            var data      = response.body,
+                includes  = section.find('[name="inherit[include]"]').value().split(','),
+                container = modal.getByID(modal.getLast()),
+                element;
 
-            /*console.log(getOutlineNameById(value));
-             console.log(data, includes);*/
-
-            if (contains(includes, 'attributes') && data.html[IDsMap['attributes']]) {
-                var element = $('#' + IDsMap['attributes']);
-                if (element) {
-                    element.html(data.html[IDsMap['attributes']]);
-
+            // refresh field values based on settings and ajax response
+            forEach(IDsMap, function(id, option) {
+                if (contains(includes, option) && data.html[id] && (element = container.find('#' + id))) {
+                    element.html(data.html[id]);
                     var selects = element.search('[data-selectize]');
                     if (selects) { selects.selectize(); }
                 }
-            }
+            });
         });
     });
 });
