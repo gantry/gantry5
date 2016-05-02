@@ -3000,6 +3000,10 @@ var $                  = require('elements'),
     getOutlineNameById = require('../../utils/get-outline-by-id');
 
 
+var IDsMap = {
+    attributes: 'g-settings-particle'
+};
+
 ready(function() {
     var body = $('body');
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
@@ -3027,46 +3031,20 @@ ready(function() {
                 return;
             }
 
-            var data     = response.body.json,
+            var data     = response.body,
                 includes = section.find('[name="inherit[include]"]').value().split(',');
 
             /*console.log(getOutlineNameById(value));
              console.log(data, includes);*/
 
-            if (contains(includes, 'attributes')) {
-                forEach(data.attributes, function(value, key) {
-                    if (typeof value !== 'string') {
-                        value = JSON.stringify(value);
-                    }
+            if (contains(includes, 'attributes') && data.html[IDsMap['attributes']]) {
+                var element = $('#' + IDsMap['attributes']);
+                if (element) {
+                    element.html(data.html[IDsMap['attributes']]);
 
-                    var field     = section.find('[name="particles[' + data.type + '][' + key + ']"]') || section.find('[name="particles[' + data.type + '][' + key + '][_json]"]'),
-                        selectize = field.selectizeInstance;
-
-                    //if (!field) { return; }
-
-                    if (field) {
-                        field.value(value);
-
-                        if (selectize) {
-                            if (selectize.options.mode == 'multi') {
-                                var input = [];
-                                value = value.split(selectize.options.delimiter);
-                                value.forEach(function(item) {
-                                    var inputItem = {};
-                                    inputItem[selectize.options.labelField] = item;
-                                    inputItem[selectize.options.valueField] = item;
-                                    input.push(inputItem);
-                                });
-
-                                selectize.addOption(input);
-                            }
-
-                            selectize.setValue(value);
-                        }
-
-                        body.emit('update', { target: field });
-                    }
-                });
+                    var selects = element.search('[data-selectize]');
+                    if (selects) { selects.selectize(); }
+                }
             }
         });
     });
