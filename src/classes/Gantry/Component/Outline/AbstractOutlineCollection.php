@@ -35,6 +35,11 @@ abstract class AbstractOutlineCollection extends Collection
      */
     abstract public function load($path = 'gantry-config://');
 
+    public function name($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : null;
+    }
+
     public function all()
     {
         return $this;

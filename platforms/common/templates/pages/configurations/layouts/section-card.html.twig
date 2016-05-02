@@ -1,0 +1,15 @@
+            <div class="card settings-block">
+                <h4>
+                    {{ title }}
+                </h4>
+
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': blueprints, 'data': data, 'prefix': prefix} %}
+                </div>
+
+                <div class="g-inherit{{ inherit ? '' : ' hide' }}">
+                    <div class="g-inherit-content">
+                        Inheriting from <strong>{{ inherit }}</strong>
+                    </div>
+                </div>
+            </div>
