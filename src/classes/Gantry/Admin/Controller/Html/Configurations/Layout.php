@@ -207,7 +207,7 @@ class Layout extends HtmlController
             unset($list[$page]);
 
             if ($list) {
-                $inheritance->set('form.fields.outline.options', (array) $inheritance->get('form.fields.outline.options') + $list);
+                $inheritance->set('form.fields.outline.filter', array_keys($list));
                 if (!$hasBlock) {
                     $inheritance->undef('form.fields.include.options.block');
                 }

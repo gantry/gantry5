@@ -5,7 +5,7 @@ type: section.inheritance
 form:
   fields:
     outline:
-      type: select.selectize
+      type: gantry.outlines
       label: Outline
       description: Outline to inherit from.
       selectize:

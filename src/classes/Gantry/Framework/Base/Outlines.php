@@ -37,11 +37,6 @@ class Outlines extends AbstractOutlineCollection
     {
         $this->path = $path;
 
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
         $iterator = $this->getFilesystemIterator($path);
 
         $files = [];
