@@ -4,7 +4,7 @@
     {{ parent() }}
     {% if not field.filter or 'default' in field.filter %}
         <optgroup label="{{ 'GANTRY5_PLATFORM_GLOBAL_DEFAULTS'|trans }}">
-        <option value="default"{% if 'default' in value %} selected="selected"{% endif %}>
+        <option value="default"{% if 'default' == value %} selected="selected"{% endif %}>
             {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
         </option>
     </optgroup>
@@ -14,7 +14,7 @@
     {% if user_conf.count %}
     <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
         {% for name, title in user_conf %}
-            <option value="{{ name }}"{% if name in value %} selected="selected"{% endif %}>
+            <option value="{{ name }}"{% if name == value %} selected="selected"{% endif %}>
                 {{ title }}
             </option>
         {% endfor %}
@@ -25,7 +25,7 @@
     {% if system_conf.count %}
     <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
         {% for name, title in system_conf %}
-            <option value="{{ name }}"{% if name in value %} selected="selected"{% endif %}>
+            <option value="{{ name }}"{% if name == value %} selected="selected"{% endif %}>
                 {{ title }}
             </option>
         {% endfor %}
