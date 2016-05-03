@@ -45,7 +45,6 @@ class Layouts extends JsonController
 
         $outline = $post['outline'];
         $section = $post['section'];
-        $name = $this->container['configurations']->name($outline);
 
         $layout = Layout::instance($outline);
         $item = $layout->find($section);
@@ -58,11 +57,12 @@ class Layouts extends JsonController
         $file->free();
 
         $params = [
+            'gantry'        => $this->container,
             'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
             'data'          => ['particles' => ['section' => $attributes]],
             'prefix'        => 'particles.section.',
-            'inherit'       => $name,
+            'inherit'       => $outline,
             'parent'        => 'settings',
             'route'         => 'configurations.section.settings'
         ];

@@ -35,11 +35,12 @@
         {# Settings Pane #}
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             {% include '@gantry-admin/pages/configurations/layouts/section-card.html.twig' with {
+                gantry: gantry,
                 title: item.title,
                 blueprints: particle.form,
                 data: data,
                 prefix: prefix,
-                inherit: 'attributes' in item.inherit.include ? inheritance.form.fields.outline.options[item.inherit.outline] : null
+                inherit: 'attributes' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
             } only %}
         </div>
 
@@ -47,11 +48,12 @@
         {% if extra %}
         <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
             {% include '@gantry-admin/pages/configurations/layouts/section-card.html.twig' with {
+                gantry: gantry,
                 title: 'GANTRY5_PLATFORM_BLOCK'|trans,
                 blueprints: extra.form,
                 data: {block: item.block},
                 prefix: 'block.',
-                inherit: 'block' in item.inherit.include ? inheritance.form.fields.outline.options[item.inherit.outline] : null
+                inherit: 'block' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
             } only %}
         </div>
         {% endif %}
