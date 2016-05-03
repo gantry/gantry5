@@ -7,21 +7,25 @@
             {# Settings Tab #}
             <li class="active">
                 <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
-                    <i class="fa fa-fw fa-lock"></i> {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
+                    {% if inheritance %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
                 </a>
             </li>
             {# Block Tab #}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    <i class="fa fa-fw fa-lock"></i> {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                    {% if inheritance %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>
             {# Inheritance Tab #}
+            {% if inheritance %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" aria-expanded="false">
                     {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                 </a>
             </li>
+            {% endif %}
         </ul>
     </div>
 
@@ -57,6 +61,7 @@
         </div>
 
         {# Inheritance Pane #}
+        {% if inheritance %}
         <div class="g-pane" role="tabpanel" id="g-settings-inheritance" aria-labelledby="g-settings-inheritance-tab" aria-expanded="false">
             <div class="card settings-block">
                 <h4>
@@ -67,6 +72,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <div class="g-modal-actions">

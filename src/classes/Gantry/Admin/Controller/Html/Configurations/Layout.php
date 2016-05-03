@@ -198,7 +198,7 @@ class Layout extends HtmlController
             $extra = new BlueprintsForm($file->content());
             $file->free();
         }
-        if (!empty($section)) {
+        if (!empty($section) && $page !== 'default') {
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/section-inheritance.yaml");
             $inheritance = new BlueprintsForm($file->content());
             $file->free();
@@ -376,6 +376,10 @@ class Layout extends HtmlController
 
         $inherit = $this->request->post->getArray('inherit');
         if (!empty($inherit['outline'])) {
+            $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
+            if (!$block) {
+                $inherit['include'] = array_values(array_diff($inherit['include'], ['block']));
+            }
             $data->join('inherit', $inherit);
         }
 

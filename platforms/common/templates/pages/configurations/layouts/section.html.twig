@@ -7,14 +7,16 @@
             {# Settings Tab #}
             <li class="active">
                 <a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">
-                    <i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i> {{ particle.name|trim }}
+                    {% if inheritance %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {{ particle.name|trim }}
                 </a>
             </li>
             {# Block Tab (for nested sections only) #}
             {% if extra %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    <i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i> {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+                    {% if inheritance %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>
             {% endif %}
