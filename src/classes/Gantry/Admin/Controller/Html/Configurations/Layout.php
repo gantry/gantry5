@@ -374,6 +374,11 @@ class Layout extends HtmlController
             $data->join('block', $block);
         }
 
+        $inherit = $this->request->post->getArray('inherit');
+        if (!empty($inherit['outline'])) {
+            $data->join('inherit', $inherit);
+        }
+
         // TODO: validate
 
         return new JsonResponse(['data' => $data->toArray()]);
