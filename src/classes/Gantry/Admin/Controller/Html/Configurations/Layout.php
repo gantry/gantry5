@@ -203,11 +203,16 @@ class Layout extends HtmlController
             $inheritance = new BlueprintsForm($file->content());
             $file->free();
 
-            $list = (array) $inheritance->get('form.fields.outline.options') + (array) $this->container['configurations']->getOutlinesWithSection($item->id, false);
+            $list = (array) $this->container['configurations']->getOutlinesWithSection($item->id, false);
             unset($list[$page]);
-            $inheritance->set('form.fields.outline.options', $list);
-            if (!$hasBlock) {
-                $inheritance->undef('form.fields.include.options.block');
+
+            if ($list) {
+                $inheritance->set('form.fields.outline.options', (array) $inheritance->get('form.fields.outline.options') + $list);
+                if (!$hasBlock) {
+                    $inheritance->undef('form.fields.include.options.block');
+                }
+            } else {
+                unset($inheritance);
             }
         }
 
