@@ -206,6 +206,9 @@ class Layout extends HtmlController
             $list = (array) $inheritance->get('form.fields.outline.options') + (array) $this->container['configurations']->getOutlinesWithSection($item->id);
             unset($list[$page]);
             $inheritance->set('form.fields.outline.options', $list);
+            if (!$hasBlock) {
+                $inheritance->undef('form.fields.include.options.block');
+            }
         }
 
         // TODO: Use blueprints to merge configuration.
