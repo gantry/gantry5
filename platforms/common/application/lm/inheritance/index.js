@@ -13,7 +13,8 @@ var $                  = require('elements'),
     getAjaxSuffix      = require('../../utils/get-ajax-suffix'),
     parseAjaxURI       = require('../../utils/get-ajax-url').parse,
     getAjaxURL         = require('../../utils/get-ajax-url').global,
-    getOutlineNameById = require('../../utils/get-outline-by-id');
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    getCurrentOutline = require('../../utils/get-outline').getCurrentOutline;
 
 
 var IDsMap = {
@@ -29,8 +30,9 @@ ready(function() {
             value   = element.value(),
             section = element.parent('[data-g-settings-id]'),
             data    = {
-                outline: value,
-                section: section ? section.data('g-settings-id') : ''
+                outline: value || getCurrentOutline(),
+                section: section ? section.data('g-settings-id') : '',
+                inherit: !!value
             };
 
         label.showIndicator();

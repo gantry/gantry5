@@ -8,7 +8,7 @@ var prime              = require('prime'),
 
     bind               = require('mout/function/bind'),
     getAjaxURL         = require('../../utils/get-ajax-url').config,
-    getOutlineNameById = require('../../utils/get-outline-by-id');
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
 
 require('elements/insertion');
 

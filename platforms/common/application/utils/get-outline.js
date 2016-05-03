@@ -6,4 +6,8 @@ var getOutlineNameById = function(outline) {
     return trim($('#configuration-selector').selectizeInstance.Options[outline].text);
 };
 
-module.exports = getOutlineNameById;
+var getCurrentOutline = function() {
+    return trim($('#configuration-selector').selectizeInstance.getValue());
+};
+
+module.exports = { getOutlineNameById: getOutlineNameById, getCurrentOutline: getCurrentOutline };

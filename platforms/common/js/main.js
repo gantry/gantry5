@@ -1620,7 +1620,7 @@ var prime              = require('prime'),
 
     bind               = require('mout/function/bind'),
     getAjaxURL         = require('../../utils/get-ajax-url').config,
-    getOutlineNameById = require('../../utils/get-outline-by-id');
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
 
 require('elements/insertion');
 
@@ -1735,7 +1735,7 @@ var Section = new prime({
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":67,"../../utils/get-outline-by-id":68,"./base":10,"./grid":13,"elements":106,"elements/insertion":107,"elements/zen":130,"mout/function/bind":184,"prime":291,"prime-util/prime/bound":287}],19:[function(require,module,exports){
+},{"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"./base":10,"./grid":13,"elements":106,"elements/insertion":107,"elements/zen":130,"mout/function/bind":184,"prime":291,"prime-util/prime/bound":287}],19:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -3003,7 +3003,8 @@ var $                  = require('elements'),
     getAjaxSuffix      = require('../../utils/get-ajax-suffix'),
     parseAjaxURI       = require('../../utils/get-ajax-url').parse,
     getAjaxURL         = require('../../utils/get-ajax-url').global,
-    getOutlineNameById = require('../../utils/get-outline-by-id');
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    getCurrentOutline = require('../../utils/get-outline').getCurrentOutline;
 
 
 var IDsMap = {
@@ -3019,8 +3020,9 @@ ready(function() {
             value   = element.value(),
             section = element.parent('[data-g-settings-id]'),
             data    = {
-                outline: value,
-                section: section ? section.data('g-settings-id') : ''
+                outline: value || getCurrentOutline(),
+                section: section ? section.data('g-settings-id') : '',
+                inherit: !!value
             };
 
         label.showIndicator();
@@ -3094,7 +3096,7 @@ ready(function() {
         }
     });
 });
-},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline-by-id":68,"agent":74,"elements":106,"elements/domready":104,"mout/array/contains":159,"mout/collection/forEach":181,"mout/object/filter":220,"mout/object/keys":227}],28:[function(require,module,exports){
+},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"agent":74,"elements":106,"elements/domready":104,"mout/array/contains":159,"mout/collection/forEach":181,"mout/object/filter":220,"mout/object/keys":227}],28:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -14569,7 +14571,11 @@ var getOutlineNameById = function(outline) {
     return trim($('#configuration-selector').selectizeInstance.Options[outline].text);
 };
 
-module.exports = getOutlineNameById;
+var getCurrentOutline = function() {
+    return trim($('#configuration-selector').selectizeInstance.getValue());
+};
+
+module.exports = { getOutlineNameById: getOutlineNameById, getCurrentOutline: getCurrentOutline };
 
 },{"elements":106,"mout/string/trim":262}],69:[function(require,module,exports){
 "use strict";
