@@ -46,6 +46,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $items;
     protected $references;
     protected $types;
+    protected $inherit;
 
     /**
      * @return array
@@ -182,7 +183,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             'preset' => $this->preset,
             'positions' => $this->positions(),
             'sections' => $this->sections(),
-            //'particles' => $this->particles()
+            //'particles' => $this->particles(),
+            'inherit' => $this->inherit()
         ];
     }
 
@@ -233,6 +235,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $file->save(LayoutReader::store($this->preset, $this->items));
         $file->free();
 
+        $this->timestamp = $file->modified();
         $this->exists = true;
 
         return $this;
@@ -243,7 +246,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      *
      * @return $this
      */
-    public function saveIndex()
+    public function saveIndex($index = null)
     {
         if (!$this->name) {
             throw new \LogicException('Cannot save unnamed layout');
@@ -264,7 +267,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             // Another process has locked the file; we will check this in a bit.
         }
 
-        $index = $this->buildIndex();
+        $index = $index ? $index : $this->buildIndex();
 
         // If file wasn't already locked by another process, save it.
         if ($file->locked() !== false) {
@@ -339,7 +342,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     {
         $types = $this->referencesByType('section');
 
-
         $list = [];
         foreach ($types as $type => $sections) {
             foreach ($sections as $id => $section) {
@@ -369,6 +371,20 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $particle->block = $blockId;
                 $list[$particle->id] = $particle;
             }
+        }
+
+        return $list;
+    }
+
+    public function inherit()
+    {
+        if (!isset($this->references)) {
+            $this->initReferences();
+        }
+
+        $list = [];
+        foreach ($this->inherit as $name => $item) {
+            $list[$item->inherit->outline][] = $name;
         }
 
         return $list;
@@ -515,6 +531,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $items = &$this->items;
             $this->references = [];
             $this->types = [];
+            $this->inherit = [];
         }
 
         foreach ($items as $key => &$item) {
@@ -525,6 +542,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (isset($item->id)) {
                     $this->references[$item->id] = &$item;
                     $this->types[$type][$subtype][$item->id] = &$item;
+
+                    if (!empty($item->inherit->outline)) {
+                        $this->inherit[$item->id] = &$item;
+                    }
                 } else {
                     $this->types[$type][$subtype][] = &$item;
                 }
@@ -683,14 +704,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
         // If layout index file doesn't exist or is not up to date, rebuild it.
-        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['sections'])) {
+        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['inherit'])) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $layout->timestamp = $timestamp;
             $index = $layout->buildIndex();
         }
 
         if ($autoSave && isset($layout)) {
-            $layout->saveIndex();
+            $layout->saveIndex($index);
         }
 
         $index += [
@@ -701,7 +722,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 'image' => 'gantry-admin://images/layouts/default.png'
             ],
             'positions' => [],
-            'sections' => []
+            'sections' => [],
+            'inherit' => []
         ];
 
         return $index;

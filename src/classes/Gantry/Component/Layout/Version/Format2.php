@@ -118,7 +118,7 @@ class Format2
                 'type' => $type,
                 'subtype' => $subtype,
                 'title' => $this->getTitle($type, $subtype, $id),
-                'attributes' => [],
+                'attributes' => []
             ];
             if (isset($boxed) && !isset($result['attributes']['boxed'])) {
                 $result['attributes']['boxed'] = $boxed;
@@ -130,6 +130,9 @@ class Format2
 
             $result = (object) $result;
             $result->attributes = (object) $result->attributes;
+            if (isset($result->inherit)) {
+                $result->inherit = (object) $result->inherit;
+            }
 
             if ($size) {
                 $result->size = $size;
@@ -177,6 +180,9 @@ class Format2
         $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
         $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
+        if (isset($result->inherit)) {
+            $result['inherit'] = (object) $result->inherit;
+        }
 
         if (isset($result['block'])) {
             $block = $result['block'];
@@ -273,6 +279,10 @@ class Format2
 
             // Remove id and children as we store data in flat structure with id being the key.
             unset ($child['id'], $child['children']);
+
+            if (empty($child['inherit']['outline'])) {
+                unset ($child['inherit']);
+            }
 
             if ($type === 'offcanvas' && isset($child['attributes']['name'])) {
                 unset ($child['attributes']['name']);

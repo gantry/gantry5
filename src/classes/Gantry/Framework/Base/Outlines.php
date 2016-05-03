@@ -81,13 +81,19 @@ class Outlines extends AbstractOutlineCollection
     }
 
 
-    public function getOutlinesWithSection($section)
+    public function getOutlinesWithSection($section, $includeInherited = true)
     {
         $list = [];
         foreach ($this->items as $name => $title) {
             $index = Layout::index($name);
-
             if (isset($index['sections'][$section])) {
+                if (!$includeInherited) {
+                    foreach ($index['inherit'] as $outline => $items) {
+                        if (is_array($items) && in_array($section, $items)) {
+                            continue 2;
+                        }
+                    }
+                }
                 $list[$name] = $title;
             }
         }
