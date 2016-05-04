@@ -45,6 +45,7 @@ class Layouts extends JsonController
 
         $outline = $post['outline'];
         $section = $post['section'];
+        $inherit = $post['inherit'] === 'true';
 
         $layout = Layout::instance($outline);
         $item = $layout->find($section);
@@ -62,7 +63,7 @@ class Layouts extends JsonController
             'blueprints'    => $blueprints->get('form'),
             'data'          => ['particles' => ['section' => $attributes]],
             'prefix'        => 'particles.section.',
-            'inherit'       => $outline,
+            'inherit'       => $inherit ? $outline : null,
             'parent'        => 'settings',
             'route'         => 'configurations.section.settings'
         ];
