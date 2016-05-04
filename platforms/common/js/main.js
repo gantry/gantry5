@@ -3033,12 +3033,14 @@ ready(function() {
         if (blocks.fixed && blocks.size) {
             data.block = {
                 size: blocks.size.value(),
-                fixed: blocks.fixed.checked(),
-                limits: [blocks.size.attribute('min'), blocks.size.attribute('max')]
-            }
+                fixed: blocks.fixed.checked()
+            };
+            
+            data.size_limits = [blocks.size.attribute('min'), blocks.size.attribute('max')]
         }
 
         label.showIndicator();
+        element.selectizeInstance.blur();
 
         request('POST', parseAjaxURI(getAjaxURL('layouts') + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
