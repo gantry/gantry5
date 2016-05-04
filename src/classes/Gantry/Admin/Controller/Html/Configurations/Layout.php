@@ -172,6 +172,7 @@ class Layout extends HtmlController
         $name = isset($item->subtype) && $item->subtype ? $item->subtype : $type;
 
         $attributes = $this->request->post->getArray('options');
+        $inherit = $this->request->post->getArray('inherit');
 
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
             $name = $type;
@@ -181,6 +182,7 @@ class Layout extends HtmlController
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
+            $inherit += (array) $item->inherit + $defaults;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
@@ -190,6 +192,7 @@ class Layout extends HtmlController
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
+            $inherit += $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
         }
 
@@ -218,6 +221,7 @@ class Layout extends HtmlController
 
         // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) $attributes;
+        $item->inherit = (object) $inherit;
 
         $this->params['id'] = $name;
         $this->params += [
