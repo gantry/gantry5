@@ -381,11 +381,17 @@ class Layout extends HtmlController
 
         $inherit = $this->request->post->getArray('inherit');
         if (!empty($inherit['outline'])) {
+            // Clean up inherit and add it to the data.
             $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
             if (!$block) {
                 $inherit['include'] = array_values(array_diff($inherit['include'], ['block']));
             }
             $data->join('inherit', $inherit);
+
+            // Additionally send children of the object.
+            $layout = LayoutObject::instance($inherit['outline']);
+            $item = $layout->find($inherit['section']);
+            $data->join('children', $item->children);
         }
 
         // TODO: validate
