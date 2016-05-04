@@ -588,6 +588,11 @@ ready(function() {
                                 particle.refreshInheritance();
                             }
 
+                            if (particle.hasInheritance() && !response.body.data.inherit) {
+                                particle.setInheritance({});
+                                particle.disableInheritance();
+                            }
+
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel

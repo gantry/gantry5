@@ -20,7 +20,8 @@ var Base = new prime({
     inherits: Emitter,
     options: {
         subtype: false,
-        attributes: {}
+        attributes: {},
+        inherit: {}
     },
     constructor: function(options) {
         this.setOptions(options);
