@@ -434,7 +434,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         if (!isset($this->references[$id])) {
-            return new \stdClass;
+            return (object)['id' => $id];
         }
 
         return $this->references[$id];
