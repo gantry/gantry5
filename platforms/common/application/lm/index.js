@@ -585,6 +585,7 @@ ready(function() {
                             if (response.body.data.inherit) {
                                 delete response.body.data.inherit.section;
                                 particle.setInheritance(response.body.data.inherit);
+                                particle.refreshInheritance();
                             }
 
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);

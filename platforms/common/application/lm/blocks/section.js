@@ -64,6 +64,15 @@ var Section = new prime({
         this.block.removeClass('g-inheriting');
     },
 
+    refreshInheritance: function() {
+        if (this.hasInheritance() && this.block.find('> .g-inherit')) {
+            var content = this.block.find('.g-inherit-content strong'),
+                outline = getOutlineNameById(this.inherit.outline);
+
+            content.html(outline);
+        }
+    },
+
     hasChanged: function(state, child) {
         var icon = this.block.find('h4 > i:first-child');
 
