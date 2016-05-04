@@ -163,6 +163,9 @@ class Layout extends HtmlController
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
+        if (!isset($item->inherit)) {
+            $item->inherit = new \stdClass;
+        }
 
         $block = $this->request->post->getArray('block');
         if (!empty($block)) {
