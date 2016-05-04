@@ -45,7 +45,7 @@ ready(function() {
                 size: blocks.size.value(),
                 fixed: blocks.fixed.checked()
             };
-            
+
             data.size_limits = [blocks.size.attribute('min'), blocks.size.attribute('max')]
         }
 
