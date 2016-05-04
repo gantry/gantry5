@@ -45,6 +45,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $exists;
     protected $items;
     protected $references;
+    protected $blocks;
     protected $types;
     protected $inherit;
 
@@ -439,6 +440,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this->references[$id];
     }
 
+    public function block($id)
+    {
+        if (!isset($this->references)) {
+            $this->initReferences();
+        }
+
+        return isset($this->blocks[$id]) ? $this->blocks[$id] : null;
+    }
 
     public function clearSections()
     {
@@ -525,33 +534,37 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param array $items
      */
-    protected function initReferences(array &$items = null)
+    protected function initReferences(array $items = null, $block = null)
     {
         if ($items === null) {
-            $items = &$this->items;
+            $items = $this->items;
             $this->references = [];
             $this->types = [];
             $this->inherit = [];
         }
 
-        foreach ($items as $key => &$item) {
+        foreach ($items as $item) {
             if (is_object($item)) {
                 $type = $item->type;
                 $subtype = !empty($item->subtype) ? $item->subtype : $type;
 
+                if ($block) {
+                    $this->blocks[$item->id] = $block;
+                }
+
                 if (isset($item->id)) {
-                    $this->references[$item->id] = &$item;
+                    $this->references[$item->id] = $item;
                     $this->types[$type][$subtype][$item->id] = &$item;
 
                     if (!empty($item->inherit->outline)) {
-                        $this->inherit[$item->id] = &$item;
+                        $this->inherit[$item->id] = $item;
                     }
                 } else {
-                    $this->types[$type][$subtype][] = &$item;
+                    $this->types[$type][$subtype][] = $item;
                 }
 
                 if (isset($item->children) && is_array($item->children)) {
-                    $this->initReferences($item->children);
+                    $this->initReferences($item->children, $type === 'block' ? $item : null);
                 }
             }
         }

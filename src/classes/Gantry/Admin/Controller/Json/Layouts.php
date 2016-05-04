@@ -51,7 +51,7 @@ class Layouts extends JsonController
         $item = $layout->find($section);
         $title = isset($item->title) ? $item->title : [];
         $attributes = isset($item->attributes) ? $item->attributes : [];
-        $block = isset($item->block) ? $item->block : [];
+        $block = $layout->block($section);
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/section.yaml");
         $blueprints = new BlueprintsForm($file->content());
