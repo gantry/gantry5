@@ -14,7 +14,7 @@ var $                  = require('elements'),
     parseAjaxURI       = require('../../utils/get-ajax-url').parse,
     getAjaxURL         = require('../../utils/get-ajax-url').global,
     getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
-    getCurrentOutline = require('../../utils/get-outline').getCurrentOutline;
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
 
 
 var IDsMap = {
@@ -26,14 +26,27 @@ ready(function() {
     var body = $('body');
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
-        var label   = element.parent('.settings-param').find('.settings-param-title'),
-            value   = element.value(),
-            section = element.parent('[data-g-settings-id]'),
-            data    = {
+        var container = element.parent('.g-panes'),
+            label     = element.parent('.settings-param').find('.settings-param-title'),
+            value     = element.value(),
+            section   = element.parent('[data-g-settings-id]'),
+            blocks    = {
+                fixed: container.find('[name="block[fixed]"]'),
+                size: container.find('[name="block[size]"]')
+            },
+            data      = {
                 outline: value || getCurrentOutline(),
                 section: section ? section.data('g-settings-id') : '',
                 inherit: !!value
             };
+
+        if (blocks.fixed && blocks.size) {
+            data.block = {
+                size: blocks.size.value(),
+                fixed: blocks.fixed.checked(),
+                limits: [blocks.size.attribute('min'), blocks.size.attribute('max')]
+            }
+        }
 
         label.showIndicator();
 
