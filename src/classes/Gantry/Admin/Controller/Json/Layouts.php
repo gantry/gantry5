@@ -70,20 +70,18 @@ class Layouts extends JsonController
 
         $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $params);
 
-        if ($block) {
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-            $blockBlueprints = new BlueprintsForm($file->content());
-            $file->free();
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+        $blockBlueprints = new BlueprintsForm($file->content());
+        $file->free();
 
-            $paramsBlock = [
-                    'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
-                    'blueprints' => $blockBlueprints->get('form'),
-                    'data' => ['block' => $block],
-                    'prefix' => 'block.'
-                ] + $params;
+        $paramsBlock = [
+                'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
+                'blueprints' => $blockBlueprints->get('form'),
+                'data' => ['block' => $block],
+                'prefix' => 'block.'
+            ] + $params;
 
-            $html['g-settings-block'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
-        }
+        $html['g-settings-block'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
