@@ -2956,6 +2956,12 @@ ready(function() {
                                 }
                             }
 
+                            // particle inheritance
+                            if (response.body.data.inherit) {
+                                delete response.body.data.inherit.section;
+                                particle.setInheritance(response.body.data.inherit);
+                            }
+
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel
