@@ -77,7 +77,7 @@ class Layouts extends JsonController
         $paramsBlock = [
                 'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
                 'blueprints' => $blockBlueprints->get('form'),
-                'data' => ['block' => $block],
+                'data' => ['block' => isset($block->attributes) ? $block->attributes : []],
                 'prefix' => 'block.'
             ] + $params;
 
