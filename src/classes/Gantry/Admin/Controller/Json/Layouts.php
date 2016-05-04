@@ -49,7 +49,7 @@ class Layouts extends JsonController
 
         $layout = Layout::instance($outline);
         $item = $layout->find($section);
-        $title = isset($item->title) ? $item->title : [];
+        $title = isset($item->title) ? $item->title : '';
         $attributes = isset($item->attributes) ? $item->attributes : [];
         $block = $layout->block($section);
 
