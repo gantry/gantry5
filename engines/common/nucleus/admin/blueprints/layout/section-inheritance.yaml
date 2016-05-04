@@ -21,7 +21,3 @@ form:
         attributes: Section Attributes
         block: Section Block
         particles: Section Children
-      default:
-        - attributes
-        - block
-        - particles
