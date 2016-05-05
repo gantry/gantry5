@@ -573,7 +573,7 @@ ready(function() {
                                 particle.setInheritance(response.body.data.inherit);
 
                                 if (response.body.data.children) {
-                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true });
+                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
                                     builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                                 }
 

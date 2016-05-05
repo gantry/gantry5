@@ -2967,7 +2967,7 @@ ready(function() {
                                 particle.setInheritance(response.body.data.inherit);
 
                                 if (response.body.data.children) {
-                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true });
+                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
                                     builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                                 }
 
@@ -3236,10 +3236,12 @@ var LayoutManager = new prime({
         var type, child,
             filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
 
-        options = options || { save: true, dropLastGrid: false };
+        options = options || { save: true, dropLastGrid: false, emptyInherits: false };
 
         forEach(this.builder.map, function(obj, id) {
             if (filter.length && !contains(filter, id)) { return; }
+            if (!options.emptyInherits && obj.block.parent('.g-inheriting')) { return; }
+
             type = obj.getType();
             child = obj.block.find('> [data-lm-id]');
             if (child) { child = child.data('lm-blocktype'); }
