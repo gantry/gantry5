@@ -577,6 +577,7 @@ ready(function() {
                                     builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                                 }
 
+                                particle.enableInheritance();
                                 particle.refreshInheritance();
                             }
 
