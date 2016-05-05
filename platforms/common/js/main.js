@@ -2405,7 +2405,6 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
-    forEach        = require('mout/collection/forEach'),
     precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -2649,20 +2648,7 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var type, child;
-        forEach(builder.map, function(obj, id) {
-            type = obj.getType();
-            child = obj.block.find('> [data-lm-id]');
-            if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
-                builder.remove(id);
-                obj.block.remove();
-            }
-        }, this);
-
-        layoutmanager.singles('cleanup', builder);
-
-        lmhistory.push(builder.serialize(), lmhistory.get().preset);
+        layoutmanager.clear();
     });
 
     // Switcher
@@ -2979,6 +2965,12 @@ ready(function() {
                             if (response.body.data.inherit) {
                                 delete response.body.data.inherit.section;
                                 particle.setInheritance(response.body.data.inherit);
+
+                                if (response.body.data.children) {
+                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true });
+                                    builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
+                                }
+
                                 particle.refreshInheritance();
                             }
 
@@ -3018,7 +3010,7 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":51,"../ui/popover":53,"../utils/field-validation":64,"../utils/flags-state":65,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"../utils/history":71,"../utils/save-state":73,"./builder":22,"./history":24,"./inheritance":27,"./layoutmanager":28,"./particles-sidebar":29,"agent":74,"elements/attributes":102,"elements/domready":105,"elements/zen":131,"mout/array/contains":160,"mout/collection/forEach":182,"mout/collection/size":184,"mout/number/enforcePrecision":215,"mout/string/properCase":255,"mout/string/replace":258,"mout/string/trim":263}],27:[function(require,module,exports){
+},{"../ui":51,"../ui/popover":53,"../utils/field-validation":64,"../utils/flags-state":65,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"../utils/history":71,"../utils/save-state":73,"./builder":22,"./history":24,"./inheritance":27,"./layoutmanager":28,"./particles-sidebar":29,"agent":74,"elements/attributes":102,"elements/domready":105,"elements/zen":131,"mout/array/contains":160,"mout/collection/size":184,"mout/number/enforcePrecision":215,"mout/string/properCase":255,"mout/string/replace":258,"mout/string/trim":263}],27:[function(require,module,exports){
 "use strict";
 
 var $                  = require('elements'),
@@ -3164,7 +3156,10 @@ var prime      = require('prime'),
     isArray    = require('mout/lang/isArray'),
     deepEquals = require('mout/lang/deepEquals'),
     find       = require('mout/collection/find'),
-    isObject   = require('mout/lang/isObject');
+    isObject   = require('mout/lang/isObject'),
+
+    contains   = require('mout/array/contains'),
+    forEach    = require('mout/collection/forEach');
 
 var singles = {
     disable: function() {
@@ -3234,6 +3229,27 @@ var LayoutManager = new prime({
 
     singles: function(mode, builder, dropLast) {
         singles[mode](builder, dropLast);
+    },
+
+    clear: function(parent, options) {
+        var type, child,
+            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+
+        options = options || { save: true, dropLastGrid: false };
+
+        forEach(this.builder.map, function(obj, id) {
+            if (filter.length && !contains(filter, id)) { return; }
+            type = obj.getType();
+            child = obj.block.find('> [data-lm-id]');
+            if (child) { child = child.data('lm-blocktype'); }
+            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) || (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
+                this.builder.remove(id);
+                obj.block.remove();
+            }
+        }, this);
+
+        this.singles('cleanup', this.builder, options.dropLastGrid);
+        if (options.save) { this.history.push(this.builder.serialize(), this.history.get().preset); }
     },
 
     updatePendingChanges: function() {
@@ -3701,7 +3717,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":48,"../ui/eraser":50,"../utils/elements.utils":62,"../utils/flags-state":65,"./blocks":14,"./drag.resizer":23,"elements/zen":131,"mout/array/every":163,"mout/collection/find":181,"mout/function/bind":185,"mout/lang/deepEquals":194,"mout/lang/isArray":196,"mout/lang/isObject":201,"mout/number/enforcePrecision":215,"mout/object/get":225,"mout/object/keys":228,"prime":292,"prime-util/prime/bound":288,"prime-util/prime/options":289,"prime/emitter":291}],29:[function(require,module,exports){
+},{"../ui/drag.drop":48,"../ui/eraser":50,"../utils/elements.utils":62,"../utils/flags-state":65,"./blocks":14,"./drag.resizer":23,"elements/zen":131,"mout/array/contains":160,"mout/array/every":163,"mout/collection/find":181,"mout/collection/forEach":182,"mout/function/bind":185,"mout/lang/deepEquals":194,"mout/lang/isArray":196,"mout/lang/isObject":201,"mout/number/enforcePrecision":215,"mout/object/get":225,"mout/object/keys":228,"prime":292,"prime-util/prime/bound":288,"prime-util/prime/options":289,"prime/emitter":291}],29:[function(require,module,exports){
 "use strict";
 
 var ready          = require('elements/domready'),
