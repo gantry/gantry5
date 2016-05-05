@@ -11,7 +11,6 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
-    forEach        = require('mout/collection/forEach'),
     precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -255,20 +254,7 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var type, child;
-        forEach(builder.map, function(obj, id) {
-            type = obj.getType();
-            child = obj.block.find('> [data-lm-id]');
-            if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
-                builder.remove(id);
-                obj.block.remove();
-            }
-        }, this);
-
-        layoutmanager.singles('cleanup', builder);
-
-        lmhistory.push(builder.serialize(), lmhistory.get().preset);
+        layoutmanager.clear();
     });
 
     // Switcher

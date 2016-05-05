@@ -19,7 +19,10 @@ var prime      = require('prime'),
     isArray    = require('mout/lang/isArray'),
     deepEquals = require('mout/lang/deepEquals'),
     find       = require('mout/collection/find'),
-    isObject   = require('mout/lang/isObject');
+    isObject   = require('mout/lang/isObject'),
+
+    contains   = require('mout/array/contains'),
+    forEach    = require('mout/collection/forEach');
 
 var singles = {
     disable: function() {
@@ -89,6 +92,27 @@ var LayoutManager = new prime({
 
     singles: function(mode, builder, dropLast) {
         singles[mode](builder, dropLast);
+    },
+
+    clear: function(parent, options) {
+        var type, child,
+            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+
+        options = options || { save: true, dropLastGrid: false };
+
+        forEach(this.builder.map, function(obj, id) {
+            if (filter.length && !contains(filter, id)) { return; }
+            type = obj.getType();
+            child = obj.block.find('> [data-lm-id]');
+            if (child) { child = child.data('lm-blocktype'); }
+            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) || (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
+                this.builder.remove(id);
+                obj.block.remove();
+            }
+        }, this);
+
+        this.singles('cleanup', this.builder, options.dropLastGrid);
+        if (options.save) { this.history.push(this.builder.serialize(), this.history.get().preset); }
     },
 
     updatePendingChanges: function() {
