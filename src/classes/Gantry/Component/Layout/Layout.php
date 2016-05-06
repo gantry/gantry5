@@ -451,6 +451,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                         if ($section->id === $item->id) {
                             $found = true;
                             $section->children = $item->children;
+                            $section->attributes = $item->attributes;
                             break;
                         }
                     }
