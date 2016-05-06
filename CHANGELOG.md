@@ -12,6 +12,7 @@
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
 2. [Joomla](#joomla)
+        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
     2. [](#improved)
         - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
         
