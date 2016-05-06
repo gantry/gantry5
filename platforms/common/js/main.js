@@ -5655,6 +5655,7 @@ var AttachSettings = function() {
 };
 
 var AttachSortableAtoms = function(atoms) {
+    if (!atoms) { return; }
     if (!atoms.SimpleSort) { Atoms.createSortables(atoms); }
 };
 
@@ -5662,7 +5663,7 @@ ready(function() {
     var atoms = $('#atoms');
 
     $('body').delegate('mouseover', '#atoms', function(event, element) {
-        AttachSortableAtoms(atoms);
+        AttachSortableAtoms(element);
     });
 
     AttachSortableAtoms(atoms);
