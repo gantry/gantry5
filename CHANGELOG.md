@@ -15,6 +15,8 @@
         - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
     2. [](#improved)
         - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
+    3. [](#bugfix)
+        -  Fixed `Joomla Articles` particle limits category selection to 20 categories only (thanks @nikola3244 - #1260)
         
 # 5.2.15
 ## 25/04/2016
