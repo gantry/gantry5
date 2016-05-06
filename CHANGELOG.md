@@ -9,6 +9,7 @@
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
         - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
         - Included woff2 version of the local Roboto font
+        - Encoding JSON data for Layout and Menu when saving to prevent possible issues with `mod_security`
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
 2. [Joomla](#joomla)

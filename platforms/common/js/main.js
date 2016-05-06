@@ -3728,14 +3728,18 @@ ready(function() {
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
+
+                var layout = JSON.stringify(lm.builder.serialize());
+                data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
 
                 break;
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
+
+                var items = JSON.stringify(mm.menumanager.items);
+                data.items = btoa ? btoa(encodeURIComponent(items)) : items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
