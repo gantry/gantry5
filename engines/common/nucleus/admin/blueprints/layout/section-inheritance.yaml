@@ -20,4 +20,4 @@ form:
       options:
         attributes: Section Attributes
         block: Section Block
-        particles: Section Children
+        children: Section Children
