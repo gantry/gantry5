@@ -472,7 +472,12 @@ class Menu extends HtmlController
     public function build(Input $input)
     {
         try {
-            $items = $input->getJsonArray('items');
+            $items = $input->get('items');
+            if ($items && $items[0] !== '{' && $items[0] !== '[') {
+                $items = urldecode((string)base64_decode($items));
+            }
+            $items = json_decode($items, true);
+
             $settings = $input->getJsonArray('settings');
             $order = $input->getJsonArray('ordering');
         } catch (\Exception $e) {
