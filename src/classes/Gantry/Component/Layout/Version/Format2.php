@@ -280,8 +280,26 @@ class Format2
             // Remove id and children as we store data in flat structure with id being the key.
             unset ($child['id'], $child['children']);
 
-            if (empty($child['inherit']['outline'])) {
+            if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
                 unset ($child['inherit']);
+            } else {
+                foreach ($child['inherit']['include'] as $include) {
+                    switch ($include) {
+                        case 'attributes':
+                            unset($child['attributes']);
+                            break;
+                        case 'block':
+                            if ($ctype === 'block') {
+                                // TODO: keep size!!
+                                //unset($content['attributes']);
+                            }
+                            break;
+                        case 'children':
+                            unset($child['children']);
+                            break;
+                    }
+                }
+
             }
 
             if ($type === 'offcanvas' && isset($child['attributes']['name'])) {

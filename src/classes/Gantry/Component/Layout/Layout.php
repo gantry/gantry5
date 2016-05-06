@@ -531,6 +531,34 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
     }
 
+    protected function initInheritance()
+    {
+        foreach ($this->inherit() as $outline => $list) {
+            $outline = $this->load($outline);
+            foreach ($list as $id) {
+                $item = $this->find($id);
+                $inherited = $outline->find($id);
+                $include = $item->inherit->include;
+
+                foreach ($include as $part) {
+                    switch ($part) {
+                        case 'attributes':
+                            $item->attributes = $inherited->attributes;
+                            break;
+                        case 'block':
+                            $block = $this->block($id);
+                            $block->attributes = $inherited->block($id)->attributes;
+                            break;
+                        case 'children':
+                            // TODO: register children
+                            $item->children = $inherited->children;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * @param array $items
      */
@@ -577,6 +605,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function prepareWidths()
     {
+        $this->initInheritance();
+        $this->initInheritance();
+
         $this->calcWidths($this->items);
 
         return $this;
