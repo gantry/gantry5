@@ -312,7 +312,8 @@ trait ThemeTrait
                 $layout = Layout::instance('default');
             }
 
-            $this->layoutObject = $layout;
+            // TODO: Optimize
+            $this->layoutObject = $layout->init();
         }
 
         return $this->layoutObject;

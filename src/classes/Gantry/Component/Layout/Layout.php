@@ -174,6 +174,21 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * Initialize layout.
+     *
+     * @return $this
+     */
+    public function init()
+    {
+        if (!isset($this->references)) {
+            $this->initReferences();
+            $this->initInheritance();
+        }
+
+        return $this;
+    }
+
+    /**
      * Build separate meta-information from the layout.
      *
      * @return array
@@ -291,9 +306,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function references()
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         return $this->references;
     }
@@ -305,9 +318,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function referencesByType($type = null, $subtype = null)
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         if (!$type) {
             return $this->types;
@@ -386,9 +397,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     public function inherit()
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         $list = [];
         foreach ($this->inherit as $name => $item) {
@@ -436,9 +445,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function find($id)
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         if (!isset($this->references[$id])) {
             return (object)['id' => $id];
@@ -449,9 +456,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     public function block($id)
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         return isset($this->blocks[$id]) ? $this->blocks[$id] : null;
     }
@@ -480,9 +485,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     public function copySections(array $old)
     {
-        if (!isset($this->references)) {
-            $this->init();
-        }
+        $this->init();
 
         /** @var Layout $old */
         $old = new static('tmp', $old);
@@ -536,12 +539,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
             }
         }
-    }
-
-    protected function init()
-    {
-        $this->initReferences();
-        $this->initInheritance();
     }
 
     protected function initInheritance()
