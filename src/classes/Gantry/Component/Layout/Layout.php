@@ -289,7 +289,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function references()
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         return $this->references;
@@ -303,7 +303,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function referencesByType($type = null, $subtype = null)
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         if (!$type) {
@@ -380,7 +380,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function inherit()
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         $list = [];
@@ -430,7 +430,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function find($id)
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         if (!isset($this->references[$id])) {
@@ -443,7 +443,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function block($id)
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         return isset($this->blocks[$id]) ? $this->blocks[$id] : null;
@@ -474,7 +474,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function copySections(array $old)
     {
         if (!isset($this->references)) {
-            $this->initReferences();
+            $this->init();
         }
 
         /** @var Layout $old */
@@ -531,10 +531,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
     }
 
+    protected function init()
+    {
+        $this->initReferences();
+        $this->initInheritance();
+    }
+
     protected function initInheritance()
     {
         foreach ($this->inherit() as $outline => $list) {
-            $outline = $this->load($outline);
+            $outline = $this->instance($outline);
             foreach ($list as $id) {
                 $item = $this->find($id);
                 $inherited = $outline->find($id);
@@ -547,11 +553,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             break;
                         case 'block':
                             $block = $this->block($id);
-                            $block->attributes = $inherited->block($id)->attributes;
+                            $block->attributes = $outline->block($id)->attributes;
                             break;
                         case 'children':
-                            // TODO: register children
                             $item->children = $inherited->children;
+                            $this->initReferences($item->children);
                             break;
                     }
                 }
@@ -605,8 +611,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function prepareWidths()
     {
-        $this->initInheritance();
-        $this->initInheritance();
+        $this->init();
 
         $this->calcWidths($this->items);
 
