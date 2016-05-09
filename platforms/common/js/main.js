@@ -1464,7 +1464,8 @@ module.exports = {
 var prime   = require('prime'),
     Section = require('./section'),
 
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    getAjaxURL = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
 
 var Offcanvas = new prime({
     inherits: Section,
@@ -1476,8 +1477,15 @@ var Offcanvas = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
-        return '<div class="offcanvas-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the offcanvas" data-tip-place="top-left"><i class="fa fa-plus"></i></span> <span data-tip="Offcanvas settings" data-tip-place="top-left"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            inheritance = '';
+
+        if (this.hasInheritance()) {
+            var outline = getOutlineNameById(this.inherit.outline);
+            inheritance = '<div class="g-inherit g-section-inherit"><div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div></div>';
+        }
+        
+        return '<div class="offcanvas-section' + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the offcanvas" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Offcanvas settings" data-tip-place="top-right"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
     },
 
     getId: function() {
@@ -1487,7 +1495,7 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":67,"./section":18,"prime":292}],16:[function(require,module,exports){
+},{"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"./section":18,"prime":292}],16:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('elements'),
