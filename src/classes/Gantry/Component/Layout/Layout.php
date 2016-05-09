@@ -202,7 +202,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             'preset' => $this->preset,
             'positions' => $this->positions(),
             'sections' => $this->sections(),
-            //'particles' => $this->particles(),
+            'particles' => $this->particles(),
             'inherit' => $this->inherit()
         ];
     }
@@ -386,15 +386,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (!empty($particle->layout)) {
                     continue;
                 }
-                $particle = clone $particle;
-                $particle->block = $blockId;
-                $list[$particle->id] = $particle;
+                $list[$particle->subtype][$particle->id] = $particle->title;
             }
         }
 
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function inherit()
     {
         $this->init();
@@ -454,6 +455,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this->references[$id];
     }
 
+    /**
+     * @param string $id
+     * @return null
+     */
     public function block($id)
     {
         $this->init();

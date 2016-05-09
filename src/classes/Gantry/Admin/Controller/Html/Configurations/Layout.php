@@ -204,21 +204,20 @@ class Layout extends HtmlController
             $extra = new BlueprintsForm($file->content());
             $file->free();
         }
-        if ($page !== 'default' && (in_array($type, ['section', 'offcanvas']) || $particle)) {
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/section-inheritance.yaml");
+        if ($page !== 'default' && ($particle || in_array($type, ['section', 'offcanvas']))) {
+            $inheritType = $particle ? 'particle' : 'section';
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$inheritType}-inheritance.yaml");
             $inheritance = new BlueprintsForm($file->content());
             $file->free();
 
-            $list = (array) $this->container['configurations']->getOutlinesWithSection($item->id, false);
+            $funcName = 'getOutlinesWith' . ucfirst($inheritType);
+            $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->type : $item->id, false);
             unset($list[$page]);
 
             if ($list) {
                 $inheritance->set('form.fields.outline.filter', array_keys($list));
                 if (!$hasBlock) {
                     $inheritance->undef('form.fields.include.options.block');
-                }
-                if ($particle) {
-                    $inheritance->undef('form.fields.include.options.children');
                 }
             } else {
                 unset($inheritance);

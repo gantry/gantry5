@@ -1,0 +1,27 @@
+name: Inheritance
+description: Section inheritance tab
+type: section.inheritance
+
+form:
+  fields:
+    outline:
+      type: gantry.outlines
+      label: Outline
+      description: Outline to inherit from.
+      selectize:
+        allowEmptyOption: true
+      options:
+        '': No Inheritance
+
+    particle:
+      type: input.text
+      label: Particle Instance
+      description: Particle to inherit from
+
+    include:
+      type: input.multicheckbox
+      label: Include
+      description: What portions of the Outline to inherit
+      options:
+        attributes: Particle Attributes
+        block: Particle Block

@@ -75,7 +75,11 @@ class Outlines extends AbstractOutlineCollection
         return $list;
     }
 
-
+    /**
+     * @param string $section
+     * @param bool $includeInherited
+     * @return array
+     */
     public function getOutlinesWithSection($section, $includeInherited = true)
     {
         $list = [];
@@ -85,6 +89,31 @@ class Outlines extends AbstractOutlineCollection
                 if (!$includeInherited) {
                     foreach ($index['inherit'] as $outline => $items) {
                         if (is_array($items) && in_array($section, $items)) {
+                            continue 2;
+                        }
+                    }
+                }
+                $list[$name] = $title;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $particle
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlinesWithParticle($particle, $includeInherited = true)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+            if (isset($index['particles'][$particle])) {
+                if (!$includeInherited) {
+                    foreach ($index['inherit'] as $outline => $items) {
+                        if (is_array($items) && in_array($particle, $items)) {
                             continue 2;
                         }
                     }

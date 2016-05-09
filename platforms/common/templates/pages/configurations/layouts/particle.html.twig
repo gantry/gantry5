@@ -68,9 +68,9 @@
                     {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                 </h4>
                 <div class="inner-params">
-                    Inheritance picker goes here
+                    <input type="hidden" name="{{ 'inherit.section'|fieldName }}" value="{{ item.id }}" />
+                    {% include 'forms/fields.html.twig' with {'blueprints': inheritance.form, 'data': {'inherit': item.inherit}, 'prefix': 'inherit.'} %}
                 </div>
-            </div>
         </div>
         {% endif %}
     </div>
