@@ -1,8 +1,10 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block contents %}
-    <h5>{{ field.label }}</h5>
-    <div>
+    {% if field.label %}
+    <{{ field.tag|default('h5') }}>{{ field.label }}</{{ field.tag|default('h5') }}>
+    {% endif %}
+    <div{{ field.id ? (' id="' ~ field.id|e ~ '"')|raw }}>
     {% if field.fields %}
         {% for childName, child in field.fields %}
             {% if childName starts with '.' %}
