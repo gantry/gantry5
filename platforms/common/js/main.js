@@ -3041,7 +3041,7 @@ var $                  = require('elements'),
 
 var IDsMap = {
     attributes: 'g-settings-particle',
-    block: 'g-settings-block'
+    block: 'g-settings-block-attributes'
 };
 
 ready(function() {
