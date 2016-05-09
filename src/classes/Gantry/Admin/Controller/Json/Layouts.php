@@ -61,8 +61,8 @@ class Layouts extends JsonController
             'gantry'        => $this->container,
             'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
-            'data'          => ['particles' => ['section' => $attributes]],
-            'prefix'        => 'particles.section.',
+            'data'          => ['particles' => [$item->type => $attributes]],
+            'prefix'        => "particles.{$item->type}.",
             'inherit'       => $inherit ? $outline : null,
             'parent'        => 'settings',
             'route'         => 'configurations.section.settings'
