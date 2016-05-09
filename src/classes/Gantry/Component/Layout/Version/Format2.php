@@ -249,14 +249,37 @@ class Format2
             $subtype = $child['subtype'];
             $isSection = in_array($type, $this->sections);
 
+            if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
+                unset ($child['inherit']);
+            } else {
+                foreach ($child['inherit']['include'] as $include) {
+                    switch ($include) {
+                        case 'attributes':
+                            unset($child['attributes']);
+                            break;
+                        case 'block':
+                            if ($ctype === 'block') {
+                                // Keep block size and fixed status.
+                                $content['attributes'] = array_intersect_key($content['attributes'], ['fixed' => 1, 'size' => 1]);
+                            }
+                            break;
+                        case 'children':
+                            $child['children'] = [];
+                            break;
+                    }
+                }
+            }
+
             if (!$isSection) {
                 // Special handling for positions.
                 if ($type === 'position') {
+                    // TODO: we may want to simplify position id, but we need to take into account multiple instances of the same position key.
+/*
                     if (!$subtype || $subtype === 'position') {
-                        // TODO: we may want to simplify position id, but we need to take into account multiple instances of the same position key.
-                        //$id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
-                        //unset ($child['attributes']['key']);
+                        $id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
+                        unset ($child['attributes']['key']);
                     }
+*/
                     unset ($child['attributes']['title']);
                 }
 
@@ -279,28 +302,6 @@ class Format2
 
             // Remove id and children as we store data in flat structure with id being the key.
             unset ($child['id'], $child['children']);
-
-            if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
-                unset ($child['inherit']);
-            } else {
-                foreach ($child['inherit']['include'] as $include) {
-                    switch ($include) {
-                        case 'attributes':
-                            unset($child['attributes']);
-                            break;
-                        case 'block':
-                            if ($ctype === 'block') {
-                                // TODO: keep size!!
-                                //unset($content['attributes']);
-                            }
-                            break;
-                        case 'children':
-                            unset($child['children']);
-                            break;
-                    }
-                }
-
-            }
 
             if ($type === 'offcanvas' && isset($child['attributes']['name'])) {
                 unset ($child['attributes']['name']);
