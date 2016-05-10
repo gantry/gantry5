@@ -219,6 +219,11 @@ class Layout extends HtmlController
                 if (!$hasBlock) {
                     $inheritance->undef('form.fields.include.options.block');
                 }
+
+                if ($particle) {
+                    // TODO: dipslay options for particle inheritance.
+                    $particles = $this->container['configurations']->getParticleList($item->subtype, false);
+                }
             } else {
                 unset($inheritance);
             }
@@ -240,7 +245,9 @@ class Layout extends HtmlController
             'parent'        => 'settings',
             'route'         => "configurations.{$page}.settings",
             'action'        => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
-            'skip'          => ['enabled']
+            'skip'          => ['enabled'],
+            'editable'      => $particle,
+            'overrideable'  => $particle,
         ];
 
         if ($particle) {
