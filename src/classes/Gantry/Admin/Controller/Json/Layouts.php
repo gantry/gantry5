@@ -81,7 +81,7 @@ class Layouts extends JsonController
                 'prefix' => 'block.'
             ] + $params;
 
-        $html['g-settings-block'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
+        $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
