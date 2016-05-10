@@ -8,7 +8,7 @@ var $                  = require('elements'),
     forEach            = require('mout/collection/forEach'),
     filter             = require('mout/object/filter'),
     keys               = require('mout/object/keys'),
-    contains           = require('mout/array/contains'),
+    contains           = require('mout/collection/contains'),
 
     getAjaxSuffix      = require('../../utils/get-ajax-suffix'),
     parseAjaxURI       = require('../../utils/get-ajax-url').parse,
@@ -19,7 +19,7 @@ var $                  = require('elements'),
 
 var IDsMap = {
     attributes: 'g-settings-particle',
-    block: 'g-settings-block-attributes'
+    block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' }
 };
 
 ready(function() {
@@ -85,12 +85,19 @@ ready(function() {
     body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
         var value     = element.value(),
             isChecked = element.checked(),
-            panel     = $('#' + IDsMap[value]),
-            tab       = $('#' + IDsMap[value] + '-tab');
+            panel     = $('#' + (IDsMap[value].panel || IDsMap[value])),
+            tab       = $('#' + (IDsMap[value].tab || IDsMap[value]) + '-tab');
 
         if (!panel || !tab) { return true; }
 
         var inherit = panel.find('.g-inherit');
+
+        // if inherit overlay doesn't exist, we could be in a set
+        /*if (!inherit) {
+            inherit = panel.parent('.settings-block').find('.g-inherit');
+            inherit.after(panel);
+        }*/
+
         if (!isChecked) {
             var lock = tab.find('.fa-lock');
 
@@ -112,7 +119,7 @@ ready(function() {
         var container = modal.getByID(modal.getLast()),
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
-            prop      = keys(filter(IDsMap, function(value, key) { return value === id; }) || []).shift(),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]');
 
         if (input) {
