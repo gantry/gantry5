@@ -52,6 +52,9 @@ class Layouts extends JsonController
         $title = isset($item->title) ? $item->title : '';
         $attributes = isset($item->attributes) ? $item->attributes : [];
         $block = $layout->block($section);
+        $block = (object) isset($block->attributes) ? $block->attributes : [];
+        $block->size = (float) ($post['block']['size'] ?: 100);
+        $block->fixed = (int) ($post['block']['fixed'] === 'true');
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$item->type}.yaml");
         $blueprints = new BlueprintsForm($file->content());
@@ -77,8 +80,9 @@ class Layouts extends JsonController
         $paramsBlock = [
                 'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
                 'blueprints' => $blockBlueprints->get('form'),
-                'data' => ['block' => isset($block->attributes) ? $block->attributes : []],
-                'prefix' => 'block.'
+                'data' => ['block' => $block],
+                'prefix' => 'block.',
+                'size_limits' => $post['size_limits'] ?: [100, 100]
             ] + $params;
 
         $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/section-card.html.twig',  $paramsBlock);
