@@ -1,7 +1,10 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route(action) }}" data-g-settings-id="{{ item.id }}">
+<form method="post"
+      action="{{ gantry.route(action) }}"
+      data-g-inheritance-settings="{{ {'id': item.id, 'type': item.type, 'subtype': item.subtype}|json_encode|e('html_attr') }}"
+>
     <div class="g-tabs" role="tablist">
         <ul>
             {# Settings Tab #}

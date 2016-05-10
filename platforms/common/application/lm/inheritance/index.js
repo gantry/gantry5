@@ -26,28 +26,19 @@ ready(function() {
     var body = $('body');
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
-        var container = element.parent('.g-panes'),
-            label     = element.parent('.settings-param').find('.settings-param-title'),
-            value     = element.value(),
-            section   = element.parent('[data-g-settings-id]'),
-            blocks    = {
-                fixed: container.find('[name="block[fixed]"]'),
-                size: container.find('[name="block[size]"]')
-            },
-            data      = {
+        var label    = element.parent('.settings-param').find('.settings-param-title'),
+            value    = element.value(),
+            form     = element.parent('[data-g-inheritance-settings]');
+
+        var formData = JSON.parse(form.data('g-inheritance-settings')),
+            data     = {
                 outline: value || getCurrentOutline(),
-                section: section ? section.data('g-settings-id') : '',
+                type: formData.type || '',
+                subtype: formData.subtype || '',
                 inherit: !!value
             };
 
-        if (blocks.fixed && blocks.size) {
-            data.block = {
-                size: blocks.size.value(),
-                fixed: blocks.fixed.checked()
-            };
-
-            data.size_limits = [blocks.size.attribute('min'), blocks.size.attribute('max')]
-        }
+        data[contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'section' : 'particle'] = formData.id;
 
         label.showIndicator();
         element.selectizeInstance.blur();
@@ -67,7 +58,7 @@ ready(function() {
             }
 
             var data      = response.body,
-                includes  = section.find('[name="inherit[include]"]').value().split(','),
+                includes  = form.find('[name="inherit[include]"]').value().split(','),
                 container = modal.getByID(modal.getLast()),
                 element;
 
@@ -94,9 +85,9 @@ ready(function() {
 
         // if inherit overlay doesn't exist, we could be in a set
         /*if (!inherit) {
-            inherit = panel.parent('.settings-block').find('.g-inherit');
-            inherit.after(panel);
-        }*/
+         inherit = panel.parent('.settings-block').find('.g-inherit');
+         inherit.after(panel);
+         }*/
 
         if (!isChecked) {
             var lock = tab.find('.fa-lock');
