@@ -211,7 +211,7 @@ class Layout extends HtmlController
             $file->free();
 
             $funcName = 'getOutlinesWith' . ucfirst($inheritType);
-            $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->type : $item->id, false);
+            $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->subtype : $item->id, false);
             unset($list[$page]);
 
             if ($list) {
