@@ -206,7 +206,7 @@ class Layout extends HtmlController
         }
         if ($page !== 'default' && ($particle || in_array($type, ['section', 'offcanvas']))) {
             $inheritType = $particle ? 'particle' : 'section';
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$inheritType}-inheritance.yaml");
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$inheritType}.yaml");
             $inheritance = new BlueprintsForm($file->content());
             $file->free();
 

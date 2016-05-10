@@ -73,7 +73,7 @@
                 </h4>
                 <div class="inner-params">
                     <input type="hidden" name="{{ 'inherit.section'|fieldName }}" value="{{ item.id }}" />
-                    {% include 'forms/fields.html.twig' with {'blueprints': inheritance.form, 'data': {'inherit': item.inherit}, 'prefix': 'inherit.'} %}
+                    {% include 'forms/fields.html.twig' with {blueprints: inheritance.form, data: {inherit: item.inherit}, prefix: 'inherit.'} only %}
                 </div>
             </div>
         </div>

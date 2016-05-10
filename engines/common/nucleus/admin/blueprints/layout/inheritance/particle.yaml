@@ -1,6 +1,6 @@
 name: Inheritance
-description: Section inheritance tab
-type: section.inheritance
+description: Particle inheritance tab
+type: particle.inheritance
 
 form:
   fields:
