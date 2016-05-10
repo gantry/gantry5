@@ -34,10 +34,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 2;
+    const VERSION = 3;
 
     protected static $instances = [];
     protected static $indexes = [];
+    protected $layout = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
 
     public $name;
     public $timestamp = 0;
@@ -383,7 +384,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $list = [];
         foreach ($blocks as $blockId => $block) {
             foreach ($block->children as $id => $particle) {
-                if (!empty($particle->layout)) {
+                if (!empty($particle->layout) || in_array($particle->type, $this->layout)) {
                     continue;
                 }
                 $list[$particle->subtype][$particle->id] = $particle->title;
