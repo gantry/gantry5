@@ -16,7 +16,8 @@
         {% set value = nested(data, scope ~ name) %}
         {% set default_value = nested(defaults, scope ~ name) %}
         {% set has_value = value and value != default_value %}
-        {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and field.overridable is same as(false) and not has_value) %}
+
+        {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and field.overrideable is same as(false) and not has_value) and not(not has_value and not_global_overrideable) %}
             {% set field = field + {'name': name} %}
 
             {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}

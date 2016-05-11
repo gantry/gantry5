@@ -42,6 +42,7 @@
             {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
                 title: item.title,
                 blueprints: particle.form,
+                overrideable: overrideable and (particle.form.overrideable is not defined or particle.form.overrideable),
                 inherit: 'attributes' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
             } %}
         </div>
