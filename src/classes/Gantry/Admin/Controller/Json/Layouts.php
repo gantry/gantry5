@@ -55,34 +55,45 @@ class Layouts extends JsonController
         $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
         $title = isset($item->title) ? $item->title : '';
-        $attributes = isset($item->attributes) ? $item->attributes : [];
+        $item->attributes = (object) (isset($item->attributes) ? $item->attributes : []);
         $block = $layout->block($id);
         $block = (object) (isset($block->attributes) ? $block->attributes : []);
         //$block->size = (float) ($post['block']['size'] ?: 100);
         //$block->fixed = (int) ($post['block']['fixed'] === 'true');
 
+        $params = [
+            'gantry'        => $this->container,
+            'parent'        => 'settings',
+            'route'         => "configurations.{$outline}.settings",
+            'inherit'       => $inherit ? $outline : null,
+        ];
+
+        $prefix = "particles.{$subtype}";
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+            $particle = false;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
+            $defaults = (object) [];
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
+            $particle = true;
+            $defaults = (object) $this->container['config']->get($prefix);
             $blueprints = new BlueprintsForm($this->container['particles']->get($subtype));
         }
 
-        $params = [
-            'gantry'        => $this->container,
+        $paramsParticle = [
             'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
             'item'          => $item,
-            'data'          => ['particles' => [$subtype => $attributes]],
-            'prefix'        => "particles.{$subtype}.",
-            'inherit'       => $inherit ? $outline : null,
-            'parent'        => 'settings',
-            'route'         => 'configurations.section.settings',
+            'data'          => ['particles' => [$subtype => $item->attributes]],
+            'defaults'      => ['particles' => [$subtype => $defaults]],
+            'prefix'        => $prefix . '.',
+            'editable'      => $particle,
+            'overrideable'  => $particle,
             'skip'          => ['enabled']
-        ];
+        ] + $params;
 
-        $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
+        $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
         $blockBlueprints = new BlueprintsForm($file->content());

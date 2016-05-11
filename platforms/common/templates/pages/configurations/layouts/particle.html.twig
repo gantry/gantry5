@@ -41,10 +41,13 @@
         <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
             {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
                 gantry: gantry,
+                parent: parent,
+                route: route,
                 title: item.title,
                 blueprints: particle.form,
                 item: item,
                 data: data,
+                defaults: defaults,
                 prefix: prefix,
                 overrideable: overrideable,
                 skip: skip,

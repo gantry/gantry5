@@ -16,7 +16,7 @@
     </h4>
 
     <div class="inner-params">
-        {% include 'forms/fields.html.twig' with {'blueprints': blueprints, 'data': data, 'prefix': prefix, 'overrideable': overrideable|default(false)} %}
+        {% include 'forms/fields.html.twig' %}
     </div>
 
     <div class="g-inherit{{ inherit ? '' : ' hide' }}">
