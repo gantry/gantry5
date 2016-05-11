@@ -67,11 +67,13 @@ abstract class AbstractOutlineCollection extends Collection
         return $this;
     }
 
-    public function filter(array $include)
+    public function filter(array $include = null)
     {
-        foreach ($this->items as $key => $item) {
-            if (!in_array($key, $include)) {
-                unset($this->items[$key]);
+        if ($include !== null) {
+            foreach ($this->items as $key => $item) {
+                if (!in_array($key, $include)) {
+                    unset($this->items[$key]);
+                }
             }
         }
 
