@@ -3,8 +3,6 @@ $position: #359AD9;
 $spacer: #eee;
 $system: #20A085;
 $atom: #9055AF;
-$stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
-$section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(transparentize(#ccc, 0.3), 3%) 25%, darken(transparentize(#ccc, 0.3), 3%) 50%, transparentize(#ccc, 0.3) 50%, transparentize(#ccc, 0.3) 75%, darken(transparentize(#ccc, 0.3), 3%) 75%, darken(transparentize(#ccc, 0.3), 3%));
 
 #g5-container {
     // wrapper
@@ -438,6 +436,11 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
             position: relative;
             white-space: nowrap;
 
+
+            &.g-inheriting {
+                @include stripes-background($position);
+            }
+
             &[data-lm-nodrag] {
                 cursor: default;
             }
@@ -525,11 +528,19 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
 
         .particle {
             background-color: $particle;
+
+            &.g-inheriting {
+                @include stripes-background($particle);
+            }
         }
 
         .spacer {
             background-color: $spacer;
             color: rgba(#666, 0.8);
+
+            &.g-inheriting {
+                @include stripes-background($spacer);
+            }
 
             .particle-size {
                 color: rgba(#666, 0.8);
@@ -546,10 +557,18 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
 
         .atom {
             background-color: $atom;
+
+            &.g-inheriting {
+                @include stripes-background($atom);
+            }
         }
 
         .system {
             background-color: $system;
+
+            &.g-inheriting {
+                @include stripes-background($system);
+            }
         }
 
         .placeholder {
@@ -590,6 +609,10 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
             }
         }
 
+        .particle-disabled, [data-lm-disabled] {
+            @include stripes-background(#ccc, 50px, 45deg);
+        }
+
         .atoms-section .placeholder.in-between {
             margin-bottom: 6px;
         }
@@ -613,11 +636,6 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
                 margin-left: 15px;
             }
         }
-    }
-
-    .particle-disabled, [data-lm-disabled] {
-        @include background($stripes !important);
-        background-size: 50px 50px !important;
     }
 
     /* history */
@@ -972,7 +990,8 @@ $section-stripes: linear-gradient(45deg, transparentize(#ccc, 0.3) 25%, darken(t
     }
 
     .g-inherit {
-        @include background($section-stripes !important);
+        //@include background($section-stripes !important);
+        @include stripes-background(transparentize(#ccc, 0.3), 'auto' !important);
         z-index: 5;
         position: absolute;
         top: 5px;

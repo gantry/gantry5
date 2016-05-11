@@ -4341,6 +4341,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   position: relative;
   white-space: nowrap;
 }
+#g5-container .lm-blocks .particle.g-inheriting, #g5-container .lm-blocks .position.g-inheriting, #g5-container .lm-blocks .spacer.g-inheriting, #g5-container .lm-blocks .system.g-inheriting, #g5-container .lm-blocks .atom.g-inheriting {
+  background-image: -webkit-linear-gradient(-45deg, #359AD9 25%, #2894d6 25%, #2894d6 50%, #359AD9 50%, #359AD9 75%, #2894d6 75%, #2894d6);
+  background-image: linear-gradient(-45deg, #359AD9 25%, #2894d6 25%, #2894d6 50%, #359AD9 50%, #359AD9 75%, #2894d6 75%, #2894d6);
+  background-size: 50px 50px;
+}
 #g5-container .lm-blocks .particle[data-lm-nodrag], #g5-container .lm-blocks .position[data-lm-nodrag], #g5-container .lm-blocks .spacer[data-lm-nodrag], #g5-container .lm-blocks .system[data-lm-nodrag], #g5-container .lm-blocks .atom[data-lm-nodrag] {
   cursor: default;
 }
@@ -4416,9 +4421,19 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .particle {
   background-color: #2A82B7;
 }
+#g5-container .lm-blocks .particle.g-inheriting {
+  background-image: -webkit-linear-gradient(-45deg, #2A82B7 25%, #2779ab 25%, #2779ab 50%, #2A82B7 50%, #2A82B7 75%, #2779ab 75%, #2779ab);
+  background-image: linear-gradient(-45deg, #2A82B7 25%, #2779ab 25%, #2779ab 50%, #2A82B7 50%, #2A82B7 75%, #2779ab 75%, #2779ab);
+  background-size: 50px 50px;
+}
 #g5-container .lm-blocks .spacer {
   background-color: #eee;
   color: rgba(102, 102, 102, 0.8);
+}
+#g5-container .lm-blocks .spacer.g-inheriting {
+  background-image: -webkit-linear-gradient(-45deg, #eee 25%, #e6e6e6 25%, #e6e6e6 50%, #eee 50%, #eee 75%, #e6e6e6 75%, #e6e6e6);
+  background-image: linear-gradient(-45deg, #eee 25%, #e6e6e6 25%, #e6e6e6 50%, #eee 50%, #eee 75%, #e6e6e6 75%, #e6e6e6);
+  background-size: 50px 50px;
 }
 #g5-container .lm-blocks .spacer .particle-size {
   color: rgba(102, 102, 102, 0.8);
@@ -4429,8 +4444,18 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .atom {
   background-color: #9055AF;
 }
+#g5-container .lm-blocks .atom.g-inheriting {
+  background-image: -webkit-linear-gradient(-45deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-image: linear-gradient(-45deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-size: 50px 50px;
+}
 #g5-container .lm-blocks .system {
   background-color: #20A085;
+}
+#g5-container .lm-blocks .system.g-inheriting {
+  background-image: -webkit-linear-gradient(-45deg, #20A085 25%, #1d937a 25%, #1d937a 50%, #20A085 50%, #20A085 75%, #1d937a 75%, #1d937a);
+  background-image: linear-gradient(-45deg, #20A085 25%, #1d937a 25%, #1d937a 50%, #20A085 50%, #20A085 75%, #1d937a 75%, #1d937a);
+  background-size: 50px 50px;
 }
 #g5-container .lm-blocks .placeholder {
   text-align: center;
@@ -4476,6 +4501,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
+#g5-container .lm-blocks .particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.atom-disabled, #g5-container .lm-blocks [data-lm-disabled] {
+  background-image: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
+  background-image: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
+  background-size: 50px 50px;
+}
 #g5-container .lm-blocks .atoms-section .placeholder.in-between {
   margin-bottom: 6px;
 }
@@ -4492,11 +4522,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .lm-blocks .block-has-changes > span .title, #g5-container .lm-blocks .block-has-changes > span .font-small, #g5-container .lm-blocks .block-has-changes > span .card h4[data-g-collapse] .g-collapse, #g5-container .card h4[data-g-collapse] .lm-blocks .block-has-changes > span .g-collapse, #g5-container .lm-blocks .block-has-changes > span .g-filters-bar label, #g5-container .g-filters-bar .lm-blocks .block-has-changes > span label, #g5-container .lm-blocks .block-has-changes > span .g5-lm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-particles-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-modules-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span .g5-mm-widgets-picker:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span #positions:not(.menu-editor-particles), #g5-container .lm-blocks .block-has-changes > span #menu-editor li .menu-item .menu-item-content .menu-item-subtitle, #g5-container #menu-editor li .menu-item .menu-item-content .lm-blocks .block-has-changes > span .menu-item-subtitle, #g5-container .lm-blocks .block-has-changes > span .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files li, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files .lm-blocks .block-has-changes > span li, #g5-container .lm-blocks .block-has-changes > span .icon {
   margin-left: 15px;
-}
-#g5-container .particle-disabled, #g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled, #g5-container [data-lm-disabled] {
-  background: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
-  background: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4) !important;
-  background-size: 50px 50px !important;
 }
 #g5-container #history {
   display: inline-block;
@@ -4783,8 +4808,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   position: relative;
 }
 #g5-container .g-inherit {
-  background: -webkit-linear-gradient(-315deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7)) !important;
-  background: linear-gradient(45deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7)) !important;
+  background-image: -webkit-linear-gradient(-45deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7));
+  background-image: linear-gradient(-45deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7));
+  background-size: "auto" !important "auto" !important;
   z-index: 5;
   position: absolute;
   top: 5px;

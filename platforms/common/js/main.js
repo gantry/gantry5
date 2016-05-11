@@ -8,6 +8,9 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -1527,7 +1530,7 @@ var Particle = new prime({
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
             subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
 
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon"><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType()  + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon"><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
     
     enableInheritance: function() {
@@ -18106,7 +18109,9 @@ module.exports = function(x1, y1, x2, y2, epsilon){
   'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define([], factory);
+    define([], function() {
+      return factory();
+    });
   } else if (typeof exports === 'object') {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
@@ -18227,9 +18232,9 @@ module.exports = function(x1, y1, x2, y2, epsilon){
       return 'null';
     } else if (Array.isArray(subject)) {
       return 'array';
-    } else if (subject instanceof Date) {
+    } else if (Object.prototype.toString.call(subject) === '[object Date]') {
       return 'date';
-    } else if (/^\/.*\//.test(subject.toString())) {
+    } else if (typeof subject.toString !== 'undefined' && /^\/.*\//.test(subject.toString())) {
       return 'regexp';
     }
     return 'object';
@@ -18239,11 +18244,28 @@ module.exports = function(x1, y1, x2, y2, epsilon){
     path = path || [];
     var currentPath = path.slice(0);
     if (typeof key !== 'undefined') {
-      if (prefilter && prefilter(currentPath, key, { lhs: lhs, rhs: rhs })) {
-        return;
+      if (prefilter) {
+        if (typeof(prefilter) === 'function' && prefilter(currentPath, key)) { return; }
+        else if (typeof(prefilter) === 'object') {
+          if (prefilter.prefilter && prefilter.prefilter(currentPath, key)) { return; }
+          if (prefilter.normalize) {
+            var alt = prefilter.normalize(currentPath, key, lhs, rhs);
+            if (alt) {
+              lhs = alt[0];
+              rhs = alt[1];
+            }
+          }
+        }
       }
       currentPath.push(key);
     }
+
+    // Use string comparison for regexes
+    if (realTypeOf(lhs) === 'regexp' && realTypeOf(rhs) === 'regexp') {
+      lhs = lhs.toString();
+      rhs = rhs.toString();
+    }
+
     var ltype = typeof lhs;
     var rtype = typeof rhs;
     if (ltype === 'undefined') {
@@ -18254,7 +18276,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
       changes(new DiffDeleted(currentPath, lhs));
     } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
       changes(new DiffEdit(currentPath, lhs, rhs));
-    } else if (lhs instanceof Date && rhs instanceof Date && ((lhs - rhs) !== 0)) {
+    } else if (Object.prototype.toString.call(lhs) === '[object Date]' && Object.prototype.toString.call(rhs) === '[object Date]' && ((lhs - rhs) !== 0)) {
       changes(new DiffEdit(currentPath, lhs, rhs));
     } else if (ltype === 'object' && lhs !== null && rhs !== null) {
       stack = stack || [];
@@ -18312,7 +18334,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
   function applyArrayChange(arr, index, change) {
     if (change.path && change.path.length) {
       var it = arr[index],
-        i, u = change.path.length - 1;
+          i, u = change.path.length - 1;
       for (i = 0; i < u; i++) {
         it = it[change.path[i]];
       }
@@ -18348,8 +18370,8 @@ module.exports = function(x1, y1, x2, y2, epsilon){
   function applyChange(target, source, change) {
     if (target && source && change && change.kind) {
       var it = target,
-        i = -1,
-        last = change.path ? change.path.length - 1 : 0;
+          i = -1,
+          last = change.path ? change.path.length - 1 : 0;
       while (++i < last) {
         if (typeof it[change.path[i]] === 'undefined') {
           it[change.path[i]] = (typeof change.path[i] === 'number') ? [] : {};
@@ -18375,7 +18397,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
     if (change.path && change.path.length) {
       // the structure of the object at the index has changed...
       var it = arr[index],
-        i, u = change.path.length - 1;
+          i, u = change.path.length - 1;
       for (i = 0; i < u; i++) {
         it = it[change.path[i]];
       }
@@ -18416,7 +18438,7 @@ module.exports = function(x1, y1, x2, y2, epsilon){
   function revertChange(target, source, change) {
     if (target && source && change && change.kind) {
       var it = target,
-        i, u;
+          i, u;
       u = change.path.length - 1;
       for (i = 0; i < u; i++) {
         if (typeof it[change.path[i]] === 'undefined') {
