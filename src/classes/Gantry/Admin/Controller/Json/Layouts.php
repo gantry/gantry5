@@ -47,7 +47,7 @@ class Layouts extends JsonController
         $type = $post['type'];
         $subtype = $post['subtype'];
         $inherit = $post['inherit'] === 'true' || $post['inherit'] == 1;
-        $id = $post['section'] ?: $post['particle'];
+        $id = $post['id'];
 
         $this->container['configuration'] = $outline;
 
