@@ -38,13 +38,13 @@ ready(function() {
                 inherit: !!value
             };
 
-        // data[contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'section' : 'particle'] = formData.id;
         data.id = formData.id;
 
         label.showIndicator();
         element.selectizeInstance.blur();
-
-        request('POST', parseAjaxURI(getAjaxURL('layouts') + getAjaxSuffix()), data, function(error, response) {
+        
+        var URI = contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'layouts' : 'layouts/list';
+        request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
             if (!response.body.success) {
