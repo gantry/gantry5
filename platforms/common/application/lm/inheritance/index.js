@@ -38,7 +38,8 @@ ready(function() {
                 inherit: !!value
             };
 
-        data[contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'section' : 'particle'] = formData.id;
+        // data[contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'section' : 'particle'] = formData.id;
+        data.id = formData.id;
 
         label.showIndicator();
         element.selectizeInstance.blur();
