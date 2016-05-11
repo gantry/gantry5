@@ -204,17 +204,19 @@ class Layout extends HtmlController
             $extra = new BlueprintsForm($file->content());
             $file->free();
         }
-        if ($page !== 'default' && ($particle || in_array($type, ['section', 'offcanvas']))) {
+
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
+        if ($page !== 'default' && $file->exists()) {
             $inheritType = $particle ? 'particle' : 'section';
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$inheritType}.yaml");
-            $inheritance = new BlueprintsForm($file->content());
-            $file->free();
 
             $funcName = 'getOutlinesWith' . ucfirst($inheritType);
             $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->subtype : $item->id, false);
             unset($list[$page]);
 
             if ($list) {
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
                 $inheritance->set('form.fields.outline.filter', array_keys($list));
                 if (!$hasBlock) {
                     $inheritance->undef('form.fields.include.options.block');
@@ -224,8 +226,6 @@ class Layout extends HtmlController
                     // TODO: dipslay options for particle inheritance.
                     $particles = $this->container['configurations']->getParticleList($item->subtype, false);
                 }
-            } else {
-                unset($inheritance);
             }
         }
 
