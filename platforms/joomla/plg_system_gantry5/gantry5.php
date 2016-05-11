@@ -398,7 +398,7 @@ class plgSystemGantry5 extends JPlugin
             $uri = new JUri($matches[2]);
             $id = (int) $uri->getVar('id');
 
-            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
+            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
                 $content = $content ?: 'No Particle Selected';
                 $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';

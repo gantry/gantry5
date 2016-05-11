@@ -21,13 +21,23 @@
     1. [](#new)
         - Hydrogen: The template now includes the emoji fonts (thanks @810 - #1253)
         - Frontend: Exposed `G5.$` and `G5.ready` JavaScript utils (ref, #1256)
+        - Menu Particle: Added new option `Expand on Hover` to allow / disallow menu items to expand on mouseover or limit them to click / touch only (#1256)
     2. [](#improved)
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
         - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
         - Included woff2 version of the local Roboto font
+        - Encoding JSON data for Layout and Menu when saving to prevent possible issues with `mod_security`
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
-    
+        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Add particle badges support for `Advanced Module Manager` (thanks @nonumber)
+    2. [](#improved)
+        - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
+    3. [](#bugfix)
+        -  Fixed `Joomla Articles` particle limits category selection to 20 categories only (thanks @nikola3244 - #1260)
+        
 # 5.2.15
 ## 25/04/2016
 

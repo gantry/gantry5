@@ -1,7 +1,7 @@
 {% extends 'forms/fields/input/selectize.html.twig' %}
 
 {% block global_attributes %}
-    {% set categories = field.options|default([])|merge(gantry.platform.finder('categories').find()) %}
+    {% set categories = field.options|default([])|merge(gantry.platform.finder('categories').limit(0).find()) %}
     {% set Options = field.selectize.Options %}
     {% set options = [] %}
     {% for key,category in categories %}

@@ -51,7 +51,8 @@ var Menu = new prime({
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
 
-        if (hasTouchEvents) {
+        this.hoverExpand = mainContainer.data('g-hover-expand') === 'true';
+        if (hasTouchEvents || !this.hoverExpand) {
             mainContainer.addClass(this.states.touchEvents);
         }
 
@@ -65,11 +66,14 @@ var Menu = new prime({
             body = $('body');
 
         if (!main) { return; }
-        main.on('mouseenter', this.bound('mouseenter'));
-        main.on('mouseleave', this.bound('mouseleave'));
+        if (this.hoverExpand) {
+            main.on('mouseenter', this.bound('mouseenter'));
+            main.on('mouseleave', this.bound('mouseleave'));
+        }
+
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
-        if (hasTouchEvents) {
+        if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
             if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));

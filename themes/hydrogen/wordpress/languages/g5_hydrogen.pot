@@ -44,10 +44,6 @@ msgstr ""
 msgid "<span class=\"author-name\">%s</span>"
 msgstr ""
 
-#: includes/helper.php:53
-msgid "%1$s"
-msgstr ""
-
 #: includes/helper.php:56
 msgid "(Edit)"
 msgstr ""
@@ -170,10 +166,6 @@ msgstr ""
 
 #. views/partials/meta.html.twig
 msgid "Comment"
-msgstr ""
-
-#. views/partials/meta.html.twig
-msgid "Comments"
 msgstr ""
 
 #. views/partials/pagination.html.twig
