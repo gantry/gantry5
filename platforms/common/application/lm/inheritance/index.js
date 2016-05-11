@@ -43,7 +43,7 @@ ready(function() {
         label.showIndicator();
         element.selectizeInstance.blur();
 
-        var URI = contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'layouts' : 'layouts/list';
+        var URI = $('[name="inherit[particle]"]') ? 'layouts/list' : 'layouts';
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
