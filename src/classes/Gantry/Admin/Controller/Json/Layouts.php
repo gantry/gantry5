@@ -43,35 +43,43 @@ class Layouts extends JsonController
     {
         $post = $this->request->request;
 
-        $type = $post['type'] ?: 'section';
         $outline = $post['outline'];
-        $section = $post['section'];
-        $inherit = $post['inherit'] === 'true';
+        $type = $post['type'];
+        $subtype = $post['subtype'];
+        $inherit = $post['inherit'] === 'true' || $post['inherit'] == 1;
+        $id = $post['section'] ?: $post['particle'];
+
+        $this->container['configuration'] = $outline;
 
         $layout = Layout::instance($outline);
-        $item = $layout->find($section);
+        $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
         $title = isset($item->title) ? $item->title : '';
         $attributes = isset($item->attributes) ? $item->attributes : [];
-        $block = $layout->block($section);
+        $block = $layout->block($id);
         $block = (object) (isset($block->attributes) ? $block->attributes : []);
-        $block->size = (float) ($post['block']['size'] ?: 100);
-        $block->fixed = (int) ($post['block']['fixed'] === 'true');
+        //$block->size = (float) ($post['block']['size'] ?: 100);
+        //$block->fixed = (int) ($post['block']['fixed'] === 'true');
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
-        $blueprints = new BlueprintsForm($file->content());
-        $file->free();
+        if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
+            $blueprints = new BlueprintsForm($file->content());
+            $file->free();
+        } else {
+            $blueprints = new BlueprintsForm($this->container['particles']->get($subtype));
+        }
 
         $params = [
             'gantry'        => $this->container,
             'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
             'item'          => $item,
-            'data'          => ['particles' => [$type => $attributes]],
-            'prefix'        => "particles.{$type}.",
+            'data'          => ['particles' => [$subtype => $attributes]],
+            'prefix'        => "particles.{$subtype}.",
             'inherit'       => $inherit ? $outline : null,
             'parent'        => 'settings',
-            'route'         => 'configurations.section.settings'
+            'route'         => 'configurations.section.settings',
+            'skip'          => ['enabled']
         ];
 
         $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
@@ -85,7 +93,7 @@ class Layouts extends JsonController
                 'blueprints' => $blockBlueprints->get('form'),
                 'data' => ['block' => $block],
                 'prefix' => 'block.',
-                'size_limits' => $post['size_limits'] ?: [100, 100]
+                //'size_limits' => $post['size_limits'] ?: [100, 100]
             ] + $params;
 
         $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsBlock);
