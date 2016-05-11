@@ -1162,6 +1162,12 @@ var Base = new prime({
         return has(this.attributes, key);
     },
 
+    enableInheritance: function() {},
+
+    disableInheritance: function() {},
+
+    refreshInheritance: function() {},
+
     hasInheritance: function() {
         return size(this.inherit);
     },
