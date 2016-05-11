@@ -3057,14 +3057,14 @@ ready(function() {
                 outline: value || getCurrentOutline(),
                 type: formData.type || '',
                 subtype: formData.subtype || '',
-                inherit: !!value
+                inherit: !!value ? '1' : '0'
             };
 
         data.id = formData.id;
 
         label.showIndicator();
         element.selectizeInstance.blur();
-        
+
         var URI = contains(['section', 'offcanvas', 'container', 'wrapper'], formData.type) ? 'layouts' : 'layouts/list';
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
@@ -3099,8 +3099,8 @@ ready(function() {
     body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
         var value     = element.value(),
             isChecked = element.checked(),
-            panel     = $('#' + (IDsMap[value].panel || IDsMap[value])),
-            tab       = $('#' + (IDsMap[value].tab || IDsMap[value]) + '-tab');
+            panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
+            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab');
 
         if (!panel || !tab) { return true; }
 
