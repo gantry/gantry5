@@ -55,9 +55,9 @@ class Layouts extends JsonController
         $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
         $title = isset($item->title) ? $item->title : '';
-        $item->attributes = (object) (isset($item->attributes) ? $item->attributes : []);
+        $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
         $block = $layout->block($id);
-        $block = (object) (isset($block->attributes) ? $block->attributes : []);
+        $block = isset($block->attributes) ? (array) $block->attributes : [];
         //$block->size = (float) ($post['block']['size'] ?: 100);
         //$block->fixed = (int) ($post['block']['fixed'] === 'true');
 
@@ -72,12 +72,13 @@ class Layouts extends JsonController
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
             $particle = false;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
-            $defaults = (object) [];
+            $defaults = [];
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
             $particle = true;
-            $defaults = (object) $this->container['config']->get($prefix);
+            $defaults = $this->container['config']->get($prefix);
+            $item->attributes = $item->attributes + $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($subtype));
         }
 
