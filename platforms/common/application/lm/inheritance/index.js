@@ -65,6 +65,7 @@ ready(function() {
 
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
+                id = id.panel || id;
                 if (contains(includes, option) && data.html[id] && (element = container.find('#' + id))) {
                     element.html(data.html[id]);
                     var selects = element.search('[data-selectize]');
