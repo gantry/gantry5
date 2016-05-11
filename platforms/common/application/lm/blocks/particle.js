@@ -25,6 +25,20 @@ var Particle = new prime({
 
         return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon"><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
+    
+    enableInheritance: function() {
+        if (this.hasInheritance()) {
+            this.block.addClass('g-inheriting');
+        }
+    },
+
+    disableInheritance: function() {
+        this.block.removeClass('g-inheriting');
+    },
+
+    refreshInheritance: function() {
+        this.block[this.hasInheritance() ? 'removeClass' : 'addClass']('g-inheritance');
+    },
 
     setLabelSize: function(size) {
         var label = this.block.find('.particle-size');
