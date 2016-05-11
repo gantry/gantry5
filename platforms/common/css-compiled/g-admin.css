@@ -4271,26 +4271,32 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
 }
-#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block {
+#g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid {
+  border-bottom: 10px solid #e0e0e0;
+}
+#g5-container .lm-blocks > .g-grid > .g-block:last-child, #g5-container .lm-blocks .g-lm-container > .g-grid:last-child {
+  border-bottom: 0;
+}
+#g5-container .lm-blocks > .g-grid > .g-block > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block {
   margin-right: 14px;
   background: #fff;
   padding-bottom: 50px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section {
+#g5-container .lm-blocks > .g-grid > .g-block > .g-block > .section, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section {
   border-bottom: 14px solid #eee;
   margin-top: 0;
   margin-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .section:last-child, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section:last-child {
+#g5-container .lm-blocks > .g-grid > .g-block > .g-block > .section:last-child, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .section:last-child {
   border-bottom: 0;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size {
+#g5-container .lm-blocks > .g-grid > .g-block > .g-block > .particle-size, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size {
   margin-right: 0;
   position: absolute;
   bottom: 12px;
   right: 12px;
 }
-#g5-container .lm-blocks > .g-grid > .g-block > .particle-size i, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size i {
+#g5-container .lm-blocks > .g-grid > .g-block > .g-block > .particle-size i, #g5-container .lm-blocks .g-lm-container > .g-grid > .g-block > .particle-size i {
   margin-right: 5px;
 }
 #g5-container .lm-blocks .g-grid:hover > .g-block > .particle:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .position:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .spacer:after, #g5-container .lm-blocks .g-grid:hover > .g-block > .system:after {
