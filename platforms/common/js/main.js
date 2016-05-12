@@ -4864,7 +4864,11 @@ ready(function() {
 
                             if (response.body.html) {
                                 var parent = element.parent('[data-mm-id]');
-                                if (parent) { parent.html(response.body.html); }
+                                if (parent) {
+                                    var status = response.body.item.enabled || response.body.item.options.particle.enabled;
+                                    parent.html(response.body.html);
+                                    parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                                }
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);

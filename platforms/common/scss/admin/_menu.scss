@@ -62,8 +62,17 @@ $submenu-ratio:                 60px;
             display: none;
         }
     }
+
     .card.full-width {
         margin: $content-margin 0;
+    }
+
+    .g-menu-item-disabled {
+        @include stripes-background(#ccc);
+
+        &:hover, &.active {
+            @include stripes-background($tertiary-accent);
+        }
     }
 }
 
@@ -187,6 +196,7 @@ $submenu-ratio:                 60px;
             border-color: $black;
         }
     }
+
     .parent-indicator {
         font-size: $core-font-size - 0.4;
         margin-left: 0.2rem;

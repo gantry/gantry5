@@ -6,8 +6,8 @@
         <h4>
             <span data-title-editable="{{ data.title }}" class="title">{{ data.title }}</span>
             <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.title) }}" data-title-edit=""></i>
-            {% if blueprints.form.fields.enabled %}
-            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
+            {% if blueprints.fields.enabled %}
+            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.fields.enabled, 'value': data.enabled} %}
             {% endif %}
             <span class="g-menuitem-path font-small">/{{ path }}</span>
         </h4>
