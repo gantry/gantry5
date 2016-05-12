@@ -248,6 +248,11 @@ var Map         = map,
             });
         },
 
+        toggleStateDelegation: function(event, element) {
+            var enabled = element.value() == '1';
+            element.attribute('disabled', !enabled);
+        },
+
         // chrome workaround for overflow and columns
         chromeFix: function() {
             if (!Assignments.isChrome()) { return; }
@@ -282,6 +287,7 @@ ready(function() {
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+    body.delegate('change', '#assignments input[type="hidden"][name]', Assignments.toggleStateDelegation);
 
     // chrome workaround for overflow and columns
     //if (Assignments.isChrome()) Assignments.chromeFix();
