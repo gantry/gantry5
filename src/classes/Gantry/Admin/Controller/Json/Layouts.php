@@ -32,10 +32,12 @@ class Layouts extends JsonController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/' => 'index'
+            '/' => 'index',
+            '/list' => 'listParticles'
         ],
         'POST' => [
-            '/' => 'index'
+            '/' => 'index',
+            '/list' => 'listParticles'
         ]
     ];
     
@@ -46,7 +48,7 @@ class Layouts extends JsonController
         $outline = $post['outline'];
         $type = $post['type'];
         $subtype = $post['subtype'];
-        $inherit = $post['inherit'] === 'true' || $post['inherit'] == 1;
+        $inherit = $post['inherit'];
         $id = $post['id'];
 
         $this->container['configuration'] = $outline;
@@ -58,8 +60,6 @@ class Layouts extends JsonController
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
         $block = $layout->block($id);
         $block = isset($block->attributes) ? (array) $block->attributes : [];
-        //$block->size = (float) ($post['block']['size'] ?: 100);
-        //$block->fixed = (int) ($post['block']['fixed'] === 'true');
 
         $params = [
             'gantry'        => $this->container,
@@ -105,11 +105,31 @@ class Layouts extends JsonController
                 'blueprints' => $blockBlueprints->get('form'),
                 'data' => ['block' => $block],
                 'prefix' => 'block.',
-                //'size_limits' => $post['size_limits'] ?: [100, 100]
             ] + $params;
 
         $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsBlock);
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
+    }
+
+    public function listParticles()
+    {
+        $post = $this->request->request;
+
+        $outline = $post['outline'];
+        $type = $post['type'];
+        $subtype = $post['subtype'];
+        $inherit = $post['inherit'];
+        $id = $post['id'];
+
+        $particles = $this->container['configurations']->getParticleList($subtype, false);
+        print_r($particles);die();
+
+        $layout = Layout::instance($outline);
+
+        $item = $layout->find($id);
+        $type = isset($item->type) ? $item->type : $type;
+        $title = isset($item->title) ? $item->title : '';
+
     }
 }

@@ -1,5 +1,10 @@
 {% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
+{# Not overridable #}
+{% block overridable %}
+{% endblock %}
+
+{# No label #}
 {% block label %}
 {% endblock %}
 

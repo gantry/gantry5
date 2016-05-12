@@ -1,5 +1,9 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
+{# Not overridable #}
+{% block overridable %}
+{% endblock %}
+
 {% block contents %}
     {% if field.label %}
     <{{ field.tag|default('h5') }}>{{ field.label }}</{{ field.tag|default('h5') }}>
