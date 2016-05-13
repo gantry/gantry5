@@ -24,6 +24,7 @@
         - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
     3. [](#bugfix)
         - Fixed `Joomla Articles` particle limits category selection to 20 categories only (thanks @nikola3244 - #1260)
+        - Fixed broken language filtering for categories and articles
         - Fixed `The menu selected is empty!` in Menu editor when PHP `default_charset` is not `UTF-8` (#1257)
 3. [WordPress](#wordpress)
     2. [](#improved)
