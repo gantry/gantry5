@@ -25,6 +25,7 @@
     3. [](#bugfix)
         - Fixed `Joomla Articles` particle limits category selection to 20 categories only (thanks @nikola3244 - #1260)
         - Fixed broken language filtering for categories and articles
+        - Worked around bug 72151 in **PHP 5.6.21** and **PHP 7.0.6** which was causing some data for articles not to be initialized
         - Fixed `The menu selected is empty!` in Menu editor when PHP `default_charset` is not `UTF-8` (#1257)
 3. [WordPress](#wordpress)
     2. [](#improved)
