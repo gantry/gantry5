@@ -13,16 +13,16 @@ form:
       skip: true
 
       fields:
-        enabled:
-          type: input.checkbox
-          label: Enabled
-          description: Enables the menu item.
-          default: true
-
         .path:
           type: key.key
           label: Path
           skip: true
+
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables the menu item.
+          default: true
 
         .id:
           type: input.text

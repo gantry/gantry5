@@ -3,12 +3,6 @@ description: Gantry menu item.
 
 form:
   fields:
-    enabled:
-      type: input.checkbox
-      label: Enabled
-      description: Enables the menu item.
-      default: true
-      
     items:
       type: collection.list
       array: true
@@ -23,6 +17,12 @@ form:
           type: key.key
           label: Path
           skip: true
+
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables the menu item.
+          default: true
 
         .id:
           type: input.text
