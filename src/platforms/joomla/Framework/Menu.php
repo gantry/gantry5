@@ -272,6 +272,7 @@ class Menu extends AbstractMenu
                     'alias' => $menuItem->alias,
                     'path' => $menuItem->route,
                     'link' => $menuItem->link,
+                    'enabled' => $menuItem->params->get('menu_show', 1),
                 ];
 
                 // Rest of the items will come from saved configuration.

@@ -20,6 +20,7 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Add particle badges support for `Advanced Module Manager` (thanks @nonumber)
+        - Make Gantry menu to honour new `Display in menu` field in Joomla! 3.5.1 (#1255)
     2. [](#improved)
         - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
     3. [](#bugfix)
