@@ -30,6 +30,8 @@
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Added missing `home`, `outline`, `language` and `direction` properties to `Framework\Page` class
+    3. [](#bugfix)
+        - Fixed HTML entities not encoded properly in menu item titles (#1248)
         
 # 5.2.15
 ## 25/04/2016
