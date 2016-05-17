@@ -155,7 +155,7 @@ class Platform extends BasePlatform
 
         if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
-            return '<div class="platform-content">' . $html . '</div>';
+            return '<div class="platform-content row-fluid"><div class="span12">' . $html . '</div></div>';
         }
 
         return $html;
@@ -197,7 +197,7 @@ class Platform extends BasePlatform
 
         if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
-            return '<div class="platform-content">' . $html . '</div>';
+            return '<div class="platform-content row-fluid"><div class="span12">' . $html . '</div></div>';
         }
 
         return $html;

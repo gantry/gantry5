@@ -13,5 +13,9 @@
 
 {% block page_layout %}
     {% do gantry.theme.joomla(true) %}
-    <jdoc:include type="component" />
+    <div class="platform-content row-fluid">
+        <div class="span12">
+            <jdoc:include type="component" />
+        </div>
+    </div>
 {% endblock %}
