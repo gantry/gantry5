@@ -60,6 +60,7 @@ class Layouts extends JsonController
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
         $block = $layout->block($id);
         $block = isset($block->attributes) ? (array) $block->attributes : [];
+        $name = !empty($item->subtype) ? $item->subtype : $type;
 
         $params = [
             'gantry'        => $this->container,
@@ -68,8 +69,8 @@ class Layouts extends JsonController
             'inherit'       => $inherit ? $outline : null,
         ];
 
-        $prefix = "particles.{$subtype}";
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+            $name = $type;
             $particle = false;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $defaults = [];
@@ -77,18 +78,18 @@ class Layouts extends JsonController
             $file->free();
         } else {
             $particle = true;
-            $defaults = $this->container['config']->get($prefix);
+            $defaults = $this->container['config']->get("particles.{$name}");
             $item->attributes = $item->attributes + $defaults;
-            $blueprints = new BlueprintsForm($this->container['particles']->get($subtype));
+            $blueprints = new BlueprintsForm($this->container['particles']->get($name));
         }
 
         $paramsParticle = [
             'title'         => $title,
             'blueprints'    => $blueprints->get('form'),
             'item'          => $item,
-            'data'          => ['particles' => [$subtype => $item->attributes]],
-            'defaults'      => ['particles' => [$subtype => $defaults]],
-            'prefix'        => $prefix . '.',
+            'data'          => ['particles' => [$name => $item->attributes]],
+            'defaults'      => ['particles' => [$name => $defaults]],
+            'prefix'        => "particles.{$name}.",
             'editable'      => $particle,
             'overrideable'  => $particle,
             'skip'          => ['enabled']

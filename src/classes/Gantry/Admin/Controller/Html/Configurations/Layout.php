@@ -177,7 +177,7 @@ class Layout extends HtmlController
             $item->block = (object) $block;
         }
 
-        $name = isset($item->subtype) && $item->subtype ? $item->subtype : $type;
+        $name = !empty($item->subtype) ? $item->subtype : $type;
 
         $attributes = $this->request->post->getArray('options');
         $inherit = $this->request->post->getArray('inherit');
