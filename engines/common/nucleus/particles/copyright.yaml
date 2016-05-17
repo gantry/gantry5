@@ -27,4 +27,3 @@ form:
       type: input.text
       label: Copyright owner
       description: Add copyright owner name.
-      placeholder: Copyright

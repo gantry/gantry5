@@ -4,7 +4,8 @@
 {% set end_date = particle.date.end|trim in ['now', ''] ? 'now'|date('Y') : particle.date.end|e %}
 
 {% block particle %}
-{{ particle.owner|default('Copyright')|raw }} &copy;
-{% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
-{{ end_date|e }}
+    &copy;
+    {% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
+    {{ end_date|e }}
+    {{ particle.owner|raw }}
 {% endblock %}

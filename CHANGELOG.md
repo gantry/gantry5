@@ -14,7 +14,6 @@
         - Encoding JSON data for Layout and Menu when saving to prevent possible issues with `mod_security`
         - Tweaked UI for multiple grids inside a container (#1278)
         - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
-        - Copyright Particle output now defaults on `Copyright © 2016` if no copyright owner is specified
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
         - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
