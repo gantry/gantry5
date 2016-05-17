@@ -10,6 +10,8 @@
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`
         - Display only shared particle settings in `Particle Defaults`
+    3. [](#bugfix)
+        - Fixed issue with Icons Picker Select button no properly re-enabling when only switching dropdown (#1290)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
