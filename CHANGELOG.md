@@ -11,7 +11,6 @@
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
         - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
         - Included woff2 version of the local Roboto font
-        - Encoding JSON data for Layout and Menu when saving to prevent possible issues with `mod_security`
         - Tweaked UI for multiple grids inside a container (#1278)
         - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
     3. [](#bugfix)
