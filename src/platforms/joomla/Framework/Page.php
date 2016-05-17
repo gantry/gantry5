@@ -12,12 +12,16 @@ namespace Gantry\Framework;
 
 class Page extends Base\Page
 {
+    public $home;
+    public $outline;
+    public $language;
+    public $direction;
+
+    // Joomla specific properties.
     public $theme;
     public $baseUrl;
     public $title;
     public $description;
-    public $direction;
-    public $home = false;
 
     public function __construct($container)
     {

@@ -20,10 +20,16 @@ class Category extends Object
     static protected $table = 'Category';
     static protected $order = 'lft';
 
-    protected function initialize()
+    public function initialize()
     {
+        if (!parent::initialize()) {
+            return false;
+        }
+
         $this->params = json_decode($this->params);
         $this->metadata = json_decode($this->metadata);
+
+        return true;
     }
 
     public function parent()

@@ -291,7 +291,7 @@ class Menu extends AbstractMenu
 
             // And if not available in configuration, default to WordPress.
             $itemParams += [
-                'title' => is_admin() ? $menuItem->title : $menuItem->title(),
+                'title' => html_entity_decode(is_admin() ? $menuItem->title : $menuItem->title(), ENT_COMPAT | ENT_HTML5, 'UTF-8'),
                 'target' => $menuItem->target ?: '_self',
                 'class' => implode(' ', $menuItem->classes)
             ];

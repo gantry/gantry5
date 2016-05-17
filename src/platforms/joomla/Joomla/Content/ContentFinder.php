@@ -80,7 +80,7 @@ class ContentFinder extends Finder
         if (!$language) {
             return $this;
         }
-        if (is_numeric($language)) {
+        if ($language === true || is_numeric($language)) {
             $language = \JFactory::getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);

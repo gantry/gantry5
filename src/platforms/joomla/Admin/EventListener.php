@@ -154,7 +154,8 @@ class EventListener implements EventSubscriberInterface
                     'menu-anchor_title' => $menu["items.{$key}.subtitle"],
                     'menu-anchor_css' => $menu["items.{$key}.anchor_class"],
                     'menu_image' => $menu["items.{$key}.image"],
-                    'menu_text' => intval(!$menu["items.{$key}.icon_only"])
+                    'menu_text' => intval(!$menu["items.{$key}.icon_only"]),
+                    'menu_show' => intval($menu["items.{$key}.enabled"]),
                 ];
 
                 $modified = false;
@@ -185,6 +186,9 @@ class EventListener implements EventSubscriberInterface
 
                 // Avoid saving values which are also stored in Joomla.
                 unset($item['title'], $item['subtitle'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
+                if (version_compare(JVERSION, '3.5.1', '>=')) {
+                    unset($item['enabled']);
+                }
 
             }
 

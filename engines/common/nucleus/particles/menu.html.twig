@@ -34,7 +34,7 @@
 
 {% macro displayItem(item, menu, context, dropdown_type) %}
     {% import _self as SELF %}
-    {% if item.visible %}
+    {% if item.visible and item.enabled|default(1) %}
         {% set title = item.icon_only ? ' title="' ~ item.title|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}

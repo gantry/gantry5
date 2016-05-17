@@ -248,6 +248,11 @@ var Map         = map,
             });
         },
 
+        toggleStateDelegation: function(event, element) {
+            var enabled = element.value() == '1';
+            element.attribute('disabled', !enabled);
+        },
+
         // chrome workaround for overflow and columns
         chromeFix: function() {
             if (!Assignments.isChrome()) { return; }
@@ -282,6 +287,7 @@ ready(function() {
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+    body.delegate('change', '#assignments input[type="hidden"][name]', Assignments.toggleStateDelegation);
 
     // chrome workaround for overflow and columns
     //if (Assignments.isChrome()) Assignments.chromeFix();
@@ -4038,16 +4044,24 @@ ready(function() {
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
 
                 var layout = JSON.stringify(lm.builder.serialize());
-                data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
 
+                // base64 encoding doesn't quite work with mod_security
+                // data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
+
+                data.layout = layout;
                 break;
+
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
 
                 var items = JSON.stringify(mm.menumanager.items);
-                data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
@@ -5155,7 +5169,11 @@ ready(function() {
 
                             if (response.body.html) {
                                 var parent = element.parent('[data-mm-id]');
-                                if (parent) { parent.html(response.body.html); }
+                                if (parent) {
+                                    var status = response.body.item.enabled || response.body.item.options.particle.enabled;
+                                    parent.html(response.body.html);
+                                    parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                                }
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);
