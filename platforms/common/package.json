@@ -12,7 +12,7 @@
     "prime-util": "^0.5.0",
     "sifter": "^0.4.5",
     "slick": "^1.12.2",
-    "sortablejs": "w00fz/Sortable#events-patch",
+    "sortablejs": "^1.4.2",
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {
