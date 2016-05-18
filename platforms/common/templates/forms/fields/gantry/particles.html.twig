@@ -3,6 +3,11 @@
 {% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
 {% set list = outline ? gantry.configurations.getParticleInstances(outline, field.particle, false) %}
 
+{% block label %}
+    {{ parent() }}
+    <div><span class="particle-label-subtype badge">{{ field.particle }}</span></div>
+{% endblock %}
+
 {% block input %}
     <div id="{{ field.id }}">
         {% if list %}

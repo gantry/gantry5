@@ -2954,6 +2954,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   max-width: 175px;
   margin: 5px;
 }
+#g5-container .settings-block .settings-param-title .particle-label-subtype {
+  margin-left: 0;
+}
 #g5-container .settings-block i {
   line-height: inherit;
 }
