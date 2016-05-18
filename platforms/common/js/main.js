@@ -3078,7 +3078,8 @@ var $                  = require('elements'),
 
 var IDsMap = {
     attributes: 'g-settings-particle',
-    block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' }
+    block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
+    inheritance: 'g-inherit-particle'
 };
 
 ready(function() {
@@ -3102,7 +3103,7 @@ ready(function() {
         label.showIndicator();
         element.selectizeInstance.blur();
 
-        var URI = $('[name="inherit[particle]"]') ? 'layouts/list' : 'layouts';
+        var URI = $('#g-inherit-particle') ? 'layouts/list' : 'layouts';
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
@@ -3119,13 +3120,14 @@ ready(function() {
 
             var data      = response.body,
                 includes  = form.find('[name="inherit[include]"]').value().split(','),
+                available = form.search('[data-multicheckbox-field="inherit[include]"]').map(function(item) { return $(item).value(); }),
                 container = modal.getByID(modal.getLast()),
                 element;
 
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                if (contains(includes, option) && data.html[id] && (element = container.find('#' + id))) {
+                if ((contains(includes, option) || !contains(available, id)) && data.html[id] && (element = container.find('#' + id))) {
                     element.html(data.html[id]);
                     var selects = element.search('[data-selectize]');
                     if (selects) { selects.selectize(); }
