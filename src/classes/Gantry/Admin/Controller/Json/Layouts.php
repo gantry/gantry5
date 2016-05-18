@@ -143,12 +143,12 @@ class Layouts extends JsonController
                 'name' => 'particle',
                 'type' => 'gantry.particles',
                 'id' => 'g-inherit-particle',
-                'outline' => $outline,
+                'outline' => !$inherit ? '' : $outline,
                 'particle' => $subtype
             ]
         ];
 
-        $html['g-inherit-particle'] = trim(preg_replace('/\s+/', ' ', $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig',  $params)));
+        $html['g-inherit-particle'] = trim(preg_replace('/\s+/', ' ', $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params)));
 
         return new JsonResponse(['json' => $list, 'html' => $html]);
     }
