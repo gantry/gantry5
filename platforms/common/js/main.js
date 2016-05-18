@@ -3083,12 +3083,14 @@ var IDsMap = {
 };
 
 ready(function() {
-    var body = $('body');
+    var body             = $('body'),
+        currentSelection = null;
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
-        var label    = element.parent('.settings-param').find('.settings-param-title'),
-            value    = element.value(),
-            form     = element.parent('[data-g-inheritance-settings]');
+        var label      = element.parent('.settings-param').find('.settings-param-title'),
+            value      = element.value(),
+            form       = element.parent('[data-g-inheritance-settings]'),
+            hasChanged = currentSelection !== value;
 
         var formData = JSON.parse(form.data('g-inheritance-settings')),
             data     = {
@@ -3127,12 +3129,15 @@ ready(function() {
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                if ((contains(includes, option) || !contains(available, id)) && data.html[id] && (element = container.find('#' + id))) {
+                var shouldRefresh = (contains(includes, option) || (hasChanged && !contains(available, id)));
+                if (shouldRefresh && data.html[id] && (element = container.find('#' + id))) {
                     element.html(data.html[id]);
                     var selects = element.search('[data-selectize]');
                     if (selects) { selects.selectize(); }
                 }
             });
+
+            currentSelection = value;
         });
     });
 
