@@ -5,7 +5,8 @@
     3. [](#bugfix)
         - Fixed media manager not rendering correctly in frontend editor (#986)
         - Fixed modal issues with Fabrik (#1147)
-        - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues 
+        - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
+        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
 
 # 5.2.16
 ## 17/05/2016
