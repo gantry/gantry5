@@ -28099,8 +28099,6 @@ module.exports = parse
 
 			moved = true;
 
-			_dispatchEvent(this, rootEl, 'over', dragEl, rootEl, evt, evt.target);
-
 			if (activeGroup && !options.disabled &&
 				(isOwner
 					? canSort || (revert = !rootEl.contains(dragEl)) // Reverting item into the original list
@@ -28327,7 +28325,6 @@ module.exports = parse
 							newIndex = oldIndex;
 						}
 
-						this.originalEvent = evt;
 						_dispatchEvent(this, rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
 
 						// Save sorting
@@ -28666,7 +28663,7 @@ module.exports = parse
 		var lastEl = el.lastElementChild,
 				rect = lastEl.getBoundingClientRect();
 
-		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - rect.right > 5)) && lastEl; // min delta
+		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - (rect.right + rect.width) > 5)) && lastEl; // min delta
 	}
 
 
@@ -28771,7 +28768,7 @@ module.exports = parse
 
 
 	// Export
-	Sortable.version = '1.3.0';
+	Sortable.version = '1.4.2';
 	return Sortable;
 });
 
