@@ -5,7 +5,8 @@
 
 {% block input %}
     <div id="{{ field.id }}">
-        {% for id, title in list %}
+        {% if list %}
+        {% for id, particle in list %}
         <div>
             <input
                     id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
@@ -14,9 +15,16 @@
                     value="{{ id }}"
                     {% if value == id %}checked="checked"{% endif %}
             />
-            <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ title }}</label>
-
+            <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ particle.title }}</label>
+            <div>
+            {% for key,attribute in particle.attributes|array %}
+                {{ key }}: {{ attribute }}<br />
+            {% endfor %}
+            </div>
         </div>
         {% endfor %}
+        {% else %}
+            No Inheritance, select an Outline first
+        {% endif %}
     </div>
 {% endblock %}

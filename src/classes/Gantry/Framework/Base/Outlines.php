@@ -130,7 +130,7 @@ class Outlines extends AbstractOutlineCollection
      * @param bool $includeInherited
      * @return array
      */
-    public function getParticleList($particle, $includeInherited = true)
+    public function getAllParticleInstances($particle, $includeInherited = true)
     {
         $list = [];
         foreach ($this->items as $name => $title) {
@@ -159,6 +159,16 @@ class Outlines extends AbstractOutlineCollection
                     }
                 }
             }
+        }
+
+
+        $layout = Layout::instance($outline);
+
+        foreach ($list as $id => $title) {
+            $item = $layout->find($id);
+            $block = $layout->block($id);
+            $item->block = $block ? $block->attributes : new \stdClass();
+            $list[$id] = $item;
         }
 
         return $list;
