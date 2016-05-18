@@ -14,7 +14,9 @@ form:
         '': No Inheritance
 
     particle:
-      type: input.text
+      type: gantry.particles
+      id: g-inherit-particle
+      outline_field: outline
       label: Particle Instance
       description: Particle to inherit from
 

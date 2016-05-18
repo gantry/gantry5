@@ -134,16 +134,30 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
         foreach ($this->items as $name => $title) {
-            $index = Layout::index($name);
-            if (isset($index['particles'][$particle])) {
-                if (!$includeInherited) {
-                    foreach ($index['inherit'] as $outline => $items) {
-                        if (is_array($items) && in_array($particle, $items)) {
-                            continue 2;
-                        }
+            $list += $this->getParticleInstances($name, $particle, $includeInherited);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $outline
+     * @param string $particle
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getParticleInstances($outline, $particle, $includeInherited = true)
+    {
+        $list = [];
+        $index = Layout::index($outline);
+        if (isset($index['particles'][$particle])) {
+            $list = $index['particles'][$particle];
+            if (!$includeInherited && !empty($index['inherit'])) {
+                foreach ($index['inherit'] as $outline => $items) {
+                    foreach ((array) $items as $id => $title) {
+                        unset($list[$id]);
                     }
                 }
-                $list[$name] = $index['particles'][$particle];
             }
         }
 

@@ -56,11 +56,11 @@ class Layouts extends JsonController
         $layout = Layout::instance($outline);
         $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
+        $subtype = isset($item->subtype) ? $item->subtype : $subtype;
         $title = isset($item->title) ? $item->title : '';
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
         $block = $layout->block($id);
         $block = isset($block->attributes) ? (array) $block->attributes : [];
-        $name = !empty($item->subtype) ? $item->subtype : $type;
 
         $params = [
             'gantry'        => $this->container,
@@ -77,6 +77,7 @@ class Layouts extends JsonController
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
+            $name = $subtype;
             $particle = true;
             $defaults = $this->container['config']->get("particles.{$name}");
             $item->attributes = $item->attributes + $defaults;
@@ -123,14 +124,29 @@ class Layouts extends JsonController
         $inherit = $post['inherit'];
         $id = $post['id'];
 
-        $particles = $this->container['configurations']->getParticleList($subtype, false);
-        print_r($particles);die();
+        $particles = $this->container['configurations']->getParticleInstances($outline, $subtype, false);
 
         $layout = Layout::instance($outline);
 
-        $item = $layout->find($id);
-        $type = isset($item->type) ? $item->type : $type;
-        $title = isset($item->title) ? $item->title : '';
+        $list = [];
+        foreach ($particles as $id => $title) {
+            $list[$id] =  $layout->find($id);
+        }
 
+        $params = [
+            'layout' => 'input',
+            'scope' => 'inherit.',
+            'field' => [
+                'name' => 'particle',
+                'type' => 'gantry.particles',
+                'id' => 'g-inherit-particle',
+                'outline' => $outline,
+                'particle' => $subtype
+            ]
+        ];
+
+        $html['g-inherit-particle'] = trim(preg_replace('/\s+/', ' ', $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig',  $params)));
+
+        return new JsonResponse(['json' => $list, 'html' => $html]);
     }
 }

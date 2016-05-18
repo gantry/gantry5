@@ -227,8 +227,7 @@ class Layout extends HtmlController
                 }
 
                 if ($particle) {
-                    // TODO: dipslay options for particle inheritance.
-                    $particles = $this->container['configurations']->getParticleList($item->subtype, false);
+                    $inheritance->set('form.fields.particle.particle', $name);
                 }
             }
         }
