@@ -3999,12 +3999,21 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .input-group.prepend .button {
   border-right: 0;
 }
+#g5-container .input-multicheckbox .input-group, #g5-container #g-inherit-particle .input-group {
+  width: 100%;
+}
 #g5-container .input-multicheckbox .input-group input, #g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group input, #g5-container #g-inherit-particle .input-group span {
   vertical-align: middle;
 }
 #g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group span {
   line-height: 1.5rem;
   margin-left: 5px;
+}
+#g5-container #g-inherit-particle label .fa {
+  color: #ddd;
+}
+#g5-container #g-inherit-particle label .fa:hover {
+  color: #666;
 }
 
 #g5-container {
