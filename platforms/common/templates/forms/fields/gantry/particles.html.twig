@@ -1,13 +1,21 @@
-{% extends 'forms/fields/select/selectize.html.twig' %}
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
 {% set list = outline ? gantry.configurations.getParticleInstances(outline, field.particle, false) %}
 
-{% block options %}
-    {{ parent() }}
-    {% for name, title in list %}
-        <option value="{{ name }}"{% if name == value %} selected="selected"{% endif %}>
-            {{ title }}
-        </option>
-    {% endfor %}
+{% block input %}
+    <div id="{{ field.id }}">
+        {% for id, title in list %}
+        <div>
+        <input
+                id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
+                type="radio"
+                name="{{ (scope ~ name)|fieldName }}"
+                value="{{ id }}"
+                {% if value == id %}checked="checked"{% endif %}
+        />
+        <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ title }}</label>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}
