@@ -7,15 +7,16 @@
     <div id="{{ field.id }}">
         {% for id, title in list %}
         <div>
-        <input
-                id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
-                type="radio"
-                name="{{ (scope ~ name)|fieldName }}"
-                value="{{ id }}"
-                {% if value == id %}checked="checked"{% endif %}
-        />
-        <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ title }}</label>
-        {% endfor %}
+            <input
+                    id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
+                    type="radio"
+                    name="{{ (scope ~ name)|fieldName }}"
+                    value="{{ id }}"
+                    {% if value == id %}checked="checked"{% endif %}
+            />
+            <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ title }}</label>
+
         </div>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -130,7 +130,10 @@ class Layouts extends JsonController
 
         $list = [];
         foreach ($particles as $id => $title) {
-            $list[$id] =  $layout->find($id);
+            $item = $layout->find($id);
+            $block = $layout->block($id);
+            $item->block = $block ? $block->attributes : new \stdClass();
+            $list[$id] = $item;
         }
 
         $params = [
