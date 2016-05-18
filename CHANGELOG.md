@@ -1,6 +1,9 @@
 # 5.2.17
 ## XX/XX/2016
 
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed `Warning: Zend OPcache API is restricted by "restrict_api" configuration directive`
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed media manager not rendering correctly in frontend editor (#986)

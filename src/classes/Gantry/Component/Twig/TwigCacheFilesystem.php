@@ -67,9 +67,10 @@ class TwigCacheFilesystem implements \Twig_CacheInterface
             if (self::FORCE_BYTECODE_INVALIDATION == ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
                 // Compile cached file into bytecode cache
                 if (function_exists('opcache_invalidate')) {
-                    opcache_invalidate($key, true);
+                    // Silence error in case if `opcache.restrict_api` directive is set.
+                    @opcache_invalidate($key, true);
                 } elseif (function_exists('apc_compile_file')) {
-                    apc_compile_file($key);
+                    @apc_compile_file($key);
                 }
             }
             return;
