@@ -6,23 +6,20 @@
 {% block input %}
     <div id="{{ field.id }}">
         {% if list %}
-        {% for id, particle in list %}
-        <div>
-            <input
-                    id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
-                    type="radio"
-                    name="{{ (scope ~ name)|fieldName }}"
-                    value="{{ id }}"
-                    {% if value == id %}checked="checked"{% endif %}
-            />
-            <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">{{ particle.title }}</label>
-            <div>
-            {% for key,attribute in particle.attributes|array %}
-                {{ key }}: {{ attribute }}<br />
-            {% endfor %}
+            <div class="input-group">
+                {% for id, particle in list %}
+                    <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">
+                        <input
+                                id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
+                                type="radio"
+                                name="{{ (scope ~ name)|fieldName }}"
+                                value="{{ id }}"
+                                {% if value == id %}checked="checked"{% endif %}
+                        />
+                        <span>{{ particle.title }}</span>
+                    </label>
+                {% endfor %}
             </div>
-        </div>
-        {% endfor %}
         {% else %}
             No Inheritance, select an Outline first
         {% endif %}

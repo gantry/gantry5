@@ -19,7 +19,7 @@ html.g5-dialog-open {
         -webkit-overflow-scrolling: touch;
         z-index: 1111;
 
-        .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]), .settings-block select, .settings-block .collection-list ul, .settings-block .g-colorpicker, .settings-block .g-selectize-input {
+        .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]):not([type="radio"]), .settings-block select, .settings-block .collection-list ul, .settings-block .g-colorpicker, .settings-block .g-selectize-input {
             width: 250px;
             @include breakpoint(mobile-only) {
                 width: 90% !important;
