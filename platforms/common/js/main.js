@@ -3090,7 +3090,12 @@ ready(function() {
         var label      = element.parent('.settings-param').find('.settings-param-title'),
             value      = element.value(),
             form       = element.parent('[data-g-inheritance-settings]'),
-            hasChanged = currentSelection !== value;
+            hasChanged = currentSelection !== value,
+            particle   = {
+                list: $('#g-inherit-particle'),
+                radios: $('[name="inherit[particle]"]'),
+                checked: $('[name="inherit[particle]"]:checked')
+            };
 
         var formData = JSON.parse(form.data('g-inheritance-settings')),
             data     = {
@@ -3105,7 +3110,12 @@ ready(function() {
         label.showIndicator();
         element.selectizeInstance.blur();
 
-        var URI = $('#g-inherit-particle') ? 'layouts/list' : 'layouts';
+        if (!hasChanged && particle.radios && particle.checked) {
+            data.id = particle.checked.value();
+            particle.list = false;
+        }
+
+        var URI = particle.list ? 'layouts/list' : 'layouts';
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
@@ -3184,11 +3194,9 @@ ready(function() {
 
     body.delegate('change', '[name="inherit[particle]"]', function(event, element) {
         var container = modal.getByID(modal.getLast()),
-            includes = container.search('[data-multicheckbox-field]');
+            outline   = container.find('[name="inherit[outline]"]');
 
-        includes.forEach(function(include) {
-            body.emit('change', { target: include });
-        });
+        body.emit('change', { target: outline });
     });
 
     body.delegate('mouseup', '.g-tabs .fa-lock, .g-tabs .fa-unlock', function(event, element) {
