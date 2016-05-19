@@ -291,7 +291,7 @@ ready(function() {
                             type = input.attribute('type');
                         if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
 
                         if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(input.value()));

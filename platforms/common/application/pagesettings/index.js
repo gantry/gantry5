@@ -196,7 +196,7 @@ var AttachSettings = function() {
                             type = input.attribute('type');
                         if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
                         var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
