@@ -5716,11 +5716,11 @@ html.g5-dialog-open {
   -webkit-overflow-scrolling: touch;
   z-index: 1111;
 }
-#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]):not([type="radio"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .g-colorpicker, #g5-container .g5-dialog .settings-block .g-selectize-input {
+#g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .g-colorpicker, #g5-container .g5-dialog .settings-block .g-selectize-input {
   width: 250px;
 }
 @media only all and (max-width: 47.938rem) {
-  #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]):not([type="radio"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .g-colorpicker, #g5-container .g5-dialog .settings-block .g-selectize-input {
+  #g5-container .g5-dialog .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), #g5-container .g5-dialog .settings-block select, #g5-container .g5-dialog .settings-block .collection-list ul, #g5-container .g5-dialog .settings-block .g-colorpicker, #g5-container .g5-dialog .settings-block .g-selectize-input {
     width: 90% !important;
   }
 }
