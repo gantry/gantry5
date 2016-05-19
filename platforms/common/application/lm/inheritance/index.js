@@ -86,11 +86,21 @@ ready(function() {
         var value     = element.value(),
             isChecked = element.checked(),
             panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
-            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab');
+            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
+            particle  = {
+                radios: $('[name="inherit[particle]"]'),
+                checked: $('[name="inherit[particle]"]:checked')
+            };
 
         if (!panel || !tab) { return true; }
 
         var inherit = panel.find('.g-inherit');
+
+        // do not try to refresh attributes/block inheritance when there's no particle selected
+        if (particle.radios && !particle.checked) {
+            return false;
+        }
+
 
         // if inherit overlay doesn't exist, we could be in a set
         /*if (!inherit) {
@@ -113,6 +123,15 @@ ready(function() {
         }
     });
 
+    body.delegate('change', '[name="inherit[particle]"]', function(event, element) {
+        var container = modal.getByID(modal.getLast()),
+            includes = container.search('[data-multicheckbox-field]');
+
+        includes.forEach(function(include) {
+            body.emit('change', { target: include });
+        });
+    });
+
     body.delegate('mouseup', '.g-tabs .fa-lock, .g-tabs .fa-unlock', function(event, element) {
         if (!element.parent('li').hasClass('active')) { return false; }
 
@@ -120,9 +139,18 @@ ready(function() {
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
             prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
-            input     = container.find('[data-multicheckbox-field][value="' + prop + '"]');
+            input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
+            particle  = {
+                radios: $('[name="inherit[particle]"]'),
+                checked: $('[name="inherit[particle]"]:checked')
+            };
 
         if (input) {
+            // do not try to refresh attributes/block inheritance when there's no particle selected
+            if (particle.radios && !particle.checked) {
+                return false;
+            }
+
             input.checked(!isLocked);
             body.emit('change', { target: input });
         }
