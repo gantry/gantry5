@@ -2931,8 +2931,9 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
                         var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
@@ -4127,13 +4128,14 @@ ready(function() {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name     = input.attribute('name'),
+                            type     = input.attribute('type'),
                             value    = input.value(),
                             parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         override = override || $(input.data('override-target'));
 
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!name || input.disabled() || (override && !override.checked()) || (type == 'radio' && !input.checked())) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
@@ -4739,8 +4741,9 @@ var StepTwo = function(data, content, button) {
 
             $(fakeDOM[0].elements).forEach(function(input) {
                 input = $(input);
-                var name = input.attribute('name');
-                if (!name || input.disabled()) { return; }
+                var name = input.attribute('name'),
+                    type = input.attribute('type');
+                if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                 input = content.find('[name="' + name + '"]');
                 var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
@@ -5180,8 +5183,9 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
 
@@ -5969,8 +5973,9 @@ var AttachSettings = function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
                         var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
@@ -6297,8 +6302,9 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
                         var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
@@ -8651,8 +8657,9 @@ ready(function() {
 
                         $(fakeDOM[0].elements).forEach(function(input) {
                             input = $(input);
-                            var name = input.attribute('name');
-                            if (!name || input.disabled()) { return; }
+                            var name = input.attribute('name'),
+                                type = input.attribute('type');
+                            if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                             input = content.find('[name="' + name + '"]');
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),

@@ -492,8 +492,9 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]');
                         var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
