@@ -2991,11 +2991,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   display: inline-block;
   height: 38px;
 }
-#g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]):not([type="radio"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .g-colorpicker, #g5-container .settings-block .g-multi.g-selectize-control {
+#g5-container .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .g-colorpicker, #g5-container .settings-block .g-multi.g-selectize-control {
   width: 250px;
 }
 @media only all and (max-width: 59.938rem) {
-  #g5-container .settings-block input:not(.settings-param-toggle):not([type="checkbox"]):not([type="radio"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .g-colorpicker, #g5-container .settings-block .g-multi.g-selectize-control {
+  #g5-container .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), #g5-container .settings-block select, #g5-container .settings-block .collection-list ul, #g5-container .settings-block .g-colorpicker, #g5-container .settings-block .g-multi.g-selectize-control {
     width: 100%;
   }
 }
