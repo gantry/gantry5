@@ -3199,6 +3199,12 @@ ready(function() {
         body.emit('change', { target: outline });
     });
 
+    body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
+        event.preventDefault();
+        alert('Modal will go here.');
+        return false;
+    });
+
     body.delegate('mouseup', '.g-tabs .fa-lock, .g-tabs .fa-unlock', function(event, element) {
         if (!element.parent('li').hasClass('active')) { return false; }
 
