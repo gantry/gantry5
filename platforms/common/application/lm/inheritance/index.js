@@ -51,9 +51,13 @@ ready(function() {
         label.showIndicator();
         element.selectizeInstance.blur();
 
-        if (!hasChanged && particle.radios && particle.checked) {
-            data.id = particle.checked.value();
-            particle.list = false;
+        if (particle.radios && particle.checked) {
+            data.selected = particle.checked.value();
+
+            if (!hasChanged) {
+                data.id = particle.checked.value();
+                particle.list = false;
+            }
         }
 
         var URI = particle.list ? 'layouts/list' : 'layouts';
