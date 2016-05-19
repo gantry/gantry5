@@ -549,11 +549,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected function initInheritance()
     {
-        foreach ($this->inherit() as $outline => $list) {
-            $outline = $this->instance($outline);
+        foreach ($this->inherit() as $outlineId => $list) {
+            $outline = $this->instance($outlineId);
             foreach ($list as $id) {
                 $item = $this->find($id);
-                $inherited = $outline->find($id);
+                $inheritId = isset($item->inherit->particle) ? $item->inherit->particle : $id;
+                $inherited = $outline->find($inheritId);
                 $include = $item->inherit->include;
 
                 foreach ($include as $part) {
@@ -563,7 +564,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             break;
                         case 'block':
                             $block = $this->block($id);
-                            $block->attributes = $outline->block($id)->attributes;
+                            $block->attributes = $outline->block($inheritId)->attributes;
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {

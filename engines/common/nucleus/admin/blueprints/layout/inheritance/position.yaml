@@ -13,6 +13,13 @@ form:
       options:
         '': No Inheritance
 
+    particle:
+      type: gantry.particles
+      id: g-inherit-particle
+      outline_field: outline
+      label: Position Instance
+      description: Position to inherit from
+
     include:
       type: input.multicheckbox
       label: Include
