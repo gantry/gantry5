@@ -3,7 +3,7 @@
 {% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
 {% set list = outline ? gantry.configurations.getParticleInstances(outline, field.particle, false) %}
 {% set keys = list|keys %}
-{% set value = value in keys ? value : keys|last %}
+{% set value = value in keys ? value : keys|first %}
 
 {% block label %}
     {{ parent() }}
