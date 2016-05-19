@@ -553,7 +553,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $outline = $this->instance($outlineId);
             foreach ($list as $id) {
                 $item = $this->find($id);
-                $inheritId = isset($item->inherit->particle) ? $item->inherit->particle : $id;
+                $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
                 $inherited = $outline->find($inheritId);
                 $include = $item->inherit->include;
 
@@ -563,8 +563,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             $item->attributes = $inherited->attributes;
                             break;
                         case 'block':
+                            $blockAttributes = array_diff_key((array) $outline->block($inheritId)->attributes, ['fixed' => 1, 'size' => 1]);
                             $block = $this->block($id);
-                            $block->attributes = $outline->block($inheritId)->attributes;
+                            $block->attributes = (object) ($blockAttributes + (array) $block->attributes);
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {

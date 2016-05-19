@@ -180,8 +180,8 @@ class Format2
         $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
         $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
-        if (isset($result->inherit)) {
-            $result['inherit'] = (object) $result->inherit;
+        if (isset($result['inherit'])) {
+            $result['inherit'] = (object) $result['inherit'];
         }
 
         if (isset($result['block'])) {
