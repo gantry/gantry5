@@ -153,7 +153,7 @@ class Outlines extends AbstractOutlineCollection
         if (isset($index['particles'][$particle])) {
             $list = $index['particles'][$particle];
             if (!$includeInherited && !empty($index['inherit'])) {
-                foreach ($index['inherit'] as $outline => $items) {
+                foreach ($index['inherit'] as $items) {
                     foreach ((array) $items as $id => $title) {
                         unset($list[$id]);
                     }
@@ -161,11 +161,10 @@ class Outlines extends AbstractOutlineCollection
             }
         }
 
-
         $layout = Layout::instance($outline);
 
         foreach ($list as $id => $title) {
-            $item = $layout->find($id);
+            $item = clone $layout->find($id);
             $block = $layout->block($id);
             $item->block = $block ? $block->attributes : new \stdClass();
             $list[$id] = $item;

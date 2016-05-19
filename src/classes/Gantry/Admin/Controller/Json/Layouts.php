@@ -124,17 +124,9 @@ class Layouts extends JsonController
         $inherit = $post['inherit'];
         $id = $post['id'];
 
-        $particles = $this->container['configurations']->getParticleInstances($outline, $subtype, false);
+        $this->container['configuration'] = $outline;
 
-        $layout = Layout::instance($outline);
-
-        $list = [];
-        foreach ($particles as $id => $title) {
-            $item = $layout->find($id);
-            $block = $layout->block($id);
-            $item->block = $block ? $block->attributes : new \stdClass();
-            $list[$id] = $item;
-        }
+        $particles = $outline && $inherit ? $this->container['configurations']->getParticleInstances($outline, $subtype, false) : new \stdClass();
 
         $params = [
             'layout' => 'input',
@@ -150,6 +142,6 @@ class Layouts extends JsonController
 
         $html['g-inherit-particle'] = trim(preg_replace('/\s+/', ' ', $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params)));
 
-        return new JsonResponse(['json' => $list, 'html' => $html]);
+        return new JsonResponse(['outline'=>$outline, 'json' => $particles, 'html' => $html]);
     }
 }

@@ -19,6 +19,7 @@
                                 type="radio"
                                 name="{{ (scope ~ name)|fieldName }}"
                                 value="{{ id }}"
+                                required="required"
                                 {% if value == id %}checked="checked"{% endif %}
                         />
                         <span>{{ particle.title }}</span>
