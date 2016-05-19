@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed `Warning: Zend OPcache API is restricted by "restrict_api" configuration directive`
+        - Fixed backward compatibility for custom menus where the hovering wouldn't be the default behavior (#1293)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed media manager not rendering correctly in frontend editor (#986)
