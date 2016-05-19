@@ -1,5 +1,5 @@
 # 5.2.17
-## XX/XX/2016
+## 19/05/2016
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -11,6 +11,9 @@
         - Fixed modal issues with Fabrik (#1147)
         - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
         - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress)
 
 # 5.2.16
 ## 17/05/2016
