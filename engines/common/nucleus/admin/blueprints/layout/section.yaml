@@ -31,3 +31,6 @@ form:
       key_placeholder: Key (data-*, style, ...)
       value_placeholder: Value
       exclude: ['id', 'class']
+
+    _inherit:
+      type: gantry.inherit

@@ -82,6 +82,7 @@ class Layouts extends JsonController
             $defaults = $this->container['config']->get("particles.{$name}");
             $item->attributes = $item->attributes + $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+            $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
 
         $paramsParticle = [
@@ -104,12 +105,12 @@ class Layouts extends JsonController
 
         $paramsBlock = [
                 'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
-                'blueprints' => $blockBlueprints->get('form'),
+                'blueprints' => ['fields' => $blockBlueprints->get('form.fields.block_container.fields')],
                 'data' => ['block' => $block],
                 'prefix' => 'block.',
             ] + $params;
 
-        $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsBlock);
+        $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/forms/fields.html.twig',  $paramsBlock);
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }

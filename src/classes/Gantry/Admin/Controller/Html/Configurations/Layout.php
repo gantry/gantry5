@@ -201,6 +201,7 @@ class Layout extends HtmlController
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+            $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
 
         if ($hasBlock) {

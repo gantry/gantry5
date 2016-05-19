@@ -35,6 +35,9 @@ form:
           value_placeholder: Value
           exclude: ['id', 'class']
 
+        _inherit:
+          type: gantry.inherit
+
     size_container:
       type: container.set
       id: g-settings-block-size
@@ -59,6 +62,6 @@ form:
             text: "%"
 
         _note:
-              type: separator.note
-              class: alert alert-warning center blocksize-note
-              content: 'The <em>Block Size</em> can only be set <span class="blocksize-range">between <strong>#min#</strong>% and <strong>#max#</strong>%</span><span class="blocksize-fixed">to <strong>#max#</strong>%</span>'
+          type: separator.note
+          class: alert alert-warning center blocksize-note
+          content: 'The <em>Block Size</em> can only be set <span class="blocksize-range">between <strong>#min#</strong>% and <strong>#max#</strong>%</span><span class="blocksize-fixed">to <strong>#max#</strong>%</span>'
