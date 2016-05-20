@@ -177,11 +177,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Initialize layout.
      *
+     * @param  bool  $force
      * @return $this
      */
-    public function init()
+    public function init($force = false)
     {
-        if (!isset($this->references)) {
+        if ($force || !isset($this->references)) {
             $this->initReferences();
             $this->initInheritance();
         }
@@ -552,6 +553,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     foreach ($sections[$type] as $section) {
                         if ($section->id === $item->id) {
                             $found = true;
+                            $section->inherit = $item->inherit;
                             $section->children = $item->children;
                             break;
                         }
