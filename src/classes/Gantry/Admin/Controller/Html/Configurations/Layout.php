@@ -188,7 +188,6 @@ class Layout extends HtmlController
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
-            $inherit += (array) $item->inherit;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
@@ -198,7 +197,6 @@ class Layout extends HtmlController
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
-            $inherit += (array) $item->inherit;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
             $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
