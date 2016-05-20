@@ -3171,9 +3171,9 @@ ready(function() {
         var inherit = panel.find('.g-inherit');
 
         // do not try to refresh attributes/block inheritance when there's no particle selected
-        if (particle.radios && !particle.checked) {
+        /*if (particle.radios && !particle.checked) {
             return false;
-        }
+        }*/
 
 
         // if inherit overlay doesn't exist, we could be in a set

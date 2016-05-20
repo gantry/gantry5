@@ -199,7 +199,7 @@
         height: 38px;
     }
 
-    input:not(.settings-param-toggle):not([type="checkbox"]):not([type="radio"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
+    input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
