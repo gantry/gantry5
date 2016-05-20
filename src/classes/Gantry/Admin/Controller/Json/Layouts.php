@@ -108,7 +108,7 @@ class Layouts extends JsonController
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
-    
+
     public function particle()
     {
         $post = $this->request->request;
@@ -194,7 +194,7 @@ class Layouts extends JsonController
      */
     protected function renderParticlesInput($outline, $particle, $selected)
     {
-        $list = $outline ? $this->container['configurations']->getParticleInstances($outline, $particle, false) : null;
+        $list = $outline ? $this->container['configurations']->getParticleInstances($outline, $particle, false) : [];
         $selected = isset($list[$selected]) ? $selected : key($list);
 
         $params = [
