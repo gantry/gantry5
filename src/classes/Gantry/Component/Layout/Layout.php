@@ -597,7 +597,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 foreach ($include as $part) {
                     switch ($part) {
                         case 'attributes':
-                            $item->attributes = $inherited->attributes;
+                            $item->attributes = isset($inherited->attributes) ? $inherited->attributes : new \stdClass();
                             break;
                         case 'block':
                             $block = $this->block($id);
