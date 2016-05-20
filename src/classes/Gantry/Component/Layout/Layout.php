@@ -544,6 +544,21 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $leftover;
     }
 
+    public function inheritAll()
+    {
+        foreach ($this->references() as $item) {
+            if (!$this->isLayoutType($item->type)) {
+                $item->inherit = (object) ['outline' => $this->name, 'include' => ['attributes', 'block']];
+            } elseif ($item->type === 'section' || $item->type == 'offcanvas') {
+                $item->inherit = (object) ['outline' => $this->name, 'include' => ['attributes', 'block', 'children']];
+            }
+        }
+
+        $this->init(true);
+
+        return $this;
+    }
+
     protected function copyData(array $data, array $sections, array &$leftover)
     {
         foreach ($data as $type => $items) {
@@ -582,10 +597,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             $item->attributes = $inherited->attributes;
                             break;
                         case 'block':
-                            $inheritBlock = $outline->block($inheritId);
-                            $blockAttributes = $inheritBlock ? array_diff_key((array) $inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
                             $block = $this->block($id);
-                            $block->attributes = (object) ($blockAttributes + (array) $block->attributes);
+                            if (isset($block->attributes)) {
+                                $inheritBlock = $outline->block($inheritId);
+                                $blockAttributes = $inheritBlock ? array_diff_key((array)$inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
+                                $block->attributes = (object)($blockAttributes + (array)$block->attributes);
+                            }
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {

@@ -289,6 +289,10 @@ class Layout extends HtmlController
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
+        if (!$input) {
+            $layout->inheritAll();
+        }
+
         $message = $deleted
             ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
@@ -299,7 +303,7 @@ class Layout extends HtmlController
             'data' => $layout->prepareWidths()->toJson(),
             'deleted' => $deleted,
             'message' => $message
-    ]   );
+        ]);
     }
 
     public function preset($id)
