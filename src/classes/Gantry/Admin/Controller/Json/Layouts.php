@@ -158,7 +158,9 @@ class Layouts extends JsonController
             'overrideable'  => true,
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig', $this->params);
+        $html = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-preview.html.twig', $this->params);
+
+        return new JsonResponse(['html' => $html]);
     }
 
     /**

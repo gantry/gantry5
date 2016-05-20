@@ -84,8 +84,10 @@ ready(function() {
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                var shouldRefresh = (contains(includes, option) || (hasChanged && !contains(available, id)));
-                if (shouldRefresh && data.html[id] && (element = container.find('#' + id))) {
+                var shouldRefresh = contains(includes, option),
+                    isAvailable   = contains(available, option);
+
+                if ((shouldRefresh || !isAvailable) && data.html[id] && (element = container.find('#' + id))) {
                     element.html(data.html[id]);
                     var selects = element.search('[data-selectize]');
                     if (selects) { selects.selectize(); }
@@ -112,8 +114,8 @@ ready(function() {
 
         // do not try to refresh attributes/block inheritance when there's no particle selected
         /*if (particle.radios && !particle.checked) {
-            return false;
-        }*/
+         return false;
+         }*/
 
 
         // if inherit overlay doesn't exist, we could be in a set
@@ -146,7 +148,26 @@ ready(function() {
 
     body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
         event.preventDefault();
-        alert('Modal will go here.');
+
+        var container = modal.getByID(modal.getLast()),
+            outline   = container.find('[name="inherit[outline]"]'),
+            id        = element.siblings('input[name="inherit[particle]"]');
+
+        if (!id || !outline) { return false; }
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            data: { id: id.value(), outline: outline.value() },
+            remote: parseAjaxURI(getAjaxURL('layouts/particle') + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+            }
+        });
+
         return false;
     });
 
