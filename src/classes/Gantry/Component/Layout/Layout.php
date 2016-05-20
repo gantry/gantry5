@@ -580,14 +580,15 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             $item->attributes = $inherited->attributes;
                             break;
                         case 'block':
-                            $blockAttributes = array_diff_key((array) $outline->block($inheritId)->attributes, ['fixed' => 1, 'size' => 1]);
+                            $inheritBlock = $outline->block($inheritId);
+                            $blockAttributes = $inheritBlock ? array_diff_key((array) $inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
                             $block = $this->block($id);
                             $block->attributes = (object) ($blockAttributes + (array) $block->attributes);
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {
                                 $item->children = $inherited->children;
-                                $this->initReferences($item->children);
+                                $this->initReferences($item->children, null, ['outline' => $outlineId, 'include' => ['attributes', 'block']]);
                             } else {
                                 $item->children = [];
                             }
@@ -601,8 +602,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param array $items
      * @param object $block
+     * @param string $inherit
      */
-    protected function initReferences(array $items = null, $block = null)
+    protected function initReferences(array $items = null, $block = null, $inherit = null)
     {
         if ($items === null) {
             $items = $this->items;
@@ -620,6 +622,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     $this->blocks[$item->id] = $block;
                 }
 
+                if ($inherit && !$this->isLayoutType($type)) {
+                    $item->inherit = (object) $inherit;
+                    $item->inherit->particle = $item->id;
+                }
+
                 if (isset($item->id)) {
                     $this->references[$item->id] = $item;
                     $this->types[$type][$subtype][$item->id] = $item;
@@ -632,7 +639,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
 
                 if (isset($item->children) && is_array($item->children)) {
-                    $this->initReferences($item->children, $type === 'block' ? $item : null);
+                    $this->initReferences($item->children, $type === 'block' ? $item : null, $inherit);
                 }
             }
         }
