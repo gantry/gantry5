@@ -547,6 +547,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     public function inheritAll()
     {
         foreach ($this->references() as $item) {
+            if (!empty($item->inherit->outline)) {
+                continue;
+            }
             if (!$this->isLayoutType($item->type)) {
                 $item->inherit = (object) ['outline' => $this->name, 'include' => ['attributes', 'block']];
             } elseif ($item->type === 'section' || $item->type == 'offcanvas') {
