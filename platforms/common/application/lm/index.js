@@ -497,16 +497,18 @@ ready(function() {
                         if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                         input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
+                        if (input) {
+                            var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                                parent   = input.parent('.settings-param'),
+                                override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                        override = override || $(input.data('override-target'));
+                            override = override || $(input.data('override-target'));
 
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
+                            if (override && !override.checked()) { return; }
+                            if (!validateField(input)) { invalid.push(input); }
 
-                        dataString.push(name + '=' + encodeURIComponent(value));
+                            dataString.push(name + '=' + encodeURIComponent(value));
+                        }
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
