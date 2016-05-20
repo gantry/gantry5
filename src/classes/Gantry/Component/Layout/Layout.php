@@ -305,6 +305,23 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @return array
      */
+    public function getLayoutTypes()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public function isLayoutType($type)
+    {
+        return in_array($type, $this->layout);
+    }
+
+    /**
+     * @return array
+     */
     public function references()
     {
         $this->init();

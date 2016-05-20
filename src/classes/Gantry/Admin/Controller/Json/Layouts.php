@@ -33,11 +33,13 @@ class Layouts extends JsonController
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index',
-            '/*' => 'index'
+            '/*' => 'index',
+            '/particle' => 'particle'
         ],
         'POST' => [
             '/' => 'index',
-            '/*' => 'index'
+            '/*' => 'index',
+            '/particle' => 'particle'
         ]
     ];
     
@@ -70,7 +72,7 @@ class Layouts extends JsonController
             'inherit'       => $inherit ? $outline : null,
         ];
 
-        if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+        if ($layout->isLayoutType($type)) {
             $name = $type;
             $particle = false;
             $defaults = [];
@@ -105,6 +107,58 @@ class Layouts extends JsonController
         }
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
+    }
+    
+    public function particle()
+    {
+        $post = $this->request->request;
+
+        $outline = $post['outline'];
+        $id = $post['id'];
+
+        $this->container['configuration'] = $outline;
+
+        $layout = Layout::instance($outline);
+
+        $particle = clone $layout->find($id);
+        if (!isset($particle->type)) {
+            throw new \RuntimeException('Particle was not found from the outline', 404);
+        }
+
+        $particle->block = $layout->block($id);
+
+        $name = $particle->subtype;
+        $prefix = "particles.{$name}";
+        $defaults = (array) $this->container['config']->get($prefix);
+        $attributes = (array) $particle->attributes + $defaults;
+
+        $particleBlueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $particleBlueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+        $blockBlueprints = new BlueprintsForm($file->content());
+        $file->free();
+
+        // TODO: Use blueprints to merge configuration.
+        $particle->attributes = (object) $attributes;
+
+        $this->params['id'] = $name;
+        $this->params += [
+            'extra'         => $blockBlueprints,
+            'item'          => $particle,
+            'data'          => ['particles' => [$name => $attributes]],
+            'defaults'      => ['particles' => [$name => $defaults]],
+            'prefix'        => "particles.{$name}.",
+            'particle'      => $particleBlueprints,
+            'parent'        => 'settings',
+            'route'         => "configurations.{$outline}.settings",
+            'action'        => str_replace('.', '/', 'configurations.' . $outline . '.layout.' . $prefix . '.validate'),
+            'skip'          => ['enabled'],
+            'editable'      => false,
+            'overrideable'  => true,
+        ];
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig', $this->params);
     }
 
     /**

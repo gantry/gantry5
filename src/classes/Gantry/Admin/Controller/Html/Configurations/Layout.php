@@ -163,7 +163,7 @@ class Layout extends HtmlController
 
         $item = $layout->find($id);
         $item->type    = $this->request->post['type'] ?: $type;
-        $item->subtype = $this->request->post['subtype'] ?: false;
+        $item->subtype = $this->request->post['subtype'] ?: $type;
         $item->title   = $this->request->post['title'] ?: ucfirst($type);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
@@ -177,15 +177,13 @@ class Layout extends HtmlController
             $item->block = (object) $block;
         }
 
-        $name = !empty($item->subtype) ? $item->subtype : $type;
-
         $attributes = $this->request->post->getArray('options');
         $inherit = $this->request->post->getArray('inherit');
 
-        if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+        $particle = !$layout->isLayoutType($type);
+        if (!$particle) {
             $name = $type;
-            $particle = false;
-            $section = $type == 'section';
+            $section = ($type == 'section');
             $hasBlock = $section && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
@@ -195,7 +193,7 @@ class Layout extends HtmlController
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
-            $particle = true;
+            $name = $item->subtype;
             $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
@@ -207,8 +205,10 @@ class Layout extends HtmlController
 
         if ($hasBlock) {
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-            $extra = new BlueprintsForm($file->content());
+            $blockBlueprints = new BlueprintsForm($file->content());
             $file->free();
+        } else {
+            $blockBlueprints = null;
         }
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
@@ -240,7 +240,7 @@ class Layout extends HtmlController
 
         $this->params['id'] = $name;
         $this->params += [
-            'extra'         => isset($extra) ? $extra : null,
+            'extra'         => $blockBlueprints,
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => isset($inheritance) ? $inheritance : null,
             'item'          => $item,
