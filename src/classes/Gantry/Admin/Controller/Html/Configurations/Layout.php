@@ -155,8 +155,8 @@ class Layout extends HtmlController
     {
         if ($type == 'atom') { return ''; }
 
-        $page = $this->params['configuration'];
-        $layout = $this->getLayout($page);
+        $outline = $this->params['configuration'];
+        $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
@@ -200,6 +200,7 @@ class Layout extends HtmlController
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
+            $inherit += (array) $item->inherit;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
             $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
@@ -211,12 +212,12 @@ class Layout extends HtmlController
         }
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
-        if ($page !== 'default' && $file->exists()) {
+        if ($outline !== 'default' && $file->exists()) {
             $inheritType = $particle ? 'particle' : 'section';
 
             $funcName = 'getOutlinesWith' . ucfirst($inheritType);
             $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->subtype : $item->id, false);
-            unset($list[$page]);
+            unset($list[$outline]);
 
             if ($list) {
                 $inheritance = new BlueprintsForm($file->content());
@@ -240,6 +241,7 @@ class Layout extends HtmlController
         $this->params['id'] = $name;
         $this->params += [
             'extra'         => isset($extra) ? $extra : null,
+            'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => isset($inheritance) ? $inheritance : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
@@ -247,8 +249,8 @@ class Layout extends HtmlController
             'prefix'        => "particles.{$name}.",
             'particle'      => $blueprints,
             'parent'        => 'settings',
-            'route'         => "configurations.{$page}.settings",
-            'action'        => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
+            'route'         => "configurations.{$outline}.settings",
+            'action'        => str_replace('.', '/', 'configurations.' . $outline . '.layout.' . $prefix . '.validate'),
             'skip'          => ['enabled'],
             'editable'      => $particle,
             'overrideable'  => $particle,

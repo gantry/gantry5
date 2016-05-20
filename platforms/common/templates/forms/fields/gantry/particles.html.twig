@@ -1,9 +1,7 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
-{% set list = outline ? gantry.configurations.getParticleInstances(outline, field.particle, false) %}
-{% set keys = list|keys %}
-{% set value = value in keys ? value : keys|first %}
+{% set particles = field.particles ?: (outline ? gantry.configurations.getParticleInstances(outline, field.particle, false)) %}
 
 {% block label %}
     {{ parent() }}
@@ -12,9 +10,9 @@
 
 {% block input %}
     <div id="{{ field.id }}">
-        {% if list %}
+        {% if particles %}
             <div class="input-group">
-                {% for id, particle in list %}
+                {% for id, particle in particles %}
                     <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">
                         <input
                                 id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"

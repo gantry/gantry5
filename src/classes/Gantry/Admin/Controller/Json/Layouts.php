@@ -33,16 +33,18 @@ class Layouts extends JsonController
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index',
-            '/list' => 'listParticles'
+            '/*' => 'index'
         ],
         'POST' => [
             '/' => 'index',
-            '/list' => 'listParticles'
+            '/*' => 'index'
         ]
     ];
     
     public function index()
     {
+        $path = implode('/', func_get_args());
+
         $post = $this->request->request;
 
         $outline = $post['outline'];
@@ -57,7 +59,6 @@ class Layouts extends JsonController
         $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
         $subtype = isset($item->subtype) ? $item->subtype : $subtype;
-        $title = isset($item->title) ? $item->title : '';
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
         $block = $layout->block($id);
         $block = isset($block->attributes) ? (array) $block->attributes : [];
@@ -72,8 +73,8 @@ class Layouts extends JsonController
         if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
             $name = $type;
             $particle = false;
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $defaults = [];
+            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml");
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
@@ -86,7 +87,7 @@ class Layouts extends JsonController
         }
 
         $paramsParticle = [
-            'title'         => $title,
+            'title'         => isset($item->title) ? $item->title : '',
             'blueprints'    => $blueprints->get('form'),
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
@@ -98,37 +99,49 @@ class Layouts extends JsonController
         ] + $params;
 
         $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
-
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        $blockBlueprints = new BlueprintsForm($file->content());
-        $file->free();
-
-        $paramsBlock = [
-                'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
-                'blueprints' => ['fields' => $blockBlueprints->get('form.fields.block_container.fields')],
-                'data' => ['block' => $block],
-                'prefix' => 'block.',
-            ] + $params;
-
-        $html['g-settings-block-attributes'] = $this->container['admin.theme']->render('@gantry-admin/forms/fields.html.twig',  $paramsBlock);
+        $html['g-settings-block-attributes'] = $this->renderBlockFields($block, $params);
+        if ($path == 'list') {
+            $html['g-inherit-particle'] = $this->renderParticlesInput($inherit ? $outline : null, $subtype, $post['selected']);
+        }
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 
-    public function listParticles()
+    /**
+     * Render block settings.
+     *
+     * @param array $block
+     * @param array $params
+     * @return string
+     */
+     protected function renderBlockFields(array $block, array $params)
+     {
+         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
+         $blockBlueprints = new BlueprintsForm($file->content());
+         $file->free();
+
+         $paramsBlock = [
+                 'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
+                 'blueprints' => ['fields' => $blockBlueprints->get('form.fields.block_container.fields')],
+                 'data' => ['block' => $block],
+                 'prefix' => 'block.',
+             ] + $params;
+
+         return $this->container['admin.theme']->render('@gantry-admin/forms/fields.html.twig',  $paramsBlock);
+     }
+
+    /**
+     * Render input field for particle picker.
+     *
+     * @param string $outline
+     * @param string $particle
+     * @param string $selected
+     * @return string
+     */
+    protected function renderParticlesInput($outline, $particle, $selected)
     {
-        $post = $this->request->request;
-
-        $outline = $post['outline'];
-        $type = $post['type'];
-        $subtype = $post['subtype'];
-        $inherit = $post['inherit'];
-        $id = $post['id'];
-        $selected = $post['selected'];
-
-        $this->container['configuration'] = $outline;
-
-        $particles = $outline && $inherit ? $this->container['configurations']->getParticleInstances($outline, $subtype, false) : new \stdClass();
+        $list = $outline ? $this->container['configurations']->getParticleInstances($outline, $particle, false) : null;
+        $selected = isset($list[$selected]) ? $selected : key($list);
 
         $params = [
             'layout' => 'input',
@@ -137,14 +150,13 @@ class Layouts extends JsonController
                 'name' => 'particle',
                 'type' => 'gantry.particles',
                 'id' => 'g-inherit-particle',
-                'outline' => !$inherit ? '' : $outline,
-                'particle' => $subtype
+                'outline' => $outline,
+                'particles' => $list,
+                'particle' => $particle
             ],
             'value' => $selected
         ];
 
-        $html['g-inherit-particle'] = trim(preg_replace('/\s+/', ' ', $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params)));
-
-        return new JsonResponse(['outline'=>$outline, 'json' => $particles, 'html' => $html]);
+        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params);
     }
 }
