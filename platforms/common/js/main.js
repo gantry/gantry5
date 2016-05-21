@@ -1593,8 +1593,10 @@ var Particle = new prime({
 
     getInheritanceTip: function() {
         var outline = getOutlineNameById(this.inherit ? this.inherit.outline : null),
+            particle = this.inherit.particle || '',
+            include = (this.inherit.include || []).join(', '),
             tooltip = {
-                'tip': 'Inheriting from <strong>' + outline + '</strong>',
+                'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
                 'tip-offset': -10,
                 'tip-place': 'top-right'
             };
