@@ -52,9 +52,8 @@ ready(function() {
         element.selectizeInstance.blur();
 
         if (particle.radios && particle.checked) {
-            data.selected = particle.checked.value();
-
             if (!hasChanged) {
+                data.selected = particle.checked.value();
                 data.id = particle.checked.value();
                 particle.list = false;
             }
