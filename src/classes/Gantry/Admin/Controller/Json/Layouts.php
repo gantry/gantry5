@@ -56,8 +56,13 @@ class Layouts extends JsonController
         $id = $post['id'];
 
         $this->container['configuration'] = $outline;
-
         $layout = Layout::instance($outline);
+
+        if ($path == 'list' && !$layout->isLayoutType($type)) {
+            $instance = $this->getParticleInstances($outline, $subtype, null);
+            $id = $instance['selected'];
+        }
+
         $item = $layout->find($id);
         $type = isset($item->type) ? $item->type : $type;
         $subtype = isset($item->subtype) ? $item->subtype : $subtype;
@@ -187,6 +192,23 @@ class Layouts extends JsonController
      }
 
     /**
+     * Gets the list of available particle instances for an outline
+     *
+     * @param string $outline
+     * @param string $particle
+     * @param string $selected
+     * @return string
+     */
+
+    protected function getParticleInstances($outline, $particle, $selected)
+    {
+        $list = $outline ? $this->container['configurations']->getParticleInstances($outline, $particle, false) : [];
+        $selected = isset($list[$selected]) ? $selected : key($list);
+
+        return ['list' => $list, 'selected' => $selected];
+    }
+
+    /**
      * Render input field for particle picker.
      *
      * @param string $outline
@@ -196,8 +218,7 @@ class Layouts extends JsonController
      */
     protected function renderParticlesInput($outline, $particle, $selected)
     {
-        $list = $outline ? $this->container['configurations']->getParticleInstances($outline, $particle, false) : [];
-        $selected = isset($list[$selected]) ? $selected : key($list);
+        $instances = $this->getParticleInstances($outline, $particle, $selected);
 
         $params = [
             'layout' => 'input',
@@ -207,10 +228,10 @@ class Layouts extends JsonController
                 'type' => 'gantry.particles',
                 'id' => 'g-inherit-particle',
                 'outline' => $outline,
-                'particles' => $list,
+                'particles' => $instances['list'],
                 'particle' => $particle
             ],
-            'value' => $selected
+            'value' => $instances['selected']
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params);
