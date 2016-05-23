@@ -4839,12 +4839,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .g-inherit .g-inherit-content {
   position: absolute;
   text-align: center;
-  transform: translate(-50%, -50%);
-  top: 50%;
+  transform: translateX(-50%);
+  top: 0;
   left: 50%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #fff;
   padding: 0.5rem;
-  border-radius: 3px;
+  border-radius: 0 0 3px 3px;
 }
 @media only all and (min-width: 48rem) {
   #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {
