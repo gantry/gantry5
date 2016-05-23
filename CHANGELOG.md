@@ -1,6 +1,9 @@
 # 5.2.18
 ## XX/XX/2016
 
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed Filepicker `root` property failing when mixing streams with non-streams paths (#1305)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)
