@@ -1,6 +1,21 @@
 {% extends "partials/page.html.twig" %}
 
+{% block page_body -%}
+    <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
+    {{ gantry.config.page.body.body_top|raw }}
+    {{ page_top|raw }}
+    {{ page_layout|raw }}
+    {{ page_bottom|raw }}
+    {{ page_footer|raw }}
+    {{ gantry.config.page.body.body_bottom|raw }}
+    </body>
+{%- endblock %}
+
 {% block page_layout %}
     {% do gantry.theme.joomla(true) %}
-    <jdoc:include type="component" />
+    <div class="platform-content row-fluid">
+        <div class="span12">
+            <jdoc:include type="component" />
+        </div>
+    </div>
 {% endblock %}

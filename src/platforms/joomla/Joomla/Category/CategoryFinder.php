@@ -83,8 +83,10 @@ class CategoryFinder extends Finder
 
     public function published($published = 1)
     {
-
-        return $this->where('a.published', '=', $published);
+        if (!is_array($published)) {
+            $published = (array) intval($published);
+        }
+        return $this->where('a.published', 'IN', $published);
     }
 
     public function authorised($authorised = true)

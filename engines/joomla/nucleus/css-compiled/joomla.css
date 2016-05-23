@@ -442,6 +442,16 @@ body.modal {
   margin: 0 0 10px 10px;
 }
 
+body.modal .manager .height-50 .icon-folder-2 {
+  font-size: 30px;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
+}
+body.modal .manager.thumbnails .small {
+  font-size: 12px;
+}
+
 .accordion-body.in:hover {
   overflow: visible;
 }

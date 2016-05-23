@@ -16,6 +16,30 @@
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
 
+# 5.2.18
+## XX/XX/2016
+
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)
+
+# 5.2.17
+## 19/05/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed `Warning: Zend OPcache API is restricted by "restrict_api" configuration directive`
+        - Fixed backward compatibility for custom menus where the hovering wouldn't be the default behavior (#1293)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed media manager not rendering correctly in frontend editor (#986)
+        - Fixed modal issues with Fabrik (#1147)
+        - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
+        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress))
+
 # 5.2.16
 ## 17/05/2016
 
@@ -29,7 +53,6 @@
         - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
         - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
         - Included woff2 version of the local Roboto font
-        - Encoding JSON data for Layout and Menu when saving to prevent possible issues with `mod_security`
         - Tweaked UI for multiple grids inside a container (#1278)
         - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
     3. [](#bugfix)
