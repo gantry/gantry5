@@ -57,6 +57,9 @@ class Layouts extends JsonController
 
         $this->container['configuration'] = $outline;
         $layout = Layout::instance($outline);
+        if ($inherit) {
+            $layout->inheritAll();
+        }
 
         if ($path == 'list' && !$layout->isLayoutType($type)) {
             $instance = $this->getParticleInstances($outline, $subtype, null);
