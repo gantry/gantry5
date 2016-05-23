@@ -416,7 +416,7 @@ class Layout extends HtmlController
         // Optionally send children of the object.
         if (in_array('children', $inherit['include'])) {
             $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['configuration']);
-            $item = $layout->find($inherit['section']);
+            $item = $layout->inheritAll()->find($inherit['section']);
             $data->join('children', $item->children);
         }
 
