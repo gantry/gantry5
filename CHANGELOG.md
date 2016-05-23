@@ -1,3 +1,10 @@
+# 5.2.18
+## XX/XX/2016
+
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)
+
 # 5.2.17
 ## 19/05/2016
 
