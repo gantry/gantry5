@@ -23,17 +23,23 @@ var Particle = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
+            subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '',
+            klass        = '';
 
-        return '<div class="' + this.getType() + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        if (this.hasInheritance()) {
+            klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+        }
+
+        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
     enableInheritance: function() {
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
         if (this.hasInheritance()) {
             var outline = getOutlineNameById(this.inherit.outline),
                 icon    = this.block.find('.icon');
 
-            this.block.addClass('g-inheriting');
+            this.block.addClass('g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
             this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
 
             forOwn(this.getInheritanceTip(), function(value, key) {
@@ -47,7 +53,7 @@ var Particle = new prime({
     disableInheritance: function() {
         var icon    = this.block.find('.icon');
 
-        this.block.removeClass('g-inheriting');
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
         this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
 
         forOwn(this.getInheritanceTip(), function(value, key) {
@@ -59,6 +65,9 @@ var Particle = new prime({
 
     refreshInheritance: function() {
         this.block[this.hasInheritance() ? 'removeClass' : 'addClass']('g-inheritance');
+        if (this.hasInheritance()) {
+            this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        }
         console.log('refreshing inheritance');
     },
 
@@ -80,14 +89,19 @@ var Particle = new prime({
     getInheritanceTip: function() {
         var outline = getOutlineNameById(this.inherit ? this.inherit.outline : null),
             particle = this.inherit.particle || '',
-            include = (this.inherit.include || []).join(', '),
-            tooltip = {
-                'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
-                'tip-offset': -10,
-                'tip-place': 'top-right'
-            };
+            include = (this.inherit.include || []).join(', ');
 
-        return tooltip;
+        return {
+            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
+            'tip-offset': -10,
+            'tip-place': 'top-right'
+        };
+    },
+
+    cleanKlass: function(klass) {
+        klass = (klass || '').split(' ');
+
+        return klass.filter(function(item) { return !item.match(/^g-inheriting-/); }).join(' ');
     },
 
     setLabelSize: function(size) {

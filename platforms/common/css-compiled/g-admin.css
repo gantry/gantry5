@@ -4143,6 +4143,10 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   -moz-transition: opacity 0.2s ease-in;
   transition: opacity 0.2s ease-in;
 }
+#g5-container .lm-blocks .section.g-inheriting h4, #g5-container .lm-blocks .atoms-section.g-inheriting h4, #g5-container .lm-blocks .offcanvas-section.g-inheriting h4 {
+  z-index: 10;
+  position: relative;
+}
 #g5-container .lm-blocks .section.g-inheriting .section-actions, #g5-container .lm-blocks .atoms-section.g-inheriting .section-actions, #g5-container .lm-blocks .offcanvas-section.g-inheriting .section-actions {
   opacity: 1;
 }
@@ -4156,11 +4160,24 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .section.g-inheriting .section-actions .section-settings i:hover, #g5-container .lm-blocks .atoms-section.g-inheriting .section-actions .section-settings i:hover, #g5-container .lm-blocks .offcanvas-section.g-inheriting .section-actions .section-settings i:hover {
   color: #4d4d4d;
 }
+#g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) .section-addrow, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) .section-addrow, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) .section-addrow {
+  position: relative;
+  z-index: 6;
+}
+#g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) .section-addrow i, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) .section-addrow i, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) .section-addrow i {
+  color: #737373;
+}
+#g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) .section-addrow i:hover, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) .section-addrow i:hover, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) .section-addrow i:hover {
+  color: #4d4d4d;
+}
 #g5-container .lm-blocks .section.g-inheriting:hover .section-actions, #g5-container .lm-blocks .atoms-section.g-inheriting:hover .section-actions, #g5-container .lm-blocks .offcanvas-section.g-inheriting:hover .section-actions {
   opacity: 1;
 }
-#g5-container .lm-blocks .section.g-inheriting > .g-grid:before, #g5-container .lm-blocks .section.g-inheriting > .g-grid:after, #g5-container .lm-blocks .atoms-section.g-inheriting > .g-grid:before, #g5-container .lm-blocks .atoms-section.g-inheriting > .g-grid:after, #g5-container .lm-blocks .offcanvas-section.g-inheriting > .g-grid:before, #g5-container .lm-blocks .offcanvas-section.g-inheriting > .g-grid:after {
+#g5-container .lm-blocks .section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .section.g-inheriting.g-inheriting-children > .g-grid:after, #g5-container .lm-blocks .atoms-section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .atoms-section.g-inheriting.g-inheriting-children > .g-grid:after, #g5-container .lm-blocks .offcanvas-section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .offcanvas-section.g-inheriting.g-inheriting-children > .g-grid:after {
   display: none !important;
+}
+#g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) > .g-grid {
+  z-index: 1;
 }
 #g5-container .lm-blocks .section .g-grid, #g5-container .lm-blocks .atoms-section .g-grid, #g5-container .lm-blocks .offcanvas-section .g-grid {
   margin: 8px 0;
@@ -4845,6 +4862,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   background-color: #fff;
   padding: 0.5rem;
   border-radius: 0 0 3px 3px;
+}
+#g5-container .g-inheriting:not(.g-inheriting-children) .g-inherit {
+  z-index: 1;
 }
 @media only all and (min-width: 48rem) {
   #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {

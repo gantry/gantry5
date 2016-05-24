@@ -29,14 +29,16 @@ var Section = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            inheritance = '';
+            inheritance = '',
+            klass = '';
 
         if (this.hasInheritance()) {
             var outline = getOutlineNameById(this.inherit.outline);
             inheritance = '<div class="g-inherit g-section-inherit"><div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div></div>';
+            klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
         }
 
-        return '<div class="section' + (this.hasInheritance() ? ' g-inheriting' : '') + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
     },
 
     adopt: function(child) {
@@ -44,12 +46,16 @@ var Section = new prime({
     },
 
     enableInheritance: function() {
-        if (this.hasInheritance() && !this.block.find('> .g-inherit')) {
-            this.block.addClass('g-inheriting');
-            var inherit = zen('div.g-inherit.g-section-inherit'),
-                outline = getOutlineNameById(this.inherit.outline);
+        if (this.hasInheritance()) {
+            this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+            this.block.addClass('g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
 
-            this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
+            if (!this.block.find('> .g-inherit')) {
+                var inherit = zen('div.g-inherit.g-section-inherit'),
+                    outline = getOutlineNameById(this.inherit.outline);
+
+                this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
+            }
         }
     },
 
@@ -61,16 +67,26 @@ var Section = new prime({
             }
         }
 
-        this.block.removeClass('g-inheriting');
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
     },
 
     refreshInheritance: function() {
-        if (this.hasInheritance() && this.block.find('> .g-inherit')) {
-            var content = this.block.find('.g-inherit-content strong'),
-                outline = getOutlineNameById(this.inherit.outline);
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        if (this.hasInheritance()) {
+            this.enableInheritance();
+            if (this.block.find('> .g-inherit')) {
+                var content = this.block.find('.g-inherit-content strong'),
+                    outline = getOutlineNameById(this.inherit.outline);
 
-            content.html(outline);
+                content.html(outline);
+            }
         }
+    },
+
+    cleanKlass: function(klass) {
+        klass = (klass || '').split(' ');
+
+        return klass.filter(function(item) { return !item.match(/^g-inheriting-/); }).join(' ');
     },
 
     hasChanged: function(state, child) {
