@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed Filepicker `root` property failing when mixing streams with non-streams paths (#1305)
+        - Fixed `button` input field (thanks @nikola3244 - #1308) 
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)
