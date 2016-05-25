@@ -36,17 +36,13 @@
                 <i class="fa fa-fw fa-pencil"></i>
             </a>
             {% if gantry.authorize('outline.create') and gantry.configurations.canDuplicate(name) %}
-            <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
-                    data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
-                    aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
-                    title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
-                    data-g-config="duplicate"
-                    data-g-config-href="{{ gantry.route('configurations', name, 'duplicate') }}"
-                    data-g-config-method="POST"
-                    class="button button-secondary"
-            >
+            <a href="{{ gantry.route('configurations', name, 'duplicate') }}"
+               data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+               title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+               aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+               data-g5-outline-duplicate class="button button-secondary">
                 <i class="fa fa-fw fa-copy"></i>
-            </button>
+            </a>
             {% endif %}
             {% if name != 'default' and gantry.authorize('outline.delete') and gantry.configurations.canDelete(name) %}
             <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"

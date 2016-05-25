@@ -101,10 +101,12 @@ class Outlines extends BaseOutlines
             throw new \RuntimeException($error, 400);
         }
 
+        $this->items[$style->id] = $title;
+
         return $style->id;
     }
 
-    public function duplicate($id)
+    public function duplicate($id, $title = null)
     {
         $model = StyleHelper::loadModel();
 
@@ -121,7 +123,20 @@ class Outlines extends BaseOutlines
             throw new \RuntimeException($model->getError(), 400);
         }
 
-        return null;
+        // Seek the newly generated style ID since Joomla doesn't return one on duplication.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        $styles = ThemeList::getStyles($theme, true);
+        $style = end($styles);
+
+        if ($title) {
+            $installer = new TemplateInstaller($this->container['theme.name']);
+            $title = $installer->getStyleName("%s - {$title}");
+            $this->rename($style->id, $title);
+        }
+
+        $this->items[$style->id] = $title ?: $style->style;
+
+        return $style->id;
     }
 
     public function rename($id, $title)
@@ -144,6 +159,8 @@ class Outlines extends BaseOutlines
         if (!$item->store()) {
             throw new \RuntimeException($item->getError(), 500);
         }
+
+        $this->items[$id] = $title;
 
         return $id;
     }
@@ -190,6 +207,8 @@ class Outlines extends BaseOutlines
                 Folder::delete($path);
             }
         }
+
+        unset($this->items[$item->id]);
     }
 
     /**

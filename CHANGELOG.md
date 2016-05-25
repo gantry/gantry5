@@ -19,6 +19,13 @@
 # 5.2.18
 ## XX/XX/2016
 
+1. [Common](#common)
+    1. [](#new)
+        - Creating and duplicating Outlines now offers a modal where title and preset can be pre-compiled, without having to edit it later (#207)
+    3. [](#bugfix)
+        - Fixed Filepicker `root` property failing when mixing streams with non-streams paths (#1305)
+        - Fixed `button` input field (thanks @nikola3244 - #1308)
+        - Fixed `Oops, Cannot delete non-existing folder (500 internal error)` during Cache Clearing and when compiling YAML and Twig settings were disabled (#1306)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)

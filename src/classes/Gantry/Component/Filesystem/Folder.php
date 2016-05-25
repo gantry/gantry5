@@ -281,6 +281,8 @@ abstract class Folder
      */
     public static function delete($target, $include_target = true)
     {
+        if (!$target) { return; }
+
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
         }

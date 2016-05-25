@@ -506,13 +506,79 @@ var $             = require('elements'),
 require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body'),
+    var body       = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+
+    // Handles Creating new Configurations
+    body.delegate('click', '[data-g5-outline-create], [data-g5-outline-duplicate]', function(event, element) {
+        if (event) { event.preventDefault(); }
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.href() + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var title   = content.elements.content.find('[name="title"]'),
+                    preset  = content.elements.content.find('[name="preset"]'),
+                    confirm = content.elements.content.find('[data-g-outline-create-confirm]');
+
+                title.on('keyup', function(event) {
+                    var code = event.which;
+                    if (code === 13) {
+                        confirm.emit('click');
+                    }
+                });
+
+                confirm.on('click', function() {
+                    confirm.hideIndicator();
+                    confirm.showIndicator();
+
+                    var URI = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
+                        data = { title: title.value(), preset: preset.value() };
+
+                    if (!data.title) { delete data.title; }
+                    if (!data.preset) { delete data.preset; }
+
+                    request('post', URI, data, function(error, response) {
+                        confirm.hideIndicator();
+
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var base = $('#configurations').find('ul').find('li'),
+                                outline = zen('li').attribute('class', base.attribute('class'));
+
+                            outline.after(base).html(response.body.outline);
+
+                            toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                            modal.close();
+                        }
+
+                    });
+                });
+
+                setTimeout(function() {
+                    title[0].focus();
+                }, 5);
+            }
+        });
+    });
 
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '#configurations [data-g-config]', function(event, element) {
-        var mode = element.data('g-config'),
-            href = element.data('g-config-href'),
+        var mode   = element.data('g-config'),
+            href   = element.data('g-config-href'),
             encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
             method = (element.data('g-config-method') || 'post').toLowerCase();
 
@@ -566,10 +632,10 @@ ready(function() {
                     }
                 });
             } else {
-                var confSelector = $('#configuration-selector'),
+                var confSelector   = $('#configuration-selector'),
                     currentOutline = confSelector.value(),
                     outlineDeleted = response.body.outline,
-                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                    reload         = $('[href="' + getAjaxURL('configurations') + '"]');
 
                 // if the current outline is the one that's been deleted,
                 // fallback to default
@@ -582,7 +648,7 @@ ready(function() {
 
                 if (!reload) { window.location = window.location; }
                 else {
-                    body.emit('click', {target: reload});
+                    body.emit('click', { target: reload });
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
@@ -597,13 +663,13 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original, wasCanceled) {
+    var updateTitle     = function(title, original, wasCanceled) {
             this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
-                href = element.data('g-config-href'),
-                method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                href    = element.data('g-config-href'),
+                method  = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent  = element.parent();
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
@@ -622,8 +688,8 @@ ready(function() {
                     element.data('title', title).data('tip', title);
 
                     // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.outline),
-                        id = dummy.find('h4 span:last-child'),
+                    var dummy   = zen('div').html(response.body.outline),
+                        id      = dummy.find('h4 span:last-child'),
                         actions = dummy.find('.outline-actions');
 
                     element.parent('.card').find('h4 span:last-child').html(id.html());
@@ -640,7 +706,7 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
-                editable.on('title-edit-start', function(){
+                editable.on('title-edit-start', function() {
                     editable.style('text-overflow', 'inherit');
                 });
                 editable.on('title-edit-end', updateTitle);
