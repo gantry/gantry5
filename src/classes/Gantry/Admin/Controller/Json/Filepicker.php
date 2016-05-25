@@ -217,7 +217,7 @@ class Filepicker extends JsonController
 
     protected function listFiles($folder)
     {
-        $folder   = rtrim($folder, '/') . '/';
+        $folder   = preg_replace("|/{1}$|", '', $folder) . '/';
         $locator  = $this->container['locator'];
         $iterator = $this->isStream[$folder] ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
         $files    = new \ArrayObject();
