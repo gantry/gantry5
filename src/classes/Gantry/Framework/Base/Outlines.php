@@ -374,12 +374,12 @@ class Outlines extends AbstractOutlineCollection
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        if (file_exists($path)) {
-            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-                $layout = $this->layout($outline);
-                $layout->updateInheritance($id)->save()->saveIndex();
-            }
+        foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+            $layout = $this->layout($outline);
+            $layout->updateInheritance($id)->save()->saveIndex();
+        }
 
+        if (file_exists($path)) {
             Folder::delete($path);
         }
     }

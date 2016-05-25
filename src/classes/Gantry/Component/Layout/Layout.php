@@ -227,6 +227,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     $element->inherit->outline = $new;
                 } else {
                     $element->inherit = new \stdClass;
+                    unset($this->inherit[$element->id]);
                 }
             }
         }
