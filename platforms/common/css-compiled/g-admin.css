@@ -4144,7 +4144,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   transition: opacity 0.2s ease-in;
 }
 #g5-container .lm-blocks .section.g-inheriting h4, #g5-container .lm-blocks .atoms-section.g-inheriting h4, #g5-container .lm-blocks .offcanvas-section.g-inheriting h4 {
-  z-index: 10;
+  z-index: 6;
   position: relative;
 }
 #g5-container .lm-blocks .section.g-inheriting .section-actions, #g5-container .lm-blocks .atoms-section.g-inheriting .section-actions, #g5-container .lm-blocks .offcanvas-section.g-inheriting .section-actions {

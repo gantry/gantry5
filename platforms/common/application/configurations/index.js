@@ -17,8 +17,7 @@ var $             = require('elements'),
 require('./dropdown-edit');
 
 ready(function() {
-    var body       = $('body'),
-        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+    var body = $('body');
 
     // Handles Creating new Configurations
     body.delegate('click', '[data-g5-outline-create], [data-g5-outline-duplicate]', function(event, element) {
@@ -50,7 +49,7 @@ ready(function() {
                     confirm.hideIndicator();
                     confirm.showIndicator();
 
-                    var URI = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
+                    var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
                         data = { title: title.value(), preset: preset.value() };
 
                     if (!data.title) { delete data.title; }
@@ -67,7 +66,7 @@ ready(function() {
                                 }
                             });
                         } else {
-                            var base = $('#configurations').find('ul').find('li'),
+                            var base    = $('#configurations').find('ul').find('li'),
                                 outline = zen('li').attribute('class', base.attribute('class'));
 
                             outline.after(base).html(response.body.outline);
@@ -88,17 +87,18 @@ ready(function() {
 
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '#configurations [data-g-config]', function(event, element) {
-        var mode   = element.data('g-config'),
-            href   = element.data('g-config-href'),
-            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
-            method = (element.data('g-config-method') || 'post').toLowerCase();
+        var mode        = element.data('g-config'),
+            href        = element.data('g-config-href'),
+            hrefConfirm = element.data('g-config-href-confirm'),
+            encode      = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
+            method      = (element.data('g-config-method') || 'post').toLowerCase();
 
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
             // confirm before proceeding
             flags.warning({
-                url: warningURL,
+                url: parseAjaxURI(href + getAjaxSuffix()),
                 callback: function(response, content) {
                     var confirm = content.find('[data-g-delete-confirm]'),
                         cancel  = content.find('[data-g-delete-cancel]');
@@ -134,7 +134,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
+        request(method, parseAjaxURI((hrefConfirm || href) + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,

@@ -29,20 +29,20 @@ class Configurations extends HtmlController
         'GET' => [
             '/'                 => 'index',
             '/*'                => 'forward',
-            '/*/delete'         => 'undefined',
-            '/*/delete/confirm' => 'confirmDeletion',
+            '/*/delete'         => 'confirmDeletion',
             '/**'               => 'forward',
         ],
         'POST' => [
-            '/'                => 'undefined',
-            '/*'               => 'undefined',
-            '/create'          => 'createForm',
-            '/create/new'      => 'create',
-            '/*/rename'        => 'rename',
-            '/*/duplicate'     => 'duplicateForm',
-            '/*/duplicate/new' => 'duplicate',
-            '/*/delete'        => 'delete',
-            '/*/**'            => 'forward',
+            '/'                 => 'undefined',
+            '/*'                => 'undefined',
+            '/create'           => 'createForm',
+            '/create/new'       => 'create',
+            '/*/rename'         => 'rename',
+            '/*/duplicate'      => 'duplicateForm',
+            '/*/duplicate/new'  => 'duplicate',
+            '/*/delete'         => 'undefined',
+            '/*/delete/confirm' => 'delete',
+            '/*/**'             => 'forward',
         ],
         'PUT'    => [
             '/'   => 'undefined',
@@ -222,13 +222,14 @@ class Configurations extends HtmlController
     public function confirmDeletion($id)
     {
         $params = [
+            'id' => $id,
             'page_type' => 'OUTLINE',
             'outline' => $this->container['configurations']->title($id),
             'inherited' => $this->container['configurations']->getInheritingOutlines($id)
         ];
 
         return new JsonResponse(
-            ['html' => $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/confirm-deletion.html.twig', $params)]
+            ['html' => $this->container['admin.theme']->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params)]
         );
     }
 
