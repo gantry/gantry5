@@ -614,11 +614,17 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected function initInheritance()
     {
         foreach ($this->inherit() as $outlineId => $list) {
-            $outline = $this->instance($outlineId);
+            try {
+                $outline = $this->instance($outlineId);
+            } catch (\Exception $e) {
+                // Outline must have been deleted.
+                $outline = null;
+            }
             foreach ($list as $id) {
                 $item = $this->find($id);
+
                 $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
-                $inherited = $outline->find($inheritId);
+                $inherited = $outline ? $outline->find($inheritId) : null;
                 $include = $item->inherit->include;
 
                 foreach ($include as $part) {
@@ -629,7 +635,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                         case 'block':
                             $block = $this->block($id);
                             if (isset($block->attributes)) {
-                                $inheritBlock = $outline->block($inheritId);
+                                $inheritBlock = $outline ? $outline->block($inheritId) : null;
                                 $blockAttributes = $inheritBlock ? array_diff_key((array)$inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
                                 $block->attributes = (object)($blockAttributes + (array)$block->attributes);
                             }
@@ -644,8 +650,15 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             break;
                     }
                 }
+
+                if (!$outline) {
+                    // Remvoe inheritance information if outline doesn't exist.
+                    $item->inherit = new \stdClass;
+                    unset($this->inherit[$item->id]);
+                }
             }
         }
+
     }
 
     /**
