@@ -1017,7 +1017,7 @@ $atom: #9055AF;
 
     .g-inherit {
         //@include background($section-stripes !important);
-        @include stripes-background(transparentize(#ccc, 0.3), 'auto' !important);
+        @include stripes-background(transparentize(#ccc, 0.4), 'auto' !important);
         z-index: 5;
         position: absolute;
         top: 5px;

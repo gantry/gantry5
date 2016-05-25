@@ -4843,8 +4843,8 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   position: relative;
 }
 #g5-container .g-inherit {
-  background-image: -webkit-linear-gradient(-45deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7));
-  background-image: linear-gradient(-45deg, rgba(204, 204, 204, 0.7) 25%, rgba(196, 196, 196, 0.7) 25%, rgba(196, 196, 196, 0.7) 50%, rgba(204, 204, 204, 0.7) 50%, rgba(204, 204, 204, 0.7) 75%, rgba(196, 196, 196, 0.7) 75%, rgba(196, 196, 196, 0.7));
+  background-image: -webkit-linear-gradient(-45deg, rgba(204, 204, 204, 0.6) 25%, rgba(196, 196, 196, 0.6) 25%, rgba(196, 196, 196, 0.6) 50%, rgba(204, 204, 204, 0.6) 50%, rgba(204, 204, 204, 0.6) 75%, rgba(196, 196, 196, 0.6) 75%, rgba(196, 196, 196, 0.6));
+  background-image: linear-gradient(-45deg, rgba(204, 204, 204, 0.6) 25%, rgba(196, 196, 196, 0.6) 25%, rgba(196, 196, 196, 0.6) 50%, rgba(204, 204, 204, 0.6) 50%, rgba(204, 204, 204, 0.6) 75%, rgba(196, 196, 196, 0.6) 75%, rgba(196, 196, 196, 0.6));
   background-size: "auto" !important "auto" !important;
   z-index: 5;
   position: absolute;
