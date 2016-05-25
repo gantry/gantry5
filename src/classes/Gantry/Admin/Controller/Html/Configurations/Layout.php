@@ -37,8 +37,7 @@ class Layout extends HtmlController
             '/switch'   => 'listSwitches',
             '/switch/*' => 'switchLayout',
             '/preset'   => 'undefined',
-            '/preset/*' => 'preset',
-            '/confirm'  => 'confirmDeletion'
+            '/preset/*' => 'preset'
         ],
         'POST'   => [
             '/'                     => 'save',
@@ -424,23 +423,6 @@ class Layout extends HtmlController
         // TODO: validate
 
         return new JsonResponse(['data' => $data->toArray()]);
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    public function confirmDeletion()
-    {
-        $outline = $this->params['configuration'];
-        $params = [
-            'page_type' => 'OUTLINE',
-            'outline' => $this->container['configurations']->title($outline),
-            'inherited' => $this->container['configurations']->getInheritingOutlines($outline)
-        ];
-
-        return new JsonResponse(
-            ['html' => $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/confirm-deletion.html.twig', $params)]
-        );
     }
 
     /**
