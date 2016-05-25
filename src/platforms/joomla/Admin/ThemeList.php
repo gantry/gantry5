@@ -47,11 +47,11 @@ class ThemeList
      * @param string $template
      * @return array
      */
-    public static function getStyles($template = null)
+    public static function getStyles($template = null, $force = false)
     {
         static $styles;
 
-        if ($styles === null) {
+        if ($force || $styles === null) {
             $styles = static::loadStyles();
         }
 
@@ -59,11 +59,13 @@ class ThemeList
             $list = [];
             foreach ($styles as $style) {
                 if ($style->name === $template) {
-                    $list[] = $style;
+                    $list[$style->id] = $style;
                 }
             }
 
-            return $list;
+            ksort($list);
+
+            return array_values($list);
         }
 
         return $styles;

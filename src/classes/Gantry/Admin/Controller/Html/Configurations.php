@@ -184,7 +184,7 @@ class Configurations extends HtmlController
             $this->forbidden();
         }
 
-        $id = $configurations->duplicate($configuration);
+        $id = $configurations->duplicate($configuration, $this->request->post['title']);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/outline.html.twig',
