@@ -121,7 +121,12 @@ class Outlines extends BaseOutlines
             throw new \RuntimeException($model->getError(), 400);
         }
 
-        return null;
+        // Seek the newly generated style ID since Joomla doesn't return one on duplication.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        $styles = ThemeList::getStyles($theme);
+        $styles = array_pop($styles)->id;
+
+        return $styles;
     }
 
     public function rename($id, $title)
