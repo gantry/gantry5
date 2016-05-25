@@ -28,7 +28,6 @@ class Configurations extends HtmlController
     protected $httpVerbs = [
         'GET' => [
             '/'                 => 'index',
-            '/*'                => 'forward',
             '/*/delete'         => 'confirmDeletion',
             '/**'               => 'forward',
         ],
