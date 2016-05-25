@@ -76,6 +76,15 @@ class Outlines extends AbstractOutlineCollection
     }
 
     /**
+     * @param string $id
+     * @return string
+     */
+    public function title($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : $id;
+    }
+
+    /**
      * @param string $section
      * @param bool $includeInherited
      * @return array
@@ -171,6 +180,32 @@ class Outlines extends AbstractOutlineCollection
             $block = $layout->block($id);
             $item->block = $block ? $block->attributes : new \stdClass();
             $list[$id] = $item;
+        }
+
+        return $list;
+    }
+
+    public function getInheritingOutlines($outline)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+            if (!empty($index['inherit'][$outline])) {
+                $list[$name] = $title;
+            }
+        }
+
+        return $list;
+
+    }
+
+    public function getInheritedOutlines($outline)
+    {
+        $index = Layout::index($outline);
+
+        $list = [];
+        foreach ($index['inherit'] as $name) {
+            $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
         }
 
         return $list;

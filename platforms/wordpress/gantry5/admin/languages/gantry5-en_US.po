@@ -605,3 +605,9 @@ msgstr "If required, you can still enter to this administrative panel by <a %s h
 
 msgid "GANTRY5_PLATFORM_PARTICLE_PREVIEW"
 msgstr "Attention! This is a read-only view of the Particle you selected. Any change made here cannot be saved."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_X"
+msgstr "The following Outlines depend on %s."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_DESC"
+msgstr "By proceeding they will stop inheriting and all the Attributes and Children will be copied over:"
