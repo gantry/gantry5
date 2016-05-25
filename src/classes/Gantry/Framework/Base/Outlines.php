@@ -341,9 +341,15 @@ class Outlines extends AbstractOutlineCollection
         }
 
         try {
+            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+                $layout = $this->layout($outline);
+                $layout->updateInheritance($id, $folder)->save()->saveIndex();
+            }
+
             Folder::move($path, $newPath);
+
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Renaming Outline failed: ', $e->getMessage()), 500, $e);
+            throw new \RuntimeException(sprintf('Renaming Outline failed: %s', $e->getMessage()), 500, $e);
         }
 
         return $folder;
@@ -369,6 +375,11 @@ class Outlines extends AbstractOutlineCollection
         }
 
         if (file_exists($path)) {
+            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+                $layout = $this->layout($outline);
+                $layout->updateInheritance($id)->save()->saveIndex();
+            }
+
             Folder::delete($path);
         }
     }

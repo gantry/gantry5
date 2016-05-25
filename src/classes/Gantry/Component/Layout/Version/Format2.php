@@ -293,7 +293,7 @@ class Format2
             }
 
             // Clean up defaults.
-            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === $this->getTitle($type, $subtype, $id)) {
+            if (empty($child['title']) || $child['title'] === 'Untitled' || $child['title'] === $this->getTitle($type, $subtype, $id)) {
                 unset ($child['title']);
             }
             if (!$subtype || $subtype === $type) {

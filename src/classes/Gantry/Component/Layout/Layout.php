@@ -210,6 +210,32 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param string $old
+     * @param string $new
+     * @return $this
+     */
+    public function updateInheritance($old, $new = null)
+    {
+        $this->init();
+
+        $inherit = $this->inherit();
+
+        if (!empty($inherit[$old])) {
+            foreach ($inherit[$old] as $id) {
+                $element = $this->find($id);
+                if ($new) {
+                    $element->inherit->outline = $new;
+                } else {
+                    $element->inherit = new \stdClass;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
      * Save layout.
      *
      * @param bool $cascade
