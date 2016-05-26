@@ -101,13 +101,14 @@ class Filepicker extends JsonController
         $active  = [];
 
         $index = 0;
+        $activeFallback = '';
 
         // iterating the folder and collecting subfolders and files
         foreach ($bookmarks as $key => $bookmark) {
             $folders[$key] = [];
 
             if (!$index) {
-                $active[] = $key;
+                $activeFallback = $key;
             }
 
             foreach ($bookmark as $folder) {
@@ -160,7 +161,11 @@ class Filepicker extends JsonController
             }
         }
 
-        $lastItem = reset($active);
+        if (!count($active)) {
+            $active[] = $activeFallback;
+        }
+
+        $lastItem = end($active);
         $files    = $this->listFiles($lastItem);
         $response = [];
 
