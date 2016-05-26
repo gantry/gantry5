@@ -33,8 +33,9 @@ var singles = {
         var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.addClass('no-hover'); }
     },
-    cleanup: function(builder, dropLast) {
-        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+    cleanup: function(builder, dropLast, start) {
+        var emptyGrids = start ? start.search('> .g-grid:empty') : $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
@@ -90,8 +91,8 @@ var LayoutManager = new prime({
         this.init();
     },
 
-    singles: function(mode, builder, dropLast) {
-        singles[mode](builder, dropLast);
+    singles: function(mode, builder, dropLast, start) {
+        singles[mode](builder, dropLast, start);
     },
 
     clear: function(parent, options) {
@@ -107,13 +108,13 @@ var LayoutManager = new prime({
             type = obj.getType();
             child = obj.block.find('> [data-lm-id]');
             if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) || (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
+            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 this.builder.remove(id);
                 obj.block.remove();
             }
         }, this);
 
-        this.singles('cleanup', this.builder, options.dropLastGrid);
+        this.singles('cleanup', this.builder, options.dropLastGrid, parent);
         if (options.save) { this.history.push(this.builder.serialize(), this.history.get().preset); }
     },
 
