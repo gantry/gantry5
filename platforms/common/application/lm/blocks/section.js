@@ -7,6 +7,7 @@ var prime              = require('prime'),
     zen                = require('elements/zen'),
 
     bind               = require('mout/function/bind'),
+    forOwn             = require('mout/object/forOwn'),
     getAjaxURL         = require('../../utils/get-ajax-url').config,
     getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
 
@@ -29,12 +30,12 @@ var Section = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            inheritance = '',
+            inheritanceLabel = '',
             klass = '';
 
         if (this.hasInheritance()) {
             var outline = getOutlineNameById(this.inherit.outline);
-            inheritance = '<div class="g-inherit g-section-inherit"><div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div></div>';
+            inheritanceLabel = this.renderInheritanceLabel(outline);
             klass = ' g-inheriting';
 
             if (this.inherit.include.length) {
@@ -42,13 +43,17 @@ var Section = new prime({
             }
         }
 
-        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
     },
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
     },
-
+    
+    renderInheritanceLabel: function(outline) {
+        return '<div class="g-inherit g-section-inherit"><div class="g-inherit-content" ' + this.addInheritanceTip(true) + '><i class="fa fa-lock"></i> Inheriting from <strong>' + outline + '</strong></div></div>';
+    },
+ 
     enableInheritance: function() {
         if (this.hasInheritance()) {
             this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
@@ -61,7 +66,7 @@ var Section = new prime({
                 var inherit = zen('div.g-inherit.g-section-inherit'),
                     outline = getOutlineNameById(this.inherit.outline);
 
-                this.block.appendChild(inherit.html('<div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div>'));
+                this.block.appendChild(inherit.html(this.renderInheritanceLabel(outline)));
             }
         }
     },
@@ -89,6 +94,33 @@ var Section = new prime({
                 content.html(outline);
             }
         }
+    },
+
+    addInheritanceTip: function(html) {
+        var tooltip = this.getInheritanceTip();
+
+        if (html) {
+            var tooltipHTML = '';
+            forOwn(tooltip, function(value, key) {
+                tooltipHTML += 'data-' + key + '="' + value + '" ';
+            });
+
+            tooltip = tooltipHTML;
+        }
+
+        return this.hasInheritance() ? tooltip : '';
+    },
+
+    getInheritanceTip: function() {
+        var outline = this.inherit ? this.inherit.outline : null,
+            name = getOutlineNameById(outline),
+            include = (this.inherit.include || []).join(', ');
+
+        return {
+            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Include: ' + include,
+            'tip-offset': -2,
+            'tip-place': 'top-right'
+        };
     },
 
     cleanKlass: function(klass) {

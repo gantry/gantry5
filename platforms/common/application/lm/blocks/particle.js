@@ -76,7 +76,6 @@ var Particle = new prime({
         if (this.hasInheritance()) {
             this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
         }
-        console.log('refreshing inheritance');
     },
 
     addInheritanceTip: function(html) {
