@@ -25,13 +25,15 @@ var IDsMap = {
 
 ready(function() {
     var body             = $('body'),
-        currentSelection = null;
+        currentSelection = {};
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label      = element.parent('.settings-param').find('.settings-param-title'),
             value      = element.value(),
+            name       = $('[name="inherit[section]"]').value(),
             form       = element.parent('[data-g-inheritance-settings]'),
-            hasChanged = currentSelection !== value,
+            hasChanged = currentSelection[name] !== value,
+            includes   = $('[data-multicheckbox-field="inherit[include]"]:checked'),
             particle   = {
                 list: $('#g-inherit-particle'),
                 radios: $('[name="inherit[particle]"]'),
@@ -93,7 +95,7 @@ ready(function() {
                 }
             });
 
-            currentSelection = value;
+            currentSelection[name] = value;
         });
     });
 
