@@ -2922,6 +2922,18 @@ ready(function() {
         }
     });
 
+    // Disable keeping particles if inherit option is selected
+    body.delegate('change', '[data-g-inherit="outline"]', function(event, element) {
+        var keeper = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve="outline"]');
+        if (keeper) { keeper.checked(false); }
+    });
+
+    // Disable inheriting section/particles if keep option is selected
+    body.delegate('change', '[data-g-preserve="outline"]', function(event, element) {
+        var inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit="outline"]');
+        if (inherit) { inherit.checked(false); }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -2933,10 +2945,13 @@ ready(function() {
         element.showIndicator();
 
         var preset = $('[data-lm-preset]'),
-            checkbox = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
-            preserve = checkbox && checkbox.checked(),
+            preserve = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
+            inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit]'),
             method = !preserve ? 'get' : 'post',
             data = {};
+
+        preserve = preserve && preserve.checked();
+        inherit = inherit && inherit.checked();
 
         if (preserve) {
             var lm = layoutmanager;
@@ -2945,6 +2960,10 @@ ready(function() {
 
             data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
             data.layout = JSON.stringify(lm.builder.serialize());
+        }
+
+        if (inherit) {
+            data.inherit = 1;
         }
 
         var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
