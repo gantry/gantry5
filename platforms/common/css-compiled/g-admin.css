@@ -4863,6 +4863,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   padding: 0.5rem;
   border-radius: 0 0 3px 3px;
 }
+#g5-container [data-lm-blocktype="container"] .section .g-inherit .g-inherit-content {
+  top: auto;
+  bottom: 0;
+  border-radius: 3px 3px 0 0;
+}
 #g5-container .g-inheriting:not(.g-inheriting-children) .g-inherit {
   z-index: 1;
 }

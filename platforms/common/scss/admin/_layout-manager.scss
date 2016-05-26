@@ -1037,6 +1037,12 @@ $atom: #9055AF;
         }
     }
 
+    [data-lm-blocktype="container"] .section .g-inherit .g-inherit-content {
+        top: auto;
+        bottom: 0;
+        border-radius: 3px 3px 0 0;
+    }
+
     .g-inheriting:not(.g-inheriting-children) .g-inherit {
         z-index: 1;
     }
