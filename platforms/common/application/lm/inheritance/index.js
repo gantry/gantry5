@@ -40,6 +40,13 @@ ready(function() {
                 checked: $('[name="inherit[particle]"]:checked')
             };
 
+        if (hasChanged && !value) {
+            includes.forEach(function(include) {
+                $(include).checked(false);
+                body.emit('change', { target: include });
+            });
+        }
+
         var formData = JSON.parse(form.data('g-inheritance-settings')),
             data     = {
                 outline: value || getCurrentOutline(),
