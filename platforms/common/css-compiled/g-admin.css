@@ -4177,7 +4177,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   display: none !important;
 }
 #g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) > .g-grid {
-  z-index: 1;
+  z-index: 2;
 }
 #g5-container .lm-blocks .section .g-grid, #g5-container .lm-blocks .atoms-section .g-grid, #g5-container .lm-blocks .offcanvas-section .g-grid {
   margin: 8px 0;
