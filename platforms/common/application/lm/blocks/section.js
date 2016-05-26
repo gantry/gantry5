@@ -35,7 +35,11 @@ var Section = new prime({
         if (this.hasInheritance()) {
             var outline = getOutlineNameById(this.inherit.outline);
             inheritance = '<div class="g-inherit g-section-inherit"><div class="g-inherit-content">Inheriting from <strong>' + outline + '</strong></div></div>';
-            klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            klass = ' g-inheriting';
+
+            if (this.inherit.include.length) {
+                klass += ' g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            }
         }
 
         return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
@@ -48,7 +52,10 @@ var Section = new prime({
     enableInheritance: function() {
         if (this.hasInheritance()) {
             this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
-            this.block.addClass('g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            this.block.addClass('g-inheriting');
+            if (this.inherit.include.length) {
+                this.block.addClass('g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            }
 
             if (!this.block.find('> .g-inherit')) {
                 var inherit = zen('div.g-inherit.g-section-inherit'),
@@ -68,6 +75,7 @@ var Section = new prime({
         }
 
         this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        this.block.removeClass('g-inheriting');
     },
 
     refreshInheritance: function() {

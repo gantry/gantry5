@@ -27,7 +27,10 @@ var Particle = new prime({
             klass        = '';
 
         if (this.hasInheritance()) {
-            klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            klass = ' g-inheriting';
+            if (this.inherit.include.length) {
+                klass += ' g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            }
         }
 
         return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
@@ -39,7 +42,11 @@ var Particle = new prime({
             var outline = getOutlineNameById(this.inherit.outline),
                 icon    = this.block.find('.icon');
 
-            this.block.addClass('g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            this.block.addClass('g-inheriting');
+            if (this.inherit.include.length) {
+                this.block.addClass('g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            }
+
             this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
 
             forOwn(this.getInheritanceTip(), function(value, key) {
@@ -54,6 +61,7 @@ var Particle = new prime({
         var icon    = this.block.find('.icon');
 
         this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        this.block.removeClass('g-inheriting');
         this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
 
         forOwn(this.getInheritanceTip(), function(value, key) {
