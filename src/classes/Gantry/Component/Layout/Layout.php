@@ -34,7 +34,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 3;
+    const VERSION = 4;
 
     protected static $instances = [];
     protected static $indexes = [];
@@ -448,7 +448,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $list = [];
         foreach ($this->inherit as $name => $item) {
-            $list[$item->inherit->outline][] = $name;
+            if (isset($item->inherit->particle)) {
+                $list[$item->inherit->outline][$item->inherit->particle] = $name;
+            } else {
+                $list[$item->inherit->outline][] = $name;
+            }
         }
 
         return $list;

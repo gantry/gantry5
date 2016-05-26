@@ -21,6 +21,7 @@ use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Outlines;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -213,11 +214,14 @@ class Layout extends HtmlController
         if ($outline !== 'default' && $file->exists()) {
             $inheritType = $particle ? 'particle' : 'section';
 
+            /** @var Outlines $outlines */
+            $outlines = $this->container['configurations'];
+            
             $funcName = 'getOutlinesWith' . ucfirst($inheritType);
-            $list = (array) $this->container['configurations']->{$funcName}($particle ? $item->subtype : $item->id, false);
+            $list = (array) $outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
             unset($list[$outline]);
 
-            if ($list) {
+            if (!empty($inherit['outline']) || ($list && !$outlines->getInheritingOutlines($outline, $id))) {
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 

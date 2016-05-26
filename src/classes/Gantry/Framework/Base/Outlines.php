@@ -185,12 +185,22 @@ class Outlines extends AbstractOutlineCollection
         return $list;
     }
 
-    public function getInheritingOutlines($outline)
+    /**
+     * Return list of outlines which are inheriting the specified outline.
+     *
+     * You can additionally pass particle id to filter the results for only that particle.
+     *
+     * @param string $outline
+     * @param string $particle
+     * @return array
+     */
+    public function getInheritingOutlines($outline, $particle = null)
     {
         $list = [];
         foreach ($this->items as $name => $title) {
             $index = Layout::index($name);
-            if (!empty($index['inherit'][$outline])) {
+
+            if (!empty($index['inherit'][$outline]) && (!$particle || isset($index['inherit'][$outline][$particle]))) {
                 $list[$name] = $title;
             }
         }
@@ -199,13 +209,24 @@ class Outlines extends AbstractOutlineCollection
 
     }
 
-    public function getInheritedOutlines($outline)
+    /**
+     * Return list of outlines inherited by the specified outline.
+     *
+     * You can additionally pass particle id to filter the results for only that particle.
+     *
+     * @param string $outline
+     * @param string $particle
+     * @return array
+     */
+    public function getInheritedOutlines($outline, $particle = null)
     {
         $index = Layout::index($outline);
 
         $list = [];
-        foreach ($index['inherit'] as $name) {
-            $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
+        foreach ($index['inherit'] as $name => $inherited) {
+            if (!$particle || in_array($particle, $inherited)) {
+                $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
+            }
         }
 
         return $list;
