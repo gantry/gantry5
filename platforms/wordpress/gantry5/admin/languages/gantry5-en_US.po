@@ -614,3 +614,6 @@ msgstr "The following Outlines depend on %s."
 
 msgid "GANTRY5_PLATFORM_DELETE_INHERIT_DESC"
 msgstr "By proceeding they will stop inheriting and all the Attributes and Children will be copied over:"
+
+msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC"
+msgstr "Inherit every Section and Children"

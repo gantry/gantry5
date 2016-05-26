@@ -293,7 +293,7 @@ class Layout extends HtmlController
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
-        if (!$input) {
+        if (!$input && $this->request->post['inherit'] === '1') {
             $layout->inheritAll();
         }
 
