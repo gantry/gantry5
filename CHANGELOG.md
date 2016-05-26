@@ -10,7 +10,8 @@
         - Fixed `Oops, Cannot delete non-existing folder (500 internal error)` during Cache Clearing and when compiling YAML and Twig settings were disabled (#1306)
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Removed `row-fluid` wrapping for Joomla modules (Regression from 5.2.17)
+        - Fixed regression in positioning module content by removing `row-fluid` wrapping from Joomla modules
+        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrade (#1285)
 
 # 5.2.17
 ## 19/05/2016

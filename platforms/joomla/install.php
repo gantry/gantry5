@@ -157,7 +157,10 @@ class Pkg_Gantry5InstallerScript
             }
 
             $extension->protected = $state;
-            $extension->enabled = $state;
+            if (isset($attributes->enabled)) {
+                $extension->enabled = $state ? (int) $attributes->enabled : 0;
+            }
+
             $extension->store();
         }
     }
