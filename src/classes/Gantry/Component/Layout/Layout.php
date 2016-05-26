@@ -651,7 +651,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     }
                 }
 
-                if (!$outline) {
+                if (!$outline || !isset($inherited->attributes)) {
                     // Remvoe inheritance information if outline doesn't exist.
                     $item->inherit = new \stdClass;
                     unset($this->inherit[$item->id]);
