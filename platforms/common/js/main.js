@@ -6822,6 +6822,7 @@ ready(function() {
 module.exports = ColorPicker;
 
 },{"../../ui/drag.events":47,"elements":103,"elements/domready":101,"elements/zen":127,"mout/collection/forEach":177,"mout/function/bind":180,"mout/math/clamp":204,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],36:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -6929,7 +6930,7 @@ var FilePicker = new prime({
                     }
                 }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + global.btoa(encodeURIComponent(this.getPath() + file[0].name))) + getAjaxSuffix());
                 }, this)
             });
 
@@ -7132,7 +7133,7 @@ var FilePicker = new prime({
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
                 data      = JSON.parse(parent.data('file')),
-                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + global.btoa(encodeURIComponent(data.pathname)) + getAjaxSuffix()));
 
             if (!data.isInCustom) { return false; }
 
@@ -7279,6 +7280,8 @@ domready(function() {
 
 
 module.exports = FilePicker;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"../../ui":49,"../../utils/elements.utils":60,"../../utils/get-ajax-suffix":64,"../../utils/get-ajax-url":65,"agent":71,"dropzone":97,"elements/domready":101,"elements/zen":127,"mout/function/bind":180,"mout/lang/deepClone":188,"mout/object/deepFillIn":212,"mout/string/rtrim":255,"prime":286}],37:[function(require,module,exports){
 "use strict";

@@ -360,7 +360,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
@@ -442,7 +442,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
