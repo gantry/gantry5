@@ -214,7 +214,7 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 210px;
+                width: 210px !important;
                 @include breakpoint(tablet-range) {
                     width: 100% !important;
                 }

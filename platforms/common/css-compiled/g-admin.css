@@ -3004,7 +3004,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   min-height: 150px;
 }
 #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
-  width: 210px;
+  width: 210px !important;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
   #g5-container .settings-block .input-group.append input, #g5-container .settings-block .input-group.prepend input {
