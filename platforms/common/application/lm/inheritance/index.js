@@ -28,20 +28,20 @@ ready(function() {
         currentSelection = {};
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
-        var label      = element.parent('.settings-param').find('.settings-param-title'),
-            value      = element.value(),
-            name       = $('[name="inherit[section]"]').value(),
-            form       = element.parent('[data-g-inheritance-settings]'),
-            hasChanged = currentSelection[name] !== value,
-            includes   = $('[data-multicheckbox-field="inherit[include]"]:checked'),
-            particle   = {
+        var label          = element.parent('.settings-param').find('.settings-param-title'),
+            value          = element.value(),
+            name           = $('[name="inherit[section]"]').value(),
+            form           = element.parent('[data-g-inheritance-settings]'),
+            hasChanged     = currentSelection[name] !== value,
+            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked'),
+            particle       = {
                 list: $('#g-inherit-particle'),
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
             };
 
         if (hasChanged && !value) {
-            includes.forEach(function(include) {
+            includesFields.forEach(function(include) {
                 $(include).checked(false);
                 body.emit('change', { target: include });
             });
@@ -102,6 +102,10 @@ ready(function() {
                 }
             });
 
+            if (hasChanged && includesFields && currentSelection[name] === '') {
+                includesFields.forEach(function(include) { body.emit('change', { target: include }); });
+            }
+
             currentSelection[name] = value;
         });
     });
@@ -111,6 +115,7 @@ ready(function() {
             isChecked = element.checked(),
             panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
             tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
+            outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
@@ -132,7 +137,7 @@ ready(function() {
          inherit.after(panel);
          }*/
 
-        if (!isChecked) {
+        if (!isChecked || !outline) {
             var lock = tab.find('.fa-lock');
 
             if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
