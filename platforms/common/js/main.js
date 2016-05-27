@@ -7379,6 +7379,7 @@ ready(function() {
 module.exports = ColorPicker;
 
 },{"../../ui/drag.events":49,"elements":107,"elements/domready":105,"elements/zen":131,"mout/collection/forEach":183,"mout/function/bind":186,"mout/math/clamp":210,"prime":294,"prime-util/prime/bound":290,"prime-util/prime/options":291,"prime/emitter":293}],38:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -7486,7 +7487,7 @@ var FilePicker = new prime({
                     }
                 }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + global.btoa(encodeURIComponent(this.getPath() + file[0].name))) + getAjaxSuffix());
                 }, this)
             });
 
@@ -7689,7 +7690,7 @@ var FilePicker = new prime({
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
                 data      = JSON.parse(parent.data('file')),
-                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + global.btoa(encodeURIComponent(data.pathname)) + getAjaxSuffix()));
 
             if (!data.isInCustom) { return false; }
 
@@ -7836,6 +7837,8 @@ domready(function() {
 
 
 module.exports = FilePicker;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"../../ui":51,"../../utils/elements.utils":62,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"agent":74,"dropzone":101,"elements/domready":105,"elements/zen":131,"mout/function/bind":186,"mout/lang/deepClone":194,"mout/object/deepFillIn":219,"mout/string/rtrim":263,"prime":294}],39:[function(require,module,exports){
 "use strict";

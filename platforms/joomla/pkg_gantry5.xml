@@ -15,19 +15,19 @@
 
     <files folder="packages">
         <!-- Mandatory system plugin -->
-        <file type="plugin"    group="system"     id="gantry5"              >plg_system_gantry5_v@version@.zip</file>
+        <file type="plugin"    group="system"     id="gantry5"              enabled="1">plg_system_gantry5_v@version@.zip</file>
         <!-- Quick icons -->
-        <file type="plugin"    group="quickicon"  id="gantry5"              >plg_quickicon_gantry5_v@version@.zip</file>
+        <file type="plugin"    group="quickicon"  id="gantry5"              enabled="1">plg_quickicon_gantry5_v@version@.zip</file>
         <!-- Mandatory system plugin -->
-        <file type="plugin"    group="gantry5"    id="preset"               >plg_gantry5_preset_v@version@.zip</file>
+        <file type="plugin"    group="gantry5"    id="preset"                          >plg_gantry5_preset_v@version@.zip</file>
         <!-- Particle module -->
-        <file type="module"    client="site"      id="mod_gantry5_particle" >mod_gantry5_particle_v@version@.zip</file>
+        <file type="module"    client="site"      id="mod_gantry5_particle" enabled="1">mod_gantry5_particle_v@version@.zip</file>
         <!-- Gantry framework library -->
-        <file type="library"                      id="gantry5"              >lib_gantry5_v@version@.zip</file>
+        <file type="library"                      id="gantry5"              enabled="1">lib_gantry5_v@version@.zip</file>
         <!-- Common media files -->
-        <file type="file"                         id="gantry5_nucleus"      >gantry5_nucleus_v@version@.zip</file>
+        <file type="file"                         id="gantry5_nucleus"      enabled="1">gantry5_nucleus_v@version@.zip</file>
         <!-- Administration component -->
-        <file type="component"                    id="com_gantry5"          >com_gantry5_v@version@.zip</file>
+        <file type="component"                    id="com_gantry5"          enabled="1">com_gantry5_v@version@.zip</file>
     </files>
 
     <languages folder="language">
