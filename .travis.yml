@@ -30,7 +30,7 @@ before_install:
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
       npm install &>/dev/null;
-      gulp -up &>/dev/null;
+      gulp -up;
     fi
   - cd $TRAVIS_BUILD_DIR/src && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev
