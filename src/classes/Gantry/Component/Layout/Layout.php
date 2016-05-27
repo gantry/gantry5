@@ -34,7 +34,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 4;
+    const VERSION = 5;
 
     protected static $instances = [];
     protected static $indexes = [];
@@ -115,6 +115,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param  string $name
+     * @param  bool   $reload
      * @return Layout
      */
     public static function instance($name)
@@ -212,9 +213,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $old
      * @param string $new
+     * @param array  $ids
      * @return $this
      */
-    public function updateInheritance($old, $new = null)
+    public function updateInheritance($old, $new = null, $ids = null)
     {
         $this->init();
 
@@ -223,7 +225,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if (!empty($inherit[$old])) {
             foreach ($inherit[$old] as $id) {
                 $element = $this->find($id);
-                if ($new) {
+                $inheritId = isset($element->inherit->particle) ? $element->inherit->particle : $id;
+                if ($new && ($ids === null || isset($ids[$inheritId]))) {
                     $element->inherit->outline = $new;
                 } else {
                     $element->inherit = new \stdClass;
@@ -418,11 +421,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * Return list of positions (key) with their titles (value).
+     * Return list of particles with their titles.
      *
+     * @param  bool  $grouped  If true, group particles by type.
      * @return array Array of position => title
      */
-    public function particles()
+    public function particles($grouped = true)
     {
         $blocks = $this->referencesByType('block', 'block');
 
@@ -432,7 +436,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (!empty($particle->layout) || in_array($particle->type, $this->layout)) {
                     continue;
                 }
-                $list[$particle->subtype][$particle->id] = $particle->title;
+                if ($grouped) {
+                    $list[$particle->subtype][$particle->id] = $particle->title;
+                } else {
+                    $list[$particle->id] = $particle->title;
+                }
             }
         }
 
@@ -440,9 +448,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param string $outline
      * @return array
      */
-    public function inherit()
+    public function inherit($outline = null)
     {
         $this->init();
 
@@ -451,11 +460,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             if (isset($item->inherit->particle)) {
                 $list[$item->inherit->outline][$item->inherit->particle] = $name;
             } else {
-                $list[$item->inherit->outline][] = $name;
+                $list[$item->inherit->outline][$name] = $name;
             }
         }
 
-        return $list;
+        return $outline ? (!empty($list[$outline]) ? $list[$outline] : []) : $list;
     }
 
     /**

@@ -134,11 +134,20 @@ class Layout extends HtmlController
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
         $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
-        $layout = new LayoutObject($configuration, $layout, $preset);
+        $layout = new LayoutObject($outline, $layout, $preset);
+
+        /** @var Outlines $outlines */
+        $outlines = $this->container['configurations'];
+
+        // Update layouts from all inheriting outlines.
+        $elements = $layout->sections() + $layout->particles(false);
+        foreach ($outlines->getInheritingOutlines($outline) as $inheritedId => $inheritedName) {
+            LayoutObject::instance($inheritedId)->updateInheritance($outline, $outline, $elements)->save()->saveIndex();
+        }
 
         // Save layout and its index.
         $layout->save()->saveIndex();
