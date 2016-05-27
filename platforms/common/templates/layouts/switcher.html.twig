@@ -56,6 +56,14 @@
         </div>
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}" role="tablist">
             <li tabindex="0" class="g-switch-title" role="presentation">{{ 'GANTRY5_PLATFORM_LM_SWITCHER_USER'|trans }}</li>
+            <li tabindex="0"
+                aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans('GANTRY5_PLATFORM_BASE_OUTLINE'|trans) }}"
+                role="button"
+                data-switch="{{ gantry.route('configurations/' ~ configuration ~ '/layout/switch/default') }}"
+                class="g-switch-configuration"
+            >
+                {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
+            </li>
             {% for key,current in user_conf %}
                 {% set label=current|replace('_', ' ')|trim|capitalize %}
                 <li tabindex="0"
