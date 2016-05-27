@@ -13,7 +13,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed regression in positioning module content by removing `row-fluid` wrapping from Joomla modules
-        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrade (#1285)
+        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrades (#1285)
 
 # 5.2.17
 ## 19/05/2016
