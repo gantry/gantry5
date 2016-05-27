@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Creating and duplicating Outlines now offers a modal where title and preset can be pre-compiled, without having to edit it later (#207)
+    2. [](#improved)
+        - Filepicker now allows uploading and deleting UTF-8 named files
     3. [](#bugfix)
         - Fixed Filepicker `root` property failing when mixing streams with non-streams paths (#1305)
         - Fixed `button` input field (thanks @nikola3244 - #1308)
