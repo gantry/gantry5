@@ -1,3 +1,10 @@
+# 5.3.0
+## XX/05/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed rendering disabled particle in menu item (thanks @nikola3244 - #1313)
+
 # 5.2.18
 ## 27/05/2016
 
