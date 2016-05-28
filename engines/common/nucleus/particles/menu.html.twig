@@ -41,8 +41,9 @@
         {% set parent = item.children ? ' g-parent' %}
         {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
         {% set rel = item.rel ? ' rel="' ~ item.rel ~ '"' %}
+        {% set particle_enabled = item.options.particle.enabled == '0' ? 'hidden' : '' %}
 
-        <li class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if not item.dropdown_hide %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"
+        <li class="{{ particle_enabled }} g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if not item.dropdown_hide %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"
                 {{- SELF.getCustomWidth(item, menu, 'item', dropdown) }}
                 {%- if context.particle.renderTitles|default(0) %} title="{{ item.title|e }}"{% endif %}>
             {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target ~ rel)|raw }}>
