@@ -47,7 +47,7 @@ form:
         _info:
           type: separator.note
           class: alert alert-info
-          content: Please note that inline CSS code should be stripped out of &lt;style&gt;&lt;/style&gt; tags as Atom is automatically adding them.
+          content: Only add your inline CSS code, the &lt;style&gt;&lt;/style&gt; tags will get automatically added for you.
 
         .extra:
           type: collection.keyvalue
@@ -87,7 +87,7 @@ form:
         _info:
           type: separator.note
           class: alert alert-info
-          content: Please note that inline JavaScript code should be stripped out of &lt;script&gt;&lt;/script&gt; tags as Atom is automatically adding them.
+          content: Only add your inline JavaScript code, the &lt;script&gt;&lt;/script&gt; tags will get automatically added for you.
 
         .in_footer:
           type: input.checkbox
