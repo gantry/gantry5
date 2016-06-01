@@ -11332,7 +11332,7 @@ module.exports = Progresser;
 
 },{"elements":107,"elements/zen":131,"moofx":132,"mout/function/bind":186,"mout/lang/isArray":197,"mout/lang/isNumber":201,"prime":294,"prime-util/prime/bound":290,"prime-util/prime/options":291,"prime/emitter":293}],55:[function(require,module,exports){
 "use strict";
-// selectize (v0.12.1)
+// selectize (v0.12.1) (commit: 4dae761)
 
 var prime      = require('prime'),
     ready      = require('elements/domready'),
@@ -11449,6 +11449,12 @@ var build_hash_table = function(key, objects) {
         }
     }
     return table;
+};
+
+var domToString = function(d) {
+    var tmp = document.createElement('div');
+    tmp.appendChild(d.cloneNode(true));
+    return tmp.innerHTML;
 };
 
 var getSelection = function(input) {
@@ -11712,7 +11718,7 @@ var Selectize = new prime({
         this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
-        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
+        forEach(['isOpen', 'isDisabled',  'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
             this[option] = false;
         }, this);
         this.currentResults = null;
@@ -11949,7 +11955,8 @@ var Selectize = new prime({
 
     setupTemplates: function() {
         var field_label    = this.options.labelField,
-            field_optgroup = this.options.optgroupLabelField;
+            field_optgroup = this.options.optgroupLabelField,
+            mode           = this.options.mode;
 
         var templates = {
             'optgroup': function(data) {
@@ -11962,7 +11969,13 @@ var Selectize = new prime({
                 return '<div class="g-option">' + escape(data[field_label]) + '</div>';
             },
             'item': function(data, escape) {
-                return '<div class="g-item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                var removeButton = '';
+
+                if (mode !== 'single') {
+                    removeButton = '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                }
+
+                return '<div class="g-item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + removeButton;
             },
             'option_create': function(data, escape) {
                 return '<div class="g-create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
@@ -12029,7 +12042,7 @@ var Selectize = new prime({
                 }
 
                 /*e.preventDefault();
-                e.stopPropagation();*/
+                 e.stopPropagation();*/
                 return false;
             }
         } else {
@@ -12227,8 +12240,7 @@ var Selectize = new prime({
             this.setCaret(this.items.length);
             this.refreshState();
 
-            // IE11 bug: element still marked as active
-            (dest || document.body).focus();
+            dest && dest.focus();
 
             this.ignoreFocus = false;
             this.emit('blur');
@@ -12596,10 +12608,10 @@ var Selectize = new prime({
                     optgroup = '';
                 }
                 if (!groups.hasOwnProperty(optgroup)) {
-                    groups[optgroup] = [];
+                    groups[optgroup] = document.createDocumentFragment();
                     groups_order.push(optgroup);
                 }
-                groups[optgroup].push(option_html);
+                groups[optgroup].appendChild(option_html);
             }
         }
 
@@ -12613,23 +12625,25 @@ var Selectize = new prime({
         }
 
         // render optgroup headers & join groups
-        html = [];
+        html = document.createDocumentFragment();
         for (i = 0, n = groups_order.length; i < n; i++) {
             optgroup = groups_order[i];
-            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].length) {
+            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].childNodes.length) {
                 // render the optgroup header and options within it,
                 // then pass it to the wrapper template
-                html_children = this.render('optgroup_header', this.Optgroups[optgroup]) || '';
-                html_children += groups[optgroup].join('');
-                html.push(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
-                    html: html_children
+                html_children = document.createDocumentFragment();
+                html_children.appendChild(this.render('optgroup_header', this.Optgroups[optgroup]));
+                html_children.appendChild(groups[optgroup]);
+                html.appendChild(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
+                    html: domToString(html_children),
+                    dom: html_children
                 })));
             } else {
-                html.push(groups[optgroup].join(''));
+                html.appendChild(groups[optgroup]);
             }
         }
 
-        $dropdown_content.html(html.join(''));
+        $dropdown_content.html(domToString(html));
 
         // highlight matching terms inline
         if (this.options.highlight && results.query.length && results.tokens.length) {
@@ -12649,7 +12663,7 @@ var Selectize = new prime({
         has_create_option = this.canCreate(query);
         if (has_create_option) {
             //$dropdown_content.prepend(this.render('option_create', { input: query }));
-            $dropdown_content.html(this.render('option_create', { input: query }) + $dropdown_content.html());
+            $(this.render('option_create', { input: query })).top($dropdown_content);
             $create = $($dropdown_content[0].childNodes[0]);
         }
 
@@ -12790,8 +12804,7 @@ var Selectize = new prime({
         // update the item if it's selected
         if (this.items.indexOf(value_new) !== -1) {
             $item = this.getItem(value);
-            var dummy = zen('div').html(this.render('item', data));
-            $item_new = dummy.firstChild();
+            $item_new = $(this.render('item', data));
             if ($item.hasClass('g-active')) {
                 $item_new.addClass('g-active');
                 this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $item_new.attribute('data-value')));
@@ -12891,9 +12904,8 @@ var Selectize = new prime({
             if (inputMode === 'single') this.clear(silent);
             if (inputMode === 'multi' && this.isFull()) return;
 
-            var dummy = zen('div').html(this.render('item', this.Options[value]));
-            $item = dummy.firstChild();
-            if (inputMode !== 'multi') $item.find('.g-remove-single-item').remove();
+            $item = $(this.render('item', this.Options[value]));
+            // if (inputMode !== 'multi') $item.find('.g-remove-single-item').remove();
 
             // ARIA
             $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
@@ -12937,7 +12949,7 @@ var Selectize = new prime({
     removeItem: function(value, silent) {
         var $item, i, idx;
 
-        $item = (typeof value === 'object') ? value : this.getItem(value);
+        $item = (value instanceof $) ? value : this.getItem(value);
         value = hash_key($item.attribute('data-value'));
         i = this.items.indexOf(value);
 
@@ -13158,10 +13170,11 @@ var Selectize = new prime({
     },
 
     clear: function(silent) {
-        var non_input = this.$control.children(':not(input)');
         if (!this.items.length) return;
 
+        var non_input = this.$control.children(':not(input)');
         if (non_input) non_input.remove();
+
         this.items = [];
         this.lastQuery = null;
         this.setCaret(0);
@@ -13394,28 +13407,29 @@ var Selectize = new prime({
         }
 
         // render markup
-        var html = this.options.render[templateName].apply(this, [data, escapeHTML]);
+        var html = zen('div').html(this.options.render[templateName].apply(this, [data, escapeHTML]));
+        html = html.firstChild();
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.data('selectable', '');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
             name = escape_replace(escapeHTML(id));
-            html = html.replace(regex_tag, '<$1 data-group="' + name + '" role="group" aria-label="' + name + '"');
+            html = html.data('group', name).attribute('role', 'group').attribute('aria-label', name);
         }
         if (templateName === 'option' || templateName === 'item') {
             name = escape_replace(escapeHTML(value || ''));
-            html = html.replace(regex_tag, '<$1 data-value="' + name + '" id="' + slugify(this.rand + '-' + name) + '" role="treeitem" aria-label="' + trim(data.text) + '" aria-selected="false"');
+            html = html.data('value', name).attribute('id', slugify(this.rand + '-' + name)).attribute('role', 'treeitem').attribute('aria-label', trim(data.text)).attribute('aria-selected', 'false');
         }
 
         // update cache
         if (cache) {
-            this.renderCache[templateName][value] = html;
+            this.renderCache[templateName][value] = html[0];
         }
 
-        return html;
+        return html[0];
     },
 
     clearCache: function(templateName) {
@@ -26395,13 +26409,14 @@ arguments[4][95][0].apply(exports,arguments)
 	 * @returns {function}
 	 */
 	Sifter.prototype.getScoreFunction = function(search, options) {
-		var self, fields, tokens, token_count;
+		var self, fields, tokens, token_count, nesting;
 
 		self        = this;
 		search      = self.prepareSearch(search, options);
 		tokens      = search.tokens;
 		fields      = search.options.fields;
 		token_count = tokens.length;
+		nesting     = search.options.nesting;
 
 		/**
 		 * Calculates how close of a match the
@@ -26438,12 +26453,12 @@ arguments[4][95][0].apply(exports,arguments)
 			}
 			if (field_count === 1) {
 				return function(token, data) {
-					return scoreValue(data[fields[0]], token);
+					return scoreValue(getattr(data, fields[0], nesting), token);
 				};
 			}
 			return function(token, data) {
 				for (var i = 0, sum = 0; i < field_count; i++) {
-					sum += scoreValue(data[fields[i]], token);
+					sum += scoreValue(getattr(data, fields[i], nesting), token);
 				}
 				return sum / field_count;
 			};
@@ -26504,7 +26519,7 @@ arguments[4][95][0].apply(exports,arguments)
 		 */
 		get_field = function(name, result) {
 			if (name === '$score') return result.score;
-			return self.items[result.id][name];
+			return getattr(self.items[result.id], name, options.nesting);
 		};
 
 		// parse options
@@ -26693,6 +26708,21 @@ arguments[4][95][0].apply(exports,arguments)
 		return a;
 	};
 
+	/**
+	 * A property getter resolving dot-notation
+	 * @param  {Object}  obj     The root object to fetch property on
+	 * @param  {String}  name    The optionally dotted property name to fetch
+	 * @param  {Boolean} nesting Handle nesting or not
+	 * @return {Object}          The resolved property value
+	 */
+	var getattr = function(obj, name, nesting) {
+	    if (!obj || !name) return;
+	    if (!nesting) return obj[name];
+	    var names = name.split(".");
+	    while(names.length && (obj = obj[names.shift()]));
+	    return obj;
+	};
+
 	var trim = function(str) {
 		return (str + '').replace(/^\s+|\s+$|/g, '');
 	};
@@ -26706,20 +26736,31 @@ arguments[4][95][0].apply(exports,arguments)
 	};
 
 	var DIACRITICS = {
-		'a': '[aÀÁÂÃÄÅàáâãäåĀāąĄ]',
-		'c': '[cÇçćĆčČ]',
-		'd': '[dđĐďĎð]',
-		'e': '[eÈÉÊËèéêëěĚĒēęĘ]',
-		'i': '[iÌÍÎÏìíîïĪī]',
-		'l': '[lłŁ]',
-		'n': '[nÑñňŇńŃ]',
-		'o': '[oÒÓÔÕÕÖØòóôõöøŌō]',
-		'r': '[rřŘ]',
-		's': '[sŠšśŚ]',
-		't': '[tťŤ]',
-		'u': '[uÙÚÛÜùúûüůŮŪū]',
-		'y': '[yŸÿýÝ]',
-		'z': '[zŽžżŻźŹ]'
+		'a': '[aḀḁĂăÂâǍǎȺⱥȦȧẠạÄäÀàÁáĀāÃãÅåąĄÃąĄ]',
+		'b': '[b␢βΒB฿𐌁ᛒ]',
+		'c': '[cĆćĈĉČčĊċC̄c̄ÇçḈḉȻȼƇƈɕᴄＣｃ]',
+		'd': '[dĎďḊḋḐḑḌḍḒḓḎḏĐđD̦d̦ƉɖƊɗƋƌᵭᶁᶑȡᴅＤｄð]',
+		'e': '[eÉéÈèÊêḘḙĚěĔĕẼẽḚḛẺẻĖėËëĒēȨȩĘęᶒɆɇȄȅẾếỀềỄễỂểḜḝḖḗḔḕȆȇẸẹỆệⱸᴇＥｅɘǝƏƐε]',
+		'f': '[fƑƒḞḟ]',
+		'g': '[gɢ₲ǤǥĜĝĞğĢģƓɠĠġ]',
+		'h': '[hĤĥĦħḨḩẖẖḤḥḢḣɦʰǶƕ]',
+		'i': '[iÍíÌìĬĭÎîǏǐÏïḮḯĨĩĮįĪīỈỉȈȉȊȋỊịḬḭƗɨɨ̆ᵻᶖİiIıɪＩｉ]',
+		'j': '[jȷĴĵɈɉʝɟʲ]',
+		'k': '[kƘƙꝀꝁḰḱǨǩḲḳḴḵκϰ₭]',
+		'l': '[lŁłĽľĻļĹĺḶḷḸḹḼḽḺḻĿŀȽƚⱠⱡⱢɫɬᶅɭȴʟＬｌ]',
+		'n': '[nŃńǸǹŇňÑñṄṅŅņṆṇṊṋṈṉN̈n̈ƝɲȠƞᵰᶇɳȵɴＮｎŊŋ]',
+		'o': '[oØøÖöÓóÒòÔôǑǒŐőŎŏȮȯỌọƟɵƠơỎỏŌōÕõǪǫȌȍՕօ]',
+		'p': '[pṔṕṖṗⱣᵽƤƥᵱ]',
+		'q': '[qꝖꝗʠɊɋꝘꝙq̃]',
+		'r': '[rŔŕɌɍŘřŖŗṘṙȐȑȒȓṚṛⱤɽ]',
+		's': '[sŚśṠṡṢṣꞨꞩŜŝŠšŞşȘșS̈s̈]',
+		't': '[tŤťṪṫŢţṬṭƮʈȚțṰṱṮṯƬƭ]',
+		'u': '[uŬŭɄʉỤụÜüÚúÙùÛûǓǔŰűŬŭƯưỦủŪūŨũŲųȔȕ∪]',
+		'v': '[vṼṽṾṿƲʋꝞꝟⱱʋ]',
+		'w': '[wẂẃẀẁŴŵẄẅẆẇẈẉ]',
+		'x': '[xẌẍẊẋχ]',
+		'y': '[yÝýỲỳŶŷŸÿỸỹẎẏỴỵɎɏƳƴ]',
+		'z': '[zŹźẐẑŽžŻżẒẓẔẕƵƶ]'
 	};
 
 	var asciifold = (function() {
