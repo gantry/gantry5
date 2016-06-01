@@ -626,7 +626,22 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected function initInheritance()
     {
-        $index = $this->name ? static::loadIndex($this->name) : null;
+        if ($this->name) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            // Attempt to load the index file.
+            $indexFile = $locator("gantry-config://{$this->name}/index.yaml");
+            if ($indexFile) {
+                $file = CompiledYamlFile::instance($indexFile);
+                $index = $file->content();
+                $file->free();
+            }
+        } else {
+            $index = null;
+        }
 
         foreach ($this->inherit() as $outlineId => $list) {
             try {
@@ -706,7 +721,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                     if (isset($index['inherit'][$item->inherit->outline][$item->id])) {
                         $item->id = $index['inherit'][$item->inherit->outline][$item->id];
-                    } elseif ($type !== 'position') {
+                    } elseif ($type !== 'position' || $subtype !== 'position') {
                         $item->id = $this->id($type, $subtype);
                     }
                 }
@@ -898,8 +913,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $configurations = $gantry['configurations'];
 
             $preset = isset($index['preset']['name']) ? $index['preset']['name'] : $configurations->preset($name);
-
-            $layoutFile = $locator("gantry-layouts://{$preset}.yaml");
         }
 
         // Get timestamp for the layout file.
@@ -913,6 +926,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         if ($autoSave && isset($layout)) {
+            if (!$layout->timestamp) {
+                $layout->save();
+            }
             $layout->saveIndex($index);
         }
 
