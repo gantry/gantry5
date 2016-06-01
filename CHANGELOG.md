@@ -5,6 +5,9 @@
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed issue with Widgets not providing a description, causing Gantry to throw an error (thanks @horch004 - #1323)
 
 # 5.2.18
 ## 27/05/2016

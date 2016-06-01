@@ -157,8 +157,9 @@ abstract class Widgets
 
         $list = [];
         foreach ($widgets as $key => $widget) {
+            $description           = isset($widget->widget_options['description']) ? $widget->widget_options['description'] : '';
             $info                   =
-                ['id'     => $widget->id_base, 'title' => $widget->name, 'description' => $widget->widget_options['description'], 'class' => $key,
+                ['id'     => $widget->id_base, 'title' => $widget->name, 'description' => $description, 'class' => $key,
                  'widget' => $widget];
             $list[$widget->id_base] = $info;
         }
