@@ -626,6 +626,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected function initInheritance()
     {
+        $index = $this->name ? static::loadIndex($this->name) : null;
+
         foreach ($this->inherit() as $outlineId => $list) {
             try {
                 $outline = $this->instance($outlineId);
@@ -656,7 +658,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                         case 'children':
                             if (!empty($inherited->children)) {
                                 $item->children = $inherited->children;
-                                $this->initReferences($item->children, null, ['outline' => $outlineId, 'include' => ['attributes', 'block']]);
+                                $this->initReferences($item->children, null, ['outline' => $outlineId, 'include' => ['attributes', 'block']], $index);
                             } else {
                                 $item->children = [];
                             }
@@ -678,8 +680,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * @param array $items
      * @param object $block
      * @param string $inherit
+     * @param array $index
      */
-    protected function initReferences(array $items = null, $block = null, $inherit = null)
+    protected function initReferences(array $items = null, $block = null, $inherit = null, array $index = null)
     {
         if ($items === null) {
             $items = $this->items;
@@ -700,6 +703,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if ($inherit && !$this->isLayoutType($type)) {
                     $item->inherit = (object) $inherit;
                     $item->inherit->particle = $item->id;
+
+                    if (isset($index['inherit'][$item->inherit->outline][$item->id])) {
+                        $item->id = $index['inherit'][$item->inherit->outline][$item->id];
+                    } elseif ($type !== 'position') {
+                        $item->id = $this->id($type, $subtype);
+                    }
                 }
 
                 if (isset($item->id)) {
@@ -714,10 +723,38 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
 
                 if (isset($item->children) && is_array($item->children)) {
-                    $this->initReferences($item->children, $type === 'block' ? $item : null, $inherit);
+                    $this->initReferences($item->children, $type === 'block' ? $item : null, $inherit, $index);
                 }
             }
         }
+    }
+
+    /**
+     * @param string $type
+     * @param string $subtype
+     * @param string $id
+     * @return string
+     */
+    protected function id($type, $subtype = null, $id = null)
+    {
+        $result = [];
+        if ($type !== 'particle') {
+            $result[] = $type;
+        }
+        if ($subtype && $subtype !== $type) {
+            $result[] = $subtype;
+        }
+        $key = implode('-', $result);
+
+        if (!$id || isset($this->references[$key][$id])) {
+            while ($id = rand(1000, 9999)) {
+                if (!isset($this->references[$key][$id])) {
+                    break;
+                }
+            }
+        }
+
+        return $key . '-'. $id;
     }
 
     /**

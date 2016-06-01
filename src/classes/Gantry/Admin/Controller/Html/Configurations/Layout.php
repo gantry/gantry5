@@ -246,6 +246,7 @@ class Layout extends HtmlController
                 if ($particle) {
                     $inheritance->set('form.fields.particle.particle', $name);
                 }
+
             } elseif (!empty($inheriting)) {
                 // Already inherited by other outlines.
                 $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
@@ -261,6 +262,7 @@ class Layout extends HtmlController
                 $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
+
             } else {
                 // Nothing to inherit from.
                 $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
