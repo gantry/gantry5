@@ -13283,7 +13283,7 @@ var Selectize = new prime({
         } else {
             $tail = this.$control.children('.g-active:' + tail);
             if ($tail) {
-                idx = this.$control.children(':not(input)').index($tail);
+                idx = indexOf(this.$control.children(':not(input)'), $tail);
                 this.setActiveItem(null);
                 this.setCaret(direction > 0 ? idx + 1 : idx);
             }
