@@ -75,12 +75,12 @@ class ThemeDetails implements \ArrayAccess
         // Initialize parent theme streams.
         $details = $this;
         $loaded = [$this->offsetGet('name')];
-        while ($details = $details->parent()) {
-            if (in_array($details->name, $loaded)) {
-                break;
-            }
-            $this->addStream($details->name, $details->getPaths());
-            $loaded[] = $details->name;
+        
+        if (!in_array($details->name, $loaded)) {
+            while ($details = $details->parent()) {
+                $this->addStream($details->name, $details->getPaths());
+                $loaded[] = $details->name;
+		    }
         }
 
         /** @var Streams $streams */
