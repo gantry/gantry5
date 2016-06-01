@@ -5,7 +5,7 @@
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
-        - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #1325)
+        - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #251, #1325)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed issue with Widgets not providing a description, causing Gantry to throw an error (thanks @horch004 - #1323)
