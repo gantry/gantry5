@@ -30,7 +30,7 @@ configuration:
     engine: nucleus
 
   theme:
-    parent: hydrogen
+    parent: g5_hydrogen
     base: gantry-theme://common
     file: gantry-theme://includes/theme.php
     class: \Gantry\Framework\Theme
