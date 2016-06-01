@@ -220,17 +220,21 @@ class Layout extends HtmlController
         }
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
-        if ($outline !== 'default' && $file->exists()) {
+        if ($file->exists()) {
             $inheritType = $particle ? 'particle' : 'section';
 
             /** @var Outlines $outlines */
             $outlines = $this->container['configurations'];
-            
-            $funcName = 'getOutlinesWith' . ucfirst($inheritType);
-            $list = (array) $outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
-            unset($list[$outline]);
 
-            if (!empty($inherit['outline']) || ($list && !$outlines->getInheritingOutlines($outline, $id))) {
+            if ($outline !== 'default') {
+                $funcName = 'getOutlinesWith' . ucfirst($inheritType);
+                $list = (array)$outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
+                unset($list[$outline]);
+            } else {
+                $list = [];
+            }
+
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, $id)) && $list)) {
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 
@@ -242,6 +246,26 @@ class Layout extends HtmlController
                 if ($particle) {
                     $inheritance->set('form.fields.particle.particle', $name);
                 }
+            } elseif (!empty($inheriting)) {
+                // Already inherited by other outlines.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+                $inheritance->set(
+                    'form.fields._note.content',
+                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</lirong>, <li>', $inheriting) . '</li></ul>')
+                );
+
+            } elseif ($outline === 'default') {
+                // Base outline.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+            } else {
+                // Nothing to inherit from.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
             }
         }
 
