@@ -24,12 +24,12 @@ before_install:
   - composer self-update
   - if [ ! -z "$TRAVIS_TAG" ]; then
       gem install sass;
-      npm install -g gulp &>/dev/null;
+      npm install -g gulp;
     fi
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
-      npm install &>/dev/null;
-      gulp -up &>/dev/null;
+      npm install;
+      gulp -up;
     fi
   - cd $TRAVIS_BUILD_DIR/src && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev

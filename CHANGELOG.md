@@ -1,5 +1,5 @@
 # 5.3.0
-## XX/XX/2016
+## XX/06/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -11,13 +11,15 @@
         - Do not display `Atoms` in `Particle Defaults`
         - Display only shared particle settings in `Particle Defaults`
     3. [](#bugfix)
+        - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
+        - Fixed typos in tooltips and notices (#1318)
         - Fixed issue with Icons Picker Select button no properly re-enabling when only switching dropdown (#1290)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
 
 # 5.2.18
-## XX/XX/2016
+## 27/05/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -31,7 +33,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed regression in positioning module content by removing `row-fluid` wrapping from Joomla modules
-        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrade (#1285)
+        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrades (#1285)
 
 # 5.2.17
 ## 19/05/2016
