@@ -115,7 +115,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param  string $name
-     * @param  bool   $reload
      * @return Layout
      */
     public static function instance($name)
@@ -871,7 +870,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // If layout file doesn't exists, figure out what preset was used.
         if (!$filename) {
-            $index = static::loadIndex($name);
+            $index = static::loadIndex($name, true);
             $preset = $index['preset']['name'];
 
             try {
@@ -945,5 +944,36 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         ];
 
         return $index;
+    }
+
+    public function check(array $children = null)
+    {
+        if ($children === null) {
+            $children = $this->items;
+        }
+
+        foreach ($children as $item) {
+            if (!$item instanceof \stdClass) {
+                throw new \RuntimeException('Invalid layout element');
+            }
+            if (!isset($item->type)) {
+                throw new \RuntimeException('Type missing');
+            }
+            if (!isset($item->subtype)) {
+                throw new \RuntimeException('Subtype missing');
+            }
+            if (!isset($item->attributes)) {
+                throw new \RuntimeException('Attributes missing');
+            }
+            if (!is_object($item->attributes)) {
+                throw new \RuntimeException('Attributes not object');
+            }
+            if (isset($item->children)) {
+                if (!is_array($item->children)) {
+                    throw new \RuntimeException('Children not array');
+                }
+                $this->check($item->children);
+            }
+        }
     }
 }
