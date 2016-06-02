@@ -871,7 +871,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // If layout file doesn't exists, figure out what preset was used.
         if (!$filename) {
-            $index = static::loadIndex($name);
+            $index = static::loadIndex($name, true);
             $preset = $index['preset']['name'];
 
             try {
