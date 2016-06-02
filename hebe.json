@@ -78,6 +78,10 @@
                     {
                         "source":"/platforms/joomla/plg_quickicon_gantry5",
                         "destination":"/plugins/quickicon/gantry5"
+                    },
+                    {
+                        "source":"/platforms/joomla/plg_system_debugbar",
+                        "destination":"/plugins/system/debugbar"
                     }
                 ],
                 "modules":[

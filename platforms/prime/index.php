@@ -53,8 +53,6 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 /** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('render', 'Rendering page');
-
 try {
     // Render the page.
     echo $theme->setLayout('default')->render('@pages/' . PAGE_PATH . '.' . PAGE_EXTENSION . '.twig');

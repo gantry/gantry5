@@ -1,3 +1,4 @@
+{%- do gantry.debugger.startTimer('render', 'Rendering page') %}
 {%- do gantry.theme.setLayout() -%}
 {%- set segments = gantry.theme.segments -%}
 
@@ -45,6 +46,8 @@
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
 {%- set page_head %}
+    {% do gantry.debugger.assets() %}
+
     {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
     {%- endblock %}
@@ -54,6 +57,8 @@
     {% block page_footer %}
         {{ gantry.scripts('footer')|join("\n    ")|raw }}
     {% endblock %}
+
+    {{ gantry.debugger.render()|raw }}
 {% endset -%}
 
 {%- block page -%}
