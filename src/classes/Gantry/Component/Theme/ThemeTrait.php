@@ -14,12 +14,14 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Debug\Debugger;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -227,7 +229,14 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
+                /** @var Debugger $debugger */
+                $debugger = Gantry::instance()['debugger'];
+                $debugger->startTimer("css-{$name}", "Compiling CSS: {$name}");
+                $debugger->addMessage("Compiling CSS: {$name}");
+
                 $compiler->compileFile($name);
+
+                $debugger->stopTimer("css-{$name}");
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);
@@ -340,7 +349,14 @@ trait ThemeTrait
     {
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
-            $this->prepareLayout($this->segments);
+
+            /** @var Debugger $debugger */
+            $debugger = Gantry::instance()['debugger'];
+            $debugger->startTimer('segments', "Preparing layout");
+
+            $this->prepareLayout($this->segments, false, false, $debugger);
+
+            $debugger->stopTimer('segments');
         }
 
         return $this->segments;
@@ -479,9 +495,10 @@ trait ThemeTrait
      * @param array $items
      * @param bool  $temporary
      * @param bool  $sticky
+     * @param Debugger $debugger
      * @internal
      */
-    protected function prepareLayout(array &$items, $temporary = false, $sticky = false)
+    protected function prepareLayout(array &$items, $temporary, $sticky, Debugger $debugger)
     {
         foreach ($items as $i => &$item) {
             // Non-numeric items are meta-data which should be ignored.
@@ -495,7 +512,7 @@ trait ThemeTrait
                     $fixed &= !empty($child->attributes->fixed);
                 }
 
-                $this->prepareLayout($item->children, $fixed, $temporary);
+                $this->prepareLayout($item->children, $fixed, $temporary, $debugger);
             }
 
             // TODO: remove hard coded types.
@@ -507,11 +524,15 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
+                    $debugger->startTimer($item->id, "Rendering {$item->id}");
+
                     $item->content = $this->renderContent($item);
                     // Note that content can also be null (postpone rendering).
                     if ($item->content === '') {
                         unset($items[$i]);
                     }
+
+                    $debugger->stopTimer($item->id);
 
                     break;
 

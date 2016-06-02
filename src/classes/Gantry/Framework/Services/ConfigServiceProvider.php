@@ -16,6 +16,7 @@ namespace Gantry\Framework\Services;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\Debug\Debugger;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -25,7 +26,16 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Container $gantry)
     {
         $gantry['blueprints'] = function($c) {
-            return static::blueprints($c);
+            /** @var Debugger $debugger */
+            $debugger = $c['debugger'];
+
+            $debugger->startTimer('blueprints', 'Loading blueprints');
+
+            $blueprints = static::blueprints($c);
+
+            $debugger->stopTimer('blueprints');
+
+            return $blueprints;
         };
 
         $gantry['config'] = function($c) {
@@ -34,10 +44,19 @@ class ConfigServiceProvider implements ServiceProviderInterface
                 throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
             }
 
+            /** @var Debugger $debugger */
+            $debugger = $c['debugger'];
+
+            $debugger->startTimer('config', 'Loading configuration');
+
             // Get the current configuration and lock the value from modification.
             $configuration = $c->lock('configuration');
 
-            return static::load($c, $configuration);
+            $config = static::load($c, $configuration);
+
+            $debugger->setConfig($config)->stopTimer('config');
+
+            return $config;
         };
     }
 

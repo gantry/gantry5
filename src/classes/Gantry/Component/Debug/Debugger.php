@@ -31,15 +31,15 @@ class Debugger
     }
 
     /**
-     * Initialize the debugger.
+     * Set Configuration
      *
+     * @param $config
      * @return $this
      * @throws \DebugBar\DebugBarException
      */
-    public function init()
+    public function setConfig($config)
     {
-        //$config = Gantry::instance()['config'];
-        //$this->debugbar->addCollector(new ConfigCollector($config->toArray(), 'Config'));
+        $this->debugbar->addCollector(new ConfigCollector($config->toArray(), 'Config'));
 
         return $this;
     }
