@@ -241,6 +241,10 @@ class Format2
             }
         }
 
+        if (!isset($content['children'])) {
+            $content['children'] = [];
+        }
+
         // Clean up all items for saving.
         foreach ($content['children'] as &$child) {
             $size = null;
