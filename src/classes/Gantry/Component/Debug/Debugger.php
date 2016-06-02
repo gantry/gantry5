@@ -59,21 +59,21 @@ class Debugger
         $this->renderer = $this->debugbar->getJavascriptRenderer();
         $this->renderer->setIncludeVendors(false);
 
-        $base = $this->renderer->getBasePath();
+        // $base = $this->renderer->getBasePath();
         list($css_files, $js_files) = $this->renderer->getAssets(null, null);
 
         foreach ($css_files as $css) {
             Document::addHeaderTag([
                 'tag' => 'link',
                 'rel' => 'stylesheet',
-                'href' => $css
+                'href' => Document::url("gantry-assets://css/debugbar/{$css}")
             ], 'head', 0);
         }
 
         foreach ($js_files as $js) {
             Document::addHeaderTag([
                 'tag' => 'script',
-                'src' => $js
+                'src' => Document::url("gantry-assets://js/debugbar/{$js}")
             ], 'head', 0);
         }
 
