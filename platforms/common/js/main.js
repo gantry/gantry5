@@ -8,6 +8,9 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -245,6 +248,11 @@ var Map         = map,
             });
         },
 
+        toggleStateDelegation: function(event, element) {
+            var enabled = element.value() == '1';
+            element.attribute('disabled', !enabled);
+        },
+
         // chrome workaround for overflow and columns
         chromeFix: function() {
             if (!Assignments.isChrome()) { return; }
@@ -279,6 +287,7 @@ ready(function() {
     body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+    body.delegate('change', '#assignments input[type="hidden"][name]', Assignments.toggleStateDelegation);
 
     // chrome workaround for overflow and columns
     //if (Assignments.isChrome()) Assignments.chromeFix();
@@ -497,13 +506,79 @@ var $             = require('elements'),
 require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body'),
+    var body       = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+
+    // Handles Creating new Configurations
+    body.delegate('click', '[data-g5-outline-create], [data-g5-outline-duplicate]', function(event, element) {
+        if (event) { event.preventDefault(); }
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.href() + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var title   = content.elements.content.find('[name="title"]'),
+                    preset  = content.elements.content.find('[name="preset"]'),
+                    confirm = content.elements.content.find('[data-g-outline-create-confirm]');
+
+                title.on('keyup', function(event) {
+                    var code = event.which;
+                    if (code === 13) {
+                        confirm.emit('click');
+                    }
+                });
+
+                confirm.on('click', function() {
+                    confirm.hideIndicator();
+                    confirm.showIndicator();
+
+                    var URI = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
+                        data = { title: title.value(), preset: preset.value() };
+
+                    if (!data.title) { delete data.title; }
+                    if (!data.preset) { delete data.preset; }
+
+                    request('post', URI, data, function(error, response) {
+                        confirm.hideIndicator();
+
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var base = $('#configurations').find('ul').find('li'),
+                                outline = zen('li').attribute('class', base.attribute('class'));
+
+                            outline.after(base).html(response.body.outline);
+
+                            toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                            modal.close();
+                        }
+
+                    });
+                });
+
+                setTimeout(function() {
+                    title[0].focus();
+                }, 5);
+            }
+        });
+    });
 
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '#configurations [data-g-config]', function(event, element) {
-        var mode = element.data('g-config'),
-            href = element.data('g-config-href'),
+        var mode   = element.data('g-config'),
+            href   = element.data('g-config-href'),
             encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
             method = (element.data('g-config-method') || 'post').toLowerCase();
 
@@ -557,10 +632,10 @@ ready(function() {
                     }
                 });
             } else {
-                var confSelector = $('#configuration-selector'),
+                var confSelector   = $('#configuration-selector'),
                     currentOutline = confSelector.value(),
                     outlineDeleted = response.body.outline,
-                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                    reload         = $('[href="' + getAjaxURL('configurations') + '"]');
 
                 // if the current outline is the one that's been deleted,
                 // fallback to default
@@ -573,7 +648,7 @@ ready(function() {
 
                 if (!reload) { window.location = window.location; }
                 else {
-                    body.emit('click', {target: reload});
+                    body.emit('click', { target: reload });
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
@@ -588,13 +663,13 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original, wasCanceled) {
+    var updateTitle     = function(title, original, wasCanceled) {
             this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
-                href = element.data('g-config-href'),
-                method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                href    = element.data('g-config-href'),
+                method  = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent  = element.parent();
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
@@ -613,8 +688,8 @@ ready(function() {
                     element.data('title', title).data('tip', title);
 
                     // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.outline),
-                        id = dummy.find('h4 span:last-child'),
+                    var dummy   = zen('div').html(response.body.outline),
+                        id      = dummy.find('h4 span:last-child'),
                         actions = dummy.find('.outline-actions');
 
                     element.parent('.card').find('h4 span:last-child').html(id.html());
@@ -631,7 +706,7 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
-                editable.on('title-edit-start', function(){
+                editable.on('title-edit-start', function() {
                     editable.style('text-overflow', 'inherit');
                 });
                 editable.on('title-edit-end', updateTitle);
@@ -3728,14 +3803,26 @@ ready(function() {
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
 
+                var layout = JSON.stringify(lm.builder.serialize());
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
+
+                data.layout = layout;
                 break;
+
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
+
+                var items = JSON.stringify(mm.menumanager.items);
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;
@@ -4542,7 +4629,7 @@ ready(function() {
     menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
-        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+        exclude: '[data-lm-nodrag], .menu-item-back, .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
@@ -4843,7 +4930,11 @@ ready(function() {
 
                             if (response.body.html) {
                                 var parent = element.parent('[data-mm-id]');
-                                if (parent) { parent.html(response.body.html); }
+                                if (parent) {
+                                    var status = response.body.item.enabled || response.body.item.options.particle.enabled;
+                                    parent.html(response.body.html);
+                                    parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                                }
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);
@@ -5479,9 +5570,21 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item);
-                    var target = $(this.originalEvent.target);
-                    if (target.matches('#trash') || target.parent('#trash')) {
+                    var item = $(event.item),
+                        trash = $('#trash'),
+                        target = $(this.originalEvent.target),
+                        touchTrash = false;
+
+                    // workaround for touch devices
+                    if (this.originalEvent.type === 'touchend') {
+                        var trashSize = trash[0].getBoundingClientRect(),
+                            oE        = this.originalEvent,
+                            position  = (oE.pageY || oE.changedTouches[0].pageY) - window.scrollY;
+
+                        touchTrash = position <= trashSize.height;
+                    }
+
+                    if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
                         item.remove();
                         Atoms.eraser.hide();
                         this.options.onSort();
@@ -5642,11 +5745,19 @@ var AttachSettings = function() {
     });
 };
 
+var AttachSortableAtoms = function(atoms) {
+    if (!atoms) { return; }
+    if (!atoms.SimpleSort) { Atoms.createSortables(atoms); }
+};
+
 ready(function() {
+    var atoms = $('#atoms');
+
     $('body').delegate('mouseover', '#atoms', function(event, element) {
-        if (!element.SimpleSort) { Atoms.createSortables(element); }
+        AttachSortableAtoms(element);
     });
 
+    AttachSortableAtoms(atoms);
     AttachSettings();
 });
 
@@ -6711,6 +6822,7 @@ ready(function() {
 module.exports = ColorPicker;
 
 },{"../../ui/drag.events":47,"elements":103,"elements/domready":101,"elements/zen":127,"mout/collection/forEach":177,"mout/function/bind":180,"mout/math/clamp":204,"prime":286,"prime-util/prime/bound":282,"prime-util/prime/options":283,"prime/emitter":285}],36:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -6818,7 +6930,7 @@ var FilePicker = new prime({
                     }
                 }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + global.btoa(encodeURIComponent(this.getPath() + file[0].name))) + getAjaxSuffix());
                 }, this)
             });
 
@@ -7021,7 +7133,7 @@ var FilePicker = new prime({
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
                 data      = JSON.parse(parent.data('file')),
-                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + global.btoa(encodeURIComponent(data.pathname)) + getAjaxSuffix()));
 
             if (!data.isInCustom) { return false; }
 
@@ -7168,6 +7280,8 @@ domready(function() {
 
 
 module.exports = FilePicker;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"../../ui":49,"../../utils/elements.utils":60,"../../utils/get-ajax-suffix":64,"../../utils/get-ajax-url":65,"agent":71,"dropzone":97,"elements/domready":101,"elements/zen":127,"mout/function/bind":180,"mout/lang/deepClone":188,"mout/object/deepFillIn":212,"mout/string/rtrim":255,"prime":286}],37:[function(require,module,exports){
 "use strict";
@@ -26680,6 +26794,12 @@ module.exports = parse
 })(function () {
 	"use strict";
 
+	if (typeof window == "undefined" || typeof window.document == "undefined") {
+		return function() {
+			throw new Error( "Sortable.js requires a window with a document" );
+		}
+	}
+
 	var dragEl,
 		parentEl,
 		ghostEl,
@@ -26927,7 +27047,7 @@ module.exports = parse
 			}
 
 			// get the index of the dragged element within its parent
-			oldIndex = _index(target);
+			oldIndex = _index(target, options.draggable);
 
 			// Check filter
 			if (typeof filter === 'function') {
@@ -27231,8 +27351,7 @@ module.exports = parse
 
 			moved = true;
 
-			_dispatchEvent(this, rootEl, 'over', dragEl, rootEl, evt, evt.target);
-
+			// _dispatchEvent(this, rootEl, 'over', dragEl, rootEl, evt, evt.target); // Gantry 5
 			if (activeGroup && !options.disabled &&
 				(isOwner
 					? canSort || (revert = !rootEl.contains(dragEl)) // Reverting item into the original list
@@ -27424,7 +27543,7 @@ module.exports = parse
 					_toggleClass(dragEl, this.options.chosenClass, false);
 
 					if (rootEl !== parentEl) {
-						newIndex = _index(dragEl);
+						newIndex = _index(dragEl, options.draggable);
 
 						if (newIndex >= 0) {
 							// drag from one list and drop into another
@@ -27444,7 +27563,7 @@ module.exports = parse
 
 						if (dragEl.nextSibling !== nextEl) {
 							// Get the index of the dragged element within its parent
-							newIndex = _index(dragEl);
+							newIndex = _index(dragEl, options.draggable);
 
 							if (newIndex >= 0) {
 								// drag & drop within the same list
@@ -27459,7 +27578,7 @@ module.exports = parse
 							newIndex = oldIndex;
 						}
 
-						this.originalEvent = evt;
+						this.originalEvent = evt; // Gantry 5
 						_dispatchEvent(this, rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
 
 						// Save sorting
@@ -27467,31 +27586,34 @@ module.exports = parse
 					}
 				}
 
-				// Nulling
-				rootEl =
-				dragEl =
-				parentEl =
-				ghostEl =
-				nextEl =
-				cloneEl =
-
-				scrollEl =
-				scrollParentEl =
-
-				tapEvt =
-				touchEvt =
-
-				moved =
-				newIndex =
-
-				lastEl =
-				lastCSS =
-
-				activeGroup =
-				Sortable.active = null;
 			}
+			this._nulling();
 		},
 
+		_nulling: function() {
+			// Nulling
+			rootEl =
+			dragEl =
+			parentEl =
+			ghostEl =
+			nextEl =
+			cloneEl =
+
+			scrollEl =
+			scrollParentEl =
+
+			tapEvt =
+			touchEvt =
+
+			moved =
+			newIndex =
+
+			lastEl =
+			lastCSS =
+
+			activeGroup =
+			Sortable.active = null;
+		},
 
 		handleEvent: function (/**Event*/evt) {
 			var type = evt.type;
@@ -27638,17 +27760,11 @@ module.exports = parse
 	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
 		if (el) {
 			ctx = ctx || document;
-			selector = selector.split('.');
-
-			var tag = selector.shift().toUpperCase(),
-				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
 
 			do {
 				if (
-					(tag === '>*' && el.parentNode === ctx) || (
-						(tag === '' || el.nodeName.toUpperCase() == tag) &&
-						(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
-					)
+					(selector === '>*' && el.parentNode === ctx)
+					|| _matches(el, selector)
 				) {
 					return el;
 				}
@@ -27798,7 +27914,8 @@ module.exports = parse
 		var lastEl = el.lastElementChild,
 				rect = lastEl.getBoundingClientRect();
 
-		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - rect.right > 5)) && lastEl; // min delta
+		// return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - rect.right > 5)) && lastEl; // min delta // Gantry 5
+		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - (rect.right + rect.width) > 5)) && lastEl; // min delta
 	}
 
 
@@ -27821,11 +27938,13 @@ module.exports = parse
 	}
 
 	/**
-	 * Returns the index of an element within its parent
+	 * Returns the index of an element within its parent for a selected set of
+	 * elements
 	 * @param  {HTMLElement} el
+	 * @param  {selector} selector
 	 * @return {number}
 	 */
-	function _index(el) {
+	function _index(el, selector) {
 		var index = 0;
 
 		if (!el || !el.parentNode) {
@@ -27833,12 +27952,29 @@ module.exports = parse
 		}
 
 		while (el && (el = el.previousElementSibling)) {
-			if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
+			if (el.nodeName.toUpperCase() !== 'TEMPLATE'
+					&& _matches(el, selector)) {
 				index++;
 			}
 		}
 
 		return index;
+	}
+
+	function _matches(/**HTMLElement*/el, /**String*/selector) {
+		if (el) {
+			selector = selector.split('.');
+
+			var tag = selector.shift().toUpperCase(),
+				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
+
+			return (
+				(tag === '' || el.nodeName.toUpperCase() == tag) &&
+				(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
+			);
+		}
+
+		return false;
 	}
 
 	function _throttle(callback, ms) {
@@ -27903,7 +28039,7 @@ module.exports = parse
 
 
 	// Export
-	Sortable.version = '1.3.0';
+	Sortable.version = '1.4.2';
 	return Sortable;
 });
 

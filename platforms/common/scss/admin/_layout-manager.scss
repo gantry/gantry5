@@ -312,29 +312,37 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        > .g-grid > .g-block, .g-lm-container > .g-grid > .g-block {
-            margin-right: 14px;
-            background: $white;
-            padding-bottom: 50px;
+        > .g-grid > .g-block, .g-lm-container > .g-grid {
+            border-bottom: 8px solid #e0e0e0;
 
-            > .section {
-                border-bottom: 14px solid #eee;
-                margin-top: 0;
-                margin-bottom: 0;
-
-                &:last-child {
-                    border-bottom: 0;
-                }
+            &:last-child {
+                border-bottom: 0;
             }
 
-            > .particle-size {
-                margin-right: 0;
-                position: absolute;
-                bottom: 12px;
-                right: 12px;
+            > .g-block {
+                margin-right: 14px;
+                background: $white;
+                padding-bottom: 50px;
 
-                i {
-                    margin-right: 5px;
+                > .section {
+                    border-bottom: 14px solid #eee;
+                    margin-top: 0;
+                    margin-bottom: 0;
+
+                    &:last-child {
+                        border-bottom: 0;
+                    }
+                }
+
+                > .particle-size {
+                    margin-right: 0;
+                    position: absolute;
+                    bottom: 12px;
+                    right: 12px;
+
+                    i {
+                        margin-right: 5px;
+                    }
                 }
             }
         }

@@ -318,10 +318,11 @@ class TwigExtension extends \Twig_Extension
     {
         if ($location == 'head') {
             $scope = 'head';
+            $html = "<!doctype html>\n<html><head>{$input}</head><body></body></html>";
         } else {
             $scope = 'body';
+            $html = "<!doctype html>\n<html><head></head><body>{$input}</body></html>";
         }
-        $html = "<html><{$scope}>{$input}</{$scope}></html>";
 
         $internal = libxml_use_internal_errors(true);
 

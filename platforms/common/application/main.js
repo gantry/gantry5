@@ -168,14 +168,26 @@ ready(function() {
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
 
+                var layout = JSON.stringify(lm.builder.serialize());
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
+
+                data.layout = layout;
                 break;
+
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
+
+                var items = JSON.stringify(mm.menumanager.items);
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
                 break;

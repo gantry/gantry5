@@ -79,7 +79,8 @@
                                         'name': 'assignments.' ~ link.name,
                                         'field': link.field,
                                         'value': link.value,
-                                        'disabled': link.disabled,
+                                        'disabled': not link.value,
+                                        'turned_off': link.disabled,
                                         'title': "'" ~ link.label ~ "' Menu Item"
                                         } %}
                                         <span class="settings-param-title">

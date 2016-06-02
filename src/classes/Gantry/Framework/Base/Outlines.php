@@ -139,15 +139,18 @@ class Outlines extends AbstractOutlineCollection
         $layout = new Layout($name, $preset);
         $layout->saveIndex();
 
+        $this->items[$name] = $title;
+
         return $name;
     }
 
     /**
      * @param string $id
+     * @param string $title
      * @return string
      * @throws \RuntimeException
      */
-    public function duplicate($id)
+    public function duplicate($id, $title = null)
     {
         if (!$this->canDuplicate($id)) {
             throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
@@ -163,7 +166,8 @@ class Outlines extends AbstractOutlineCollection
             throw new \RuntimeException('Outline not found', 404);
         }
 
-        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id === 'default' ? 'untitled' : $id)));
+        $title = $title ?: (!$title && $id === 'default' ? 'untitled' : $id);
+        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title)));
 
         $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
 
@@ -172,6 +176,8 @@ class Outlines extends AbstractOutlineCollection
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
+
+        $this->items[$folder] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], basename($newPath))));
 
         return basename($folder);
     }
@@ -215,6 +221,8 @@ class Outlines extends AbstractOutlineCollection
             throw new \RuntimeException(sprintf('Renaming Outline failed: ', $e->getMessage()), 500, $e);
         }
 
+        $this->items[$id] = $title;
+
         return $folder;
     }
 
@@ -240,6 +248,8 @@ class Outlines extends AbstractOutlineCollection
         if (file_exists($path)) {
             Folder::delete($path);
         }
+
+        unset($this->items[$id]);
     }
 
     /**

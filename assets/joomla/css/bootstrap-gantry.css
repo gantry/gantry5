@@ -176,7 +176,8 @@ textarea {
 }
 
 .row {
-	margin-left: -20px;
+/*	margin-left: -20px;*/
+	margin-left: 0px;
 	*zoom: 1;
 }
 
