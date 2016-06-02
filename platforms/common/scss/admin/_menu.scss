@@ -142,7 +142,7 @@ $submenu-ratio:                 60px;
     right: 10px;
     top: 50%;
     @include transform(translateY(-50%));
-    color: $navbar-color;
+    color: $core-text;
 }
 
 .menu-selector {
@@ -151,7 +151,7 @@ $submenu-ratio:                 60px;
         margin: 3px;
         background: lighten($navbar-bg, 8%);
         border: 1px solid #ddd;
-        color: $navbar-color;
+        color: $core-text;
         display: flex;
         align-items: center;
         cursor: move;
@@ -165,7 +165,7 @@ $submenu-ratio:                 60px;
 
         a {
             display: inline-block;
-            color: $navbar-color;
+            color: $core-text;
         }
 
         .menu-item {
@@ -214,10 +214,10 @@ $submenu-ratio:                 60px;
         cursor: pointer;
         padding: 5px;
         font-size: $core-font-size + 0.2;
-        color: lighten($navbar-color, 20%);
+        color: lighten($core-text, 20%);
         @include transition(color 0.2s);
         &:hover {
-            color: $navbar-color;
+            color: $core-text;
         }
     }
 }
@@ -226,7 +226,7 @@ $submenu-ratio:                 60px;
     border: 6px solid #fff;
     box-shadow: 0 0 0 1px #ddd;
     border-radius: $core-border-radius;
-    color: $navbar-color;
+    color: $core-text;
     background-color: $white;
 
     &.moving .g-block .submenu-reorder {
@@ -246,7 +246,7 @@ $submenu-ratio:                 60px;
             line-height: 22px;
             text-align: center;
             z-index: 5;
-            color: $navbar-color;
+            color: $core-text;
             font-family: FontAwesome, sans-serif;
             border-radius: 0 0 $core-border-radius $core-border-radius;
             left: 50%;
@@ -331,12 +331,12 @@ $submenu-ratio:                 60px;
             margin-right: 6px;
         }
         li {
-            color: $navbar-color;
+            color: $core-text;
             cursor: pointer;
             position: relative;
             a {
                 display: block;
-                color: $navbar-color;
+                color: $core-text;
             }
             .menu-item {
                 padding: $content-padding / 2 $content-padding;
@@ -499,7 +499,7 @@ $submenu-ratio:                 60px;
         }
 
         &.selected {
-            box-shadow: 0 0 0 2px $white, 0 0 0 4px $dark-gray;
+            box-shadow: 0 0 0 2px $white, 0 0 0 4px $core-text;
         }
     }
 
@@ -514,7 +514,7 @@ $submenu-ratio:                 60px;
 
     [data-mm-module] {
         text-align: left;
-        color: $dark-gray;
+        color: $core-text;
         background-color: $light-gray;
         padding: $content-padding / 2;
         width: 47%;
@@ -546,7 +546,7 @@ $submenu-ratio:                 60px;
     .sub-title {
         margin: 0;
         display: block;
-        color: lighten($dark-gray, 10%);
+        color: lighten($core-text, 10%);
     }
 }
 

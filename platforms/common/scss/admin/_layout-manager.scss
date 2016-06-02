@@ -562,20 +562,20 @@ $atom: #9055AF;
 
         .spacer {
             background-color: $spacer;
-            color: rgba(#666, 0.8);
+            color: rgba($dark-gray, 0.8);
 
             &.g-inheriting {
                 @include stripes-background($spacer);
             }
 
             .particle-size {
-                color: rgba(#666, 0.8);
+                color: rgba($dark-gray, 0.8);
             }
 
             > span {
                 span {
                     &:last-child {
-                        color: rgba(#666, 0.8);
+                        color: rgba($dark-gray, 0.8);
                     }
                 }
             }
@@ -916,7 +916,7 @@ $atom: #9055AF;
             }
 
             &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-                color: #666;
+                color: $dark-gray;
                 border: 2px solid darken($medium-gray, 5);
 
                 &.original-placeholder {

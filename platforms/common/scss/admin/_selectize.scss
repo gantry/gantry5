@@ -3,7 +3,7 @@ $selectize-font-smoothing: inherit;
 $selectize-font-size: inherit;
 $selectize-line-height: normal;
 
-$selectize-color-text: #666;
+$selectize-color-text: $core-text;
 $selectize-color-border: $medium-gray;
 $selectize-color-highlight: rgba($tertiary-accent, 0.5);
 $selectize-color-input: #fff;
