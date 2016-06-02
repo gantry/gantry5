@@ -13,6 +13,8 @@ var $             = require('elements'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals');
 
+var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
+
 var menumanager = null;
 
 var randomID = function randomString(len, an) {
@@ -228,6 +230,7 @@ var StepTwo = function(data, content, button) {
 
                 modal.close();
                 submit.hideIndicator();
+                WordpressWidgetsCustomizer(field);
             });
         });
     });

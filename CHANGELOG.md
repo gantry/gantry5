@@ -17,6 +17,9 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
 
 # 5.2.18
 ## 27/05/2016

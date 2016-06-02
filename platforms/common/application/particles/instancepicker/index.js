@@ -10,6 +10,7 @@ var $             = require('elements'),
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     getAjaxSuffix = require('../../utils/get-ajax-suffix');
 
+var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
 ready(function() {
     var body = $('body'),
@@ -171,6 +172,8 @@ ready(function() {
 
                             modal.close();
                             submit.hideIndicator();
+
+                            WordpressWidgetsCustomizer(field);
                         });
                     });
 
