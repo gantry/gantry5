@@ -14,7 +14,6 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
-use Gantry\Component\Debug\Debugger;
 use Gantry\Component\System\Messages;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
@@ -189,7 +188,9 @@ abstract class Gantry extends Container
         /** @var Gantry $instance */
         $instance = new static();
 
-        $instance['debugger'] = new Debugger();
+        if (GANTRY_DEBUGGER) {
+            $instance['debugger'] = \Gantry\Debugger::instance();
+        }
 
         $instance['loader'] = \Gantry5\Loader::get();
 

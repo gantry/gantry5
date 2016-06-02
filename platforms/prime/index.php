@@ -4,7 +4,6 @@ use Gantry\Framework\Gantry;
 
 define('PRIME_PROFILER', false);
 
-
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
 define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
@@ -12,14 +11,17 @@ PRIME_PROFILER && profiler_enable();
 
 date_default_timezone_set('UTC');
 
+// Load debugger if it exists.
+$include = PRIME_ROOT . '/debugbar/Debugger.php';
+if (file_exists($include)) {
+    include_once $include;
+}
+
 // Bootstrap Gantry framework.
 include_once PRIME_ROOT . '/src/bootstrap.php';
 
 // Initialize Gantry.
 $gantry = Gantry::instance();
-
-/** @var \Gantry\Component\Debug\Debugger $debugger */
-$debugger = $gantry['debugger'];
 
 // Get current theme and path.
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : Folder::getRelativePath($_SERVER['REQUEST_URI'], PRIME_URI);
@@ -38,11 +40,7 @@ define('PAGE_EXTENSION', trim($extension, '.') ?: 'html');
 // Bootstrap selected theme.
 $include = PRIME_ROOT . "/themes/{$theme}/includes/gantry.php";
 if (is_file($include)) {
-    $debugger->startTimer('theme', 'Load theme');
-
     include $include;
-
-    $debugger->stopTimer('theme');
 }
 
 // Enter to administration if we are in /ROOT/theme/admin. Also display installed themes if no theme has been selected.
@@ -55,7 +53,7 @@ if (!isset($gantry['theme']) || strpos($path, 'admin') === 0) {
 /** @var Gantry\Framework\Theme $theme */
 $theme = $gantry['theme'];
 
-$debugger->startTimer('render', 'Rendering page');
+GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('render', 'Rendering page');
 
 try {
     // Render the page.
