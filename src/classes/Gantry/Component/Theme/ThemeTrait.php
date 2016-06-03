@@ -131,6 +131,8 @@ trait ThemeTrait
 
         // Set configuration if given.
         if ($name && $name != $configuration) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
+
             $gantry['configuration'] = $name;
         }
 

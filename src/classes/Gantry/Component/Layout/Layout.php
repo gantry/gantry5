@@ -250,6 +250,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \LogicException('Cannot save unnamed layout');
         }
 
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Saving layout for outline {$this->name}");
+
         $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
 
         $gantry = Gantry::instance();
@@ -301,6 +303,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if (!$this->name) {
             throw new \LogicException('Cannot save unnamed layout');
         }
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Saving layout index for outline {$this->name}");
 
         $gantry = Gantry::instance();
 
@@ -642,11 +646,19 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $index = null;
         }
 
-        foreach ($this->inherit() as $outlineId => $list) {
+        $inheriting = $this->inherit();
+
+        if (GANTRY_DEBUGGER && $inheriting) {
+            \Gantry\Debugger::addMessage(sprintf("Layout from outline %s inherits %s", $this->name, implode(", ", array_keys($inheriting))));
+        }
+
+        foreach ($inheriting as $outlineId => $list) {
             try {
+
                 $outline = $this->instance($outlineId);
             } catch (\Exception $e) {
                 // Outline must have been deleted.
+                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
                 $outline = null;
             }
             foreach ($list as $id) {

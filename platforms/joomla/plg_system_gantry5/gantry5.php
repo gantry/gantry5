@@ -124,13 +124,13 @@ class plgSystemGantry5 extends JPlugin
      */
     private function onAfterRouteSite()
     {
-        $template = $this->app->getTemplate();
+        $templateName = $this->app->getTemplate();
 
-        if (!file_exists(JPATH_THEMES . "/{$template}/gantry/theme.yaml")) {
+        if (!file_exists(JPATH_THEMES . "/{$templateName}/gantry/theme.yaml")) {
             return;
         }
 
-        $gantryPath = JPATH_THEMES . "/{$template}/includes/gantry.php";
+        $gantryPath = JPATH_THEMES . "/{$templateName}/includes/gantry.php";
 
         if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
@@ -138,7 +138,7 @@ class plgSystemGantry5 extends JPlugin
 
             if (!$gantry) {
                 throw new \RuntimeException(
-                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $template, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
+                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $templateName, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
                     500
                 );
             }
@@ -152,13 +152,15 @@ class plgSystemGantry5 extends JPlugin
             $gantry = Gantry\Framework\Gantry::instance();
 
             // Initialize the template.
-            $gantry['theme.path'] = JPATH_THEMES . "/{$template}";
-            $gantry['theme.name'] = $template;
+            $gantry['theme.path'] = JPATH_THEMES . "/{$templateName}";
+            $gantry['theme.name'] = $templateName;
 
             $themePath = $gantry['theme.path'] . '/includes/theme.php';
 
             include_once $themePath;
         }
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry 5 template {$templateName}");
 
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
