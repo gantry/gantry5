@@ -9,7 +9,7 @@
  */
 defined('_JEXEC') or die;
 
-class plgSystemDebugbar extends JPlugin
+class plgSystemGantry5_Debugbar extends JPlugin
 {
     public function __construct(&$subject, $config = array())
     {

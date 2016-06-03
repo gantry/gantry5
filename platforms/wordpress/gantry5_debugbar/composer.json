@@ -1,7 +1,7 @@
 {
-    "name": "system-gantrydebugger",
-    "description": "Gantry 5 DebugBar for Joomla",
-    "license": "MIT",
+    "name": "wordpress-debugbar",
+    "description": "DebugBar for Gantry WordPress",
+    "license": "GPLv2",
 
     "require": {
         "php": ">=5.4.0",

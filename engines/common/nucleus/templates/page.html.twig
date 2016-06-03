@@ -46,8 +46,6 @@
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
 {%- set page_head %}
-    {% do gantry.debugger.assets() %}
-
     {% block page_head -%}
         {% include 'partials/page_head.html.twig' %}
     {%- endblock %}

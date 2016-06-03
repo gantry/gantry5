@@ -80,8 +80,8 @@
                         "destination":"/plugins/quickicon/gantry5"
                     },
                     {
-                        "source":"/platforms/joomla/plg_system_debugbar",
-                        "destination":"/plugins/system/debugbar"
+                        "source":"/platforms/joomla/plg_system_gantry5_debugbar",
+                        "destination":"/plugins/system/gantry5_debugbar"
                     }
                 ],
                 "modules":[
@@ -122,6 +122,10 @@
                     {
                         "source":"/platforms/common",
                         "destination":"/wp-content/plugins/gantry5/admin/common"
+                    },
+                    {
+                        "source":"/platforms/wordpress/gantry5_debugbar",
+                        "destination":"/wp-content/plugins/gantry5_debugbar"
                     }
                 ],
                 "library":[

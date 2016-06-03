@@ -82,7 +82,7 @@ class Debugger
             self::$renderer = self::$debugbar->getJavascriptRenderer();
             self::$renderer->setIncludeVendors(false);
 
-            self::$renderer->setBaseUrl(\JUri::root(true) . '/plugins/system/debugbar/vendor/maximebf/debugbar/src/DebugBar/Resources');
+            self::$renderer->setBaseUrl(\JUri::root(true) . '/plugins/system/gantry5_debugbar/vendor/maximebf/debugbar/src/DebugBar/Resources');
             list($css_files, $js_files) = self::$renderer->getAssets(null, JavascriptRenderer::RELATIVE_URL);
 
             foreach ($css_files as $css) {
