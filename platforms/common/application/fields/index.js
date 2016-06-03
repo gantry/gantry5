@@ -165,6 +165,10 @@ ready(function() {
         var fields, equals;
         presetsCache.forEach(function(data, element) {
             fields = collectFieldsValues(data.map.keys());
+
+            // Do not consider __js__overrides when comparing for equality
+            fields.unset('__js__overrides');
+
             equals = deepEquals(fields, data.map, function(a, b) { return a == b; });
             $($('[data-g-styles]')[data.index]).parent()[equals ? 'addClass' : 'removeClass']('g-preset-match');
         });

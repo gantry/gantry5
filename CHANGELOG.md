@@ -16,6 +16,7 @@
         - Fixed typos in tooltips and notices (#1318)
         - Fixed issue with Icons Picker Select button no properly re-enabling when only switching dropdown (#1290)
         - Fixed potential JavaScript error on frontend when the Menu particle was disabled
+        - Fixed Preset Match (star) being applied only in Base but not in the rest of the Outlines
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
