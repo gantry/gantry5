@@ -25,7 +25,13 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Container $gantry)
     {
         $gantry['blueprints'] = function($c) {
-            return static::blueprints($c);
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('blueprints', 'Loading blueprints');
+
+            $blueprints = static::blueprints($c);
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('blueprints');
+
+            return $blueprints;
         };
 
         $gantry['config'] = function($c) {
@@ -34,10 +40,16 @@ class ConfigServiceProvider implements ServiceProviderInterface
                 throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
             }
 
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('config', 'Loading configuration');
+
             // Get the current configuration and lock the value from modification.
             $configuration = $c->lock('configuration');
 
-            return static::load($c, $configuration);
+            $config = static::load($c, $configuration);
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::setConfig($config)->stopTimer('config');
+
+            return $config;
         };
     }
 

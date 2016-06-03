@@ -32,6 +32,7 @@ class Document
         switch ($element['tag']) {
             case 'link':
                 if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
+                    $id = !empty($element['id']) ? ['id' => $element['id']] : [];
                     $href = $element['href'];
                     $type = !empty($element['type']) ? $element['type'] : 'text/css';
                     $media = !empty($element['media']) ? $element['media'] : null;
@@ -43,7 +44,7 @@ class Document
                         'type' => $type,
                         'media' => $media,
                         'element' => $element
-                    ];
+                    ] + $id;
 
                     return true;
                 }

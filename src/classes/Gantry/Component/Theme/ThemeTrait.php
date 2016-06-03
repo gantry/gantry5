@@ -20,6 +20,7 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -227,7 +228,11 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
+                GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && \Gantry\Debugger::addMessage("Compiling CSS: {$name}");
+
                 $compiler->compileFile($name);
+
+                GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("css-{$name}");
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);
@@ -341,7 +346,12 @@ trait ThemeTrait
     {
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('segments', "Preparing layout");
+
             $this->prepareLayout($this->segments);
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('segments');
         }
 
         return $this->segments;
@@ -508,11 +518,15 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
+                    GANTRY_DEBUGGER && \Gantry\Debugger::startTimer($item->id, "Rendering {$item->id}");
+
                     $item->content = $this->renderContent($item);
                     // Note that content can also be null (postpone rendering).
                     if ($item->content === '') {
                         unset($items[$i]);
                     }
+
+                    GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer($item->id);
 
                     break;
 

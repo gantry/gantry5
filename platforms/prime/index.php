@@ -4,13 +4,18 @@ use Gantry\Framework\Gantry;
 
 define('PRIME_PROFILER', false);
 
-
 define('PRIME_ROOT', dirname($_SERVER['SCRIPT_FILENAME']));
 define('PRIME_URI', dirname($_SERVER['SCRIPT_NAME']));
 
 PRIME_PROFILER && profiler_enable();
 
 date_default_timezone_set('UTC');
+
+// Load debugger if it exists.
+$include = PRIME_ROOT . '/debugbar/Debugger.php';
+if (file_exists($include)) {
+    include_once $include;
+}
 
 // Bootstrap Gantry framework.
 include_once PRIME_ROOT . '/src/bootstrap.php';

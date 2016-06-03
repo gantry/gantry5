@@ -10,6 +10,7 @@ Thumbs.db
 bin/**/composer.lock
 bin/**/vendor/**
 src/vendor/**
+platforms/*/*debugbar*/vendor
 
 # Symbolic links in admin
 platforms/joomla/com_gantry5/admin/common

@@ -1,0 +1,11 @@
+{
+    "name": "wordpress-debugbar",
+    "description": "DebugBar for Gantry WordPress",
+    "license": "GPLv2",
+
+    "require": {
+        "php": ">=5.4.0",
+        "maximebf/debugbar": "~1.10",
+        "symfony/polyfill-iconv": "~1.0"
+    }
+}

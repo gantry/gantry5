@@ -52,6 +52,8 @@ abstract class RealLoader
             define('DS', DIRECTORY_SEPARATOR);
         }
 
+        define('GANTRY_DEBUGGER', class_exists('Gantry\\Debugger'));
+
         return self::autoload();
     }
 

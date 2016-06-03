@@ -188,6 +188,10 @@ abstract class Gantry extends Container
         /** @var Gantry $instance */
         $instance = new static();
 
+        if (GANTRY_DEBUGGER) {
+            $instance['debugger'] = \Gantry\Debugger::instance();
+        }
+
         $instance['loader'] = \Gantry5\Loader::get();
 
         $instance->register(new ConfigServiceProvider);
