@@ -93,9 +93,11 @@
 
 // Size Adjustment
 .full-width {
-	@include flex(0 100%);
+	@include flex-grow(0);
+	@include flex-basis(100%);
 	.g-block {
-		@include flex(0 100%);
+		@include flex-grow(0);
+		@include flex-basis(100%);
 	}
 }
 
