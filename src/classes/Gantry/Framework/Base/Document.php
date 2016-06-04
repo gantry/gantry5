@@ -309,8 +309,18 @@ class Document
     {
         static::$urlFilterParams = [$domain, $timestamp_age];
 
+        // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
+        $tokens = [];
+        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
+            $token = uniqid('__g5_token');
+            $tokens['#' . $token . '#'] = $matches[0];
+
+            return $token;
+        }, $html);
+
         $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', 'static::linkHandler', $html);
         $html = preg_replace_callback('^(\s)url\((.*?)\)^', 'static::urlHandler', $html);
+        $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
 
         return $html;
     }
