@@ -272,6 +272,7 @@ class Menu extends AbstractMenu
                     'alias' => $menuItem->alias,
                     'path' => $menuItem->route,
                     'link' => $menuItem->link,
+                    'link_title' => $menuItem->params->get('menu-anchor_title', ''),
                     'enabled' => $menuItem->params->get('menu_show', 1),
                 ];
 
@@ -302,7 +303,6 @@ class Menu extends AbstractMenu
                 // And if not available in configuration, default to Joomla.
                 $itemParams += [
                     'title' => $menuItem->title,
-                    'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
                     'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1),

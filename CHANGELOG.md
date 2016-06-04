@@ -24,6 +24,8 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
+    3. [](#bugfix)
+        - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
