@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
+        - **Inheritance**: It is now possible to have individual Sections and Particles to Inherit from a different Outline and to decide what to Inherit specifically (attributes, children, blocks). Once a Section or Particle have been set to Inherit, any change applied to the parent Section / Particle will automatically reflect to the inheriting one (#50, #303, #340, #361, #575, #1018, #1213, #1312)
         - Add support for DebugBar (#386)
         - Update SCSS compiler to support version 3.4 (#1117)
         - Update Bourbon SCSS library to v4.2.7
