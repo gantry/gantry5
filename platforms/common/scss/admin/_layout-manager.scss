@@ -3,7 +3,6 @@ $position: #359AD9;
 $spacer: #eee;
 $system: #20A085;
 $atom: #9055AF;
-$stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
 
 #g5-container {
     // wrapper
@@ -106,6 +105,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             .section:last-child {
                 margin-bottom: 0;
             }
+
+            > .section {
+                position: static !important;
+            }
         }
 
         .section, .atoms-section, .offcanvas-section, .wrapper-section {
@@ -153,6 +156,53 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 .section-actions {
                     opacity: 1;
                     @include transition(opacity 0.2s ease-in);
+                }
+            }
+
+            @mixin inheritance-actions() {
+                position: relative;
+                z-index: 6;
+                i {
+                    color: lighten($core-text, 5%);
+
+                    &:hover {
+                        color: darken($core-text, 10%);
+                    }
+                }
+            }
+
+            &.g-inheriting {
+                h4 {
+                    z-index: 6;
+                    position: relative;
+                }
+
+                .section-actions {
+                    opacity: 1;
+                    .section-settings {
+                        @include inheritance-actions();
+                    }
+                }
+
+                &:not(.g-inheriting-children) .section-addrow {
+                    @include inheritance-actions();
+                }
+
+                &:hover {
+                    .section-actions {
+                        opacity: 1;
+                    }
+                }
+                
+                &.g-inheriting-children > .g-grid {
+                    &:before, &:after {
+                        display: none !important;
+                    }
+                }
+
+
+                &:not(.g-inheriting-children) > .g-grid {
+                    z-index: 2;
                 }
             }
 
@@ -412,6 +462,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             position: relative;
             white-space: nowrap;
 
+
+            &.g-inheriting {
+                @include stripes-background($position);
+            }
+
             &[data-lm-nodrag] {
                 cursor: default;
             }
@@ -499,20 +554,28 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .particle {
             background-color: $particle;
+
+            &.g-inheriting {
+                @include stripes-background($particle);
+            }
         }
 
         .spacer {
             background-color: $spacer;
-            color: rgba(#666, 0.8);
+            color: rgba($dark-gray, 0.8);
+
+            &.g-inheriting {
+                @include stripes-background($spacer);
+            }
 
             .particle-size {
-                color: rgba(#666, 0.8);
+                color: rgba($dark-gray, 0.8);
             }
 
             > span {
                 span {
                     &:last-child {
-                        color: rgba(#666, 0.8);
+                        color: rgba($dark-gray, 0.8);
                     }
                 }
             }
@@ -520,10 +583,18 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .atom {
             background-color: $atom;
+
+            &.g-inheriting {
+                @include stripes-background($atom);
+            }
         }
 
         .system {
             background-color: $system;
+
+            &.g-inheriting {
+                @include stripes-background($system);
+            }
         }
 
         .placeholder {
@@ -564,6 +635,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
+        .particle-disabled, [data-lm-disabled] {
+            @include stripes-background(#ccc, 50px, 45deg);
+        }
+
         .atoms-section .placeholder.in-between {
             margin-bottom: 6px;
         }
@@ -587,11 +662,6 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 margin-left: 15px;
             }
         }
-    }
-
-    .particle-disabled, [data-lm-disabled] {
-        @include background($stripes !important);
-        background-size: 50px 50px !important;
     }
 
     /* history */
@@ -676,7 +746,9 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
         @extend #navbar;
 
-        margin-right: 0 !important;
+        &, i {
+            margin-right: 0 !important;
+        }
 
         ul {
             background-color: $navbar-bg;
@@ -726,6 +798,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 background-color: $light-gray;
                 border-radius: $core-border-radius;
             }
+        }
+
+        .settings-block {
+            position: relative;
         }
     }
 
@@ -840,7 +916,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-                color: #666;
+                color: $dark-gray;
                 border: 2px solid darken($medium-gray, 5);
 
                 &.original-placeholder {
@@ -933,6 +1009,43 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 margin-top: -12px;
             }
         }
+    }
+
+    [data-lm-blocktype] {
+        position: relative;
+    }
+
+    .g-inherit {
+        //@include background($section-stripes !important);
+        @include stripes-background(transparentize(#ccc, 0.4), 'auto' !important);
+        z-index: 5;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+
+        .g-inherit-content {
+            position: absolute;
+            text-align: center;
+            transform: translateX(-50%);
+            top: 0;
+            left: 50%;
+            background-color: $white;
+            padding: 0.5rem;
+            border-radius: 0 0 3px 3px;
+        }
+    }
+
+    [data-lm-blocktype="container"] .section .g-inherit .g-inherit-content {
+        top: auto;
+        bottom: 0;
+        border-radius: 3px 3px 0 0;
+        padding: 8px 16px;
+    }
+
+    .g-inheriting:not(.g-inheriting-children) .g-inherit {
+        z-index: 1;
     }
 
     @include breakpoint(no-mobile) {

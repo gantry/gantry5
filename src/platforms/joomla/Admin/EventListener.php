@@ -60,7 +60,8 @@ class EventListener implements EventSubscriberInterface
     {
         /** @var Layout $layout */
         $layout = $event->layout;
-        if ($layout->name[0] !== '_') {
+
+        if ($layout->name[0] !== '_' && $layout->name !== 'default') {
             $preset = isset($layout->preset['name']) ? $layout->preset['name'] : 'default';
 
             // Update Joomla template style.

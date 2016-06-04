@@ -19,7 +19,10 @@ var prime      = require('prime'),
     isArray    = require('mout/lang/isArray'),
     deepEquals = require('mout/lang/deepEquals'),
     find       = require('mout/collection/find'),
-    isObject   = require('mout/lang/isObject');
+    isObject   = require('mout/lang/isObject'),
+
+    contains   = require('mout/array/contains'),
+    forEach    = require('mout/collection/forEach');
 
 var singles = {
     disable: function() {
@@ -30,8 +33,9 @@ var singles = {
         var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.addClass('no-hover'); }
     },
-    cleanup: function(builder, dropLast) {
-        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+    cleanup: function(builder, dropLast, start) {
+        var emptyGrids = start ? start.search('> .g-grid:empty') : $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
@@ -87,8 +91,31 @@ var LayoutManager = new prime({
         this.init();
     },
 
-    singles: function(mode, builder, dropLast) {
-        singles[mode](builder, dropLast);
+    singles: function(mode, builder, dropLast, start) {
+        singles[mode](builder, dropLast, start);
+    },
+
+    clear: function(parent, options) {
+        var type, child,
+            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+
+        options = options || { save: true, dropLastGrid: false, emptyInherits: false };
+
+        forEach(this.builder.map, function(obj, id) {
+            if (filter.length && !contains(filter, id)) { return; }
+            if (!options.emptyInherits && obj.block.parent('.g-inheriting')) { return; }
+
+            type = obj.getType();
+            child = obj.block.find('> [data-lm-id]');
+            if (child) { child = child.data('lm-blocktype'); }
+            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
+                this.builder.remove(id);
+                obj.block.remove();
+            }
+        }, this);
+
+        this.singles('cleanup', this.builder, options.dropLastGrid, parent);
+        if (options.save) { this.history.push(this.builder.serialize(), this.history.get().preset); }
     },
 
     updatePendingChanges: function() {
@@ -162,7 +189,7 @@ var LayoutManager = new prime({
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
-                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
                 if (siblings) {
                     siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
@@ -385,7 +412,7 @@ var LayoutManager = new prime({
         }
 
         if (this.block.getType() === 'grid') {
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
             if (siblings) {
                 siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
             }

@@ -13,6 +13,8 @@ var $             = require('elements'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals');
 
+var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
+
 var menumanager = null;
 
 var randomID = function randomString(len, an) {
@@ -154,10 +156,11 @@ var StepTwo = function(data, content, button) {
 
             $(fakeDOM[0].elements).forEach(function(input) {
                 input = $(input);
-                var name = input.attribute('name');
-                if (!name || input.disabled()) { return; }
+                var name = input.attribute('name'),
+                    type = input.attribute('type');
+                if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                input = content.find('[name="' + name + '"]');
+                input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
                 var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -227,6 +230,7 @@ var StepTwo = function(data, content, button) {
 
                 modal.close();
                 submit.hideIndicator();
+                WordpressWidgetsCustomizer(field);
             });
         });
     });

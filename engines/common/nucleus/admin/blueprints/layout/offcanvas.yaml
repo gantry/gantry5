@@ -39,3 +39,6 @@ form:
       label: CSS3 Animation
       description: Animates the offcanvas using translate3d. If causes issues due to fixed elements, disable to fallback to left animation
       default: 1
+
+    _inherit:
+      type: gantry.inherit

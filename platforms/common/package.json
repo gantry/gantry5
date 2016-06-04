@@ -10,13 +10,14 @@
     "objectdiff": "^1.1.0",
     "prime": "^0.5.0",
     "prime-util": "^0.5.0",
-    "sifter": "^0.4.5",
+    "sifter": "^0.5.1",
     "slick": "^1.12.2",
     "sortablejs": "gantry/Sortable#master",
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
+    "deep-diff": "^0.3.3",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.0",
     "gulp-rename": "^1.2.2",

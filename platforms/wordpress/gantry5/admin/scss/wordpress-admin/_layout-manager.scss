@@ -5,7 +5,7 @@
 
     .g5-lm-particles-picker {
         .settings-block {
-            input:not(.settings-param-toggle):not([type="checkbox"]) {
+            input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]) {
                 width: 250px;
             }
 

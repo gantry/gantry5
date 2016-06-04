@@ -37,7 +37,7 @@
         border: solid 1px #CCC;
         box-shadow: 0 0 20px rgba(0, 0, 0, .2);
         z-index: 99999;
-        @include box-sizing(content-box);
+        box-sizing: content-box;
         display: none;
     }
 
@@ -161,7 +161,7 @@
         height: 8px;
         border-radius: 8px;
         border: solid 2px white;
-        @include box-sizing(content-box);
+        box-sizing: content-box;
     }
 
     .cp-picker {
@@ -173,13 +173,13 @@
         background: white;
         border: solid 1px black;
         margin-top: -2px;
-        @include box-sizing(content-box);
+        box-sizing: content-box;
         z-index: 2;
     }
 
     /* Tabs */
     .cp-tabs {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         position: absolute;
         bottom: 0;
         color: #777;

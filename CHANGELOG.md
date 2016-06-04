@@ -2,13 +2,30 @@
 ## XX/06/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Add support for DebugBar (#386)
+        - Update SCSS compiler to support version 3.4 (#1117)
+        - Update Bourbon SCSS library to v4.2.7
+        - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
+    2. [](#improved)
+        - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
+        - Do not display `Atoms` in `Particle Defaults`
+        - Display only shared particle settings in `Particle Defaults`
+        - Tweaked text contrast across the Admin UI (#1326)
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
+        - Fixed issue with Icons Picker Select button no properly re-enabling when only switching dropdown (#1290)
+        - Fixed potential JavaScript error on frontend when the Menu particle was disabled
+        - Fixed Preset Match (star) being applied only in Base but not in the rest of the Outlines
         - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #251, #1325)
+        - Fixed `Document::urlFilter` handling URLs inside `<pre>` and `<code>` tags (#1328)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Enable `Layout` tab for `Base Outline`
 3. [WordPress](#wordpress)
-    3. [](#bugfix)
-        - Fixed issue with Widgets not providing a description, causing Gantry to throw an error (thanks @horch004 - #1323)
+    2. [](#improved)
+        - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
 
 # 5.2.18
 ## 27/05/2016

@@ -165,6 +165,9 @@ msgstr "Particle"
 msgid "GANTRY5_PLATFORM_BLOCK"
 msgstr "Block"
 
+msgid "GANTRY5_PLATFORM_INHERITANCE"
+msgstr "Inheritance"
+
 msgid "GANTRY5_PLATFORM_APPLY"
 msgstr "Apply"
 
@@ -593,3 +596,24 @@ msgstr "Save Content Settings"
 
 msgid "GANTRY5_PLATFORM_CREATE_OUTLINE"
 msgstr "Create New Outline"
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE"
+msgstr "You can define default options for Particles from <a %s href=\"%s\">%s</a>."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING"
+msgstr "As of Gantry v5.3.0, the <strong>%s</strong> (previously known as <strong>Settings</strong>) tab in the Gantry admin has been hidden. This was done to cut down on any confusion as it presents an extra level of inheritance that is only needed for advanced usage cases."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER"
+msgstr "If required, you can still enter to this administrative panel by <a %s href=\"%s\">clicking here</a>."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_PREVIEW"
+msgstr "Attention! This is a read-only view of the Particle you selected. Any change made here cannot be saved."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_X"
+msgstr "The following Outlines depend on %s."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_DESC"
+msgstr "By proceeding they will stop inheriting and all the Attributes and Children will be copied over:"
+
+msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC"
+msgstr "Inherit every Section and Children of the selected Outline"

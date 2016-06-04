@@ -287,10 +287,11 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
 
                         if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(input.value()));

@@ -21,6 +21,7 @@ use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Layout\LayoutReader;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Outlines;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -37,7 +38,7 @@ class Layout extends HtmlController
             '/switch'   => 'listSwitches',
             '/switch/*' => 'switchLayout',
             '/preset'   => 'undefined',
-            '/preset/*' => 'preset',
+            '/preset/*' => 'preset'
         ],
         'POST'   => [
             '/'                     => 'save',
@@ -133,11 +134,20 @@ class Layout extends HtmlController
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
         $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
-        $layout = new LayoutObject($configuration, $layout, $preset);
+        $layout = new LayoutObject($outline, $layout, $preset);
+
+        /** @var Outlines $outlines */
+        $outlines = $this->container['configurations'];
+
+        // Update layouts from all inheriting outlines.
+        $elements = $layout->sections() + $layout->particles(false);
+        foreach ($outlines->getInheritingOutlines($outline) as $inheritedId => $inheritedName) {
+            LayoutObject::instance($inheritedId)->updateInheritance($outline, $outline, $elements)->save()->saveIndex();
+        }
 
         // Save layout and its index.
         $layout->save()->saveIndex();
@@ -155,18 +165,21 @@ class Layout extends HtmlController
     {
         if ($type == 'atom') { return ''; }
 
-        $page = $this->params['configuration'];
-        $layout = $this->getLayout($page);
+        $outline = $this->params['configuration'];
+        $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
 
         $item = $layout->find($id);
         $item->type    = $this->request->post['type'] ?: $type;
-        $item->subtype = $this->request->post['subtype'] ?: false;
+        $item->subtype = $this->request->post['subtype'] ?: $type;
         $item->title   = $this->request->post['title'] ?: ucfirst($type);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
+        }
+        if (!isset($item->inherit)) {
+            $item->inherit = new \stdClass;
         }
 
         $block = $this->request->post->getArray('block');
@@ -174,14 +187,14 @@ class Layout extends HtmlController
             $item->block = (object) $block;
         }
 
-        $name = isset($item->subtype) && $item->subtype ? $item->subtype : $type;
-
         $attributes = $this->request->post->getArray('options');
+        $inherit = $this->request->post->getArray('inherit');
 
-        if (in_array($type, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+        $particle = !$layout->isLayoutType($type);
+        if (!$particle) {
             $name = $type;
-            $particle = false;
-            $hasBlock = $type == 'section' && !empty($block);
+            $section = ($type == 'section');
+            $hasBlock = $section && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes + $defaults;
@@ -189,35 +202,95 @@ class Layout extends HtmlController
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
         } else {
-            $particle = true;
+            $name = $item->subtype;
             $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
             $attributes += $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+            $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
 
         if ($hasBlock) {
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-            $extra = new BlueprintsForm($file->content());
+            $blockBlueprints = new BlueprintsForm($file->content());
             $file->free();
+        } else {
+            $blockBlueprints = null;
+        }
+
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
+        if ($file->exists()) {
+            $inheritType = $particle ? 'particle' : 'section';
+
+            /** @var Outlines $outlines */
+            $outlines = $this->container['configurations'];
+
+            if ($outline !== 'default') {
+                $funcName = 'getOutlinesWith' . ucfirst($inheritType);
+                $list = (array)$outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
+                unset($list[$outline]);
+            } else {
+                $list = [];
+            }
+
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, $id)) && $list)) {
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+                $inheritance->set('form.fields.outline.filter', array_keys($list));
+                if (!$hasBlock) {
+                    $inheritance->undef('form.fields.include.options.block');
+                }
+
+                if ($particle) {
+                    $inheritance->set('form.fields.particle.particle', $name);
+                }
+
+            } elseif (!empty($inheriting)) {
+                // Already inherited by other outlines.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+                $inheritance->set(
+                    'form.fields._note.content',
+                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li>, <li>', $inheriting) . '</li></ul>')
+                );
+
+            } elseif ($outline === 'default') {
+                // Base outline.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+            } else {
+                // Nothing to inherit from.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+            }
         }
 
         // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) $attributes;
+        $item->inherit = (object) $inherit;
 
         $this->params['id'] = $name;
         $this->params += [
-            'extra'         => isset($extra) ? $extra : null,
+            'extra'         => $blockBlueprints,
+            'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
+            'inheritance'   => isset($inheritance) ? $inheritance : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],
             'prefix'        => "particles.{$name}.",
             'particle'      => $blueprints,
             'parent'        => 'settings',
-            'route'         => "configurations.{$page}.settings",
-            'action'        => str_replace('.', '/', 'configurations.' . $page . '.layout.' . $prefix . '.validate'),
-            'skip'          => ['enabled']
+            'route'         => "configurations.{$outline}.settings",
+            'action'        => str_replace('.', '/', 'configurations.' . $outline . '.layout.' . $prefix . '.validate'),
+            'skip'          => ['enabled'],
+            'editable'      => $particle,
+            'overrideable'  => $particle,
         ];
 
         if ($particle) {
@@ -255,6 +328,10 @@ class Layout extends HtmlController
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
+        if (!$input && $this->request->post['inherit'] === '1') {
+            $layout->inheritAll();
+        }
+
         $message = $deleted
             ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
@@ -265,7 +342,7 @@ class Layout extends HtmlController
             'data' => $layout->prepareWidths()->toJson(),
             'deleted' => $deleted,
             'message' => $message
-    ]   );
+        ]);
     }
 
     public function preset($id)
@@ -363,6 +440,23 @@ class Layout extends HtmlController
             }
 
             $data->join('block', $block);
+        }
+
+        $inherit = $this->request->post->getArray('inherit');
+        $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
+        if (!empty($inherit['outline']) && count($inherit['include'])) {
+            // Clean up inherit and add it to the data.
+            if (!$block) {
+                $inherit['include'] = array_values(array_diff($inherit['include'], ['block']));
+            }
+            $data->join('inherit', $inherit);
+        }
+
+        // Optionally send children of the object.
+        if (in_array('children', $inherit['include'])) {
+            $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['configuration']);
+            $item = $layout->inheritAll()->find($inherit['section']);
+            $data->join('children', $item->children);
         }
 
         // TODO: validate

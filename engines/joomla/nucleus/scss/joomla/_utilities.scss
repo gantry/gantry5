@@ -236,5 +236,5 @@ th .tooltip-inner {
 // Third Party Resets
 // RokSprocket
 .sprocket-strips.loading .sprocket-strips-overlay {
-    @include box-sizing(content-box);
+    box-sizing: content-box;
 }

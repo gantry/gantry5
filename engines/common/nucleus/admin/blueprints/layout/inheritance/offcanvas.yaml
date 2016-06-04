@@ -1,0 +1,23 @@
+name: Inheritance
+description: Offcanvas inheritance tab
+type: offcanvas.inheritance
+
+form:
+  fields:
+    outline:
+      type: gantry.outlines
+      label: Outline
+      description: Outline to inherit from.
+      selectize:
+        allowEmptyOption: true
+      options:
+        '': No Inheritance
+
+    include:
+      type: input.multicheckbox
+      label: Include
+      description: What portions of the Outline to inherit
+      options:
+        attributes: Offcanvas Attributes
+        block: Offcanvas Block
+        children: Offcanvas Children

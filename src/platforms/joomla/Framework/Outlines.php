@@ -177,6 +177,11 @@ class Outlines extends BaseOutlines
         }
 
         try {
+            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+                $layout = $this->layout($outline);
+                $layout->updateInheritance($id)->save()->saveIndex();
+            }
+
             if (!$model->delete($id)) {
                 $error = $model->getError();
                 // Well, Joomla can always send enqueue message instead!

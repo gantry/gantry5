@@ -1,3 +1,5 @@
+{% do gantry.debugger.assets() %}
+
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
         <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>

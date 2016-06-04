@@ -1,7 +1,9 @@
 <div class="card settings-block">
     <h4 id="g-modal-labelledby">{{ ('GANTRY5_PLATFORM_DELETE_' ~ page_type)|trans }}</h4>
     <div class="inner-params" id="g-modal-describedby">
+        {% block message %}
         {{ ('GANTRY5_PLATFORM_DELETE_' ~ page_type ~ '_DESC')|trans }}
+        {% endblock %}
     </div>
 </div>
 

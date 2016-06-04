@@ -23,9 +23,8 @@
         {% set can_remove = field.deletion is defined ? field.deletion : true %}
         {% set can_addnew = field.add_new is defined ? field.add_new : true %}
         <div class="settings-param {{ field.type|replace('.', '-')|e }}">
-            {% if overrideable and (field.overridable is not defined or field.overridable == true) and field.type != 'container.set' %}
-                <input type="checkbox" class="settings-param-toggle" id="of-{{ (scope ~ name)|e }}"{{ value != default_value ? ' checked="checked"' }} />
-                <label class="settings-param-override" for="of-{{ (scope ~ name)|e }}"></label>
+            {% if overrideable and (field.overridable is not defined or field.overridable == true or has_value) and field.type != 'container.set' %}
+                {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
             {% endif %}
             {% block contents %}
                 {% set field_route = (route ~ '.' ~ prefix ~ '.' ~ field.name)|replace('.', '/') %}

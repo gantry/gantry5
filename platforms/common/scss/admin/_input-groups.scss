@@ -41,6 +41,7 @@
         text-align: center;
         background-color: #f6f6f6;
         border: 1px solid $medium-gray;
+        border-left: 0;
         border-radius: $core-border-radius;
     }
 
@@ -95,6 +96,29 @@
         }
         .button {
             border-right: 0;
+        }
+    }
+
+    .input-multicheckbox .input-group, #g-inherit-particle .input-group {
+        width: 100%;
+        input, span {
+            vertical-align: middle;
+        }
+
+        span {
+            line-height: 1.5rem;
+            margin-left: 5px;
+        }
+    }
+
+    #g-inherit-particle {
+        label {
+            .fa {
+                color: $medium-gray;
+                &:hover {
+                    color: $dark-gray;
+                }
+            }
         }
     }
 

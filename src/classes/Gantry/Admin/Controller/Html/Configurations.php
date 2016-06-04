@@ -27,19 +27,22 @@ class Configurations extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'   => 'index',
-            '/**' => 'forward',
+            '/'                 => 'index',
+            '/*'                => 'forward',
+            '/*/delete'         => 'confirmDeletion',
+            '/*/**'             => 'forward',
         ],
         'POST' => [
-            '/'                => 'undefined',
-            '/*'               => 'undefined',
-            '/create'          => 'createForm',
-            '/create/new'      => 'create',
-            '/*/rename'        => 'rename',
-            '/*/duplicate'     => 'duplicateForm',
-            '/*/duplicate/new' => 'duplicate',
-            '/*/delete'        => 'delete',
-            '/*/**'            => 'forward',
+            '/'                 => 'undefined',
+            '/*'                => 'undefined',
+            '/create'           => 'createForm',
+            '/create/new'       => 'create',
+            '/*/rename'         => 'rename',
+            '/*/duplicate'      => 'duplicateForm',
+            '/*/duplicate/new'  => 'duplicate',
+            '/*/delete'         => 'undefined',
+            '/*/delete/confirm' => 'delete',
+            '/*/**'             => 'forward',
         ],
         'PUT'    => [
             '/'   => 'undefined',
@@ -211,6 +214,23 @@ class Configurations extends HtmlController
         $configurations->delete($configuration);
 
         return new JsonResponse(['html' => 'Outline deleted.', 'outline' => $configuration]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function confirmDeletion($id)
+    {
+        $params = [
+            'id' => $id,
+            'page_type' => 'OUTLINE',
+            'outline' => $this->container['configurations']->title($id),
+            'inherited' => $this->container['configurations']->getInheritingOutlines($id)
+        ];
+
+        return new JsonResponse(
+            ['html' => $this->container['admin.theme']->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params)]
+        );
     }
 
     public function forward()

@@ -60,7 +60,7 @@ $close-color:               #000;
         border: 1px solid $popover-border-color;
         border-radius: $border-radius-large;
         box-shadow: 0 2px 6px rgba(0,0,0,.15);
-        color: #444;
+        color: $core-text;
         outline: transparent;
 
         &.top,&.top-left,&.top-right     { margin-top: -$popover-arrow-width; }

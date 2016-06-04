@@ -78,6 +78,10 @@
                     {
                         "source":"/platforms/joomla/plg_quickicon_gantry5",
                         "destination":"/plugins/quickicon/gantry5"
+                    },
+                    {
+                        "source":"/platforms/joomla/plg_system_gantry5_debugbar",
+                        "destination":"/plugins/system/gantry5_debugbar"
                     }
                 ],
                 "modules":[
@@ -118,6 +122,10 @@
                     {
                         "source":"/platforms/common",
                         "destination":"/wp-content/plugins/gantry5/admin/common"
+                    },
+                    {
+                        "source":"/platforms/wordpress/gantry5_debugbar",
+                        "destination":"/wp-content/plugins/gantry5_debugbar"
                     }
                 ],
                 "library":[
@@ -198,6 +206,12 @@
         },
         "prime":{
             "nodes":{
+                "debugbar":[
+                    {
+                        "source":"/platforms/prime/debugbar",
+                        "destination":"/debugbar"
+                    }
+                ],
                 "admin":[
                     {
                         "source":"/platforms/prime/admin",

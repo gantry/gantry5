@@ -1,0 +1,29 @@
+name: Inheritance
+description: Posotion inheritance tab
+type: position.inheritance
+
+form:
+  fields:
+    outline:
+      type: gantry.outlines
+      label: Outline
+      description: Outline to inherit from.
+      selectize:
+        allowEmptyOption: true
+      options:
+        '': No Inheritance
+
+    particle:
+      type: gantry.particles
+      id: g-inherit-particle
+      outline_field: outline
+      label: Position Instance
+      description: Position to inherit from
+
+    include:
+      type: input.multicheckbox
+      label: Include
+      description: What portions of the Outline to inherit
+      options:
+        attributes: Position Attributes
+        block: Position Block

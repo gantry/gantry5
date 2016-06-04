@@ -55,6 +55,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
             new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
+            new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
         ];
     }
 
@@ -179,6 +180,17 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Casts input to array.
+     *
+     * @param array $input
+     * @return array
+     */
+    public function arrayFilter($input)
+    {
+        return (array) $input;
     }
 
     /**

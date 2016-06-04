@@ -10,6 +10,7 @@ var $             = require('elements'),
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     getAjaxSuffix = require('../../utils/get-ajax-suffix');
 
+var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
 ready(function() {
     var body = $('body'),
@@ -127,10 +128,11 @@ ready(function() {
 
                         $(fakeDOM[0].elements).forEach(function(input) {
                             input = $(input);
-                            var name = input.attribute('name');
-                            if (!name || input.disabled()) { return; }
+                            var name = input.attribute('name'),
+                                type = input.attribute('type');
+                            if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                            input = content.find('[name="' + name + '"]');
+                            input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -170,6 +172,8 @@ ready(function() {
 
                             modal.close();
                             submit.hideIndicator();
+
+                            WordpressWidgetsCustomizer(field);
                         });
                     });
 

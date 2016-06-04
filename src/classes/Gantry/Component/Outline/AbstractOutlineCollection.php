@@ -35,6 +35,11 @@ abstract class AbstractOutlineCollection extends Collection
      */
     abstract public function load($path = 'gantry-config://');
 
+    public function name($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : null;
+    }
+
     public function all()
     {
         return $this;
@@ -56,6 +61,19 @@ abstract class AbstractOutlineCollection extends Collection
         foreach ($this->items as $key => $item) {
             if (substr($key, 0, 1) === '_' || $key == 'default') {
                 unset($this->items[$key]);
+            }
+        }
+
+        return $this;
+    }
+
+    public function filter(array $include = null)
+    {
+        if ($include !== null) {
+            foreach ($this->items as $key => $item) {
+                if (!in_array($key, $include)) {
+                    unset($this->items[$key]);
+                }
             }
         }
 

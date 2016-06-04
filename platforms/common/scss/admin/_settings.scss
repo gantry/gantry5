@@ -147,6 +147,10 @@
     .settings-param-title {
         max-width: 175px;
         margin: 5px;
+
+        .particle-label-subtype {
+            margin-left: 0;
+        }
     }
 
 
@@ -156,7 +160,7 @@
 
     .fa {
         width: 1rem;
-        height: 1rem;
+        vertical-align: middle;
         text-align: center;
     }
 
@@ -172,7 +176,7 @@
         height: auto;
         max-width: 100%;
         font-size: $core-font-size;
-        line-height: $core-line-height;
+        line-height: $core-line-height + 0.1;
         border-radius: $core-border-radius;
         vertical-align: middle;
 
@@ -195,7 +199,7 @@
         height: 38px;
     }
 
-    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
+    input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
@@ -210,7 +214,7 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 210px;
+                width: 210px !important;
                 @include breakpoint(tablet-range) {
                     width: 100% !important;
                 }

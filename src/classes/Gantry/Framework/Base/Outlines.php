@@ -37,11 +37,6 @@ class Outlines extends AbstractOutlineCollection
     {
         $this->path = $path;
 
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
         $iterator = $this->getFilesystemIterator($path);
 
         $files = [];
@@ -75,6 +70,163 @@ class Outlines extends AbstractOutlineCollection
             $index = Layout::index($name);
 
             $list += $index['positions'];
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $id
+     * @return string
+     */
+    public function title($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : $id;
+    }
+
+    /**
+     * @param string $section
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlinesWithSection($section, $includeInherited = true)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+            if (isset($index['sections'][$section])) {
+                if (!$includeInherited) {
+                    foreach ($index['inherit'] as $outline => $items) {
+                        if (is_array($items) && in_array($section, $items)) {
+                            continue 2;
+                        }
+                    }
+                }
+                $list[$name] = $title;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $particle
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlinesWithParticle($particle, $includeInherited = true)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+            if (isset($index['particles'][$particle])) {
+                $ids = $index['particles'][$particle];
+                if (!$includeInherited && !empty($index['inherit'])) {
+                    foreach ($index['inherit'] as $items) {
+                        foreach ((array) $items as $id) {
+                            unset($ids[$id]);
+                        }
+                    }
+                }
+                if ($ids) {
+                    $list[$name] = $title;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $particle
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getAllParticleInstances($particle, $includeInherited = true)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $list += $this->getParticleInstances($name, $particle, $includeInherited);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $outline
+     * @param string $particle
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getParticleInstances($outline, $particle, $includeInherited = true)
+    {
+        $list = [];
+        $index = Layout::index($outline);
+        if (isset($index['particles'][$particle])) {
+            $list = $index['particles'][$particle];
+            if (!$includeInherited && !empty($index['inherit'])) {
+                foreach ($index['inherit'] as $items) {
+                    foreach ((array) $items as $id) {
+                        unset($list[$id]);
+                    }
+                }
+            }
+        }
+
+        $layout = Layout::instance($outline);
+
+        foreach ($list as $id => $title) {
+            $item = clone $layout->find($id);
+            $block = $layout->block($id);
+            $item->block = $block ? $block->attributes : new \stdClass();
+            $list[$id] = $item;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return list of outlines which are inheriting the specified outline.
+     *
+     * You can additionally pass particle id to filter the results for only that particle.
+     *
+     * @param string $outline
+     * @param string $particle
+     * @return array
+     */
+    public function getInheritingOutlines($outline, $particle = null)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $index = Layout::index($name);
+
+            if (!empty($index['inherit'][$outline]) && (!$particle || isset($index['inherit'][$outline][$particle]))) {
+                $list[$name] = $title;
+            }
+        }
+
+        return $list;
+
+    }
+
+    /**
+     * Return list of outlines inherited by the specified outline.
+     *
+     * You can additionally pass particle id to filter the results for only that particle.
+     *
+     * @param string $outline
+     * @param string $particle
+     * @return array
+     */
+    public function getInheritedOutlines($outline, $particle = null)
+    {
+        $index = Layout::index($outline);
+
+        $list = [];
+        foreach ($index['inherit'] as $name => $inherited) {
+            if (!$particle || in_array($particle, $inherited)) {
+                $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
+            }
         }
 
         return $list;
@@ -216,9 +368,15 @@ class Outlines extends AbstractOutlineCollection
         }
 
         try {
+            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+                $layout = $this->layout($outline);
+                $layout->updateInheritance($id, $folder)->save()->saveIndex();
+            }
+
             Folder::move($path, $newPath);
+
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Renaming Outline failed: ', $e->getMessage()), 500, $e);
+            throw new \RuntimeException(sprintf('Renaming Outline failed: %s', $e->getMessage()), 500, $e);
         }
 
         $this->items[$id] = $title;
@@ -243,6 +401,11 @@ class Outlines extends AbstractOutlineCollection
         $path = $locator->findResource("{$this->path}/{$id}", true, true);
         if (!is_dir($path)) {
             throw new \RuntimeException('Outline not found', 404);
+        }
+
+        foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+            $layout = $this->layout($outline);
+            $layout->updateInheritance($id)->save()->saveIndex();
         }
 
         if (file_exists($path)) {

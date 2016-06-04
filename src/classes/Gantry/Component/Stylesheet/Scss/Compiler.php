@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
+use Leafo\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Compiler extends BaseCompiler
@@ -24,10 +25,13 @@ class Compiler extends BaseCompiler
     protected $basePath;
     protected $fonts;
     protected $usedFonts;
-    protected $parsedFiles;
+    protected $streamNames;
+    protected $parsedFiles = [];
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->registerFunction('get-font-url', [$this, 'userGetFontUrl']);
         $this->registerFunction('get-font-family', [$this, 'userGetFontFamily']);
         $this->registerFunction('get-local-fonts', [$this, 'userGetLocalFonts']);
@@ -38,12 +42,6 @@ class Compiler extends BaseCompiler
     public function setBasePath($basePath)
     {
         $this->basePath = '/' . Folder::getRelativePath($basePath);
-    }
-
-    public function getParsedFiles()
-    {
-        // parsedFiles is a private variable in base class, so we need to override function to see it.
-        return $this->parsedFiles;
     }
 
     public function setFonts(array $fonts)
@@ -67,11 +65,11 @@ class Compiler extends BaseCompiler
      *
      * @param string    $name
      * @param boolean   $shouldThrow
-     * @param \stdClass $env
+     * @param BaseCompiler\Environment $env
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, $env = null)
+    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null)
     {
         try {
             return parent::get($name, $shouldThrow, $env);
@@ -81,7 +79,12 @@ class Compiler extends BaseCompiler
         }
     }
 
-    public function libUrl(array $args, Compiler $compiler)
+    /**
+     * @param array $args
+     * @return string
+     * @throws \Leafo\ScssPhp\Exception\CompilerException
+     */
+    public function libUrl(array $args)
     {
         // Function has a single parameter.
         $parsed = reset($args);
@@ -111,10 +114,9 @@ class Compiler extends BaseCompiler
      * get-font-url($my-font-variable);
      *
      * @param array $args
-     * @param Compiler $compiler
      * @return string
      */
-    public function userGetFontUrl($args, Compiler $compiler)
+    public function userGetFontUrl($args)
     {
         $value = trim($this->compileValue(reset($args)), '\'"');
 
@@ -137,10 +139,9 @@ class Compiler extends BaseCompiler
      * font-family: get-font-family($my-font-variable);
      *
      * @param array $args
-     * @param Compiler $compiler
      * @return string
      */
-    public function userGetFontFamily($args, Compiler $compiler)
+    public function userGetFontFamily($args)
     {
         $value = trim($this->compileValue(reset($args)), '\'"');
 
@@ -151,10 +152,9 @@ class Compiler extends BaseCompiler
      * get-local-fonts($my-font-variable, $my-font-variable2, ...);
      *
      * @param array $args
-     * @param Compiler $compiler
      * @return string
      */
-    public function userGetLocalFonts($args, Compiler $compiler)
+    public function userGetLocalFonts($args)
     {
         $args = $this->compileArgs($args);
 
@@ -179,10 +179,9 @@ class Compiler extends BaseCompiler
      * get-local-font-weights(roboto);
      *
      * @param array $args
-     * @param Compiler $compiler
      * @return string
      */
-    public function userGetLocalFontWeights($args, Compiler $compiler)
+    public function userGetLocalFontWeights($args)
     {
         $name = trim($this->compileValue(reset($args)), '\'"');
 
@@ -191,7 +190,7 @@ class Compiler extends BaseCompiler
         // Create a list of numbers so that SCSS parser can parse the list.
         $list = [];
         foreach ($weights as $weight) {
-            $list[] = ['number', $weight, ''];
+            $list[] = ['string', '', [(int) $weight]];
         }
 
         return ['list', ',', $list];
@@ -201,10 +200,9 @@ class Compiler extends BaseCompiler
      * get-local-font-url(roboto, 400);
      *
      * @param array $args
-     * @param Compiler $compiler
      * @return string
      */
-    public function userGetLocalFontUrl($args, Compiler $compiler)
+    public function userGetLocalFontUrl($args)
     {
         $args = $this->compileArgs($args);
 
@@ -297,43 +295,99 @@ class Compiler extends BaseCompiler
     }
 
     /**
+     * Instantiate parser
+     *
+     * @param string $path
+     *
+     * @return \Leafo\ScssPhp\Parser
+     */
+    protected function parserFactory($path)
+    {
+        $parser = new Parser($path, count($this->sourceNames), $this->encoding);
+
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+
+        $this->sourceNames[] = $locator->isStream($path) ? $locator->findResource($path, false) : $path;
+        $this->streamNames[] = $path;
+        $this->addParsedFile($path);
+        return $parser;
+    }
+
+    /**
+     * Adds to list of parsed files
+     *
+     * @api
+     *
+     * @param string $path
+     */
+    public function addParsedFile($path)
+    {
+        if ($path && file_exists($path)) {
+            $this->parsedFiles[$path] = filemtime($path);
+        }
+    }
+
+    /**
+     * Returns list of parsed files
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getParsedFiles()
+    {
+        return $this->parsedFiles;
+    }
+
+    /**
+     * Handle import loop
+     *
+     * @param string $name
+     *
+     * @throws \Exception
+     */
+    protected function handleImportLoop($name)
+    {
+        for ($env = $this->env; $env; $env = $env->parent) {
+            $file = $this->streamNames[$env->block->sourceIndex];
+
+            if (realpath($file) === $name) {
+                $this->throwError('An @import loop has been found: %s imports %s', $file, basename($file));
+                break;
+            }
+        }
+    }
+
+    /**
      * Override function to improve the logic.
      *
-     * @param $path
-     * @param $out
+     * @param string $path
+     * @param array  $out
      */
     protected function importFile($path, $out)
     {
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+
         // see if tree is cached
-        if (!isset($this->importCache[$path])) {
-            $gantry = Gantry::instance();
+        $realPath = $locator($path);
 
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
+        if (isset($this->importCache[$realPath])) {
+            $this->handleImportLoop($realPath);
 
-            $filename = $locator($path);
+            $tree = $this->importCache[$realPath];
+        } else {
+            $code   = file_get_contents($realPath);
+            $parser = $this->parserFactory($path);
+            $tree   = $parser->parse($code);
 
-            $file = ScssFile::instance($filename);
-            $this->importCache[$path] = $file->content();
-            $file->free();
+            $this->importCache[$realPath] = $tree;
         }
-
-        if (!isset($this->parsedFiles[$path])) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            $filename = $locator($path);
-
-            $this->parsedFiles[$path] = filemtime($filename);
-        }
-
-        $tree = $this->importCache[$path];
 
         $dirname = dirname($path);
         array_unshift($this->importPaths, $dirname);
-        $this->compileChildren($tree->children, $out);
+        $this->compileChildrenNoReturn($tree->children, $out);
         array_shift($this->importPaths);
     }
 }

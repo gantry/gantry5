@@ -48,9 +48,10 @@ var Menu = new prime({
         this.active = null;
         this.location = [];
 
-        var mainContainer = $(this.selectors.mainContainer),
-            gHoverExpand  = mainContainer.data('g-hover-expand');
+        var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
+
+        var gHoverExpand  = mainContainer.data('g-hover-expand');
 
         this.hoverExpand = gHoverExpand === null || gHoverExpand === 'true';
         if (hasTouchEvents || !this.hoverExpand) {

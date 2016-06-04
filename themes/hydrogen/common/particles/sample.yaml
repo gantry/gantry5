@@ -15,28 +15,33 @@ form:
       type: input.imagepicker
       label: Image
       description: Select the main image.
+      overridable: false
 
     headline:
       type: input.text
       label: Headline
       description: Customize the headline text.
       placeholder: Enter headline
+      overridable: false
 
     description:
       type: textarea.textarea
       label: Description
       description: Customize the description.
       placeholder: Enter short description
+      overridable: false
 
     link:
       type: input.text
       label: Link
       description: Specify the link address.
+      overridable: false
 
     linktext:
       type: input.text
       label: Link Text
       description: Customize the link text.
+      overridable: false
 
     samples:
       type: collection.list
@@ -45,6 +50,7 @@ form:
       description: Create each item to appear in the content row.
       value: title
       ajax: true
+      overridable: false
 
       fields:
         .icon:

@@ -51,6 +51,7 @@
                     aria-label="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"
                     data-g-config="delete"
                     data-g-config-href="{{ gantry.route('configurations', name, 'delete') }}"
+                    data-g-config-href-confirm="{{ gantry.route('configurations', name, 'delete/confirm') }}"
                     data-g-config-method="POST" class="button red"
             >
                 <i class="fa fa-fw fa-trash-o"></i>

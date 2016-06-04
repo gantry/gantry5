@@ -118,7 +118,7 @@ class Format2
                 'type' => $type,
                 'subtype' => $subtype,
                 'title' => $this->getTitle($type, $subtype, $id),
-                'attributes' => [],
+                'attributes' => []
             ];
             if (isset($boxed) && !isset($result['attributes']['boxed'])) {
                 $result['attributes']['boxed'] = $boxed;
@@ -130,6 +130,9 @@ class Format2
 
             $result = (object) $result;
             $result->attributes = (object) $result->attributes;
+            if (isset($result->inherit)) {
+                $result->inherit = (object) $result->inherit;
+            }
 
             if ($size) {
                 $result->size = $size;
@@ -177,6 +180,9 @@ class Format2
         $result += ['id' => $this->id($type, $subtype, $id), 'title' => $title, 'type' => $type, 'subtype' => $subtype, 'attributes' => []];
 
         $result['attributes'] = (object) ($result['attributes'] + ['enabled' => 1]);
+        if (isset($result['inherit'])) {
+            $result['inherit'] = (object) $result['inherit'];
+        }
 
         if (isset($result['block'])) {
             $block = $result['block'];
@@ -235,6 +241,10 @@ class Format2
             }
         }
 
+        if (!isset($content['children'])) {
+            $content['children'] = [];
+        }
+
         // Clean up all items for saving.
         foreach ($content['children'] as &$child) {
             $size = null;
@@ -243,14 +253,37 @@ class Format2
             $subtype = $child['subtype'];
             $isSection = in_array($type, $this->sections);
 
+            if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
+                unset ($child['inherit']);
+            } else {
+                foreach ($child['inherit']['include'] as $include) {
+                    switch ($include) {
+                        case 'attributes':
+                            unset($child['attributes']);
+                            break;
+                        case 'block':
+                            if ($ctype === 'block') {
+                                // Keep block size and fixed status.
+                                $content['attributes'] = array_intersect_key($content['attributes'], ['fixed' => 1, 'size' => 1]);
+                            }
+                            break;
+                        case 'children':
+                            $child['children'] = [];
+                            break;
+                    }
+                }
+            }
+
             if (!$isSection) {
                 // Special handling for positions.
                 if ($type === 'position') {
+                    // TODO: we may want to simplify position id, but we need to take into account multiple instances of the same position key.
+/*
                     if (!$subtype || $subtype === 'position') {
-                        // TODO: we may want to simplify position id, but we need to take into account multiple instances of the same position key.
-                        //$id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
-                        //unset ($child['attributes']['key']);
+                        $id = 'position-' . (isset($child['attributes']['key']) ? $child['attributes']['key'] : rand(1000,9999));
+                        unset ($child['attributes']['key']);
                     }
+*/
                     unset ($child['attributes']['title']);
                 }
 
@@ -264,7 +297,7 @@ class Format2
             }
 
             // Clean up defaults.
-            if (!$child['title'] || $child['title'] === 'Untitled' || $child['title'] === $this->getTitle($type, $subtype, $id)) {
+            if (empty($child['title']) || $child['title'] === 'Untitled' || $child['title'] === $this->getTitle($type, $subtype, $id)) {
                 unset ($child['title']);
             }
             if (!$subtype || $subtype === $type) {
