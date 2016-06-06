@@ -78,11 +78,12 @@ trait CompiledFile
             $cache = $file->exists() ? $file->content() : null;
 
             // Load real file if cache isn't up to date (or is invalid).
-            if (
+            if ($cache && (
                 !isset($cache['@class'])
                 || $cache['@class'] != $class
                 || $cache['modified'] != $modified
                 || $cache['filename'] != $this->filename
+                )
             ) {
                 // Attempt to lock the file for writing.
                 try {
