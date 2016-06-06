@@ -12,7 +12,10 @@
 
     <files>
         <filename plugin="gantry5_debugbar">gantry5_debugbar.php</filename>
-        <filename>MD5SUMS</filename>
+        <!--filename>MD5SUMS</filename-->
+        <filename>composer.json</filename>
+        <filename>composer.lock</filename>
+        <filename>Debugger.php</filename>
         <folder>language</folder>
         <folder>vendor</folder>
     </files>
