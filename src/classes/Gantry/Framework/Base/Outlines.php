@@ -289,7 +289,7 @@ class Outlines extends AbstractOutlineCollection
 
         // Create index file for the new layout.
         $layout = new Layout($name, $preset);
-        $layout->saveIndex();
+        $layout->save()->saveIndex();
 
         $this->items[$name] = $title;
 

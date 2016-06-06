@@ -21,7 +21,6 @@
         - Fixed Preset Match (star) being applied only in Base but not in the rest of the Outlines
         - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #251, #1325)
         - Fixed `Document::urlFilter` handling URLs inside `<pre>` and `<code>` tags (#1328)
-        - Fixed caching content of non-existent YAML files before they get saved (#1334)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
