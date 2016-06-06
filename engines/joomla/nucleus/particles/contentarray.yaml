@@ -15,6 +15,7 @@ form:
       type: joomla.categories
       label: Categories
       description: Select the categories the articles should be taken from.
+      overridable: false
 
     article.filter.featured:
       type: select.select
@@ -25,6 +26,7 @@ form:
         include: Include Featured
         exclude: Exclude Featured
         only: Only Featured
+      overridable: false
 
     article.limit.total:
       type: input.text
@@ -32,6 +34,7 @@ form:
       description: Enter the maximum number of articles to display.
       default: 2
       pattern: '\d{1,2}'
+      overridable: false
 
     article.limit.columns:
       type: select.select
@@ -45,6 +48,7 @@ form:
         4: 4
         5: 5
         6: 6
+      overridable: false
 
     article.limit.start:
       type: input.text
@@ -52,6 +56,7 @@ form:
       description: Enter offset specifying the first article to return. The default is '0' (the first article).
       default: 0
       pattern: '\d{1,2}'
+      overridable: false
 
     article.sort.orderby:
       type: select.select
@@ -67,6 +72,7 @@ form:
         hits: Hits
         id: ID
         alias: Alias
+      overridable: false
 
     article.sort.ordering:
       type: select.select
@@ -76,15 +82,17 @@ form:
       options:
         ASC: Ascending
         DESC: Descending
+      overridable: false
 
     article.display.image.enabled:
       type: select.select
       label: Image
-      description: Select if the image of the article should be shown.
-      default: show
+      description: Select if and what image of the article should be shown.
+      default: intro
       options:
-        show: Show
-        '': Hide
+        intro: Intro
+        full: Full
+        '': None
 
     article.display.title.enabled:
       type: select.select

@@ -19,7 +19,11 @@
             {% for key, text in field.options %}
                 <option
                         {# required attribute structures #}
-                        {% if key|trim == value|trim %}selected="selected"{% endif %}
+                        {% if field.multiple %}
+                            {% if key|trim in value %}selected="selected"{% endif %}
+                        {% else %}
+                            {% if key|trim == value|trim %}selected="selected"{% endif %}
+                        {% endif %}
                         value="{{ key|e }}"
                         {# non-gloval attribute structures #}
                         {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}

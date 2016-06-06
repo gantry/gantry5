@@ -1,0 +1,17 @@
+{% extends '@gantry-admin/ajax/confirm-deletion.html.twig' %}
+
+{% block message %}
+    {% if inherited %}
+    <div class="alert alert-warning">
+        {{ 'GANTRY5_PLATFORM_DELETE_INHERIT_X'|trans('<strong>' ~ outline ~ '</strong>')|raw }}
+        {{ 'GANTRY5_PLATFORM_DELETE_INHERIT_DESC'|trans }}
+        <ul>
+            {% for item in inherited %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}

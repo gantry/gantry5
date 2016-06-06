@@ -28,7 +28,7 @@ ready(function() {
     menumanager = new MenuManager('[data-mm-container]', {
         delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
-        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+        exclude: '[data-lm-nodrag], .menu-item-back, .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
@@ -287,10 +287,11 @@ ready(function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
 
                         if (!validateField(input)) { invalid.push(input); }
                         dataString.push(name + '=' + encodeURIComponent(input.value()));
@@ -329,7 +330,11 @@ ready(function() {
 
                             if (response.body.html) {
                                 var parent = element.parent('[data-mm-id]');
-                                if (parent) { parent.html(response.body.html); }
+                                if (parent) {
+                                    var status = response.body.item.enabled || response.body.item.options.particle.enabled;
+                                    parent.html(response.body.html);
+                                    parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                                }
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);

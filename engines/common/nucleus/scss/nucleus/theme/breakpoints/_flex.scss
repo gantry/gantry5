@@ -22,13 +22,15 @@
 // Grid Row and Column Setup
 .g-block {
 	@include breakpoint(mobile-only) {
-		@include flex(0 100%);
+		@include flex-grow(0);
+		@include flex-basis(100%);
 	}
 }
 
 body [class*="size-"] {
 	@include breakpoint(mobile-only) {
-		@include flex(0 100%);
+        @include flex-grow(0);
+        @include flex-basis(100%);
 	}
 }
 

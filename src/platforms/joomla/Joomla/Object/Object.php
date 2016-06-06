@@ -59,6 +59,11 @@ abstract class Object extends \JObject
     protected $_readonly = false;
 
     /**
+     * @var bool
+     */
+    protected $_initialized = false;
+
+    /**
      * Class constructor, overridden in descendant classes.
      *
      * @param int $identifier Identifier.
@@ -66,16 +71,9 @@ abstract class Object extends \JObject
     public function __construct($identifier = null)
     {
         parent::__construct();
-        if (!empty($this->id)) {
-            // loadInstances() is trying to create the same instance again - do not allow it.
-            if (isset(static::$instances[(int) $this->id])) return;
-            $this->_exists = true;
-            $this->initialize();
-        } else {
+
+        if ($identifier) {
             $this->load($identifier);
-        }
-        if ($this->id && !isset(static::$instances[(int) $this->id])) {
-            static::$instances[(int) $this->id] = $this;
         }
     }
 
@@ -83,8 +81,16 @@ abstract class Object extends \JObject
      * Override this function if you need to initialize object right after creating it.
      *
      * Can be used for example if the database fields need to be converted to array or JRegistry.
+     *
+     * @return bool True if initialization was done, false if object was already initialized.
      */
-    protected function initialize() {}
+    public function initialize()
+    {
+        $initialized = $this->_initialized;
+        $this->_initialized = true;
+
+        return !$initialized;
+    }
 
     /**
      * Make instance as read only object.
@@ -227,7 +233,9 @@ abstract class Object extends \JObject
         $this->setProperties($table->getProperties());
 
         if ($this->id) {
-            static::$instances[$this->id] = $this;
+            if (!isset(static::$instances[$this->id])) {
+                static::$instances[$this->id] = $this;
+            }
         }
         $this->initialize();
 
@@ -281,7 +289,10 @@ abstract class Object extends \JObject
         // If item was created, load the object.
         if ($isNew) {
             $this->load($table->id);
-            static::$instances[$this->id] = $this;
+
+            if (!isset(static::$instances[$this->id])) {
+                static::$instances[$this->id] = $this;
+            }
         }
 
         // Trigger the onContentAfterSave event.
@@ -412,18 +423,26 @@ abstract class Object extends \JObject
 
     /**
      * @param \JDatabaseQuery|string $query
-     * @return array
      */
     static protected function loadInstances($query = null)
     {
         if (!$query) {
             $query = static::getQuery();
         }
+
         $db = \JFactory::getDbo();
         $db->setQuery($query);
-        $items = (array) $db->loadObjectList('id', get_called_class());
-        static::$instances += $items;
 
-        return $items;
+        /** @var Object[] $items */
+        $items = (array) $db->loadObjectList('id', get_called_class());
+
+        foreach ($items as $item) {
+            if (!isset(static::$instances[$item->id])) {
+                $item->exists(true);
+                $item->initialize();
+            }
+        }
+
+        static::$instances += $items;
     }
 }

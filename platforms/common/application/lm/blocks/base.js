@@ -8,6 +8,7 @@ var prime   = require('prime'),
     $       = require('elements'),
     ID      = require('../id'),
 
+    size    = require('mout/object/size'),
     get     = require('mout/object/get'),
     has     = require('mout/object/has'),
     set     = require('mout/object/set');
@@ -19,7 +20,8 @@ var Base = new prime({
     inherits: Emitter,
     options: {
         subtype: false,
-        attributes: {}
+        attributes: {},
+        inherit: {}
     },
     constructor: function(options) {
         this.setOptions(options);
@@ -27,6 +29,7 @@ var Base = new prime({
         this.fresh = !this.options.id;
         this.id = this.options.id || ID(this.options);
         this.attributes = this.options.attributes || {};
+        this.inherit = this.options.inherit || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
 
@@ -79,6 +82,10 @@ var Base = new prime({
         return this.attributes || {};
     },
 
+    getInheritance: function() {
+        return this.inherit || {};
+    },
+
     updateTitle: function() {
         return this;
     },
@@ -94,8 +101,24 @@ var Base = new prime({
         return this;
     },
 
+    setInheritance: function(inheritance) {
+        this.inherit = inheritance;
+
+        return this;
+    },
+
     hasAttribute: function(key) {
         return has(this.attributes, key);
+    },
+
+    enableInheritance: function() {},
+
+    disableInheritance: function() {},
+
+    refreshInheritance: function() {},
+
+    hasInheritance: function() {
+        return size(this.inherit);
     },
 
     disable: function() {

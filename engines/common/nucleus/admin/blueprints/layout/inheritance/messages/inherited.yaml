@@ -1,0 +1,10 @@
+name: Inheritance
+description: Inherited tab
+type: inherited.inheritance
+
+form:
+  fields:
+    _note:
+      type: separator.note
+      class: alert alert-success blocksize-note
+      content: 'This %s has been inherited by the following Outlines: %s'

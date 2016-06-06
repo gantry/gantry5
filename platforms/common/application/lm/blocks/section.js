@@ -1,13 +1,15 @@
 "use strict";
-var prime = require('prime'),
-    Base  = require('./base'),
-    Bound = require('prime-util/prime/bound'),
-    Grid  = require('./grid'),
-    $     = require('elements'),
-    zen   = require('elements/zen'),
+var prime              = require('prime'),
+    Base               = require('./base'),
+    Bound              = require('prime-util/prime/bound'),
+    Grid               = require('./grid'),
+    $                  = require('elements'),
+    zen                = require('elements/zen'),
 
-    bind  = require('mout/function/bind'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    bind               = require('mout/function/bind'),
+    forOwn             = require('mout/object/forOwn'),
+    getAjaxURL         = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
 
 require('elements/insertion');
 
@@ -27,13 +29,111 @@ var Section = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            inheritanceLabel = '',
+            klass = '';
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        if (this.hasInheritance()) {
+            var outline = getOutlineNameById(this.inherit.outline);
+            inheritanceLabel = this.renderInheritanceLabel(outline);
+            klass = ' g-inheriting';
+
+            if (this.inherit.include.length) {
+                klass += ' g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            }
+        }
+
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
     },
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
+    },
+    
+    renderInheritanceLabel: function(outline) {
+        var content = 'Inheriting from <strong>' + outline + '</strong>';
+
+        if (this.block && this.getParent()) {
+            content = '';
+        }
+
+        return '<div class="g-inherit g-section-inherit"><div class="g-inherit-content" ' + this.addInheritanceTip(true) + '><i class="fa fa-lock"></i> ' + content + '</div></div>';
+    },
+ 
+    enableInheritance: function() {
+        if (this.hasInheritance()) {
+            this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+            this.block.addClass('g-inheriting');
+            if (this.inherit.include.length) {
+                this.block.addClass('g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            }
+
+            if (!this.block.find('> .g-inherit')) {
+                var inherit = zen('div'),
+                    outline = getOutlineNameById(this.inherit.outline),
+                    html = this.renderInheritanceLabel(outline);
+
+                this.block.appendChild(inherit.html(html).children());
+            }
+        }
+    },
+
+    disableInheritance: function() {
+        if (this.block.find('> .g-inherit')) {
+            var inherit = this.block.find('> .g-inherit.g-section-inherit');
+            if (inherit) {
+                inherit.remove();
+            }
+        }
+
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        this.block.removeClass('g-inheriting');
+    },
+
+    refreshInheritance: function() {
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        if (this.hasInheritance()) {
+            this.enableInheritance();
+            if (this.block.find('> .g-inherit')) {
+                var content = this.block.find('.g-inherit-content strong'),
+                    outline = getOutlineNameById(this.inherit.outline);
+
+                if (content) { content.html(outline); }
+            }
+        }
+    },
+
+    addInheritanceTip: function(html) {
+        var tooltip = this.getInheritanceTip();
+
+        if (html) {
+            var tooltipHTML = '';
+            forOwn(tooltip, function(value, key) {
+                tooltipHTML += 'data-' + key + '="' + value + '" ';
+            });
+
+            tooltip = tooltipHTML;
+        }
+
+        return this.hasInheritance() ? tooltip : '';
+    },
+
+    getInheritanceTip: function() {
+        var outline = this.inherit ? this.inherit.outline : null,
+            name = getOutlineNameById(outline),
+            include = (this.inherit.include || []).join(', ');
+
+        return {
+            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Include: ' + include,
+            'tip-offset': -2,
+            'tip-place': 'top-right'
+        };
+    },
+
+    cleanKlass: function(klass) {
+        klass = (klass || '').split(' ');
+
+        return klass.filter(function(item) { return !item.match(/^g-inheriting-/); }).join(' ');
     },
 
     hasChanged: function(state, child) {
@@ -71,7 +171,7 @@ var Section = new prime({
     getParent: function() {
         var parent = this.block.parent('[data-lm-id]');
 
-        return this.options.builder.get(parent.data('lm-id'));
+        return parent ? this.options.builder.get(parent.data('lm-id')) : null;
     },
 
     getLimits: function(parent) {
@@ -85,9 +185,9 @@ var Section = new prime({
         if (siblingBlock.getType() !== 'block') { return false; }
 
         var sizes = {
-                current: this.getParent().getSize(),
-                sibling: siblingBlock.getSize()
-            };
+            current: this.getParent().getSize(),
+            sibling: siblingBlock.getSize()
+        };
 
         return [5, (sizes.current + sizes.sibling) - 5];
     }

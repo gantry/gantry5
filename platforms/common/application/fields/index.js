@@ -1,16 +1,17 @@
 "use strict";
-var ready      = require('elements/domready'),
-    $          = require('elements/attributes'),
-    storage    = require('prime/map'),
-    deepEquals = require('mout/lang/deepEquals'),
-    is         = require('mout/lang/is'),
-    isString   = require('mout/lang/isString'),
-    hasOwn     = require('mout/object/has'),
-    forEach    = require('mout/collection/forEach'),
-    invoke     = require('mout/array/invoke'),
-    History    = require('../utils/history'),
-    flags      = require('../utils/flags-state');
+var ready         = require('elements/domready'),
+    $             = require('elements/attributes'),
+    storage       = require('prime/map'),
+    deepEquals    = require('mout/lang/deepEquals'),
+    is            = require('mout/lang/is'),
+    isString      = require('mout/lang/isString'),
+    hasOwn        = require('mout/object/has'),
+    forEach       = require('mout/collection/forEach'),
+    invoke        = require('mout/array/invoke'),
+    History       = require('../utils/history'),
+    flags         = require('../utils/flags-state');
 
+require('./multicheckbox');
 
 var originals,
     collectFieldsValues = function(keys) {
@@ -164,6 +165,10 @@ ready(function() {
         var fields, equals;
         presetsCache.forEach(function(data, element) {
             fields = collectFieldsValues(data.map.keys());
+
+            // Do not consider __js__overrides when comparing for equality
+            fields.unset('__js__overrides');
+
             equals = deepEquals(fields, data.map, function(a, b) { return a == b; });
             $($('[data-g-styles]')[data.index]).parent()[equals ? 'addClass' : 'removeClass']('g-preset-match');
         });

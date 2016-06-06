@@ -1,6 +1,6 @@
 // Box model Resets for Joomla / Bootstrap2
 .platform-content input {
-    @include box-sizing(content-box);
+    box-sizing: content-box;
 }
 
 legend {

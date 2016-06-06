@@ -1,5 +1,106 @@
+# 5.3.0
+## XX/06/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - **Inheritance**: It is now possible to have individual Sections and Particles to Inherit from a different Outline and to decide what to Inherit specifically (attributes, children, blocks). Once a Section or Particle have been set to Inherit, any change applied to the parent Section / Particle will automatically reflect to the inheriting one (#50, #303, #340, #361, #575, #1018, #1213, #1312)
+        - Add support for DebugBar (#386)
+        - Update SCSS compiler to support version 3.4 (#1117)
+        - Update Bourbon SCSS library to v4.2.7
+        - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
+    2. [](#improved)
+        - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
+        - Do not display `Atoms` in `Particle Defaults`
+        - Display only shared particle settings in `Particle Defaults`
+        - Tweaked text contrast across the Admin UI (#1326)
+    3. [](#bugfix)
+        - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
+        - Fixed typos in tooltips and notices (#1318)
+        - Fixed issue with Icons Picker Select button no properly re-enabling when only switching dropdown (#1290)
+        - Fixed potential JavaScript error on frontend when the Menu particle was disabled
+        - Fixed Preset Match (star) being applied only in Base but not in the rest of the Outlines
+        - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #251, #1325)
+        - Fixed `Document::urlFilter` handling URLs inside `<pre>` and `<code>` tags (#1328)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Enable `Layout` tab for `Base Outline`
+    3. [](#bugfix)
+        - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
+
+# 5.2.18
+## 27/05/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Creating and duplicating Outlines now offers a modal where title and preset can be pre-compiled, without having to edit it later (#207)
+    2. [](#improved)
+        - Filepicker now allows uploading and deleting UTF-8 named files
+    3. [](#bugfix)
+        - Fixed Filepicker `root` property failing when mixing streams with non-streams paths (#1305)
+        - Fixed `button` input field (thanks @nikola3244 - #1308)
+        - Fixed `Oops, Cannot delete non-existing folder (500 internal error)` during Cache Clearing and when compiling YAML and Twig settings were disabled (#1306)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed regression in positioning module content by removing `row-fluid` wrapping from Joomla modules
+        - Fixed `Gantry 5 - Presets` plugin being enabled during upgrades (#1285)
+
+# 5.2.17
+## 19/05/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed `Warning: Zend OPcache API is restricted by "restrict_api" configuration directive`
+        - Fixed backward compatibility for custom menus where the hovering wouldn't be the default behavior (#1293)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed media manager not rendering correctly in frontend editor (#986)
+        - Fixed modal issues with Fabrik (#1147)
+        - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
+        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress))
+
+# 5.2.16
+## 17/05/2016
+
+1. [Common](#common)
+    1. [](#new)
+        - Hydrogen: The template now includes the emoji fonts (thanks @810 - #1253)
+        - Frontend: Exposed `G5.$` and `G5.ready` JavaScript utils (ref, #1256)
+        - Menu Particle: Added new option `Expand on Hover` to allow / disallow menu items to expand on mouseover or limit them to click / touch only (#1256)
+        - Menu Editor: It is now possible to disable menu items directly from the editor without having to pass through the platform (#1020)
+    2. [](#improved)
+        - Extended top level menus with a fixed width are now respecting the directional setting (#1252)
+        - Menu Manager: Cog wheel settings for Menu Items as well as Columns sorting icons, will now always appear on Touch Devices instead of been hover controlled only (related to #1254 and #1218)
+        - Included woff2 version of the local Roboto font
+        - Tweaked UI for multiple grids inside a container (#1278)
+        - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
+    3. [](#bugfix)
+        - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
+        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Add particle badges support for `Advanced Module Manager` (thanks @nonumber)
+        - Make Gantry menu to honour new `Display in menu` field in Joomla! 3.5.1 (#1255)
+    2. [](#improved)
+        - The Joomla Articles Particle now offers the option to pick either `intro` or `fulltext` image (thanks @nikola3244 - #1261, related to #1258)
+    3. [](#bugfix)
+        - Fixed `Joomla Articles` particle limits category selection to 20 categories only (thanks @nikola3244 - #1260)
+        - Fixed broken language filtering for categories and articles
+        - Worked around bug 72151 in **PHP 5.6.21** and **PHP 7.0.6** which was causing some data for articles not to be initialized
+        - Fixed `The menu selected is empty!` in Menu editor when PHP `default_charset` is not `UTF-8` (#1257)
+3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Added missing `home`, `outline`, `language` and `direction` properties to `Framework\Page` class
+    3. [](#bugfix)
+        - Fixed HTML entities not encoded properly in menu item titles (#1248)
+        
 # 5.2.15
-## XX/XX/2016
+## 25/04/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -16,6 +117,7 @@
         - Locked the Particle Settings editing overlay in Gantry 5 Particle Module, to prevent losing settings by accident (#1247, related to #1227)
         - [CHANGE]: Copyright Particle output now renders without the hardcoded `Copyright` word that couldn't be translated. Before: `Copyright © 2016 SiteOwner`, After: `SiteOwner © 2016` (#950)
         - [REGRESSION] Disabling `Compile twig` attempts to write lots of directories to hard drive root (#1250)
+        - Prevent resolving stream paths outside of defined scheme root
 2. [Joomla](#joomla)
     2. [](#improved)
         - Enable HTML5 document support from Joomla

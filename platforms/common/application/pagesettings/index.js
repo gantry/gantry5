@@ -85,9 +85,21 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item);
-                    var target = $(this.originalEvent.target);
-                    if (target.matches('#trash') || target.parent('#trash')) {
+                    var item = $(event.item),
+                        trash = $('#trash'),
+                        target = $(this.originalEvent.target),
+                        touchTrash = false;
+
+                    // workaround for touch devices
+                    if (this.originalEvent.type === 'touchend') {
+                        var trashSize = trash[0].getBoundingClientRect(),
+                            oE        = this.originalEvent,
+                            position  = (oE.pageY || oE.changedTouches[0].pageY) - window.scrollY;
+
+                        touchTrash = position <= trashSize.height;
+                    }
+
+                    if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
                         item.remove();
                         Atoms.eraser.hide();
                         this.options.onSort();
@@ -180,10 +192,11 @@ var AttachSettings = function() {
 
                     $(fakeDOM[0].elements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
                         var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                             parent   = input.parent('.settings-param'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -248,11 +261,19 @@ var AttachSettings = function() {
     });
 };
 
+var AttachSortableAtoms = function(atoms) {
+    if (!atoms) { return; }
+    if (!atoms.SimpleSort) { Atoms.createSortables(atoms); }
+};
+
 ready(function() {
+    var atoms = $('#atoms');
+
     $('body').delegate('mouseover', '#atoms', function(event, element) {
-        if (!element.SimpleSort) { Atoms.createSortables(element); }
+        AttachSortableAtoms(element);
     });
 
+    AttachSortableAtoms(atoms);
     AttachSettings();
 });
 

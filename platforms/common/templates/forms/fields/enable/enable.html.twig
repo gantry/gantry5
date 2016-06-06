@@ -1,7 +1,7 @@
 {% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% block input %}
-    <span class="enabler" role="checkbox" aria-checked="{{ value ? 'true' : 'false' }}" tabindex="0" aria-label="{{ disabled ? 'Disabled' : 'Enables ' ~ scope|replace({'.': ' '})|title|trim|default(title|trim) }}">
+    <span class="enabler" role="checkbox" aria-checked="{{ value ? 'true' : 'false' }}" tabindex="0" aria-label="{{ turned_off ? 'Disabled' : 'Enables ' ~ scope|replace({'.': ' '})|title|trim|default(title|trim) }}">
     <input
             {# required attribute structures #}
             type="hidden"
@@ -11,7 +11,7 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             />
-    {% if disabled %}
+    {% if turned_off %}
     <span><i class="fa fa-power-off"></i></span>
     {% else %}
     <span class="toggle"><span class="knob"></span></span>

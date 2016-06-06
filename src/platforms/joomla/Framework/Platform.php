@@ -26,7 +26,7 @@ use Gantry\Joomla\Content\ContentFinder;
 
 class Platform extends BasePlatform
 {
-    public $no_base_layout = true;
+    public $no_base_layout = false;
 
     protected $name = 'joomla';
     protected $settings_key = 'return';
@@ -197,7 +197,7 @@ class Platform extends BasePlatform
 
         if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
-            return '<div class="platform-content">' . $html . '</div>';
+            return '<div class="platform-content row-fluid"><div class="span12">' . $html . '</div></div>';
         }
 
         return $html;

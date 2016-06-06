@@ -63,6 +63,7 @@ domready(function() {
                     }
 
                     container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
                 var updateTotal = function() {

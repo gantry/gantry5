@@ -55,6 +55,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
             new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
+            new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
         ];
     }
 
@@ -179,6 +180,17 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Casts input to array.
+     *
+     * @param array $input
+     * @return array
+     */
+    public function arrayFilter($input)
+    {
+        return (array) $input;
     }
 
     /**
@@ -318,10 +330,11 @@ class TwigExtension extends \Twig_Extension
     {
         if ($location == 'head') {
             $scope = 'head';
+            $html = "<!doctype html>\n<html><head>{$input}</head><body></body></html>";
         } else {
             $scope = 'body';
+            $html = "<!doctype html>\n<html><head></head><body>{$input}</body></html>";
         }
-        $html = "<html><{$scope}>{$input}</{$scope}></html>";
 
         $internal = libxml_use_internal_errors(true);
 

@@ -1,3 +1,4 @@
+{%- do gantry.debugger.startTimer('render', 'Rendering page') %}
 {%- do gantry.theme.setLayout() -%}
 {%- set segments = gantry.theme.segments -%}
 
@@ -54,6 +55,8 @@
     {% block page_footer %}
         {{ gantry.scripts('footer')|join("\n    ")|raw }}
     {% endblock %}
+
+    {{ gantry.debugger.render()|raw }}
 {% endset -%}
 
 {%- block page -%}

@@ -80,10 +80,18 @@ class ContentFinder extends Finder
         if (!$language) {
             return $this;
         }
-        if (is_numeric($language)) {
+        if ($language === true || is_numeric($language)) {
             $language = \JFactory::getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
+    }
+
+    public function published($published = 1)
+    {
+        if (!is_array($published)) {
+            $published = (array) intval($published);
+        }
+        return $this->where('a.state', 'IN', $published);
     }
 
     public function authorised($authorised = true)
@@ -105,8 +113,11 @@ class ContentFinder extends Finder
 
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
-            $this->query->where("(a.publish_up = {$nullDate} OR a.publish_up <= {$nowDate})")
-                ->where("(a.publish_down = {$nullDate} OR a.publish_down >= {$nowDate})");
+            $this->query
+                ->where("(a.publish_up = {$nullDate} OR a.publish_up <= {$nowDate})")
+                ->where("(a.publish_down = {$nullDate} OR a.publish_down >= {$nowDate})")
+                ->where("a.state >= 1")
+            ;
         }
 
         $groups = $user->getAuthorisedViewLevels();

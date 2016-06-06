@@ -188,7 +188,7 @@ class Menu extends HtmlController
             return call_user_func_array([$this, 'validateitem'], $params);
         }
 
-        $path = implode('/', $path);
+        $path = html_entity_decode(implode('/', $path), ENT_COMPAT | ENT_HTML5, 'UTF-8');
 
         // Load the menu.
         $resource = $this->loadResource($id);
@@ -472,7 +472,12 @@ class Menu extends HtmlController
     public function build(Input $input)
     {
         try {
-            $items = $input->getJsonArray('items');
+            $items = $input->get('items');
+            if ($items && $items[0] !== '{' && $items[0] !== '[') {
+                $items = urldecode((string)base64_decode($items));
+            }
+            $items = json_decode($items, true);
+
             $settings = $input->getJsonArray('settings');
             $order = $input->getJsonArray('ordering');
         } catch (\Exception $e) {

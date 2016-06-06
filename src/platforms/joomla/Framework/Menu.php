@@ -272,6 +272,8 @@ class Menu extends AbstractMenu
                     'alias' => $menuItem->alias,
                     'path' => $menuItem->route,
                     'link' => $menuItem->link,
+                    'link_title' => $menuItem->params->get('menu-anchor_title', ''),
+                    'enabled' => $menuItem->params->get('menu_show', 1),
                 ];
 
                 // Rest of the items will come from saved configuration.
@@ -301,7 +303,6 @@ class Menu extends AbstractMenu
                 // And if not available in configuration, default to Joomla.
                 $itemParams += [
                     'title' => $menuItem->title,
-                    'subtitle' => $menuItem->params->get('menu-anchor_title', ''),
                     'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
                     'image' => $menuItem->params->get('menu_image', ''),
                     'icon_only' => !$menuItem->params->get('menu_text', 1),
@@ -359,7 +360,9 @@ class Menu extends AbstractMenu
                 if ($item->type == 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
                     // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
-                    $item->url(htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($item->link))));
+                    $item->url(
+                        htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($item->link, ENT_COMPAT|ENT_SUBSTITUTE, 'UTF-8')))
+                    );
                 }
             }
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.

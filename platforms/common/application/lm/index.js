@@ -11,7 +11,6 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
-    forEach        = require('mout/collection/forEach'),
     precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -27,6 +26,7 @@ var ready          = require('elements/domready'),
     SaveState      = require('../utils/save-state');
 
 require('../ui/popover');
+require('./inheritance');
 
 var builder, layoutmanager, lmhistory, savestate, Tips;
 
@@ -254,20 +254,7 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var type, child;
-        forEach(builder.map, function(obj, id) {
-            type = obj.getType();
-            child = obj.block.find('> [data-lm-id]');
-            if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
-                builder.remove(id);
-                obj.block.remove();
-            }
-        }, this);
-
-        layoutmanager.singles('cleanup', builder);
-
-        lmhistory.push(builder.serialize(), lmhistory.get().preset);
+        layoutmanager.clear();
     });
 
     // Switcher
@@ -295,6 +282,18 @@ ready(function() {
         }
     });
 
+    // Disable keeping particles if inherit option is selected
+    body.delegate('change', '[data-g-inherit="outline"]', function(event, element) {
+        var keeper = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve="outline"]');
+        if (keeper) { keeper.checked(false); }
+    });
+
+    // Disable inheriting section/particles if keep option is selected
+    body.delegate('change', '[data-g-preserve="outline"]', function(event, element) {
+        var inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit="outline"]');
+        if (inherit) { inherit.checked(false); }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -306,10 +305,13 @@ ready(function() {
         element.showIndicator();
 
         var preset = $('[data-lm-preset]'),
-            checkbox = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
-            preserve = checkbox && checkbox.checked(),
+            preserve = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
+            inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit]'),
             method = !preserve ? 'get' : 'post',
             data = {};
+
+        preserve = preserve && preserve.checked();
+        inherit = inherit && inherit.checked();
 
         if (preserve) {
             var lm = layoutmanager;
@@ -318,6 +320,10 @@ ready(function() {
 
             data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
             data.layout = JSON.stringify(lm.builder.serialize());
+        }
+
+        if (inherit) {
+            data.inherit = 1;
         }
 
         var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
@@ -423,16 +429,19 @@ ready(function() {
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
+            data.id = builder.get(element.data('lm-id')).getId() || null;
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
+            data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
             data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
             if (!size(data.options)) { delete data.options; }
+            if (!size(data.inherit)) { delete data.inherit; }
             if (!size(data.block)) { delete data.block; }
         }
 
@@ -500,22 +509,27 @@ ready(function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    $(formElements).forEach(function(input) {
                         input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                        var name = input.attribute('name'),
+                            type = input.attribute('type');
+                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
+                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+                        if (input) {
+                            var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                                parent   = input.parent('.settings-param'),
+                                override = parent ? parent.find('> input[type="checkbox"]') : null;
 
-                        override = override || $(input.data('override-target'));
+                            override = override || $(input.data('override-target'));
 
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
+                            if (override && !override.checked()) { return; }
+                            if (!validateField(input)) { invalid.push(input); }
 
-                        dataString.push(name + '=' + encodeURIComponent(value));
+                            dataString.push(name + '=' + encodeURIComponent(value));
+                        }
                     });
 
                     var title = content.elements.content.find('[data-title-editable]');
@@ -575,6 +589,25 @@ ready(function() {
                                     sibling = builder.get(sibling.data('lm-id'));
                                     sibling.setAnimatedSize(parseFloat(sibling.getSize()) + diffSize, true);
                                 }
+                            }
+
+                            // particle inheritance
+                            if (response.body.data.inherit) {
+                                delete response.body.data.inherit.section;
+                                particle.setInheritance(response.body.data.inherit);
+
+                                if (response.body.data.children) {
+                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
+                                    builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
+                                }
+
+                                particle.enableInheritance();
+                                particle.refreshInheritance();
+                            }
+
+                            if (particle.hasInheritance() && !response.body.data.inherit) {
+                                particle.setInheritance({});
+                                particle.disableInheritance();
                             }
 
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);

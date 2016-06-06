@@ -12,7 +12,9 @@ var ready     = require('domready'),
 ready(function() {
     instances = {
         offcanvas: new offcanvas(),
-        menu: new menu()
+        menu: new menu(),
+        $: $,
+        ready: ready
     };
 
     module.exports = window.G5 = instances;
@@ -74,7 +76,10 @@ var Menu = new prime({
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
 
-        if (hasTouchEvents) {
+        var gHoverExpand  = mainContainer.data('g-hover-expand');
+
+        this.hoverExpand = gHoverExpand === null || gHoverExpand === 'true';
+        if (hasTouchEvents || !this.hoverExpand) {
             mainContainer.addClass(this.states.touchEvents);
         }
 
@@ -82,17 +87,20 @@ var Menu = new prime({
     },
 
     attach: function() {
-        var selectors = this.selectors,
-            main = $(selectors.mainContainer + ' ' + selectors.item),
+        var selectors       = this.selectors,
+            main            = $(selectors.mainContainer + ' ' + selectors.item),
             mobileContainer = $(selectors.mobileContainer),
-            body = $('body');
+            body            = $('body');
 
         if (!main) { return; }
-        main.on('mouseenter', this.bound('mouseenter'));
-        main.on('mouseleave', this.bound('mouseleave'));
+        if (this.hoverExpand) {
+            main.on('mouseenter', this.bound('mouseenter'));
+            main.on('mouseleave', this.bound('mouseleave'));
+        }
+
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
 
-        if (hasTouchEvents) {
+        if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
             if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
@@ -130,11 +138,11 @@ var Menu = new prime({
 
     touchend: function(event) {
         var selectors = this.selectors,
-            states = this.states;
+            states    = this.states;
 
-        var target = $(event.target),
-            indicator = target.parent(selectors.item).find(selectors.touchIndicator),
-            menuType = target.parent('.g-standard') ? 'standard' : 'megamenu',
+        var target      = $(event.target),
+            indicator   = target.parent(selectors.item).find(selectors.touchIndicator),
+            menuType    = target.parent('.g-standard') ? 'standard' : 'megamenu',
             isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
 
@@ -165,7 +173,7 @@ var Menu = new prime({
         if ((menuType == 'megamenu' || !parent.parent(selectors.mainContainer)) && (parent.find(' > ' + selectors.dropdown + ', > * > ' + selectors.dropdown) || isGoingBack)) {
             var sublevel = target.parent('.g-sublevel') || target.parent('.g-toplevel'),
                 slideout = parent.find('.g-sublevel'),
-                columns = parent.parent('.g-dropdown-column'),
+                columns  = parent.parent('.g-dropdown-column'),
                 blocks;
 
             if (sublevel) {
@@ -203,7 +211,7 @@ var Menu = new prime({
         if (dropdown) {
             var sublevels = dropdown.search('.g-sublevel'),
                 slideouts = dropdown.search('.g-slide-out, .' + this.states.selected),
-                actives = dropdown.search('.' + this.states.active);
+                actives   = dropdown.search('.' + this.states.active);
 
             if (sublevels) { sublevels.attribute('style', null); }
             if (slideouts) { slideouts.removeClass('g-slide-out').removeClass(this.states.selected); }
@@ -215,9 +223,9 @@ var Menu = new prime({
 
     closeAllDropdowns: function() {
         var selectors = this.selectors,
-            states = this.states,
-            topLevel = $(selectors.mainContainer + ' > .g-toplevel'),
-            roots = topLevel.search(' >' + selectors.item);
+            states    = this.states,
+            topLevel  = $(selectors.mainContainer + ' > .g-toplevel'),
+            roots     = topLevel.search(' >' + selectors.item);
 
         if (roots) { roots.removeClass(states.selected); }
         if (topLevel) {
@@ -231,7 +239,7 @@ var Menu = new prime({
 
     resetStates: function(menu) {
         if (!menu) { return; }
-        var items = menu.search('.g-toplevel, .g-dropdown-column, .g-dropdown, .g-selected, .g-active, .g-slide-out'),
+        var items   = menu.search('.g-toplevel, .g-dropdown-column, .g-dropdown, .g-selected, .g-active, .g-slide-out'),
             actives = menu.search('.g-active');
         if (!items) { return; }
 
@@ -256,7 +264,7 @@ var Menu = new prime({
                 from: parent[0].getBoundingClientRect(),
                 to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
             },
-            height = Math.max(heights.from.height, heights.to.height);
+            height  = Math.max(heights.from.height, heights.to.height);
 
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
@@ -266,8 +274,8 @@ var Menu = new prime({
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {
                 var maxHeight = height,
-                    block = $(sublevel).parent('.g-block:not(.size-100)'),
-                    column = block ? block.parent('.g-dropdown-column') : null;
+                    block     = $(sublevel).parent('.g-block:not(.size-100)'),
+                    column    = block ? block.parent('.g-dropdown-column') : null;
                 (sublevel.parents('.g-slide-out, .g-dropdown-column') || parent).forEach(function(slideout) {
                     maxHeight = Math.max(height, parseInt(slideout.style.height || 0, 10));
                 });
@@ -276,9 +284,9 @@ var Menu = new prime({
                     column[0].style.height = maxHeight + 'px';
 
                     var blocks = column.search('> .g-grid > .g-block'),
-                        diff = maxHeight;
+                        diff   = maxHeight;
 
-                    blocks.forEach(function(block, i){
+                    blocks.forEach(function(block, i) {
                         if ((i + 1) != blocks.length) {
                             diff -= block.getBoundingClientRect().height;
                         } else {
@@ -295,17 +303,17 @@ var Menu = new prime({
     },
 
     _calculateBreakpoint: function(value) {
-        var digit = parseFloat(value.match(/^\d{1,}/).shift()),
-            unit = value.match(/[a-z]{1,}$/i).shift(),
+        var digit     = parseFloat(value.match(/^\d{1,}/).shift()),
+            unit      = value.match(/[a-z]{1,}$/i).shift(),
             tolerance = unit.match(/r?em/) ? -0.062 : -1;
 
         return (digit + tolerance) + unit;
     },
 
     _checkQuery: function(mq) {
-        var selectors = this.options.selectors,
+        var selectors       = this.options.selectors,
             mobileContainer = $(selectors.mobileContainer),
-            mainContainer = $(selectors.mainContainer + selectors.mobileTarget) || $(selectors.mainContainer),
+            mainContainer   = $(selectors.mainContainer + selectors.mobileTarget) || $(selectors.mainContainer),
             find, dropdowns;
 
         if (mq.matches) {
@@ -4366,6 +4374,9 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);

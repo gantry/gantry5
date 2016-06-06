@@ -1,6 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
+    {% if gantry.particles.overrides(configuration) or gantry.request.get.get('enable') %}
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <div id="settings">
         <form method="post">
@@ -9,7 +10,7 @@
                     <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}">
                     <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                 </span>
-                {% for group, list in particles if (group != 'hidden') %}
+                {% for group, list in particles if list and (group != 'hidden') %}
                     <h2 class="page-title">
                         <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</span>
                     </h2>
@@ -49,7 +50,7 @@
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'not_global_overrideable': particle.form.overrideable is same as(false), 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}
@@ -66,5 +67,12 @@
             </div>
             <input type="hidden" name="_end" value="1" />
         </form>
+        {% else %}
+            {% set ajaxify %}data-g5-ajaxify="" data-g5-nav="settings" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"{% endset %}
+            <h2 class="page-title">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</h2>
+            <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE'|trans(ajaxify, gantry.route('configurations/default/settings'), 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans)|raw }}</p>
+            <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER'|trans(ajaxify, gantry.route('configurations', configuration, 'settings') ~ '&enable=1')|raw }}</p>
+            <p class="alert alert-notice">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING'|trans('GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans)|raw }}</p>
+        {% endif %}
     </div>
 {% endblock %}

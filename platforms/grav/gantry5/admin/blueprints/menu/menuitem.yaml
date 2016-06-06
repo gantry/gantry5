@@ -18,6 +18,12 @@ form:
           label: Path
           skip: true
 
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables the menu item.
+          default: true
+
         .id:
           type: input.text
           label: Menu Item Id

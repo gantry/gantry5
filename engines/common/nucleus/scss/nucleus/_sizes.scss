@@ -12,5 +12,6 @@
 // Support for non flex browsers
 .size-100 {
     width: 100%;
-    @include flex(0 100%);
+    @include flex-grow(0);
+    @include flex-basis(100%);
 }

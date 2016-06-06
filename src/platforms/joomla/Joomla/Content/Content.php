@@ -21,8 +21,12 @@ class Content extends Object
     static protected $table = 'Content';
     static protected $order = 'id';
 
-    protected function initialize()
+    public function initialize()
     {
+        if (!parent::initialize()) {
+            return false;
+        }
+
         $this->images = json_decode($this->images);
         $this->urls = json_decode($this->urls);
         $this->attribs = json_decode($this->attribs);
@@ -35,6 +39,8 @@ class Content extends Object
         if ($this->publish_up === $nullDate) {
             $this->publish_up = $this->created;
         }
+
+        return true;
     }
 
     public function author()

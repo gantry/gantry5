@@ -112,6 +112,7 @@ var Builder = new prime({
                 subtype: subtype,
                 title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
+                inherit: get(this.map, id) ? get(this.map, id).getInheritance() : {},
                 children: children
             };
 
@@ -139,6 +140,7 @@ var Builder = new prime({
         var Element = new (Blocks[value.type] || Blocks['section'])(deepFillIn({
             id: key,
             attributes: {},
+            inherit: {},
             subtype: value.subtype || false,
             builder: this
         }, omit(value, 'children')));

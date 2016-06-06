@@ -1,5 +1,5 @@
 "use strict";
-// selectize (v0.12.1)
+// selectize (v0.12.1) (commit: 4dae761)
 
 var prime      = require('prime'),
     ready      = require('elements/domready'),
@@ -116,6 +116,12 @@ var build_hash_table = function(key, objects) {
         }
     }
     return table;
+};
+
+var domToString = function(d) {
+    var tmp = document.createElement('div');
+    tmp.appendChild(d.cloneNode(true));
+    return tmp.innerHTML;
 };
 
 var getSelection = function(input) {
@@ -379,7 +385,7 @@ var Selectize = new prime({
         this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
-        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
+        forEach(['isOpen', 'isDisabled',  'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
             this[option] = false;
         }, this);
         this.currentResults = null;
@@ -616,7 +622,8 @@ var Selectize = new prime({
 
     setupTemplates: function() {
         var field_label    = this.options.labelField,
-            field_optgroup = this.options.optgroupLabelField;
+            field_optgroup = this.options.optgroupLabelField,
+            mode           = this.options.mode;
 
         var templates = {
             'optgroup': function(data) {
@@ -629,7 +636,13 @@ var Selectize = new prime({
                 return '<div class="g-option">' + escape(data[field_label]) + '</div>';
             },
             'item': function(data, escape) {
-                return '<div class="g-item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                var removeButton = '';
+
+                if (mode !== 'single') {
+                    removeButton = '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                }
+
+                return '<div class="g-item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + removeButton;
             },
             'option_create': function(data, escape) {
                 return '<div class="g-create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
@@ -696,7 +709,7 @@ var Selectize = new prime({
                 }
 
                 /*e.preventDefault();
-                e.stopPropagation();*/
+                 e.stopPropagation();*/
                 return false;
             }
         } else {
@@ -894,8 +907,7 @@ var Selectize = new prime({
             this.setCaret(this.items.length);
             this.refreshState();
 
-            // IE11 bug: element still marked as active
-            (dest || document.body).focus();
+            dest && dest.focus();
 
             this.ignoreFocus = false;
             this.emit('blur');
@@ -1263,10 +1275,10 @@ var Selectize = new prime({
                     optgroup = '';
                 }
                 if (!groups.hasOwnProperty(optgroup)) {
-                    groups[optgroup] = [];
+                    groups[optgroup] = document.createDocumentFragment();
                     groups_order.push(optgroup);
                 }
-                groups[optgroup].push(option_html);
+                groups[optgroup].appendChild(option_html);
             }
         }
 
@@ -1280,23 +1292,25 @@ var Selectize = new prime({
         }
 
         // render optgroup headers & join groups
-        html = [];
+        html = document.createDocumentFragment();
         for (i = 0, n = groups_order.length; i < n; i++) {
             optgroup = groups_order[i];
-            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].length) {
+            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].childNodes.length) {
                 // render the optgroup header and options within it,
                 // then pass it to the wrapper template
-                html_children = this.render('optgroup_header', this.Optgroups[optgroup]) || '';
-                html_children += groups[optgroup].join('');
-                html.push(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
-                    html: html_children
+                html_children = document.createDocumentFragment();
+                html_children.appendChild(this.render('optgroup_header', this.Optgroups[optgroup]));
+                html_children.appendChild(groups[optgroup]);
+                html.appendChild(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
+                    html: domToString(html_children),
+                    dom: html_children
                 })));
             } else {
-                html.push(groups[optgroup].join(''));
+                html.appendChild(groups[optgroup]);
             }
         }
 
-        $dropdown_content.html(html.join(''));
+        $dropdown_content.html(domToString(html));
 
         // highlight matching terms inline
         if (this.options.highlight && results.query.length && results.tokens.length) {
@@ -1316,7 +1330,7 @@ var Selectize = new prime({
         has_create_option = this.canCreate(query);
         if (has_create_option) {
             //$dropdown_content.prepend(this.render('option_create', { input: query }));
-            $dropdown_content.html(this.render('option_create', { input: query }) + $dropdown_content.html());
+            $(this.render('option_create', { input: query })).top($dropdown_content);
             $create = $($dropdown_content[0].childNodes[0]);
         }
 
@@ -1457,8 +1471,7 @@ var Selectize = new prime({
         // update the item if it's selected
         if (this.items.indexOf(value_new) !== -1) {
             $item = this.getItem(value);
-            var dummy = zen('div').html(this.render('item', data));
-            $item_new = dummy.firstChild();
+            $item_new = $(this.render('item', data));
             if ($item.hasClass('g-active')) {
                 $item_new.addClass('g-active');
                 this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $item_new.attribute('data-value')));
@@ -1558,9 +1571,8 @@ var Selectize = new prime({
             if (inputMode === 'single') this.clear(silent);
             if (inputMode === 'multi' && this.isFull()) return;
 
-            var dummy = zen('div').html(this.render('item', this.Options[value]));
-            $item = dummy.firstChild();
-            if (inputMode !== 'multi') $item.find('.g-remove-single-item').remove();
+            $item = $(this.render('item', this.Options[value]));
+            // if (inputMode !== 'multi') $item.find('.g-remove-single-item').remove();
 
             // ARIA
             $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
@@ -1604,7 +1616,7 @@ var Selectize = new prime({
     removeItem: function(value, silent) {
         var $item, i, idx;
 
-        $item = (typeof value === 'object') ? value : this.getItem(value);
+        $item = (value instanceof $) ? value : this.getItem(value);
         value = hash_key($item.attribute('data-value'));
         i = this.items.indexOf(value);
 
@@ -1825,10 +1837,11 @@ var Selectize = new prime({
     },
 
     clear: function(silent) {
-        var non_input = this.$control.children(':not(input)');
         if (!this.items.length) return;
 
+        var non_input = this.$control.children(':not(input)');
         if (non_input) non_input.remove();
+
         this.items = [];
         this.lastQuery = null;
         this.setCaret(0);
@@ -1937,7 +1950,7 @@ var Selectize = new prime({
         } else {
             $tail = this.$control.children('.g-active:' + tail);
             if ($tail) {
-                idx = this.$control.children(':not(input)').index($tail);
+                idx = indexOf(this.$control.children(':not(input)'), $tail);
                 this.setActiveItem(null);
                 this.setCaret(direction > 0 ? idx + 1 : idx);
             }
@@ -2061,28 +2074,29 @@ var Selectize = new prime({
         }
 
         // render markup
-        var html = this.options.render[templateName].apply(this, [data, escapeHTML]);
+        var html = zen('div').html(this.options.render[templateName].apply(this, [data, escapeHTML]));
+        html = html.firstChild();
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.data('selectable', '');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
             name = escape_replace(escapeHTML(id));
-            html = html.replace(regex_tag, '<$1 data-group="' + name + '" role="group" aria-label="' + name + '"');
+            html = html.data('group', name).attribute('role', 'group').attribute('aria-label', name);
         }
         if (templateName === 'option' || templateName === 'item') {
             name = escape_replace(escapeHTML(value || ''));
-            html = html.replace(regex_tag, '<$1 data-value="' + name + '" id="' + slugify(this.rand + '-' + name) + '" role="treeitem" aria-label="' + trim(data.text) + '" aria-selected="false"');
+            html = html.data('value', name).attribute('id', slugify(this.rand + '-' + name)).attribute('role', 'treeitem').attribute('aria-label', trim(data.text)).attribute('aria-selected', 'false');
         }
 
         // update cache
         if (cache) {
-            this.renderCache[templateName][value] = html;
+            this.renderCache[templateName][value] = html[0];
         }
 
-        return html;
+        return html[0];
     },
 
     clearCache: function(templateName) {

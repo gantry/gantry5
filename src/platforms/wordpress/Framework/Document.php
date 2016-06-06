@@ -41,7 +41,7 @@ class Document extends BaseDocument
                         $array = explode('?', $style['href']);
                         $href = array_shift($array);
                         $version = array_shift($array) ?: false;
-                        $name = basename($href, '.css');
+                        $name = isset($style['id']) ? $style['id'] : basename($href, '.css');
                         \wp_enqueue_style($name, $href, array(), $version, $style['media']);
                         break;
                     case 'inline':

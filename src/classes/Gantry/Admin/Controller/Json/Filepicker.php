@@ -24,7 +24,6 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Filepicker extends JsonController
 {
     protected $base = false;
-    protected $isStream = false;
     protected $value = false;
     protected $filter = false;
     protected $httpVerbs = [
@@ -102,19 +101,20 @@ class Filepicker extends JsonController
         $active  = [];
 
         $index = 0;
+        $activeFallback = '';
 
         // iterating the folder and collecting subfolders and files
         foreach ($bookmarks as $key => $bookmark) {
             $folders[$key] = [];
 
             if (!$index) {
-                $active[] = $key;
+                $activeFallback = $key;
             }
 
             foreach ($bookmark as $folder) {
-                $this->isStream = $folder instanceof UniformResourceIterator;
+                $isStream = $this->isStream($folder);
 
-                if ($this->isStream) {
+                if ($isStream) {
                     unset($bookmarks[$key]);
                     $iterator = new \IteratorIterator($folder);
                     $folder   = $key;
@@ -135,7 +135,7 @@ class Filepicker extends JsonController
                     }
 
                     $file = new \stdClass();
-                    $this->attachData($file, $info);
+                    $this->attachData($file, $info, $folder);
 
                     if ($file->dir) {
                         if ($file->pathname == dirname($this->value)) {
@@ -153,7 +153,7 @@ class Filepicker extends JsonController
                     }
                 }
 
-                if ($this->isStream) {
+                if ($isStream) {
                     $bookmarks[$key][] = $key;
                 }
 
@@ -161,7 +161,11 @@ class Filepicker extends JsonController
             }
         }
 
-        $lastItem = reset($active);
+        if (!count($active)) {
+            $active[] = $activeFallback;
+        }
+
+        $lastItem = end($active);
         $files    = $this->listFiles($lastItem);
         $response = [];
 
@@ -194,7 +198,7 @@ class Filepicker extends JsonController
         return new JsonResponse($response);
     }
 
-    protected function attachData(&$node, $iteration)
+    protected function attachData(&$node, $iteration, $folder)
     {
         foreach (
             ['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable',
@@ -204,7 +208,7 @@ class Filepicker extends JsonController
             $node->{$keyMethod} = $iteration->{$method}();
 
             if ($method == 'getPathname') {
-                $node->{$keyMethod} = $this->isStream ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
+                $node->{$keyMethod} = $this->isStream($folder) ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
             } else {
                 if ($method == 'getExtension') {
                     $node->isImage = in_array($node->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp']);
@@ -216,8 +220,9 @@ class Filepicker extends JsonController
 
     protected function listFiles($folder)
     {
+        $isStream = $this->isStream($folder);
         $locator  = $this->container['locator'];
-        $iterator = $this->isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
+        $iterator = $isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
         $files    = new \ArrayObject();
 
         /** @var \SplFileInfo $info */
@@ -228,7 +233,7 @@ class Filepicker extends JsonController
             }
 
             $file = new \stdClass();
-            $this->attachData($file, $info);
+            $this->attachData($file, $info, $folder);
 
             if (!$file->dir) {
                 if ($this->filter && !preg_match("/" . $this->filter . "/i", $file->filename)) {
@@ -237,7 +242,7 @@ class Filepicker extends JsonController
 
                 $file->isInCustom = false;
 
-                if ($this->isStream) {
+                if ($isStream) {
                     $stream         = explode('://', $folder);
                     $stream         = array_shift($stream) . '://';
                     $customLocation = $locator->findResource($stream, true, true);
@@ -355,7 +360,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
@@ -407,7 +412,7 @@ class Filepicker extends JsonController
         }
 
         $finfo = new \stdClass();
-        $this->attachData($finfo, new \SplFileInfo($destination));
+        $this->attachData($finfo, new \SplFileInfo($destination), $targetPath);
         return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
 
     }
@@ -437,7 +442,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
@@ -468,5 +473,10 @@ class Filepicker extends JsonController
         $file->free();
 
         return new JsonResponse(['success', 'File deleted: ' . $targetPath]);
+    }
+
+    private function isStream($folder)
+    {
+        return $folder instanceof UniformResourceIterator || strpos($folder, '://');
     }
 }

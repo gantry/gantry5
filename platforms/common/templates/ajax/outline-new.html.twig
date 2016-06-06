@@ -1,0 +1,46 @@
+{% set create_route = duplicate ? gantry.route('configurations', outline, 'duplicate/new') : gantry.route('configurations', 'create/new') %}
+
+<div class="card settings-block">
+    <h4 id="g-modal-labelledby">{{ 'GANTRY5_PLATFORM_CREATE_OUTLINE'|trans }}</h4>
+    <div class="inner-params" id="g-modal-describedby">
+        <div class="settings-param input-text">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline Title" data-tip-place="top-right" aria-label="Outline Title" data-title="Outline Title">Title</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <input type="text" name="title" placeholder="{{ duplicate ? 'Auto generate' : 'Untitled' }}" aria-label="Outline Title Field" pattern="[A-Za-z0-9-\s]+">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="settings-param input-text">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline Preset" data-tip-place="top-right" aria-label="Outline Preset" data-title="Outline Preset">Preset</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <select name="preset" value="Untitled" {{ duplicate ? 'disabled="disabled"' : '' }} aria-label="Outline Preset Field" data-selectize>
+                        {% for group, options in presets %}
+                        <optgroup label="{{ group|title }}">
+                            {% for key, option in options %}
+                                {% set selected = key == preset|default('default') ? 'selected="selected"' : '' %}
+                                <option value="{{ key }}"{{ selected }}>{{ option }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="g-modal-actions">
+    <button tabindex="0" class="button button-primary" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}" data-g-outline-create-confirm="{{ create_route }}">
+        {{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}
+    </button>
+    <button tabindex="0" class="button g5-dialog-close" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}" data-g-outline-create-cancel="">
+        {{ 'GANTRY5_PLATFORM_CANCEL'|trans }}
+    </button>
+</div>

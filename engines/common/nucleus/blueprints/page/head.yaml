@@ -16,7 +16,7 @@ form:
     head_bottom:
       type: textarea.textarea
       label: Custom Content
-      description: Anything in this field will be appended to the <head>
+      description: Anything in this field will be appended to the head tag
 
     atoms:
       type: input.hidden

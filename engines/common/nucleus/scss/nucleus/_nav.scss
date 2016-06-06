@@ -176,7 +176,8 @@
                 }
             }
 		    .g-block {
-		    	@include flex(0 100%);
+				@include flex-grow(0);
+				@include flex-basis(100%);
 		    }
 		    // Dropdown is Active When Its Parent is Clicked
 			&.g-active {
@@ -196,6 +197,22 @@
 			position: absolute;
 			left: 0;
 			right: 0;
+
+			&.g-dropdown-left {
+				right: 0;
+				left: inherit;
+			}
+
+			&.g-dropdown-center {
+				left: inherit;
+				right: inherit;
+				@include dropdown-center;
+			}
+
+			&.g-dropdown-right {
+				left: 0;
+				right: inherit;
+			}
 
 			.g-block {
 				position: relative;
