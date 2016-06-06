@@ -930,17 +930,19 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
         // If layout index file doesn't exist or is not up to date, rebuild it.
-        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['version']) || $index['version'] != static::VERSION) {
+        if (empty($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['version']) || $index['version'] != static::VERSION) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $layout->timestamp = $timestamp;
-            $index = $layout->buildIndex();
-        }
 
-        if ($autoSave && isset($layout)) {
-            if (!$layout->timestamp) {
-                $layout->save();
+            if ($autoSave) {
+                if (!$layout->timestamp) {
+                    $layout->save();
+                }
+                $index = $layout->buildIndex();
+                $layout->saveIndex($index);
+            } else {
+                $index = $layout->buildIndex();
             }
-            $layout->saveIndex($index);
         }
 
         $index += [
