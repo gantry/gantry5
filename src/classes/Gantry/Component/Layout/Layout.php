@@ -772,9 +772,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
         $key = implode('-', $result);
 
-        if (!$id || isset($this->references[$key][$id])) {
+        if (!$id || isset($this->references[$key . '-'. $id])) {
             while ($id = rand(1000, 9999)) {
-                if (!isset($this->references[$key][$id])) {
+                if (!isset($this->references[$key . '-'. $id])) {
                     break;
                 }
             }
