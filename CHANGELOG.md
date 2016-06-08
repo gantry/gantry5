@@ -25,6 +25,8 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
+    2. [](#improved)
+        - Hydrogen for Joomla loads now optional `alert` assets from Nucleus to fix potential styling issues
     3. [](#bugfix)
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
 3. [WordPress](#wordpress)
@@ -60,7 +62,7 @@
         - Fixed media manager not rendering correctly in frontend editor (#986)
         - Fixed modal issues with Fabrik (#1147)
         - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
-        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
+        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress))
@@ -82,7 +84,7 @@
         - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
-        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
+        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259)
 2. [Joomla](#joomla)
     1. [](#new)
         - Add particle badges support for `Advanced Module Manager` (thanks @nonumber)
@@ -99,7 +101,7 @@
         - Added missing `home`, `outline`, `language` and `direction` properties to `Framework\Page` class
     3. [](#bugfix)
         - Fixed HTML entities not encoded properly in menu item titles (#1248)
-        
+
 # 5.2.15
 ## 25/04/2016
 

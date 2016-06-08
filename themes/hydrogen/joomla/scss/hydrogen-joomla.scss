@@ -10,6 +10,9 @@
 @import "nucleus/functions/base";
 @import "nucleus/mixins/base";
 
+// Load Optional Nucleus Assets
+@import "nucleus/theme/alerts";
+
 // Load Theme Variable Driven Nucleus Elements
 @import "joomla/theme/base";
 
