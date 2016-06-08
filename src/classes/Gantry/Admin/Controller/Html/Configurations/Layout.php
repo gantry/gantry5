@@ -451,6 +451,7 @@ class Layout extends HtmlController
                 $inherit['include'] = array_values(array_diff($inherit['include'], ['block']));
             }
 
+            unset($inherit['mode']);
             $data->join('inherit', $inherit);
         }
 
