@@ -12,7 +12,7 @@ form:
       selectize:
         allowEmptyOption: true
       options:
-        '': Inherit
+        '': Inherit from Page Settings
         0: Fullwidth (Boxed Content)
         2: Fullwidth (Flushed Content)
         1: Boxed
