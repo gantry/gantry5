@@ -25,14 +25,14 @@ var IDsMap = {
 
 ready(function() {
     var body             = $('body'),
-        currentSelection = {};
+        currentSelection = {},
+        currentMode      = {};
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
             value          = element.value(),
             name           = $('[name="inherit[section]"]').value(),
             form           = element.parent('[data-g-inheritance-settings]'),
-            hasChanged     = currentSelection[name] !== value,
             includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
                 list: $('#g-inherit-particle'),
@@ -40,6 +40,8 @@ ready(function() {
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
             };
+
+        var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
 
         if (hasChanged && !value) {
             includesFields.forEach(function(include) {
@@ -53,6 +55,7 @@ ready(function() {
                 outline: value || getCurrentOutline(),
                 type: formData.type || '',
                 subtype: formData.subtype || '',
+                mode: particle.mode.value(),
                 inherit: !!value && particle.mode.value() === 'inherit' ? '1' : '0'
             };
 
@@ -108,6 +111,7 @@ ready(function() {
             }
 
             currentSelection[name] = value;
+            currentMode[name] = particle.mode.value();
         });
     });
 
