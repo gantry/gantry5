@@ -26,7 +26,6 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 /**
  * Class Layouts
  * @package Gantry\Admin\Controller\Json
- * @deprecated
  */
 class Layouts extends JsonController
 {
