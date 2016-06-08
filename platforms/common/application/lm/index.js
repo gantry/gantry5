@@ -596,13 +596,13 @@ ready(function() {
                                 delete response.body.data.inherit.section;
                                 particle.setInheritance(response.body.data.inherit);
 
-                                if (response.body.data.children) {
-                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
-                                    builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
-                                }
-
                                 particle.enableInheritance();
                                 particle.refreshInheritance();
+                            }
+
+                            if (response.body.data.children) {
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
+                                builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                             }
 
                             if (particle.hasInheritance() && !response.body.data.inherit) {
