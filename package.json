@@ -5,9 +5,9 @@
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^13.0.0",
+    "browserify": "^13.0.1",
     "gulp": "^3.9.1",
-    "gulp-if": "^2.0.0",
+    "gulp-if": "^2.0.1",
     "gulp-jsonminify": "1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
@@ -18,7 +18,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^4.6.0"
+    "yargs": "^4.7.1"
   },
   "scripts": {
     "build-assets": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && npm install && cd assets/common && npm install && cd ../../ && cd platforms/common && npm install && cd ../../ && cd engines/common/nucleus && npm install && cd ../../../"

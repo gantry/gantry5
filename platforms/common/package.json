@@ -16,10 +16,10 @@
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "deep-diff": "^0.3.3",
+    "browserify": "^13.0.1",
+    "deep-diff": "^0.3.4",
     "gulp": "^3.9.1",
-    "gulp-if": "^2.0.0",
+    "gulp-if": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-sourcemaps": "^2.0.0-alpha",
@@ -29,6 +29,6 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^4.6.0"
+    "yargs": "^4.7.1"
   }
 }
