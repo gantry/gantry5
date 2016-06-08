@@ -21,6 +21,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Atoms;
 use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
@@ -286,6 +287,10 @@ class Page extends HtmlController
             $layout = Layout::instance($configuration);
             if (is_array($layout->atoms())) {
                 $layout->save(false);
+            }
+            if (isset($data['atoms'])) {
+                $atoms = new Atoms($data['atoms']);
+                $data['atoms'] = $atoms->update()->toArray();
             }
         }
 
