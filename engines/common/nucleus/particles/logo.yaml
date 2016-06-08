@@ -24,7 +24,7 @@ form:
     svg:
       type: textarea.textarea
       label: SVG Code
-      description: Place your SVG code below to add it inline to your site.
+      description: Your SVG code that will be added inline to the site.
       placeholder: 'Place your <svg> code here.'
 
     text:
