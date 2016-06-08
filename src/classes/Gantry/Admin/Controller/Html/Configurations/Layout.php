@@ -443,7 +443,7 @@ class Layout extends HtmlController
         }
 
         $inherit = $this->request->post->getArray('inherit');
-        $clone = $inherit['mode'] === 'clone';
+        $clone = !empty($inherit['mode']) && $inherit['mode'] === 'clone';
         $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
         if (!$clone && !empty($inherit['outline']) && count($inherit['include'])) {
             // Clean up inherit and add it to the data.
