@@ -1400,13 +1400,14 @@ th {
 
 .size-100 {
   width: 100%;
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 
 .g-main-nav:not(.g-menu-hastouch) .g-dropdown {
@@ -1542,13 +1543,14 @@ th {
   right: auto;
 }
 .g-main-nav .g-standard .g-dropdown .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 .g-main-nav .g-standard .g-go-back {
   display: none;
@@ -1973,22 +1975,24 @@ input[type="submit"] {
 }
 
 .full-width {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 .full-width .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 
 .hidden {

@@ -1301,13 +1301,14 @@
 }
 #g5-container .size-100 {
   width: 100%;
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-dropdown {
   z-index: 10;
@@ -1440,13 +1441,14 @@
   right: auto;
 }
 #g5-container .g-main-nav .g-standard .g-dropdown .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .g-main-nav .g-standard .g-go-back {
   display: none;
@@ -1828,22 +1830,24 @@
   width: 100%;
 }
 #g5-container .full-width {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .full-width .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .hidden {
   display: none;
@@ -4002,15 +4006,25 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .input-group.prepend .button {
   border-right: 0;
 }
-#g5-container .input-multicheckbox .input-group, #g5-container #g-inherit-particle .input-group {
+#g5-container .input-multicheckbox .input-group, #g5-container .input-radios .input-group, #g5-container #g-inherit-particle .input-group {
   width: 100%;
 }
-#g5-container .input-multicheckbox .input-group input, #g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group input, #g5-container #g-inherit-particle .input-group span {
+#g5-container .input-multicheckbox .input-group input, #g5-container .input-multicheckbox .input-group span, #g5-container .input-radios .input-group input, #g5-container .input-radios .input-group span, #g5-container #g-inherit-particle .input-group input, #g5-container #g-inherit-particle .input-group span {
   vertical-align: middle;
 }
-#g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group span {
+#g5-container .input-multicheckbox .input-group span, #g5-container .input-radios .input-group span, #g5-container #g-inherit-particle .input-group span {
   line-height: 1.5rem;
   margin-left: 5px;
+}
+#g5-container .input-radios .radios {
+  margin-right: 1rem;
+}
+#g5-container .input-radios .radios input, #g5-container .input-radios .radios label {
+  display: inline-block;
+  margin-bottom: 0;
+}
+#g5-container .input-radios .radios label {
+  margin-left: 0.2rem;
 }
 #g5-container #g-inherit-particle label .fa {
   color: #ddd;

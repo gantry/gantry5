@@ -33,9 +33,10 @@ ready(function() {
             name           = $('[name="inherit[section]"]').value(),
             form           = element.parent('[data-g-inheritance-settings]'),
             hasChanged     = currentSelection[name] !== value,
-            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked'),
+            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
                 list: $('#g-inherit-particle'),
+                mode: $('[name="inherit[mode]"]:checked'),
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
             };
@@ -52,7 +53,7 @@ ready(function() {
                 outline: value || getCurrentOutline(),
                 type: formData.type || '',
                 subtype: formData.subtype || '',
-                inherit: !!value ? '1' : '0'
+                inherit: !!value && particle.mode.value() === 'inherit' ? '1' : '0'
             };
 
         data.id = formData.id;
@@ -113,50 +114,57 @@ ready(function() {
     body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
         var value     = element.value(),
             isChecked = element.checked(),
+            noRefresh = event.noRefresh,
             panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
             tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
             outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
+                mode: $('[name="inherit[mode]"]:checked'),
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
             };
 
         if (!panel || !tab) { return true; }
 
-        var inherit = panel.find('.g-inherit');
+        var inherit = panel.find('.g-inherit'),
+            isClone = particle.mode.value() === 'clone',
+            refresh = function(noRefresh) {
+                if (!noRefresh) {
+                    body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+                }
+            };
 
-        // do not try to refresh attributes/block inheritance when there's no particle selected
-        /*if (particle.radios && !particle.checked) {
-         return false;
-         }*/
-
-
-        // if inherit overlay doesn't exist, we could be in a set
-        /*if (!inherit) {
-         inherit = panel.parent('.settings-block').find('.g-inherit');
-         inherit.after(panel);
-         }*/
-
-        if (!isChecked || !outline) {
+        if (!isChecked || !outline || isClone) {
             var lock = tab.find('.fa-lock');
 
             if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
             if (inherit) { inherit.hide(); }
+            if (isClone) { refresh(noRefresh); }
         } else {
             var unlock = tab.find('.fa-unlock');
 
             if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
             if (inherit) { inherit.show(); }
 
-            body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+            refresh(noRefresh);
         }
     });
 
-    body.delegate('change', '[name="inherit[particle]"]', function(event, element) {
-        var container = modal.getByID(modal.getLast()),
-            outline   = container.find('[name="inherit[outline]"]');
 
-        body.emit('change', { target: outline });
+    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"]', function(event, element) {
+        var container  = modal.getByID(modal.getLast()),
+            outline    = container.find('[name="inherit[outline]"]'),
+            checkboxes = container.search('[data-multicheckbox-field]') || [],
+            noRefresh  = false;
+
+        if (element.attribute('name') === 'inherit[mode]') {
+            noRefresh = true;
+        }
+
+        body.emit('change', { target: outline, noRefresh: noRefresh });
+        checkboxes.forEach(function(checkbox) {
+            body.emit('change', { target: checkbox, noRefresh: noRefresh });
+        });
     });
 
     body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
@@ -193,13 +201,15 @@ ready(function() {
             prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
+                mode: $('[name="inherit[mode]"]:checked'),
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
             };
 
         if (input) {
             // do not try to refresh attributes/block inheritance when there's no particle selected
-            if (particle.radios && !particle.checked) {
+            // or if we are in clone mode
+            if (particle.mode.value() === 'clone' || (particle.radios && !particle.checked)) {
                 return false;
             }
 
