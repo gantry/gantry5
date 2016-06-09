@@ -33,12 +33,12 @@ class Atoms extends JsonController
         'GET' => [
             '/' => 'index',
             '/*' => 'index',
-            '/atom' => 'atom'
+            '/instance' => 'atom'
         ],
         'POST' => [
             '/' => 'index',
             '/*' => 'index',
-            '/atom' => 'atom'
+            '/instance' => 'atom'
         ]
     ];
     
