@@ -48,7 +48,7 @@
         </optgroup>
         {% endif %}
     </select>
-    {% if selected_editable and gantry.authorize('outline.rename') %}
+    {% if selected_editable and gantry.authorize('outline.rename') and configuration != 'default' %}
     <span data-title-editable="{{ selected_title }}"
           data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename') }}"
           class="title g-conf-title-edit"

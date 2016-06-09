@@ -16,6 +16,7 @@
         - Display only shared particle settings in `Particle Defaults`
         - Tweaked text contrast across the Admin UI (#1326)
         - Sections Layout `Inherit` option is now renamed to `Inherit from Page Settings` (#1349)
+        - Removed rename capability from Base Outline (#1350)
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
