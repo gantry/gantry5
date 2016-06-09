@@ -617,3 +617,6 @@ msgstr "By proceeding they will stop inheriting and all the Attributes and Child
 
 msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC"
 msgstr "Inherit every Section and Children of the selected Outline"
+
+msgid "GANTRY5_PLATFORM_ATOM"
+msgstr "Atom"

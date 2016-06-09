@@ -15,6 +15,7 @@ namespace Gantry\Framework\Base;
 
 use FilesystemIterator;
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
@@ -130,6 +131,33 @@ class Outlines extends AbstractOutlineCollection
                 }
                 if ($ids) {
                     $list[$name] = $title;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlinesWithAtom($type, $includeInherited = true)
+    {
+        $list = [];
+
+        // TODO: Move this information into index.yaml file as it allows us to follow also inheritance.
+        // FIXME: $includeInherited is not used.
+        foreach ($this->items as $name => $title) {
+            $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
+            $index = $file->content();
+            $file->free();
+            if (isset($index['atoms'])) {
+                foreach ($index['atoms'] as $atom) {
+                    if (!empty($atom['id']) && $atom['type'] === $type) {
+                        $list[$name] = $title;
+                    }
                 }
             }
         }

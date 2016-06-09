@@ -23,6 +23,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Outlines;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -193,9 +194,9 @@ class Page extends HtmlController
 
     public function atom($name)
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
-        $data = $this->request->post['data'];
+        $data = $this->request->post['particles'];
         if ($data) {
             $data = json_decode($data, true);
         } else {
@@ -215,15 +216,61 @@ class Page extends HtmlController
         $item->def('type', $name);
         $item->def('title', $blueprints->get('name'));
         $item->def('attributes', []);
+        $item->def('inherit', []);
+
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/atom.yaml");
+        if ($file->exists()) {
+            /** @var Outlines $outlines */
+            $outlines = $this->container['configurations'];
+
+            if ($outline !== 'default') {
+                $list = (array)$outlines->getOutlinesWithAtom($item->type, false);
+                unset($list[$outline]);
+            } else {
+                $list = [];
+            }
+
+            if (!empty($inherit['outline']) || (/*!($inheriting = $outlines->getInheritingOutlines($outline, 'atom', $id)) && */ $list)) {
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+                $inheritance->set('form.fields.outline.filter', array_keys($list));
+                $inheritance->set('form.fields.atom.particle', $name);
+
+            } elseif (!empty($inheriting)) {
+                // Already inherited by other outlines.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+                $inheritance->set(
+                    'form.fields._note.content',
+                    sprintf($inheritance->get('form.fields._note.content'), 'atom', ' <ul><li>' . implode('</li>, <li>', $inheriting) . '</li></ul>')
+                );
+
+            } elseif ($outline === 'default') {
+                // Base outline.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+            } else {
+                // Nothing to inherit from.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+            }
+        }
 
         $this->params += [
+            'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
+            'inheritance'   => isset($inheritance) ? $inheritance : null,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'blueprints'    => $blueprints,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
-            'action'        => "configurations/{$configuration}/page/atoms/{$name}/validate"
+            'action'        => "configurations/{$outline}/page/atoms/{$name}/validate"
         ];
 
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);

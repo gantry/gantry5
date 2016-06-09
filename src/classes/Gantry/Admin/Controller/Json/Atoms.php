@@ -49,7 +49,7 @@ class Atoms extends JsonController
         $post = $this->request->request;
 
         $outline = $post['outline'];
-        $type = $post['type'];
+        $type = $post['subtype'];
         $inherit = $post['inherit'];
         $id = $post['id'];
 
