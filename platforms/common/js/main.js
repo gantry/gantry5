@@ -1894,11 +1894,12 @@ var Section = new prime({
         this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
         if (this.hasInheritance()) {
             this.enableInheritance();
-            if (this.block.find('> .g-inherit')) {
-                var content = this.block.find('.g-inherit-content strong'),
-                    outline = getOutlineNameById(this.inherit.outline);
+            var overlay = this.block.find('> .g-inherit');
+            if (overlay) {
+                var outline = getOutlineNameById(this.inherit.outline),
+                    content = zen('div').html(this.renderInheritanceLabel(outline));
 
-                if (content) { content.html(outline); }
+                if (overlay && content) { overlay.html(content.children().html()); }
             }
         }
     },
@@ -1966,6 +1967,8 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+
+        this.refreshInheritance();
     },
 
     getParent: function() {
