@@ -23,9 +23,19 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
+    /**
+     * @var array
+     */
     protected $items;
+
+    /**
+     * @var array
+     */
     protected $ids;
 
+    /**
+     * @var array|static[]
+     */
     protected static $instances;
 
     /**
@@ -66,7 +76,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         foreach ($this->items as &$item) {
             if (!empty($item['inherit']['outline']) && !empty($item['inherit']['atom'])) {
                 $inherited = static::instance($item['inherit']['outline']);
-                $test = $inherited->get($item['inherit']['atom']);
+                $test = $inherited->id($item['inherit']['atom']);
                 if (!empty($test['attributes'])) {
                     $item['attributes'] = $test['attributes'];
                 }
@@ -80,7 +90,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         foreach ($this->items as &$item) {
             if (empty($item['id'])) {
-                $item['id'] = $this->id($item);
+                $item['id'] = $this->createId($item);
             }
             if (!empty($item['inherit']['outline']) && !empty($item['inherit']['atom'])) {
                 unset($item['attributes']);
@@ -106,16 +116,32 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
      * @param string $id
      * @return array
      */
-    public function get($id)
+    public function id($id)
     {
         return isset($this->ids[$id]) ? $this->ids[$id] : [];
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    public function type($type)
+    {
+        $list = [];
+        foreach ($this->items as $item) {
+            if ($item['type'] === $type) {
+                $list[] = $item;
+            }
+        }
+
+        return $list;
     }
 
     /**
      * @param array $item
      * @return string
      */
-    protected function id(array &$item)
+    protected function createId(array &$item)
     {
         $type = $item['type'];
 
