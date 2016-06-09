@@ -3311,7 +3311,8 @@ var $                  = require('elements'),
 var IDsMap = {
     attributes: 'g-settings-particle',
     block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
-    inheritance: 'g-inherit-particle'
+    inheritance: 'g-inherit-particle',
+    atoms: 'g-inherit-atom'
 };
 
 ready(function() {
@@ -3326,7 +3327,7 @@ ready(function() {
             form           = element.parent('[data-g-inheritance-settings]'),
             includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
-                list: $('#g-inherit-particle'),
+                list: $('#g-inherit-particle, #g-inherit-atom'),
                 mode: $('[name="inherit[mode]"]:checked'),
                 radios: $('[name="inherit[particle]"]'),
                 checked: $('[name="inherit[particle]"]:checked')
@@ -3363,7 +3364,9 @@ ready(function() {
             }
         }
 
-        var URI = particle.list ? 'layouts/list' : 'layouts';
+        var URI_mode = data.type === 'atom' ? 'atoms' : 'layouts',
+            URI      = particle.list ? URI_mode + '/list' : URI_mode;
+
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
@@ -3462,7 +3465,7 @@ ready(function() {
         });
     });
 
-    body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
+    body.delegate('click', '#g-inherit-particle .fa-info-circle, #g-inherit-atom .fa-info-circle', function(event, element) {
         event.preventDefault();
 
         var container = modal.getByID(modal.getLast()),
