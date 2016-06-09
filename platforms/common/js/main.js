@@ -5025,6 +5025,12 @@ var StepTwo = function(data, content, button) {
                 if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                 input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+
+                // workaround for checkboxes trick that has both a hidden and checkbox field
+                if (type === 'checkbox' && content.find('[type="hidden"][name="' + name + '"]')) {
+                    input = content.find('[name="' + name + '"][type="checkbox"]');
+                }
+                
                 var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -8946,6 +8952,12 @@ ready(function() {
                             if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                             input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+
+                            // workaround for checkboxes trick that has both a hidden and checkbox field
+                            if (type === 'checkbox' && content.find('[type="hidden"][name="' + name + '"]')) {
+                                input = content.find('[name="' + name + '"][type="checkbox"]');
+                            }
+
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;

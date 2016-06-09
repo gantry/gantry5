@@ -34,6 +34,7 @@
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
+        - Add support for Widgets with checkboxes that use the trick of hidden/checkbox fields with the same name (#1014)
 
 # 5.2.18
 ## 27/05/2016
