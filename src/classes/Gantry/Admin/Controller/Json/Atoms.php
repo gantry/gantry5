@@ -167,6 +167,6 @@ class Atoms extends JsonController
             'value' => $selected
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params);
+        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/atoms.html.twig', $params);
     }
 }
