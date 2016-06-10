@@ -196,7 +196,7 @@ class Page extends HtmlController
     {
         $outline = $this->params['configuration'];
 
-        $data = $this->request->post['particles'];
+        $data = $this->request->post['data'];
         if ($data) {
             $data = json_decode($data, true);
         } else {
