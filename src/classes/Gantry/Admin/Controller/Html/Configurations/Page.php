@@ -270,7 +270,8 @@ class Page extends HtmlController
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
-            'action'        => "configurations/{$outline}/page/atoms/{$name}/validate"
+            'action'        => "configurations/{$outline}/page/atoms/{$name}/validate",
+            'skip'          => ['enabled']
         ];
 
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
