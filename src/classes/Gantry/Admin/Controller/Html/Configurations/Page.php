@@ -235,7 +235,7 @@ class Page extends HtmlController
                 $file->free();
 
                 $inheritance->set('form.fields.outline.filter', array_keys($list));
-                $inheritance->set('form.fields.atom.particle', $name);
+                $inheritance->set('form.fields.atom.atom', $name);
 
             } elseif (!empty($inheriting)) {
                 // Already inherited by other outlines.

@@ -146,23 +146,23 @@ class Atoms extends JsonController
      * Render input field for particle picker.
      *
      * @param string $outline
-     * @param string $particle
+     * @param string $type
      * @param string $selected
      * @param array $instances
      * @return string
      */
-    protected function renderAtomsInput($outline, $particle, $selected, array $instances)
+    protected function renderAtomsInput($outline, $type, $selected, array $instances)
     {
         $params = [
             'layout' => 'input',
             'scope' => 'inherit.',
             'field' => [
                 'name' => 'atom',
-                'type' => 'gantry.particles',
+                'type' => 'gantry.atoms',
                 'id' => 'g-inherit-atom',
                 'outline' => $outline,
-                'particles' => $instances,
-                'particle' => $particle
+                'atoms' => $instances,
+                'atom' => $type
             ],
             'value' => $selected
         ];

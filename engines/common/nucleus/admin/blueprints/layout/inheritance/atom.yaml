@@ -23,15 +23,8 @@ form:
         '': No Inheritance
 
     atom:
-      type: gantry.particles
+      type: gantry.atoms
       id: g-inherit-atom
       outline_field: outline
       label: Atom Instance
       description: Atom to inherit from
-
-    include:
-      type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
-      options:
-        attributes: Atom Attributes

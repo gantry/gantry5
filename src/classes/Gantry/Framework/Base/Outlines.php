@@ -213,6 +213,31 @@ class Outlines extends AbstractOutlineCollection
         return $list;
     }
 
+
+    /**
+     * @param string $outline
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getAtomInstances($outline, $type, $includeInherited = true)
+    {
+        $list = [];
+
+        $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
+        $index = $file->content();
+        $file->free();
+        if (isset($index['atoms'])) {
+            foreach ($index['atoms'] as $atom) {
+                if (!empty($atom['id']) && $atom['type'] === $type && ($includeInherited || empty($atom['inherit']['outline']))) {
+                    $list[$atom['id']] = (object) $atom;
+                }
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * Return list of outlines which are inheriting the specified outline.
      *
