@@ -34,6 +34,8 @@
     3. [](#bugfix)
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)
     2. [](#improved)
         - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
         - Add support for Widgets with checkboxes that use the trick of hidden/checkbox fields with the same name (#1014)
