@@ -38,8 +38,8 @@ ready(function() {
             particle       = {
                 list: $('#g-inherit-particle, #g-inherit-atom'),
                 mode: $('[name="inherit[mode]"]:checked'),
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
         var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
@@ -127,8 +127,8 @@ ready(function() {
             outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
         if (!panel || !tab) { return true; }
@@ -158,7 +158,7 @@ ready(function() {
     });
 
 
-    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"]', function(event, element) {
+    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"], [name="inherit[atom]"]', function(event, element) {
         var container  = modal.getByID(modal.getLast()),
             outline    = container.find('[name="inherit[outline]"]'),
             checkboxes = container.search('[data-multicheckbox-field]') || [],
@@ -179,15 +179,16 @@ ready(function() {
 
         var container = modal.getByID(modal.getLast()),
             outline   = container.find('[name="inherit[outline]"]'),
-            id        = element.siblings('input[name="inherit[particle]"]');
+            id        = element.siblings('input[name="inherit[particle]"], input[name="inherit[atom]"]');
 
         if (!id || !outline) { return false; }
 
+        var URI = id.name() === 'inherit[atom]' ? 'atoms/instance' : 'layouts/particle';
         modal.open({
             content: 'Loading',
             method: 'post',
             data: { id: id.value(), outline: outline.value() },
-            remote: parseAjaxURI(getAjaxURL('layouts/particle') + getAjaxSuffix()),
+            remote: parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) {
                     modal.enableCloseByOverlay();
@@ -209,8 +210,8 @@ ready(function() {
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
         if (input) {
