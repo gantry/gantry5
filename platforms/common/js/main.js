@@ -3296,6 +3296,7 @@ var $                  = require('elements'),
     request            = require('agent'),
     modal              = require('../../ui').modal,
 
+    isArray            = require('mout/lang/isArray'),
     forEach            = require('mout/collection/forEach'),
     filter             = require('mout/object/filter'),
     keys               = require('mout/object/keys'),
@@ -3309,9 +3310,9 @@ var $                  = require('elements'),
 
 
 var IDsMap = {
-    attributes: 'g-settings-particle',
+    attributes: ['g-settings-particle', 'g-settings-atom'],
     block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
-    inheritance: 'g-inherit-particle',
+    particles: 'g-inherit-particle',
     atoms: 'g-inherit-atom'
 };
 
@@ -3390,14 +3391,18 @@ ready(function() {
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                var shouldRefresh = contains(includes, option),
-                    isAvailable   = contains(available, option);
+                id = !isArray(id) ? [id] : id;
 
-                if ((shouldRefresh || !isAvailable) && data.html[id] && (element = container.find('#' + id))) {
-                    element.html(data.html[id]);
-                    var selects = element.search('[data-selectize]');
-                    if (selects) { selects.selectize(); }
-                }
+                id.forEach(function(currentID) {
+                    var shouldRefresh = contains(includes, option),
+                        isAvailable   = contains(available, option);
+
+                    if ((shouldRefresh || !isAvailable) && data.html[currentID] && (element = container.find('#' + currentID))) {
+                        element.html(data.html[currentID]);
+                        var selects = element.search('[data-selectize]');
+                        if (selects) { selects.selectize(); }
+                    }
+                });
             });
 
             if (hasChanged && includesFields && currentSelection[name] === '') {
@@ -3413,8 +3418,6 @@ ready(function() {
         var value     = element.value(),
             isChecked = element.checked(),
             noRefresh = event.noRefresh,
-            panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
-            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
             outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
@@ -3422,30 +3425,45 @@ ready(function() {
                 checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
-        if (!panel || !tab) { return true; }
+        var IDs = {
+            panel: (IDsMap[value] && IDsMap[value].panel || IDsMap[value]),
+            tab: (IDsMap[value] && IDsMap[value].tab || IDsMap[value])
+        };
 
-        var inherit = panel.find('.g-inherit'),
-            isClone = particle.mode.value() === 'clone',
-            refresh = function(noRefresh) {
-                if (!noRefresh) {
-                    body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
-                }
-            };
-
-        if (!isChecked || !outline || isClone) {
-            var lock = tab.find('.fa-lock');
-
-            if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
-            if (inherit) { inherit.hide(); }
-            if (isClone) { refresh(noRefresh); }
-        } else {
-            var unlock = tab.find('.fa-unlock');
-
-            if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
-            if (inherit) { inherit.show(); }
-
-            refresh(noRefresh);
+        if (!isArray(IDs.panel)) {
+            IDs.panel = [IDs.panel];
+            IDs.tab = [IDs.tab];
         }
+
+        IDs.panel.forEach(function(currentPanel, index) {
+            var panel = $('#' + currentPanel),
+                tab   = $('#' + IDs.tab[index] + '-tab');
+
+            if (!panel || !tab) { return true; }
+
+            var inherit = panel.find('.g-inherit'),
+                isClone = particle.mode.value() === 'clone',
+                refresh = function(noRefresh) {
+                    if (!noRefresh) {
+                        body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+                    }
+                };
+
+            if (!isChecked || !outline || isClone) {
+                var lock = tab.find('.fa-lock');
+
+                if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
+                if (inherit) { inherit.hide(); }
+                if (isClone) { refresh(noRefresh); }
+            } else {
+                var unlock = tab.find('.fa-unlock');
+
+                if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
+                if (inherit) { inherit.show(); }
+
+                refresh(noRefresh);
+            }
+        });
     });
 
 
@@ -3497,7 +3515,7 @@ ready(function() {
         var container = modal.getByID(modal.getLast()),
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
-            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(id, value) || contains(id, value.tab); }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
@@ -3517,7 +3535,7 @@ ready(function() {
         }
     });
 });
-},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"mout/collection/contains":182,"mout/collection/forEach":184,"mout/object/filter":224,"mout/object/keys":231}],28:[function(require,module,exports){
+},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"mout/collection/contains":182,"mout/collection/forEach":184,"mout/lang/isArray":198,"mout/object/filter":224,"mout/object/keys":231}],28:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
