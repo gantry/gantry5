@@ -3515,7 +3515,7 @@ ready(function() {
         var container = modal.getByID(modal.getLast()),
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
-            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(id, value) || contains(id, value.tab); }) || []).shift(),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(value, id); }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
