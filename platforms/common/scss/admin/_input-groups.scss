@@ -99,7 +99,7 @@
         }
     }
 
-    .input-multicheckbox .input-group, .input-radios .input-group, #g-inherit-particle .input-group {
+    .input-multicheckbox .input-group, .input-radios .input-group, #g-inherit-particle .input-group, #g-inherit-atom .input-group {
         width: 100%;
         input, span {
             vertical-align: middle;
@@ -124,7 +124,7 @@
         }
     }
 
-    #g-inherit-particle {
+    #g-inherit-particle, #g-inherit-atom {
         label {
             .fa {
                 color: $medium-gray;
