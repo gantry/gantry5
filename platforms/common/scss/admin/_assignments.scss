@@ -6,10 +6,9 @@
 
         .settings-param-wrapper {
             min-width: 100%;
-            // Overflow disabled until Chrome issue fixed (see #851)
-            /*max-height: 455px;
+            max-height: 455px;
             overflow-y: auto;
-            overflow-x: hidden;*/
+            overflow-x: hidden;
             margin: 0 -10px -10px;
         }
 

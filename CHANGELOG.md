@@ -16,6 +16,7 @@
         - Display only shared particle settings in `Particle Defaults`
         - Tweaked text contrast across the Admin UI (#1326)
         - Sections Layout `Inherit` option is now renamed to `Inherit from Page Settings` (#1349)
+        - Assignments cards have now maximum height declared for better presentation and readability
         - Removed rename capability from Base Outline (#1350)
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
