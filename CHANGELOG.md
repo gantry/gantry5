@@ -18,6 +18,7 @@
         - Sections Layout `Inherit` option is now renamed to `Inherit from Page Settings` (#1349)
         - Assignments cards have now maximum height declared for better presentation and readability
         - Removed rename capability from Base Outline (#1350)
+        - Do not close the Atoms modal when clicking on the overlay, in order to prevent accidental loss of changes.
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
