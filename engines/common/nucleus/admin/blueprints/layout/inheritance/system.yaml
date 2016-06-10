@@ -4,6 +4,15 @@ type: system.inheritance
 
 form:
   fields:
+    mode:
+      type: input.radios
+      label: Mode
+      description: Whether to clone or inherit the particle properties
+      default: inherit
+      options:
+        clone: Clone
+        inherit: Inherit
+
     outline:
       type: gantry.outlines
       label: Outline

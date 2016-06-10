@@ -532,6 +532,10 @@ $atom: #9055AF;
                     z-index: 2;
                 }
             }
+
+            &.g-inheriting.particle-disabled {
+                @include stripes-background(#ccc, 50px, 45deg);
+            }
         }
 
         .atom {
@@ -635,10 +639,10 @@ $atom: #9055AF;
             }
         }
 
-        .particle-disabled, [data-lm-disabled] {
+        .particle-disabled, [data-lm-disabled], .g-inheriting .particle-disabled {
             @include stripes-background(#ccc, 50px, 45deg);
         }
-
+        
         .atoms-section .placeholder.in-between {
             margin-bottom: 6px;
         }
