@@ -103,7 +103,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $filename = $locator->findResource("gantry-layouts://{$name}.yaml");
 
         if (!$filename) {
-            throw new \RuntimeException("Preset '{$name}' not found", 404);
+            throw new \RuntimeException(sprintf("Preset '%s' not found", $name), 404);
         }
 
         $layout = LayoutReader::read($filename);

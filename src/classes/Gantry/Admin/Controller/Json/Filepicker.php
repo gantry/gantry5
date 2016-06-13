@@ -94,7 +94,7 @@ class Filepicker extends JsonController
         }
 
         if (!count($bookmarks)) {
-            throw new \RuntimeException((count($drives) > 1 ? 'directories' : 'directory') . ' "' . implode('", "', $drives) . '" not found', 404);
+            throw new \RuntimeException(sprintf('%s "%s" not found', count($drives) > 1 ? 'directories' : 'directory', implode('", "', $drives)), 404);
         }
 
         $folders = [];
@@ -287,7 +287,7 @@ class Filepicker extends JsonController
         $targetPath = GANTRY5_ROOT . '/' . $path;
 
         if (!file_exists($targetPath)) {
-            throw new \RuntimeException('File not found: ' . $path, 404);
+            throw new \RuntimeException(sprintf('File not found: %s', $path), 404);
         }
 
         $hash = md5_file($path);
@@ -462,13 +462,13 @@ class Filepicker extends JsonController
         $file = File::instance($targetPath);
 
         if (!$file->exists()) {
-            throw new \RuntimeException('File not found: ' . $targetPath, 404);
+            throw new \RuntimeException(sprintf('File not found: %s', $targetPath), 404);
         }
 
         try {
             $file->delete();
         } catch (\Exception $e) {
-            throw new \RuntimeException('File could not be deleted: ' . $targetPath, 500);
+            throw new \RuntimeException(sprintf('File could not be deleted: %s', $targetPath), 500);
         }
         $file->free();
 

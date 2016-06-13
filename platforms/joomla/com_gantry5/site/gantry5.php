@@ -34,7 +34,7 @@ if (!$menuItem) {
 
 // Handle non-html formats and error page.
 if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error') {
-    JError::raiseError(404, 'Page not found');
+    JError::raiseError(404, JText::_('JERROR_PAGE_NOT_FOUND'));
 }
 
 $gantry = \Gantry\Framework\Gantry::instance();

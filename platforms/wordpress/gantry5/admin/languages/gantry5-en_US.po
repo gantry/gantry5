@@ -624,8 +624,8 @@ msgstr "Inherit every Section and Children of the selected Outline"
 msgid "GANTRY5_PLATFORM_ATOM"
 msgstr "Atom"
 
-msgid "GANTRY_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE"
+msgid "GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE"
 msgstr "No Inheritance, select an Outline first"
 
-msgid "GANTRY_PLATFROM_INHERITING_FROM_X"
+msgid "GANTRY5_PLATFROM_INHERITING_FROM_X"
 msgstr "Inheriting from %s"
