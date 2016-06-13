@@ -191,7 +191,9 @@ var AttachSettings = function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    $(formElements).forEach(function(input) {
                         input = $(input);
                         var name = input.attribute('name'),
                             type = input.attribute('type');
