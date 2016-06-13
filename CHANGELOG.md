@@ -4,9 +4,10 @@
 1. [Common](#common)
     1. [](#new)
         - **Inheritance**: It is now possible to have individual Sections and Particles to Inherit from a different Outline and to decide what to Inherit specifically (attributes, children, blocks). Once a Section or Particle have been set to Inherit, any change applied to the parent Section / Particle will automatically reflect to the inheriting one (#50, #303, #340, #361, #575, #1018, #1213, #1312)
-        - Add support for DebugBar (#386)
-        - Update SCSS compiler to support version 3.4 (#1117)
-        - Update Bourbon SCSS library to v4.2.7
+        - Added support for DebugBar (#386)
+        - Removed outdated LESS compiler (see #273)
+        - Updated SCSS compiler to support version 3.4 (#1117)
+        - Updated Bourbon SCSS library to v4.2.7
         - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
         - New `input.radios` field. Allows to create a list of radio selectors. `options` entry should be of kind key/value
         - Added possibility to place `<svg>` code directly inside the Logo particle
