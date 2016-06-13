@@ -298,6 +298,7 @@ class Page extends HtmlController
             }
         );
 
+        $data->set('id', $this->request->post['id']);
         $data->set('type', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->get('name'));
         $data->set('attributes', $this->request->post->getArray("particles.{$name}"));
@@ -310,8 +311,12 @@ class Page extends HtmlController
             }
         }
 
-        if ($block) {
-            $data->join('options.block', $block);
+        $inherit = $this->request->post->getArray('inherit');
+        $clone = !empty($inherit['mode']) && $inherit['mode'] === 'clone';
+        $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
+        if (!$clone && !empty($inherit['outline']) && count($inherit['include'])) {
+            unset($inherit['mode']);
+            $data->join('inherit', $inherit);
         }
 
         // TODO: validate
