@@ -87,7 +87,7 @@
                     </div>
                     <div>
                         <ul style="display: none">
-                            <li data-collection-nosort data-collection-template="{{ field.value|e }}" style="display: none;">
+                            <li data-collection-nosort="" data-collection-template="{{ field.value|e }}" style="display: none;">
                                 {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
