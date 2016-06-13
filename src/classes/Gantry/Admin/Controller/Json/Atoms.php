@@ -55,7 +55,7 @@ class Atoms extends JsonController
 
         $this->container['configuration'] = $outline;
 
-        $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('header.atoms'));
+        $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
         if ($inherit) {
             $atoms->inheritAll($outline);
         }
@@ -86,7 +86,7 @@ class Atoms extends JsonController
             'data'          => ['particles' => [$type => $item->attributes]],
             'prefix'        => "particles.{$type}.",
             'editable'      => true,
-            'overrideable'  => true,
+            'overrideable'  => false,
             'skip'          => ['enabled']
         ];
 
@@ -107,8 +107,7 @@ class Atoms extends JsonController
 
         $this->container['configuration'] = $outline;
 
-        $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('header.atoms'));
-
+        $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
         $item = (object) $atoms->id($id);
         if (empty($item->id)) {
             throw new \RuntimeException('Atom was not found from the outline', 404);
@@ -134,10 +133,10 @@ class Atoms extends JsonController
             'action'        => str_replace('.', '/', 'configurations.' . $outline . '.layout.' . $prefix . '.validate'),
             'skip'          => ['enabled'],
             'editable'      => false,
-            'overrideable'  => true,
+            'overrideable'  => false,
         ];
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-preview.html.twig', $this->params);
+        $html = $this->container['admin.theme']->render('@gantry-admin/modals/atom-preview.html.twig', $this->params);
 
         return new JsonResponse(['html' => $html]);
     }
