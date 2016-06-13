@@ -32,7 +32,7 @@ class AssignmentsPost implements AssignmentsInterface
             $post_type = $queried_object->post_type;
             $id = $queried_object->ID;
 
-            $rules[$post_type][$id] = 1;
+            $rules[$post_type][$id] = $this->priority;
 
             // Get current post type taxonomies and its terms
             $taxonomies = get_object_taxonomies($queried_object);
