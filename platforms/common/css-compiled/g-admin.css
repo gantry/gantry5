@@ -1865,9 +1865,6 @@
 #g5-container .visible-desktop {
   display: inherit !important;
 }
-#g5-container .g-block.visible-desktop {
-  display: block !important;
-}
 @media print {
   #g5-container .visible-print {
     display: inherit !important;
