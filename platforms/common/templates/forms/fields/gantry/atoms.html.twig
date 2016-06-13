@@ -12,15 +12,15 @@
     <div id="{{ field.id }}">
         {% if atoms %}
             <div class="input-group">
-                {% for id, atom in atoms %}
-                    <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">
+                {% for atom in atoms %}
+                    <label for="{{ field.id|default(scope ~ name) ~ '-' ~ atom.id }}">
                         <input
-                                id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
+                                id="{{ field.id|default(scope ~ name) ~ '-' ~ atom.id }}"
                                 type="radio"
                                 name="{{ (scope ~ name)|fieldName }}"
-                                value="{{ id }}"
+                                value="{{ atom.id }}"
                                 required="required"
-                                {% if value == id %}checked="checked"{% endif %}
+                                {% if value == atom.id %}checked="checked"{% endif %}
                         />
                         <span>{{ atom.title }}</span>
                         <i class="fa fa-info-circle fa-fw"></i>
@@ -28,7 +28,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            No Inheritance, select an Outline first
+            {{ 'GANTRY_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE'|trans }}
         {% endif %}
     </div>
 {% endblock %}
