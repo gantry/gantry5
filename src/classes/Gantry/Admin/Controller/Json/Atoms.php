@@ -67,6 +67,7 @@ class Atoms extends JsonController
             if (empty($item->id)) {
                 $item = (object)reset($list);
             }
+            $selected = $item->id;
         }
 
         $type = isset($item->type) ? $item->type : $type;
@@ -92,7 +93,7 @@ class Atoms extends JsonController
 
         $html['g-settings-atom'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
         if (isset($list)) {
-            $html['g-inherit-atom'] = $this->renderAtomsInput($inherit ? $outline : null, $type, $post['selected'], $list);
+            $html['g-inherit-atom'] = $this->renderAtomsInput($inherit ? $outline : null, $type, $selected, $list);
         }
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
