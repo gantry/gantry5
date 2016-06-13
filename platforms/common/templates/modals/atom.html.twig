@@ -47,6 +47,7 @@
                             {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                         </h4>
                         <div class="inner-params">
+                            <input type="hidden" name="{{ 'inherit.atom'|fieldName }}" value="{{ item.id }}" />
                             {% include 'forms/fields.html.twig' with {
                             gantry: gantry,
                             blueprints: inheritance.form,
@@ -61,7 +62,7 @@
 
         <div class="g-modal-actions">
             <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-            <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+            <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
             <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
         </div>
     </form>
