@@ -47,7 +47,6 @@
                             {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
                         </h4>
                         <div class="inner-params">
-                            <input type="hidden" name="{{ 'inherit.atom'|fieldName }}" value="{{ item.id }}" />
                             {% include 'forms/fields.html.twig' with {
                             gantry: gantry,
                             blueprints: inheritance.form,

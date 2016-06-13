@@ -33,7 +33,7 @@ ready(function() {
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
             value          = element.value(),
-            name           = $('[name="inherit[section]"]').value(),
+            name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
             form           = element.parent('[data-g-inheritance-settings]'),
             includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
