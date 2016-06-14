@@ -6091,23 +6091,27 @@ var MenuManager = new prime({
 module.exports = MenuManager;
 
 },{"../ui/drag.drop":48,"../ui/eraser":50,"../utils/elements.utils":62,"./drag.resizer":31,"elements/zen":132,"mout/array/every":164,"mout/array/indexOf":170,"mout/array/last":174,"mout/function/bind":187,"mout/lang/deepClone":195,"mout/lang/isArray":198,"mout/lang/isObject":203,"mout/object/equals":222,"mout/object/get":228,"mout/string/ltrim":257,"prime":295,"prime-util/prime/bound":291,"prime-util/prime/options":292,"prime/emitter":294}],35:[function(require,module,exports){
+(function (global){
 'use strict';
-var $             = require('elements'),
-    ready         = require('elements/domready'),
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
 
-    zen           = require('elements/zen'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    Eraser        = require('../ui/eraser'),
-    request       = require('agent'),
-    indexOf       = require('mout/array/indexOf'),
-    simpleSort    = require('sortablejs'),
+    zen                = require('elements/zen'),
+    modal              = require('../ui').modal,
+    toastr             = require('../ui').toastr,
+    Eraser             = require('../ui/eraser'),
+    request            = require('agent'),
+    indexOf            = require('mout/array/indexOf'),
+    simpleSort         = require('sortablejs'),
 
-    trim          = require('mout/string/trim'),
+    trim               = require('mout/string/trim'),
+    size               = require('mout/object/size'),
 
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    parseAjaxURI       = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix      = require('../utils/get-ajax-suffix'),
+    validateField      = require('../utils/field-validation'),
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById;
+;
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -6178,9 +6182,9 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item),
-                        trash = $('#trash'),
-                        target = $(this.originalEvent.target),
+                    var item       = $(event.item),
+                        trash      = $('#trash'),
+                        target     = $(this.originalEvent.target),
                         touchTrash = false;
 
                     // workaround for touch devices
@@ -6333,11 +6337,24 @@ var AttachSettings = function() {
                             item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
                             // toggle enabled/disabled status as needed
-                            var enabled = Number(dataValue[index].attributes.enabled);
+                            var enabled    = Number(dataValue[index].attributes.enabled),
+                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
+                            item.attribute('title', enabled ? '' : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+
+                            item.data('tip', null);
+                            if (inheriting) {
+                                var inherit = response.body.item.inherit,
+                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
+                                    atom = inherit.atom || '',
+                                    include = (inherit.include || []).join(', ');
+
+                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Include: ' + include);
+                            }
 
                             body.emit('change', { target: dataField });
+                            global.G5.tips.reload();
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {
@@ -6374,7 +6391,9 @@ ready(function() {
 });
 
 module.exports = Atoms;
-},{"../ui":51,"../ui/eraser":50,"../utils/field-validation":64,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"agent":75,"elements":108,"elements/domready":106,"elements/zen":132,"mout/array/indexOf":170,"mout/string/trim":266,"sortablejs":310}],36:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"../ui":51,"../ui/eraser":50,"../utils/field-validation":64,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"elements/zen":132,"mout/array/indexOf":170,"mout/object/size":237,"mout/string/trim":266,"sortablejs":310}],36:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),

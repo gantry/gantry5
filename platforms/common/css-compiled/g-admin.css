@@ -4952,6 +4952,10 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   border: 2px solid #9055AF;
   padding: 0.469rem;
   margin: 0.3125rem;
+  vertical-align: middle;
+}
+#g5-container #page-settings #atoms .atoms-picker li .atom-title, #g5-container #page-settings #atoms .atoms-list li .atom-title {
+  vertical-align: middle;
 }
 #g5-container #page-settings #atoms .atoms-picker li:not(.atom-force-style), #g5-container #page-settings #atoms .atoms-list li:not(.atom-force-style) {
   -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
@@ -4966,10 +4970,28 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
   color: #fff;
 }
+#g5-container #page-settings #atoms .atoms-picker li.g-inheriting, #g5-container #page-settings #atoms .atoms-list li.g-inheriting {
+  background-image: -webkit-linear-gradient(-315deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-image: linear-gradient(45deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-size: 50px 50px;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.g-inheriting i, #g5-container #page-settings #atoms .atoms-list li.g-inheriting i {
+  color: #fff;
+}
 #g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled {
   border-color: rgba(0, 0, 0, 0.1);
   color: #666;
   opacity: 0.7;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting, #g5-container #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting {
+  background-image: -webkit-linear-gradient(-315deg, #666 25%, #5e5e5e 25%, #5e5e5e 50%, #666 50%, #666 75%, #5e5e5e 75%, #5e5e5e);
+  background-image: linear-gradient(45deg, #666 25%, #5e5e5e 25%, #5e5e5e 50%, #666 50%, #666 75%, #5e5e5e 75%, #5e5e5e);
+  background-size: 50px 50px;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting i, #g5-container #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting i {
+  color: #fff;
 }
 #g5-container #page-settings #atoms .atoms-picker li {
   color: #666;

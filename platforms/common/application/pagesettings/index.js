@@ -1,20 +1,23 @@
 'use strict';
-var $             = require('elements'),
-    ready         = require('elements/domready'),
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
 
-    zen           = require('elements/zen'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    Eraser        = require('../ui/eraser'),
-    request       = require('agent'),
-    indexOf       = require('mout/array/indexOf'),
-    simpleSort    = require('sortablejs'),
+    zen                = require('elements/zen'),
+    modal              = require('../ui').modal,
+    toastr             = require('../ui').toastr,
+    Eraser             = require('../ui/eraser'),
+    request            = require('agent'),
+    indexOf            = require('mout/array/indexOf'),
+    simpleSort         = require('sortablejs'),
 
-    trim          = require('mout/string/trim'),
+    trim               = require('mout/string/trim'),
+    size               = require('mout/object/size'),
 
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    parseAjaxURI       = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix      = require('../utils/get-ajax-suffix'),
+    validateField      = require('../utils/field-validation'),
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById;
+;
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -85,9 +88,9 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item),
-                        trash = $('#trash'),
-                        target = $(this.originalEvent.target),
+                    var item       = $(event.item),
+                        trash      = $('#trash'),
+                        target     = $(this.originalEvent.target),
                         touchTrash = false;
 
                     // workaround for touch devices
@@ -240,11 +243,24 @@ var AttachSettings = function() {
                             item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
                             // toggle enabled/disabled status as needed
-                            var enabled = Number(dataValue[index].attributes.enabled);
+                            var enabled    = Number(dataValue[index].attributes.enabled),
+                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
+                            item.attribute('title', enabled ? '' : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+
+                            item.data('tip', null);
+                            if (inheriting) {
+                                var inherit = response.body.item.inherit,
+                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
+                                    atom = inherit.atom || '',
+                                    include = (inherit.include || []).join(', ');
+
+                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Include: ' + include);
+                            }
 
                             body.emit('change', { target: dataField });
+                            global.G5.tips.reload();
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {
