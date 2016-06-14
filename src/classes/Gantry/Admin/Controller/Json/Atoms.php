@@ -67,8 +67,8 @@ class Atoms extends JsonController
             if (empty($item->id)) {
                 $item = (object)reset($list);
             }
-            $selected = $item->id;
         }
+        $selected = !empty($item->id) ? $item->id : null;
 
         $type = isset($item->type) ? $item->type : $type;
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];

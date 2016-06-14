@@ -147,15 +147,13 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
 
-        // TODO: Move this information into index.yaml file as it allows us to follow also inheritance.
-        // FIXME: $includeInherited is not used.
         foreach ($this->items as $name => $title) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
             $index = $file->content();
             $file->free();
             if (isset($index['atoms'])) {
                 foreach ($index['atoms'] as $atom) {
-                    if (!empty($atom['id']) && $atom['type'] === $type) {
+                    if (!empty($atom['id']) && $atom['type'] === $type && ($includeInherited || empty($atom['inherit']))) {
                         $list[$name] = $title;
                     }
                 }
