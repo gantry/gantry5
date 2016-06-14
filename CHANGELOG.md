@@ -46,7 +46,7 @@
         - Add support for Widgets with checkboxes that use the trick of hidden/checkbox fields with the same name (#1014)
     3. [](#bugfix)
         - Fixed post type priority not being used in assignments (#1340)
-        - Menu particle does not have `Expand on Hover` option (#1360)
+        - Fixed menu particle missing `Expand on Hover` option (#1360)
 
 # 5.2.18
 ## 27/05/2016
