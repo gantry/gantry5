@@ -230,7 +230,7 @@ class Page extends HtmlController
                 $list = [];
             }
 
-            if (!empty($inherit['outline']) || (/*!($inheriting = $outlines->getInheritingOutlines($outline, 'atom', $id)) && */ $list)) {
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlinesWithAtom($outline, $item->id)) && $list)) {
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 

@@ -223,12 +223,39 @@ class Outlines extends AbstractOutlineCollection
         $list = [];
 
         $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
-        $index = $file->content();
+        $head = $file->content();
         $file->free();
-        if (isset($index['atoms'])) {
-            foreach ($index['atoms'] as $atom) {
+        if (isset($head['atoms'])) {
+            foreach ($head['atoms'] as $atom) {
                 if (!empty($atom['id']) && $atom['type'] === $type && ($includeInherited || empty($atom['inherit']['outline']))) {
                     $list[$atom['id']] = (object) $atom;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return list of outlines which are inheriting the specified atom.
+     *
+     * @param string $outline
+     * @param string $id
+     * @return array
+     */
+    public function getInheritingOutlinesWithAtom($outline, $id = null)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
+            $head = $file->content();
+            $file->free();
+
+            if (isset($head['atoms'])) {
+                foreach ($head['atoms'] as $atom) {
+                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] == $outline && (!$id || $atom['inherit']['atom'] == $id)) {
+                        $list[$name] = $title;
+                    }
                 }
             }
         }
@@ -257,7 +284,6 @@ class Outlines extends AbstractOutlineCollection
         }
 
         return $list;
-
     }
 
     /**
