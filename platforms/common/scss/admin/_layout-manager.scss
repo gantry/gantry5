@@ -199,11 +199,6 @@ $atom: #9055AF;
                         display: none !important;
                     }
                 }
-
-
-                &:not(.g-inheriting-children) > .g-grid {
-                    z-index: 2;
-                }
             }
 
             .g-grid {
@@ -1049,7 +1044,7 @@ $atom: #9055AF;
     }
 
     .g-inheriting:not(.g-inheriting-children) .g-inherit {
-        z-index: 1;
+        z-index: 0;
     }
 
     @include breakpoint(no-mobile) {

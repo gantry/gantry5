@@ -181,7 +181,7 @@ var LayoutManager = new prime({
         if (!this.block.isNew()) {
             element.style({
                 position: 'absolute',
-                zIndex: 1500,
+                zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),
