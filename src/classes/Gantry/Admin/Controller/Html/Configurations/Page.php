@@ -61,13 +61,26 @@ class Page extends HtmlController
         if ($configuration == 'default') {
             $this->params['overrideable'] = false;
         } else {
-            $this->params['defaults'] = $this->container['defaults'];
+            $defaults = $this->container['defaults'];
+            $this->params['defaults'] = $defaults;
             $this->params['overrideable'] = true;
         }
 
         $deprecated = $this->getDeprecatedAtoms();
         if ($deprecated) {
             $this->container['config']->set('page.head.atoms', $deprecated);
+        }
+
+        if (isset($defaults)) {
+            $defaultAtoms = $defaults->get('page.head.atoms');
+            $currentAtoms = $this->container['config']->get('page.head.atoms');
+            if ($currentAtoms && $defaultAtoms === $currentAtoms) {
+                // Make atoms to appear to be inherited in they are loaded from defaults.
+                $atoms = (new Atoms($defaultAtoms))->inheritAll('default')->toArray();
+
+                $this->params['defaults']->set('page.head.atoms', $atoms);
+                $this->container['config']->set('page.head.atoms', $atoms);
+            }
         }
 
         $this->params += [

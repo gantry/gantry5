@@ -86,6 +86,9 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function update()
     {
         foreach ($this->items as &$item) {
@@ -102,14 +105,23 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @param string $outline
+     * @return $this
+     */
     public function inheritAll($outline)
     {
         foreach ($this->items as &$item) {
-            $item['inherit'] = [
-                'outline' => $outline,
-                'atom' => $item['id']
-            ];
+            if (!empty($item['id'])) {
+                $item['inherit'] = [
+                    'outline' => $outline,
+                    'atom' => $item['id'],
+                    'include' => ['attributes']
+                ];
+            }
         }
+
+        return $this;
     }
 
     /**
