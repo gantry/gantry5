@@ -254,7 +254,7 @@ class Layout extends HtmlController
                 $file->free();
                 $inheritance->set(
                     'form.fields._note.content',
-                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li>, <li>', $inheriting) . '</li></ul>')
+                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
                 );
 
             } elseif ($outline === 'default') {
