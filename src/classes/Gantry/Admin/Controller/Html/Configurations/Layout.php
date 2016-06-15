@@ -235,6 +235,7 @@ class Layout extends HtmlController
             }
 
             if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, $id)) && $list)) {
+                $inheritable = true;
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 
@@ -280,6 +281,7 @@ class Layout extends HtmlController
             'extra'         => $blockBlueprints,
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => isset($inheritance) ? $inheritance : null,
+            'inheritable'   => !empty($inheritable),
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],

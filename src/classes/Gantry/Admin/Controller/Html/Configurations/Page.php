@@ -231,6 +231,7 @@ class Page extends HtmlController
             }
 
             if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlinesWithAtom($outline, $item->id)) && $list)) {
+                $inheritable = true;
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 
@@ -264,6 +265,7 @@ class Page extends HtmlController
         $this->params += [
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => isset($inheritance) ? $inheritance : null,
+            'inheritable'   => !empty($inheritable),
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'blueprints'    => $blueprints,
