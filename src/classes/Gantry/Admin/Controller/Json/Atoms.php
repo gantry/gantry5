@@ -53,6 +53,10 @@ class Atoms extends JsonController
         $inherit = $post['inherit'];
         $id = $post['id'];
 
+        if (!$outline) {
+            throw new \RuntimeException('Outline not given', 404);
+        }
+
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -105,6 +109,10 @@ class Atoms extends JsonController
 
         $outline = $post['outline'];
         $id = $post['id'];
+
+        if (!$outline) {
+            throw new \RuntimeException('Outline not given', 404);
+        }
 
         $this->container['configuration'] = $outline;
 
