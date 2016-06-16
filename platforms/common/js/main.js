@@ -4587,7 +4587,6 @@ ready(function() {
             indicator.hideIndicator();
         })
     });
-
 });
 
 var modules = {

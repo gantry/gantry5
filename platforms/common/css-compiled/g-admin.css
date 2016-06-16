@@ -2064,6 +2064,8 @@ body.g-prime {
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 #g5-container .g-collapsed.card .inner-params, #g5-container .g-collapsed:not(.card) {
   overflow: hidden;
