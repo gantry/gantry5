@@ -393,6 +393,9 @@ class TemplateInstaller
             }
 
             if (!empty($menu['items'])) {
+                $this->copyCustom('_body_only', '_body_only');
+                $this->copyCustom('_error', '_error');
+                $this->copyCustom('_offline', '_offline');
                 $this->copyCustom('default', 'default');
                 $this->addMenuItems($menutype, $menu['items'], (int) $parent);
             }
