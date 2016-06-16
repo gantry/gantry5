@@ -114,6 +114,10 @@ function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $
 }
 
 function gantry5_upgrader_post_install($success, $options, $result) {
+    if(isset($options['plugin']) && $options['plugin'] != "gantry5/gantry5.php") { 
+        return; 
+    }
+    
     if ($success) {
         $theme = isset($options['gantry5_abort']) && !$options['gantry5_abort'];
         $plugin = $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5';
