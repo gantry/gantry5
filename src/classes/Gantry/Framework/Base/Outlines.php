@@ -19,6 +19,7 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
+use Gantry\Framework\Atoms;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -446,8 +447,10 @@ class Outlines extends AbstractOutlineCollection
 
         try {
             foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-                $layout = $this->layout($outline);
-                $layout->updateInheritance($id, $folder)->save()->saveIndex();
+                $this->layout($outline)->updateInheritance($id, $folder)->save()->saveIndex();
+            }
+            foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+                Atoms::instance($outline)->updateInheritance($id, $folder)->save();
             }
 
             Folder::move($path, $newPath);
@@ -481,8 +484,10 @@ class Outlines extends AbstractOutlineCollection
         }
 
         foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-            $layout = $this->layout($outline);
-            $layout->updateInheritance($id)->save()->saveIndex();
+            $this->layout($outline)->updateInheritance($id)->save()->saveIndex();
+        }
+        foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+            Atoms::instance($outline)->updateInheritance($id)->save();
         }
 
         if (file_exists($path)) {

@@ -178,8 +178,10 @@ class Outlines extends BaseOutlines
 
         try {
             foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-                $layout = $this->layout($outline);
-                $layout->updateInheritance($id)->save()->saveIndex();
+                $this->layout($outline)->updateInheritance($id)->save()->saveIndex();
+            }
+            foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+                Atoms::instance($outline)->updateInheritance($id)->save();
             }
 
             if ($deleteModel && !$model->delete($id)) {

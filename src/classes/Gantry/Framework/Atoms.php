@@ -18,10 +18,16 @@ use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
+
+    /**
+     * @var  string
+     */
+    protected $name;
 
     /**
      * @var array
@@ -47,7 +53,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         if (!isset(static::$instances[$outline])) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
             $head = $file->content();
-            static::$instances[$outline] = new static(isset($head['atoms']) ? $head['atoms'] : []);
+            static::$instances[$outline] = new static(isset($head['atoms']) ? $head['atoms'] : [], $outline);
             $file->free();
 
             static::$instances[$outline]->init();
@@ -59,9 +65,11 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Atoms constructor.
      * @param array $atoms
+     * @param string $name
      */
-    public function __construct(array $atoms = [])
+    public function __construct(array $atoms = [], $name = null)
     {
+        $this->name = $name;
         $this->items = $atoms;
 
         foreach ($this->items as &$item) {
@@ -124,6 +132,51 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $old
+     * @param string $new
+     * @param array  $ids
+     * @return $this
+     */
+    public function updateInheritance($old, $new = null, $ids = null)
+    {
+        $this->init();
+
+        foreach ($this->items as &$item) {
+            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] == $old && isset($item['inherit']['atom'])) {
+                if ($new && ($ids === null || isset($ids[$item['inherit']['atom']]))) {
+                    $item['inherit']['outline'] = $new;
+                } else {
+                    unset($item['inherit']);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    public function save()
+    {
+        if ($this->name) {
+            /** @var UniformResourceLocator $locator */
+            $locator = Gantry::instance()['locator'];
+
+            $loadPath = $locator->findResource("gantry-theme://config/{$this->name}/page/head.yaml");
+            $savePath = $locator->findResource("gantry-theme://config/{$this->name}/page/head.yaml", true, true);
+
+            if ($loadPath && $savePath) {
+                $file = CompiledYamlFile::instance($loadPath);
+                $head = $file->content();
+                $head['atoms'] = $this->update()->toArray();
+                $file->free();
+
+                $file = CompiledYamlFile::instance($savePath);
+                $file->save($head);
+                $file->free();
+            }
+        }
     }
 
     /**
