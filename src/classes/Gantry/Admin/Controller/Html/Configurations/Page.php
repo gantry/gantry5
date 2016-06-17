@@ -217,6 +217,7 @@ class Page extends HtmlController
         }
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
 
         // Load particle blueprints and default settings.
         $validator = new BlueprintsForm([]);
