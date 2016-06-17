@@ -205,7 +205,7 @@ ready(function() {
         modal.open({
             content: 'Loading',
             method: 'post',
-            data: { id: id.value(), outline: outline.value() },
+            data: { id: id.value(), outline: outline.value() || getCurrentOutline() },
             remote: parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) {
