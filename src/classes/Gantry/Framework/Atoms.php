@@ -77,8 +77,10 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
             if (!empty($item['inherit']['outline']) && !empty($item['inherit']['atom'])) {
                 $inherited = static::instance($item['inherit']['outline']);
                 $test = $inherited->id($item['inherit']['atom']);
-                if (!empty($test['attributes'])) {
+                if (isset($test['attributes'])) {
                     $item['attributes'] = $test['attributes'];
+                } else {
+                    unset($item['inherit']);
                 }
             }
         }
