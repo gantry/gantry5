@@ -54,7 +54,7 @@ class Atoms extends JsonController
         $id = $post['id'];
 
         if (!$outline) {
-            throw new \RuntimeException('Outline not given', 404);
+            throw new \RuntimeException('Outline not given', 400);
         }
 
         $this->container['configuration'] = $outline;
@@ -111,7 +111,7 @@ class Atoms extends JsonController
         $id = $post['id'];
 
         if (!$outline) {
-            throw new \RuntimeException('Outline not given', 404);
+            throw new \RuntimeException('Outline not given', 400);
         }
 
         $this->container['configuration'] = $outline;
