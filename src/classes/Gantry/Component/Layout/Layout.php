@@ -629,6 +629,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     protected function initInheritance()
     {
+        $index = null;
         if ($this->name) {
             $gantry = Gantry::instance();
 
@@ -642,8 +643,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $index = $file->content();
                 $file->free();
             }
-        } else {
-            $index = null;
         }
 
         $inheriting = $this->inherit();
