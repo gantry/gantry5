@@ -314,17 +314,27 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
-    public function onExtensionAfterDelete($context, $table)
+    public function onExtensionBeforeDelete($context, $table)
     {
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
-            return;
+            return true;
         }
 
         $template = $table->template;
 
-        $this->load($template);
+        $gantry = $this->load($template);
 
-        Gantry\Joomla\StyleHelper::delete($table->id);
+        /** @var \Gantry\Framework\Outlines $outlines */
+        $outlines = $gantry['configurations'];
+
+        try {
+            $outlines->delete($table->id, false);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            return false;
+        }
+
+        return true;
     }
 
     public function onContentPrepareData($context, $data)

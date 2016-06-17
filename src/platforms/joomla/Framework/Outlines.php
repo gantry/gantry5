@@ -165,7 +165,7 @@ class Outlines extends BaseOutlines
         return $id;
     }
 
-    public function delete($id)
+    public function delete($id, $deleteModel = true)
     {
         $model = StyleHelper::loadModel();
 
@@ -182,7 +182,7 @@ class Outlines extends BaseOutlines
                 $layout->updateInheritance($id)->save()->saveIndex();
             }
 
-            if (!$model->delete($id)) {
+            if ($deleteModel && !$model->delete($id)) {
                 $error = $model->getError();
                 // Well, Joomla can always send enqueue message instead!
                 if (!$error) {
