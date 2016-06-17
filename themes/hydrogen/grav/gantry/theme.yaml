@@ -2,23 +2,20 @@ details:
   name: Hydrogen
   version: "@version@"
   icon: paper-plane
-  date: "@versiondate@"
+  date: @versiondate@
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
     link: http://www.rockettheme.com
 
   documentation:
-    link: http://www.rockettheme.com/docs/joomla/templates/hydrogen
+    link: http://docs.gantry.org/gantry5
 
   support:
-    link: http://www.rockettheme.com/forum/joomla-template-hydrogen
+    link: https://gitter.im/gantry/gantry5
 
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml
-
-  news:
-    link: http://news.rockettheme.com/prime/themes.yaml
 
   copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
   license: GPLv2
@@ -57,14 +54,42 @@ configuration:
     overrides:
       - custom
 
+  block-variations:
+    Box Variations:
+      box1: Box 1
+      box2: Box 2
+      box3: Box 3
+      box4: Box 4
+    Effects:
+      shadow: Shadow 1
+      shadow2: Shadow 2
+      rounded: Rounded
+      square: Square
+    Utility:
+      disabled: Disabled
+      align-right: Align Right
+      align-left: Align Left
+      center: Center
+      full-width: Full Width
+      equal-height: Equal Height
+      nomarginall: No Margin
+      nopaddingall: No Padding
+
   dependencies:
     gantry: ~5.3
 
 admin:
   styles:
-    section:
-      - header
-      - showcase
-      - subfeature
     core:
       - base
+      - accent
+    section:
+      - header
+      - navigation
+      - showcase
+      - feature
+      - subfeature
+      - main
+      - footer
+    configuration:
+      - breakpoints
