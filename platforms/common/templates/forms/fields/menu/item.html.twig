@@ -10,10 +10,10 @@
             <option
                     {# required attribute structures #}
                     {% if key == value %}selected="selected"{% endif %}
-                    value="{{ key|e }}"
+                    value="{{ key }}"
                     {# non-gloval attribute structures #}
                     {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                    >{{ item.spacing|raw }}{{ item.label|e }}</option>
+                    >{{ item.spacing|raw }}{{ item.label }}</option>
             {% endfor %}
             </optgroup>
             {% endif %}

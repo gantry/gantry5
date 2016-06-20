@@ -7,7 +7,7 @@
     <span class="g-instancepicker-title">{{ value.title|default('') }}<br />{{ value.particle ? ' (' ~ value.particle ~ ')' : '' }}</span><button class="button" data-g-instancepicker="{{ { type: 'particle', field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
     <input
             type="hidden"
-            name="{{ (scope ~ name)|fieldName|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
             value="{{ value ? value|json_encode(constant('JSON_UNESCAPED_UNICODE'))|e }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
@@ -16,6 +16,6 @@
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
             />
 
-    <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName|e }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+    <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle"></i></span>
     </div></div></div>
 {% endblock %}

@@ -6,19 +6,19 @@
             <input
                     {# required attribute structures #}
                     type="text"
-                    name="{{ (scope ~ name)|fieldName|e }}"
-                    value="{{ value|join(', ')|e }}"
+                    name="{{ (scope ~ name)|fieldName }}"
+                    value="{{ value|join(', ') }}"
                     {# global attribute structures #}
                     {{ block('global_attributes') }}
                     {# non-gloval attribute structures #}
-                    {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
+                    {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
                     {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
                     {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                    {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
+                    {% if field.list is defined %}list="{{ field.list }}"{% endif %}
                     />
             {% set picker = 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]' %}
              <span class="input-group-btn">
-                <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label|e }}" data-g5-iconpicker="{{ picker|e('html_attr') }}">
+                <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label }}" data-g5-iconpicker="{{ picker|e('html_attr') }}">
                     <i class="{{ value|default('fa fa-hand-o-up picker')|e('html_attr') }}"></i>
                 </button>
             </span>
