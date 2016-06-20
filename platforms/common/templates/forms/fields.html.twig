@@ -2,7 +2,7 @@
 
 {% if blueprints.type %}
     {% set field = blueprints %}
-    {% set value = data %}
+    {% set current_value = data %}
     {% set default_value = defaults %}
 
     {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
@@ -13,9 +13,9 @@
             {% set name = name[1:] %}
         {% endif %}
 
-        {% set value = nested(data, scope ~ name) %}
+        {% set current_value = nested(data, scope ~ name) %}
         {% set default_value = nested(defaults, scope ~ name) %}
-        {% set has_value = value and value != default_value %}
+        {% set has_value = current_value is not null %}
         {% set field_overrideable = field.overridable is defined ? field.overridable : (field.overrideable is defined ? field.overrideable : true) %}
 
         {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and not field_overrideable and not has_value) and not(not has_value and not_global_overrideable) %}

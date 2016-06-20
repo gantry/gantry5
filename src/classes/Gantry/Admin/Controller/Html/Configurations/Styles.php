@@ -66,9 +66,11 @@ class Styles extends HtmlController
 
         if($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $this->params['data'] = $this->container['config'];
         } else {
-            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $this->container['defaults'];
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false);
         }
 
         $this->params['blocks'] = $this->container['styles']->group();
@@ -86,14 +88,15 @@ class Styles extends HtmlController
 
         if($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $this->params['data'] = $this->container['config']->get($prefix);
         } else {
-            $this->params['defaults'] = $this->container['defaults']->get($prefix);
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false)->get($prefix);
         }
 
         $this->params += [
             'block' => $blueprints,
-            'data' =>  $this->container['config']->get($prefix),
             'id' => $id,
             'parent' => "configurations/{$this->params['configuration']}/styles",
             'route'  => "configurations.{$this->params['configuration']}.styles.{$prefix}",
@@ -107,6 +110,7 @@ class Styles extends HtmlController
     {
         $path = func_get_args();
 
+        $configuration = $this->params['configuration'];
         $style = $this->container['styles']->get($id);
 
         // Load blueprints.
@@ -129,9 +133,17 @@ class Styles extends HtmlController
         }
         array_pop($path);
 
+        if($configuration == 'default') {
+            $this->params['overrideable'] = false;
+            $this->params['data'] = $this->container['config']->get($prefix);
+        } else {
+            $this->params['overrideable'] = true;
+            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false)->get($prefix);
+        }
+
         $this->params = [
                 'blueprints' => $fields,
-                'data' =>  $this->container['config']->get($prefix),
                 'parent' => $path
                     ? "configurations/{$this->params['configuration']}/styles/blocks/{$id}/" . implode('/', $path)
                     : "configurations/{$this->params['configuration']}/styles/blocks/{$id}",

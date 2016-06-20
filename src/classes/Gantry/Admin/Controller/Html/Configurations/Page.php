@@ -24,6 +24,7 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
 use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Outlines;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -60,30 +61,30 @@ class Page extends HtmlController
 
         if ($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $data = $this->container['config'];
         } else {
-            $defaults = $this->container['defaults'];
-            $this->params['defaults'] = $defaults;
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $defaults = $this->container['defaults'];
+            $data = ConfigServiceProvider::load($this->container, $configuration, false, false);
         }
 
         $deprecated = $this->getDeprecatedAtoms();
         if ($deprecated) {
-            $this->container['config']->set('page.head.atoms', $deprecated);
+            $data->set('page.head.atoms', $deprecated);
         }
 
         if (isset($defaults)) {
-            $defaultAtoms = $defaults->get('page.head.atoms');
-            $currentAtoms = $this->container['config']->get('page.head.atoms');
-            if ($currentAtoms && $defaultAtoms === $currentAtoms) {
+            $currentAtoms = $data->get('page.head.atoms');
+            if (!$currentAtoms) {
                 // Make atoms to appear to be inherited in they are loaded from defaults.
+                $defaultAtoms = $defaults->get('page.head.atoms');
                 $atoms = (new Atoms($defaultAtoms))->inheritAll('default')->toArray();
-
-                $this->params['defaults']->set('page.head.atoms', $atoms);
-                $this->container['config']->set('page.head.atoms', $atoms);
+                $defaults->set('page.head.atoms', $atoms);
             }
         }
 
         $this->params += [
+            'data' => $data,
             'page' => $this->container['page']->group(),
             'route'  => "configurations.{$this->params['configuration']}",
             'page_id' => $configuration,

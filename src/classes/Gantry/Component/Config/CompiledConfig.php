@@ -41,6 +41,21 @@ class CompiledConfig extends CompiledBase
     protected $withDefaults;
 
     /**
+     * Get filename for the compiled PHP file.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function name($name = null)
+    {
+        if (!$this->name) {
+            $this->name = $name ?: md5(json_encode(array_keys($this->files)) . (int) $this->withDefaults);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set blueprints for the configuration.
      *
      * @param callable $blueprints

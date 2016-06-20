@@ -1,6 +1,6 @@
 <input type="checkbox"
        class="settings-param-toggle"
-       id="of-{{ scope ~ name }}"{{ value != default_value ? ' checked="checked"' }}
+       id="of-{{ scope ~ name }}"{{ has_value ? ' checked="checked"' }}
        role="checkbox"
        aria-label="{{ 'GANTRY5_PLATFORM_OVERRIDE_CHECKBOX'|trans((scope ~ name)|replace({'.': ' '})|title|trim) }}"
        title="{{ 'GANTRY5_PLATFORM_OVERRIDE_CHECKBOX'|trans(field.label) }}" />

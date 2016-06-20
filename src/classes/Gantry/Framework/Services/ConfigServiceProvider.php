@@ -72,13 +72,15 @@ class ConfigServiceProvider implements ServiceProviderInterface
         return $config->load();
     }
 
-    public static function load(Container $container, $name = 'default')
+    public static function load(Container $container, $name = 'default', $combine = true, $withDefaults = true)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
+        $combine = $combine && $name !== 'default';
+
         // Merge current configuration with the default.
-        $uris = array_unique(["gantry-config://{$name}", 'gantry-config://default']);
+        $uris = $combine ? ["gantry-config://{$name}", 'gantry-config://default'] : ["gantry-config://{$name}"];
 
         $paths = [];
         foreach ($uris as $uri) {
@@ -99,7 +101,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
             return $container['blueprints'];
         });
 
-        $config = $compiled->load(true);
+        $config = $compiled->load($withDefaults);
 
         // Set atom inheritance.
         $atoms = new Atoms((array) $config->get('page.head.atoms'));
