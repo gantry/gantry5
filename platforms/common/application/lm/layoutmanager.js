@@ -97,7 +97,7 @@ var LayoutManager = new prime({
 
     clear: function(parent, options) {
         var type, child,
-            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+            filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
 
         options = options || { save: true, dropLastGrid: false, emptyInherits: false };
 
