@@ -30,6 +30,7 @@
         - Fixed `Document::urlFilter` handling URLs inside `<pre>` and `<code>` tags (#1328)
         - Fixed `collection.list` inside `container.set` not working (#1333)
         - Removed Nucleus CSS rule `.g-block.visible-desktop {}` that was overriding the media queries (#1344)
+        - Layout Manager will now prevent clearing single empty rows upon save (#1368)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
