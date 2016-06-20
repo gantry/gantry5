@@ -105,11 +105,12 @@ class plgSystemGantry5 extends JPlugin
                     $params   = json_decode($module->params);
                     $particle = isset($params->particle) ? json_decode($params->particle) : '';
                     $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
+                    $type = isset($particle->particle) ? $particle->particle : '';
 
                     $this->modules[$module->id] = $particle;
 
-                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title) {
-                        return $this->appendHtml($matches, $title);
+                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title, $type) {
+                        return $this->appendHtml($matches, $title, $type);
                     }, $body);
                 }
 
@@ -400,9 +401,11 @@ class plgSystemGantry5 extends JPlugin
      * @param array  $matches
      * @param string $content
      *
+     * @param string $type
+     *
      * @return string
      */
-    private function appendHtml(array $matches, $content = 'Gantry 5')
+    private function appendHtml(array $matches, $content = 'Gantry 5', $type = '')
     {
         $html = $matches[0];
 
@@ -412,8 +415,11 @@ class plgSystemGantry5 extends JPlugin
 
             if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
+                $colors = $content ? 'background:#439a86;' : 'background:#f17f48;';
                 $content = $content ?: 'No Particle Selected';
-                $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
+                $content .= $type ? ' (' . $type . ')' : '';
+
+                $html .= ' <span class="label" style="' . $colors . ';color:#fff;">' . $content . '</span>';
 
                 if (isset($this->modules[$id])) { unset($this->modules[$id]); }
                 else { unset($this->styles[$id]); }
