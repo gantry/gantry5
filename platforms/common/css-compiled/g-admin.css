@@ -2890,9 +2890,15 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .settings-block .g-instancepicker-title {
   margin-right: 0.5rem;
   font-style: italic;
+  vertical-align: middle;
+  display: inline-block;
 }
 #g5-container .settings-block .g-instancepicker-title:empty {
   margin: 0;
+}
+#g5-container .settings-block .g-instancepicker-title + .button {
+  display: inline-block;
+  vertical-align: middle;
 }
 #g5-container .settings-block .input-small {
   width: 120px !important;

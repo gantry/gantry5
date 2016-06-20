@@ -78,9 +78,15 @@ body.com_modules #g5-container .g-instancepicker-title, body.com_menus #g5-conta
   font-size: 1rem;
   font-style: italic;
   margin-right: 0.5rem;
+  vertical-align: middle;
+  display: inline-block;
 }
 body.com_modules #g5-container .g-instancepicker-title:empty, body.com_menus #g5-container .g-instancepicker-title:empty {
   margin-right: 0;
+}
+body.com_modules #g5-container .g-instancepicker-title + .button, body.com_menus #g5-container .g-instancepicker-title + .button {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #g5-container .button-primary {
