@@ -7,7 +7,7 @@ form:
     _info:
       type: separator.note
       class: alert alert-info blocksize-note
-      content: 'Inheritance makes the Offcanvas to be identical to the inherited outline.'
+      content: 'Inheritance makes the Offcanvas identical to that of the inherited outline.'
 
     mode:
       type: input.radios
