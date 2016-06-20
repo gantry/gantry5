@@ -4,6 +4,11 @@ type: section.inheritance
 
 form:
   fields:
+    _info:
+      type: separator.note
+      class: alert alert-info blocksize-note
+      content: 'Inheritance makes the Section to be identical to the inherited outline.'
+
     mode:
       type: input.radios
       label: Mode
@@ -24,9 +29,14 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Section to inherit?
       options:
         attributes: Section Attributes
-        block: Section Block
-        children: Section Children
+        block: Block Attributes
+        children: Particles within Section
+
+    _warning:
+      type: separator.note
+      class: alert alert-warning blocksize-note
+      content: '<strong>WARNING:</strong> By checking <strong>Replace Particles within Section</strong> all your pre-existing particles will be deleted!'

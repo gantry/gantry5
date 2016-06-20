@@ -31,7 +31,7 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Atom to inherit?
       options:
         attributes: Atom Attributes

@@ -4,6 +4,11 @@ type: offcanvas.inheritance
 
 form:
   fields:
+    _info:
+      type: separator.note
+      class: alert alert-info blocksize-note
+      content: 'Inheritance makes the Offcanvas to be identical to the inherited outline.'
+
     mode:
       type: input.radios
       label: Mode
@@ -24,9 +29,14 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Offcanvas to inherit?
       options:
         attributes: Offcanvas Attributes
-        block: Offcanvas Block
-        children: Offcanvas Children
+        block: Block Attributes
+        children: Particles within Offcanvas
+
+    _warning:
+      type: separator.note
+      class: alert alert-warning blocksize-note
+      content: '<strong>WARNING:</strong> By checking <strong>Replace Particles within Offcanvas</strong> all your pre-existing particles will be deleted!'
