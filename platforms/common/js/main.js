@@ -4184,7 +4184,8 @@ ready(function() {
                 limit           = containerBounds.top + containerBounds.height,
                 sidebarCoords   = sidebar[0].getBoundingClientRect(),
                 shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
-                reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit;
+                reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit,
+                sidebarTallerThanContainer = containerBounds.height <= sidebarCoords.height;
 
             sidebar.style('width', sidebarCoords.width);
             if (shouldBeFixed && !reachedTheLimit) {
@@ -4194,11 +4195,13 @@ ready(function() {
                     bottom: 'inherit'
                 });
             } else if (shouldBeFixed && reachedTheLimit) {
-                sidebar.removeClass('particles-fixed').addClass('particles-absolute');
-                sidebar.style({
-                    top: 'inherit',
-                    bottom: parseInt(container.compute('padding-bottom'), 10)
-                });
+                if (sidebarTallerThanContainer) {
+                    sidebar.removeClass('particles-fixed').addClass('particles-absolute');
+                    sidebar.style({
+                        top: 'inherit',
+                        bottom: parseInt(container.compute('padding-bottom'), 10)
+                    });
+                }
             } else {
                 sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
                 sidebar.style({

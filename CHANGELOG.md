@@ -32,6 +32,7 @@
         - Removed Nucleus CSS rule `.g-block.visible-desktop {}` that was overriding the media queries (#1344)
         - Layout Manager will now prevent clearing single empty rows upon save (#1368)
 2. [Joomla](#joomla)
+        - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
     2. [](#improved)
