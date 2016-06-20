@@ -210,6 +210,20 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @return $this
+     */
+    public function clean()
+    {
+        $this->references = null;
+        $this->types = null;
+        $this->inherit = null;
+
+        $this->cleanLayout($this->items);
+
+        return $this;
+    }
+
+    /**
      * @param string $old
      * @param string $new
      * @param array  $ids
@@ -623,6 +637,33 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 if (!$found && !empty($item->children)) {
                     $leftover[$item->id] = $item->title;
                 }
+            }
+        }
+    }
+
+    /**
+     * @param array $items
+     */
+    protected function cleanLayout(array $items)
+    {
+        foreach ($items as $item) {
+            if (!empty($item->inherit->include)) {
+                $include = $item->inherit->include;
+                foreach ($include as $part) {
+                    switch ($part) {
+                        case 'attributes':
+                            $item->attributes = new \stdClass();
+                            break;
+                        case 'block':
+                            break;
+                        case 'children':
+                            $item->children = [];
+                            break;
+                    }
+                }
+            }
+            if ($item->children) {
+                $this->cleanLayout($item->children);
             }
         }
     }
