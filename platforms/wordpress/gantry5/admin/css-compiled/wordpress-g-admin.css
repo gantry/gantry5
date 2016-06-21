@@ -101,14 +101,14 @@ body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;
 }
-body.gantry5 #g5-container input[type="checkbox"] {
+body.gantry5 #g5-container input[type="checkbox"], body.gantry5 #g5-container input[type="radio"] {
   height: 16px;
   display: inline-block;
 }
-body.gantry5 #g5-container input[type="checkbox"]:checked:before {
+body.gantry5 #g5-container input[type="checkbox"]:not([type="radio"]):checked:before, body.gantry5 #g5-container input[type="radio"]:not([type="radio"]):checked:before {
   height: 16px;
 }
-body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle) {
+body.gantry5 #g5-container input[type="checkbox"]:not(.settings-param-toggle), body.gantry5 #g5-container input[type="radio"]:not(.settings-param-toggle) {
   position: inherit;
 }
 body.gantry5 #g5-container .main-block {

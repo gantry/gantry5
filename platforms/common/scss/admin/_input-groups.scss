@@ -99,7 +99,7 @@
         }
     }
 
-    .input-multicheckbox .input-group, .input-radios .input-group, #g-inherit-particle .input-group, #g-inherit-atom .input-group {
+    .input-multicheckbox .input-group, .input-radios .input-group, #g-inherit-particle .input-group, #g-inherit-atom .input-group, .g-preserve-particles {
         width: 100%;
         input, span {
             vertical-align: middle;
@@ -108,6 +108,10 @@
         span {
             line-height: 1.5rem;
             margin-left: 5px;
+        }
+
+        label {
+            display: block;
         }
     }
 

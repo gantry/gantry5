@@ -40,10 +40,10 @@ body.gantry5 {
             font-family: inherit;
         }
 
-        input[type="checkbox"] {
+        input[type="checkbox"], input[type="radio"] {
             height: 16px;
             display: inline-block;
-            &:checked:before {
+            &:not([type="radio"]):checked:before {
                 height: 16px;
             }
             &:not(.settings-param-toggle) {
