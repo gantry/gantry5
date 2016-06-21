@@ -32,6 +32,7 @@
         - Fixed `collection.list` inside `container.set` not working (#1333)
         - Removed Nucleus CSS rule `.g-block.visible-desktop {}` that was overriding the media queries (#1344)
         - Layout Manager will now prevent clearing single empty rows upon save (#1368)
+        - Font Picker: Fixed potential conflict issue when a Local and a Remote fonts were matching name
 2. [Joomla](#joomla)
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
         - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
