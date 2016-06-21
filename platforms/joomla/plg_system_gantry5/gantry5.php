@@ -246,7 +246,7 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Trigger the onContentBeforeSave event.
-        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, &$table, false));
+        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, $table, false));
         if (in_array(false, $result, true)) {
             throw new RuntimeException($table->getError());
         }
@@ -260,7 +260,7 @@ class plgSystemGantry5 extends JPlugin
         \Gantry\Joomla\CacheHelper::cleanPlugin();
 
         // Trigger the onExtensionAfterSave event.
-        $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
+        $dispatcher->trigger('onExtensionAfterSave', array($name, $table, false));
 
         return true;
     }
@@ -338,7 +338,7 @@ class plgSystemGantry5 extends JPlugin
         return true;
     }
 
-    public function onContentPrepareData($context, $data)
+    public function onContentPrepareData($context, &$data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 

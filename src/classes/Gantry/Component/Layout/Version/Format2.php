@@ -366,7 +366,7 @@ class Format2
                     // Sections and other complex items.
                     $id = isset($child['attributes']['boxed']) ? "/{$id}/" : $id;
                     $result[trim("{$id} {$size}")] = $value;
-                } else {
+                } elseif (!empty($value)) {
                     // Simple grid / block item.
                     $result[] = $value;
                 }
@@ -381,6 +381,7 @@ class Format2
             unset ($this->structure[$content['id']]);
             return reset($result) ?: null;
         }
+
         return $result;
     }
 
