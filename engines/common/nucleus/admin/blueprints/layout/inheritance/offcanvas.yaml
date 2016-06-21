@@ -35,8 +35,3 @@ form:
         attributes: Offcanvas Attributes
         block: Block Attributes
         children: Particles within Offcanvas
-
-    _warning:
-      type: separator.note
-      class: alert alert-warning blocksize-note
-      content: '<strong>WARNING:</strong> By checking <strong>Replace Particles within Offcanvas</strong> all your pre-existing particles will be deleted!'

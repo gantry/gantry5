@@ -35,8 +35,3 @@ form:
         attributes: Section Attributes
         block: Block Attributes
         children: Particles within Section
-
-    _warning:
-      type: separator.note
-      class: alert alert-warning blocksize-note
-      content: '<strong>WARNING:</strong> By checking <strong>Replace Particles within Section</strong> all your pre-existing particles will be deleted!'
