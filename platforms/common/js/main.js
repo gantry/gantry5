@@ -3078,7 +3078,7 @@ ready(function() {
 
         var blocktype = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data = null, parent;
+            data = null, parent, section;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
@@ -3093,6 +3093,7 @@ ready(function() {
 
         element = element.parent('[data-lm-blocktype]');
         parent = element.parent('[data-lm-blocktype]');
+        section = element.parent('[data-lm-blocktype="section"]');
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
@@ -3109,6 +3110,7 @@ ready(function() {
             data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
             data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
+            data.parent = section ? section.data('lm-id') : null;
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
