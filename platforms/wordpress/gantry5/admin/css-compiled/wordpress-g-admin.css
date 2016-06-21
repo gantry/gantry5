@@ -79,6 +79,9 @@ body.gantry5 {
   color: #ddd;
   background-color: #F1F1F1;
 }
+body.gantry5 .label:empty, body.gantry5 .badge:empty {
+  display: none;
+}
 body.gantry5.auto-fold #wpcontent {
   padding-left: 0;
 }

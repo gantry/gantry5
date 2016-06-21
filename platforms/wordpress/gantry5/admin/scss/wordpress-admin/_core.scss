@@ -5,6 +5,10 @@ body.gantry5 {
     padding: 0;
     max-width: inherit;
 
+    .label:empty, .badge:empty {
+        display: none;
+    }
+
     &.auto-fold {
         #wpcontent {
             padding-left: 0;
