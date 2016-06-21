@@ -49,13 +49,13 @@ ready(function() {
                     confirm.showIndicator();
 
                     var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
-                        mode    = content.elements.content.find('[name="mode"]:checked'),
+                        from    = content.elements.content.find('[name="from"]:checked'),
                         preset  = content.elements.content.find('[name="preset"]'),
                         outline = content.elements.content.find('[name="outline"]'),
                         inherit = content.elements.content.find('[name="inherit"]'),
                         data = {
                             title: title.value(),
-                            mode: mode.value(),
+                            from: from.value(),
                             preset: preset.value(),
                             outline: outline.value(),
                             inherit: inherit.checked()
@@ -95,14 +95,14 @@ ready(function() {
     });
 
     // Handles Preset / Outline switcher in Outline creation
-    body.delegate('change', 'input[type="radio"]#mode-preset, input[type="radio"]#mode-outline', function(event, element) {
+    body.delegate('change', 'input[type="radio"]#from-preset, input[type="radio"]#from-outline', function(event, element) {
         element = $(element);
         var value    = element.value(),
-            elements = element.parent('.card').search('.g-create-mode');
+            elements = element.parent('.card').search('.g-create-from');
 
         var filtered = elements.style('display', 'none').filter(function(block) {
             block = $(block);
-            return block.hasClass('g-create-mode-' + value);
+            return block.hasClass('g-create-from-' + value);
         });
 
         if (filtered) {
