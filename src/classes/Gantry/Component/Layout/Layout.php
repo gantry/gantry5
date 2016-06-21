@@ -34,7 +34,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 5;
+    const VERSION = 6;
 
     protected static $instances = [];
     protected static $indexes = [];
@@ -236,7 +236,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $inherit = $this->inherit();
 
         if (!empty($inherit[$old])) {
-            foreach ($inherit[$old] as $id) {
+            foreach ($inherit[$old] as $id => $inheritId) {
                 $element = $this->find($id);
                 $inheritId = isset($element->inherit->particle) ? $element->inherit->particle : $id;
                 if ($new && ($ids === null || isset($ids[$inheritId]))) {
@@ -475,7 +475,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $list = [];
         foreach ($this->inherit as $name => $item) {
             if (isset($item->inherit->particle)) {
-                $list[$item->inherit->outline][$item->inherit->particle] = $name;
+                $list[$item->inherit->outline][$name] = $item->inherit->particle;
             } else {
                 $list[$item->inherit->outline][$name] = $name;
             }
@@ -701,7 +701,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
                 $outline = null;
             }
-            foreach ($list as $id) {
+            foreach ($list as $id => $inheritId) {
                 $item = $this->find($id);
 
                 $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
