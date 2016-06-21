@@ -524,7 +524,6 @@ ready(function() {
                 }
 
                 var title   = content.elements.content.find('[name="title"]'),
-                    preset  = content.elements.content.find('[name="preset"]'),
                     confirm = content.elements.content.find('[data-g-outline-create-confirm]');
 
                 title.on('keyup', function(event) {
@@ -539,7 +538,17 @@ ready(function() {
                     confirm.showIndicator();
 
                     var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
-                        data = { title: title.value(), preset: preset.value() };
+                        mode    = content.elements.content.find('[name="mode"]:checked'),
+                        preset  = content.elements.content.find('[name="preset"]'),
+                        outline = content.elements.content.find('[name="outline"]'),
+                        inherit = content.elements.content.find('[name="inherit"]'),
+                        data = {
+                            title: title.value(),
+                            mode: mode.value(),
+                            preset: preset.value(),
+                            outline: outline.value(),
+                            inherit: inherit.checked()
+                        };
 
                     if (!data.title) { delete data.title; }
                     if (!data.preset) { delete data.preset; }
@@ -577,7 +586,7 @@ ready(function() {
     // Handles Preset / Outline switcher in Outline creation
     body.delegate('change', 'input[type="radio"]#mode-preset, input[type="radio"]#mode-outline', function(event, element) {
         element = $(element);
-        var value = element.value(),
+        var value    = element.value(),
             elements = element.parent('.card').search('.g-create-mode');
 
         var filtered = elements.style('display', 'none').filter(function(block) {
