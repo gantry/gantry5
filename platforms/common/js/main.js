@@ -574,6 +574,22 @@ ready(function() {
         });
     });
 
+    // Handles Preset / Outline switcher in Outline creation
+    body.delegate('change', 'input[type="radio"]#mode-preset, input[type="radio"]#mode-outline', function(event, element) {
+        element = $(element);
+        var value = element.value(),
+            elements = element.parent('.card').search('.g-create-mode');
+
+        var filtered = elements.style('display', 'none').filter(function(block) {
+            block = $(block);
+            return block.hasClass('g-create-mode-' + value);
+        });
+
+        if (filtered) {
+            $(filtered).style('display', 'block');
+        }
+    });
+
     // Handles Configurations Duplicate / Remove
     body.delegate('click', '#configurations [data-g-config]', function(event, element) {
         var mode        = element.data('g-config'),

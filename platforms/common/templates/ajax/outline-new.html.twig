@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="settings-param input-text">
+        <div class="settings-param input-text g-create-mode g-create-mode-preset">
             <span class="settings-param-title float-left">
                 <span data-tip="Outline Preset" data-tip-place="top-right" aria-label="Outline Preset" data-title="Outline Preset">Preset</span>
             </span>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="settings-param input-text">
+        <div class="settings-param input-text g-create-mode g-create-mode-outline" style="display: none;">
             <span class="settings-param-title float-left">
                 <span data-tip="Outline" data-tip-place="top-right" aria-label="Outline" data-title="Outline">Outline</span>
             </span>
@@ -59,6 +59,20 @@
                     <select name="outline" value="default" aria-label="Outline Field" title="Outline Field" data-selectize>
                         {% include 'partials/outlines-list.html.twig' %}
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-param input-multicheckbox g-create-mode g-create-mode-outline" style="display: none;">
+            <span class="settings-param-title float-left">
+                <span data-tip="Inherit every Section and Children of the selected Outline" data-tip-place="top-right" aria-label="Inherit every Section and Children of the selected Outline" data-title="Inherit every Section and Children of the selected Outline">Inherit</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" value="inherit" aria-label="Inherit">
+                        <span>Inherit every Section and Children of the selected Outline</span>
+                    </label>
                 </div>
             </div>
         </div>
