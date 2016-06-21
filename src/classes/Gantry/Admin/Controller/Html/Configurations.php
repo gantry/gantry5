@@ -78,7 +78,8 @@ class Configurations extends HtmlController
         }
 
         $params = [
-            'presets' => LayoutObject::presets()
+            'presets' => LayoutObject::presets(),
+            'outlines' => $this->container['configurations']
         ];
 
         $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/outline-new.html.twig', $params)];

@@ -14,6 +14,21 @@
             </div>
         </div>
 
+        <div class="settings-param input-radios">
+            <span class="settings-param-title float-left">
+                <span data-tip="Create based on a Preset or Outline" data-tip-place="top-right" aria-label="Create based on a Preset or Outline" data-title="Create based on a Preset or Outline">Mode</span>
+            </span>
+            <div class="settings-param-field">
+                <span class="radios">
+                    <input type="radio" id="mode-preset" value="preset" name="mode" checked="checked">
+                    <label for="mode-preset">Preset</label>
+                </span>
+                <span class="radios">
+                    <input type="radio" id="mode-outline" value="outline" name="mode">
+                    <label for="mode-outline">Outline</label>
+                </span>
+            </div>
+        </div>
 
         <div class="settings-param input-text">
             <span class="settings-param-title float-left">
@@ -23,13 +38,26 @@
                 <div class="input-group">
                     <select name="preset" value="Untitled" {{ duplicate ? 'disabled="disabled"' : '' }} aria-label="Outline Preset Field" data-selectize>
                         {% for group, options in presets %}
-                        <optgroup label="{{ group|title }}">
-                            {% for key, option in options %}
-                                {% set selected = key == preset|default('default') ? 'selected="selected"' : '' %}
-                                <option value="{{ key }}"{{ selected }}>{{ option }}</option>
-                            {% endfor %}
-                        </optgroup>
+                            <optgroup label="{{ group|title }}">
+                                {% for key, option in options %}
+                                    {% set selected = key == preset|default('default') ? 'selected="selected"' : '' %}
+                                    <option value="{{ key }}"{{ selected }}>{{ option }}</option>
+                                {% endfor %}
+                            </optgroup>
                         {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-param input-text">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline" data-tip-place="top-right" aria-label="Outline" data-title="Outline">Outline</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <select name="outline" value="default" aria-label="Outline Field" title="Outline Field" data-selectize>
+                        {% include 'partials/outlines-list.html.twig' %}
                     </select>
                 </div>
             </div>
