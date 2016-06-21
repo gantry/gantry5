@@ -274,7 +274,7 @@ abstract class Object extends \JObject
         \JPluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
-        $result = $dispatcher->trigger('onContentBeforeSave', array("com_gantry5.".get_called_class(), &$table, $isNew));
+        $result = $dispatcher->trigger('onContentBeforeSave', array("com_gantry5.".get_called_class(), $table, $isNew));
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -296,7 +296,7 @@ abstract class Object extends \JObject
         }
 
         // Trigger the onContentAfterSave event.
-        $dispatcher->trigger('onContentAfterSave', array("com_gantry5.".get_called_class(), &$table, $isNew));
+        $dispatcher->trigger('onContentAfterSave', array("com_gantry5.".get_called_class(), $table, $isNew));
 
         return true;
     }
