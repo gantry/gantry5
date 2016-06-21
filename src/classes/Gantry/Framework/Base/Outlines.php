@@ -125,7 +125,7 @@ class Outlines extends AbstractOutlineCollection
                 $ids = $index['particles'][$particle];
                 if (!$includeInherited && !empty($index['inherit'])) {
                     foreach ($index['inherit'] as $items) {
-                        foreach ((array) $items as $id) {
+                        foreach ((array) $items as $id => $inheritId) {
                             unset($ids[$id]);
                         }
                     }
@@ -193,7 +193,7 @@ class Outlines extends AbstractOutlineCollection
             $list = $index['particles'][$particle];
             if (!$includeInherited && !empty($index['inherit'])) {
                 foreach ($index['inherit'] as $items) {
-                    foreach ((array) $items as $id) {
+                    foreach ((array) $items as $id => $inheritId) {
                         unset($list[$id]);
                     }
                 }
@@ -279,7 +279,7 @@ class Outlines extends AbstractOutlineCollection
         foreach ($this->items as $name => $title) {
             $index = Layout::index($name);
 
-            if (!empty($index['inherit'][$outline]) && (!$particle || isset($index['inherit'][$outline][$particle]))) {
+            if (!empty($index['inherit'][$outline]) && (!$particle || in_array($particle, $index['inherit'][$outline]))) {
                 $list[$name] = $title;
             }
         }
@@ -302,7 +302,7 @@ class Outlines extends AbstractOutlineCollection
 
         $list = [];
         foreach ($index['inherit'] as $name => $inherited) {
-            if (!$particle || in_array($particle, $inherited)) {
+            if (!$particle || isset($inherited[$particle])) {
                 $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
             }
         }
