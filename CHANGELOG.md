@@ -36,6 +36,7 @@
 2. [Joomla](#joomla)
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
         - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
+        - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
     2. [](#improved)

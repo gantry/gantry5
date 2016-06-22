@@ -130,6 +130,7 @@ $atom: #9055AF;
                     font-weight: $font-weight-regular;
                     font-family: $font-family-default;
                     font-size: 24px;
+                    @include ellipsis();
                 }
 
                 i {
@@ -273,6 +274,7 @@ $atom: #9055AF;
                     vertical-align: middle;
                     line-height: 47px;
                     color: #bababa;
+                    @include ellipsis();
                 }
             }
         }
@@ -354,6 +356,7 @@ $atom: #9055AF;
         .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
+                @include ellipsis();
             }
         }
 
