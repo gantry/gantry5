@@ -1710,7 +1710,7 @@ var Particle = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Replace: ' + include,
             'tip-offset': -10,
             'tip-place': 'top-right'
         };
@@ -1950,7 +1950,7 @@ var Section = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Replace: ' + include,
             'tip-offset': -2,
             'tip-place': 'top-right'
         };
@@ -6400,7 +6400,7 @@ var AttachSettings = function() {
                                     atom = inherit.atom || '',
                                     include = (inherit.include || []).join(', ');
 
-                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Include: ' + include);
+                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Replace: ' + include);
                             }
 
                             body.emit('change', { target: dataField });

@@ -125,7 +125,7 @@ var Section = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Replace: ' + include,
             'tip-offset': -2,
             'tip-place': 'top-right'
         };

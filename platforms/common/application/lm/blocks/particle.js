@@ -99,7 +99,7 @@ var Particle = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Replace: ' + include,
             'tip-offset': -10,
             'tip-place': 'top-right'
         };
