@@ -2926,7 +2926,19 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        layoutmanager.clear();
+        var mode = element.data('lm-clear'),
+            options = {};
+
+        switch (mode) {
+            case 'keep-inheritance':
+                options = { save: true, dropLastGrid: false, emptyInherits: false };
+                break;
+            case 'full':
+            default:
+                options = { save: true, dropLastGrid: false, emptyInherits: true };
+        }
+
+        layoutmanager.clear(null, options);
     });
 
     // Switcher
@@ -3676,6 +3688,11 @@ var LayoutManager = new prime({
             if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 this.builder.remove(id);
                 obj.block.remove();
+            } else if (options.emptyInherits && (type == 'section' || type == 'container')) {
+                if (obj.hasInheritance) {
+                    obj.inherit = {};
+                    obj.disableInheritance();
+                }
             }
         }, this);
 
@@ -4367,8 +4384,12 @@ ready(function() {
                     allowElementsClick: '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){

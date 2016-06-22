@@ -106,8 +106,12 @@ ready(function() {
                     allowElementsClick: '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){

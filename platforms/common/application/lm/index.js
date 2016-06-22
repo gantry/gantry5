@@ -254,7 +254,19 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        layoutmanager.clear();
+        var mode = element.data('lm-clear'),
+            options = {};
+
+        switch (mode) {
+            case 'keep-inheritance':
+                options = { save: true, dropLastGrid: false, emptyInherits: false };
+                break;
+            case 'full':
+            default:
+                options = { save: true, dropLastGrid: false, emptyInherits: true };
+        }
+
+        layoutmanager.clear(null, options);
     });
 
     // Switcher
