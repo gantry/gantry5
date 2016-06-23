@@ -55,14 +55,15 @@ ready(function() {
                         inherit = content.elements.content.find('[name="inherit"]'),
                         data = {
                             title: title.value(),
-                            from: from.value(),
-                            preset: preset.value(),
-                            outline: outline.value(),
-                            inherit: inherit.checked()
+                            from: from ? from.value() : null,
+                            preset: preset ? preset.value() : null,
+                            outline: outline ? outline.value() : null,
+                            inherit: inherit.checked() ? 1 : 0
                         };
 
-                    if (!data.title) { delete data.title; }
-                    if (!data.preset) { delete data.preset; }
+                    ['title', 'from', 'preset', 'outline'].forEach(function(key) {
+                        if (!data[key]) { delete data[key]; }
+                    });
 
                     request('post', URI, data, function(error, response) {
                         confirm.hideIndicator();
