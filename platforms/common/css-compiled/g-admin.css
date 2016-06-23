@@ -4138,6 +4138,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-weight: 400;
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 24px;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks .section .section-header i, #g5-container .lm-blocks .atoms-section .section-header i, #g5-container .lm-blocks .offcanvas-section .section-header i {
   pointer-events: visible;
@@ -4261,6 +4267,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   vertical-align: middle;
   line-height: 47px;
   color: #bababa;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
   background-color: transparent;
@@ -4321,6 +4333,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid {
   border-bottom: 8px solid #e0e0e0;

@@ -256,7 +256,7 @@ var AttachSettings = function() {
                                     atom = inherit.atom || '',
                                     include = (inherit.include || []).join(', ');
 
-                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Include: ' + include);
+                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Replace: ' + include);
                             }
 
                             body.emit('change', { target: dataField });

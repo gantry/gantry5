@@ -35,6 +35,7 @@
         - Layout Manager will now prevent clearing single empty rows upon save (#1368)
         - Font Picker: Fixed potential conflict issue when a Local and a Remote fonts were matching name
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
+        - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
         - Fixed missing configuration when duplicating system outlines
 2. [Joomla](#joomla)
     1. [](#new)
@@ -56,6 +57,7 @@
     3. [](#bugfix)
         - Fixed post type priority not being used in assignments (#1340)
         - Fixed menu particle missing `Expand on Hover` option (#1360)
+        - Fixed Admin incompatibility with Jetpack (#1184)
 
 # 5.2.18
 ## 27/05/2016
