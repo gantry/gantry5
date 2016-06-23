@@ -34,7 +34,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 6;
+    const VERSION = 7;
 
     protected static $instances = [];
     protected static $indexes = [];
@@ -178,13 +178,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * Initialize layout.
      *
      * @param  bool  $force
+     * @param  bool  $inherit
      * @return $this
      */
-    public function init($force = false)
+    public function init($force = false, $inherit = true)
     {
         if ($force || !isset($this->references)) {
             $this->initReferences();
-            $this->initInheritance();
+            if ($inherit) {
+                $this->initInheritance();
+            }
         }
 
         return $this;
@@ -770,9 +773,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     $item->inherit = (object) $inherit;
                     $item->inherit->particle = $item->id;
 
-                    if (isset($index['inherit'][$item->inherit->outline][$item->id])) {
-                        $item->id = $index['inherit'][$item->inherit->outline][$item->id];
-                    } elseif ($type !== 'position' || $subtype !== 'position') {
+                    if (isset($index['inherit'][$item->inherit->outline]) && ($newId = array_search($item->id, $index['inherit'][$item->inherit->outline]))) {
+                        $item->id = $newId;
+                    } else {
                         $item->id = $this->id($type, $subtype);
                     }
                 }
@@ -807,7 +810,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if ($type !== 'particle') {
             $result[] = $type;
         }
-        if ($subtype && $subtype !== $type) {
+        if ($subtype && ($subtype !== $type || $subtype === 'position')) {
             $result[] = $subtype;
         }
         $key = implode('-', $result);

@@ -139,7 +139,7 @@ class Layout extends HtmlController
 
         // Create layout from the data.
         $layout = new LayoutObject($outline, $layout, $preset);
-        $layout->clean()->init();
+        $layout->init(false, false);
 
         /** @var Outlines $outlines */
         $outlines = $this->container['configurations'];
