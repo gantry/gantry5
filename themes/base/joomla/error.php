@@ -28,5 +28,5 @@ unset($gantry['configuration']);
 
 // Render the page.
 echo $theme
-    ->setLayout('_error')
+    ->setLayout('_error', true)
     ->render('error.html.twig', $context);
