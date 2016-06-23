@@ -18,9 +18,10 @@
     </ul>
 
     <div class="card settings-block">
-        {% if gantry.config.get('page.head.atoms') %}
+        {% set list = data.get('page.head.atoms')|default(defaults.get('page.head.atoms')) %}
+        {% if list %}
                 <ul class="atoms-list">
-                {%- for atom in gantry.config.get('page.head.atoms') -%}
+                {%- for atom in list -%}
                     {% set classes = (atom.attributes.enabled ? '' : 'atom-disabled') ~ (atom.inherit.outline ? ' g-inheriting' : '') %}
                     {% set inheriting = atom.inherit.outline ? ' g-inheriting="" data-tip="'
                     ~ 'GANTRY5_PLATFROM_INHERITING_FROM_X'|trans('<strong>' ~ gantry.configurations.title(atom.inherit.outline) ~ '</strong>') ~'<br />ID: ' ~ atom.inherit.atom ~ '<br />Replace: ' ~ atom.inherit.include|join(', ') ~ '"' %}
@@ -40,12 +41,12 @@
 
         {% if overrideable %}
             {% set prefix = 'page.head.' %}
-            {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'atoms', 'default_value': attribute(defaults, prefix ~ 'atoms'), 'value': gantry.config.get(prefix ~ 'atoms'), 'field': {'label': 'Enabled of the field Atoms' }} %}
+            {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'atoms', 'has_value': data.get(prefix ~ 'atoms'), 'field': {'label': 'Enabled of the field Atoms' }} %}
         {% endif %}
     </div>
 
     {# Deprecated Atoms from Layout (< 5.2.0) #}
-    {% if atoms_deprecated is not null and atoms_deprecated|length and gantry.config.get('page.head.atoms') %}
+    {% if atoms_deprecated is not null and atoms_deprecated|length and data.get('page.head.atoms') %}
         <p class="alert alert-notice">{{ 'GANTRY5_PLATFORM_ATOMS_DEPRECATED_MESSAGE'|trans }}</p>
     {% endif %}
 

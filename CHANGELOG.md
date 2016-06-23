@@ -22,6 +22,7 @@
         - Removed rename capability from Base Outline (#1350)
         - Do not close the Atoms modal when clicking on the overlay, in order to prevent accidental loss of changes.
         - When deleting an Outline it will now highlight the title of the Outline in question
+        - Make configration overrides persistent, meaning that the value will stay checked even if the value is identical to the global value (#1346)
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)

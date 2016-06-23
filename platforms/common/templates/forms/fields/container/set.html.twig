@@ -12,7 +12,7 @@
     {% if field.fields %}
         {% for childName, child in field.fields %}
             {% if childName starts with '.' %}
-                {% set childValue = value[childName[1:]] %}
+                {% set childValue = current_value[childName[1:]] %}
                 {% set childDefault = default_value[childName[1:]] %}
                 {% set childName = name ~ childName %}
             {% else %}
@@ -23,7 +23,7 @@
 
             {% if child.type %}
                 {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                with {name: childName, field: child, value: childValue, default_value: childDefault, prefix: childPrefix } %}
+                with {name: childName, field: child, current_value: childValue, default_value: childDefault, prefix: childPrefix } %}
             {% endif %}
         {% endfor %}
     {% endif %}

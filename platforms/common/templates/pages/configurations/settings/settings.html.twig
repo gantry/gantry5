@@ -41,16 +41,16 @@
                                         <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
                                         <span class="g-title">{{ particle.name }}</span>
                                         {% if particle.form.fields.enabled %}
-                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': data.get(prefix ~ 'enabled')} %}
 
                                             {% if overrideable %}
-                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': gantry.config.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
+                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': data.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
                                             {% endif %}
                                         {% endif %}
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'not_global_overrideable': particle.form.overrideable is same as(false), 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'not_global_overrideable': particle.form.overrideable is same as(false), 'blueprints': particle.form, skip: ['enabled'], data: data, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}
