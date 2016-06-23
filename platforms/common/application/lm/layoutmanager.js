@@ -111,7 +111,7 @@ var LayoutManager = new prime({
             if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 this.builder.remove(id);
                 obj.block.remove();
-            } else if (options.emptyInherits && (type == 'section' || type == 'container')) {
+            } else if (options.emptyInherits && (type == 'section' || type == 'offcanvas' || type == 'container')) {
                 if (obj.hasInheritance) {
                     obj.inherit = {};
                     obj.disableInheritance();
