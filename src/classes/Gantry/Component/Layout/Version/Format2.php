@@ -227,6 +227,11 @@ class Format2
         $result = [];
         $ctype = isset($content['type']) ? $content['type'] : null;
 
+        if (in_array($ctype, ['grid', 'block'])) {
+            if (empty($content['attributes']['id']) || $content['attributes']['id'] === $content['id']) {
+                unset ($content['attributes']['id']);
+            }
+        }
         if ($ctype === 'block') {
             if (empty($content['attributes']['extra'])) {
                 unset ($content['attributes']['extra']);
