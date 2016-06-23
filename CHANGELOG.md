@@ -11,6 +11,7 @@
         - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
         - New `input.radios` field. Allows to create a list of radio selectors. `options` entry should be of kind key/value
         - Added possibility to place `<svg>` code directly inside the Logo particle
+        - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
     2. [](#improved)
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`
@@ -33,9 +34,9 @@
         - Removed Nucleus CSS rule `.g-block.visible-desktop {}` that was overriding the media queries (#1344)
         - Layout Manager will now prevent clearing single empty rows upon save (#1368)
         - Font Picker: Fixed potential conflict issue when a Local and a Remote fonts were matching name
-2. [Joomla](#joomla)
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
-        - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
+        - Fixed missing configuration when duplicating system outlines
+2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
     2. [](#improved)
@@ -45,6 +46,7 @@
     3. [](#bugfix)
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
         - Fixed untranslated 404 page title (#1001) 
+        - Fixed wrong title in newly created outline
 3. [WordPress](#wordpress)
     1. [](#new)
         - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)

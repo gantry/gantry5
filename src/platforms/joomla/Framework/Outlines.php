@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Outlines as BaseOutlines;
 use Gantry\Joomla\StyleHelper;
 use Gantry\Joomla\TemplateInstaller;
@@ -19,6 +20,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Outlines extends BaseOutlines
 {
+    protected $createId;
+
     /**
      * @param string $path
      * @return $this
@@ -89,11 +92,29 @@ class Outlines extends BaseOutlines
         return ($configuration && is_dir($locator("{$this->path}/{$configuration}"))) ? $configuration : $preset;
     }
 
-    public function create($title = 'Untitled', $preset = 'default')
+    /**
+     * @param string|null $id
+     * @param string $title
+     * @param string|array $preset
+     * @return string
+     * @throws \RuntimeException
+     */
+    public function create($id, $title = null, $preset = null)
     {
+        if ($this->createId) {
+            // Workaround Joomla wanting to use different logic for style duplication.
+            $new = parent::create($this->createId, $title, $preset);
+
+            $this->createId = null;
+
+            return $new;
+        }
+
+        $title = $title ? "%s - {$title}" : '%s - Untitled';
+
         $installer = new TemplateInstaller($this->container['theme.name']);
-        $title = $installer->getStyleName($title ? "%s - {$title}" : '%s - Untitled');
-        $style = $installer->addStyle($title, ['preset' => $preset ?: 'default']);
+        $title = $installer->getStyleName($title);
+        $style = $installer->addStyle($title);
 
         $error = $style->getError();
 
@@ -101,22 +122,33 @@ class Outlines extends BaseOutlines
             throw new \RuntimeException($error, 400);
         }
 
-        $this->items[$style->id] = $title;
+        $presetId = (string) (isset($preset['preset']['name']) ? $preset['preset']['name'] : ($preset ?: 'default'));
+
+        StyleHelper::update($style->id, $presetId);
+
+        // Create configuration folder.
+        $id = parent::create($style->id, $title, $preset);
+
+        if ($id != $style->id) {
+            throw new \RuntimeException(sprintf("Creating outline: folder '%s' already exists!", $style->id));
+        }
 
         return $style->id;
     }
 
-    public function duplicate($id, $title = null)
+    public function duplicate($id, $title = null, $inherit = false)
     {
-        $model = StyleHelper::loadModel();
-
-        $item = $model->getTable();
-        $item->load($id);
-
-        if (!$item->id) {
-            throw new \RuntimeException('Outline not found', 404);
+        if (!$this->canDuplicate($id)) {
+            throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
         }
 
+        // Handle special case of duplicating system outlines.
+        if ((string)(int) $id !== (string) $id) {
+            return parent::duplicate($id, $title, $inherit);
+        }
+
+        // Use Joomla logic to duplicate the style.
+        $model = StyleHelper::loadModel();
         $pks = [$id];
 
         if (!$model->duplicate($pks)) {
@@ -124,19 +156,22 @@ class Outlines extends BaseOutlines
         }
 
         // Seek the newly generated style ID since Joomla doesn't return one on duplication.
-        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        $theme = $this->container['theme.name'];
         $styles = ThemeList::getStyles($theme, true);
         $style = end($styles);
 
         if ($title) {
-            $installer = new TemplateInstaller($this->container['theme.name']);
+            // Change the title.
+            $installer = new TemplateInstaller($theme);
             $title = $installer->getStyleName("%s - {$title}");
             $this->rename($style->id, $title);
+        } else {
+            $title = $style->style;
         }
 
-        $this->items[$style->id] = $title ?: $style->style;
+        $this->createId = $style->id;
 
-        return $style->id;
+        return parent::duplicate($id, $title, $inherit);
     }
 
     public function rename($id, $title)
@@ -160,21 +195,23 @@ class Outlines extends BaseOutlines
             throw new \RuntimeException($item->getError(), 500);
         }
 
-        $this->items[$id] = $title;
+        if (isset($this->items[$id])) {
+            $this->items[$id] = $title;
+        }
 
         return $id;
     }
 
     public function delete($id, $deleteModel = true)
     {
+        if (!$this->canDelete($id)) {
+            throw new \RuntimeException("Outline '$id' cannot be deleted", 400);
+        }
+
         $model = StyleHelper::loadModel();
 
         $item = $model->getTable();
         $item->load($id);
-
-        if (!$item->id) {
-            throw new \RuntimeException('Outline not found', 404);
-        }
 
         try {
             foreach ($this->getInheritingOutlines($id) as $outline => $title) {
@@ -217,19 +254,6 @@ class Outlines extends BaseOutlines
      * @param string $id
      * @return boolean
      */
-    public function canDuplicate($id)
-    {
-        if (!$id || $id === 'default') {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $id
-     * @return boolean
-     */
     public function canDelete($id)
     {
         $model = StyleHelper::loadModel();
@@ -237,11 +261,7 @@ class Outlines extends BaseOutlines
         $item = $model->getTable();
         $item->load($id);
 
-        if (!$item->id) {
-            throw new \RuntimeException('Outline not found', 404);
-        }
-
-        return $item->home ? false : true;
+        return !$item->id || $item->home ? false : true;
     }
 
     /**
@@ -250,6 +270,11 @@ class Outlines extends BaseOutlines
      */
     public function isDefault($id)
     {
-        return !$this->canDelete($id);
+        $model = StyleHelper::loadModel();
+
+        $item = $model->getTable();
+        $item->load($id);
+
+        return (bool) $item->home;
     }
 }

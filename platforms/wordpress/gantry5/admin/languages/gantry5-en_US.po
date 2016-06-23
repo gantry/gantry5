@@ -635,3 +635,6 @@ msgstr "Full Layout"
 
 msgid "GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE"
 msgstr "Keep Inheritance"
+
+msgid "GANTRY5_PLATFORM_CREATE_OUTLINE_FROM_X"
+msgstr "Create New Outline From '%s'"

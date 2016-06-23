@@ -662,7 +662,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     }
                 }
             }
-            if ($item->children) {
+            if (!empty($item->children)) {
                 $this->cleanLayout($item->children);
             }
         }

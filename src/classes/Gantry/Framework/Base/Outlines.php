@@ -343,29 +343,36 @@ class Outlines extends AbstractOutlineCollection
     }
 
     /**
+     * @param string|null $id
      * @param string $title
-     * @param string $preset
+     * @param string|array $preset
      * @return string
      * @throws \RuntimeException
      */
-    public function create($title = 'Untitled', $preset = 'default')
+    public function create($id, $title = null, $preset = null)
     {
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+        $title = $title ?: 'Untitled';
+        $name = ltrim(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title)), '_');
 
         if (!$name) {
             throw new \RuntimeException("Outline needs a name", 400);
         }
 
-        if ($name === 'default' || $name[0] === '_') {
+        if ($name === 'default') {
             throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
         }
 
         $name = $this->findFreeName($name);
+        if (!$id) {
+            $title = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
+        }
 
-        // Load preset.
-        $preset = Layout::preset($preset);
+        if (!is_array($preset)) {
+            // Load preset.
+            $preset = Layout::preset($preset ?: 'default');
+        }
 
-        // Create index file for the new layout.
+        // Create layout and index for the new layout.
         $layout = new Layout($name, $preset);
         $layout->save()->saveIndex();
 
@@ -377,39 +384,47 @@ class Outlines extends AbstractOutlineCollection
     /**
      * @param string $id
      * @param string $title
+     * @param bool $inherit
      * @return string
      * @throws \RuntimeException
      */
-    public function duplicate($id, $title = null)
+    public function duplicate($id, $title = null, $inherit = false)
     {
         if (!$this->canDuplicate($id)) {
             throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
         }
 
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $path = $locator->findResource("{$this->path}/{$id}");
-        if (!$path || !is_dir($path)) {
-            throw new \RuntimeException('Outline not found', 404);
+        $layout = Layout::load($id);
+        if ($inherit) {
+            $layout->inheritAll()->clean();
         }
 
-        $title = $title ?: (!$title && $id === 'default' ? 'untitled' : $id);
-        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title)));
+        $new = $this->create(null, $title, $layout->toArray() + ['preset' => $layout->preset]);
 
-        $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
+        if ($id === 'default') {
+            // For Base Outline we're done.
+            return $new;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $path = $locator->findResource("{$this->path}/{$id}");
+        if (!$path) {
+            // Nothing to copy.
+            return $new;
+        }
+
+        $newPath = $locator->findResource("{$this->path}/{$new}", true, true);
 
         try {
-            Folder::copy($path, $newPath, $id === 'default' ? '/^(?!(index|layout)).*$/' : '/assignments/');
+            // Copy everything over except index, layout and assignments.
+            Folder::copy($path, $newPath, '/^(index|layout|asignments)\..*$/');
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
 
-        $this->items[$folder] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], basename($newPath))));
-
-        return basename($folder);
+        return $new;
     }
 
     /**
@@ -503,7 +518,7 @@ class Outlines extends AbstractOutlineCollection
      */
     public function canDuplicate($id)
     {
-        if (!$id) {
+        if (!isset($this->items[$id])) {
             return false;
         }
 

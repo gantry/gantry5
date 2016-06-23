@@ -116,7 +116,7 @@ class TemplateInstaller
         return $style;
     }
 
-    public function addStyle($title, array $configuration, $home = 0)
+    public function addStyle($title, array $configuration = [], $home = 0)
     {
         // Make sure language debug is turned off.
         $lang = \JFactory::getLanguage();
