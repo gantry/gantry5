@@ -28,28 +28,33 @@ class AssignmentsPost implements AssignmentsInterface
 
         $queried_object = get_queried_object();
 
-        if(is_singular() && $queried_object !== null) {
-            $post_type = $queried_object->post_type;
-            $id = $queried_object->ID;
+        if($queried_object !== null) {
+            if(is_singular()) {
+                $post_type = $queried_object->post_type;
+                $id        = $queried_object->ID;
 
-            $rules[$post_type][$id] = $this->priority;
+                $rules[$post_type][$id] = $this->priority;
+                $rules[$post_type]['is_singular'] = $this->priority;
 
-            // Get current post type taxonomies and its terms
-            $taxonomies = get_object_taxonomies($queried_object);
-            if(!empty($taxonomies)) {
-                foreach($taxonomies as $tax) {
-                    $args = [
-                        'orderby' => 'name',
-                        'order' => 'ASC',
-                        'fields' => 'all'
-                    ];
+                // Get current post type taxonomies and its terms
+                $taxonomies = get_object_taxonomies($queried_object);
+                if (!empty($taxonomies)) {
+                    foreach ($taxonomies as $tax) {
+                        $args = [
+                            'orderby' => 'name',
+                            'order'   => 'ASC',
+                            'fields'  => 'all'
+                        ];
 
-                    $terms = wp_get_post_terms($id, $tax, $args);
+                        $terms = wp_get_post_terms($id, $tax, $args);
 
-                    foreach($terms as $term) {
-                        $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = $this->priority;
+                        foreach ($terms as $term) {
+                            $rules[$post_type . '-terms'][$tax . '-' . $term->term_id] = $this->priority;
+                        }
                     }
                 }
+            } elseif(is_post_type_archive()) {
+                $rules[$queried_object->name]['is_archive'] = $this->priority;
             }
         }
 
@@ -57,7 +62,7 @@ class AssignmentsPost implements AssignmentsInterface
     }
 
     /**
-     * List all the rules available.
+     * Create cards with lists of items.
      *
      * @return array
      */
@@ -92,6 +97,13 @@ class AssignmentsPost implements AssignmentsInterface
         return $list;
     }
 
+    /**
+     * Get all available Post Types
+     *
+     * @param array $args
+     *
+     * @return array
+     */
     protected function getPostTypes($args = [])
     {
         $defaults = [
@@ -105,6 +117,14 @@ class AssignmentsPost implements AssignmentsInterface
         return $post_types;
     }
 
+    /**
+     * List all available Items
+     *
+     * @param       $post_type
+     * @param array $args
+     *
+     * @return mixed|void
+     */
     protected function getItems($post_type, $args = [])
     {
         $items = [];
@@ -123,6 +143,33 @@ class AssignmentsPost implements AssignmentsInterface
 
         $wp_query = new \WP_Query;
         $posts = $wp_query->query($args);
+
+        // General and single posts sections for custom post types
+        if(!$post_type->_builtin) {
+            $items[] = [
+                'name'     => '',
+                'label'    => 'General',
+                'section'  => true,
+                'disabled' => true
+            ];
+
+            $items[] = [
+                'name'  => 'is_singular',
+                'label' => $post_type->labels->name . ' - Single Post View'
+            ];
+
+            $items[] = [
+                'name'  => 'is_archive',
+                'label' => $post_type->labels->name . ' - Archive View'
+            ];
+
+            $items[] = [
+                'name'     => '',
+                'label'    => 'Single Posts',
+                'section'  => true,
+                'disabled' => true
+            ];
+        }
 
         // Check if there are any posts
         if(!$wp_query->post_count) {
