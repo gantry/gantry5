@@ -28,7 +28,7 @@ class BuddyPress implements ServiceProviderInterface, EventSubscriberInterface
      */
     public static function enabled() {
         // Required BuddyPress version
-        $req_bp_version = '2.6*';
+        $req_bp_version = '2.6';
 
         if (in_array('buddypress/bp-loader.php', apply_filters('active_plugins', get_option('active_plugins'))) && version_compare(BP_VERSION, $req_bp_version, '>')) {
             return true;

@@ -23,18 +23,33 @@ class AssignmentsBuddyPress implements AssignmentsInterface
     public $priority = 4;
 
     public $_active = false;
-    protected $context = [];
 
-    /**
-     * AssignmentsBuddyPress constructor.
-     */
+    protected $components = [];
+    protected $member_types = [];
+    protected $groups = [];
+
     public function __construct()
     {
         $this->_active = is_plugin_active('buddypress/bp-loader.php');
-        if($this->_active) {
-            $components = \bp_core_get_components('all');
+
+        if ($this->_active) {
+            $components = \bp_core_get_components( 'all' );
             foreach($components as $key => $val) {
-                $this->context[$key] = $val['title'];
+                $this->components[$key] = $val['title'] . ' (' . $key . ')';
+            }
+
+            if (\bp_is_active('members')) {
+                $member_types = \bp_get_member_types(array(), 'objects');
+                foreach($member_types as $member_type) {
+                    $this->member_types[$member_type->name] = $member_type->labels['name'];
+                }
+            }
+
+            if (\bp_is_active('groups')) {
+                $groups = \groups_get_groups()['groups'];
+                foreach($groups as $group) {
+                    $this->groups[$group->id] = $group->name;
+                }
             }
         }
     }
@@ -46,17 +61,42 @@ class AssignmentsBuddyPress implements AssignmentsInterface
      */
     public function getRules()
     {
-        $rules = [];
+        $rules_components = [];
+        $rules_member_types = [];
+        $rules_groups = [];
 
-        if($this->_active) {
-            foreach($this->context as $var => $label) {
-                if(bp_is_current_component($var) === true) {
-                    $rules[$var] = $this->priority;
+        if ($this->_active) {
+            foreach($this->components as $var => $label) {
+                if (\bp_is_current_component($var) === true) {
+                    $rules_components[$var] = $this->priority;
+                }
+            }
+
+            $user_id = bp_loggedin_user_id();
+            if ($user_id) {
+                if (\bp_is_active('members')) {
+                    $user_member_types = bp_get_member_type($user_id, false);
+                    if (!empty($user_member_types)) {
+                        foreach($this->member_types as $var => $label) {
+                            if (in_array($var, $user_member_types)) {
+                                $rules_member_types[$var] = $this->priority - 3;
+                            }
+                        }
+                    }
+                }
+
+                if (\bp_is_active('groups')) {
+                    $user_groups = groups_get_user_groups($user_id)['groups'];
+                    foreach ($this->groups as $var => $label) {
+                        if (in_array($var, $user_groups)) {
+                            $rules_groups[$var] = $this->priority - 3;
+                        }
+                    }
                 }
             }
         }
 
-        return [$rules];
+        return [$rules_components, $rules_member_types, $rules_groups];
     }
 
     /**
@@ -67,18 +107,66 @@ class AssignmentsBuddyPress implements AssignmentsInterface
     public function listRules()
     {
         // Get label and items for the context.
-        $list = [
-            'label' => 'BuddyPress',
-            'items' => $this->getItems()
+        $components = [
+            'label' => 'BuddyPress Components',
+            'items' => $this->getComponents(),
         ];
 
-        return [$list];
+        if (\bp_is_active('members')) {
+            $member_types = [
+                'label' => 'BuddyPress Member Types',
+                'items' => $this->getMemberTypes(),
+            ];
+        } else {
+            $member_types = [];
+        }
+
+        if (\bp_is_active('groups')) {
+            $groups = [
+                'label' => 'BuddyPress Groups',
+                'items' => $this->getGroups(),
+            ];
+        } else {
+            $groups = [];
+        }
+
+        return [$components, $member_types, $groups];
     }
 
-    protected function getItems()
+    protected function getComponents()
     {
         $items = [];
-        $context = $this->context;
+        $context = $this->components;
+
+        foreach($context as $conditional => $label) {
+            $items[] = [
+                'name'  => $conditional,
+                'label' => $label
+            ];
+        }
+
+        return $items;
+    }
+
+    protected function getMemberTypes()
+    {
+        $items = [];
+        $context = $this->member_types;
+
+        foreach($context as $conditional => $label) {
+            $items[] = [
+                'name'  => $conditional,
+                'label' => $label
+            ];
+        }
+
+        return $items;
+    }
+
+    protected function getGroups()
+    {
+        $items = [];
+        $context = $this->groups;
 
         foreach($context as $conditional => $label) {
             $items[] = [
@@ -99,7 +187,7 @@ class AssignmentsBuddyPress implements AssignmentsInterface
      */
     public static function addPageContextItem($context)
     {
-        if(is_array($context)) {
+        if (is_array($context)) {
             $context['is_buddypress'] = 'BuddyPress Page';
         }
 
@@ -116,12 +204,12 @@ class AssignmentsBuddyPress implements AssignmentsInterface
      */
     public static function addPageContextConditionals($rules, $priority = 1)
     {
-        if(!isset($rules)) {
+        if (!isset($rules)) {
             $rules = [];
         }
 
         $bp = buddypress();
-        if(!bp_is_blog_page()) {
+        if (!bp_is_blog_page()) {
             $rules['is_buddypress'] = $priority;
         }
 
