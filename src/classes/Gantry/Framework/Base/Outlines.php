@@ -267,19 +267,19 @@ class Outlines extends AbstractOutlineCollection
     /**
      * Return list of outlines which are inheriting the specified outline.
      *
-     * You can additionally pass particle id to filter the results for only that particle.
+     * You can additionally pass section or particle id to filter the results for only that type.
      *
      * @param string $outline
-     * @param string $particle
+     * @param string|array $id
      * @return array
      */
-    public function getInheritingOutlines($outline, $particle = null)
+    public function getInheritingOutlines($outline, $id = null)
     {
         $list = [];
         foreach ($this->items as $name => $title) {
             $index = Layout::index($name);
 
-            if (!empty($index['inherit'][$outline]) && (!$particle || in_array($particle, $index['inherit'][$outline]))) {
+            if (!empty($index['inherit'][$outline]) && (!$id || array_intersect((array) $id, $index['inherit'][$outline]))) {
                 $list[$name] = $title;
             }
         }
@@ -290,19 +290,19 @@ class Outlines extends AbstractOutlineCollection
     /**
      * Return list of outlines inherited by the specified outline.
      *
-     * You can additionally pass particle id to filter the results for only that particle.
+     * You can additionally pass section or particle id to filter the results for only that type.
      *
      * @param string $outline
-     * @param string $particle
+     * @param string $id
      * @return array
      */
-    public function getInheritedOutlines($outline, $particle = null)
+    public function getInheritedOutlines($outline, $id = null)
     {
         $index = Layout::index($outline);
 
         $list = [];
         foreach ($index['inherit'] as $name => $inherited) {
-            if (!$particle || isset($inherited[$particle])) {
+            if (!$id || array_intersect_key((array) $id, $inherited[$id])) {
                 $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
             }
         }

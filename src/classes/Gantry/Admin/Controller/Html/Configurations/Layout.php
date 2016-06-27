@@ -176,6 +176,7 @@ class Layout extends HtmlController
         $item->type    = $this->request->post['type'] ?: $type;
         $item->subtype = $this->request->post['subtype'] ?: $type;
         $item->title   = $this->request->post['title'] ?: ucfirst($type);
+        $parent   = $this->request->post['parent'] ?: $layout->getParentId($id);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
@@ -227,14 +228,17 @@ class Layout extends HtmlController
             $outlines = $this->container['configurations'];
 
             if ($outline !== 'default') {
-                $funcName = 'getOutlinesWith' . ucfirst($inheritType);
-                $list = (array)$outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
+                if ($particle) {
+                    $list = $outlines->getOutlinesWithParticle($item->subtype, false);
+                } else {
+                    $list = $outlines->getOutlinesWithSection($item->id, false);
+                }
                 unset($list[$outline]);
             } else {
                 $list = [];
             }
 
-            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, $id)) && $list)) {
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, [$id, $parent])) && $list)) {
                 $inheritable = true;
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
