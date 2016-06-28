@@ -236,7 +236,7 @@ class Page extends HtmlController
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/atom.yaml");
         if ($file->exists()) {
             /** @var Outlines $outlines */
-            $outlines = $this->container['configurations'];
+            $outlines = $this->container['outlines'];
 
             if ($outline !== 'default') {
                 $list = (array)$outlines->getOutlinesWithAtom($item->type, false);

@@ -548,17 +548,17 @@ class Outlines extends AbstractOutlineCollection
     }
 
     /**
-     * @param array $configurations
+     * @param array $outlines
      * @return array
      */
-    protected function addDefaults(array $configurations)
+    protected function addDefaults(array $outlines)
     {
         return [
             'default' => 'Base Outline',
             '_body_only' => 'Body Only',
             '_error' => 'Error',
             '_offline' => 'Offline'
-        ] + $configurations;
+        ] + $outlines;
     }
 
     /**

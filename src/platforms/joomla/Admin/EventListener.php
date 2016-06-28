@@ -70,7 +70,7 @@ class EventListener implements EventSubscriberInterface
 
         $theme = $event->gantry['theme.name'];
 
-        $positions = $event->gantry['configurations']->positions();
+        $positions = $event->gantry['outlines']->positions();
         $positions['debug'] = 'Debug';
 
         $manifest = new Manifest($theme);

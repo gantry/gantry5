@@ -149,7 +149,7 @@ class Theme extends AbstractTheme
 
         // Positions are set inside layouts and we need to grab all of them as we do not yet know which layout will be
         // displayed. We also need to register all the positions for the admin.
-        $positions = $gantry['configurations']->positions();
+        $positions = $gantry['outlines']->positions();
 
         if (!$positions) {
             // No positions are set; display notification in admin.
@@ -179,7 +179,7 @@ class Theme extends AbstractTheme
     {
         $gantry = Gantry::instance();
 
-        $menuLocations = $gantry['configurations']->menuLocations();
+        $menuLocations = $gantry['outlines']->menuLocations();
 
         if ($menuLocations) {
             register_nav_menus($menuLocations);

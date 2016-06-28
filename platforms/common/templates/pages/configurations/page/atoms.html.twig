@@ -24,7 +24,7 @@
                 {%- for atom in list -%}
                     {% set classes = (atom.attributes.enabled ? '' : 'atom-disabled') ~ (atom.inherit.outline ? ' g-inheriting' : '') %}
                     {% set inheriting = atom.inherit.outline ? ' g-inheriting="" data-tip="'
-                    ~ 'GANTRY5_PLATFROM_INHERITING_FROM_X'|trans('<strong>' ~ gantry.configurations.title(atom.inherit.outline) ~ '</strong>') ~'<br />ID: ' ~ atom.inherit.atom ~ '<br />Replace: ' ~ atom.inherit.include|join(', ') ~ '"' %}
+                    ~ 'GANTRY5_PLATFROM_INHERITING_FROM_X'|trans('<strong>' ~ gantry.outlines.title(atom.inherit.outline) ~ '</strong>') ~'<br />ID: ' ~ atom.inherit.atom ~ '<br />Replace: ' ~ atom.inherit.include|join(', ') ~ '"' %}
                     {% set title = atom.attributes.enabled ? '' : ' title="' ~ 'GANTRY5_PLATFORM_ATOMS_DISABLED_DESC'|trans ~ '"' %}
                     <li data-atom-picked="{{ atom|json_encode|e('html_attr') }}"{{ (classes ? ' class="' ~ classes|trim ~ '"')|raw }}{{ inheriting|raw }}{{ title|raw }} data-atom-type="{{ atom.type }}">
                         <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>

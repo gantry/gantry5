@@ -10,7 +10,7 @@
     </optgroup>
     {% endif %}
 
-    {% set user_conf = gantry.configurations.user.filter(field.filter) %}
+    {% set user_conf = gantry.outlines.user.filter(field.filter) %}
     {% if user_conf.count %}
     <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
         {% for name, title in user_conf %}
@@ -21,7 +21,7 @@
     </optgroup>
     {% endif %}
 
-    {% set system_conf = gantry.configurations.system.filter(field.filter) %}
+    {% set system_conf = gantry.outlines.system.filter(field.filter) %}
     {% if system_conf.count %}
     <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
         {% for name, title in system_conf %}

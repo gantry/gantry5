@@ -230,7 +230,19 @@ abstract class Gantry extends Container
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.
+        $instance['outlines'] = $instance->factory(function ($c) {
+            static $collection;
+            if (!$collection) {
+                $collection = (new Outlines($c))->load();
+            }
+
+            return $collection->copy();
+        });
+
+        // @deprecated 5.3
         $instance['configurations'] = $instance->factory(function ($c) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Depredated call: gantry.configurations");
+
             static $collection;
             if (!$collection) {
                 $collection = (new Outlines($c))->load();

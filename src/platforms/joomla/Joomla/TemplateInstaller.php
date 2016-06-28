@@ -359,7 +359,7 @@ class TemplateInstaller
         CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
 
         /** @var Outlines $outlines */
-        $outlines = $gantry['configurations'];
+        $outlines = $gantry['outlines'];
 
         // Update positions in manifest file.
         $positions = $outlines->positions();

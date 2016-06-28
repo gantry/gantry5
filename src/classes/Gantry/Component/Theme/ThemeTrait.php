@@ -67,15 +67,15 @@ trait ThemeTrait
     /**
      * Update all CSS files in the theme.
      *
-     * @param array $configurations
+     * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $configurations = null)
+    public function updateCss(array $outlines = null)
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();
 
-        if (is_null($configurations)) {
+        if (is_null($outlines)) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $path = $locator->findResource($compiler->getTarget(), true, true);
@@ -85,21 +85,21 @@ trait ThemeTrait
                 Folder::delete($path, false);
             }
 
-            $configurations = $gantry['configurations'];
+            $outlines = $gantry['outlines'];
         }
 
         // Make sure that PHP has the latest data of the files.
         clearstatcache();
 
         $warnings = [];
-        foreach ($configurations as $configuration => $title) {
-            $config = ConfigServiceProvider::load($gantry, $configuration);
+        foreach ($outlines as $outline => $title) {
+            $config = ConfigServiceProvider::load($gantry, $outline);
 
-            $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
+            $compiler->reset()->setConfiguration($outline)->setVariables($config->flatten('styles', '-'));
 
             $results = $compiler->compileAll()->getWarnings();
             if ($results) {
-                $warnings[$configuration] = $results;
+                $warnings[$outline] = $results;
             }
         }
 

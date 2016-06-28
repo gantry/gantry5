@@ -79,7 +79,7 @@ class Configurations extends HtmlController
 
         $params = [
             'presets' => LayoutObject::presets(),
-            'outlines' => $this->container['configurations']
+            'outlines' => $this->container['outlines']
         ];
 
         $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
@@ -99,7 +99,7 @@ class Configurations extends HtmlController
         }
 
         /** @var OutlinesObject $outlines */
-        $outlines = $this->container['configurations'];
+        $outlines = $this->container['outlines'];
         $title = $this->request->post['title'];
         $preset = $this->request->post['preset'];
 
@@ -120,7 +120,7 @@ class Configurations extends HtmlController
         }
 
         /** @var OutlinesObject $outlines */
-        $outlines = $this->container['configurations'];
+        $outlines = $this->container['outlines'];
         $title = $this->request->post['title'];
 
         $id = $outlines->rename($outline, $title);
@@ -140,7 +140,7 @@ class Configurations extends HtmlController
         }
 
         $params = [
-            'outlines' => $this->container['configurations'],
+            'outlines' => $this->container['outlines'],
             'outline' => $outline,
             'duplicate' => true
         ];
@@ -157,7 +157,7 @@ class Configurations extends HtmlController
         }
 
         /** @var OutlinesObject $outlines */
-        $outlines = $this->container['configurations'];
+        $outlines = $this->container['outlines'];
         $title = $this->request->post['title'];
         $inherit = in_array($this->request->post['inherit'], ['1', 'true']);
 
@@ -178,7 +178,7 @@ class Configurations extends HtmlController
         }
 
         /** @var OutlinesObject $outlines */
-        $outlines = $this->container['configurations'];
+        $outlines = $this->container['outlines'];
         $list = $outlines->user();
 
         if (!isset($list[$outline])) {
@@ -198,8 +198,8 @@ class Configurations extends HtmlController
         $params = [
             'id' => $id,
             'page_type' => 'OUTLINE',
-            'outline' => $this->container['configurations']->title($id),
-            'inherited' => $this->container['configurations']->getInheritingOutlines($id)
+            'outline' => $this->container['outlines']->title($id),
+            'inherited' => $this->container['outlines']->getInheritingOutlines($id)
         ];
 
         return new JsonResponse(
@@ -211,7 +211,7 @@ class Configurations extends HtmlController
     {
         $path = func_get_args();
 
-        $outlines = $this->container['configurations']->toArray();
+        $outlines = $this->container['outlines']->toArray();
 
         $outline = isset($outlines[$path[0]]) ? array_shift($path) : 'default';
 

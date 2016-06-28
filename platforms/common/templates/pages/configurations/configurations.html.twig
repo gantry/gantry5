@@ -26,8 +26,8 @@
                 {% set name = 'default' %}
                 {% include '@gantry-admin/layouts/outline.html.twig' %}
             </li>
-            {% for name, title in gantry.configurations.user %}
-                <li class="card g-block size-1-4{{ gantry.configurations.isDefault(name) ? ' outline-is-default' : '' }}">
+            {% for name, title in gantry.outlines.user %}
+                <li class="card g-block size-1-4{{ gantry.outlines.isDefault(name) ? ' outline-is-default' : '' }}">
                     {% include '@gantry-admin/layouts/outline.html.twig' %}
                 </li>
             {% endfor %}
@@ -47,8 +47,8 @@
 
         <h2>{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}</h2>
         <ul class="g-grid">
-            {% for name, title in gantry.configurations.system %}
-                {% set preset = gantry.configurations.layoutPreset(name) %}
+            {% for name, title in gantry.outlines.system %}
+                {% set preset = gantry.outlines.layoutPreset(name) %}
                 <li class="card g-block size-1-4">
                     <div class="page">
                         <h4>{{ title }} <span class="float-right font-small">({{ 'GANTRY5_PLATFORM_ID_X'|trans(name) }})</span></h4>

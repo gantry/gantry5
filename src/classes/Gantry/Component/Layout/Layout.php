@@ -979,10 +979,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         // Find out the currently used layout file.
         $layoutFile = $locator("gantry-config://{$name}/layout.yaml");
         if (!$layoutFile) {
-            /** @var Outlines $configurations */
-            $configurations = $gantry['configurations'];
+            /** @var Outlines $outlines */
+            $outlines = $gantry['outlines'];
 
-            $preset = isset($index['preset']['name']) ? $index['preset']['name'] : $configurations->preset($name);
+            $preset = isset($index['preset']['name']) ? $index['preset']['name'] : $outlines->preset($name);
         }
 
         // Get timestamp for the layout file.

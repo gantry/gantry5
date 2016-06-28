@@ -166,10 +166,10 @@ class plgSystemGantry5 extends JPlugin
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
-        /** @var \Gantry\Framework\Outlines $configurations */
-        $configurations = $gantry['configurations'];
+        /** @var \Gantry\Framework\Outlines $outlines */
+        $outlines = $gantry['outlines'];
 
-        $theme->setLayout($configurations->current());
+        $theme->setLayout($outlines->current());
 
         if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
             $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
@@ -326,7 +326,7 @@ class plgSystemGantry5 extends JPlugin
         $gantry = $this->load($template);
 
         /** @var \Gantry\Framework\Outlines $outlines */
-        $outlines = $gantry['configurations'];
+        $outlines = $gantry['outlines'];
 
         try {
             $outlines->delete($table->id, false);

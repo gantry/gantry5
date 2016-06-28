@@ -1,7 +1,7 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
 {% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
-{% set particles = field.particles ?: (outline ? gantry.configurations.getParticleInstances(outline, field.particle, false)) %}
+{% set particles = field.particles ?: (outline ? gantry.outlines.getParticleInstances(outline, field.particle, false)) %}
 
 {% block label %}
     {{ parent() }}

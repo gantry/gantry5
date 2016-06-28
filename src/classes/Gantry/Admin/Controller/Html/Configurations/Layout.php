@@ -142,7 +142,7 @@ class Layout extends HtmlController
         $layout->init(false, false);
 
         /** @var Outlines $outlines */
-        $outlines = $this->container['configurations'];
+        $outlines = $this->container['outlines'];
 
         // Update layouts from all inheriting outlines.
         $elements = $layout->sections() + $layout->particles(false);
@@ -225,7 +225,7 @@ class Layout extends HtmlController
             $inheritType = $particle ? 'particle' : 'section';
 
             /** @var Outlines $outlines */
-            $outlines = $this->container['configurations'];
+            $outlines = $this->container['outlines'];
 
             if ($outline !== 'default') {
                 if ($particle) {

@@ -66,10 +66,10 @@ interface ThemeInterface
     /**
      * Update all CSS files in the theme.
      *
-     * @param array $configurations
+     * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $configurations = null);
+    public function updateCss(array $outlines = null);
 
     /**
      * Set current layout.

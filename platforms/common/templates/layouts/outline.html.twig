@@ -1,4 +1,4 @@
-{%  set preset = gantry.configurations.layoutPreset(name) %}
+{%  set preset = gantry.outlines.layoutPreset(name) %}
 
 <div id="outline-{{ name }}" class="page">
     <h4>
@@ -35,7 +35,7 @@
             >
                 <i class="fa fa-fw fa-pencil"></i>
             </a>
-            {% if gantry.authorize('outline.create') and gantry.configurations.canDuplicate(name) %}
+            {% if gantry.authorize('outline.create') and gantry.outlines.canDuplicate(name) %}
             <a href="{{ gantry.route('configurations', name, 'duplicate') }}"
                data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
                title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
@@ -44,7 +44,7 @@
                 <i class="fa fa-fw fa-copy"></i>
             </a>
             {% endif %}
-            {% if name != 'default' and gantry.authorize('outline.delete') and gantry.configurations.canDelete(name) %}
+            {% if name != 'default' and gantry.authorize('outline.delete') and gantry.outlines.canDelete(name) %}
             <button data-title="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
                     data-tip="{{ 'GANTRY5_PLATFORM_DELETE'|trans }}"
                     title="{{ 'GANTRY5_PLATFORM_DELETE_X'|trans(title) }}"

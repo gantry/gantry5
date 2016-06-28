@@ -76,7 +76,7 @@ class Positions extends Collection
         }
 
         // Add empty positions from the layouts.
-        foreach ($this->container['configurations']->positions() as $name => $title) {
+        foreach ($this->container['outlines']->positions() as $name => $title) {
             if (!isset($positions[$name])) {
                 $positions[$name] = new Position($name, ['title' => $title]);
             }
