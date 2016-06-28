@@ -85,7 +85,9 @@ abstract class Gantry extends Container
      */
     public function siteUrl()
     {
-        return RealDocument::siteUrl();
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->siteUrl();
     }
 
     /**
@@ -94,7 +96,7 @@ abstract class Gantry extends Container
      */
     public function styles($location = 'head')
     {
-        return RealDocument::getStyles($location);
+        return $this['document']->getStyles($location);
     }
 
     /**
@@ -103,7 +105,7 @@ abstract class Gantry extends Container
      */
     public function scripts($location = 'head')
     {
-        return RealDocument::getScripts($location);
+        return $this['document']->getScripts($location);
     }
 
     /**
@@ -114,7 +116,7 @@ abstract class Gantry extends Container
      */
     public function load($framework)
     {
-        return RealDocument::load($framework);
+        return $this['document']->load($framework);
     }
 
     /**
@@ -227,6 +229,10 @@ abstract class Gantry extends Container
 
         $instance['page'] = function ($c) {
             return new Page($c);
+        };
+
+        $instance['document'] = function () {
+            return new RealDocument;
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.

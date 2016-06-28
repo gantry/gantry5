@@ -154,7 +154,7 @@ class TwigExtension extends \Twig_Extension
     public function imageSize($src, $attrib = true, $remote = false)
     {
         // TODO: need to better handle absolute and relative paths
-        //$url = Document::url(trim((string) $src), false, false);
+        //$url = Gantry::instance()['document']->url(trim((string) $src), false, false);
         $width = $height = null;
         $sizes = ['width' => $width, 'height' => $height];
         $attr = '';
@@ -267,7 +267,9 @@ class TwigExtension extends \Twig_Extension
      */
     public function urlFunc($input, $domain = false, $timestamp_age = null)
     {
-        return Document::url(trim((string) $input), $domain, $timestamp_age);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->url(trim((string) $input), $domain, $timestamp_age);
     }
 
     /**
@@ -281,7 +283,9 @@ class TwigExtension extends \Twig_Extension
      */
     public function htmlFilter($str, $domain = false, $timestamp_age = null)
     {
-        return Document::urlFilter($str, $domain, $timestamp_age);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->urlFilter($str, $domain, $timestamp_age);
     }
 
     /**
@@ -358,7 +362,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $location, (int) $priority);
+            $success = Gantry::instance()['document']->addHeaderTag($result, $location, (int) $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }

@@ -205,12 +205,22 @@ class Document
         return static::rootUri();
     }
 
-
+    /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @return string
+     */
     public static function rootUri()
     {
         return '';
     }
 
+    /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @param bool $addDomain
+     * @return string
+     */
     public static function domain($addDomain = false)
     {
         return '';
@@ -220,6 +230,8 @@ class Document
      * Return URL to the resource.
      *
      * @example {{ url('gantry-theme://images/logo.png')|default('http://www.placehold.it/150x100/f4f4f4') }}
+     *
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
      *
      * @param  string $url         Resource to be located.
      * @param  bool $domain        True to include domain name.

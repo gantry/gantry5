@@ -99,7 +99,7 @@ class Compiler extends BaseCompiler
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
 
         // Generate URL, failed streams will be kept as they are to allow users to find issues.
-        $url = Document::url($uri) ?: $url;
+        $url = Gantry::instance()['document']->url($uri) ?: $url;
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url && $url[0] == '/' && $this->basePath) {

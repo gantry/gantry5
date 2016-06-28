@@ -186,7 +186,9 @@ class Platform extends BasePlatform
 
     public function finalize()
     {
-        Document::registerAssets();
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerAssets();
     }
 
 

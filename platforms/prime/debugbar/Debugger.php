@@ -86,7 +86,7 @@ class Debugger
             list($css_files, $js_files) = self::$renderer->getAssets(null, JavascriptRenderer::RELATIVE_URL);
 
             foreach ($css_files as $css) {
-                Document::addHeaderTag([
+                $gantry['document']->addHeaderTag([
                     'tag' => 'link',
                     'rel' => 'stylesheet',
                     'href' => $css
@@ -94,7 +94,7 @@ class Debugger
             }
 
             foreach ($js_files as $js) {
-                Document::addHeaderTag([
+                $gantry['document']->addHeaderTag([
                     'tag' => 'script',
                     'src' => $js
                 ], 'head', 0);

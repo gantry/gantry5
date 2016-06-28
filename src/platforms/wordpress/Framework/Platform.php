@@ -112,7 +112,9 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        return Document::url('wp-admin/customize.php?theme=' . $theme);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->url('wp-admin/customize.php?theme=' . $theme);
     }
 
     /**
@@ -124,7 +126,9 @@ class Platform extends BasePlatform
     public function getThemeAdminUrl($theme)
     {
         if ($theme === Gantry::instance()['theme.name']) {
-            return Document::url('wp-admin/admin.php?page=layout-manager');
+            $gantry = Gantry::instance();
+
+            return $gantry['document']->url('wp-admin/admin.php?page=layout-manager');
         }
         return null;
     }
@@ -136,7 +140,9 @@ class Platform extends BasePlatform
 
     public function finalize()
     {
-        Document::registerAssets();
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerAssets();
     }
 
     public function errorHandlerPaths()

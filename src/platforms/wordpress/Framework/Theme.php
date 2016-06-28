@@ -189,7 +189,9 @@ class Theme extends AbstractTheme
 
     public function url_filter($text)
     {
-        return Document::urlFilter($text, true, 0);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->urlFilter($text, true, 0);
     }
 
     public function register_post_types()
@@ -216,7 +218,9 @@ class Theme extends AbstractTheme
 
     public function enqueue_scripts()
     {
-        Document::registerAssets();
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerAssets();
     }
 
     public function print_styles()
@@ -237,7 +241,9 @@ class Theme extends AbstractTheme
 
     public function print_inline_scripts()
     {
-        Document::registerScripts('footer');
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerScripts('footer');
         $scripts = Gantry::instance()->scripts('footer');
         if ($scripts) {
             echo implode("\n    ", $scripts) . "\n";
