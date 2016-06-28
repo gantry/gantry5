@@ -14,10 +14,28 @@ use Gantry\Framework\Base\Document as BaseDocument;
 
 class Document extends BaseDocument
 {
+    protected static $availableFrameworks = [
+        'jquery' => 'registerJquery',
+        'jquery.framework' => 'registerJquery',
+        'jquery.ui.core' => 'registerJqueryUiCore',
+        'jquery.ui.sortable' => 'registerJqueryUiSortable',
+        'bootstrap.2' => 'registerBootstrap2',
+        'mootools' => 'registerMootools',
+        'mootools.framework' => 'registerMootools',
+        'mootools.core' => 'registerMootools',
+        'mootools.more' => 'registerMootoolsMore'
+    ];
+
     public static function registerAssets()
     {
+        static::registerFrameworks();
         static::registerStyles();
         static::registerScripts();
+    }
+
+    public static function rootUri()
+    {
+        return rtrim(\JUri::root(true), '/') ?: '/';
     }
 
     protected static function registerStyles()
@@ -68,39 +86,33 @@ class Document extends BaseDocument
         }
     }
 
-    public static function load($framework)
+    protected static function registerJquery()
     {
-        switch ($framework) {
-            case 'jquery':
-            case 'jquery.framework':
-                \JHtml::_('jquery.framework');
-                break;
-            case 'jquery.ui.core':
-                \JHtml::_('jquery.ui', ['core']);
-                break;
-            case 'jquery.ui.sortable':
-                \JHtml::_('jquery.ui', ['sortable']);
-                break;
-            case 'boostrap.2':
-                Gantry::instance()['theme']->joomla(true);
-                break;
-            case 'mootools':
-            case 'mootools.framework':
-            case 'mootools.core':
-                \JHtml::_('behavior.framework');
-                break;
-            case 'mootools.more':
-                \JHtml::_('behavior.framework', true);
-                break;
-            default:
-                return false;
-        }
-
-        return true;
+        \JHtml::_('jquery.framework');
     }
 
-    public static function rootUri()
+    protected static function registerJqueryUiCore()
     {
-        return rtrim(\JUri::root(true), '/') ?: '/';
+        \JHtml::_('jquery.ui', ['core']);
+    }
+
+    protected static function registerJqueryUiSortable()
+    {
+        \JHtml::_('jquery.ui', ['sortable']);
+    }
+
+    protected static function registerBootstrap2()
+    {
+        Gantry::instance()['theme']->joomla(true);
+    }
+
+    protected static function registerMootools()
+    {
+        \JHtml::_('behavior.framework');
+    }
+
+    protected static function registerMootoolsMore()
+    {
+        \JHtml::_('behavior.framework', true);
     }
 }

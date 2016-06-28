@@ -18,9 +18,22 @@ class Document extends BaseDocument
     public static $wp_styles = [];
     public static $wp_scripts = ['head' => [], 'footer' => []];
     protected static $script_info = [];
+    protected static $availableFrameworks = [
+        'jquery' => 'registerJquery',
+        'jquery.framework' => 'registerJquery',
+        'jquery.ui.core' => 'registerJqueryUiCore',
+        'jquery.ui.sortable' => 'registerJqueryUiSortable',
+        'bootstrap.2' => 'registerBootstrap2',
+        'bootstrap.3' => 'registerBootstrap3',
+        'mootools' => 'registerMootools',
+        'mootools.framework' => 'registerMootools',
+        'mootools.core' => 'registerMootools',
+        'mootools.more' => 'registerMootoolsMore'
+    ];
 
     public static function registerAssets()
     {
+        static::registerFrameworks();
         static::registerStyles();
         static::registerScripts('head');
         static::registerScripts('footer');
@@ -89,40 +102,6 @@ class Document extends BaseDocument
         self::$scripts[$pos] = [];
     }
 
-    public static function load($framework)
-    {
-        switch ($framework) {
-            case 'jquery':
-            case 'jquery.framework':
-                wp_enqueue_script('jquery');
-                break;
-            case 'jquery.ui.core':
-                wp_enqueue_script('jquery-ui-core');
-                break;
-            case 'jquery.ui.sortable':
-                wp_enqueue_script('jquery-ui-sortable');
-                break;
-            case 'bootstrap.2':
-                wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
-                break;
-            case 'bootstrap.3':
-                wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
-                break;
-            case 'mootools':
-            case 'mootools.framework':
-            case 'mootools.core':
-                wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
-                break;
-            case 'mootools.more':
-                wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
-                break;
-            default:
-                return false;
-        }
-
-        return true;
-    }
-
     public static function domain($addDomain = false)
     {
         static $domain;
@@ -186,5 +165,40 @@ class Document extends BaseDocument
         $append = implode(' ', $append);
 
         return str_replace(' src=', " {$append} src=", $tag);
+    }
+
+    protected static function registerJquery()
+    {
+        wp_enqueue_script('jquery');
+    }
+
+    protected static function registerJqueryUiCore()
+    {
+        wp_enqueue_script('jquery-ui-core');
+    }
+
+    protected static function registerJqueryUiSortable()
+    {
+        wp_enqueue_script('jquery-ui-sortable');
+    }
+
+    protected static function registerBootstrap2()
+    {
+        wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
+    }
+
+    protected static function registerBootstrap3()
+    {
+        wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
+    }
+
+    protected static function registerMootools()
+    {
+        wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
+    }
+
+    protected static function registerMootoolsMore()
+    {
+        wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
     }
 }

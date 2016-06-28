@@ -26,6 +26,19 @@ class Document
 
     protected static $scripts = [];
     protected static $styles = [];
+    protected static $frameworks = [];
+    protected static $availableFrameworks = [
+        'jquery' => 'registerJquery',
+        'jquery.framework' => 'registerJquery',
+        'jquery.ui.core' => 'registerJqueryUiSortable',
+        'jquery.ui.sortable' => 'registerJqueryUiSortable',
+        'bootstrap.2' => 'registerBootstrap2',
+        'bootstrap.3' => 'registerBootstrap3',
+        'mootools' => 'registerMootools',
+        'mootools.framework' => 'registerMootools',
+        'mootools.core' => 'registerMootools',
+        'mootools.more' => 'registerMootoolsMore'
+    ];
 
     public static function addHeaderTag(array $element, $location = 'head', $priority = 0)
     {
@@ -174,7 +187,13 @@ class Document
 
     public static function load($framework)
     {
-        return false;
+        if (!isset(static::$availableFrameworks[$framework])) {
+            return false;
+        }
+
+        static::$frameworks[] = $framework;
+
+        return true;
     }
 
     public static function registerAssets()
@@ -349,5 +368,94 @@ class Document
         $url = static::url(trim($matches[2], '"\''), $domain, $timestamp_age);
 
         return "{$matches[1]}url({$url})";
+    }
+
+    /**
+     * Register loaded frameworks.
+     */
+    protected static function registerFrameworks()
+    {
+        //print_r(static::$frameworks);die();
+        foreach (static::$frameworks as $framework) {
+            if (isset(static::$availableFrameworks[$framework])) {
+                call_user_func([get_called_class(), static::$availableFrameworks[$framework]]);
+            }
+        }
+    }
+
+    protected static function registerJquery()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://code.jquery.com/jquery-2.2.2.min.js',
+                'integrity' => 'sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=',
+                'crossorigin' => 'anonymous'
+            ],
+            'head',
+            10
+        );
+    }
+
+    protected static function registerJqueryUiSortable()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js',
+                'integrity' => 'sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=',
+                'crossorigin' => 'anonymous'
+            ],
+            'head',
+            10
+        );
+    }
+
+    protected static function registerBootstrap2()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
+            ],
+            'head',
+            10
+        );
+    }
+
+    protected static function registerBootstrap3()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
+            ],
+            'head',
+            10
+        );
+    }
+
+    protected static function registerMootools()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js'
+            ],
+            'head',
+            10
+        );
+    }
+
+    protected static function registerMootoolsMore()
+    {
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js'
+            ],
+            'head',
+            10
+        );
     }
 }

@@ -17,6 +17,7 @@ class Document extends BaseDocument
 {
     public static function registerAssets()
     {
+        static::registerFrameworks();
         static::registerStyles();
         static::registerScripts('head');
     }
@@ -92,4 +93,6 @@ class Document extends BaseDocument
         }
         return $url;
     }
+
+    // TODO: add support for loading standard frameworks...
 }
