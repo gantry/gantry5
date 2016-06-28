@@ -62,6 +62,11 @@
                 border: 2px solid $atom;
                 padding: $content-padding / 2;
                 margin: $content-margin / 2;
+                vertical-align: middle;
+                
+                .atom-title {
+                    vertical-align: middle;
+                }
 
                 &:not(.atom-force-style) {
                     @include transition(background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out);
@@ -77,11 +82,27 @@
                     }
                 }
 
+                &.g-inheriting {
+                    @include stripes-background($atom, 50px, 45deg);
+                    color: $white;
+                    i {
+                        color: $white;
+                    }
+                }
+
                 &.atom-disabled {
                     @extend .particle-disabled;
                     border-color: rgba(0, 0, 0, 0.1);
                     color: $dark-gray;
                     opacity: 0.7;
+
+                    &.g-inheriting {
+                        @include stripes-background($dark-gray, 50px, 45deg);
+                        color: $white;
+                        i {
+                            color: $white;
+                        }
+                    }
                 }
             }
         }

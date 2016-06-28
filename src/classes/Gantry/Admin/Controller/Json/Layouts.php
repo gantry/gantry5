@@ -26,7 +26,6 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 /**
  * Class Layouts
  * @package Gantry\Admin\Controller\Json
- * @deprecated
  */
 class Layouts extends JsonController
 {
@@ -53,6 +52,7 @@ class Layouts extends JsonController
         $type = $post['type'];
         $subtype = $post['subtype'];
         $inherit = $post['inherit'];
+        $clone = $post['mode'] === 'clone';
         $id = $post['id'];
 
         $this->container['configuration'] = $outline;
@@ -111,7 +111,7 @@ class Layouts extends JsonController
         $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
         $html['g-settings-block-attributes'] = $this->renderBlockFields($block, $params);
         if ($path == 'list') {
-            $html['g-inherit-particle'] = $this->renderParticlesInput($inherit ? $outline : null, $subtype, $post['selected']);
+            $html['g-inherit-particle'] = $this->renderParticlesInput($inherit || $clone ? $outline : null, $subtype, $post['selected']);
         }
 
         return new JsonResponse(['json' => $item, 'html' => $html]);

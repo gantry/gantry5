@@ -37,6 +37,7 @@ class AssignmentFilter
             $scores[$type] = $this->getScore($candidate);
         }
 
+        ksort($scores, SORT_STRING);
         arsort($scores);
 
         return $scores;

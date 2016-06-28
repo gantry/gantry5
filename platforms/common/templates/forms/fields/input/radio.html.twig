@@ -4,13 +4,13 @@
     <input
             {# required attribute structures #}
             type="radio"
-            name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
+            value="{{ value|join(', ') }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
             {% if value == true %}checked="checked" {% endif %}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}

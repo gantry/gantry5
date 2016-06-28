@@ -4,15 +4,25 @@
 1. [Common](#common)
     1. [](#new)
         - **Inheritance**: It is now possible to have individual Sections and Particles to Inherit from a different Outline and to decide what to Inherit specifically (attributes, children, blocks). Once a Section or Particle have been set to Inherit, any change applied to the parent Section / Particle will automatically reflect to the inheriting one (#50, #303, #340, #361, #575, #1018, #1213, #1312)
-        - Add support for DebugBar (#386)
-        - Update SCSS compiler to support version 3.4 (#1117)
-        - Update Bourbon SCSS library to v4.2.7
+        - Added support for DebugBar (#386)
+        - Removed outdated LESS compiler (see #273)
+        - Updated SCSS compiler to support version 3.4 (#1117)
+        - Updated Bourbon SCSS library to v4.2.7
         - New `input.multicheckbox` field. Takes options like a select and renders as a list of checkboxes
+        - New `input.radios` field. Allows to create a list of radio selectors. `options` entry should be of kind key/value
+        - Added possibility to place `<svg>` code directly inside the Logo particle
+        - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
     2. [](#improved)
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`
         - Display only shared particle settings in `Particle Defaults`
         - Tweaked text contrast across the Admin UI (#1326)
+        - Sections Layout `Inherit` option is now renamed to `Inherit from Page Settings` (#1349)
+        - Assignments cards have now maximum height declared for better presentation and readability
+        - Removed rename capability from Base Outline (#1350)
+        - Do not close the Atoms modal when clicking on the overlay, in order to prevent accidental loss of changes.
+        - When deleting an Outline it will now highlight the title of the Outline in question
+        - Make configration overrides persistent, meaning that the value will stay checked even if the value is identical to the global value (#1346)
     3. [](#bugfix)
         - Fixed disabled particle rendering in menu item (thanks @nikola3244 - #1313)
         - Fixed typos in tooltips and notices (#1318)
@@ -21,14 +31,35 @@
         - Fixed Preset Match (star) being applied only in Base but not in the rest of the Outlines
         - Fixed issue in parent themes streams initialization (thanks @nikola3244 - #251, #1325)
         - Fixed `Document::urlFilter` handling URLs inside `<pre>` and `<code>` tags (#1328)
+        - Fixed `collection.list` inside `container.set` not working (#1333)
+        - Removed Nucleus CSS rule `.g-block.visible-desktop {}` that was overriding the media queries (#1344)
+        - Layout Manager will now prevent clearing single empty rows upon save (#1368)
+        - Font Picker: Fixed potential conflict issue when a Local and a Remote fonts were matching name
+        - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
+        - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
+        - Fixed missing configuration when duplicating system outlines
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
+    2. [](#improved)
+        - Hydrogen for Joomla loads now optional `alert` assets from Nucleus to fix potential styling issues
+        - Gantry 5 Particle now displays the Particle type in the lists of modules (#1373)
+        - Gantry 5 Particle badge for unselected Particles is now orange, to distinct from the selected ones (green)
     3. [](#bugfix)
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
+        - Fixed untranslated 404 page title (#1001)
+        - Fixed wrong title in newly created outline
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)
+        - Extend Assignments with possibility to assign outline to all posts or archive page of custom post type (thanks @horch004 - #1298)
     2. [](#improved)
         - Gantry 5 Particle Widget is now compatible with WordPress Customizer and will live-refresh on change (#869)
+        - Add support for Widgets with checkboxes that use the trick of hidden/checkbox fields with the same name (#1014)
+    3. [](#bugfix)
+        - Fixed post type priority not being used in assignments (#1340)
+        - Fixed menu particle missing `Expand on Hover` option (#1360)
+        - Fixed Admin incompatibility with Jetpack (#1184)
 
 # 5.2.18
 ## 27/05/2016
@@ -59,7 +90,7 @@
         - Fixed media manager not rendering correctly in frontend editor (#986)
         - Fixed modal issues with Fabrik (#1147)
         - Wrap all Joomla content to `row-fluid` to fix some Bootstrap layout issues
-        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289) 
+        - Fixed articles particle displaying unpublished, trashed and archived articles (#1289)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress))
@@ -81,7 +112,7 @@
         - Saving Assignments will now only post enabled items instead of the whole lot, making the save faster and reducing the probability of hitting a `max_input_vars` limit issue (#1279)
     3. [](#bugfix)
         - Fixed Sub-items back arrow in Menu Manager not responding to tap in Touch Devices (#1254, #1218)
-        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259) 
+        - Fixed issue that was preventing Atoms from properly getting sorted and deleted on touch devices (#1259)
 2. [Joomla](#joomla)
     1. [](#new)
         - Add particle badges support for `Advanced Module Manager` (thanks @nonumber)
@@ -98,7 +129,7 @@
         - Added missing `home`, `outline`, `language` and `direction` properties to `Framework\Page` class
     3. [](#bugfix)
         - Fixed HTML entities not encoded properly in menu item titles (#1248)
-        
+
 # 5.2.15
 ## 25/04/2016
 

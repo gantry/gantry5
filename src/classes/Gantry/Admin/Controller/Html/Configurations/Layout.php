@@ -139,6 +139,7 @@ class Layout extends HtmlController
 
         // Create layout from the data.
         $layout = new LayoutObject($outline, $layout, $preset);
+        $layout->init(false, false);
 
         /** @var Outlines $outlines */
         $outlines = $this->container['configurations'];
@@ -175,6 +176,7 @@ class Layout extends HtmlController
         $item->type    = $this->request->post['type'] ?: $type;
         $item->subtype = $this->request->post['subtype'] ?: $type;
         $item->title   = $this->request->post['title'] ?: ucfirst($type);
+        $parent   = $this->request->post['parent'] ?: $layout->getParentId($id);
         if (!isset($item->attributes)) {
             $item->attributes = new \stdClass;
         }
@@ -197,7 +199,7 @@ class Layout extends HtmlController
             $hasBlock = $section && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
-            $attributes += (array) $item->attributes + $defaults;
+            $attributes += (array) $item->attributes;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $blueprints = new BlueprintsForm($file->content());
             $file->free();
@@ -206,7 +208,6 @@ class Layout extends HtmlController
             $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
-            $attributes += $defaults;
             $blueprints = new BlueprintsForm($this->container['particles']->get($name));
             $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
@@ -227,14 +228,18 @@ class Layout extends HtmlController
             $outlines = $this->container['configurations'];
 
             if ($outline !== 'default') {
-                $funcName = 'getOutlinesWith' . ucfirst($inheritType);
-                $list = (array)$outlines->{$funcName}($particle ? $item->subtype : $item->id, false);
+                if ($particle) {
+                    $list = $outlines->getOutlinesWithParticle($item->subtype, false);
+                } else {
+                    $list = $outlines->getOutlinesWithSection($item->id, false);
+                }
                 unset($list[$outline]);
             } else {
                 $list = [];
             }
 
-            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, $id)) && $list)) {
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, [$id, $parent])) && $list)) {
+                $inheritable = true;
                 $inheritance = new BlueprintsForm($file->content());
                 $file->free();
 
@@ -254,7 +259,7 @@ class Layout extends HtmlController
                 $file->free();
                 $inheritance->set(
                     'form.fields._note.content',
-                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li>, <li>', $inheriting) . '</li></ul>')
+                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
                 );
 
             } elseif ($outline === 'default') {
@@ -280,6 +285,7 @@ class Layout extends HtmlController
             'extra'         => $blockBlueprints,
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => isset($inheritance) ? $inheritance : null,
+            'inheritable'   => !empty($inheritable),
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'defaults'      => ['particles' => [$name => $defaults]],
@@ -443,19 +449,26 @@ class Layout extends HtmlController
         }
 
         $inherit = $this->request->post->getArray('inherit');
+        $clone = !empty($inherit['mode']) && $inherit['mode'] === 'clone';
         $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
-        if (!empty($inherit['outline']) && count($inherit['include'])) {
+        if (!$clone && !empty($inherit['outline']) && count($inherit['include'])) {
             // Clean up inherit and add it to the data.
             if (!$block) {
                 $inherit['include'] = array_values(array_diff($inherit['include'], ['block']));
             }
+
+            unset($inherit['mode']);
             $data->join('inherit', $inherit);
         }
 
         // Optionally send children of the object.
         if (in_array('children', $inherit['include'])) {
             $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['configuration']);
-            $item = $layout->inheritAll()->find($inherit['section']);
+            if ($clone) {
+                $item = $layout->find($inherit['section']);
+            } else {
+                $item = $layout->inheritAll()->find($inherit['section']);
+            }
             $data->join('children', $item->children);
         }
 

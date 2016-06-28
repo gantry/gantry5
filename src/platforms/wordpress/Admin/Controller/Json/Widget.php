@@ -200,7 +200,7 @@ class Widget extends JsonController
     {
         $widgets = $this->container['platform']->listWidgets();
         if (!isset($widgets[$name])) {
-            throw new \RuntimeException("Widget '{$name}' not found", 404);
+            throw new \RuntimeException(sprintf("Widget '%s' not found", $name), 404);
         }
 
         /** @var \WP_Widget $widget */

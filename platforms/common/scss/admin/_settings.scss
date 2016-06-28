@@ -71,8 +71,15 @@
     .g-instancepicker-title {
         margin-right: 0.5rem;
         font-style: italic;
+        vertical-align: middle;
+        display: inline-block;
         &:empty {
             margin: 0;
+        }
+
+        + .button {
+            display: inline-block;
+            vertical-align: middle;
         }
     }
 

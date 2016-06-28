@@ -4,14 +4,14 @@
     <input
             {# required attribute structures #}
             type="color"
-            name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|lower|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
+            value="{{ value|join(', ')|lower }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-            {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
+            {% if field.list is defined %}list="{{ field.list }}"{% endif %}
             />
 {% endblock %}

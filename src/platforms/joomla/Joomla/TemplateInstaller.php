@@ -116,7 +116,7 @@ class TemplateInstaller
         return $style;
     }
 
-    public function addStyle($title, array $configuration, $home = 0)
+    public function addStyle($title, array $configuration = [], $home = 0)
     {
         // Make sure language debug is turned off.
         $lang = \JFactory::getLanguage();
@@ -393,6 +393,9 @@ class TemplateInstaller
             }
 
             if (!empty($menu['items'])) {
+                $this->copyCustom('_body_only', '_body_only');
+                $this->copyCustom('_error', '_error');
+                $this->copyCustom('_offline', '_offline');
                 $this->copyCustom('default', 'default');
                 $this->addMenuItems($menutype, $menu['items'], (int) $parent);
             }

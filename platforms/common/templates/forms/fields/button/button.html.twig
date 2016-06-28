@@ -3,13 +3,13 @@
 {% block input %}
     <button
             {# required attribute structures #}
-            name="{{ (scope ~ name)|fieldName|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
             {# non-global attribute structures #}
-            type="{{ field.type|e }}"
+            type="{{ field.type }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             >
-        {% if value is defined and value != "" %} {{ value|e }} {% else %} {{ field.value|e }} {% endif %}
-        {% if field.icon is defined %} <i class="{{ field.icon|e }}" aria-hidden="true"></i> {% endif %}
+        {{ field.value }}
+        {% if field.icon is defined %} <i class="{{ field.icon }}" aria-hidden="true"></i> {% endif %}
     </button>
 {% endblock %}

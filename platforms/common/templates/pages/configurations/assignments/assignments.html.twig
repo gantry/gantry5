@@ -64,7 +64,9 @@
                                             'name': path|fieldName,
                                             'field': link.field,
                                             'value': link.value is defined ? link.value : gantry.config.get(path),
-                                            'disabled': link.disabled
+
+                                            'disabled': not link.value,
+                                            'turned_off': link.disabled
                                             } %}
                                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
                                 {{- link.label -}}

@@ -4,6 +4,20 @@ type: section.inheritance
 
 form:
   fields:
+    _info:
+      type: separator.note
+      class: alert alert-info blocksize-note
+      content: 'Inheritance makes the Section identical to that of the inherited outline.'
+
+    mode:
+      type: input.radios
+      label: Mode
+      description: Whether to clone or inherit the section properties
+      default: inherit
+      options:
+        clone: Clone
+        inherit: Inherit
+
     outline:
       type: gantry.outlines
       label: Outline
@@ -15,9 +29,9 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Section to inherit?
       options:
         attributes: Section Attributes
-        block: Section Block
-        children: Section Children
+        block: Block Attributes
+        children: Particles within Section

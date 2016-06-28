@@ -17,6 +17,7 @@ use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\CompiledTheme;
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Framework\Atoms;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -101,14 +102,16 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
         return $config->load();
     }
-
-    public static function load(Container $container, $name = 'default')
+    
+    public static function load(Container $container, $name = 'default', $combine = true, $withDefaults = true)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
+        $combine = $combine && $name !== 'default';
+
         // Merge current configuration with the default.
-        $uris = array_unique(["gantry-config://{$name}", 'gantry-config://default']);
+        $uris = $combine ? ["gantry-config://{$name}", 'gantry-config://default'] : ["gantry-config://{$name}"];
 
         $paths = [];
         foreach ($uris as $uri) {
@@ -124,12 +127,18 @@ class ConfigServiceProvider implements ServiceProviderInterface
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 
-        $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
-        $config->setBlueprints(function() use ($container) {
+        $compiled = new CompiledConfig($cache, $files, GANTRY5_ROOT);
+        $compiled->setBlueprints(function() use ($container) {
             return $container['blueprints'];
         });
 
-        return $config->load(true);
+        $config = $compiled->load($withDefaults);
+
+        // Set atom inheritance.
+        $atoms = new Atoms((array) $config->get('page.head.atoms'));
+        $config->set('page.head.atoms', $atoms->init()->toArray());
+
+        return $config;
     }
 
 

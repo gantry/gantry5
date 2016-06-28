@@ -106,8 +106,12 @@ ready(function() {
                     allowElementsClick: '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){
@@ -164,7 +168,7 @@ ready(function() {
         switch (page) {
             case 'layout':
                 var preset = $('[data-lm-preset]');
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.layoutmanager.singles('cleanup', lm.builder, false);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
@@ -356,7 +360,6 @@ ready(function() {
             indicator.hideIndicator();
         })
     });
-
 });
 
 var modules = {

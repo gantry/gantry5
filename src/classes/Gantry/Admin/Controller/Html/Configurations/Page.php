@@ -21,7 +21,10 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Atoms;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Outlines;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -58,17 +61,30 @@ class Page extends HtmlController
 
         if ($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $data = $this->container['config'];
         } else {
-            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $defaults = $this->container['defaults'];
+            $data = ConfigServiceProvider::load($this->container, $configuration, false, false);
         }
 
         $deprecated = $this->getDeprecatedAtoms();
         if ($deprecated) {
-            $this->container['config']->set('page.head.atoms', $deprecated);
+            $data->set('page.head.atoms', $deprecated);
+        }
+
+        if (isset($defaults)) {
+            $currentAtoms = $data->get('page.head.atoms');
+            if (!$currentAtoms) {
+                // Make atoms to appear to be inherited in they are loaded from defaults.
+                $defaultAtoms = $defaults->get('page.head.atoms');
+                $atoms = (new Atoms($defaultAtoms))->inheritAll('default')->toArray();
+                $defaults->set('page.head.atoms', $atoms);
+            }
         }
 
         $this->params += [
+            'data' => $data,
             'page' => $this->container['page']->group(),
             'route'  => "configurations.{$this->params['configuration']}",
             'page_id' => $configuration,
@@ -192,7 +208,7 @@ class Page extends HtmlController
 
     public function atom($name)
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
         $data = $this->request->post['data'];
         if ($data) {
@@ -202,6 +218,7 @@ class Page extends HtmlController
         }
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
 
         // Load particle blueprints and default settings.
         $validator = new BlueprintsForm([]);
@@ -214,15 +231,64 @@ class Page extends HtmlController
         $item->def('type', $name);
         $item->def('title', $blueprints->get('name'));
         $item->def('attributes', []);
+        $item->def('inherit', []);
+
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/atom.yaml");
+        if ($file->exists()) {
+            /** @var Outlines $outlines */
+            $outlines = $this->container['configurations'];
+
+            if ($outline !== 'default') {
+                $list = (array)$outlines->getOutlinesWithAtom($item->type, false);
+                unset($list[$outline]);
+            } else {
+                $list = [];
+            }
+
+            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlinesWithAtom($outline, $item->id)) && $list)) {
+                $inheritable = true;
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+                $inheritance->set('form.fields.outline.filter', array_keys($list));
+                $inheritance->set('form.fields.atom.atom', $name);
+
+            } elseif (!empty($inheriting)) {
+                // Already inherited by other outlines.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+                $inheritance->set(
+                    'form.fields._note.content',
+                    sprintf($inheritance->get('form.fields._note.content'), 'atom', ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
+                );
+
+            } elseif ($outline === 'default') {
+                // Base outline.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+
+            } else {
+                // Nothing to inherit from.
+                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
+                $inheritance = new BlueprintsForm($file->content());
+                $file->free();
+            }
+        }
 
         $this->params += [
+            'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
+            'inheritance'   => isset($inheritance) ? $inheritance : null,
+            'inheritable'   => !empty($inheritable),
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
             'blueprints'    => $blueprints,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
-            'action'        => "configurations/{$configuration}/page/atoms/{$name}/validate"
+            'action'        => "configurations/{$outline}/page/atoms/{$name}/validate",
+            'skip'          => ['enabled']
         ];
 
         return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
@@ -249,6 +315,7 @@ class Page extends HtmlController
             }
         );
 
+        $data->set('id', $this->request->post['id']);
         $data->set('type', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->get('name'));
         $data->set('attributes', $this->request->post->getArray("particles.{$name}"));
@@ -261,8 +328,12 @@ class Page extends HtmlController
             }
         }
 
-        if ($block) {
-            $data->join('options.block', $block);
+        $inherit = $this->request->post->getArray('inherit');
+        $clone = !empty($inherit['mode']) && $inherit['mode'] === 'clone';
+        $inherit['include'] = !empty($inherit['include']) ? explode(',', $inherit['include']) : [];
+        if (!$clone && !empty($inherit['outline']) && count($inherit['include'])) {
+            unset($inherit['mode']);
+            $data->join('inherit', $inherit);
         }
 
         // TODO: validate
@@ -286,6 +357,10 @@ class Page extends HtmlController
             $layout = Layout::instance($configuration);
             if (is_array($layout->atoms())) {
                 $layout->save(false);
+            }
+            if (isset($data['atoms'])) {
+                $atoms = new Atoms($data['atoms']);
+                $data['atoms'] = $atoms->update()->toArray();
             }
         }
 

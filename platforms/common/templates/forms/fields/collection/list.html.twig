@@ -1,6 +1,7 @@
 {% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+
 {# If values contains a plain list of items, we need to reindex them. #}
-{% set value = not field.key and value is iterable and value|length ? value|values : value|default(field.default) %}
+{% set value = not field.key and value is iterable and value|length ? value|values : value %}
 
 {% block field %}
     {% if field.is_current %}
@@ -19,10 +20,10 @@
             {% endfor %}
         </div>
     {% else %}
-        {% set can_reorder = field.reorder is defined ? field.reorder : true %}
-        {% set can_remove = field.deletion is defined ? field.deletion : true %}
-        {% set can_addnew = field.add_new is defined ? field.add_new : true %}
-        <div class="settings-param {{ field.type|replace('.', '-')|e }}">
+        {% set can_reorder = field.reorder ?? true %}
+        {% set can_remove = field.deletion ?? true %}
+        {% set can_addnew = field.add_new ?? true %}
+        <div class="settings-param {{ field.type|replace('.', '-') }}">
             {% if overrideable and (field.overridable is not defined or field.overridable == true or has_value) and field.type != 'container.set' %}
                 {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
             {% endif %}
@@ -31,27 +32,27 @@
                 <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
-                            <span aria-label="{{ field.description|e }}" data-tip="{{ field.description|raw }}" data-tip-place="top-right">{{ field.label|e }}</span>
+                            <span aria-label="{{ field.description }}" data-tip="{{ field.description|raw }}" data-tip-place="top-right">{{ field.label }}</span>
                         {% else %}
-                            {{ field.label|e }}
+                            {{ field.label }}
                         {% endif %}
                         {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                     {% endblock %}
                 </span>
-                <div class="settings-param-field" data-field-name="{{ field.name|e }}">
+                <div class="settings-param-field" data-field-name="{{ field.name }}">
                     {% block input -%}
                         <div class="g5-collection-wrapper">
                         <ul>
                         {%- if field.fields -%}
                                 {% for key, val in value %}
                                     {% if (field.ajax == true) %}
-                                        <li data-collection-item="{{ field.value|e }}">
+                                        <li data-collection-item="{{ field.value }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
-                                            <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key)|e }}"><span data-title-editable="{{ itemValue|e }}" class="title">{{ itemValue|e }}</span></a>
+                                            <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="title">{{ itemValue }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
                                             {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
-                                            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': itemValue|e}) }}" data-title-edit=""></i>
+                                            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         {% block collection_fields %}
@@ -59,7 +60,7 @@
                                                 {% for childName, child in field.fields %}
                                                     {% if childName starts with '.' %}
                                                         {% set childKey = childName|trim('.') %}
-                                                        {% set childValue = val[childName[1:]] %}
+                                                        {% set childValue = current_value[childName[1:]] %}
                                                         {% set childDefault = default_value[childName[1:]] %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
@@ -74,7 +75,7 @@
                                                              with {name: childName, field: child, value: key} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, value: childValue, default_value: childDefault, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
+                                                             with {name: childName, field: child, current_value: childValue, default_value: childDefault, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
@@ -87,18 +88,18 @@
                     </div>
                     <div>
                         <ul style="display: none">
-                            <li data-collection-nosort data-collection-template="{{ field.value|e }}" style="display: none;">
+                            <li data-collection-nosort="" data-collection-template="{{ field.value }}" style="display: none;">
                                 {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
-                                <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%')|e }}"><span data-title-editable="New item" class="title">New item</span></a>
+                                <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
                                 {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
                                 <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
                             </li>
                         </ul>
                         {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>{% endif %}
-                        <a href="{{ gantry.route(field_route)|e }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
+                        <a href="{{ gantry.route(field_route) }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
                     </div>
-                    <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName|e }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
+                    <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
                     {% endblock %}
                 </div>
             {% endblock %}

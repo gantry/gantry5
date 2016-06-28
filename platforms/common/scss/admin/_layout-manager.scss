@@ -130,6 +130,7 @@ $atom: #9055AF;
                     font-weight: $font-weight-regular;
                     font-family: $font-family-default;
                     font-size: 24px;
+                    @include ellipsis();
                 }
 
                 i {
@@ -198,11 +199,6 @@ $atom: #9055AF;
                     &:before, &:after {
                         display: none !important;
                     }
-                }
-
-
-                &:not(.g-inheriting-children) > .g-grid {
-                    z-index: 2;
                 }
             }
 
@@ -278,6 +274,7 @@ $atom: #9055AF;
                     vertical-align: middle;
                     line-height: 47px;
                     color: #bababa;
+                    @include ellipsis();
                 }
             }
         }
@@ -359,6 +356,7 @@ $atom: #9055AF;
         .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
+                @include ellipsis();
             }
         }
 
@@ -532,6 +530,10 @@ $atom: #9055AF;
                     z-index: 2;
                 }
             }
+
+            &.g-inheriting.particle-disabled {
+                @include stripes-background(#ccc, 50px, 45deg);
+            }
         }
 
         .atom {
@@ -635,7 +637,7 @@ $atom: #9055AF;
             }
         }
 
-        .particle-disabled, [data-lm-disabled] {
+        .particle-disabled, [data-lm-disabled], .g-inheriting .particle-disabled {
             @include stripes-background(#ccc, 50px, 45deg);
         }
 
@@ -1045,7 +1047,7 @@ $atom: #9055AF;
     }
 
     .g-inheriting:not(.g-inheriting-children) .g-inherit {
-        z-index: 1;
+        z-index: 0;
     }
 
     @include breakpoint(no-mobile) {

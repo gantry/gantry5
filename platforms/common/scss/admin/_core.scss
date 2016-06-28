@@ -70,6 +70,7 @@ body.g-prime {
         .g-collapse {
             i {
                 @include transform(rotate(180deg));
+                @include backface-visibility(hidden);
             }
         }
 

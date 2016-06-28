@@ -4,22 +4,22 @@
     <input
             {# required attribute structures #}
             type="search"
-            name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
+            value="{{ value|join(', ') }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
-            {% if field.dirname is defined %}dirname="{{ field.dirname|e }}"{% endif %}
+            {% if field.dirname is defined %}dirname="{{ field.dirname }}"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-            {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
-            {% if field.maxlength is defined %}maxlength="{{ field.maxlength|e }}"{% endif %}
-            {% if field.minlength is defined %}minlength="{{ field.minlength|e }}"{% endif %}
-            {% if field.pattern is defined %}pattern="{{ field.pattern|e }}"{% endif %}
-            {% if field.placeholder is defined %}placeholder="{{ field.placeholder|e }}"{% endif %}
+            {% if field.list is defined %}list="{{ field.list }}"{% endif %}
+            {% if field.maxlength is defined %}maxlength="{{ field.maxlength }}"{% endif %}
+            {% if field.minlength is defined %}minlength="{{ field.minlength }}"{% endif %}
+            {% if field.pattern is defined %}pattern="{{ field.pattern }}"{% endif %}
+            {% if field.placeholder is defined %}placeholder="{{ field.placeholder }}"{% endif %}
             {% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
-            {% if field.size is defined %}size="{{ field.size|e }}"{% endif %}
+            {% if field.size is defined %}size="{{ field.size }}"{% endif %}
             />
 {% endblock %}

@@ -130,10 +130,17 @@ class Theme extends AbstractTheme
         $gantry = Gantry::instance();
 
         $assignments = new Assignments;
+        $selected = $assignments->select();
+
+        if (GANTRY_DEBUGGER) {
+            \Gantry\Debugger::addMessage('Selecting outline:');
+            \Gantry\Debugger::addMessage($assignments->matches());
+            \Gantry\Debugger::addMessage($assignments->scores());
+        }
 
         /** @var Theme $theme */
         $theme = $gantry['theme'];
-        $theme->setLayout($assignments->select());
+        $theme->setLayout($selected);
     }
 
     public function widgets_init()

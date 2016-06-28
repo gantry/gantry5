@@ -35,7 +35,6 @@ ready(function() {
                 }
 
                 var title   = content.elements.content.find('[name="title"]'),
-                    preset  = content.elements.content.find('[name="preset"]'),
                     confirm = content.elements.content.find('[data-g-outline-create-confirm]');
 
                 title.on('keyup', function(event) {
@@ -50,10 +49,21 @@ ready(function() {
                     confirm.showIndicator();
 
                     var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
-                        data = { title: title.value(), preset: preset.value() };
+                        from    = content.elements.content.find('[name="from"]:checked'),
+                        preset  = content.elements.content.find('[name="preset"]'),
+                        outline = content.elements.content.find('[name="outline"]'),
+                        inherit = content.elements.content.find('[name="inherit"]'),
+                        data = {
+                            title: title.value(),
+                            from: from ? from.value() : null,
+                            preset: preset ? preset.value() : null,
+                            outline: outline ? outline.value() : null,
+                            inherit: inherit.checked() ? 1 : 0
+                        };
 
-                    if (!data.title) { delete data.title; }
-                    if (!data.preset) { delete data.preset; }
+                    ['title', 'from', 'preset', 'outline'].forEach(function(key) {
+                        if (!data[key]) { delete data[key]; }
+                    });
 
                     request('post', URI, data, function(error, response) {
                         confirm.hideIndicator();
@@ -83,6 +93,22 @@ ready(function() {
                 }, 5);
             }
         });
+    });
+
+    // Handles Preset / Outline switcher in Outline creation
+    body.delegate('change', 'input[type="radio"]#from-preset, input[type="radio"]#from-outline', function(event, element) {
+        element = $(element);
+        var value    = element.value(),
+            elements = element.parent('.card').search('.g-create-from');
+
+        var filtered = elements.style('display', 'none').filter(function(block) {
+            block = $(block);
+            return block.hasClass('g-create-from-' + value);
+        });
+
+        if (filtered) {
+            $(filtered).style('display', 'block');
+        }
     });
 
     // Handles Configurations Duplicate / Remove

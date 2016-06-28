@@ -34,7 +34,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    const VERSION = 5;
+    const VERSION = 7;
 
     protected static $instances = [];
     protected static $indexes = [];
@@ -48,6 +48,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $exists;
     protected $items;
     protected $references;
+    protected $parents;
     protected $blocks;
     protected $types;
     protected $inherit;
@@ -103,7 +104,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $filename = $locator->findResource("gantry-layouts://{$name}.yaml");
 
         if (!$filename) {
-            throw new \RuntimeException("Preset '{$name}' not found", 404);
+            throw new \RuntimeException(sprintf("Preset '%s' not found", $name), 404);
         }
 
         $layout = LayoutReader::read($filename);
@@ -178,13 +179,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * Initialize layout.
      *
      * @param  bool  $force
+     * @param  bool  $inherit
      * @return $this
      */
-    public function init($force = false)
+    public function init($force = false, $inherit = true)
     {
         if ($force || !isset($this->references)) {
             $this->initReferences();
-            $this->initInheritance();
+            if ($inherit) {
+                $this->initInheritance();
+            }
         }
 
         return $this;
@@ -210,6 +214,20 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @return $this
+     */
+    public function clean()
+    {
+        $this->references = null;
+        $this->types = null;
+        $this->inherit = null;
+
+        $this->cleanLayout($this->items);
+
+        return $this;
+    }
+
+    /**
      * @param string $old
      * @param string $new
      * @param array  $ids
@@ -222,7 +240,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $inherit = $this->inherit();
 
         if (!empty($inherit[$old])) {
-            foreach ($inherit[$old] as $id) {
+            foreach ($inherit[$old] as $id => $inheritId) {
                 $element = $this->find($id);
                 $inheritId = isset($element->inherit->particle) ? $element->inherit->particle : $id;
                 if ($new && ($ids === null || isset($ids[$inheritId]))) {
@@ -354,6 +372,15 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param $id
+     * @return string|null
+     */
+    public function getParentId($id)
+    {
+        return isset($this->parents[$id]) ? $this->parents[$id] : null;
+    }
+
+    /**
      * @return array
      */
     public function references()
@@ -461,7 +488,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $list = [];
         foreach ($this->inherit as $name => $item) {
             if (isset($item->inherit->particle)) {
-                $list[$item->inherit->outline][$item->inherit->particle] = $name;
+                $list[$item->inherit->outline][$name] = $item->inherit->particle;
             } else {
                 $list[$item->inherit->outline][$name] = $name;
             }
@@ -627,8 +654,36 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
     }
 
+    /**
+     * @param array $items
+     */
+    protected function cleanLayout(array $items)
+    {
+        foreach ($items as $item) {
+            if (!empty($item->inherit->include)) {
+                $include = $item->inherit->include;
+                foreach ($include as $part) {
+                    switch ($part) {
+                        case 'attributes':
+                            $item->attributes = new \stdClass();
+                            break;
+                        case 'block':
+                            break;
+                        case 'children':
+                            $item->children = [];
+                            break;
+                    }
+                }
+            }
+            if (!empty($item->children)) {
+                $this->cleanLayout($item->children);
+            }
+        }
+    }
+
     protected function initInheritance()
     {
+        $index = null;
         if ($this->name) {
             $gantry = Gantry::instance();
 
@@ -642,8 +697,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $index = $file->content();
                 $file->free();
             }
-        } else {
-            $index = null;
         }
 
         $inheriting = $this->inherit();
@@ -661,7 +714,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
                 $outline = null;
             }
-            foreach ($list as $id) {
+            foreach ($list as $id => $inheritId) {
                 $item = $this->find($id);
 
                 $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
@@ -677,14 +730,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             $block = $this->block($id);
                             if (isset($block->attributes)) {
                                 $inheritBlock = $outline ? $outline->block($inheritId) : null;
-                                $blockAttributes = $inheritBlock ? array_diff_key((array)$inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
+                                $blockAttributes = $inheritBlock ?
+                                    array_diff_key((array)$inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
                                 $block->attributes = (object)($blockAttributes + (array)$block->attributes);
                             }
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {
                                 $item->children = $inherited->children;
-                                $this->initReferences($item->children, null, ['outline' => $outlineId, 'include' => ['attributes', 'block']], $index);
+                                $this->initReferences($item->children, $this->getParentId($id), null,
+                                    ['outline' => $outlineId, 'include' => ['attributes', 'block']], $index);
                             } else {
                                 $item->children = [];
                             }
@@ -704,11 +759,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param array $items
+     * @param object $section
      * @param object $block
      * @param string $inherit
      * @param array $index
      */
-    protected function initReferences(array $items = null, $block = null, $inherit = null, array $index = null)
+    protected function initReferences(array $items = null, $parent = null, $block = null, $inherit = null, array $index = null)
     {
         if ($items === null) {
             $items = $this->items;
@@ -723,6 +779,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $subtype = !empty($item->subtype) ? $item->subtype : $type;
 
                 if ($block) {
+                    $this->parents[$item->id] = $parent;
+                }
+                if ($block) {
                     $this->blocks[$item->id] = $block;
                 }
 
@@ -730,9 +789,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     $item->inherit = (object) $inherit;
                     $item->inherit->particle = $item->id;
 
-                    if (isset($index['inherit'][$item->inherit->outline][$item->id])) {
-                        $item->id = $index['inherit'][$item->inherit->outline][$item->id];
-                    } elseif ($type !== 'position' || $subtype !== 'position') {
+                    if (isset($index['inherit'][$item->inherit->outline]) && ($newId = array_search($item->id, $index['inherit'][$item->inherit->outline]))) {
+                        $item->id = $newId;
+                    } else {
                         $item->id = $this->id($type, $subtype);
                     }
                 }
@@ -749,7 +808,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
 
                 if (isset($item->children) && is_array($item->children)) {
-                    $this->initReferences($item->children, $type === 'block' ? $item : null, $inherit, $index);
+                    $this->initReferences($item->children, $type === 'section' ? $item : $parent, $type === 'block' ? $item : null, $inherit, $index);
                 }
             }
         }
@@ -767,14 +826,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         if ($type !== 'particle') {
             $result[] = $type;
         }
-        if ($subtype && $subtype !== $type) {
+        if ($subtype && ($subtype !== $type || $subtype === 'position')) {
             $result[] = $subtype;
         }
         $key = implode('-', $result);
 
-        if (!$id || isset($this->references[$key][$id])) {
+        if (!$id || isset($this->references[$key . '-'. $id])) {
             while ($id = rand(1000, 9999)) {
-                if (!isset($this->references[$key][$id])) {
+                if (!isset($this->references[$key . '-'. $id])) {
                     break;
                 }
             }
@@ -930,17 +989,19 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
         // If layout index file doesn't exist or is not up to date, rebuild it.
-        if (!isset($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['version']) || $index['version'] != static::VERSION) {
+        if (empty($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['version']) || $index['version'] != static::VERSION) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $layout->timestamp = $timestamp;
-            $index = $layout->buildIndex();
-        }
 
-        if ($autoSave && isset($layout)) {
-            if (!$layout->timestamp) {
-                $layout->save();
+            if ($autoSave) {
+                if (!$layout->timestamp) {
+                    $layout->save();
+                }
+                $index = $layout->buildIndex();
+                $layout->saveIndex($index);
+            } else {
+                $index = $layout->buildIndex();
             }
-            $layout->saveIndex($index);
         }
 
         $index += [

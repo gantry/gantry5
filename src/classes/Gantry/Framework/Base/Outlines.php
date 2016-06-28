@@ -15,9 +15,11 @@ namespace Gantry\Framework\Base;
 
 use FilesystemIterator;
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
+use Gantry\Framework\Atoms;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -123,13 +125,38 @@ class Outlines extends AbstractOutlineCollection
                 $ids = $index['particles'][$particle];
                 if (!$includeInherited && !empty($index['inherit'])) {
                     foreach ($index['inherit'] as $items) {
-                        foreach ((array) $items as $id) {
+                        foreach ((array) $items as $id => $inheritId) {
                             unset($ids[$id]);
                         }
                     }
                 }
                 if ($ids) {
                     $list[$name] = $title;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlinesWithAtom($type, $includeInherited = true)
+    {
+        $list = [];
+
+        foreach ($this->items as $name => $title) {
+            $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
+            $index = $file->content();
+            $file->free();
+            if (isset($index['atoms'])) {
+                foreach ($index['atoms'] as $atom) {
+                    if (!empty($atom['id']) && $atom['type'] === $type && ($includeInherited || empty($atom['inherit']))) {
+                        $list[$name] = $title;
+                    }
                 }
             }
         }
@@ -166,7 +193,7 @@ class Outlines extends AbstractOutlineCollection
             $list = $index['particles'][$particle];
             if (!$includeInherited && !empty($index['inherit'])) {
                 foreach ($index['inherit'] as $items) {
-                    foreach ((array) $items as $id) {
+                    foreach ((array) $items as $id => $inheritId) {
                         unset($list[$id]);
                     }
                 }
@@ -185,46 +212,97 @@ class Outlines extends AbstractOutlineCollection
         return $list;
     }
 
+
+    /**
+     * @param string $outline
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getAtomInstances($outline, $type, $includeInherited = true)
+    {
+        $list = [];
+
+        $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
+        $head = $file->content();
+        $file->free();
+        if (isset($head['atoms'])) {
+            foreach ($head['atoms'] as $atom) {
+                if (!empty($atom['id']) && $atom['type'] === $type && ($includeInherited || empty($atom['inherit']['outline']))) {
+                    $list[$atom['id']] = (object) $atom;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return list of outlines which are inheriting the specified atom.
+     *
+     * @param string $outline
+     * @param string $id
+     * @return array
+     */
+    public function getInheritingOutlinesWithAtom($outline, $id = null)
+    {
+        $list = [];
+        foreach ($this->items as $name => $title) {
+            $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
+            $head = $file->content();
+            $file->free();
+
+            if (isset($head['atoms'])) {
+                foreach ($head['atoms'] as $atom) {
+                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] == $outline && (!$id || $atom['inherit']['atom'] == $id)) {
+                        $list[$name] = $title;
+                    }
+                }
+            }
+        }
+
+        return $list;
+    }
+
     /**
      * Return list of outlines which are inheriting the specified outline.
      *
-     * You can additionally pass particle id to filter the results for only that particle.
+     * You can additionally pass section or particle id to filter the results for only that type.
      *
      * @param string $outline
-     * @param string $particle
+     * @param string|array $id
      * @return array
      */
-    public function getInheritingOutlines($outline, $particle = null)
+    public function getInheritingOutlines($outline, $id = null)
     {
         $list = [];
         foreach ($this->items as $name => $title) {
             $index = Layout::index($name);
 
-            if (!empty($index['inherit'][$outline]) && (!$particle || isset($index['inherit'][$outline][$particle]))) {
+            if (!empty($index['inherit'][$outline]) && (!$id || array_intersect((array) $id, $index['inherit'][$outline]))) {
                 $list[$name] = $title;
             }
         }
 
         return $list;
-
     }
 
     /**
      * Return list of outlines inherited by the specified outline.
      *
-     * You can additionally pass particle id to filter the results for only that particle.
+     * You can additionally pass section or particle id to filter the results for only that type.
      *
      * @param string $outline
-     * @param string $particle
+     * @param string $id
      * @return array
      */
-    public function getInheritedOutlines($outline, $particle = null)
+    public function getInheritedOutlines($outline, $id = null)
     {
         $index = Layout::index($outline);
 
         $list = [];
         foreach ($index['inherit'] as $name => $inherited) {
-            if (!$particle || in_array($particle, $inherited)) {
+            if (!$id || array_intersect_key((array) $id, $inherited[$id])) {
                 $list[$name] = isset($this->items[$name]) ? $this->items[$name] : $name;
             }
         }
@@ -265,31 +343,38 @@ class Outlines extends AbstractOutlineCollection
     }
 
     /**
+     * @param string|null $id
      * @param string $title
-     * @param string $preset
+     * @param string|array $preset
      * @return string
      * @throws \RuntimeException
      */
-    public function create($title = 'Untitled', $preset = 'default')
+    public function create($id, $title = null, $preset = null)
     {
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+        $title = $title ?: 'Untitled';
+        $name = ltrim(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title)), '_');
 
         if (!$name) {
             throw new \RuntimeException("Outline needs a name", 400);
         }
 
-        if ($name === 'default' || $name[0] === '_') {
+        if ($name === 'default') {
             throw new \RuntimeException("Outline cannot use reserved name '{$name}'", 400);
         }
 
         $name = $this->findFreeName($name);
+        if (!$id) {
+            $title = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
+        }
 
-        // Load preset.
-        $preset = Layout::preset($preset);
+        if (!is_array($preset)) {
+            // Load preset.
+            $preset = Layout::preset($preset ?: 'default');
+        }
 
-        // Create index file for the new layout.
+        // Create layout and index for the new layout.
         $layout = new Layout($name, $preset);
-        $layout->saveIndex();
+        $layout->save()->saveIndex();
 
         $this->items[$name] = $title;
 
@@ -299,39 +384,47 @@ class Outlines extends AbstractOutlineCollection
     /**
      * @param string $id
      * @param string $title
+     * @param bool $inherit
      * @return string
      * @throws \RuntimeException
      */
-    public function duplicate($id, $title = null)
+    public function duplicate($id, $title = null, $inherit = false)
     {
         if (!$this->canDuplicate($id)) {
             throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
         }
 
-        $gantry = $this->container;
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $path = $locator->findResource("{$this->path}/{$id}");
-        if (!$path || !is_dir($path)) {
-            throw new \RuntimeException('Outline not found', 404);
+        $layout = Layout::load($id);
+        if ($inherit) {
+            $layout->inheritAll()->clean();
         }
 
-        $title = $title ?: (!$title && $id === 'default' ? 'untitled' : $id);
-        $folder = $this->findFreeName(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title)));
+        $new = $this->create(null, $title, $layout->toArray() + ['preset' => $layout->preset]);
 
-        $newPath = $locator->findResource("{$this->path}/{$folder}", true, true);
+        if ($id === 'default') {
+            // For Base Outline we're done.
+            return $new;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $path = $locator->findResource("{$this->path}/{$id}");
+        if (!$path) {
+            // Nothing to copy.
+            return $new;
+        }
+
+        $newPath = $locator->findResource("{$this->path}/{$new}", true, true);
 
         try {
-            Folder::copy($path, $newPath, $id === 'default' ? '/^(?!(index|layout)).*$/' : '/assignments/');
+            // Copy everything over except index, layout and assignments.
+            Folder::copy($path, $newPath, '/^(index|layout|asignments)\..*$/');
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
 
-        $this->items[$folder] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], basename($newPath))));
-
-        return basename($folder);
+        return $new;
     }
 
     /**
@@ -369,8 +462,10 @@ class Outlines extends AbstractOutlineCollection
 
         try {
             foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-                $layout = $this->layout($outline);
-                $layout->updateInheritance($id, $folder)->save()->saveIndex();
+                $this->layout($outline)->updateInheritance($id, $folder)->save()->saveIndex();
+            }
+            foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+                Atoms::instance($outline)->updateInheritance($id, $folder)->save();
             }
 
             Folder::move($path, $newPath);
@@ -404,8 +499,10 @@ class Outlines extends AbstractOutlineCollection
         }
 
         foreach ($this->getInheritingOutlines($id) as $outline => $title) {
-            $layout = $this->layout($outline);
-            $layout->updateInheritance($id)->save()->saveIndex();
+            $this->layout($outline)->updateInheritance($id)->save()->saveIndex();
+        }
+        foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+            Atoms::instance($outline)->updateInheritance($id)->save();
         }
 
         if (file_exists($path)) {
@@ -421,7 +518,7 @@ class Outlines extends AbstractOutlineCollection
      */
     public function canDuplicate($id)
     {
-        if (!$id) {
+        if (!isset($this->items[$id])) {
             return false;
         }
 

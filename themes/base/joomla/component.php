@@ -23,5 +23,5 @@ unset($gantry['configuration']);
 
 // Render the component.
 echo $theme
-    ->setLayout('_body_only')
+    ->setLayout('_body_only', true)
     ->render($raw ? 'raw.html.twig' : 'component.html.twig');

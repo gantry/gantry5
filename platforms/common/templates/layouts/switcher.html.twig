@@ -64,7 +64,7 @@
             >
                 {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
             </li>
-            {% for key,current in user_conf %}
+            {% for key,current in user_conf if key != configuration %}
                 {% set label=current|replace('_', ' ')|trim|capitalize %}
                 <li tabindex="0"
                     aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"

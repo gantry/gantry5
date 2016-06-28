@@ -5,6 +5,10 @@ body.gantry5 {
     padding: 0;
     max-width: inherit;
 
+    .label:empty, .badge:empty {
+        display: none;
+    }
+
     &.auto-fold {
         #wpcontent {
             padding-left: 0;
@@ -40,10 +44,10 @@ body.gantry5 {
             font-family: inherit;
         }
 
-        input[type="checkbox"] {
+        input[type="checkbox"], input[type="radio"] {
             height: 16px;
             display: inline-block;
-            &:checked:before {
+            &:not([type="radio"]):checked:before {
                 height: 16px;
             }
             &:not(.settings-param-toggle) {

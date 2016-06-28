@@ -21,17 +21,6 @@ var prime    = require('prime'),
 
 var animationEndSupport = false;
 
-domready(function() {
-    var style = (document.body || document.documentElement).style;
-
-    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
-        if (animationEndSupport) {
-            return;
-        }
-        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-    });
-});
-
 var Modal = new prime({
     mixin: [Bound, Options],
 
@@ -405,6 +394,17 @@ var Modal = new prime({
     _closeButtonClick: function(element) {
         return this.close(storage.get($(element)).dialog.id);
     }
+});
+
+domready(function() {
+    var style = (document.body || document.documentElement).style;
+
+    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
+        if (animationEndSupport) {
+            return;
+        }
+        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+    });
 });
 
 var modal = new Modal();

@@ -97,7 +97,7 @@ var LayoutManager = new prime({
 
     clear: function(parent, options) {
         var type, child,
-            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+            filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
 
         options = options || { save: true, dropLastGrid: false, emptyInherits: false };
 
@@ -111,6 +111,11 @@ var LayoutManager = new prime({
             if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 this.builder.remove(id);
                 obj.block.remove();
+            } else if (options.emptyInherits && (type == 'section' || type == 'offcanvas' || type == 'container')) {
+                if (obj.hasInheritance) {
+                    obj.inherit = {};
+                    obj.disableInheritance();
+                }
             }
         }, this);
 
@@ -181,7 +186,7 @@ var LayoutManager = new prime({
         if (!this.block.isNew()) {
             element.style({
                 position: 'absolute',
-                zIndex: 1500,
+                zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),

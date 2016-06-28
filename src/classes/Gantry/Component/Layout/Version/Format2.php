@@ -227,6 +227,11 @@ class Format2
         $result = [];
         $ctype = isset($content['type']) ? $content['type'] : null;
 
+        if (in_array($ctype, ['grid', 'block'])) {
+            if (empty($content['attributes']['id']) || $content['attributes']['id'] === $content['id']) {
+                unset ($content['attributes']['id']);
+            }
+        }
         if ($ctype === 'block') {
             if (empty($content['attributes']['extra'])) {
                 unset ($content['attributes']['extra']);
@@ -244,6 +249,7 @@ class Format2
         if (!isset($content['children'])) {
             $content['children'] = [];
         }
+        unset ($content['layout']);
 
         // Clean up all items for saving.
         foreach ($content['children'] as &$child) {
@@ -365,7 +371,7 @@ class Format2
                     // Sections and other complex items.
                     $id = isset($child['attributes']['boxed']) ? "/{$id}/" : $id;
                     $result[trim("{$id} {$size}")] = $value;
-                } else {
+                } elseif (!empty($value)) {
                     // Simple grid / block item.
                     $result[] = $value;
                 }
@@ -380,6 +386,7 @@ class Format2
             unset ($this->structure[$content['id']]);
             return reset($result) ?: null;
         }
+
         return $result;
     }
 

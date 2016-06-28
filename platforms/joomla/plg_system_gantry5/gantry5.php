@@ -105,11 +105,12 @@ class plgSystemGantry5 extends JPlugin
                     $params   = json_decode($module->params);
                     $particle = isset($params->particle) ? json_decode($params->particle) : '';
                     $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
+                    $type = isset($particle->particle) ? $particle->particle : '';
 
                     $this->modules[$module->id] = $particle;
 
-                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title) {
-                        return $this->appendHtml($matches, $title);
+                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title, $type) {
+                        return $this->appendHtml($matches, $title, $type);
                     }, $body);
                 }
 
@@ -245,7 +246,7 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Trigger the onContentBeforeSave event.
-        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, &$table, false));
+        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, $table, false));
         if (in_array(false, $result, true)) {
             throw new RuntimeException($table->getError());
         }
@@ -259,7 +260,7 @@ class plgSystemGantry5 extends JPlugin
         \Gantry\Joomla\CacheHelper::cleanPlugin();
 
         // Trigger the onExtensionAfterSave event.
-        $dispatcher->trigger('onExtensionAfterSave', array($name, &$table, false));
+        $dispatcher->trigger('onExtensionAfterSave', array($name, $table, false));
 
         return true;
     }
@@ -314,20 +315,30 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
-    public function onExtensionAfterDelete($context, $table)
+    public function onExtensionBeforeDelete($context, $table)
     {
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
-            return;
+            return true;
         }
 
         $template = $table->template;
 
-        $this->load($template);
+        $gantry = $this->load($template);
 
-        Gantry\Joomla\StyleHelper::delete($table->id);
+        /** @var \Gantry\Framework\Outlines $outlines */
+        $outlines = $gantry['configurations'];
+
+        try {
+            $outlines->delete($table->id, false);
+        } catch (Exception $e) {
+            $this->app->enqueueMessage($e->getMessage(), 'error');
+            return false;
+        }
+
+        return true;
     }
 
-    public function onContentPrepareData($context, $data)
+    public function onContentPrepareData($context, &$data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
@@ -390,9 +401,11 @@ class plgSystemGantry5 extends JPlugin
      * @param array  $matches
      * @param string $content
      *
+     * @param string $type
+     *
      * @return string
      */
-    private function appendHtml(array $matches, $content = 'Gantry 5')
+    private function appendHtml(array $matches, $content = 'Gantry 5', $type = '')
     {
         $html = $matches[0];
 
@@ -402,8 +415,11 @@ class plgSystemGantry5 extends JPlugin
 
             if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
+                $colors = $content ? 'background:#439a86;' : 'background:#f17f48;';
                 $content = $content ?: 'No Particle Selected';
-                $html .= ' <span class="label" style="background:#439a86;color:#fff;">' . $content . '</span>';
+                $content .= $type ? ' (' . $type . ')' : '';
+
+                $html .= ' <span class="label" style="' . $colors . ';color:#fff;">' . $content . '</span>';
 
                 if (isset($this->modules[$id])) { unset($this->modules[$id]); }
                 else { unset($this->styles[$id]); }

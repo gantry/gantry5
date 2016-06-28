@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2016-05-24 14:21-0700\n"
+"PO-Revision-Date: 2016-06-21 17:16-0700\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 msgid "COM_GANTRY5"
@@ -49,7 +49,7 @@ msgid "GANTRY5_PLATFORM_DELETE_OUTLINE"
 msgstr "Delete Outline"
 
 msgid "GANTRY5_PLATFORM_DELETE_OUTLINE_DESC"
-msgstr "Are you sure you want to delete this Outline?"
+msgstr "Are you sure you want to delete <strong>%s</strong> Outline?"
 
 msgid "GANTRY5_PLATFORM_DELETE_POSITION"
 msgstr "Delete Position"
@@ -609,6 +609,9 @@ msgstr "If required, you can still enter to this administrative panel by <a %s h
 msgid "GANTRY5_PLATFORM_PARTICLE_PREVIEW"
 msgstr "Attention! This is a read-only view of the Particle you selected. Any change made here cannot be saved."
 
+msgid "GANTRY5_PLATFORM_ATOM_PREVIEW"
+msgstr "Attention! This is a read-only view of the Atom you selected. Any change made here cannot be saved."
+
 msgid "GANTRY5_PLATFORM_DELETE_INHERIT_X"
 msgstr "The following Outlines depend on %s."
 
@@ -617,3 +620,21 @@ msgstr "By proceeding they will stop inheriting and all the Attributes and Child
 
 msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC"
 msgstr "Inherit every Section and Children of the selected Outline"
+
+msgid "GANTRY5_PLATFORM_ATOM"
+msgstr "Atom"
+
+msgid "GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE"
+msgstr "No Inheritance, select an Outline first"
+
+msgid "GANTRY5_PLATFROM_INHERITING_FROM_X"
+msgstr "Inheriting from %s"
+
+msgid "GANTRY5_PLATFORM_LM_CLEAR_FULL"
+msgstr "Full Layout"
+
+msgid "GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE"
+msgstr "Keep Inheritance"
+
+msgid "GANTRY5_PLATFORM_CREATE_OUTLINE_FROM_X"
+msgstr "Create New Outline From '%s'"

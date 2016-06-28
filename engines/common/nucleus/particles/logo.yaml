@@ -21,6 +21,12 @@ form:
       label: Image
       description: Select desired logo image.
 
+    svg:
+      type: textarea.textarea
+      label: SVG Code
+      description: Your SVG code that will be added inline to the site.
+      placeholder: 'Place your <svg> code here.'
+
     text:
       type: input.text
       label: Text

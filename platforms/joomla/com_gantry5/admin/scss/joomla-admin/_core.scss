@@ -101,9 +101,16 @@ body.com_modules, body.com_menus {
             font-size: $core-font-size;
             font-style: italic;
             margin-right: 0.5rem;
+            vertical-align: middle;
+            display: inline-block;
 
             &:empty {
                 margin-right: 0;
+            }
+
+            + .button {
+                display: inline-block;
+                vertical-align: middle;
             }
         }
     }

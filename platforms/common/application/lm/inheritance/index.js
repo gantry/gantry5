@@ -5,6 +5,7 @@ var $                  = require('elements'),
     request            = require('agent'),
     modal              = require('../../ui').modal,
 
+    isArray            = require('mout/lang/isArray'),
     forEach            = require('mout/collection/forEach'),
     filter             = require('mout/object/filter'),
     keys               = require('mout/object/keys'),
@@ -18,27 +19,31 @@ var $                  = require('elements'),
 
 
 var IDsMap = {
-    attributes: 'g-settings-particle',
+    attributes: ['g-settings-particle', 'g-settings-atom'],
     block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
-    inheritance: 'g-inherit-particle'
+    particles: 'g-inherit-particle',
+    atoms: 'g-inherit-atom'
 };
 
 ready(function() {
     var body             = $('body'),
-        currentSelection = {};
+        currentSelection = {},
+        currentMode      = {};
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
             value          = element.value(),
-            name           = $('[name="inherit[section]"]').value(),
+            name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
             form           = element.parent('[data-g-inheritance-settings]'),
-            hasChanged     = currentSelection[name] !== value,
-            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked'),
+            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
-                list: $('#g-inherit-particle'),
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                list: $('#g-inherit-particle, #g-inherit-atom'),
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
+
+        var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
 
         if (hasChanged && !value) {
             includesFields.forEach(function(include) {
@@ -52,7 +57,8 @@ ready(function() {
                 outline: value || getCurrentOutline(),
                 type: formData.type || '',
                 subtype: formData.subtype || '',
-                inherit: !!value ? '1' : '0'
+                mode: particle.mode.value(),
+                inherit: !!value && particle.mode.value() === 'inherit' ? '1' : '0'
             };
 
         data.id = formData.id;
@@ -68,7 +74,9 @@ ready(function() {
             }
         }
 
-        var URI = particle.list ? 'layouts/list' : 'layouts';
+        var URI_mode = data.type === 'atom' ? 'atoms' : 'layouts',
+            URI      = particle.list ? URI_mode + '/list' : URI_mode;
+
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
@@ -92,14 +100,18 @@ ready(function() {
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                var shouldRefresh = contains(includes, option),
-                    isAvailable   = contains(available, option);
+                id = !isArray(id) ? [id] : id;
 
-                if ((shouldRefresh || !isAvailable) && data.html[id] && (element = container.find('#' + id))) {
-                    element.html(data.html[id]);
-                    var selects = element.search('[data-selectize]');
-                    if (selects) { selects.selectize(); }
-                }
+                id.forEach(function(currentID) {
+                    var shouldRefresh = contains(includes, option),
+                        isAvailable   = contains(available, option);
+
+                    if ((shouldRefresh || !isAvailable) && data.html[currentID] && (element = container.find('#' + currentID))) {
+                        element.html(data.html[currentID]);
+                        var selects = element.search('[data-selectize]');
+                        if (selects) { selects.selectize(); }
+                    }
+                });
             });
 
             if (hasChanged && includesFields && currentSelection[name] === '') {
@@ -107,72 +119,94 @@ ready(function() {
             }
 
             currentSelection[name] = value;
+            currentMode[name] = particle.mode.value();
         });
     });
 
     body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
         var value     = element.value(),
             isChecked = element.checked(),
-            panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
-            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
+            noRefresh = event.noRefresh,
             outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
-        if (!panel || !tab) { return true; }
+        var IDs = {
+            panel: (IDsMap[value] && IDsMap[value].panel || IDsMap[value]),
+            tab: (IDsMap[value] && IDsMap[value].tab || IDsMap[value])
+        };
 
-        var inherit = panel.find('.g-inherit');
-
-        // do not try to refresh attributes/block inheritance when there's no particle selected
-        /*if (particle.radios && !particle.checked) {
-         return false;
-         }*/
-
-
-        // if inherit overlay doesn't exist, we could be in a set
-        /*if (!inherit) {
-         inherit = panel.parent('.settings-block').find('.g-inherit');
-         inherit.after(panel);
-         }*/
-
-        if (!isChecked || !outline) {
-            var lock = tab.find('.fa-lock');
-
-            if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
-            if (inherit) { inherit.hide(); }
-        } else {
-            var unlock = tab.find('.fa-unlock');
-
-            if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
-            if (inherit) { inherit.show(); }
-
-            body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+        if (!isArray(IDs.panel)) {
+            IDs.panel = [IDs.panel];
+            IDs.tab = [IDs.tab];
         }
+
+        IDs.panel.forEach(function(currentPanel, index) {
+            var panel = $('#' + currentPanel),
+                tab   = $('#' + IDs.tab[index] + '-tab');
+
+            if (!panel || !tab) { return true; }
+
+            var inherit = panel.find('.g-inherit'),
+                isClone = particle.mode.value() === 'clone',
+                refresh = function(noRefresh) {
+                    if (!noRefresh) {
+                        body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+                    }
+                };
+
+            if (!isChecked || !outline || isClone) {
+                var lock = tab.find('.fa-lock');
+
+                if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
+                if (inherit) { inherit.hide(); }
+                if (isClone) { refresh(noRefresh); }
+            } else {
+                var unlock = tab.find('.fa-unlock');
+
+                if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
+                if (inherit) { inherit.show(); }
+
+                refresh(noRefresh);
+            }
+        });
     });
 
-    body.delegate('change', '[name="inherit[particle]"]', function(event, element) {
-        var container = modal.getByID(modal.getLast()),
-            outline   = container.find('[name="inherit[outline]"]');
 
-        body.emit('change', { target: outline });
+    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"], [name="inherit[atom]"]', function(event, element) {
+        var container  = modal.getByID(modal.getLast()),
+            outline    = container.find('[name="inherit[outline]"]'),
+            checkboxes = container.search('[data-multicheckbox-field]') || [],
+            noRefresh  = false;
+
+        if (element.attribute('name') === 'inherit[mode]') {
+            noRefresh = true;
+        }
+
+        body.emit('change', { target: outline, noRefresh: noRefresh });
+        checkboxes.forEach(function(checkbox) {
+            body.emit('change', { target: checkbox, noRefresh: noRefresh });
+        });
     });
 
-    body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
+    body.delegate('click', '#g-inherit-particle .fa-info-circle, #g-inherit-atom .fa-info-circle', function(event, element) {
         event.preventDefault();
 
         var container = modal.getByID(modal.getLast()),
             outline   = container.find('[name="inherit[outline]"]'),
-            id        = element.siblings('input[name="inherit[particle]"]');
+            id        = element.siblings('input[name="inherit[particle]"], input[name="inherit[atom]"]');
 
         if (!id || !outline) { return false; }
 
+        var URI = id.name() === 'inherit[atom]' ? 'atoms/instance' : 'layouts/particle';
         modal.open({
             content: 'Loading',
             method: 'post',
-            data: { id: id.value(), outline: outline.value() },
-            remote: parseAjaxURI(getAjaxURL('layouts/particle') + getAjaxSuffix()),
+            data: { id: id.value(), outline: outline.value() || getCurrentOutline() },
+            remote: parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) {
                     modal.enableCloseByOverlay();
@@ -190,16 +224,18 @@ ready(function() {
         var container = modal.getByID(modal.getLast()),
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
-            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(value, id); }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
         if (input) {
             // do not try to refresh attributes/block inheritance when there's no particle selected
-            if (particle.radios && !particle.checked) {
+            // or if we are in clone mode
+            if (particle.mode.value() === 'clone' || (particle.radios && !particle.checked)) {
                 return false;
             }
 

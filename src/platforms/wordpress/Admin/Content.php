@@ -67,7 +67,7 @@ class Content
         $files = $this->locateBlueprints();
 
         if (empty($files[$id])) {
-            throw new \RuntimeException("Settings for '{$id}' not found.", 404);
+            throw new \RuntimeException(sprintf("Settings for '%s' not found.", $id), 404);
         }
 
         $filename = key($files[$id]);

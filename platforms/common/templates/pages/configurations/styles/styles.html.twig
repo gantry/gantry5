@@ -96,7 +96,7 @@
                         <span class="g-title">{{ block.name }}</span>
                     </h4>
                     <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': block.form, 'data': gantry.config} %}
+                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': block.form, 'data': data} %}
                     </div>
                 </div>
             {% endfor %}

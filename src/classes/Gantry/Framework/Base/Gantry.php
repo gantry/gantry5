@@ -292,7 +292,7 @@ abstract class Gantry extends Container
         }
 
         // Development version support.
-        if ($version === '5.0' || static::isDev()) {
+        if ($version === '5.3' || static::isDev()) {
             return true;
         }
 

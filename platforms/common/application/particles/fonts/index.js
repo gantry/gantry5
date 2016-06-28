@@ -198,7 +198,8 @@ var Fonts = new prime({
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
         }
 
-        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+        var noConflict = isLocal ? '[data-category="local-fonts"]' : 'not([data-category="local-fonts"])',
+            element = $('ul.g-fonts-list > [data-font="' + name + '"]' + noConflict);
         variants = variants || element.data('variants').split(',') || ['regular'];
 
         if (contains(variants, '400')) {

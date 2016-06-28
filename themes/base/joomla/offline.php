@@ -31,5 +31,5 @@ unset($gantry['configuration']);
 
 // Render the page.
 echo $theme
-    ->setLayout('_offline')
+    ->setLayout('_offline', true)
     ->render('offline.html.twig', $context);

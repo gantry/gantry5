@@ -1301,13 +1301,14 @@
 }
 #g5-container .size-100 {
   width: 100%;
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .g-main-nav:not(.g-menu-hastouch) .g-dropdown {
   z-index: 10;
@@ -1440,13 +1441,14 @@
   right: auto;
 }
 #g5-container .g-main-nav .g-standard .g-dropdown .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .g-main-nav .g-standard .g-go-back {
   display: none;
@@ -1828,22 +1830,24 @@
   width: 100%;
 }
 #g5-container .full-width {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .full-width .g-block {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  box-flex: 0;
-  -webkit-flex: 0 100%;
-  -moz-flex: 0 100%;
-  -ms-flex: 0 100%;
-  flex: 0 100%;
+  -webkit-flex-grow: 0;
+  -moz-flex-grow: 0;
+  flex-grow: 0;
+  -ms-flex-positive: 0;
+  -webkit-flex-basis: 100%;
+  -moz-flex-basis: 100%;
+  flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
 }
 #g5-container .hidden {
   display: none;
@@ -1860,9 +1864,6 @@
 }
 #g5-container .visible-desktop {
   display: inherit !important;
-}
-#g5-container .g-block.visible-desktop {
-  display: block !important;
 }
 @media print {
   #g5-container .visible-print {
@@ -2063,6 +2064,8 @@ body.g-prime {
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 #g5-container .g-collapsed.card .inner-params, #g5-container .g-collapsed:not(.card) {
   overflow: hidden;
@@ -2887,9 +2890,15 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .settings-block .g-instancepicker-title {
   margin-right: 0.5rem;
   font-style: italic;
+  vertical-align: middle;
+  display: inline-block;
 }
 #g5-container .settings-block .g-instancepicker-title:empty {
   margin: 0;
+}
+#g5-container .settings-block .g-instancepicker-title + .button {
+  display: inline-block;
+  vertical-align: middle;
 }
 #g5-container .settings-block .input-small {
   width: 120px !important;
@@ -3271,9 +3280,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container #assignments .settings-param-wrapper {
   min-width: 100%;
-  /*max-height: 455px;
+  max-height: 455px;
   overflow-y: auto;
-  overflow-x: hidden;*/
+  overflow-x: hidden;
   margin: 0 -10px -10px;
 }
 #g5-container #assignments .settings-param {
@@ -4002,20 +4011,33 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .input-group.prepend .button {
   border-right: 0;
 }
-#g5-container .input-multicheckbox .input-group, #g5-container #g-inherit-particle .input-group {
+#g5-container .input-multicheckbox .input-group, #g5-container .input-radios .input-group, #g5-container #g-inherit-particle .input-group, #g5-container #g-inherit-atom .input-group, #g5-container .g-preserve-particles {
   width: 100%;
 }
-#g5-container .input-multicheckbox .input-group input, #g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group input, #g5-container #g-inherit-particle .input-group span {
+#g5-container .input-multicheckbox .input-group input, #g5-container .input-multicheckbox .input-group span, #g5-container .input-radios .input-group input, #g5-container .input-radios .input-group span, #g5-container #g-inherit-particle .input-group input, #g5-container #g-inherit-particle .input-group span, #g5-container #g-inherit-atom .input-group input, #g5-container #g-inherit-atom .input-group span, #g5-container .g-preserve-particles input, #g5-container .g-preserve-particles span {
   vertical-align: middle;
 }
-#g5-container .input-multicheckbox .input-group span, #g5-container #g-inherit-particle .input-group span {
+#g5-container .input-multicheckbox .input-group span, #g5-container .input-radios .input-group span, #g5-container #g-inherit-particle .input-group span, #g5-container #g-inherit-atom .input-group span, #g5-container .g-preserve-particles span {
   line-height: 1.5rem;
   margin-left: 5px;
 }
-#g5-container #g-inherit-particle label .fa {
+#g5-container .input-multicheckbox .input-group label, #g5-container .input-radios .input-group label, #g5-container #g-inherit-particle .input-group label, #g5-container #g-inherit-atom .input-group label, #g5-container .g-preserve-particles label {
+  display: block;
+}
+#g5-container .input-radios .radios {
+  margin-right: 1rem;
+}
+#g5-container .input-radios .radios input, #g5-container .input-radios .radios label {
+  display: inline-block;
+  margin-bottom: 0;
+}
+#g5-container .input-radios .radios label {
+  margin-left: 0.2rem;
+}
+#g5-container #g-inherit-particle label .fa, #g5-container #g-inherit-atom label .fa {
   color: #ddd;
 }
-#g5-container #g-inherit-particle label .fa:hover {
+#g5-container #g-inherit-particle label .fa:hover, #g5-container #g-inherit-atom label .fa:hover {
   color: #666;
 }
 
@@ -4116,6 +4138,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-weight: 400;
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   font-size: 24px;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks .section .section-header i, #g5-container .lm-blocks .atoms-section .section-header i, #g5-container .lm-blocks .offcanvas-section .section-header i {
   pointer-events: visible;
@@ -4175,9 +4203,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .lm-blocks .section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .section.g-inheriting.g-inheriting-children > .g-grid:after, #g5-container .lm-blocks .atoms-section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .atoms-section.g-inheriting.g-inheriting-children > .g-grid:after, #g5-container .lm-blocks .offcanvas-section.g-inheriting.g-inheriting-children > .g-grid:before, #g5-container .lm-blocks .offcanvas-section.g-inheriting.g-inheriting-children > .g-grid:after {
   display: none !important;
-}
-#g5-container .lm-blocks .section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .atoms-section.g-inheriting:not(.g-inheriting-children) > .g-grid, #g5-container .lm-blocks .offcanvas-section.g-inheriting:not(.g-inheriting-children) > .g-grid {
-  z-index: 2;
 }
 #g5-container .lm-blocks .section .g-grid, #g5-container .lm-blocks .atoms-section .g-grid, #g5-container .lm-blocks .offcanvas-section .g-grid {
   margin: 8px 0;
@@ -4242,6 +4267,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   vertical-align: middle;
   line-height: 47px;
   color: #bababa;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section {
   background-color: transparent;
@@ -4302,6 +4333,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .lm-blocks .offcanvas-section .g-grid:empty:after, #g5-container .lm-blocks .wrapper-section .g-grid:empty:after {
   content: "Drop particles here...";
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 #g5-container .lm-blocks > .g-grid > .g-block, #g5-container .lm-blocks .g-lm-container > .g-grid {
   border-bottom: 8px solid #e0e0e0;
@@ -4435,6 +4472,11 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   position: relative;
   z-index: 2;
 }
+#g5-container .lm-blocks .particle.g-inheriting.particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.particle.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.particle.g-inheriting.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.particle.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.particle.g-inheriting.atom-disabled, #g5-container .lm-blocks .position.g-inheriting.particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.position.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.position.g-inheriting.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.position.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.position.g-inheriting.atom-disabled, #g5-container .lm-blocks .spacer.g-inheriting.particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.spacer.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.spacer.g-inheriting.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.spacer.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.spacer.g-inheriting.atom-disabled, #g5-container .lm-blocks .system.g-inheriting.particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.system.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.system.g-inheriting.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.system.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.system.g-inheriting.atom-disabled, #g5-container .lm-blocks .atom.g-inheriting.particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.atom.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.atom.g-inheriting.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.atom.g-inheriting.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.atom.g-inheriting.atom-disabled {
+  background-image: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
+  background-image: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
+  background-size: 50px 50px;
+}
 #g5-container .lm-blocks .atom {
   margin: 0 6px 6px 0px;
 }
@@ -4536,7 +4578,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks .placeholder.in-between.in-between-sections {
   width: auto;
 }
-#g5-container .lm-blocks .particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.atom-disabled, #g5-container .lm-blocks [data-lm-disabled] {
+#g5-container .lm-blocks .particle-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks li.atom-disabled, #g5-container .lm-blocks #page-settings #atoms .atoms-list li.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks li.atom-disabled, #g5-container .lm-blocks [data-lm-disabled], #g5-container .lm-blocks .g-inheriting .particle-disabled, #g5-container .lm-blocks .g-inheriting #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-picker .lm-blocks .g-inheriting li.atom-disabled, #g5-container .lm-blocks .g-inheriting #page-settings #atoms .atoms-list li.atom-disabled, #g5-container #page-settings #atoms .atoms-list .lm-blocks .g-inheriting li.atom-disabled {
   background-image: -webkit-linear-gradient(-315deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
   background-image: linear-gradient(45deg, #ccc 25%, #c4c4c4 25%, #c4c4c4 50%, #ccc 50%, #ccc 75%, #c4c4c4 75%, #c4c4c4);
   background-size: 50px 50px;
@@ -4870,7 +4912,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   padding: 8px 16px;
 }
 #g5-container .g-inheriting:not(.g-inheriting-children) .g-inherit {
-  z-index: 1;
+  z-index: 0;
 }
 @media only all and (min-width: 48rem) {
   #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {
@@ -4936,6 +4978,10 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   border: 2px solid #9055AF;
   padding: 0.469rem;
   margin: 0.3125rem;
+  vertical-align: middle;
+}
+#g5-container #page-settings #atoms .atoms-picker li .atom-title, #g5-container #page-settings #atoms .atoms-list li .atom-title {
+  vertical-align: middle;
 }
 #g5-container #page-settings #atoms .atoms-picker li:not(.atom-force-style), #g5-container #page-settings #atoms .atoms-list li:not(.atom-force-style) {
   -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
@@ -4950,10 +4996,28 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #page-settings #atoms .atoms-picker li.atom-dragging:not(.atom-disabled) .atom-settings, #g5-container #page-settings #atoms .atoms-list li.atom-dragging:not(.atom-disabled) .atom-settings {
   color: #fff;
 }
+#g5-container #page-settings #atoms .atoms-picker li.g-inheriting, #g5-container #page-settings #atoms .atoms-list li.g-inheriting {
+  background-image: -webkit-linear-gradient(-315deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-image: linear-gradient(45deg, #9055AF 25%, #884ea6 25%, #884ea6 50%, #9055AF 50%, #9055AF 75%, #884ea6 75%, #884ea6);
+  background-size: 50px 50px;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.g-inheriting i, #g5-container #page-settings #atoms .atoms-list li.g-inheriting i {
+  color: #fff;
+}
 #g5-container #page-settings #atoms .atoms-picker li.atom-disabled, #g5-container #page-settings #atoms .atoms-list li.atom-disabled {
   border-color: rgba(0, 0, 0, 0.1);
   color: #666;
   opacity: 0.7;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting, #g5-container #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting {
+  background-image: -webkit-linear-gradient(-315deg, #666 25%, #5e5e5e 25%, #5e5e5e 50%, #666 50%, #666 75%, #5e5e5e 75%, #5e5e5e);
+  background-image: linear-gradient(45deg, #666 25%, #5e5e5e 25%, #5e5e5e 50%, #666 50%, #666 75%, #5e5e5e 75%, #5e5e5e);
+  background-size: 50px 50px;
+  color: #fff;
+}
+#g5-container #page-settings #atoms .atoms-picker li.atom-disabled.g-inheriting i, #g5-container #page-settings #atoms .atoms-list li.atom-disabled.g-inheriting i {
+  color: #fff;
 }
 #g5-container #page-settings #atoms .atoms-picker li {
   color: #666;

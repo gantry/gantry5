@@ -78,7 +78,8 @@ class Configurations extends HtmlController
         }
 
         $params = [
-            'presets' => LayoutObject::presets()
+            'presets' => LayoutObject::presets(),
+            'outlines' => $this->container['configurations']
         ];
 
         $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
@@ -88,65 +89,59 @@ class Configurations extends HtmlController
 
     public function create()
     {
+        // Check if we want to duplicate outline instead.
+        if ($this->request->post['from'] === 'outline') {
+            return $this->duplicate($this->request->post['outline']);
+        }
+
         if (!$this->container->authorize('outline.create')) {
             $this->forbidden();
         }
 
-        /** @var OutlinesObject $configurations */
-        $configurations = $this->container['configurations'];
+        /** @var OutlinesObject $outlines */
+        $outlines = $this->container['configurations'];
+        $title = $this->request->post['title'];
+        $preset = $this->request->post['preset'];
 
-        $title = $this->request->post->get('title', 'Untitled');
-        $preset = $this->request->post->get('preset', 'default');
-
-        $id = $configurations->create($title, $preset);
+        $id = $outlines->create(null, $title, $preset);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $title]
+            ['name' => $id, 'title' => $outlines[$id]]
         );
 
         return new JsonResponse(['html' => 'Outline created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
-    public function rename($configuration)
+    public function rename($outline)
     {
         if (!$this->container->authorize('outline.rename')) {
             $this->forbidden();
         }
 
-        /** @var OutlinesObject $configurations */
-        $configurations = $this->container['configurations'];
-        $list = $configurations->user();
-
-        if (!isset($list[$configuration])) {
-            $this->forbidden();
-        }
-
+        /** @var OutlinesObject $outlines */
+        $outlines = $this->container['configurations'];
         $title = $this->request->post['title'];
-        $id = $configurations->rename($configuration, $title);
+
+        $id = $outlines->rename($outline, $title);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $title]
+            ['name' => $id, 'title' => $outlines[$id]]
         );
 
-        return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$configuration}", 'outline' => $html]);
+        return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$outline}", 'outline' => $html]);
     }
 
-    public function duplicateForm($configuration)
+    public function duplicateForm($outline)
     {
         if (!$this->container->authorize('outline.create')) {
             $this->forbidden();
         }
 
-        /** @var OutlinesObject $configurations */
-        $configurations = $this->container['configurations'];
-        $preset = $configurations->preset($configuration);
-
         $params = [
-            'presets' => LayoutObject::presets(),
-            'outline' => $configuration,
-            'preset'  => $preset,
+            'outlines' => $this->container['configurations'],
+            'outline' => $outline,
             'duplicate' => true
         ];
 
@@ -155,65 +150,44 @@ class Configurations extends HtmlController
         return new JsonResponse($response);
     }
 
-    public function duplicate($configuration)
+    public function duplicate($outline)
     {
         if (!$this->container->authorize('outline.create')) {
             $this->forbidden();
         }
 
-        /** @var OutlinesObject $configurations */
-        $configurations = $this->container['configurations'];
+        /** @var OutlinesObject $outlines */
+        $outlines = $this->container['configurations'];
+        $title = $this->request->post['title'];
+        $inherit = in_array($this->request->post['inherit'], ['1', 'true']);
 
-        // Handle special case on duplicating a preset.
-        if ($configuration && $configuration[0] == '_') {
-            $preset = $configurations->preset($configuration);
-            $title = ucwords(trim(str_replace('_', ' ', $configuration)));
-            if (empty($preset)) {
-                throw new \RuntimeException('Preset not found', 404);
-            }
-
-            $id = $configurations->create($title, $configuration);
-            $html = $this->container['admin.theme']->render(
-                '@gantry-admin/layouts/outline.html.twig',
-                ['name' => $id, 'title' => $title]
-            );
-
-            return new JsonResponse(['html' => 'System configuration duplicated.', 'id' => $id, 'outline' => $html]);
-        }
-
-        $list = $configurations->user();
-
-        if (!isset($list[$configuration]) && $configuration !== 'default') {
-            $this->forbidden();
-        }
-
-        $id = $configurations->duplicate($configuration, $this->request->post['title']);
+        $id = $outlines->duplicate($outline, $title, $inherit);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $configurations[$id]]
+            ['name' => $id, 'title' => $outlines[$id]]
         );
 
         return new JsonResponse(['html' => 'Outline duplicated.', 'id' => $id, 'outline' => $html]);
     }
 
-    public function delete($configuration)
+    public function delete($outline)
     {
         if (!$this->container->authorize('outline.delete')) {
             $this->forbidden();
         }
 
-        /** @var OutlinesObject $configurations */
-        $configurations = $this->container['configurations'];
-        $list = $configurations->user();
+        /** @var OutlinesObject $outlines */
+        $outlines = $this->container['configurations'];
+        $list = $outlines->user();
 
-        if (!isset($list[$configuration])) {
+        if (!isset($list[$outline])) {
             $this->forbidden();
         }
 
-        $configurations->delete($configuration);
+        $outlines->delete($outline);
 
-        return new JsonResponse(['html' => 'Outline deleted.', 'outline' => $configuration]);
+        return new JsonResponse(['html' => 'Outline deleted.', 'outline' => $outline]);
     }
 
     /**
@@ -237,17 +211,17 @@ class Configurations extends HtmlController
     {
         $path = func_get_args();
 
-        $configurations = $this->container['configurations']->toArray();
+        $outlines = $this->container['configurations']->toArray();
 
-        $configuration = isset($configurations[$path[0]]) ? array_shift($path) : 'default';
+        $outline = isset($outlines[$path[0]]) ? array_shift($path) : 'default';
 
-        $this->container['configuration'] = $configuration;
+        $this->container['configuration'] = $outline;
 
         $method = $this->params['method'];
         $page = (array_shift($path) ?: 'styles');
         $resource = $this->params['location'] . '/'. $page;
 
-        $this->params['configuration'] = $configuration;
+        $this->params['configuration'] = $outline;
         $this->params['location'] = $resource;
         $this->params['configuration_page'] = $page;
         $this->params['navbar'] = !empty($this->request->get['navbar']);

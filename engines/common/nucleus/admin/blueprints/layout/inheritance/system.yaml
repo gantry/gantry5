@@ -4,6 +4,15 @@ type: system.inheritance
 
 form:
   fields:
+    mode:
+      type: input.radios
+      label: Mode
+      description: Whether to clone or inherit the particle properties
+      default: inherit
+      options:
+        clone: Clone
+        inherit: Inherit
+
     outline:
       type: gantry.outlines
       label: Outline
@@ -22,8 +31,8 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Position to inherit?
       options:
         attributes: Position Attributes
-        block: Position Block
+        block: Block Attributes

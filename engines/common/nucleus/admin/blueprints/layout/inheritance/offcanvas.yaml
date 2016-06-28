@@ -4,6 +4,20 @@ type: offcanvas.inheritance
 
 form:
   fields:
+    _info:
+      type: separator.note
+      class: alert alert-info blocksize-note
+      content: 'Inheritance makes the Offcanvas identical to that of the inherited outline.'
+
+    mode:
+      type: input.radios
+      label: Mode
+      description: Whether to clone or inherit the particle properties
+      default: inherit
+      options:
+        clone: Clone
+        inherit: Inherit
+
     outline:
       type: gantry.outlines
       label: Outline
@@ -15,9 +29,9 @@ form:
 
     include:
       type: input.multicheckbox
-      label: Include
-      description: What portions of the Outline to inherit
+      label: Replace
+      description: Which parts of the Offcanvas to inherit?
       options:
         attributes: Offcanvas Attributes
-        block: Offcanvas Block
-        children: Offcanvas Children
+        block: Block Attributes
+        children: Particles within Offcanvas

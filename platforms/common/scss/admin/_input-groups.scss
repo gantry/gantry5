@@ -99,7 +99,7 @@
         }
     }
 
-    .input-multicheckbox .input-group, #g-inherit-particle .input-group {
+    .input-multicheckbox .input-group, .input-radios .input-group, #g-inherit-particle .input-group, #g-inherit-atom .input-group, .g-preserve-particles {
         width: 100%;
         input, span {
             vertical-align: middle;
@@ -109,9 +109,26 @@
             line-height: 1.5rem;
             margin-left: 5px;
         }
+
+        label {
+            display: block;
+        }
     }
 
-    #g-inherit-particle {
+    .input-radios .radios {
+        margin-right: 1rem;
+
+        input, label {
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        label {
+            margin-left: 0.2rem;
+        }
+    }
+
+    #g-inherit-particle, #g-inherit-atom {
         label {
             .fa {
                 color: $medium-gray;

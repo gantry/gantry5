@@ -8,9 +8,9 @@
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
-            {% if field.pattern is defined %}pattern="{{ field.pattern|e }}"{% endif %}
+            {% if field.pattern is defined %}pattern="{{ field.pattern }}"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
             />
-    <span class="button" data-g-instancepicker="{{ { type: 'module', return: true, field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}">{{ field.picker_label|default('Pick a Module') }}</span>
+    <span class="button" data-g-instancepicker="{{ { type: 'module', return: true, field: (scope ~ name)|fieldName }|json_encode|e('html_attr') }}">{{ field.picker_label|default('Pick a Module') }}</span>
 {% endblock %}

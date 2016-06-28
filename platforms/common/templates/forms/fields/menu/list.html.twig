@@ -8,9 +8,9 @@
         <option
                 {# required attribute structures #}
                 {% if key == value %}selected="selected"{% endif %}
-                value="{{ key|e }}"
+                value="{{ key }}"
                 {# non-gloval attribute structures #}
                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                >{{ text|e }}{{ (current == key and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
+                >{{ text }}{{ (current == key and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
     {% endfor %}
 {% endblock %}

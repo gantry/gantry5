@@ -57,14 +57,27 @@
                     aria-label="{{ 'GANTRY5_PLATFORM_LM_LOAD_PRESET'|trans }}">
                 <i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
             </button>
-            <button href="#"
-                    class="button"
-                    role="button"
-                    data-lm-clear=""
-                    aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
-            >
-                <i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span>
-            </button>
+            <div data-g-extras class="button" aria-haspopup="true" aria-expanded="false" role="presentation">
+                <span><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></span>
+                <ul data-popover-content class="hidden" tabindex="0">
+                    <li data-g-popover-follow>
+                        <a tabindex="0"
+                           href="#"
+                           data-lm-clear="full"
+                           aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
+                        ><i class="fa fa-fw fa-trash"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
+                        </a>
+                    </li>
+                    <li data-g-popover-follow>
+                        <a tabindex="0"
+                           href="#"
+                           data-lm-clear="keep-inheritance"
+                           aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
+                        ><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <button href="#"
                     class="button button-primary button-save"
                     role="button"
@@ -109,9 +122,27 @@
                 <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url) }}">
                     <i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
                 </a>
-                <a href="#" class="button" data-lm-clear="">
-                    <i class="fa fa-fw fa-trash-o"></i> <span>{{ 'GANTRY5_PLATFORM_CLEAR'|trans }}</span>
-                </a>
+                <div data-g-extras class="button" aria-haspopup="true" aria-expanded="false" role="presentation">
+                <span><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></span>
+                <ul data-popover-content class="hidden" tabindex="0">
+                    <li data-g-popover-follow>
+                        <a tabindex="0"
+                           href="#"
+                           data-lm-clear="full"
+                           aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
+                        ><i class="fa fa-fw fa-trash"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
+                        </a>
+                    </li>
+                    <li data-g-popover-follow>
+                        <a tabindex="0"
+                           href="#"
+                           data-lm-clear="keep-inheritance"
+                           aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
+                        ><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
                 <a href="#" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}">
                     <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
                 </a>

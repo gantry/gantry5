@@ -1,5 +1,5 @@
 <div class="g-inherit{{ inherit ? '' : ' hide' }}">
     <div class="g-inherit-content">
-        Inheriting from <strong>{{ gantry.configurations.name(inherit) }}</strong>
+        {{ 'GANTRY5_PLATFROM_INHERITING_FROM_X'|trans('<strong>' ~ gantry.configurations.name(inherit)|e ~ '</strong>')|raw }}
     </div>
 </div>

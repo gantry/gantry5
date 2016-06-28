@@ -20,6 +20,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -63,12 +64,15 @@ class Settings extends HtmlController
 
         if ($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $data = $this->container['config'];
         } else {
-            $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $this->container['defaults'];
+            $data = ConfigServiceProvider::load($this->container, $configuration, false, false);
         }
 
         $this->params += [
+            'data' => $data,
             'particles' => $this->container['particles']->group(['atom']),
             'route'  => "configurations.{$this->params['configuration']}.settings",
             'page_id' => $configuration
@@ -86,15 +90,17 @@ class Settings extends HtmlController
 
         if($configuration == 'default') {
             $this->params['overrideable'] = false;
+            $data = $this->container['config'];
         } else {
-            $this->params['defaults'] = $this->container['defaults']->get($prefix);
             $this->params['overrideable'] = true;
+            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $data = ConfigServiceProvider::load($this->container, $configuration, false, false);
         }
 
         $this->params += [
             'scope' => 'particle.',
             'particle' => $blueprints,
-            'data' =>  ['particle' => Gantry::instance()['config']->get($prefix)],
+            'data' =>  ['particle' => $data->get($prefix)],
             'id' => $id,
             'parent' => "configurations/{$this->params['configuration']}/settings",
             'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",

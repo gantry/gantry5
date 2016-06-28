@@ -1,26 +1,68 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route(action) }}">
-    <div class="card settings-block">
-        <h4>
-            <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span>
-            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title) }}" data-title-edit=""></i>
-            <span class="badge font-small">{{ item.type }}</span>
-            {% if blueprints.form.fields.enabled %}
-            {% include 'forms/fields/enable/enable.html.twig' with {'name': prefix ~ 'enabled', 'field': blueprints.form.fields.enabled, 'value': item.attributes.enabled, 'default': 1} %}
-            {% endif %}
-        </h4>
-
-        <div class="inner-params">
-            {% include 'forms/fields.html.twig' with {'blueprints': blueprints.form, 'data': data, 'prefix': prefix, 'skip': ['enabled']} %}
+    <form method="post"
+          action="{{ gantry.route(action) }}"
+          data-g-inheritance-settings="{{ {'id': item.id, 'type': 'atom', subtype: item.type}|json_encode|e('html_attr') }}"
+    >
+        <input type="hidden" name="id" value="{{ item.id }}" />
+        <div class="g-tabs" role="tablist">
+            <ul>
+                {# Settings Tab #}
+                <li class="active">
+                    <a href="#" id="g-settings-atom-tab" role="presentation" aria-controls="g-settings-atom" role="tab" aria-expanded="true">
+                        {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                        {% block title %}
+                            {{ 'GANTRY5_PLATFORM_ATOM'|trans }}
+                        {% endblock %}
+                    </a>
+                </li>
+                {# Inheritance Tab #}
+                {% if inheritance %}
+                    <li>
+                        <a href="#" id="g-settings-inheritance-tab" role="presentation" aria-controls="g-settings-inheritance" aria-expanded="false">
+                            {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-    </div>
 
-    <div class="g-modal-actions">
-        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
-        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
-    </div>
-</form>
+        <div class="g-panes">
+            {# Settings Pane #}
+            <div class="g-pane active" role="tabpanel" id="g-settings-atom" aria-labelledby="g-settings-atom-tab" aria-expanded="true">
+                {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
+                title: item.title,
+                blueprints: blueprints.form,
+                overrideable: overrideable and (blueprints.form.overrideable is not defined or blueprints.form.overrideable),
+                inherit: 'attributes' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
+                } %}
+            </div>
+
+            {# Inheritance Pane #}
+            {% if inheritance %}
+                <div class="g-pane" role="tabpanel" id="g-settings-inheritance" aria-labelledby="g-settings-inheritance-tab" aria-expanded="false">
+                    <div class="card settings-block">
+                        <h4>
+                            {{ 'GANTRY5_PLATFORM_INHERITANCE'|trans }}
+                        </h4>
+                        <div class="inner-params">
+                            {% include 'forms/fields.html.twig' with {
+                            gantry: gantry,
+                            blueprints: inheritance.form,
+                            data: {inherit: item.inherit},
+                            prefix: 'inherit.'
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="g-modal-actions">
+            <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+            <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+            <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
+        </div>
+    </form>
 {% endblock %}

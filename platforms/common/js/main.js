@@ -524,7 +524,6 @@ ready(function() {
                 }
 
                 var title   = content.elements.content.find('[name="title"]'),
-                    preset  = content.elements.content.find('[name="preset"]'),
                     confirm = content.elements.content.find('[data-g-outline-create-confirm]');
 
                 title.on('keyup', function(event) {
@@ -539,10 +538,21 @@ ready(function() {
                     confirm.showIndicator();
 
                     var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
-                        data = { title: title.value(), preset: preset.value() };
+                        from    = content.elements.content.find('[name="from"]:checked'),
+                        preset  = content.elements.content.find('[name="preset"]'),
+                        outline = content.elements.content.find('[name="outline"]'),
+                        inherit = content.elements.content.find('[name="inherit"]'),
+                        data = {
+                            title: title.value(),
+                            from: from ? from.value() : null,
+                            preset: preset ? preset.value() : null,
+                            outline: outline ? outline.value() : null,
+                            inherit: inherit.checked() ? 1 : 0
+                        };
 
-                    if (!data.title) { delete data.title; }
-                    if (!data.preset) { delete data.preset; }
+                    ['title', 'from', 'preset', 'outline'].forEach(function(key) {
+                        if (!data[key]) { delete data[key]; }
+                    });
 
                     request('post', URI, data, function(error, response) {
                         confirm.hideIndicator();
@@ -572,6 +582,22 @@ ready(function() {
                 }, 5);
             }
         });
+    });
+
+    // Handles Preset / Outline switcher in Outline creation
+    body.delegate('change', 'input[type="radio"]#from-preset, input[type="radio"]#from-outline', function(event, element) {
+        element = $(element);
+        var value    = element.value(),
+            elements = element.parent('.card').search('.g-create-from');
+
+        var filtered = elements.style('display', 'none').filter(function(block) {
+            block = $(block);
+            return block.hasClass('g-create-from-' + value);
+        });
+
+        if (filtered) {
+            $(filtered).style('display', 'block');
+        }
     });
 
     // Handles Configurations Duplicate / Remove
@@ -1572,7 +1598,7 @@ var Offcanvas = new prime({
             klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
         }
         
-        return '<div class="offcanvas-section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the offcanvas" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Offcanvas settings" data-tip-place="top-right"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
+        return '<div class="offcanvas-section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getAttribute('name') +'">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><span data-tip="Adds a new row in the offcanvas" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Offcanvas settings" data-tip-place="top-right"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
     },
 
     getId: function() {
@@ -1685,7 +1711,7 @@ var Particle = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Replace: ' + include,
             'tip-offset': -10,
             'tip-place': 'top-right'
         };
@@ -1843,7 +1869,7 @@ var Section = new prime({
             }
         }
 
-        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getTitle() + '">' + this.getTitle() + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="Adds a new row in the section" data-tip-place="top-right"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="Section settings" data-tip-place="top-right"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
     },
 
     adopt: function(child) {
@@ -1894,11 +1920,12 @@ var Section = new prime({
         this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
         if (this.hasInheritance()) {
             this.enableInheritance();
-            if (this.block.find('> .g-inherit')) {
-                var content = this.block.find('.g-inherit-content strong'),
-                    outline = getOutlineNameById(this.inherit.outline);
+            var overlay = this.block.find('> .g-inherit');
+            if (overlay) {
+                var outline = getOutlineNameById(this.inherit.outline),
+                    content = zen('div').html(this.renderInheritanceLabel(outline));
 
-                if (content) { content.html(outline); }
+                if (overlay && content) { overlay.html(content.children().html()); }
             }
         }
     },
@@ -1924,7 +1951,7 @@ var Section = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Include: ' + include,
+            'tip': 'Inheriting from <strong>' + name + '</strong><br />Outline ID: ' + outline + '<br />Replace: ' + include,
             'tip-offset': -2,
             'tip-place': 'top-right'
         };
@@ -1966,6 +1993,8 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+
+        this.refreshInheritance();
     },
 
     getParent: function() {
@@ -2898,7 +2927,19 @@ ready(function() {
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        layoutmanager.clear();
+        var mode = element.data('lm-clear'),
+            options = {};
+
+        switch (mode) {
+            case 'keep-inheritance':
+                options = { save: true, dropLastGrid: false, emptyInherits: false };
+                break;
+            case 'full':
+            default:
+                options = { save: true, dropLastGrid: false, emptyInherits: true };
+        }
+
+        layoutmanager.clear(null, options);
     });
 
     // Switcher
@@ -3050,7 +3091,7 @@ ready(function() {
 
         var blocktype = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data = null, parent;
+            data = null, parent, section;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
@@ -3065,6 +3106,7 @@ ready(function() {
 
         element = element.parent('[data-lm-blocktype]');
         parent = element.parent('[data-lm-blocktype]');
+        section = element.parent('[data-lm-blocktype="section"]');
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
@@ -3081,6 +3123,7 @@ ready(function() {
             data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
             data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
+            data.parent = section ? section.data('lm-id') : null;
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
@@ -3240,13 +3283,13 @@ ready(function() {
                                 delete response.body.data.inherit.section;
                                 particle.setInheritance(response.body.data.inherit);
 
-                                if (response.body.data.children) {
-                                    layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
-                                    builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
-                                }
-
                                 particle.enableInheritance();
                                 particle.refreshInheritance();
+                            }
+
+                            if (response.body.data.children) {
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
+                                builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                             }
 
                             if (particle.hasInheritance() && !response.body.data.inherit) {
@@ -3293,6 +3336,7 @@ var $                  = require('elements'),
     request            = require('agent'),
     modal              = require('../../ui').modal,
 
+    isArray            = require('mout/lang/isArray'),
     forEach            = require('mout/collection/forEach'),
     filter             = require('mout/object/filter'),
     keys               = require('mout/object/keys'),
@@ -3306,27 +3350,31 @@ var $                  = require('elements'),
 
 
 var IDsMap = {
-    attributes: 'g-settings-particle',
+    attributes: ['g-settings-particle', 'g-settings-atom'],
     block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
-    inheritance: 'g-inherit-particle'
+    particles: 'g-inherit-particle',
+    atoms: 'g-inherit-atom'
 };
 
 ready(function() {
     var body             = $('body'),
-        currentSelection = {};
+        currentSelection = {},
+        currentMode      = {};
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
             value          = element.value(),
-            name           = $('[name="inherit[section]"]').value(),
+            name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
             form           = element.parent('[data-g-inheritance-settings]'),
-            hasChanged     = currentSelection[name] !== value,
-            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked'),
+            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
             particle       = {
-                list: $('#g-inherit-particle'),
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                list: $('#g-inherit-particle, #g-inherit-atom'),
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
+
+        var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
 
         if (hasChanged && !value) {
             includesFields.forEach(function(include) {
@@ -3340,7 +3388,8 @@ ready(function() {
                 outline: value || getCurrentOutline(),
                 type: formData.type || '',
                 subtype: formData.subtype || '',
-                inherit: !!value ? '1' : '0'
+                mode: particle.mode.value(),
+                inherit: !!value && particle.mode.value() === 'inherit' ? '1' : '0'
             };
 
         data.id = formData.id;
@@ -3356,7 +3405,9 @@ ready(function() {
             }
         }
 
-        var URI = particle.list ? 'layouts/list' : 'layouts';
+        var URI_mode = data.type === 'atom' ? 'atoms' : 'layouts',
+            URI      = particle.list ? URI_mode + '/list' : URI_mode;
+
         request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
             label.hideIndicator();
 
@@ -3380,14 +3431,18 @@ ready(function() {
             // refresh field values based on settings and ajax response
             forEach(IDsMap, function(id, option) {
                 id = id.panel || id;
-                var shouldRefresh = contains(includes, option),
-                    isAvailable   = contains(available, option);
+                id = !isArray(id) ? [id] : id;
 
-                if ((shouldRefresh || !isAvailable) && data.html[id] && (element = container.find('#' + id))) {
-                    element.html(data.html[id]);
-                    var selects = element.search('[data-selectize]');
-                    if (selects) { selects.selectize(); }
-                }
+                id.forEach(function(currentID) {
+                    var shouldRefresh = contains(includes, option),
+                        isAvailable   = contains(available, option);
+
+                    if ((shouldRefresh || !isAvailable) && data.html[currentID] && (element = container.find('#' + currentID))) {
+                        element.html(data.html[currentID]);
+                        var selects = element.search('[data-selectize]');
+                        if (selects) { selects.selectize(); }
+                    }
+                });
             });
 
             if (hasChanged && includesFields && currentSelection[name] === '') {
@@ -3395,72 +3450,94 @@ ready(function() {
             }
 
             currentSelection[name] = value;
+            currentMode[name] = particle.mode.value();
         });
     });
 
     body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
         var value     = element.value(),
             isChecked = element.checked(),
-            panel     = $('#' + (IDsMap[value] && IDsMap[value].panel || IDsMap[value])),
-            tab       = $('#' + (IDsMap[value] && IDsMap[value].tab || IDsMap[value]) + '-tab'),
+            noRefresh = event.noRefresh,
             outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
-        if (!panel || !tab) { return true; }
+        var IDs = {
+            panel: (IDsMap[value] && IDsMap[value].panel || IDsMap[value]),
+            tab: (IDsMap[value] && IDsMap[value].tab || IDsMap[value])
+        };
 
-        var inherit = panel.find('.g-inherit');
-
-        // do not try to refresh attributes/block inheritance when there's no particle selected
-        /*if (particle.radios && !particle.checked) {
-         return false;
-         }*/
-
-
-        // if inherit overlay doesn't exist, we could be in a set
-        /*if (!inherit) {
-         inherit = panel.parent('.settings-block').find('.g-inherit');
-         inherit.after(panel);
-         }*/
-
-        if (!isChecked || !outline) {
-            var lock = tab.find('.fa-lock');
-
-            if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
-            if (inherit) { inherit.hide(); }
-        } else {
-            var unlock = tab.find('.fa-unlock');
-
-            if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
-            if (inherit) { inherit.show(); }
-
-            body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+        if (!isArray(IDs.panel)) {
+            IDs.panel = [IDs.panel];
+            IDs.tab = [IDs.tab];
         }
+
+        IDs.panel.forEach(function(currentPanel, index) {
+            var panel = $('#' + currentPanel),
+                tab   = $('#' + IDs.tab[index] + '-tab');
+
+            if (!panel || !tab) { return true; }
+
+            var inherit = panel.find('.g-inherit'),
+                isClone = particle.mode.value() === 'clone',
+                refresh = function(noRefresh) {
+                    if (!noRefresh) {
+                        body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+                    }
+                };
+
+            if (!isChecked || !outline || isClone) {
+                var lock = tab.find('.fa-lock');
+
+                if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
+                if (inherit) { inherit.hide(); }
+                if (isClone) { refresh(noRefresh); }
+            } else {
+                var unlock = tab.find('.fa-unlock');
+
+                if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
+                if (inherit) { inherit.show(); }
+
+                refresh(noRefresh);
+            }
+        });
     });
 
-    body.delegate('change', '[name="inherit[particle]"]', function(event, element) {
-        var container = modal.getByID(modal.getLast()),
-            outline   = container.find('[name="inherit[outline]"]');
 
-        body.emit('change', { target: outline });
+    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"], [name="inherit[atom]"]', function(event, element) {
+        var container  = modal.getByID(modal.getLast()),
+            outline    = container.find('[name="inherit[outline]"]'),
+            checkboxes = container.search('[data-multicheckbox-field]') || [],
+            noRefresh  = false;
+
+        if (element.attribute('name') === 'inherit[mode]') {
+            noRefresh = true;
+        }
+
+        body.emit('change', { target: outline, noRefresh: noRefresh });
+        checkboxes.forEach(function(checkbox) {
+            body.emit('change', { target: checkbox, noRefresh: noRefresh });
+        });
     });
 
-    body.delegate('click', '#g-inherit-particle .fa-info-circle', function(event, element) {
+    body.delegate('click', '#g-inherit-particle .fa-info-circle, #g-inherit-atom .fa-info-circle', function(event, element) {
         event.preventDefault();
 
         var container = modal.getByID(modal.getLast()),
             outline   = container.find('[name="inherit[outline]"]'),
-            id        = element.siblings('input[name="inherit[particle]"]');
+            id        = element.siblings('input[name="inherit[particle]"], input[name="inherit[atom]"]');
 
         if (!id || !outline) { return false; }
 
+        var URI = id.name() === 'inherit[atom]' ? 'atoms/instance' : 'layouts/particle';
         modal.open({
             content: 'Loading',
             method: 'post',
-            data: { id: id.value(), outline: outline.value() },
-            remote: parseAjaxURI(getAjaxURL('layouts/particle') + getAjaxSuffix()),
+            data: { id: id.value(), outline: outline.value() || getCurrentOutline() },
+            remote: parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) {
                     modal.enableCloseByOverlay();
@@ -3478,16 +3555,18 @@ ready(function() {
         var container = modal.getByID(modal.getLast()),
             isLocked  = element.hasClass('fa-lock'),
             id        = element.parent('a').id().replace(/\-tab$/, ''),
-            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id; }) || []).shift(),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(value, id); }) || []).shift(),
             input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
             particle  = {
-                radios: $('[name="inherit[particle]"]'),
-                checked: $('[name="inherit[particle]"]:checked')
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
 
         if (input) {
             // do not try to refresh attributes/block inheritance when there's no particle selected
-            if (particle.radios && !particle.checked) {
+            // or if we are in clone mode
+            if (particle.mode.value() === 'clone' || (particle.radios && !particle.checked)) {
                 return false;
             }
 
@@ -3496,7 +3575,7 @@ ready(function() {
         }
     });
 });
-},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"mout/collection/contains":182,"mout/collection/forEach":184,"mout/object/filter":224,"mout/object/keys":231}],28:[function(require,module,exports){
+},{"../../ui":51,"../../utils/get-ajax-suffix":66,"../../utils/get-ajax-url":67,"../../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"mout/collection/contains":182,"mout/collection/forEach":184,"mout/lang/isArray":198,"mout/object/filter":224,"mout/object/keys":231}],28:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -3596,7 +3675,7 @@ var LayoutManager = new prime({
 
     clear: function(parent, options) {
         var type, child,
-            filter = !parent ? [] : parent.search('[data-lm-id]').map(function(element) { return $(element).data('lm-id'); });
+            filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
 
         options = options || { save: true, dropLastGrid: false, emptyInherits: false };
 
@@ -3610,6 +3689,11 @@ var LayoutManager = new prime({
             if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
                 this.builder.remove(id);
                 obj.block.remove();
+            } else if (options.emptyInherits && (type == 'section' || type == 'offcanvas' || type == 'container')) {
+                if (obj.hasInheritance) {
+                    obj.inherit = {};
+                    obj.disableInheritance();
+                }
             }
         }, this);
 
@@ -3680,7 +3764,7 @@ var LayoutManager = new prime({
         if (!this.block.isNew()) {
             element.style({
                 position: 'absolute',
-                zIndex: 1500,
+                zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),
@@ -4136,45 +4220,49 @@ var initSizes = function() {
 ready(function() {
     initSizes();
 
-    var scrollElement = $(GANTRY_PLATFORM == 'grav' ? '#admin-main .content-padding' : window) || [window];
+    var scrollElement = $(GANTRY_PLATFORM == 'grav' ? '#admin-main .content-padding' : window) || [window],
+        scroll        = function() {
+            if (!container || !sidebar) { return; }
 
-    decouple(scrollElement[0], 'scroll', function() {
-        if (!container || !sidebar) { return; }
+            var scrollTop       = this.scrollY || this.scrollTop,
+                containerBounds = container[0].getBoundingClientRect(),
+                limit           = containerBounds.top + containerBounds.height,
+                sidebarCoords   = sidebar[0].getBoundingClientRect(),
+                shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
+                reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit,
+                sidebarTallerThanContainer = containerBounds.height <= sidebarCoords.height;
 
-        var scrollTop       = this.scrollY || this.scrollTop,
-            containerBounds = container[0].getBoundingClientRect(),
-            limit           = containerBounds.top + containerBounds.height,
-            sidebarCoords   = sidebar[0].getBoundingClientRect(),
-            shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
-            reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit;
+            sidebar.style('width', sidebarCoords.width);
+            if (shouldBeFixed && !reachedTheLimit) {
+                sidebar.removeClass('particles-absolute').addClass('particles-fixed');
+                sidebar.style({
+                    top: heightTop + 10,
+                    bottom: 'inherit'
+                });
+            } else if (shouldBeFixed && reachedTheLimit) {
+                if (sidebarTallerThanContainer) {
+                    sidebar.removeClass('particles-fixed').addClass('particles-absolute');
+                    sidebar.style({
+                        top: 'inherit',
+                        bottom: parseInt(container.compute('padding-bottom'), 10)
+                    });
+                }
+            } else {
+                sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
+                sidebar.style({
+                    top: 'inherit',
+                    bottom: 'inherit'
+                });
+            }
+        };
 
-        sidebar.style('width', sidebarCoords.width);
-        if (shouldBeFixed && !reachedTheLimit) {
-            sidebar.removeClass('particles-absolute').addClass('particles-fixed');
-            sidebar.style({
-                top: heightTop + 10,
-                bottom: 'inherit'
-            });
-        } else if (shouldBeFixed && reachedTheLimit) {
-            sidebar.removeClass('particles-fixed').addClass('particles-absolute');
-            sidebar.style({
-                top: 'inherit',
-                bottom: parseInt(container.compute('padding-bottom'), 10)
-            });
-        } else {
-            sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
-            sidebar.style({
-                top: 'inherit',
-                bottom: 'inherit'
-            });
-        }
-    });
+    decouple(scrollElement[0], 'scroll', scroll.bind(scrollElement[0]));
 
     decouple(window, 'resize', function() {
         if (!particles) { return; }
 
-        sidebar.style('width', null);
-        initSizes();
+        // initSizes();
+        scroll.call(scrollElement[0]);
 
         particles.style({
             'max-height': (window.innerHeight - heightTop - heightBottom - search[0].offsetHeight - 30)
@@ -4297,8 +4385,12 @@ ready(function() {
                     allowElementsClick: '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){
@@ -4355,7 +4447,7 @@ ready(function() {
         switch (page) {
             case 'layout':
                 var preset = $('[data-lm-preset]');
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.layoutmanager.singles('cleanup', lm.builder, false);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
@@ -4547,7 +4639,6 @@ ready(function() {
             indicator.hideIndicator();
         })
     });
-
 });
 
 var modules = {
@@ -5011,6 +5102,12 @@ var StepTwo = function(data, content, button) {
                 if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                 input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+
+                // workaround for checkboxes trick that has both a hidden and checkbox field
+                if (type === 'checkbox' && content.find('[type="hidden"][name="' + name + '"]')) {
+                    input = content.find('[name="' + name + '"][type="checkbox"]');
+                }
+                
                 var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                     parent = input.parent('.settings-param'),
                     override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -6045,23 +6142,27 @@ var MenuManager = new prime({
 module.exports = MenuManager;
 
 },{"../ui/drag.drop":48,"../ui/eraser":50,"../utils/elements.utils":62,"./drag.resizer":31,"elements/zen":132,"mout/array/every":164,"mout/array/indexOf":170,"mout/array/last":174,"mout/function/bind":187,"mout/lang/deepClone":195,"mout/lang/isArray":198,"mout/lang/isObject":203,"mout/object/equals":222,"mout/object/get":228,"mout/string/ltrim":257,"prime":295,"prime-util/prime/bound":291,"prime-util/prime/options":292,"prime/emitter":294}],35:[function(require,module,exports){
+(function (global){
 'use strict';
-var $             = require('elements'),
-    ready         = require('elements/domready'),
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
 
-    zen           = require('elements/zen'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    Eraser        = require('../ui/eraser'),
-    request       = require('agent'),
-    indexOf       = require('mout/array/indexOf'),
-    simpleSort    = require('sortablejs'),
+    zen                = require('elements/zen'),
+    modal              = require('../ui').modal,
+    toastr             = require('../ui').toastr,
+    Eraser             = require('../ui/eraser'),
+    request            = require('agent'),
+    indexOf            = require('mout/array/indexOf'),
+    simpleSort         = require('sortablejs'),
 
-    trim          = require('mout/string/trim'),
+    trim               = require('mout/string/trim'),
+    size               = require('mout/object/size'),
 
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    parseAjaxURI       = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix      = require('../utils/get-ajax-suffix'),
+    validateField      = require('../utils/field-validation'),
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById;
+;
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -6132,9 +6233,9 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item),
-                        trash = $('#trash'),
-                        target = $(this.originalEvent.target),
+                    var item       = $(event.item),
+                        trash      = $('#trash'),
+                        target     = $(this.originalEvent.target),
                         touchTrash = false;
 
                     // workaround for touch devices
@@ -6207,6 +6308,7 @@ var AttachSettings = function() {
             content: 'Loading',
             method: 'post',
             data: { data: itemData },
+            overlayClickToClose: false,
             remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
@@ -6237,7 +6339,9 @@ var AttachSettings = function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    $(formElements).forEach(function(input) {
                         input = $(input);
                         var name = input.attribute('name'),
                             type = input.attribute('type');
@@ -6284,11 +6388,24 @@ var AttachSettings = function() {
                             item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
                             // toggle enabled/disabled status as needed
-                            var enabled = Number(dataValue[index].attributes.enabled);
+                            var enabled    = Number(dataValue[index].attributes.enabled),
+                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
+                            item.attribute('title', enabled ? '' : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+
+                            item.data('tip', null);
+                            if (inheriting) {
+                                var inherit = response.body.item.inherit,
+                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
+                                    atom = inherit.atom || '',
+                                    include = (inherit.include || []).join(', ');
+
+                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Replace: ' + include);
+                            }
 
                             body.emit('change', { target: dataField });
+                            global.G5.tips.reload();
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {
@@ -6325,7 +6442,9 @@ ready(function() {
 });
 
 module.exports = Atoms;
-},{"../ui":51,"../ui/eraser":50,"../utils/field-validation":64,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"agent":75,"elements":108,"elements/domready":106,"elements/zen":132,"mout/array/indexOf":170,"mout/string/trim":266,"sortablejs":310}],36:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"../ui":51,"../ui/eraser":50,"../utils/field-validation":64,"../utils/get-ajax-suffix":66,"../utils/get-ajax-url":67,"../utils/get-outline":68,"agent":75,"elements":108,"elements/domready":106,"elements/zen":132,"mout/array/indexOf":170,"mout/object/size":237,"mout/string/trim":266,"sortablejs":310}],36:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -8048,7 +8167,8 @@ var Fonts = new prime({
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
         }
 
-        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+        var noConflict = isLocal ? '[data-category="local-fonts"]' : 'not([data-category="local-fonts"])',
+            element = $('ul.g-fonts-list > [data-font="' + name + '"]' + noConflict);
         variants = variants || element.data('variants').split(',') || ['regular'];
 
         if (contains(variants, '400')) {
@@ -8932,6 +9052,12 @@ ready(function() {
                             if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
 
                             input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+
+                            // workaround for checkboxes trick that has both a hidden and checkbox field
+                            if (type === 'checkbox' && content.find('[type="hidden"][name="' + name + '"]')) {
+                                input = content.find('[name="' + name + '"][type="checkbox"]');
+                            }
+
                             var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
                                 parent = input.parent('.settings-param'),
                                 override = parent ? parent.find('> input[type="checkbox"]') : null;
@@ -10127,17 +10253,6 @@ var prime    = require('prime'),
 
 var animationEndSupport = false;
 
-domready(function() {
-    var style = (document.body || document.documentElement).style;
-
-    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
-        if (animationEndSupport) {
-            return;
-        }
-        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-    });
-});
-
 var Modal = new prime({
     mixin: [Bound, Options],
 
@@ -10511,6 +10626,17 @@ var Modal = new prime({
     _closeButtonClick: function(element) {
         return this.close(storage.get($(element)).dialog.id);
     }
+});
+
+domready(function() {
+    var style = (document.body || document.documentElement).style;
+
+    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
+        if (animationEndSupport) {
+            return;
+        }
+        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+    });
 });
 
 var modal = new Modal();
@@ -14584,7 +14710,11 @@ var decouple = function(element, event, callback) {
         tracking = false;
     };
 
-    element.addEventListener(event, capture, false);
+    try {
+        element.addEventListener(event, capture, false);
+    } catch (e) {}
+
+    return capture;
 };
 
 module.exports = decouple;
