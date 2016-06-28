@@ -23,9 +23,9 @@ class Assignments extends HtmlController
 {
     public function index()
     {
-        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration && $configuration !== 'default' && $configuration[0] !== '_') {
-            $assignments = new AssignmentsObject($configuration);
+        $outline = isset($this->params['configuration']) ? $this->params['configuration'] : null;
+        if ($outline && $outline !== 'default' && $outline[0] !== '_') {
+            $assignments = new AssignmentsObject($outline);
 
             $this->params['assignments'] = $assignments->get();
             $this->params['options'] = $assignments->assignmentOptions();
@@ -41,15 +41,15 @@ class Assignments extends HtmlController
             $this->forbidden();
         }
 
-        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration && ($configuration === 'default' || $configuration[0] === '_')) {
+        $outline = isset($this->params['configuration']) ? $this->params['configuration'] : null;
+        if ($outline && ($outline === 'default' || $outline[0] === '_')) {
             $this->undefined();
         }
 
         if (!$this->request->post->get('_end')) {
             throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
         }
-        $assignments = new AssignmentsObject($configuration);
+        $assignments = new AssignmentsObject($outline);
         $assignments->set($this->request->post->getArray('assignments'));
 
         // Fire save event.

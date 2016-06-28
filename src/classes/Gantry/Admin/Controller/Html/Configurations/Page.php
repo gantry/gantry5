@@ -57,15 +57,15 @@ class Page extends HtmlController
 
     public function index()
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
-        if ($configuration == 'default') {
+        if ($outline == 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
             $this->params['overrideable'] = true;
             $this->params['defaults'] = $defaults = $this->container['defaults'];
-            $data = ConfigServiceProvider::load($this->container, $configuration, false, false);
+            $data = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
         $deprecated = $this->getDeprecatedAtoms();
@@ -87,7 +87,7 @@ class Page extends HtmlController
             'data' => $data,
             'page' => $this->container['page']->group(),
             'route'  => "configurations.{$this->params['configuration']}",
-            'page_id' => $configuration,
+            'page_id' => $outline,
             'atoms' => $this->getAtoms(),
             'atoms_deprecated' => $deprecated
         ];
@@ -350,11 +350,11 @@ class Page extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
         // Move atoms out of layout.
         if ($id === 'head') {
-            $layout = Layout::instance($configuration);
+            $layout = Layout::instance($outline);
             if (is_array($layout->atoms())) {
                 $layout->save(false);
             }
@@ -364,7 +364,7 @@ class Page extends HtmlController
             }
         }
 
-        $save_dir      = $locator->findResource("gantry-config://{$configuration}/page", true, true);
+        $save_dir      = $locator->findResource("gantry-config://{$outline}/page", true, true);
         $filename      = "{$save_dir}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);

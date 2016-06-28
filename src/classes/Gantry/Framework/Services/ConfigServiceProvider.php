@@ -44,9 +44,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
             GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('config', 'Loading configuration');
 
             // Get the current configuration and lock the value from modification.
-            $configuration = $c->lock('configuration');
+            $outline = $c->lock('configuration');
 
-            $config = static::load($c, $configuration);
+            $config = static::load($c, $outline);
 
             GANTRY_DEBUGGER && \Gantry\Debugger::setConfig($config)->stopTimer('config');
 

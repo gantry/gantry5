@@ -127,10 +127,10 @@ trait ThemeTrait
             $name = 'default';
         }
 
-        $configuration = isset($gantry['configuration']) ? $gantry['configuration'] : null;
+        $outline = isset($gantry['configuration']) ? $gantry['configuration'] : null;
 
         // Set configuration if given.
-        if ($name && $name != $configuration) {
+        if ($name && $name != $outline) {
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
 
             $gantry['configuration'] = $name;

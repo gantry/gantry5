@@ -62,15 +62,15 @@ class Styles extends HtmlController
 
     public function index()
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
-        if($configuration == 'default') {
+        if($outline == 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config'];
         } else {
             $this->params['overrideable'] = true;
             $this->params['defaults'] = $this->container['defaults'];
-            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false);
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
         $this->params['blocks'] = $this->container['styles']->group();
@@ -81,18 +81,18 @@ class Styles extends HtmlController
 
     public function display($id)
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
         $style = $this->container['styles']->get($id);
         $blueprints = new BlueprintsForm($style);
         $prefix = 'styles.' . $id;
 
-        if($configuration == 'default') {
+        if($outline == 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
             $this->params['overrideable'] = true;
             $this->params['defaults'] = $this->container['defaults']->get($prefix);
-            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false)->get($prefix);
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $outline, false, false)->get($prefix);
         }
 
         $this->params += [
@@ -110,7 +110,7 @@ class Styles extends HtmlController
     {
         $path = func_get_args();
 
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
         $style = $this->container['styles']->get($id);
 
         // Load blueprints.
@@ -133,13 +133,13 @@ class Styles extends HtmlController
         }
         array_pop($path);
 
-        if($configuration == 'default') {
+        if($outline == 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
             $this->params['overrideable'] = true;
             $this->params['defaults'] = $this->container['defaults']->get($prefix);
-            $this->params['data'] = ConfigServiceProvider::load($this->container, $configuration, false, false)->get($prefix);
+            $this->params['data'] = ConfigServiceProvider::load($this->container, $outline, false, false)->get($prefix);
         }
 
         $this->params = [
@@ -206,8 +206,8 @@ class Styles extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}", true, true);
+        $outline = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$outline}", true, true);
         $filename = "{$save_dir}/styles.yaml";
 
         $file = YamlFile::instance($filename);
@@ -251,8 +251,8 @@ class Styles extends HtmlController
     {
         /** @var Theme $theme */
         $theme = $this->container['theme'];
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
-        return $theme->updateCss($configuration !== 'default' ? [$configuration => ucfirst($configuration)] : null);
+        return $theme->updateCss($outline !== 'default' ? [$outline => ucfirst($outline)] : null);
     }
 }

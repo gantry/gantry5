@@ -29,9 +29,9 @@ class Particles
         $this->container = $container;
     }
 
-    public function overrides($configuration, $particle = null)
+    public function overrides($outline, $particle = null)
     {
-        if ($configuration === 'default') {
+        if ($outline === 'default') {
             return true;
         }
 
@@ -39,10 +39,10 @@ class Particles
         $locator = $this->container['locator'];
 
         if ($particle) {
-            return !empty($locator->findResources("gantry-theme://config/{$configuration}/particles/{$particle}.yaml"));
+            return !empty($locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml"));
         }
 
-        return !empty($locator->findResources("gantry-theme://config/{$configuration}/particles"));
+        return !empty($locator->findResources("gantry-theme://config/{$outline}/particles"));
     }
 
     public function all()

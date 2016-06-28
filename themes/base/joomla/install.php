@@ -58,14 +58,14 @@ class G5_BaseInstallerScript
                 switch ($default->template) {
                     case 'beez3':
                     case 'protostar':
-                        $configuration = '_joomla_-_' . $default->template;
+                        $outline = '_joomla_-_' . $default->template;
                         break;
                     default:
-                        $configuration = 'default';
+                        $outline = 'default';
                 }
 
                 // Update default style.
-                $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => $configuration), 1);
+                $installer->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => $outline), 1);
 
                 // Install menus and styles from demo data.
                 $installer->installMenus();

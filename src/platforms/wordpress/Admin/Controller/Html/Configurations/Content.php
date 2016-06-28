@@ -55,9 +55,9 @@ class Content extends HtmlController
 
     public function index()
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
 
-        if($configuration == 'default') {
+        if($outline == 'default') {
             $this->params['overrideable'] = false;
         } else {
             $this->params['defaults'] = $this->container['defaults'];
@@ -65,20 +65,20 @@ class Content extends HtmlController
         }
 
         $this->params['content'] = $this->container['content']->group();
-        $this->params['route']  = "configurations.{$configuration}.content";
-        $this->params['page_id'] = $configuration;
+        $this->params['route']  = "configurations.{$outline}.content";
+        $this->params['page_id'] = $outline;
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
     public function display($group, $id = null)
     {
-        $configuration = $this->params['configuration'];
+        $outline = $this->params['configuration'];
         $particle = $this->container['content']->get("{$group}/{$id}");
         $blueprints = new BlueprintsForm($particle);
         $prefix = "content.{$group}.{$id}";
 
-        if($configuration == 'default') {
+        if($outline == 'default') {
             $this->params['overrideable'] = false;
         } else {
             $this->params['defaults'] = $this->container['defaults']->get($prefix);
@@ -211,8 +211,8 @@ class Content extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $configuration = $this->params['configuration'];
-        $save_dir = $locator->findResource("gantry-config://{$configuration}/content", true, true);
+        $outline = $this->params['configuration'];
+        $save_dir = $locator->findResource("gantry-config://{$outline}/content", true, true);
         $filename = "{$save_dir}/{$group}/{$id}.yaml";
 
         $file = YamlFile::instance($filename);
