@@ -53,7 +53,7 @@ class Category extends Object
     {
         require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
-        return \JRoute::_(\ContentHelperRoute::getCategoryRoute($this->id . '-' . $this->alias), false);
+        return \JRoute::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
     }
 
     public function render($file)
