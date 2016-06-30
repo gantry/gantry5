@@ -63,6 +63,7 @@
         - Fixed post type priority not being used in assignments (#1340)
         - Fixed menu particle missing `Expand on Hover` option (#1360)
         - Fixed Admin incompatibility with Jetpack (#1184)
+        - Fixed updating plugins causing endless maintenance mode (#1271) 
 
 # 5.2.18
 ## 27/05/2016

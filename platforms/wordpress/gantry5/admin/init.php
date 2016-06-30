@@ -114,14 +114,10 @@ function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $
 }
 
 function gantry5_upgrader_post_install($success, $options, $result) {
-    //If a plugin is being updated, and that plugin is not Gantry5, return
-    if(isset($options['plugin']) && $options['plugin'] != "gantry5/gantry5.php") { 
-        return; 
-    }
-    
     if ($success) {
         $theme = isset($options['gantry5_abort']) && !$options['gantry5_abort'];
-        $plugin = $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5';
+        $plugin = (isset($options['plugin']) && $options['plugin'] == 'gantry5/gantry5.php')
+            || (isset($options['type']) && $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5');
 
         // Clear gantry cache after plugin / Gantry theme installs.
         if ($theme || $plugin) {
