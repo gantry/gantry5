@@ -38,6 +38,7 @@
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
         - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
         - Fixed missing configuration when duplicating system outlines
+        - Fixed issues with single select field with multiple values (#1402) 
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
@@ -50,7 +51,7 @@
         - Fixed untranslated 404 page title (#1001)
         - Fixed wrong title in newly created outline
         - Fixed content array particle: alias in link duplicating (#1400) 
-        - Fixed particle module does not cache Javascript / CSS (#977)
+        - Fixed particle module not caching Javascript / CSS (#977)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)
