@@ -50,6 +50,7 @@
         - Fixed untranslated 404 page title (#1001)
         - Fixed wrong title in newly created outline
         - Content array particle: alias in link duplicating (#1400) 
+        - Particle module does not cache Javascript / CSS (#977)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)

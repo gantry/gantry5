@@ -17,6 +17,7 @@ class Document extends BaseDocument
 {
     public static $wp_styles = [];
     public static $wp_scripts = ['head' => [], 'footer' => []];
+
     protected static $script_info = [];
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',

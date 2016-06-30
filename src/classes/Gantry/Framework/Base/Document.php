@@ -24,9 +24,10 @@ class Document
     public static $timestamp_age = 604800;
     public static $urlFilterParams;
 
+    protected static $stack = [];
+    protected static $frameworks = [];
     protected static $scripts = [];
     protected static $styles = [];
-    protected static $frameworks = [];
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
         'jquery.framework' => 'registerJquery',
@@ -39,6 +40,53 @@ class Document
         'mootools.core' => 'registerMootools',
         'mootools.more' => 'registerMootoolsMore'
     ];
+
+    /**
+     * Create new local instance of document allowing asset caching.
+     */
+    public static function push()
+    {
+        array_push(static::$stack, ['frameworks' => static::$frameworks, 'scripts' => static::$scripts, 'styles' => static::$styles]);
+
+    }
+
+    /**
+     * Return local instance of document allowing it to be cached.
+     *
+     * @return array
+     */
+    public static function pop()
+    {
+        $current = ['frameworks' => static::$frameworks, 'scripts' => static::$scripts, 'styles' => static::$styles];
+
+        $old = array_pop(static::$stack);
+
+        static::$frameworks = isset($old['frameworks']) ? $old['frameworks'] : [];
+        static::$scripts = isset($old['scripts']) ? $old['scripts'] : [];
+        static::$styles = isset($old['styles']) ? $old['styles'] : [];
+
+        return $current;
+    }
+
+    /**
+     * Append local assets to the outer document.
+     *
+     * @param array $document
+     */
+    public static function appendHeaderTags(array $document)
+    {
+        if (isset($document['frameworks'])) {
+            static::$frameworks = static::appendArray(static::$frameworks, $document['frameworks']);
+        }
+
+        if (isset($document['scripts'])) {
+            static::$scripts = static::appendArray(static::$scripts, $document['scripts']);
+        }
+
+        if (isset($document['styles'])) {
+            static::$styles = static::appendArray(static::$styles, $document['styles']);
+        }
+    }
 
     public static function addHeaderTag(array $element, $location = 'head', $priority = 0)
     {
@@ -116,17 +164,17 @@ class Document
 
     public static function getStyles($location = 'head')
     {
-        if (!isset(self::$styles[$location])) {
+        if (!isset(static::$styles[$location])) {
             return [];
         }
 
-        $styles = self::$styles[$location];
+        $styles = static::$styles[$location];
 
         krsort($styles, SORT_NUMERIC);
 
         $html = [];
 
-        foreach (self::$styles[$location] as $styles) {
+        foreach (static::$styles[$location] as $styles) {
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
@@ -152,17 +200,17 @@ class Document
 
     public static function getScripts($location = 'head')
     {
-        if (!isset(self::$scripts[$location])) {
+        if (!isset(static::$scripts[$location])) {
             return [];
         }
 
-        $scripts = self::$scripts[$location];
+        $scripts = static::$scripts[$location];
 
         krsort($scripts, SORT_NUMERIC);
 
         $html = [];
 
-        foreach (self::$scripts[$location] as $scripts) {
+        foreach (static::$scripts[$location] as $scripts) {
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
@@ -380,6 +428,32 @@ class Document
         $url = static::url(trim($matches[2], '"\''), $domain, $timestamp_age);
 
         return "{$matches[1]}url({$url})";
+    }
+
+    /**
+     * @param array $target
+     * @param array $source
+     * @return array
+     */
+    protected static function appendArray(array $target, array $source)
+    {
+        foreach ($source as $location => $priorities) {
+            if (is_array($priorities)) {
+                foreach ($priorities as $priority => $hashes) {
+                    if (is_array($hashes)) {
+                        foreach ($hashes as $hash => $element) {
+                            $target[$location][$priority][$hash] = $element;
+                        }
+                    } else {
+                            $target[$location][$priority] = $hashes;
+                    }
+                }
+            } else {
+                $target[$location] = $priorities;
+            }
+        }
+
+        return $target;
     }
 
     /**

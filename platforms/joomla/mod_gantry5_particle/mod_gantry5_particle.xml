@@ -24,6 +24,7 @@
                         label="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_LABEL"
                         description="MOD_GANTRY5_PARTICLE_FIELD_PARTICLE_DESC" />
             </fieldset>
+
             <fieldset name="advanced">
                 <field
                     name="moduleclass_sfx"
@@ -32,12 +33,12 @@
                     description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 
                 <field
-                        name="cache"
+                        name="owncache"
                         type="list"
-                        default="0"
                         label="COM_MODULES_FIELD_CACHING_LABEL"
                         description="COM_MODULES_FIELD_CACHING_DESC"
-                        >
+                        default="0"
+                >
                     <option value="1">JGLOBAL_USE_GLOBAL</option>
                     <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
                 </field>
@@ -48,12 +49,6 @@
                         default="900"
                         label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
                         description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
-
-                <field
-                        name="cachemode"
-                        type="hidden"
-                        default="static">
-                </field>
             </fieldset>
         </fields>
     </config>
