@@ -69,9 +69,13 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
         foreach ($this->items as $name => $title) {
-            $index = Layout::index($name);
+            try {
+                $index = Layout::index($name);
 
-            $list += $index['positions'];
+                $list += $index['positions'];
+            } catch (\Exception $e) {
+                // Ignore exceptions, it doesn't matter if missing layouts have no positions.
+            }
         }
 
         return $list;

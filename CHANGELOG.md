@@ -38,7 +38,7 @@
         - Fixed minor issue that would cause the flickering of the Layout while scrolling, when the Layout was shorter than the Sidebar (#1378)
         - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
         - Fixed missing configuration when duplicating system outlines
-        - Fixed issues with single select field with multiple values (#1402) 
+        - Fixed issues with single select field with multiple values (#1402)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
@@ -64,6 +64,7 @@
         - Fixed menu particle missing `Expand on Hover` option (#1360)
         - Fixed Admin incompatibility with Jetpack (#1184)
         - Fixed updating plugins causing endless maintenance mode when `display_errors = On` (#1271) 
+        - Fixed missing layout denying access to admin (#1319)
 
 # 5.2.18
 ## 27/05/2016
