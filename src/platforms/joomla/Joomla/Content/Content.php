@@ -76,7 +76,7 @@ class Content extends Object
 
         $category = $this->category();
 
-        return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . '-' . $this->alias, $category->id . '-' . $category->alias), false);
+        return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
 
     public function render($file)
