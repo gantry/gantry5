@@ -12,6 +12,7 @@
 
     <files>
         <filename module="mod_gantry5_particle">mod_gantry5_particle.php</filename>
+        <filename>helper.php</filename>
         <folder>language</folder>
     </files>
     <config>
