@@ -386,6 +386,7 @@
 	    	padding: 0;
 			[class*="size-"] {
 				@include flex(0 1 100%);
+                max-width: 100%;
 			}
 	    }
 	}

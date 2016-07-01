@@ -31,6 +31,7 @@ body [class*="size-"] {
 	@include breakpoint(mobile-only) {
         @include flex-grow(0);
         @include flex-basis(100%);
+        max-width: 100%;
 	}
 }
 

@@ -1330,6 +1330,7 @@ th {
   -ms-flex: 0 33.33333%;
   flex: 0 33.33333%;
   width: 33.33333%;
+  max-width: 33.33333%;
 }
 
 .size-16-7 {
@@ -1341,6 +1342,7 @@ th {
   -ms-flex: 0 16.66667%;
   flex: 0 16.66667%;
   width: 16.66667%;
+  max-width: 16.66667%;
 }
 
 .size-14-3 {
@@ -1352,6 +1354,7 @@ th {
   -ms-flex: 0 14.28571%;
   flex: 0 14.28571%;
   width: 14.28571%;
+  max-width: 14.28571%;
 }
 
 .size-12-5 {
@@ -1363,6 +1366,7 @@ th {
   -ms-flex: 0 12.5%;
   flex: 0 12.5%;
   width: 12.5%;
+  max-width: 12.5%;
 }
 
 .size-11-1 {
@@ -1374,6 +1378,7 @@ th {
   -ms-flex: 0 11.11111%;
   flex: 0 11.11111%;
   width: 11.11111%;
+  max-width: 11.11111%;
 }
 
 .size-9-1 {
@@ -1385,6 +1390,7 @@ th {
   -ms-flex: 0 9.09091%;
   flex: 0 9.09091%;
   width: 9.09091%;
+  max-width: 9.09091%;
 }
 
 .size-8-3 {
@@ -1396,10 +1402,12 @@ th {
   -ms-flex: 0 8.33333%;
   flex: 0 8.33333%;
   width: 8.33333%;
+  max-width: 8.33333%;
 }
 
 .size-100 {
   width: 100%;
+  max-width: 100%;
   -webkit-flex-grow: 0;
   -moz-flex-grow: 0;
   flex-grow: 0;
@@ -1733,6 +1741,7 @@ th {
   -moz-flex: 0 1 100%;
   -ms-flex: 0 1 100%;
   flex: 0 1 100%;
+  max-width: 100%;
 }
 #g-mobilemenu-container .g-sublevel {
   cursor: default;

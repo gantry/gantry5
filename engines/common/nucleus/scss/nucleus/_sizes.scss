@@ -6,12 +6,14 @@
     .size-#{$i} {
         @include flex(0 percentage($n));
         width: percentage($n);
+        max-width: percentage($n);
     }
 }
 
 // Support for non flex browsers
 .size-100 {
     width: 100%;
+    max-width: 100%;
     @include flex-grow(0);
     @include flex-basis(100%);
 }
