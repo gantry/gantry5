@@ -1,6 +1,7 @@
 "use strict";
 var ready          = require('elements/domready'),
     $              = require('elements/attributes'),
+    Submit         = require('../fields/submit'),
     modal          = require('../ui').modal,
     toastr         = require('../ui').toastr,
     sidebar        = require('./particles-sidebar'),
@@ -473,8 +474,7 @@ ready(function() {
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
-                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [], invalid = [];
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -517,41 +517,14 @@ ready(function() {
                     var target = $(e.target);
                     target.disabled(true);
 
-                    dataString = [];
-                    invalid = [];
-
                     target.hideIndicator();
                     target.showIndicator();
 
                     // Refresh the form to collect fresh and dynamic fields
                     var formElements = content.elements.content.find('form')[0].elements;
-                    $(formElements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name'),
-                            type = input.attribute('type');
-                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
+                    var post = Submit(formElements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
-                        if (input) {
-                            var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                                parent   = input.parent('.settings-param'),
-                                override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                            override = override || $(input.data('override-target'));
-
-                            if (override && !override.checked()) { return; }
-                            if (!validateField(input)) { invalid.push(input); }
-
-                            dataString.push(name + '=' + encodeURIComponent(value));
-                        }
-                    });
-
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        dataString.push('title=' + encodeURIComponent(trim(title.data('title-editable'))));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
@@ -559,7 +532,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

@@ -39,6 +39,7 @@
         - Section titles in the Layout Manager that don't fit are now collapsing with ellipsis and a title (#1392)
         - Fixed missing configuration when duplicating system outlines
         - Fixed issues with single select field with multiple values (#1402)
+        - Fixed `select.select` with `multiple` option enabled, storing only the first selected option rather than all (#1402)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`

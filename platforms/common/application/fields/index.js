@@ -9,7 +9,8 @@ var ready         = require('elements/domready'),
     forEach       = require('mout/collection/forEach'),
     invoke        = require('mout/array/invoke'),
     History       = require('../utils/history'),
-    flags         = require('../utils/flags-state');
+    flags         = require('../utils/flags-state'),
+    submit        = require('./submit');
 
 require('./multicheckbox');
 
@@ -223,5 +224,6 @@ ready(function() {
 
 module.exports = {
     compare: compare,
-    collect: collectFieldsValues
+    collect: collectFieldsValues,
+    submit: submit
 };

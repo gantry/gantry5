@@ -1,6 +1,7 @@
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
+    Submit        = require('../fields/submit'),
     $             = require('elements'),
     zen           = require('elements/zen'),
     modal         = require('../ui').modal,
@@ -12,8 +13,7 @@ var ready         = require('elements/domready'),
     contains      = require('mout/array/contains'),
     indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    getAjaxSuffix = require('../utils/get-ajax-suffix');
 
 var menumanager;
 
@@ -218,7 +218,6 @@ ready(function() {
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [], invalid = [],
                     path;
 
                 var search      = content.elements.content.find('.search input'),
@@ -278,31 +277,12 @@ ready(function() {
 
                     var target = $(e.target);
                     target.disabled(true);
-
-                    dataString = [];
-                    invalid = [];
-
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name'),
-                            type = input.attribute('type');
-                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
+                    var post = Submit(fakeDOM[0].elements, content.elements.content, {isRoot: true});
 
-                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
-
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(input.value()));
-                    });
-
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + encodeURIComponent(title.data('title-editable')));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
@@ -310,7 +290,7 @@ ready(function() {
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

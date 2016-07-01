@@ -3,6 +3,7 @@
 var ready         = require('elements/domready'),
     $             = require('elements'),
     zen           = require('elements/zen'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     toastr        = require('../../ui').toastr,
     request       = require('agent'),
@@ -13,8 +14,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
 
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    validateField = require('../../utils/field-validation');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix');
 
 require('elements/insertion');
 
@@ -208,8 +208,6 @@ ready(function() {
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [],
-                    invalid = [],
                     dataValue = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
@@ -232,47 +230,19 @@ ready(function() {
 
                     var target = $(e.target);
 
-                    dataString = [];
-                    invalid = [];
-
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name'),
-                            type = input.attribute('type');
-                        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var titles = content.elements.content.search('[data-title-editable]'), key;
-                    if (titles) {
-                        titles.forEach(function(title) {
-                            title = $(title);
-                            key = title.data('collection-key') || 'title';
-                            dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
-                        });
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
                         toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,

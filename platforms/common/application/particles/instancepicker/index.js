@@ -3,6 +3,7 @@
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     request       = require('agent'),
     trim          = require('mout/string/trim'),
@@ -112,8 +113,7 @@ ready(function() {
                 else {
                     var form = content.find('form'),
                         fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
-                        submit = content.find('input[type="submit"], button[type="submit"]'),
-                        dataString = [];
+                        submit = content.find('input[type="submit"], button[type="submit"]');
 
                     if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -122,41 +122,12 @@ ready(function() {
 
                     submit.on('click', function(e) {
                         e.preventDefault();
-                        dataString = [];
 
                         submit.showIndicator();
 
-                        $(fakeDOM[0].elements).forEach(function(input) {
-                            input = $(input);
-                            var name = input.attribute('name'),
-                                type = input.attribute('type');
-                            if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
+                        var post = Submit(fakeDOM[0].elements, content);
 
-                            input = content.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
-
-                            // workaround for checkboxes trick that has both a hidden and checkbox field
-                            if (type === 'checkbox' && content.find('[type="hidden"][name="' + name + '"]')) {
-                                input = content.find('[name="' + name + '"][type="checkbox"]');
-                            }
-
-                            var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                                parent = input.parent('.settings-param'),
-                                override = parent ? parent.find('> input[type="checkbox"]') : null;
-                            override = override || $(input.data('override-target'));
-
-                            if (override && !override.checked()) { return; }
-
-                            if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                                dataString.push(name + '=' + encodeURIComponent(value));
-                            }
-                        });
-
-                        var title = content.find('[data-title-editable]');
-                        if (title) {
-                            dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-                        }
-
-                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,
