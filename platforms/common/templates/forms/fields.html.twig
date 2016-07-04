@@ -1,4 +1,4 @@
-{% set scope = scope is not null ? scope : prefix %}
+{% set scope = scope ?? prefix %}
 
 {% if blueprints.type %}
     {% set field = blueprints %}

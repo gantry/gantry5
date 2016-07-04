@@ -60,13 +60,11 @@
                                                 {% for childName, child in field.fields %}
                                                     {% if childName starts with '.' %}
                                                         {% set childKey = childName|trim('.') %}
-                                                        {% set childValue = current_value[childName[1:]] %}
-                                                        {% set childDefault = default_value[childName[1:]] %}
+                                                        {% set childValue = val[childName[1:]] %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
                                                         {% set childKey = childName %}
                                                         {% set childValue = nested(data, scope ~ childName) %}
-                                                        {% set childDefault = nested(defaults, scope ~ childName) %}
                                                         {% set childName = childName|replace({'*': key}) %}
                                                     {% endif %}
                                                     {% if childName not in skip and not child.skip and field.value != childKey %}
@@ -75,7 +73,7 @@
                                                              with {name: childName, field: child, value: key} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, current_value: childValue, default_value: childDefault, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
+                                                             with {name: childName, field: child, current_value: childValue, default_value: null, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
