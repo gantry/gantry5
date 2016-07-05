@@ -47,6 +47,7 @@
         - Enable `Layout` tab for `Base Outline`
     2. [](#improved)
         - Hydrogen for Joomla loads now optional `alert` assets from Nucleus to fix potential styling issues
+        - Gantry 5 Particle now displays, as a tooltip, the Particle type in the lists of modules when hovering over the badge (#1373)
         - Gantry 5 Particle badge for unselected Particles is now orange, to distinct from the selected ones (green)
     3. [](#bugfix)
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
