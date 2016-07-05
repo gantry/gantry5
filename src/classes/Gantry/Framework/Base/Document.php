@@ -88,78 +88,159 @@ class Document
         }
     }
 
+    /**
+     * @param string|array $element
+     * @param string $location
+     * @param int $priority
+     * @return bool
+     */
+    public static function addStyle($element, $location = 'head', $priority = 0)
+    {
+        if (!is_array($element)) {
+            $element = ['href' => $element];
+        }
+        if (empty($element['href'])) {
+            return false;
+        }
+
+        $id = !empty($element['id']) ? ['id' => $element['id']] : [];
+        $href = $element['href'];
+        $type = !empty($element['type']) ? $element['type'] : 'text/css';
+        $media = !empty($element['media']) ? $element['media'] : null;
+        unset($element['tag'], $element['id'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
+
+        static::$styles[$location][$priority][md5($href).sha1($href)] = [
+            ':type' => 'file',
+            'href' => $href,
+            'type' => $type,
+            'media' => $media,
+            'element' => $element
+        ] + $id;
+
+        return true;
+    }
+
+    /**
+     * @param string|array $element
+     * @param string $location
+     * @param int $priority
+     * @return bool
+     */
+    public static function addInlineStyle($element, $location = 'head', $priority = 0)
+    {
+        if (!is_array($element)) {
+            $element = ['content' => $element];
+        }
+        if (empty($element['content'])) {
+            return false;
+        }
+
+        $content = $element['content'];
+        $type = !empty($element['type']) ? $element['type'] : 'text/css';
+
+        static::$styles[$location][$priority][md5($content).sha1($content)] = [
+            ':type' => 'inline',
+            'content' => $content,
+            'type' => $type
+        ];
+
+        return true;
+    }
+
+    /**
+     * @param string|array $element
+     * @param string $location
+     * @param int $priority
+     * @return bool
+     */
+    public static function addScript(array $element, $location = 'head', $priority = 0)
+    {
+        if (!is_array($element)) {
+            $element = ['src' => $element];
+        }
+        if (empty($element['src'])) {
+            return false;
+        }
+
+        $src = $element['src'];
+        $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
+        $defer = isset($element['defer']) ? true : false;
+        $async = isset($element['async']) ? true : false;
+        $handle = !empty($element['handle']) ? $element['handle'] : '';
+
+        static::$scripts[$location][$priority][md5($src) . sha1($src)] = [
+            ':type' => 'file',
+            'src' => $src,
+            'type' => $type,
+            'defer' => $defer,
+            'async' => $async,
+            'handle' => $handle
+        ];
+
+        return true;
+    }
+
+    /**
+     * @param string|array $element
+     * @param string $location
+     * @param int $priority
+     * @return bool
+     */
+    public static function addInlineScript($element, $location = 'head', $priority = 0)
+    {
+        if (!is_array($element)) {
+            $element = ['content' => $element];
+        }
+        if (empty($element['content'])) {
+            return false;
+        }
+
+        $content = $element['content'];
+        $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
+
+        static::$scripts[$location][$priority][md5($content).sha1($content)] = [
+            ':type' => 'inline',
+            'content' => $content,
+            'type' => $type
+        ];
+
+        return true;
+    }
+
+    /**
+     * @param array $element
+     * @param string $location
+     * @param int $priority
+     * @return bool
+     */
     public static function addHeaderTag(array $element, $location = 'head', $priority = 0)
     {
+        $success = false;
+
         switch ($element['tag']) {
             case 'link':
-                if (!empty($element['href']) && !empty($element['rel']) && $element['rel'] == 'stylesheet') {
-                    $id = !empty($element['id']) ? ['id' => $element['id']] : [];
-                    $href = $element['href'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/css';
-                    $media = !empty($element['media']) ? $element['media'] : null;
-                    unset($element['tag'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
-
-                    static::$styles[$location][$priority][md5($href).sha1($href)] = [
-                        ':type' => 'file',
-                        'href' => $href,
-                        'type' => $type,
-                        'media' => $media,
-                        'element' => $element
-                    ] + $id;
-
-                    return true;
+                if (!empty($element['rel']) && $element['rel'] === 'stylesheet') {
+                    $success = static::addStyle($element, $location, $priority);
                 }
+
                 break;
 
             case 'style':
-                if (!empty($element['content'])) {
-                    $content = $element['content'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/css';
+                $success = static::addInlineStyle($element, $location, $priority);
 
-                    static::$styles[$location][$priority][md5($content).sha1($content)] = [
-                        ':type' => 'inline',
-                        'content' => $content,
-                        'type' => $type
-                    ];
-
-                    return true;
-                }
                 break;
 
             case 'script':
                 if (!empty($element['src'])) {
-                    $src = $element['src'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-                    $defer = isset($element['defer']) ? true : false;
-                    $async = isset($element['async']) ? true : false;
-                    $handle = !empty($element['handle']) ? $element['handle'] : '';
-
-                    static::$scripts[$location][$priority][md5($src).sha1($src)]= [
-                        ':type' => 'file',
-                        'src' => $src,
-                        'type' => $type,
-                        'defer' => $defer,
-                        'async' => $async,
-                        'handle' => $handle
-                    ];
-
-                    return true;
-
+                    $success = static::addScript($element, $location, $priority);
                 } elseif (!empty($element['content'])) {
-                    $content = $element['content'];
-                    $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
-
-                    static::$scripts[$location][$priority][md5($content).sha1($content)] = [
-                        ':type' => 'inline',
-                        'content' => $content,
-                        'type' => $type
-                    ];
-
-                    return true;
+                    $success = static::addInlineScript($element, $location, $priority);
                 }
+
                 break;
         }
-        return false;
+
+        return $success;
     }
 
     public static function getStyles($location = 'head')
@@ -180,16 +261,25 @@ class Document
                     case 'file':
                         $attribs = '';
                         if ($style['media']) {
-                            $attribs .= ' media="' . $style['media'] . '"';
+                            $attribs .= ' media="' . static::escape($style['media']) . '"';
                         }
-                        $html[] = "<link rel=\"stylesheet\" href=\"{$style['href']}\" type=\"{$style['type']}\"{$attribs} />";
+                        $html[] = sprintf(
+                            '<link rel="stylesheet" href="%s" type="%s"%s />',
+                            static::escape($style['href']),
+                            static::escape($style['type']),
+                            $attribs
+                        );
                         break;
                     case 'inline':
                         $attribs = '';
                         if ($style['type'] !== 'text/css') {
-                            $attribs .= ' type="' . $style['type'] . '"';
+                            $attribs .= ' type="' . static::escape($style['type']) . '"';
                         }
-                        $html[] = "<style{$attribs}>{$style['content']}</style>";
+                        $html[] = sprintf(
+                            '<style%s>%s</style>', 
+                            $attribs, 
+                            $style['content']
+                        );
                         break;
                 }
             }
@@ -221,16 +311,80 @@ class Document
                         if ($script['defer']) {
                             $attribs .= ' defer="defer"';
                         }
-                        $html[] = "<script type=\"{$script['type']}\"{$attribs} src=\"{$script['src']}\"></script>";
+                        $html[] = sprintf(
+                            '<script type="%s"%s src="%s"></script>',
+                            static::escape($script['type']),
+                            $attribs,
+                            static::escape($script['src'])
+                        );
                         break;
                     case 'inline':
-                        $html[] = "<script type=\"{$script['type']}\">{$script['content']}</script>";
+                        $html[] = sprintf(
+                            '<script type="%s">%s</script>',
+                            static::escape($script['type']),
+                            $script['content']
+                        );
                         break;
                 }
             }
         }
 
         return $html;
+    }
+
+    /**
+     * Escape string (emulates twig filter).
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function escape($string, $strategy = 'html')
+    {
+        if (!is_string($string)) {
+            if (is_object($string) && method_exists($string, '__toString')) {
+                $string = (string) $string;
+            } elseif (in_array($strategy, array('html', 'js', 'css', 'html_attr', 'url'))) {
+                return $string;
+            }
+        }
+
+        switch ($strategy) {
+            case 'html':
+                return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+            case 'js':
+                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                }
+
+                $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', '_twig_escape_js_callback', $string);
+
+                return $string;
+
+            case 'css':
+                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                }
+
+                $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', '_twig_escape_css_callback', $string);
+
+                return $string;
+
+            case 'html_attr':
+                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                }
+
+                $string = preg_replace_callback('#[^a-zA-Z0-9,\.\-_]#Su', '_twig_escape_html_attr_callback', $string);
+
+                return $string;
+
+            case 'url':
+                return rawurlencode($string);
+
+            default:
+                throw new \RuntimeException(sprintf('Invalid escaping strategy "%s" (valid ones: html, js, css, html_attr, url).', $strategy));
+        }
     }
 
     public static function load($framework)

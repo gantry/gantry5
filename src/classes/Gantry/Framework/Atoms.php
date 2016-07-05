@@ -70,7 +70,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     public function __construct(array $atoms = [], $name = null)
     {
         $this->name = $name;
-        $this->items = $atoms;
+        $this->items = array_filter($atoms);
 
         foreach ($this->items as &$item) {
             if (!empty($item['id'])) {

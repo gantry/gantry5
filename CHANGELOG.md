@@ -1,5 +1,5 @@
 # 5.3.0
-## XX/06/2016
+## XX/07/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -41,6 +41,7 @@
         - Fixed missing configuration when duplicating system outlines
         - Fixed issues with single select field with multiple values (#1402)
         - Fixed `select.select` with `multiple` option enabled, storing only the first selected option rather than all (#1402)
+        - Fixed DOM parser issue with HTML tags when adding inline JS/CSS (#1359)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
