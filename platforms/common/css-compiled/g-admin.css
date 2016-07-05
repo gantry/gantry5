@@ -1238,6 +1238,7 @@
   -ms-flex: 0 33.33333%;
   flex: 0 33.33333%;
   width: 33.33333%;
+  max-width: 33.33333%;
 }
 #g5-container .size-16-7 {
   -webkit-box-flex: 0;
@@ -1248,6 +1249,7 @@
   -ms-flex: 0 16.66667%;
   flex: 0 16.66667%;
   width: 16.66667%;
+  max-width: 16.66667%;
 }
 #g5-container .size-14-3 {
   -webkit-box-flex: 0;
@@ -1258,6 +1260,7 @@
   -ms-flex: 0 14.28571%;
   flex: 0 14.28571%;
   width: 14.28571%;
+  max-width: 14.28571%;
 }
 #g5-container .size-12-5 {
   -webkit-box-flex: 0;
@@ -1268,6 +1271,7 @@
   -ms-flex: 0 12.5%;
   flex: 0 12.5%;
   width: 12.5%;
+  max-width: 12.5%;
 }
 #g5-container .size-11-1 {
   -webkit-box-flex: 0;
@@ -1278,6 +1282,7 @@
   -ms-flex: 0 11.11111%;
   flex: 0 11.11111%;
   width: 11.11111%;
+  max-width: 11.11111%;
 }
 #g5-container .size-9-1 {
   -webkit-box-flex: 0;
@@ -1288,6 +1293,7 @@
   -ms-flex: 0 9.09091%;
   flex: 0 9.09091%;
   width: 9.09091%;
+  max-width: 9.09091%;
 }
 #g5-container .size-8-3 {
   -webkit-box-flex: 0;
@@ -1298,9 +1304,11 @@
   -ms-flex: 0 8.33333%;
   flex: 0 8.33333%;
   width: 8.33333%;
+  max-width: 8.33333%;
 }
 #g5-container .size-100 {
   width: 100%;
+  max-width: 100%;
   -webkit-flex-grow: 0;
   -moz-flex-grow: 0;
   flex-grow: 0;
@@ -1625,6 +1633,7 @@
   -moz-flex: 0 1 100%;
   -ms-flex: 0 1 100%;
   flex: 0 1 100%;
+  max-width: 100%;
 }
 #g5-container #g-mobilemenu-container .g-sublevel {
   cursor: default;
@@ -4904,6 +4913,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   background-color: #fff;
   padding: 0.5rem;
   border-radius: 0 0 3px 3px;
+  opacity: 0.7;
 }
 #g5-container [data-lm-blocktype="container"] .section .g-inherit .g-inherit-content {
   top: auto;
