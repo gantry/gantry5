@@ -80,7 +80,7 @@ class ThemeDetails implements \ArrayAccess
             while ($details = $details->parent()) {
                 $this->addStream($details->name, $details->getPaths());
                 $loaded[] = $details->name;
-		    }
+            }
         }
 
         /** @var Streams $streams */

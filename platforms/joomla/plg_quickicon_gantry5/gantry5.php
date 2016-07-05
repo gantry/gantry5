@@ -46,7 +46,7 @@ class plgQuickiconGantry5 extends JPlugin
                 // Initialise Gantry.
                 Gantry5\Loader::setup();
                 $gantry = Gantry\Framework\Gantry::instance();
-                $gantry['streams'];
+                $gantry['streams']->register();
 
                 /** @var Gantry\Framework\Platform $platform */
                 $platform = $gantry['platform'];
