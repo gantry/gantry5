@@ -417,7 +417,7 @@ class plgSystemGantry5 extends JPlugin
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
                 $colors = $content ? 'background:#439a86;' : 'background:#f17f48;';
                 $content = $content ?: 'No Particle Selected';
-                $content .= $type ? ' (' . $type . ')' : '';
+                // $content .= $type ? ' (' . $type . ')' : ''; // to display the explicit particle type
 
                 $html .= ' <span class="label" style="' . $colors . ';color:#fff;">' . $content . '</span>';
 
