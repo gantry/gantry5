@@ -54,6 +54,7 @@
         - Fixed wrong title in newly created outline
         - Fixed content array particle: alias in link duplicating (#1400) 
         - Fixed particle module not caching Javascript / CSS (#977)
+        - Fixed exception thrown in administration if parent theme was not enabled in Joomla
 3. [WordPress](#wordpress)
     1. [](#new)
         - Extend Assignments with multiple `BuddyPress` conditionals. This requires BuddyPress 2.6 and newer (thanks @horch004 - #1298)

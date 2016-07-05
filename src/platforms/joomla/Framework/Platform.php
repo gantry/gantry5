@@ -79,7 +79,7 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        return \JUri::root(false) . 'index.php?templateStyle=' . $theme;
+        return (string)(int) $theme === (string) $theme ? \JUri::root(false) . 'index.php?templateStyle=' . $theme : null;
     }
 
     /**

@@ -20,21 +20,40 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ThemeList
 {
+    protected static $items;
+
     /**
      * @return array
      */
     public static function getThemes()
+    {
+        if (!is_array(static::$items)) {
+            static::loadThemes();
+        }
+
+        return static::$items;
+    }
+
+    public static function getTheme($name)
+    {
+        if (!is_array(static::$items)) {
+            static::loadThemes();
+        }
+
+        return isset(static::$items[$name]) ? static::$items[$name] : null;
+    }
+
+    protected static function loadThemes()
     {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $files = Folder::all('gantry-themes://', ['recursive' => false, 'files' => false]);
-
         /** @var array|ThemeDetails[] $list */
         $list = [];
 
+        $files = Folder::all('gantry-themes://', ['recursive' => false, 'files' => false]);
         natsort($files);
 
         foreach ($files as $theme) {
@@ -58,12 +77,6 @@ class ThemeList
             $details['thumbnail'] = $details->getUrl("details.images.thumbnail");
         }
 
-        return $list;
-    }
-
-    public static function getTheme($name)
-    {
-        $themes = static::getThemes();
-        return isset($themes[$name]) ? $themes[$name] : null;
+        static::$items = $list;
     }
 }

@@ -10,37 +10,54 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
+use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+
 
 class ThemeList
 {
     /**
-    * @return array
+     * @var ThemeDetails[]
+     */
+    protected static $items;
+
+    /**
+     * @var array
+     */
+    protected static $styles;
+
+    /**
+     * @return array
      */
     public static function getThemes()
     {
-        static $styles;
-
-        if ($styles === null) {
-            $styles = static::loadStyles();
+        if (!is_array(static::$items)) {
+            static::loadThemes();
         }
 
         $list = [];
-        foreach ($styles as $style) {
-            $list[$style->name] = $style;
+        foreach (static::$items as $item) {
+            $details = static::getTheme($item['name']);
+            if ($details) {
+                $list[$item['name']] = $details;
+            }
         }
-
-        ksort($list);
 
         return $list;
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public static function getTheme($name)
     {
-        $themes = static::getThemes();
-        return isset($themes[$name]) ? $themes[$name] : null;
+        $styles = static::getStyles($name);
+
+        return reset($styles);
     }
 
     /**
@@ -49,45 +66,26 @@ class ThemeList
      */
     public static function getStyles($template = null, $force = false)
     {
-        static $styles;
-
-        if ($force || $styles === null) {
-            $styles = static::loadStyles();
+        if ($force || !is_array(static::$styles)) {
+            static::loadStyles();
         }
 
         if ($template) {
-            $list = [];
-            foreach ($styles as $style) {
-                if ($style->name === $template) {
-                    $list[$style->id] = $style;
-                }
-            }
-
-            ksort($list);
-
-            return array_values($list);
+            return isset(static::$styles[$template]) ? static::$styles[$template] : [];
         }
 
-        return $styles;
+        $list = [];
+        foreach (static::$styles as $styles) {
+            $list += $styles;
+        }
+
+        ksort($list);
+
+        return $list;
     }
 
-    protected static function loadStyles()
+    protected static function loadThemes()
     {
-        // Load styles
-        $db    = \JFactory::getDbo();
-        $query = $db
-            ->getQuery(true)
-            ->select('s.id, e.extension_id, s.template AS name, s.title, s.params')
-            ->from('#__template_styles AS s')
-            ->where('s.client_id = 0')
-            ->where('e.enabled = 1')
-            ->where('e.state = 0')
-            ->leftJoin('#__extensions AS e ON e.element=s.template AND e.type='
-            . $db->quote('template') . ' AND e.client_id=s.client_id');
-
-        $db->setQuery($query);
-        $templates = (array) $db->loadObjectList();
-
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
@@ -96,33 +94,79 @@ class ThemeList
         /** @var array|ThemeDetails[] $list */
         $list = [];
 
-        foreach ($templates as $template)
-        {
-            if (file_exists(JPATH_SITE . '/templates/' . $template->name . '/gantry/theme.yaml'))
-            {
-                $details = new ThemeDetails($template->name);
+        $files = Folder::all('gantry-themes://', ['recursive' => false, 'files' => false]);
+        natsort($files);
+
+        foreach ($files as $theme) {
+            if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
+                $details = new ThemeDetails($theme);
                 $details->addStreams();
 
-                $params = new \JRegistry($template->params);
-
-                $details['id'] = $template->id;
-                $details['extension_id'] = $template->extension_id;
-                $details['name'] = $template->name;
+                $details['name'] = $theme;
                 $details['title'] = $details['details.name'];
-                $details['style'] = $template->title;
-                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($template->id);
-                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($template->name);
-                $details['params'] = $params->toArray();
+                $details['preview_url'] = null;
+                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
+                $details['params'] = [];
 
-                $list[$template->id] = $details;
+                $list[$details->name] = $details;
+
             }
         }
 
         // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {
-            $details['thumbnail'] = $details->getUrl('details.images.thumbnail');
+            $details['thumbnail'] = $details->getUrl("details.images.thumbnail");
         }
 
-        return $list;
+        static::$items = $list;
+    }
+
+    protected static function loadStyles()
+    {
+        $gantry = Gantry::instance();
+        $db = \JFactory::getDbo();
+
+        $query = $db
+            ->getQuery(true)
+            ->select('s.id, e.extension_id, s.template AS name, s.title, s.params')
+            ->from('#__template_styles AS s')
+            ->where('s.client_id = 0')
+            ->where('e.enabled = 1')
+            ->where('e.state = 0')
+            ->leftJoin('#__extensions AS e ON e.element=s.template AND e.type='
+                . $db->quote('template') . ' AND e.client_id=s.client_id')
+            ->order('s.id');
+
+        $db->setQuery($query);
+
+        $styles = (array) $db->loadObjectList();
+
+        if (!is_array(static::$items)) {
+            static::loadThemes();
+        }
+
+        /** @var array|ThemeDetails[] $list */
+        $list = [];
+
+        foreach ($styles as $style)
+        {
+            $details = isset(static::$items[$style->name]) ? static::$items[$style->name] : null;
+            if (!$details) {
+                continue;
+            }
+
+            $params = new Registry($style->params);
+
+            $details = clone $details;
+            $details['id'] = $style->id;
+            $details['extension_id'] = $style->extension_id;
+            $details['style'] = $style->title;
+            $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($style->id);
+            $details['params'] = $params->toArray();
+
+            $list[$style->name][$style->id] = $details;
+        }
+
+        static::$styles = $list;
     }
 }
