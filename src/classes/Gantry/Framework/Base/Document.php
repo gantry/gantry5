@@ -89,12 +89,27 @@ class Document
     }
 
     /**
-     * @param string|array $element
-     * @param string $location
-     * @param int $priority
+     * @param string $framework
      * @return bool
      */
-    public static function addStyle($element, $location = 'head', $priority = 0)
+    public static function addFramework($framework)
+    {
+        if (!isset(static::$availableFrameworks[$framework])) {
+            return false;
+        }
+
+        static::$frameworks[] = $framework;
+
+        return true;
+    }
+
+    /**
+     * @param string|array $element
+     * @param int $priority
+     * @param string $location
+     * @return bool
+     */
+    public static function addStyle($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
             $element = ['href' => $element];
@@ -122,11 +137,11 @@ class Document
 
     /**
      * @param string|array $element
-     * @param string $location
      * @param int $priority
+     * @param string $location
      * @return bool
      */
-    public static function addInlineStyle($element, $location = 'head', $priority = 0)
+    public static function addInlineStyle($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
             $element = ['content' => $element];
@@ -149,11 +164,11 @@ class Document
 
     /**
      * @param string|array $element
-     * @param string $location
      * @param int $priority
+     * @param string $location
      * @return bool
      */
-    public static function addScript(array $element, $location = 'head', $priority = 0)
+    public static function addScript(array $element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
             $element = ['src' => $element];
@@ -182,11 +197,11 @@ class Document
 
     /**
      * @param string|array $element
-     * @param string $location
      * @param int $priority
+     * @param string $location
      * @return bool
      */
-    public static function addInlineScript($element, $location = 'head', $priority = 0)
+    public static function addInlineScript($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
             $element = ['content' => $element];
@@ -220,21 +235,21 @@ class Document
         switch ($element['tag']) {
             case 'link':
                 if (!empty($element['rel']) && $element['rel'] === 'stylesheet') {
-                    $success = static::addStyle($element, $location, $priority);
+                    $success = static::addStyle($element, $priority, $location);
                 }
 
                 break;
 
             case 'style':
-                $success = static::addInlineStyle($element, $location, $priority);
+                $success = static::addInlineStyle($element, $priority, $location);
 
                 break;
 
             case 'script':
                 if (!empty($element['src'])) {
-                    $success = static::addScript($element, $location, $priority);
+                    $success = static::addScript($element, $priority, $location);
                 } elseif (!empty($element['content'])) {
-                    $success = static::addInlineScript($element, $location, $priority);
+                    $success = static::addInlineScript($element, $priority, $location);
                 }
 
                 break;
@@ -387,15 +402,14 @@ class Document
         }
     }
 
+    /**
+     * @param $framework
+     * @return bool
+     * @deprecated 5.3
+     */
     public static function load($framework)
     {
-        if (!isset(static::$availableFrameworks[$framework])) {
-            return false;
-        }
-
-        static::$frameworks[] = $framework;
-
-        return true;
+        return static::addFramework($framework);
     }
 
     public static function registerAssets()
