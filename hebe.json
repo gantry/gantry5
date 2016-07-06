@@ -108,6 +108,14 @@
                     {
                         "source":"/themes/hydrogen/common",
                         "destination":"/templates/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/helium/joomla",
+                        "destination":"/templates/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/templates/g5_helium/common"
                     }
                 ]
             }
@@ -160,6 +168,22 @@
                     {
                         "source":"/themes/hydrogen/common",
                         "destination":"/wp-content/themes/g5_hydrogen_child/common"
+                    },
+                    {
+                        "source":"/themes/helium/wordpress",
+                        "destination":"/wp-content/themes/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/wp-content/themes/g5_helium/common"
+                    },
+                    {
+                        "source":"/themes/helium-child/wordpress",
+                        "destination":"/wp-content/themes/g5_helium_child"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/wp-content/themes/g5_helium_child/common"
                     }
                 ]
             }
@@ -200,6 +224,14 @@
                     {
                         "source":"/themes/hydrogen/common",
                         "destination":"/user/themes/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/helium/grav",
+                        "destination":"/user/themes/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/user/themes/g5_helium/common"
                     }
                 ]
             }
@@ -290,6 +322,22 @@
                     {
                         "source":"/themes/hydrogen-demo/common",
                         "destination":"/themes/hydrogen-demo/common"
+                    },
+                    {
+                        "source":"/themes/helium/prime",
+                        "destination":"/themes/helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/themes/helium/common"
+                    },
+                    {
+                        "source":"/themes/helium-demo/prime",
+                        "destination":"/themes/helium-demo"
+                    },
+                    {
+                        "source":"/themes/helium-demo/common",
+                        "destination":"/themes/helium-demo/common"
                     }
                 ]
             }
