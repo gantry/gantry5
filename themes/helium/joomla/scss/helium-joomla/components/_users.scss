@@ -1,0 +1,27 @@
+// Users Component
+.login,
+.logout,
+.registration,
+.profile-edit,
+.remind,
+.reset {
+    input {
+        border: 1px solid $border-color-light;
+        background: $white;
+        border-radius: 6px;
+    }
+
+    .btn {
+        @extend %g-button;
+        margin-right: 10px;
+    }
+
+    .controls {
+        #helpsite-refresh {
+            font-size: $core-font-size - 0.3;
+            border-radius: $core-border-radius;
+            padding: 0.8rem 1rem;
+            margin-left: 5px;
+        }
+    }
+}

@@ -1,0 +1,508 @@
+//-------------------------------------------//
+
+// OWL CAROUSEL ORIGINAL STYLING
+
+/*
+ *  Owl Carousel - Animate Plugin
+ */
+
+.owl-carousel .animated {
+    -webkit-animation-duration: 1000ms;
+    animation-duration: 1000ms;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.owl-carousel .owl-animated-in {
+    z-index: 0;
+}
+
+.owl-carousel .owl-animated-out {
+    z-index: 1;
+}
+
+.owl-carousel .fadeOut {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/*
+ *  Owl Carousel - Auto Height Plugin
+ */
+
+.owl-height {
+    -webkit-transition: height 500ms ease-in-out;
+    -moz-transition: height 500ms ease-in-out;
+    -ms-transition: height 500ms ease-in-out;
+    -o-transition: height 500ms ease-in-out;
+    transition: height 500ms ease-in-out;
+}
+
+/*
+ *  Core Owl Carousel CSS File
+ */
+
+.owl-carousel {
+    display: none;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* position relative and z-index fix webkit rendering fonts issue */
+    position: relative;
+    z-index: 1;
+}
+
+.owl-carousel .owl-stage {
+    position: relative;
+    -ms-touch-action: pan-Y;
+}
+
+.owl-carousel .owl-stage:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.owl-carousel .owl-stage-outer {
+    position: relative;
+    overflow: hidden;
+    /* fix for flashing background */
+    -webkit-transform: translate3d(0px, 0px, 0px);
+}
+
+.owl-carousel .owl-controls .owl-nav .owl-prev,
+.owl-carousel .owl-controls .owl-nav .owl-next,
+.owl-carousel .owl-controls .owl-dot {
+    cursor: pointer;
+    cursor: hand;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.owl-carousel.owl-loaded {
+    display: block;
+}
+
+.owl-carousel.owl-loading {
+    opacity: 0;
+    display: block;
+}
+
+.owl-carousel.owl-hidden {
+    opacity: 0;
+}
+
+.owl-carousel .owl-refresh .owl-item {
+    display: none;
+}
+
+.owl-carousel .owl-item {
+    position: relative;
+    min-height: 1px;
+    float: left;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.owl-carousel .owl-item img {
+    display: block;
+    width: 100%;
+    -webkit-transform-style: preserve-3d;
+}
+
+.owl-carousel.owl-text-select-on .owl-item {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+}
+
+.owl-carousel .owl-grab {
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -o-grab;
+    cursor: -ms-grab;
+    cursor: grab;
+}
+
+.owl-carousel.owl-rtl {
+    direction: rtl;
+}
+
+.owl-carousel.owl-rtl .owl-item {
+    float: right;
+}
+
+/* No Js */
+.no-js .owl-carousel {
+    display: block;
+}
+
+/*
+ *  Owl Carousel - Lazy Load Plugin
+ */
+
+.owl-carousel .owl-item .owl-lazy {
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease;
+    -moz-transition: opacity 400ms ease;
+    -ms-transition: opacity 400ms ease;
+    -o-transition: opacity 400ms ease;
+    transition: opacity 400ms ease;
+}
+
+.owl-carousel .owl-item img {
+    transform-style: preserve-3d;
+}
+
+/*
+ *  Owl Carousel - Video Plugin
+ */
+
+.owl-carousel .owl-video-wrapper {
+    position: relative;
+    height: 100%;
+    background: #000;
+}
+
+.owl-carousel .owl-video-play-icon {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40px;
+    margin-top: -40px;
+    background: url("owl.video.play.png") no-repeat;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: scale 100ms ease;
+    -moz-transition: scale 100ms ease;
+    -ms-transition: scale 100ms ease;
+    -o-transition: scale 100ms ease;
+    transition: scale 100ms ease;
+}
+
+.owl-carousel .owl-video-play-icon:hover {
+    -webkit-transition: scale(1.3, 1.3);
+    -moz-transition: scale(1.3, 1.3);
+    -ms-transition: scale(1.3, 1.3);
+    -o-transition: scale(1.3, 1.3);
+    transition: scale(1.3, 1.3);
+}
+
+.owl-carousel .owl-video-playing .owl-video-tn,
+.owl-carousel .owl-video-playing .owl-video-play-icon {
+    display: none;
+}
+
+.owl-carousel .owl-video-tn {
+    opacity: 0;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    -webkit-transition: opacity 400ms ease;
+    -moz-transition: opacity 400ms ease;
+    -ms-transition: opacity 400ms ease;
+    -o-transition: opacity 400ms ease;
+    transition: opacity 400ms ease;
+}
+
+.owl-carousel .owl-video-frame {
+    position: relative;
+    z-index: 1;
+}
+
+/*
+ *  Owl Carousel - Nav & Dots
+ */
+
+.owl-nav {
+    opacity: 1;
+    @include transition(opacity 0.25s);
+
+    div {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 42px;
+        height: 42px;
+        display: inline-block;
+        opacity: 1;
+        color: $white;
+        border: 1px solid $white;
+        border-radius: 50%;
+        padding: 0.9rem 0;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: $core-font-size - 0.2;
+        line-height: $core-font-size - 0.2;
+        font-weight: $font-weight-bold;
+        @include transition(all 0.25s);
+
+        &:hover {
+            background: fadeout($white, 80%);
+            border-color: transparent;
+        }
+
+        @include breakpoint(mobile-only) {
+            font-size: $core-font-size - 0.3;
+        }
+
+        &.owl-prev {
+            left: 3rem;
+            right: auto;
+
+            @include breakpoint(mobile-only) {
+                left: 2rem;
+            }
+        }
+
+        &.owl-next {
+            right: 3rem;
+            left: auto;
+
+            @include breakpoint(mobile-only) {
+                right: 2rem;
+            }
+        }
+    }
+}
+
+.owl-dots {
+    position: absolute;
+    bottom: 12%;
+    width: 100%;
+    text-align: center;
+
+    @include breakpoint(desktop-range) {
+        bottom: 5%;
+    }
+
+    @include breakpoint(tablet-range) {
+        bottom: 1rem;
+    }
+
+    @include breakpoint(mobile-only) {
+        bottom: 0.5rem;
+    }
+
+    .owl-dot {
+        display: inline-block;
+        background: $base-text-color;
+        margin: 0 ($content-margin / 2);
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        opacity: 0.75;
+        @include transition(opacity 0.2s);
+
+        &.active {
+            opacity: 1;
+            background: $white;
+        }
+    }
+}
+
+.owlcarousel-offset {
+    margin-right: -45px !important;
+    margin-bottom: -45px !important;
+    margin-left: -45px !important;
+
+    @include breakpoint(mobile-only) {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    position: relative;
+    z-index: 2;
+}
+
+//-------------------------------------------//
+
+// THEME PARTICLES STYLING
+
+.g-owlcarousel {
+    &:hover {
+        .owl-nav {
+            opacity: 1;
+        }
+    }
+}
+
+.g-owlcarousel-item-wrapper {
+    position: relative;
+}
+
+.g-owlcarousel-item-img {
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: "";
+        height: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.g-owlcarousel-item-content-container {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include transform-style(preserve-3d);
+
+    @include breakpoint(very-large-desktop-range) {
+        width: $breakpoints-very-large-desktop-container;
+    }
+
+    @include breakpoint(large-desktop-range) {
+        width: $breakpoints-large-desktop-container;
+    }
+
+    @include breakpoint(desktop-range) {
+        width: $breakpoints-desktop-container;
+    }
+
+    @include breakpoint(tablet-range) {
+        width: ($breakpoints-tablet-container - 8rem);
+    }
+
+    @include breakpoint(large-mobile-range) {
+        width: $breakpoints-large-mobile-container;
+    }
+
+    @include breakpoint(small-mobile-range) {
+        width: 100%;
+    }
+}
+
+.g-owlcarousel-item-content-wrapper {
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    height: 100%;
+
+    @include breakpoint(desktop-range) {
+        padding-top: 2.5rem;
+    }
+}
+
+.g-owlcarousel-item-content {
+    margin: ($content-margin * 2) $content-margin $content-margin;
+    padding: $content-padding;
+    text-align: center;
+
+    @include breakpoint(tablet-range) {
+        padding-top: 2.5rem;
+    }
+}
+
+.g-owlcarousel-item-title {
+    font-family: get-font-family($font-family-default);
+    font-size: 3.5rem;
+    line-height: 4rem;
+    font-weight: $font-weight-medium;
+    margin: ($content-margin * 2) ($content-margin * 2) $content-margin;
+
+    @include breakpoint(desktop-range) {
+        font-size: 3rem;
+        line-height: 3.875rem;
+    }
+
+    @include breakpoint(tablet-range) {
+        font-size: 2rem;
+        line-height: 2.875rem;
+        margin-top: ($content-margin * 5);
+    }
+
+    @include breakpoint(large-mobile-range) {
+        margin-top: 0;
+        font-size: 2rem;
+        line-height: 2.875rem;
+    }
+
+    @include breakpoint(small-mobile-range) {
+        margin-top: 0;
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+
+.g-owlcarousel-item-desc {
+    font-size: 1.5rem;
+    line-height: $core-line-height - 0.5;
+    font-weight: $font-weight-light;
+    padding-bottom: $content-padding * 1.5;
+    margin-top: 0;
+    margin-bottom: $content-margin;
+
+    @include breakpoint(desktop-range) {
+        font-size: 1rem;
+        line-height: 1.875rem;
+    }
+
+    @include breakpoint(tablet-range) {
+        font-size: 1rem;
+        line-height: 1.875rem;
+        padding-bottom: 0;
+    }
+
+    @include breakpoint(mobile-only) {
+        display: none;
+    }
+}
+
+.g-owlcarousel-item-button {
+    @include breakpoint(tablet-range) {
+        padding: 1rem 2.625rem;
+        font-size: $core-font-size - 0.4;
+    }
+
+    @include breakpoint(mobile-only) {
+        display: none;
+    }
+}

@@ -1,0 +1,257 @@
+// Tooltips
+.tip-wrap {
+    color: #fff;
+    background-color: #000;
+}
+
+// Images
+.img-polaroid {
+    background-color: $white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+// System Messages and Alerts
+.muted {
+    color: #999999;
+}
+
+a.muted:hover,
+a.muted:focus {
+    color: #808080;
+}
+
+.alert {
+    background-color: lighten($warning-color, 41%);
+    border-color: lighten($warning-color, 34%);
+    padding: $content-padding;
+
+    a,
+    a:hover,
+    .alert-link,
+    .alert-link:hover {
+        right: 0 !important;
+        color: darken($warning-color, 25%);
+        font-weight: bold;
+        text-decoration: none;
+    }
+}
+
+.alert,
+.alert h4,
+.text-warning {
+    color: $warning-color;
+}
+
+a.text-warning:hover,
+a.text-warning:focus {
+    color: darken($warning-color, 5%);
+}
+
+.alert-success {
+    color: $success-color;
+    background-color: lighten($success-color, 50%);
+    border-color: lighten($success-color, 42%);
+
+    a,
+    a:hover,
+    .alert-link,
+    .alert-link:hover {
+        color: darken($success-color, 10%);
+        font-weight: bold;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.alert-success h4,
+.text-success {
+    color: $success-color;
+}
+
+a.text-success:hover,
+a.text-success:focus {
+    color: darken($success-color, 5%);
+}
+
+.alert-danger,
+.alert-error {
+    color: $error-color;
+    background-color: lighten($error-color, 43%);
+    border-color: lighten($error-color, 37%);
+
+    a,
+    a:hover,
+    .alert-link,
+    .alert-link:hover {
+        color: darken($error-color, 10%);
+        font-weight: bold;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.alert-danger h4,
+.alert-error h4,
+.text-error {
+    color: $error-color;
+}
+
+a.text-error:hover,
+a.text-error:focus {
+    color: darken($error-color, 5%);
+}
+
+.alert-info {
+    color: $info-color;
+    background-color: lighten($info-color, 47%);
+    border-color: lighten($info-color, 40%);
+
+    a,
+    a:hover,
+    .alert-link,
+    .alert-link:hover {
+        color: darken($info-color, 10%);
+        font-weight: bold;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.alert-info h4,
+.text-info {
+    color: $info-color;
+}
+
+a.text-info:hover,
+a.text-info:focus {
+    color: darken($info-color, 5%);
+}
+
+// Pull Left & Pull Right
+.pull-left, .pull-right {
+    max-width: 100%;
+}
+
+.dir-rtl {
+    .pull-left {
+        float: right;
+    }
+
+    .pull-right {
+        float: left;
+    }
+}
+
+// Thumbnails
+.thumbnails {
+    margin-left: -20px;
+    list-style: none;
+
+    &:before, &:after {
+        display: table;
+        content: "";
+        line-height: 0;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    > li {
+        float: left;
+        margin-bottom: 18px;
+        margin-left: 20px;
+    }
+}
+
+.row-fluid .thumbnails {
+    margin-left: 0;
+}
+
+.thumbnail {
+    display: block;
+    padding: 4px;
+    line-height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    @include transition(all .2s ease-in-out);
+
+    > img {
+        display: block;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .caption {
+        padding: 9px;
+        color: #555;
+    }
+}
+
+a.thumbnail:hover,
+a.thumbnail:focus {
+    border-color: #08c;
+    box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.manager {
+    > li {
+        float: left !important;
+        margin-bottom: 18px !important;
+        margin-left: 20px !important;
+    }
+}
+
+// Calendar
+.calendar {
+    .title {
+        border: none;
+    }
+
+    thead {
+        .name {
+            padding: 2px;
+        }
+
+        .button {
+            font-weight: normal;
+            border: 1px solid transparent;
+        }
+
+        .hilite {
+            border-radius: 0;
+            padding: 2px;
+        }
+    }
+}
+
+// Frontend Editing Pagination
+.pagination-list {
+    list-style: none;
+
+    li {
+        display: inline-block;
+        margin: 0 0.5rem;
+    }
+}
+
+// Frontend Image Editor
+#imageForm, #uploadForm {
+    button {
+        padding: 0.25rem 1rem;
+        margin: 1rem 0;
+
+        &:hover {
+            border: none;
+        }
+    }
+}

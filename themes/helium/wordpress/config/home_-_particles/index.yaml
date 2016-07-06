@@ -1,0 +1,7 @@
+name: home
+timestamp: 1443033928
+preset:
+  image: 'gantry-admin://images/layouts/home.png'
+  name: home_-_particles
+  timestamp: 1442506624
+positions: {  }

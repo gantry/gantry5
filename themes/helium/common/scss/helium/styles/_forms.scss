@@ -1,0 +1,52 @@
+textarea, select[multiple=multiple] {
+	background-color: white;
+	border: 1px solid $base-border-color;
+
+	&:hover {
+		border-color: $border-color-hover;
+        box-shadow: $base-box-shadow;
+	}
+
+	&:focus {
+		border-color: $border-color-focus;
+        box-shadow: $base-box-shadow;
+	}
+}
+
+textarea {
+	width: 100%;
+	box-sizing: border-box !important;
+    padding: 0.75rem 1.25rem;
+}
+
+fieldset.input {
+	margin: 0;
+	padding: 0;
+}
+
+#{$all-text-inputs} {
+	background-color: white;
+	vertical-align: middle;
+	border: 1px solid $base-border-color;
+	font-size: $core-font-size;
+	width: 100%;
+	line-height: $core-line-height;
+    padding: 0.375rem 1.25rem;
+	@include transition(border-color 0.2s);
+
+    &:hover {
+        box-shadow: $base-box-shadow;
+    }
+
+    &:focus {
+        box-shadow: $base-box-shadow;
+    }
+}
+
+#{$all-text-inputs-hover} {
+	border-color: $border-color-hover;
+}
+
+#{$all-text-inputs-focus} {
+	border-color: $border-color-focus;
+}

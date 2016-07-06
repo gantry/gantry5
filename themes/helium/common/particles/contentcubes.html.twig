@@ -1,0 +1,63 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+<div class="g-contentcubes {{ particle.css.class }}">
+    {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+
+    {% if particle.items %}
+        <div class="cube-items-wrapper">
+
+            {% for item in particle.items %}
+                <div class="item image-position-{{ item.imageposition }} cube-row g-grid">
+                    <div class="g-block size-50">
+                        {% if item.image %}
+                            <div class="cube-image-wrapper">
+                                <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" class="cube-image" />
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="g-block size-50">
+                        <div class="cube-content-wrapper">
+                            {% if item.label %}
+                                <div class="item-label">{{ item.label|e }}</div>
+                            {% endif %}
+
+                            <div class="item-title">
+                                {% if item.link %}
+                                <a target="{{ item.buttontarget|default('_self')|e }}" class="item-link {{ item.buttonclass|e }}" href="{{ item.link|e }}">
+                                    {% endif %}
+
+                                    {{ item.title|e }}
+
+                                    {% if item.link %}
+                                    <span class="item-link-text">{{ item.linktext|raw }}</span>
+                                </a>
+                                {% endif %}
+                            </div>
+
+                            {% if item.tags %}
+                                <div class="item-tags">
+
+                                    {% for tag in item.tags %}
+                                        <span class="tag">
+                                            <a target="{{ tag.target|default('_self')|e }}" href="{{ tag.link|e }}">
+                                                {% if tag.icon %}<i class="{{ tag.icon }}"></i> {% endif %}
+                                                {{ tag.text|raw }}
+                                            </a>
+                                        </span>
+                                    {% endfor %}
+
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

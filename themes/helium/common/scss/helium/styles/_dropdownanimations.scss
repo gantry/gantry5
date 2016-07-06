@@ -1,0 +1,170 @@
+.g-main-nav {
+    .g-standard {
+        .g-dropdown {
+            @include transition(none);
+        }
+
+        .g-fade.g-dropdown {
+            @include transition(opacity .3s ease-out, transform .3s ease-out);
+        }
+
+        .g-zoom.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-zoom);
+        }
+
+        .g-fade-in-up.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-fade-in-up);
+        }
+
+        .g-dropdown-bounce-in-left.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-left);
+        } 
+
+        .g-dropdown-bounce-in-right.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-right);
+        } 
+
+        .g-dropdown-bounce-in-down.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-down);
+        }                
+    }
+
+    .g-fullwidth > {
+        .g-dropdown {
+            @include transition(none);
+        }
+
+        .g-fade.g-dropdown {
+            @include transition(opacity .3s ease-out, transform .3s ease-out);
+        }
+
+        .g-zoom.g-active {
+            @include animation-duration(.3s);
+            @include animation-name(g-dropdown-zoom);
+        }
+
+        .g-dropdown-bounce-in-left.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-left);
+        } 
+
+        .g-dropdown-bounce-in-right.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-right);
+        } 
+        
+        .g-dropdown-bounce-in-down.g-active {
+            @include animation-duration(.5s);
+            @include animation-name(g-dropdown-bounce-in-down);
+        }         
+    }
+}
+
+@include keyframes(g-dropdown-zoom) {
+    0% {
+        opacity: 0;
+        @include transform(scale3d(.8, .8, .8));
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(g-dropdown-fade-in-up) {
+    0% {
+        opacity: 0;
+        @include transform(translate3d(0, 30px, 0));
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(g-dropdown-bounce-in-left) {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    @include transform(translate3d(-50px, 0, 0));
+  }
+
+  60% {
+    opacity: 1;
+    @include transform(translate3d(25px, 0, 0));
+  }
+
+  75% {
+    @include transform(translate3d(-10px, 0, 0));
+  }
+
+  90% {
+    @include transform(translate3d(5px, 0, 0));
+  }
+
+  to {
+    @include transform(none);
+  }
+}
+
+@include keyframes(g-dropdown-bounce-in-down) {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    @include transform(translate3d(0, -50px, 0));
+  }
+
+  60% {
+    opacity: 1;
+    @include transform(translate3d(0, 25px, 0));
+  }
+
+  75% {
+    @include transform(translate3d(0, -10px, 0));
+  }
+
+  90% {
+    @include transform(translate3d(0, 5px, 0));
+  }
+
+  to {
+    @include transform(none);
+  }
+}
+
+@include keyframes(g-dropdown-bounce-in-right) {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  from {
+    opacity: 0;
+    @include transform(translate3d(50px, 0, 0));
+  }
+
+  60% {
+    opacity: 1;
+    @include transform(translate3d(-25px, 0, 0));
+  }
+
+  75% {
+    @include transform(translate3d(10px, 0, 0));
+  }
+
+  90% {
+    @include transform(translate3d(-5px, 0, 0));
+  }
+
+  to {
+    @include transform(none);
+  }
+}

@@ -1,0 +1,12 @@
+#g-expanded {
+    background: $expanded-background;
+    color: $expanded-text-color;
+    padding: $section-padding;
+}
+
+@media print {
+    #g-expanded {
+        background: #fff !important;
+        color: #000 !important;
+    }
+}

@@ -1,0 +1,60 @@
+// Single Contact
+.contact {
+    > h3 {
+        display: none;
+    }
+
+    .contact-address {
+        margin: 0;
+    }
+
+    .form-actions {
+        margin: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .btn {
+            @extend %g-button;
+            font-size: $core-font-size - 0.4;
+            padding: 1.1rem 2.725rem;
+            margin-left: 5px;
+        }
+    }
+}
+
+#contact-form {
+    .controls {
+        input,
+        textarea {
+            border: 1px solid $base-border-color;
+            background: $white;
+            border-radius: $core-border-radius;
+        }
+
+        .btn-primary.validate {
+            @extend %g-button;
+            font-size: $core-font-size - 0.4;
+            padding: 1.1rem 2.725rem;
+            margin-left: 5px;
+        }
+    }
+}
+
+// Profile
+.profile {
+    legend {
+        margin: 0;
+    }
+
+    dt,
+    dd {
+        margin-bottom: $content-margin;
+    }
+
+    .btn {
+        @extend %g-button;
+        font-size: $core-font-size - 0.4;
+        padding: 1.1rem 2.725rem;
+        margin-left: 5px;
+    }
+}

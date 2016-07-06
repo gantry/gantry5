@@ -1,0 +1,49 @@
+body {
+    color: $base-text-color;
+    background: $base-background;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: auto;
+
+    *::selection {
+        color: $white;
+        background: $accent-color-1;
+    }
+
+    *::-moz-selection {
+        color: $white;
+        background: $accent-color-1;
+    }
+}
+
+body p {
+    margin: 1rem 0;
+
+    &.h1 {
+        font-size: $h1-font-size;
+    }
+
+    &.h2 {
+        font-size: $h2-font-size;
+    }
+
+    &.h3 {
+        font-size: $h3-font-size;
+    }
+
+    &.h4 {
+        font-size: $h4-font-size;
+    }
+
+    &.h5 {
+        font-size: $h5-font-size;
+    }
+
+    &.h6 {
+        font-size: $h6-font-size;
+    }
+}
+
+body span.para {
+    display: block;
+    margin: 1rem 0;
+}

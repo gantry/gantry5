@@ -1,0 +1,47 @@
+{% set twigTemplate = 'meta-page.html.twig' %}
+
+<div class="entry-meta">
+
+    {% block meta %}
+
+        {# Begin Meta - Date #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '0') and post.date %}
+            <div class="meta-date">
+                <i class="fa fa-clock-o"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.link', '1') %}
+                    <a href="{{ post.link }}" title="{{ post.title }}" class="meta-date-link">
+                        <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                    </a>
+                {% else %}
+                    <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {# End Meta - Date #}
+
+        {# Begin Meta - Author #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '0') and post.author.name %}
+            <div class="meta-author">
+                <i class="fa fa-pencil"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.link', '1') %}
+                    <a href="{{ post.author.link }}" title="{{ post.author.name }}" class="meta-author-link"><span class="author">{{ post.author.name }}</span></a>
+                {% else %}
+                    <span class="author">{{ post.author.name }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {# End Meta - Author #}
+
+    {% endblock %}
+
+</div>

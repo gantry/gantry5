@@ -1,0 +1,13 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+<div class="{{ particle.css.class|e }}">
+    <div class="g-totop">
+        <a href="#" id="g-totop" rel="nofollow">
+            {% if particle.content %}{{particle.content|raw}}{% endif %}
+            {% if particle.icon %}<i class="{{particle.icon}}"></i>{% endif %}
+            {% if not particle.icon and not particle.content %}To Top{% endif %}
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+#g-page-surround {
+    // Global
+    .nav {
+        margin-bottom: 20px;
+        margin-left: 0;
+        list-style: none;
+
+        > li {
+            > a {
+                display: block;
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+
+                > img {
+                    max-width: none;
+                }
+            }
+        }
+    }
+
+    // Platform Content
+    .platform-content {
+
+        // Entries & Entry
+        .entries, .entry {
+            .entry-header {
+                .entry-title {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+
+        // Entries
+        .entries {
+            .tease {
+                margin-bottom: 2rem;
+
+                // Sticky Posts
+                &.sticky {
+                    background-color: #eceff3;
+                    border-radius: $core-border-radius;
+                }
+            }
+        }
+
+        // Password Form
+        form.password-form {
+            .password-box {
+                margin: 0.625rem 0;
+            }
+        }
+    }
+
+    // Search Form
+    .search-form {
+        input.search-field {
+            color: $base-text-color;
+        }
+    }
+}

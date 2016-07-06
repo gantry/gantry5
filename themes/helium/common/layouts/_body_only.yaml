@@ -1,0 +1,10 @@
+version: 2
+preset:
+  image: 'gantry-admin://images/layouts/body-only.png'
+  name: _body_only
+layout:
+  /mainbar/:
+    -
+  /offcanvas/:
+    -
+      - mobile-menu

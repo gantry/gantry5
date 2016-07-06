@@ -1,0 +1,17 @@
+meta: {  }
+head_bottom: ''
+atoms:
+  -
+    type: frameworks
+    title: 'JavaScript Frameworks'
+    attributes:
+      enabled: '1'
+      jquery:
+        enabled: '1'
+        ui_core: '0'
+        ui_sortable: '0'
+      bootstrap:
+        enabled: '0'
+      mootools:
+        enabled: '0'
+        more: '0'
