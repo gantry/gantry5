@@ -23,7 +23,7 @@
 
             {% if child.type %}
                 {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                with {name: childName, field: child, current_value: childValue, default_value: childDefault, prefix: childPrefix } %}
+                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix } %}
             {% endif %}
         {% endfor %}
     {% endif %}

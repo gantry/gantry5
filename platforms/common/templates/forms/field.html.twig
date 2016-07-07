@@ -12,8 +12,8 @@
 {% endassets -%}
 
 {% set name = (name ?? field.name) -%}
-{% set default_value = (default_value is not null ? default_value : field.default) -%}
-{% set current_value = (current_value is not null ? current_value : value) -%}
+{% set default_value = (default_value ?? field.default) -%}
+{% set current_value = (current_value ?? value) -%}
 {% set has_value = current_value is not null -%}
 {% set value = has_value ? current_value : default_value -%}
 
