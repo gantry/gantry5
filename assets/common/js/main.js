@@ -23,6 +23,7 @@ ready(function() {
 module.exports = window.G5 = instances;
 
 },{"./menu":2,"./offcanvas":3,"./totop":4,"./utils/dollar-extras":6,"domready":7}],2:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var ready   = require('domready'),
@@ -99,6 +100,7 @@ var Menu = new prime({
         }
 
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
+        body.delegate('click', ':not(' + selectors.mainContainer + ') a[href]', this.bound('resetAfterClick'));
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
@@ -118,6 +120,13 @@ var Menu = new prime({
 
     click: function(event) {
         this.touchend(event);
+    },
+
+    resetAfterClick: function(event) {
+        this.closeDropdown(event);
+        if (global.G5 && global.G5.offcanvas) {
+            G5.offcanvas.close();
+        }
     },
 
     mouseenter: function(event) {
@@ -349,6 +358,8 @@ var Menu = new prime({
 });
 
 module.exports = Menu;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
 },{"../utils/dollar-extras":6,"domready":7,"elements/zen":36,"mout/function/bind":40,"mout/function/timeout":44,"prime":85,"prime-util/prime/bound":81,"prime-util/prime/options":82}],3:[function(require,module,exports){
 // Offcanvas slide with desktop, touch and all-in-one touch devices support that supports both left and right placement.

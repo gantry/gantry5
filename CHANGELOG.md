@@ -42,6 +42,7 @@
         - Fixed issues with single select field with multiple values (#1402)
         - Fixed `select.select` with `multiple` option enabled, storing only the first selected option rather than all (#1402)
         - Fixed DOM parser issue with HTML tags when adding inline JS/CSS (#1359)
+        - Fixed issue with anchors and Offcanvas not resetting the overlay in IE and Firefox (#1399)
 2. [Joomla](#joomla)
     1. [](#new)
         - Enable `Layout` tab for `Base Outline`
