@@ -967,7 +967,6 @@ var Selectize = new prime({
     },
 
     onItemRemoveViaX: function(e, element) {
-        console.log(e, element);
         e.preventDefault();
         if (this.isLocked || this.options.mode == 'single') return;
 
@@ -2250,16 +2249,17 @@ $.implement({
             if ($input.selectizeInstance) return;
 
             var instance,
+                new_settings,
                 dataOptions = $input.data('selectize'),
                 tag_name    = $input.tag().toLowerCase(),
                 placeholder = $input.attribute('placeholder') || $input.attribute('data-placeholder');
 
             // g5 custom
             if (dataOptions) { dataOptions = JSON.parse(dataOptions); }
-            settings = merge({}, settings, dataOptions);
+            new_settings = merge({}, settings, dataOptions);
             // end g5 custom
 
-            if (!placeholder && !settings.allowEmptyOption) {
+            if (!placeholder && !new_settings.allowEmptyOption) {
                 var chlds = $input.children('option[value=""]');
                 placeholder = chlds ? $input.children('option[value=""]').text() : '';
             }
