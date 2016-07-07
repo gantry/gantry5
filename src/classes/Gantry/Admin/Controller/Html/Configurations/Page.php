@@ -77,7 +77,7 @@ class Page extends HtmlController
             $currentAtoms = $data->get('page.head.atoms');
             if (!$currentAtoms) {
                 // Make atoms to appear to be inherited in they are loaded from defaults.
-                $defaultAtoms = $defaults->get('page.head.atoms');
+                $defaultAtoms = (array) $defaults->get('page.head.atoms');
                 $atoms = (new Atoms($defaultAtoms))->inheritAll('default')->toArray();
                 $defaults->set('page.head.atoms', $atoms);
             }
