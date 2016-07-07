@@ -4,7 +4,7 @@
     <div class="settings-block"><div class="settings-param-field"><div class="input-group">
     {% set label = field.picker_label|default('GANTRY5_PLATFORM_PICK_PARTICLE'|trans) %}
     {% set alt_label = field.picker_label_alt|default('GANTRY5_PLATFORM_EDIT_PARTICLE'|trans) %}
-    <span class="g-instancepicker-title">{{ value.title|default('') }}<br />{{ value.particle ? ' (' ~ value.particle ~ ')' : '' }}</span><button class="button" data-g-instancepicker="{{ { type: 'particle', field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
+    <span class="g-instancepicker-title" title="{{ value.particle ? 'Particle Type: ' ~ value.particle : '' }}">{{ value.title|default('') }}</span><button class="button" data-g-instancepicker="{{ { type: 'particle', field: (scope ~ name)|fieldName|e }|json_encode|e('html_attr') }}" data-g-instancepicker-text="{{ label }}" data-g-instancepicker-alttext="{{ alt_label }}">{{ value ? alt_label : label }}</button>
     <input
             type="hidden"
             name="{{ (scope ~ name)|fieldName }}"
