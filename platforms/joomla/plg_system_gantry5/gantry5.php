@@ -338,7 +338,7 @@ class plgSystemGantry5 extends JPlugin
         return true;
     }
 
-    public function onContentPrepareData($context, &$data)
+    public function onContentPrepareData($context, $data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
