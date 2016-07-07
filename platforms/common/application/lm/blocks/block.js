@@ -96,7 +96,7 @@ var Block = new prime({
         this.changeState = state;
 
         if (!child) {
-            child = this.block.find('> .particle-size');
+            child = this.block.find('> .particle-size') || this.block.parent('[data-lm-blocktype="block"]').find('> .particle-size');
             icon = child.find('i:first-child');
 
             if (!state && icon) { icon.remove(); }
