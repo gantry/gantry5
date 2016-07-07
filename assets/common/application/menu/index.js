@@ -74,7 +74,7 @@ var Menu = new prime({
         }
 
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
-        body.delegate('click', ':not(' + selectors.mainContainer + ') a[href]', this.bound('resetAfterClick'));
+        body.delegate(hasTouchEvents ? 'touchend' : 'click', ':not(' + selectors.mainContainer + ') a[href]', this.bound('resetAfterClick'));
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
@@ -97,6 +97,12 @@ var Menu = new prime({
     },
 
     resetAfterClick: function(event) {
+        var target = $(event.target);
+
+        if (target.data('g-menuparent') !== null) {
+            return true;
+        }
+
         this.closeDropdown(event);
         if (global.G5 && global.G5.offcanvas) {
             G5.offcanvas.close();
