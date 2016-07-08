@@ -12,6 +12,7 @@
         - New `input.radios` field. Allows to create a list of radio selectors. `options` entry should be of kind key/value
         - Added possibility to place `<svg>` code directly inside the Logo particle
         - Creating New Outlines will now offer to either load based off of Presets or existing Outlines. When selecting existing Outlines you can now decide whether you want to Inherit or not (#1386)
+        - Added priority field for CSS/JS Assets and Atom (#1321)
     2. [](#improved)
         - Hide `Particle Defaults` tab from everywhere else but in `Base Outline`
         - Do not display `Atoms` in `Particle Defaults`

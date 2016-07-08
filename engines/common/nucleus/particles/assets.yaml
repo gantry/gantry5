@@ -51,6 +51,14 @@ form:
           value_placeholder: Value
           exclude: ['rel', 'href', 'type']
 
+        .priority:
+          type: input.number
+          label: Priority
+          description: Set priority between 10 (first) and -10 (last). Default value is 0.
+          default: 0
+          min: -10
+          max: 10
+
     javascript:
       type: collection.list
       array: true
@@ -95,3 +103,10 @@ form:
           label: Tag attributes
           exclude: ['src', 'type']
 
+        .priority:
+          type: input.number
+          label: Priority
+          description: Set priority between 10 (first) and -10 (last). Default value is 0.
+          default: 0
+          min: -10
+          max: 10
