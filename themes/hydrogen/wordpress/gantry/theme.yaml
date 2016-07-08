@@ -58,10 +58,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.0.*
-    engine/nucleus: 1.0.*
-    asset/font-awesome: 4.2
-    particle/menu: 1.0.*
+    gantry: 5.3.*
 
   block-variations:
     Box Variations:
