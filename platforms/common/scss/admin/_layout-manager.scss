@@ -1051,6 +1051,10 @@ $atom: #9055AF;
         z-index: 0;
     }
 
+    .g-inheriting:not(.g-inheriting-children) .g-grid {
+        z-index: 1;
+    }
+
     @include breakpoint(no-mobile) {
         // fixed sidebar in LM
         .g5-lm-particles-picker.particles-fixed, .g5-lm-particles-picker.particles-absolute {

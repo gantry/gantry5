@@ -4924,6 +4924,9 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .g-inheriting:not(.g-inheriting-children) .g-inherit {
   z-index: 0;
 }
+#g5-container .g-inheriting:not(.g-inheriting-children) .g-grid {
+  z-index: 1;
+}
 @media only all and (min-width: 48rem) {
   #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {
     z-index: 5;
