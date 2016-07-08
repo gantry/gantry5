@@ -2,9 +2,15 @@ version: 2
 preset:
   image: 'gantry-admin://images/layouts/body-only.png'
   name: _body_only
+  timestamp: 1467996401
 layout:
   /mainbar/:
     -
-  /offcanvas/:
+      - system-messages-6659
     -
-      - mobile-menu
+      - system-content-5845
+structure:
+  mainbar:
+    type: section
+    attributes:
+      boxed: ''
