@@ -47,11 +47,21 @@ class JFormFieldParticle extends JFormField
             return '';
         }
 
-        // FIXME: Use better style detection (via js by using: style_id_field).
-        $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
-        $theme = \Gantry\Joomla\StyleHelper::getDefaultStyle()->template;
+        // TODO: Use better style detection.
+        $style = \Gantry\Joomla\StyleHelper::getDefaultStyle();
+        if (!$style->template) {
+            $app->enqueueMessage(
+                JText::_("MOD_GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
+                'warning'
+            );
+        } elseif (!file_exists(JPATH_THEMES . "/{$style->template}/gantry/theme.yaml")) {
+            $app->enqueueMessage(
+                JText::sprintf("MOD_GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
+                'warning'
+            );
+        }
 
-        $this->container['router']->setTheme($theme, $style->id)->load();
+        $this->container['router']->setTheme($style->template, null)->load();
 
         $field = [
             'default' => true,
