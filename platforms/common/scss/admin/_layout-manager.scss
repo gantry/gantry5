@@ -1052,7 +1052,7 @@ $atom: #9055AF;
     }
 
     .g-inheriting:not(.g-inheriting-children) .g-grid {
-        z-index: 1;
+        z-index: 5;
     }
 
     @include breakpoint(no-mobile) {
