@@ -13626,21 +13626,21 @@ $.implement({
         };
 
         return this.forEach(function($input, i) {
+            settings = merge({}, defaults, settings_user),
             $input = $($input);
             if ($input.selectizeInstance) return;
 
             var instance,
-                new_settings,
                 dataOptions = $input.data('selectize'),
                 tag_name    = $input.tag().toLowerCase(),
                 placeholder = $input.attribute('placeholder') || $input.attribute('data-placeholder');
 
             // g5 custom
             if (dataOptions) { dataOptions = JSON.parse(dataOptions); }
-            new_settings = merge({}, settings, dataOptions);
+            settings = merge({}, settings, dataOptions);
             // end g5 custom
 
-            if (!placeholder && !new_settings.allowEmptyOption) {
+            if (!placeholder && !settings.allowEmptyOption) {
                 var chlds = $input.children('option[value=""]');
                 placeholder = chlds ? $input.children('option[value=""]').text() : '';
             }
