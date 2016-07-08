@@ -4,15 +4,10 @@ type: offcanvas.inheritance
 
 form:
   fields:
-    _info:
-      type: separator.note
-      class: alert alert-info blocksize-note
-      content: 'Inheritance makes the Offcanvas identical to that of the inherited outline.'
-
     mode:
       type: input.radios
       label: Mode
-      description: Whether to clone or inherit the particle properties
+      description: Whether to clone or inherit the particle properties. <code>inherit</code> makes the Offcanvas identical to that of the inherited outline.
       default: inherit
       options:
         clone: Clone

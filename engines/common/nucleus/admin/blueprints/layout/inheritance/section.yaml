@@ -4,15 +4,10 @@ type: section.inheritance
 
 form:
   fields:
-    _info:
-      type: separator.note
-      class: alert alert-info blocksize-note
-      content: 'Inheritance makes the Section identical to that of the inherited outline.'
-
     mode:
       type: input.radios
       label: Mode
-      description: Whether to clone or inherit the section properties
+      description: Whether to clone or inherit the section properties. <code>inherit</code> makes the Section identical to that of the inherited outline.
       default: inherit
       options:
         clone: Clone
