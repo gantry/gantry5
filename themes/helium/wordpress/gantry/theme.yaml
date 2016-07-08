@@ -76,6 +76,9 @@ configuration:
       - helium-wordpress
       - custom
 
+  dependencies:
+    gantry: 5.3.*
+
   block-variations:
     Title Variations:
       title1: Title 1
