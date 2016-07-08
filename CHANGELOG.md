@@ -1,3 +1,10 @@
+# 5.3.1
+## XX/XX/2016
+
+1. [Common](#common)
+    2. [](#bugfix)
+        - Fixed `Can't use method return value in write context` on PHP 5.4 (#1413)
+
 # 5.3.0
 ## 08/07/2016
 

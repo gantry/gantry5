@@ -39,10 +39,12 @@ class Particles
         $locator = $this->container['locator'];
 
         if ($particle) {
-            return !empty($locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml"));
+            $resource = $locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml");
+            return !empty($resource);
         }
 
-        return !empty($locator->findResources("gantry-theme://config/{$outline}/particles"));
+        $resource = $locator->findResources("gantry-theme://config/{$outline}/particles");
+        return !empty($resource);
     }
 
     public function all()
