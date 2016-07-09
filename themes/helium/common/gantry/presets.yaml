@@ -1,6 +1,6 @@
 preset1:
   image: 'gantry-admin://images/preset1.png'
-  description: 'Preset 1'
+  description: GANTRY5_PLATFORM_PRESET1
   colors:
     - '#4db2b3'
     - '#8f4dae'
@@ -52,7 +52,7 @@ preset1:
 
 preset2:
   image: 'gantry-admin://images/preset2.png'
-  description: 'Preset 2'
+  description: GANTRY5_PLATFORM_PRESET2
   colors:
     - '#b34b4b'
     - '#4cad9e'
@@ -104,7 +104,7 @@ preset2:
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
-  description: 'Preset 3'
+  description: GANTRY5_PLATFORM_PRESET4
   colors:
     - '#c06c84'
     - '#355c7d'
@@ -156,7 +156,7 @@ preset3:
 
 preset4:
   image: 'gantry-admin://images/preset4.png'
-  description: 'Preset 4'
+  description: GANTRY5_PLATFORM_PRESET4
   colors:
     - '#e84a5f'
     - '#2a363b'
@@ -208,7 +208,7 @@ preset4:
 
 preset5:
   image: 'gantry-admin://images/preset5.png'
-  description: 'Preset 5'
+  description: GANTRY5_PLATFORM_PRESET5
   colors:
     - '#a8a7a7'
     - '#474747'
@@ -260,7 +260,7 @@ preset5:
 
 preset6:
   image: 'gantry-admin://images/preset6.png'
-  description: 'Preset 6'
+  description: GANTRY5_PLATFORM_PRESET6
   colors:
     - '#474747'
     - '#363636'

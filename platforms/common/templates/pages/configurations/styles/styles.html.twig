@@ -44,7 +44,7 @@
                         {% set counter = 0 %}
                         <li class="g-block{{ presetKey == key ? ' g-preset-match' }}">
                             <a href="#" class="swatch" data-g-styles="{{ presets.def(key ~ '.styles.preset', key).flatten(key ~ '.styles', '][', 'styles')|json_encode|escape('html_attr') }}">
-                                <img src="{{ url(preset.image)|default(url('gantry-admin://images/placeholder.png')) }}" class="swatch-image" alt="{{ 'GANTRY5_PLATFORM_STYLES_APPLY'|trans }} {{ preset.description }}"/>
+                                <img src="{{ url(preset.image)|default(url('gantry-admin://images/placeholder.png')) }}" class="swatch-image" alt="{{ 'GANTRY5_PLATFORM_STYLES_APPLY'|trans }} {{ preset.description|trans|raw }}"/>
                                 {% if preset.colors|length %}
                                     {% set stop = (100 / preset.colors|length)|number_format(3, '.') %}
                                     <span class="swatch-colors"
@@ -56,10 +56,10 @@
                             {%- endfor %})">
                     </span>
                                 {% endif %}
-                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description }}"><i class="fa fa-fw fa-eye"></i></button>
+                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description|trans|raw }}"><i class="fa fa-fw fa-eye"></i></button>
                                 <span class="swatch-matched"><i class="fa fa-fw fa-star"></i></span>
                             </a>
-                            <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star"></i></span> {{ preset.description }}</span>
+                            <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star"></i></span> {{ preset.description|trans|raw }}</span>
                         </li>
                     {% endfor %}
                 </ul>

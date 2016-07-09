@@ -2,7 +2,9 @@
 ## XX/XX/2016
 
 1. [Common](#common)
-    2. [](#bugfix)
+    2. [](#improved)
+        - Allow Presets description to be translatable (#1212)
+    3. [](#bugfix)
         - Fixed `Can't use method return value in write context` on PHP 5.4 (#1413)
         - Fixed `Document::addScript` not allowing string argument (#1414)
 

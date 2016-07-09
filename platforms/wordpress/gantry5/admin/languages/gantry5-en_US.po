@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2016-07-08 19:49+0200\n"
+"PO-Revision-Date: 2016-07-09 15:28-0700\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -638,3 +638,33 @@ msgstr "Keep Inheritance"
 
 msgid "GANTRY5_PLATFORM_CREATE_OUTLINE_FROM_X"
 msgstr "Create New Outline From '%s'"
+
+msgid "GANTRY5_PLATFORM_PRESET1"
+msgstr "Preset 1"
+
+msgid "GANTRY5_PLATFORM_PRESET2"
+msgstr "Preset 2"
+
+msgid "GANTRY5_PLATFORM_PRESET3"
+msgstr "Preset 3"
+
+msgid "GANTRY5_PLATFORM_PRESET4"
+msgstr "Preset 4"
+
+msgid "GANTRY5_PLATFORM_PRESET5"
+msgstr "Preset 5"
+
+msgid "GANTRY5_PLATFORM_PRESET6"
+msgstr "Preset 6"
+
+msgid "GANTRY5_PLATFORM_PRESET7"
+msgstr "Preset 7"
+
+msgid "GANTRY5_PLATFORM_PRESET8"
+msgstr "Preset 8"
+
+msgid "GANTRY5_PLATFORM_PRESET9"
+msgstr "Preset 9"
+
+msgid "GANTRY5_PLATFORM_PRESET10"
+msgstr "Preset 10"
