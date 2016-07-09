@@ -1,7 +1,7 @@
 === Gantry 5 Framework ===
 Contributors: gantry
 Author URI: http://gantry.org
-Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, less, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
+Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
 Requires at least: 4.2+
 Tested up to: 4.5.3
 Stable tag: @version@
@@ -62,9 +62,9 @@ Change the way your site's menus look with Gantry 5's powerful Menu Editor. Quic
 
 Theme overrides are now part of Gantry 5's Outline system, enabling you to easily create and manage Layouts, Settings, Styles, and more and assign them as needed.
 
-= Use SCSS, LESS or CSS =
+= Use SCSS or CSS =
 
-Gantry 5 has built-in support for SCSS and pure CSS, with the ability to support LESS.
+Gantry 5 has built-in support for SCSS and pure CSS.
 
 > For video tutorials and documentation please visit official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
