@@ -168,7 +168,7 @@ class Document
      * @param string $location
      * @return bool
      */
-    public static function addScript(array $element, $priority = 0, $location = 'head')
+    public static function addScript($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
             $element = ['src' => $element];

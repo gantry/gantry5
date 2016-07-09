@@ -4,6 +4,7 @@
 1. [Common](#common)
     2. [](#bugfix)
         - Fixed `Can't use method return value in write context` on PHP 5.4 (#1413)
+        - Fixed `Document::addScript` not allowing string argument (#1414)
 
 # 5.3.0
 ## 08/07/2016
