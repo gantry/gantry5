@@ -58,8 +58,8 @@ form:
 
         .priority:
           type: input.number
-          label: Priority
-          description: Set priority between 10 (first) and -10 (last). Default value is 0.
+          label: Load Priority
+          description: Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.
           default: 0
           min: -10
           max: 10
@@ -110,8 +110,8 @@ form:
 
         .priority:
           type: input.number
-          label: Priority
-          description: Set priority between 10 (first) and -10 (last). Default value is 0.
+          label: Load Priority
+          description: Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.
           default: 0
           min: -10
           max: 10
