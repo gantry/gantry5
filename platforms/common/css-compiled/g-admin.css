@@ -4407,7 +4407,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   right: -10px;
   width: 6px;
   background: #00baaa;
-  z-index: 3;
+  z-index: 0;
   cursor: col-resize;
 }
 #g5-container .lm-blocks .g-grid > .g-block:last-child:after {
@@ -4925,7 +4925,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   z-index: 0;
 }
 #g5-container .g-inheriting:not(.g-inheriting-children) .g-grid {
-  z-index: 5;
+  z-index: 1;
 }
 @media only all and (min-width: 48rem) {
   #g5-container .g5-lm-particles-picker.particles-fixed, #g5-container .g5-lm-particles-picker.particles-absolute {
