@@ -5,6 +5,21 @@
     <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
         {% include 'partials/outlines-list.html.twig' %}
     </select>
+
+    {% for name, title in gantry.outlines.user %}
+        {% if name == configuration %}
+            {% set selected_title = title %}
+            {% set selected_value = name %}
+        {% endif %}
+    {% endfor %}
+    {% for name, title in gantry.outlines.system %}
+        {% if name == configuration %}
+            {% set selected_title = title %}
+            {% set selected_value = name %}
+            {% set selected_editable = false %}
+        {% endif %}
+    {% endfor %}
+
     {% if selected_editable and gantry.authorize('outline.rename') and configuration != 'default' %}
     <span data-title-editable="{{ selected_title }}"
           data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename') }}"
