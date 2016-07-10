@@ -8,6 +8,9 @@
     3. [](#bugfix)
         - Fixed `Can't use method return value in write context` on PHP 5.4 (#1413)
         - Fixed `Document::addScript` not allowing string argument (#1414)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed warning in `Gantry 5 Particle` module about not using a Gantry 5 Theme (#1420)
 
 # 5.3.0
 ## 08/07/2016

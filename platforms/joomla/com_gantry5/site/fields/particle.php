@@ -54,7 +54,7 @@ class JFormFieldParticle extends JFormField
                 JText::_("MOD_GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
                 'warning'
             );
-        } elseif (!file_exists(JPATH_THEMES . "/{$style->template}/gantry/theme.yaml")) {
+        } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
             $app->enqueueMessage(
                 JText::sprintf("MOD_GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
                 'warning'
