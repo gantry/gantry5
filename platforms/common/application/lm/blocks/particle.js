@@ -6,7 +6,8 @@ var prime              = require('prime'),
     precision          = require('mout/number/enforcePrecision'),
     forOwn             = require('mout/object/forOwn'),
     getAjaxURL         = require('../../utils/get-ajax-url').config,
-    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById;
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    translate          = require('../../utils/translate');
 
 var UID = 0;
 
@@ -33,7 +34,7 @@ var Particle = new prime({
             }
         }
 
-        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Particle') + '" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
     enableInheritance: function() {
@@ -99,7 +100,7 @@ var Particle = new prime({
             include = (this.inherit.include || []).join(', ');
 
         return {
-            'tip': 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + particle + '<br />Replace: ' + include,
+            'tip': translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + particle + '<br />Replace: ' + include,
             'tip-offset': -10,
             'tip-place': 'top-right'
         };

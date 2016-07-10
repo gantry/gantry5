@@ -7,7 +7,7 @@
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}">
+                    <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
                     <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                 </span>
                 {% for group, list in particles if list and (group != 'hidden') %}
@@ -60,7 +60,7 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}">
+                        <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
                             <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                     </span>
                 </div>

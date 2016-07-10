@@ -1,17 +1,18 @@
 "use strict";
-var prime   = require('prime'),
-    Options = require('prime-util/prime/options'),
-    Bound    = require('prime-util/prime/bound'),
-    Emitter = require('prime/emitter'),
-    zen     = require('elements/zen'),
-    trim    = require('mout/string/trim'),
-    $       = require('elements'),
-    ID      = require('../id'),
+var prime     = require('prime'),
+    Options   = require('prime-util/prime/options'),
+    Bound     = require('prime-util/prime/bound'),
+    Emitter   = require('prime/emitter'),
+    zen       = require('elements/zen'),
+    trim      = require('mout/string/trim'),
+    $         = require('elements'),
+    ID        = require('../id'),
 
-    size    = require('mout/object/size'),
-    get     = require('mout/object/get'),
-    has     = require('mout/object/has'),
-    set     = require('mout/object/set');
+    size      = require('mout/object/size'),
+    get       = require('mout/object/get'),
+    has       = require('mout/object/has'),
+    set       = require('mout/object/set'),
+    translate = require('../../utils/translate');
 
 require('elements/traversal');
 
@@ -122,7 +123,7 @@ var Base = new prime({
     },
 
     disable: function() {
-        this.block.title('This particle has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+        this.block.title(translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'particle'));
         this.block.addClass('particle-disabled');
     },
 
@@ -152,17 +153,17 @@ var Base = new prime({
         return 'data-lm-dropzone';
     },
 
-    addDropzone: function(){
+    addDropzone: function() {
         this.block.data('lm-dropzone', true);
     },
 
-    removeDropzone: function(){
+    removeDropzone: function() {
         this.block.data('lm-dropzone', null);
     },
 
     layout: function() {},
 
-    onRendered: function(){},
+    onRendered: function() {},
 
     setLayout: function(layout) {
         this.block = layout;

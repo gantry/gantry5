@@ -14,7 +14,8 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
 
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -193,7 +194,7 @@ ready(function() {
 
         var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
             data: dataPost,
@@ -238,7 +239,7 @@ ready(function() {
                     if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
@@ -275,7 +276,7 @@ ready(function() {
                             }
 
                             modal.close();
-                            toastr.success('Collection Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Collection'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

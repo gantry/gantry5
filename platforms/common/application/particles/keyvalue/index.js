@@ -17,7 +17,8 @@ var ready         = require('elements/domready'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../translate');
 
 require('elements/insertion');
 
@@ -130,7 +131,7 @@ ready(function() {
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
             wrapper
-                .data('tip', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null))
+                .data('tip', duplicate ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE', keyValue) : (excluded ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED', keyValue) : null))
                 .data('tip-place', 'top-right')
                 .data('tip-spacing', 2)
                 .data('tip-offset', 8);

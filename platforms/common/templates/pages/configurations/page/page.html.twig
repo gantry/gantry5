@@ -6,7 +6,7 @@
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}">
+                    <button type="submit" class="button button-primary button-save" data-save="Page Settings">
                         <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PAGESETTINGS'|trans }}</span></button>
                 </span>
                 {% for group, list in page if (group != 'hidden') %}
@@ -61,7 +61,7 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}">
+                        <button type="submit" class="button button-primary button-save" data-save="Page Settings">
                             <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PAGESETTINGS'|trans }}</span></button>
                     </span>
                 </div>

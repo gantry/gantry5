@@ -9,7 +9,8 @@ var $             = require('elements'),
     trim          = require('mout/string/trim'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
@@ -62,7 +63,7 @@ ready(function() {
         if (data.modal_close) { return true; }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
             overlayClickToClose: false,

@@ -20,7 +20,8 @@ var $              = require('elements'),
     mm             = require('./menu'),
     configurations = require('./configurations'),
     positions      = require('./positions'),
-    changelog      = require('./changelog');
+    changelog      = require('./changelog'),
+    translate      = require('./utils/translate');
 
 require('elements/attributes');
 require('elements/events');
@@ -74,13 +75,13 @@ var prettyDate = {
 
 window.onbeforeunload = function() {
     if (flags.get('pending')) {
-        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+        return translate('GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED');
     }
 };
 
 ready(function() {
     var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+        sentence = translate('GANTRY5_PLATFORM_JS_SAVE_SUCCESS');
 
     // Close notification
     body.delegate('click', '[data-g-close]', function(event, element) {
@@ -139,7 +140,7 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        var feedback = 'Last Saved: ' + prettyDate.format(element.lastSaved);
+        var feedback = translate('GANTRY5_PLATFORM_LAST_SAVED') + ': ' + prettyDate.format(element.lastSaved);
         element
             .data('tip', feedback)
             .data('title', feedback);
@@ -222,7 +223,7 @@ ready(function() {
             saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
-            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
             return;
         }
 
@@ -241,14 +242,14 @@ ready(function() {
                 modal.close();
 
                 if ($('#styles')) {
-                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : translate('GANTRY5_PLATFORM_JS_CSS_COMPILED'));
                 }
 
                 toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
-                }), type + ' Saved');
+                }), type + ' ' + translate('GANTRY5_PLATFORM_SAVED'));
             }
 
             saves.disabled(false);

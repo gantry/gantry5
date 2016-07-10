@@ -5,6 +5,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
 
     trim          = require('mout/string/trim'),
     contains      = require('mout/array/contains');
@@ -32,7 +33,7 @@ domready(function() {
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADINg'),
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {

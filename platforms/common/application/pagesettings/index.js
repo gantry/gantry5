@@ -15,7 +15,8 @@ var $                  = require('elements'),
 
     parseAjaxURI       = require('../utils/get-ajax-url').parse,
     getAjaxSuffix      = require('../utils/get-ajax-suffix'),
-    getOutlineNameById = require('../utils/get-outline').getOutlineNameById;
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById,
+    translate          = require('../utils/translate');
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -158,7 +159,7 @@ var AttachSettings = function() {
             itemData  = item.data('atom-picked');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             data: { data: itemData },
             overlayClickToClose: false,
@@ -194,7 +195,7 @@ var AttachSettings = function() {
                     if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), 'GANTRY5_PLATFORM_JS_INVALID_FIELDS');
                         return;
                     }
 
@@ -219,7 +220,7 @@ var AttachSettings = function() {
                                 inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
                             item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
-                            item.attribute('title', enabled ? '' : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item.attribute('title', enabled ? '' : translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'atom'));
 
                             item.data('tip', null);
                             if (inheriting) {
@@ -228,7 +229,7 @@ var AttachSettings = function() {
                                     atom = inherit.atom || '',
                                     include = (inherit.include || []).join(', ');
 
-                                item.data('tip', 'Inheriting from <strong>' + outline + '</strong><br />ID: ' + atom + '<br />Replace: ' + include);
+                                item.data('tip', translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + atom + '<br />Replace: ' + include);
                             }
 
                             body.emit('change', { target: dataField });
@@ -241,7 +242,7 @@ var AttachSettings = function() {
                             }
 
                             modal.close();
-                            toastr.success('Atom Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Atom'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

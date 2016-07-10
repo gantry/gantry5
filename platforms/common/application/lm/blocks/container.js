@@ -1,9 +1,10 @@
 "use strict";
-var prime = require('prime'),
-    Base = require('./base'),
-    zen = require('elements/zen'),
-    $ = require('elements'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+var prime      = require('prime'),
+    Base       = require('./base'),
+    zen        = require('elements/zen'),
+    $          = require('elements'),
+    getAjaxURL = require('../../utils/get-ajax-url').config,
+    translate  = require('../../utils/translate');
 
 var Container = new prime({
     inherits: Base,
@@ -48,7 +49,7 @@ var Container = new prime({
             actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
-        actions.html('<span data-tip="Container settings" data-tip-place="top-left"><i aria-label="Configure Container Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
+        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Container') + '" data-tip-place="top-left"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Container') + '" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 

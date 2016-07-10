@@ -24,7 +24,8 @@ var ready          = require('elements/domready'),
     validateField  = require('../utils/field-validation'),
     LMHistory      = require('./history'),
     LayoutManager  = require('./layoutmanager'),
-    SaveState      = require('../utils/save-state');
+    SaveState      = require('../utils/save-state'),
+    translate      = require('../utils/translate');
 
 require('../ui/popover');
 require('./inheritance');
@@ -236,7 +237,7 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid';
+        var msg = tooltips.equalize ? translate('GANTRY5_PLATFORM_JS_LM_GRID_EQUALIZE') : translate('GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE');
 
         element.data('tip', msg).data('tip-offset', -30);
 
@@ -502,7 +503,7 @@ ready(function() {
                     }
 
                     var isValid = function() {
-                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : translate('GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE');
                     };
 
                     blockSize.on('input', function(){
@@ -528,7 +529,7 @@ ready(function() {
                         target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
@@ -607,7 +608,7 @@ ready(function() {
 
                             modal.close();
 
-                            toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED', particle.getTitle()), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

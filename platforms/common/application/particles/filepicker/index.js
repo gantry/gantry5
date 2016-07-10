@@ -13,6 +13,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
     dropzone      = require('dropzone');
 
 var FilePicker = new prime({
@@ -42,7 +43,7 @@ var FilePicker = new prime({
         modal.open({
             method: 'post',
             data: this.data,
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-filepicker',
             remote: parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()),
             remoteLoaded: bind(this.loaded, this),
@@ -101,7 +102,7 @@ var FilePicker = new prime({
                     if (!this.data.filter) { done(); }
                     else {
                         if (file.name.match(this.data.filter)) { done(); }
-                        else { done('<code>' + file.name + '</code> does not match the filter: <br />  <code>' + this.data.filter + '</code>'); }
+                        else { done('<code>' + file.name + '</code> ' + translate('GANTRY5_PLATFORM_JS_FILTER_MISMATCH') + ': <br />  <code>' + this.data.filter + '</code>'); }
                     }
                 }, this),
                 url: bind(function(file) {
@@ -153,7 +154,7 @@ var FilePicker = new prime({
 
                 element.addClass('g-file-uploading');
                 uploader.progresser(progressConf);
-                uploader.attribute('title', 'processing...').find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', 'processing...');
+                uploader.attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING')).find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING'));
 
             }).on('processing', function(file) {
 
@@ -226,7 +227,7 @@ var FilePicker = new prime({
                             element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
                             element.dropzone = file;
                             uploader.remove();
-                            mtime.text('just now');
+                            mtime.text(translate('GANTRY5_PLATFORM_JUST_NOW'));
                         }
                     });
                 }, this), 500);

@@ -34,6 +34,7 @@ var prime         = require('prime'),
 
     modal         = require('../../ui').modal,
     asyncForEach  = require('../../utils/async-foreach'),
+    translate     = require('../../utils/translate'),
 
     request       = require('agent'),
 
@@ -91,7 +92,7 @@ var Fonts = new prime({
         this.field = $(data.field);
 
         modal.open({
-            content: 'Loading...',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-fonts',
             remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {

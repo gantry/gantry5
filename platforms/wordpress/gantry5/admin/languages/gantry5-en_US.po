@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2016-07-09 15:28-0700\n"
+"PO-Revision-Date: 2016-07-09 20:03-0700\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -627,7 +627,7 @@ msgstr "Atom"
 msgid "GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE"
 msgstr "No Inheritance, select an Outline first"
 
-msgid "GANTRY5_PLATFROM_INHERITING_FROM_X"
+msgid "GANTRY5_PLATFORM_INHERITING_FROM_X"
 msgstr "Inheriting from %s"
 
 msgid "GANTRY5_PLATFORM_LM_CLEAR_FULL"
@@ -668,3 +668,75 @@ msgstr "Preset 9"
 
 msgid "GANTRY5_PLATFORM_PRESET10"
 msgstr "Preset 10"
+
+msgid "GANTRY5_PLATFORM_JS_LOADING"
+msgstr "Loading..."
+
+msgid "GANTRY5_PLATFORM_JS_PROCESSING"
+msgstr "Processing..."
+
+msgid "GANTRY5_PLATFORM_JS_LM_SETTINGS"
+msgstr "%s Settings"
+
+msgid "GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS"
+msgstr "Configure %s Settings"
+
+msgid "GANTRY5_PLATFORM_JS_LM_ADD_ROW"
+msgstr "Add new row in %s"
+
+msgid "GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE"
+msgstr "This %s has been disabled and it will not be rendered on front-end. You can still configure, move and delete."
+
+msgid "GANTRY5_PLATFORM_JS_LM_GRID_EQUALIZE"
+msgstr "Equalize the width of blocks in this grid"
+
+msgid "GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE"
+msgstr "Sort or Move the Grid"
+
+msgid "GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE"
+msgstr "You need to stay in between the min and max range"
+
+msgid "GANTRY5_PLATFORM_JS_REVIEW_FIELDS"
+msgstr "Please review the fields in the modal and ensure you correct any invalid one."
+
+msgid "GANTRY5_PLATFORM_JS_INVALID_FIELDS"
+msgstr "Invalid Fields"
+
+msgid "GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED"
+msgstr "The Particle \"%s\" settings have been applied to the Layout. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED"
+msgstr "The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED"
+msgstr "The %s settings have been applied. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_SETTINGS_APPLIED"
+msgstr "Settings Applied"
+
+msgid "GANTRY5_PLATFORM_JS_FILTER_MISMATCH"
+msgstr "does not match the filter"
+
+msgid "GANTRY5_PLATFORM_JUST_NOW"
+msgstr "just now"
+
+msgid "GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE"
+msgstr "The key \"%s\" is a duplicate"
+
+msgid "GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED"
+msgstr "The key \"%s\" has been excluded and cannot be used"
+
+msgid "GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED"
+msgstr "You haven't saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
+
+msgid "GANTRY5_PLATFORM_JS_SAVE_SUCCESS"
+msgstr "The {{type}} {{verb}} been successfully saved! {{extras}}"
+
+msgid "GANTRY5_PLATFORM_SAVED"
+msgstr "Saved"
+
+msgid "GANTRY5_PLATFORM_LAST_SAVED"
+msgstr "Last Saved"
+
+msgid "GANTRY5_PLATFORM_JS_CSS_COMPILED"
+msgstr "The CSS was successfully compiled!"

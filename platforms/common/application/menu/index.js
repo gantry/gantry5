@@ -13,7 +13,8 @@ var ready         = require('elements/domready'),
     contains      = require('mout/array/contains'),
     indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    translate     = require('../utils/translate');
 
 var menumanager;
 
@@ -204,7 +205,7 @@ ready(function() {
         }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             data: data,
             overlayClickToClose: false,
@@ -286,7 +287,7 @@ ready(function() {
                         target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
@@ -326,7 +327,7 @@ ready(function() {
                             }
 
                             modal.close();
-                            toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

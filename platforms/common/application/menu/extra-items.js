@@ -12,7 +12,8 @@ var $             = require('elements'),
     getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
-    deepEquals    = require('mout/lang/deepEquals');
+    deepEquals    = require('mout/lang/deepEquals'),
+    translate     = require('../utils/translate');
 
 var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
 
@@ -58,7 +59,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             //data: data,
             remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
@@ -187,7 +188,7 @@ var StepTwo = function(data, content, button) {
 
                         menumanager.isNewParticle = false;
                         menumanager.emit('dragEnd', menumanager.map);
-                        toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                        toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                     } else { // it's field picker
                         var field = $('[name="' + picker.field + '"]'),
                             btnPicker = field.siblings('[data-g-instancepicker]'),
