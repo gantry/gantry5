@@ -462,14 +462,16 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $list = [];
         foreach ($blocks as $blockId => $block) {
-            foreach ($block->children as $id => $particle) {
-                if (!empty($particle->layout) || in_array($particle->type, $this->layout)) {
-                    continue;
-                }
-                if ($grouped) {
-                    $list[$particle->subtype][$particle->id] = $particle->title;
-                } else {
-                    $list[$particle->id] = $particle->title;
+            if (!empty($block->children)) {
+                foreach ($block->children as $id => $particle) {
+                    if (!empty($particle->layout) || in_array($particle->type, $this->layout)) {
+                        continue;
+                    }
+                    if ($grouped) {
+                        $list[$particle->subtype][$particle->id] = $particle->title;
+                    } else {
+                        $list[$particle->id] = $particle->title;
+                    }
                 }
             }
         }
@@ -759,7 +761,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param array $items
-     * @param object $section
+     * @param object $parent
      * @param object $block
      * @param string $inherit
      * @param array $index
