@@ -719,7 +719,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                 $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
                 $inherited = $outline ? $outline->find($inheritId) : null;
-                $include = $item->inherit->include;
+                $include = (array) $item->inherit->include;
 
                 foreach ($include as $part) {
                     switch ($part) {
