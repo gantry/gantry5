@@ -37,7 +37,7 @@ var refreshWordpressLinks = function (title, value) {
         currentURI = setParam(currentURI, 'view', currentView);
         History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
     }
-}
+};
 
 ready(function() {
     var body = $('body');

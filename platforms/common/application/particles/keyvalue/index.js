@@ -18,7 +18,7 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
 
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    translate     = require('../../translate');
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 

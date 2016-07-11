@@ -411,7 +411,7 @@ var refreshWordpressLinks = function (title, value) {
         currentURI = setParam(currentURI, 'view', currentView);
         History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
     }
-}
+};
 
 ready(function() {
     var body = $('body');
@@ -4353,7 +4353,8 @@ var $              = require('elements'),
     mm             = require('./menu'),
     configurations = require('./configurations'),
     positions      = require('./positions'),
-    changelog      = require('./changelog');
+    changelog      = require('./changelog'),
+    translate      = require('./utils/translate');
 
 require('elements/attributes');
 require('elements/events');
@@ -4407,13 +4408,13 @@ var prettyDate = {
 
 window.onbeforeunload = function() {
     if (flags.get('pending')) {
-        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+        return translate('GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED');
     }
 };
 
 ready(function() {
     var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+        sentence = translate('GANTRY5_PLATFORM_JS_SAVE_SUCCESS');
 
     // Close notification
     body.delegate('click', '[data-g-close]', function(event, element) {
@@ -4472,7 +4473,7 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        var feedback = 'Last Saved: ' + prettyDate.format(element.lastSaved);
+        var feedback = translate('GANTRY5_PLATFORM_LAST_SAVED') + ': ' + prettyDate.format(element.lastSaved);
         element
             .data('tip', feedback)
             .data('title', feedback);
@@ -4555,7 +4556,7 @@ ready(function() {
             saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
-            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
             return;
         }
 
@@ -4574,14 +4575,14 @@ ready(function() {
                 modal.close();
 
                 if ($('#styles')) {
-                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : translate('GANTRY5_PLATFORM_JS_CSS_COMPILED'));
                 }
 
                 toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
-                }), type + ' Saved');
+                }), type + ' ' + translate('GANTRY5_PLATFORM_SAVED'));
             }
 
             saves.disabled(false);
@@ -4719,7 +4720,7 @@ var modules = {
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":27,"./menu":34,"./pagesettings":36,"./particles":42,"./positions":46,"./styles":47,"./ui":52,"./ui/popover":54,"./ui/tooltips":59,"./utils/ajaxify-links":60,"./utils/field-validation":65,"./utils/flags-state":66,"./utils/get-ajax-suffix":67,"./utils/get-ajax-url":68,"./utils/rAF-polyfill":73,"agent":77,"elements":110,"elements/attributes":105,"elements/delegation":107,"elements/domready":108,"elements/events":109,"elements/insertion":111,"elements/traversal":133,"elements/zen":134,"moofx":135,"mout/queryString/setParam":246,"mout/string/interpolate":257,"mout/string/trim":268}],32:[function(require,module,exports){
+},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":27,"./menu":34,"./pagesettings":36,"./particles":42,"./positions":46,"./styles":47,"./ui":52,"./ui/popover":54,"./ui/tooltips":59,"./utils/ajaxify-links":60,"./utils/field-validation":65,"./utils/flags-state":66,"./utils/get-ajax-suffix":67,"./utils/get-ajax-url":68,"./utils/rAF-polyfill":73,"./utils/translate":75,"agent":77,"elements":110,"elements/attributes":105,"elements/delegation":107,"elements/domready":108,"elements/events":109,"elements/insertion":111,"elements/traversal":133,"elements/zen":134,"moofx":135,"mout/queryString/setParam":246,"mout/string/interpolate":257,"mout/string/trim":268}],32:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -7955,6 +7956,7 @@ var prime         = require('prime'),
 
     modal         = require('../../ui').modal,
     asyncForEach  = require('../../utils/async-foreach'),
+    translate     = require('../../utils/translate'),
 
     request       = require('agent'),
 
@@ -8012,7 +8014,7 @@ var Fonts = new prime({
         this.field = $(data.field);
 
         modal.open({
-            content: 'Loading...',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-fonts',
             remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {
@@ -8666,7 +8668,7 @@ domready(function() {
 
 module.exports = Fonts;
 
-},{"../../ui":52,"../../utils/async-foreach":61,"../../utils/decouple":62,"../../utils/elements.utils":63,"../../utils/elements.viewport":64,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"agent":77,"elements/domready":108,"elements/zen":134,"mout/array/append":161,"mout/array/combine":162,"mout/array/contains":163,"mout/array/find":168,"mout/array/forEach":171,"mout/array/insert":173,"mout/array/intersection":174,"mout/array/last":176,"mout/array/map":177,"mout/array/removeAll":179,"mout/array/split":182,"mout/function/bind":189,"mout/object/merge":234,"mout/string/properCase":260,"mout/string/trim":268,"mout/string/unhyphenate":271,"prime":297,"prime-util/prime/bound":293,"prime-util/prime/options":294,"prime/emitter":296,"prime/map":298,"webfontloader":313}],41:[function(require,module,exports){
+},{"../../ui":52,"../../utils/async-foreach":61,"../../utils/decouple":62,"../../utils/elements.utils":63,"../../utils/elements.viewport":64,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"../../utils/translate":75,"agent":77,"elements/domready":108,"elements/zen":134,"mout/array/append":161,"mout/array/combine":162,"mout/array/contains":163,"mout/array/find":168,"mout/array/forEach":171,"mout/array/insert":173,"mout/array/intersection":174,"mout/array/last":176,"mout/array/map":177,"mout/array/removeAll":179,"mout/array/split":182,"mout/function/bind":189,"mout/object/merge":234,"mout/string/properCase":260,"mout/string/trim":268,"mout/string/unhyphenate":271,"prime":297,"prime-util/prime/bound":293,"prime-util/prime/options":294,"prime/emitter":296,"prime/map":298,"webfontloader":313}],41:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
@@ -8674,6 +8676,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
 
     trim          = require('mout/string/trim'),
     contains      = require('mout/array/contains');
@@ -8701,7 +8704,7 @@ domready(function() {
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADINg'),
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
@@ -8855,7 +8858,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../../ui":52,"../../utils/elements.utils":63,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"elements/domready":108,"mout/array/contains":163,"mout/string/trim":268}],42:[function(require,module,exports){
+},{"../../ui":52,"../../utils/elements.utils":63,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"../../utils/translate":75,"elements/domready":108,"mout/array/contains":163,"mout/string/trim":268}],42:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -8880,7 +8883,8 @@ var $             = require('elements'),
     trim          = require('mout/string/trim'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
@@ -8933,7 +8937,7 @@ ready(function() {
         if (data.modal_close) { return true; }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
             overlayClickToClose: false,
@@ -9033,7 +9037,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../fields/submit":8,"../../ui":52,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"../../utils/wp-widgets-customizer":76,"agent":77,"elements":110,"elements/domready":108,"elements/zen":134,"mout/string/trim":268}],44:[function(require,module,exports){
+},{"../../fields/submit":8,"../../ui":52,"../../utils/get-ajax-suffix":67,"../../utils/get-ajax-url":68,"../../utils/translate":75,"../../utils/wp-widgets-customizer":76,"agent":77,"elements":110,"elements/domready":108,"elements/zen":134,"mout/string/trim":268}],44:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -9053,7 +9057,8 @@ var ready         = require('elements/domready'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -9166,7 +9171,7 @@ ready(function() {
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
             wrapper
-                .data('tip', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null))
+                .data('tip', duplicate ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE', keyValue) : (excluded ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED', keyValue) : null))
                 .data('tip-place', 'top-right')
                 .data('tip-spacing', 2)
                 .data('tip-offset', 8);
@@ -9216,7 +9221,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":52,"../../utils/get-ajax-suffix":67,"agent":77,"elements":110,"elements/domready":108,"elements/insertion":111,"elements/zen":134,"mout/array/contains":163,"mout/array/indexOf":172,"mout/array/last":176,"mout/array/some":181,"mout/object/has":231,"mout/object/keys":233,"mout/string/escapeUnicode":256,"mout/string/trim":268,"sortablejs":312}],45:[function(require,module,exports){
+},{"../../ui":52,"../../utils/get-ajax-suffix":67,"../../utils/translate":75,"agent":77,"elements":110,"elements/domready":108,"elements/insertion":111,"elements/zen":134,"mout/array/contains":163,"mout/array/indexOf":172,"mout/array/last":176,"mout/array/some":181,"mout/object/has":231,"mout/object/keys":233,"mout/string/escapeUnicode":256,"mout/string/trim":268,"sortablejs":312}],45:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
