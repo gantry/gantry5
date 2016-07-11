@@ -281,7 +281,7 @@ ready(function() {
                     target.hideIndicator();
                     target.showIndicator();
 
-                    var post = Submit(fakeDOM[0].elements, content.elements.content, {isRoot: true});
+                    var post = Submit(fakeDOM[0].elements, content.elements.content, {isRoot: isRoot});
 
                     if (post.invalid.length) {
                         target.disabled(false);

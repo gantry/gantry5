@@ -15,6 +15,7 @@
         - Fixed `Invalid argument supplied for foreach()` error when duplicating outline (#1416)
         - Fixed `Undefined property: stdClass::$childen` (#1431)
         - Fixed duplicating collection items not triggering the display of the multiple edit button (#1432)
+        - Fixed issue that was preventing Menu Item titles (in Menu Manager) to be renamed
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed warning in `Gantry 5 Particle` module about not using a Gantry 5 Theme (#1420)
