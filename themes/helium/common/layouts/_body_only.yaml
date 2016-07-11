@@ -12,5 +12,6 @@ layout:
 structure:
   mainbar:
     type: section
+    subtype: main
     attributes:
       boxed: ''

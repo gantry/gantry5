@@ -51,6 +51,8 @@ structure:
     attributes:
       boxed: ''
   header:
+    type: section
+    subtype: header
     attributes:
       boxed: ''
       class: g-flushed
@@ -81,12 +83,16 @@ structure:
       boxed: ''
   mainbar:
     type: section
+    subtype: main
   sidebar:
     type: section
+    subtype: aside
   container-main:
     attributes:
       boxed: ''
   footer:
+    type: section
+    subtype: footer
     attributes:
       boxed: ''
   offcanvas:
