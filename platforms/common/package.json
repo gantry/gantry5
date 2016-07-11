@@ -13,7 +13,7 @@
     "sifter": "^0.5.1",
     "slick": "^1.12.2",
     "sortablejs": "gantry/Sortable#master",
-    "webfontloader": "^1.6.24"
+    "webfontloader": "^1.6.26"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
@@ -23,12 +23,12 @@
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-sourcemaps": "^2.0.0-alpha",
-    "gulp-uglify": "^1.5.3",
+    "gulp-uglify": "^1.5.4",
     "gulp-util": "^3.0.7",
     "merge-stream": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^4.7.1"
+    "yargs": "^4.8.0"
   }
 }
