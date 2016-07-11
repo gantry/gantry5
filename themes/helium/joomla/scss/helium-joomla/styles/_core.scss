@@ -104,9 +104,7 @@ table.table-bordered {
     border-color: $base-border-color $base-border-color $base-border-color transparent;
 
     th, td {
-        border-left: 1px solid $base-border-color;
-        border-right: 0;
-        border-bottom: 0;
+        border-left-color: $base-border-color;
     }
 }
 

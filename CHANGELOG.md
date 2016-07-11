@@ -15,6 +15,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed warning in `Gantry 5 Particle` module about not using a Gantry 5 Theme (#1420)
+        - Fixed Bootstrap table having always a border (#1330)
 
 # 5.3.0
 ## 08/07/2016
