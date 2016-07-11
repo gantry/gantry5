@@ -1,8 +1,7 @@
 "use strict";
 
-var replace = require('mout/string/replace'),
-    G5T     = global.G5T;
+var replace = require('mout/string/replace');
 
 module.exports = function(key, replacement) {
-    return replace(G5T(key), '%s', replacement || '');
+    return replace(global.G5T(key), '%s', replacement || '');
 };
