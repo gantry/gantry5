@@ -7,6 +7,7 @@
     2. [](#improved)
         - Allow Presets description to be translatable (#1212)
         - Converted all hardcoded JS strings to translatable languages (#1212)
+        - Added proper HTML5 subtypes to sections in Helium
     3. [](#bugfix)
         - Fixed `Can't use method return value in write context` on PHP 5.4 (#1413)
         - Fixed `Document::addScript` not allowing string argument (#1414)
@@ -76,7 +77,7 @@
         - Fixed issue with `Link Title Attribute` menu setting in Joomla, where the value would be translated as subtitle in Gantry, rather than `title=""` attribute (#1176)
         - Fixed untranslated 404 page title (#1001)
         - Fixed wrong title in newly created outline
-        - Fixed content array particle: alias in link duplicating (#1400) 
+        - Fixed content array particle: alias in link duplicating (#1400)
         - Fixed particle module not caching Javascript / CSS (#977)
         - Fixed exception thrown in administration if parent theme was not enabled in Joomla
 3. [WordPress](#wordpress)
@@ -90,7 +91,7 @@
         - Fixed post type priority not being used in assignments (#1340)
         - Fixed menu particle missing `Expand on Hover` option (#1360)
         - Fixed Admin incompatibility with Jetpack (#1184)
-        - Fixed updating plugins causing endless maintenance mode when `display_errors = On` (#1271) 
+        - Fixed updating plugins causing endless maintenance mode when `display_errors = On` (#1271)
         - Fixed missing layout denying access to admin (#1319)
 
 # 5.2.18
