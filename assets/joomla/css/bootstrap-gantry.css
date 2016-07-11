@@ -4035,6 +4035,7 @@ input[type="submit"].btn.btn-mini {
 .pagination ul {
 	display: inline-block;
 	*display: inline;
+	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 0;
 	-webkit-border-radius: 4px;
