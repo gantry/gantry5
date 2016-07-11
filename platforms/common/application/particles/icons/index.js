@@ -33,7 +33,7 @@ domready(function() {
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
-            content: translate('GANTRY5_PLATFORM_JS_LOADINg'),
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
