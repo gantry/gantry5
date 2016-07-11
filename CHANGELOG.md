@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Added permanent warning at the top of admin when using PHP 5.4. Gantry will soon drop PHP 5.4 support. Please upgrade as soon as possible. [More details](http://gantry.org/blog/php54-end-of-support)
     2. [](#improved)
         - Allow Presets description to be translatable (#1212)
         - Converted all hardcoded JS strings to translatable languages (#1212) 

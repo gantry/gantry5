@@ -2025,6 +2025,19 @@ body.g-prime {
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
   position: relative;
 }
+#g5-container .g-php-outdated {
+  line-height: 1em;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 8px 0;
+  margin: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#g5-container .g-php-outdated a {
+  font-weight: bold;
+  text-decoration: underline;
+}
 #g5-container a {
   color: #439A86;
 }
