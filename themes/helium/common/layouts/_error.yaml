@@ -73,6 +73,7 @@ structure:
       boxed: ''
   mainbar:
     type: section
+    subtype: main
     attributes:
       class: ''
     block:
