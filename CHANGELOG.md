@@ -32,6 +32,9 @@
         - Fixed warning in `Gantry 5 Particle` module about not using a Gantry 5 Theme (#1420)
         - Fixed Bootstrap table having always a border (#1330)
         - Fixed Bootstrap pagination having too much margin (#1389)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Fixed `Missing argument 4 for gantry5_upgrader_source_selection()`
 
 # 5.3.0
 ## 08/07/2016

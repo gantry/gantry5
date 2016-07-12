@@ -101,7 +101,7 @@ function gantry5_upgrader_package_options($options) {
     return $options;
 }
 
-function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $options) {
+function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $options = []) {
     if (isset($options['gantry5_abort'])) {
         // Allow upgrading Gantry themes from uploader.
         if (file_exists($source . '/gantry/theme.yaml')) {
