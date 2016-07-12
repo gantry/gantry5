@@ -13,6 +13,9 @@
         - Definitive fix for z-index issue Layout Manager when sections were inheriting without children (#1430)
         - Always ensure that the `G5T` method (translations for JS) is available (#1434)
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Allow to install and update Gantry in Joomla 3.6
+        - Helium is now going to be available from Joomla Updates
     3. [](#bugfix)
         - Menu subtitles get wiped out from all menu items when saving menu (#1438)
         - Fixed missing language loading in Gantry 5 Particle Module (#1437)
