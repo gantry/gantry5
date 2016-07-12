@@ -2,7 +2,10 @@
 ## XX/07/2016
 
 1. [Common](#common)
+    2. [](#improved)
+        - Improved OwlCarousel color overlay support in Helium
     3. [](#bugfix)
+        - Fixed wrong dropdown menu item text hover color in Helium
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
 2. [Joomla](#joomla)
     3. [](#bugfix)

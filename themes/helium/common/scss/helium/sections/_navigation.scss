@@ -121,7 +121,7 @@
                 color: $navigation-text-color;
 
                 &:hover {
-                    color: fadeout($navigation-text-color, 80%);
+                    color: $accent-color-1;;
                 }
             }
 
