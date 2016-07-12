@@ -17348,7 +17348,8 @@ module.exports = SaveState;
 var replace = require('mout/string/replace');
 
 module.exports = function(key, replacement) {
-    return replace(global.G5T(key), '%s', replacement || '');
+    var G5T = global.G5T || function(key) { return key; };
+    return replace(G5T(key), '%s', replacement || '');
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 

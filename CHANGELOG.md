@@ -11,6 +11,7 @@
         - Fixed wrong dropdown menu item text hover color in Helium
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
         - Definitive fix for z-index issue Layout Manager when sections were inheriting without children (#1430)
+        - Always ensure that the `G5T` method (translations for JS) is available (#1434)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Menu subtitles get wiped out from all menu items when saving menu (#1438)
