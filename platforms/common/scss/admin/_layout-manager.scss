@@ -194,8 +194,8 @@ $atom: #9055AF;
                         opacity: 1;
                     }
                 }
-                
-                &.g-inheriting-children > .g-grid {
+
+                &.g-inheriting-children > .g-grid:not(:empty) {
                     &:before, &:after {
                         display: none !important;
                     }

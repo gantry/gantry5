@@ -12,7 +12,8 @@ var prime     = require('prime'),
     get       = require('mout/object/get'),
     has       = require('mout/object/has'),
     set       = require('mout/object/set'),
-    translate = require('../../utils/translate');
+    translate = require('../../utils/translate'),
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
 
 require('elements/traversal');
 
@@ -119,7 +120,7 @@ var Base = new prime({
     refreshInheritance: function() {},
 
     hasInheritance: function() {
-        return size(this.inherit);
+        return size(this.inherit) && this.inherit.outline != getCurrentOutline();
     },
 
     disable: function() {

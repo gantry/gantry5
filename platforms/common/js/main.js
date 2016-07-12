@@ -1243,7 +1243,8 @@ var prime     = require('prime'),
     get       = require('mout/object/get'),
     has       = require('mout/object/has'),
     set       = require('mout/object/set'),
-    translate = require('../../utils/translate');
+    translate = require('../../utils/translate'),
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
 
 require('elements/traversal');
 
@@ -1350,7 +1351,7 @@ var Base = new prime({
     refreshInheritance: function() {},
 
     hasInheritance: function() {
-        return size(this.inherit);
+        return size(this.inherit) && this.inherit.outline != getCurrentOutline();
     },
 
     disable: function() {
@@ -1408,7 +1409,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"../../utils/translate":75,"../id":26,"elements":110,"elements/traversal":133,"elements/zen":134,"mout/object/get":230,"mout/object/has":231,"mout/object/set":238,"mout/object/size":239,"mout/string/trim":268,"prime":297,"prime-util/prime/bound":293,"prime-util/prime/options":294,"prime/emitter":296}],12:[function(require,module,exports){
+},{"../../utils/get-outline":69,"../../utils/translate":75,"../id":26,"elements":110,"elements/traversal":133,"elements/zen":134,"mout/object/get":230,"mout/object/has":231,"mout/object/set":238,"mout/object/size":239,"mout/string/trim":268,"prime":297,"prime-util/prime/bound":293,"prime-util/prime/options":294,"prime/emitter":296}],12:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -3342,7 +3343,7 @@ ready(function() {
                             }
 
                             if (response.body.data.children) {
-                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: true, emptyInherits: true });
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: !!response.body.data.children.length, emptyInherits: true });
                                 builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
                             }
 
