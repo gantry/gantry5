@@ -184,7 +184,7 @@ class EventListener implements EventSubscriberInterface
                 }
 
                 // Avoid saving values which are also stored in Joomla.
-                unset($item['title'], $item['subtitle'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
+                unset($item['title'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
                 if (version_compare(JVERSION, '3.5.1', '>=')) {
                     unset($item['enabled']);
                 }

@@ -1,9 +1,12 @@
 # 5.3.2
-## 11/07/2016
+## XX/07/2016
 
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Menu subtitles get wiped out from all menu items when saving menu (#1438)
 
 # 5.3.1
 ## 11/07/2016
