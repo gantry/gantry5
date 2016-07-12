@@ -362,6 +362,8 @@
 // THEME PARTICLES STYLING
 
 .g-owlcarousel {
+    color: #eceeef;
+
     &.has-color-overlay {
         .g-owlcarousel-item-img:after {
             background-color: $accent-color-1;
