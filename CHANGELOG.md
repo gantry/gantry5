@@ -34,7 +34,7 @@
         - Fixed Bootstrap pagination having too much margin (#1389)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Fixed `Missing argument 4 for gantry5_upgrader_source_selection()`
+        - Fixed `Missing argument 4 for gantry5_upgrader_source_selection()` (#1440)
 
 # 5.3.0
 ## 08/07/2016
