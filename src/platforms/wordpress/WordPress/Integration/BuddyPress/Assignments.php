@@ -30,6 +30,7 @@ class AssignmentsBuddyPress implements AssignmentsInterface
 
     public function __construct()
     {
+        include_once(ABSPATH . 'wp-admin/includes/plugin.php');
         $this->_active = is_plugin_active('buddypress/bp-loader.php');
 
         if ($this->_active) {

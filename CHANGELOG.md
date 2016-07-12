@@ -16,6 +16,9 @@
     3. [](#bugfix)
         - Menu subtitles get wiped out from all menu items when saving menu (#1438)
         - Fixed missing language loading in Gantry 5 Particle Module (#1437)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed Fatal error when using BuddyPress (thanks @AlwynBarry - #1441)
 
 # 5.3.1
 ## 11/07/2016
