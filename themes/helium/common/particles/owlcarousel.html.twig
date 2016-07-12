@@ -2,23 +2,10 @@
 
 {% block particle %}
 
-    {% if particle.imageOverlay == 'enable' %}
-        {% styles with { priority: -10 } %}
-        <style type="text/css">
-            #g-owlcarousel-{{ id }} .g-owlcarousel-item-img:after {
-                background-color: {{ gantry.config.get('styles.accent.color-1') }};
-                background-image: -webkit-linear-gradient(-310deg, {{ gantry.config.get('styles.accent.color-1') }}, {{ gantry.config.get('styles.accent.color-2') }});
-                background-image: linear-gradient(40deg, {{ gantry.config.get('styles.accent.color-1') }}, {{ gantry.config.get('styles.accent.color-2') }});
-                opacity: 0.9;
-            }
-        </style>
-        {% endstyles -%}
-    {% endif %}
-
     <div class="{{ particle.class|e }}">
         {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
 
-        <div id="g-owlcarousel-{{ id }}" class="g-owlcarousel owl-carousel">
+        <div id="g-owlcarousel-{{ id }}" class="g-owlcarousel owl-carousel {% if particle.imageOverlay == 'enable' %}has-color-overlay{% endif %}">
 
             {% for item in particle.items %}
                 <div class="g-owlcarousel-item owl-item">

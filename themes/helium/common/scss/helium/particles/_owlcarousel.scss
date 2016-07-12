@@ -362,6 +362,14 @@
 // THEME PARTICLES STYLING
 
 .g-owlcarousel {
+    &.has-color-overlay {
+        .g-owlcarousel-item-img:after {
+            background-color: $accent-color-1;
+            @include linear-gradient(40deg, $accent-color-1, $accent-color-2);
+            opacity: 0.9;
+        }
+    }
+
     &:hover {
         .owl-nav {
             opacity: 1;
