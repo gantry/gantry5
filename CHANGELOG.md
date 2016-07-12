@@ -14,6 +14,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Menu subtitles get wiped out from all menu items when saving menu (#1438)
+        - Fixed missing language loading in Gantry 5 Particle Module (#1437)
 
 # 5.3.1
 ## 11/07/2016
