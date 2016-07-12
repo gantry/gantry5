@@ -107,20 +107,16 @@ content:
     attributes:
       items:
         -
-          text: Home
-          link: '#'
-          name: Home
-        -
-          text: RocketTheme
-          link: 'http://rockettheme.com'
-          name: RocketTheme
+          text: Gantry
+          link: 'http://gantry.org'
+          name: Gantry
         -
           text: Documentation
           link: 'http://docs.gantry.org'
           name: Documentation
         -
           text: Download
-          link: 'http://gantry.org'
+          link: 'http://gantry.org/downloads'
           name: Download
   totop-8670:
     title: 'To Top'
