@@ -111,16 +111,16 @@ content:
           link: '#'
           name: Home
         -
-          text: Features
-          link: '#'
-          name: Features
+          text: RocketTheme
+          link: 'http://rockettheme.com'
+          name: RocketTheme
         -
-          text: Subscriptions
-          link: '#'
-          name: Subscriptions
+          text: Documentation
+          link: 'http://docs.gantry.org'
+          name: Documentation
         -
-          text: New
-          link: '#'
-          name: News
+          text: Download
+          link: 'http://gantry.org'
+          name: Download
   totop-8670:
     title: 'To Top'
