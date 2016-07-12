@@ -152,6 +152,26 @@
 	margin: -($content-padding + $content-margin);
 }
 
+// Preset Thumbnails
+.g-preset-thumbnails {
+    img {
+        margin-bottom: 1rem;
+    }
+
+    @include breakpoint(mobile-only) {
+        text-align: center;
+
+        .g-block {
+            @include flex(0 0 auto);
+            width: 50% !important;
+        }
+
+        .g-content {
+            margin: 0;
+        }
+    }
+}
+
 @media print {
     #g-offcanvas {
         background: #fff !important;
