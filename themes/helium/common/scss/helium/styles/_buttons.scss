@@ -94,4 +94,12 @@
             color: white;
         }
     }
+
+    &.button-bevel {
+        border-radius: 0.25rem;
+    }
+
+    &.button-square {
+        border-radius: 0;
+    }
 }

@@ -2,6 +2,8 @@
 ## XX/07/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Added two new button variations to Helium - `button-square` and `button-bevel`
     2. [](#improved)
         - Improved OwlCarousel color overlay support in Helium
         - Improved `shadow` variation in Helium
