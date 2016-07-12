@@ -1979,7 +1979,7 @@ var Section = new prime({
                     outline = getOutlineNameById(this.inherit.outline),
                     html    = this.renderInheritanceLabel(outline);
 
-                this.block.appendChild(inherit.html(html).children());
+                inherit.html(html).children().after(this.block.find('> .section-header'));
             }
         }
     },
