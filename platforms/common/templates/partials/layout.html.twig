@@ -8,6 +8,7 @@
 
 {% block javascript %}
     <script type="text/javascript" defer="defer" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
+    {% include "@gantry-admin/partials/js-translations.html.twig" %}
     {{ parent() }}
 {% endblock %}
 
