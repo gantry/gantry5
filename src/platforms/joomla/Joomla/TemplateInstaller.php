@@ -594,7 +594,7 @@ class TemplateInstaller
 
             $outline = isset($item['outline']) ? $item['outline'] : (isset($item['layout']) ? $item['layout'] : null);
             $params = $this->getOutline($outline);
-            if ($params === null) {
+            if (!is_array($params)) {
                 $params = [
                     'preset' => isset($item['preset']) ? $item['preset'] : null,
                     'title' => isset($item['style']) ? $this->getStyleName($item['style']) : null
