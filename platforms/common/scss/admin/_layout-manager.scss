@@ -745,7 +745,9 @@ $atom: #9055AF;
         }
     }
 
-    .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
+    .g5-dialog > .g-tabs, .g5-popover-content > .g-tabs,
+    .g5-dialog form > .g-tabs, .g5-popover-content form > .g-tabs,
+    .g5-dialog .g5-content > .g-tabs, .g5-popover-content .g5-content > .g-tabs {
         @extend #navbar;
 
         &, i {

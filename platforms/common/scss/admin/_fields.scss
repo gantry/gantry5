@@ -1,8 +1,9 @@
-@import "particles/colorpicker";
-@import "particles/fonts";
-@import "particles/icons";
-@import "particles/filepicker";
-@import "particles/keyvalue";
+@import "fields/colorpicker";
+@import "fields/fonts";
+@import "fields/icons";
+@import "fields/filepicker";
+@import "fields/keyvalue";
+@import "fields/tabs";
 
 #g5-container {
     .g-particles-footer, .g-particles-header {

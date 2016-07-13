@@ -13,7 +13,9 @@
   overflow: visible;
 }
 
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog > .g-tabs ul, #g5-container .g5-popover-content > .g-tabs ul,
+#g5-container .g5-dialog form > .g-tabs ul, #g5-container .g5-popover-content form > .g-tabs ul,
+#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -42,7 +44,9 @@
   visibility: visible;
   overflow: visible;
 }
-#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog > .g-tabs ul, #g5-container .g5-popover-content > .g-tabs ul,
+#g5-container .g5-dialog form > .g-tabs ul, #g5-container .g5-popover-content form > .g-tabs ul,
+#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -3699,16 +3703,22 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
     display: none;
   }
 }
-#g5-container #navbar, #g5-container .g5-dialog .g-tabs, #g5-container .g5-popover-content .g-tabs {
+#g5-container #navbar, #g5-container .g5-dialog > .g-tabs, #g5-container .g5-popover-content > .g-tabs,
+#g5-container .g5-dialog form > .g-tabs, #g5-container .g5-popover-content form > .g-tabs,
+#g5-container .g5-dialog .g5-content > .g-tabs, #g5-container .g5-popover-content .g5-content > .g-tabs {
   font-size: 0.8rem;
   font-weight: 500;
   margin-right: -1px;
 }
-#g5-container #navbar .g-content, #g5-container .g5-dialog .g-tabs .g-content, #g5-container .g5-popover-content .g-tabs .g-content {
+#g5-container #navbar .g-content, #g5-container .g5-dialog > .g-tabs .g-content, #g5-container .g5-popover-content > .g-tabs .g-content,
+#g5-container .g5-dialog form > .g-tabs .g-content, #g5-container .g5-popover-content form > .g-tabs .g-content,
+#g5-container .g5-dialog .g5-content > .g-tabs .g-content, #g5-container .g5-popover-content .g5-content > .g-tabs .g-content {
   padding: 0;
   margin: 0.625rem 0;
 }
-#g5-container #navbar ul li:not(.config-select-wrap), #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap), #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) {
+#g5-container #navbar ul li:not(.config-select-wrap), #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap), #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap),
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap), #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap),
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap), #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) {
   display: inline-block;
   margin-right: -4px;
   background-color: #DADADA;
@@ -3718,21 +3728,31 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   -moz-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
 }
-#g5-container #navbar ul li:not(.config-select-wrap):hover, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap):hover, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap):hover {
+#g5-container #navbar ul li:not(.config-select-wrap):hover, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap):hover,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap):hover, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap):hover {
   background-color: #c8c8c8;
   color: #404040;
 }
-#g5-container #navbar ul li:not(.config-select-wrap).active, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active {
+#g5-container #navbar ul li:not(.config-select-wrap).active, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active {
   background-color: #f0f0f0;
 }
-#g5-container #navbar ul li:not(.config-select-wrap).active a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active a {
+#g5-container #navbar ul li:not(.config-select-wrap).active a, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active a,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active a, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active a {
   color: #314C59;
 }
-#g5-container #navbar ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap).active a:focus {
+#g5-container #navbar ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap).active a:focus,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap).active a:focus,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap).active a:focus, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap).active a:focus {
   background-color: inherit;
   color: #314C59;
 }
-#g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a {
+#g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a {
   color: #666;
   border-color: #C6C6C6;
   display: block;
@@ -3741,35 +3761,49 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-size: 1rem;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a {
+  #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a,
+  #g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a,
+  #g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a {
     padding: 0.938rem 0.738rem;
   }
 }
 @media only all and (max-width: 47.938rem) {
-  #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a {
+  #g5-container #navbar ul li:not(.config-select-wrap) a, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a,
+  #g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a,
+  #g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a {
     text-align: center;
     padding: 0.938rem 1.038rem;
   }
 }
-#g5-container #navbar ul li:not(.config-select-wrap) a:focus, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a:focus, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a:focus {
+#g5-container #navbar ul li:not(.config-select-wrap) a:focus, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a:focus, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a:focus,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a:focus, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a:focus,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a:focus, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a:focus {
   background-color: #c8c8c8;
   color: #404040;
 }
-#g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a i {
+#g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a i,
+#g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a i,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a i {
   margin-right: 0.6rem;
 }
 @media only all and (max-width: 47.938rem) {
-  #g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a i {
+  #g5-container #navbar ul li:not(.config-select-wrap) a i, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a i,
+  #g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a i,
+  #g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a i, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a i {
     margin: 0;
     font-size: 1.3rem;
   }
 }
 @media only all and (max-width: 47.938rem) {
-  #g5-container #navbar ul li:not(.config-select-wrap) a span, #g5-container .g5-dialog .g-tabs ul li:not(.config-select-wrap) a span, #g5-container .g5-popover-content .g-tabs ul li:not(.config-select-wrap) a span {
+  #g5-container #navbar ul li:not(.config-select-wrap) a span, #g5-container .g5-dialog > .g-tabs ul li:not(.config-select-wrap) a span, #g5-container .g5-popover-content > .g-tabs ul li:not(.config-select-wrap) a span,
+  #g5-container .g5-dialog form > .g-tabs ul li:not(.config-select-wrap) a span, #g5-container .g5-popover-content form > .g-tabs ul li:not(.config-select-wrap) a span,
+  #g5-container .g5-dialog .g5-content > .g-tabs ul li:not(.config-select-wrap) a span, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:not(.config-select-wrap) a span {
     display: none;
   }
 }
-#g5-container #navbar ul .config-select-wrap, #g5-container .g5-dialog .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content .g-tabs ul .config-select-wrap {
+#g5-container #navbar ul .config-select-wrap, #g5-container .g5-dialog > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content > .g-tabs ul .config-select-wrap,
+#g5-container .g5-dialog form > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content form > .g-tabs ul .config-select-wrap,
+#g5-container .g5-dialog .g5-content > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content .g5-content > .g-tabs ul .config-select-wrap {
   font-size: 1rem;
   position: relative;
   top: 0.6rem;
@@ -3777,24 +3811,34 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   float: left;
 }
 @media only all and (min-width: 48rem) and (max-width: 59.938rem) {
-  #g5-container #navbar ul .config-select-wrap, #g5-container .g5-dialog .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content .g-tabs ul .config-select-wrap {
+  #g5-container #navbar ul .config-select-wrap, #g5-container .g5-dialog > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content > .g-tabs ul .config-select-wrap,
+  #g5-container .g5-dialog form > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content form > .g-tabs ul .config-select-wrap,
+  #g5-container .g5-dialog .g5-content > .g-tabs ul .config-select-wrap, #g5-container .g5-popover-content .g5-content > .g-tabs ul .config-select-wrap {
     padding: 0 0.738rem;
   }
 }
-#g5-container #navbar ul .config-select-wrap #configuration-selector, #g5-container .g5-dialog .g-tabs ul .config-select-wrap #configuration-selector, #g5-container .g5-popover-content .g-tabs ul .config-select-wrap #configuration-selector {
+#g5-container #navbar ul .config-select-wrap #configuration-selector, #g5-container .g5-dialog > .g-tabs ul .config-select-wrap #configuration-selector, #g5-container .g5-popover-content > .g-tabs ul .config-select-wrap #configuration-selector,
+#g5-container .g5-dialog form > .g-tabs ul .config-select-wrap #configuration-selector, #g5-container .g5-popover-content form > .g-tabs ul .config-select-wrap #configuration-selector,
+#g5-container .g5-dialog .g5-content > .g-tabs ul .config-select-wrap #configuration-selector, #g5-container .g5-popover-content .g5-content > .g-tabs ul .config-select-wrap #configuration-selector {
   display: inline-block;
   margin-bottom: 0;
 }
-#g5-container #navbar ul ul, #g5-container .g5-dialog .g-tabs ul ul, #g5-container .g5-popover-content .g-tabs ul ul {
+#g5-container #navbar ul ul, #g5-container .g5-dialog > .g-tabs ul ul, #g5-container .g5-popover-content > .g-tabs ul ul,
+#g5-container .g5-dialog form > .g-tabs ul ul, #g5-container .g5-popover-content form > .g-tabs ul ul,
+#g5-container .g5-dialog .g5-content > .g-tabs ul ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul {
   text-transform: none;
 }
-#g5-container #navbar ul ul li a, #g5-container .g5-dialog .g-tabs ul ul li a, #g5-container .g5-popover-content .g-tabs ul ul li a {
+#g5-container #navbar ul ul li a, #g5-container .g5-dialog > .g-tabs ul ul li a, #g5-container .g5-popover-content > .g-tabs ul ul li a,
+#g5-container .g5-dialog form > .g-tabs ul ul li a, #g5-container .g5-popover-content form > .g-tabs ul ul li a,
+#g5-container .g5-dialog .g5-content > .g-tabs ul ul li a, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul li a {
   color: #999;
   padding-top: 0.2345rem;
   padding-bottom: 0.2345rem;
   padding-left: 42px;
 }
-#g5-container #navbar ul ul li a:before, #g5-container .g5-dialog .g-tabs ul ul li a:before, #g5-container .g5-popover-content .g-tabs ul ul li a:before {
+#g5-container #navbar ul ul li a:before, #g5-container .g5-dialog > .g-tabs ul ul li a:before, #g5-container .g5-popover-content > .g-tabs ul ul li a:before,
+#g5-container .g5-dialog form > .g-tabs ul ul li a:before, #g5-container .g5-popover-content form > .g-tabs ul ul li a:before,
+#g5-container .g5-dialog .g5-content > .g-tabs ul ul li a:before, #g5-container .g5-popover-content .g5-content > .g-tabs ul ul li a:before {
   content: "\f054";
   font-family: FontAwesome;
   font-size: 100%;
@@ -4688,15 +4732,25 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   color: #666;
   text-shadow: 0 0 1px #fff;
 }
-#g5-container .g5-dialog .g-tabs, #g5-container .g5-dialog .g-tabs i, #g5-container .g5-popover-content .g-tabs, #g5-container .g5-popover-content .g-tabs i {
+#g5-container .g5-dialog > .g-tabs, #g5-container .g5-dialog > .g-tabs i, #g5-container .g5-popover-content > .g-tabs, #g5-container .g5-popover-content > .g-tabs i,
+#g5-container .g5-dialog form > .g-tabs,
+#g5-container .g5-dialog form > .g-tabs i, #g5-container .g5-popover-content form > .g-tabs, #g5-container .g5-popover-content form > .g-tabs i,
+#g5-container .g5-dialog .g5-content > .g-tabs,
+#g5-container .g5-dialog .g5-content > .g-tabs i, #g5-container .g5-popover-content .g5-content > .g-tabs, #g5-container .g5-popover-content .g5-content > .g-tabs i {
   margin-right: 0 !important;
 }
-#g5-container .g5-dialog .g-tabs ul, #g5-container .g5-popover-content .g-tabs ul {
+#g5-container .g5-dialog > .g-tabs ul, #g5-container .g5-popover-content > .g-tabs ul,
+#g5-container .g5-dialog form > .g-tabs ul, #g5-container .g5-popover-content form > .g-tabs ul,
+#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul {
   background-color: #DADADA;
   margin: -1rem -1rem 1rem !important;
   border-radius: 0.1875rem 0.1875rem 0 0;
 }
-#g5-container .g5-dialog .g-tabs ul li:first-child, #g5-container .g5-dialog .g-tabs ul li:first-child a, #g5-container .g5-popover-content .g-tabs ul li:first-child, #g5-container .g5-popover-content .g-tabs ul li:first-child a {
+#g5-container .g5-dialog > .g-tabs ul li:first-child, #g5-container .g5-dialog > .g-tabs ul li:first-child a, #g5-container .g5-popover-content > .g-tabs ul li:first-child, #g5-container .g5-popover-content > .g-tabs ul li:first-child a,
+#g5-container .g5-dialog form > .g-tabs ul li:first-child,
+#g5-container .g5-dialog form > .g-tabs ul li:first-child a, #g5-container .g5-popover-content form > .g-tabs ul li:first-child, #g5-container .g5-popover-content form > .g-tabs ul li:first-child a,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:first-child,
+#g5-container .g5-dialog .g5-content > .g-tabs ul li:first-child a, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:first-child, #g5-container .g5-popover-content .g5-content > .g-tabs ul li:first-child a {
   border-radius: 0.1875rem 0 0 0;
 }
 #g5-container .g5-popover-content .g-tabs ul {
@@ -7028,6 +7082,59 @@ html.g5-dialog-open {
 }
 #g5-container .settings-block .g-keyvalue-field .g-keyvalue-value {
   margin-left: 1em;
+}
+
+#g5-container .settings-param.container-tabs {
+  padding: 0;
+}
+#g5-container .g5-tabs-container {
+  border-bottom: 1px solid #dedede;
+}
+#g5-container .g5-tabs-container .g-tabs ul {
+  /*@include border-width(null 1px 1px 1px);
+  @include border-style(null solid solid solid);
+  @include border-color(null #e6e6e6 #e6e6e6 #e6e6e6);*/
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0.5rem 0;
+}
+#g5-container .g5-tabs-container .g-tabs li {
+  display: inline-block;
+}
+#g5-container .g5-tabs-container .g-tabs li a {
+  display: block;
+  color: #439A86;
+}
+#g5-container .g5-tabs-container .g-tabs li a span {
+  padding: 0.2rem 0.5rem;
+}
+#g5-container .g5-tabs-container .g-tabs li a:hover {
+  color: #245348;
+}
+#g5-container .g5-tabs-container .g-tabs li.active a span {
+  color: #fff;
+  background-color: #439A86;
+  border-radius: 1rem;
+}
+#g5-container .g5-tabs-container .g-panes {
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-left-style: solid;
+  border-right-color: #e6e6e6;
+  border-left-color: #e6e6e6;
+}
+#g5-container .g5-tabs-container .g-panes .settings-param {
+  background-color: #fafafa;
+  border-bottom: 1px solid #ededed;
+  /*.settings-param-override {
+      background-color: transparentize(#e2e2e2, 0.5);
+  }*/
+}
+#g5-container .g5-tabs-container .g-panes .g-pane {
+  display: none;
+}
+#g5-container .g5-tabs-container .g-panes .g-pane.active {
+  display: block;
 }
 
 #g5-container .g-particles-footer, #g5-container .g-particles-header {
