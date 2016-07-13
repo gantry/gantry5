@@ -5,6 +5,7 @@
     1. [](#new)
         - Added two new button variations to Helium - `button-square` and `button-bevel`
         - Implemented new Tabs Container that allows to better organize Particles fields in the admin (#1026 - [more details](https://github.com/gantry/gantry5/issues/1026#issuecomment-232265381))
+        - Hydrogen and Helium now require Gantry 5.3.2
     2. [](#improved)
         - Improved OwlCarousel color overlay support in Helium
         - Improved `shadow` variation in Helium

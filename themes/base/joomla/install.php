@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 class G5_BaseInstallerScript
 {
-    public $requiredGantryVersion = '5.3.0';
+    public $requiredGantryVersion = '5.3.2';
 
     public function preflight($type, $parent)
     {
