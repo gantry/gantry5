@@ -727,7 +727,7 @@ msgid "GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED"
 msgstr "The key \"%s\" has been excluded and cannot be used"
 
 msgid "GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED"
-msgstr "You haven\\'t saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
+msgstr "You haven't saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
 
 msgid "GANTRY5_PLATFORM_JS_SAVE_SUCCESS"
 msgstr "The {{type}} {{verb}} been successfully saved! {{extras}}"

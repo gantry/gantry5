@@ -12,6 +12,7 @@
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
         - Definitive fix for z-index issue Layout Manager when sections were inheriting without children (#1430)
         - Always ensure that the `G5T` method (translations for JS) is available (#1434)
+        - Better escaping for JS translations
         - Fixed issue in Layout Manager when inheriting an empty Section from another Outline (#1435)
         - Fixed mis-representation of an inherited Section/Particle when set to "No Inheritance" but with all the Replace options selected
         - Fixed inherited Sections with empty grids, not displaying the "Drop particles here..." message
