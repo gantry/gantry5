@@ -28,6 +28,6 @@
             GANTRY5_PLATFORM_JS_SAVE_SUCCESS: {{ 'GANTRY5_PLATFORM_JS_SAVE_SUCCESS'|trans|json_encode|raw }},
         };
 
-        return map[key] | fallback | key;
+        return map[key] || fallback || key;
     };
 </script>
