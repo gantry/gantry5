@@ -186,9 +186,9 @@ GANTRY5_PLATFORM_CONTENT_SETTINGS: "Content Settings"
 GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS: "Save Content Settings"
 GANTRY5_PLATFORM_CREATE_OUTLINE: "Create New Outline"
 
-GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE: "You can define default options for Particles from <a %s href=\"%s\">%s</a>."
-GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING: "As of Gantry v5.3.0, the <strong>%s</strong> (previously known as <strong>Settings</strong>) tab in the Gantry admin has been hidden. This was done to cut down on any confusion as it presents an extra level of inheritance that is only needed for advanced usage cases."
-GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER: "If required, you can still enter to this administrative panel by <a %s href=\"%s\">clicking here</a>."
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE: 'You can define default options for Particles from <a %s href="%s">%s</a>.'
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING: 'As of Gantry v5.3.0, the <strong>%s</strong> (previously known as <strong>Settings</strong>) tab in the Gantry admin has been hidden. This was done to cut down on any confusion as it presents an extra level of inheritance that is only needed for advanced usage cases.'
+GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER: 'If required, you can still enter to this administrative panel by <a %s href="%s">clicking here</a>.'
 GANTRY5_PLATFORM_PARTICLE_PREVIEW: "Attention! This is a read-only view of the Particle you selected. Any change made here cannot be saved."
 GANTRY5_PLATFORM_ATOM_PREVIEW: "Attention! This is a read-only view of the Atom you selected. Any change made here cannot be saved."
 
@@ -222,18 +222,18 @@ GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE: "Sort or Move the Grid"
 GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE: "You need to stay in between the min and max range"
 GANTRY5_PLATFORM_JS_REVIEW_FIELDS: "Please review the fields in the modal and ensure you correct any invalid one."
 GANTRY5_PLATFORM_JS_INVALID_FIELDS: "Invalid Fields"
-GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED: "The Particle \"%s\" settings have been applied to the Layout. <br />Remember to click the Save button to store them."
+GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED: 'The Particle "%s" settings have been applied to the Layout. <br />Remember to click the Save button to store them.'
 GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED: "The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them."
 GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED: "The %s settings have been applied. <br />Remember to click the Save button to store them."
 GANTRY5_PLATFORM_JS_SETTINGS_APPLIED: "Settings Applied"
 GANTRY5_PLATFORM_JS_FILTER_MISMATCH: "does not match the filter"
 GANTRY5_PLATFORM_JUST_NOW: "just now"
-GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE: "The key \"%s\" is a duplicate"
-GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED: "The key \"%s\" has been excluded and cannot be used"
-GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED: "You haven\'t saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
+GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE: 'The key "%s" is a duplicate'
+GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED: 'The key "%s" has been excluded and cannot be used'
+GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED: "You haven't saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
 GANTRY5_PLATFORM_JS_SAVE_SUCCESS: "The {{type}} {{verb}} been successfully saved! {{extras}}"
 GANTRY5_PLATFORM_SAVED: "Saved"
 GANTRY5_PLATFORM_LAST_SAVED: "Last Saved"
 GANTRY5_PLATFORM_JS_CSS_COMPILED: "The CSS was successfully compiled!"
-GANTRY5_PLATFORM_PHP54_WARNING: "You are currently running PHP <strong>%s</strong> which will soon no longer be supported by Gantry. Please upgrade as soon as possible. <a target: "_blank" href: "http://gantry.org/blog/php54-end-of-support">More Details.</a>"
+GANTRY5_PLATFORM_PHP54_WARNING: 'You are currently running PHP <strong>%s</strong> which will soon no longer be supported by Gantry. Please upgrade as soon as possible. <a target: "_blank" href: "http://gantry.org/blog/php54-end-of-support">More Details.</a>'
 GANTRY5_PLATFORM_SAMPLE_DATA_INSTALLED: "Sample Data Installed"
