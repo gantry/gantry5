@@ -198,12 +198,12 @@ class TemplateInstaller
 
     public function createDefaults()
     {
-        $this->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => 'default'), 1);
         $this->createOutlines();
     }
 
     public function createSampleData()
     {
+        $this->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', [], 1);
         $this->installMenus();
     }
 
@@ -225,7 +225,7 @@ class TemplateInstaller
             $token = \JSession::getFormToken();
             $context += [
                 'name' => $name,
-                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1")
+                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1", false)
             ];
 
             return $twig->render($template, $context);
