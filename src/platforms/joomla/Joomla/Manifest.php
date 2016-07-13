@@ -42,6 +42,11 @@ class Manifest
         return $this->xml;
     }
 
+    public function getScriptFile()
+    {
+        return $this->xml->scriptfile;
+    }
+
     public function setPositions(array $positions)
     {
         sort($positions);

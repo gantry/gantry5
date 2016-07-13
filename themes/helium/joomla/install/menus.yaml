@@ -5,5 +5,5 @@ helium-theme:
   items:
     helium:
       title: 'Home'
-      layout: home_-_particles
+      outline: home
       home: 1

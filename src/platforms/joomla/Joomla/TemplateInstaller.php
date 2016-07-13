@@ -15,6 +15,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Outlines;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -22,6 +23,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class TemplateInstaller
 {
     protected $extension;
+    protected $outlines;
+    protected $script;
 
     public function __construct($extension = null)
     {
@@ -53,6 +56,11 @@ class TemplateInstaller
         }
         $this->extension = \JTable::getInstance('extension');
         $this->extension->load($id);
+    }
+
+    public function getPath()
+    {
+        return JPATH_SITE . '/templates/' . $this->extension->name;
     }
 
     public function getStyleName($title)
@@ -164,6 +172,171 @@ class TemplateInstaller
         }
 
         return $component_id;
+    }
+
+    public function installDefaults()
+    {
+        $installerScript = $this->getInstallerScript();
+
+        if (method_exists($installerScript, 'installDefaults')) {
+            $installerScript->installDefaults($this);
+        } else {
+            $this->createDefaults();
+        }
+    }
+
+    public function installSampleData()
+    {
+        $installerScript = $this->getInstallerScript();
+
+        if (method_exists($installerScript, 'installSampleData')) {
+            $installerScript->installSampleData($this);
+        } else {
+            $this->createSampleData();
+        }
+    }
+
+    public function createDefaults()
+    {
+        $this->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', array('configuration' => 'default'), 1);
+        $this->createOutlines();
+    }
+
+    public function createSampleData()
+    {
+        $this->installMenus();
+    }
+
+    public function render($template, $context = [])
+    {
+        try {
+            $loader = new \Twig_Loader_Filesystem();
+            $loader->setPaths([$this->getPath() . '/install/templates']);
+
+            $params = [
+                'cache' => null,
+                'debug' => false,
+                'autoescape' => 'html'
+            ];
+
+            $twig = new \Twig_Environment($loader, $params);
+
+            $name = $this->extension->name;
+            $token = \JSession::getFormToken();
+            $context += [
+                'name' => $name,
+                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1")
+            ];
+
+            return $twig->render($template, $context);
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Set available outlines.
+     *
+     * @param array $outlines If parameter isn't provided, outlines list get reloaded from the disk.
+     * @return $this
+     */
+    public function setOutlines(array $outlines = null)
+    {
+        $this->outlines = $outlines;
+
+        return $this;
+    }
+
+    /**
+     * Get list of available outlines.
+     *
+     * @param array $filter
+     * @return array
+     */
+    public function getOutlines(array $filter = null)
+    {
+        if (!isset($this->outlines)) {
+            $this->outlines = [];
+            $path = $this->getPath();
+
+            // If no outlines are given, try loading outlines.yaml file.
+            $file = YamlFile::instance($path . '/install/outlines.yaml');
+
+            if ($file->exists()) {
+                // Load the list from the yaml file.
+                $this->outlines = (array)$file->content();
+                $file->free();
+            } elseif (is_dir($path . '/install/outlines')) {
+                // Build the list from the install folder.
+                $folders = \JFolder::folders($path . '/install/outlines', '.', false, true);
+                foreach ($folders as $folder) {
+                    $this->outlines[basename($folder)] = [];
+                }
+            }
+        }
+
+        return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
+    }
+
+    public function getOutline($name)
+    {
+        $list = $this->getOutlines([$name]);
+
+        return reset($list);
+    }
+
+    /**
+     * @param array $filter
+     */
+    public function createOutlines(array $filter = null)
+    {
+        $outlines = $this->getOutlines($filter);
+
+        foreach ($outlines as $folder => $params) {
+            $this->createOutline($folder, $params);
+        }
+    }
+
+    /**
+     * @param string $folder
+     * @param array $params
+     * @return string|bool
+     */
+    public function createOutline($folder, array $params = [])
+    {
+        if (!$folder) {
+            throw new \RuntimeException('Cannot create outline without folder name');
+        }
+
+        $params += [
+            'preset' => null,
+            'title' => null
+        ];
+
+        $title = $params['title'] ?: ucwords(trim(strtr($folder, ['_' => ' '])));
+        $preset = $params['preset'];
+
+        if ($folder[0] !== '_') {
+            $title = $this->getStyleName("%s - {$title}");
+            $style = $this->getStyle($title);
+
+            if (!$style->id) {
+                // Only add style if it doesn't exist.
+                $style = $this->addStyle($title, ['preset' => $preset ?: $folder]);
+            }
+
+            $id = $style->id;
+
+        } else {
+            $id = $folder;
+        }
+
+        // Copy configuration for the new layout.
+        if ($this->copyCustom($folder, $id) && isset($style)) {
+            $this->updateStyle($title, ['preset' => $preset ?: $folder]);
+        }
+
+        return $id;
     }
 
     /**
@@ -312,7 +485,7 @@ class TemplateInstaller
     public function cleanup()
     {
         $name = $this->extension->name;
-        $path = JPATH_SITE . '/templates/' . $name;
+        $path = $this->getPath();
 
         // Remove compiled CSS files if they exist.
         $cssPath = $path . '/custom/css-compiled';
@@ -358,8 +531,16 @@ class TemplateInstaller
         CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
         CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
 
+        $this->finalize();
+    }
+
+    public function finalize()
+    {
+        $gantry = Gantry::instance();
+
         /** @var Outlines $outlines */
         $outlines = $gantry['outlines'];
+        $name = $this->extension->name;
 
         // Update positions in manifest file.
         $positions = $outlines->positions();
@@ -372,8 +553,7 @@ class TemplateInstaller
     public function installMenus(array $menus = null, $parent = 1)
     {
         if ($menus === null) {
-            $name = $this->extension->name;
-            $path = JPATH_SITE . '/templates/' . $name;
+            $path = $this->getPath();
 
             $file = YamlFile::instance($path . '/install/menus.yaml');
             $menus = (array) $file->content();
@@ -412,22 +592,17 @@ class TemplateInstaller
                 'alias' => $alias
             ];
 
-            if (isset($item['layout']) && $item['layout'][0] !== '_') {
-                $styleName = '%s - ' . ucwords(trim(strtr($item['layout'], ['_' => ' '])));
-                $styleName = $this->getStyleName($styleName);
-                $style = $this->getStyle($styleName);
-
-                if (!$style->id) {
-                    $style = $this->addStyle($styleName, ['preset' => $item['layout']]);
-                } else {
-                    $style = $this->updateStyle($styleName, ['preset' => $item['layout']]);
-                }
-
-                // Copy configuration for the new layout.
-                $this->copyCustom($item['layout'], $style->id);
-
-                $item['template_style_id'] = $style->id;
+            $outline = isset($item['outline']) ? $item['outline'] : (isset($item['layout']) ? $item['layout'] : null);
+            $params = $this->getOutline($outline);
+            if ($params === null) {
+                $params = [
+                    'preset' => isset($item['preset']) ? $item['preset'] : null,
+                    'title' => isset($item['style']) ? $this->getStyleName($item['style']) : null
+                ];
             }
+
+            $id = $outline ? $this->createOutline($outline, $params) : 0;
+            $item['template_style_id'] = (string)(int) $id === (string) $id ? $id : 0;
 
             // If $parent = 0, do dry run.
             $itemId = $parent ? $this->addMenuItem($item, $parent, true) : 0;
@@ -437,14 +612,55 @@ class TemplateInstaller
         }
     }
 
+    /**
+     * @param string $layout
+     * @param string $id
+     * @return bool True if files were copied over.
+     */
     protected function copyCustom($layout, $id)
     {
-        $path = JPATH_SITE . '/templates/' . $this->extension->name;
+        $path = $this->getPath();
 
-        $src = $path . '/install/layouts/' . $layout;
+        // Only copy files if the target id doesn't exist.
         $dst = $path . '/custom/config/' . $id;
-        if (is_dir($src) && !is_dir($dst)) {
-            \JFolder::copy($src, $dst);
+        if (!$layout || !$id || is_dir($dst)) {
+            return false;
         }
+
+        // New location for G5.3.2+
+        $src = $path . '/install/outlines/' . $layout;
+        if (!is_dir($src)) {
+            // Old and deprecated location.
+            $src = $path . '/install/layouts/' . $layout;
+        }
+
+        if (!is_dir($src)) {
+            return false;
+        }
+
+        return \JFolder::copy($src, $dst);
+    }
+
+    protected function getInstallerScript()
+    {
+        if (!$this->script) {
+            $className = $this->extension->name . 'InstallerScript';
+
+            if (!class_exists($className)) {
+                $manifest = new Manifest($this->extension->name);
+                $file = $manifest->getScriptFile();
+
+                $path = "{$this->getPath()}/{$file}";
+                if ($file && is_file($path)) {
+                    require_once $path;
+                }
+            }
+
+            if (class_exists($className)) {
+                $this->script = new $className;
+            }
+        }
+
+        return $this->script;
     }
 }

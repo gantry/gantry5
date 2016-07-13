@@ -24,25 +24,23 @@ class Install extends HtmlController
 {
     public function index()
     {
-        if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
-            $installer = new TemplateInstaller;
-            $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus();
-            $installer->cleanup();
+        if (!$this->container->authorize('updates.manage')) {
+            $this->forbidden();
         }
 
-        return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);
-    }
-
-    public function display($id)
-    {
         if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
             $installer = new TemplateInstaller;
-            $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus();
-            $installer->cleanup();
         }
 
-        return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);
+        if (isset($installer)) {
+            $installer->loadExtension($this->container['theme.name']);
+            $installer->installDefaults();
+            $installer->installSampleData();
+            $installer->finalize();
+
+            $this->params['content'] = $installer->render('sampledata.html.twig');
+        }
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/install/install.html.twig', $this->params);
     }
 }

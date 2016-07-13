@@ -743,3 +743,6 @@ msgstr "The CSS was successfully compiled!"
 
 msgid "GANTRY5_PLATFORM_PHP54_WARNING"
 msgstr "You are currently running PHP <strong>%s</strong> which will soon no longer be supported by Gantry. Please upgrade as soon as possible. <a target=\"_blank\" href=\"http://gantry.org/blog/php54-end-of-support\">More Details.</a>"
+
+msgid "GANTRY5_PLATFORM_SAMPLE_DATA_INSTALLED"
+msgstr "Sample Data Installed"
