@@ -613,10 +613,6 @@ class TemplateInstaller
             }
 
             if (!empty($menu['items'])) {
-                $this->copyCustom('_body_only', '_body_only');
-                $this->copyCustom('_error', '_error');
-                $this->copyCustom('_offline', '_offline');
-                $this->copyCustom('default', 'default');
                 $this->addMenuItems($menutype, $menu['items'], (int) $parent);
             }
         }
@@ -674,11 +670,7 @@ class TemplateInstaller
             $src = $path . '/install/layouts/' . $layout;
         }
 
-        if (!is_dir($src)) {
-            return false;
-        }
-
-        return \JFolder::copy($src, $dst);
+        return is_dir($src) ? \JFolder::copy($src, $dst) : \JFolder::create($dst);
     }
 
     protected function getInstallerScript()

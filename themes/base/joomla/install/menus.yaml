@@ -5,5 +5,5 @@ base-theme:
   items:
     base-theme:
       title: 'Home'
-      layout: home
+      outline: home
       home: 1
