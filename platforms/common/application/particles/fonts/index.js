@@ -199,7 +199,7 @@ var Fonts = new prime({
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
         }
 
-        var noConflict = isLocal ? '[data-category="local-fonts"]' : 'not([data-category="local-fonts"])',
+        var noConflict = isLocal ? '[data-category="local-fonts"]' : ':not([data-category="local-fonts"])',
             element = $('ul.g-fonts-list > [data-font="' + name + '"]' + noConflict);
         variants = variants || element.data('variants').split(',') || ['regular'];
 
@@ -501,8 +501,8 @@ var Fonts = new prime({
                 variation = this.selected.selected,
                 charset   = this.selected.charsets;
 
-            if (variation.length == 1 && variation[0] == 'regular') { variation = []; }
-            if (charset.length == 1 && charset[0] == 'latin') { charset = []; }
+            if (variation && variation.length == 1 && variation[0] == 'regular') { variation = []; }
+            if (charset && charset.length == 1 && charset[0] == 'latin') { charset = []; }
 
             if (contains(variation, 'regular')) {
                 removeAll(variation, 'regular');
