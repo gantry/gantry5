@@ -9,7 +9,7 @@
     2. [](#improved)
         - Improved OwlCarousel color overlay support in Helium
         - Improved `shadow` variation in Helium
-        - Changed Joomla Articles and Wordpress Posts particle to use the new Tabs container
+        - Changed Joomla Articles and WordPress Posts particle to use the new Tabs container
     3. [](#bugfix)
         - Fixed wrong dropdown menu item text hover color in Helium
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
