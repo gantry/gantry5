@@ -58,7 +58,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.3.*
+    gantry: 5.3.2
 
   block-variations:
     Box Variations:
