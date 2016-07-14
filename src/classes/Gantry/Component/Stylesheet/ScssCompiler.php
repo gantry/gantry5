@@ -72,6 +72,8 @@ class ScssCompiler extends CssCompiler
     {
         // Buy some extra time as compilation may take a lot of time in shared environments.
         @set_time_limit(30);
+        @set_time_limit(60);
+        @set_time_limit(90);
         ob_start();
 
         $gantry = Gantry::instance();
