@@ -12,6 +12,16 @@
         @include button-color($button-bg, $white);
     }
 
+    button.disabled, .button[disabled],
+    button.disabled:focus, .button[disabled]:focus {
+        background: darken(#f0f0f0, 10%);
+        color: $white;
+        cursor: default;
+        &:active {
+            margin: 0;
+        }
+    }
+
     .button-simple {
         @include button-color(#eee, #a2a2a2);
     }

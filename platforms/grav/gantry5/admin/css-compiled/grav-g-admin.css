@@ -127,6 +127,16 @@ body #admin-main .admin-block {
   background: #8a8a8a;
   color: #fff;
 }
+#admin-main #g5-container button.disabled, #admin-main #g5-container .button[disabled],
+#admin-main #g5-container button.disabled:focus, #admin-main #g5-container .button[disabled]:focus {
+  background: #d7d7d7;
+  color: #fff;
+  cursor: default;
+}
+#admin-main #g5-container button.disabled:active, #admin-main #g5-container .button[disabled]:active,
+#admin-main #g5-container button.disabled:focus:active, #admin-main #g5-container .button[disabled]:focus:active {
+  margin: 0;
+}
 #admin-main #g5-container .button-simple {
   background: #eee;
   color: #a2a2a2;
