@@ -1,9 +1,19 @@
 #g5-container {
     .settings-block {
         input, textarea, select {
+            background-color: $white;
             &:focus {
                 border-color: rgba($core-accent, .5);
             }
+        }
+
+        .fa {
+            height: 1.3rem;
+            line-height: 1.3rem;
+        }
+
+        .g-selectize-control .g-item {
+            vertical-align: middle;
         }
     }
 }

@@ -119,11 +119,67 @@ body #admin-main .admin-block {
   left: 4.2rem;
 }
 
-#g5-container .button-primary {
+#admin-main #g5-container .button {
+  background: #999999;
+  color: #fff;
+}
+#admin-main #g5-container .button:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button:focus {
+  background: #8a8a8a;
+  color: #fff;
+}
+#admin-main #g5-container .button-simple {
+  background: #eee;
+  color: #a2a2a2;
+}
+#admin-main #g5-container .button-simple:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button-simple:focus {
+  background: #dfdfdf;
+  color: #a2a2a2;
+}
+#admin-main #g5-container .button-primary {
   background: #3180c2;
   color: #fff;
 }
-#g5-container .button-primary:not(.disabled):not([disabled]):hover, #g5-container .button-primary:focus {
+#admin-main #g5-container .button-primary:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button-primary:focus {
+  background: #2b70aa;
+  color: #fff;
+}
+#admin-main #g5-container .button-secondary {
+  background: #314C59;
+  color: #fff;
+}
+#admin-main #g5-container .button-secondary:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button-secondary:focus {
+  background: #263b45;
+  color: #fff;
+}
+#admin-main #g5-container .button.red {
+  background: #ed5565;
+  color: #fff;
+}
+#admin-main #g5-container .button.red:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button.red:focus {
+  background: #ea394c;
+  color: #fff;
+}
+#admin-main #g5-container .button.yellow {
+  background: #ffce54;
+  color: #876000;
+}
+#admin-main #g5-container .button.yellow:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button.yellow:focus {
+  background: #ffc535;
+  color: #876000;
+}
+#admin-main #g5-container .input-group-btn .button {
+  background: #f6f6f6;
+  color: #111;
+}
+#admin-main #g5-container .input-group-btn .button:not(.disabled):not([disabled]):hover, #admin-main #g5-container .input-group-btn .button:focus {
+  background: #e7e7e7;
+  color: #111;
+}
+#admin-main #g5-container .button-primary {
+  background: #3180c2;
+  color: #fff;
+}
+#admin-main #g5-container .button-primary:not(.disabled):not([disabled]):hover, #admin-main #g5-container .button-primary:focus {
   background: #2b70aa;
   color: #fff;
 }
@@ -232,8 +288,18 @@ body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;
 }
 
+#g5-container .settings-block input, #g5-container .settings-block textarea, #g5-container .settings-block select {
+  background-color: #fff;
+}
 #g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
   border-color: rgba(49, 128, 194, 0.5);
+}
+#g5-container .settings-block .fa {
+  height: 1.3rem;
+  line-height: 1.3rem;
+}
+#g5-container .settings-block .g-selectize-control .g-item {
+  vertical-align: middle;
 }
 
 #g5-container #footer {
