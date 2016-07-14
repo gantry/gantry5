@@ -21,7 +21,7 @@
             ({{ position.name }})
         </small>
     </h4>
-    <div class="inner-params" style="height: 257px; overflow: auto;">
+    <div class="inner-params" style="height: 257px; overflow: auto;" data-position="{{ position.toJson(true)|e('html_attr') }}">
         <ul>
             {% set statuses = {
                 all: {

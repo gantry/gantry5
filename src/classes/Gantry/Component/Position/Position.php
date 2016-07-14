@@ -19,6 +19,8 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Symfony\Component\Yaml\Exception\DumpException;
+use Symfony\Component\Yaml\Yaml;
 
 class Position extends Collection
 {
@@ -197,14 +199,50 @@ class Position extends Collection
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray($includeModules = false)
     {
-        return [
+        $array = [
+            'name' => $this->name,
             'title' => $this->title,
-            'ordering' => $this->items
         ];
+
+        if (!$includeModules) {
+            $array['ordering'] = $this->items;
+
+        } else {
+            $list = [];
+            foreach ($this->getIterator() as $key => $module) {
+                $list[$key] = $module->toArray();
+            }
+            $array['modules'] = $list;
+        }
+
+        return $array;
     }
 
+    /**
+     * @param int $inline
+     * @param int $indent
+     * @param bool $includeModules
+     * @return string
+     */
+    public function toYaml($inline = 3, $indent = 2, $includeModules = false)
+    {
+        return Yaml::dump($this->toArray($includeModules), $inline, $indent, true, false);
+    }
+
+    /**
+     * @param bool $includeModules
+     * @return string
+     */
+    public function toJson($includeModules = false)
+    {
+        return json_encode($this->toArray($includeModules));
+    }
+
+    /**
+     * @return array
+     */
     public function listModules()
     {
         $list = [];
@@ -215,6 +253,9 @@ class Position extends Collection
         return $list;
     }
 
+    /**
+     * @param $data
+     */
     protected function load($data)
     {
         if ($data === null) {
