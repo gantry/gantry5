@@ -12,6 +12,7 @@ namespace Gantry\Joomla;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Outlines;
@@ -22,6 +23,12 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class TemplateInstaller
 {
+    /**
+     * Set to true if in Gantry.
+     *
+     * @var bool
+     */
+    public $initialized = false;
     protected $extension;
     protected $outlines;
     protected $script;
@@ -308,6 +315,10 @@ class TemplateInstaller
             throw new \RuntimeException('Cannot create outline without folder name');
         }
 
+        $this->initialize();
+
+        $created = false;
+
         $params += [
             'preset' => null,
             'title' => null
@@ -322,7 +333,8 @@ class TemplateInstaller
 
             if (!$style->id) {
                 // Only add style if it doesn't exist.
-                $style = $this->addStyle($title, ['preset' => $preset ?: $folder]);
+                $style = $this->addStyle($title, []);
+                $created = true;
             }
 
             $id = $style->id;
@@ -331,9 +343,22 @@ class TemplateInstaller
             $id = $folder;
         }
 
+        $target = $folder !== 'default' ? $id : $folder;
+
         // Copy configuration for the new layout.
-        if ($this->copyCustom($folder, $id) && isset($style)) {
-            $this->updateStyle($title, ['preset' => $preset ?: $folder]);
+        if (($this->copyCustom($folder, $target) || $created) && isset($style)) {
+            // Update layout and save it.
+            $layout = Layout::load($target, $preset);
+            $layout->save()->saveIndex();
+
+            if ($id !== $target) {
+                // Default outline: Inherit everything from the base.
+                $layout->inheritAll()->name = $id;
+                $layout->save()->saveIndex();
+            }
+
+            // Update preset in Joomla table.
+            $this->updateStyle($title, ['preset' => $layout['preset']['name']]);
         }
 
         return $id;
@@ -482,8 +507,21 @@ class TemplateInstaller
         $db->execute();
     }
 
-    public function cleanup()
+    /**
+     * @deprecated 5.3.2
+     */
+    public function creanup()
     {
+        $this->initialize();
+        $this->finalize();
+    }
+
+    public function initialize()
+    {
+        if ($this->initialized) {
+            return;
+        }
+
         $name = $this->extension->name;
         $path = $this->getPath();
 
@@ -531,11 +569,13 @@ class TemplateInstaller
         CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
         CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
 
-        $this->finalize();
+        $this->initialized = true;
     }
 
     public function finalize()
     {
+        $this->initialize();
+
         $gantry = Gantry::instance();
 
         /** @var Outlines $outlines */

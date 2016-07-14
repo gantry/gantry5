@@ -308,6 +308,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $this->timestamp = $file->modified();
         $this->exists = true;
 
+        static::$instances[$this->name] = $this;
+
         return $this;
     }
 
@@ -349,7 +351,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
         $file->free();
 
-        static::$indexes['name'] = $index;
+        static::$indexes[$this->name] = $index;
 
         return $this;
     }
@@ -924,9 +926,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param  string $name
+     * @param  string $preset
      * @return static
      */
-    public static function load($name)
+    public static function load($name, $preset = null)
     {
         if (!$name) {
             throw new \BadMethodCallException('Layout needs to have a name');
@@ -938,13 +941,17 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $locator = $gantry['locator'];
 
         $layout = null;
-        $preset = null;
         $filename = $locator("gantry-config://{$name}/layout.yaml");
 
         // If layout file doesn't exists, figure out what preset was used.
         if (!$filename) {
-            $index = static::loadIndex($name, true);
-            $preset = $index['preset']['name'];
+
+            // Attempt to load the index file.
+            $indexFile = $locator("gantry-config://{$name}/index.yaml");
+            if ($indexFile || !$preset) {
+                $index = static::loadIndex($name, true);
+                $preset = $index['preset']['name'];
+            }
 
             try {
                 $layout = static::preset($preset);

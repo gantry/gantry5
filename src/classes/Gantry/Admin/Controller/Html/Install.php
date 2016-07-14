@@ -33,6 +33,7 @@ class Install extends HtmlController
         }
 
         if (isset($installer)) {
+            $installer->initialized = true;
             $installer->loadExtension($this->container['theme.name']);
             $installer->installDefaults();
             $installer->installSampleData();

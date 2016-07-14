@@ -61,6 +61,7 @@ class G5_HeliumInstallerScript
     public function postflight($type, $parent)
     {
         $installer = new Gantry\Joomla\TemplateInstaller($parent);
+        $installer->initialize();
 
         // Install sample data on first install.
         if (in_array($type, array('install', 'discover_install'))) {
@@ -77,7 +78,7 @@ class G5_HeliumInstallerScript
             echo $installer->render('update.html.twig');
         }
 
-        $installer->cleanup();
+        $installer->finalize();
     }
 
     /**
