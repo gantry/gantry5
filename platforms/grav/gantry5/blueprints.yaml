@@ -73,7 +73,7 @@ form:
     compile_yaml:
       type: toggle
       label: Compile YAML
-      description: Compile YAML configuration files into PHP, making page loads significally faster.
+      description: Compile YAML configuration files into PHP, making page loads significantly faster.
       highlight: 1
       default: 1
       options:
@@ -85,7 +85,7 @@ form:
     compile_twig:
       type: toggle
       label: Compile Twig
-      description: Compile Twig template files into PHP, making page loads significally faster.
+      description: Compile Twig template files into PHP, making page loads significantly faster.
       highlight: 1
       default: 1
       options:
