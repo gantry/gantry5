@@ -1,5 +1,15 @@
-<div class="well">
-    <h1>Helium template installed!</h1>
+{% include 'style.html.twig' %}
 
-    <p>If you wish, you can also install <a href="{{ install_url }}" class="btn btn-warning">Sample Data</a>.</p>
+<div class="g5i">
+    <h1>
+        <span class="g5-title">{{ name }} Template Installed</span>
+        <span class="g5-info">v{{ version }} / {{ date }}</span>
+    </h1>
+
+    <p>By Installing Sample Data a new Home menu item will be created.The Home menu item and this template will be set as default. Other sample pages will be created as well. Click the button below to proceed.</p>
+
+    <div class="g5-actions">
+        <a href="{{ install_url }}" class="g5-button"><span class="g5-icon icon-cube"></span> Install Sample Data</a>
+        <a href="{{ edit_url }}" class="g5-button">Configure Helium <span class="g5-icon icon-chevron-right"></span></a>
+    </div>
 </div>
