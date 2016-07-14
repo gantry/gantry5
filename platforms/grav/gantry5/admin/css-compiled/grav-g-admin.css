@@ -93,10 +93,10 @@ body #admin-main .admin-block {
 }
 #g5-container #main-header {
   position: fixed;
-  z-index: 10;
+  z-index: 2;
   top: 0;
   right: 0;
-  left: 20%;
+  left: 240px;
   height: 4.2rem;
 }
 #g5-container #main-header .g-content {
@@ -113,6 +113,10 @@ body #admin-main .admin-block {
   top: 4rem !important;
   right: 1rem !important;
   left: inherit !important;
+}
+
+.sidebar-closed #g5-container #main-header {
+  left: 4.2rem;
 }
 
 #g5-container .button-primary {
