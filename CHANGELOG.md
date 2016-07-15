@@ -29,6 +29,8 @@
         - Helium is now going to be available from Joomla Updates
         - Improve template installation by adding support for nice looking installation and upgrade messages (written in twig)
         - Add support to install sample data separately from the template
+    2. [](#improved)
+        - Helium: Enhanced Menu Modules in Offcanvas (#1442)
     3. [](#bugfix)
         - Menu subtitles get wiped out from all menu items when saving menu (#1438)
         - Fixed missing language loading in Gantry 5 Particle Module (#1437)
