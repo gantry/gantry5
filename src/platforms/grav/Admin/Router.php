@@ -67,14 +67,6 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '.json';
 
-
-        $this->container['routes'] = [
-            '1' => '/%s',
-            'themes' => '',
-
-            'picker/layouts' => '/layouts',
-        ];
-
         $nonce = Utils::getNonce('gantry-admin');
         $this->container['routes'] = [
             '1' => '/%s?nonce=' . $nonce,
