@@ -32,6 +32,8 @@ class TemplateInstaller
     protected $extension;
     protected $outlines;
     protected $script;
+    protected $manifest;
+    protected $actions = [];
 
     public function __construct($extension = null)
     {
@@ -52,6 +54,8 @@ class TemplateInstaller
         $property = $reflectionClass->getProperty('extension');
         $property->setAccessible(true);
         $this->extension = $property->getValue($install);
+
+        $this->manifest = $install->getManifest();
 
         return $this;
     }
@@ -75,16 +79,6 @@ class TemplateInstaller
         return \JText::sprintf($title, \JText::_($this->extension->name));
     }
 
-    public function createStyle()
-    {
-        $style = \JTable::getInstance('Style', 'TemplatesTable');
-        $style->reset();
-        $style->template = $this->extension->element;
-        $style->client_id = $this->extension->client_id;
-
-        return $style;
-    }
-
     public function getStyle($name = null)
     {
         if (is_numeric($name)) {
@@ -96,10 +90,10 @@ class TemplateInstaller
 
         $style = $this->createStyle();
         $style->load([
-                'template' => $this->extension->element,
-                'client_id' => $this->extension->client_id,
-                $field => $name
-            ]);
+            'template' => $this->extension->element,
+            'client_id' => $this->extension->client_id,
+            $field => $name
+        ]);
 
         return $style;
     }
@@ -112,73 +106,55 @@ class TemplateInstaller
         return $style;
     }
 
-    public function updateStyle($name, array $configuration, $home = null)
+    /**
+     * Get list of available outlines.
+     *
+     * @param array $filter
+     * @return array
+     */
+    public function getOutlines(array $filter = null)
     {
-        $style = $this->getStyle($name);
+        if (!isset($this->outlines)) {
+            $this->outlines = [];
+            $path = $this->getPath();
 
-        if ($style->id) {
-            $home = ($home !== null ? $home : $style->home);
-            $params = (array) json_decode($style->params, true);
+            // If no outlines are given, try loading outlines.yaml file.
+            $file = YamlFile::instance($path . '/install/outlines.yaml');
 
-            $data = [
-                'params' => json_encode($configuration + $params),
-                'home' => $home
-            ];
-
-            $style->save($data);
+            if ($file->exists()) {
+                // Load the list from the yaml file.
+                $this->outlines = (array)$file->content();
+                $file->free();
+            } elseif (is_dir($path . '/install/outlines')) {
+                // Build the list from the install folder.
+                $folders = \JFolder::folders($path . '/install/outlines', '.', false, true);
+                foreach ($folders as $folder) {
+                    $this->outlines[basename($folder)] = [];
+                }
+            }
         }
 
-        return $style;
+        return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
     }
 
-    public function addStyle($title, array $configuration = [], $home = 0)
+    public function getOutline($name)
     {
-        // Make sure language debug is turned off.
-        $lang = \JFactory::getLanguage();
-        $debug = $lang->setDebug(false);
+        $list = $this->getOutlines([$name]);
 
-        // Translate title.
-        $title = $this->getStyleName($title);
-
-        // Turn language debug back on.
-        $lang->setDebug($debug);
-
-        $data = [
-            'home' => (int) $home,
-            'title' => $title,
-            'params' => json_encode($configuration),
-        ];
-
-        $style = $this->createStyle();
-        $style->save($data);
-
-        return $style;
+        return reset($list);
     }
 
-    public function assignHomeStyle($style)
+    /**
+     * @param string $type
+     * @return \JTableMenu
+     */
+    public function getMenu($type)
     {
-        // Update the mapping for menu items that this style IS assigned to.
-        $db = \JFactory::getDbo();
+        /** @var \JTableMenuType $table */
+        $table = \JTable::getInstance('MenuType');
+        $table->load(['menutype' => $type]);
 
-        $query = $db->getQuery(true)
-            ->update('#__menu')
-            ->set('template_style_id=' . (int) $style->id)
-            ->where('home=1')
-            ->where('client_id=0');
-        $db->setQuery($query);
-        $db->execute();
-    }
-
-    protected function getComponent()
-    {
-        static $component_id;
-
-        if (!$component_id) {
-            // Get Gantry component id.
-            $component_id = \JComponentHelper::getComponent('com_gantry5')->id;
-        }
-
-        return $component_id;
+        return $table;
     }
 
     public function installDefaults()
@@ -230,14 +206,106 @@ class TemplateInstaller
 
             $name = $this->extension->name;
             $token = \JSession::getFormToken();
+            $manifest = $this->getManifest();
             $context += [
-                'name' => $name,
-                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1", false)
+                'name' => \JText::_($name),
+                'description' => \JText::_((string) $manifest->get('description')),
+                'version' => (string) $manifest->get('version'),
+                'date' => (string) $manifest->get('creationDate'),
+                'author' => [
+                    'name' => (string) $manifest->get('author'),
+                    'email' => (string) $manifest->get('authorEmail'),
+                    'url' => (string) $manifest->get('authorUrl')
+                ],
+                'copyright' => (string) $manifest->get('copyright'),
+                'license' => (string) $manifest->get('license'),
+                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1", false),
+                'edit_url' => \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$name}&{$token}=1", false),
+                'actions' => $this->actions
             ];
 
             return $twig->render($template, $context);
         } catch (\Exception $e) {
             return '';
+        }
+    }
+
+    public function createStyle()
+    {
+        $style = \JTable::getInstance('Style', 'TemplatesTable');
+        $style->reset();
+        $style->template = $this->extension->element;
+        $style->client_id = $this->extension->client_id;
+
+        return $style;
+    }
+
+    public function addStyle($title, array $configuration = [], $home = 0)
+    {
+        // Make sure language debug is turned off.
+        $lang = \JFactory::getLanguage();
+        $debug = $lang->setDebug(false);
+
+        // Translate title.
+        $title = $this->getStyleName($title);
+
+        // Turn language debug back on.
+        $lang->setDebug($debug);
+
+        $data = [
+            'home' => (int) $home,
+            'title' => $title,
+            'params' => json_encode($configuration),
+        ];
+
+        $style = $this->createStyle();
+        $style->save($data);
+
+        if ($home) {
+            $this->actions[] = ['action' => 'default_style_assigned', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $title)];
+        }
+
+        return $style;
+    }
+
+    public function updateStyle($name, array $configuration, $home = null)
+    {
+        $style = $this->getStyle($name);
+
+        if ($style->id) {
+            $home = ($home !== null ? $home : $style->home);
+            $params = (array) json_decode($style->params, true);
+
+            $data = [
+                'params' => json_encode($configuration + $params),
+                'home' => $home
+            ];
+
+            if ($home && !$style->home) {
+                $this->actions[] = ['action' => 'default_style_assigned', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $style->title)];
+            }
+
+            $style->save($data);
+        }
+
+        return $style;
+    }
+
+    public function assignHomeStyle($style)
+    {
+        // Update the mapping for menu items that this style IS assigned to.
+        $db = \JFactory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->update('#__menu')
+            ->set('template_style_id=' . (int) $style->id)
+            ->where('home=1')
+            ->where('client_id=0');
+        $db->setQuery($query);
+        $db->execute();
+
+        if ($db->getAffectedRows()) {
+            $this->actions[] = ['action' => 'home_style_assigned', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_HOME_STYLE_ASSIGNED', $style->title)];
         }
     }
 
@@ -252,44 +320,6 @@ class TemplateInstaller
         $this->outlines = $outlines;
 
         return $this;
-    }
-
-    /**
-     * Get list of available outlines.
-     *
-     * @param array $filter
-     * @return array
-     */
-    public function getOutlines(array $filter = null)
-    {
-        if (!isset($this->outlines)) {
-            $this->outlines = [];
-            $path = $this->getPath();
-
-            // If no outlines are given, try loading outlines.yaml file.
-            $file = YamlFile::instance($path . '/install/outlines.yaml');
-
-            if ($file->exists()) {
-                // Load the list from the yaml file.
-                $this->outlines = (array)$file->content();
-                $file->free();
-            } elseif (is_dir($path . '/install/outlines')) {
-                // Build the list from the install folder.
-                $folders = \JFolder::folders($path . '/install/outlines', '.', false, true);
-                foreach ($folders as $folder) {
-                    $this->outlines[basename($folder)] = [];
-                }
-            }
-        }
-
-        return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
-    }
-
-    public function getOutline($name)
-    {
-        $list = $this->getOutlines([$name]);
-
-        return reset($list);
     }
 
     /**
@@ -355,6 +385,14 @@ class TemplateInstaller
                 // Default outline: Inherit everything from the base.
                 $layout->inheritAll()->name = $id;
                 $layout->save()->saveIndex();
+
+                $this->actions[] = ['action' => 'base_outline_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_BASE_OUTLINE_CREATED', $title)];
+            }
+
+            if ($created) {
+                $this->actions[] = ['action' => 'outline_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
+            } else {
+                $this->actions[] = ['action' => 'outline_updated', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_OUTLINE_UPDATED', $title)];
             }
 
             // Update preset in Joomla table.
@@ -377,6 +415,7 @@ class TemplateInstaller
 
         $table = \JTable::getInstance('menu');
         $date = new \JDate();
+        $update = false;
 
         // Defaults for the item.
         $item += [
@@ -404,17 +443,19 @@ class TemplateInstaller
         if (in_array($item['type'], ['separator', 'heading'])) {
             $item['link'] = '';
         }
+
         if ($item['type'] !== 'component') {
             $item['component_id'] = 0;
         }
 
         if ($load) {
-            $table->load([
+            $update = $table->load([
                 'menutype' => $item['menutype'],
                 'alias' => $item['alias'],
                 'parent_id' => $item['parent_id']
             ]);
         }
+
         $table->setLocation($parent_id, 'last-child');
 
         if (!$table->bind($item) || !$table->check() || !$table->store()) {
@@ -425,20 +466,49 @@ class TemplateInstaller
         $cache = \JFactory::getCache();
         $cache->clean('mod_menu');
 
+        $menu = \JTable::getInstance('menuType');
+        $menu->load(['menutype' => $item['menutype']]);
+
+        if (!isset($this->actions["menu_{$item['menutype']}_created"])) {
+            $postfix = $item['home'] ? '_HOME' : '';
+            if ($update) {
+                $this->actions[] = ['action' => 'menu_item_updated', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_UPDATED' . $postfix, $table->title, $table->path, $menu->title)];
+            } else {
+                $this->actions[] = ['action' => 'menu_item_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_CREATED' . $postfix, $table->title, $table->path, $menu->title)];
+            }
+        } elseif ($item['home']) {
+            $this->actions[] = ['action' => 'menu_item_updated', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_HOME', $table->title, $table->path, $menu->title)];
+        }
+
         return $table->id;
     }
 
-    /**
-     * @param string $type
-     * @return \JTableMenu
-     */
-    public function getMenu($type)
+    public function installMenus(array $menus = null, $parent = 1)
     {
-         /** @var \JTableMenuType $table */
-        $table = \JTable::getInstance('MenuType');
-        $table->load(['menutype' => $type]);
+        if ($menus === null) {
+            $path = $this->getPath();
 
-        return $table;
+            $file = YamlFile::instance($path . '/install/menus.yaml');
+            $menus = (array) $file->content();
+            $file->free();
+        }
+
+        foreach ($menus as $menutype => $menu) {
+            $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
+            $description = !empty($menu['description']) ? $menu['description'] : '';
+
+            $exists = $this->getMenu($menutype)->id;
+
+            // If $parent = 0, do dry run.
+            if ((int) $parent && !$exists) {
+                $this->deleteMenu($menutype, true);
+                $this->createMenu($menutype, $title, $description);
+            }
+
+            if (!empty($menu['items'])) {
+                $this->addMenuItems($menutype, $menu['items'], (int) $parent);
+            }
+        }
     }
 
     /**
@@ -465,6 +535,8 @@ class TemplateInstaller
         if (!$table->store()) {
             throw new \Exception($table->getError());
         }
+
+        $this->actions["menu_{$type}_created"] = ['action' => 'menu_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_CREATED', $title)];
     }
 
     /**
@@ -485,6 +557,8 @@ class TemplateInstaller
 
             if (!$success) {
                 \JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
+            } else {
+                $this->actions["menu_{$type}_deleted"] = ['action' => 'menu_delete', 'text' => \JText::_('GANTRY5_INSTALLER_ACTION_MENU_DELETED', $table->title)];
             }
         }
 
@@ -590,34 +664,6 @@ class TemplateInstaller
         $manifest->save();
     }
 
-    public function installMenus(array $menus = null, $parent = 1)
-    {
-        if ($menus === null) {
-            $path = $this->getPath();
-
-            $file = YamlFile::instance($path . '/install/menus.yaml');
-            $menus = (array) $file->content();
-            $file->free();
-        }
-
-        foreach ($menus as $menutype => $menu) {
-            $title = !empty($menu['title']) ? $menu['title'] : ucfirst($menutype);
-            $description = !empty($menu['description']) ? $menu['description'] : '';
-
-            $exists = $this->getMenu($menutype)->id;
-
-            // If $parent = 0, do dry run.
-            if ((int) $parent && !$exists) {
-                $this->deleteMenu($menutype, true);
-                $this->createMenu($menutype, $title, $description);
-            }
-
-            if (!empty($menu['items'])) {
-                $this->addMenuItems($menutype, $menu['items'], (int) $parent);
-            }
-        }
-    }
-
     protected function addMenuItems($menutype, array $items, $parent)
     {
         foreach ($items as $alias => $item) {
@@ -694,5 +740,26 @@ class TemplateInstaller
         }
 
         return $this->script;
+    }
+
+    protected function getManifest()
+    {
+        if (!$this->manifest) {
+            $this->manifest = new Manifest($this->extension->name);
+        }
+
+        return $this->manifest;
+    }
+
+    protected function getComponent()
+    {
+        static $component_id;
+
+        if (!$component_id) {
+            // Get Gantry component id.
+            $component_id = \JComponentHelper::getComponent('com_gantry5')->id;
+        }
+
+        return $component_id;
     }
 }

@@ -1,7 +1,7 @@
-home:
-  title: Home
-  preset: home
-
 default:
   title: Default
   preset: default
+
+home:
+  title: Home
+  preset: home

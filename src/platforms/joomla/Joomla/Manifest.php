@@ -34,6 +34,10 @@ class Manifest
         $this->xml = simplexml_load_file($this->path);
     }
 
+    public function get($variable) {
+        return (string) $this->xml->{$variable};
+    }
+
     /**
      * @return \SimpleXMLElement
      */
@@ -44,7 +48,7 @@ class Manifest
 
     public function getScriptFile()
     {
-        return $this->xml->scriptfile;
+        return (string) $this->xml->scriptfile;
     }
 
     public function setPositions(array $positions)
