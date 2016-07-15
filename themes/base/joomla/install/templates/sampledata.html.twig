@@ -1,1 +1,8 @@
-<p>Sample data created a menu item, which was set to default. Also default template style was changed to point to this template.</p>
+<p>
+    Following actions were performed while installing sample data:
+</p>
+<ul>
+    {% for item in actions %}
+        <li>{{ item.text }}</li>
+    {% endfor %}
+</ul>
