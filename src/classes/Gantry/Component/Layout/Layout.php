@@ -491,10 +491,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $list = [];
         foreach ($this->inherit as $name => $item) {
-            if (isset($item->inherit->particle)) {
-                $list[$item->inherit->outline][$name] = $item->inherit->particle;
-            } else {
-                $list[$item->inherit->outline][$name] = $name;
+            if (isset($item->inherit->outline)) {
+                if (isset($item->inherit->particle)) {
+                    $list[$item->inherit->outline][$name] = $item->inherit->particle;
+                } else {
+                    $list[$item->inherit->outline][$name] = $name;
+                }
             }
         }
 
