@@ -59,8 +59,7 @@ html.g5-dialog-open {
     }
 
     .g5-dialog.g5-dialog-theme-default {
-        padding-top: 10vh;
-        padding-bottom: 10vh;
+
         &.g5-closing .g5-content {
             @include animation(flyOut 0.5s);
         }
@@ -73,7 +72,7 @@ html.g5-dialog-open {
             color: $core-text;
             padding: 1rem;
             position: relative;
-            margin: 0 auto;
+            margin: 10vh auto;
             max-width: 100%;
             width: 600px;
             font-size: 1rem;
