@@ -23,6 +23,7 @@
         - Fixed issue in the Font Picker and local fonts throwing JS error
         - Proper fix for nested fields within containers (#924, #1026)
         - Fixed `Undefined property: stdClass::$outline` in `Layout::inherit()`
+        - Fixed issue with modals in Firefox where the bottom end wouldn't have enough margin (thanks @coder4life - #1454)
 2. [Joomla](#joomla)
     1. [](#new)
         - Allow to install and update Gantry in Joomla 3.6
