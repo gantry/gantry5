@@ -42,7 +42,7 @@
                             {% if childName starts with '.' %}
                                 {% set childValue = current_value[childName[1:]] %}
                                 {% set childDefault = default_value[childName[1:]] %}
-                                {% set childName = name ~ childName %}
+                                {% set childName = childName|trim('.') %}
                             {% else %}
                                 {% set childValue = nested(data, scope ~ childName) %}
                                 {% set childDefault = nested(defaults, scope ~ childName) %}

@@ -75,6 +75,7 @@ class BlueprintsForm implements \ArrayAccess, ExportInterface
                 $inner_fields = null;
                 foreach($current as $field) {
                     $type = isset($field['type']) ? $field['type'] : 'container.';
+                    $fields = isset($field['fields']);
                     $container = (0 === strpos($type, 'container.'));
 
                     if ($container && is_array($field)) {
