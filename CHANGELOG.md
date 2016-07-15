@@ -21,6 +21,7 @@
         - Fixed mis-representation of an inherited Section/Particle when set to "No Inheritance" but with all the Replace options selected
         - Fixed inherited Sections with empty grids, not displaying the "Drop particles here..." message
         - Fixed issue in the Font Picker and local fonts throwing JS error
+        - Proper fix for nested fields within containers (#924, #1026)
 2. [Joomla](#joomla)
     1. [](#new)
         - Allow to install and update Gantry in Joomla 3.6
