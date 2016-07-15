@@ -22,7 +22,7 @@
         - Fixed inherited Sections with empty grids, not displaying the "Drop particles here..." message
         - Fixed issue in the Font Picker and local fonts throwing JS error
         - Proper fix for nested fields within containers (#924, #1026)
-        - Fixed `Undefined property: stdClass::$outline` in `Layout::inheirt()`
+        - Fixed `Undefined property: stdClass::$outline` in `Layout::inherit()`
 2. [Joomla](#joomla)
     1. [](#new)
         - Allow to install and update Gantry in Joomla 3.6
