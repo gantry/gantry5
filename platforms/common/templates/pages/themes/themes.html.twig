@@ -34,7 +34,7 @@
                                                 </div>
                                                 <div class="theme-screenshot">
                                                     {% if theme.admin_url %}
-                                                    <a href="{{ theme.admin_url }}">
+                                                    <a href="{{ gantry.route(id, 'configurations/default/styles') }}">
                                                     {% endif %}
                                                         <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4') }}" />
                                                     {% if theme.admin_url %}
@@ -46,7 +46,7 @@
                                                     <a class="button" href="{{ theme.preview_url }}" target="_blank">{{ 'GANTRY5_PLATFORM_PREVIEW'|trans }}</a>
                                                     {% endif %}
                                                     {% if theme.admin_url %}
-                                                    <a class="button button-primary" href="{{ theme.admin_url }}">{{ 'GANTRY5_PLATFORM_CONFIGURE'|trans }}</a>
+                                                    <a class="button button-primary" href="{{ gantry.route(id, 'configurations/default/styles') }}">{{ 'GANTRY5_PLATFORM_CONFIGURE'|trans }}</a>
                                                     {% endif %}
                                                 </div>
                                             </div>
