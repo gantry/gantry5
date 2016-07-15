@@ -21,9 +21,10 @@ class Manifest
 
     /**
      * @param string $theme
+     * @param \SimpleXMLElement $manifest
      * @throws \RuntimeException
      */
-    public function __construct($theme)
+    public function __construct($theme, \SimpleXMLElement $manifest = null)
     {
         $this->theme = $theme;
         $this->path = JPATH_SITE . "/templates/{$theme}/templateDetails.xml";
@@ -31,10 +32,15 @@ class Manifest
         if (!is_file($this->path)) {
             throw new \RuntimeException(sprintf('Template %s does not exist.', $theme));
         }
-        $this->xml = simplexml_load_file($this->path);
+        $this->xml = $manifest ?: simplexml_load_file($this->path);
     }
 
-    public function get($variable) {
+    /**
+     * @param string $variable
+     * @return string
+     */
+    public function get($variable)
+    {
         return (string) $this->xml->{$variable};
     }
 

@@ -55,7 +55,7 @@ class TemplateInstaller
         $property->setAccessible(true);
         $this->extension = $property->getValue($install);
 
-        $this->manifest = $install->getManifest();
+        $this->manifest = new Manifest($this->extension->name, $install->getManifest());
 
         return $this;
     }
