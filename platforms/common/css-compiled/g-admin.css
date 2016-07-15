@@ -15,7 +15,7 @@
 
 #g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog > .g-tabs ul, #g5-container .g5-popover-content > .g-tabs ul,
 #g5-container .g5-dialog form > .g-tabs ul, #g5-container .g5-popover-content form > .g-tabs ul,
-#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-generic ul, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -46,7 +46,7 @@
 }
 #g5-container .g-main-nav ul, #g5-container #g-mobilemenu-container ul, #g5-container .settings-block .settings-param.input-hidden, #g5-container .collection-list .settings-param-field ul, #g5-container .collection-keyvalue .settings-param-field .g-keyvalue-field ul, #g5-container #configurations ul, #g5-container #positions ul, #g5-container #main-header ul, #g5-container #navbar ul, #g5-container .g5-dialog > .g-tabs ul, #g5-container .g5-popover-content > .g-tabs ul,
 #g5-container .g5-dialog form > .g-tabs ul, #g5-container .g5-popover-content form > .g-tabs ul,
-#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
+#g5-container .g5-dialog .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g5-content > .g-tabs ul, #g5-container .g5-popover-content .g-pane ul, #g5-container .g5-lm-particles-picker ul, #g5-container .g5-lm-particles-picker li, #g5-container .g5-mm-particles-picker ul, #g5-container .g5-mm-particles-picker li, #g5-container .g5-mm-modules-picker ul, #g5-container .g5-mm-modules-picker li, #g5-container .g5-mm-widgets-picker ul, #g5-container .g5-mm-widgets-picker li, #g5-container #positions li, #g5-container #page-settings #atoms .atoms-picker, #g5-container .g5-popover.g5-popover-font-preview ul, #g5-container .g5-popover.g5-popover-font-preview li, #g5-container .g5-popover-generic ul, #g5-container .g5-popover-extras ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content .icons-wrapper ul, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-bookmarks, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content [data-file], #g5-container .g5-tabs-container .g-tabs ul, #g5-container #g-changelog ul, #g5-container #g-changelog ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6242,13 +6242,26 @@ html.g5-dialog-open {
   left: 50%;
   position: absolute;
 }
+#g5-container .g5-popover-generic a {
+  display: block;
+  padding: 0.4rem;
+  color: #111 !important;
+}
+#g5-container .g5-popover-generic a:hover {
+  color: #111 !important;
+  background-color: #eee;
+  border-radius: 4px;
+}
+#g5-container .g5-popover-generic a:focus {
+  outline: auto;
+}
 #g5-container .g5-popover-extras a, #g5-container .g5-popover-extras [data-g-devprod] {
   display: block;
   padding: 0.4rem;
-  color: #111;
+  color: #111 !important;
 }
 #g5-container .g5-popover-extras a:hover, #g5-container .g5-popover-extras [data-g-devprod]:hover {
-  color: #111;
+  color: #111 !important;
   background-color: #eee;
   border-radius: 4px;
 }
