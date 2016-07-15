@@ -74,7 +74,7 @@ var Menu = new prime({
         }
 
         body.delegate('click', ':not(' + selectors.mainContainer + ') ' + selectors.linkedParent + ', .g-fullwidth .g-sublevel ' + selectors.linkedParent, this.bound('click'));
-        body.delegate(hasTouchEvents ? 'touchend' : 'click', ':not(' + selectors.mainContainer + ') a[href]', this.bound('resetAfterClick'));
+        body.delegate('click', ':not(' + selectors.mainContainer + ') a[href]', this.bound('resetAfterClick'));
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
