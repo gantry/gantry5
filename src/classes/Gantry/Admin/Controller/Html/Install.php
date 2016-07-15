@@ -14,11 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Joomla\TemplateInstaller;
-use RocketTheme\Toolbox\File\YamlFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Install extends HtmlController
 {
