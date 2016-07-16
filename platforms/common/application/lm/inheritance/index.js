@@ -123,11 +123,15 @@ ready(function() {
         });
     });
 
-    body.delegate('change', '[data-multicheckbox-field]', function(event, element) {
+    body.delegate('change', '#g-settings-inheritance [data-multicheckbox-field]', function(event, element) {
+        var outline = $('[name="inherit[outline]"]');
+        if (!outline) { return true; }
+
+        outline   = outline.value();
+
         var value     = element.value(),
             isChecked = element.checked(),
             noRefresh = event.noRefresh,
-            outline   = $('[name="inherit[outline]"]').value(),
             particle  = {
                 mode: $('[name="inherit[mode]"]:checked'),
                 radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
