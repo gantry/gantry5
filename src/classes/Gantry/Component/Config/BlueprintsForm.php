@@ -74,9 +74,20 @@ class BlueprintsForm implements \ArrayAccess, ExportInterface
                 // properly loop through nested containers to find deep matching fields
                 $inner_fields = null;
                 foreach($current as $field) {
-                    $type = isset($field['type']) ? $field['type'] : 'container.';
+                    $type = isset($field['type']) ? $field['type'] : '-undefined-';
+                    $container = (0 === strpos($type, 'container.')) || $type === '-undefined-';
                     $fields = isset($field['fields']);
-                    $container = (0 === strpos($type, 'container.'));
+
+                    $container_fields = [];
+                    if ($type === '-undefined-') {
+                        foreach ($current['fields'] as $container_field) {
+                            if (isset($container_field['fields'])) {
+                                $container_fields[] = $container_field['fields'];
+                            }
+                        }
+
+                        $field = array_reduce($container_fields, 'array_merge', []);
+                    }
 
                     if ($container && is_array($field)) {
                         $inner_fields = $field;
