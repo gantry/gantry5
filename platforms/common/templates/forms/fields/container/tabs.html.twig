@@ -40,13 +40,12 @@
                          aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}">
                         {% for childName, child in pane %}
                             {% if childName starts with '.' %}
-                                {% set childValue = current_value[childName[1:]] %}
-                                {% set childDefault = default_value[childName[1:]] %}
                                 {% set childName = childName|trim('.') %}
-                            {% else %}
-                                {% set childValue = nested(data, scope ~ childName) %}
-                                {% set childDefault = nested(defaults, scope ~ childName) %}
                             {% endif %}
+
+                            {% set childName = childName|trim('.') %}
+                            {% set childValue = nested(data, scope ~ childName) %}
+                            {% set childDefault = nested(defaults, scope ~ childName) %}
                             {% set childPrefix = prefix ~ childName ~ '.' %}
 
                             {% if child.type %}
