@@ -355,7 +355,7 @@ class TemplateInstaller
         ];
 
         $title = $params['title'] ?: ucwords(trim(strtr($folder, ['_' => ' '])));
-        $preset = $params['preset'];
+        $preset = $params['preset'] ?: 'default';
 
         if ($folder[0] !== '_') {
             $title = $this->getStyleName("%s - {$title}");
@@ -363,7 +363,7 @@ class TemplateInstaller
 
             if (!$style->id) {
                 // Only add style if it doesn't exist.
-                $style = $this->addStyle($title, []);
+                $style = $this->addStyle($title, ['preset' => $preset]);
                 $created = true;
             }
 
@@ -648,6 +648,12 @@ class TemplateInstaller
 
     public function finalize()
     {
+        // Copy standard outlines if they haven't been copied already.
+        $this->copyCustom('default', 'default');
+        $this->copyCustom('_body_only', '_body_only');
+        $this->copyCustom('_error', '_error');
+        $this->copyCustom('_offline', '_offline');
+
         $this->initialize();
 
         $gantry = Gantry::instance();
@@ -678,7 +684,7 @@ class TemplateInstaller
             $params = $this->getOutline($outline);
             if (!is_array($params)) {
                 $params = [
-                    'preset' => isset($item['preset']) ? $item['preset'] : null,
+                    'preset' => isset($item['preset']) ? $item['preset'] : (isset($item['layout']) ? $item['layout'] : null),
                     'title' => isset($item['style']) ? $this->getStyleName($item['style']) : null
                 ];
             }
