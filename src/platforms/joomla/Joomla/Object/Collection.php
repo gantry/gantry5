@@ -3,12 +3,9 @@
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
  * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
- * @license   Dual License: MIT or GNU/GPLv2 and later
+ * @license   GNU/GPLv2 and later
  *
- * http://opensource.org/licenses/MIT
  * http://www.gnu.org/licenses/gpl-2.0.html
- *
- * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
 namespace Gantry\Joomla\Object;
@@ -25,18 +22,31 @@ class Collection extends BaseCollection
     public function get($property)
     {
         $list = [];
-        foreach ($this as $object) {
-            $list[] = $object->{$property};
+
+        if ($property === 'id') {
+            return array_keys($this->items);
         }
+
+        foreach ($this as $object) {
+            $list[$object->id] = $object->{$property};
+        }
+
+        return $list;
     }
 
     public function __call($name, $arguments)
     {
         $list = [];
+
         foreach ($this as $object) {
-            if (method_exists($object, $name)) {
-                $list[] = call_user_func_array([$object, $name], $arguments);
-            }
+            $list[$object->id] = method_exists($object, $name) ? call_user_func_array([$object, $name], $arguments) : null;
         }
+
+        return $list;
+    }
+
+    public function toArray()
+    {
+        return $this->__call('toArray', []);
     }
 }

@@ -101,7 +101,7 @@ class ModuleFinder extends Finder
 
     protected function prepare()
     {
-        $this->where('client_id', '=', 0)->where('published', 'IN', $this->published);
+        $this->where('client_id', '=', 0)->where('published', 'IN', $this->published)->order('position')->order('ordering');
         foreach ($this->state as $key => $list) {
             foreach ($list as $op => $group) {
                 $this->where($key, $op, array_unique($group));

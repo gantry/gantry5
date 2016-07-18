@@ -26,6 +26,25 @@ class Module extends Object implements ExportInterface
 
     static protected $table = 'Module';
     static protected $order = 'id';
+    
+    protected $_assignments;
+
+    public function assignments($assignments = null)
+    {
+        if (is_array($assignments)) {
+            $this->_assignments = array_map('intval', array_values($assignments));
+
+        } elseif (!isset($this->_assignments)) {
+            $db = \JFactory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select('menuid')->from('#__modules_menu')->where('moduleid = ' . $this->id);
+            $db->setQuery($query);
+
+            $this->_assignments = array_map('intval', (array) $db->loadColumn());
+        }
+        
+        return $this->_assignments;
+    }
 
     public function initialize()
     {
@@ -47,29 +66,25 @@ class Module extends Object implements ExportInterface
 
         $array = [
             'title' => $this->title,
-            'note' => $this->note,
+            'note' => $this->note ?: null,
             'position' => $this->position,
             'ordering' => (int) $this->ordering,
             'type' => $particle ? 'gantry.particle' : 'joomla.' . $this->module,
             'published' => (bool) $this->published,
             'show_title' => (bool) $this->showtitle,
-            'params' => &$params,
+            'particle' => null,
+            'content' => $this->content ?: null,
+            'joomla' => &$params,
+            'language' => $this->language !== '*' ? $this->language : null,
+            'assignments' => $this->assignments()
         ];
 
         if ($particle && !empty($params['particle'])) {
-            $array['particle'] = $params['particle'];
+            $array['particle'] = json_decode($params['particle'], true);
             unset($params['particle']);
         }
 
-        if ($this->content) {
-            $array['content'] = $this->content;
-        }
-
-        if ($this->language !== '*') {
-            $array['language'] = $this->language;
-        }
-
-        return $array;
+        return array_filter($array, [$this, 'is_not_null']);
     }
 
     public function create(array $array)
@@ -86,15 +101,16 @@ class Module extends Object implements ExportInterface
 
         $properties = [
             'title' => $array['title'],
-            'note' => $array['note'],
+            'note' => isset($array['note']) ? $array['note'] : '',
             'position' => $array['position'],
-            'ordering' => $array['ordering'],
+            'ordering' => (int) $array['ordering'],
             'module' => $type,
-            'published' => (int) $array['published'],
-            'show_title' => (int) $array['show_title'],
-            'params' => json_decode(json_encode($array['params'])),
+            'published' => (int) !empty($array['published']),
+            'show_title' => (int) !empty($array['show_title']),
+            'params' => isset($array['joomla']) ? json_decode(json_encode($array['joomla'])) : [],
             'content' => isset($array['content']) ? $array['content'] : '',
             'language' => isset($array['language']) ? $array['language'] : '*',
+            '_assignments' => isset($array['assignments']) ? $array['assignments'] : [],
         ];
 
         $object = new static();
@@ -105,11 +121,28 @@ class Module extends Object implements ExportInterface
 
     public function render($file)
     {
-        return Gantry::instance()['theme']->render($file, ['article' => $this]);
+        return Gantry::instance()['theme']->render($file, ['particle' => $this]);
     }
 
     public function compile($string)
     {
-        return Gantry::instance()['theme']->compile($string, ['article' => $this]);
+        return Gantry::instance()['theme']->compile($string, ['particle' => $this]);
+    }
+
+    // Internal functions
+
+    /**
+     * @param $val
+     * @return bool
+     * @internal
+     */
+    public function is_not_null($val)
+    {
+        return !is_null($val);
+    }
+
+    static protected function collection($items)
+    {
+        return new ModuleCollection($items);
     }
 }

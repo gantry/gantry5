@@ -27,10 +27,8 @@ class Export extends HtmlController
             $finder = new ModuleFinder;
             $modules = $finder->particle()->find();
 
-            foreach ($modules as $module) {
-                $list[] = $module->toArray();
-            }
+            $list = $modules->export();
         }
-        die(Yaml::dump($list));
+        die(Yaml::dump($list, 10 , 2));
     }
 }

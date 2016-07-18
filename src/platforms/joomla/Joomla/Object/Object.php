@@ -164,6 +164,20 @@ abstract class Object extends \JObject
     }
 
     /**
+     * Tests if dynamically defined property has been defined.
+     *
+     * @param string $property
+     * @param bool   $defined
+     * @return bool
+     */
+    public function defined($property, $defined = true)
+    {
+        $property = '_' . $property;
+
+        return $defined ? isset($this->{$property}) : !isset($this->{$property});
+    }
+
+    /**
      * Returns an associative array of object properties.
      *
      * @param   boolean  $public  If true, returns only the public properties.
@@ -359,7 +373,7 @@ abstract class Object extends \JObject
 
     static public function getAvailableInstances()
     {
-        return new Collection(static::$instances);
+        return static::collection(static::$instances);
     }
 
     static public function getInstances(array $ids, $readonly = true)
@@ -393,10 +407,15 @@ abstract class Object extends \JObject
             }
         }
 
-        return new Collection($results);
+        return static::collection($results);
     }
 
     // Internal functions
+
+    static protected function collection($items)
+    {
+        return new Collection($items);
+    }
 
     /**
      * Method to get the table object.
