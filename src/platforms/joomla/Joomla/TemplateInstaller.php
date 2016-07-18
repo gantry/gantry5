@@ -584,7 +584,7 @@ class TemplateInstaller
     /**
      * @deprecated 5.3.2
      */
-    public function creanup()
+    public function cleanup()
     {
         $this->initialize();
         $this->finalize();
