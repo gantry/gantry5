@@ -77,15 +77,19 @@ class BlueprintsForm implements \ArrayAccess, ExportInterface
                     $type = isset($field['type']) ? $field['type'] : '-undefined-';
                     $container = (0 === strpos($type, 'container.')) || $type === '-undefined-';
                     $fields = isset($field['fields']);
-
                     $container_fields = [];
+
+                    // if the field has no type, it most certainly is a container
                     if ($type === '-undefined-') {
-                        foreach ($current['fields'] as $container_field) {
+                        // loop through all the container inner fields and reduce to a flat blueprint
+                        $current_fields = isset($current['fields']) ? $current['fields'] : $current;
+                        foreach ($current_fields as $container_field) {
                             if (isset($container_field['fields'])) {
                                 $container_fields[] = $container_field['fields'];
                             }
                         }
 
+                        // any container structural data can be discarded, flatten
                         $field = array_reduce($container_fields, 'array_merge', []);
                     }
 
