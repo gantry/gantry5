@@ -3,16 +3,17 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Added two new button variations to Helium - `button-square` and `button-bevel`
+        - Helium: Added two new button variations - `button-square` and `button-bevel`
         - Implemented new Tabs Container that allows to better organize Particles fields in the admin (#1026 - [more details](https://github.com/gantry/gantry5/issues/1026#issuecomment-232265381))
         - Hydrogen and Helium now require Gantry 5.3.2
     2. [](#improved)
-        - Improved OwlCarousel color overlay support in Helium
-        - Improved `shadow` variation in Helium
+        - Helium: Improved OwlCarousel color overlay support
+        - Helium: Improved `shadow` variation
         - Changed Joomla Articles and WordPress Posts particle to use the new Tabs container
         - Increased PHP timeout for CSS compiler to prevent issues in slow shared servers
+        - Helium: OwlCarousel Color Overlay is now alternated to match while transitioning 
     3. [](#bugfix)
-        - Fixed wrong dropdown menu item text hover color in Helium
+        - Helium: Fixed wrong dropdown menu item text hover color
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
         - Definitive fix for z-index issue Layout Manager when sections were inheriting without children (#1430)
         - Always ensure that the `G5T` method (translations for JS) is available (#1434)
