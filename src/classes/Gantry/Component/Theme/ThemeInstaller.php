@@ -31,10 +31,11 @@ abstract class ThemeInstaller
      * @var bool
      */
     public $initialized = false;
+    public $actions = [];
+
     protected $name;
     protected $outlines;
     protected $script;
-    protected $actions = [];
 
     public function __construct($extension = null)
     {

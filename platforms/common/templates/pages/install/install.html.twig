@@ -13,6 +13,11 @@
     </div>
 
     <div>
-        {{ content|raw }}
+        <p>{{ 'GANTRY5_INSTALLER_ACTIONS'|trans }}</p>
+        <ul>
+            {% for item in actions %}
+                <li>{{ item.text }}</li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

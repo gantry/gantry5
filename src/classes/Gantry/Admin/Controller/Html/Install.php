@@ -14,30 +14,25 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Joomla\TemplateInstaller;
+use Gantry\Framework\ThemeInstaller;
 
 class Install extends HtmlController
 {
     public function index()
     {
-        if (!$this->container->authorize('updates.manage')) {
+        if (!$this->container->authorize('updates.manage') || !class_exists('\Gantry\Framework\ThemeInstaller')) {
             $this->forbidden();
         }
 
-        if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
-            $installer = new TemplateInstaller;
-        }
+        $installer = new ThemeInstaller();
+        $installer->initialized = true;
+        $installer->loadExtension($this->container['theme.name']);
+        $installer->installDefaults();
+        $installer->installSampleData();
+        $installer->finalize();
 
-        if (isset($installer)) {
-            $installer->initialized = true;
-            $installer->loadExtension($this->container['theme.name']);
-            $installer->installDefaults();
-            $installer->installSampleData();
-            $installer->finalize();
-
-            $this->params['content'] = $installer->render('sampledata.html.twig');
-        }
-
+        $this->params['actions'] = $installer->actions;
+        
         return $this->container['admin.theme']->render('@gantry-admin/pages/install/install.html.twig', $this->params);
     }
 }
