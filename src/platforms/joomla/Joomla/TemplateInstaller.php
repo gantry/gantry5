@@ -14,6 +14,7 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Component\Theme\ThemeInstaller;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Platform;
@@ -21,22 +22,15 @@ use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class TemplateInstaller
+class TemplateInstaller extends ThemeInstaller
 {
-    /**
-     * Set to true if in Gantry.
-     *
-     * @var bool
-     */
-    public $initialized = false;
     protected $extension;
-    protected $outlines;
-    protected $script;
     protected $manifest;
-    protected $actions = [];
 
     public function __construct($extension = null)
     {
+        parent::__construct();
+
         jimport('joomla.filesystem.folder');
 
         \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
@@ -54,6 +48,7 @@ class TemplateInstaller
         $property = $reflectionClass->getProperty('extension');
         $property->setAccessible(true);
         $this->extension = $property->getValue($install);
+        $this->name = $this->extension->name;
 
         $this->manifest = new Manifest($this->extension->name, $install->getManifest());
 
@@ -67,6 +62,7 @@ class TemplateInstaller
         }
         $this->extension = \JTable::getInstance('extension');
         $this->extension->load($id);
+        $this->name = $this->extension->name;
     }
 
     public function getPath()
@@ -107,44 +103,6 @@ class TemplateInstaller
     }
 
     /**
-     * Get list of available outlines.
-     *
-     * @param array $filter
-     * @return array
-     */
-    public function getOutlines(array $filter = null)
-    {
-        if (!isset($this->outlines)) {
-            $this->outlines = [];
-            $path = $this->getPath();
-
-            // If no outlines are given, try loading outlines.yaml file.
-            $file = YamlFile::instance($path . '/install/outlines.yaml');
-
-            if ($file->exists()) {
-                // Load the list from the yaml file.
-                $this->outlines = (array)$file->content();
-                $file->free();
-            } elseif (is_dir($path . '/install/outlines')) {
-                // Build the list from the install folder.
-                $folders = \JFolder::folders($path . '/install/outlines', '.', false, true);
-                foreach ($folders as $folder) {
-                    $this->outlines[basename($folder)] = [];
-                }
-            }
-        }
-
-        return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
-    }
-
-    public function getOutline($name)
-    {
-        $list = $this->getOutlines([$name]);
-
-        return reset($list);
-    }
-
-    /**
      * @param string $type
      * @return \JTableMenu
      */
@@ -157,33 +115,6 @@ class TemplateInstaller
         return $table;
     }
 
-    public function installDefaults()
-    {
-        $installerScript = $this->getInstallerScript();
-
-        if (method_exists($installerScript, 'installDefaults')) {
-            $installerScript->installDefaults($this);
-        } else {
-            $this->createDefaults();
-        }
-    }
-
-    public function installSampleData()
-    {
-        $installerScript = $this->getInstallerScript();
-
-        if (method_exists($installerScript, 'installSampleData')) {
-            $installerScript->installSampleData($this);
-        } else {
-            $this->createSampleData();
-        }
-    }
-
-    public function createDefaults()
-    {
-        $this->createOutlines();
-    }
-
     public function createSampleData()
     {
         $this->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', [], 1);
@@ -192,42 +123,24 @@ class TemplateInstaller
 
     public function render($template, $context = [])
     {
-        try {
-            $loader = new \Twig_Loader_Filesystem();
-            $loader->setPaths([$this->getPath() . '/install/templates']);
+        $token = \JSession::getFormToken();
+        $manifest = $this->getManifest();
+        $context += [
+            'description' => $this->translate((string) $manifest->get('description')),
+            'version' => (string) $manifest->get('version'),
+            'date' => (string) $manifest->get('creationDate'),
+            'author' => [
+                'name' => (string) $manifest->get('author'),
+                'email' => (string) $manifest->get('authorEmail'),
+                'url' => (string) $manifest->get('authorUrl')
+            ],
+            'copyright' => (string) $manifest->get('copyright'),
+            'license' => (string) $manifest->get('license'),
+            'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
+            'edit_url' => \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
+        ];
 
-            $params = [
-                'cache' => null,
-                'debug' => false,
-                'autoescape' => 'html'
-            ];
-
-            $twig = new \Twig_Environment($loader, $params);
-
-            $name = $this->extension->name;
-            $token = \JSession::getFormToken();
-            $manifest = $this->getManifest();
-            $context += [
-                'name' => \JText::_($name),
-                'description' => \JText::_((string) $manifest->get('description')),
-                'version' => (string) $manifest->get('version'),
-                'date' => (string) $manifest->get('creationDate'),
-                'author' => [
-                    'name' => (string) $manifest->get('author'),
-                    'email' => (string) $manifest->get('authorEmail'),
-                    'url' => (string) $manifest->get('authorUrl')
-                ],
-                'copyright' => (string) $manifest->get('copyright'),
-                'license' => (string) $manifest->get('license'),
-                'install_url' => \JRoute::_("index.php?option=com_gantry5&view=install&theme={$name}&{$token}=1", false),
-                'edit_url' => \JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$name}&{$token}=1", false),
-                'actions' => $this->actions
-            ];
-
-            return $twig->render($template, $context);
-        } catch (\Exception $e) {
-            return '';
-        }
+        return parent::render($template, $context);
     }
 
     public function createStyle()
@@ -310,31 +223,6 @@ class TemplateInstaller
     }
 
     /**
-     * Set available outlines.
-     *
-     * @param array $outlines If parameter isn't provided, outlines list get reloaded from the disk.
-     * @return $this
-     */
-    public function setOutlines(array $outlines = null)
-    {
-        $this->outlines = $outlines;
-
-        return $this;
-    }
-
-    /**
-     * @param array $filter
-     */
-    public function createOutlines(array $filter = null)
-    {
-        $outlines = $this->getOutlines($filter);
-
-        foreach ($outlines as $folder => $params) {
-            $this->createOutline($folder, $params);
-        }
-    }
-
-    /**
      * @param string $folder
      * @param array $params
      * @return string|bool
@@ -386,13 +274,13 @@ class TemplateInstaller
                 $layout->inheritAll()->name = $id;
                 $layout->save()->saveIndex();
 
-                $this->actions[] = ['action' => 'base_outline_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_BASE_OUTLINE_CREATED', $title)];
+                $this->actions[] = ['action' => 'base_outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_BASE_OUTLINE_CREATED', $title)];
             }
 
             if ($created) {
-                $this->actions[] = ['action' => 'outline_created', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
+                $this->actions[] = ['action' => 'outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
             } else {
-                $this->actions[] = ['action' => 'outline_updated', 'text' => \JText::sprintf('GANTRY5_INSTALLER_ACTION_OUTLINE_UPDATED', $title)];
+                $this->actions[] = ['action' => 'outline_updated', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_UPDATED', $title)];
             }
 
             // Update preset in Joomla table.
@@ -590,71 +478,9 @@ class TemplateInstaller
         $this->finalize();
     }
 
-    public function initialize()
-    {
-        if ($this->initialized) {
-            return;
-        }
-
-        $name = $this->extension->name;
-        $path = $this->getPath();
-
-        // Remove compiled CSS files if they exist.
-        $cssPath = $path . '/custom/css-compiled';
-        if (is_dir($cssPath)) {
-            \JFolder::delete($cssPath);
-        } elseif (is_file($cssPath)) {
-            \JFile::delete($cssPath);
-        }
-
-        // Remove wrongly named file if it exists.
-        $md5path = $path . '/MD5SUM';
-        if (is_file($md5path)) {
-            \JFile::delete($md5path);
-        }
-
-        // Restart Gantry and initialize it.
-        $gantry = Gantry::restart();
-        $gantry['theme.name'] = $name;
-        $gantry['streams']->register();
-
-        // Only add error service if debug mode has been enabled.
-        if ($gantry->debug()) {
-            $gantry->register(new ErrorServiceProvider);
-        }
-
-        /** @var Platform $patform */
-        $patform = $gantry['platform'];
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-        // Initialize theme stream.
-        $details = new ThemeDetails($name);
-        $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
-
-        // Initialize theme cache stream and clear theme cache.
-        $cachePath = $patform->getCachePath() . '/' . $name;
-        if (is_dir($cachePath)) {
-            Folder::delete($cachePath);
-        }
-        Folder::create($cachePath);
-        $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
-
-        CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
-
-        $this->initialized = true;
-    }
-
     public function finalize()
     {
-        // Copy standard outlines if they haven't been copied already.
-        $this->copyCustom('default', 'default');
-        $this->copyCustom('_body_only', '_body_only');
-        $this->copyCustom('_error', '_error');
-        $this->copyCustom('_offline', '_offline');
-
-        $this->initialize();
+        parent::finalize();
 
         $gantry = Gantry::instance();
 
@@ -698,31 +524,6 @@ class TemplateInstaller
                 $this->addMenuItems($menutype, $item['items'], $itemId);
             }
         }
-    }
-
-    /**
-     * @param string $layout
-     * @param string $id
-     * @return bool True if files were copied over.
-     */
-    protected function copyCustom($layout, $id)
-    {
-        $path = $this->getPath();
-
-        // Only copy files if the target id doesn't exist.
-        $dst = $path . '/custom/config/' . $id;
-        if (!$layout || !$id || is_dir($dst)) {
-            return false;
-        }
-
-        // New location for G5.3.2+
-        $src = $path . '/install/outlines/' . $layout;
-        if (!is_dir($src)) {
-            // Old and deprecated location.
-            $src = $path . '/install/layouts/' . $layout;
-        }
-
-        return is_dir($src) ? \JFolder::copy($src, $dst) : \JFolder::create($dst);
     }
 
     protected function getInstallerScript()
