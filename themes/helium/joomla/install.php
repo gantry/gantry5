@@ -60,7 +60,7 @@ class G5_HeliumInstallerScript
      */
     public function postflight($type, $parent)
     {
-        $installer = new Gantry\Joomla\TemplateInstaller($parent);
+        $installer = new Gantry\Framework\ThemeInstaller($parent);
         $installer->initialize();
 
         // Install sample data on first install.
@@ -84,9 +84,9 @@ class G5_HeliumInstallerScript
     /**
      * Called by TemplateInstaller to customize post-installation.
      *
-     * @param \Gantry\Joomla\TemplateInstaller $installer
+     * @param \Gantry\Framework\ThemeInstaller $installer
      */
-    public function installDefaults(Gantry\Joomla\TemplateInstaller $installer)
+    public function installDefaults(Gantry\Framework\ThemeInstaller $installer)
     {
         // Create default outlines etc.
         $installer->createDefaults();
@@ -95,9 +95,9 @@ class G5_HeliumInstallerScript
     /**
      * Called by TemplateInstaller to customize sample data creation.
      *
-     * @param \Gantry\Joomla\TemplateInstaller $installer
+     * @param \Gantry\Framework\ThemeInstaller $installer
      */
-    public function installSampleData(Gantry\Joomla\TemplateInstaller $installer)
+    public function installSampleData(Gantry\Framework\ThemeInstaller $installer)
     {
         // Create sample data.
         $installer->createSampleData();
