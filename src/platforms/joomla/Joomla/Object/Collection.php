@@ -44,9 +44,4 @@ class Collection extends BaseCollection
 
         return $list;
     }
-
-    public function toArray()
-    {
-        return $this->__call('toArray', []);
-    }
 }

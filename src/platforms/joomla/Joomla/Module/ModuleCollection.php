@@ -14,9 +14,13 @@ use Gantry\Joomla\Object\Collection;
 
 class ModuleCollection extends Collection
 {
+    public function toArray()
+    {
+        return $this->__call('toArray', []);
+    }
+
     public function export()
     {
-
         $assignments = $this->assignments();
         $paths = $this->getAssignmentPath($this->values($assignments));
 
@@ -115,5 +119,4 @@ class ModuleCollection extends Collection
 
         return array_unique($list);
     }
-
 }
