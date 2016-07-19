@@ -27,7 +27,7 @@ form:
         .id:
           type: input.text
           label: Menu Item Id
-          disabled: true
+          readonly: true
 
         .type:
           type: input.text

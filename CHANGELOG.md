@@ -28,6 +28,7 @@
         - Fixed issue with modals in Firefox where the bottom end wouldn't have enough margin (thanks @coder4life - #1454)
         - Fixed issue with Offcanvas that on Touch devices would cause the Offcanvas to close while touch-scrolling (#1447)
         - Fixed issue with `input.multicheckbox` field throwing errors when not used in LM
+        - Fixed save in menu editor, menu items were not saved properly (#1439)
 2. [Joomla](#joomla)
     1. [](#new)
         - Allow to install and update Gantry in Joomla 3.6
