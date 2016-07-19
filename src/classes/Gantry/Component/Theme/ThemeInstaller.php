@@ -74,6 +74,10 @@ abstract class ThemeInstaller
                     $this->outlines[basename($folder)] = [];
                 }
             }
+
+            // Always include system outlines.
+            $this->outlines += ['default' => [], '_body_only' => [], '_error' => [], '_offline' => []];
+
         }
 
         return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
@@ -90,7 +94,7 @@ abstract class ThemeInstaller
     {
         $installerScript = $this->getInstallerScript();
 
-        if (method_exists($installerScript, 'installDefaults')) {
+        if ($installerScript && method_exists($installerScript, 'installDefaults')) {
             $installerScript->installDefaults($this);
         } else {
             $this->createDefaults();
@@ -101,7 +105,7 @@ abstract class ThemeInstaller
     {
         $installerScript = $this->getInstallerScript();
 
-        if (method_exists($installerScript, 'installSampleData')) {
+        if ($installerScript && method_exists($installerScript, 'installSampleData')) {
             $installerScript->installSampleData($this);
         } else {
             $this->createSampleData();
@@ -113,7 +117,9 @@ abstract class ThemeInstaller
         $this->createOutlines();
     }
 
-    abstract public function createSampleData();
+    public function createSampleData()
+    {
+    }
 
     public function render($template, $context = [])
     {
@@ -190,7 +196,7 @@ abstract class ThemeInstaller
         $preset = $params['preset'] ?: 'default';
 
         // Copy configuration for the new layout.
-        if (($this->copyCustom($folder, $folder) || $created) && isset($style)) {
+        if (($this->copyCustom($folder, $folder) || $created)) {
             // Update layout and save it.
             $layout = Layout::load($folder, $preset);
             $layout->save()->saveIndex();
@@ -309,5 +315,25 @@ abstract class ThemeInstaller
         return call_user_func_array([$translator, 'translate'], $args);
     }
 
-    abstract protected function getInstallerScript();
+
+    protected function getInstallerScript()
+    {
+        if (!$this->script) {
+            $className = ucfirst($this->name) . 'InstallerScript';
+
+            if (!class_exists($className)) {
+
+                $path = "{$this->getPath()}/install.php";
+                if (is_file($path)) {
+                    require_once $path;
+                }
+            }
+
+            if (class_exists($className)) {
+                $this->script = new $className;
+            }
+        }
+
+        return $this->script;
+    }
 }

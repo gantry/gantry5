@@ -339,6 +339,13 @@ class Theme extends AbstractTheme
         return $filetypes;
     }
 
+    public function install()
+    {
+        $installer = new ThemeInstaller($this->name);
+        $installer->installDefaults();
+        $installer->finalize();
+    }
+
     /**
      * @see AbstractTheme::init()
      */
@@ -351,6 +358,11 @@ class Theme extends AbstractTheme
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
+
+        $installed = is_dir($locator->findResource('gantry-theme://config/default', true, true));
+        if (!$installed) {
+            $this->install();
+        }
 
         // Set lookup locations for Timber.
         \Timber::$locations = $locator->findResources('gantry-engine://views');
