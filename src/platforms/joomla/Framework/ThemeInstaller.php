@@ -14,7 +14,7 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Component\Theme\ThemeInstaller;
+use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Platform;
@@ -22,7 +22,7 @@ use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class TemplateInstaller extends ThemeInstaller
+class TemplateInstaller extends AbstractInstaller
 {
     protected $extension;
     protected $manifest;
