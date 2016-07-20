@@ -98,8 +98,11 @@ class Compiler extends BaseCompiler
         // Handle ../ inside CSS files (points to current theme).
         $uri = strpos($url, '../') === 0 ? 'gantry-theme://' . substr($url, 3) : $url;
 
-        // Generate URL, failed streams will be kept as they are to allow users to find issues.
-        $url = Gantry::instance()['document']->url($uri) ?: $url;
+        // Generate URL, failed streams will be transformed to 404 URLs.
+        $url = Gantry::instance()['document']->url($uri);
+        if (!$url) {
+            $url = Gantry::instance()['document']->url(dirname($uri)) . basename($uri);
+        }
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url && $url[0] == '/' && $this->basePath) {

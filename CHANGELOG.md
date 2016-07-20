@@ -1,3 +1,10 @@
+# 5.3.3
+## XX/XX/2016
+
+1. [Common](#common)
+    2. [](#improved)
+        - Failed streams in compiled SCSS will now be transformed to 404 URIs, instead of keeping the stream. This will create less confusion on the errors displayed on frontend (#1457, #1443, #1331) 
+        
 # 5.3.2
 ## 19/07/2016
 
