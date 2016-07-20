@@ -153,6 +153,12 @@ abstract class Widgets
 
     public static function listWidgets()
     {
+        static $list;
+
+        if ($list !== null) {
+            return $list;
+        }
+
         $widgets = $GLOBALS['wp_widget_factory']->widgets;
 
         $list = [];
@@ -232,6 +238,102 @@ abstract class Widgets
         ksort($sidebars);
 
         return $sidebars;
+    }
+
+    public static function import(array $positions)
+    {
+        // Load sidebars.
+        $sidebars = (array)get_option('sidebars_widgets');
+        $widgets = [];
+
+        foreach ($positions as $sidebar => $list) {
+            foreach ($list as $data) {
+                $type = static::getImportType($data['type']);
+                if (!$type) {
+                    continue;
+                }
+
+                if (!isset($widgets[$type])) {
+                    // Load widgets.
+                    $widgets[$type] = (array)get_option("widget_{$type}");
+                }
+
+                static::addWidget($type, $data, $sidebar, $widgets[$type], $sidebars);
+            }
+        }
+
+        // Bulk update all widgets and sidebars.
+        foreach ($widgets as $type => $list) {
+            update_option("widget_{$type}", $list);
+        }
+        update_option('sidebars_widgets', $sidebars);
+    }
+
+    public static function create($type, array $data, $sidebar = 'wp_inactive_widgets')
+    {
+        // Load widgets and sidebars.
+        $sidebars = (array)get_option('sidebars_widgets');
+        $widgets = (array)get_option("widget_{$type}");
+
+        // Add widget to the sidebar.
+        static::addWidget($type, $data, $sidebar, $widgets, $sidebars);
+
+        // Save widgets and sidebars.
+        update_option("widget_{$type}", $widgets);
+        update_option('sidebars_widgets', $sidebars);
+    }
+
+    protected static function getImportType($type)
+    {
+        if ($type === 'gantry.particle') {
+            list ($scope, $type) = ['wordpress', 'particle_widget'];
+        } else {
+            list ($scope, $type) = explode('.', $type, 2);
+        }
+
+        if ($scope !== 'wordpress') {
+            return false;
+        }
+
+        // Check if widget type exists in the site.
+        $widgetTypes = static::listWidgets();
+        if (!isset($widgetTypes[$type])) {
+            return false;
+        }
+
+        return $type;
+    }
+
+    protected static function addWidget($type, array $data, $sidebar, array &$widgets, array &$sidebars)
+    {
+        global $wp_registered_sidebars;
+
+        $widget = [];
+        if ($type === 'particle_widget') {
+            $widget = isset($data['particle']) ? $data['particle'] : [];
+
+        }
+
+        if (isset($data['wordpress'])) {
+            $widget += $data['wordpress'];
+        }
+
+        // Check if sidebar exists in the site.
+        if (!isset($wp_registered_sidebars[$sidebar])) {
+            $sidebar = 'wp_inactive_widgets';
+        }
+
+        // Add new widget while making sure that key 0 will not be used.
+        $widgets[0] = true;
+        $widgets[] = $widget;
+        end($widgets);
+        $id = key($widgets);
+
+        // Append _multiwidget=1 into the end of the list.
+        unset($widgets[0], $widgets['_multiwidget']);
+        $widgets['_multiwidget'] = 1;
+
+        $sidebars[$sidebar][] = "{$type}-{$id}";
     }
 
     public static function sidebarChromeFilter($params)
