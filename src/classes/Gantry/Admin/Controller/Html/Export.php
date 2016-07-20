@@ -14,7 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Joomla\Module\ModuleFinder;
+use Gantry\Framework\Exporter;
 use Symfony\Component\Yaml\Yaml;
 
 class Export extends HtmlController
@@ -23,12 +23,24 @@ class Export extends HtmlController
     {
         // Experimental module exporter...
         $list = [];
-        if (class_exists('Gantry\Joomla\Module\ModuleFinder')) {
-            $finder = new ModuleFinder;
-            $modules = $finder->particle()->find();
+        if (class_exists('Gantry\Framework\Exporter')) {
+            $exporter = new Exporter;
+            $contents = Yaml::dump($exporter->positions(), 10, 2);
 
-            $list = $modules->export();
+            $filename = 'positions.yaml';
+            $filesize = strlen($contents);
+
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $filename);
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . $filesize);
+
+            @ob_end_clean();
+            flush();
+            echo $contents;
+            exit;
         }
-        die(Yaml::dump($list, 10 , 2));
     }
 }

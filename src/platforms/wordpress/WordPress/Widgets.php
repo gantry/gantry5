@@ -169,6 +169,71 @@ abstract class Widgets
         return $list;
     }
 
+    public static function export($particlesOnly = true)
+    {
+        global $wp_registered_widget_controls;
+
+        // Get all widget instances.
+        $list = [];
+        foreach ($wp_registered_widget_controls as $widget) {
+            if (!empty($widget['id_base'])) {
+                $base = $widget['id_base'];
+                if ($base === 'particle_widget') {
+                    $type = 'gantry.particle';
+                    $isParticle = true;
+                } else {
+                    $type = "wordpress.{$base}";
+                    $isParticle = false;
+                    if ($particlesOnly) {
+                        continue;
+                    }
+                }
+                foreach (get_option("widget_{$base}") as $id => $instance) {
+                    if (is_numeric($id)) {
+                        $wordpress = $particle = [];
+                        if (!$isParticle) {
+                            $wordpress = $instance;
+                        } else {
+                            if (isset($instance['g5_classes'])) {
+                                $wordpress['g5_classes'] = $instance['g5_classes'];
+                                unset($instance['g5_classes']);
+                            }
+                            $particle = $instance;
+                        }
+
+
+                        $data = ['type' => $type];
+                        if ($particle) {
+                            $data['particle'] = $particle;
+                        }
+                        if ($wordpress) {
+                            $data['wordpress'] = $wordpress;
+                        }
+
+                        $list["{$base}-{$id}"] = $data;
+                    }
+                }
+            }
+        }
+
+        $sidebars = [];
+        foreach (get_option('sidebars_widgets') as $sidebar => $widgets) {
+            if (!is_array($widgets) || $sidebar === 'wp_inactive_widgets' || strpos($sidebar, 'orphaned_widgets_') === 0) {
+                continue;
+            }
+
+            foreach ($widgets as $widgetId) {
+                if (isset($list[$widgetId])) {
+                    $sidebars[$sidebar][] = $list[$widgetId];
+                }
+            }
+        }
+
+        ksort($sidebars);
+
+        return $sidebars;
+    }
+
     public static function sidebarChromeFilter($params)
     {
         if (empty(static::$chromeArgs)) {
