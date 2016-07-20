@@ -2,12 +2,12 @@
 
 var paths,
     gulp         = require('gulp'),
-    fs   = require('fs'),
+    fs           = require('fs'),
     convertBytes = function(bytes) {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         if (bytes == 0) return '0 Byte';
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        return Math.round(((bytes / Math.pow(1024, i) * 100)) / 100) + ' ' + sizes[i];
     };
 
 // You can install or update NPM dependencies across the whole project via the supported commands:
@@ -16,7 +16,7 @@ var paths,
 if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|-{1,2}inst|-{1,2}go|-{1,2}deps)/)) {
     gulp.task('default', function() {
         paths = ['./', 'platforms/common', 'assets/common', 'engines/common/nucleus'];
-        var exec = require('child_process').exec, child, stat;
+        var exec = require('child_process').exec, child;
         paths.forEach(function(path) {
             var nodes  = path.replace(/(\/$)/g, '') + '/' + 'node_modules',
                 method = 'install',
@@ -62,7 +62,7 @@ paths = {
         { // admin
             in: './platforms/common/application/main.js',
             out: './platforms/common/js/main.js',
-            expose: [{lib: './platforms/common/js/tooltips.js', require: 'ext/tooltips'}]
+            expose: [{ lib: './platforms/common/js/tooltips.js', require: 'ext/tooltips' }]
         },
         { // frontend
             in: './assets/common/application/main.js',
@@ -171,7 +171,7 @@ var compileJS = function(app, watching) {
     });
 
     if (_exp) {
-        _exp.forEach(function(expose){
+        _exp.forEach(function(expose) {
             bundle.require(expose.lib, { expose: expose.require });
         });
     }
@@ -244,7 +244,7 @@ gulp.task('watchify', function() {
 
     // watch js
     paths.js.forEach(function(app) {
-        var _path = app.in.substring(0, app.in.lastIndexOf('/'));
+        // var _path = app.in.substring(0, app.in.lastIndexOf('/'));
         return compileJS(app, true);
     });
 

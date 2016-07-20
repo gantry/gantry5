@@ -18,12 +18,13 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^4.8.0"
+    "yargs": "^4.8.1"
   },
   "scripts": {
     "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",
     "build-assets": "rm -rf node_modules && rm -rf assets/common/node_modules && rm -rf platforms/common/node_modules && rm -rf engines/common/nucleus/node_modules && npm install && cd assets/common && npm install && cd ../../ && cd platforms/common && npm install && cd ../../ && cd engines/common/nucleus && npm install && cd ../../../",
-    "ncu": "ncu && cd assets/common && ncu && cd ../../ && cd platforms/common && ncu && cd ../../ && cd engines/common/nucleus && ncu && cd ../../../"
+    "ncu": "ncu && cd assets/common && ncu && cd ../../ && cd platforms/common && ncu && cd ../../ && cd engines/common/nucleus && ncu && cd ../../../",
+    "ncu-update": "ncu -a && npm update && cd assets/common && ncu -a && npm update && cd ../../ && cd platforms/common && ncu -a && npm update && cd ../../ && cd engines/common/nucleus && ncu -a && npm update && cd ../../../"
   },
   "repository": {
     "type": "git",
