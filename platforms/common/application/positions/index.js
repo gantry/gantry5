@@ -14,6 +14,8 @@ var $             = require('elements'),
 
     flags         = require('../utils/flags-state');
 
+require('./cards');
+
 ready(function() {
     var body = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
@@ -122,10 +124,9 @@ ready(function() {
 
                     // refresh ID label and actions buttons
                     var dummy = zen('div').html(response.body.position),
-                        id = dummy.find('h4 span:last-child'),
                         actions = dummy.find('.position-actions');
 
-                    element.parent('.card').find('h4 span:last-child').html(id.html());
+                    element.parent('.card').find('h4 .position-key').html(response.body.id);
                     element.parent('.card').find('.position-actions').html(actions.html());
                 }
 

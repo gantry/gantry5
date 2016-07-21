@@ -18,6 +18,7 @@ var $              = require('elements'),
     validateField  = require('./utils/field-validation'),
     lm             = require('./lm'),
     mm             = require('./menu'),
+    pm             = require('./positions/cards'),
     configurations = require('./configurations'),
     positions      = require('./positions'),
     changelog      = require('./changelog'),
@@ -163,7 +164,7 @@ ready(function() {
             invalid = [],
             type    = element.data('save'),
             extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-position]') ? 'positions' : 'other')),
             saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
@@ -195,6 +196,10 @@ ready(function() {
                 data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
+                break;
+
+            case 'positions':
+                data.positions = pm.serialize();
                 break;
 
             case 'other':
