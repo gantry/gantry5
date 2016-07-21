@@ -115,31 +115,6 @@ ready(function() {
                     return;
                 }
 
-                alert('Let me know when you got to this point ;)');
-            }
-        });
-    });
-
-    // Positions Items settings
-    body.delegate('click', '#positions .item-settings', function(event, element) {
-        event.preventDefault();
-
-        var data = {};
-
-        data.item = JSON.stringify(element.parent('[data-pm-data]').data('pm-data'));
-
-        modal.open({
-            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
-            method: 'post',
-            data: data,
-            overlayClickToClose: false,
-            remote: parseAjaxURI(getAjaxURL('positions/edit') + getAjaxSuffix()),
-            remoteLoaded: function(response, content) {
-                if (!response.body.success) {
-                    modal.enableCloseByOverlay();
-                    return;
-                }
-
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
@@ -194,6 +169,32 @@ ready(function() {
                 }
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
+            }
+        });
+    });
+
+    // Positions Items settings
+    body.delegate('click', '#positions .item-settings', function(event, element) {
+        event.preventDefault();
+
+        var data = {},
+            parent = element.parent('[data-pm-data]');
+
+        data.item = JSON.stringify(parent.data('pm-data'));
+
+        modal.open({
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
+            method: 'post',
+            data: data,
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL('positions/edit/' + parent.data('pm-blocktype')) + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                alert('Let me know when you got to this point ;)');
             }
         });
     });
