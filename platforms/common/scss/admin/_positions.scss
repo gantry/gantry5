@@ -28,6 +28,7 @@
             ul {
                 position: relative;
                 min-height: 95%;
+                font-size: 1rem;
 
                 &:empty:after {
                     content: "Drop positions here...";
@@ -52,6 +53,13 @@
                 @include display(flex);
                 @include flex-direction(row);
                 @include justify-content(flex-start);
+
+                &:hover {
+                    .item-settings {
+                        opacity: 1;
+                        @include transition(opacity 0.2s);
+                    }
+                }
             }
 
             .position-dragging {
@@ -66,13 +74,17 @@
         }
 
         .item-reorder, .item-settings, .title-status {
-            color: #bbb;
+            color: #333;
             text-align: left;
             line-height: 1.2rem;
 
             &:hover {
                 color: $core-text;
             }
+        }
+
+        .title-status {
+            margin-right: $content-padding / 2;
         }
 
         .title-status, .title-status:hover {
@@ -82,6 +94,8 @@
         .item-settings {
             cursor: pointer;
             text-align: right;
+            opacity: 0;
+            @include transition(opacity 0.2s);
         }
     }
 }

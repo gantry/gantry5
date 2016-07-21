@@ -3498,6 +3498,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #positions .position-container ul {
   position: relative;
   min-height: 95%;
+  font-size: 1rem;
 }
 #g5-container #positions .position-container ul:empty:after {
   content: "Drop positions here...";
@@ -3557,6 +3558,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   justify-content: flex-start;
   -ms-flex-pack: start;
 }
+#g5-container #positions .position-container li:hover .item-settings {
+  opacity: 1;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
 #g5-container #positions .position-container .position-dragging.sortable-fallback {
   background: #fff;
 }
@@ -3564,12 +3571,15 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   margin: 0.625rem 1.25rem;
 }
 #g5-container #positions .item-reorder, #g5-container #positions .item-settings, #g5-container #positions .title-status {
-  color: #bbb;
+  color: #333;
   text-align: left;
   line-height: 1.2rem;
 }
 #g5-container #positions .item-reorder:hover, #g5-container #positions .item-settings:hover, #g5-container #positions .title-status:hover {
   color: #111;
+}
+#g5-container #positions .title-status {
+  margin-right: 0.469rem;
 }
 #g5-container #positions .title-status, #g5-container #positions .title-status:hover {
   color: inherit;
@@ -3577,6 +3587,10 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #positions .item-settings {
   cursor: pointer;
   text-align: right;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s;
 }
 
 #g5-container [data-mode-indicator="production"] {
