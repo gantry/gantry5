@@ -244,7 +244,7 @@ class ThemeInstaller extends AbstractInstaller
         $preset = $params['preset'] ?: 'default';
 
         if ($folder[0] !== '_') {
-            $title = $this->getStyleName("%s - {$title}");
+            $title = $this->getStyleName($title !== 'Default' ? "%s - {$title}" : 'JLIB_INSTALLER_DEFAULT_STYLE');
             $style = $this->getStyle($title);
 
             if (!$style->id) {
@@ -509,7 +509,7 @@ class ThemeInstaller extends AbstractInstaller
             if (!is_array($params)) {
                 $params = [
                     'preset' => isset($item['preset']) ? $item['preset'] : (isset($item['layout']) ? $item['layout'] : null),
-                    'title' => isset($item['style']) ? $this->getStyleName($item['style']) : null
+                    'title' => isset($item['style']) ? $item['style'] : null
                 ];
             }
 
