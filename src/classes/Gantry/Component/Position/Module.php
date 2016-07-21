@@ -67,15 +67,6 @@ class Module implements \ArrayAccess
         return $this;
     }
 
-    /**
-     * @param bool $includeModules
-     * @return string
-     */
-    public function toJson()
-    {
-        return json_encode($this->toArray());
-    }
-
     protected function load()
     {
         $file = $this->file();

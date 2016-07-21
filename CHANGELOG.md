@@ -6,7 +6,7 @@
         - Failed streams in compiled SCSS will now be transformed to 404 URIs, instead of keeping the stream. This will create less confusion on the errors displayed on frontend (#1457, #1443, #1331) 
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Fixed extra Default outline that was added in the non-English Joomla installation (#1461)
+        - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
     
 # 5.3.2
 ## 19/07/2016
