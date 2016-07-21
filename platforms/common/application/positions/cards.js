@@ -99,7 +99,7 @@ var Positions = {
                         if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
                             item.remove();
                             Positions.eraser.hide();
-                            this.options.onSort();
+                            this.options.onSort(event);
                             return;
                         }
 
@@ -108,12 +108,12 @@ var Positions = {
                         Positions.eraser.hide();
                     },
 
-                    onSort: function(evt) {
-                        var from = $(evt.from),
-                            to = $(evt.to),
+                    onSort: function(event) {
+                        var from = $(event.from),
+                            to = $(event.to),
                             lists = [from.parent('[data-position]'), to.parent('[data-position]')];
 
-                        if (evt.from[0] === evt.to[0]) {
+                        if (event.from[0] === event.to[0]) {
                             lists.shift();
                         }
 
@@ -132,10 +132,10 @@ var Positions = {
                         });
                     },
 
-                    onOver: function(evt) {
-                        if (!$(evt.from).matches('ul')) { return; }
+                    onOver: function(event) {
+                        if (!$(event.from).matches('ul')) { return; }
 
-                        var over = $(evt.newIndex);
+                        var over = $(event.newIndex);
                         if (over.matches('#trash') || over.parent('#trash')) {
                             Positions.eraser.over();
                         } else {
