@@ -1,8 +1,14 @@
 #g5-container {
     #positions {
 
+        .position-key {
+            @extend .font-small;
+            display: block;
+            color: #999;
+        }
+
         .button-simple {
-            padding: 0 2px;
+            padding: 6px;
         }
 
         .g-grid > li {
@@ -10,17 +16,52 @@
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
+
+            cursor: default;
         }
 
-        .inner-params li {
-            @include align-items(center);
-            @include display(flex);
-            @include flex-direction(row);
-            @include justify-content(flex-start);
+        .position-container {
+            height: 257px;
+            overflow-y: auto;
+            overflow-x: hidden;
 
+            ul {
+                position: relative;
+                min-height: 95%;
+
+                &:empty:after {
+                    content: "Drop positions here...";
+                    display: block;
+                    text-align: center;
+                    margin: 0 auto;
+                    vertical-align: middle;
+                    line-height: 257px;
+                    color: #bababa;
+                    position: absolute;
+                    font-size: 1rem;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    @include ellipsis();
+                }
+            }
+
+            li {
+                @include align-items(center);
+                @include display(flex);
+                @include flex-direction(row);
+                @include justify-content(flex-start);
+            }
+
+            .position-dragging {
+                &.sortable-fallback {
+                    background: $white;
+                }
+            }
         }
 
-        [data-mm-blocktype] {
+        [data-pm-blocktype] {
             margin: $content-margin ($content-margin * 2);
         }
 
