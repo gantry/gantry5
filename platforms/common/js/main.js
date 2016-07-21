@@ -9578,7 +9578,8 @@ var $             = require('elements'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
 
-    flags         = require('../utils/flags-state');
+    flags         = require('../utils/flags-state'),
+    translate     = require('../utils/translate');
 
 require('./cards');
 
@@ -9663,6 +9664,31 @@ ready(function() {
 
     });
 
+    // Positions Items settings
+    body.delegate('click', '#positions .item-settings', function(event, element) {
+        event.preventDefault();
+
+        var data = {};
+
+        data.item = JSON.stringify(element.parent('[data-pm-data]').data('pm-data'));
+
+        modal.open({
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
+            method: 'post',
+            data: data,
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL('positions/edit') + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                alert('Let me know when you got to this point ;)');
+            }
+        });
+    });
+
     // Handles Positions Titles Rename
     var updateTitle = function(title, original, wasCanceled) {
             this.style('text-overflow', 'ellipsis');
@@ -9713,6 +9739,7 @@ ready(function() {
             });
         };
 
+    // Global state change
     body.on('statechangeAfter', function(event, element) {
         var editables = $('#positions [data-title-editable]');
         if (!editables) { return true; }
@@ -9729,7 +9756,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"./cards":46,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/object/keys":234,"mout/string/trim":269}],48:[function(require,module,exports){
+},{"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"../utils/translate":76,"./cards":46,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/object/keys":234,"mout/string/trim":269}],48:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $ = require('elements/attributes'),
