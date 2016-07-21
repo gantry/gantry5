@@ -98,6 +98,28 @@ ready(function() {
 
     });
 
+    // Positions Add
+    body.delegate('click', '#positions .card h4 button', function(event, element) {
+        event.preventDefault();
+
+        var data = {};
+
+        modal.open({
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
+            method: 'get',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL('positions/add') + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                alert('Let me know when you got to this point ;)');
+            }
+        });
+    });
+
     // Positions Items settings
     body.delegate('click', '#positions .item-settings', function(event, element) {
         event.preventDefault();
@@ -118,7 +140,60 @@ ready(function() {
                     return;
                 }
 
-                alert('Let me know when you got to this point ;)');
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
+
+                var search      = content.elements.content.find('.search input'),
+                    blocks      = content.elements.content.search('[data-pm-type]'),
+                    filters     = content.elements.content.search('[data-pm-filter]'),
+                    urlTemplate = content.elements.content.find('.g-urltemplate');
+
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
+
+                            return true;
+                        }
+                    });
+                }
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('pm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-pm-type]') ? filter : filter.parent('[data-pm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
+
+                if (search) {
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
+                }
+
+                if ((!form && !fakeDOM) || !submit) { return true; }
             }
         });
     });
