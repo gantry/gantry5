@@ -10,45 +10,21 @@
         </span>
         <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         <span class="float-right font-small">
-            <button class="button button-primary button-simple"
+            <a href="{{ gantry.route('positions', position.name, 'add') }}" class="button button-primary button-simple position-add"
                     title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
                     aria-label="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
             >
                 <i class="fa fa-fw fa-plus"></i>
-            </button>
+            </a>
         </span>
         <span class="font-small position-key">
             <span>{{ position.name }}</span>
         </span>
     </h4>
-    <div class="position-container inner-params" data-position="{{ position.toJson(true)|e('html_attr') }}">
-        {% set statuses = {
-            all: {
-                'label': 'Assigned to all',
-                'icon': '<i class="fa item-status fa-fw fa-circle"></i>'
-            },
-            none: {
-                'label': 'Not assigned',
-                'icon': '<i class="fa item-status fa-fw fa-circle-o"></i>'
-            },
-            some: {
-                'label': 'Some assignments',
-                'icon': '<i class="fa item-status fa-fw fa-adjust"></i>'
-            }
-        } %}
+    <div class="position-container inner-params" data-position="{{ position.toJson(true)|e('html_attr') }}" data-position-name="{{ position.name }}">
         <ul>{% spaceless %}
             {% for module in position %}
-            <li data-pm-blocktype="{{ module.type }}" data-pm-data="{{ module.toJson()|e('html_attr') }}">
-                {% set status = statuses[module.assigned] %}
-                {#<i class="fa fa-reorder font-small item-reorder size-10"></i>#}
-                <div class="title size-90">
-                    <div>
-                        <span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span>
-                        <span class="title-name" title="Type: {{ module.subtype }}">{{ module.title|default(module.name) }}</span>
-                    </div>
-                </div>
-                <i class="fa item-settings fa-cog size-10"></i>
-            </li>
+                {% include 'pages/positions/item.html.twig' with { module: module } %}
             {% endfor %}
         {% endspaceless %}</ul>
     </div>

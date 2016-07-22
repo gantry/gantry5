@@ -1,0 +1,26 @@
+{% set statuses = {
+    all: {
+        'label': 'Assigned to all',
+        'icon': '<i class="fa item-status fa-fw fa-circle"></i>'
+    },
+    none: {
+        'label': 'Not assigned',
+        'icon': '<i class="fa item-status fa-fw fa-circle-o"></i>'
+    },
+    some: {
+        'label': 'Some assignments',
+        'icon': '<i class="fa item-status fa-fw fa-adjust"></i>'
+    }
+} %}
+
+<li data-pm-blocktype="{{ module.type }}" data-pm-data="{{ module.toJson()|e('html_attr') }}">
+    {% set status = statuses[module.assigned] %}
+    {#<i class="fa fa-reorder font-small item-reorder size-10"></i>#}
+    <div class="title size-90">
+        <div>
+            <span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span>
+            <span class="title-name" title="Type: {{ module.subtype }}">{{ module.title|default(module.name) }}</span>
+        </div>
+    </div>
+    <i class="fa item-settings fa-cog size-10"></i>
+</li>

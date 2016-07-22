@@ -29,22 +29,24 @@ class Positions extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'                 => 'index',
-            '/*'                => 'undefined',
-            '/*/add'            => 'selectParticle',
-            '/add'              => 'selectParticle',
+            '/'                   => 'index',
+            '/*'                  => 'undefined',
+            '/*/add'              => 'selectParticle',
+            '/add'                => 'selectParticle',
         ],
         'POST' => [
-            '/'                 => 'undefined',
-            '/create'           => 'create',
-            '/*'                => 'undefined',
-            '/*/rename'         => 'rename',
-            '/*/duplicate'      => 'duplicate',
-            '/*/delete'         => 'delete',
-            '/*/edit'           => 'undefined',
-            '/*/edit/particle'  => 'particle',
-            '/edit'             => 'undefined',
-            '/edit/particle'    => 'particle',
+            '/'                   => 'undefined',
+            '/create'             => 'create',
+            '/*'                  => 'undefined',
+            '/*/rename'           => 'rename',
+            '/*/duplicate'        => 'duplicate',
+            '/*/delete'           => 'delete',
+            '/*/edit'             => 'undefined',
+            '/*/edit/particle'    => 'particle',
+            '/*/edit/particle/*'  => 'validateParticle',
+            '/edit'               => 'undefined',
+            '/edit/particle'      => 'particle',
+            '/edit/particle/*'    => 'validateParticle',
         ]
     ];
 
@@ -114,9 +116,6 @@ class Positions extends HtmlController
         $data = $this->request->post['item'];
         if ($data) {
             $data = json_decode($data, true);
-            // FIXME:
-            if (is_string($data)) $data = json_decode($data, true);
-
         } else {
             $data = $this->request->post->getArray();
         }
@@ -136,14 +135,14 @@ class Positions extends HtmlController
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
-            'action'        => "menu/particle/{$name}"
+            'action'        => "positions/{$position}/edit/particle/{$name}"
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
     }
 
 
-    public function validateParticle($name)
+    public function validateParticle($position = null, $name)
     {
         // Validate only exists for JSON.
         if (empty($this->params['ajax'])) {
@@ -181,13 +180,20 @@ class Positions extends HtmlController
         // TODO: validate
 
         // Fill parameters to be passed to the template file.
+        $this->params['position'] = $position;
         $this->params['item'] = (object) $data->toArray();
 
-        // FIXME:
-        //$html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
-        $html = '';
+        // FIXME: missing assigned param
+        $assigned = 'some';
 
-        return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
+        // FIXME: module is not consistent to what we get in layout/position.html.twig
+        $this->params['module'] = (object) $data->toArray();
+        $this->params['module']->subtype = $this->params['module']->{$this->params['module']->type};
+        $this->params['module']->assigned = $assigned;
+
+        $html = $this->container['admin.theme']->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
+
+        return new JsonResponse(['item' => $data->toArray(), 'html' => $html, 'position' => $position]);
     }
 
     public function selectParticle($position = null)
@@ -218,7 +224,7 @@ class Positions extends HtmlController
 
         $this->params += [
             'particles' => $groups,
-            'route' => 'positions/edit/particle',
+            'route' => "positions/{$position}/edit/particle",
         ];
 
         return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);

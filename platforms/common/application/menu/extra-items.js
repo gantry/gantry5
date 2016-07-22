@@ -166,29 +166,42 @@ var StepTwo = function(data, content, button) {
                     });
                 } else {
                     // it's menu
+                    // FIXME: this is now handling both the Menu and the Positions when inserting a new Particle. Needs to be separated
                     if (!picker) {
-                        var element = menumanager.element,
-                            path = element.data('mm-id') + '-',
-                            id = randomID(5),
-                            base = element.parent('[data-mm-base]').data('mm-base'),
-                            col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
-                            index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
+                        if (menumanager) {
+                            // case for Menu Manager
+                            var element = menumanager.element,
+                                path    = element.data('mm-id') + '-',
+                                id      = randomID(5),
+                                base    = element.parent('[data-mm-base]').data('mm-base'),
+                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                                index   = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
-                        while (menumanager.items[path + id]) { id = randomID(5); }
+                            while (menumanager.items[path + id]) { id = randomID(5); }
 
-                        menumanager.items[path + id] = response.body.item;
-                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
-                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
-                        menumanager.ordering[base][col].splice(index, 1, path + id);
-                        element.data('mm-id', path + id);
+                            menumanager.items[path + id] = response.body.item;
+                            if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                            if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
+                            menumanager.ordering[base][col].splice(index, 1, path + id);
+                            element.data('mm-id', path + id);
 
-                        if (response.body.html) {
-                            element.html(response.body.html);
+                            if (response.body.html) {
+                                element.html(response.body.html);
+                            }
+
+                            menumanager.isNewParticle = false;
+                            menumanager.emit('dragEnd', menumanager.map);
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+
+                        } else {
+                            // case for Positions
+                            var position = $('[data-position-name="' + response.body.position + '"]'),
+                                dummy = zen('div').html(response.body.html);
+
+                            position.find('> ul').appendChild(dummy.children());
+
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
-
-                        menumanager.isNewParticle = false;
-                        menumanager.emit('dragEnd', menumanager.map);
-                        toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                     } else { // it's field picker
                         var field = $('[name="' + picker.field + '"]'),
                             btnPicker = field.siblings('[data-g-instancepicker]'),

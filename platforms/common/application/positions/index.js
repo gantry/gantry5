@@ -99,7 +99,7 @@ ready(function() {
     });
 
     // Positions Add
-    body.delegate('click', '#positions .card h4 button', function(event, element) {
+    body.delegate('click', '#positions .position-add', function(event, element) {
         event.preventDefault();
 
         var data = {};
@@ -108,7 +108,7 @@ ready(function() {
             content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'get',
             overlayClickToClose: false,
-            remote: parseAjaxURI(getAjaxURL('positions/add') + getAjaxSuffix()),
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 if (!response.body.success) {
                     modal.enableCloseByOverlay();
@@ -178,9 +178,11 @@ ready(function() {
         event.preventDefault();
 
         var data = {},
-            parent = element.parent('[data-pm-data]');
+            parent = element.parent('[data-pm-data]'),
+            position = JSON.parse(element.parent('[data-position]').data('position'));
 
-        data.item = JSON.stringify(parent.data('pm-data'));
+        data.position = position.name;
+        data.item = parent.data('pm-data');
 
         modal.open({
             content: translate('GANTRY5_PLATFORM_JS_LOADING'),
@@ -193,8 +195,6 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
-
-                alert('Let me know when you got to this point ;)');
             }
         });
     });
