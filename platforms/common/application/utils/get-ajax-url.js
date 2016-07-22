@@ -1,6 +1,7 @@
 "use strict";
 var unescapeHtml  = require('mout/string/unescapeHtml'),
     getAjaxSuffix = require('./get-ajax-suffix'),
+    endsWith      = require('mout/string/endsWith'),
     getQuery      = require('mout/queryString/getQuery'),
     getParam      = require('mout/queryString/getParam'),
     setParam      = require('mout/queryString/setParam');
@@ -33,11 +34,13 @@ var parseAjaxURI = function(uri) {
             break;
         case 'grav':
             // converts foo/bar?nonce=1234.json to foo/bar.json?nonce=1234
-            var query  = '' + getQuery(uri),
-                nonce  = '' + getParam(uri, 'nonce'),
-                suffix = getAjaxSuffix();
+            var suffix = getAjaxSuffix();
+            if (endsWith(uri, suffix)) {
+                var query  = '' + getQuery(uri),
+                    nonce  = '' + getParam(uri, 'nonce');
 
-            uri = uri.replace(query, suffix) + query.replace(nonce, (nonce.replace(suffix, '')));
+                uri = uri.replace(query, suffix) + query.replace(nonce, (nonce.replace(suffix, '')));
+            }
             break;
         default:
     }
