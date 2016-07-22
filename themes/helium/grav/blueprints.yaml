@@ -1,0 +1,16 @@
+name: Helium
+version: "@version@"
+description: "Default Gantry 5 theme."
+icon: gantry
+author:
+  name: RocketTheme
+  email: support@rockettheme.com
+  url: http://www.rockettheme.com
+homepage: http://gantry.org
+keywords: gantry, gantry5, theme
+bugs: https://github.com/gantry/gantry5/issues
+license: MIT
+
+form:
+  validation: loose
+  fields:

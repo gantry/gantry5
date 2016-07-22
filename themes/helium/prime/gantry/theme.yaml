@@ -1,0 +1,124 @@
+details:
+  name: Helium
+  version: "@version@"
+  icon: paper-plane
+  date: @versiondate@
+  author:
+    name: RocketTheme, LLC
+    email: support@rockettheme.com
+    link: http://www.rockettheme.com
+
+  documentation:
+    link: http://docs.gantry.org/gantry5
+
+  support:
+    link: https://gitter.im/gantry/gantry5
+
+  updates:
+    link: http://updates.rockettheme.com/themes/helium.yaml
+
+  copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
+  license: GPLv2
+  description: Helium Theme
+  images:
+    thumbnail: admin/images/preset1.png
+    preview: admin/images/preset1.png
+
+configuration:
+  gantry:
+    platform: prime
+    engine: nucleus
+
+  theme:
+    parent: helium
+    base: gantry-theme://common
+    file: gantry-theme://include/theme.php
+    class: \Gantry\Framework\Theme
+
+  fonts:
+    Raleway:
+      900italic: 'gantry-theme://fonts/raleway/raleway-blackitalic/raleway-blackitalic-webfont'
+      900: 'gantry-theme://fonts/raleway/raleway-black/raleway-black-webfont'
+      700italic: 'gantry-theme://fonts/raleway/raleway-bold/raleway-bolditalic-webfont'
+      700: 'gantry-theme://fonts/raleway/raleway-bold/raleway-bold-webfont'
+      600italic: 'gantry-theme://fonts/raleway/raleway-semibolditalic/raleway-semibolditalic-webfont'
+      600: 'gantry-theme://fonts/raleway/raleway-semibold/raleway-semibold-webfont'
+      500italic: 'gantry-theme://fonts/raleway/raleway-mediumitalic/raleway-mediumitalic-webfont'
+      500: 'gantry-theme://fonts/raleway/raleway-medium/raleway-medium-webfont'
+      400italic: 'gantry-theme://fonts/raleway/raleway-italic/raleway-italic-webfont'
+      400: 'gantry-theme://fonts/raleway/raleway-regular/raleway-regular-webfont'
+      200italic: 'gantry-theme://fonts/raleway/raleway-lightitalic/raleway-lightitalic-webfont'
+      200: 'gantry-theme://fonts/raleway/raleway-light/raleway-light-webfont'
+    Lato:
+      900italic: 'gantry-theme://fonts/lato/lato-blackitalic/lato-blackitalic-webfont'
+      900: 'gantry-theme://fonts/lato/lato-black/lato-black-webfont'
+      700italic: 'gantry-theme://fonts/lato/lato-bold/lato-bolditalic-webfont'
+      700: 'gantry-theme://fonts/lato/lato-bold/lato-bold-webfont'
+      400italic: 'gantry-theme://fonts/lato/lato-italic/lato-italic-webfont'
+      400: 'gantry-theme://fonts/lato/lato-regular/lato-regular-webfont'
+      200italic: 'gantry-theme://fonts/lato/lato-lightitalic/lato-lightitalic-webfont'
+      200: 'gantry-theme://fonts/lato/lato-light/lato-light-webfont'
+
+  css:
+    compiler: \Gantry\Component\Stylesheet\ScssCompiler
+    target: gantry-theme://css-compiled
+    paths:
+      - gantry-theme://scss
+      - gantry-engine://scss
+    files:
+      - helium
+      - custom
+    persistent:
+      - helium
+    overrides:
+      - custom
+
+  dependencies:
+    gantry: 5.3.2
+
+  block-variations:
+    Title Variations:
+      title1: Title 1
+      title2: Title 2
+      title-gradient: Title Gradient
+      title-outline: Title Outline
+    Box Variations:
+      box1: Box 1
+      box2: Box 2
+      box-gradient: Box Gradient
+      box-outline: Box Outline
+    Effects:
+      spaced : Spaced
+      shadow : Shadow
+      rounded : Rounded
+    Utility:
+      center: Center
+      title-center: Centered Title
+      equal-height: Equal Height
+      disabled: Disabled
+      align-right: Align Right
+      align-left: Align Left
+      nomarginall: No Margin
+      nopaddingall: No Padding
+
+admin:
+  styles:
+    core:
+      - base
+      - accent
+      - font
+    section:
+      - navigation
+      - header
+      - intro
+      - features
+      - utility
+      - above
+      - testimonials
+      - expanded
+      - main
+      - sidebar
+      - footer
+      - offcanvas
+    configuration:
+      - breakpoints

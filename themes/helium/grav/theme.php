@@ -6,7 +6,7 @@ use Gantry\Framework\Theme as GantryTheme;
 use Grav\Common\Theme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class G5_Hydrogen extends Theme
+class G5_Helium extends Theme
 {
     public $gantry = '5.3.2';
 
@@ -57,7 +57,7 @@ class G5_Hydrogen extends Theme
 
         // Define Gantry services.
         $gantry['theme'] = function ($c) {
-            return new \Gantry\Theme\G5_Hydrogen($c['theme.path'], $c['theme.name']);
+            return new \Gantry\Theme\G5_Helium($c['theme.path'], $c['theme.name']);
         };
     }
 }
