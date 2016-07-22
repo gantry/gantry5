@@ -5,5 +5,5 @@
 {% endblock %}
 
 {% block module %}
-    {% include '@nucleus/content/' ~ segment.type ~ '.html.twig' %}
+    {% include '@nucleus/content/' ~ segment.type ~ '.html.twig' with { segment: {type: segment.type, subtype: segment.options.type, attributes: segment.options.attributes }} %}
 {% endblock %}
