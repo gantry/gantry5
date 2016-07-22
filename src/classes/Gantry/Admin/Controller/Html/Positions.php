@@ -13,37 +13,35 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Framework\Positions as PositionsObject;
+use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Positions extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'   => 'index',
-            '/**' => 'forward',
+            '/'             => 'index',
+            '/*'            => 'undefined',
+            '/add'        => 'selectParticle',
         ],
         'POST' => [
-            '/'            => 'undefined',
-            '/*'           => 'undefined',
-            '/create'      => 'create',
-            '/*/rename'    => 'rename',
-            '/*/duplicate' => 'duplicate',
-            '/*/delete'    => 'delete',
-            '/*/**'        => 'forward',
-        ],
-        'PUT'    => [
-            '/'   => 'undefined',
-            '/**' => 'forward'
-        ],
-        'PATCH'  => [
-            '/'   => 'undefined',
-            '/**' => 'forward'
+            '/'             => 'undefined',
+            '/create'       => 'create',
+            '/*'            => 'undefined',
+            '/*/rename'     => 'rename',
+            '/*/duplicate'  => 'duplicate',
+            '/*/delete'     => 'delete',
+            '/edit'         => 'undefined',
+            '/edit/particle' => 'particle',
         ]
     ];
 
@@ -105,5 +103,136 @@ class Positions extends HtmlController
         $positions->delete($position);
 
         return new JsonResponse(['html' => sprintf("Position '%s' deleted.", $position), 'position' => $position]);
+    }
+
+
+    public function particle()
+    {
+        $data = $this->request->post['item'];
+        if ($data) {
+            // FIXME:
+            $data = trim(preg_replace('/\\\"/' , '"', $data), '"');
+            $data = json_decode($data, true);
+
+        } else {
+            $data = $this->request->post->getArray();
+        }
+        $data['title'] = isset($data['title']) ? $data['title'] : 'Untitled';
+        $data['options'] = isset($data['options']) ? $data['options'] : [];
+        $attributes = isset($data['options']['attributes']) ? $data['options']['attributes'] : [];
+
+        $name = isset($data['options']['type']) ? $data['options']['type'] : (isset($data['particle']) ? $data['particle'] : null);
+        $data['options']['type'] = $name;
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        $this->params += [
+            'item'          => $data,
+            'data'          => ['particles' => [$name => $attributes]],
+            'particle'      => $blueprints,
+            'parent'        => 'settings',
+            'prefix'        => "particles.{$name}.",
+            'route'         => "configurations.default.settings",
+            'action'        => "menu/particle/{$name}"
+        ];
+
+        return $this->container['admin.theme']->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
+    }
+
+
+    public function validateParticle($name)
+    {
+        // Validate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
+        // Load particle blueprints and default settings.
+        $validator = new Blueprints;
+        $validator->embed('options', $this->container['particles']->get($name));
+
+        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        // Create configuration from the defaults.
+        $data = new Config([],
+            function () use ($validator) {
+                return $validator;
+            }
+        );
+
+        $data->set('type', 'particle');
+        $data->set('particle', $name);
+        $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
+        $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
+        $data->def('options.particle.enabled', 1);
+
+        $assignments = $this->request->post->getArray('assignments');
+        foreach ($assignments as $key => $param) {
+            if ($param === '') {
+                unset($assignments[$key]);
+            }
+        }
+
+        $data->join('options.assignments', $assignments);
+
+        // TODO: validate
+
+        // Fill parameters to be passed to the template file.
+        $this->params['item'] = (object) $data->toArray();
+
+        // FIXME:
+        //$html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+        $html = '';
+
+        return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
+    }
+
+    public function selectParticle()
+    {
+        $groups = [
+            'Particles' => ['particle' => []],
+        ];
+
+        $particles = [
+            'position'    => [],
+            'spacer'      => [],
+            'system'      => [],
+            'particle'    => [],
+        ];
+
+        $particles = array_replace($particles, $this->getParticles());
+        unset($particles['atom'], $particles['position']);
+
+        foreach ($particles as &$group) {
+            asort($group);
+        }
+
+        foreach ($groups as $section => $children) {
+            foreach ($children as $key => $child) {
+                $groups[$section][$key] = $particles[$key];
+            }
+        }
+
+        $this->params += [
+            'particles' => $groups,
+            'route' => 'positions/edit/particle',
+        ];
+
+        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+    }
+
+    protected function getParticles()
+    {
+        $particles = $this->container['particles']->all();
+
+        $list = [];
+        foreach ($particles as $name => $particle) {
+            $type = isset($particle['type']) ? $particle['type'] : 'particle';
+            $particleName = isset($particle['name']) ? $particle['name'] : $name;
+            $particleIcon = isset($particle['icon']) ? $particle['icon'] : null;
+            $list[$type][$name] = ['name' => $particleName, 'icon' => $particleIcon];
+        }
+
+        return $list;
     }
 }

@@ -354,7 +354,11 @@ class Menu extends HtmlController
             }
         }
 
-        $this->params['particles'] = $groups;
+        $this->params += [
+            'particles' => $groups,
+            'route' => 'menu/particle',
+        ];
+
         return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 

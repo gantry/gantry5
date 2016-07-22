@@ -19,10 +19,11 @@
         <h2 class="page-title">
             {{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}
             <button data-g-config="create"
-                    data-g-config-href="{{ gantry.route('positions', 'create') }}"
+                    data-g-config-href="{{ gantry.route('positions/create') }}"
                     title="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
                     aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
                     data-g-config-method="POST"
+                    data-g5-lm-add tabindex="0"
                     class="button button-primary"
             >
                 <i class="fa fa-fw fa-plus"></i>
@@ -40,7 +41,7 @@
             <li class="card g-block size-1-4 add-new">
                 <div class="page">
                     <a data-g-config="create"
-                       data-g-config-href="{{ gantry.route('positions', 'create') }}"
+                       data-g-config-href="{{ gantry.route('positions/create') }}"
                        title="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
                        aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
                        data-g-config-method="POST"
