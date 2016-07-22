@@ -156,17 +156,17 @@ ready(function() {
             if (link == element[0]) { index = i + 1; }
         });
 
-        panes.find('.active').removeClass('active');
-        parent.find('.active').removeClass('active');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
-        parent.find('li:nth-child(' + index + ')').addClass('active');
+        panes.find('> .active').removeClass('active');
+        parent.find('> ul > .active').removeClass('active');
+        panes.find('> .g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('> ul > li:nth-child(' + index + ')').addClass('active');
 
         // ARIA
-        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
-        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (panes.search('> [aria-expanded]')) { panes.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('> [aria-expanded]')) { parent.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
 
-        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
-        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
+        panes.find('> .g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('> ul >li:nth-child(' + index + ') [aria-expanded]')) { parent.find('> ul > li:nth-child(' + index + ') > [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker

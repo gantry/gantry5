@@ -7,6 +7,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
+        - Fixed issue with Tabs container, conflicting with Tabs in the modals. Improved specificity (#1463)
     
 # 5.3.2
 ## 19/07/2016
