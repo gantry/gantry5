@@ -29,19 +29,22 @@ class Positions extends HtmlController
 {
     protected $httpVerbs = [
         'GET' => [
-            '/'             => 'index',
-            '/*'            => 'undefined',
-            '/add'        => 'selectParticle',
+            '/'                 => 'index',
+            '/*'                => 'undefined',
+            '/*/add'            => 'selectParticle',
+            '/add'              => 'selectParticle',
         ],
         'POST' => [
-            '/'             => 'undefined',
-            '/create'       => 'create',
-            '/*'            => 'undefined',
-            '/*/rename'     => 'rename',
-            '/*/duplicate'  => 'duplicate',
-            '/*/delete'     => 'delete',
-            '/edit'         => 'undefined',
-            '/edit/particle' => 'particle',
+            '/'                 => 'undefined',
+            '/create'           => 'create',
+            '/*'                => 'undefined',
+            '/*/rename'         => 'rename',
+            '/*/duplicate'      => 'duplicate',
+            '/*/delete'         => 'delete',
+            '/*/edit'           => 'undefined',
+            '/*/edit/particle'  => 'particle',
+            '/edit'             => 'undefined',
+            '/edit/particle'    => 'particle',
         ]
     ];
 
@@ -106,13 +109,13 @@ class Positions extends HtmlController
     }
 
 
-    public function particle()
+    public function particle($position = null)
     {
         $data = $this->request->post['item'];
         if ($data) {
-            // FIXME:
-            $data = trim(preg_replace('/\\\"/' , '"', $data), '"');
             $data = json_decode($data, true);
+            // FIXME:
+            if (is_string($data)) $data = json_decode($data, true);
 
         } else {
             $data = $this->request->post->getArray();
@@ -187,7 +190,7 @@ class Positions extends HtmlController
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
     }
 
-    public function selectParticle()
+    public function selectParticle($position = null)
     {
         $groups = [
             'Particles' => ['particle' => []],
