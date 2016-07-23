@@ -19,6 +19,7 @@ class ModuleFinder extends Finder
     protected $readonly = true;
     protected $state = [];
     protected $published = [0, 1];
+    protected $limit = 0;
 
     /**
      * Makes all created objects as readonly.
