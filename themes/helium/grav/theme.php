@@ -27,6 +27,10 @@ class G5_Helium extends Theme
 
     public function onThemeInitialized()
     {
+        if (defined('GRAV_CLI') && GRAV_CLI) {
+            return;
+        }
+
         /** @var UniformResourceLocator $locator */
         $locator = $this->grav['locator'];
         $path = $locator('theme://');
