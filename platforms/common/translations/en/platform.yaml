@@ -194,7 +194,7 @@ GANTRY5_PLATFORM_ATOM_PREVIEW: "Attention! This is a read-only view of the Atom 
 
 GANTRY5_PLATFORM_DELETE_INHERIT_X: "The following Outlines depend on %s."
 GANTRY5_PLATFORM_DELETE_INHERIT_DESC: "By proceeding they will stop inheriting and all the Attributes and Children will be copied over:"
-GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC: "Inherit every Section and Children of the selected Outline"
+GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC: "Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned."
 GANTRY5_PLATFORM_ATOM: "Atom"
 GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE: "No Inheritance, select an Outline first"
 GANTRY5_PLATFORM_INHERITING_FROM_X: "Inheriting from %s"

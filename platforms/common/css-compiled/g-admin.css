@@ -4868,6 +4868,10 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  padding-left: 20px;
+}
+#g5-container .g-preserve-particles input {
+  margin-left: -20px !important;
 }
 #g5-container .sidebar-block {
   margin: -1.563rem 1.563rem -1.563rem -1.563rem;

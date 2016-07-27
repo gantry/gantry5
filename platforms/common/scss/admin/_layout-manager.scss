@@ -834,6 +834,11 @@ $atom: #9055AF;
 
         label {
             @include user-select(none);
+            padding-left: 20px;
+        }
+
+        input {
+            margin-left: -20px !important;
         }
     }
 
