@@ -2735,6 +2735,12 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 .g-selectize-dropdown .g-create {
   color: rgba(17, 17, 17, 0.6);
 }
+.g-selectize-dropdown .g-option-subtitle {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0 5px;
+  color: #8c8c8c;
+}
 
 .g-selectize-dropdown-content {
   overflow-y: auto;

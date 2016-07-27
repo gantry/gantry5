@@ -215,6 +215,13 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     .g-create {
         color: $selectize-color-dropdown-item-create-text;
     }
+
+    .g-option-subtitle {
+        display: inline-block;
+        border-radius: 3px;
+        padding: 0 5px;
+        color: #8c8c8c;
+    }
 }
 
 .g-selectize-dropdown-content {

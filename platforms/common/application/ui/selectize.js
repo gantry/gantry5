@@ -622,6 +622,7 @@ var Selectize = new prime({
 
     setupTemplates: function() {
         var field_label    = this.options.labelField,
+            field_value    = this.options.valueField,
             field_optgroup = this.options.optgroupLabelField,
             mode           = this.options.mode;
 
@@ -633,16 +634,25 @@ var Selectize = new prime({
                 return '<div class="g-optgroup-header">' + escape(data[field_optgroup]) + '</div>';
             },
             'option': function(data, escape) {
-                return '<div class="g-option">' + escape(data[field_label]) + '</div>';
+                var label = '<div class="g-option">' + escape(data[field_label]) + '</div>';
+                if (this.options.Subtitles) {
+                    label = '<div class="g-option"><span>' + escape(data[field_label]) + '</span> <div class="g-option-subtitle"><small>' + escape(data[field_value]) + '</small></div></div>';
+                }
+                return label;
             },
             'item': function(data, escape) {
-                var removeButton = '';
+                var removeButton = '',
+                    title = escape(data[field_value]);
 
                 if (mode !== 'single') {
                     removeButton = '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
                 }
 
-                return '<div class="g-item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + removeButton;
+                if (this.options.Subtitles) {
+                    title = 'class name: ' + title;
+                }
+
+                return '<div class="g-item" title="' + title + '">' + escape(data[field_label]) + removeButton;
             },
             'option_create': function(data, escape) {
                 return '<div class="g-create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
