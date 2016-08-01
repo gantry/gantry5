@@ -79,7 +79,8 @@ class Debugger
     public static function setLocator(UniformResourceLocator $locator)
     {
         if (self::$debugbar) {
-            self::$debugbar->addCollector(new ConfigCollector($locator->getPaths(), 'Streams'));
+            $paths = $locator->getPaths(null);
+            $paths && self::$debugbar->addCollector(new ConfigCollector($paths, 'Streams'));
         }
 
         return static::instance();
