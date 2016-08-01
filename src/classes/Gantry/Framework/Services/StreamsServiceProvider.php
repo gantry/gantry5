@@ -39,6 +39,8 @@ class StreamsServiceProvider implements ServiceProviderInterface
             $streams = new Streams($locator);
             $streams->add($schemes);
 
+            GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator') && \Gantry\Debugger::setLocator($locator);
+
             return $streams;
         };
     }

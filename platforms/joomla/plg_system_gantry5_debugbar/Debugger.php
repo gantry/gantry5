@@ -4,8 +4,10 @@ namespace Gantry;
 use DebugBar\DataCollector\ConfigCollector;
 use DebugBar\JavascriptRenderer;
 use DebugBar\StandardDebugBar;
+use Gantry\Component\Config\Config;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class Debugger
@@ -54,10 +56,11 @@ class Debugger
     /**
      * Set Configuration
      *
+     * @param Config $config
      * @return static
      * @throws \DebugBar\DebugBarException
      */
-    public static function setConfig($config)
+    public static function setConfig(Config $config)
     {
         if (self::$debugbar) {
             self::$debugbar->addCollector(new ConfigCollector($config->toArray(), 'Config'));
@@ -66,6 +69,21 @@ class Debugger
         return static::instance();
     }
 
+    /**
+     * Set Configuration
+     *
+     * @param UniformResourceLocator $locator
+     * @return static
+     * @throws \DebugBar\DebugBarException
+     */
+    public static function setLocator(UniformResourceLocator $locator)
+    {
+        if (self::$debugbar) {
+            self::$debugbar->addCollector(new ConfigCollector($locator->getPaths(), 'Streams'));
+        }
+
+        return static::instance();
+    }
 
     /**
      * Add the debugger assets to the Grav Assets.
@@ -207,6 +225,21 @@ class Debugger
     {
         if (self::$debugbar) {
             self::$debugbar['messages']->addMessage($message, $label, $isString);
+        }
+
+        return static::instance();
+    }
+
+    /**
+     * Dump exception.
+     *
+     * @param \Exception $e
+     * @return Debugger
+     */
+    public static function addException(\Exception $e)
+    {
+        if (self::$debugbar) {
+            self::$debugbar['exceptions']->addException($e);
         }
 
         return static::instance();
