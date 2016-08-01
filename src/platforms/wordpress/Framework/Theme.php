@@ -365,7 +365,7 @@ class Theme extends AbstractTheme
         }
 
         // Set lookup locations for Timber.
-        \Timber::$locations = $locator->findResources('gantry-engine://views');
+        \Timber::$locations = $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
 
         // Enable caching in Timber.
         \Timber::$twig_cache =  (bool) $global->get('compile_twig', 1);
