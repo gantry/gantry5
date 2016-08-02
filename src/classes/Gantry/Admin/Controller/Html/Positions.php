@@ -32,7 +32,6 @@ class Positions extends HtmlController
             '/'                   => 'index',
             '/*'                  => 'undefined',
             '/*/add'              => 'selectParticle',
-            '/add'                => 'selectParticle',
         ],
         'POST' => [
             '/'                   => 'undefined',
@@ -44,9 +43,6 @@ class Positions extends HtmlController
             '/*/edit'             => 'undefined',
             '/*/edit/particle'    => 'particle',
             '/*/edit/particle/*'  => 'validateParticle',
-            '/edit'               => 'undefined',
-            '/edit/particle'      => 'particle',
-            '/edit/particle/*'    => 'validateParticle',
         ]
     ];
 
@@ -119,14 +115,14 @@ class Positions extends HtmlController
         } else {
             $data = $this->request->post->getArray();
         }
-        $data['title'] = isset($data['title']) ? $data['title'] : 'Untitled';
-        $data['options'] = isset($data['options']) ? $data['options'] : [];
-        $attributes = isset($data['options']['attributes']) ? $data['options']['attributes'] : [];
-
         $name = isset($data['options']['type']) ? $data['options']['type'] : (isset($data['particle']) ? $data['particle'] : null);
-        $data['options']['type'] = $name;
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+
+        $data['title'] = isset($data['title']) ? $data['title'] : $blueprints['name'];
+        $data['options'] = isset($data['options']) ? $data['options'] : [];
+        $data['options']['type'] = $name;
+        $attributes = isset($data['options']['attributes']) ? $data['options']['attributes'] : [];
 
         $this->params += [
             'item'          => $data,
@@ -142,7 +138,7 @@ class Positions extends HtmlController
     }
 
 
-    public function validateParticle($position = null, $name)
+    public function validateParticle($position, $name)
     {
         // Validate only exists for JSON.
         if (empty($this->params['ajax'])) {
@@ -168,14 +164,19 @@ class Positions extends HtmlController
         $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
 
+        // FIXME: implement
+        /*
         $assignments = $this->request->post->getArray('assignments');
         foreach ($assignments as $key => $param) {
             if ($param === '') {
                 unset($assignments[$key]);
             }
         }
+        $assignments = $assignments ?: 'none';
+        */
+        $assignments = 'all';
 
-        $data->join('options.assignments', $assignments);
+        $data->set('options.assignments', $assignments);
 
         // TODO: validate
 
@@ -183,8 +184,7 @@ class Positions extends HtmlController
         $this->params['position'] = $position;
         $this->params['item'] = (object) $data->toArray();
 
-        // FIXME: missing assigned param
-        $assigned = 'some';
+        $assigned = is_array($assignments) ? 'some' : $assignments;
 
         // FIXME: module is not consistent to what we get in layout/position.html.twig
         $this->params['module'] = (object) $data->toArray();
@@ -196,7 +196,7 @@ class Positions extends HtmlController
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html, 'position' => $position]);
     }
 
-    public function selectParticle($position = null)
+    public function selectParticle($position)
     {
         $groups = [
             'Particles' => ['particle' => []],
