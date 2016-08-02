@@ -11,11 +11,11 @@ var $             = require('elements'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
+    Submit        = require('../fields/submit'),
 
     flags         = require('../utils/flags-state'),
-    translate     = require('../utils/translate');
-
-require('./cards');
+    translate     = require('../utils/translate'),
+    Cards         = require('./cards');
 
 ready(function() {
     var body = $('body'),
@@ -195,6 +195,80 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
+
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
+
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
+
+                            return true;
+                        }
+                    });
+                }
+
+                if ((!form && !fakeDOM) || !submit) { return true; }
+
+                // Position Settings apply
+                submit.on('click', function(e) {
+                    e.preventDefault();
+
+                    var target = $(e.target);
+                    target.disabled(true);
+                    target.hideIndicator();
+                    target.showIndicator();
+
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
+
+                    if (post.invalid.length) {
+                        target.disabled(false);
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
+                        return;
+                    }
+
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var parent = element.parent('[data-pm-data]');
+
+                            if (parent) {
+                                parent.data('pm-data', JSON.stringify(response.body.item));
+
+                                var status = response.body.item.enabled || response.body.item.options.attributes.enabled;
+                                var dummy = zen('div').html(response.body.html);
+                                parent.html(dummy.firstChild().html());
+                                parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                            }
+
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
+                            Cards.serialize(element.parent('[data-position]'));
+
+                            modal.close();
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+                        }
+
+                        target.hideIndicator();
+                    });
+                });
             }
         });
     });
@@ -230,6 +304,12 @@ ready(function() {
 
                     element.parent('.card').find('h4 .position-key').html(response.body.id);
                     element.parent('.card').find('.position-actions').html(actions.html());
+
+                    var position = element.parent('.card').find('[data-position]'),
+                        data = JSON.parse(position.data('position'));
+
+                    data.title = title;
+                    position.data('position', JSON.stringify(data));
                 }
 
                 parent.hideIndicator();

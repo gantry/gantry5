@@ -4575,7 +4575,7 @@ ready(function() {
                 break;
 
             case 'positions':
-                data.positions = pm.serialize();
+                data.positions = pm.map;
                 break;
 
             case 'other':
@@ -5057,7 +5057,9 @@ var $             = require('elements'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals'),
-    translate     = require('../utils/translate');
+    translate     = require('../utils/translate'),
+
+    Cards         = require('../positions/cards'); // required for Positions
 
 var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
 
@@ -5244,6 +5246,8 @@ var StepTwo = function(data, content, button) {
 
                             position.find('> ul').appendChild(dummy.children());
 
+                            Cards.serialize(position);
+
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
                     } else { // it's field picker
@@ -5344,7 +5348,7 @@ ready(function() {
 
 module.exports = StepOne;
 
-},{"../fields/submit":8,"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"../utils/translate":76,"../utils/wp-widgets-customizer":77,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/array/indexOf":173,"mout/lang/deepEquals":199,"mout/string/trim":270}],34:[function(require,module,exports){
+},{"../fields/submit":8,"../positions/cards":46,"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"../utils/translate":76,"../utils/wp-widgets-customizer":77,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/array/indexOf":173,"mout/lang/deepEquals":199,"mout/string/trim":270}],34:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
@@ -9301,7 +9305,6 @@ domready(function() {
 
 module.exports = {};
 },{"../../utils/elements.utils":64,"elements/domready":109}],46:[function(require,module,exports){
-(function (global){
 "use strict";
 
 var $             = require('elements'),
@@ -9331,21 +9334,35 @@ var PositionsField = '[name="page[head][atoms][_json]"]',
 var Positions = {
     eraser: null,
     lists: [],
+    map: {},
 
-    serialize: function() {
-        var output = [],
-            positions  = $('[data-position]');
+    serialize: function(position) {
+        var data,
+            output = [],
+            positions  = $(position) || $('[data-position]');
 
         if (!positions) {
             return '[]';
         }
 
-        positions.forEach(function(item) {
-            item = $(item);
-            output.push(JSON.parse(item.data('position')));
+        positions.forEach(function(position) {
+            position = $(position);
+            data = JSON.parse(position.data('position'));
+            data.modules = [];
+
+            // collect positions items
+            (position.search('[data-pm-data]') || []).forEach(function(item) {
+                item = $(item);
+                data.modules.push(JSON.parse(item.data('pm-data') || '{}'));
+            });
+
+            output.push(data);
+            position.data('position', JSON.stringify(data));
         });
 
-        return JSON.stringify(output).replace(/\//g, '\\/');
+        this.map = JSON.stringify(output).replace(/\//g, '\\/');
+
+        return this.map;
     },
 
     attachEraser: function() {
@@ -9421,19 +9438,7 @@ var Positions = {
                             lists.shift();
                         }
 
-                        lists.forEach(function(list) {
-                            list = $(list);
-
-                            var data = JSON.parse(list.data('position'));
-
-                            data.modules = (list.search('[data-pm-data]') || []).map(function(item) {
-                                item = $(item);
-
-                                return item.data('pm-data');
-                            });
-
-                            list.data('position', JSON.stringify(data));
-                        });
+                        Positions.serialize(lists);
                     },
 
                     onOver: function(event) {
@@ -9462,113 +9467,6 @@ var Positions = {
     }
 };
 
-var AttachSettings = function() {
-    var body = $('body');
-
-    body.delegate('click', '.atoms-list [data-atom-picked] .config-cog', function(event, element) {
-        if (event && event.preventDefault) { event.preventDefault(); }
-
-        var list      = element.parent('ul'),
-            dataField = $(PositionsField),
-            data      = dataField.value(),
-            items     = list.search('> [data-atom-picked]'),
-            item      = element.parent('[data-atom-picked]'),
-            itemData  = item.data('atom-picked');
-
-        modal.open({
-            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
-            method: 'post',
-            data: { data: itemData },
-            overlayClickToClose: false,
-            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
-            remoteLoaded: function(response, content) {
-                var form      = content.elements.content.find('form'),
-                    fakeDOM   = zen('div').html(response.body.html).find('form'),
-                    submit    = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataValue = JSON.parse(data);
-
-                if (modal.getAll().length > 1) {
-                    var applyAndSave = content.elements.content.search('[data-apply-and-save]');
-                    if (applyAndSave) { applyAndSave.remove(); }
-                }
-
-                if ((!form && !fakeDOM) || !submit) {
-                    return true;
-                }
-
-                // Atom Settings apply
-                submit.on('click', function(e) {
-                    e.preventDefault();
-
-                    var target = $(e.target);
-
-                    target.hideIndicator();
-                    target.showIndicator();
-
-                    // Refresh the form to collect fresh and dynamic fields
-                    var formElements = content.elements.content.find('form')[0].elements;
-                    var post = Submit(formElements, content.elements.content);
-
-                    if (post.invalid.length) {
-                        target.hideIndicator();
-                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), 'GANTRY5_PLATFORM_JS_INVALID_FIELDS');
-                        return;
-                    }
-
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
-                        if (!response.body.success) {
-                            modal.open({
-                                content: response.body.html || response.body,
-                                afterOpen: function(container) {
-                                    if (!response.body.html) { container.style({ width: '90%' }); }
-                                }
-                            });
-                        } else {
-                            var index = indexOf(items, item[0]);
-                            dataValue[index] = response.body.item;
-
-                            dataField.value(JSON.stringify(dataValue).replace(/\//g, '\\/'));
-                            item.find('.atom-title').text(dataValue[index].title);
-                            item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
-
-                            // toggle enabled/disabled status as needed
-                            var enabled    = Number(dataValue[index].attributes.enabled),
-                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
-                            item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
-                            item.attribute('title', enabled ? '' : translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'atom'));
-
-                            item.data('tip', null);
-                            if (inheriting) {
-                                var inherit = response.body.item.inherit,
-                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
-                                    atom    = inherit.atom || '',
-                                    include = (inherit.include || []).join(', ');
-
-                                item.data('tip', translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + atom + '<br />Replace: ' + include);
-                            }
-
-                            body.emit('change', { target: dataField });
-                            global.G5.tips.reload();
-
-                            // if it's apply and save we also save the panel
-                            if (target.data('apply-and-save') !== null) {
-                                var save = $('body').find('.button-save');
-                                if (save) { body.emit('click', { target: save }); }
-                            }
-
-                            modal.close();
-                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Atom'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
-                        }
-
-                        target.hideIndicator();
-                    });
-                });
-            }
-        });
-    });
-};
 
 var AttachSortablePositions = function(positions) {
     if (!positions) { return; }
@@ -9583,12 +9481,9 @@ ready(function() {
     });
 
     AttachSortablePositions(positions);
-    AttachSettings();
 });
 
 module.exports = Positions;
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-
 },{"../ui":53,"../ui/eraser":52,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/object/keys":234,"mout/string/trim":270,"sortablejs":314}],47:[function(require,module,exports){
 "use strict";
 
@@ -9603,11 +9498,11 @@ var $             = require('elements'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxURL    = require('../utils/get-ajax-url').global,
+    Submit        = require('../fields/submit'),
 
     flags         = require('../utils/flags-state'),
-    translate     = require('../utils/translate');
-
-require('./cards');
+    translate     = require('../utils/translate'),
+    Cards         = require('./cards');
 
 ready(function() {
     var body = $('body'),
@@ -9787,6 +9682,80 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
+
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
+
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
+
+                            return true;
+                        }
+                    });
+                }
+
+                if ((!form && !fakeDOM) || !submit) { return true; }
+
+                // Position Settings apply
+                submit.on('click', function(e) {
+                    e.preventDefault();
+
+                    var target = $(e.target);
+                    target.disabled(true);
+                    target.hideIndicator();
+                    target.showIndicator();
+
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
+
+                    if (post.invalid.length) {
+                        target.disabled(false);
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
+                        return;
+                    }
+
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var parent = element.parent('[data-pm-data]');
+
+                            if (parent) {
+                                parent.data('pm-data', JSON.stringify(response.body.item));
+
+                                var status = response.body.item.enabled || response.body.item.options.attributes.enabled;
+                                var dummy = zen('div').html(response.body.html);
+                                parent.html(dummy.firstChild().html());
+                                parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                            }
+
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
+                            Cards.serialize(element.parent('[data-position]'));
+
+                            modal.close();
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+                        }
+
+                        target.hideIndicator();
+                    });
+                });
             }
         });
     });
@@ -9822,6 +9791,12 @@ ready(function() {
 
                     element.parent('.card').find('h4 .position-key').html(response.body.id);
                     element.parent('.card').find('.position-actions').html(actions.html());
+
+                    var position = element.parent('.card').find('[data-position]'),
+                        data = JSON.parse(position.data('position'));
+
+                    data.title = title;
+                    position.data('position', JSON.stringify(data));
                 }
 
                 parent.hideIndicator();
@@ -9858,7 +9833,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"../utils/translate":76,"./cards":46,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/object/keys":234,"mout/string/trim":270}],48:[function(require,module,exports){
+},{"../fields/submit":8,"../ui":53,"../utils/flags-state":67,"../utils/get-ajax-suffix":68,"../utils/get-ajax-url":69,"../utils/translate":76,"./cards":46,"agent":78,"elements":111,"elements/domready":109,"elements/zen":135,"mout/object/keys":234,"mout/string/trim":270}],48:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $ = require('elements/attributes'),

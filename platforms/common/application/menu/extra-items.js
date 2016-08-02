@@ -13,7 +13,9 @@ var $             = require('elements'),
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
     deepEquals    = require('mout/lang/deepEquals'),
-    translate     = require('../utils/translate');
+    translate     = require('../utils/translate'),
+
+    Cards         = require('../positions/cards'); // required for Positions
 
 var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
 
@@ -199,6 +201,8 @@ var StepTwo = function(data, content, button) {
                                 dummy = zen('div').html(response.body.html);
 
                             position.find('> ul').appendChild(dummy.children());
+
+                            Cards.serialize(position);
 
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
