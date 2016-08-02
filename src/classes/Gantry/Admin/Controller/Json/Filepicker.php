@@ -256,6 +256,7 @@ class Filepicker extends JsonController
             }
         }
 
+        $files->asort();
         return $files;
 
     }
