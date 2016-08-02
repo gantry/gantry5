@@ -9712,8 +9712,8 @@ ready(function() {
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
 
                 var search      = content.elements.content.find('.search input'),
-                    blocks      = content.elements.content.search('[data-pm-type]'),
-                    filters     = content.elements.content.search('[data-pm-filter]'),
+                    blocks      = content.elements.content.search('[data-mm-type]'),
+                    filters     = content.elements.content.search('[data-mm-filter]'),
                     urlTemplate = content.elements.content.find('.g-urltemplate');
 
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
@@ -9744,9 +9744,9 @@ ready(function() {
 
                         filters.forEach(function(filter) {
                             filter = $(filter);
-                            text = trim(filter.data('pm-filter')).toLowerCase();
+                            text = trim(filter.data('mm-filter')).toLowerCase();
                             if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
-                                found.push(filter.matches('[data-pm-type]') ? filter : filter.parent('[data-pm-type]'));
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
                             }
                         }, this);
 
