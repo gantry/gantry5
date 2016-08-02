@@ -124,6 +124,19 @@ class Position extends Collection
     }
 
     /**
+     * @param $name
+     * @return Module
+     */
+    public function get($name)
+    {
+        if (!isset($this->modules[$name])) {
+            $this->modules[$name] = $this->loadModule($name);
+        }
+
+        return $this->modules[$name];
+    }
+
+    /**
      * Returns the value at specified offset.
      *
      * @param string $offset  The offset to retrieve.
@@ -254,6 +267,15 @@ class Position extends Collection
     }
 
     /**
+     * @param bool $save
+     * @return string
+     */
+    public function folder($save = false)
+    {
+        return $this->locator()->findResource($this->path(), true, $save);
+    }
+
+    /**
      * @param $data
      */
     protected function load($data)
@@ -284,15 +306,6 @@ class Position extends Collection
     protected function file($save = false)
     {
         return CompiledYamlFile::instance($this->locator()->findResource($this->path() . '.yaml', true, $save));
-    }
-
-    /**
-     * @param bool $save
-     * @return string
-     */
-    public function folder($save = false)
-    {
-        return $this->locator()->findResource($this->path(), true, $save);
     }
 
     /**

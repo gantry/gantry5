@@ -31,14 +31,31 @@ class Module implements \ArrayAccess
     /**
      * Module constructor.
      *
-     * @param $name
-     * @param $position
+     * @param string $name
+     * @param string $position
+     * @param array $data
      */
-    public function __construct($name, $position)
+    public function __construct($name, $position, array $data = null)
     {
         $this->name = $name;
         $this->position = $position;
-        $this->load();
+
+        if ($data) {
+            $this->init($data);
+        } else {
+            $this->load();
+        }
+    }
+
+    public function move($position, $id = null)
+    {
+        $this->items['position'] = $this->position;
+        $this->position = $position;
+
+        if ($id !== null) {
+            $this->items['id'] = $this->name;
+            $this->name = $id;
+        }
     }
 
     /**
@@ -78,11 +95,16 @@ class Module implements \ArrayAccess
     protected function load()
     {
         $file = $this->file();
-        $module = $file->content();
+        $this->init($file->content());
         $file->free();
+    }
 
-        if (isset($module['assignments'])) {
-            $assignments = $module['assignments'];
+    protected function init($data)
+    {
+        $this->items = $data;
+
+        if (isset($this->items['assignments'])) {
+            $assignments = $this->items['assignments'];
             if (is_array($assignments)) {
                 $this->assigned = 'some';
             } elseif ($assignments !== 'all') {
@@ -93,8 +115,6 @@ class Module implements \ArrayAccess
         } else {
             $this->assigned = 'all';
         }
-
-        $this->items = $module;
     }
 
     protected function file($save = false)

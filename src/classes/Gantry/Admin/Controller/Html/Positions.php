@@ -17,6 +17,7 @@ use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Position\Module;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
@@ -118,8 +119,15 @@ class Positions extends HtmlController
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
 
-        foreach ($data as $item) {
-            $position = $positions[$item['name']];
+        foreach ($data as $pos) {
+            $position = $positions[$pos['name']];
+            foreach ($pos as $item) {
+                if (!empty($item['id']) && !empty($item['position'])) {
+                    $module = $positions[$item['position']]->get($item['id']);
+                } else {
+                    $module = new Module($item['id'], $position, $item);
+                }
+            }
         }
     }
 
@@ -178,7 +186,7 @@ class Positions extends HtmlController
         );
 
         $data->set('position', $position);
-        $data->set('id', $this->request->post['id']);
+        $data->set('id', $id = $this->request->post['id']);
         $data->set('type', 'particle');
         $data->set('particle', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
@@ -204,13 +212,7 @@ class Positions extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['position'] = $position;
         $this->params['item'] = (object) $data->toArray();
-
-        $assigned = is_array($assignments) ? 'some' : $assignments;
-
-        // FIXME: module is not consistent to what we get in layout/position.html.twig
-        $this->params['module'] = (object) $data->toArray();
-        $this->params['module']->subtype = $this->params['module']->{$this->params['module']->type};
-        $this->params['module']->assigned = $assigned;
+        $this->params['module'] = new Module($id, $position, $data->toArray());
 
         $html = $this->container['admin.theme']->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
 
