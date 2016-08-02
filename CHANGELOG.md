@@ -7,6 +7,7 @@
     2. [](#improved)
         - Failed streams in compiled SCSS will now be transformed to 404 URIs, instead of keeping the stream. This will create less confusion on the errors displayed on frontend (#1457, #1443, #1331) 
         - Block Variations now display both label and actual class names inline, to better identify and use variations. Hovering over a selected variation will also now display the actual class name as a tooltip.
+        - Filepicker files are now displaying sorted by name (#1478)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
