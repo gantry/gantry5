@@ -190,8 +190,8 @@ class Positions extends HtmlController
         $data->set('type', 'particle');
         $data->set('particle', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
-        $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
-        $data->def('options.particle.enabled', 1);
+        $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
+        $data->def('options.attributes.enabled', 1);
 
         // FIXME: implement
         /*
