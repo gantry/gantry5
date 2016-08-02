@@ -48,8 +48,11 @@ class Module implements \ArrayAccess
      */
     public function save()
     {
+        $items = $this->toArray();
+        unset($items['position'], $items['id']);
+
         $file = $this->file(true);
-        $file->save($this->toArray());
+        $file->save($items);
 
         return $this;
     }
@@ -65,6 +68,11 @@ class Module implements \ArrayAccess
         $file->delete();
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return  ['position' => $this->position, 'id' => $this->name] + $this->items;
     }
 
     protected function load()

@@ -31,6 +31,7 @@
 
                 <div class="inner-params">
                     {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': data, 'prefix': prefix, 'skip': ['enabled']} %}
+                    <input type="hidden" name="id" value="{{ item.id }}" />
                 </div>
             </div>
         </div>

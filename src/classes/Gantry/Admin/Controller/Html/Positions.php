@@ -34,7 +34,7 @@ class Positions extends HtmlController
             '/*/add'              => 'selectParticle',
         ],
         'POST' => [
-            '/'                   => 'undefined',
+            '/'                   => 'save',
             '/create'             => 'create',
             '/*'                  => 'undefined',
             '/*/rename'           => 'rename',
@@ -43,6 +43,8 @@ class Positions extends HtmlController
             '/*/edit'             => 'undefined',
             '/*/edit/particle'    => 'particle',
             '/*/edit/particle/*'  => 'validateParticle',
+            '/edit'               => 'undefined',
+            '/edit/particle'      => 'particle',
         ]
     ];
 
@@ -56,11 +58,11 @@ class Positions extends HtmlController
     public function create()
     {
         /** @var PositionsObject $position */
-        $position = $this->container['positions'];
+        $positions = $this->container['positions'];
 
         $title = $this->request->post->get('title', 'Untitled');
 
-        $id = $position->create($title);
+        $id = $positions->create($title);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/position.html.twig',
@@ -106,9 +108,26 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position '%s' deleted.", $position), 'position' => $position]);
     }
 
+    public function save()
+    {
+        // FIXME:
+        $this->undefined();
+
+        $data = $this->request->post->getJsonArray('positions');
+
+        /** @var PositionsObject $position */
+        $positions = $this->container['positions'];
+
+        foreach ($data as $item) {
+            $position = $positions[$item['name']];
+        }
+    }
 
     public function particle($position = null)
     {
+        if (!$position) {
+            $position = $this->request->post['position'];
+        }
         $data = $this->request->post['item'];
         if ($data) {
             $data = json_decode($data, true);
@@ -158,6 +177,8 @@ class Positions extends HtmlController
             }
         );
 
+        $data->set('position', $position);
+        $data->set('id', $this->request->post['id']);
         $data->set('type', 'particle');
         $data->set('particle', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
