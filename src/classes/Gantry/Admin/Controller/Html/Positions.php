@@ -112,24 +112,29 @@ class Positions extends HtmlController
 
     public function save()
     {
-        // FIXME:
-        $this->undefined();
-
         $data = $this->request->post->getJsonArray('positions');
 
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
 
+        print_r($data);
+
         foreach ($data as $pos) {
             $position = $positions[$pos['name']];
+
+            /*
             foreach ($pos as $item) {
                 if (!empty($item['id']) && !empty($item['position'])) {
-                    $module = $positions[$item['position']]->get($item['id']);
+                    $module = $position[$item['position']]->get($item['id']);
                 } else {
                     $module = new Module($item['id'], $position, $item);
                 }
+                print_r($item);
+                print_r($module);
             }
+            */
         }
+        die();
     }
 
     public function particle($position = null)
