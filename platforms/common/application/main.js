@@ -199,7 +199,7 @@ ready(function() {
                 break;
 
             case 'positions':
-                data.positions = pm.map;
+                data.positions = pm.serialize();
                 break;
 
             case 'other':

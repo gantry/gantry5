@@ -27,7 +27,6 @@ var PositionsField = '[name="page[head][atoms][_json]"]',
 var Positions = {
     eraser: null,
     lists: [],
-    map: {},
 
     serialize: function(position) {
         var data,
@@ -53,9 +52,7 @@ var Positions = {
             position.data('position', JSON.stringify(data));
         });
 
-        this.map = JSON.stringify(output).replace(/\//g, '\\/');
-
-        return this.map;
+        return JSON.stringify(output).replace(/\//g, '\\/');
     },
 
     attachEraser: function() {
