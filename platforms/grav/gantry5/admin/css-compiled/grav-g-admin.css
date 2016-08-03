@@ -294,6 +294,12 @@ body #admin-main .admin-block {
   border: 0;
 }
 
+#messages .alert {
+  border: inherit;
+  border-radius: inherit;
+  margin-bottom: 0;
+}
+
 body.com_gantry5 #g5-container .navbar-block #gantry-logo {
   right: 2.1rem;
 }
