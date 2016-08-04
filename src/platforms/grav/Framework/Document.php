@@ -94,5 +94,8 @@ class Document extends BaseDocument
         return $url;
     }
 
-    // TODO: add support for loading standard frameworks...
+    protected static function registerJquery()
+    {
+        Grav::instance()['assets']->addJs('jquery', 101);
+    }
 }
