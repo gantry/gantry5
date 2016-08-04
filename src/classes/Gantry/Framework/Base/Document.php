@@ -650,7 +650,7 @@ class Document
                 'crossorigin' => 'anonymous'
             ],
             'head',
-            10
+            11
         );
     }
 
@@ -666,7 +666,7 @@ class Document
                 'crossorigin' => 'anonymous'
             ],
             'head',
-            10
+            11
         );
     }
 
@@ -680,7 +680,7 @@ class Document
                 'src' => 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
             ],
             'head',
-            10
+            11
         );
     }
 
@@ -694,7 +694,7 @@ class Document
                 'src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
             ],
             'head',
-            10
+            11
         );
     }
 
@@ -706,7 +706,7 @@ class Document
                 'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js'
             ],
             'head',
-            10
+            11
         );
     }
 
@@ -720,7 +720,7 @@ class Document
                 'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js'
             ],
             'head',
-            10
+            11
         );
     }
 }

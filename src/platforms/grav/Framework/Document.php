@@ -43,10 +43,10 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        $grav['assets']->addCss(static::getRelativeUrl($style['href']), 100 + $priority);
+                        $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $priority);
                         break;
                     case 'inline':
-                        $grav['assets']->addInlineCss($style['content'], 100 + $priority);
+                        $grav['assets']->addInlineCss($style['content'], 90 + $priority);
                         break;
                 }
             }
@@ -68,14 +68,14 @@ class Document extends BaseDocument
                 switch ($script[':type']) {
                     case 'file':
                         $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
-                            'priority' => 100 + $priority,
+                            'priority' => 90 + $priority,
                             'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
                             'group' => $group,
                         ]);
                         break;
                     case 'inline':
                         $grav['assets']->AddInlineJs($script['content'], [
-                            'priority' => 100 + $priority,
+                            'priority' => 90 + $priority,
                             'group' => $group,
                         ]);
                         break;
