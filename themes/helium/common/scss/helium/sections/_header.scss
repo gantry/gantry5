@@ -49,6 +49,14 @@
 
         &.large-heading {
             font-size: $h2-font-size * 2;
+
+            @include breakpoint(tablet-range) {
+                font-size: $h2-font-size * 1.25;
+            }
+
+            @include breakpoint(mobile-only) {
+                font-size: $h2-font-size;
+            }
         }
     }
 }
