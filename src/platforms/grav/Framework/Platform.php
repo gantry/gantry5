@@ -184,14 +184,6 @@ class Platform extends BasePlatform
         return $grav['gantry5_plugin']->base . '/' . $theme;
     }
 
-    public function finalize()
-    {
-        $gantry = Gantry::instance();
-
-        $gantry['document']->registerAssets();
-    }
-
-
     public function settings()
     {
         $grav = Grav::instance();

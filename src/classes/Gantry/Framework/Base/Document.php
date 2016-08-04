@@ -412,8 +412,12 @@ class Document
         return static::addFramework($framework);
     }
 
+    /**
+     * Register assets.
+     */
     public static function registerAssets()
     {
+        static::registerFrameworks();
     }
 
     public static function siteUrl()
@@ -629,7 +633,6 @@ class Document
      */
     protected static function registerFrameworks()
     {
-        //print_r(static::$frameworks);die();
         foreach (static::$frameworks as $framework) {
             if (isset(static::$availableFrameworks[$framework])) {
                 call_user_func([get_called_class(), static::$availableFrameworks[$framework]]);
@@ -653,6 +656,8 @@ class Document
 
     protected static function registerJqueryUiSortable()
     {
+        static::registerJquery();
+
         static::addHeaderTag(
             [
                 'tag' => 'script',
@@ -667,6 +672,8 @@ class Document
 
     protected static function registerBootstrap2()
     {
+        static::registerJquery();
+
         static::addHeaderTag(
             [
                 'tag' => 'script',
@@ -679,6 +686,8 @@ class Document
 
     protected static function registerBootstrap3()
     {
+        static::registerJquery();
+
         static::addHeaderTag(
             [
                 'tag' => 'script',
@@ -703,6 +712,8 @@ class Document
 
     protected static function registerMootoolsMore()
     {
+        static::registerMootools();
+
         static::addHeaderTag(
             [
                 'tag' => 'script',

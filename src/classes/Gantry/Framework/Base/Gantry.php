@@ -116,7 +116,7 @@ abstract class Gantry extends Container
      */
     public function load($framework)
     {
-        return $this['document']->load($framework);
+        return $this['document']->addFramework($framework);
     }
 
     /**

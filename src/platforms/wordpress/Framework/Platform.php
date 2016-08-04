@@ -138,13 +138,6 @@ class Platform extends BasePlatform
         return \do_shortcode($text);
     }
 
-    public function finalize()
-    {
-        $gantry = Gantry::instance();
-
-        $gantry['document']->registerAssets();
-    }
-
     public function errorHandlerPaths()
     {
         // Catch errors in Gantry cache, plugin and theme only.

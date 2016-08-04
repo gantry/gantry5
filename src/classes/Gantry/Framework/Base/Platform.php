@@ -190,6 +190,9 @@ abstract class Platform
 
     public function finalize()
     {
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerAssets();
     }
 
     public function call()

@@ -21,6 +21,4 @@ class Document extends BaseDocument
     {
         return PRIME_URI;
     }
-
-    // TODO: add support for loading assets...
 }

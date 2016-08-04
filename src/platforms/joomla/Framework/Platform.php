@@ -100,13 +100,6 @@ class Platform extends BasePlatform
         return \JHtml::_('content.prepare', $text, '', 'mod_custom.content');
     }
 
-    public function finalize()
-    {
-        $gantry = Gantry::instance();
-
-        $gantry['document']->registerAssets();
-    }
-
     public function countModules($position)
     {
         $document = \JFactory::getDocument();
