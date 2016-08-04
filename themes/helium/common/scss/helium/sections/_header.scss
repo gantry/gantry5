@@ -46,6 +46,10 @@
         em {
             font-weight: $font-weight-medium;
         }
+
+        &.large-heading {
+            font-size: $h2-font-size * 2;
+        }
     }
 }
 
