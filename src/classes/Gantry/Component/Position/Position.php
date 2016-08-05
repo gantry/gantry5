@@ -333,8 +333,9 @@ class Position extends Collection
 
         // Sort modules by ordering, if items are not listed in ordering, use alphabetical order.
         $ordering = isset($data['ordering']) ? array_flip($data['ordering']) : [];
-        $files = Folder::all(
-            $this->locator()->findResource($this->path()),
+        $path = $this->locator()->findResource($this->path());
+        $files = $path ? Folder::all(
+            $path,
             [
                 'compare' => 'Filename',
                 'pattern' => '|\.yaml$|',
@@ -343,7 +344,7 @@ class Position extends Collection
                 'key' => 'Filename',
                 'filters' => ['key' => '|\.yaml$|']
             ]
-        );
+        ) : [];
         ksort($files);
         $this->items = array_keys($ordering + $files);
     }
