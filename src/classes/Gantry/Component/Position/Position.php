@@ -124,7 +124,15 @@ class Position extends Collection
                 $this->add($item);
             }
         }
-
+/*
+        $remove = array_diff($this->items, $list);
+        foreach ($remove as $item) {
+            $module = $this->get($item);
+            if ($module->position === $this->name) {
+                $module->delete();
+            }
+        }
+*/
         $this->items = $list;
 
         return $this;
@@ -137,11 +145,23 @@ class Position extends Collection
     public function add($item)
     {
         if ($item instanceof Module) {
-            $this->items[] = $item->name;
             $this->modules[$item->name] = $item;
-        } else {
-            $this->items[] = $item;
+            $item = $item->name;
         }
+
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    public function remove($item) {
+        if ($item instanceof Module) {
+            $item = $item->name;
+        }
+
+        unset($this->modules[$item]);
+
+        $this->items = array_diff($this->items, $item);
 
         return $this;
     }

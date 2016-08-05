@@ -99,15 +99,20 @@ class Positions extends Collection
     {
         foreach ($data as $pos) {
             $list = [];
+            $position = $pos['name'];
             foreach ($pos['modules'] as $item) {
                 $name = !empty($item['id']) ? $item['id'] : '';
 
                 if ($name && !empty($item['position'])) {
                     $module = $this[$item['position']]->get($name);
+
+                    if ($position !== $item['position']) {
+                        $module->delete();
+                    }
                 } else {
-                    $module = new Module($name, $pos['name']);
+                    $module = new Module($name, $position);
                 }
-                $module->update($item)->save($name, $pos['name']);
+                $module->update($item)->save($name, $position);
 
                 $list[] = $module;
             }
