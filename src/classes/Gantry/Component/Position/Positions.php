@@ -82,7 +82,7 @@ class Positions extends Collection
             }
         }
 
-        asort($positions);
+        ksort($positions);
 
         $this->items = $positions;
 
