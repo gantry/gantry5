@@ -65,12 +65,12 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             if (!is_array($old)) {
-                throw new \RuntimeException('Value ' . $old);
+                throw new \RuntimeException("Value is not array in {$name}: " . print_r($old, true));
             }
             if (is_object($value)) {
                 $value = (array) $value;
             } elseif (!is_array($value)) {
-                throw new \RuntimeException('Value ' . $value);
+                throw new \RuntimeException("Value is not array in {$name}: " . print_r($value, true));
             }
             $value = $this->blueprints()->mergeData($old, $value, $name, $separator);
         }
@@ -129,7 +129,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         if (is_object($value)) {
             $value = (array) $value;
         } elseif (!is_array($value)) {
-            throw new \RuntimeException('Value ' . $value);
+            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
         }
 
         $old = $this->get($name, null, $separator);
@@ -140,7 +140,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         }
 
         if (!is_array($old)) {
-            throw new \RuntimeException('Value ' . $old);
+            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
         }
 
         // Return joined data.

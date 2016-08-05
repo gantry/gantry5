@@ -15,5 +15,12 @@ form:
     key:
       type: input.text
       label: Key
-      description: Position name
+      description: Position name.
+      pattern: '[A-Za-z0-9-]+'
       overridable: false
+
+    chrome:
+      type: input.text
+      label: Chrome
+      description: Module chrome in this position.
+      placeholder: gantry

@@ -104,7 +104,6 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'plugin://gantry5/assets']];
     }
 
-
     public function countModules($position)
     {
         return count($this->getModules($position));
