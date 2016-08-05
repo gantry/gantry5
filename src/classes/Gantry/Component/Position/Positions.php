@@ -90,6 +90,35 @@ class Positions extends Collection
     }
 
     /**
+     * Updates all positions with their modules from an array and saves them.
+     *
+     * @param array $data
+     * @return $this
+     */
+    public function import(array $data)
+    {
+        foreach ($data as $pos) {
+            $list = [];
+            foreach ($pos['modules'] as $item) {
+                $name = !empty($item['id']) ? $item['id'] : '';
+
+                if ($name && !empty($item['position'])) {
+                    $module = $this[$item['position']]->get($name);
+                } else {
+                    $module = new Module($name, $pos['name']);
+                }
+                $module->update($item)->save($name, $pos['name']);
+
+                $list[] = $module;
+            }
+
+            $this[$pos['name']]->update($list)->save();
+        }
+
+        return $this;
+    }
+
+    /**
      * @param Position $item
      * @return $this
      */

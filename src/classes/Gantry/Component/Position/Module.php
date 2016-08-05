@@ -35,7 +35,7 @@ class Module implements \ArrayAccess
      * @param string $position
      * @param array $data
      */
-    public function __construct($name, $position, array $data = null)
+    public function __construct($name, $position = null, array $data = null)
     {
         $this->name = $name;
         $this->position = $position;
@@ -47,24 +47,25 @@ class Module implements \ArrayAccess
         }
     }
 
-    public function move($position, $id = null)
+    public function update(array $data)
     {
-        $this->items['position'] = $this->position;
-        $this->position = $position;
+        $this->init($data);
 
-        if ($id !== null) {
-            $this->items['id'] = $this->name;
-            $this->name = $id;
-        }
+        return $this;
     }
 
     /**
      * Save module.
      *
+     * @param string $position
+     * @param string $name
      * @return $this
      */
-    public function save()
+    public function save($name = null, $position = null)
     {
+        $this->name = $name ?: $this->name;
+        $this->position = $position ?: $this->position;
+
         $items = $this->toArray();
         unset($items['position'], $items['id']);
 
@@ -82,9 +83,21 @@ class Module implements \ArrayAccess
     public function delete()
     {
         $file = $this->file(true);
-        $file->delete();
+        if ($file->exists()) {
+            $file->delete();
+        }
 
         return $this;
+    }
+
+    /**
+     * Return true if module exists.
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return $this->name ? $this->file()->exists() : false;
     }
 
     public function toArray()
@@ -119,9 +132,39 @@ class Module implements \ArrayAccess
 
     protected function file($save = false)
     {
+        $position = $this->position ?: '_unassigned_';
+
+        $this->name = $this->name ?: ($save ? $this->findFreeName() : null);
+        $name = $this->name ?: '_untitled_';
+
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 
-        return CompiledYamlFile::instance($locator->findResource("gantry-positions://{$this->position}/{$this->name}.yaml", true, $save));
+        return CompiledYamlFile::instance($locator->findResource("gantry-positions://{$position}/{$name}.yaml", true, $save));
+    }
+
+    /**
+     * Find unused name with number appended.
+     */
+    protected function findFreeName()
+    {
+        $position = $this->position ?: '_unassigned_';
+        $name = $this->get('type');
+        $name = $name == 'particle' ? $this->get('options.type') : $name;
+
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+
+        if (!$locator->findResource("gantry-positions://{$position}/{$name}.yaml")) {
+            return $name;
+        }
+
+        $count = 1;
+
+        do {
+            $count++;
+        } while ($locator->findResource("gantry-positions://{$position}/{$name}_{$count}.yaml"));
+
+        return "{$name}_{$count}";
     }
 }

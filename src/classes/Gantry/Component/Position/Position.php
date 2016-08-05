@@ -108,6 +108,29 @@ class Position extends Collection
     }
 
     /**
+     * Update modules in the position.
+     *
+     * @param array $items
+     * @return $this
+     */
+    public function update(array $items)
+    {
+        $list = [];
+        foreach ($items as $item) {
+            $name = ($item instanceof Module) ? $item->name : $item;
+
+            $list[] = $name;
+            if (!in_array($name, $this->items)) {
+                $this->add($item);
+            }
+        }
+
+        $this->items = $list;
+
+        return $this;
+    }
+    
+    /**
      * @param Module|string $item
      * @return $this
      */

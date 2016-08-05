@@ -58,6 +58,11 @@ class Positions extends HtmlController
 
     public function create()
     {
+        // Create only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
 
@@ -75,6 +80,11 @@ class Positions extends HtmlController
 
     public function rename($position)
     {
+        // Rename only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
@@ -92,6 +102,11 @@ class Positions extends HtmlController
 
     public function duplicate($position)
     {
+        // Duplicate only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
@@ -102,6 +117,11 @@ class Positions extends HtmlController
 
     public function delete($position)
     {
+        // Delete only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
@@ -112,29 +132,18 @@ class Positions extends HtmlController
 
     public function save()
     {
+        // Save only exists for JSON.
+        if (empty($this->params['ajax'])) {
+            $this->undefined();
+        }
+
         $data = $this->request->post->getJsonArray('positions');
 
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
+        $positions->import($data);
 
-        print_r($data);
-
-        foreach ($data as $pos) {
-            $position = $positions[$pos['name']];
-
-            /*
-            foreach ($pos as $item) {
-                if (!empty($item['id']) && !empty($item['position'])) {
-                    $module = $position[$item['position']]->get($item['id']);
-                } else {
-                    $module = new Module($item['id'], $position, $item);
-                }
-                print_r($item);
-                print_r($module);
-            }
-            */
-        }
-        die();
+        return new JsonResponse(['html' => sprintf("Positions saved.")]);
     }
 
     public function particle($position = null)
@@ -194,8 +203,8 @@ class Positions extends HtmlController
         $data->set('position', $position);
         $data->set('id', $id = $this->request->post['id']);
         $data->set('type', 'particle');
-        $data->set('particle', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
+        $data->set('options.type', $name);
         $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.attributes.enabled', 1);
 
