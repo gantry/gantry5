@@ -310,7 +310,22 @@ class Position extends Collection
         }
 
         $this->title = isset($data['title']) ? $data['title'] : $this->name;
-        $this->items = isset($data['ordering']) ? array_values($data['ordering']) : [];
+
+        // Sort modules by ordering, if items are not listed in ordering, use alphabetical order.
+        $ordering = isset($data['ordering']) ? array_flip($data['ordering']) : [];
+        $files = Folder::all(
+            $this->locator()->findResource($this->path()),
+            [
+                'compare' => 'Filename',
+                'pattern' => '|\.yaml$|',
+                'folders' => false,
+                'recursive' => false,
+                'key' => 'Filename',
+                'filters' => ['key' => '|\.yaml$|']
+            ]
+        );
+        ksort($files);
+        $this->items = array_keys($ordering + $files);
     }
 
     /**
