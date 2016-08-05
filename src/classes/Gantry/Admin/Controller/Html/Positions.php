@@ -220,7 +220,7 @@ class Positions extends HtmlController
         */
         $assignments = 'all';
 
-        $data->set('options.assignments', $assignments);
+        $data->set('assignments', $assignments);
 
         // TODO: validate
 
