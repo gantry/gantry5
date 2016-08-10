@@ -59,6 +59,9 @@ abstract class Router implements RouterInterface
 
         } catch (\Exception $e) {
             // Handle errors.
+            if ($this->container->debug()) {
+                throw $e;
+            }
             $response = $this->getErrorResponse($e, $this->format == 'json');
         }
 

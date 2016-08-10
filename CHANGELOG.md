@@ -9,6 +9,7 @@
         - Block Variations now display both label and actual class names inline, to better identify and use variations. Hovering over a selected variation will also now display the actual class name as a tooltip.
         - Filepicker files are now displaying sorted by name (#1478)
         - Social particle should use simple select instead of fancy selectize (#1490)
+        - If debug mode is enabled, display whoops error instead of catching exceptions
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
