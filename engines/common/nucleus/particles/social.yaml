@@ -24,7 +24,7 @@ form:
       placeholder: Enter title
 
     target:
-      type: select.selectize
+      type: select.select
       label: Target
       description: Target browser window when item is clicked.
       placeholder: 'Select...'
