@@ -68,7 +68,7 @@ class Menu extends AbstractMenu
             // Build the groups arrays.
             foreach ($items as $item) {
                 // Build the options array.
-                $groups[$menu][$item->db_id] = [
+                $groups[$menu][$item->ID] = [
                     'spacing' => str_repeat('&nbsp; ', max(0, $item->level)),
                     'label' => $item->title
                 ];
@@ -136,11 +136,11 @@ class Menu extends AbstractMenu
 
             $menuItems = [];
             foreach ($unsorted_menu_items as $menuItem) {
-                $tree = $menuItem->menu_item_parent ? $menuItems[$menuItem->menu_item_parent]->tree : [];
-                $menuItem->level = count($tree);
-                $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
-                $menuItem->path = implode('/', $menuItem->tree);
-                $menuItems[$menuItem->db_id] = $menuItem;
+                $menuItems[$menuItem->ID] = $menuItem;
+            }
+
+            foreach ($menuItems as $menuItem) {
+                $this->updateMenuItem($menuItem, $menuItems);
             }
 
             return $menuItems;
@@ -185,6 +185,23 @@ class Menu extends AbstractMenu
         return $base;
     }
 
+    protected function updateMenuItem($item, array $items)
+    {
+        if (!empty($item->menu_item_parent) && isset($items[$item->menu_item_parent])) {
+            $parent = $items[$item->menu_item_parent];
+            if (!isset($parent->tree)) {
+                $this->updateMenuItem($parent, $items);
+            }
+
+            $tree = $parent->tree;
+        } else {
+            $tree = [];
+        }
+        $item->level = count($tree);
+        $item->tree = array_merge($tree, [$item->ID]);
+        $item->path = implode('/', $item->tree);
+    }
+
     protected function buildList($menuItems, $tree = [])
     {
         $list = [];
@@ -195,16 +212,16 @@ class Menu extends AbstractMenu
 
         foreach ($menuItems as $menuItem) {
             $menuItem->level = count($tree);
-            $menuItem->tree = array_merge($tree, [$menuItem->db_id]);
+            $menuItem->tree = array_merge($tree, [$menuItem->ID]);
             $menuItem->path = implode('/', $menuItem->tree);
-            $list[$menuItem->db_id] = $menuItem;
+            $list[$menuItem->ID] = $menuItem;
 
             if ($menuItem->children) {
                 $list += $this->buildList($menuItem->children, $menuItem->tree);
             }
 
             if ($menuItem->current) {
-                $this->current = $menuItem->db_id;
+                $this->current = $menuItem->ID;
                 $this->active += array_flip($menuItem->tree);
             }
         }
@@ -258,7 +275,7 @@ class Menu extends AbstractMenu
 
         foreach ($menuItems as $menuItem) {
             $slugPath = $this->getMenuSlug($menuItems, $menuItem->tree);
-            $slugMap[$slugPath] = $menuItem->db_id;
+            $slugMap[$slugPath] = $menuItem->ID;
 
             // TODO: Path is menu path to the current page..
             $tree = [];
@@ -271,7 +288,7 @@ class Menu extends AbstractMenu
 
             // These params always come from WordPress.
             $itemParams = [
-                'id' => $menuItem->db_id,
+                'id' => $menuItem->ID,
                 'type' => $menuItem->type,
                 'link' => is_admin() ? $menuItem->url : $menuItem->link(),
                 // TODO: use
@@ -281,9 +298,9 @@ class Menu extends AbstractMenu
             ];
 
             // Rest of the items will come from saved configuration.
-            if (isset($itemMap[$menuItem->db_id])) {
+            if (isset($itemMap[$menuItem->ID])) {
                 // ID found, use it.
-                $itemParams += $itemMap[$menuItem->db_id];
+                $itemParams += $itemMap[$menuItem->ID];
             } elseif (isset($items[$slugPath])) {
                 // Otherwise use the slug path.
                 $itemParams += $items[$slugPath];

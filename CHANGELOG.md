@@ -18,6 +18,7 @@
     3. [](#bugfix)
         - Added missing custom directory to Timber template lookup (#1465)
         - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
+        - Fixed possible fatal error in menu partile (#1493)
     
 # 5.3.2
 ## 19/07/2016
