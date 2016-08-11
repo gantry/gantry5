@@ -124,7 +124,7 @@ class Position extends Collection
                 $this->add($item);
             }
         }
-/*
+
         $remove = array_diff($this->items, $list);
         foreach ($remove as $item) {
             $module = $this->get($item);
@@ -132,7 +132,7 @@ class Position extends Collection
                 $module->delete();
             }
         }
-*/
+
         $this->items = $list;
 
         return $this;
