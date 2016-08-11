@@ -42,16 +42,16 @@
                     {{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}
                 </h4>
                 <div class="inner-params">
-                    TODO
+                    {% include 'pages/positions/assignments.html.twig' with { assignments: assignments } %}
                 </div>
             </div>
         </div>
     </div>
-
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
         <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
         <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
+    <input type="hidden" name="_end" value="1" />
 </form>
 {% endblock %}

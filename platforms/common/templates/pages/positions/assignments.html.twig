@@ -1,0 +1,55 @@
+<div class="g-filters-bar">
+    <div class="g-panel-filters" data-g-global-filter="">
+        <div class="search settings-block">
+            <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
+            <i class="fa fa-fw fa-search"></i>
+        </div>
+        <span data-g-assignments-uncheck="" data-tip="Unselect all items" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
+        <span data-g-assignments-check="" data-tip="Select all items" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
+    </div>
+    <label>
+        <input type="checkbox" data-assignments-enabledonly="" /> {{ 'GANTRY5_PLATFORM_ASSIGNMENTS_HIDE_UNASSIGNED'|trans }}
+    </label>
+</div>
+
+<div class="cards-wrapper clearfix">
+    {%  set all = data.assignments == 'all' %}
+    {% for type, types in assignments %}
+        {% for name, list in types %}
+            <div class="card settings-block">
+                <h4>
+                    {{ list.label }}
+                    <div class="g-panel-filters float-right align-right">
+                        <div class="search settings-block">
+                            <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                        <span data-g-assignments-uncheck="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}" data-tip-place="right">
+                            <i class="fa fa-fw fa-toggle-off"></i>
+                        </span>
+                        <span data-g-assignments-check="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}" data-tip-place="right">
+                            <i class="fa fa-fw fa-toggle-on"></i>
+                        </span>
+                    </div>
+                </h4>
+
+                <div class="settings-param-wrapper">
+                    {% for link in list.items %}
+                        {% set path = 'assignments.' ~ type ~ '.' ~ name ~ '.' ~ link.name %}
+                        {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
+                            {% include 'forms/fields/enable/enable.html.twig' with {
+                            'default': true,
+                            'name': path|fieldName,
+                            'field': link.field,
+                            'value': all or nested(data, path),
+                            'turned_off': link.disabled
+                            } %}
+                            <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">{{ link.label }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>

@@ -22,6 +22,7 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
+use Gantry\Framework\Assignments;
 use Gantry\Framework\Positions as PositionsObject;
 use RocketTheme\Toolbox\Blueprints\Blueprints;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -166,10 +167,16 @@ class Positions extends HtmlController
         $data['options']['type'] = $name;
         $attributes = isset($data['options']['attributes']) ? $data['options']['attributes'] : [];
 
+        $assignments = new Assignments();
+
         $this->params += [
             'item'          => $data,
-            'data'          => ['particles' => [$name => $attributes]],
+            'data'          => [
+                'particles' => [$name => $attributes],
+                'assignments' => isset($data['assignments']) ? $data['assignments'] : 'all'
+            ],
             'particle'      => $blueprints,
+            'assignments'   => $assignments->get(),
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
