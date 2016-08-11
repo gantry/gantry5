@@ -87,7 +87,7 @@ class Debugger
     }
 
     /**
-     * Add the debugger assets to the Grav Assets.
+     * Add the debugger assets to the Gantry Assets.
      *
      * @return static
      */

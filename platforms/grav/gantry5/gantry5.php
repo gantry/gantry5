@@ -61,6 +61,8 @@ class Gantry5Plugin extends Plugin
         $loader = $this->grav['loader'];
         $loader->addClassMap(['Gantry5\\Loader' => __DIR__ . '/src/Loader.php']);
 
+        include_once __DIR__ . '/Debugger.php';
+
         $this->grav['gantry5_plugin'] = $this;
     }
 
