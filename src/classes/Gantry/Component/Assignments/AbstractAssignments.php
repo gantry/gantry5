@@ -173,11 +173,12 @@ abstract class AbstractAssignments
     }
 
     /**
-     * Save assignments for the configuration.
+     * Filter assignments data.
      *
      * @param array $data
+     * @return array
      */
-    public function save(array $data)
+    public function filter(array $data)
     {
         $types = [];
         foreach ($this->types() as $type) {
@@ -191,7 +192,7 @@ abstract class AbstractAssignments
                     if (!$value) {
                         unset($group[$key]);
                     } else {
-                        $group[$key] = (bool) $value;
+                        $group[$key] = (bool)$value;
                     }
                 }
                 if (empty($group)) {
@@ -199,6 +200,18 @@ abstract class AbstractAssignments
                 }
             }
         }
+
+        return $data;
+    }
+
+    /**
+     * Save assignments for the configuration.
+     *
+     * @param array $data
+     */
+    public function save(array $data)
+    {
+        $data = $this->filter($data);
 
         $gantry = Gantry::instance();
 

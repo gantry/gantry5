@@ -215,17 +215,13 @@ class Positions extends HtmlController
         $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.attributes.enabled', 1);
 
-        // FIXME: implement
-        /*
-        $assignments = $this->request->post->getArray('assignments');
-        foreach ($assignments as $key => $param) {
-            if ($param === '') {
-                unset($assignments[$key]);
-            }
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
         }
+
+        $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'));
         $assignments = $assignments ?: 'none';
-        */
-        $assignments = 'all';
+//        $assignments = 'all';
 
         $data->set('assignments', $assignments);
 
