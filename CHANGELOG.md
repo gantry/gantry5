@@ -5,7 +5,7 @@
     1. [](#new)
         - Updated FontAwesome to v4.6.3
     2. [](#improved)
-        - Failed streams in compiled SCSS will now be transformed to 404 URIs, instead of keeping the stream. This will create less confusion on the errors displayed on frontend (#1457, #1443, #1331) 
+        - Failed streams in compiled SCSS will now be transformed to 404 URIs, instead of keeping the stream. This will create less confusion on the errors displayed on frontend (#1457, #1443, #1331)
         - Block Variations now display both label and actual class names inline, to better identify and use variations. Hovering over a selected variation will also now display the actual class name as a tooltip.
         - Filepicker files are now displaying sorted by name (#1478)
         - Social particle should use simple select instead of fancy selectize (#1490)
@@ -19,8 +19,8 @@
     3. [](#bugfix)
         - Added missing custom directory to Timber template lookup (#1465)
         - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
-        - Fixed possible fatal error in menu partile (#1493)
-    
+        - Fixed possible fatal error in menu particle (#1493)
+
 # 5.3.2
 ## 19/07/2016
 
@@ -35,7 +35,7 @@
         - Helium: Improved `shadow` variation
         - Changed Joomla Articles and WordPress Posts particle to use the new Tabs container
         - Increased PHP timeout for CSS compiler to prevent issues in slow shared servers
-        - Helium: OwlCarousel Color Overlay is now alternated to match while transitioning 
+        - Helium: OwlCarousel Color Overlay is now alternated to match while transitioning
     3. [](#bugfix)
         - Helium: Fixed wrong dropdown menu item text hover color
         - Fixed missing languages files in Gantry 5 Particle Module, causing JS errors and preventing the Picker to work
