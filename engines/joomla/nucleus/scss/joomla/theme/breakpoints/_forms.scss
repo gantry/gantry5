@@ -10,4 +10,8 @@
 	        margin: 0;
 	    }
 	}
+
+	[dir="rtl"] .form-horizontal .control-label {
+		text-align: right;
+	}
 }
