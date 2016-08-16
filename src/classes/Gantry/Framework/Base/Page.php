@@ -26,7 +26,7 @@ abstract class Page
 
     public function doctype()
     {
-        return $this->config->get('page.doctype');
+        return $this->config->get('page.doctype', 'html');
     }
 
     abstract public function url(array $args = []);

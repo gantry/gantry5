@@ -5,11 +5,6 @@ type: global
 form:
   fields:
 
-    doctype:
-      type: input.hidden
-      label: Doctype
-      default: html
-
     attribs.id:
       type: input.text
       label: Body Id
