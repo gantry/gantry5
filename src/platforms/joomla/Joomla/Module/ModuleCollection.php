@@ -29,6 +29,10 @@ class ModuleCollection extends Collection
 
         // Convert assignments to our format.
         foreach ($items as $item) {
+            $position = $item['position'];
+            if ($position === '') {
+                continue;
+            }
             if (empty($item['assignments'])) {
                 $item['assignments'] = [];
             } elseif (in_array(0, $item['assignments'])) {
@@ -43,7 +47,6 @@ class ModuleCollection extends Collection
                 }
                 $item['assignments'] = ['menu' => [$list]];
             }
-            $position = $item['position'];
             unset($item['position'], $item['ordering']);
 
             $positions[$position][] = $item;

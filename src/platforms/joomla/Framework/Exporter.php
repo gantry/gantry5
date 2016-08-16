@@ -10,15 +10,84 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Layout\Layout;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Joomla\Module\ModuleFinder;
+use Gantry\Joomla\StyleHelper;
 
 class Exporter
 {
+    public function all()
+    {
+        return [
+            'outlines' => $this->outlines(),
+            'positions' => $this->positions()
+        ];
+    }
+
     public function positions()
     {
         $finder = new ModuleFinder();
         $modules = $finder->particle()->find();
 
         return $modules->export();
+    }
+
+    public function outlines()
+    {
+        $gantry = Gantry::instance();
+        $styles = StyleHelper::loadStyles($gantry['theme.name']);
+
+        $list = [
+            'default' => ['title' => 'Default'],
+            '_error' => ['title' => 'Error'],
+            '_offline' => ['title' => 'Offline'],
+            '_body_only' => ['title' => 'Body Only'],
+        ];
+        $inheritance = [];
+
+        foreach ($styles as $style) {
+            $name = $base = strtolower(trim(preg_replace('|[^a-z\d_-]+|ui', '_', $style->title), '_'));
+            $i = 0;
+            while (isset($list[$name])) {
+                $i++;
+                $name = "{$base}-{$i}";
+            };
+            $inheritance[$style->id] = $name;
+            $list[$name] = [
+                'id' => (int) $style->id,
+                'title' => $style->title,
+                'home' => $style->home,
+            ];
+            if (!$style->home) {
+                unset($list[$name]['home']);
+            }
+        }
+
+        foreach ($list as $name => &$style) {
+            $id = isset($style['id']) ? $style['id'] : $name;
+            $config = ConfigServiceProvider::load($gantry, $id, false, false);
+
+            // Update layout inheritance.
+            $layout = Layout::instance($id);
+            $layout->name = $name;
+            foreach ($inheritance as $from => $to) {
+                $layout->updateInheritance($from, $to);
+            }
+            $style['preset'] = $layout->preset['name'];
+            $config['index'] = $layout->buildIndex();
+            $config['layout'] = $layout->export();
+
+            // Update atom inheritance.
+            $atoms = new Atoms((array) $config->get('page.head.atoms'));
+            foreach ($inheritance as $from => $to) {
+                $atoms->updateInheritance($from, $to);
+            }
+            $config->set('page.head.atoms', $atoms->update()->toArray());
+
+            $style['config'] = $config->toArray();
+        }
+
+        return $list;
     }
 }

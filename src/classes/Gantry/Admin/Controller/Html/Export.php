@@ -25,22 +25,51 @@ class Export extends HtmlController
             $this->forbidden();
         }
 
+        if (!class_exists('ZipArchive')) {
+            throw new \RuntimeException('Please enable PHP ZIP extension to use this feature.');
+        }
+
         $exporter = new Exporter;
-        $contents = Yaml::dump($exporter->positions(), 10, 2);
+        $exported = $exporter->all();
 
-        $filename = 'positions.yaml';
-        $filesize = strlen($contents);
+        $filename = 'export.zip';
+        $tmpname = tempnam(sys_get_temp_dir(), 'zip');
 
-        header('Content-Type: application/octet-stream');
+        $zip = new \ZipArchive();
+        $zip->open($tmpname, \ZipArchive::CREATE);
+        foreach ($exported['positions'] as $position => $data) {
+            $zip->addFromString("positions/{$position}.yaml", Yaml::dump($data, 10, 2));
+        }
+        foreach ($exported['outlines'] as $outline => &$data) {
+            if (!empty($data['config'])) {
+                foreach ($data['config'] as $name => $config) {
+                    if (in_array($name, ['particles', 'page'])) {
+                        foreach ($config as $sub => $subconfig) {
+                            $zip->addFromString("outlines/{$outline}/{$name}/{$sub}.yaml", Yaml::dump($subconfig, 10, 2));
+                        }
+                    } else {
+                        $zip->addFromString("outlines/{$outline}/{$name}.yaml", Yaml::dump($config, 10, 2));
+                    }
+                }
+            }
+            unset($data['config']);
+        }
+        $zip->addFromString("outlines.yaml", Yaml::dump($exported['outlines'], 10, 2));
+        $zip->close();
+
+        header('Content-Type: application/zip');
         header('Content-Disposition: attachment; filename=' . $filename);
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
-        header('Content-Length: ' . $filesize);
+        header('Content-Length: ' . filesize($tmpname));
 
         @ob_end_clean();
         flush();
-        echo $contents;
+
+        readfile($tmpname);
+        unlink($tmpname);
+
         exit;
     }
 }

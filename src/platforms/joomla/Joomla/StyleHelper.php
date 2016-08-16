@@ -33,6 +33,30 @@ class StyleHelper
         return $style;
     }
 
+    public static function loadStyles($template)
+    {
+        $db = \JFactory::getDbo();
+
+        $query = $db
+            ->getQuery(true)
+            ->select('s.id, s.template, s.home, s.title AS long_title, s.params')
+            ->from('#__template_styles AS s')
+            ->where('s.client_id = 0')
+            ->where("s.template = {$db->quote($template)}")
+            ->order('s.id');
+
+        $db->setQuery($query);
+
+        $list = (array) $db->loadObjectList('id');
+
+        foreach ($list as $id => &$style) {
+            $style->title = preg_replace('/' . \JText::_($style->template) . '\s*-\s*/', '', $style->long_title);
+            $style->home = $style->home && $style->home !== '1' ? $style->home : (bool)$style->home;
+        }
+
+        return $list;
+    }
+
     public static function getDefaultStyle()
     {
         return static::getStyle(['home' => 1, 'client_id' => 0]);
