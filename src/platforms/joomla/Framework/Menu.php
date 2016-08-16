@@ -83,7 +83,7 @@ class Menu extends AbstractMenu
         // Build the groups arrays.
         foreach ($items as $item) {
             // Initialize the group.
-            $groups[$item->menutype] = array();
+            $groups[$item->menutype] = [];
 
             // Build the options array.
             foreach ($item->links as $link) {
@@ -365,6 +365,7 @@ class Menu extends AbstractMenu
                     );
                 }
             }
+
             // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
             // $cache->store($this->items, $key);
         }
