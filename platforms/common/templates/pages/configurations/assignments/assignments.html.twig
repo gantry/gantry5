@@ -22,14 +22,20 @@
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
                             <i class="fa fa-fw fa-search"></i>
                         </div>
-                        {% if edit %}
-                        <span data-g-assignments-uncheck="" data-tip="Unselect all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-off"></i></span>
-                        <span data-g-assignments-check="" data-tip="Selects all menu items" data-tip-place="right"><i class="fa fa-fw fa-toggle-on"></i></span>
-                        {% endif %}
                     </div>
                     <label>
                         <input type="checkbox" data-assignments-enabledonly="" /> {{ 'GANTRY5_PLATFORM_ASSIGNMENTS_HIDE_UNASSIGNED'|trans }}
                     </label>
+                    <a href="#" data-g-assignments-check=""
+                       aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
+                       data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
+                       data-tip-place="top">All
+                    </a>
+                    <a href="#" data-g-assignments-uncheck=""
+                       aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
+                       data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
+                       data-tip-place="top">None
+                    </a>
                 </div>
 
                 <div class="cards-wrapper clearfix">
@@ -44,12 +50,16 @@
                                             <i class="fa fa-fw fa-search"></i>
                                         </div>
                                         {% if edit %}
-                                        <span data-g-assignments-uncheck="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}" data-tip-place="right">
-                                            <i class="fa fa-fw fa-toggle-off"></i>
-                                        </span>
-                                        <span data-g-assignments-check="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}" data-tip-place="right">
-                                            <i class="fa fa-fw fa-toggle-on"></i>
-                                        </span>
+                                            <a href="#" data-g-assignments-check=""
+                                               aria-label="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans ~ ' in ' ~ list.label  }}"
+                                               data-tip="{{ 'GANTRY5_PLATFORM_SELECT_ALL_MENU'|trans ~ ' in ' ~ list.label  }}"
+                                               data-tip-place="top">All
+                                            </a>
+                                            <a href="#" data-g-assignments-uncheck=""
+                                               aria-label="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans ~ ' in ' ~ list.label  }}"
+                                               data-tip="{{ 'GANTRY5_PLATFORM_UNSELECT_ALL_MENU'|trans ~ ' in ' ~ list.label  }}"
+                                               data-tip-place="top">None
+                                            </a>
                                         {% endif %}
                                     </div>
                                 </h4>

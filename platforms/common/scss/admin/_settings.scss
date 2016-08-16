@@ -254,7 +254,12 @@
             position: absolute;
             right: 10px;
             top: 50%;
-            margin-top: -12px;
+            transform: translateY(-50%);
+            margin-top: -2px;
+            /*position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -12px;*/
         }
     }
 }
@@ -277,17 +282,23 @@
 }
 
 .g-filters-bar {
-    label {
+    label, a {
         @extend .font-small;
         display: inline-block;
-        margin: 0 0 0 1rem;
+        margin: 0 0 0 0.5rem;
         border-left: 1px solid $medium-gray;
-        line-height: 30px;
-        padding-left: 1rem;
+        padding-left: 0.5rem;
+        line-height: 1;
+        // line-height: 30px;
 
         input {
             display: inline-block;
         }
+    }
+
+    label {
+        padding-left: 0;
+        border: 0;
     }
 }
 

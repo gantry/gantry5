@@ -10,6 +10,7 @@
         - Filepicker files are now displaying sorted by name (#1478)
         - Social particle should use simple select instead of fancy selectize (#1490)
         - If debug mode is enabled, display whoops error instead of catching exceptions
+        - Reworked the UI for assignments Filters and Togglers
     3. [](#bugfix)
         - Fixed inherited/default atoms from base outline displaying even if there are no atoms assigned in `Page Settings`
 2. [Joomla](#joomla)
