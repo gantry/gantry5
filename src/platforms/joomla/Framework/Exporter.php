@@ -79,11 +79,14 @@ class Exporter
             $config['layout'] = $layout->export();
 
             // Update atom inheritance.
-            $atoms = new Atoms((array) $config->get('page.head.atoms'));
-            foreach ($inheritance as $from => $to) {
-                $atoms->updateInheritance($from, $to);
+            $atoms = $config->get('page.head.atoms');
+            if (is_array($atoms)) {
+                $atoms = new Atoms($atoms);
+                foreach ($inheritance as $from => $to) {
+                    $atoms->updateInheritance($from, $to);
+                }
+                $config->set('page.head.atoms', $atoms->update()->toArray());
             }
-            $config->set('page.head.atoms', $atoms->update()->toArray());
 
             $style['config'] = $config->toArray();
         }

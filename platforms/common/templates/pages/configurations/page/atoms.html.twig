@@ -18,7 +18,7 @@
     </ul>
 
     <div class="card settings-block">
-        {% set list = data.get('page.head.atoms')|default(defaults.get('page.head.atoms')) %}
+        {% set list = data.get('page.head.atoms') ?? defaults.get('page.head.atoms') %}
         {% if list %}
                 <ul class="atoms-list">
                 {%- for atom in list -%}
@@ -41,7 +41,7 @@
 
         {% if overrideable %}
             {% set prefix = 'page.head.' %}
-            {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'atoms', 'has_value': data.get(prefix ~ 'atoms'), 'field': {'label': 'Enabled of the field Atoms' }} %}
+            {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'atoms', 'has_value': data.get(prefix ~ 'atoms') is not null, 'field': {'label': 'Enabled of the field Atoms' }} %}
         {% endif %}
     </div>
 

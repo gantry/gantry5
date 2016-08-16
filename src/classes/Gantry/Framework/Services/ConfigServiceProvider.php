@@ -104,8 +104,10 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $config = $compiled->load($withDefaults);
 
         // Set atom inheritance.
-        $atoms = new Atoms((array) $config->get('page.head.atoms'));
-        $config->set('page.head.atoms', $atoms->init()->toArray());
+        $atoms = $config->get('page.head.atoms');
+        if (is_array($atoms)) {
+            $config->set('page.head.atoms', (new Atoms($atoms))->init()->toArray());
+        }
 
         return $config;
     }
