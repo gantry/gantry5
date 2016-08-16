@@ -313,6 +313,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    public function export()
+    {
+        return LayoutReader::store($this->preset, $this->items);
+    }
+
     /**
      * Save index.
      *
@@ -713,7 +718,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         foreach ($inheriting as $outlineId => $list) {
             try {
-
                 $outline = $this->instance($outlineId);
             } catch (\Exception $e) {
                 // Outline must have been deleted.
@@ -730,7 +734,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 foreach ($include as $part) {
                     switch ($part) {
                         case 'attributes':
-                            $item->attributes = isset($inherited->attributes) ? $inherited->attributes : new \stdClass();
+                            // Deep clone attributes.
+                            $item->attributes = isset($inherited->attributes) ? json_decode(json_encode($inherited->attributes)) : new \stdClass();
                             break;
                         case 'block':
                             $block = $this->block($id);
@@ -743,7 +748,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                             break;
                         case 'children':
                             if (!empty($inherited->children)) {
-                                $item->children = $inherited->children;
+                                // Deep clone children.
+                                $item->children = json_decode(json_encode($inherited->children));
                                 $this->initReferences($item->children, $this->getParentId($id), null,
                                     ['outline' => $outlineId, 'include' => ['attributes', 'block']], $index);
                             } else {
@@ -754,7 +760,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
 
                 if (!$outline || !isset($inherited->attributes)) {
-                    // Remvoe inheritance information if outline doesn't exist.
+                    // Remove inheritance information if outline doesn't exist.
                     $item->inherit = new \stdClass;
                     unset($this->inherit[$item->id]);
                 }
