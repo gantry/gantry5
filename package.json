@@ -10,7 +10,7 @@
     "gulp-if": "^2.0.1",
     "gulp-jsonminify": "1.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.0.6",
+    "gulp-ruby-sass": "^2.1.0",
     "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
