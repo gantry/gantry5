@@ -53,6 +53,7 @@ class Positions extends Collection
     public function load($path = 'gantry-positions://')
     {
         $this->path = $path;
+        $positions = [];
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
