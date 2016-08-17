@@ -98,6 +98,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return false;
     }
 
+    /**
+     * @param array $params
+     * @param Config $menu
+     * @return AbstractMenu
+     */
     public function instance(array $params = [], Config $menu = null)
     {
         $params = $params + $this->defaults;
@@ -208,12 +213,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $list;
     }
 
-    public function items()
+    public function items($withdefaults = true)
     {
         $list = [];
         foreach ($this->items as $key => $item) {
             if ($key !== '') {
-                $list[$item->path] = $item->toArray();
+                $list[$item->path] = $item->toArray($withdefaults);
             }
         }
 

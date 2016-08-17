@@ -21,7 +21,8 @@ class Exporter
     {
         return [
             'outlines' => $this->outlines(),
-            'positions' => $this->positions()
+            'positions' => $this->positions(),
+            'menus' => $this->menus()
         ];
     }
 
@@ -89,6 +90,44 @@ class Exporter
             }
 
             $style['config'] = $config->toArray();
+        }
+
+        return $list;
+    }
+
+    public function menus()
+    {
+        $gantry = Gantry::instance();
+        $db = \JFactory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->select('id, menutype, title, description')
+            ->from('#__menu_types');
+        $db->setQuery($query);
+        $menus = $db->loadObjectList('id');
+
+        $list = [];
+        foreach ($menus as $menu) {
+            $items = $gantry['menu']->instance(['menu' => $menu->menutype])->items(false);
+
+            array_walk(
+                $items,
+                function (&$item) {
+                    $item['id'] = (int) $item['id'];
+                    if (in_array($item['type'], ['component', 'alias'])) {
+                        $item['type'] = "joomla.{$item['type']}";
+                    }
+
+                    unset($item['alias'], $item['path'], $item['parent_id'], $item['level']);
+                }
+            );
+
+            $list[$menu->menutype] = [
+                'id' => (int) $menu->id,
+                'title' => $menu->title,
+                'description' => $menu->description,
+                'items' => $items
+            ];
         }
 
         return $list;
