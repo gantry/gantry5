@@ -73,14 +73,15 @@ class ThemeDetails implements \ArrayAccess
         $streamName = $this->addStream($this->offsetGet('name'), $this->getPaths());
 
         // Initialize parent theme streams.
-        $details = $this;
         $loaded = [$this->offsetGet('name')];
-        
-        if (!in_array($details->name, $loaded)) {
-            while ($details = $details->parent()) {
-                $this->addStream($details->name, $details->getPaths());
-                $loaded[] = $details->name;
+        $details = $this;
+
+        while ($details = $details->parent()) {
+            if (in_array($details->name, $loaded)) {
+                continue;
             }
+            $this->addStream($details->name, $details->getPaths(false));
+            $loaded[] = $details->name;
         }
 
         /** @var Streams $streams */
@@ -116,10 +117,10 @@ class ThemeDetails implements \ArrayAccess
      *
      * @return array
      */
-    public function getPaths()
+    public function getPaths($overrides = true)
     {
         $paths = array_merge(
-            (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom'),
+            $overrides ? (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom') : [],
             ['gantry-theme://'],
             (array) $this->get('configuration.theme.base', 'gantry-theme://common')
         );
