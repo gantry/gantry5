@@ -27,6 +27,11 @@ class AssignmentsPage implements AssignmentsInterface
     public function getRules()
     {
         $grav = Grav::instance();
+
+        if (!$grav['page']->routable()) {
+            return [];
+        }
+
         $route = trim($grav['page']->route(), '/');
 
         $rules = [];

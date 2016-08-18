@@ -21,17 +21,18 @@ use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
 use Grav\Common\Themes;
 use Grav\Common\Twig\Twig;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Gantry5Plugin extends Plugin
 {
     public $base;
-    protected $template;
 
     /**
      * @var Theme
      */
     protected $theme;
+    protected $outline;
 
     /**
      * @return array
@@ -49,6 +50,9 @@ class Gantry5Plugin extends Plugin
             'onAdminMenu' => [
                 ['onAdminMenu', -10]
             ],
+            'onPageNotFound' => [
+                ['onPageNotFound', 0]
+            ]
         ];
     }
 
@@ -162,12 +166,11 @@ class Gantry5Plugin extends Plugin
         $locator->addPath('theme', 'blueprints', ['gantry-theme://blueprints', 'gantry-engine://blueprints/pages']);
 
         $this->theme = $theme;
-
         if (!$this->isAdmin()) {
             $this->enable([
-                'onPagesInitialized' => ['onThemePagesInitialized', 0],
+                'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigInitialized' => ['onThemeTwigInitialized', 0],
-                'onTwigSiteVariables' => ['onThemeTwigVariables', 0]
+                'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
             ]);
         }
    }
@@ -258,9 +261,9 @@ class Gantry5Plugin extends Plugin
     }
 
     /**
-     * Replaces page object with admin one.
+     * Select outline to be used.
      */
-    public function onThemePagesInitialized()
+    public function onThemePageInitialized()
     {
         $gantry = Gantry::instance();
 
@@ -269,7 +272,7 @@ class Gantry5Plugin extends Plugin
 
         $assignments = new Assignments();
 
-        $theme->setLayout($assignments->select());
+        $theme->setLayout($this->outline ?: $assignments->select());
     }
 
     /**
@@ -290,5 +293,13 @@ class Gantry5Plugin extends Plugin
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
         $twig->twig_vars = $this->theme->getContext($twig->twig_vars);
+    }
+
+    /**
+     * Handle non-existing pages.
+     */
+    public function onPageNotFound()
+    {
+        $this->outline = '_error';
     }
 }
