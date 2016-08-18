@@ -173,6 +173,8 @@ class Gantry5Plugin extends Plugin
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
             ]);
         }
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
    }
 
     public function initAdmin()
@@ -200,6 +202,8 @@ class Gantry5Plugin extends Plugin
             'onTwigInitialized' => ['onAdminTwigInitialized', 900],
             'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
         ]);
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Inside Gantry administration');
     }
 
     /**
@@ -275,9 +279,20 @@ class Gantry5Plugin extends Plugin
 
         if (!empty($page->header()->gantry['outline'])) {
             $this->outline = $page->header()->gantry['outline'];
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Current page forces outline {$this->outline} to be used");
         }
 
-        $theme->setLayout($this->outline ?: $assignments->select());
+        if (!$this->outline) {
+            if (GANTRY_DEBUGGER) {
+                \Gantry\Debugger::addMessage('Selecting outline:');
+                \Gantry\Debugger::addMessage($assignments->matches());
+                \Gantry\Debugger::addMessage($assignments->scores());
+            }
+
+            $this->outline = $assignments->select();
+        }
+
+        $theme->setLayout($this->outline);
     }
 
     /**
@@ -305,6 +320,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onPageNotFound()
     {
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Page not found');
         $this->outline = '_error';
     }
 }
