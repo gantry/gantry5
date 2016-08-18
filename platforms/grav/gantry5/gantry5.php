@@ -49,9 +49,6 @@ class Gantry5Plugin extends Plugin
             ],
             'onAdminMenu' => [
                 ['onAdminMenu', -10]
-            ],
-            'onPageNotFound' => [
-                ['onPageNotFound', 0]
             ]
         ];
     }
@@ -171,6 +168,7 @@ class Gantry5Plugin extends Plugin
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigInitialized' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
+                'onPageNotFound' => ['onPageNotFound', 1000]
             ]);
         }
 
