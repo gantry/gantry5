@@ -32,8 +32,8 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
         $page = $grav['page'];
-        $this->active = $page && $page->routable() ? trim($page->route(), '/') : null;
         $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
+        $this->active = $page && $page->routable() ? (trim($page->route(), '/') ?: $this->default) : '-+*N/A*+-';
     }
 
     /**
