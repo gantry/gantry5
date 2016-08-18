@@ -291,6 +291,7 @@ class Gantry5Plugin extends Plugin
         }
 
         $theme->setLayout($this->outline);
+        $this->setPreset();
     }
 
     /**
@@ -320,5 +321,50 @@ class Gantry5Plugin extends Plugin
     {
         GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Page not found');
         $this->outline = '_error';
+    }
+    
+    public function setPreset()
+    {
+        $gantry = Gantry::instance();
+        $theme = $gantry['theme'];
+        $request = $gantry['request'];
+
+        $cookie = md5($theme->name);
+
+        $presetVar = 'presets';
+        $resetVar = 'reset-settings';
+
+        if ($request->request[$resetVar] !== null) {
+            $preset = false;
+        } else {
+            $preset = preg_replace('/[^a-z0-9_-]/', '', (string) $request->request[$presetVar]) ?: null;
+        }
+        if ($preset !== null) {
+            if ($preset === false) {
+                // Invalidate the cookie.
+                $this->updateCookie($cookie, false, time() - 42000);
+            } else {
+                // Update the cookie.
+                $this->updateCookie($cookie, $preset, 0);
+            }
+        } else {
+            $preset = $request->cookie[$cookie];
+        }
+
+        if ($preset) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using preset {$preset}");
+            $theme->setPreset($preset);
+        }
+    }
+
+    protected function updateCookie($name, $value, $expire = 0)
+    {
+        $uri = $this->grav['uri'];
+        $config = $this->grav['config'];
+
+        $path   = $config->get('system.session.path', '/' . ltrim($uri->rootUrl(false), '/'));
+        $domain = $uri->host();
+
+        setcookie($name, $value, $expire, $path, $domain);
     }
 }

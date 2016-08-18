@@ -50,6 +50,21 @@ class EventListener implements EventSubscriberInterface
 
     public function onStylesSave(Event $event)
     {
+        $cookie = md5($event->theme->name);
+        $this->updateCookie($cookie, false, time() - 42000);
+    }
+
+    protected function updateCookie($name, $value, $expire = 0)
+    {
+        // TODO: move to better place, copied from Gantry main plugin file.
+        $grav = Grav::instance();
+        $uri = $grav['uri'];
+        $config = $grav['config'];
+
+        $path   = $config->get('system.session.path', '/' . ltrim($uri->rootUrl(false), '/'));
+        $domain = $uri->host();
+
+        setcookie($name, $value, $expire, $path, $domain);
     }
 
     public function onSettingsSave(Event $event)
