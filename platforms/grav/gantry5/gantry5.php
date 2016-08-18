@@ -265,12 +265,17 @@ class Gantry5Plugin extends Plugin
      */
     public function onThemePageInitialized()
     {
+        $page = $this->grav['page'];
         $gantry = Gantry::instance();
 
         /** @var \Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
         $assignments = new Assignments();
+
+        if (!empty($page->header()->gantry['outline'])) {
+            $this->outline = $page->header()->gantry['outline'];
+        }
 
         $theme->setLayout($this->outline ?: $assignments->select());
     }
