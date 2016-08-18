@@ -30,11 +30,10 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
-        $this->default = 'home';
-
         $grav = Grav::instance();
         $page = $grav['page'];
-        $this->active  = $page ? trim($page->route(), '/') : null;
+        $this->active = $page && $page->routable() ? trim($page->route(), '/') : null;
+        $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
     }
 
     /**
@@ -84,7 +83,7 @@ class Menu extends AbstractMenu
         // Build the options array.
         /** @var Page $page */
         foreach ($pages as $page) {
-            $name = trim($page->route(), '/') ?: 'home';
+            $name = trim($page->route(), '/') ?: $this->default;
             $path = explode('/', $name);
 
             $groups['mainmenu'][$name] = [
@@ -158,7 +157,7 @@ class Menu extends AbstractMenu
         $this->pages = [];
         /** @var Page $item */
         foreach ($pages as $item) {
-            $name = trim($item->route(), '/') ?: 'home';
+            $name = trim($item->route(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
             $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
 

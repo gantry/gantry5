@@ -256,7 +256,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     public function isActive($item)
     {
-        if ($item->path && strpos($this->base, $item->path) === 0) {
+        if ($item && $item->path && strpos($this->base, $item->path) === 0) {
             return true;
         }
 
@@ -265,7 +265,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     public function isCurrent($item)
     {
-        return $item->path == $this->getActive()->path;
+        $active = $this->getActive();
+
+        return $item && $active && $item->path == $active->path;
     }
 
     public function init(&$params)
