@@ -157,6 +157,13 @@ class Menu extends AbstractMenu
         $this->pages = [];
         /** @var Page $item */
         foreach ($pages as $item) {
+            $level = substr_count($item->route(), '/');
+            /*
+            if ($levels >= 0 && $level > $levels) {
+                continue;
+            }
+            */
+
             $name = trim($item->route(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
             $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
@@ -179,7 +186,7 @@ class Menu extends AbstractMenu
                 'visible' => true,
                 'group' => 0,
                 'columns' => [],
-                'level' => substr_count($item->route(), '/'),
+                'level' => $level,
             ];
 
             $this->pages[$name] = 1;
@@ -225,7 +232,8 @@ class Menu extends AbstractMenu
         $max     = $params['maxLevels'];
         $end     = $max ? $start + $max - 1 : 0;
 
-        $menuItems = array_replace_recursive($this->getItemsFromPlatform($start <= $end ? $end : -1), $items) ;
+        $gravItems = $this->getItemsFromPlatform($start <= $end ? $end : -1);
+        $menuItems = array_replace_recursive($gravItems, $items);
 
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
@@ -241,7 +249,13 @@ class Menu extends AbstractMenu
             }
 
             $item = new Item($this, $name, $data);
-            $this->add($item);
+
+            /*
+            if (!in_array($item->type, ['module', 'particle']) && !isset($gravItems[$name])) {
+                // Ignore removed menu items.
+                continue;
+            }
+            */
 
             // Placeholder page.
             if ($item->type == 'link' && !isset($this->pages[$item->path])) {
@@ -249,7 +263,8 @@ class Menu extends AbstractMenu
             }
 
             switch ($item->type) {
-                case 'hidden':
+                case 'module':
+                case 'particle':
                 case 'separator':
                 case 'heading':
                     // Separator and heading have no link.
@@ -269,6 +284,8 @@ class Menu extends AbstractMenu
                         $item->url($item->link);
                     }
             }
+
+            $this->add($item);
         }
     }
 }
