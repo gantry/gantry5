@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -59,11 +60,14 @@ class Content extends HtmlController
 
         if($outline == 'default') {
             $this->params['overrideable'] = false;
+            $data = $this->container['config'];
         } else {
             $this->params['defaults'] = $this->container['defaults'];
             $this->params['overrideable'] = true;
+            $data = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
+        $this->params['data'] = $data;
         $this->params['content'] = $this->container['content']->group();
         $this->params['route']  = "configurations.{$outline}.content";
         $this->params['page_id'] = $outline;

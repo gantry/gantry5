@@ -25,6 +25,7 @@
         - Added missing custom directory to Timber template lookup (#1465)
         - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
         - Fixed possible fatal error in menu particle (#1493)
+        - Fixed new outline having checkboxes in Content tab selected (#1482)
 
 # 5.3.2
 ## 19/07/2016
