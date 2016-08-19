@@ -301,7 +301,11 @@ abstract class ThemeInstaller
             $src = $path . '/install/layouts/' . $layout;
         }
 
-        is_dir($src) ? Folder::copy($src, $dst) : Folder::create($dst);
+        try {
+            is_dir($src) ? Folder::copy($src, $dst) : Folder::create($dst);
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Creating configuration for outline '{$layout}' failed: {$e->getMessage()}", 500, $e);
+        }
 
         return true;
     }
