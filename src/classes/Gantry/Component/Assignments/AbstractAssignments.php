@@ -187,16 +187,20 @@ abstract class AbstractAssignments
 
         $data = array_replace($types, $data);
         foreach ($data as $tname => &$type) {
-            foreach ($type as $gname => &$group) {
-                foreach ($group as $key => $value) {
-                    if (!$value) {
-                        unset($group[$key]);
-                    } else {
-                        $group[$key] = (bool)$value;
+            if (is_array($type)) {
+                foreach ($type as $gname => &$group) {
+                    if (is_array($group)) {
+                        foreach ($group as $key => $value) {
+                            if (!$value) {
+                                unset($group[$key]);
+                            } else {
+                                $group[$key] = (bool)$value;
+                            }
+                        }
+                        if (empty($group)) {
+                            unset($type[$gname]);
+                        }
                     }
-                }
-                if (empty($group)) {
-                    unset($type[$gname]);
                 }
             }
         }
