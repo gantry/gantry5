@@ -245,7 +245,7 @@ abstract class AbstractAssignments
 
             /** @var AssignmentsInterface $instance */
             $instance = new $class;
-            $list[$type] = $instance->listRules();
+            $list[$type] = $instance->listRules($this->configuration);
             unset($instance);
         }
 

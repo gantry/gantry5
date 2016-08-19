@@ -19,6 +19,7 @@
         - Fixed issue with Tabs container, conflicting with Tabs in the modals. Improved specificity (#1463)
         - Helium Template: Updateserver not implemented in templateDetails.xml (#1488)
         - Fixed RTL issue with forms labels (#1494)
+        - Unassigning outline from all menu items does not have any effect (#1451)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Added missing custom directory to Timber template lookup (#1465)

@@ -192,9 +192,6 @@ msgstr "Save Assignments"
 msgid "GANTRY5_PLATFORM_ASSIGNMENTS"
 msgstr "Assignments"
 
-msgid "GANTRY5_PLATFORM_HIDE_ASSIGNMENTS"
-msgstr "Hide Unassigned Items"
-
 msgid "GANTRY5_PLATFORM_FILTER"
 msgstr "Filter"
 

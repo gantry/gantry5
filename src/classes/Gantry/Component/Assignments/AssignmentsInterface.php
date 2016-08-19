@@ -25,7 +25,8 @@ interface AssignmentsInterface
     /**
      * List all the rules available.
      *
+     * @param string $configuration
      * @return array
      */
-    public function listRules();
+    public function listRules($configuration);
 }

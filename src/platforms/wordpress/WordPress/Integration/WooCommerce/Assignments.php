@@ -53,9 +53,10 @@ class AssignmentsWoocommerce implements AssignmentsInterface
     /**
      * List all the rules available.
      *
+     * @param string $configuration
      * @return array
      */
-    public function listRules()
+    public function listRules($configuration)
     {
         // Get label and items for the context.
         $list = [

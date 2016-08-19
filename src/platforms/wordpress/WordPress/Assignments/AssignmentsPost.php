@@ -62,11 +62,12 @@ class AssignmentsPost implements AssignmentsInterface
     }
 
     /**
-     * Create cards with lists of items.
+     * List all the rules available.
      *
+     * @param string $configuration
      * @return array
      */
-    public function listRules()
+    public function listRules($configuration)
     {
         // Get all defined post types
         $post_types = $this->getPostTypes();

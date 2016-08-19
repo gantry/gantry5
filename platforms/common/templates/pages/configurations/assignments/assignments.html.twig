@@ -26,16 +26,24 @@
                     <label>
                         <input type="checkbox" data-assignments-enabledonly="" /> {{ 'GANTRY5_PLATFORM_ASSIGNMENTS_HIDE_UNASSIGNED'|trans }}
                     </label>
-                    <a href="#" data-g-assignments-check=""
-                       aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
-                       data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
-                       data-tip-place="top">All
-                    </a>
-                    <a href="#" data-g-assignments-uncheck=""
-                       aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
-                       data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
-                       data-tip-place="top">None
-                    </a>
+                    {% if edit %}
+                        <a href="#" data-g-assignments-check=""
+                           aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
+                           data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}"
+                           data-tip-place="top">All
+                        </a>
+                        <a href="#" data-g-assignments-uncheck=""
+                           aria-label="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
+                           data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}"
+                           data-tip-place="top">None
+                        </a>
+                    {% endif %}
+
+                    {% if options %}
+                        <div class="pull-right">
+                            {% include '@gantry-admin/forms/fields/select/selectize.html.twig' with {'layout': 'input', 'name': 'assignments.assignment', 'field': {'type': 'select.selectize', 'options': options}, 'value': assignment} only %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="cards-wrapper clearfix">
@@ -74,9 +82,9 @@
                                             'name': path|fieldName,
                                             'field': link.field,
                                             'value': link.value is defined ? link.value : gantry.config.get(path),
-
                                             'disabled': not link.value,
-                                            'turned_off': link.disabled
+                                            'turned_off': link.disabled,
+                                            'title': "'" ~ link.label ~ "' Menu Item"
                                             } %}
                                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
                                 {{- link.label -}}
@@ -92,7 +100,7 @@
                 {% if edit %}
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="Assignments">
+                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
                             <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
                         </button>
                     </span>
