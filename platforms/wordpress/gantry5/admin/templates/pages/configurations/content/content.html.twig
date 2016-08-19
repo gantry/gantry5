@@ -51,7 +51,7 @@
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': item.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': item.form, skip: ['enabled'], "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}
