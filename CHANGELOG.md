@@ -21,7 +21,12 @@
         - Fixed RTL issue with forms labels (#1494)
         - Unassigning outline from all menu items does not have any effect (#1451)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Helium: Added missing `languages/` directory with the `.pot` translation template file
+    2. [](#improved)
+        - Helium: Added multiple `raw` filters in the content views
     3. [](#bugfix)
+        - Helium: Offline page should now properly display the offline message set in the Gantry 5 settings page.
         - Added missing custom directory to Timber template lookup (#1465)
         - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
         - Fixed possible fatal error in menu particle (#1493)
@@ -38,6 +43,7 @@
     2. [](#improved)
         - Helium: Improved OwlCarousel color overlay support
         - Helium: Improved `shadow` variation
+        - Hydrogen: Improved enqueueing of `comment-reply` script in the Comments twig template
         - Changed Joomla Articles and WordPress Posts particle to use the new Tabs container
         - Increased PHP timeout for CSS compiler to prevent issues in slow shared servers
         - Helium: OwlCarousel Color Overlay is now alternated to match while transitioning

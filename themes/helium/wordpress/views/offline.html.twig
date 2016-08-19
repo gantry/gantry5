@@ -3,7 +3,6 @@
 
 {% block content %}
 
-    <h1>{{ __('Maintenance Mode', 'g5_helium') }}</h1>
-    <p>{{ __( 'Sorry, our Website is Temporarily Down for Maintenance. Please Check Back Again Soon.', 'g5_helium' ) }}</p>
+    <h2>{{ gantry.global.get('offline_message') }}</h2>
 
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% if function('get_option', 'thread_comments') == '1' %}
     {% scripts in 'footer' %}
-        <script type="text/javascript" src="{{ url('wp-includes://js/comment-reply.min.js') }}"></script>
+        {{ wordpress.call('wp_enqueue_script', 'comment-reply') }}
     {% endscripts %}
 {% endif %}
 

@@ -42,7 +42,7 @@
                 {# End Featured Image #}
 
                 {# Begin Page Content #}
-                {{ post.content }}
+                {{ post.content|raw }}
 
                 {{ function('wp_link_pages', {'before': '<div class="page-links" itemprop="pagination">', 'after': '</div>', 'link_before': '<span class="page-number page-numbers">', 'link_after': '</span>', 'echo': 0}) }}
                 {# End Page Content #}
