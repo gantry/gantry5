@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Stylesheet\Scss\CompiledScssFile;
 use Gantry\Component\Stylesheet\Scss\Compiler;
 use Gantry\Framework\Base\Gantry;
+use Leafo\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -105,7 +106,11 @@ class ScssCompiler extends CssCompiler
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
         $scss = '@import "' . $in . '.scss"';
-        $css = $this->compiler->compile($scss);
+        try {
+            $css = $this->compiler->compile($scss);
+        } catch (CompilerException $e) {
+            throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
+        }
         if (strpos($css, $scss) === 0) {
             $css = '/* ' . $scss . ' */';
         }
