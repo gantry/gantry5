@@ -1,43 +1,95 @@
-<section class="blog-item">
-    {% set banner = page.assets.images|first %}
-    {% if banner %}
-    <div class="blog-header">
-        {{ banner.cropZoom(900,300).html }}
-        <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
-    </div>
-    {% else %}
-    <div class="blog-title">
-        <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
-    </div>
-    {% endif %}
+<div class="list-item h-entry">
 
-    <div class="blog-details">
-        <span class="blog-date">Posted: {{ page.date|date() }}</span>
+    {% set header_image = page.header.header_image|defined(true) %}
+    {% set header_image_width  = page.header.header_image_width|defined(900) %}
+    {% set header_image_height = page.header.header_image_height|defined(300) %}
+    {% set header_image_file = page.header.header_image_file %}
 
+    <div class="list-blog-header">
+        {% if page.header.link %}
+            <h2 class="p-name">
+                {% if page.header.continue_link is not sameas(false) %}
+                    <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url"></i></a>
+                {% endif %}
+                <a href="{{ page.header.link }}" class="u-url">{{ page.title }}</a>
+            </h2>
+        {% else %}
+            <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
+        {% endif %}
+
+        <span class="list-blog-date">
+            <time class="dt-published" datetime="{{ page.date|date("c") }}">
+                <span>{{ page.date|date("d") }}</span>
+                <em>{{ page.date|date("M") }}</em>
+            </time>
+        </span>
         {% if page.taxonomy.tag %}
-        <span class="tags">
+            <span class="tags">
             {% for tag in page.taxonomy.tag %}
-            <a href="{{ base_url_relative }}{{ list_url }}/tag:{{ tag }}">{{ tag }}</a>
+                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>
             {% endfor %}
         </span>
         {% endif %}
+        {% if header_image %}
+            {% if header_image_file %}
+                {% set header_image_media = page.media.images[header_image_file] %}
+            {% else %}
+                {% set header_image_media = page.media.images|first %}
+            {% endif %}
+            {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+        {% endif %}
+
     </div>
 
-    <div class="blog-padding">
-    {% if truncate %}
-    <p>{{ page.content|truncate(550) }}</p>
-    <p><a class="button" href="{{ page.url }}">Read More</a></p>
-    {% else %}
-    <p>{{ page.content }}</p>
+    <div class="list-blog-padding">
+
+        {% if page.header.continue_link is sameas(false) %}
+        <div class="e-content">
+            {{ page.content }}
+        </div>
+        {% if not truncate %}
+            {% set show_prev_next = true %}
+        {% endif %}
+        {% elseif truncate and page.summary != page.content %}
+            <div class="p-summary e-content">
+                {{ page.summary }}
+                <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
+            </div>
+        {% elseif truncate %}
+        <div class="p-summary e-content">
+            {% if page.summary != page.content %}
+            {{ page.content|truncate(550) }}
+        </div>
+        {% else %}
+            {{ page.content }}
+
+        {% endif %}
+        <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
+    </div>
+{% else %}
+    <div class="e-content">
+        {{ page.content }}
+    </div>
+
+    {% if config.plugins.comments.enabled %}
+        {% include 'partials/comments.html.twig' %}
     {% endif %}
-    </div>
 
-    {% if not truncate %}
-    <div class="blog-images">
-    {% for asset in page.assets.all %}
-        {{ asset.lightbox.cropResize(1000,100).html }}
-    {% endfor %}
-    </div>
+    {% set show_prev_next = true %}
     {% endif %}
 
-</section>
+    {% if show_prev_next %}
+
+        <p class="prev-next">
+            {% if not page.isFirst %}
+                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left"></i> {{ 'BLOG.ITEM.NEXT_POST'|t }}</a>
+            {% endif %}
+
+            {% if not page.isLast %}
+                <a class="button" href="{{ page.prevSibling.url }}">{{ 'BLOG.ITEM.PREV_POST'|t }} <i class="fa fa-chevron-right"></i></a>
+            {% endif %}
+        </p>
+    {% endif %}
+
+</div>
+</div>

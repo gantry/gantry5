@@ -3,11 +3,8 @@
 {% block head_title %}
     <meta charset="utf-8" />
     <title>{% if header.title %}{{ header.title }} | {% endif %}{{ site.title }}</title>
-    {% if header.description %}
-        <meta name="description" content="{{ header.description }}">
-    {% else %}
-        <meta name="description" content="{{ site.description }}">
-    {% endif %}
+    {% include 'partials/metadata.html.twig' %}
+    <link rel="canonical" href="{{ page.url(true, true) }}" />
     {% if header.robots %}
         <meta name="robots" content="{{ header.robots }}">
     {% endif %}
