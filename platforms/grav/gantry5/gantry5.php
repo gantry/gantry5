@@ -292,6 +292,12 @@ class Gantry5Plugin extends Plugin
 
         $theme->setLayout($this->outline);
         $this->setPreset();
+        
+        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator')) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+            \Gantry\Debugger::setLocator($locator);
+        }
     }
 
     /**

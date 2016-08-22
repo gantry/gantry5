@@ -136,9 +136,18 @@ class Debugger
      */
     public static function setLocator(UniformResourceLocator $locator)
     {
+        static $exists = false;
+
         if (static::$debugger) {
             $paths = $locator->getPaths(null);
-            $paths && static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
+            if ($paths) {
+                if (!$exists) {
+                    static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
+                } else {
+                    static::$debugger->getCollector('Streams')->setData($paths);
+                }
+            }
+            $exists = true;
         }
 
         return static::instance();
