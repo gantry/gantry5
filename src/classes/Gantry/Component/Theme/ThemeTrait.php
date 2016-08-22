@@ -156,8 +156,7 @@ trait ThemeTrait
         }
 
         if ($preset && !isset($presets[$preset])) {
-            $keys = array_keys($presets);
-            $preset = reset($keys);
+            $preset = null;
         }
 
         return $preset;

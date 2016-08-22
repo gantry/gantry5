@@ -352,8 +352,11 @@ class Gantry5Plugin extends Plugin
         }
 
         if ($preset) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using preset {$preset}");
             $theme->setPreset($preset);
+            if (GANTRY_DEBUGGER) {
+                $preset = $theme->preset();
+                $preset && \Gantry\Debugger::addMessage("Using preset {$preset}");
+            }
         }
     }
 
