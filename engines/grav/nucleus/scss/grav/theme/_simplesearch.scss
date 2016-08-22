@@ -1,0 +1,64 @@
+.simplesearch {
+
+    h1 {
+        margin-bottom: 0;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+
+    input {
+        display: inline-block;
+        max-width: 30rem;
+        font-size: 2rem;
+    }
+
+    .search-image {
+        margin-top: 1rem;
+        img {
+           border-radius: 4px;
+
+           @include breakpoint(mobile-only) {
+                display: none;
+            }
+        }
+    }
+
+    .search-item {
+        @include breakpoint(mobile-only) {
+            margin-left: 0;
+        }
+    }
+
+    .search-wrapper {
+        .search-submit {
+            height: 52px;
+            padding: 0 10px;
+            img {
+                width: 30px;
+            }
+        }
+    }
+
+
+    .search-details {
+        float: right;
+        margin-top: -2.5rem;
+        font-weight: bold;
+        font-size: 1rem;
+        color: lighten($base-text-color,20%);
+
+        @include breakpoint(mobile-only) {
+            float: none;
+            margin-top: -0.2rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    hr {
+        border-bottom: 1px solid #eee;
+    }
+
+}

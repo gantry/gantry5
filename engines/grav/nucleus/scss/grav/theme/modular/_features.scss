@@ -1,0 +1,99 @@
+// Modular Showcase styling
+.modular {
+    .features {
+        padding: 6rem 0;
+        text-align: center;
+        @include clearfix;
+
+        h2 {
+            margin: 0;
+            line-height: 100%;
+        }
+
+        p {
+            margin: 1rem 0;
+            font-size: $core-font-size + 0.2rem;
+            @include breakpoint(mobile-only) {
+                font-size: $core-font-size;
+            }
+        }
+
+        .feature-items {
+            margin-top: 2rem;
+            @supports not (flex-wrap: wrap) {
+                overflow: hidden;
+            }
+        }
+
+        .feature {
+            display:block;
+            float: left;
+            width: 25%;
+            vertical-align: top;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            @include breakpoint(large-mobile-range) {
+                margin-top: 1rem;
+                width: 50%;
+            }
+            @include breakpoint(small-mobile-range) {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            i.fa {
+                font-size: 2rem;
+                color: $core-accent;
+            }
+
+            h4 {
+                margin: 0;
+                font-size: 1.1rem;
+            }
+
+            p {
+                display: inline-block;
+                font-size: $core-font-size;
+                margin: 0.2rem 0 1rem;
+            }
+        }
+
+        &.big {
+
+            text-align: center;
+
+            .feature {
+                width: 50%;
+                @include breakpoint(small-mobile-range) {
+                    margin-top: 1rem;
+                    width: 100%;
+                }
+            }
+
+            i.fa {
+                font-size: 3rem;
+                float: left;
+            }
+
+            .feature-content {
+                padding-right: 2rem;
+
+                &.icon-offset {
+                    margin-left: 5rem;
+                }
+
+                h4 {
+                    font-size: 1.3rem;
+                    text-align: left;
+                }
+
+                p {
+                    padding: 0;
+                    text-align: left;
+                }
+            }
+        }
+
+    }
+
+}

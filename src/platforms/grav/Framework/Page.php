@@ -47,8 +47,12 @@ class Page extends Base\Page
     public function bodyAttributes($attributes = [])
     {
         $gantry = Gantry::instance();
+        $grav = Grav::instance();
+        $page = $grav['page'];
+
         $classes = [
             'site',
+            $page ? $page->template() : '',
             // TODO:
             "dir-ltr",
             "outline-{$gantry['configuration']}",

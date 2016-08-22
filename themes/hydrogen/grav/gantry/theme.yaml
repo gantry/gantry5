@@ -48,9 +48,11 @@ configuration:
       - gantry-engine://scss
     files:
       - hydrogen
+      - hydrogen-grav
       - custom
     persistent:
       - hydrogen
+      - hydrogen-grav
     overrides:
       - custom
 

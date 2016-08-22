@@ -67,9 +67,11 @@ configuration:
       - gantry-engine://scss
     files:
       - helium
+      - helium-grav
       - custom
     persistent:
       - helium
+      - helium-grav
     overrides:
       - custom
 
