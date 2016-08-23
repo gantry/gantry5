@@ -48,9 +48,9 @@
 {% endblock %}
 
 {% block content %}
-    {{ page.content }}
+    {{ page.content|raw }}
     {% for module in page.collection() %}
         <div id="{{ _self.pageLinkName(module.menu) }}"></div>
-        {{ module.content }}
+        {{ module.content|raw }}
     {% endfor %}
 {% endblock %}

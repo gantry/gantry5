@@ -10,7 +10,7 @@
     {% else %}
     <div class="blog-header">
     {% endif %}
-        {{ page.content }}
+        {{ page.content|raw }}
     </div>
 
     {% for child in collection %}

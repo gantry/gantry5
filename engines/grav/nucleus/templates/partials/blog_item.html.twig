@@ -45,30 +45,30 @@
 
         {% if page.header.continue_link is sameas(false) %}
         <div class="e-content">
-            {{ page.content }}
+            {{ page.content|raw }}
         </div>
         {% if not truncate %}
             {% set show_prev_next = true %}
         {% endif %}
         {% elseif truncate and page.summary != page.content %}
             <div class="p-summary e-content">
-                {{ page.summary }}
+                {{ page.summary|raw }}
                 <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
             </div>
         {% elseif truncate %}
         <div class="p-summary e-content">
             {% if page.summary != page.content %}
-            {{ page.content|truncate(550) }}
+            {{ page.content|truncate(550)|raw }}
         </div>
         {% else %}
-            {{ page.content }}
+            {{ page.content|raw }}
 
         {% endif %}
         <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
     </div>
 {% else %}
     <div class="e-content">
-        {{ page.content }}
+        {{ page.content|raw }}
     </div>
 
     {% if config.plugins.comments.enabled %}

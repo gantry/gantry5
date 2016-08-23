@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block head_application %}
-    {{ gantry.platform.finalize }}
-    {{ assets.css() }}
+    {% do gantry.platform.finalize %}
+    {{ assets.css()|raw }}
 
-    {{ assets.js() }}
+    {{ assets.js()|raw }}
 {% endblock %}

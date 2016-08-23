@@ -165,6 +165,7 @@ class Gantry5Plugin extends Plugin
         $this->theme = $theme;
         if (!$this->isAdmin()) {
             $this->enable([
+                'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', -1000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigInitialized' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
@@ -303,11 +304,23 @@ class Gantry5Plugin extends Plugin
     /**
      * Initialize nucleus layout engine.
      */
-    public function onThemeTwigInitialized()
+    public function onThemeTwigTemplatePaths()
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
-        $this->theme->extendTwig($twig->twig(), $twig->loader());
+        $twig->twig_paths = array_merge($twig->twig_paths, $this->theme->getTwigPaths());
+    }
+
+    /**
+     * Initialize nucleus layout engine.
+     */
+    public function onThemeTwigInitialized()
+    {
+        /** @var Twig $gravTwig */
+        $gravTwig = $this->grav['twig'];
+        $twig = $this->theme->renderer();
+
+        $this->theme->extendTwig($twig, $gravTwig->loader());
     }
 
     /**

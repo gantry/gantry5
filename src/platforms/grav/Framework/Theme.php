@@ -10,8 +10,11 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Grav\Common\Grav;
+use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -23,27 +26,71 @@ class Theme extends AbstractTheme
     use ThemeTrait;
 
     /**
+     * Return renderer.
+     *
+     * @return \Twig_Environment
+     */
+    public function renderer()
+    {
+        if (!$this->renderer) {
+            $gantry = static::gantry();
+            $grav = Grav::instance();
+
+            /** @var Twig $gravTwig */
+            $gravTwig = $grav['twig'];
+
+            $twig = $gravTwig->twig();
+            $loader = $gravTwig->loader();
+
+            /** @var Config $global */
+            $global = $gantry['global'];
+
+            $debug = $gantry->debug();
+            $production = (bool) $global->get('production', 1);
+
+            if ($debug && !$twig->isDebug()) {
+                $twig->enableDebug();
+                $twig->addExtension(new \Twig_Extension_Debug());
+            }
+
+            if ($production) {
+                $twig->disableAutoReload();
+            } else {
+                $twig->enableAutoReload();
+            }
+
+            // Force html escaping strategy.
+            $twig->getExtension('escaper')->setDefaultStrategy('html');
+
+            $this->setTwigLoaderPaths($loader);
+
+            $this->renderer = $this->extendTwig($twig, $loader);
+        }
+
+        return $this->renderer;
+    }
+
+    /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_LoaderInterface $loader
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
-            return;
-        }
-
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $paths = $locator->mergeResources(['gantry-theme://templates', 'gantry-engine://templates']);
-
-        // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
-        $loader->setPaths($paths);
-
         parent::setTwigLoaderPaths($loader);
+    }
+
+    /**
+     * Get list of twig paths.
+     *
+     * @return array
+     */
+    public static function getTwigPaths()
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = static::gantry()['locator'];
+
+        return $locator->mergeResources(['gantry-theme://templates', 'gantry-engine://templates']);
     }
 
     /**

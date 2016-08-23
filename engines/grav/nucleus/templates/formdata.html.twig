@@ -1,7 +1,7 @@
 {% extends "@nucleus/page.html.twig" %}
 
 {% block content %}
-    {{ content }}
+    {{ content|raw }}
 
     <div class="alert">{{ form.message }}</div>
 
