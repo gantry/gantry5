@@ -3083,10 +3083,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   top: 50%;
   transform: translateY(-50%);
   margin-top: -2px;
-  /*position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -12px;*/
 }
 #g5-container .g-panel-filters {
   position: relative;
@@ -5028,12 +5024,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   position: relative;
   margin-bottom: 10px;
 }
-#g5-container .g5-lm-particles-picker .search i, #g5-container .g5-mm-particles-picker .search i, #g5-container .g5-mm-modules-picker .search i, #g5-container .g5-mm-widgets-picker .search i, #g5-container #positions .search i {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -12px;
-}
 #g5-container [data-lm-blocktype] {
   position: relative;
 }
@@ -5634,6 +5624,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .menu-editor-particles [data-mm-module] .module-wrapper, #g5-container .menu-editor-modules [data-mm-module] .module-wrapper {
   top: 50%;
+  left: 0.469rem;
   position: absolute;
   -webkit-transform: translate(0, -50%);
   -moz-transform: translate(0, -50%);
@@ -7590,6 +7581,13 @@ html.g5-dialog-open {
 [dir="rtl"] #g5-container #g-changelog ul li:before {
   margin-left: 1rem;
   margin-right: -6rem;
+}
+[dir="rtl"] #g5-container .settings-block i {
+  right: inherit;
+  left: 10px;
+}
+[dir="rtl"] #g5-container .sidebar-block {
+  margin: -1.563rem -1.563rem -1.563rem 1.563rem;
 }
 
 

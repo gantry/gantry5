@@ -11,6 +11,7 @@
         - Social particle should use simple select instead of fancy selectize (#1490)
         - If debug mode is enabled, display whoops error instead of catching exceptions
         - Reworked the UI for assignments Filters and Togglers
+        - Various RTL fixes and improvements (#1494, #1512)
     3. [](#bugfix)
         - Fixed inherited/default atoms from base outline displaying even if there are no atoms assigned in `Page Settings`
 2. [Joomla](#joomla)
@@ -18,7 +19,6 @@
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
         - Fixed issue with Tabs container, conflicting with Tabs in the modals. Improved specificity (#1463)
         - Helium Template: Updateserver not implemented in templateDetails.xml (#1488)
-        - Fixed RTL issue with forms labels (#1494)
         - Unassigning outline from all menu items does not have any effect (#1451)
 3. [WordPress](#wordpress)
     1. [](#new)

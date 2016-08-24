@@ -524,6 +524,7 @@ $submenu-ratio:                 60px;
 
         .module-wrapper {
             top: 50%;
+            left: $content-padding / 2;
             position: absolute;
             @include transform(translate(0, -50%));
         }
