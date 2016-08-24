@@ -130,6 +130,27 @@
     }
 }
 
+[dir="rtl"] {
+	.g-main-nav {
+		.g-sublevel {
+			> li {
+				&.g-parent {
+					.g-menu-item-content {
+						margin-right: inherit;
+						margin-left: 2rem;
+						text-align: right;
+					}
+					.g-menu-parent-indicator {
+						right: inherit;
+						left: $content-padding - 0.2;
+						@include transform(rotate(180deg));
+					}
+				}
+			}
+		}
+	}
+}
+
 .g-menu-item-container {
 	display: block;
 	position: relative;

@@ -1508,6 +1508,21 @@ th {
   content: "\f00d";
 }
 
+[dir="rtl"] .g-main-nav .g-sublevel > li.g-parent .g-menu-item-content {
+  margin-right: inherit;
+  margin-left: 2rem;
+  text-align: right;
+}
+[dir="rtl"] .g-main-nav .g-sublevel > li.g-parent .g-menu-parent-indicator {
+  right: inherit;
+  left: 0.738rem;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
 .g-menu-item-container {
   display: block;
   position: relative;
