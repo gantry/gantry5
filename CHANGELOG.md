@@ -28,7 +28,7 @@
     3. [](#bugfix)
         - Helium: Offline page should now properly display the offline message set in the Gantry 5 settings page.
         - Added missing custom directory to Timber template lookup (#1465)
-        - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
+        - Fixed `|trans` twig filter having `gantry5` textdomain hardcoded (#1459)
         - Fixed possible fatal error in menu particle (#1493)
         - Fixed new outline having checkboxes in Content tab selected (#1482)
 
