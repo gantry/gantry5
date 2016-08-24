@@ -16,6 +16,8 @@
         - Fixed inherited/default atoms from base outline displaying even if there are no atoms assigned in `Page Settings`
         - Fixed issue with globally disabled Particles that were appearing as enabled in the LM and could be drag and dropped (#1496)
         - Fixed wrongly rendered `disabled` attribute for Assignments items. Causing them to get lost on next save (#1501)
+        - Section layout setting `Fullwidth (Boxed Content)` always shows as default in the Layout Manager (#1515)
+        - Fixed select and selectize form fields not regognising difference between 0 and ''
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)

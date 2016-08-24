@@ -55,6 +55,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
             new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
+            new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
             new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
         ];
     }
@@ -75,6 +76,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
             new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc'])
         ];
     }
 
@@ -183,14 +185,41 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
+     * Casts input to string.
+     *
+     * @param mixed $input
+     * @return string
+     */
+    public function stringFilter($input)
+    {
+        return (string) $input;
+    }
+
+    /**
      * Casts input to array.
      *
-     * @param array $input
+     * @param mixed $input
      * @return array
      */
     public function arrayFilter($input)
     {
         return (array) $input;
+    }
+
+    public function is_selectedFunc($a, $b)
+    {
+        $b = (array) $b;
+        array_walk(
+            $b,
+            function (&$item) {
+                if (is_bool($item)) {
+                    $item = (int) $item;
+                }
+                $item = (string) $item;
+            }
+        );
+
+        return in_array((string) $a, $b, true);
     }
 
     /**

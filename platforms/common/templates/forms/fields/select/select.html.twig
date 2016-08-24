@@ -19,7 +19,7 @@
             {% for key, text in field.options %}
                 <option
                         {# required attribute structures #}
-                        {% if (value is not iterable and key == value) or (value is iterable and key in value) %}selected="selected"{% endif %}
+                        {% if is_selected(key, value) %}selected="selected"{% endif %}
                         value="{{ key }}"
                         {# non-global attribute structures #}
                         {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
