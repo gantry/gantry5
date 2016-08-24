@@ -85,12 +85,11 @@
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
-                <include name="composer.*"/>
             </fileset>
         </copy>
 
         <copy todir="${tmp_dir}/packages/gantry5/src/vendor" overwrite="true">
-            <fileset dir="${path.src}/vendor">
+            <fileset dir="${path.src}/platforms/grav/vendor">
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
                 <exclude name="**/Tests/"/>
@@ -106,8 +105,8 @@
                 <exclude name="**/*.md"/>
                 <exclude name="**/*.rst"/>
                 <exclude name="**/*.sh"/>
-                <exclude name="**/CHANGELOG"/>
-                <exclude name="**/LICENSE"/>
+                <exclude name="**/CHANGELOG*"/>
+                <exclude name="**/LICENSE*"/>
                 <exclude name="**/Makefile"/>
                 <exclude name="**/todo"/>
                 <exclude name="filp/whoops/src/deprecated"/>
@@ -118,8 +117,10 @@
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src/classes/Gantry" overwrite="true">
-            <fileset dir="${path.src}/platforms/grav"/>
+        <copy todir="${tmp_dir}/packages/gantry5/src" overwrite="true">
+            <fileset dir="${path.src}/platforms/grav">
+                <exclude name="vendor/**"/>
+            </fileset>
         </copy>
     </target>
 
