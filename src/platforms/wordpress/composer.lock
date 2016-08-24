@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69cdf875a90949790ee5a8c800efac25",
-    "content-hash": "bad4827141241012f8835577b29cf628",
+    "hash": "327876a068ea1c67ba4431e11339c293",
+    "content-hash": "1a7fe7f0b375acf3416ff8b88b8b5c63",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -251,16 +251,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.3.2",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "32eb9bf6a8a58c1631a7be694599c5af1a69a13a"
+                "reference": "cf81ba463ab4d86ce09c07d44908a3aea313c765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/32eb9bf6a8a58c1631a7be694599c5af1a69a13a",
-                "reference": "32eb9bf6a8a58c1631a7be694599c5af1a69a13a",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/cf81ba463ab4d86ce09c07d44908a3aea313c765",
+                "reference": "cf81ba463ab4d86ce09c07d44908a3aea313c765",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,7 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2016-05-24 18:58:03"
+            "time": "2016-08-24 09:40:53"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -405,67 +405,6 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-07-17 09:06:15"
-        },
-        {
-            "name": "twig/twig",
-            "version": "v1.24.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.7"
-            },
-            "require-dev": {
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~2.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.24-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Twig_": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com",
-                    "role": "Project Founder"
-                },
-                {
-                    "name": "Twig Team",
-                    "homepage": "http://twig.sensiolabs.org/contributors",
-                    "role": "Contributors"
-                }
-            ],
-            "description": "Twig, the flexible, fast, and secure template language for PHP",
-            "homepage": "http://twig.sensiolabs.org",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2016-05-30 09:11:59"
         }
     ],
     "packages-dev": [
@@ -837,7 +776,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rockettheme/toolbox": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

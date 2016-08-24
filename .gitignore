@@ -10,6 +10,7 @@ Thumbs.db
 bin/**/composer.lock
 bin/**/vendor/**
 src/vendor/**
+src/platforms/*/vendor
 platforms/*/*debugbar*/vendor
 
 # Symbolic links in admin
