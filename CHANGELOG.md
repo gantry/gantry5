@@ -14,6 +14,7 @@
         - Various RTL fixes and improvements (#1494, #1508, #1511, #1512)
     3. [](#bugfix)
         - Fixed inherited/default atoms from base outline displaying even if there are no atoms assigned in `Page Settings`
+        - Fixed issue with globally disabled Particles that were appearing as enabled in the LM and could be drag and dropped (#1496)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)

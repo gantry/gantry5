@@ -1001,6 +1001,18 @@ $atom: #9055AF;
                 color: #fff;
                 background-color: $atom;
             }
+
+            &[data-lm-disabled] {
+                color: #666;
+                border: 2px solid #aaa;
+                @include stripes-background(#ccc, 50px, 45deg);
+
+                .particle-icon {
+                    border: 0;
+                    background-color: #aaa;
+                    color: #fff;
+                }
+            }
         }
 
         .settings-block {
