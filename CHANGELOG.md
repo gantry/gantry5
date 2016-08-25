@@ -1,3 +1,10 @@
+# 5.3.4
+## 24/08/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - **Patch Release**: This patch release fixes a regression introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) where Layout Manager and Menu Manager item settings were not clickable.
+    
 # 5.3.3
 ## 24/08/2016
 
