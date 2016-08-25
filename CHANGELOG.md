@@ -1,3 +1,10 @@
+# 5.3.5
+## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3)
+
 # 5.3.4
 ## 24/08/2016
 
