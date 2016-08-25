@@ -65,6 +65,7 @@ class Module extends Object implements ExportInterface
         $params = json_decode(json_encode($this->params), true);
 
         $array = [
+            'id' => $this->id,
             'title' => $this->title,
             'note' => $this->note ?: null,
             'position' => $this->position,

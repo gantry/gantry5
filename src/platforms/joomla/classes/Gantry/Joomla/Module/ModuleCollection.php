@@ -30,6 +30,8 @@ class ModuleCollection extends Collection
         // Convert assignments to our format.
         foreach ($items as $item) {
             $position = $item['position'];
+            $name = $item['type'] . '-' . $item['id'];
+
             if ($position === '') {
                 continue;
             }
@@ -47,9 +49,9 @@ class ModuleCollection extends Collection
                 }
                 $item['assignments'] = ['menu' => [$list]];
             }
-            unset($item['position'], $item['ordering']);
+            unset($item['position'], $item['id'], $item['ordering']);
 
-            $positions[$position][] = $item;
+            $positions[$position][preg_replace('/.*?\./u', '', $name)] = $item;
         }
 
         return $positions;
