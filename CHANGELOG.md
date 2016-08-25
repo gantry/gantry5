@@ -5,6 +5,7 @@
     3. [](#bugfix)
         - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) (#1528)
         - Outlines in the Load panel in LM are now capitalized properly (#1520)
+        - Fixed Global filter for Assignments (#1521)
         
 # 5.3.4
 ## 24/08/2016
