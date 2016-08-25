@@ -1,8 +1,8 @@
 details:
   name: Helium
-  version: @version@
+  version: 5.3.4
   icon: paper-plane
-  date: @versiondate@
+  date: August 24, 2016
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com

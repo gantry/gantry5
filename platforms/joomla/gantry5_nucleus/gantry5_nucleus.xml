@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension version="3.4" type="file" method="upgrade">
     <name>gantry5_nucleus</name>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
+    <version>5.3.4</version>
+    <creationDate>August 24, 2016</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
