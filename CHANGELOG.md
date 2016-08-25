@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     3. [](#bugfix)
-        - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3)
+        - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) (#1528)
 
 # 5.3.4
 ## 24/08/2016
