@@ -89,6 +89,14 @@ class Exporter
                 $config->set('page.head.atoms', $atoms->update()->toArray());
             }
 
+            // Add assignments.
+            if (is_numeric($id)) {
+                $assignments = $this->getOutlineAssignments($id);
+                if ($assignments) {
+                    $config->set('assignments', $this->getOutlineAssignments($id));
+                }
+            }
+            
             $style['config'] = $config->toArray();
         }
 
@@ -131,5 +139,38 @@ class Exporter
         }
 
         return $list;
+    }
+
+    /**
+     * List all the rules available.
+     *
+     * @param string $configuration
+     * @return array
+     */
+    public function getOutlineAssignments($configuration)
+    {
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+        $app = \JApplicationCms::getInstance('site');
+        $menu = $app->getMenu();
+        $data = \MenusHelper::getMenuLinks();
+
+        $group = [];
+        foreach ($data as $item) {
+            $items = [];
+            foreach ($item->links as $link) {
+                if ($link->template_style_id == $configuration) {
+                    $items[$menu->getItem($link->value)->route] = true;
+                }
+            }
+            if ($items) {
+                $group[$item->menutype] = $items;
+            }
+        }
+
+        if ($group) {
+            return ['menus' => $group];
+        }
+
+        return [];
     }
 }
