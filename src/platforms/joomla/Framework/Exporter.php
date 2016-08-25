@@ -14,6 +14,7 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Exporter
 {
@@ -26,12 +27,26 @@ class Exporter
         ];
     }
 
-    public function positions()
+    public function positions($all = true)
     {
-        $finder = new ModuleFinder();
-        $modules = $finder->particle()->find();
+        $gantry = Gantry::instance();
+        $positions = $gantry['outlines']->positions();
+        $positions['debug'] = 'Debug';
 
-        return $modules->export();
+        $finder = new ModuleFinder();
+        if (!$all) {
+            $finder->particle();
+        }
+        $modules = $finder->find()->export();
+        $list = [];
+        foreach ($modules as $position => $items) {
+            $list[$position] = [
+                'title' => $positions[$position],
+                'items' => $items,
+            ];
+        }
+
+        return $list;
     }
 
     public function outlines()
@@ -154,21 +169,17 @@ class Exporter
         $menu = $app->getMenu();
         $data = \MenusHelper::getMenuLinks();
 
-        $group = [];
+        $items = [];
         foreach ($data as $item) {
-            $items = [];
             foreach ($item->links as $link) {
                 if ($link->template_style_id == $configuration) {
-                    $items[$menu->getItem($link->value)->route] = true;
+                    $items[$menu->getItem($link->value)->route] = 1;
                 }
-            }
-            if ($items) {
-                $group[$item->menutype] = $items;
             }
         }
 
-        if ($group) {
-            return ['menus' => $group];
+        if ($items) {
+            return ['menu' => [$items]];
         }
 
         return [];
