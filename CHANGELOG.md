@@ -7,6 +7,7 @@
         - Outlines in the Load panel in LM are now capitalized properly (#1520)
         - Fixed Global filter for Assignments (#1521)
         - Fixed disabled menu items still showing up on front-end and not displaying as disabled in the admin (#1532)
+        - Fixed validation warning icon piling up when Applying and after an error (#1526)
         
 # 5.3.4
 ## 24/08/2016
