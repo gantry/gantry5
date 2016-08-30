@@ -104,6 +104,7 @@ class Theme extends AbstractTheme
         $gantry = static::gantry();
 
         $context = parent::getContext($context);
+        $context = array_replace($context, Grav::instance()['twig']->twig_vars);
         $context['site'] = $gantry['site'];
 
         return $context;
