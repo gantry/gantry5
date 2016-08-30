@@ -134,7 +134,7 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
                     'menu-item-type' => $wpItem->type,
                     'menu-item-title' => trim($item['title']),
-                    'menu-item-url' => trim($item['link']),
+                    'menu-item-url' => $wpItem->url,
                     'menu-item-description' => $wpItem->description,
                     'menu-item-attr-title' => $wpItem->attr_title,
                     'menu-item-target' => $item['target'] != '_self' ? $item['target'] : '',

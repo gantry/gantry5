@@ -9,7 +9,10 @@
         - Fixed disabled menu items still showing up on front-end and not displaying as disabled in the admin (#1532)
         - Fixed validation warning icon piling up when Applying and after an error (#1526)
         - Fixed untranslated string in Atoms validation (#1525)
-
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed `Undefined index: link` when saving menu
+    
 # 5.3.4
 ## 24/08/2016
 
