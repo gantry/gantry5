@@ -135,7 +135,7 @@ class Platform extends BasePlatform
 
     public function filter($text)
     {
-        return \do_shortcode($text);
+        return translate(\do_shortcode($text));
     }
 
     public function errorHandlerPaths()
