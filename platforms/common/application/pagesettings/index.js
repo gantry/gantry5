@@ -183,7 +183,7 @@ var AttachSettings = function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();

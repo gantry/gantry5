@@ -80,8 +80,8 @@ $.implement({
                 icon.top(node);
             }
 
-            icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
             if (!node.gIndicator) { node.gIndicator = icon.attribute('class') || true; }
+            icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
         });
     },
 
