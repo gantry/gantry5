@@ -38,6 +38,9 @@ class Export extends HtmlController
         $zip = new \ZipArchive();
         $zip->open($tmpname, \ZipArchive::CREATE);
 
+        $zip->addFromString("export.yaml", Yaml::dump($exported['export'], 10, 2));
+        unset($exported['export']);
+
         foreach ($exported['positions'] as $key => $position) {
             foreach ($position['items'] as $module => $data) {
                 $zip->addFromString("positions/{$key}/{$module}.yaml", Yaml::dump($data, 10, 2));

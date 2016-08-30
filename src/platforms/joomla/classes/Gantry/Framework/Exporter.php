@@ -21,6 +21,16 @@ class Exporter
     public function all()
     {
         return [
+            'export' => [
+                'gantry' => [
+                    'version' => GANTRY5_VERSION,
+                    'format' => 1
+                ],
+                'platform' => [
+                    'name' => 'joomla',
+                    'version' => JVERSION
+                ],
+            ],
             'outlines' => $this->outlines(),
             'positions' => $this->positions(),
             'menus' => $this->menus()
@@ -179,7 +189,7 @@ class Exporter
         }
 
         if ($items) {
-            return ['menu' => [$items]];
+            return ['page' => [$items]];
         }
 
         return [];
