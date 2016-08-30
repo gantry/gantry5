@@ -3335,7 +3335,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
 
                     target.hideIndicator();
@@ -5655,7 +5655,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
                     target.hideIndicator();
                     target.showIndicator();
@@ -6429,7 +6429,7 @@ var AttachSettings = function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
@@ -6752,7 +6752,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
@@ -9731,7 +9731,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
                     target.hideIndicator();
                     target.showIndicator();
@@ -15195,8 +15195,8 @@ $.implement({
                 icon.top(node);
             }
 
-            icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
             if (!node.gIndicator) { node.gIndicator = icon.attribute('class') || true; }
+            icon.attribute('class', klass || 'fa fa-fw fa-spin-fast fa-spinner');
         });
     },
 
