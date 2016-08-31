@@ -24,20 +24,21 @@
                     <ul>
                     {% for type, particle in list %}
                         {% for item_key, item in particle %}
+                            {% set isDisabled = not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}
                             <li class="g5-lm-particle-{{ type }}"
                                 data-lm-blocktype="{{ type }}"
                                 data-lm-subtype="{{ item_key }}"
                                 data-lm-icon="{{ item.icon|default('fa-cube') }}"
-                                {% if not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}
+                                {% if isDisabled %}
                                 data-lm-disabled=""
                                 data-lm-nodrag=""
                                 title="{{ 'GANTRY5_PLATFORM_PARTICLE_DISABLED'|trans }}"
                                 {% endif %}
                             >
-                                <span class="particle-icon">
-                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i>
+                                <span class="particle-icon" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>
+                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
                                 </span>
-                                <span class="particle-title">{{ item.name }}</span>
+                                <span class="particle-title" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>{{ item.name }}</span>
                             </li>
                         {%  endfor %}
                     {% endfor %}

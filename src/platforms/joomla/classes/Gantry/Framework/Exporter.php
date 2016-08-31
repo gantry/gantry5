@@ -14,24 +14,49 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Exporter
 {
     public function all()
     {
         return [
+            'export' => [
+                'gantry' => [
+                    'version' => GANTRY5_VERSION,
+                    'format' => 1
+                ],
+                'platform' => [
+                    'name' => 'joomla',
+                    'version' => JVERSION
+                ],
+            ],
             'outlines' => $this->outlines(),
             'positions' => $this->positions(),
             'menus' => $this->menus()
         ];
     }
 
-    public function positions()
+    public function positions($all = true)
     {
-        $finder = new ModuleFinder();
-        $modules = $finder->particle()->find();
+        $gantry = Gantry::instance();
+        $positions = $gantry['outlines']->positions();
+        $positions['debug'] = 'Debug';
 
-        return $modules->export();
+        $finder = new ModuleFinder();
+        if (!$all) {
+            $finder->particle();
+        }
+        $modules = $finder->find()->export();
+        $list = [];
+        foreach ($modules as $position => $items) {
+            $list[$position] = [
+                'title' => $positions[$position],
+                'items' => $items,
+            ];
+        }
+
+        return $list;
     }
 
     public function outlines()
@@ -89,6 +114,14 @@ class Exporter
                 $config->set('page.head.atoms', $atoms->update()->toArray());
             }
 
+            // Add assignments.
+            if (is_numeric($id)) {
+                $assignments = $this->getOutlineAssignments($id);
+                if ($assignments) {
+                    $config->set('assignments', $this->getOutlineAssignments($id));
+                }
+            }
+            
             $style['config'] = $config->toArray();
         }
 
@@ -131,5 +164,34 @@ class Exporter
         }
 
         return $list;
+    }
+
+    /**
+     * List all the rules available.
+     *
+     * @param string $configuration
+     * @return array
+     */
+    public function getOutlineAssignments($configuration)
+    {
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+        $app = \JApplicationCms::getInstance('site');
+        $menu = $app->getMenu();
+        $data = \MenusHelper::getMenuLinks();
+
+        $items = [];
+        foreach ($data as $item) {
+            foreach ($item->links as $link) {
+                if ($link->template_style_id == $configuration) {
+                    $items[$menu->getItem($link->value)->route] = 1;
+                }
+            }
+        }
+
+        if ($items) {
+            return ['page' => [$items]];
+        }
+
+        return [];
     }
 }

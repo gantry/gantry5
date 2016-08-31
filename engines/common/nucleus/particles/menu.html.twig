@@ -37,7 +37,7 @@
     {% if item.type == 'particle' and not item.options.particle.enabled %} 
         {% set enabled = 0 %}
     {% endif %}
-    {% if item.visible and item.enabled|default(1) and enabled|default(1) %}
+    {% if item.visible and item.enabled and enabled|default(1) %}
         {% set title = item.icon_only or item.link_title ? ' title="' ~ item.link_title|default(item.title)|e ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}

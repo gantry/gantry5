@@ -74,10 +74,11 @@ class Theme extends AbstractTheme
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        parent::setTwigLoaderPaths($loader);
+        return parent::setTwigLoaderPaths($loader);
     }
 
     /**
@@ -104,6 +105,7 @@ class Theme extends AbstractTheme
         $gantry = static::gantry();
 
         $context = parent::getContext($context);
+        $context = array_replace($context, Grav::instance()['twig']->twig_vars);
         $context['site'] = $gantry['site'];
 
         return $context;

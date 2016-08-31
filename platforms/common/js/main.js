@@ -28,17 +28,45 @@ var cachedClearTimeout;
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
         return setTimeout(fun, 0);
-    } else {
-        return cachedSetTimeout.call(null, fun, 0);
     }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
 }
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
-        clearTimeout(marker);
-    } else {
-        cachedClearTimeout.call(null, marker);
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
     }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
 }
 var queue = [];
 var draining = false;
@@ -148,7 +176,7 @@ var Map         = map,
     Assignments = {
         toggleSection: function(e, element, index, array) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
-            if (element.siblings('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card    = element.parent('.card'),
@@ -179,7 +207,7 @@ var Map         = map,
         },
 
         filterSection: function(e, element, value, global) {
-            if (element.siblings('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
@@ -2901,7 +2929,7 @@ ready(function() {
     layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
-        exclude: '.section-header .button, .section-header .fa, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        exclude: '.section-header .button, .section-header .fa, .lm-newblocks .float-right .button, [data-lm-nodrag], [data-lm-disabled]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
         builder: builder,
         history: lmhistory,
@@ -3307,7 +3335,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
 
                     target.hideIndicator();
@@ -5627,7 +5655,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
                     target.hideIndicator();
                     target.showIndicator();
@@ -6401,7 +6429,7 @@ var AttachSettings = function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
@@ -6413,7 +6441,7 @@ var AttachSettings = function() {
                     if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), 'GANTRY5_PLATFORM_JS_INVALID_FIELDS');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
@@ -6724,7 +6752,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
@@ -9703,7 +9731,7 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
+                    var target = $(e.currentTarget);
                     target.disabled(true);
                     target.hideIndicator();
                     target.showIndicator();

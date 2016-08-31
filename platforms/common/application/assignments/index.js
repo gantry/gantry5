@@ -13,7 +13,7 @@ var Map         = map,
     Assignments = {
         toggleSection: function(e, element, index, array) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
-            if (element.siblings('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card    = element.parent('.card'),
@@ -44,7 +44,7 @@ var Map         = map,
         },
 
         filterSection: function(e, element, value, global) {
-            if (element.siblings('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
                 onlyEnabled = $('[data-assignments-enabledonly]'),

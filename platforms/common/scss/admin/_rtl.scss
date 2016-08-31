@@ -37,5 +37,16 @@
                 margin-right: -6rem;
             }
         }
+
+        .settings-block i {
+            right: inherit;
+            left: 10px;
+        }
+
+        .sidebar-block {
+            $negate: -($content-padding + $content-margin);
+            $compensate: $content-padding + $content-margin;
+            margin: $negate $negate $negate $compensate;
+        }
     }
 }

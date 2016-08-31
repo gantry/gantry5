@@ -1,5 +1,27 @@
-# 5.3.3
+# 5.3.5
 ## XX/XX/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) (#1528)
+        - Outlines in the Load panel in LM are now capitalized properly (#1520)
+        - Fixed Global filter for Assignments (#1521)
+        - Fixed disabled menu items still showing up on front-end and not displaying as disabled in the admin (#1532)
+        - Fixed validation warning icon piling up when Applying and after an error (#1526)
+        - Fixed untranslated string in Atoms validation (#1525)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed `Undefined index: link` when saving menu
+    
+# 5.3.4
+## 24/08/2016
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - **Patch Release**: This patch release fixes a regression introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) where Layout Manager and Menu Manager item settings were not clickable.
+    
+# 5.3.3
+## 24/08/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -11,14 +33,18 @@
         - Social particle should use simple select instead of fancy selectize (#1490)
         - If debug mode is enabled, display whoops error instead of catching exceptions
         - Reworked the UI for assignments Filters and Togglers
+        - Various RTL fixes and improvements (#1494, #1508, #1511, #1512)
     3. [](#bugfix)
         - Fixed inherited/default atoms from base outline displaying even if there are no atoms assigned in `Page Settings`
+        - Fixed issue with globally disabled Particles that were appearing as enabled in the LM and could be drag and dropped (#1496)
+        - Fixed wrongly rendered `disabled` attribute for Assignments items. Causing them to get lost on next save (#1501)
+        - Section layout setting `Fullwidth (Boxed Content)` always shows as default in the Layout Manager (#1515)
+        - Fixed select and selectize form fields not recognising difference between 0 and ''
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed extra Default outline that was added in the non-English Joomla installation during clean installation of template (#1461)
         - Fixed issue with Tabs container, conflicting with Tabs in the modals. Improved specificity (#1463)
         - Helium Template: Updateserver not implemented in templateDetails.xml (#1488)
-        - Fixed RTL issue with forms labels (#1494)
         - Unassigning outline from all menu items does not have any effect (#1451)
 3. [WordPress](#wordpress)
     1. [](#new)
@@ -28,7 +54,7 @@
     3. [](#bugfix)
         - Helium: Offline page should now properly display the offline message set in the Gantry 5 settings page.
         - Added missing custom directory to Timber template lookup (#1465)
-        - Fixed `|trans` twig filter having 'gantry5' textdomain hardcoded (#1459)
+        - Fixed `|trans` twig filter having `gantry5` textdomain hardcoded (#1459)
         - Fixed possible fatal error in menu particle (#1493)
         - Fixed new outline having checkboxes in Content tab selected (#1482)
 

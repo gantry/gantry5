@@ -65,23 +65,34 @@ class Module extends Object implements ExportInterface
         $params = json_decode(json_encode($this->params), true);
 
         $array = [
-            'title' => $this->title,
-            'note' => $this->note ?: null,
+            'id' => $this->id,
             'position' => $this->position,
             'ordering' => (int) $this->ordering,
-            'type' => $particle ? 'gantry.particle' : 'joomla.' . $this->module,
-            'published' => (bool) $this->published,
-            'show_title' => (bool) $this->showtitle,
-            'particle' => null,
-            'content' => $this->content ?: null,
-            'joomla' => &$params,
-            'language' => $this->language !== '*' ? $this->language : null,
+            'type' => $particle ? 'particle' : 'joomla',
+            'title' => $this->title,
+            'chrome' => ['display_title' => (bool) $this->showtitle],
+            'options' => null,
             'assignments' => $this->assignments()
         ];
 
-        if ($particle && !empty($params['particle'])) {
-            $array['particle'] = json_decode($params['particle'], true);
+        $options = array_filter(
+            [
+                'type' => !$particle ? $this->module : null,
+                'note' => $this->note ?: null,
+                'published' => (bool) $this->published,
+                'content' => $this->content ?: null,
+                'params' => &$params,
+                'language' => $this->language !== '*' ? $this->language : null,
+            ],
+            [$this, 'is_not_null']
+        );
+
+        if ($particle) {
+            $array['options'] = !empty($params['particle']) ? json_decode($params['particle'], true) : ['type' => null];
+            $array['joomla'] = $options;
             unset($params['particle']);
+        } else {
+            $array['options'] = $options;
         }
 
         return array_filter($array, [$this, 'is_not_null']);
@@ -89,27 +100,31 @@ class Module extends Object implements ExportInterface
 
     public function create(array $array)
     {
-        list ($scope, $type) = explode('.', $array['type'], 2);
+        $type = $array['type'];
 
-        if ($scope === 'gantry' && $type === 'particle') {
-            $type = 'mod_gantry5_particle';
-            $array['params']['particle'] = isset($array['particle']) ? $array['particle'] : '';
+        if ($type === 'particle') {
+            $particle = isset($array['options']) ? $array['options'] : [];
+            $array['options'] = isset($array['joomla']) ? $array['joomla'] : [];
+            $array['options']['type'] = 'mod_gantry5_particle';
+            $array['options']['params']['particle'] = $particle;
 
-        } elseif ($scope !== 'joomla') {
+        } elseif ($type !== 'joomla') {
             return null;
         }
 
+        $options = $array['options'];
+
         $properties = [
             'title' => $array['title'],
-            'note' => isset($array['note']) ? $array['note'] : '',
+            'note' => isset($options['note']) ? $options['note'] : '',
+            'content' => isset($options['content']) ? $options['content'] : '',
             'position' => $array['position'],
             'ordering' => (int) $array['ordering'],
-            'module' => $type,
-            'published' => (int) !empty($array['published']),
-            'show_title' => (int) !empty($array['show_title']),
-            'params' => isset($array['joomla']) ? json_decode(json_encode($array['joomla'])) : [],
-            'content' => isset($array['content']) ? $array['content'] : '',
-            'language' => isset($array['language']) ? $array['language'] : '*',
+            'published' => (int) !empty($options['published']),
+            'module' => $options['type'],
+            'showtitle' => (int) !empty($array['chrome']['display_title']),
+            'params' => isset($options['params']) ? json_decode(json_encode($options['params'])) : [],
+            'language' => isset($options['language']) ? $options['language'] : '*',
             '_assignments' => isset($array['assignments']) ? $array['assignments'] : [],
         ];
 

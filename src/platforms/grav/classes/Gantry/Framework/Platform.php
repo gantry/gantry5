@@ -38,7 +38,7 @@ class Platform extends BasePlatform
             'gantry-positions' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
-                    '' => ['gantry-theme://positions']
+                    '' => ['user://positions']
                 ]
             ]
         ];
@@ -151,6 +151,14 @@ class Platform extends BasePlatform
         }
 
         return $html;
+    }
+
+
+    public function displaySystemMessages($params = [])
+    {
+        return Gantry::instance()['theme']->compile(
+            '{% for message in grav.messages.fetch %}<div class="alert-{{ message.scope|e }} alert">{{ message.message|raw }}</div>{% endfor %}'
+        );
     }
 
     protected function getModule($id)

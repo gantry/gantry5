@@ -30,13 +30,15 @@ class ModuleCollection extends Collection
         // Convert assignments to our format.
         foreach ($items as $item) {
             $position = $item['position'];
+            $name = $item['options']['type'] . '-' . $item['id'];
+
             if ($position === '') {
                 continue;
             }
             if (empty($item['assignments'])) {
                 $item['assignments'] = [];
             } elseif (in_array(0, $item['assignments'])) {
-                $item['assignments'] = ['menu' => true];
+                $item['assignments'] = ['page' => true];
             } else {
                 $list = [];
                 foreach ($item['assignments'] as $assignment) {
@@ -45,11 +47,11 @@ class ModuleCollection extends Collection
                         $list[$paths[$key]] = $assignment > 0 ? 1 : -1;
                     }
                 }
-                $item['assignments'] = ['menu' => [$list]];
+                $item['assignments'] = ['page' => [$list]];
             }
-            unset($item['position'], $item['ordering']);
+            unset($item['position'], $item['id'], $item['ordering']);
 
-            $positions[$position][] = $item;
+            $positions[$position][$name] = $item;
         }
 
         return $positions;

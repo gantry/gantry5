@@ -38,11 +38,21 @@ class Export extends HtmlController
         $zip = new \ZipArchive();
         $zip->open($tmpname, \ZipArchive::CREATE);
 
-        foreach ((array) $exported['positions'] as $position => $data) {
-            $zip->addFromString("positions/{$position}.yaml", Yaml::dump($data, 10, 2));
+        $zip->addFromString("export.yaml", Yaml::dump($exported['export'], 10, 2));
+        unset($exported['export']);
+
+        foreach ($exported['positions'] as $key => $position) {
+            foreach ($position['items'] as $module => $data) {
+                $zip->addFromString("positions/{$key}/{$module}.yaml", Yaml::dump($data, 10, 2));
+            }
+
+            $position['ordering'] = array_keys($position['items']);
+            unset($position['items']);
+
+            $zip->addFromString("positions/{$key}.yaml", Yaml::dump($position, 10, 2));
         }
 
-        foreach ((array) $exported['outlines'] as $outline => &$data) {
+        foreach ($exported['outlines'] as $outline => &$data) {
             if (!empty($data['config'])) {
                 foreach ($data['config'] as $name => $config) {
                     if (in_array($name, ['particles', 'page'])) {
@@ -56,9 +66,9 @@ class Export extends HtmlController
             }
             unset($data['config']);
         }
-        $zip->addFromString("outlines.yaml", Yaml::dump($exported['outlines'], 10, 2));
+        $zip->addFromString("outlines/outlines.yaml", Yaml::dump($exported['outlines'], 10, 2));
 
-        foreach ((array) $exported['menus'] as $menu => $data) {
+        foreach ($exported['menus'] as $menu => $data) {
             $zip->addFromString("menus/{$menu}.yaml", Yaml::dump($data, 10, 2));
         }
 

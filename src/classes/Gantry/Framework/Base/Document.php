@@ -457,9 +457,10 @@ class Document
      * @param  bool $domain        True to include domain name.
      * @param  int $timestamp_age  Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                             Use value <= 0 to disable the feature.
+     * @param  bool $allowNull     True if non-existing files should return null.
      * @return string|null         Returns url to the resource or null if resource was not found.
      */
-    public static function url($url, $domain = false, $timestamp_age = null)
+    public static function url($url, $domain = false, $timestamp_age = null, $allowNull = true)
     {
         if (!is_string($url) || $url === '') {
             // Return null on invalid input.
@@ -474,8 +475,8 @@ class Document
         $parts = Url::parse($url);
 
         if (!is_array($parts)) {
-            // URL could not be parsed, return null.
-            return null;
+            // URL could not be parsed.
+            return $allowNull ? null : $url;
         }
 
         // Make sure we always have scheme, host, port and path.
@@ -500,7 +501,12 @@ class Document
             $path = $locator->findResource("{$scheme}://{$host}{$path}", false);
 
             if ($path === false) {
-                return null;
+                if ($allowNull) {
+                    return null;
+                }
+
+                // Return location where the file would be if it was saved.
+                $path = $locator->findResource("{$scheme}://{$host}{$path}", false, true);
             }
 
         } elseif ($host || $port) {
