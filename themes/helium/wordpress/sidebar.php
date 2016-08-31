@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * The Template for displaying sidebar
  */
