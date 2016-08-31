@@ -10,7 +10,7 @@
 
 namespace Gantry\Framework;
 
-class Site extends \TimberSite
+class Site extends \Timber\Site
 {
     /**
      * @param string $widget_id

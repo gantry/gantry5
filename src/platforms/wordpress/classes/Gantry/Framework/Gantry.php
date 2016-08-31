@@ -13,6 +13,7 @@ namespace Gantry\Framework;
 use Gantry\Component\Config\Config;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
+use Timber\Timber;
 
 class Gantry extends Base\Gantry
 {
@@ -52,15 +53,23 @@ class Gantry extends Base\Gantry
      */
     protected static function init()
     {
-        // Make sure Timber plugin has been loaded.
-        if (!class_exists('Timber')) {
-            $action = 'install-plugin';
-            $slug = 'timber-library';
-            throw new \LogicException('<strong>Timber not activated</strong>. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'update.php' ) ), $action.'_'.$slug ) . '"><strong>here</strong></a> to install it or go to the <a href=" ' . admin_url('plugins.php#timber') . '"><strong>Installed Plugins</strong></a> page to activate it, if already installed.');
+        // Make sure that Timber plugin is new enough or not installed.
+        if (class_exists('Timber', false) && empty(\Timber::$version)) {
+            $action = 'deactivate';
+            $slug = 'timber-library/timber.php';
+            throw new \LogicException('<strong>Timber Plugin</strong> is too old for <strong>Gantry 5</strong> and it is no longer needed. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'plugins.php' ) ), 'deactivate-plugin_' . $slug ) . '"><strong>here</strong></a> to deactivate it.');
         }
 
         $container = parent::init();
 
+        if (class_exists('TimberHelper')) {
+            // Using Timber plugin.
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Using Timber Plugin v' . Timber::$version);
+        } else {
+            // Using composer version of Timber; Initialize it.
+            new Timber;
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Using Timber Library v' . Timber::$version);
+        }
 
         $lookup = $container['loader']->getPrefixesPsr4()['Gantry\\'];
         $iterator = new \FilesystemIterator($lookup[0] . '/WordPress/Integration', \FilesystemIterator::SKIP_DOTS & \FilesystemIterator::UNIX_PATHS);
