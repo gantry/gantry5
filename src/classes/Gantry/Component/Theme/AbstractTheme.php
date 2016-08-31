@@ -210,12 +210,17 @@ abstract class AbstractTheme
      * Set twig lookup paths to the loader.
      *
      * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem|null
      * @internal
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
-            return;
+        if ($loader instanceof \Twig_Loader_Chain) {
+            $new = new \Twig_Loader_Filesystem();
+            $loader->addLoader($new);
+            $loader = $new;
+        } elseif (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return null;
         }
 
         $gantry = static::gantry();
@@ -225,6 +230,8 @@ abstract class AbstractTheme
 
         $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
         $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
+
+        return $loader;
     }
 
     /**

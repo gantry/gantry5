@@ -129,23 +129,32 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Get list of twig paths.
+     *
+     * @return array
+     */
+    public static function getTwigPaths()
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = static::gantry()['locator'];
+
+        return $locator->mergeResources(['gantry-theme://twig', 'gantry-engine://twig']);
+    }
+
+    /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
-            return;
+        $loader = parent::setTwigLoaderPaths($loader);
+
+        if ($loader) {
+            $loader->setPaths($this->getTwigPaths());
         }
 
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $loader->setPaths($locator->findResources('gantry-engine://twig'));
-
-        parent::setTwigLoaderPaths($loader);
+        return $loader;
     }
 }

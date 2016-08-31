@@ -74,10 +74,11 @@ class Theme extends AbstractTheme
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        parent::setTwigLoaderPaths($loader);
+        return parent::setTwigLoaderPaths($loader);
     }
 
     /**
