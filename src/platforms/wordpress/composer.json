@@ -11,7 +11,8 @@
         "filp/whoops": "~2.0",
         "rockettheme/toolbox": "dev-develop",
         "leafo/scssphp": "~0.6.5",
-        "erusev/parsedown-extra": "~0.7"
+        "erusev/parsedown-extra": "~0.7",
+        "timber/timber": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

@@ -13,6 +13,8 @@ namespace Gantry\Framework;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Timber\Timber;
+use Timber\User;
 
 /**
  * Class Theme
@@ -49,7 +51,7 @@ class Theme extends AbstractTheme
         $context['wordpress'] = $gantry['platform'];
 
         if (!$this->user) {
-            $this->user = new \TimberUser;
+            $this->user = new User;
         }
 
         $context['current_user'] = $this->user;
@@ -116,7 +118,7 @@ class Theme extends AbstractTheme
         static $timberContext;
 
         if (!isset($timberContext)) {
-            $timberContext = \Timber::get_context();
+            $timberContext = Timber::get_context();
         }
 
         // Include Gantry specific things to the context.
@@ -378,14 +380,14 @@ class Theme extends AbstractTheme
         }
 
         // Set lookup locations for Timber.
-        \Timber::$locations = $this->getTwigPaths();
+        Timber::$locations = $this->getTwigPaths();
 
         // Enable caching in Timber.
-        \Timber::$twig_cache =  (bool) $global->get('compile_twig', 1);
-        \Timber::$cache = false;
+        Timber::$twig_cache =  (bool) $global->get('compile_twig', 1);
+        Timber::$cache = false;
 
         // Set autoescape in Timber.
-        \Timber::$autoescape = false;
+        Timber::$autoescape = false;
 
         add_theme_support('html5', ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets']);
         add_theme_support('title-tag');
