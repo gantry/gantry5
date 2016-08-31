@@ -281,7 +281,7 @@
         \tbox.bottom = box.top + box.height;\n\
         \n\
         \treturn box;\n\
-        }//@ sourceURL=darsain-position/index.js"
+        }//# sourceURL=darsain-position/index.js"
     ));
     fakeRequire.register("component-classes/index.js", Function("exports, fakeRequire, module",
         "/**\n\
@@ -449,7 +449,7 @@
             ? this.list.contains(name)\n\
             : !! ~index(this.array(), name);\n\
         };\n\
-        //@ sourceURL=component-classes/index.js"
+        //# sourceURL=component-classes/index.js"
     ));
     fakeRequire.register("darsain-tooltip/index.js", Function("exports, fakeRequire, module",
         "'use strict';\n\
@@ -1068,7 +1068,7 @@
         \tspacing:     null,      // Gap between target and tooltip.\n\
         \toffset:      null,      // Horizontal offset to align arrow\n\
         \tauto:        0          // Whether to automatically adjust place to fit into window.\n\
-        };//@ sourceURL=darsain-tooltip/index.js"
+        };//# sourceURL=darsain-tooltip/index.js"
     ));
     fakeRequire.register("darsain-event/index.js", Function("exports, fakeRequire, module",
         "'use strict';\n\
@@ -1126,7 +1126,7 @@
         \t\tel[fnid] = undefined;\n\
         \t}\n\
         \treturn fn;\n\
-        };//@ sourceURL=darsain-event/index.js"
+        };//# sourceURL=darsain-event/index.js"
     ));
     fakeRequire.register("component-indexof/index.js", Function("exports, fakeRequire, module",
         "module.exports = function(arr, obj){\n\
@@ -1135,7 +1135,7 @@
             if (arr[i] === obj) return i;\n\
           }\n\
           return -1;\n\
-        };//@ sourceURL=component-indexof/index.js"
+        };//# sourceURL=component-indexof/index.js"
     ));
     fakeRequire.register("code42day-dataset/index.js", Function("exports, fakeRequire, module",
         "module.exports=dataset;\n\
@@ -1196,7 +1196,7 @@
           }\n\
         \n\
           return self;\n\
-        }//@ sourceURL=code42day-dataset/index.js"
+        }//# sourceURL=code42day-dataset/index.js"
     ));
     fakeRequire.register("tooltips/index.js", Function("exports, fakeRequire, module",
         "'use strict';\n\
@@ -1580,7 +1580,7 @@
         \tshowOn:    'mouseenter', // Show tooltip event.\n\
         \thideOn:    'mouseleave', // Hide tooltip event.\n\
         \tobserve:   0             // Enable mutation observer (used only when supported).\n\
-        };//@ sourceURL=tooltips/index.js"
+        };//# sourceURL=tooltips/index.js"
     ));
 
 
