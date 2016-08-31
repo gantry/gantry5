@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * The template for displaying 404 pages (Not Found)
  */

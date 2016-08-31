@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * Third party plugins that hijack the theme will call wp_footer() to get the footer template.
  * We use this to end our output buffer (started in header.php) and render into the views/page-plugin.html.twig template.

@@ -14,6 +14,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Include Timber Library v1.1.3 into Gantry Plugin. Removes dependency to Timber Plugin. (#1542)
+    2. [](#improved)
+        - Updated Hydrogen and Helium themes to use Timber 1.1 classes
     3. [](#bugfix)
         - Fixed `Undefined index: link` when saving menu
     

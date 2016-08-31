@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * The template for displaying Author Archive pages
  */
@@ -26,7 +28,7 @@ $context['page_head'] = $theme->render('partials/page_head.html.twig', $context)
 $context['posts'] = Timber::get_posts();
 
 if (isset($authordata)) {
-    $author            = new TimberUser($authordata->ID);
+    $author            = new \Timber\User($authordata->ID);
     $context['author'] = $author;
     $context['title']  = __('Author:', 'g5_helium') . ' ' . $author->name();
 }

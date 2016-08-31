@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * The main template file
  * This is the most generic template file in a WordPress theme
@@ -17,11 +19,6 @@ defined('ABSPATH') or die;
  * It is used to display a page when nothing more specific matches a query.
  * E.g., it puts together the home page when no home.php file exists
  */
-
-if (!class_exists('Timber')) {
-    _e('Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>', 'g5_helium');
-    return;
-}
 
 $gantry = Gantry\Framework\Gantry::instance();
 $theme  = $gantry['theme'];

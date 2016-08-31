@@ -3,6 +3,8 @@
  * Helper class G5ThemeHelper containing useful theme functions and hooks
  */
 
+defined('ABSPATH') or die;
+
 // Extend Timber context
 add_filter('timber_context', array('G5ThemeHelper', 'add_to_context'));
 
@@ -25,7 +27,7 @@ class G5ThemeHelper
     public static function add_to_context(array $context)
     {
         $context['is_user_logged_in'] = is_user_logged_in();
-        $context['pagination']        = Timber::get_pagination();
+        $context['pagination']        = Timber\Timber::get_pagination();
 
         return $context;
     }
