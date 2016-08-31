@@ -347,6 +347,19 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Get list of twig paths.
+     *
+     * @return array
+     */
+    public static function getTwigPaths()
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = static::gantry()['locator'];
+
+        return $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
+    }
+
+    /**
      * @see AbstractTheme::init()
      */
     protected function init()
@@ -365,7 +378,7 @@ class Theme extends AbstractTheme
         }
 
         // Set lookup locations for Timber.
-        \Timber::$locations = $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
+        \Timber::$locations = $this->getTwigPaths();
 
         // Enable caching in Timber.
         \Timber::$twig_cache =  (bool) $global->get('compile_twig', 1);
@@ -450,24 +463,18 @@ class Theme extends AbstractTheme
      * @see AbstractTheme::setTwigLoaderPaths()
      *
      * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
-            return;
+        $loader = parent::setTwigLoaderPaths($loader);
+        
+        if ($loader) {
+            // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
+            $loader->setPaths($this->getTwigPaths());
         }
 
-        $gantry = static::gantry();
-
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
-
-        $paths = $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
-
-        // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
-        $loader->setPaths($paths);
-
-        parent::setTwigLoaderPaths($loader);
+        return $loader;
     }
 
     protected function updateCookie($name, $value, $expire = 0)
