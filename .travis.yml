@@ -31,10 +31,10 @@ install:
       npm install;
       gulp -up;
     fi
-  - cd $TRAVIS_BUILD_DIR/src/joomla && composer install --no-dev;
-  - cd $TRAVIS_BUILD_DIR/src/wordpress && composer install --no-dev;
-  - cd $TRAVIS_BUILD_DIR/src/grav && composer install --no-dev;
-  - cd $TRAVIS_BUILD_DIR/src/prime && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/joomla && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/wordpress && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/grav && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/prime && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev
 script:
   - export SHORT_COMMIT=$(echo $TRAVIS_COMMIT | cut -c1-9)
