@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Implement platform specific composer dependencies
+        - Implemented platform specific composer dependencies
     3. [](#bugfix)
         - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) (#1528)
         - Outlines in the Load panel in LM are now capitalized properly (#1520)

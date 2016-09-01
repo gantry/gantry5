@@ -108,20 +108,25 @@
                 <exclude name="**/Tests/"/>
                 <exclude name="**/doc/"/>
                 <exclude name="**/docs/"/>
+                <exclude name="**/phpdoc.xml"/>
+                <exclude name="**/phpdocs-md"/>
                 <exclude name="**/examples/"/>
                 <exclude name="**/ext/"/>
                 <exclude name="**/bin/"/>
                 <exclude name="**/site/"/>
+                <exclude name="**/.github"/>
                 <exclude name="**/.*.yml"/>
                 <exclude name="**/.editor*"/>
                 <exclude name="**/phpunit.xml*"/>
                 <exclude name="**/*.md"/>
                 <exclude name="**/*.rst"/>
                 <exclude name="**/*.sh"/>
+                <exclude name="**/readme.txt"/>
                 <exclude name="**/CHANGELOG*"/>
                 <exclude name="**/LICENSE*"/>
                 <exclude name="**/Makefile"/>
                 <exclude name="**/todo"/>
+                <exclude name="**/composer.lock"/>
                 <exclude name="filp/whoops/src/deprecated"/>
             </fileset>
         </copy>
