@@ -1,7 +1,7 @@
 {
-    "name": "gantry",
+    "name": "gantry/joomla",
     "description": "Gantry Framework Library",
-    "license": "MIT",
+    "license": "GPLv2",
 
     "require": {
         "php": ">=5.4.0",
@@ -10,7 +10,7 @@
         "twig/twig": "~1.23",
         "pimple/pimple": "~3.0",
         "filp/whoops": "~2.0",
-        "rockettheme/toolbox": "~1.3.1",
+        "rockettheme/toolbox": "dev-develop",
         "leafo/scssphp": "~0.6.5",
         "erusev/parsedown-extra": "~0.7"
     },

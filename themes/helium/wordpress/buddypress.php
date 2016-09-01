@@ -10,6 +10,8 @@
 
 defined('ABSPATH') or die;
 
+use Timber\Timber;
+
 /*
  * The template for displaying BBPress pages
  */
@@ -22,6 +24,6 @@ $context              = Timber::get_context();
 $context['page_head'] = $theme->render('partials/page_head.html.twig', $context);
 
 $context['posts']   = Timber::query_post();
-$context['content'] = TimberHelper::ob_function('the_content');
+$context['content'] = \Timber\Helper::ob_function('the_content');
 
 Timber::render('bbpress.html.twig', $context);

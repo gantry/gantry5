@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Implement platform specific composer dependencies
     3. [](#bugfix)
         - Fixed compiled CSS files having bad relative URLs, regression was introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) (#1528)
         - Outlines in the Load panel in LM are now capitalized properly (#1520)
@@ -10,6 +12,10 @@
         - Fixed validation warning icon piling up when Applying and after an error (#1526)
         - Fixed untranslated string in Atoms validation (#1525)
 3. [WordPress](#wordpress)
+    1. [](#new)
+        - Include Timber Library v1.1.3 into Gantry Plugin. Removes dependency to Timber Plugin. (#1542)
+    2. [](#improved)
+        - Updated Hydrogen and Helium themes to use Timber 1.1 classes
     3. [](#bugfix)
         - Fixed `Undefined index: link` when saving menu
     
