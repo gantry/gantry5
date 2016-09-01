@@ -50,10 +50,6 @@
                         "destination":"/libraries/gantry5/language"
                     },
                     {
-                        "source":"/src/vendor",
-                        "destination":"/libraries/gantry5/vendor"
-                    },
-                    {
                         "source":"/src/bootstrap.php",
                         "destination":"/libraries/gantry5/bootstrap.php"
                     },
