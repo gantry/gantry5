@@ -1,7 +1,13 @@
 {% extends "forms/fields/input/selectize.html.twig" %}
 
 {% block global_attributes %}
-    {% set categories = gantry.platform.getCategories() %}
+    {% set taxonomy = field.taxonomy|default('category') %}
+    {% set hide_empty = field.hide_empty|default('false') %}
+    {% set array = {
+	    'taxonomy': taxonomy,
+        'hide_empty': hide_empty
+	} %}
+    {% set categories = gantry.platform.getCategories(array) %}
     {% set Options = field.selectize.Options %}
     {% set options = [] %}
     {% if categories %}
