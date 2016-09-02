@@ -3,11 +3,11 @@
 {% block global_attributes %}
     {% set taxonomy = field.taxonomy|default('category') %}
     {% set hide_empty = field.hide_empty|default('false') %}
-    {% set array = {
+    {% set query_parameters = {
 	    'taxonomy': taxonomy,
         'hide_empty': hide_empty
 	} %}
-    {% set categories = gantry.platform.getCategories(array) %}
+    {% set categories = gantry.platform.getCategories(query_parameters) %}
     {% set Options = field.selectize.Options %}
     {% set options = [] %}
     {% if categories %}
