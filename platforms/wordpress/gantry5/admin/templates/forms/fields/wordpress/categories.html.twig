@@ -4,7 +4,7 @@
     {% set taxonomy = field.taxonomy|default('category') %}
     {% set hide_empty = field.hide_empty|default('false') %}
     {% set query_parameters = {
-	    'taxonomy': taxonomy,
+        'taxonomy': taxonomy,
         'hide_empty': hide_empty
 	} %}
     {% set categories = gantry.platform.getCategories(query_parameters) %}
