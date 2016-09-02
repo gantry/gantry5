@@ -1,15 +1,15 @@
 #!/bin/bash
 
-METHOD=--quiet
-PLATFORMS=("joomla" "wordpress" "grav")
+OUTPUT=--quiet
+PLATFORMS=("joomla" "wordpress" "grav" "prime")
 
 if [[ "$1" == '--loud' || "$1" == '-l' ]]; then
-    METHOD=''
+    OUTPUT=''
 fi
 
 for platform in "${PLATFORMS[@]}"
 do
     echo "# Updating composer for $platform"
-    cd platforms/$platform && composer install --no-dev ${METHOD} && cd ../..
+    cd platforms/$platform && composer install --no-dev ${OUTPUT} && cd ../..
 done
  
