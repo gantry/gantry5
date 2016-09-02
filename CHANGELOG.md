@@ -11,6 +11,7 @@
         - Fixed disabled menu items still showing up on front-end and not displaying as disabled in the admin (#1532)
         - Fixed validation warning icon piling up when Applying and after an error (#1526)
         - Fixed untranslated string in Atoms validation (#1525)
+        - Removed extra `assets` and `engines` folders from `gantry-media://` stream
 3. [WordPress](#wordpress)
     1. [](#new)
         - Include Timber Library v1.1.3 into Gantry Plugin. Removes dependency to Timber Plugin. (#1542)

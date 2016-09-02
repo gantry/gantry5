@@ -161,6 +161,7 @@ class Gantry5Plugin extends Plugin
         $locator = $gantry['locator'];
         $locator->resetScheme('theme')->addPath('theme', '', 'gantry-theme://');
         $locator->addPath('theme', 'blueprints', ['gantry-theme://blueprints', 'gantry-engine://blueprints/pages']);
+        $locator->addPath('gantry-theme', 'images', ["image://{$theme->name}"]);
 
         $this->theme = $theme;
         if (!$this->isAdmin()) {
