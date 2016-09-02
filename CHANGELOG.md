@@ -1,3 +1,10 @@
+# 5.3.6
+## XX/XX/2016
+
+1. [Common](#common)
+    1. [](#improved)
+        - Display sorted sidebar folders in Filepicker
+         
 # 5.3.5
 ## 02/09/2016
 
