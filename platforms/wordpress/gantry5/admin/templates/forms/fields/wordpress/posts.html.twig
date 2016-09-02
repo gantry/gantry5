@@ -21,6 +21,6 @@
             {% set options = options|merge([{value: id, text: post.post_title}])  %}
         {% endfor %}
 
-        {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options }}) %}
+        {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options, create: false }}) %}
     {{ parent() }}
 {% endblock %}
