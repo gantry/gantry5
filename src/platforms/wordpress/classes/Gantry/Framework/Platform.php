@@ -79,7 +79,6 @@ class Platform extends BasePlatform
         return ['' => [
             'gantry-theme://images',
             $this->upload_dir,
-            $this->gantry_dir
             ]
         ];
     }
