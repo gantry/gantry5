@@ -16,11 +16,15 @@
     {% set posts = gantry.platform.call('Timber::get_posts', array) %}
     {% set Options = field.selectize.Options %}
     {% set options = [] %}
+    {% if posts %}
         {% for id,post in posts %}
             {% set id = post.id %}
             {% set options = options|merge([{value: id, text: post.post_title}])  %}
         {% endfor %}
 
         {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options }}) %}
+    {% endif %}
+
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
     {{ parent() }}
 {% endblock %}
