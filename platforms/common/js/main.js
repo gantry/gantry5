@@ -637,6 +637,8 @@ ready(function() {
                             outline.after(base).html(response.body.outline);
 
                             toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+
+                            attachEditables(outline.find('[data-title-editable]'));
                             modal.close();
                         }
 

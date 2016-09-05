@@ -2,10 +2,12 @@
 ## XX/XX/2016
 
 1. [Common](#common)
-    1. [](#improved)
+    2. [](#improved)
         - Display sorted sidebar folders in Filepicker
-2. [WordPress](#wordpress)
-    1. [](#improved)
+    3. [](#bugfix)
+        - Fixed title editing for newly added Outlines (#1555)
+3. [WordPress](#wordpress)
+    2. [](#improved)
         - Extend categories field to allow selecting custom taxonomies (#1535)
         
 # 5.3.5
