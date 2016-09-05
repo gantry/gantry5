@@ -1,3 +1,13 @@
+# 5.3.6
+## XX/XX/2016
+
+1. [Common](#common)
+    1. [](#improved)
+        - Display sorted sidebar folders in Filepicker
+2. [WordPress](#wordpress)
+    1. [](#improved)
+        - Extend categories field to allow selecting custom taxonomies (#1535)
+        
 # 5.3.5
 ## 02/09/2016
 
