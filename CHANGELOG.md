@@ -6,6 +6,7 @@
         - Display sorted sidebar folders in Filepicker
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
+        - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extend categories field to allow selecting custom taxonomies (#1535)

@@ -49,8 +49,10 @@
                             {% set childPrefix = prefix ~ childName ~ '.' %}
 
                             {% if child.type %}
+                                {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
+
                                 {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix } %}
+                                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix, overrideable: child_overrideable } %}
                             {% endif %}
                         {% endfor %}
                     </div>
