@@ -115,4 +115,22 @@ class Document extends BaseDocument
     {
         \JHtml::_('behavior.framework', true);
     }
+
+    /**
+     * Override to support index.php?Itemid=xxx.
+     *
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public static function linkHandler(array $matches)
+    {
+        $url = trim($matches[3]);
+        if (strpos($url, 'index.php?') !== 0) {
+            list($domain, $timestamp_age) = static::$urlFilterParams;
+            $url = static::url(trim($matches[3]), $domain, $timestamp_age);
+        }
+
+        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
+    }
 }

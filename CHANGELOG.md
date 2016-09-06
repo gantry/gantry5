@@ -7,10 +7,13 @@
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fix routing for `index.php?Itemid=xxx` URLs inside particles
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extend categories field to allow selecting custom taxonomies (#1535)
-        
+
 # 5.3.5
 ## 02/09/2016
 
@@ -32,14 +35,14 @@
         - Updated Hydrogen and Helium themes to use Timber 1.1 classes
     3. [](#bugfix)
         - Fixed `Undefined index: link` when saving menu
-    
+
 # 5.3.4
 ## 24/08/2016
 
 1. [Common](#common)
     3. [](#bugfix)
         - **Patch Release**: This patch release fixes a regression introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) where Layout Manager and Menu Manager item settings were not clickable.
-    
+
 # 5.3.3
 ## 24/08/2016
 
