@@ -155,10 +155,9 @@ class EventListener implements EventSubscriberInterface
         }
     }
 
-    protected function flattenOrdering(array $ordering, $parents = [])
+    protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
     {
         $list = [];
-        $i = 0;
         $group = isset($ordering[0]);
         foreach ($ordering as $id => $children) {
             $tree = $parents;
@@ -168,7 +167,11 @@ class EventListener implements EventSubscriberInterface
                 $list[$name] = ++$i;
             }
             if (is_array($children)) {
-                $list += $this->flattenOrdering($children, $tree);
+                $ni = $group ? $i : 0;
+                $list += $this->flattenOrdering($children, $tree, $ni);
+                if ($group) {
+                    $i = $ni;
+                }
             }
         }
 
