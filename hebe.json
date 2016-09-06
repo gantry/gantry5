@@ -1,12 +1,7 @@
 {
     "project":"Gantry5",
-    "aliases":[
-        {
-            "joomla32":"joomla34"
-        }
-    ],
     "platforms":{
-        "joomla34":{
+        "joomla":{
             "nodes":{
                 "manifests":[
                     {
