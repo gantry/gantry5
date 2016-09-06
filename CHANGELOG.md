@@ -13,6 +13,7 @@
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extend categories field to allow selecting custom taxonomies (#1535)
+        - Update Timber to 1.1.5 for new features (#1556)
 
 # 5.3.5
 ## 02/09/2016
