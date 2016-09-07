@@ -72,7 +72,7 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['images://']];
+        return ['' => ['image://']];
     }
 
     public function getEnginesPaths()
@@ -188,7 +188,9 @@ class Platform extends BasePlatform
     public function getThemeAdminUrl($theme)
     {
         $grav = Grav::instance();
-        return $grav['gantry5_plugin']->base . '/' . $theme;
+        $base = $grav['gantry5_plugin']->base;
+
+        return "{$base}/{$theme}";
     }
 
     public function settings()
