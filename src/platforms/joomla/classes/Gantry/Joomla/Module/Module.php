@@ -88,8 +88,15 @@ class Module extends Object implements ExportInterface
         );
 
         if ($particle) {
-            $array['options'] = !empty($params['particle']) ? json_decode($params['particle'], true) : ['type' => null];
             $array['joomla'] = $options;
+            $options = !empty($params['particle']) ? json_decode($params['particle'], true) : [];
+            $options['type'] = isset($options['particle']) ? $options['particle'] : null;
+            $options['attributes'] = isset($options['options']['particle']) ? $options['options']['particle'] : [];
+
+            unset($options['particle'], $options['options']);
+
+            $array['options'] = $options;
+
             unset($params['particle']);
         } else {
             $array['options'] = $options;

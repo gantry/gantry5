@@ -15,6 +15,7 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Framework\Exporter;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 
 class Export extends HtmlController
@@ -70,6 +71,20 @@ class Export extends HtmlController
 
         foreach ($exported['menus'] as $menu => $data) {
             $zip->addFromString("menus/{$menu}.yaml", Yaml::dump($data, 10, 2));
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        foreach ($exported['files'] as $stream => $files) {
+            foreach ($files as $path => $uri) {
+                $filename = $locator->findResource($uri);
+                
+                if (file_exists($filename)) {
+                    $zip->addFile($filename, "files/{$stream}/{$path}");
+                }
+            }
+            
         }
 
         $zip->close();
