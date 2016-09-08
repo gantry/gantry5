@@ -369,6 +369,8 @@ class TwigExtension extends \Twig_Extension
             $html = "<!doctype html>\n<html><head></head><body>{$input}</body></html>";
         }
 
+        libxml_clear_errors();
+
         $internal = libxml_use_internal_errors(true);
 
         $doc = new \DOMDocument();
