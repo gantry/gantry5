@@ -1,0 +1,12 @@
+name: Search
+description: Search Particle
+type: particle
+icon: fa-search
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable search particles.
+      default: true

@@ -1,0 +1,12 @@
+name: Login
+description: Login Particle
+type: particle
+icon: fa-sign-in
+
+form:
+  fields:
+    enabled:
+      type: checkbox
+      label: Enabled
+      description: Globally enable login particles.
+      default: true
