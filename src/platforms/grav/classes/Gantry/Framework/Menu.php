@@ -20,6 +20,7 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
+use Grav\Common\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -31,9 +32,14 @@ class Menu extends AbstractMenu
     public function __construct()
     {
         $grav = Grav::instance();
-        $page = $grav['page'];
+
+        /** @var Uri $uri */
+        $uri = $grav['uri'];
+
+        $route = trim($uri->path(), '/');
+
         $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
-        $this->active = $page && $page->routable() ? (trim($page->route(), '/') ?: $this->default) : '-+*N/A*+-';
+        $this->active = $route ?: 'home';
     }
 
     /**

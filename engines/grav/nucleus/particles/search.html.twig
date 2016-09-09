@@ -1,0 +1,9 @@
+{% try %}
+
+{% do gantry.theme.load('jquery') %}
+
+{% include 'partials/simplesearch_searchbox.html.twig' %}
+
+{% catch %}
+<div class="alert alert-error"><strong>Error:</strong> Please enable simplesearch plugin!</div>
+{% endtry %}

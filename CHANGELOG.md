@@ -7,6 +7,8 @@
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)
+        - Fixed broken URLs for non-existing files in Custom HTML particle
+        - Fixed XML errors outside Gantry triggering an error (thanks @Chrissi2812, #1567)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix routing for `index.php?Itemid=xxx` URLs inside particles
@@ -15,7 +17,7 @@
         - Extend categories field to allow selecting custom taxonomies (#1535)
         - Update Timber to 1.1.5 for new features (#1556)
     3. [](#bugfix)
-        - Fixed Colorpicker zIndex in Particle Settings (#1574)
+        - Helium: Fixed duration parameter in Content Tabs particle
 
 # 5.3.5
 ## 02/09/2016

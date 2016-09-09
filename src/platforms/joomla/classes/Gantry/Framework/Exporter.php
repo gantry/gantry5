@@ -18,6 +18,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Exporter
 {
+    protected $files = [];
+
     public function all()
     {
         return [
@@ -33,7 +35,8 @@ class Exporter
             ],
             'outlines' => $this->outlines(),
             'positions' => $this->positions(),
-            'menus' => $this->menus()
+            'menus' => $this->menus(),
+            'files' => $this->files,
         ];
     }
 
@@ -49,7 +52,16 @@ class Exporter
         }
         $modules = $finder->find()->export();
         $list = [];
-        foreach ($modules as $position => $items) {
+        foreach ($modules as $position => &$items) {
+            if (!isset($positions[$position])) {
+                continue;
+            }
+            foreach ($items as &$item) {
+                $func = 'module' . $item['options']['type'];
+                if (method_exists($this, $func)) {
+                    $item = $this->{$func}($item);
+                }
+            }
             $list[$position] = [
                 'title' => $positions[$position],
                 'items' => $items,
@@ -193,5 +205,118 @@ class Exporter
         }
 
         return [];
+    }
+
+    /**
+     * Filter stream URLs from HTML.
+     *
+     * @param  string $html         HTML input to be filtered.
+     * @return string               Returns modified HTML.
+     */
+    public function urlFilter($html)
+    {
+        // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
+        $tokens = [];
+        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
+            $token = uniqid('__g5_token');
+            $tokens['#' . $token . '#'] = $matches[0];
+
+            return $token;
+        }, $html);
+
+        $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $html);
+        $html = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $html);
+        $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
+
+        return $html;
+    }
+
+    public function url($url)
+    {
+        // Only process local urls.
+        if ($url === '' || $url[0] === '/' || $url[0] === '#') {
+            return $url;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+
+        // Handle URIs.
+        if (strpos($url, '://')) {
+            if ($locator->isStream($url)) {
+                // File is a stream, include it to files list.
+                list ($stream, $path) = explode('://', $url);
+                $this->files[$stream][$path] = $url;
+            }
+
+            return $url;
+        }
+
+        // Try to convert local paths to streams.
+        $paths = $locator->getPaths();
+
+        $found = false;
+        $stream = $path = '';
+        foreach ($paths as $stream => $prefixes) {
+            foreach ($prefixes as $prefix => $paths) {
+                foreach ($paths as $path) {
+                    if (is_string($path) && strpos($url, $path) === 0) {
+                        $path = ($prefix ? "{$prefix}/" : '') . substr($url, strlen($path) + 1);
+                        $found = true;
+                        break 3;
+                    }
+                }
+            }
+        }
+
+        if ($found) {
+            $url = "{$stream}://{$path}";
+            $this->files[$stream][$path] = $url;
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public function linkHandler(array $matches)
+    {
+        $url = $this->url(trim($matches[3]));
+
+        return "{$matches[1]}{$matches[2]}=\"{$url}\"";
+    }
+
+    /**
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public function urlHandler(array $matches)
+    {
+        $url = $this->url(trim($matches[2], '"\''));
+
+        return "{$matches[1]}url({$url})";
+    }
+
+    protected function moduleMod_Custom(array $data)
+    {
+        // Convert to particle...
+        $data['type'] = 'particle';
+        $data['joomla'] = $data['options'];
+        $data['options'] = [
+            'type' => 'custom',
+            'attributes' => [
+                'enabled' => $data['joomla']['published'],
+                'html' => $this->urlFilter($data['joomla']['content']),
+                'filter' => $data['joomla']['params']['prepare_content']
+            ]
+        ];
+
+        unset($data['joomla']['content'], $data['joomla']['params']['prepare_content']);
+
+        return $data;
     }
 }

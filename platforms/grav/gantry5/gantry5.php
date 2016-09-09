@@ -284,7 +284,8 @@ class Gantry5Plugin extends Plugin
 
         if (!$this->outline) {
             if (GANTRY_DEBUGGER) {
-                \Gantry\Debugger::addMessage('Selecting outline:');
+                \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):');
+                \Gantry\Debugger::addMessage($assignments->getPage());
                 \Gantry\Debugger::addMessage($assignments->matches());
                 \Gantry\Debugger::addMessage($assignments->scores());
             }

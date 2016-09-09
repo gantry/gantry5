@@ -13,6 +13,7 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
+use Grav\Common\Uri;
 
 class AssignmentsPage implements AssignmentsInterface
 {
@@ -27,15 +28,11 @@ class AssignmentsPage implements AssignmentsInterface
     public function getRules()
     {
         $grav = Grav::instance();
-        $page = $grav['page'];
-        $rules = [];
 
-        if (!$page || !$page->routable()) {
-            return $rules;
-        }
+        /** @var Uri $uri */
+        $uri = $grav['uri'];
 
-        $route = trim($page->route(), '/');
-
+        $route = trim($uri->path(), '/');
         $rules[$route ?: 'home'] = $this->priority;
 
         return [$rules];

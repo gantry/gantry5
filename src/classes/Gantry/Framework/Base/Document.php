@@ -498,15 +498,17 @@ class Document
             }
 
             // Attempt to find the resource (because of parse_url() we need to put host back to path).
-            $path = $locator->findResource("{$scheme}://{$host}{$path}", false);
+            $newPath = $locator->findResource("{$scheme}://{$host}{$path}", false);
 
-            if ($path === false) {
+            if ($newPath === false) {
                 if ($allowNull) {
                     return null;
                 }
 
                 // Return location where the file would be if it was saved.
                 $path = $locator->findResource("{$scheme}://{$host}{$path}", false, true);
+            } else {
+                $path = $newPath;
             }
 
         } elseif ($host || $port) {
@@ -590,7 +592,8 @@ class Document
     public static function linkHandler(array $matches)
     {
         list($domain, $timestamp_age) = static::$urlFilterParams;
-        $url = static::url(trim($matches[3]), $domain, $timestamp_age);
+        $url = trim($matches[3]);
+        $url = static::url($url, $domain, $timestamp_age, false);
 
         return "{$matches[1]}{$matches[2]}=\"{$url}\"";
     }
@@ -603,7 +606,8 @@ class Document
     public static function urlHandler(array $matches)
     {
         list($domain, $timestamp_age) = static::$urlFilterParams;
-        $url = static::url(trim($matches[2], '"\''), $domain, $timestamp_age);
+        $url = trim($matches[2], '"\'');
+        $url = static::url($url, $domain, $timestamp_age, false);
 
         return "{$matches[1]}url({$url})";
     }
