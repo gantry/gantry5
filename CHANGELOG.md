@@ -4,6 +4,7 @@
 1. [Common](#common)
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
+        - Better coordination for dragged items in Menu and Layout Manager (related #1576)
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)

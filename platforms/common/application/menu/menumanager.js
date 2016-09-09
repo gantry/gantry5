@@ -110,7 +110,8 @@ var MenuManager = new prime({
 
     start: function(event, element) {
         var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector') || element.parent('.g5-mm-particles-picker'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.targetLevel = undefined;
@@ -148,25 +149,23 @@ var MenuManager = new prime({
 
         if (!this.isNewParticle) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 1500,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).addClass('active');
 
             this.placeholder.before(element);
         } else {
-            var position = element.position(),
-                parentOffset = {
-                    top: element.parent()[0].scrollTop,
-                    left: element.parent()[0].scrollLeft
-                };
+            var position = element.position();
             this.original.style({
-                position: 'absolute',
+                position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].offsetLeft - parentOffset.left,
-                top: element[0].offsetTop - parentOffset.top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });

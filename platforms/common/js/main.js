@@ -3859,7 +3859,8 @@ var LayoutManager = new prime({
 
     start: function(event, element) {
         var root = $('[data-lm-root]'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.mode = root.data('lm-root') || 'page';
@@ -3890,12 +3891,14 @@ var LayoutManager = new prime({
 
         if (!this.block.isNew()) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
@@ -3913,8 +3916,8 @@ var LayoutManager = new prime({
                 position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].getBoundingClientRect().left,
-                top: element[0].getBoundingClientRect().top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });
@@ -5836,7 +5839,8 @@ var MenuManager = new prime({
 
     start: function(event, element) {
         var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector') || element.parent('.g5-mm-particles-picker'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.targetLevel = undefined;
@@ -5874,25 +5878,23 @@ var MenuManager = new prime({
 
         if (!this.isNewParticle) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 1500,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).addClass('active');
 
             this.placeholder.before(element);
         } else {
-            var position = element.position(),
-                parentOffset = {
-                    top: element.parent()[0].scrollTop,
-                    left: element.parent()[0].scrollLeft
-                };
+            var position = element.position();
             this.original.style({
-                position: 'absolute',
+                position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].offsetLeft - parentOffset.left,
-                top: element[0].offsetTop - parentOffset.top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });

@@ -154,7 +154,8 @@ var LayoutManager = new prime({
 
     start: function(event, element) {
         var root = $('[data-lm-root]'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.mode = root.data('lm-root') || 'page';
@@ -185,12 +186,14 @@ var LayoutManager = new prime({
 
         if (!this.block.isNew()) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
@@ -208,8 +211,8 @@ var LayoutManager = new prime({
                 position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].getBoundingClientRect().left,
-                top: element[0].getBoundingClientRect().top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });
