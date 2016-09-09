@@ -6397,7 +6397,7 @@ html.g5-dialog-open {
   background: white;
   border: solid 1px #CCC;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  z-index: 99999;
+  z-index: 9999999;
   box-sizing: content-box;
   display: none;
 }
