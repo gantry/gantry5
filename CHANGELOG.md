@@ -18,6 +18,7 @@
         - Update Timber to 1.1.5 for new features (#1556)
     3. [](#bugfix)
         - Helium: Fixed duration parameter in Content Tabs particle
+        - Fixed Colorpicker zIndex in Particle Settings (#1574)
 
 # 5.3.5
 ## 02/09/2016
