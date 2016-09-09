@@ -88,6 +88,11 @@ body #admin-main .admin-block {
   box-shadow: none;
   color: inherit;
 }
+#g5-container form select {
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
+}
 #g5-container #menu-editor li.block.in-between.placeholder {
   flex: inherit;
 }

@@ -18,6 +18,12 @@ body #admin-main .admin-block {
         color: inherit;
     }
 
+    form select {
+        -webkit-appearance: menulist;
+        -moz-appearance: menulist;
+        appearance: menulist;
+    }
+
     #menu-editor {
         li.block.in-between.placeholder {
             flex: inherit;
