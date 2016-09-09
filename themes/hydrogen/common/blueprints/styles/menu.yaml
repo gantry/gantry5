@@ -12,7 +12,7 @@ form:
       default: "180px"
       pattern: '\d+(\.\d+){0,1}(rem|em|px)'
     animation:
-      type: select.selectize
+      type: select.select
       label: Dropdown Animation
       description: Select the dropdown animation.
       default: g-fade
