@@ -33,6 +33,16 @@ form:
           _parent: Self
           _blank: New Window
 
+    display:
+      type: input.radios
+      label: Display
+      description: How to display the Social Icons
+      default: both
+      options:
+        icons_only: Icons Only
+        text_only: Text Only
+        both: Both
+
     items:
       type: collection.list
       array: true
