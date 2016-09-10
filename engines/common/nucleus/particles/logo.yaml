@@ -11,18 +11,6 @@ form:
       description: Globally enable logo particles.
       default: true
 
-    range:
-      type: input.range
-      label: Range
-      min: 0
-      max: 100
-      default: 50
-
-    color:
-      type: input.colorpicker
-      label: Base Text Color
-      default: #666666
-
     url:
       type: input.text
       label: Url
