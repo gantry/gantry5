@@ -1,5 +1,23 @@
 #g5-container {//wrapper
 
+.button-group {
+    display: inline-block;
+
+    .button, button {
+        &:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        &:not(:last-child) {
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-right: -4px;
+        }
+    }
+}
+
 .button {
     @extend %button;
     @include button-color($button-bg, $white);

@@ -59,6 +59,13 @@ body #admin-main .admin-block {
         left: inherit !important;
     }
 
+    .particles-container {
+        bottom: 25px;
+    }
+}
+
+#admin-sidebar:hover {
+    z-index: 20;
 }
 
 .sidebar-closed #g5-container #main-header {

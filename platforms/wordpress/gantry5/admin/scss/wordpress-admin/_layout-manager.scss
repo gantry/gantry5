@@ -14,4 +14,14 @@
             }
         }
     }
+
+    .particles-container {
+        z-index: 9999;
+    }
+}
+
+#adminmenumain:hover {
+    #adminmenuback, #adminmenuwrap {
+        z-index: 99999;
+    }
 }

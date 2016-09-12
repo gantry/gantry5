@@ -332,6 +332,7 @@ var DragDrop = new prime({
 
         var isNew = this.element.parent('.particles-container');
         if (isNew) {
+            deltaX += this.origin.offset.scroll.x - window.scrollX;
             deltaY += this.origin.offset.scroll.y - window.scrollY;
         }
 

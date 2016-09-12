@@ -4019,6 +4019,19 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   border-bottom: 1px dotted #ed5565;
 }
 
+#g5-container .button-group {
+  display: inline-block;
+}
+#g5-container .button-group .button:not(:first-child), #g5-container .button-group button:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#g5-container .button-group .button:not(:last-child), #g5-container .button-group button:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -4px;
+}
 #g5-container .button {
   background: #999999;
   color: rgba(255, 255, 255, 0.9);
@@ -5104,6 +5117,71 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   #g5-container .g5-lm-particles-picker.particles-absolute {
     position: absolute;
   }
+}
+#g5-container .particles-container {
+  position: fixed;
+  bottom: 0;
+  height: 100px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  background: #f0f0f0;
+  border-top: 2px solid #C6C6C6;
+  -webkit-transition: height 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
+}
+#g5-container .particles-container.particles-hide, #g5-container .particles-container.particles-hide .particles-picker-wrapper {
+  -webkit-transition: height 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
+  height: 0;
+}
+#g5-container .particles-container.particles-hide .particles-picker-toggle .fa-chevron-down:before, #g5-container .particles-container.particles-hide .particles-picker-wrapper .particles-picker-toggle .fa-chevron-down:before {
+  content: "\f077";
+}
+#g5-container .particles-container .particles-picker-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-transition: height 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
+}
+#g5-container .particles-container .particles-picker-container {
+  width: auto;
+  white-space: nowrap;
+}
+#g5-container .particles-container .particles-picker-container ul, #g5-container .particles-container .particles-picker-container ul li {
+  display: inline-block;
+  margin: 0;
+}
+#g5-container .particles-container .particles-picker-block-title {
+  padding-bottom: 0.2rem;
+}
+#g5-container .particles-container .particles-picker-toggle {
+  position: absolute;
+  background: #f0f0f0;
+  border: 2px solid #C6C6C6;
+  border-bottom: 0;
+  padding: 0.2rem 0.5rem;
+  left: 50%;
+  border-radius: 3px 3px 0 0;
+  transform: translate(-50%, -100%);
+  font-size: 1rem;
+  color: #354D59;
+  cursor: pointer;
+}
+#g5-container .particles-container .particles-picker-toggle .fa {
+  font-size: 0.8rem;
+}
+#g5-container .particles-container .particles-picker-toggle > * {
+  vertical-align: middle;
+}
+#g5-container .particles-container .particles-picker-block {
+  display: inline-block;
+  margin: 0.5rem 1rem;
+  padding-bottom: 0.5rem;
 }
 
 #g5-container #page-settings #atoms .card {

@@ -7,9 +7,9 @@
 <p>{{ 'GANTRY5_PLATFORM_BASE_LAYOUT_DESC'|trans }}</p>
 
 {% else %}
-
+{% set stored_data = get_cookie('g5-particles-collapsed')|default(0) %}
 <div class="g-grid" data-lm-container="">
-    <div class="g-block sidebar-block particles-sidebar-block">
+    <div class="g-block">{#sidebar-block particles-sidebar-block">
         <h2 class="page-title">
             <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLES'|trans }}</span>
         </h2>
@@ -46,11 +46,16 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
+    </div>#}
     <div class="g-block main-block">
         <span class="float-right">
             {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
             <a href="#" class="button"><i class="fa fa-fw fa-sign-out"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>#}
+            <div class="button-group">
+                <button data-lm-back="" href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
+                {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
+                <button data-lm-forward="" href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></button>
+            </div>
             <button href="#"
                     class="button"
                     role="button"
@@ -94,11 +99,6 @@
 
         <div class="lm-newblocks clearfix" data-lm-blocktypes="">
             {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle=""><i class="fa fa-plus"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>#}
-            <span class="float-right">
-                <button data-lm-back="" href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
-                {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
-                <button data-lm-forward="" href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></button>
-            </span>
         </div>
         <div id="page">
             <div class="lm-blocks"
@@ -120,6 +120,11 @@
 
             <div class="g-footer-actions">
             <span class="float-right">
+                <div class="button-group">
+                    <button data-lm-back="" href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
+                        {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
+                        <button data-lm-forward="" href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></button>
+                </div>
                 <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url) }}">
                     <i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
                 </a>
@@ -148,6 +153,46 @@
                     <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
                 </a>
             </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="particles-container{{ stored_data ? ' particles-hide' : '' }}">
+        <div class="particles-picker-toggle">
+            <span>{{ 'GANTRY5_PLATFORM_PARTICLES'|trans }}</span>
+            <i class="fa fa-fw fa-chevron-down"></i>
+        </div>
+        <div class="particles-picker-wrapper">
+            <div class="particles-picker-container g5-lm-particles-picker">
+                {% for key, list in particles %}
+                <div class="particles-picker-block">
+                    <div class="particles-picker-block-title">
+                        {{ key|capitalize }}
+                    </div>
+                    <ul>
+                        {% for type, particle in list -%}
+                            {%- for item_key, item in particle -%}
+                                {% set isDisabled = not gantry.config.get('particles.' ~ item_key ~ '.enabled', true) %}
+                                <li class="g5-lm-particle-{{ type }}"
+                                    data-lm-blocktype="{{ type }}"
+                                    data-lm-subtype="{{ item_key }}"
+                                    data-lm-icon="{{ item.icon|default('fa-cube') }}"
+                                        {% if isDisabled %}
+                                            data-lm-disabled=""
+                                            data-lm-nodrag=""
+                                            title="{{ 'GANTRY5_PLATFORM_PARTICLE_DISABLED'|trans }}"
+                                        {% endif %}
+                                >
+                                    <span class="particle-icon" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>
+                                        <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
+                                    </span>
+                                    <span class="particle-title" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>{{ item.name }}</span>
+                                </li>
+                            {%  endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

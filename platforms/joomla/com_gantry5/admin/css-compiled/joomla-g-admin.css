@@ -50,6 +50,9 @@ body.com_gantry5 #g5-container textarea, body.com_gantry5 #g5-container input {
 body.com_gantry5 #g5-container input, body.com_gantry5 #g5-container button, body.com_gantry5 #g5-container select, body.com_gantry5 #g5-container textarea {
   font-family: inherit;
 }
+body.com_gantry5 #g5-container .particles-container {
+  bottom: 30px;
+}
 body.com_gantry5 nav.navbar * {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;

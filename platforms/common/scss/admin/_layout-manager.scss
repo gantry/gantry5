@@ -1086,4 +1086,74 @@ $atom: #9055AF;
             position: absolute;
         }
     }
+
+    .particles-container {
+        position: fixed;
+        bottom: 0;
+        height: 100px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 10;
+        background: $navbar-active;
+        border-top: 2px solid $navbar-border;
+        @include transition(height 0.2s ease-in-out);
+
+        &.particles-hide, &.particles-hide .particles-picker-wrapper {
+            @include transition(height 0.2s ease-in-out);
+            height: 0;
+
+            .particles-picker-toggle .fa-chevron-down:before {
+                content: "\f077";
+            }
+        }
+
+        .particles-picker-wrapper {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            @include transition(height 0.2s ease-in-out);
+        }
+
+        .particles-picker-container {
+            width: auto;
+            white-space: nowrap;
+
+            ul, ul li {
+                display: inline-block;
+                margin: 0;
+            }
+        }
+
+        .particles-picker-block-title {
+            padding-bottom: 0.2rem;
+        }
+
+        .particles-picker-toggle {
+            position: absolute;
+            background: $navbar-active;
+            border: 2px solid $navbar-border;
+            border-bottom: 0;
+            padding: 0.2rem 0.5rem;
+            left: 50%;
+            border-radius: 3px 3px 0 0;
+            transform: translate(-50%, -100%);
+            font-size: 1rem;
+            color: $body-bg;
+            cursor: pointer;
+
+            .fa {
+                font-size: 0.8rem;
+            }
+
+            > * {
+                vertical-align: middle;
+            }
+        }
+
+        .particles-picker-block {
+            display: inline-block;
+            margin: 0.5rem 1rem;
+            padding-bottom: 0.5rem;
+        }
+    }
 }

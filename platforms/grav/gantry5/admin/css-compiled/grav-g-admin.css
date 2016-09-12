@@ -119,6 +119,13 @@ body #admin-main .admin-block {
   right: 1rem !important;
   left: inherit !important;
 }
+#g5-container .particles-container {
+  bottom: 25px;
+}
+
+#admin-sidebar:hover {
+  z-index: 20;
+}
 
 .sidebar-closed #g5-container #main-header {
   left: 4.2rem;

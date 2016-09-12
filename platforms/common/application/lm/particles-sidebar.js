@@ -1,108 +1,27 @@
 "use strict";
 
-var ready          = require('elements/domready'),
+var prime          = require('prime'),
     $              = require('elements'),
     decouple       = require('../utils/decouple'),
-    scrollbarWidth = require('../utils/get-scrollbar-width');
+    Cookie         = require('../utils/cookie');
 
-var container, sidebar, search, particles, height, heightTop, heightBottom, excludeTop, excludeBottom,
-    initialSidebarCoords, realSidebarTop;
-
-var initSizes = function() {
-    // fixed and contained particles sidebar
-    container = $('.sidebar-block');
-    if (!container) { return; }
-
-    sidebar = container.find('.g5-lm-particles-picker');
-    if (!sidebar) { return; }
-
-    search = sidebar.find('> .search');
-    particles = sidebar.find('> .particles-container');
-    height = window.innerHeight;
-    heightTop = 0;
-    heightBottom = 0;
-    initialSidebarCoords = sidebar[0].getBoundingClientRect();
-    realSidebarTop = sidebar.position().top;
-    excludeTop = $('body.admin.com_gantry5 nav.navbar-fixed-top, #wpadminbar, #admin-main #titlebar, #admin-main .grav-update.grav');
-    excludeBottom = $('body.admin.com_gantry5 #status');
-
-    if (excludeTop) {
-        $(excludeTop).forEach(function(element) {
-            heightTop += element.offsetHeight;
-        });
-    }
-
-    if (excludeBottom) {
-        $(excludeBottom).forEach(function(element) {
-            heightBottom += element.offsetHeight;
-        });
-    }
-
-    particles.style({
-        'max-height': (height - heightTop - heightBottom - search[0].offsetHeight - 30),
-        overflow: 'auto'
-    });
-
-    if (particles[0].scrollHeight != particles[0].offsetHeight) {
-        particles.addClass('has-scrollbar').style({ 'margin-right': -scrollbarWidth() });
-    }
-};
-
-ready(function() {
-    initSizes();
-
-    var scrollElement = $(GANTRY_PLATFORM == 'grav' ? '#admin-main .content-padding' : window) || [window],
-        scroll        = function() {
-            if (!container || !sidebar) { return; }
-
-            var scrollTop       = this.scrollY || this.scrollTop,
-                containerBounds = container[0].getBoundingClientRect(),
-                limit           = containerBounds.top + containerBounds.height,
-                sidebarCoords   = sidebar[0].getBoundingClientRect(),
-                shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
-                reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit,
-                sidebarTallerThanContainer = containerBounds.height <= sidebarCoords.height;
-
-            sidebar.style('width', sidebarCoords.width);
-            if (shouldBeFixed && !reachedTheLimit) {
-                sidebar.removeClass('particles-absolute').addClass('particles-fixed');
-                sidebar.style({
-                    top: heightTop + 10,
-                    bottom: 'inherit'
-                });
-            } else if (shouldBeFixed && reachedTheLimit) {
-                if (sidebarTallerThanContainer) {
-                    sidebar.removeClass('particles-fixed').addClass('particles-absolute');
-                    sidebar.style({
-                        top: 'inherit',
-                        bottom: parseInt(container.compute('padding-bottom'), 10)
-                    });
-                }
-            } else {
-                sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
-                sidebar.style({
-                    top: 'inherit',
-                    bottom: 'inherit'
-                });
-            }
+var ParticlesPicker = new prime({
+    constructor: function() {
+        this.bounds = {
+            toggle: this.toggle.bind(this)
         };
 
-    decouple(scrollElement[0], 'scroll', scroll.bind(scrollElement[0]));
+        $('body').delegate('click', '.particles-picker-toggle', this.bounds.toggle);
+    },
 
-    decouple(window, 'resize', function() {
-        if (!particles) { return; }
+    toggle: function(event, element) {
+        var container = element.parent('.particles-container'),
+            wrapper   = element.nextSibling('.particles-picker-wrapper'),
+            isCollapsed = container.hasClass('particles-hide');
 
-        // initSizes();
-        scroll.call(scrollElement[0]);
-
-        particles.style({
-            'max-height': (window.innerHeight - heightTop - heightBottom - search[0].offsetHeight - 30)
-        });
-    });
-
-    $('body').on('statechangeEnd', function() {
-        initSizes();
-    });
+        container[isCollapsed ? 'removeClass' : 'addClass']('particles-hide');
+        Cookie.write('g5-particles-collapsed', isCollapsed ? 0 : 1);
+    }
 });
 
-module.exports = initSizes;
+module.exports = new ParticlesPicker();

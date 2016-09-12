@@ -168,21 +168,22 @@ var LayoutManager = new prime({
         if (!this.placeholder) { this.placeholder = zen('div.block.placeholder[data-lm-placeholder]'); }
         this.placeholder.style({ display: 'none' });
 
-        clone = $(clone);
-        this.original = clone.after(element).style({
-            display: clone.hasClass('g-grid') ? 'flex' : 'block',
-            opacity: 0.5
-        }).addClass('original-placeholder').data('lm-dropzone', null);
-
-        if (type === 'grid') { this.original.style({ display: 'flex' }); }
-
-        this.originalType = type;
-
         this.block = get(this.builder.map, element.data('lm-id') || '') || new Blocks[type]({
                 builder: this.builder,
                 subtype: element.data('lm-subtype'),
                 title: element.text()
             });
+
+        clone = $(clone);
+        this.original = clone.after(element).style({
+            display: clone.hasClass('g-grid') ? 'flex' : (!this.block.isNew() ? 'block' : 'inline-block'),
+            opacity: 0.5,
+            position: !this.block.isNew() ? 'inherit' : 'fixed'
+        }).addClass('original-placeholder').data('lm-dropzone', null);
+
+        if (type === 'grid') { this.original.style({ display: 'flex' }); }
+
+        this.originalType = type;
 
         if (!this.block.isNew()) {
             element.style({

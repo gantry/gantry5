@@ -690,6 +690,13 @@ body.gantry5.admin-color-sunrise #g5-container .overview-header .theme-title {
 #g5-container .g5-lm-particles-picker .settings-block.search {
   font-size: inherit;
 }
+#g5-container .particles-container {
+  z-index: 9999;
+}
+
+#adminmenumain:hover #adminmenuback, #adminmenumain:hover #adminmenuwrap {
+  z-index: 99999;
+}
 
 body.gantry5 #g5-container .navbar-block #navbar {
   padding: 0 0.625rem;
