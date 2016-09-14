@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated scssphp to v0.6.6
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)
