@@ -56,6 +56,20 @@
 	}
 }
 
+.nomarginleft {
+    margin-left: 0 !important;
+    .g-content {
+        margin-left: 0 !important;
+    }
+}
+
+.nomarginright {
+    margin-right: 0 !important;
+    .g-content {
+        margin-right: 0 !important;
+    }
+}
+
 .nopaddingall {
 	padding: 0 !important;
 	.g-content {
@@ -75,6 +89,20 @@
 	.g-content {
 		padding-bottom: 0 !important;
 	}
+}
+
+.nopaddingleft {
+    padding-left: 0 !important;
+    .g-content {
+        padding-left: 0 !important;
+    }
+}
+
+.nopaddingright {
+    padding-right: 0 !important;
+    .g-content {
+        padding-right: 0 !important;
+    }
 }
 
 .g-flushed {

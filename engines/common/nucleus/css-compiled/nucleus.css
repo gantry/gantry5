@@ -1966,6 +1966,20 @@ input[type="submit"] {
   margin-bottom: 0 !important;
 }
 
+.nomarginleft {
+  margin-left: 0 !important;
+}
+.nomarginleft .g-content {
+  margin-left: 0 !important;
+}
+
+.nomarginright {
+  margin-right: 0 !important;
+}
+.nomarginright .g-content {
+  margin-right: 0 !important;
+}
+
 .nopaddingall {
   padding: 0 !important;
 }
@@ -1985,6 +1999,20 @@ input[type="submit"] {
 }
 .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
+}
+
+.nopaddingleft {
+  padding-left: 0 !important;
+}
+.nopaddingleft .g-content {
+  padding-left: 0 !important;
+}
+
+.nopaddingright {
+  padding-right: 0 !important;
+}
+.nopaddingright .g-content {
+  padding-right: 0 !important;
 }
 
 .g-flushed {
