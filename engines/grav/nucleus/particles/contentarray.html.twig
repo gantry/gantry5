@@ -1,0 +1,131 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set attr_extra = '' %}
+{% if particle.extra %}
+    {% for attributes in particle.extra %}
+        {% for key, value in attributes %}
+            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+{% block particle %}
+    {% set article_settings = particle.article %}
+    {% set filter = article_settings.filter %}
+    {% set sort = article_settings.sort %}
+    {% set limit = article_settings.limit %}
+    {% set display = article_settings.display %}
+
+    {# Content Finder #}
+    {% set pages = grav.page.collection({
+        items: {'@taxonomy.category': filter.categories},
+        order: {by: 'default', dir: 'desc'},
+        limit: limit.total,
+        pagination: limit.start,
+        url_taxonomy_filters: false
+    }) %}
+
+    {# All pages #}
+    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+
+        {% for column in pages.batch(limit.columns) %}
+            <div class="g-grid">
+                {% for page in column %}
+
+                    <div class="g-block">
+                        <div class="g-content">
+                            <div class="g-array-item">
+                                {# FIXME images #}
+                                {% if display.image.enabled and page.images.image_intro or page.images.image_fulltext %}
+                                    {% if page.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}
+                                        <div class="g-array-item-image">
+                                            <a href="{{ page.url }}">
+                                                <img src="{{ url(page.images.image_intro) }}" {{ page.images.image_intro|imagesize|raw }} />
+                                            </a>
+                                        </div>
+                                    {% elseif page.images.image_fulltext and display.image.enabled == 'full' %}
+                                        <div class="g-array-item-image">
+                                            <a href="{{ page.url }}">
+                                                <img src="{{ url(page.images.image_fulltext) }}" {{ page.images.image_fulltext|imagesize|raw }} />
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if display.title.enabled %}
+                                    <div class="g-array-item-title">
+                                        <h3 class="g-item-title">
+                                            <a href="{{ page.url }}">
+                                                {{ display.title.limit ? page.title|truncate_text(display.title.limit) : page.title }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                {% endif %}
+
+                                {% if display.date.enabled or (display.author.enabled and page.username) or display.category.enabled %}
+                                    <div class="g-array-item-details">
+                                        {% if display.date.enabled %}
+                                            <span class="g-array-item-date">
+                                                {% if display.date.enabled == 'published' %}
+                                                    <i class="fa fa-clock-o"></i>{{ page.published|date(display.date.format) }}
+                                                {% elseif display.date.enabled == 'modified' %}
+                                                    <i class="fa fa-clock-o"></i>{{ page.modified|date(display.date.format) }}
+                                                {% else %}
+                                                    <i class="fa fa-clock-o"></i>{{ page.date|date(display.date.format) }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.author.enabled and page.username %}
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user"></i>{{ page.username }}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.category.enabled %}
+                                            {% set category_link = display.category.enabled == 'link' %}
+                                            <span class="g-array-item-category">
+                                                {% for category in page.taxonomy.categories %}
+                                                    {% if category_link %}
+                                                        {# FIXME category link #}
+                                                        <a href="{{ category.route }}">
+                                                            <i class="fa fa-folder-open"></i>{{ category }}
+                                                        </a>
+                                                    {% else %}
+                                                        <i class="fa fa-folder-open"></i>{{ category }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.text.type %}
+                                    {% set page_text = display.text.type == 'intro' ? page.summary : page.content %}
+                                    <div class="g-array-item-text">
+                                        {% if display.text.formatting == 'text' %}
+                                            {{ page_text|truncate_text(display.text.limit)|raw }}
+                                        {% else %}
+                                            {{ page_text|truncate_html(display.text.limit)|raw }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.read_more.enabled %}
+                                    <div class="g-array-item-read-more">
+                                        <a href="{{ page.url }}">
+                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
