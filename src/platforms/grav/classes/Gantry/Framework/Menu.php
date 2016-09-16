@@ -256,12 +256,10 @@ class Menu extends AbstractMenu
 
             $item = new Item($this, $name, $data);
 
-            /*
             if (!in_array($item->type, ['module', 'particle']) && !isset($gravItems[$name])) {
                 // Ignore removed menu items.
                 continue;
             }
-            */
 
             // Placeholder page.
             if ($item->type == 'link' && !isset($this->pages[$item->path])) {
