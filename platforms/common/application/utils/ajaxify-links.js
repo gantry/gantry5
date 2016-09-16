@@ -237,20 +237,44 @@ domready(function() {
     // Update NONCE if any
     if (GANTRY_AJAX_NONCE) {
         var currentURI = History.getPageUrl(),
-            currentNonce = getParam(currentURI, '_wpnonce'),
-            currentView = getParam(currentURI, 'view');
+            currentNonce, currentView;
 
-        // hack to inject the default view in WP in case it's missing
-        if (!currentView) {
-            currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+        // hack to inject the default view in WP/Grav in case it's missing
+        switch (GANTRY_PLATFORM) {
+            case 'wordpress':
+                currentNonce = getParam(currentURI, '_wpnonce');
+                currentView = getParam(currentURI, 'view');
+
+                if (!currentView) {
+                    currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+
+                // refresh nonce
+                if (currentNonce !== GANTRY_AJAX_NONCE) {
+                    currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                break;
+
+            case 'grav':
+                currentNonce = getParam(currentURI, 'nonce');
+                currentView = contains(currentURI, 'configurations/default/styles');
+
+                if (!currentView) {
+                    currentURI += 'configurations/default/styles';
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+
+                // refresh nonce
+                if (currentNonce !== GANTRY_AJAX_NONCE) {
+                    currentURI = setParam(currentURI, 'nonce', GANTRY_AJAX_NONCE);
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                break;
         }
 
-        // refresh nonce
-        if (currentNonce !== GANTRY_AJAX_NONCE) {
-            currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
-        }
+
     }
 
     // back to configuration

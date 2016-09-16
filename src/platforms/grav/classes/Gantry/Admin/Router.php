@@ -73,6 +73,8 @@ class Router extends BaseRouter
             'themes' => '',
             'picker/layouts' => '/layouts?nonce=' . $nonce,
         ];
+
+        $this->container['ajax_nonce'] = $nonce;
     }
 
     public function setTheme($theme)
