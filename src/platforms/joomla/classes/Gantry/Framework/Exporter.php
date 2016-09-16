@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
+use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -25,7 +26,7 @@ class Exporter
         return [
             'export' => [
                 'gantry' => [
-                    'version' => GANTRY5_VERSION,
+                    'version' => GANTRY5_VERSION !== '@version@' ? GANTRY5_VERSION : 'GIT',
                     'format' => 1
                 ],
                 'platform' => [
@@ -36,39 +37,9 @@ class Exporter
             'outlines' => $this->outlines(),
             'positions' => $this->positions(),
             'menus' => $this->menus(),
+            'content' => $this->articles(),
             'files' => $this->files,
         ];
-    }
-
-    public function positions($all = true)
-    {
-        $gantry = Gantry::instance();
-        $positions = $gantry['outlines']->positions();
-        $positions['debug'] = 'Debug';
-
-        $finder = new ModuleFinder();
-        if (!$all) {
-            $finder->particle();
-        }
-        $modules = $finder->find()->export();
-        $list = [];
-        foreach ($modules as $position => &$items) {
-            if (!isset($positions[$position])) {
-                continue;
-            }
-            foreach ($items as &$item) {
-                $func = 'module' . $item['options']['type'];
-                if (method_exists($this, $func)) {
-                    $item = $this->{$func}($item);
-                }
-            }
-            $list[$position] = [
-                'title' => $positions[$position],
-                'items' => $items,
-            ];
-        }
-
-        return $list;
     }
 
     public function outlines()
@@ -140,6 +111,37 @@ class Exporter
         return $list;
     }
 
+    public function positions($all = true)
+    {
+        $gantry = Gantry::instance();
+        $positions = $gantry['outlines']->positions();
+        $positions['debug'] = 'Debug';
+
+        $finder = new ModuleFinder();
+        if (!$all) {
+            $finder->particle();
+        }
+        $modules = $finder->find()->export();
+        $list = [];
+        foreach ($modules as $position => &$items) {
+            if (!isset($positions[$position])) {
+                continue;
+            }
+            foreach ($items as &$item) {
+                $func = 'module' . $item['options']['type'];
+                if (method_exists($this, $func)) {
+                    $item = $this->{$func}($item);
+                }
+            }
+            $list[$position] = [
+                'title' => $positions[$position],
+                'items' => $items,
+            ];
+        }
+
+        return $list;
+    }
+
     public function menus()
     {
         $gantry = Gantry::instance();
@@ -173,6 +175,20 @@ class Exporter
                 'description' => $menu->description,
                 'items' => $items
             ];
+        }
+
+        return $list;
+    }
+
+    public function articles()
+    {
+        $finder = new ContentFinder();
+
+        $articles = $finder->limit(0)->find();
+
+        $list = [];
+        foreach ($articles as $article) {
+            $list[$article->alias] = $article->toArray();
         }
 
         return $list;

@@ -88,4 +88,9 @@ class Content extends Object
     {
         return Gantry::instance()['theme']->compile($string, ['article' => $this]);
     }
+
+    public function toArray()
+    {
+        return $this->getProperties(true);
+    }
 }
