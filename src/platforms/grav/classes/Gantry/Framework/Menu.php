@@ -176,7 +176,7 @@ class Menu extends AbstractMenu
 
             $list[$name] = [
                 'id' => $id,
-                'type' => $item->isPage() ? 'link' : 'separator',
+                'type' => $item->isPage() && $item->routable() ? 'link' : 'separator',
                 'path' => $name,
                 'alias' => $item->slug(),
                 'title' => $item->title(),
