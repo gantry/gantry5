@@ -15,6 +15,7 @@
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)
         - Fixed broken URLs for non-existing files in Custom HTML particle
         - Fixed XML errors outside Gantry triggering an error (thanks @Chrissi2812, #1567)
+        - Fixed issue with Block attributes not rendering when the parent Section was inheriting (#1577, #1580)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix routing for `index.php?Itemid=xxx` URLs inside particles
