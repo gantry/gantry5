@@ -150,7 +150,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function jsonDecodeFilter($str, $assoc = false, $depth = 512, $options = 0)
     {
-        return json_decode($str, $assoc, $depth, $options);
+        return json_decode(html_entity_decode($str), $assoc, $depth, $options);
     }
 
     public function imageSize($src, $attrib = true, $remote = false)

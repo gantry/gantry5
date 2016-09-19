@@ -168,7 +168,7 @@ class Gantry5Plugin extends Plugin
             $this->enable([
                 'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', -1000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
-                'onTwigInitialized' => ['onThemeTwigInitialized', 0],
+                'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
                 'onPageNotFound' => ['onPageNotFound', 1000]
             ]);
@@ -199,7 +199,7 @@ class Gantry5Plugin extends Plugin
 
         $this->enable([
             'onPagesInitialized' => ['onAdminPagesInitialized', 900],
-            'onTwigInitialized' => ['onAdminTwigInitialized', 900],
+            'onTwigExtensions' => ['onAdminTwigInitialized', 900],
             'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
         ]);
 
