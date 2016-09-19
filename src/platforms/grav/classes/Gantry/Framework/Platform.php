@@ -138,7 +138,7 @@ class Platform extends BasePlatform
         /** @var Theme $theme */
         $theme = $this->container['theme'];
 
-        $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['segment' => $module]));
+        $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['inContent' => true, 'segment' => $module]));
 
         return $html;
     }
