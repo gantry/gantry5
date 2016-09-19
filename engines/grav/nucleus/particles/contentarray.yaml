@@ -1,14 +1,14 @@
-name: Joomla Articles
-description: Display Joomla Articles.
+name: Grav Content
+description: Display Grav Content in given Category taxonomy.
 type: particle
-icon: fa-joomla
+icon: fa-grav
 
 form:
   fields:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable Joomla Articles particles.
+      description: Globally enable Grav Content particles.
       default: true
 
     _tabs:
@@ -20,13 +20,13 @@ form:
             article.filter.categories:
               type: joomla.categories
               label: Categories
-              description: Select the categories the articles should be taken from.
+              description: Select the categories the content should be taken from.
               overridable: false
 
             article.limit.total:
               type: input.text
-              label: Number of Articles
-              description: Enter the maximum number of articles to display.
+              label: Number of Pages
+              description: Enter the maximum number of content to display.
               default: 2
               pattern: '\d{1,2}'
               overridable: false
@@ -34,7 +34,7 @@ form:
             article.limit.columns:
               type: select.select
               label: Number of columns
-              description: Select the number of columns that you want articles to appear in.
+              description: Select the number of columns that you want content to appear in.
               default: 2
               options:
                 1: 1
@@ -48,7 +48,7 @@ form:
             article.limit.start:
               type: input.text
               label: Start From
-              description: Enter offset specifying the first article to return. The default is '0' (the first article).
+              description: Enter offset specifying the first article to return. The default is '0' (the first content item).
               default: 0
               pattern: '\d{1,2}'
               overridable: false
@@ -56,7 +56,7 @@ form:
             article.sort.orderby:
               type: select.select
               label: Order By
-              description: Select how the articles should be ordered by.
+              description: Select how the content should be ordered by.
               default: publish_up
               options:
                 publish_up: Published Date
@@ -72,7 +72,7 @@ form:
             article.sort.ordering:
               type: select.select
               label: Ordering Direction
-              description: Select the direction the articles should be ordered by.
+              description: Select the direction the content should be ordered by.
               default: ASC
               options:
                 ASC: Ascending
@@ -84,7 +84,7 @@ form:
             article.display.image.enabled:
               type: select.select
               label: Image
-              description: Select if and what image of the article should be shown.
+              description: Select if and what image of the content should be shown.
               default: intro
               options:
                 intro: Intro
@@ -93,7 +93,7 @@ form:
             article.display.text.type:
               type: select.select
               label: Article Text
-              description: Select if and how the article text should be shown.
+              description: Select if and how the content text should be shown.
               default: intro
               options:
                 intro: Introduction
@@ -103,14 +103,14 @@ form:
             article.display.text.limit:
               type: input.text
               label: Text Limit
-              description: Type in the number of characters the article text should be limited to.
+              description: Type in the number of characters the content text should be limited to.
               default: ''
               pattern: '\d+'
 
             article.display.text.formatting:
               type: select.select
               label: Text Formatting
-              description: Select the formatting you want to use to display the article text.
+              description: Select the formatting you want to use to display the content text.
               default: text
               options:
                 text: Plain Text
@@ -119,7 +119,7 @@ form:
             article.display.title.enabled:
               type: select.select
               label: Title
-              description: Select if the article title should be shown.
+              description: Select if the content title should be shown.
               default: show
               options:
                 show: Show
@@ -128,13 +128,13 @@ form:
             article.display.title.limit:
               type: input.text
               label: Title Limit
-              description: Enter the maximum number of characters the article title should be limited to.
+              description: Enter the maximum number of characters the content title should be limited to.
               pattern: '\d+(\.\d+){0,1}'
 
             article.display.date.enabled:
               type: select.select
               label: Date
-              description: Select if the article date should be shown.
+              description: Select if the content date should be shown.
               default: published
               options:
                 created: Show Created Date
@@ -168,7 +168,7 @@ form:
             article.display.read_more.enabled:
               type: select.select
               label: Read More
-              description: Select if the article 'Read More' button should be shown.
+              description: Select if the content 'Read More' button should be shown.
               default: show
               options:
                 show: Show
@@ -191,7 +191,7 @@ form:
             article.display.author.enabled:
               type: select.select
               label: Author
-              description: Select if the article author should be shown.
+              description: Select if the content author should be shown.
               default: show
               options:
                 show: Show
@@ -200,7 +200,7 @@ form:
             article.display.category.enabled:
               type: select.select
               label: Category
-              description: Select if and how the article category should be shown.
+              description: Select if and how the content category should be shown.
               default: link
               options:
                 show: Show
