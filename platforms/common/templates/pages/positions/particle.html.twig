@@ -10,6 +10,11 @@
                 </a>
             </li>
             <li>
+                <a href="#" id="g-chrome-tab" role="presentation" aria-controls="g-chrome" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_CHROME'|trans }}
+                </a>
+            </li>
+            <li>
                 <a href="#" id="g-settings-assignments-tab" role="presentation" aria-controls="g-settings-assignments" role="tab" aria-expanded="false">
                     {{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}
                 </a>
@@ -32,6 +37,17 @@
                 <div class="inner-params">
                     {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': data, 'prefix': prefix, 'skip': ['enabled']} %}
                     <input type="hidden" name="id" value="{{ item.id }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="g-pane" role="tabpanel" id="g-chrome" aria-labelledby="g-chrome-tab" aria-expanded="false">
+            <div class="card settings-block">
+                <h4>
+                    {{ 'GANTRY5_PLATFORM_CHROME'|trans }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': chrome.form, 'data': data, 'prefix': 'chrome.'} %}
                 </div>
             </div>
         </div>

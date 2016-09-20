@@ -162,20 +162,26 @@ class Positions extends HtmlController
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));
 
+        $file = CompiledYamlFile::instance("gantry-admin://blueprints/position/chrome.yaml");
+        $chromeBlueprints = new BlueprintsForm($file->content());
+        $file->free();
+
         $data['title'] = isset($data['title']) ? $data['title'] : $blueprints['name'];
+        $data['chrome'] = isset($data['chrome']) ? $data['chrome'] : [];
         $data['options'] = isset($data['options']) ? $data['options'] : [];
         $data['options']['type'] = $name;
         $attributes = isset($data['options']['attributes']) ? $data['options']['attributes'] : [];
-
         $assignments = new Assignments();
 
         $this->params += [
             'item'          => $data,
             'data'          => [
                 'particles' => [$name => $attributes],
+                'chrome'    => $data['chrome'],
                 'assignments' => isset($data['assignments']) ? $data['assignments'] : 'all'
             ],
             'particle'      => $blueprints,
+            'chrome'        => $chromeBlueprints,
             'assignments'   => $assignments->get(),
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
@@ -192,6 +198,10 @@ class Positions extends HtmlController
         // Validate only exists for JSON.
         if (empty($this->params['ajax'])) {
             $this->undefined();
+        }
+
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
         }
 
         // Load particle blueprints and default settings.
@@ -211,13 +221,10 @@ class Positions extends HtmlController
         $data->set('id', $id = $this->request->post['id']);
         $data->set('type', 'particle');
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
+        $data->set('chrome', $this->request->post->getArray('chrome'));
         $data->set('options.type', $name);
         $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.attributes.enabled', 1);
-
-        if (!$this->request->post->get('_end')) {
-            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
-        }
 
         $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'));
         $assignments = $assignments ?: 'none';

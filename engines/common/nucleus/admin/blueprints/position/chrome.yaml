@@ -1,0 +1,18 @@
+name: Module chrome
+description: Module chrome
+type: position.chrome
+
+form:
+  fields:
+
+    display_title:
+      type: enable.enable
+      label: Display Title
+      description: Display title.
+      default: 1
+
+    class:
+      type: input.selectize
+      label: CSS Classes
+      description: Enter CSS class names.
+      default:

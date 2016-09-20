@@ -7,7 +7,7 @@
 {%- endset -%}
 
 {% if module|trim %}
-<div class="module">
+<div class="moduletable{{ chrome.class ? ' ' ~ chrome.class }}">
     {% if title|trim %}
         <h2>{{ title|trim }}</h2>
     {% endif %}
