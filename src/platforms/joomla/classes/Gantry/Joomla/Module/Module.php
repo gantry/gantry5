@@ -70,7 +70,10 @@ class Module extends Object implements ExportInterface
             'ordering' => (int) $this->ordering,
             'type' => $particle ? 'particle' : 'joomla',
             'title' => $this->title,
-            'chrome' => ['display_title' => (bool) $this->showtitle],
+            'chrome' => [
+                'display_title' => (bool) $this->showtitle,
+                'class' => !empty($params['moduleclass_sfx']) ? $params['moduleclass_sfx'] : ''
+            ],
             'options' => null,
             'assignments' => $this->assignments()
         ];
