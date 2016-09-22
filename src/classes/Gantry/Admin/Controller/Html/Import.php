@@ -17,6 +17,8 @@ use Gantry\Component\Controller\HtmlController;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Importer;
 use RocketTheme\Toolbox\File\YamlFile;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Symfony\Component\Yaml\Yaml;
 
 class Import extends HtmlController
 {
@@ -59,10 +61,20 @@ class Import extends HtmlController
             throw new \RuntimeException('No file sent', 400);
         }
 
-        $file = YamlFile::instance($filename);
-        $importer = new Importer;
-        $importer->positions($file->content());
-        $file->free();
+        $zip = new \ZipArchive;
+        if ($zip->open($filename) !== true || !($export = Yaml::parse($zip->getFromName('export.yaml'))) || !isset($export['gantry'])) {
+            throw new \RuntimeException('Uploaded file is not Gantry 5 export file', 400);
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        $folder = $locator->findResource('gantry-cache://import', true, true);
+        $zip->extractTo($folder);
+        $zip->close();
+
+        $importer = new Importer($folder);
+        $importer->all();
 
         $this->params['success'] = true;
 

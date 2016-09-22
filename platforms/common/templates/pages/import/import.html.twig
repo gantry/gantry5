@@ -8,7 +8,7 @@
                 <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
         </span>
     </div>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" action="{{ gantry.route('import') }}">
         <div class="card settings-block">
             {% if success %}
                 <div class="alert alert-success">{{  'GANTRY5_PLATFORM_SAVED'|trans }}</div>
@@ -17,7 +17,7 @@
                 {{ 'GANTRY5_PLATFORM_IMPORT'|trans }}
             </h2>
             <div class="inner-params">
-                {% include 'forms/fields/input/file.html.twig' with { field: { name: 'file', type: 'input.file', label: 'Import Positions', accept: '.yaml' }} %}
+                {% include 'forms/fields/input/file.html.twig' with { field: { name: 'file', type: 'input.file', label: 'Import File', accept: '.zip' }} %}
             </div>
             <div class="g-modal-actions">
                 <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>

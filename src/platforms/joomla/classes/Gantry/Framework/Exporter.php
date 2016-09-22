@@ -23,6 +23,8 @@ class Exporter
 
     public function all()
     {
+        $theme = Gantry::instance()['theme']->details();
+
         return [
             'export' => [
                 'gantry' => [
@@ -33,6 +35,15 @@ class Exporter
                     'name' => 'joomla',
                     'version' => JVERSION
                 ],
+                'theme' => [
+                    'name' => $theme->get('name'),
+                    'title' => $theme->get('details.name'),
+                    'version' => $theme->get('details.version'),
+                    'date' => $theme->get('details.date'),
+                    'author' => $theme->get('details.author'),
+                    'copyright' => $theme->get('details.copyright'),
+                    'license' => $theme->get('details.license'),
+                ]
             ],
             'outlines' => $this->outlines(),
             'positions' => $this->positions(),
@@ -188,7 +199,7 @@ class Exporter
 
         $list = [];
         foreach ($articles as $article) {
-            $list[$article->alias] = $article->toArray();
+            $list[$article->id . '-' . $article->alias] = $article->toArray();
         }
 
         return $list;

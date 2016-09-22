@@ -33,7 +33,7 @@ class Export extends HtmlController
         $exporter = new Exporter;
         $exported = $exporter->all();
 
-        $filename = 'export.zip';
+        $zipname = $exported['export']['theme']['name'] . '-export.zip';
         $tmpname = tempnam(sys_get_temp_dir(), 'zip');
 
         $zip = new \ZipArchive();
@@ -94,7 +94,7 @@ class Export extends HtmlController
         $zip->close();
 
         header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Content-Disposition: attachment; filename=' . $zipname);
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
