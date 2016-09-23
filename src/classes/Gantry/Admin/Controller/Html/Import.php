@@ -14,6 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Importer;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -70,11 +71,14 @@ class Import extends HtmlController
         $locator = $this->container['locator'];
 
         $folder = $locator->findResource('gantry-cache://import', true, true);
+        if (is_dir($folder)) Folder::delete($folder);
         $zip->extractTo($folder);
         $zip->close();
 
         $importer = new Importer($folder);
         $importer->all();
+
+        if (is_dir($folder)) Folder::delete($folder);
 
         $this->params['success'] = true;
 
