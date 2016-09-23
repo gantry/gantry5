@@ -54,8 +54,17 @@ class AssignmentFilter
     {
         $matches = [];
         foreach ($candidates as $type => $candidate) {
+            if (!is_array($candidate)) {
+                continue;
+            }
             foreach ($candidate as $section => $list) {
+                if (!is_array($list)) {
+                    continue;
+                }
                 foreach ($list as $name => $rules) {
+                    if (!is_array($rules)) {
+                        continue;
+                    }
                     if (isset($page[$section][$name])) {
                         $match =\array_intersect_key($page[$section][$name], $rules);
                         if ($match) {
