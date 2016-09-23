@@ -169,8 +169,13 @@ abstract class Folder
             $filePath = $file->{$value}();
             if ($filters) {
                 if (isset($filters['key'])) {
+                    $filter = $filters['key'];
                     $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
-                    $fileKey = $pre . preg_replace($filters['key'], '', $fileKey);
+                    if (is_callable($filter)) {
+                        $fileKey = $pre . call_user_func($filter, $fileKey);
+                    } else {
+                        $fileKey = $pre . preg_replace($filter, '', $fileKey);
+                    }
                 }
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];
