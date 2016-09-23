@@ -65,4 +65,9 @@ class Category extends Object
     {
         return Gantry::instance()['theme']->compile($string, ['category' => $this]);
     }
+
+    public function toArray()
+    {
+        return $this->getProperties(true);
+    }
 }

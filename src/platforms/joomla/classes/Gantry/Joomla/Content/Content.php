@@ -91,6 +91,15 @@ class Content extends Object
 
     public function toArray()
     {
-        return $this->getProperties(true);
+        return $this->getProperties(true) + [
+            'category' => [
+                'alias' => $this->category()->alias,
+                'title' => $this->category()->title
+            ],
+            'author' => [
+                'username' => $this->author()->username,
+                'fullname' => $this->author()->name
+            ],
+        ];
     }
 }

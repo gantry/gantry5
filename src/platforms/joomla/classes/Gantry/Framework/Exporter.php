@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
+use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
@@ -49,6 +50,7 @@ class Exporter
             'positions' => $this->positions(),
             'menus' => $this->menus(),
             'content' => $this->articles(),
+            'categories' => $this->categories(),
             'files' => $this->files,
         ];
     }
@@ -204,6 +206,21 @@ class Exporter
 
         return $list;
     }
+
+    public function categories()
+    {
+        $finder = new CategoryFinder();
+
+        $categories = $finder->limit(0)->find();
+
+        $list = [];
+        foreach ($categories as $category) {
+            $list[$category->id] = $category->toArray();
+        }
+
+        return $list;
+    }
+
 
     /**
      * List all the rules available.

@@ -77,6 +77,10 @@ class Export extends HtmlController
             $zip->addFromString("content/{$id}.yaml", Yaml::dump($data, 10, 2));
         }
 
+        if (!empty($exported['categories'])) {
+            $zip->addFromString("content/categories.yaml", Yaml::dump($exported['categories'], 10, 2));
+        }
+
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
