@@ -179,7 +179,7 @@ class Menu extends AbstractMenu
                 'type' => $item->isPage() && $item->routable() ? 'link' : 'separator',
                 'path' => $name,
                 'alias' => $item->slug(),
-                'title' => $item->title(),
+                'title' => $item->menu(),
                 'link' => $item->url(),
                 'parent_id' => $parent_id,
                 'layout' => 'list',
