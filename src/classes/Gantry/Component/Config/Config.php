@@ -27,7 +27,7 @@ use RocketTheme\Toolbox\Blueprints\Blueprints;
  */
 class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
 {
-    use NestedArrayAccessWithGetters, Countable, Iterator, Export;
+    use NestedArrayAccessWithGetters, Iterator, Export;
 
     /**
      * @var array
@@ -239,5 +239,19 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
             $this->blueprints = $blueprints();
         }
         return $this->blueprints;
+    }
+
+    /**
+     * Count items in nested array.
+     *
+     * @param string $path
+     * @param string $separator
+     * @return int
+     */
+    public function count($path = null, $separator = '.')
+    {
+        $items = $path ? $this->get($path, null, $separator) : $this->items;
+
+        return is_array($items) ? count($items) : 0;
     }
 }
