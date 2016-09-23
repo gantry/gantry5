@@ -201,7 +201,13 @@ class Exporter
 
         $list = [];
         foreach ($articles as $article) {
-            $list[$article->id . '-' . $article->alias] = $article->toArray();
+            $exported = $article->toArray();
+
+            // Convert images to use streams.
+            $exported['introtext'] = $this->urlFilter($exported['introtext']);
+            $exported['fulltext'] = $this->urlFilter($exported['fulltext']);
+
+            $list[$article->id . '-' . $article->alias] = $exported;
         }
 
         return $list;
