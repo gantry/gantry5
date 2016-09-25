@@ -22,7 +22,7 @@
 
     {# Content Finder #}
     {% if filter.articles %}
-        {% set article_options = filter.articles ? {id: [filter.articles|split(',')]} : {} %}
+        {% set article_options = filter.articles ? {id: [filter.articles|replace(' ', '')|split(',')]} : {} %}
         {% set article_finder = joomla.finder('content', article_options).published(1).language() %}
     {% else %}
         {% set article_finder = joomla.finder('content').category(categories).published(1).language() %}
