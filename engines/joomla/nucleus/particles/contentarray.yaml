@@ -23,6 +23,12 @@ form:
               description: Select the categories the articles should be taken from.
               overridable: false
 
+            article.filter.articles:
+              type: input.text
+              label: Articles
+              description: Enter the Joomla articles that should be shown. It should be a list of article IDs separated with a comma (i.e. 1,2,3,4,5).
+              overridable: false
+
             article.filter.featured:
               type: select.select
               label: Featured Articles
