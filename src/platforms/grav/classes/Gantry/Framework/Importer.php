@@ -320,6 +320,9 @@ class Importer
 {% include \"forms/form.html.twig\" with {form: forms( {route: '/form/contact'} )} %}"
                     ];
                     break;
+                case 'com_search':
+                    // TODO:
+                    break;
                 default:
                     die($link['query']);
             }
