@@ -19,6 +19,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix routing for `index.php?Itemid=xxx` URLs inside particles
+        - Joomla Articles Particle: Add field for enteting article ids (thanks @JoomFX - #1591)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extend categories field to allow selecting custom taxonomies (#1535)
