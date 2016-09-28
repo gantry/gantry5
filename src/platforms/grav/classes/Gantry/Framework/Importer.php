@@ -268,6 +268,24 @@ class Importer
                             $page = $this->readArticle($vars['id']);
                             unset($this->articles[$vars['id']]);
                             break;
+                        case 'featured':
+                            $page = [
+                                'type' => 'blog_list',
+                                'header' => [
+                                    'content' => [
+                                        'items' => [],
+                                        'limit' => 5,
+                                        'order' => [
+                                            'by' => 'date',
+                                            'dir' => 'desc'
+                                        ],
+                                        'pagination' => true,
+                                        'url_taxonomy_filters' => true
+                                    ],
+                                    'pagination' => 1
+                                ]
+                            ];
+                            break;
                         case 'category':
                             if ($vars['layout'] !== 'blog') {
                                 die($link['query']);
