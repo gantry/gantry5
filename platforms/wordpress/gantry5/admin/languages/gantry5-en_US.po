@@ -743,3 +743,12 @@ msgstr "You are currently running PHP <strong>%s</strong> which will soon no lon
 
 msgid "GANTRY5_PLATFORM_SAMPLE_DATA_INSTALLED"
 msgstr "Sample Data Installed"
+
+msgid "GANTRY5_PLATFORM_CHROME"
+msgstr "Chrome"
+
+msgid "GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED"
+msgstr "You are not allowed to edit this menu."
+
+msgid "GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED_PLATFORM"
+msgstr ""

@@ -7,9 +7,11 @@
             <button class="button button-back-to-conf">
                 <i class="fa fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
             </button>
+            {% if gantry.authorize('menu.edit', id) %}
             <button type="submit" class="button button-primary button-save" data-save="Menu">
                 <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span>
             </button>
+            {% endif %}
         </span>
         <h2 class="page-title">{{ 'GANTRY5_PLATFORM_MENU_EDITOR'|trans }}</h2>
         <select placeholder="{{ 'GANTRY5_PLATFORM_SELECT_ELI'|trans }}"
@@ -28,6 +30,11 @@
         </select>
     </div>
 
+    {% if not gantry.authorize('menu.edit', id) %}
+        <div class="alert alert-danger">{{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED'|trans }} {{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED_PLATFORM'|trans }}</div>
+    {% endif %}
+
+    {% if gantry.authorize('menu.edit', id) %}
     <div class="g5-mm-particles-picker">
         <ul class="g-menu-addblock">
             <li data-mm-blocktype="module" data-mm-id="__module">
@@ -50,6 +57,8 @@
             </li>
         </ul>
     </div>
+    {% endif %}
+
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
          data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"

@@ -171,9 +171,9 @@ abstract class Gantry extends Container
         return preg_replace('|/+|', '/', '/' . $this->offsetGet('base_url') . sprintf($route, $path));
     }
 
-    public function authorize($action)
+    public function authorize($action, $id = null)
     {
-        return $this['platform']->authorize($action);
+        return $this['platform']->authorize($action, $id);
     }
 
     public function wrapper($value = null)

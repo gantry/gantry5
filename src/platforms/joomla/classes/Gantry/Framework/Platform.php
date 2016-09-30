@@ -387,7 +387,7 @@ class Platform extends BasePlatform
         return \JHtml::_('string.truncate', $text, $length, true, $html);
     }
 
-    public function authorize($action)
+    public function authorize($action, $id = null)
     {
         $user = \JFactory::getUser();
 
@@ -397,6 +397,37 @@ class Platform extends BasePlatform
             case 'menu.manage':
                 return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
             case 'menu.edit':
+                if ($id) {
+                    $db = \JFactory::getDbo();
+                    $userId = \JFactory::getUser()->id;
+
+                    // Verify that no items are checked out.
+                    $query = $db->getQuery(true)
+                        ->select('id')
+                        ->from('#__menu')
+                        ->where('menutype=' . $db->quote($id))
+                        ->where('checked_out !=' . (int) $userId)
+                        ->where('checked_out !=0');
+                    $db->setQuery($query);
+
+                    if ($db->loadRowList()) {
+                        return false;
+                    }
+
+                    // Verify that no module for this menu are checked out.
+                    $query->clear()
+                        ->select('id')
+                        ->from('#__modules')
+                        ->where('module=' . $db->quote('mod_menu'))
+                        ->where('params LIKE ' . $db->quote('%"menutype":' . json_encode($id) . '%'))
+                        ->where('checked_out !=' . (int) $userId)
+                        ->where('checked_out !=0');
+                    $db->setQuery($query);
+
+                    if ($db->loadRowList()) {
+                        return false;
+                    }
+                }
                 return $user->authorise('core.edit', 'com_menus');
             case 'updates.manage':
                 return $user->authorise('core.manage', 'com_installer');

@@ -21,6 +21,7 @@
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
         - Joomla Articles Particle: Add field for enteting article ids (thanks @JoomFX - #1591)
         - Fixed accessing Particle module from Joomla Module Manager if user does not have access to edit template (#1476)
+        - Menu Manager: Display info message and prevent user from saving menu if menu items have been checked out (#1019)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extended categories field to allow selecting custom taxonomies (#1535)
