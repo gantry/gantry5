@@ -18,11 +18,12 @@
         - Fixed issue with Block attributes not rendering when the parent Section was inheriting (#1577, #1580)
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Fix routing for `index.php?Itemid=xxx` URLs inside particles
+        - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
         - Joomla Articles Particle: Add field for enteting article ids (thanks @JoomFX - #1591)
+        - Fixed accessing Particle module from Joomla Module Manager if user does not have access to edit template (#1476)
 3. [WordPress](#wordpress)
     2. [](#improved)
-        - Extend categories field to allow selecting custom taxonomies (#1535)
+        - Extended categories field to allow selecting custom taxonomies (#1535)
         - Update Timber to 1.1.5 for new features (#1556)
     3. [](#bugfix)
         - Helium: Fixed duration parameter in Content Tabs particle
