@@ -1,5 +1,6 @@
 {% extends ['@nucleus/module-chrome/' ~ style ~ '.html.twig', '@nucleus/module-chrome/gantry.html.twig'] %}
 
+{% set id = segment.id ?: segment.type ~ '-' ~ rand(1000, 9999) %}
 {% set chrome = segment.chrome %}
 
 {% block title %}
@@ -11,5 +12,5 @@
     '@nucleus/content/' ~ segment.type ~ '/' ~ segment.options.type|default('default') ~ '.html.twig',
     '@nucleus/content/' ~ segment.type ~ '.html.twig',
     '@nucleus/content/unknown.html.twig']
-    with { segment: {type: segment.type, subtype: segment.options.type, options: segment.options, attributes: segment.options.attributes }} %}
+    with { segment: {id: id, type: segment.type, subtype: segment.options.type, options: segment.options, attributes: segment.options.attributes }} %}
 {% endblock %}
