@@ -332,7 +332,7 @@ class Gantry5Plugin extends Plugin
     {
         /** @var Twig $twig */
         $twig = $this->grav['twig'];
-        $twig->twig_vars = $this->theme->getContext($twig->twig_vars);
+        $twig->twig_vars += $this->theme->getContext($twig->twig_vars);
     }
 
     /**
