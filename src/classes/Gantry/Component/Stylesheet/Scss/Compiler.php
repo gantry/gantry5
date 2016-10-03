@@ -104,8 +104,13 @@ class Compiler extends BaseCompiler
         $url = Gantry::instance()['document']->url($url, false, null, false);
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
-        if ($url && $url[0] == '/' && $this->basePath) {
+        if ($url && $url[0] === '/' && $this->basePath) {
             $url = Folder::getRelativePathDotDot($url, $this->basePath);
+        }
+
+        // Make sure that all the URLs inside CSS are https compatible by replacing http:// protocol with //.
+        if (strpos($url, 'http://') === 0) {
+            $url = str_replace('http://', '//', $url);
         }
 
         // Return valid CSS.
