@@ -6,7 +6,7 @@
         - Updated scssphp to v0.6.6
         - Added `nomarginleft`, `nomarginright`, `nopaddingleft`, `nopaddingright` CSS utility classes to Nucleus
         - Use default platform upload path when adding new images via file picker (#1597)
-        - SCSS compiler: Make all URLs https compatible by replacing `http://` protocol with `//` (#1594)
+        - SCSS compiler: Make all URLs https compatible by replacing `http://` protocol with `//`
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)
@@ -33,6 +33,7 @@
     3. [](#bugfix)
         - Helium: Fixed duration parameter in Content Tabs particle
         - Fixed Colorpicker zIndex in Particle Settings (#1574)
+        - Fixed wrong protocol in compiled CSS files in a site that uses both http and https (#1594)
 
 # 5.3.5
 ## 02/09/2016
