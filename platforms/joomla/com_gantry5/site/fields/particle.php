@@ -35,7 +35,7 @@ class JFormFieldParticle extends JFormField
             Gantry5\Loader::setup();
 
             $lang = JFactory::getLanguage();
-            $lang->load('con_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', GANTRYADMIN_PATH);
+            $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', GANTRYADMIN_PATH);
 
             $this->container = Gantry\Framework\Gantry::instance();
             $this->container['router'] = function ($c) {

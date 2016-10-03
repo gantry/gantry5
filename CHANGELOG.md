@@ -23,6 +23,7 @@
         - Fixed accessing Particle module from Joomla Module Manager if user does not have access to edit template (#1476)
         - Menu Manager: Display info message and prevent user from saving menu if menu items have been checked out (#1019)
         - Fixed missing system message in component modals (#1156)
+        - Typo on custom translation filename (#1600)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extended categories field to allow selecting custom taxonomies (#1535)
