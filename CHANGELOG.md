@@ -5,6 +5,7 @@
     1. [](#new)
         - Updated scssphp to v0.6.6
         - Added `nomarginleft`, `nomarginright`, `nopaddingleft`, `nopaddingright` CSS utility classes to Nucleus
+        - Use default platform upload path when adding new images via file picker (#1597)
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)
@@ -23,7 +24,7 @@
         - Fixed accessing Particle module from Joomla Module Manager if user does not have access to edit template (#1476)
         - Menu Manager: Display info message and prevent user from saving menu if menu items have been checked out (#1019)
         - Fixed missing system message in component modals (#1156)
-        - Typo on custom translation filename (#1600)
+        - Fixed typo on custom translation filename (#1600)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extended categories field to allow selecting custom taxonomies (#1535)

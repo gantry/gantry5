@@ -77,8 +77,8 @@ class Platform extends BasePlatform
     public function getMediaPaths()
     {
         return ['' => [
-            'gantry-theme://images',
             $this->upload_dir,
+            'gantry-theme://images',
             ]
         ];
     }
