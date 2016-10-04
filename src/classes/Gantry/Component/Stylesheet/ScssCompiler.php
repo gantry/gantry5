@@ -140,6 +140,7 @@ WARN;
         $file->free();
 
         $this->createMeta($out, md5($css));
+        $this->compiler->cleanParsedFiles();
 
         return true;
     }

@@ -348,6 +348,18 @@ class Compiler extends BaseCompiler
     }
 
     /**
+     * Clean parset files.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function cleanParsedFiles()
+    {
+        $this->parsedFiles = [];
+    }
+
+    /**
      * Handle import loop
      *
      * @param string $name
@@ -370,10 +382,12 @@ class Compiler extends BaseCompiler
      * Override function to improve the logic.
      *
      * @param string $path
-     * @param array  $out
+     * @param mixed  $out
      */
     protected function importFile($path, $out)
     {
+        $this->addParsedFile($path);
+
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 

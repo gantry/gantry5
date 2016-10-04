@@ -19,6 +19,7 @@
         - Fixed XML errors outside Gantry triggering an error (thanks @Chrissi2812, #1567)
         - Fixed issue with Block attributes not rendering when the parent Section was inheriting (#1577, #1580)
         - Fixed particles getting lost in offcancas section when loading layout preset with older format (#1593)
+        - Fixed first time compilation of custom.scss not working (#1590)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
