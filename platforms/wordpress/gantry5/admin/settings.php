@@ -49,13 +49,24 @@ function gantry5_plugin_settings() {
                     <tbody>
                         <tr>
                             <th scope="row">
-                                <label for="production1"><?php _e( 'Production Mode', 'gantry5' ); ?></label>
+                                <label for="production1" title="<?php _e( 'Production mode makes Gantry faster by more aggressive caching and ignoring changed files in the filesystem. Most changes made from administration should still be detected, but changes made in filesystem or database will be ignored.', 'gantry5'  ); ?>"><?php _e( 'Production Mode', 'gantry5' ); ?></label>
                             </th>
                             <td>
                                 <input id="production1" type="radio" <?php checked( $option[ 'production' ], '1' ); ?> value="1" name="gantry5_plugin[production]"/>
                                 <label for="production1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="production2" class="second" type="radio" <?php checked( $option['production'], '0' ); ?> value="0" name="gantry5_plugin[production]"/>
                                 <label for="production2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="use_media_folder1" title="<?php _e( 'By default Gantry media picker saves all files into the theme. If you want to save files into uploads folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.', 'gantry5'  ); ?>"><?php _e( 'Use Uploads Folder', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="use_media_folder1" type="radio" <?php checked( $option[ 'use_media_folder' ], '1' ); ?> value="1" name="gantry5_plugin[use_media_folder]"/>
+                                <label for="use_media_folder1"><?php _e( 'Yes', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="use_media_folder2" class="second" type="radio" <?php checked( $option['use_media_folder'], '0' ); ?> value="0" name="gantry5_plugin[use_media_folder]"/>
+                                <label for="use_media_folder2"><?php _e( 'No', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -98,7 +109,7 @@ function gantry5_plugin_settings() {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="compile_yaml1"><?php _e( 'Compile YAML', 'gantry5' ); ?></label>
+                                <label for="compile_yaml1" title="<?php _e( 'Compile YAML configuration files into PHP, making page loads significantly faster.', 'gantry5' ); ?>"><?php _e( 'Compile YAML', 'gantry5' ); ?></label>
                             </th>
                             <td>
                                 <input id="compile_yaml1" type="radio" <?php checked( $option[ 'compile_yaml' ], '1' ); ?> value="1" name="gantry5_plugin[compile_yaml]"/>
@@ -109,7 +120,7 @@ function gantry5_plugin_settings() {
                         </tr>
                         <tr>
                             <th scope="row">
-                                <label for="compile_twig1"><?php _e( 'Compile Twig', 'gantry5' ); ?></label>
+                                <label for="compile_twig1" title="<?php _e( 'Compile Twig template files into PHP, making page loads significantly faster.', 'gantry5' ); ?>"><?php _e( 'Compile Twig', 'gantry5' ); ?></label>
                             </th>
                             <td>
                                 <input id="compile_twig1" type="radio" <?php checked( $option[ 'compile_twig' ], '1' ); ?> value="1" name="gantry5_plugin[compile_twig]"/>

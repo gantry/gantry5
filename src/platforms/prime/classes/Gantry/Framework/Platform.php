@@ -102,7 +102,15 @@ class Platform extends BasePlatform
 
     public function getMediaPaths()
     {
-        return ['' => ['media', 'gantry-theme://images']];
+        $paths = ['media'];
+
+        if ($this->container['global']->get('use_media_folder', false)) {
+            array_push($paths, 'gantry-theme://images');
+        } else {
+            array_unshift($paths, 'gantry-theme://images');
+        }
+
+        return ['' => $paths];
     }
 
     /**

@@ -41,6 +41,17 @@ form:
       validate:
         type: bool
 
+    use_media_folder:
+      label: Use Grav Images Folder
+      description: By default Gantry media picker saves all files into the theme. If you want to save files into Grav images folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      highlight: 1
+      default: 0
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
+
     asset_timestamps:
       type: toggle
       label: Asset Timestamps

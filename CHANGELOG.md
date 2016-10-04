@@ -5,7 +5,7 @@
     1. [](#new)
         - Updated scssphp to v0.6.6
         - Added `nomarginleft`, `nomarginright`, `nopaddingleft`, `nopaddingright` CSS utility classes to Nucleus
-        - Use default platform upload path when adding new images via file picker (#1597)
+        - Add configuration option to use default platform upload path when adding new images via file picker (#1597)
         - SCSS compiler: Make all URLs https compatible by replacing `http://` protocol with `//`
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker

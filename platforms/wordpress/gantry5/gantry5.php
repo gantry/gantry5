@@ -51,13 +51,14 @@ add_action('admin_init', 'gantry5_plugin_defaults');
 function gantry5_plugin_defaults()
 {
     $defaults = array(
-        'production'      => '1',
-        'debug'           => '0',
-        'offline'         => '0',
-        'offline_message' => 'Site is currently in offline mode. Please try again later.',
-        'cache_path'      => '',
-        'compile_yaml'    => '1',
-        'compile_twig'    => '1'
+        'production'       => '1',
+        'use_media_folder' => '0',
+        'debug'            => '0',
+        'offline'          => '0',
+        'offline_message'  => 'Site is currently in offline mode. Please try again later.',
+        'cache_path'       => '',
+        'compile_yaml'     => '1',
+        'compile_twig'     => '1'
     );
 
     $option = (array)get_option('gantry5_plugin');
