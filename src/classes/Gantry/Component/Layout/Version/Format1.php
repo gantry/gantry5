@@ -43,12 +43,15 @@ class Format1
         // We have user entered file; let's build the layout.
 
         // Two last items are always offcanvas and atoms.
-        $invisible = [
-            'offcanvas' => isset($data['offcanvas']) ? $data['offcanvas'] : [],
-            'atoms' => isset($data['atoms']) ? $data['atoms'] : []
-        ];
+        $offcanvas = isset($data['offcanvas']) ? $data['offcanvas'] : [];
+        $atoms = isset($data['atoms']) ? $data['atoms'] : [];
+
         unset($data['offcanvas'], $data['atoms']);
-        $data += $invisible;
+
+        $data['offcanvas'] = $offcanvas;
+        if ($atoms) {
+            $data['atoms'] = $atoms;
+        }
 
         $result = [];
         foreach ($data as $field => $params) {
@@ -86,7 +89,7 @@ class Format1
             $item->id = $section;
             $item->subtype = (in_array($section, ['aside', 'nav', 'article', 'header', 'footer', 'main']) ? $section : 'section');
         } elseif ($item->type === 'offcanvas') {
-            $item->id = $item->type;
+            $item->id = $item->subtype = $item->type;
             unset ($item->attributes->name, $item->attributes->boxed);
             return;
         } else {
