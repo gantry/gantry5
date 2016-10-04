@@ -20,6 +20,7 @@
         - Fixed issue with Block attributes not rendering when the parent Section was inheriting (#1577, #1580)
         - Fixed particles getting lost in offcancas section when loading layout preset with older format (#1593)
         - Fixed first time compilation of custom.scss not working (#1590)
+        - Fixed override checkboxes showing up in settings tabs when they should not (#1578)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
