@@ -652,8 +652,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     foreach ($sections[$type] as $section) {
                         if ($section->id === $item->id) {
                             $found = true;
-                            $section->inherit = $item->inherit;
-                            $section->children = $item->children;
+                            $section->inherit = $this->cloneData($item->inherit);
+                            $section->children = $this->cloneData($item->children);
                             break;
                         }
                     }
@@ -663,6 +663,31 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
             }
         }
+    }
+
+    /**
+     * Clone data which consists mixed set of arrays and stdClass objects.
+     *
+     * @param mixed $data
+     * @return mixed
+     */
+    protected function cloneData($data)
+    {
+        if (!($isObject = is_object($data)) && !is_array($data)) {
+            return $data;
+        }
+
+        $clone = [];
+
+        foreach((array) $data as $key => $value) {
+            if (is_object($value) || is_array($value)) {
+                $clone[$key] = $this->cloneData($value);
+            } else {
+                $clone[$key] = $value;
+            }
+        }
+
+        return $isObject ? (object) $clone : $clone;
     }
 
     /**
@@ -735,12 +760,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     switch ($part) {
                         case 'attributes':
                             // Deep clone attributes.
-                            $item->attributes = isset($inherited->attributes) ? json_decode(json_encode($inherited->attributes)) : new \stdClass();
+                            $item->attributes = isset($inherited->attributes) ? $this->cloneData($inherited->attributes) : new \stdClass();
                             break;
                         case 'block':
                             $block = $this->block($id);
                             if (isset($block->attributes)) {
-                                $inheritBlock = $outline ? $outline->block($inheritId) : null;
+                                $inheritBlock = $outline ? $this->cloneData($outline->block($inheritId)) : null;
                                 $blockAttributes = $inheritBlock ?
                                     array_diff_key((array)$inheritBlock->attributes, ['fixed' => 1, 'size' => 1]) : [];
                                 $block->attributes = (object)($blockAttributes + (array)$block->attributes);
@@ -749,7 +774,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                         case 'children':
                             if (!empty($inherited->children)) {
                                 // Deep clone children.
-                                $item->children = json_decode(json_encode($inherited->children));
+                                $item->children = $this->cloneData($inherited->children);
                                 $this->initReferences($item->children, $this->getParentId($id), null,
                                     ['outline' => $outlineId, 'include' => ['attributes', 'block']], $index);
                             } else {

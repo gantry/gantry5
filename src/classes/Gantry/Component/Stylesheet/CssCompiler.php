@@ -211,6 +211,7 @@ abstract class CssCompiler implements CssCompilerInterface
         // Check if CSS file exists at all.
         if (!$path) {
             $this->setVariables($variables());
+
             return true;
         }
 
@@ -268,6 +269,11 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if any of the imported files have been changed.
         $imports = isset($content['imports']) ? $content['imports'] : [];
+
+        if (!$imports) {
+            return $this->findImport($in) !== null;
+        }
+
         foreach ($imports as $resource => $timestamp) {
             $import = $locator->isStream($resource) ? $locator->findResource($resource) : realpath($resource);
             if (!$import || filemtime($import) != $timestamp) {
@@ -324,6 +330,12 @@ abstract class CssCompiler implements CssCompilerInterface
 
         return $this;
     }
+
+    /**
+     * @param string $url
+     * @return null|string
+     */
+    abstract public function findImport($url);
 
     protected function createMeta($out, $md5)
     {

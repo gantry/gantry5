@@ -20,6 +20,10 @@
         - Fixed XML errors outside Gantry triggering an error (thanks @Chrissi2812, #1567)
         - Fixed issue with Block attributes not rendering when the parent Section was inheriting (#1577, #1580)
         - Fixed particles getting lost in offcancas section when loading layout preset with older format (#1593)
+        - Fixed first time compilation of custom.scss not working (#1590)
+        - Fixed override checkboxes showing up in settings tabs when they should not (#1578)
+        - Fixed enablers in `Particle Defaults` having custom value and still appearing to be unchecked (#1570)
+        - Fixed inheritance converting associative arrays into objects causing associative lists to be missing in inherited sections and particles (#1585)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
