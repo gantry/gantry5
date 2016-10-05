@@ -92,7 +92,10 @@ class EventListener implements EventSubscriberInterface
             'icon_only' => false,
             'visible' => true,
             'group' => 0,
-            'columns' => []
+            'columns' => [],
+            'link_title' => '',
+            'hash' => '',
+            'class' => ''
         ];
 
         $menu = $event->menu;
