@@ -12,6 +12,7 @@
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)
         - Using regular select for Dropdown Animation
         - Social Particle: New Display option allows to show icons only, text only or both (#1565)
+        - Helium: Removed redundant favicon field in the Styles tab. Please use the one in the Page Settings.
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)
