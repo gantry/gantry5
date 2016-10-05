@@ -1,7 +1,7 @@
 {% set attr_extra = '' %}
 {% if segment.attributes.extra %}
     {% for attributes in segment.attributes.extra %}
-        {% for key, value in attributes|array %}
+        {% for key, value in attributes %}
             {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
         {% endfor %}
     {% endfor %}
