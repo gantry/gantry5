@@ -1,5 +1,5 @@
 # 5.3.6
-## XX/XX/2016
+## XX/10/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -13,6 +13,7 @@
         - Using regular select for Dropdown Animation
         - Social Particle: New Display option allows to show icons only, text only or both (#1565)
         - Helium: Removed redundant favicon field in the Styles tab. Please use the one in the Page Settings.
+        - Updated Google Fonts (+3 fonts)
     3. [](#bugfix)
         - Fixed title editing for newly added Outlines (#1555)
         - Fixed fields set to not override still displaying overridable in Tabs containers (#1552)

@@ -1828,6 +1828,18 @@
 #g5-container .nomarginbottom .g-content {
   margin-bottom: 0 !important;
 }
+#g5-container .nomarginleft {
+  margin-left: 0 !important;
+}
+#g5-container .nomarginleft .g-content {
+  margin-left: 0 !important;
+}
+#g5-container .nomarginright {
+  margin-right: 0 !important;
+}
+#g5-container .nomarginright .g-content {
+  margin-right: 0 !important;
+}
 #g5-container .nopaddingall {
   padding: 0 !important;
 }
@@ -1845,6 +1857,18 @@
 }
 #g5-container .nopaddingbottom .g-content {
   padding-bottom: 0 !important;
+}
+#g5-container .nopaddingleft {
+  padding-left: 0 !important;
+}
+#g5-container .nopaddingleft .g-content {
+  padding-left: 0 !important;
+}
+#g5-container .nopaddingright {
+  padding-right: 0 !important;
+}
+#g5-container .nopaddingright .g-content {
+  padding-right: 0 !important;
 }
 #g5-container .g-flushed {
   padding: 0 !important;
