@@ -35,6 +35,7 @@
         - Menu Manager: Display info message and prevent user from saving menu if menu items have been checked out (#1019)
         - Fixed missing system message in component modals (#1156)
         - Fixed typo on custom translation filename (#1600)
+        - Fixed error in Menu particle when site has no default menu selected for the language
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Extended categories field to allow selecting custom taxonomies (#1535)

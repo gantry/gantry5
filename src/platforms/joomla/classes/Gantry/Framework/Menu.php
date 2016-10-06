@@ -100,11 +100,11 @@ class Menu extends AbstractMenu
     /**
      * Return default menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getDefaultMenuName()
     {
-        return $this->default->menutype;
+        return $this->default ? $this->default->menutype : null;
     }
 
     /**
@@ -120,7 +120,7 @@ class Menu extends AbstractMenu
     /**
      * Return active menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveMenuName()
     {
