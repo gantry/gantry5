@@ -19,6 +19,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use Gantry\Framework\Platform;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Theme extends AbstractTheme
@@ -87,11 +88,11 @@ class Theme extends AbstractTheme
             $locator->addPath('gantry-admin', $prefix, $paths);
         }
 
-        \JPluginHelper::importPlugin('gantry5');
-
-        // Trigger the onGantryThemeInit event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5AdminInit', ['theme' => $this]);
+        // Fire admin init event.
+        $event = new Event;
+        $event->gantry = $gantry;
+        $event->theme = $this;
+        $gantry->fireEvent('admin.init.theme', $event);
     }
 
     /**

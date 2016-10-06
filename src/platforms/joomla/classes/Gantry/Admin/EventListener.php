@@ -27,6 +27,7 @@ class EventListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            'admin.init.theme'  => ['onAdminThemeInit', 0],
             'admin.global.save' => ['onGlobalSave', 0],
             'admin.styles.save' => ['onStylesSave', 0],
             'admin.settings.save' => ['onSettingsSave', 0],
@@ -36,8 +37,19 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    public function onAdminThemeInit(Event $event)
+    {
+        \JPluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeInit event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5AdminInit', ['theme' => $event->theme]);
+    }
+
     public function onGlobalSave(Event $event)
     {
+        \JPluginHelper::importPlugin('gantry5');
+
         // Trigger the onGantryThemeUpdateCss event.
         $dispatcher = \JEventDispatcher::getInstance();
         $dispatcher->trigger('onGantry5SaveConfig', [$event->data]);

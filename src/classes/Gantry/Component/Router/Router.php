@@ -137,9 +137,6 @@ abstract class Router implements RouterInterface
             return new Theme(GANTRYADMIN_PATH);
         };
 
-        // Boot the service.
-        $this->container['admin.theme'];
-
         // Add event listener.
         if (class_exists('Gantry\\Admin\\EventListener')) {
             $listener = new EventListener;
@@ -148,6 +145,9 @@ abstract class Router implements RouterInterface
             $events = $this->container['events'];
             $events->addSubscriber($listener);
         }
+
+        // Boot the service.
+        $this->container['admin.theme'];
 
         return $this;
     }
