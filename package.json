@@ -18,7 +18,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^5.0.0"
+    "yargs": "^6.0.0"
   },
   "scripts": {
     "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",
