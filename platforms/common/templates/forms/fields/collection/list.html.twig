@@ -5,12 +5,28 @@
 
 {% block field %}
     {% if field.is_current %}
-        <div class="g-grid">
+        <div class="g-filter-actions">
+            <div class="g-panel-filters" data-g-global-filter="">
+                <div class="search settings-block">
+                    {% set filter = {'element': '.settings-param', 'title': '.settings-param-title, h4 .g-title', 'fallback': true} %}
+                    <input type="text" data-g-collapse-filter="{{ filter|json_encode|e('html_attr') }}" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
+                    <i class="fa fa-fw fa-search"></i>
+                </div>
+                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+            </div>
+        </div>
+        <div class="cards-wrapper g-grid">
+            {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
             {% for key, val in value %}
                 {% set title = (field.value == field.key ? key : val[field.value]) %}
+                {% set prefix = route ~ '.' ~ key ~ '.' ~ field.value %}
                 <div class="card settings-block">
-                    <h4>
-                        <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="title">{{ title }}</span>
+                    <h4
+                        data-g-collapse="{{ labels|merge({collapsed: false, id: prefix, store: false,  target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                    >
+                        <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
+                        <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="g-title">{{ title }}</span>
                         <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
                     </h4>
                     <div class="inner-params">
@@ -49,7 +65,7 @@
                                         <li data-collection-item="{{ field.value }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
-                                            <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="title">{{ itemValue }}</span></a>
+                                            <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
                                             {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
                                             <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>

@@ -9985,14 +9985,15 @@ ready(function() {
 
         data = JSON.parse(element.data('g-collapse'));
         target = $(event.target);
-        storage = Cookie.read('g5-collapsed') || {};
+        storage = ((data.store !== false) ? Cookie.read('g5-collapsed') : storage) || {};
         if (!data.handle) { data.handle = element.find('.g-collapse'); }
 
         if (!target.matches(data.handle) && !target.parent(data.handle)) { return false; }
 
         if (storage[data.id] === undefined) {
             storage[data.id] = data.collapsed;
-            Cookie.write('g5-collapsed', storage);
+
+            if (data.store !== false) { Cookie.write('g5-collapsed', storage); }
         }
 
         var collapsed = storage[data.id],
@@ -10027,7 +10028,9 @@ ready(function() {
             refreshData.collapsed = !collapsed;
             element.data('g-collapse', JSON.stringify(refreshData));
 
-            Cookie.write('g5-collapsed', storage);
+            if (data.store !== false) {
+                Cookie.write('g5-collapsed', storage);
+            }
         };
 
         if (element.gFastCollapse) {
@@ -10047,11 +10050,11 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode       = element.data('g-collapse-all') == 'true',
-            parent     = element.parent('.g-filter-actions'),
-            container  = parent.nextSibling(),
-            collapsers = container.search('[data-g-collapse]'),
-            storage    = Cookie.read('g5-collapsed') || {},
+        var mode          = element.data('g-collapse-all') == 'true',
+            parent        = element.parent('.g-filter-actions'),
+            container     = parent.nextSibling(),
+            collapsers    = container.search('[data-g-collapse]'),
+            CookieStorage = Cookie.read('g5-collapsed') || {},
             panel, data, handle, card;
 
         if (!collapsers) { return; }
@@ -10063,9 +10066,12 @@ ready(function() {
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
 
-            storage[data.id] = mode;
-            Cookie.write('g5-collapsed', storage);
+            storage = ((data.store !== false) ? CookieStorage : storage) || {};
 
+            storage[data.id] = mode;
+            if (data.store !== false) {
+                Cookie.write('g5-collapsed', storage);
+            }
 
             panel.attribute('style', null);
             collapser[!mode ? 'removeClass' : 'addClass']('g-collapsed-main');
@@ -10075,9 +10081,10 @@ ready(function() {
 
     // filter by card title
     body.delegate('input', '[data-g-collapse-filter]', function(event, element) {
-        var parent    = element.parent('.g-filter-actions'),
+        var filter    = JSON.parse(element.data('g-collapse-filter') || '{}'),
+            parent    = element.parent('.g-filter-actions'),
             container = parent.nextSibling(),
-            cards     = container.search('.card'),
+            cards     = container.search(filter.element || '.card'),
             value     = element.value();
 
         if (!cards) { return; }
@@ -10085,7 +10092,7 @@ ready(function() {
         if (!value) { cards.attribute('style', null); }
         cards.forEach(function(element, index) {
             element = $(element);
-            var title   = trim(element.find('h4 .g-title').text()),
+            var title   = trim(element.find(filter.title || 'h4 .g-title').text()),
                 matches = title.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
             if (matches) { element.attribute('style', null); }
