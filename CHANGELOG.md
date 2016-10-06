@@ -8,6 +8,7 @@
         - Add configuration option to use default platform upload path when adding new images via file picker (#1597)
         - SCSS compiler: Make all URLs https compatible by replacing `http://` protocol with `//`
         - Helium: Added a second sidebar `Aside` to the default layout. It and `Sidebar` have also been set to have fixed size
+        - Add initial support for translating form field `label` and `description` (#84)
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)

@@ -47,6 +47,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
+            new \Twig_SimpleFilter('trans_key', [$this, 'transKeyFilter']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
             new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
@@ -104,6 +105,25 @@ class TwigExtension extends \Twig_Extension
         $path = explode('.', $str);
 
         return array_shift($path) . ($path ? '[' . implode('][', $path) . ']' : '');
+    }
+
+    /**
+     * Translate by using key, default on original string.
+     *
+     * @param $str
+     * @param $key
+     * @return string
+     */
+    public function transKeyFilter($str)
+    {
+        $params = func_get_args();
+        array_shift($params);
+
+        $key = 'GANTRY5_' . preg_replace('|[^A-Z0-9]+|', '_', strtoupper(implode('_', $params)));
+
+        $translation = $this->transFilter($key);
+
+        return $translation === $key ? $str : $translation;
     }
 
     /**
