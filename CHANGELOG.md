@@ -30,7 +30,7 @@
         - Add plugin events `onGantry5AdminInit` and `onGantry5ThemeInit` to allow custom Twig filters and functions (#1584)
     3. [](#bugfix)
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
-        - Joomla Articles Particle: Add field for enteting article ids (thanks @JoomFX - #1591)
+        - Joomla Articles Particle: Add field for entering article ids (thanks @JoomFX - #1591)
         - Fixed accessing Particle module from Joomla Module Manager if user does not have access to edit template (#1476)
         - Menu Manager: Display info message and prevent user from saving menu if menu items have been checked out (#1019)
         - Fixed missing system message in component modals (#1156)
