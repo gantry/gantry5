@@ -86,6 +86,12 @@ class Theme extends AbstractTheme
         foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
             $locator->addPath('gantry-admin', $prefix, $paths);
         }
+
+        \JPluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeInit event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5AdminInit', ['theme' => $this]);
     }
 
     /**

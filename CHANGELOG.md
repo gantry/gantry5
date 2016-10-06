@@ -24,6 +24,8 @@
         - Fixed enablers in `Particle Defaults` having custom value and still appearing to be unchecked (#1570)
         - Fixed inheritance converting associative arrays into objects causing associative lists to be missing in inherited sections and particles (#1585)
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Add plugin events `onGantry5AdminInit` and `onGantry5ThemeInit` to allow custom Twig filters and functions (#1584)
     3. [](#bugfix)
         - Fixed routing for `index.php?Itemid=xxx` URLs inside particles
         - Joomla Articles Particle: Add field for enteting article ids (thanks @JoomFX - #1591)

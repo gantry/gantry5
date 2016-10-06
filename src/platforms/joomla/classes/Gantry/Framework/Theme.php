@@ -93,12 +93,6 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        \JPluginHelper::importPlugin('gantry5');
-
-        // Trigger the onGantryThemeInit event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
-
         $lang = \JFactory::getLanguage();
 
         // FIXME: Do not hardcode this file.
@@ -126,6 +120,12 @@ class Theme extends AbstractTheme
         $this->language = $doc->language;
         $this->direction = $doc->direction;
         $this->url = \JUri::root(true) . '/templates/' . $this->name;
+
+        \JPluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeInit event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
     }
 
     /**
