@@ -7,6 +7,7 @@
         - Added `nomarginleft`, `nomarginright`, `nopaddingleft`, `nopaddingright` CSS utility classes to Nucleus
         - Add configuration option to use default platform upload path when adding new images via file picker (#1597)
         - SCSS compiler: Make all URLs https compatible by replacing `http://` protocol with `//`
+        - Helium: added a second sidebar `Aside` section to the default layout. Both with `Sidebar` section are also set to have fixed size.
     2. [](#improved)
         - Display sorted sidebar folders in Filepicker
         - Better coordination for dragged items in Menu and Layout Manager (related #1576)
