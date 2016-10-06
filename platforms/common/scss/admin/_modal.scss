@@ -142,9 +142,13 @@ html.g5-dialog-open {
         width: 90%;
 
         .settings-block:not(:only-child) {
+            margin: 10px 0;
+        }
+
+        /*.settings-block:not(:only-child) {
             width: 48% !important;
             margin: 10px 1% !important;
-        }
+        }*/
 
         @include breakpoint(mobile-only) {
             .settings-block {
