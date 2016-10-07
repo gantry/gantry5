@@ -2,6 +2,11 @@
 ## 06/10/2016
 
 1. [Common](#common)
+
+# 5.3.6
+## 06/10/2016
+
+1. [Common](#common)
     1. [](#new)
         - Updated scssphp to v0.6.6
         - Added `nomarginleft`, `nomarginright`, `nopaddingleft`, `nopaddingright` CSS utility classes to Nucleus
