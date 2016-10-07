@@ -96,17 +96,14 @@
                                         {% if display.category.enabled %}
                                             {% set category_link = display.category.enabled == 'link' %}
                                             <span class="g-array-item-category">
-                                                {% for category in article.categories %}
-                                                    {% if loop.last %}
-                                                        {% if category_link %}
-                                                            <a href="{{ category.route }}">
-                                                                <i class="fa fa-folder-open"></i>{{ category.title }}
-                                                            </a>
-                                                        {% else %}
-                                                            <i class="fa fa-folder-open"></i>{{ category.title }}
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
+                                                {% set cat = article.categories|last %}
+                                                {% if category_link %}
+                                                    <a href="{{ cat.route }}">
+                                                        <i class="fa fa-folder-open"></i>{{ cat.title }}
+                                                    </a>
+                                                {% else %}
+                                                    <i class="fa fa-folder-open"></i>{{ cat.title }}
+                                                {% endif %}
                                             </span>
                                         {% endif %}
 
