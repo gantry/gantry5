@@ -8,9 +8,7 @@
     
     {% if particle.url_disable == false %}
         <a href="{{ url }}" title="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
-    {% else %}
-        <div {{ class|default('')|raw }}>
-    {% endif %}
+    {% else %}<div {{ class|default('')|raw }}>{% endif %}
         {% if particle.svg is not empty %}
             {{ particle.svg|raw }}
         {% elseif image %}
@@ -18,9 +16,5 @@
         {% else %}
             {{ particle.text|default('Logo') }}
         {% endif %}
-    {% if particle.url_disable == false %}
-        </a>
-    {% else %}
-        </div>
-    {% endif %}
+    {% if particle.url_disable == false %}</a>{% else %}</div>{% endif %}
 {% endblock %}
