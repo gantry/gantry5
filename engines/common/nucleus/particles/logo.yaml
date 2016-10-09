@@ -20,6 +20,12 @@ form:
       type: input.imagepicker
       label: Image
       description: Select desired logo image.
+      
+    url_disable:
+      type: input.checkbox
+      label: Disable Url
+      description: Disable image url.
+      default: false
 
     svg:
       type: textarea.textarea
