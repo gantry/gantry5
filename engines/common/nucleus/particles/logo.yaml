@@ -21,10 +21,10 @@ form:
       label: Image
       description: Select desired logo image.
       
-    url_disable:
+    nolink:
       type: input.checkbox
-      label: Disable Url
-      description: Disable image url.
+      label: No Link
+      description: Renders Logo/Image without any link.
       default: false
 
     svg:
