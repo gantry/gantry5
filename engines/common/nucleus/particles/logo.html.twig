@@ -6,7 +6,7 @@
     {% set class=(particle.class ? 'class="'~ particle.class ~'"') %}
     {% set image = url(particle.image) %}
     
-    {% if particle.url_disable == false %}
+    {% if particle.nolink == false %}
         <a href="{{ url }}" title="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
     {% else %}<div {{ class|default('')|raw }}>{% endif %}
         {% if particle.svg is not empty %}
@@ -16,5 +16,5 @@
         {% else %}
             {{ particle.text|default('Logo') }}
         {% endif %}
-    {% if particle.url_disable == false %}</a>{% else %}</div>{% endif %}
+    {% if particle.nolink == false %}</a>{% else %}</div>{% endif %}
 {% endblock %}
