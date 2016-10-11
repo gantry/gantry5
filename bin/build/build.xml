@@ -85,27 +85,6 @@
 
         <delete dir="${tmp_dir}"/>
         <delete dir="${build_dir}"/>
-
-        <!-- Fail the build if yarn is not installed -->
-        <!-- <trycatch>
-            <try>
-                <exec command="yarn --version" checkreturn="true" passthru="true" output="/dev/null" />
-            </try>
-            <catch>
-                <fail message="Please install Yarn Package Manager" />
-            </catch>
-        </trycatch> -->
-
-
-        <!-- Fail the build if gulp is not installed -->
-        <!-- <trycatch>
-            <try>
-                <exec command="yarn ls gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
-            </try>
-            <catch>
-                <echo message="Please install Gulp globally" />
-            </catch>
-        </trycatch> -->
     </target>
 
     <target name="info">
