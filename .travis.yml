@@ -21,14 +21,18 @@ env:
     # GH_TOKEN
     - secure: "GIFHCpRBw07hm/RwDUbeh1EZS3nUCRFnsAhyeBm02a5dKbCCIrAUoI5HVjTPyFiG/UKaRo3u/7byA3ROmXgVE48Hg5n4E3+ga8zOwdRdXql7V6pwu4bII4Kr+4qFgIDkn8ca1Ut1bxKQZI/NP/FR73pZ/pst/rtw27M4Au/PZSHAtAkMF1KSqcRSfvggAtqnhh3xFTFx13XvakX7zpP1AyD1Yft4dHhhZN+BHTxQgRrl+fJLky1MAwIwOl1xOF1VH+RQDdh3yXLHMfbznTjdeE9vJCiEjnZPUgZ+aXusLj1bJoNgrRNVCCikrOMLFK854YxxzGuzRtN/6xhcB/8LeFypw8jhHNnswJ5TX8heB7i4Jbu/7OTCk5/Ew0uG6kveTtvWsAOmVZZAqSl4Z/hZowCAavXy2X1DmZpsjQ0ljxZC271a5UQpI5HF7EKVoFhzvxyxZrxlUYSSDFTOoNGauKvsZbtgz6A0eAQOpjtuWXRTYnbxsOEZFuZCuOwUU6EdDtSA0RIpxnUI3qwn26+GzGTaaxjwTQ+ZtytmHaddC3jgKZ9EfZB6yOUeXXdnI+h0coSR8lp4yjOU/ZWnA9n96+fMqwnR5zCbxJeErhI8RJFWJL1/so1k0wq3t4OixVjDGY1rJkkugD8AnIUEPgB/gfGtF5t6J4WGrpFhWzej9/c="
 before_install:
+  - nvm install stable
+  - nvm use stable
   - composer self-update
+  - npm config set spin false
+  - npm install -g yarn
   - if [ ! -z "$TRAVIS_TAG" ]; then
       gem install sass;
-      npm install -g gulp;
+      yarn global install gulp;
     fi
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
-      npm install;
+      yarn install;
       gulp -up;
     fi
   - cd $TRAVIS_BUILD_DIR/src/platforms/joomla && composer install --no-dev;

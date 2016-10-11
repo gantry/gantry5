@@ -86,20 +86,20 @@
         <delete dir="${tmp_dir}"/>
         <delete dir="${build_dir}"/>
 
-        <trycatch>
+        <!-- <trycatch>
             <try>
-                <!-- Fail the build if npm is not installed -->
-                <exec command="npm -v" checkreturn="true" passthru="true" output="/dev/null" />
+                <!-- Fail the build if yarn is not installed --><!--
+                <exec command="yarn --version" checkreturn="true" passthru="true" output="/dev/null" />
             </try>
             <catch>
-                <fail message="Please install Node Package Manager" />
+                <fail message="Please install Yarn Package Manager" />
             </catch>
-        </trycatch>
+        </trycatch> -->
 
         <trycatch>
             <try>
                 <!-- Fail the build if gulp is not installed -->
-                <exec command="npm list -g gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
+                <exec command="yarn ls gulp|grep gulp" checkreturn="true" passthru="true" output="/dev/null" />
             </try>
             <catch>
                 <echo message="Please install Gulp globally" />
