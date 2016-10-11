@@ -101,6 +101,7 @@
 
         <copy todir="${tmp_dir}/packages/gantry5/src/vendor" overwrite="true">
             <fileset dir="${path.src}/platforms/wordpress/vendor">
+                <exclude name="bin/"/>
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
                 <exclude name="**/Tests/"/>

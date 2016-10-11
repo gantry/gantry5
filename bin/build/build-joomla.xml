@@ -103,6 +103,7 @@
 
         <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
             <fileset dir="${path.src}/platforms/joomla/vendor">
+                <exclude name="bin/"/>
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
                 <exclude name="**/Tests/"/>
