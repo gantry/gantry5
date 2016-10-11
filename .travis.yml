@@ -25,6 +25,7 @@ before_install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
       gem install sass;
       curl -o- -L https://yarnpkg.com/install.sh | bash;
+      source ~/.bashrc;
       yarn global install gulp;
     fi
 install:
