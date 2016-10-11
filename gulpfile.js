@@ -24,10 +24,10 @@ if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|
 
             try { exists = fs.lstatSync(nodes).isDirectory(); }
             catch (e) {}
-            if (exists) { method = 'update --save --save-dev'; }
+            if (exists) { method = 'upgrade'; }
 
-            console.log((exists ? 'Updating' : "Installing") + " JS dependencies in: " + path);
-            child = exec('cd ' + path + ' && npm ' + method + ' --silent',
+            console.log((exists ? 'Upgrading' : "Installing") + " JS dependencies in: " + path);
+            child = exec('cd ' + path + ' && yarn ' + method, // + ' --silent',
                 function(error, stdout, stderr) {
                     if (stdout) { console.log('Completed `' + path + '`:', "\n", stdout); }
                     if (stderr) { console.log('Error `' + path + '`:' + stderr); }
