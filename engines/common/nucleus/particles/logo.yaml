@@ -20,6 +20,12 @@ form:
       type: input.imagepicker
       label: Image
       description: Select desired logo image.
+      
+    nolink:
+      type: input.checkbox
+      label: No Link
+      description: Renders Logo/Image without any link.
+      default: false
 
     svg:
       type: textarea.textarea
