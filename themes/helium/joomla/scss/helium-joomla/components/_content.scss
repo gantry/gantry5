@@ -1,6 +1,7 @@
 // Single Article
 .page-header {
     h2 {
+        font-family: get-font-family($font-family-title);
         margin-bottom: 0.5rem;
     }
 }

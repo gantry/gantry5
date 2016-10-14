@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    3. [](#bugfix)
+        - Helium: Fixed wrong font being used for the content titles (#1603)
 
 # 5.3.6
 ## 06/10/2016

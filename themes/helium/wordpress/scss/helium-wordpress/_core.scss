@@ -27,6 +27,7 @@
         .entries, .entry {
             .entry-header {
                 .entry-title {
+                    font-family: get-font-family($font-family-title);
                     margin-bottom: 0.5rem;
                 }
             }
