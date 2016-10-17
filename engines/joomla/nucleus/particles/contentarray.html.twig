@@ -67,7 +67,7 @@
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
                                             <a href="{{ article.route }}">
-                                                {{ display.title.limit ? article.title|truncate_text(display.title.limit) : article.title }}
+                                                {{ display.title.limit ? article.title|truncate_text(display.title.limit)|raw : article.title|raw }}
                                             </a>
                                         </h3>
                                     </div>
