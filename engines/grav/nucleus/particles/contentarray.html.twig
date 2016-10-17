@@ -56,7 +56,7 @@
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
                                             <a href="{{ page.url }}">
-                                                {{ display.title.limit ? page.title|truncate_text(display.title.limit) : page.title }}
+                                                {{ display.title.limit ? page.title|truncate_text(display.title.limit)|raw : page.title|raw }}
                                             </a>
                                         </h3>
                                     </div>
