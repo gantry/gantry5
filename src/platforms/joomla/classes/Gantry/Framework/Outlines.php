@@ -77,6 +77,8 @@ class Outlines extends BaseOutlines
         $preset = $template->params->get('preset', 'default');
         $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : null);
 
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Template Style:') && \Gantry\Debugger::addMessage($template);
+
         if (JDEBUG && !$outline) {
             static $shown = false;
 
