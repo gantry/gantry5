@@ -21,11 +21,11 @@ form:
       label: Image
       description: Select desired logo image.
       
-    nolink:
+    link:
       type: input.checkbox
-      label: No Link
-      description: Renders Logo/Image without any link.
-      default: false
+      label: Link
+      description: Renders Logo/Image with a link.
+      default: true
 
     svg:
       type: textarea.textarea
