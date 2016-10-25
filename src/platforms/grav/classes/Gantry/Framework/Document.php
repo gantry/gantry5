@@ -10,8 +10,10 @@
 
 namespace Gantry\Framework;
 
+use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Gantry\Framework\Base\Document as BaseDocument;
+use Grav\Common\Language\Language;
 
 class Document extends BaseDocument
 {
@@ -27,6 +29,33 @@ class Document extends BaseDocument
         $grav = Grav::instance();
 
         return rtrim($grav['base_url'], '/') ?: '/';
+    }
+
+    public static function siteUrl()
+    {
+        static $url;
+
+        if (!$url) {
+            // TODO: there should be Grav method to get this!
+            $grav = Grav::instance();
+
+            /** @var Config $config */
+            $config = $grav['config'];
+
+            /** @var Language $language */
+            $language = $grav['language'];
+
+            $active_language = $language->getActive();
+
+            $path_append = rtrim($grav['pages']->base(), '/');
+            if ($language->getDefault() != $active_language || $config->get('system.languages.include_default_lang') === true) {
+                $path_append .= $active_language ? '/' . $active_language : '';
+            }
+
+            $url = rtrim($grav['base_url'] . $path_append, '/') ?: '/';
+        }
+
+        return $url;
     }
 
     public static function registerStyles()

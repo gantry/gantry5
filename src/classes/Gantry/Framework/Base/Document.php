@@ -467,8 +467,8 @@ class Document
             return null;
         }
 
-        if ($url[0] === '#') {
-            // Handle fragment only.
+        if ($url[0] === '#' || $url[0] === '?') {
+            // Handle urls with query string or fragment only.
             return $url;
         }
 
