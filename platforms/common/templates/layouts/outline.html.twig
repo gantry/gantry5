@@ -1,4 +1,8 @@
-{%  set preset = gantry.outlines.layoutPreset(name) %}
+{% try %}
+{% set preset = gantry.outlines.layoutPreset(name) %}
+{% catch %}
+{% set preset = gantry.outlines.layoutPreset('default') %}
+{% endtry %}
 
 <div id="outline-{{ name }}" class="page">
     <h4>

@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Helium: Fixed wrong font being used for the content titles (#1603)
+        - Prevent broken Layout from breaking Gantry administration
 
 # 5.3.6
 ## 06/10/2016

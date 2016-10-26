@@ -74,7 +74,7 @@ class Outlines extends AbstractOutlineCollection
 
                 $list += $index['positions'];
             } catch (\Exception $e) {
-                // Ignore exceptions, it doesn't matter if missing layouts have no positions.
+                // Layout cannot be read. We will just skip it instead of throwing an exception.
             }
         }
 
@@ -99,7 +99,13 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
         foreach ($this->items as $name => $title) {
-            $index = Layout::index($name);
+            try {
+                $index = Layout::index($name);
+            } catch (\Exception $e) {
+                // Layout cannot be read. We will just skip it instead of throwing an exception.
+                continue;
+            }
+
             if (isset($index['sections'][$section])) {
                 if (!$includeInherited) {
                     foreach ($index['inherit'] as $outline => $items) {
@@ -124,7 +130,13 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
         foreach ($this->items as $name => $title) {
-            $index = Layout::index($name);
+            try {
+                $index = Layout::index($name);
+            } catch (\Exception $e) {
+                // Layout cannot be read. We will just skip it instead of throwing an exception.
+                continue;
+            }
+
             if (isset($index['particles'][$particle])) {
                 $ids = $index['particles'][$particle];
                 if (!$includeInherited && !empty($index['inherit'])) {
@@ -281,7 +293,12 @@ class Outlines extends AbstractOutlineCollection
     {
         $list = [];
         foreach ($this->items as $name => $title) {
-            $index = Layout::index($name);
+            try {
+                $index = Layout::index($name);
+            } catch (\Exception $e) {
+                // Layout cannot be read. We will just skip it instead of throwing an exception.
+                continue;
+            }
 
             if (!empty($index['inherit'][$outline]) && (!$id || array_intersect((array) $id, $index['inherit'][$outline]))) {
                 $list[$name] = $title;
@@ -302,7 +319,12 @@ class Outlines extends AbstractOutlineCollection
      */
     public function getInheritedOutlines($outline, $id = null)
     {
-        $index = Layout::index($outline);
+        try {
+            $index = Layout::index($outline);
+        } catch (\Exception $e) {
+            // Layout cannot be read. We will just return nothing instead of throwing an exception.
+            return [];
+        }
 
         $list = [];
         foreach ($index['inherit'] as $name => $inherited) {
