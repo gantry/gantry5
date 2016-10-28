@@ -29,7 +29,7 @@ class Translator implements TranslatorInterface
         if (preg_match('|^GANTRY5(_[A-Z0-9]+){2,}$|', $string)) {
             list(, $section, $code) = explode('_', $string, 3);
 
-            $string = ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $code;
+            $string = ($this->find($this->active, $section, $string) ?: $this->find($this->default, $section, $string)) ?: $string;
         }
 
         if (func_num_args() === 1) {
