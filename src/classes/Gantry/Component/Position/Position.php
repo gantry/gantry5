@@ -97,7 +97,9 @@ class Position extends Collection
     public function delete()
     {
         $file = $this->file(true);
-        $file->delete();
+        if ($file->exists()) {
+            $file->delete();
+        }
 
         $folder = $this->folder(true);
         if (is_dir($folder)) {
