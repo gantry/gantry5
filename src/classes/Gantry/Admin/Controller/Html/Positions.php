@@ -89,16 +89,24 @@ class Positions extends HtmlController
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
-        $title = $this->request->post['title'];
+        $title = (string) $this->request->post['title'];
+        $key = (string) $this->request->post['key'];
         $position = $positions[$position];
-        $position->rename($title);
+        if (strlen($title)) {
+            $position->title = (string) $title;
+        }
+        if (strlen($key)) {
+            $position = $position->rename($key);
+        } else {
+            $position->save();
+        }
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/position.html.twig',
-            ['name' => $position->name, 'title' => $title]
+            ['name' => $position->name, 'title' => $position->title]
         );
 
-        return new JsonResponse(['html' => sprintf("Position title changed to '%s'.", $title), 'id' => "position-{$position->name}", 'position' => $html]);
+        return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
     }
 
     public function duplicate($position)

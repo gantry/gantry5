@@ -76,17 +76,17 @@ class Position extends Collection
     }
 
     /**
-     * Raname module title
+     * Raname module key
      *
-     * @param string $title
-     * @return $this
+     * @param string $name
+     * @return static
      */
-    public function rename($title)
+    public function rename($name)
     {
-        $this->title = $title;
-        $this->save();
+        $new = $this->duplicate($name);
+        $this->delete();
 
-        return $this;
+        return $new;
     }
 
     /**
