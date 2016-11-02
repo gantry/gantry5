@@ -21,8 +21,19 @@
     {% for type, types in assignments %}
         {% for name, list in types %}
             <div class="card settings-block">
-                <h4>
+                <h4 data-positions-assignments>
                     {{ list.label }}
+
+                    {% set value = all or nested(data, path) %}
+                    {% set path = 'assignments.' ~ type %}
+                    {% include 'forms/fields/enable/enable.html.twig' with {
+                    'default': true,
+                    'name': path|fieldName,
+                    'field': link.field,
+                    'value': value,
+                    'disabled': not value,
+                    'turned_off': false
+                    } %}
                     <div class="g-panel-filters float-right align-right {{ (list.items|length > 1 and assignments|length == 1) ? 'hidden' : '' }}">
                         <div class="search settings-block">
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">

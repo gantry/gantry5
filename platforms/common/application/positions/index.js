@@ -335,6 +335,18 @@ ready(function() {
             });
         };
 
+    // Toggle all assignments on/off
+    body.delegate('change', '[data-positions-assignments] input[type="hidden"]', function(event, element) {
+        var card = element.parent('.card'),
+            wrapper = card.find('.settings-param-wrapper');
+
+        wrapper[element.value() == 1 ? 'addClass' : 'removeClass']('hide');
+        wrapper.search('input[type="hidden"]').forEach(function(element) {
+            element = $(element);
+            element.value(0);
+        });
+    });
+
     // Global state change
     body.on('statechangeAfter', function(event, element) {
         var editables = $('#positions [data-title-editable]');
