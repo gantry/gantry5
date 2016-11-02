@@ -279,13 +279,17 @@ ready(function() {
             if (wasCanceled || title == original) { return; }
             var element = this,
                 href = element.data('g-config-href'),
+                type = element.data('title-editable-type'),
                 method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                parent = element.parent('[id]'),
+                data = {};
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
+            data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
+
+            request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -300,12 +304,14 @@ ready(function() {
 
                     // refresh ID label and actions buttons
                     var dummy = zen('div').html(response.body.position),
-                        actions = dummy.find('.position-actions');
+                        actions = dummy.find('.position-actions'),
+                        card = element.parent('.card');
 
-                    element.parent('.card').find('h4 .position-key').html(response.body.id);
-                    element.parent('.card').find('.position-actions').html(actions.html());
+                    card.find('h4 .position-key').html(response.body.id);
+                    console.log(card);
+                    card.find('.position-actions').html(actions.html());
 
-                    var position = element.parent('.card').find('[data-position]'),
+                    var position = card.find('[data-position]'),
                         data = JSON.parse(position.data('position'));
 
                     data.title = title;

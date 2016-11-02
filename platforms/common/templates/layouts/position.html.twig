@@ -5,6 +5,7 @@
               data-title-editable="{{ position.title }}"
               class="title"
               data-tip="{{ position.title }}"
+              data-title-editable-type="title"
         >
             {{ position.title }}
         </span>
@@ -18,7 +19,15 @@
             </a>
         </span>
         <span class="font-small position-key">
-            <span>{{ position.name }}</span>
+            <span data-g-config-href="{{ gantry.route('positions', position.name, 'rename') }}"
+                  data-g-config-method="post"
+                  data-title-editable="{{ position.name }}"
+                  data-tip="{{ position.name }}"
+                  data-title-editable-type="key"
+                >
+                {{ position.name }}
+            </span>
+            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         </span>
     </h4>
     <div class="position-container inner-params" data-position="{{ position.toJson(true)|e('html_attr') }}" data-position-name="{{ position.name }}">
