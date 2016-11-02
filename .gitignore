@@ -35,3 +35,4 @@ themes/*/*/custom
 **/node_modules/*
 platforms/**/cache
 npm-debug.log
+/themes/multisite
