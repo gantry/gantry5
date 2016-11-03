@@ -124,15 +124,6 @@
 // Dropdown Top Offsets
 @include dropdown-offset-y(5px);
 
-// Nav Overlay
-.g-nav-overlay, .g-menu-overlay {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.g-menu-overlay.g-menu-overlay-open {
-    z-index: 19;
-}
-
 // Touch Device
 .g-menu-hastouch {
     .g-standard, .g-fullwidth {
