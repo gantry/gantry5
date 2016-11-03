@@ -72,6 +72,7 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
+                        die(static::getRelativeUrl($style['href']));
                         $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $priority);
                         break;
                     case 'inline':
@@ -118,7 +119,7 @@ class Document extends BaseDocument
         $base = rtrim(static::rootUri(), '/') . '/';
 
         if (strpos($url, $base) === 0) {
-            return substr($url, strlen($base));
+            return substr($url, strlen($base) - 1);
         }
         return $url;
     }
