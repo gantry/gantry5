@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Helium: Fixed wrong font being used for the content titles (#1603)
+        - Helium: Remove Expanded section padding on tablet-range view
         - Prevent broken Layout from breaking Gantry administration
 
 # 5.3.6
