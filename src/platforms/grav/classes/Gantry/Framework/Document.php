@@ -72,7 +72,6 @@ class Document extends BaseDocument
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        die(static::getRelativeUrl($style['href']));
                         $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $priority);
                         break;
                     case 'inline':
