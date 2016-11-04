@@ -9,73 +9,74 @@
         {% if page.header.link %}
             <h2 class="p-name">
                 {% if page.header.continue_link is not sameas(false) %}
-                    <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url"></i></a>
+                <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url"></i></a>
                 {% endif %}
                 <a href="{{ page.header.link }}" class="u-url">{{ page.title }}</a>
             </h2>
         {% else %}
             <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
         {% endif %}
-
-        <span class="list-blog-date">
+        <div class="list-blog-meta">
+            <i class="fa fa-clock-o"></i>
             <time class="dt-published" datetime="{{ page.date|date("c") }}">
-                <span>{{ page.date|date("d") }}</span>
-                <em>{{ page.date|date("M") }}</em>
+                {{ page.date|date('jS M Y') }}{% if page.taxonomy.tag %}, {% endif %}
             </time>
-        </span>
-        {% if page.taxonomy.tag %}
+            {% if page.taxonomy.tag %}
+            <i class="fa fa-tags"></i>
             <span class="tags">
-            {% for tag in page.taxonomy.tag %}
-                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>
-            {% endfor %}
-        </span>
-        {% endif %}
+                {% for tag in page.taxonomy.tag %}
+                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
+
         {% if header_image %}
             {% if header_image_file %}
                 {% set header_image_media = page.media.images[header_image_file] %}
             {% else %}
                 {% set header_image_media = page.media.images|first %}
             {% endif %}
-            {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+            {{ header_image_media.cropZoom(header_image_width, header_image_height).html|raw }}
         {% endif %}
 
     </div>
 
     <div class="list-blog-padding">
 
-        {% if page.header.continue_link is sameas(false) %}
+    {% if page.header.continue_link is sameas(false) %}
         <div class="e-content">
             {{ page.content|raw }}
         </div>
         {% if not truncate %}
-            {% set show_prev_next = true %}
+        {% set show_prev_next = true %}
         {% endif %}
-        {% elseif truncate and page.summary != page.content %}
-            <div class="p-summary e-content">
-                {{ page.summary|raw }}
-                <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
-            </div>
-        {% elseif truncate %}
+    {% elseif truncate and page.summary != page.content %}
+        <div class="p-summary e-content">
+            {{ page.summary|raw }}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('Read More...') }}</a></p>
+        </div>
+    {% elseif truncate %}
         <div class="p-summary e-content">
             {% if page.summary != page.content %}
-            {{ page.content|truncate(550)|raw }}
+                    {{ page.content|truncate(550)|raw }}
+                </div>
+            {% else %}
+                    {{ page.content|raw }}
+
+            {% endif %}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('Read More...') }}</a></p>
         </div>
-        {% else %}
+    {% else %}
+        <div class="e-content">
             {{ page.content|raw }}
+        </div>
 
+        {% if config.plugins.comments.enabled %}
+            {% include 'partials/comments.html.twig' %}
         {% endif %}
-        <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
-    </div>
-{% else %}
-    <div class="e-content">
-        {{ page.content|raw }}
-    </div>
 
-    {% if config.plugins.comments.enabled %}
-        {% include 'partials/comments.html.twig' %}
-    {% endif %}
-
-    {% set show_prev_next = true %}
+        {% set show_prev_next = true %}
     {% endif %}
 
     {% if show_prev_next %}
@@ -91,5 +92,5 @@
         </p>
     {% endif %}
 
-</div>
+    </div>
 </div>

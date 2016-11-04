@@ -60,23 +60,6 @@
             border-radius: $border-radius;
         }
     }
-
-    .list-blog-date {
-        float: right;
-        text-align: center;
-        span {
-            display: block;
-            font-size: 1.75rem;
-            font-weight: $font-weight-bold;
-            line-height: 110%;
-        }
-        em {
-            display: block;
-            border-top: 1px solid $border-color;
-            font-style: normal;
-            text-transform: uppercase;
-        }
-    }
 }
 
 // Bigger first para
@@ -89,12 +72,6 @@
 // Tags
 .tags {
     a {
-        display: inline-block;
-        font-size: $core-font-size - 0.2rem;
-        border: 1px solid $core-accent;
-        border-radius: $border-radius;
-        padding: 0.1rem 0.4rem;
-        margin-bottom: 0.2rem;
         text-transform: uppercase;
     }
 }
