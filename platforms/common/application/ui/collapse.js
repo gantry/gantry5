@@ -128,13 +128,14 @@ ready(function() {
             container     = parent.nextSibling(),
             collapsers    = container.search('[data-g-collapse]'),
             CookieStorage = Cookie.read('g5-collapsed') || {},
-            panel, data, handle, card;
+            panel, data, handle, card, inner;
 
         if (!collapsers) { return; }
 
         collapsers.forEach(function(collapser) {
             collapser = $(collapser);
             card = collapser.parent('.card');
+            inner = card.find('> .g-collapsed');
             data = JSON.parse(collapser.data('g-collapse'));
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
@@ -149,6 +150,10 @@ ready(function() {
             panel.attribute('style', null);
             collapser[!mode ? 'removeClass' : 'addClass']('g-collapsed-main');
             card[!mode ? 'removeClass' : 'addClass']('g-collapsed');
+
+            if (inner) {
+                inner[!mode ? 'removeClass' : 'addClass']('g-collapsed');
+            }
         });
     });
 
