@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated FontAwesome to 4.7.0 which includes [Grav](https://getgrav.org)'s Logo! 
     3. [](#bugfix)
         - Helium: Fixed wrong font being used for the content titles (#1603)
         - Helium: Remove Expanded section padding on tablet-range view
