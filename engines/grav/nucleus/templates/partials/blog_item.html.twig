@@ -19,8 +19,9 @@
         <div class="list-blog-meta">
             <i class="fa fa-clock-o"></i>
             <time class="dt-published" datetime="{{ page.date|date("c") }}">
-                {{ page.date|date('jS M Y') }}{% if page.taxonomy.tag %}, {% endif %}
+                {{ page.date|date('jS M Y') }}
             </time>
+            {% if page.taxonomy.tag %} <span class="separator">/</span> {% endif %}
             {% if page.taxonomy.tag %}
             <i class="fa fa-tags"></i>
             <span class="tags">

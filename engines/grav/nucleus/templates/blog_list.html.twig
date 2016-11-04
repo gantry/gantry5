@@ -4,9 +4,11 @@
 
 {% block content %}
 
+    {% if page.content %}
     <div class="blog-header">
         {{ page.content|raw }}
     </div>
+    {% endif %}
 
     {% for child in collection %}
         {% include 'partials/blog_item.html.twig' with {'blog':page, 'page':child, 'truncate':true} %}

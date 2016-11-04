@@ -59,6 +59,12 @@
             margin-top: 1rem;
             border-radius: $border-radius;
         }
+        .list-blog-meta {
+            .separator {
+                margin: 0 0.3rem;
+                color: transparentize($base-text-color, 80%);
+            }
+        }
     }
 }
 
