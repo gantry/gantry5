@@ -5,16 +5,55 @@
 {% block content %}
 
     {% if page.content %}
-    <div class="blog-header">
-        {{ page.content|raw }}
-    </div>
+        <div class="blog-header">
+            {{ page.content|raw }}
+        </div>
     {% endif %}
 
-    {% for child in collection %}
-        {% include 'partials/blog_item.html.twig' with {'blog':page, 'page':child, 'truncate':true} %}
-    {% endfor %}
+    <div class="list-blog cols-{{ page.header.content.columns }}">
+
+        {# Leading #}
+        {% if page.header.content.leading > 0 %}
+            {% for child in collection | slice(0, page.header.content.leading) %}
+                <div class="list-blog-row">
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true} %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {# Column Layout #}
+        {% if page.header.content.columns > 1 %}
+            {% if page.header.content.leading %}
+                {% for row in collection | slice(page.header.content.leading) | batch(page.header.content.columns) %}
+                    <div class="list-blog-row">
+                        {% for child in row %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true} %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for row in collection | batch(page.header.content.columns) %}
+                    <div class="list-blog-row">
+                        {% for child in row %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true} %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% if page.header.content.leading > 0 %}
+                {% for child in collection | slice(page.header.content.leading) %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true} %}
+                {% endfor %}
+            {% else %}
+                {% for child in collection %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true} %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
 
     {% if config.plugins.pagination.enabled and collection.params.pagination %}
-        {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+        {% include 'partials/pagination.html.twig' with {'base_url': page.url, 'pagination': collection.params.pagination} %}
     {% endif %}
 {% endblock %}

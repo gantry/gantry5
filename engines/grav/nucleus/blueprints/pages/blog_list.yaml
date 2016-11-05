@@ -38,6 +38,22 @@ form:
               label: Items
               default: '@self.children'
 
+            header.content.leading:
+              type: text
+              label: Leading Articles
+              default: 0
+              validate:
+                type: int
+                min: 0
+
+            header.content.columns:
+              type: text
+              label: Columns
+              default: 2
+              validate:
+                type: int
+                min: 0
+
             header.content.limit:
               type: text
               label: Max Item Count
