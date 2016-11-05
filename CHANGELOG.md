@@ -2,11 +2,14 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated FontAwesome to 4.7.0 which includes [Grav](https://getgrav.org)'s Logo! 
     3. [](#bugfix)
         - Helium: Fixed wrong font being used for the content titles (#1603)
         - Helium: Remove Expanded section padding on tablet-range view
         - Helium: Remove unneeded menu overlay when viewing site on touch devices
         - Prevent broken Layout from breaking Gantry administration
+        - Fixed Collection Lists' multi edit collapse/expand that could potentially end up stuck closed (#1612)
 
 # 5.3.6
 ## 06/10/2016
