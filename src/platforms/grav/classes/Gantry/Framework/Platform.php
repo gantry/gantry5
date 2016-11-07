@@ -135,7 +135,13 @@ class Platform extends BasePlatform
             $assignments = $module['assignments'];
             if (is_array($assignments)) {
                 // TODO: move Assignments to DI to speed it up.
-                if (!(new Assignments)->matches(['test' => $assignments])) {
+                $matches = (new Assignments)->matches(['test' => $assignments]);
+                if (GANTRY_DEBUGGER) {
+                    \Gantry\Debugger::addMessage("Module assignments for {$module['id']} (rules, matches):", 'debug');
+                    \Gantry\Debugger::addMessage($assignments, 'debug');
+                    \Gantry\Debugger::addMessage(isset($matches['test']) ? $matches['test'] : [], 'debug');
+                }
+                if (!$matches) {
                     return '';
                 }
             } elseif ($assignments !== 'all') {
