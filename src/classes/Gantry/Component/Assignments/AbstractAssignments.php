@@ -176,9 +176,10 @@ abstract class AbstractAssignments
      * Filter assignments data.
      *
      * @param array $data
+     * @param bool $minimize
      * @return array
      */
-    public function filter(array $data)
+    public function filter(array $data, $minimize = false)
     {
         $types = [];
         foreach ($this->types() as $type) {
@@ -203,6 +204,9 @@ abstract class AbstractAssignments
                     } else {
                         $group = (bool) $group;
                     }
+                }
+                if ($minimize && empty($type)) {
+                    unset($data[$tname]);
                 }
             } else {
                 $type = (bool) $type;

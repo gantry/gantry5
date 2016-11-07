@@ -234,7 +234,7 @@ class Positions extends HtmlController
         $data->set('options.attributes', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.attributes.enabled', 1);
 
-        $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'));
+        $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'), true);
         $assignments = $assignments ?: 'none';
 //        $assignments = 'all';
 
