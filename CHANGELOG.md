@@ -10,6 +10,7 @@
         - Helium: Remove unneeded menu overlay when viewing site on touch devices
         - Prevent broken Layout from breaking Gantry administration
         - Fixed Collection Lists' multi edit collapse/expand that could potentially end up stuck closed (#1612)
+        - Hydrogen / Helium: Fixed password field translation (#1657)
 
 # 5.3.6
 ## 06/10/2016
