@@ -194,14 +194,18 @@ abstract class AbstractAssignments
                             if (!$value) {
                                 unset($group[$key]);
                             } else {
-                                $group[$key] = (bool)$value;
+                                $group[$key] = (bool) $value;
                             }
                         }
                         if (empty($group)) {
                             unset($type[$gname]);
                         }
+                    } else {
+                        $group = (bool) $group;
                     }
                 }
+            } else {
+                $type = (bool) $type;
             }
         }
 
