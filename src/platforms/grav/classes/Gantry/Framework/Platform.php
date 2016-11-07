@@ -137,7 +137,7 @@ class Platform extends BasePlatform
                 // TODO: move Assignments to DI to speed it up.
                 $matches = (new Assignments)->matches(['test' => $assignments]);
                 if (GANTRY_DEBUGGER) {
-                    \Gantry\Debugger::addMessage("Module assignments for {$module['id']} (rules, matches):", 'debug');
+                    \Gantry\Debugger::addMessage("Module assignments for '{$module['id']}' (rules, matches):", 'debug');
                     \Gantry\Debugger::addMessage($assignments, 'debug');
                     \Gantry\Debugger::addMessage(isset($matches['test']) ? $matches['test'] : [], 'debug');
                 }
@@ -148,6 +148,8 @@ class Platform extends BasePlatform
                 return '';
             }
         }
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Rendering Gantry module '{$module['id']}'", 'info');
 
         /** @var Theme $theme */
         $theme = $this->container['theme'];
