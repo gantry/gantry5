@@ -9754,6 +9754,7 @@ ready(function() {
                 // Position Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
+                    fakeDOM = content.elements.content.find('form');
 
                     var target = $(e.currentTarget);
                     target.disabled(true);
@@ -9844,7 +9845,6 @@ ready(function() {
                         card = element.parent('.card');
 
                     card.find('h4 .position-key').html(response.body.id);
-                    console.log(card);
                     card.find('.position-actions').html(actions.html());
 
                     var position = card.find('[data-position]'),
