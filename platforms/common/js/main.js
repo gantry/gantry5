@@ -9883,7 +9883,7 @@ ready(function() {
         wrapper[element.value() == 1 ? 'addClass' : 'removeClass']('hide');
         wrapper.search('input[type="hidden"]').forEach(function(element) {
             element = $(element);
-            element.value(0);
+            element.value(0).disabled(true);
         });
     });
 
