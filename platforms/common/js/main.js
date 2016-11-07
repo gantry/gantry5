@@ -3506,6 +3506,7 @@ ready(function() {
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
+            text           = element.siblings().find('.g-focus .g-item'),
             value          = element.value(),
             name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
             form           = element.parent('[data-g-inheritance-settings]'),
@@ -3516,6 +3517,8 @@ ready(function() {
                 radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
                 checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
+
+        if (!text || !text.text().trim()) { return true; }
 
         var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
 
@@ -3722,6 +3725,7 @@ ready(function() {
         }
     });
 });
+
 },{"../../ui":53,"../../utils/get-ajax-suffix":68,"../../utils/get-ajax-url":69,"../../utils/get-outline":70,"agent":78,"elements":111,"elements/domready":109,"mout/collection/contains":185,"mout/collection/forEach":187,"mout/lang/isArray":201,"mout/object/filter":227,"mout/object/keys":234}],29:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),

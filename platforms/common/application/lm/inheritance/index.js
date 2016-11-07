@@ -32,6 +32,7 @@ ready(function() {
 
     body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
         var label          = element.parent('.settings-param').find('.settings-param-title'),
+            text           = element.siblings().find('.g-focus .g-item'),
             value          = element.value(),
             name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
             form           = element.parent('[data-g-inheritance-settings]'),
@@ -42,6 +43,8 @@ ready(function() {
                 radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
                 checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
             };
+
+        if (!text || !text.text().trim()) { return true; }
 
         var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
 
