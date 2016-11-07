@@ -55,7 +55,7 @@
             display: block;
         }
     } @else {
-        display: block;
+        display: block !important;
     }
 }
 
