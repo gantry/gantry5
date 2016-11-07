@@ -15,8 +15,9 @@ $app = JFactory::getApplication();
 // ACL for Gantry admin access.
 if (!$user->authorise('core.manage', 'com_gantry5')
     && !$user->authorise('core.manage', 'com_templates')
-    // Editing particle module makes AJAX call to Gantry component, but has restricted access to a single view only.
-    && !($user->authorise('core.manage', 'com_modules') && strpos($app->input->request->getString('view'), 'particle/') === 0)) {
+    // Editing particle module makes AJAX call to Gantry component, but has restricted access to json only.
+    && !($user->authorise('core.manage', 'com_modules') && $app->input->request->getString('format') === 'json')
+) {
     $app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
 
     return false;
