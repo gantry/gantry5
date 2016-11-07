@@ -215,7 +215,7 @@ var Map         = map,
             asyncForEach(toggles.inputs, function(item) {
                 item = $(item);
 
-                if (item.parent('label').compute('display') == 'none') { return; }
+                if (item.parent('label, h4').compute('display') == 'none') { return; }
 
                 item.value(mode).emit('change');
                 $('body').emit('change', { target: item });
@@ -261,7 +261,7 @@ var Map         = map,
                 match = text.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
                 if (onlyEnabled.checked()) {
-                    match = Number(!!match) & Number(item.parent('label').find('.enabler input[type="hidden"]').value());
+                    match = Number(!!match) & Number(item.parent('label, h4').find('.enabler input[type="hidden"]').value());
                 }
 
                 if (match) {
@@ -271,10 +271,10 @@ var Map         = map,
                         if (parentGroup) { parentGroup.style('display', 'block'); }
                     }
 
-                    item.parent('label').style('display', 'block');
+                    item.parent('label, h4').style('display', 'block');
                     on++;
                 } else {
-                    item.parent('label').style('display', 'none');
+                    item.parent('label, h4').style('display', 'none');
                     off++;
                 }
 
