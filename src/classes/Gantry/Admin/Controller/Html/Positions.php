@@ -236,7 +236,11 @@ class Positions extends HtmlController
 
         $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'), true);
         $assignments = $assignments ?: 'none';
-//        $assignments = 'all';
+
+        // TODO: This is a special case and hardcoded for now.
+        if ($assignments === ['page' => [true]]) {
+            $assignments = 'all';
+        }
 
         $data->set('assignments', $assignments);
 
