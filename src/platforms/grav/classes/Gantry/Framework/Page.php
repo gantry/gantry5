@@ -58,6 +58,10 @@ class Page extends Base\Page
             "outline-{$gantry['configuration']}",
         ];
 
+        $header = $page->header();
+        if (!empty($header->body_classes)) {
+            $classes[] = $header->body_classes;
+        }
         $baseAttributes = (array) $this->config->get('page.body.attribs', []);
         if (!empty($baseAttributes['class'])) {
             $baseAttributes['class'] = array_merge((array) $baseAttributes['class'], $classes);
