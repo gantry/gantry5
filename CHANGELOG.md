@@ -8,11 +8,13 @@
         - Helium: Fixed wrong font being used for the content titles (#1603)
         - Helium: Remove Expanded section padding on tablet-range view
         - Helium: Remove unneeded menu overlay when viewing site on touch devices
+        - Hydrogen / Helium: Fixed Offcanvas toggle visibility setting (#1630)
         - Prevent broken Layout from breaking Gantry administration
         - Fixed Collection Lists' multi edit collapse/expand that could potentially end up stuck closed (#1612)
-        - Hydrogen / Helium: Fixed password field translation (#1657)
-        - Hydrogen / Helium: Fixed Offcanvas toggle visibility setting (#1630)
         - Keep focus when clearing Inheritance dropdown (#1632)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)  
+        - Hydrogen / Helium: Fixed password field translation (#1657)
 
 # 5.3.6
 ## 06/10/2016
