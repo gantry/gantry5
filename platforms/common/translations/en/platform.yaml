@@ -225,6 +225,7 @@ GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED: 'The Particle "%s" settings have 
 GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED: "The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them."
 GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED: "The %s settings have been applied. <br />Remember to click the Save button to store them."
 GANTRY5_PLATFORM_JS_SETTINGS_APPLIED: "Settings Applied"
+GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED: "Positions Applied"
 GANTRY5_PLATFORM_JS_FILTER_MISMATCH: "does not match the filter"
 GANTRY5_PLATFORM_JUST_NOW: "just now"
 GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE: 'The key "%s" is a duplicate'
