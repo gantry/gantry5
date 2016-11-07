@@ -16,6 +16,7 @@ form:
       fields:
         _tab_articles:
           label: Articles
+          overridable: false
           fields:
             article.filter.categories:
               type: joomla.categories

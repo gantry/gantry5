@@ -12,6 +12,7 @@
         - Prevent broken Layout from breaking Gantry administration
         - Fixed Collection Lists' multi edit collapse/expand that could potentially end up stuck closed (#1612)
         - Keep focus when clearing Inheritance dropdown (#1632)
+        - Hide non-overridable fields inside tabs (#1665)
 3. [WordPress](#wordpress)
     3. [](#bugfix)  
         - Hydrogen / Helium: Fixed password field translation (#1657)

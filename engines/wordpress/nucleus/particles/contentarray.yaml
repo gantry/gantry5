@@ -16,6 +16,7 @@ form:
       fields:
         _tab_posts:
           label: Posts
+          overridable: false
           fields:
             post.filter.categories:
               type: wordpress.categories
