@@ -235,10 +235,12 @@ class Positions extends HtmlController
         $data->def('options.attributes.enabled', 1);
 
         $assignments = (new Assignments())->filter($this->request->post->getArray('assignments'), true);
-        $assignments = $assignments ?: 'none';
 
-        // TODO: This is a special case and hardcoded for now.
-        if ($assignments === ['page' => [true]]) {
+        if (!$assignments) {
+            // Use special syntax for no assignments.
+            $assignments = 'none';
+        } elseif ($assignments === ['page' => [true]]) {
+            // Use special syntax for assigned to all pages. This is a special case and hardcoded for now.
             $assignments = 'all';
         }
 

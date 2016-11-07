@@ -25,7 +25,7 @@
                     {{ list.label }}
 
                     {% set path = 'assignments.' ~ type ~ '.' ~ name %}
-                    {% set all_value = all or nested(data, path) %}
+                    {% set all_value = all or nested(data, path) is same as(true) %}
                     {% include 'forms/fields/enable/enable.html.twig' with {
                     'default': true,
                     'name': path|fieldName,
