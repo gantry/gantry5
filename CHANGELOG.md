@@ -17,6 +17,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix permissions for editing Particle modules without having access to Gantry admin (#1476)
+        - Fixed Gantry menu editor loosing content on CSS field in Joomla menu item (#1656)
 3. [WordPress](#wordpress)
     3. [](#bugfix)  
         - Hydrogen / Helium: Fixed password field translation (#1657)

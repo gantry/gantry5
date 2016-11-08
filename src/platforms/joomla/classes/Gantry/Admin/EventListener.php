@@ -166,7 +166,7 @@ class EventListener implements EventSubscriberInterface
                 $browserNav = intval($menu["items.{$key}.target"] === '_blank');
 
                 $options = [
-                    'menu-anchor_css' => $menu["items.{$key}.anchor_class"],
+//                    'menu-anchor_css' => $menu["items.{$key}.class"],
                     'menu_image' => $menu["items.{$key}.image"],
                     'menu_text' => intval(!$menu["items.{$key}.icon_only"]),
                     'menu_show' => intval($menu["items.{$key}.enabled"]),
