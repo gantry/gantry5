@@ -22,6 +22,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)  
         - Hydrogen / Helium: Fixed password field translation (#1657)
+        - Fixed editing the menu item titles under `Appearance > Menu` changing the order of menu items in Gantry (#1016)
 
 # 5.3.6
 ## 06/10/2016

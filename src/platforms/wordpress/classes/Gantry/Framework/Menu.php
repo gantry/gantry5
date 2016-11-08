@@ -265,6 +265,7 @@ class Menu extends AbstractMenu
         $itemMap = [];
         foreach ($items as $path => &$itemRef) {
             if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+                $itemRef['path'] = $path;
                 $itemMap[$itemRef['id']] = &$itemRef;
             }
         }
@@ -301,6 +302,14 @@ class Menu extends AbstractMenu
             if (isset($itemMap[$menuItem->ID])) {
                 // ID found, use it.
                 $itemParams += $itemMap[$menuItem->ID];
+
+                // Store new path for the menu item into path map.
+                if ($slugPath !== $itemMap[$menuItem->ID]['path']) {
+                    if (!$this->pathMap) {
+                        $this->pathMap = new Config([]);
+                    }
+                    $this->pathMap->set(preg_replace('|/|', '/children/', $itemMap[$menuItem->ID]['path']) . '/path', $slugPath, '/');
+                }
             } elseif (isset($items[$slugPath])) {
                 // Otherwise use the slug path.
                 $itemParams += $items[$slugPath];
