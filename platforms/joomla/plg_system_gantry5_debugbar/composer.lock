@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "maximebf/debugbar",
-            "version": "v1.12.0",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988"
+                "reference": "5f49a5ed6cfde81d31d89378806670d77462526e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
-                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/5f49a5ed6cfde81d31d89378806670d77462526e",
+                "reference": "5f49a5ed6cfde81d31d89378806670d77462526e",
                 "shasum": ""
             },
             "require": {
@@ -37,7 +37,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -66,26 +66,34 @@
                 "debug",
                 "debugbar"
             ],
-            "time": "2016-05-15 13:11:34"
+            "time": "2016-09-15 14:01:59"
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -99,12 +107,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "symfony/polyfill-iconv",
@@ -226,16 +235,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.1.0",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "436195b421e8c0493ca3e390c1fbecd8ee08c546"
+                "reference": "4dc2f03b480c43f1665d3317d827a04ed6ffd11e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/436195b421e8c0493ca3e390c1fbecd8ee08c546",
-                "reference": "436195b421e8c0493ca3e390c1fbecd8ee08c546",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/4dc2f03b480c43f1665d3317d827a04ed6ffd11e",
+                "reference": "4dc2f03b480c43f1665d3317d827a04ed6ffd11e",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +294,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-05-24 10:06:56"
+            "time": "2016-10-18 15:46:07"
         }
     ],
     "packages-dev": [],
