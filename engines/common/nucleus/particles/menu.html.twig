@@ -7,7 +7,7 @@
 {% macro getCustomWidth(item, menu, mode, dropdown_type) -%}
     {%- if (item.width|default('auto') != 'auto') and not (dropdown_type == 'fullwidth' and item.level > 1) -%}
         {%- if mode == 'item' %} style="position: relative;"
-        {%- elseif mode == 'submenu' %} style="width:{{ item.width|e }};" data-g-item-width="{{ item.width|e }}"
+        {%- elseif mode == 'submenu' %} style="width:{{ item.width }};" data-g-item-width="{{ item.width }}"
         {%- endif %}
     {%- endif %}
 {%- endmacro %}
@@ -25,9 +25,9 @@
 
 {% macro displayTitle(item) %}
     {% if not item.icon_only or not (item.image or item.icon) %}
-        <span class="g-menu-item-title">{{ item.title|e }}</span>
+        <span class="g-menu-item-title">{{ item.title }}</span>
         {% if item.subtitle %}
-            <span class="g-menu-item-subtitle">{{ item.subtitle|e }}</span>
+            <span class="g-menu-item-subtitle">{{ item.subtitle }}</span>
         {% endif %}
     {% endif %}
 {% endmacro %}
@@ -38,22 +38,22 @@
         {% set enabled = 0 %}
     {% endif %}
     {% if item.visible and item.enabled and enabled|default(1) %}
-        {% set title = item.icon_only or item.link_title ? ' title="' ~ item.link_title|default(item.title)|e ~ '"' %}
+        {% set title = item.icon_only or item.link_title ? ' title="' ~ item.link_title|default(item.title) ~ '"' %}
         {% set active = menu.isActive(item) ? ' active' %}
-        {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown()|e %}
+        {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
         {% set parent = item.children ? ' g-parent' %}
-        {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
+        {% set target = item.target != '_self' ? ' target="' ~ item.target ~ '"' %}
         {% set rel = item.rel ? ' rel="' ~ item.rel ~ '"' %}
 
-        <li class="g-menu-item g-menu-item-type-{{ item.type|e }} g-menu-item-{{ item.id|e }}{% if not item.dropdown_hide %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|e|default('') }}"
+        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent|raw }}{% endif %}{{ active|raw }}{{ dropdown|raw }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
                 {{- SELF.getCustomWidth(item, menu, 'item', dropdown) }}
-                {%- if context.particle.renderTitles|default(0) %} title="{{ item.title|e }}"{% endif %}>
-            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url|e }}{{ item.hash ? item.hash|e : '' }}"{{ (title ~ target ~ rel)|raw }}>
+                {%- if context.particle.renderTitles|default(0) %} title="{{ item.title }}"{% endif %}>
+            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url }}{{ item.hash }}"{{ (title ~ target ~ rel)|raw }}>
             {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent="">{% endif %}
                 {% if item.image %}
-                    <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+                    <img src="{{ url(item.image) }}" alt="{{ item.title }}" />
                 {% elseif item.icon %}
-                    <i class="{{ item.icon|e }}"></i>
+                    <i class="{{ item.icon }}"></i>
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">
@@ -88,9 +88,9 @@
     <div class="g-grid">
         {% set groups = item.getDropdown() == 'standard' ? [item] : item.groups %}
         {% for column, items in groups %}
-        <div class="g-block {{ item.columnWidth(column)|toGrid|e }}">
+        <div class="g-block {{ item.columnWidth(column)|toGrid }}">
             <ul class="g-sublevel">
-                <li class="g-level-{{ item.level|e }} g-go-back">
+                <li class="g-level-{{ item.level }} g-go-back">
                     <a class="g-menu-item-container" href="#" data-g-menuparent=""><span>Back</span></a>
                 </li>
                 {{ SELF.displayItems(items, menu, context, dropdown_type) }}
