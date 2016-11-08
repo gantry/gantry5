@@ -38,6 +38,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     protected $items;
 
+    /**
+     * @var Config|null
+     */
+    protected $pathMap;
+
     protected $defaults = [
         'menu' => '',
         'base' => '/',
@@ -363,10 +368,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * @param array $ordering
      * @param string $path
+     * @param array $map
      */
-    public function sortAll(array &$ordering = null, $path = '')
+    public function sortAll(array $ordering = null, $path = '', $map = null)
     {
-        if (!$ordering) {
+        if ($ordering === null) {
             $config = $this->config();
             $ordering = $config['ordering'] ? $config['ordering'] : [];
         }
@@ -375,25 +381,43 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             return;
         }
 
+        if ($map === null) {
+            $map = $this->pathMap ? $this->pathMap->toArray() : [];
+        }
+
+        $order = [];
+        $newMap = [];
         $item = $this->items[$path];
         if ($this->isAssoc($ordering)) {
-            $item->sortChildren($ordering);
+            foreach ($ordering as $key => $value) {
+                if ($map) {
+                    $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
+                    $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                    $order[$key] = $value;
+                }
 
-            foreach ($ordering as $key => &$value) {
                 if (is_array($value)) {
-                    $this->sortAll($value, $path ? $path . '/' . $key : $key);
+                    $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                 }
             }
-        } else {
-            $item->groupChildren($ordering);
 
-            foreach ($ordering as &$group) {
-                foreach ($group as $key => &$value) {
+            $item->sortChildren($order ?: $ordering);
+        } else {
+            foreach ($ordering as $i => $group) {
+                foreach ($group as $key => $value) {
+                    if ($map) {
+                        $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
+                        $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                        $order[$i][$key] = $value;
+                    }
+
                     if (is_array($value)) {
-                        $this->sortAll($value, $path ? $path . '/' . $key : $key);
+                        $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                     }
                 }
             }
+
+            $item->groupChildren($order ?: $ordering);
         }
 
     }

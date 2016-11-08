@@ -160,13 +160,14 @@ class EventListener implements EventSubscriberInterface
                 // Menu item exists in Joomla, let's update it instead.
                 unset($item['type'], $item['link']);
 
-                $item['id'] = $id;
+                $item['id'] = (int) $id;
 
                 $title = $menu["items.{$key}.title"];
                 $browserNav = intval($menu["items.{$key}.target"] === '_blank');
 
                 $options = [
-//                    'menu-anchor_css' => $menu["items.{$key}.class"],
+                    // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
+                    // 'menu-anchor_css' => $menu["items.{$key}.class"],
                     'menu_image' => $menu["items.{$key}.image"],
                     'menu_text' => intval(!$menu["items.{$key}.icon_only"]),
                     'menu_show' => intval($menu["items.{$key}.enabled"]),
@@ -221,12 +222,8 @@ class EventListener implements EventSubscriberInterface
                 unset($item['link']);
             }
 
-            if (!isset($item['type']) && isset($item['id']) && count($item) === 1) {
-                // Remove Joomla menu items which have no custom Gantry settings.
-                unset($event->menu["items.{$key}"]);
-            } else {
-                $event->menu["items.{$key}"] = $item;
-            }
+            // Because of ordering we need to save all menu items, including those from Joomla which have no data except id.
+            $event->menu["items.{$key}"] = $item;
         }
 
         // Clean the cache.

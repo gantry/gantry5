@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
@@ -254,6 +255,7 @@ class Menu extends AbstractMenu
             $itemMap = [];
             foreach ($items as $path => &$itemRef) {
                 if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+                    $itemRef['path'] = $path;
                     $itemMap[$itemRef['id']] = &$itemRef;
                 }
             }
@@ -280,6 +282,14 @@ class Menu extends AbstractMenu
                 if (isset($itemMap[$menuItem->id])) {
                     // ID found, use it.
                     $itemParams += $itemMap[$menuItem->id];
+
+                    // Store new path for the menu item into path map.
+                    if ($itemParams['path'] !== $itemMap[$menuItem->id]['path']) {
+                        if (!$this->pathMap) {
+                            $this->pathMap = new Config([]);
+                        }
+                        $this->pathMap->set(preg_replace('|/|', '/children/', $itemMap[$menuItem->id]['path']) . '/path', $itemParams['path'], '/');
+                    }
                 } elseif (isset($items[$menuItem->route])) {
                     // ID not found, try to use route.
                     $itemParams += $items[$menuItem->route];
