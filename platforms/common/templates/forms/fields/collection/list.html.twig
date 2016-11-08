@@ -20,10 +20,10 @@
             {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
             {% for key, val in value %}
                 {% set title = (field.value == field.key ? key : val[field.value]) %}
-                {% set prefix = route ~ '.' ~ key ~ '.' ~ field.value %}
+                {% set id = route ~ '.' ~ key ~ '.' ~ field.value %}
                 <div class="card settings-block">
                     <h4
-                        data-g-collapse="{{ labels|merge({collapsed: false, id: prefix, store: false,  target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                        data-g-collapse="{{ labels|merge({collapsed: false, id: id, store: false,  target: '~ .inner-params' })|json_encode|e('html_attr') }}"
                     >
                         <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
                         <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="g-title">{{ title }}</span>

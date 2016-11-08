@@ -13,6 +13,7 @@
         - Fixed Collection Lists' multi edit collapse/expand that could potentially end up stuck closed (#1612)
         - Keep focus when clearing Inheritance dropdown (#1632)
         - Hide non-overridable fields inside tabs (#1665)
+        - Fixed nested collections being non-editable after using `Edit all items` button in a parent collection (#1612)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix permissions for editing Particle modules without having access to Gantry admin (#1476)

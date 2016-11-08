@@ -31,6 +31,8 @@ form:
       ajax: true
 
       fields:
+        .name:
+          type: input.text
         .image:
           type: input.imagepicker
           label: Image
