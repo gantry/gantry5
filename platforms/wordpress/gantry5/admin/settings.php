@@ -8,23 +8,26 @@ add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 )
 add_filter( 'network_admin_plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 
 function gantry5_register_admin_settings() {
-    register_setting( 'gantry5_plugin_options', 'gantry5_plugin' );
+    if ( current_user_can( 'manage_options' ) ){
+        register_setting( 'gantry5_plugin_options', 'gantry5_plugin' );
+    }
 }
 
-function gantry5_manage_settings()
-{
-    add_submenu_page( null, 'Gantry 5 Settings', 'Gantry 5 Settings', 'manage_options', 'g5-settings', 'gantry5_plugin_settings' );
+function gantry5_manage_settings() {
+    if ( current_user_can( 'manage_options' ) ){
+        add_options_page( 'Gantry 5 Settings', 'Gantry 5 Settings', 'manage_options', 'g5-settings', 'gantry5_plugin_settings' );
+    }
 }
 
 function gantry5_modify_plugin_action_links( $links, $file ) {
-    // Return normal links if not Gantry 5
-    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file ) {
+    // Return normal links if not Gantry 5 or insufficient permissions
+    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file || !current_user_can( 'manage_options' ) ) {
         return $links;
     }
 
     // Add a few links to the existing links array
     return array_merge( $links, array(
-        'settings' => '<a href="' . esc_url( add_query_arg( [ 'page' => 'g5-settings' ] ) ) . '">' . esc_html__( 'Settings', 'gantry5' ) . '</a>'
+        'settings' => '<a href="' . get_admin_url( get_current_blog_id(), 'options-general.php?page=g5-settings' ) .'">' . esc_html__( 'Settings', 'gantry5' ) . '</a>'
     ) );
 
 }
