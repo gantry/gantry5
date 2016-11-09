@@ -643,6 +643,17 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    public function inheritNothing()
+    {
+        foreach ($this->references() as $item) {
+            unset($item->inherit);
+        }
+
+        $this->init(true);
+
+        return $this;
+    }
+
     protected function copyData(array $data, array $sections, array &$leftover)
     {
         foreach ($data as $type => $items) {

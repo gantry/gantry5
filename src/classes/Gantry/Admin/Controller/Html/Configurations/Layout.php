@@ -326,6 +326,7 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
+        $outline = $this->params['configuration'];
         $layout = $this->getLayout($id);
         if (!$layout->toArray()) {
             // Layout hasn't been defined, return default layout instead.
@@ -334,7 +335,9 @@ class Layout extends HtmlController
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
-        if (!$input && $this->request->post['inherit'] === '1') {
+        if ($outline == 'default') {
+            $layout->inheritNothing();
+        } elseif (!$input && $this->request->post['inherit'] === '1') {
             $layout->inheritAll();
         }
 

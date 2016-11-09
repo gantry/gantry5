@@ -49,10 +49,12 @@
                 <input data-g-preserve="outline" type="checkbox" />
                 {{ 'GANTRY5_PLATFORM_SWITCH_OUTLINE_DESC'|trans }}
             </label>
+            {% if configuration != 'default' %}
             <label>
                 <input data-g-inherit="outline" type="checkbox" checked="checked" />
                 {{ 'GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC'|trans }}
             </label>
+            {% endif %}
         </div>
         <ul class="g-switch-conf-user{% if system_conf.count %} float-left{% endif %}" role="tablist">
             <li tabindex="0" class="g-switch-title" role="presentation">{{ 'GANTRY5_PLATFORM_LM_SWITCHER_USER'|trans }}</li>
