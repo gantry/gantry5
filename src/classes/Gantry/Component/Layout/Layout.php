@@ -299,6 +299,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             }
         }
 
+        // Make sure that base outline never uses inheritance.
+        if ($name == 'default') {
+            $this->inheritNothing();
+        }
+
         $filename = $locator->findResource("gantry-config://{$name}/layout.yaml", true, true);
         $file = CompiledYamlFile::instance($filename);
         $file->settings(['inline' => 20]);
