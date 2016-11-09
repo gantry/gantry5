@@ -28,11 +28,11 @@ before_install:
   - npm install -g yarn
   - if [ ! -z "$TRAVIS_TAG" ]; then
       gem install sass;
-      yarn global install gulp;
+      yarn global add gulp;
     fi
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
-      yarn install;
+      yarn;
       gulp -up;
     fi
   - cd $TRAVIS_BUILD_DIR/src/platforms/joomla && composer install --no-dev;
