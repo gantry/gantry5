@@ -666,16 +666,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.12",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "889983a79a043dfda68f38c38b6dba092dd49cd8"
+                "reference": "25c576abd4e0f212e678fe8b2bd9a9a98c7ea934"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/889983a79a043dfda68f38c38b6dba092dd49cd8",
-                "reference": "889983a79a043dfda68f38c38b6dba092dd49cd8",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/25c576abd4e0f212e678fe8b2bd9a9a98c7ea934",
+                "reference": "25c576abd4e0f212e678fe8b2bd9a9a98c7ea934",
                 "shasum": ""
             },
             "require": {
@@ -722,20 +722,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-28 16:56:28"
+            "time": "2016-10-13 01:43:15"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.12",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e7540734bad981fe59f8ef14b6fc194ae9df8d9c"
+                "reference": "396784cd06b91f3db576f248f2402d547a077787"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e7540734bad981fe59f8ef14b6fc194ae9df8d9c",
-                "reference": "e7540734bad981fe59f8ef14b6fc194ae9df8d9c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/396784cd06b91f3db576f248f2402d547a077787",
+                "reference": "396784cd06b91f3db576f248f2402d547a077787",
                 "shasum": ""
             },
             "require": {
@@ -771,20 +771,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-02 01:57:56"
+            "time": "2016-10-21 20:59:10"
         },
         {
             "name": "twig/twig",
-            "version": "v1.26.1",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d"
+                "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
-                "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
+                "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
                 "shasum": ""
             },
             "require": {
@@ -797,7 +797,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.26-dev"
+                    "dev-master": "1.27-dev"
                 }
             },
             "autoload": {
@@ -832,7 +832,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-10-05 18:57:41"
+            "time": "2016-10-25 19:17:17"
         }
     ],
     "aliases": [],
