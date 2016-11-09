@@ -20,6 +20,7 @@
         - Fix permissions for editing Particle modules without having access to Gantry admin (#1476)
         - Fixed Gantry menu editor loosing content of CSS field in Joomla menu item (#1656)
         - Fixed menu ordering issues when menu item alias got changed; to become effective menu must be saved once in Gantry (#595)
+        - Fixed 'joomla.categories' YAML field type displaying trashed and archived categories (#1625)
 3. [WordPress](#wordpress)
     3. [](#bugfix)  
         - Hydrogen / Helium: Fixed password field translation (#1657)
