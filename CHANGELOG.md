@@ -1,8 +1,9 @@
 # 5.3.8
 ## XX/XX/2016
 
-1. [Common](#common)
-    1. [](#new)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Make Gantry settings available in multi-site environments (#1610)
 
 # 5.3.7
 ## 09/11/2016
