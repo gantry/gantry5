@@ -84,7 +84,9 @@ class EventListener implements EventSubscriberInterface
             'columns' => [],
             'link_title' => '',
             'hash' => '',
-            'class' => ''
+            'class' => '',
+            'anchor_class' => '',
+            'enabled' => 1,
         ];
 
         $menu = $event->menu;
@@ -127,7 +129,7 @@ class EventListener implements EventSubscriberInterface
 
         foreach ($menu['items'] as $key => $item) {
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
-                $item['id'] = (int) $item['id'];
+                $item['object_id'] = (int) $item['object_id'];
                 $wpItem = $menu_items[$item['id']];
 
                 $args = [
@@ -148,8 +150,11 @@ class EventListener implements EventSubscriberInterface
 
                 wp_update_nav_menu_item($id, $wpItem->db_id, $args);
 
-                unset($item['title'], $item['link'], $item['class'], $item['target']);
+                unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
             }
+
+            $item['enabled'] = (int) $item['enabled'];
+
             // Do not save default values.
             foreach ($defaults as $var => $value) {
                 if (isset($item[$var]) && $item[$var] == $value) {

@@ -288,7 +288,7 @@ class Menu extends AbstractMenu
                         if (!$this->pathMap) {
                             $this->pathMap = new Config([]);
                         }
-                        $this->pathMap->set(preg_replace('|/|', '/children/', $itemMap[$menuItem->id]['path']) . '/path', $itemParams['path'], '/');
+                        $this->pathMap->set(preg_replace('|/|u', '/children/', $itemMap[$menuItem->id]['path']) . '/path', $itemParams['path'], '/');
                     }
                 } elseif (isset($items[$menuItem->route])) {
                     // ID not found, try to use route.

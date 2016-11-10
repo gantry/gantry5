@@ -3,7 +3,8 @@
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        - Make Gantry settings available in multi-site environments (#1610)
+        - Fixed Gantry settings not being available in multi-site environments (#1610)
+        - Fixed issues with Gantry menu mixing up menu item parameters and ordering after using WordPress Importer (#1669)
 
 # 5.3.7
 ## 09/11/2016

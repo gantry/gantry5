@@ -264,9 +264,9 @@ class Menu extends AbstractMenu
 
         $itemMap = [];
         foreach ($items as $path => &$itemRef) {
-            if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
+            if (isset($itemRef['object_id']) && is_numeric($itemRef['object_id'])) {
                 $itemRef['path'] = $path;
-                $itemMap[$itemRef['id']] = &$itemRef;
+                $itemMap[$itemRef['object_id']] = $itemRef;
             }
         }
         $slugMap = [];
@@ -290,6 +290,7 @@ class Menu extends AbstractMenu
             // These params always come from WordPress.
             $itemParams = [
                 'id' => $menuItem->ID,
+                'object_id' => $menuItem->object_id,
                 'type' => $menuItem->type,
                 'link' => is_admin() ? $menuItem->url : $menuItem->link(),
                 // TODO: use
@@ -299,16 +300,16 @@ class Menu extends AbstractMenu
             ];
 
             // Rest of the items will come from saved configuration.
-            if (isset($itemMap[$menuItem->ID])) {
+            if (isset($itemMap[$menuItem->object_id])) {
                 // ID found, use it.
-                $itemParams += $itemMap[$menuItem->ID];
+                $itemParams += $itemMap[$menuItem->object_id];
 
                 // Store new path for the menu item into path map.
-                if ($slugPath !== $itemMap[$menuItem->ID]['path']) {
+                if ($slugPath !== $itemMap[$menuItem->object_id]['path']) {
                     if (!$this->pathMap) {
                         $this->pathMap = new Config([]);
                     }
-                    $this->pathMap->set(preg_replace('|/|', '/children/', $itemMap[$menuItem->ID]['path']) . '/path', $slugPath, '/');
+                    $this->pathMap->set(preg_replace('|/|u', '/children/', $itemMap[$menuItem->object_id]['path']) . '/path', $slugPath, '/');
                 }
             } elseif (isset($items[$slugPath])) {
                 // Otherwise use the slug path.
