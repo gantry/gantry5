@@ -254,7 +254,7 @@ class TwigExtension extends \Twig_Extension
     {
         $platform = Gantry::instance()['platform'];
 
-        return $platform->truncate($string, $limit, false);
+        return $platform->truncate($string, (int) $limit, false);
     }
 
     /**
@@ -269,7 +269,7 @@ class TwigExtension extends \Twig_Extension
     {
         $platform = Gantry::instance()['platform'];
 
-        return $platform->truncate($string, $limit, true);
+        return $platform->truncate($string, (int) $limit, true);
     }
 
     /**

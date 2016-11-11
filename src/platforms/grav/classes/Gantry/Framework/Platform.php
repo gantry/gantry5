@@ -218,9 +218,10 @@ class Platform extends BasePlatform
     public function truncate($text, $length, $html = false)
     {
         if ($html) {
-            return Utils::truncate($text, $length);
+            return $length ? Utils::truncateHtml($text, $length) : $text;
         } else {
-            return Utils::truncateHtml($text, $length);
+            $text = strip_tags($text);
+            return $length ? Utils::truncate($text, $length) : $text;
         }
     }
 }
