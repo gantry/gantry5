@@ -11,16 +11,16 @@
 // Load Grav Configuration Defaults
 @import "configuration/grav/base";
 
-// Load Theme Configuration
-@import "configuration/base";
+//-------------------------------------------
+
+// Load Nucleus Mixins and Functions
+@import "nucleus/functions/base";
+@import "nucleus/mixins/base";
 
 //-------------------------------------------
 
-// Load Theme Variable Driven Nucleus Elements
-@import "grav";
+// Load Alerts Highlighting
+@import "nucleus/theme/alerts";
 
-//-------------------------------------------
-
-// GRAV THEME SPECIFIC
-
-//-------------------------------------------
+// Load Grav Assets
+@import "grav/base";
