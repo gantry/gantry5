@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     3. [](#bugfix)
+        - Fixed disabled atoms being rendered (#1671)
 
 # 5.3.8
 ## 10/11/2016
