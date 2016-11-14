@@ -4,6 +4,9 @@
     .ui-tabs-nav {
         margin: 0;
         @include display(flex);
+        @include breakpoint(mobile-only) {
+          flex-direction: column;
+        }
 
         li {
             list-style: none;
@@ -42,6 +45,9 @@
         list-style: none;
         margin: 0 0 1rem 0;
         border-bottom: 1px solid $base-border-color;
+        @include breakpoint(mobile-only) {
+          border: 0 none;
+        }
     }
 
     .g-contenttabs-tab {
@@ -57,7 +63,7 @@
         background: fadeout($accent-color-1, 85%);
 
         @include breakpoint(mobile-only) {
-            padding: ($content-padding / 2) $content-padding;
+            border-radius: 0;
         }
 
         .g-contenttabs-tab-title {
