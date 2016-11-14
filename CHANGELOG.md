@@ -4,6 +4,9 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed disabled atoms being rendered (#1671)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed PHP warning when saving menu and fetching menu items failed
 
 # 5.3.8
 ## 10/11/2016

@@ -111,15 +111,17 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
-        // Get all menu items.
+        // Get all menu items (or false).
         $unsorted_menu_items = wp_get_nav_menu_items(
             $id,
             ['orderby' => 'ID', 'output' => ARRAY_A, 'output_key' => 'ID', 'post_status' => 'draft,publish']
         );
 
         $menu_items = [];
-        foreach ($unsorted_menu_items as $_item) {
-            $menu_items[$_item->db_id] = $_item;
+        if ($unsorted_menu_items) {
+            foreach ($unsorted_menu_items as $_item) {
+                $menu_items[$_item->db_id] = $_item;
+            }
         }
 
         wp_defer_term_counting(true);
