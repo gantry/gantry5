@@ -264,9 +264,7 @@ class Document
             return [];
         }
 
-        $styles = static::$styles[$location];
-
-        krsort($styles, SORT_NUMERIC);
+        krsort(static::$styles[$location], SORT_NUMERIC);
 
         $html = [];
 
@@ -309,9 +307,7 @@ class Document
             return [];
         }
 
-        $scripts = static::$scripts[$location];
-
-        krsort($scripts, SORT_NUMERIC);
+        krsort(static::$scripts[$location], SORT_NUMERIC);
 
         $html = [];
 
