@@ -4,12 +4,14 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed disabled atoms being rendered (#1671)
+        - Fixed issues with responsive support classes (#1487)
+        - Helium: Fixed tab rendering issues in `Content tabs` particle (#1635)  
 2. [Joomla](#joomla)
     2. [](#improved)
         - Automatically load jQuery and Mootools frameworks in error page if particles or atoms request them
 3. [WordPress](#wordpress)
     3. [](#bugfix)
-        - Fixed PHP warning when saving menu and fetching menu items failed
+        - Fixed PHP warning when saving menu with no menu items
 
 # 5.3.8
 ## 10/11/2016
