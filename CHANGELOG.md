@@ -2,6 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
+    2. [](#improved)
+        - Helium: Load `jQuery` from particles instead of using `JavaScript Frameworks` atom to load it into every page
     3. [](#bugfix)
         - Fixed disabled atoms being rendered (#1671)
         - Fixed issues with responsive support classes (#1487)
