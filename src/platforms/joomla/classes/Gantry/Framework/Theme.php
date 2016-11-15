@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\Framework\Base\Document;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -36,10 +37,10 @@ class Theme extends AbstractTheme
     public function joomla($enable = null)
     {
         if ($enable && !$this->joomla) {
-            // Workaround for Joomla! not loading bootstrap when it needs it.
-            \JHtml::_('bootstrap.framework');
-
             $this->joomla = true;
+
+            // Workaround for Joomla! not loading bootstrap when it needs it.
+            $this->gantry()->load('bootstrap.2');
         }
 
         return $this->joomla;

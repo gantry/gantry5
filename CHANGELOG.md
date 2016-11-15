@@ -4,6 +4,9 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed disabled atoms being rendered (#1671)
+2. [Joomla](#joomla)
+    2. [](#improved)
+        - Automatically load jQuery and Mootools frameworks in error page if particles or atoms request them
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed PHP warning when saving menu and fetching menu items failed

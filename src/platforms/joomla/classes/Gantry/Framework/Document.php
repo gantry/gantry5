@@ -38,21 +38,32 @@ class Document extends BaseDocument
         return rtrim(\JUri::root(true), '/') ?: '/';
     }
 
+    public static function errorPage($new = null)
+    {
+        static $error = false;
+
+        if (isset($new)) {
+            $error = (bool) $new;
+        }
+
+        return $error;
+    }
+
     protected static function registerStyles()
     {
-        if (empty(self::$styles['head'])) {
+        if (empty(static::$styles['head']) || static::errorPage()) {
             return;
         }
 
-        krsort(self::$styles['head'], SORT_NUMERIC);
+        krsort(static::$styles['head'], SORT_NUMERIC);
 
         $doc = \JFactory::getDocument();
 
-        foreach (self::$styles['head'] as $styles) {
+        foreach (static::$styles['head'] as $styles) {
             foreach ($styles as $style) {
                 switch ($style[':type']) {
                     case 'file':
-                        $doc->AddStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
+                        $doc->addStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
                         break;
                     case 'inline':
                         $doc->addStyleDeclaration($style['content'], $style['type']);
@@ -64,15 +75,15 @@ class Document extends BaseDocument
 
     protected static function registerScripts()
     {
-        if (empty(self::$scripts['head'])) {
+        if (empty(static::$scripts['head']) || static::errorPage()) {
             return;
         }
 
-        krsort(self::$scripts['head'], SORT_NUMERIC);
+        krsort(static::$scripts['head'], SORT_NUMERIC);
 
         $doc = \JFactory::getDocument();
 
-        foreach (self::$scripts['head'] as $scripts) {
+        foreach (static::$scripts['head'] as $scripts) {
             foreach ($scripts as $script) {
                 switch ($script[':type']) {
                     case 'file':
@@ -88,32 +99,147 @@ class Document extends BaseDocument
 
     protected static function registerJquery()
     {
-        \JHtml::_('jquery.framework');
+        if (!static::errorPage()) {
+            \JHtml::_('jquery.framework');
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
+            ],
+            'head',
+            100
+        );
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
+            ],
+            'head',
+            100
+        );
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
+            ],
+            'head',
+            100
+        );
     }
 
     protected static function registerJqueryUiCore()
     {
-        \JHtml::_('jquery.ui', ['core']);
+        if (!static::errorPage()) {
+            \JHtml::_('jquery.ui', ['core']);
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::registerJquery();
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
+            ],
+            'head',
+            100
+        );
+
     }
 
     protected static function registerJqueryUiSortable()
     {
-        \JHtml::_('jquery.ui', ['sortable']);
+        if (!static::errorPage()) {
+            \JHtml::_('jquery.ui', ['sortable']);
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::registerJqueryUiCore();
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
+            ],
+            'head',
+            100
+        );
     }
 
     protected static function registerBootstrap2()
     {
         Gantry::instance()['theme']->joomla(true);
+
+        if (!static::errorPage()) {
+            \JHtml::_('bootstrap.framework');
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::registerJquery();
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
+            ],
+            'head',
+            100
+        );
     }
 
     protected static function registerMootools()
     {
-        \JHtml::_('behavior.framework');
+        if (!static::errorPage()) {
+            \JHtml::_('behavior.framework');
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
+            ],
+            'head',
+            99
+        );
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/system/js/core.js'
+            ],
+            'head',
+            99
+        );
     }
 
     protected static function registerMootoolsMore()
     {
-        \JHtml::_('behavior.framework', true);
+        if (!static::errorPage()) {
+            \JHtml::_('behavior.framework', true);
+
+            return;
+        }
+
+        // Workaround for error document type.
+        static::registerMootools();
+        static::addHeaderTag(
+            [
+                'tag' => 'script',
+                'src' => \JUri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
+            ],
+            'head',
+            99
+        );
     }
 
     /**
