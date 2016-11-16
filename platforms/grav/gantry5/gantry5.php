@@ -304,9 +304,12 @@ class Gantry5Plugin extends Plugin
 
         $assignments = new Assignments();
 
-        if (!empty($page->header()->gantry['outline'])) {
-            $this->outline = $page->header()->gantry['outline'];
+        $header = $page->header();
+        if (!empty($header->gantry['outline'])) {
+            $this->outline = $header->gantry['outline'];
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Current page forces outline {$this->outline} to be used");
+        } elseif ($page->name() == 'notfound.md') {
+            $this->outline = '_error';
         }
 
         if (!$this->outline) {
