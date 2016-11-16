@@ -14,6 +14,7 @@ use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Framework\Assignments;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
@@ -172,6 +173,13 @@ class Gantry5Plugin extends Plugin
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
                 'onPageNotFound' => ['onPageNotFound', 1000]
             ]);
+        }
+
+        if (!$gantry['global']->get('production', 0) || $gantry['global']->get('asset_timestamps', 1)) {
+            $age = (int) ($gantry['global']->get('asset_timestamps_period', 7) * 86400);
+            Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
+        } else {
+            Document::$timestamp_age = 0;
         }
 
         GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
