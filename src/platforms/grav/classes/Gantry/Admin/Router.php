@@ -25,6 +25,7 @@ class Router extends BaseRouter
     public function boot()
     {
         $grav = Grav::instance();
+        $plugin = $grav['gantry5_plugin'];
 
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $grav['admin'];
@@ -63,7 +64,7 @@ class Router extends BaseRouter
             'params' => $request->post->getJsonArray('params')
         ];
 
-        $this->container['base_url'] = $grav['gantry5_plugin']->base;
+        $this->container['base_url'] = $plugin->base;
 
         $this->container['ajax_suffix'] = '.json';
 

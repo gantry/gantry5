@@ -20,8 +20,13 @@ form:
   validation: loose
   fields:
     enabled:
-      type: hidden
+      type: toggle
+      label: Plugin Status
+      highlight: 1
       default: 1
+      options:
+        1: Enabled
+        0: Disabled
       validate:
         type: bool
 
@@ -40,7 +45,7 @@ form:
     use_media_folder:
       type: toggle
       label: Use Grav Images Folder
-      description: By default Gantry media picker saves all files under the <strong>data://gantry5/themes</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      description: By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
       highlight: 1
       default: 0
       options:
