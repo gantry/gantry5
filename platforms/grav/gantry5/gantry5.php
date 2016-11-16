@@ -297,11 +297,15 @@ class Gantry5Plugin extends Plugin
         $gantry = Gantry::instance();
         
         // Set page to offline.
-        if ($gantry['global']->get('offline', 0) && !isset($this->grav['user']->username)) {
-            $page = new Page;
-            $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
+        if ($gantry['global']->get('offline', 0)) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
 
-            $this->grav['page'] = $page;
+            if (!isset($this->grav['user']->username)) {
+                $page = new Page;
+                $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
+
+                $this->grav['page'] = $page;
+            }
         }
     }
 
