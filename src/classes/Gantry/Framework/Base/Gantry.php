@@ -270,6 +270,7 @@ abstract class Gantry extends Container
             $data = $c->loadGlobal() + [
                     'debug' => false,
                     'production' => true,
+                    'use_media_folder' => false,
                     'asset_timestamps' => true,
                     'asset_timestamps_period' => 7,
                     'compile_yaml' => true,

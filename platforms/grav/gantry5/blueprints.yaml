@@ -20,19 +20,15 @@ form:
   validation: loose
   fields:
     enabled:
-      type: toggle
-      label: Plugin status
-      highlight: 1
+      type: hidden
       default: 1
-      options:
-        1: Enabled
-        0: Disabled
       validate:
         type: bool
 
     production:
       type: toggle
       label: Production Mode
+      description: Production mode makes Gantry faster by more aggressive caching and ignoring changed files in the filesystem. Most changes made from admin should still be detected.
       highlight: 1
       default: 1
       options:
@@ -42,8 +38,9 @@ form:
         type: bool
 
     use_media_folder:
+      type: toggle
       label: Use Grav Images Folder
-      description: By default Gantry media picker saves all files into the theme. If you want to save files into Grav images folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      description: By default Gantry media picker saves all files under the <strong>data://gantry5/themes</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
       highlight: 1
       default: 0
       options:
@@ -55,6 +52,7 @@ form:
     asset_timestamps:
       type: toggle
       label: Asset Timestamps
+      description: Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page. NOTE: Timestamps are always enabled in development mode.
       highlight: 1
       default: 1
       options:
@@ -66,18 +64,15 @@ form:
     asset_timestamps_period:
       type: text
       label: Timestamp Period
+      description: Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.
       default: 7
       validate:
         type: float
 
-    route:
-      type: text
-      label: Route
-      default: '/admin/gantry5'
-
     debug:
       type: toggle
       label: Debug Mode
+      description: By enabling debugging mode, you will get more information what's going on inside Gantry.
       highlight: 1
       default: 0
       options:
