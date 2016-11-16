@@ -54,6 +54,23 @@ form:
       validate:
         type: bool
 
+    offline:
+      type: toggle
+      label: Offline
+      description: Set site to maintenance mode. When site is offline, its only visible for logged in users.
+      highlight: 1
+      default: 0
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
+
+    offline_message:
+      type: textarea
+      label: Offline Message
+      description: Set your own offline message explaining why the site is offline. Field accepts Markdown and HTML.
+
     asset_timestamps:
       type: toggle
       label: Asset Timestamps

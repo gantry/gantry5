@@ -186,6 +186,7 @@ class Gantry5Plugin extends Plugin
 
             $this->enable([
                 'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', 10000],
+                'onPagesInitialized' => ['onThemePagesInitialized', 10000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
@@ -291,6 +292,19 @@ class Gantry5Plugin extends Plugin
         $twig->twig_vars['gantry_url'] = $this->base;
     }
 
+    public function onThemePagesInitialized()
+    {
+        $gantry = Gantry::instance();
+        
+        // Set page to offline.
+        if ($gantry['global']->get('offline', 0) && !isset($this->grav['user']->username)) {
+            $page = new Page;
+            $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
+
+            $this->grav['page'] = $page;
+        }
+    }
+
     /**
      * Select outline to be used.
      */
@@ -368,10 +382,16 @@ class Gantry5Plugin extends Plugin
     /**
      * Handle non-existing pages.
      */
-    public function onPageNotFound()
+    public function onPageNotFound(Event $event)
     {
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Page not found');
-        $this->outline = '_error';
+        $page = $this->grav['page'];
+        if ($page->name() == 'offline.md') {
+            $event->page = $page;
+            $event->stopPropagation();
+        } else {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Page not found');
+            $this->outline = '_error';
+        }
     }
     
     public function setPreset()
