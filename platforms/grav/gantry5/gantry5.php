@@ -168,7 +168,7 @@ class Gantry5Plugin extends Plugin
         $this->theme = $theme;
         if (!$this->isAdmin()) {
             $this->enable([
-                'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', -1000],
+                'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', 10000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
