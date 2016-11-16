@@ -16,6 +16,7 @@ use Gantry\Component\Filesystem\Streams;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
@@ -167,6 +168,22 @@ class Gantry5Plugin extends Plugin
 
         $this->theme = $theme;
         if (!$this->isAdmin()) {
+            /** @var Platform $patform */
+            $patform = $gantry['platform'];
+
+            $nucleus = $patform->getEnginePaths('nucleus')[''];
+            $patform->set(
+                'streams.gantry-admin.prefixes', [
+                    ''        => ['gantry-theme://admin', 'plugins://gantry5/admin', 'plugins://gantry5/admin/common', 'gantry-engine://admin'],
+                    'assets/' => array_merge(['plugins://gantry5/admin', 'plugins://gantry5/admin/common'], $nucleus, ['gantry-assets://'])
+                ]
+            );
+
+            // Add admin paths.
+            foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
+                $locator->addPath('gantry-admin', $prefix, $paths);
+            }
+
             $this->enable([
                 'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', 10000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],

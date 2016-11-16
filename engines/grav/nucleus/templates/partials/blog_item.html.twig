@@ -55,7 +55,7 @@
     {% elseif truncate and page.summary != page.content %}
         <div class="p-summary e-content">
             {{ page.summary|raw }}
-            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('Read More...') }}</a></p>
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
         </div>
     {% elseif truncate %}
         <div class="p-summary e-content">
@@ -65,7 +65,7 @@
                     {{ page.content|raw }}
 
             {% endif %}
-            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('Read More...') }}</a></p>
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
         </div>
     {% else %}
         <div class="e-content">
@@ -83,11 +83,11 @@
 
         <p class="prev-next">
             {% if not page.isFirst %}
-                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left"></i> {{ 'BLOG.ITEM.NEXT_POST'|t }}</a>
+                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left"></i> {{ 'GANTRY5_ENGINE_BLOG_ITEM_NEXT_POST'|trans }}</a>
             {% endif %}
 
             {% if not page.isLast %}
-                <a class="button" href="{{ page.prevSibling.url }}">{{ 'BLOG.ITEM.PREV_POST'|t }} <i class="fa fa-chevron-right"></i></a>
+                <a class="button" href="{{ page.prevSibling.url }}">{{ 'GANTRY5_ENGINE_BLOG_ITEM_PREV_POST'|trans }} <i class="fa fa-chevron-right"></i></a>
             {% endif %}
         </p>
     {% endif %}

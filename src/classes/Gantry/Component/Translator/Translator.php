@@ -84,6 +84,11 @@ class Translator implements TranslatorInterface
         $locator = $gantry['locator'];
 
         $section = strtolower($section);
+        if ($section === 'engine') {
+            // TODO: add support for other engines than nucleus.
+            $section = 'nucleus';
+        }
+
         $filename = 'gantry-admin://translations/' . $language . '/' . $section . '.yaml';
         $file = CompiledYamlFile::instance($filename);
 
