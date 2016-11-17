@@ -11,6 +11,8 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Automatically load jQuery and Mootools frameworks in error page if particles or atoms request them
+    3. [](#bugfix)
+        - Fixed issue where Apache rewrite rule is overriding component but hitting `404 Page Not Found` instead of Joomla properly routing to the new location
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed PHP warning when saving menu with no menu items

@@ -33,7 +33,7 @@ if (!$menuItem) {
 }
 
 // Handle non-html formats and error page.
-if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error') {
+if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
     JError::raiseError(404, JText::_('JERROR_PAGE_NOT_FOUND'));
 }
 

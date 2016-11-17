@@ -21,7 +21,7 @@ function Gantry5BuildRoute(&$query)
 function Gantry5ParseRoute($segments)
 {
     if ($segments) {
-        throw new Exception(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        return array('g5_not_found' => 1);
     }
 
     return array();
