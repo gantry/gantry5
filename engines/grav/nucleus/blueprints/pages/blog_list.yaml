@@ -81,6 +81,17 @@ form:
                 asc: Ascending
                 desc: Descending
 
+            header.content.date:
+              type: toggle
+              label: Show Date
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
             header.content.pagination:
               type: toggle
               label: Pagination

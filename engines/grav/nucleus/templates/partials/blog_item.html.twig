@@ -1,10 +1,5 @@
 <div class="list-item h-entry">
 
-    {% set header_image = page.header.header_image|defined(true) %}
-    {% set header_image_width  = page.header.header_image_width|defined(900) %}
-    {% set header_image_height = page.header.header_image_height|defined(300) %}
-    {% set header_image_file = page.header.header_image_file %}
-
     <div class="list-blog-header">
         {% if page.header.link %}
             <h2 class="p-name">
@@ -16,11 +11,15 @@
         {% else %}
             <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
         {% endif %}
+
+        {% if page.taxonomy.tag or show_date  %}
         <div class="list-blog-meta">
+            {% if show_date %}
             <i class="fa fa-clock-o"></i>
             <time class="dt-published" datetime="{{ page.date|date("c") }}">
                 {{ page.date|date('jS M Y') }}
             </time>
+            {% endif %}
             {% if page.taxonomy.tag %} <span class="separator">/</span> {% endif %}
             {% if page.taxonomy.tag %}
             <i class="fa fa-tags"></i>
@@ -31,16 +30,7 @@
             </span>
             {% endif %}
         </div>
-
-        {% if header_image %}
-            {% if header_image_file %}
-                {% set header_image_media = page.media.images[header_image_file] %}
-            {% else %}
-                {% set header_image_media = page.media.images|first %}
-            {% endif %}
-            {{ header_image_media.cropZoom(header_image_width, header_image_height).html|raw }}
         {% endif %}
-
     </div>
 
     <div class="list-blog-padding">
