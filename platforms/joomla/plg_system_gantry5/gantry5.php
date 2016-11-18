@@ -121,6 +121,19 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * @param object $module
+     * @param array $attribs
+     */
+    public function onRenderModule(&$module, &$attribs)
+    {
+        if (!$this->app->isSite()) {
+            return;
+        }
+
+        // TODO: This event allows more diverse module assignment conditions.
+    }
+
+    /**
      * Load Gantry framework before dispatching to the component.
      */
     private function onAfterRouteSite()
