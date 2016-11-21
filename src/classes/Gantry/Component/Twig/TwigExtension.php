@@ -119,7 +119,7 @@ class TwigExtension extends \Twig_Extension
         $params = func_get_args();
         array_shift($params);
 
-        $key = 'GANTRY5_' . preg_replace('|[^A-Z0-9]+|', '_', strtoupper(implode('_', $params)));
+        $key = preg_replace('|[^A-Z0-9]+|', '_', strtoupper(implode('_', $params)));
 
         $translation = $this->transFilter($key);
 

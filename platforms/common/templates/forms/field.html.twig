@@ -30,12 +30,12 @@
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        {% set description = field.description|trans_key('FORM_FIELD', scope, name, 'DESC') %}
+                        {% set description = field.description|trans_key('GANTRY5_FORM_FIELD', scope, name, 'DESC') %}
                         <span data-tip="{{ description|raw }}" data-tip-place="top-right" aria-label="{{ description }}" data-title="{{ description }}">
-                            {{ field.label|trans_key('FORM_FIELD', scope, name, 'LABEL') }}
+                            {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}
                         </span>
                     {% else %}
-                        {{ field.label|trans_key('FORM_FIELD', scope, name, 'LABEL') }}
+                        {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}
                     {% endif %}
                     {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                 {% endblock %}
