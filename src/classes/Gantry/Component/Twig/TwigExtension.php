@@ -111,7 +111,6 @@ class TwigExtension extends \Twig_Extension
      * Translate by using key, default on original string.
      *
      * @param $str
-     * @param $key
      * @return string
      */
     public function transKeyFilter($str)

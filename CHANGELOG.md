@@ -16,6 +16,8 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed PHP warning when saving menu with no menu items
+        - Fixed incompatibility with WooCommerce Payu Latam plugin (#1628)
+        - Fixed `Gantry: Please set current configuration before using $gantry["config"]` (#942)
 
 # 5.3.8
 ## 10/11/2016

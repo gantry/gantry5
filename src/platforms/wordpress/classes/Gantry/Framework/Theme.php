@@ -129,8 +129,6 @@ class Theme extends AbstractTheme
 
     public function set_template_layout()
     {
-        $gantry = Gantry::instance();
-
         $assignments = new Assignments;
         $selected = $assignments->select();
 
@@ -140,9 +138,7 @@ class Theme extends AbstractTheme
             \Gantry\Debugger::addMessage($assignments->scores());
         }
 
-        /** @var Theme $theme */
-        $theme = $gantry['theme'];
-        $theme->setLayout($selected);
+        $this->setLayout($selected);
     }
 
     public function widgets_init()
@@ -411,10 +407,11 @@ class Theme extends AbstractTheme
         add_filter('widget_update_callback', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesUpdate'], 10, 4);
         add_filter('dynamic_sidebar_params', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesSidebarParams'], 9);
 
-        add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('init', [$this, 'register_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
         add_action('init', [$this, 'register_menus']);
+
+        add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
         add_action('wp_enqueue_scripts', [$this, 'prepare_particles'], 15);
@@ -457,6 +454,8 @@ class Theme extends AbstractTheme
         load_theme_textdomain($domain, $this->path . '/languages');
 
         $this->url = $gantry['site']->theme->link;
+
+        $gantry['configuration'] = 'default';
 
         $gantry->fireEvent('theme.init');
     }
