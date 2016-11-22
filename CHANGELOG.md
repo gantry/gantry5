@@ -7,7 +7,8 @@
     3. [](#bugfix)
         - Fixed disabled atoms being rendered (#1671)
         - Fixed issues with responsive support classes (#1487)
-        - Helium: Fixed tab rendering issues in `Content tabs` particle (#1635)  
+        - Helium: Fixed tab rendering issues in `Content tabs` particle (#1635)
+        - Fixed issue preventing particles to be switched between in the Inheritance panel
 2. [Joomla](#joomla)
     2. [](#improved)
         - Automatically load jQuery and Mootools frameworks in error page if particles or atoms request them
