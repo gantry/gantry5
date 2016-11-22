@@ -7,10 +7,10 @@
   "devDependencies": {
     "browserify": "^13.1.1",
     "gulp": "^3.9.1",
-    "gulp-if": "^2.0.1",
+    "gulp-if": "^2.0.2",
     "gulp-jsonminify": "1.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.1.0",
+    "gulp-ruby-sass": "^2.1.1",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
@@ -18,7 +18,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "yargs": "^6.3.0"
+    "yargs": "^6.4.0"
   },
   "scripts": {
     "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",
