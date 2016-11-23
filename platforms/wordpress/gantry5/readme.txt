@@ -12,7 +12,7 @@ Gantry is a comprehensive set of building blocks to enable the rapid development
 
 Gantry 5 is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform theme.
 
-* Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
+> Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
 
 Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss.
 
