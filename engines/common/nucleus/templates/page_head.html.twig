@@ -2,6 +2,7 @@
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
+        <link rel="stylesheet" href="{{ url('gantry-assets://css/lightcase.min.css') }}" type="text/css"/>
         <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
         {% for css in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
