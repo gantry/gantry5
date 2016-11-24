@@ -19,7 +19,7 @@
     {# Content Finder #}
     {% set pages = grav.page.collection({
         items: {'@taxonomy.category': filter.categories},
-        order: {by: 'default', dir: 'desc'},
+        order: {by: sort.orderby, dir: sort.ordering},
         limit: limit.total,
         pagination: limit.start,
         url_taxonomy_filters: false
@@ -66,11 +66,11 @@
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
-                                                {% if display.date.enabled == 'published' %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.published|date(display.date.format) }}
-                                                {% elseif display.date.enabled == 'modified' %}
+                                                {% if display.date.enabled == 'published' %}X
+                                                    <i class="fa fa-clock-o"></i>{{ page.publish_date|date(display.date.format) }}
+                                                {% elseif display.date.enabled == 'modified' %}Y
                                                     <i class="fa fa-clock-o"></i>{{ page.modified|date(display.date.format) }}
-                                                {% else %}
+                                                {% else %}Z
                                                     <i class="fa fa-clock-o"></i>{{ page.date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>

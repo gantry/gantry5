@@ -19,7 +19,7 @@ form:
           overridable: false
           fields:
             article.filter.categories:
-              type: joomla.categories
+              type: grav.categories
               label: Categories
               description: Select the categories the content should be taken from.
               overridable: false
@@ -58,26 +58,25 @@ form:
               type: select.select
               label: Order By
               description: Select how the content should be ordered by.
-              default: publish_up
+              default: default
               options:
-                publish_up: Published Date
-                created: Created Date
+                default: Default Ordering
+                date: Date
+                publish_date: Publish Date
+                unpublish_date: Unpublish Date
                 modified: Last Modified Date
                 title: Title
-                ordering: Ordering
-                hits: Hits
-                id: ID
-                alias: Alias
+                slug: Slug
               overridable: false
 
             article.sort.ordering:
               type: select.select
               label: Ordering Direction
               description: Select the direction the content should be ordered by.
-              default: ASC
+              default: asc
               options:
-                ASC: Ascending
-                DESC: Descending
+                asc: Ascending
+                desc: Descending
               overridable: false
         _tab_display:
           label: Display
