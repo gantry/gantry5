@@ -125,6 +125,6 @@ class Document extends BaseDocument
 
     protected static function registerJquery()
     {
-        Grav::instance()['assets']->addJs('jquery', 101);
+        Grav::instance()['assets']->addJs('jquery', 111);
     }
 }
