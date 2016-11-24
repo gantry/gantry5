@@ -156,7 +156,7 @@ class Platform extends BasePlatform
 
     public function settings()
     {
-        return admin_url('plugins.php?page=g5-settings');
+        return admin_url('options-general.php?page=g5-settings');
     }
 
     public function update()

@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#new)
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed broken link from Gantry admin to plugin settings
 
 # 5.3.9
 ## 23/11/2016
