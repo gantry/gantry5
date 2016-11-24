@@ -80,7 +80,7 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
 
-    public function rename($position)
+    public function rename($old)
     {
         // Rename only exists for JSON.
         if (empty($this->params['ajax'])) {
@@ -89,10 +89,13 @@ class Positions extends HtmlController
 
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
+        $position = $positions[$old];
+        if (!$position) {
+            throw new \RuntimeException(sprintf("Position '%s' not found", $old), 404);
+        }
 
         $title = (string) $this->request->post['title'];
         $key = (string) $this->request->post['key'];
-        $position = $positions[$position];
         if (strlen($title)) {
             $position->title = (string) $title;
         }
