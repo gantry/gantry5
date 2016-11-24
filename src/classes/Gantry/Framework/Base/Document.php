@@ -38,7 +38,9 @@ class Document
         'mootools' => 'registerMootools',
         'mootools.framework' => 'registerMootools',
         'mootools.core' => 'registerMootools',
-        'mootools.more' => 'registerMootoolsMore'
+        'mootools.more' => 'registerMootoolsMore',
+        'lightcase' => 'registerLightcase',
+        'lightcase.init' => 'registerLightcaseInit',
     ];
 
     /**
@@ -648,14 +650,12 @@ class Document
 
     protected static function registerJquery()
     {
-        static::addHeaderTag(
+        static::addScript(
             [
-                'tag' => 'script',
                 'src' => 'https://code.jquery.com/jquery-2.2.2.min.js',
                 'integrity' => 'sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=',
                 'crossorigin' => 'anonymous'
             ],
-            'head',
             11
         );
     }
@@ -664,14 +664,12 @@ class Document
     {
         static::registerJquery();
 
-        static::addHeaderTag(
+        static::addScript(
             [
-                'tag' => 'script',
                 'src' => 'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js',
                 'integrity' => 'sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=',
                 'crossorigin' => 'anonymous'
             ],
-            'head',
             11
         );
     }
@@ -680,53 +678,40 @@ class Document
     {
         static::registerJquery();
 
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
-            ],
-            'head',
-            11
-        );
+        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'], 11);
     }
 
     protected static function registerBootstrap3()
     {
         static::registerJquery();
 
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
-            ],
-            'head',
-            11
-        );
+        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'], 11);
     }
 
     protected static function registerMootools()
     {
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js'
-            ],
-            'head',
-            11
-        );
+        static::addScript(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js'], 11);
     }
 
     protected static function registerMootoolsMore()
     {
         static::registerMootools();
 
-        static::addHeaderTag(
-            [
-                'tag' => 'script',
-                'src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js'
-            ],
-            'head',
-            11
-        );
+        static::addScript(['src' => 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js'], 11);
+    }
+
+    protected static function registerLightcase()
+    {
+        static::registerJquery();
+
+        static::addScript(['src' => self::url('gantry-assets://js/lightcase.js', false, null, false)], 11, 'footer');
+        static::addStyle(['href' => self::url('gantry-assets://css/lightcase.min.css', false, null, false)], 11);
+    }
+
+    protected static function registerLightcaseInit()
+    {
+        static::registerLightcase();
+
+        static::addInlineScript(['content' => "jQuery(document).ready(function($) { jQuery('[data-rel^=lightcase]').lightcase(); });"], 0, 'footer');
     }
 }
