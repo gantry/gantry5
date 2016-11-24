@@ -139,13 +139,14 @@ class Positions extends Collection
 
     /**
      * @param string $title
+     * @param string $id
      *
      * @return string
      * @throws \RuntimeException
      */
-    public function create($title = 'Untitled')
+    public function create($title = 'Untitled', $id = null)
     {
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title));
 
         if (!$name) {
             throw new \RuntimeException("Position needs a name", 400);

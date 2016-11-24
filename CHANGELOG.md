@@ -5,7 +5,6 @@
     1. [](#new)
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
 
-
 # 5.3.9
 ## 23/11/2016
 

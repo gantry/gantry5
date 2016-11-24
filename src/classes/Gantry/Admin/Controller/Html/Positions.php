@@ -68,15 +68,16 @@ class Positions extends HtmlController
         $positions = $this->container['positions'];
 
         $title = $this->request->post->get('title', 'Untitled');
+        $key = (string) $this->request->post['key'];
 
-        $id = $positions->create($title);
+        $id = $positions->create($title, $key);
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/position.html.twig',
-            ['name' => $id, 'title' => $title]
+            ['position' => ['name' => $id, 'title' => $title]]
         );
 
-        return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'position' => $html]);
+        return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
 
     public function rename($position)
@@ -103,7 +104,7 @@ class Positions extends HtmlController
 
         $html = $this->container['admin.theme']->render(
             '@gantry-admin/layouts/position.html.twig',
-            ['name' => $position->name, 'title' => $position->title]
+            ['position' => $position]
         );
 
         return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
