@@ -29,7 +29,9 @@ class Document extends BaseDocument
         'mootools' => 'registerMootools',
         'mootools.framework' => 'registerMootools',
         'mootools.core' => 'registerMootools',
-        'mootools.more' => 'registerMootoolsMore'
+        'mootools.more' => 'registerMootoolsMore',
+        'lightcase' => 'registerLightcase',
+        'lightcase.init' => 'registerLightcaseInit',
     ];
 
     public static function registerAssets()
