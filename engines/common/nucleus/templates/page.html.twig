@@ -53,7 +53,8 @@
 
 {%- set page_footer %}
     {% block page_footer %}
-        {{ gantry.scripts('footer')|join("\n    ")|raw }}
+        {% do gantry.platform.finalize() -%}
+        {{ gantry.scripts('footer')|join("\n    ")|raw -}}
     {% endblock %}
 
     {{ gantry.debugger.render()|raw }}
