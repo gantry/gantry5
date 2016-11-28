@@ -21,6 +21,9 @@
     .visible-phone {
 		display: none !important;
 	}
+    .visible-tablet {
+		display: none !important;
+	}
 }
 
 @include breakpoint(desktop-range) {
@@ -34,6 +37,9 @@
         display: block !important;
     }
 	.hidden-desktop {
+		display: none !important;
+	}
+    .visible-tablet {
 		display: none !important;
 	}
     .visible-phone {
@@ -73,6 +79,9 @@
 		display: none !important;
 	}
 	.visible-desktop {
+		display: none !important;
+	}
+    .visible-tablet {
 		display: none !important;
 	}
 	.visible-large {
