@@ -20,10 +20,8 @@
     {% set pages = grav.page.collection({
         items: {'@taxonomy.category': filter.categories},
         order: {by: sort.orderby, dir: sort.ordering},
-        limit: limit.total,
-        pagination: limit.start,
         url_taxonomy_filters: false
-    }) %}
+    }, false).slice(limit.start, limit.total) %}
 
     {# All pages #}
     <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
