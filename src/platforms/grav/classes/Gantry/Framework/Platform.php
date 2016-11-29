@@ -38,7 +38,10 @@ class Platform extends BasePlatform
             'gantry-positions' => [
                 'type' => 'ReadOnlyStream',
                 'prefixes' => [
-                    '' => ['user://positions']
+                    '' => [
+                        'user://data/gantry5/positions',
+                        'user://positions' // TODO: remove
+                    ]
                 ]
             ]
         ];

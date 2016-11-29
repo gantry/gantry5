@@ -158,7 +158,12 @@ class Gantry5Plugin extends Plugin
             }
         }
 
-        $theme->registerStream("user://gantry5/themes/{$theme->name}");
+        $theme->registerStream(
+            [
+                "user://data/gantry5/themes/{$theme->name}",
+                "user://gantry5/themes/{$theme->name}", // TODO: remove
+            ]
+        );
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
