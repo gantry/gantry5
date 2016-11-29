@@ -85,7 +85,7 @@
                                             <span class="g-array-item-category">
                                                 {% for category in page.taxonomy.category %}
                                                     {% if display.category.route %}
-                                                        <a href="{{ grav.pages.find(display.category.route).route }}">
+                                                        <a href="{{ base_url ~ display.category.route }}">
                                                             <i class="fa fa-folder-open"></i>{{ category }}
                                                         </a>
                                                     {% else %}
