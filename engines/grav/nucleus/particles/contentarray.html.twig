@@ -18,7 +18,7 @@
 
     {# Content Finder #}
     {% set pages = grav.page.collection({
-        items: {'@taxonomy.category': filter.categories},
+        items: {'@taxonomy.category': filter.categories|split(' ')},
         order: {by: sort.orderby, dir: sort.ordering},
         url_taxonomy_filters: false
     }, false).slice(limit.start, limit.total) %}

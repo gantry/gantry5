@@ -19,7 +19,7 @@ form:
           overridable: false
           fields:
             article.filter.categories:
-              type: grav.categories
+              type: input.selectize
               label: Categories
               description: Select the categories the content should be taken from.
               overridable: false
