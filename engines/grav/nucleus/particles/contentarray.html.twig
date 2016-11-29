@@ -82,12 +82,10 @@
                                         {% endif %}
 
                                         {% if display.category.enabled %}
-                                            {% set category_link = display.category.enabled == 'link' %}
                                             <span class="g-array-item-category">
                                                 {% for category in page.taxonomy.category %}
-                                                    {% if category_link %}
-                                                        {# FIXME category link #}
-                                                        <a href="{{ category.route }}">
+                                                    {% if display.category.route %}
+                                                        <a href="{{ grav.pages.find(display.category.route).route }}">
                                                             <i class="fa fa-folder-open"></i>{{ category }}
                                                         </a>
                                                     {% else %}

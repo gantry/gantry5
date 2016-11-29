@@ -204,8 +204,12 @@ form:
               default: link
               options:
                 show: Show
-                link: Show with Link
                 '': Hide
+
+            article.display.category.route:
+              type: input.text
+              label: Category Route
+              description: Route to the category page
 
     css.class:
       type: input.selectize
