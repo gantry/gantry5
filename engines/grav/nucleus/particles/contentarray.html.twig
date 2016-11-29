@@ -33,20 +33,21 @@
                     <div class="g-block">
                         <div class="g-content">
                             <div class="g-array-item">
-                                {# FIXME images #}
-                                {% if display.image.enabled and page.images.image_intro or page.images.image_fulltext %}
-                                    {% if page.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}
-                                        <div class="g-array-item-image">
-                                            <a href="{{ page.url }}">
-                                                <img src="{{ url(page.images.image_intro) }}" {{ page.images.image_intro|imagesize|raw }} />
-                                            </a>
-                                        </div>
-                                    {% elseif page.images.image_fulltext and display.image.enabled == 'full' %}
-                                        <div class="g-array-item-image">
-                                            <a href="{{ page.url }}">
-                                                <img src="{{ url(page.images.image_fulltext) }}" {{ page.images.image_fulltext|imagesize|raw }} />
-                                            </a>
-                                        </div>
+                                {% if display.image.enabled %}
+                                    {% if display.image.enabled == 'intro' %}
+                                        {% set file = page.header.image.summary.enabled|defined(true) ? (page.header.image.summary.file ?: true) %}
+                                    {% elseif display.image.enabled == 'full' %}
+                                        {% set file = page.header.image.text.enabled|defined(true) ? (page.header.image.text.file ?: true) %}
+                                    {% endif %}
+
+                                    {% set image = file is same as(true) ? page.media.images|first : (file ? page.media.images[file]) %}
+
+                                    {% if image %}
+                                    <div class="g-array-item-image">
+                                        <a href="{{ page.url }}">
+                                            {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
+                                        </a>
+                                    </div>
                                     {% endif %}
                                 {% endif %}
 
@@ -64,19 +65,19 @@
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
-                                                {% if display.date.enabled == 'published' %}X
+                                                {% if display.date.enabled == 'published' %}
                                                     <i class="fa fa-clock-o"></i>{{ page.publish_date|date(display.date.format) }}
-                                                {% elseif display.date.enabled == 'modified' %}Y
+                                                {% elseif display.date.enabled == 'modified' %}
                                                     <i class="fa fa-clock-o"></i>{{ page.modified|date(display.date.format) }}
-                                                {% else %}Z
+                                                {% else %}
                                                     <i class="fa fa-clock-o"></i>{{ page.date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
-                                        {% if display.author.enabled and page.username %}
+                                        {% if display.author.enabled and (page.username or page.author) %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ page.username }}
+                                                <i class="fa fa-user"></i>{{ page.username ?: page.author }}
                                             </span>
                                         {% endif %}
 

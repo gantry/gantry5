@@ -1,12 +1,18 @@
 <div class="list-item h-entry">
 
-    {% set header_image = page.header.header_image|defined(true) %}
-    {% set header_image_width  = page.header.header_image_width|defined(900) %}
-    {% set header_image_height = page.header.header_image_height|defined(300) %}
-    {% set header_image_file = page.header.header_image_file %}
+    {% if truncate %}
+        {% set image_file = page.header.image.summary.enabled|defined(true) ? (page.header.image.summary.file ?: true) %}
+    {% else %}
+        {% set image_file = page.header.image.text.enabled|defined(true) ? (page.header.image.text.file ?: true) %}
+    {% endif %}
 
     <div class="list-blog-header">
-        <img src="{{ url(page.images.image_intro) }}" {{ page.images.image_intro|imagesize|raw }} />
+        {% if image_file %}
+            {% set image = image_file is same as(true) ? page.media.images|first : (image_file ? page.media.images[image_file]) %}
+            {% if image %}
+                {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
+            {% endif %}
+        {% endif %}
         {% if page.header.link %}
             <h2 class="p-name">
                 {% if page.header.continue_link is not sameas(false) %}
@@ -35,21 +41,13 @@
                 {% endfor %}
             </span>
             {% endif %}
-            {% if header_image %}
-                {% if header_image_file %}
-                    {% set header_image_media = page.media.images[header_image_file] %}
-                {% else %}
-                    {% set header_image_media = page.media.images|first %}
-                {% endif %}
-                {{ header_image_media.cropZoom(header_image_width, header_image_height).html|raw }}
-            {% endif %}
         </div>
         {% endif %}
     </div>
 
     <div class="list-blog-padding">
 
-    {% if page.header.continue_link is sameas(false) %}
+    {% if page.header.continue_link is same as(false) %}
         <div class="e-content">
             {{ page.content|raw }}
         </div>
