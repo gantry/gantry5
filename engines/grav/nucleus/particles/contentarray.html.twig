@@ -55,7 +55,7 @@
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
                                             <a href="{{ page.url }}">
-                                                {{ display.title.limit ? page.title|truncate_text(display.title.limit) : page.title }}
+                                                {{ (display.title.limit ? page.title|e|truncate_text(display.title.limit) : page.title|e)|raw }}
                                             </a>
                                         </h3>
                                     </div>
@@ -77,7 +77,7 @@
 
                                         {% if display.author.enabled and (page.username or page.author) %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ page.username ?: page.author }}
+                                                <i class="fa fa-user"></i>{{ page.author ?: page.username }}
                                             </span>
                                         {% endif %}
 
