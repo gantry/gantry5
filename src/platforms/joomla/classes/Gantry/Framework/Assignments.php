@@ -21,6 +21,51 @@ class Assignments extends AbstractAssignments
     protected $platform = 'Joomla';
 
     /**
+     * Load all assignments.
+     *
+     * @return array
+     */
+    public function loadAssignments()
+    {
+        $app = \JFactory::getApplication();
+
+        if (!$app->isSite()) {
+            return [];
+        }
+
+        // Get current template, style id and rules.
+        $template = $app->getTemplate();
+        $active = $app->getMenu()->getActive();
+        if ($active) {
+            $style = (int) $active->template_style_id;
+            $rules = [$active->menutype => [$active->id => true]];
+        } else {
+            $style = 0;
+            $rules = [];
+        }
+
+        // Load saved assignments.
+        $assignments = parent::loadAssignments();
+
+        // Add missing template styles from Joomla.
+        $styles = StyleHelper::loadStyles($template);
+        $assignments += array_fill_keys(array_keys($styles), []);
+
+        foreach ($assignments as $id => &$assignment) {
+            $assignment += [
+                'menu' => $style === $id ? $rules : [],
+                'style' => [
+                    'id' => [
+                        $id => true
+                    ]
+                ]
+            ];
+        }
+
+        return $assignments;
+    }
+
+    /**
      * Save assignments for the configuration.
      *
      * @param array $data
@@ -32,7 +77,7 @@ class Assignments extends AbstractAssignments
         // Joomla stores language and menu assignments by its own.
         $this->saveAssignment($data['assignment']);
         $this->saveMenu($data['menu']);
-        unset($data['assignment'], $data['menu']);
+        unset($data['assignment'], $data['menu'], $data['style']);
 
         // Continue saving rest of the assignments.
         parent::save($data);
@@ -40,7 +85,7 @@ class Assignments extends AbstractAssignments
 
     public function types()
     {
-        return ['menu'];
+        return ['menu', 'style'];
     }
 
     public function saveMenu($data)

@@ -19,7 +19,7 @@ use Gantry\Joomla\TemplateInstaller;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
- * Joomla manifest file modifier.
+ * Joomla style helper.
  */
 class StyleHelper
 {

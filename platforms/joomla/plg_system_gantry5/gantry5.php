@@ -179,10 +179,16 @@ class plgSystemGantry5 extends JPlugin
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
 
-        /** @var \Gantry\Framework\Outlines $outlines */
-        $outlines = $gantry['outlines'];
+        $assignments = new \Gantry\Framework\Assignments();
 
-        $theme->setLayout($outlines->current());
+        if (GANTRY_DEBUGGER) {
+            \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
+            \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
+        }
+
+        $theme->setLayout($assignments->select());
 
         if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
             $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);

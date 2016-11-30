@@ -31,7 +31,7 @@ class AssignmentsMenu implements AssignmentsInterface
             $active = $app->getMenu()->getActive();
             if ($active) {
                 $menutype = $active->menutype;
-                $id = $active->itemId;
+                $id = $active->id;
                 $rules = [$menutype => [$id => $this->priority]];
             }
         }
