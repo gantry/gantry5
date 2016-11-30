@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 class G5_HeliumInstallerScript
 {
-    public $requiredGantryVersion = '5.3.2';
+    public $requiredGantryVersion = '5.3.9';
 
     /**
      * @param string $type

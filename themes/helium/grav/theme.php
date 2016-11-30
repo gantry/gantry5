@@ -8,7 +8,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class G5_Helium extends Theme
 {
-    public $gantry = '5.3.8';
+    public $gantry = '5.3.9';
 
     /**
      * @var GantryTheme
