@@ -1,9 +1,9 @@
 <div class="list-item h-entry">
 
     {% if truncate %}
-        {% set image_file = page.header.image.summary.enabled|defined(true) ? (page.header.image.summary.file ?: true) %}
+        {% set image_file = page.header.image.summary.enabled|defined(false) ? (page.header.image.summary.file ?: true) %}
     {% else %}
-        {% set image_file = page.header.image.text.enabled|defined(true) ? (page.header.image.text.file ?: true) %}
+        {% set image_file = page.header.image.text.enabled|defined(false) ? (page.header.image.text.file ?: true) %}
     {% endif %}
 
     <div class="list-blog-header">

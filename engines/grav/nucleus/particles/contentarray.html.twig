@@ -35,9 +35,9 @@
                             <div class="g-array-item">
                                 {% if display.image.enabled %}
                                     {% if display.image.enabled == 'intro' %}
-                                        {% set file = page.header.image.summary.enabled|defined(true) ? (page.header.image.summary.file ?: true) %}
+                                        {% set file = page.header.image.summary.enabled|defined(false) ? (page.header.image.summary.file ?: true) %}
                                     {% elseif display.image.enabled == 'full' %}
-                                        {% set file = page.header.image.text.enabled|defined(true) ? (page.header.image.text.file ?: true) %}
+                                        {% set file = page.header.image.text.enabled|defined(false) ? (page.header.image.text.file ?: true) %}
                                     {% endif %}
 
                                     {% set image = file is same as(true) ? page.media.images|first : (file ? page.media.images[file]) %}

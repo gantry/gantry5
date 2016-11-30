@@ -26,8 +26,8 @@ form:
               help: Enabled displaying of a summary image
               highlight: 1
               options:
-                1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED
+                1: PLUGIN_ADMIN.ENABLED
 
             header.image.summary.file:
               type: text
@@ -43,8 +43,8 @@ form:
               help: Enabled displaying of a blog image
               highlight: 1
               options:
-                1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED
+                1: PLUGIN_ADMIN.ENABLED
 
             header.image.text.file:
               type: text
