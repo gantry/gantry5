@@ -12,6 +12,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed broken link from Gantry admin to plugin settings
+        - Fixed outline duplication copying assignments (#1719) 
 
 # 5.3.9
 ## 23/11/2016

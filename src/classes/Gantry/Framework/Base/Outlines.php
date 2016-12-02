@@ -445,7 +445,7 @@ class Outlines extends AbstractOutlineCollection
 
         try {
             // Copy everything over except index, layout and assignments.
-            Folder::copy($path, $newPath, '/^(index|layout|asignments)\..*$/');
+            Folder::copy($path, $newPath, '/^(index|layout|assignments)\..*$/');
         } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
         }
