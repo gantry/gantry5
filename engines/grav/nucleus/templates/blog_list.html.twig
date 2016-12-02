@@ -16,7 +16,7 @@
         {% if page.header.content.leading > 0 %}
             {% for child in collection | slice(0, page.header.content.leading) %}
                 <div class="list-blog-row">
-                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.date } %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date } %}
                 </div>
             {% endfor %}
         {% endif %}
@@ -27,7 +27,7 @@
                 {% for row in collection | slice(page.header.content.leading) | batch(page.header.content.columns) %}
                     <div class="list-blog-row">
                         {% for child in row %}
-                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.date} %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
                         {% endfor %}
                     </div>
                 {% endfor %}
@@ -35,7 +35,7 @@
                 {% for row in collection | batch(page.header.content.columns) %}
                     <div class="list-blog-row">
                         {% for child in row %}
-                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.date} %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
                         {% endfor %}
                     </div>
                 {% endfor %}
@@ -43,11 +43,11 @@
         {% else %}
             {% if page.header.content.leading > 0 %}
                 {% for child in collection | slice(page.header.content.leading) %}
-                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.date} %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
                 {% endfor %}
             {% else %}
                 {% for child in collection %}
-                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.date} %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
                 {% endfor %}
             {% endif %}
         {% endif %}

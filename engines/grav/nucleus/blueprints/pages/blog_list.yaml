@@ -81,7 +81,7 @@ form:
                 asc: Ascending
                 desc: Descending
 
-            header.content.date:
+            header.content.show_date:
               type: toggle
               label: Show Date
               highlight: 0
