@@ -19,7 +19,7 @@ form:
         type: text
         id: username
         placeholder: Username
-        label: PLUGIN_LOGIN.USERNAME_EMAIL
+        label: PLUGIN_LOGIN.USERNAME
         autofocus: true
 
       - name: password
