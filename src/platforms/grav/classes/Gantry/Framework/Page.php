@@ -19,7 +19,17 @@ class Page extends Base\Page
     public $baseUrl;
     public $title;
     public $description;
-    public $direction;
+
+    public $outline;
+    public $language = 'en-GB';
+    public $direction = 'ltr';
+
+    public function __construct()
+    {
+        $gantry = Gantry::instance();
+
+        $this->outline = $gantry['configuration'];
+    }
 
     public function url(array $args = [])
     {
@@ -35,9 +45,9 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                'lang' => 'en-GB',
-                // TODO:
-                'dir' => 'ltr'
+                // TODO: set language, directrion from Grav
+                'lang' => $this->language,
+                'dir' => $this->direction
             ]
             + (array) $this->config->get('page.html', []);
 
@@ -46,16 +56,14 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        $gantry = Gantry::instance();
         $grav = Grav::instance();
         $page = $grav['page'];
 
         $classes = [
             'site',
             $page ? $page->template() : '',
-            // TODO:
-            "dir-ltr",
-            "outline-{$gantry['configuration']}",
+            "dir-$this->direction",
+            "outline-{$this->outline}",
         ];
 
         $header = $page->header();

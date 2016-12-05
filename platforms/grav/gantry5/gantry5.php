@@ -88,7 +88,8 @@ class Gantry5Plugin extends Plugin
 
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $this->grav['admin'];
-        $inAdmin = !($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route));
+        $inAdmin = $admin->location === 'gantry';
+//        $inAdmin = !($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route));
         if ($inAdmin) {
             $results = explode('/', $admin->route, 2);
             $theme = array_shift($results);
