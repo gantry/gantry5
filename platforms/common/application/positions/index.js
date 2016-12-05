@@ -308,7 +308,7 @@ ready(function() {
                         actions = dummy.find('.position-actions'),
                         card = element.parent('.card');
 
-                    card.find('h4 .position-key').html(response.body.id);
+                    card.find('h4 .position-key span').html(response.body.id);
                     card.find('.position-actions').html(actions.html());
 
                     var position = card.find('[data-position]'),
