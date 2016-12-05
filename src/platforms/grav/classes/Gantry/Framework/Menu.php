@@ -149,10 +149,6 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($levels)
     {
-        if ($this->override) {
-            return [];
-        }
-
         $grav = Grav::instance();
 
         // Initialize pages.
@@ -164,11 +160,10 @@ class Menu extends AbstractMenu
         /** @var Page $item */
         foreach ($pages as $item) {
             $level = substr_count($item->route(), '/');
-            /*
+
             if ($levels >= 0 && $level > $levels) {
                 continue;
             }
-            */
 
             $name = trim($item->route(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
