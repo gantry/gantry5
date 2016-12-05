@@ -301,21 +301,12 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    element.data('title', title).data('tip', title);
+                    var dummy = zen('div').html(response.body.position);
 
-                    // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.position),
-                        actions = dummy.find('.position-actions'),
-                        card = element.parent('.card');
+                    parent.html(dummy.find('[id]').html());
 
-                    card.find('h4 .position-key span').html(response.body.id);
-                    card.find('.position-actions').html(actions.html());
-
-                    var position = card.find('[data-position]'),
-                        data = JSON.parse(position.data('position'));
-
-                    data.title = title;
-                    position.data('position', JSON.stringify(data));
+                    var editables = parent.search('[data-title-editable]');
+                    attachEditables(editables);
                 }
 
                 parent.hideIndicator();
