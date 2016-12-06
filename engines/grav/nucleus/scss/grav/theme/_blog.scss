@@ -5,11 +5,20 @@
     &[class*=' cols-'] {
         .list-blog-row {
             @include display(flex);
+            @include breakpoint(mobile-only) {
+              @include flex-direction(column);
+            }
             margin: -$content-padding;
             .list-item {
                 @include flex(1);
                 @include flex-basis(0);
                 padding: $content-padding;
+
+                @include breakpoint(mobile-only) {
+                  padding-top: 0;
+                  padding-bottom: 0;
+                  margin-bottom: 0;
+                }
             }
         }
     }
