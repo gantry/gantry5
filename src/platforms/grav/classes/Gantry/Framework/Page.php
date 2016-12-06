@@ -24,8 +24,10 @@ class Page extends Base\Page
     public $language = 'en-GB';
     public $direction = 'ltr';
 
-    public function __construct()
+    public function __construct($container)
     {
+        parent::__construct($container);
+
         $gantry = Gantry::instance();
 
         $this->outline = $gantry['configuration'];
