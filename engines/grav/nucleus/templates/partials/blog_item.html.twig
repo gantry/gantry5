@@ -13,6 +13,7 @@
                 {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
             {% endif %}
         {% endif %}
+        {% if truncate %}
         {% if page.header.link %}
             <h2 class="p-name">
                 {% if page.header.continue_link is not sameas(false) %}
@@ -23,6 +24,11 @@
         {% else %}
             <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
         {% endif %}
+        {% else %}
+            <h2 class="p-name">{{ page.title }}</h2>
+        {% endif %}
+
+
 
         {% if page.taxonomy.tag or show_date  %}
         <div class="list-blog-meta">
