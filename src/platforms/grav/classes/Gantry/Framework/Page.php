@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Url\Url;
 use Grav\Common\Grav;
+use Grav\Common\Language\LanguageCodes;
 
 class Page extends Base\Page
 {
@@ -21,16 +22,18 @@ class Page extends Base\Page
     public $description;
 
     public $outline;
-    public $language = 'en-GB';
-    public $direction = 'ltr';
+    public $language;
+    public $direction;
 
     public function __construct($container)
     {
         parent::__construct($container);
 
-        $gantry = Gantry::instance();
+        $grav = Grav::instance();
 
-        $this->outline = $gantry['configuration'];
+        $this->outline = $container['configuration'];
+        $this->language = $grav['language']->getLanguage() ?: 'en-GB';
+        $this->direction = LanguageCodes::getOrientation($this->language);
     }
 
     public function url(array $args = [])
@@ -47,7 +50,6 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                // TODO: set language, directrion from Grav
                 'lang' => $this->language,
                 'dir' => $this->direction
             ]
