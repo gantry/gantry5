@@ -13,6 +13,9 @@ form:
   name: login
   action:
   method: post
+  login:
+    rememberme: false
+    forgot_button: false
 
   fields:
       - name: username
