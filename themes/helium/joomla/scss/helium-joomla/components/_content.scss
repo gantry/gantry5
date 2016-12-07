@@ -37,15 +37,6 @@ dl.article-info {
     padding: ($content-padding/3) $content-padding;
 }
 
-// Read More
-p.readmore {
-    .btn {
-        @extend %g-button;
-        font-size: $core-font-size - 0.4;
-        padding: 1.1rem 2.725rem;
-    }
-}
-
 // Filter Search
 .filter-search {
     .btn {
