@@ -37,6 +37,13 @@ dl.article-info {
     padding: ($content-padding/3) $content-padding;
 }
 
+// Read More
+p.readmore {
+    .btn {
+        @extend %g-button;
+    }
+}
+
 // Filter Search
 .filter-search {
     .btn {
