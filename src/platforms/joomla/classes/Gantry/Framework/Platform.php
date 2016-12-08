@@ -29,6 +29,7 @@ class Platform extends BasePlatform
     public $no_base_layout = false;
 
     protected $name = 'joomla';
+    protected $features = ['modules' => true];
     protected $settings_key = 'return';
     protected $modules;
 

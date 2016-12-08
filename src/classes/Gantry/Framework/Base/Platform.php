@@ -30,6 +30,7 @@ abstract class Platform
     use NestedArrayAccess, Export;
 
     protected $name;
+    protected $features = [];
     protected $settings_key;
     protected $items;
     protected $container;
@@ -120,6 +121,11 @@ abstract class Platform
     public function init()
     {
         return $this;
+    }
+
+    public function has($feature)
+    {
+        return !empty($this->features[$feature]);
     }
 
     public function getThemePaths()

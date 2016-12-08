@@ -26,6 +26,7 @@ use RocketTheme\Toolbox\DI\Container;
 class Platform extends BasePlatform
 {
     protected $name = 'wordpress';
+    protected $features = ['widgets' => true];
     protected $file = 'gantry5/gantry5.php';
 
     public function __construct(Container $container)

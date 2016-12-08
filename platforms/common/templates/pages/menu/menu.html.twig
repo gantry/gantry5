@@ -21,7 +21,7 @@
                 class="menu-select-wrap"
         >
             {% for menu_name in menus %}
-            <option value="{{ menu_name|e }}"
+            <option value="{{ menu_name }}"
                     {% if id == menu_name %}selected="selected"{% endif %}
                     data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
                 {{ menu_name|capitalize }}{{ default_menu == menu_name ? ' ★' : '' }}
@@ -37,6 +37,7 @@
     {% if gantry.authorize('menu.edit', id) %}
     <div class="g5-mm-particles-picker">
         <ul class="g-menu-addblock">
+            {% if gantry.platform.has('modules') %}
             <li data-mm-blocktype="module" data-mm-id="__module">
                 <span class="menu-item">
                     <i class="fa fa-fw fa-hand-stop-o"></i>
@@ -46,6 +47,17 @@
                     <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_MODULE_SETTINGS'|trans }}" class="fa fa-cog"></i>
                 </a>
             </li>
+            {% elseif gantry.platform.has('widgets') %}
+            <li data-mm-blocktype="widget" data-mm-id="__widget">
+                <span class="menu-item">
+                    <i class="fa fa-fw fa-hand-stop-o"></i>
+                    <span class="title">{{ 'GANTRY5_PLATFORM_WIDGET'|trans }}</span>
+                </span>
+                <a class="config-cog" href="{{ gantry.route('menu/select/widget') }}">
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_WIDGET_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                </a>
+            </li>
+            {% endif %}
             <li data-mm-blocktype="particle" data-mm-id="__particle">
                 <span class="menu-item">
                     <i class="fa fa-fw fa-hand-stop-o"></i>
@@ -70,6 +82,6 @@
         {% endif %}
     </div>
 
-    <div id="trash" data-mm-eraseparticle><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+    <div id="trash" data-mm-eraseparticle=""><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
 </form>
 {% endblock %}
