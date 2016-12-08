@@ -44,6 +44,9 @@ class Gantry5Plugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
+            'onBeforeCacheClear' => [
+                ['onBeforeCacheClear', 0],
+            ],
             'onPluginsInitialized' => [
                 ['initialize', 1000],
                 ['initializeGantryAdmin', -100]
@@ -54,6 +57,18 @@ class Gantry5Plugin extends Plugin
         ];
     }
 
+    public function onBeforeCacheClear(Event $event)
+    {
+        // TODO: remove BC to 1.1.9-rc.3
+        $remove = isset($event['remove']) ? $event['remove'] : 'standard';
+        $paths = $event['paths'];
+
+        if (in_array($remove, ['all', 'standard', 'cache-only']) && !in_array('cache://', $paths)) {
+            $paths[] = 'cache://gantry5/';
+            $event['paths'] = $paths;
+        }
+    }
+    
     /**
      * Bootstrap Gantry loader.
      */
