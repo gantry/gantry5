@@ -6,6 +6,7 @@
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
     3. [](#bugfix)
         - Fix broken responsive support classes (#1705)
+        - YAML syntax fixes
 2. [Joomla](#joomla)
     2. [](#improved)
         - Improved outline assignments logic

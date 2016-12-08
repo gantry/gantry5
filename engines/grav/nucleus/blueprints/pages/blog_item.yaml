@@ -1,7 +1,7 @@
 title: Item
 extends@:
     type: default
-    context: blueprints://pages
+    context: 'blueprints://pages'
 
 form:
   fields:
@@ -34,7 +34,7 @@ form:
               toggleable: true
               label: Summary Image File
               help: image filename that exists in the page folder. If not provided, will use the first image found.
-              placeholder: For example: myimage.jpg
+              placeholder: 'For example: myimage.jpg'
 
             header.image.text.enabled:
               type: toggle
@@ -51,7 +51,7 @@ form:
               toggleable: true
               label: Blog Image File
               help: image filename that exists in the page folder. If not provided, will use the first image found.
-              placeholder: For example: myimage.jpg
+              placeholder: 'For example: myimage.jpg'
 
 
             header.image.width:
