@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route('menu/edit', id, path|url_encode, 'validate') }}">
+<form method="post" action="{{ gantry.route('menu/edit', id, path, 'validate') }}">
     <div class="card settings-block">
         <h4>
             <span data-title-editable="{{ data.title }}" class="title">{{ data.title }}</span>
