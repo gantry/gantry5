@@ -3546,7 +3546,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-size: 1rem;
 }
 #g5-container #positions .position-container ul:empty:after {
-  content: "Drop modules here...";
+  content: "Drop Particles Here or Use the +";
   display: block;
   text-align: center;
   margin: 0 auto;
