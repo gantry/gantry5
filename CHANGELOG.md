@@ -5,13 +5,14 @@
     1. [](#new)
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
     3. [](#bugfix)
-        - Fix broken responsive support classes (#1705)
-        - YAML syntax fixes
+        - Fixed broken responsive support classes (#1705)
+        - Fixed YAML syntax issues
+        - Fixed known PHP 7.1 issues
 2. [Joomla](#joomla)
     2. [](#improved)
         - Improved outline assignments logic
     3. [](#bugfix)
-        - Error outline should only render modules which were assigned to all pages (#1732)
+        - Fixed error outline rendering modules which were assigned to menu items (#1732)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed broken link from Gantry admin to plugin settings

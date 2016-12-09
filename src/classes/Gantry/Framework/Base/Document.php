@@ -126,7 +126,7 @@ class Document
         $media = !empty($element['media']) ? $element['media'] : null;
         unset($element['tag'], $element['id'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
 
-        static::$styles[$location][$priority][md5($href).sha1($href)] = [
+        static::$styles[$location][(int) $priority][md5($href).sha1($href)] = [
             ':type' => 'file',
             'href' => $href,
             'type' => $type,
@@ -155,7 +155,7 @@ class Document
         $content = $element['content'];
         $type = !empty($element['type']) ? $element['type'] : 'text/css';
 
-        static::$styles[$location][$priority][md5($content).sha1($content)] = [
+        static::$styles[$location][(int) $priority][md5($content).sha1($content)] = [
             ':type' => 'inline',
             'content' => $content,
             'type' => $type
@@ -185,7 +185,7 @@ class Document
         $async = isset($element['async']) ? true : false;
         $handle = !empty($element['handle']) ? $element['handle'] : '';
 
-        static::$scripts[$location][$priority][md5($src) . sha1($src)] = [
+        static::$scripts[$location][(int) $priority][md5($src) . sha1($src)] = [
             ':type' => 'file',
             'src' => $src,
             'type' => $type,
@@ -215,7 +215,7 @@ class Document
         $content = $element['content'];
         $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
 
-        static::$scripts[$location][$priority][md5($content).sha1($content)] = [
+        static::$scripts[$location][(int) $priority][md5($content).sha1($content)] = [
             ':type' => 'inline',
             'content' => $content,
             'type' => $type
