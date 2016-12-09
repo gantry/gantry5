@@ -52,14 +52,11 @@ class Assignments extends AbstractAssignments
         $assignments += array_fill_keys(array_keys($styles), []);
 
         foreach ($assignments as $id => &$assignment) {
-            $assignment += [
-                'menu' => $style === $id ? $rules : [],
-                'style' => [
-                    'id' => [
-                        $id => true
-                    ]
-                ]
-            ];
+            // Add current menu item if it has been assigned to the style.
+            $assignment['menu'] = $style === $id ? $rules : [];
+
+            // Always add the current template style.
+            $assignment['style'] =  ['id' => [$id => true]];
         }
 
         return $assignments;

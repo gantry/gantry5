@@ -184,6 +184,7 @@ class plgSystemGantry5 extends JPlugin
         if (GANTRY_DEBUGGER) {
             \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
             \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->loadAssignments(), 'debug');
             \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
             \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
         }
