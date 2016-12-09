@@ -136,7 +136,9 @@ class Platform extends BasePlatform
 
         if (isset($module['assignments'])) {
             $assignments = $module['assignments'];
-            if (is_array($assignments)) {
+            $outline = Gantry::instance()['configuration'];
+
+            if (is_array($assignments) && !in_array($outline, ['_error', '_offline'])) {
                 // TODO: move Assignments to DI to speed it up.
                 $matches = (new Assignments)->matches(['test' => $assignments]);
                 if (GANTRY_DEBUGGER) {
