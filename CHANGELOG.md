@@ -4,9 +4,10 @@
 1. [Common](#common)
     1. [](#new)
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
+    2. [](#improved)
+        - Start using more strict YAML syntax (compatible to future version of YAML compiler)
     3. [](#bugfix)
         - Fixed broken responsive support classes (#1705)
-        - Fixed YAML syntax issues
         - Fixed known PHP 7.1 issues
 2. [Joomla](#joomla)
     2. [](#improved)
