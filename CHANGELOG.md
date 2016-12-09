@@ -10,6 +10,7 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Improved outline assignments logic
+        - Error outline should only render modules which were assigned to all pages (#1732)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed broken link from Gantry admin to plugin settings
