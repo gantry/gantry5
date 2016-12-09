@@ -10,6 +10,7 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Improved outline assignments logic
+    3. [](#bugfix)
         - Error outline should only render modules which were assigned to all pages (#1732)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
