@@ -13,14 +13,12 @@
 {%- endmacro %}
 
 {% macro displayParticle(item, context) %}
-    {% if item.options.particle.enabled is null or item.options.particle.enabled %}
-        {% set context = context|merge({ particle: item.options.particle }) %}
-        {% set classes = item.options.block.class %}
-        <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
-        {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
-        ignore missing with context only %}
-        </div>
-    {% endif %}
+    {% set context = context|merge({ particle: item.options.particle }) %}
+    {% set classes = item.options.block.class %}
+    <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
+    {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
+    ignore missing with context only %}
+    </div>
 {% endmacro %}
 
 {% macro displayTitle(item) %}

@@ -352,7 +352,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             array_pop($parentTree);
 
             // Enabled state should equal particle setting.
-            $item['enabled'] = !empty($item['options']['particle']['enabled']);
+            $item['enabled'] = !isset($item['options']['particle']['enabled']) || !empty($item['options']['particle']['enabled']);
             $item['level'] = $level = count($tree);
             $item['parent_id'] = implode('/', $parentTree);
             if (($start && $start > $level)
