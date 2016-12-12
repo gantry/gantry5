@@ -86,10 +86,10 @@
                                                 {% for category in page.taxonomy.category %}
                                                     {% if display.category.route %}
                                                         <a href="{{ base_url ~ display.category.route }}">
-                                                            <i class="fa fa-folder-open"></i>{{ category }}
+                                                            <i class="fa fa-folder-open"></i>{{ category|raw }}
                                                         </a>
                                                     {% else %}
-                                                        <i class="fa fa-folder-open"></i>{{ category }}
+                                                        <i class="fa fa-folder-open"></i>{{ category|raw }}
                                                     {% endif %}
                                                 {% endfor %}
                                             </span>
