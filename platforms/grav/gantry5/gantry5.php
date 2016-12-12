@@ -36,7 +36,6 @@ class Gantry5Plugin extends Plugin
      */
     protected $theme;
     protected $outline;
-    protected $link;
 
     /**
      * @return array
@@ -92,26 +91,20 @@ class Gantry5Plugin extends Plugin
             return;
         }
 
-        // If Gantry theme is active, display extra menu item.
+        // If Gantry theme is active, display extra menu item and make sure that page types get loaded.
         $theme = $this->config->get('system.pages.theme');
         if ($theme && is_file("themes://{$theme}/gantry/theme.yaml")) {
-            $this->link = $theme;
+            $enabled = true;
             $this->enable([
-                'onAdminMenu' => ['onAdminMenu', -10]
+                'onAdminMenu' => ['onAdminMenu', -10],
+                'onAdminThemeInitialized' => ['initAdminTheme', 0]
             ]);
         }
 
         /** @var \Grav\Plugin\Admin $admin */
         $admin = $this->grav['admin'];
         $inAdmin = $admin->location === 'gantry';
-//        $inAdmin = !($admin->location != 'gantry' && ($admin->location != 'themes' || !$admin->route));
-        if ($inAdmin) {
-            $results = explode('/', $admin->route, 2);
-            $theme = array_shift($results);
-        }
-
-        // Do not initialize Gantry on non-Gantry themes.
-        if ($theme && !is_file("themes://{$theme}/gantry/theme.yaml")) {
+        if (!$inAdmin) {
             return;
         }
 
@@ -123,23 +116,26 @@ class Gantry5Plugin extends Plugin
         }
 
         $base = rtrim($this->grav['base_url'], '/');
-        $this->base = rtrim("{$base}{$admin->base}/{$admin->location}/{$theme}", '/');
+        $this->base = rtrim("{$base}{$admin->base}/{$admin->location}", '/');
 
-        if (!$inAdmin) {
-            $this->enable([
-                'onAdminThemeInitialized' => ['initAdmin', 0]
-            ]);
-            return;
-        }
+        $gantry = Gantry::instance();
+        $gantry['base_url'] = $this->base;
+        $gantry['router'] = new Router($gantry);
+        $gantry['router']->boot();
 
         $this->enable([
-            'onAdminThemeInitialized' => ['runAdmin', 0]
+            'onPagesInitialized' => ['onAdminPagesInitialized', 900],
+            'onTwigExtensions' => ['onAdminTwigInitialized', 900],
+            'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
         ]);
 
-        if ($theme) {
-            // Switch theme and initialize it.
-            $this->config->set('system.pages.theme', $theme);
+        if (empty($enabled)) {
+            $this->enable([
+            'onAdminThemeInitialized' => ['initAdminTheme', 0]
+        ]);
         }
+
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Inside Gantry administration');
     }
 
     /**
@@ -225,33 +221,15 @@ class Gantry5Plugin extends Plugin
         GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
    }
 
-    public function initAdmin()
+    public function initAdminTheme()
     {
         /** @var Themes $themes */
         $themes = $this->grav['themes'];
         $themes->initTheme();
 
         $gantry = Gantry::instance();
-        $gantry['base_url'] = $this->base;
 
         $this->grav['gantry5'] = $gantry;
-    }
-
-    public function runAdmin()
-    {
-        $this->initAdmin();
-
-        $this->grav['gantry5']['router'] = function ($c) {
-            return new Router($c);
-        };
-
-        $this->enable([
-            'onPagesInitialized' => ['onAdminPagesInitialized', 900],
-            'onTwigExtensions' => ['onAdminTwigInitialized', 900],
-            'onTwigSiteVariables' => ['onAdminTwigVariables', 900]
-        ]);
-
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Inside Gantry administration');
     }
 
     /**
@@ -260,7 +238,7 @@ class Gantry5Plugin extends Plugin
     public function onAdminMenu()
     {
         $nonce = Utils::getNonce('gantry-admin');
-        $this->grav['twig']->plugins_hooked_nav['Appearance'] = ['route' => "gantry/{$this->link}/configurations/default/styles?nonce={$nonce}", 'icon' => 'fa-gantry'];
+        $this->grav['twig']->plugins_hooked_nav['Appearance'] = ['route' => "gantry/configurations/default/styles?nonce={$nonce}", 'icon' => 'fa-gantry'];
     }
 
     /**

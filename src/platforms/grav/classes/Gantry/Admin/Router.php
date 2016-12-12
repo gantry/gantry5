@@ -24,6 +24,14 @@ class Router extends BaseRouter
 {
     public function boot()
     {
+        static $booted;
+
+        if ($booted) {
+            return;
+        }
+
+        $booted = true;
+
         $grav = Grav::instance();
         $plugin = $grav['gantry5_plugin'];
 
@@ -34,9 +42,15 @@ class Router extends BaseRouter
         $uri = $grav['uri'];
 
         $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
+        $base = '';
 
         // Set theme.
-        $theme = array_shift($parts);
+        if ($parts && $parts[0] === 'themes') {
+            $base = '/' . array_shift($parts);
+            $theme = array_shift($parts);
+        } else {
+            $theme = $grav['config']->get('system.pages.theme');
+        }
         $this->setTheme($theme);
 
         /** @var Request $request */
@@ -44,15 +58,8 @@ class Router extends BaseRouter
 
         // Figure out the action we want to make.
         $this->method = $request->getMethod();
-        $this->path = $parts;
-        if (!$theme) {
-            $this->resource = array_shift($this->path) ?: 'themes';
-        } else {
-            if (!$this->path) {
-                $this->path = ['configurations', 'styles'];
-            }
-            $this->resource = array_shift($this->path);
-        }
+        $this->path = $parts ?: ($theme ? ['configurations', true] : ['themes']);
+        $this->resource = array_shift($this->path);
         $this->format = $uri->extension('html');
         $ajax = ($this->format == 'json');
 
@@ -64,31 +71,28 @@ class Router extends BaseRouter
             'params' => $request->post->getJsonArray('params')
         ];
 
-        $this->container['base_url'] = $plugin->base;
-
         $this->container['ajax_suffix'] = '.json';
 
         $nonce = Utils::getNonce('gantry-admin');
-        $this->container['routes'] = [
-            '1' => '/%s?nonce=' . $nonce,
-            'themes' => '',
-            'picker/layouts' => '/layouts?nonce=' . $nonce,
-        ];
-
+        $this->container['base_url'] = $plugin->base;
         $this->container['ajax_nonce'] = $nonce;
+        if ($base) {
+            $this->container['routes'] = [
+                '1' => "{$base}/{$theme}/%s?nonce={$nonce}",
+                'themes' => '/themes',
+                'picker/layouts' => "{$base}/{$theme}/layouts?nonce={$nonce}",
+            ];
+        } else {
+            $this->container['routes'] = [
+                '1' => "/%s?nonce={$nonce}",
+                'themes' => '/themes',
+                'picker/layouts' => "/layouts?nonce={$nonce}",
+            ];
+        }
     }
 
-    public function setTheme($theme)
+    public function setTheme(&$theme)
     {
-        $grav = Grav::instance();
-        $plugin = $grav['gantry5_plugin'];
-
-        $this->container['base_url'] = $plugin->base;
-
-        if (!$theme) {
-            $theme = $grav['config']->get('system.theme');
-        }
-
         $path = "themes://{$theme}";
 
         if (!$theme || !is_file("{$path}/gantry/theme.yaml") || !is_file("{$path}/theme.php")) {
@@ -100,6 +104,8 @@ class Router extends BaseRouter
 
             CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
             CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
+        } else {
+            Grav::instance()['config']->set('system.pages.theme', $theme);
         }
 
         return $this;

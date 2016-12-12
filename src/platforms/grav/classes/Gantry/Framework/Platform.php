@@ -212,7 +212,7 @@ class Platform extends BasePlatform
         $grav = Grav::instance();
         $base = $grav['gantry5_plugin']->base;
 
-        return "{$base}/{$theme}";
+        return "{$base}/themes/{$theme}";
     }
 
     public function settings()

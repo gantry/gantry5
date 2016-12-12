@@ -33,14 +33,16 @@ class Router extends BaseRouter
         // TODO: Remove style variable.
         $style = $input->getInt('style');
         $theme = $input->getCmd('theme');
+        $path = array_filter(explode('/', $input->getString('view', '')), function($var) { return $var !== ''; });
+
         $this->setTheme($theme, $style);
 
         /** @var Request $request */
         $request = $this->container['request'];
 
         $this->method = $request->getMethod();
-        $this->path = explode('/', $input->getString('view'));
-        $this->resource = array_shift($this->path) ?: 'themes';
+        $this->path = $path ?: (isset($this->container['theme.name']) ? ['configurations', true] : ['themes']);
+        $this->resource = array_shift($this->path);
         $this->format = $input->getCmd('format', 'html');
         $ajax = ($this->format == 'json');
 

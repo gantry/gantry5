@@ -18,6 +18,7 @@ use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Component\Response\RedirectResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Framework\Outlines as OutlinesObject;
@@ -211,14 +212,23 @@ class Configurations extends HtmlController
     {
         $path = func_get_args();
 
+        $outline = array_shift($path);
+        $page = array_shift($path);
+
+        $method = $this->params['method'];
+
+        if (!isset($outline) || !isset($page)) {
+            return new RedirectResponse($this->container->route('configurations', is_string($outline) ? $outline : 'default', 'styles'));
+        }
+
         $outlines = $this->container['outlines']->toArray();
 
-        $outline = isset($outlines[$path[0]]) ? array_shift($path) : 'default';
+        if (!isset($outlines[$outline])) {
+            throw new \RuntimeException('Outline not found.', 404);
+        }
 
         $this->container['configuration'] = $outline;
 
-        $method = $this->params['method'];
-        $page = (array_shift($path) ?: 'styles');
         $resource = $this->params['location'] . '/'. $page;
 
         $this->params['configuration'] = $outline;
@@ -233,7 +243,7 @@ class Configurations extends HtmlController
     {
         $class = '\\Gantry\\Admin\\Controller\\Html\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
         if (!class_exists($class)) {
-            throw new \RuntimeException('Outline not found', 404);
+            throw new \RuntimeException('Page not found', 404);
         }
 
         /** @var HtmlController $controller */
