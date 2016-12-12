@@ -287,6 +287,7 @@ class Menu extends HtmlController
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
         $data->set('options.particle', $this->request->post->getArray("particles.{$name}"));
         $data->def('options.particle.enabled', 1);
+        $data->set('enabled', $data->get('options.particle.enabled'));
 
         $block = $this->request->post->getArray('block');
         foreach ($block as $key => $param) {

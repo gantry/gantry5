@@ -18,6 +18,7 @@
     3. [](#bugfix)
         - Fixed broken link from Gantry admin to plugin settings
         - Fixed outline duplication copying assignments (#1719) 
+        - Fixed widgets and particles not showing up in menu (#1715)
 
 # 5.3.9
 ## 23/11/2016
