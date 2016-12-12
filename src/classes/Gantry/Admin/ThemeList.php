@@ -57,18 +57,22 @@ class ThemeList
         natsort($files);
 
         foreach ($files as $theme) {
-            if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
-                $details = new ThemeDetails($theme);
-                $details->addStreams();
+            try {
+                if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
+                    $details = new ThemeDetails($theme);
+                    $details->addStreams();
 
-                $details['name'] = $theme;
-                $details['title'] = $details['details.name'];
-                $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
-                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
-                $details['params'] = [];
+                    $details['name'] = $theme;
+                    $details['title'] = $details['details.name'];
+                    $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
+                    $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
+                    $details['params'] = [];
 
-                $list[$details->name] = $details;
-
+                    $list[$details->name] = $details;
+                }
+            } catch (\Exception $e) {
+                // Do not add broken themes into the list.
+                continue;
             }
         }
 

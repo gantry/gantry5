@@ -9,6 +9,7 @@
     3. [](#bugfix)
         - Fixed broken responsive support classes (#1705)
         - Fixed known PHP 7.1 issues
+        - Ignore broken Gantry 5 themes instead of throwing exception
 2. [Joomla](#joomla)
     2. [](#improved)
         - Improved outline assignments logic
