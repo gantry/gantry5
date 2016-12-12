@@ -126,7 +126,7 @@ class plgSystemGantry5 extends JPlugin
      */
     public function onRenderModule(&$module, &$attribs)
     {
-        if (!$this->app->isSite()) {
+        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
             return;
         }
 
@@ -147,7 +147,7 @@ class plgSystemGantry5 extends JPlugin
     {
         $templateName = $this->app->getTemplate();
 
-        if (!file_exists(JPATH_THEMES . "/{$templateName}/gantry/theme.yaml")) {
+        if (!$this->isGantryTemplate($templateName)) {
             return;
         }
 
