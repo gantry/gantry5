@@ -243,12 +243,14 @@ domready(function() {
         switch (GANTRY_PLATFORM) {
             case 'wordpress':
                 currentNonce = getParam(currentURI, '_wpnonce');
-                currentView = getParam(currentURI, 'view');
+                // currentView = getParam(currentURI, 'view');
 
+                /*
                 if (!currentView) {
                     currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
                     History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
                 }
+                */
 
                 // refresh nonce
                 if (currentNonce !== GANTRY_AJAX_NONCE) {
@@ -259,12 +261,14 @@ domready(function() {
 
             case 'grav':
                 currentNonce = getParam(currentURI, 'nonce');
-                currentView = contains(currentURI, 'configurations/default/styles');
+                // currentView = contains(currentURI, 'configurations/default/styles');
 
+                /*
                 if (!currentView) {
                     currentURI += 'configurations/default/styles';
                     History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
                 }
+                */
 
                 // refresh nonce
                 if (currentNonce !== GANTRY_AJAX_NONCE) {
