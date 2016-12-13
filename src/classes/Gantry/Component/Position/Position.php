@@ -142,13 +142,14 @@ class Position extends Collection
     
     /**
      * @param Module|string $item
+     * @param string        $name  Temporary name for the module.
      * @return $this
      */
-    public function add($item)
+    public function add($item, $name = null)
     {
         if ($item instanceof Module) {
-            $this->modules[$item->name] = $item;
-            $item = $item->name;
+            $this->modules[$name ?: $item->name] = $item;
+            $item = $name ?: $item->name;
         }
 
         $this->items[] = $item;
@@ -336,7 +337,7 @@ class Position extends Collection
 
         if (isset($data['modules'])) {
             foreach ($data['modules'] as $array) {
-                $this->add(new Module($array['id'], $this->name, $array));
+                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: rand());
             }
 
             return;
