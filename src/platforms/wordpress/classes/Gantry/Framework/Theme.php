@@ -371,7 +371,8 @@ class Theme extends AbstractTheme
         $locator = $gantry['locator'];
 
         $installed = is_dir($locator->findResource('gantry-theme://config/default', true, true));
-        if (!$installed) {
+        $linked = is_link($locator->findResource('gantry-theme://'));
+        if (!$installed && !$linked) {
             $this->install();
         }
 

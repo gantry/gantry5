@@ -33,6 +33,20 @@ class Platform extends BasePlatform
     protected $settings_key = 'return';
     protected $modules;
 
+
+    public function init()
+    {
+        // Support linked sample data.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
+        }
+
+        return parent::init();
+    }
+
     public function getCachePath()
     {
         $path = \JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
@@ -51,6 +65,13 @@ class Platform extends BasePlatform
     public function getMediaPaths()
     {
         $paths = ['images'];
+
+        // Support linked sample data.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+            array_unshift($paths, "media/gantry5/themes/{$theme}/media-shared");
+            array_unshift($paths, "media/gantry5/themes/{$theme}/media-demo");
+        }
 
         if ($this->container['global']->get('use_media_folder', false)) {
             array_push($paths, 'gantry-theme://images');

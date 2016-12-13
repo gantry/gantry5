@@ -53,6 +53,14 @@ class Platform extends BasePlatform
 
     public function init()
     {
+        // Support linked sample data.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        if ($theme && is_dir(WP_CONTENT_DIR . "/gantry5/{$theme}/media-shared")) {
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "wp-content://gantry5/{$theme}/theme-shared");
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "wp-content://gantry5/{$theme}/theme-demo");
+            array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "wp-content://gantry5/{$theme}/custom");
+        }
+
         if ($this->multisite) {
             $theme = $this->get('streams.gantry-theme.prefixes..0');
             if ($theme) {
@@ -78,6 +86,13 @@ class Platform extends BasePlatform
     public function getMediaPaths()
     {
         $paths = [$this->upload_dir];
+
+        // Support linked sample data.
+        $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
+        if ($theme && is_dir(WP_CONTENT_DIR . "/gantry5/{$theme}/media-shared")) {
+            array_unshift($paths, "wp-content://gantry5/{$theme}/media-shared");
+            array_unshift($paths, "wp-content://gantry5/{$theme}/media-demo");
+        }
 
         if ($this->container['global']->get('use_media_folder', false)) {
             array_push($paths, 'gantry-theme://images');
