@@ -22,7 +22,7 @@ class Icons extends JsonController
     {
         $response = [];
 
-        // Font Awesome Icons list [v4.6.3 - 730 icons]
+        // Font Awesome Icons list [v4.7.0 - 730 icons]
         // NOTE: To get an updated list of icons:
         //       1. Go to: http://fontawesome.io/icons/
         //       2. Open Console in Deveveloper Tools
