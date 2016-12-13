@@ -156,7 +156,8 @@ class Position extends Collection
         return $this;
     }
 
-    public function remove($item) {
+    public function remove($item)
+    {
         if ($item instanceof Module) {
             $item = $item->name;
         }
@@ -332,6 +333,14 @@ class Position extends Collection
         }
 
         $this->title = isset($data['title']) ? $data['title'] : $this->name;
+
+        if (isset($data['modules'])) {
+            foreach ($data['modules'] as $array) {
+                $this->add(new Module($array['id'], $array['position'], $array));
+            }
+
+            return;
+        }
 
         // Sort modules by ordering, if items are not listed in ordering, use alphabetical order.
         $ordering = isset($data['ordering']) ? array_flip($data['ordering']) : [];

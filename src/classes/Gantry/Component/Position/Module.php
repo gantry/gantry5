@@ -114,6 +114,8 @@ class Module implements \ArrayAccess
 
     protected function init($data)
     {
+        unset($data['id'], $data['position']);
+
         $this->items = $data;
 
         if (isset($this->items['assignments'])) {

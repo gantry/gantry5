@@ -18,6 +18,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Position\Module;
+use Gantry\Component\Position\Position;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
@@ -87,22 +88,36 @@ class Positions extends HtmlController
             $this->undefined();
         }
 
+        $title = (string) $this->request->post['title'];
+        $key = (string) $this->request->post['key'];
+        $data = (string) $this->request->post['data'];
+
         /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
         $position = $positions[$old];
-        if (!$position) {
-            throw new \RuntimeException(sprintf("Position '%s' not found", $old), 404);
+        $exists = isset($position);
+
+        if (!$exists) {
+            if (!$data) {
+                throw new \RuntimeException(sprintf("Position '%s' not found", $old), 404);
+            }
+
+            $position = new Position($key ?: $old);
         }
 
-        $title = (string) $this->request->post['title'];
-        $key = (string) $this->request->post['key'];
         if (strlen($title)) {
             $position->title = (string) $title;
         }
-        if (strlen($key)) {
+        if ($exists && strlen($key)) {
             $position = $position->rename($key);
         } else {
             $position->save();
+        }
+
+        if ($data) {
+            $data = ['title' => $position->title] + json_decode($data, true);
+
+            $position = new Position($position->name, $data);
         }
 
         $html = $this->container['admin.theme']->render(
