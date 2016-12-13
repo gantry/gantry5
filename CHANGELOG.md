@@ -1,5 +1,5 @@
-# 5.3.10
-## XX/XX/2016
+# 5.4.0
+## 13/12/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -23,6 +23,9 @@
         - Fixed broken link from Gantry admin to plugin settings
         - Fixed outline duplication copying assignments (#1719) 
         - Fixed widgets and particles not showing up in menu (#1715)
+4. [Grav](#grav)
+    1. [](#new)
+        - Grav is now integrated with Gantry 5!
 
 # 5.3.9
 ## 23/11/2016
@@ -1067,7 +1070,7 @@
         - Fixed Joomla frontend image manager alignment issues
 3. [WordPress](#wordpress)
     1. [](#new)
-        * WordPress is now integrated with Gantry 5!
+        - WordPress is now integrated with Gantry 5!
 
 # 5.0.1
 ## 07/16/2015
