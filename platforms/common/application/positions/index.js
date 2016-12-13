@@ -282,13 +282,13 @@ ready(function() {
                 href = element.data('g-config-href'),
                 type = element.data('title-editable-type'),
                 method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent('[id]'),
-                data = {};
+                parent = element.parent('[id]');
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
+            var data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
+            data.data = parent.find('[data-position]').data('position');
 
             request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
