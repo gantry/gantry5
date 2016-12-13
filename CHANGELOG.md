@@ -11,6 +11,8 @@
         - Fixed known PHP 7.1 issues
         - Ignore broken Gantry 5 themes instead of throwing exception
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Resolve all stream URI links in Joomla page
     2. [](#improved)
         - Improved outline assignments logic
     3. [](#bugfix)

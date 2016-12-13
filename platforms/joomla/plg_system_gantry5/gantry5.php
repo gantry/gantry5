@@ -51,9 +51,6 @@ class plgSystemGantry5 extends JPlugin
         $global = $this->params->toArray();
     }
 
-    /**
-     * Re-route Gantry templates to Gantry Administration component.
-     */
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
@@ -64,59 +61,13 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
-    /**
-     * Convert links in com_templates to point into Gantry Administrator component.
-     */
     public function onAfterRender()
     {
-        if (!$this->app->isAdmin()) {
-            return;
-        }
+        if ($this->app->isSite() && class_exists('Gantry\Framework\Gantry')) {
+            $this->onAfterRenderSite();
 
-        $document = JFactory::getDocument();
-        $type   = $document->getType();
-
-        $option = $this->app->input->getString('option');
-        $view   = $this->app->input->getString('view', 'g5');
-        $task   = $this->app->input->getString('task');
-
-        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && ($view == 'g5' || $view == 'styles') && !$task && $type == 'html') {
-            $this->styles = $this->getStyles();
-
-            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
-
-            $this->app->setBody($body);
-        }
-
-        if (($option == 'com_modules' || $option == 'com_advancedmodules') && (($view == 'g5' || $view == 'modules') || empty($view)) && $type == 'html') {
-            $db    = JFactory::getDBO();
-            $query = $db->getQuery(true);
-            $query->select('id, title, params');
-            $query->from('#__modules');
-            $query->where('module = ' . $db->quote('mod_gantry5_particle'));
-            $db->setQuery($query);
-            $data = $db->loadObjectList();
-
-            if (sizeof($data) > 0) {
-                $this->modules = array();
-                $body = $this->app->getBody();
-
-                foreach ($data as $module) {
-                    $params   = json_decode($module->params);
-                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
-                    $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
-                    $type = isset($particle->particle) ? $particle->particle : '';
-
-                    $this->modules[$module->id] = $particle;
-
-                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title, $type) {
-                        return $this->appendHtml($matches, $title, $type);
-                    }, $body);
-                }
-
-
-                $this->app->setBody($body);
-            }
+        } elseif ($this->app->isAdmin()) {
+            $this->onAfterRenderAdmin();
         }
     }
 
@@ -237,6 +188,68 @@ class plgSystemGantry5 extends JPlugin
                     $token = JSession::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
+            }
+        }
+    }
+
+    /**
+     * Convert all stream uris into proper links.
+     */
+    private function onAfterRenderSite()
+    {
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $this->app->setBody($gantry['document']->urlFilter($this->app->getBody()));
+    }
+
+    /**
+     * Convert links in com_templates to point into Gantry Administrator component.
+     */
+    private function onAfterRenderAdmin()
+    {
+        $document = JFactory::getDocument();
+        $type   = $document->getType();
+
+        $option = $this->app->input->getString('option');
+        $view   = $this->app->input->getString('view', 'g5');
+        $task   = $this->app->input->getString('task');
+
+        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && ($view == 'g5' || $view == 'styles') && !$task && $type == 'html') {
+            $this->styles = $this->getStyles();
+
+            $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
+
+            $this->app->setBody($body);
+        }
+
+        if (($option == 'com_modules' || $option == 'com_advancedmodules') && (($view == 'g5' || $view == 'modules') || empty($view)) && $type == 'html') {
+            $db    = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select('id, title, params');
+            $query->from('#__modules');
+            $query->where('module = ' . $db->quote('mod_gantry5_particle'));
+            $db->setQuery($query);
+            $data = $db->loadObjectList();
+
+            if (sizeof($data) > 0) {
+                $this->modules = array();
+                $body = $this->app->getBody();
+
+                foreach ($data as $module) {
+                    $params   = json_decode($module->params);
+                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
+                    $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
+                    $type = isset($particle->particle) ? $particle->particle : '';
+
+                    $this->modules[$module->id] = $particle;
+
+                    $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', function($matches) use ($title, $type) {
+                        return $this->appendHtml($matches, $title, $type);
+                    }, $body);
+                }
+
+
+                $this->app->setBody($body);
             }
         }
     }
