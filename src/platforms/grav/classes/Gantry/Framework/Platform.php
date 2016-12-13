@@ -28,7 +28,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class Platform extends BasePlatform
 {
     protected $name = 'grav';
-    protected $features = ['fontawesome' => true];
+    protected $features = ['fontawesome' => false];
 
     public function __construct(Container $container)
     {
