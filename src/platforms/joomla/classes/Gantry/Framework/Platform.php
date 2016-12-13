@@ -39,6 +39,20 @@ class Platform extends BasePlatform
         // Support linked sample data.
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
         if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
+            $custom = JPATH_ROOT . "/media/gantry5/themes/{$theme}/custom";
+            if (!is_dir($custom)) {
+                // First run -- copy configuration into a single location.
+                $shared = JPATH_ROOT . "/media/gantry5/themes/{$theme}/template-shared";
+                $demo = JPATH_ROOT . "/media/gantry5/themes/{$theme}/template-demo";
+
+                Folder::create($custom);
+                if (is_dir("{$shared}/custom/config")) {
+                    Folder::copy("{$shared}/custom/config", "{$custom}/config");
+                }
+                if (is_dir("{$demo}/custom/config")) {
+                    Folder::copy("{$demo}/custom/config", "{$custom}/config");
+                }
+            }
             array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-shared");
             array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/template-demo");
             array_unshift($this->items['streams']['gantry-theme']['prefixes'][''], "media/gantry5/themes/{$theme}/custom");
