@@ -336,7 +336,7 @@ class Position extends Collection
 
         if (isset($data['modules'])) {
             foreach ($data['modules'] as $array) {
-                $this->add(new Module($array['id'], $array['position'], $array));
+                $this->add(new Module($array['id'], $this->name, $array));
             }
 
             return;
