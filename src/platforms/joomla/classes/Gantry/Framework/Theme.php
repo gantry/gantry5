@@ -60,7 +60,7 @@ class Theme extends AbstractTheme
         // Get user timezone and if not set, use Joomla default.
         $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
 
-        $twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+        $twig->getExtension('Twig_Extension_Core')->setTimezone(new \DateTimeZone($timezone));
 
         return $twig;
     }

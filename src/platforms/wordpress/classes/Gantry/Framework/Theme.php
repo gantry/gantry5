@@ -77,7 +77,7 @@ class Theme extends AbstractTheme
 
         // FIXME: Get timezone from WP.
         //$timezone = 'UTC';
-        //$twig->getExtension('core')->setTimezone(new \DateTimeZone($timezone));
+        //$twig->getExtension('Twig_Extension_Core')->setTimezone(new \DateTimeZone($timezone));
 
         return $twig;
     }
