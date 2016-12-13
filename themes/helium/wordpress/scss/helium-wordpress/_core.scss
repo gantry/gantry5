@@ -23,20 +23,11 @@
     // Platform Content
     .platform-content {
 
-        // Entries & Entry
-        .entries, .entry {
-            .entry-header {
-                .entry-title {
-                    font-family: get-font-family($font-family-title);
-                    margin-bottom: 0.5rem;
-                }
-            }
-        }
-
         // Entries
         .entries {
             .tease {
-                margin-bottom: 2rem;
+                margin: 0;
+                padding: 0;
 
                 // Sticky Posts
                 &.sticky {
