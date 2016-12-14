@@ -8,7 +8,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class G5_Hydrogen extends Theme
 {
-    public $gantry = '5.3.9';
+    public $gantry = '5.4.0';
 
     /**
      * @var GantryTheme

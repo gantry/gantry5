@@ -70,7 +70,7 @@ configuration:
       nopaddingall: No Padding
 
   dependencies:
-    gantry: 5.3.9
+    gantry: 5.4.0
 
 admin:
   styles:

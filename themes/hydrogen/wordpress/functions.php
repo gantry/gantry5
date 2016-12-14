@@ -13,7 +13,7 @@ defined('ABSPATH') or die;
 // Note: This file must be PHP 5.2 compatible.
 
 // Check min. required version of Gantry 5
-$requiredGantryVersion = '5.3.9';
+$requiredGantryVersion = '5.4.0';
 
 // Bootstrap Gantry framework or fail gracefully.
 $gantry_include = get_stylesheet_directory() . '/includes/gantry.php';
