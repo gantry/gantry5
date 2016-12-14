@@ -1,3 +1,10 @@
+# 5.4.1
+## 13/12/2016
+
+1. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed Grav and Grav Admin dependencies versions
+
 # 5.4.0
 ## 13/12/2016
 
@@ -6,7 +13,7 @@
         - Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
     2. [](#improved)
         - Start using more strict YAML syntax (compatible to future version of YAML compiler)
-        - Removed hack to manipulate URL and inject default page and nonce in Grav and Wordpress 
+        - Removed hack to manipulate URL and inject default page and nonce in Grav and Wordpress
     3. [](#bugfix)
         - Fixed broken responsive support classes (#1705)
         - Fixed known PHP 7.1 issues
@@ -21,7 +28,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed broken link from Gantry admin to plugin settings
-        - Fixed outline duplication copying assignments (#1719) 
+        - Fixed outline duplication copying assignments (#1719)
         - Fixed widgets and particles not showing up in menu (#1715)
 4. [Grav](#grav)
     1. [](#new)
@@ -62,7 +69,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Updated FontAwesome to 4.7.0 which includes [Grav](https://getgrav.org)'s Logo! 
+        - Updated FontAwesome to 4.7.0 which includes [Grav](https://getgrav.org)'s Logo!
     3. [](#bugfix)
         - Helium: Fixed wrong font being used for the content titles (#1603)
         - Helium: Remove Expanded section padding on tablet-range view
@@ -81,7 +88,7 @@
         - Fixed menu ordering issues when menu item alias got changed; to become effective menu must be saved once in Gantry (#595)
         - Fixed 'joomla.categories' YAML field type displaying trashed and archived categories (#1625)
 3. [WordPress](#wordpress)
-    3. [](#bugfix)  
+    3. [](#bugfix)
         - Hydrogen / Helium: Fixed password field translation (#1657)
         - Fixed editing the menu item titles under `Appearance > Menu` changing the order of menu items in Gantry (#1016)
 
