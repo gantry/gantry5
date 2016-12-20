@@ -2,7 +2,8 @@
 ## XX/XX/2016
 
 1. [Common](#common)
-    1. [](#new)
+    3. [](#bugfix)
+        - Fix regression: Do not change links which aren't using Gantry streams in platform filter events (#1756)
 
 # 5.4.1
 ## 13/12/2016

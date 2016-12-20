@@ -560,11 +560,12 @@ class Document
      * @param  bool $domain         True to include domain name.
      * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                              Use value <= 0 to disable the feature.
+     * @param  bool $streamOnly     Only touch streams.
      * @return string               Returns modified HTML.
      */
-    public static function urlFilter($html, $domain = false, $timestamp_age = null)
+    public static function urlFilter($html, $domain = false, $timestamp_age = null, $streamOnly = false)
     {
-        static::$urlFilterParams = [$domain, $timestamp_age];
+        static::$urlFilterParams = [$domain, $timestamp_age, $streamOnly];
 
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
@@ -575,8 +576,30 @@ class Document
             return $token;
         }, $html);
 
-        $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', 'static::linkHandler', $html);
-        $html = preg_replace_callback('^(\s)url\((.*?)\)^', 'static::urlHandler', $html);
+        if ($streamOnly) {
+            $gantry = static::gantry();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+            $schemes = $locator->getSchemes();
+
+            $list = [];
+            foreach ($schemes as $scheme) {
+                if (strpos($scheme, 'gantry-') === 0) {
+                    $list[] = substr($scheme, 7);
+                }
+            }
+            if (empty($list)) {
+                return $html;
+            }
+
+            $match = '(gantry-(' . implode('|', $list). ')://.*?)';
+        } else {
+            $match = '(.*?)';
+        }
+
+        $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^', 'static::linkHandler', $html);
+        $html = preg_replace_callback('^(\s)url\(' . $match . '\)^', 'static::urlHandler', $html);
         $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
 
         return $html;

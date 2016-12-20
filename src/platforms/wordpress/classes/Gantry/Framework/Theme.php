@@ -189,7 +189,8 @@ class Theme extends AbstractTheme
     {
         $gantry = Gantry::instance();
 
-        return $gantry['document']->urlFilter($text, true, 0);
+        // Only filter our streams.
+        return $gantry['document']->urlFilter($text, true, 0, true);
     }
 
     public function register_post_types()

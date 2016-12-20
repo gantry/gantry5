@@ -199,7 +199,8 @@ class plgSystemGantry5 extends JPlugin
     {
         $gantry = \Gantry\Framework\Gantry::instance();
 
-        $this->app->setBody($gantry['document']->urlFilter($this->app->getBody()));
+        // Only filter our streams.
+        $this->app->setBody($gantry['document']->urlFilter($this->app->getBody(), false, 0, true));
     }
 
     /**
