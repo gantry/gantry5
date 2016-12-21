@@ -15,7 +15,7 @@
     <target name="build-grav-plugin" depends="build-grav-installer">
         <echo message="Building Plugin..." />
 
-        <copy todir="${tmp_dir}/packages/gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5" overwrite="true">
             <fileset dir="${path.platforms}/grav/gantry5">
                 <exclude name=".sass-cache/"/>
                 <exclude name="assets/" />
@@ -30,7 +30,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/admin" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/admin" overwrite="true">
             <fileset dir="${path.platforms}/common">
                 <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
@@ -57,7 +57,7 @@
         <phingcall target="build-grav-media" />
 
         <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5" overwrite="true">
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/grav/gantry5">
                 <include name="blueprints.yaml"/>
@@ -67,28 +67,27 @@
 
         <!-- Generate Manifest files -->
         <phingcall target="checksum">
-            <property name="source" value="${tmp_dir}/packages/gantry5" />
+            <property name="source" value="${tmp_dir}/packages/plugin/gantry5" />
         </phingcall>
 
         <!-- Zip the Plugin -->
         <phingcall target="archive">
             <property name="destination.file" value="${package_dir}/grav-${cfg.prefix}${cfg.name}${str.fileversion}" />
-            <property name="base.directory" value="${tmp_dir}/packages/gantry5" />
-            <property name="prefix" value="gantry5/" />
+            <property name="base.directory" value="${tmp_dir}/packages/plugin" />
         </phingcall>
     </target>
 
     <target name="build-grav-library">
         <echo message="Building Library.." />
 
-        <copy todir="${tmp_dir}/packages/gantry5/src" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/src" overwrite="true">
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src/vendor" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/src/vendor" overwrite="true">
             <fileset dir="${path.src}/platforms/grav/vendor">
                 <exclude name="bin/"/>
                 <exclude name="**/test/"/>
@@ -119,11 +118,11 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src/classes" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/src/classes" overwrite="true">
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/src" overwrite="true">
             <fileset dir="${path.src}/platforms/grav">
                 <exclude name="vendor/**"/>
             </fileset>
@@ -133,7 +132,7 @@
     <target name="build-grav-media">
         <echo message="Building Media (assets/nucleus).." />
 
-        <copy todir="${tmp_dir}/packages/gantry5/assets" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/assets" overwrite="true">
             <fileset dir="${path.assets}/common">
                 <exclude name="application/**"/>
                 <exclude name="**/*.js.map"/>
@@ -153,7 +152,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/engines" overwrite="true">
+        <copy todir="${tmp_dir}/packages/plugin/gantry5/engines" overwrite="true">
             <fileset dir="${path.engines}/common">
                 <exclude name="**/*.sh"/>
                 <exclude name="**/.sass-cache/"/>
@@ -190,11 +189,13 @@
         <if>
             <available file='${path.themes}/${directory}/grav/gantry/theme.yaml' type='file' />
             <then>
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <mkdir dir="${tmp_dir}/themes/${directory}" />
+
+                <copy todir="${tmp_dir}/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/common"/>
                 </copy>
 
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <copy todir="${tmp_dir}/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/grav">
                         <exclude name="common"/>
                         <exclude name="custom"/>
@@ -202,7 +203,7 @@
                 </copy>
 
                 <!-- Add version information to all xml files -->
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <copy todir="${tmp_dir}/themes/${directory}/g5_${directory}" overwrite="true">
                     <filterchain refid="filter"/>
                     <fileset dir="${path.themes}/${directory}/grav">
                         <include name="blueprints.yaml"/>
@@ -213,14 +214,13 @@
 
                 <!-- Generate Manifest files -->
                 <phingcall target="checksum">
-                    <property name="source" value="${tmp_dir}/themes/tpl_g5_${directory}" />
+                    <property name="source" value="${tmp_dir}/themes/${directory}/g5_${directory}" />
                 </phingcall>
 
                 <!-- Zip the theme -->
                 <phingcall target="archive">
                     <property name="destination.file" value="${package_dir}/grav-tpl_g5_${directory}${str.fileversion}" />
-                    <property name="base.directory" value="${tmp_dir}/themes/tpl_g5_${directory}" />
-                    <property name="prefix" value="g5_${directory}/" />
+                    <property name="base.directory" value="${tmp_dir}/themes/${directory}" />
                 </phingcall>
             </then>
         </if>
