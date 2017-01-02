@@ -4,7 +4,10 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769) 
-
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed missing particle type in position page when hovering over particle (#1771)
+        
 # 5.4.2
 ## 20/12/2016
 

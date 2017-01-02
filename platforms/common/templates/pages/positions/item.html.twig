@@ -18,7 +18,7 @@
     {#<i class="fa fa-reorder font-small item-reorder size-10"></i>#}
     <div class="title size-90">
         <span class="title-status" title="{{ status.label }}" data-tip="{{ status.label }}" aria-label="{{ status.label }}">{{ status.icon|raw }}</span>
-        <span class="title-name" title="Type: {{ module.subtype }}">{{ module.title|default(module.name) }}</span>
+        <span class="title-name" title="Type: {{ module.options.type }} (id: {{ module.name }})">{{ module.title|default(module.name) }}</span>
     </div>
     <i class="fa item-settings fa-cog size-10"></i>
 </li>
