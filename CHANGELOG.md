@@ -18,33 +18,9 @@
 # 5.4.1
 ## 13/12/2016
 
-1. [Common](#common)
-    1. [](#new)
-        - 5.4.0: Added Lightbox support by creating `Lightcase Atom`. By default this feature can be used by adding `data-rel="lightcase"` into the link
-    2. [](#improved)
-        - 5.4.0: Start using more strict YAML syntax (compatible to future version of YAML compiler)
-        - 5.4.0: Removed hack to manipulate URL and inject default page and nonce in Grav and Wordpress
-    3. [](#bugfix)
-        - 5.4.0: Fixed broken responsive support classes (#1705)
-        - 5.4.0: Fixed known PHP 7.1 issues
-        - 5.4.0: Ignore broken Gantry 5 themes instead of throwing exception
-2. [Joomla](#joomla)
-    1. [](#new)
-        - 5.4.0: Resolve all stream URI links in Joomla page
-    2. [](#improved)
-        - 5.4.0: Improved outline assignments logic
-    3. [](#bugfix)
-        - 5.4.0: Fixed error outline rendering modules which were assigned to menu items (#1732)
-3. [WordPress](#wordpress)
-    3. [](#bugfix)
-        - 5.4.0: Fixed broken link from Gantry admin to plugin settings
-        - 5.4.0: Fixed outline duplication copying assignments (#1719)
-        - 5.4.0: Fixed widgets and particles not showing up in menu (#1715)
 4. [Grav](#grav)
-    1. [](#new)
-        - 5.4.0: Grav is now integrated with Gantry 5!
     3. [](#bugfix)
-        - 5.4.1: Fixed Grav and Grav Admin dependencies versions
+        - Fixed Grav and Grav Admin dependencies versions
 
 # 5.4.0
 ## 13/12/2016
