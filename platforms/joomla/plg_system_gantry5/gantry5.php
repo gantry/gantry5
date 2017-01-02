@@ -84,7 +84,7 @@ class plgSystemGantry5 extends JPlugin
         $outline = \Gantry\Framework\Gantry::instance()['configuration'];
 
         // Do not render modules assigned to menu items in error and offline page.
-        if (isset($module->menuid) && $module->menuid > 0 && in_array($outline, ['_error', '_offline'])) {
+        if (isset($module->menuid) && $module->menuid > 0 && in_array($outline, array('_error', '_offline'))) {
             $module = null;
         }
 
@@ -232,7 +232,7 @@ class plgSystemGantry5 extends JPlugin
             $db->setQuery($query);
             $data = $db->loadObjectList();
 
-            if (sizeof($data) > 0) {
+            if (count($data) > 0) {
                 $this->modules = array();
                 $body = $this->app->getBody();
 
