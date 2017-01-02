@@ -50,7 +50,7 @@ class StyleHelper
         $list = (array) $db->loadObjectList('id');
 
         foreach ($list as $id => &$style) {
-            $style->title = preg_replace('/' . \JText::_($style->template) . '\s*-\s*/', '', $style->long_title);
+            $style->title = preg_replace('/' . preg_quote(\JText::_($style->template), '/') . '\s*-\s*/u', '', $style->long_title);
             $style->home = $style->home && $style->home !== '1' ? $style->home : (bool)$style->home;
         }
 

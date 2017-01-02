@@ -1,4 +1,11 @@
 # 5.4.2
+## XX/XX/2017
+
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769) 
+
+# 5.4.2
 ## 20/12/2016
 
 1. [Common](#common)
