@@ -33,7 +33,8 @@ class AssignmentsPage implements AssignmentsInterface
         $uri = $grav['uri'];
 
         $route = trim($uri->path(), '/');
-        $rules[$route ?: 'home'] = $this->priority;
+        $home = trim($grav['config']->get('system.home.alias', '/home'), '/');
+        $rules[$route ?: $home] = $this->priority;
 
         return [$rules];
     }

@@ -7,6 +7,7 @@
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed missing particle type in position page when hovering over particle (#1771)
+        - Fixed home assignment bug (#1773)
         
 # 5.4.2
 ## 20/12/2016

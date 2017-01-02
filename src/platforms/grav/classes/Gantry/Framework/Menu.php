@@ -39,7 +39,7 @@ class Menu extends AbstractMenu
         $route = trim($uri->path(), '/');
 
         $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
-        $this->active = $route ?: 'home';
+        $this->active = $route ?: $this->default;
     }
 
     /**
@@ -276,7 +276,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    if ($item->link == '/home') {
+                    if ($item->link == '/' . $this->default) {
                         // Deal with home page.
                         $item->url('/');
                     } else {
