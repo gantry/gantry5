@@ -171,8 +171,10 @@ class Platform extends BasePlatform
         }
 
         $isGantry = \strpos($module->module, 'gantry5') !== false;
+        $content = isset($module->content) ? $module->content : null;
 
         $renderer = $document->loadRenderer('module');
+
         $html = trim($renderer->render($module, $attribs));
 
         // Add frontend editing feature as it has only been defined for module positions.
@@ -191,6 +193,9 @@ class Platform extends BasePlatform
             ];
             \JLayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
         }
+
+        // Work around Joomla "issue" which corrupts content of custom html module (last checked J! 3.6.5).
+        $module->content = $content;
 
         if ($html && !$isGantry) {
             $this->container['theme']->joomla(true);
