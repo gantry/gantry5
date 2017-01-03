@@ -4,7 +4,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769)
-        - Fixed blank Page when editing an article with flexicontent (#1767)
+        - Fixed blank page when rendering ACL rules in frontend Joomla forms (#1767, #1775)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Improved title styling for Login Form particle (#1774, thanks @adi8i)
