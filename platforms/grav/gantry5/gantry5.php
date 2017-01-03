@@ -20,6 +20,7 @@ use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
 use Grav\Common\Themes;
 use Grav\Common\Twig\Twig;
@@ -96,6 +97,7 @@ class Gantry5Plugin extends Plugin
         if ($theme && is_file("themes://{$theme}/gantry/theme.yaml")) {
             $enabled = true;
             $this->enable([
+                'onGetPageTemplates' => ['onGetPageTemplates', -10],
                 'onAdminMenu' => ['onAdminMenu', -10],
                 'onAdminThemeInitialized' => ['initAdminTheme', 0]
             ]);
@@ -230,6 +232,18 @@ class Gantry5Plugin extends Plugin
         $gantry = Gantry::instance();
 
         $this->grav['gantry5'] = $gantry;
+    }
+
+    /**
+     * Add page template types.
+     *
+     * @since 5.4.3
+     */
+    public function onGetPageTemplates(Event $event)
+    {
+        /** @var Types $types */
+        $types = $event->types;
+        $types->scanTemplates('gantry-engine://templates');
     }
 
     /**
