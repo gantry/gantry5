@@ -569,9 +569,10 @@ class Document
 
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
-            $token = uniqid('__g5_token');
-            $tokens['#' . $token . '#'] = $matches[0];
+
+        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', function($matches) use (&$tokens) {
+            $token = '@@'. uniqid('g5_token_') . '@@';
+            $tokens['#' . preg_quote($token, '#') . '#u'] = $matches[0];
 
             return $token;
         }, $html);
@@ -598,8 +599,8 @@ class Document
             $match = '(.*?)';
         }
 
-        $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^', 'static::linkHandler', $html);
-        $html = preg_replace_callback('^(\s)url\(' . $match . '\)^', 'static::urlHandler', $html);
+        $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^u', 'static::linkHandler', $html);
+        $html = preg_replace_callback('^(\s)url\(' . $match . '\)^u', 'static::urlHandler', $html);
         $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
 
         return $html;
