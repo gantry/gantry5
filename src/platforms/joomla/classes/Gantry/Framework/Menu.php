@@ -138,6 +138,14 @@ class Menu extends AbstractMenu
         return true;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCacheId()
+    {
+        return $this->active ? $this->active->id : null;
+    }
+
     public function isActive($item)
     {
         $tree = $this->base->tree;

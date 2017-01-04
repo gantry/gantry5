@@ -259,6 +259,14 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $this->offsetGet($this->active);
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCacheId()
+    {
+        return $this->active ?: null;
+    }
+
     public function isActive($item)
     {
         $active = $this->getActive();

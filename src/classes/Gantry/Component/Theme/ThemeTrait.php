@@ -22,6 +22,7 @@ use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Document;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -604,6 +605,7 @@ trait ThemeTrait
         }
 
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
+        $extra = [];
         if (isset($particle['caching'])) {
             $caching = $particle['caching'] + ['type' => 'dynamic'];
 
@@ -618,6 +620,13 @@ trait ThemeTrait
                         $cached = ($values === $compare);
                     }
                     break;
+                case 'menu':
+                    /** @var Menu $menu */
+                    $menu = $gantry['menu'];
+                    $active = $menu->getCacheId();
+
+                    $cached = true;
+                    $extra = ['_active_menu_item' => $active];
             }
         }
 
@@ -627,7 +636,7 @@ trait ThemeTrait
         if ($cached) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
-            $key = md5(json_encode($particle));
+            $key = md5(json_encode($particle + $extra));
 
             $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
             $file = PhpFile::instance($filename);

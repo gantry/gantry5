@@ -160,6 +160,14 @@ class Menu extends AbstractMenu
         return isset($this->active[$item->id]);
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCacheId()
+    {
+        return $this->current ?: null;
+    }
+
     public function isCurrent($item)
     {
         return $this->current == $item->id;

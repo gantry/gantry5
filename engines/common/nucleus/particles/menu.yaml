@@ -3,6 +3,10 @@ description: Gantry menu
 type: particle
 icon: fa-bars
 
+configuration:
+  caching:
+    type: menu
+
 form:
   fields:
 
