@@ -3,6 +3,10 @@ description: Display copyright information.
 type: particle
 icon: fa-copyright
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -52,7 +56,3 @@ form:
       type: input.text
       label: CSS Classes
       description: CSS class name for the particle.
-
-    caching.type:
-      type: hidden
-      default: static

@@ -13,20 +13,16 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
-use Gantry\Component\Request\Request;
-use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Response\Response;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Positions as PositionsObject;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Positions extends HtmlController
 {
@@ -232,7 +228,7 @@ class Positions extends HtmlController
         }
 
         // Load particle blueprints and default settings.
-        $validator = new Blueprints;
+        $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
         $blueprints = new BlueprintsForm($this->container['particles']->get($name));

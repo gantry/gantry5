@@ -3,6 +3,10 @@ description: Display a logo or an image.
 type: particle
 icon: fa-file-image-o
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -42,7 +46,3 @@ form:
       type: input.selectize
       label: CSS Classes
       description: Set a specific CSS class for custom styling.
-
-    caching.type:
-      type: hidden
-      default: static

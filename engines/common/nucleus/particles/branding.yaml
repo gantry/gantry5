@@ -3,6 +3,10 @@ description: Displays powered by link to Gantry Framework
 type: particle
 icon: fa-trademark
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -22,7 +26,3 @@ form:
       label: CSS Classes
       description: CSS class name for the particle.
       default: branding
-
-    caching.type:
-      type: hidden
-      default: static

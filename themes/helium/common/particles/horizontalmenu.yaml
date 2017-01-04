@@ -3,6 +3,10 @@ description: Display horizontal menu.
 type: particle
 icon: fa-forward
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -45,7 +49,3 @@ form:
         .link:
           type: input.text
           label: Link
-
-    caching.type:
-      type: hidden
-      default: static

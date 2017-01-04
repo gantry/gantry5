@@ -4,6 +4,10 @@ type: particle
 icon: fa-ellipsis-v
 hidden: false
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -16,7 +20,3 @@ form:
       type: separator.note
       class: alert alert-info
       content: '<p>This Particle is the container target where, on Mobile, the Menu will be injected.</p><p>Please note that this Particle <strong>must</strong> be unique in the Layout and positioned in the Offcanvas section. You will also need a Menu present in the Layout.</p>'
-
-    caching.type:
-      type: hidden
-      default: static

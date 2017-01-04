@@ -605,10 +605,21 @@ trait ThemeTrait
         if (isset($particle['caching'])) {
             $caching = $particle['caching'] + ['type' => 'dynamic'];
 
-            $cached = $caching['type'] === 'static';
+            switch ($caching['type']) {
+                case 'static':
+                    $cached = true;
+                    break;
+                case 'config_matches':
+                    if (is_array($particle['caching']['values'])) {
+                        $values = $particle['caching']['values'];
+                        $compare = array_intersect_key($particle, $values);
+                        $cached = ($values === $compare);
+                    }
+                    break;
+            }
         }
 
-        if (isset($cached)) {
+        if (!empty($cached)) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $key = md5(json_encode($particle));

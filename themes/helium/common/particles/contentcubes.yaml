@@ -3,6 +3,10 @@ description: Display content in side-by-side cubes.
 type: particle
 icon: fa-cube
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -108,7 +112,3 @@ form:
           options:
               _self: Self
               _blank: New Window
-
-    caching.type:
-      type: hidden
-      default: static

@@ -3,6 +3,10 @@ description: Displays Sample Content
 type: particle
 icon: fa-pencil-square-o
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -84,7 +88,3 @@ form:
         .variations:
           type: input.block-variations
           label: Variations
-
-    caching.type:
-      type: hidden
-      default: static

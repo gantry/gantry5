@@ -3,6 +3,10 @@ description: Scroll back to top.
 type: particle
 icon: fa-chevron-up
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -27,7 +31,3 @@ form:
       label: Text
       description: The text to be displayed for the link. HTML is allowed.
       placeholder: To Top
-
-    caching.type:
-      type: hidden
-      default: static
