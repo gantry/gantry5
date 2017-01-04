@@ -45,3 +45,7 @@ form:
         .link:
           type: input.text
           label: Link
+
+    caching.type:
+      type: hidden
+      default: static

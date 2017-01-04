@@ -37,7 +37,3 @@ form:
           'l': Date9
           'l j F Y': Date10
           'j F Y': Date11
-
-    caching.type:
-      type: hidden
-      default: static

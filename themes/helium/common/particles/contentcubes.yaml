@@ -109,3 +109,6 @@ form:
               _self: Self
               _blank: New Window
 
+    caching.type:
+      type: hidden
+      default: static
