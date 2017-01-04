@@ -3,6 +3,10 @@ description: Displays Content Tabs.
 type: particle
 icon: fa-table
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:

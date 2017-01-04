@@ -21,6 +21,7 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Document;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -596,6 +597,7 @@ trait ThemeTrait
 
         $subtype = $item->subtype;
         $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
+        $cached = false;
 
         if (!$enabled) {
             return '';
@@ -610,8 +612,8 @@ trait ThemeTrait
                     $cached = true;
                     break;
                 case 'config_matches':
-                    if (is_array($particle['caching']['values'])) {
-                        $values = $particle['caching']['values'];
+                    if (isset($particle['caching']['values'])) {
+                        $values = (array) $particle['caching']['values'];
                         $compare = array_intersect_key($particle, $values);
                         $cached = ($values === $compare);
                     }
@@ -619,7 +621,10 @@ trait ThemeTrait
             }
         }
 
-        if (!empty($cached)) {
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        if ($cached) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $key = md5(json_encode($particle));
@@ -627,16 +632,29 @@ trait ThemeTrait
             $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
             $file = PhpFile::instance($filename);
             if ($file->exists()) {
-                $html = $file->content()['html'];
+                $content = $file->content();
+
+                // Set HTML and assets from the cache.
+                $html = $content['html'];
+                $document->appendHeaderTags($content['assets']);
             }
         }
         if (!isset($html)) {
+            if (isset($file)) {
+                // Create new document context for assets.
+                $document->push();
+            }
+
             $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle, 'prepare_layout' => true]);
             $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
 
             if (isset($file)) {
-                $file->save(['html' => $html]);
+                // Restore upper level context and save HTML and assets into the cache.
+                $assets = $document->pop();
+                $document->appendHeaderTags($assets);
+                $file->save(['html' => $html, 'assets' => $assets]);
             }
+
         }
 
         return !strstr($html, '@@DEFERRED@@') ? $html : null;

@@ -3,6 +3,10 @@ description: Display Owl Carousel.
 type: particle
 icon: fa-sliders
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
