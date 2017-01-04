@@ -43,6 +43,22 @@
     {% endblock %}
 {% endset -%}
 
+{# Setting the "After <body>" and "Before </body>" blocks #}
+
+{%- set page_open_body %}
+    {% block page_open_body %}
+        {{ gantry.config.page.body.body_top|raw }}
+        {# PLACEHOLDER HERE #}
+    {% endblock %}
+{% endset -%}
+
+{%- set page_close_body %}
+    {% block page_close_body %}
+        {{ gantry.config.page.body.body_bottom|raw }}
+        {# PLACEHOLDER HERE #}
+    {% endblock %}
+{% endset -%}
+
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
 {%- set page_head %}
@@ -66,7 +82,7 @@
     {{ page_head|raw }}
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
-        {{ gantry.config.page.body.body_top|raw }}
+        {{ page_open_body|raw }}
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
@@ -78,7 +94,7 @@
         </div>
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
         {{ page_footer|raw }}
-        {{ gantry.config.page.body.body_bottom|raw }}
+        {{ page_close_body|raw }}
     </body>
     {%- endblock %}
 
