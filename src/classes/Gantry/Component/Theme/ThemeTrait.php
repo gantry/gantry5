@@ -524,7 +524,7 @@ trait ThemeTrait
                 case 'spacer':
                     GANTRY_DEBUGGER && \Gantry\Debugger::startTimer($item->id, "Rendering {$item->id}");
 
-                    $item->content = $this->renderContent($item);
+                    $item->content = $this->renderContent($item, ['prepare_layout' => true]);
                     // Note that content can also be null (postpone rendering).
                     if ($item->content === '') {
                         unset($items[$i]);
@@ -589,11 +589,16 @@ trait ThemeTrait
      *
      * Function is used to pre-render content.
      *
-     * @param object $item
+     * @param object|array $item
+     * @param array $options
      * @return string|null
      */
-    protected function renderContent($item)
+    protected function renderContent($item, $options = [])
     {
+        if (is_array($item)) {
+            $item = (object) $item;
+        }
+
         $gantry = static::gantry();
 
         $subtype = $item->subtype;
@@ -627,6 +632,7 @@ trait ThemeTrait
 
                     $cached = true;
                     $extra = ['_active_menu_item' => $active];
+                    break;
             }
         }
 
@@ -648,13 +654,14 @@ trait ThemeTrait
                 $document->appendHeaderTags($content['assets']);
             }
         }
+
         if (!isset($html)) {
             if (isset($file)) {
                 // Create new document context for assets.
                 $document->push();
             }
 
-            $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle, 'prepare_layout' => true]);
+            $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
             $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
 
             if (isset($file)) {
