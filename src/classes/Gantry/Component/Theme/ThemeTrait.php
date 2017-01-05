@@ -628,6 +628,10 @@ trait ThemeTrait
 
         $gantry = static::gantry();
 
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        $production = (bool) $global->get('production');
         $subtype = $item->subtype;
         $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
 
@@ -638,7 +642,9 @@ trait ThemeTrait
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
         $cached = false;
         $extra = [];
-        if (isset($particle['caching'])) {
+
+        // Enable particle caching only in production mode.
+        if ($production && isset($particle['caching'])) {
             $caching = $particle['caching'] + ['type' => 'dynamic'];
 
             switch ($caching['type']) {
