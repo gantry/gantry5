@@ -62,7 +62,12 @@ class Platform extends BasePlatform
                 $shared = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-shared";
                 $demo = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-demo";
 
-                Folder::create($custom);
+                try {
+                    Folder::create($custom);
+                } catch (\Exception $e) {
+                    throw new \RuntimeException(sprintf("Failed to create folder '%s'.", $custom), 500, $e);
+                }
+
                 if (is_dir("{$shared}/custom/config")) {
                     Folder::copy("{$shared}/custom/config", "{$custom}/config");
                 }

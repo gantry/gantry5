@@ -78,7 +78,8 @@ abstract class Widgets
                     // As we already rendered content, we can later just display it.
                     $wp_registered_widgets[$id]['callback'] = function () use ($contents) {
                         echo $contents;
-                    };                }
+                    };
+                }
             }
 
             $html = '@@DEFERRED@@';

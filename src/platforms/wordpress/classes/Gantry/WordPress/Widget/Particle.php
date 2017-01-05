@@ -98,24 +98,33 @@ class Particle extends \WP_Widget
                 }
             }
 
+            $object = (object) array(
+                'id' => "widget-{$particle}-{$id}",
+                'type' => $type,
+                'subtype' => $particle,
+                'attributes' => $instance['options']['particle'],
+            );
 
             $context = array(
                 'gantry' => $this->container,
-                'inContent' => true,
-                'segment' => array(
-                    'id' => "widget-{$particle}-{$id}",
-                    'type' => $type,
-                    'subtype' => $particle,
-                    'attributes' =>  $instance['options']['particle'],
-                )
+                'inContent' => true
             );
 
-            $this->content[$md5] = apply_filters('widget_content', $theme->render("@nucleus/content/particle.html.twig", $context));
+            $content = $theme->getContent($object, $context);
+            $content['html'] = apply_filters('widget_content', $content['html']);
+
+            $this->content[$md5] = $content;
         }
 
-        if (trim($this->content[$md5])) {
+        $content = $this->content[$md5];
+
+        /** @var \Gantry\Framework\Document $document */
+        $document = $this->container['document'];
+        $document->appendHeaderTags($content['assets']);
+
+        if (trim($content['html'])) {
             echo $args['before_widget'];
-            echo $this->content[$md5];
+            echo $content['html'];
             echo $args['after_widget'];
         }
     }

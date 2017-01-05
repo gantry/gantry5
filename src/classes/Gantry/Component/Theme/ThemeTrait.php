@@ -636,7 +636,7 @@ trait ThemeTrait
         $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
 
         if (!$enabled) {
-            return '';
+            return ['html' => '', 'assets' => []];
         }
 
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
