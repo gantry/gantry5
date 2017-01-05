@@ -77,15 +77,15 @@ class Document
      */
     public static function appendHeaderTags(array $document)
     {
-        if (isset($document['frameworks'])) {
+        if (!empty($document['frameworks'])) {
             static::$frameworks = static::appendArray(static::$frameworks, $document['frameworks']);
         }
 
-        if (isset($document['scripts'])) {
+        if (!empty($document['scripts'])) {
             static::$scripts = static::appendArray(static::$scripts, $document['scripts']);
         }
 
-        if (isset($document['styles'])) {
+        if (!empty($document['styles'])) {
             static::$styles = static::appendArray(static::$styles, $document['styles']);
         }
     }
@@ -114,16 +114,16 @@ class Document
     public static function addStyle($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
-            $element = ['href' => $element];
+            $element = ['href' => (string) $element];
         }
         if (empty($element['href'])) {
             return false;
         }
 
-        $id = !empty($element['id']) ? ['id' => $element['id']] : [];
+        $id = !empty($element['id']) ? ['id' => (string) $element['id']] : [];
         $href = $element['href'];
-        $type = !empty($element['type']) ? $element['type'] : 'text/css';
-        $media = !empty($element['media']) ? $element['media'] : null;
+        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
+        $media = !empty($element['media']) ? (string) $element['media'] : null;
         unset($element['tag'], $element['id'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
 
         static::$styles[$location][(int) $priority][md5($href).sha1($href)] = [
@@ -146,14 +146,14 @@ class Document
     public static function addInlineStyle($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
-            $element = ['content' => $element];
+            $element = ['content' => (string) $element];
         }
         if (empty($element['content'])) {
             return false;
         }
 
-        $content = $element['content'];
-        $type = !empty($element['type']) ? $element['type'] : 'text/css';
+        $content = (string) $element['content'];
+        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
 
         static::$styles[$location][(int) $priority][md5($content).sha1($content)] = [
             ':type' => 'inline',
@@ -173,17 +173,17 @@ class Document
     public static function addScript($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
-            $element = ['src' => $element];
+            $element = ['src' => (string) $element];
         }
         if (empty($element['src'])) {
             return false;
         }
 
         $src = $element['src'];
-        $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
+        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
         $defer = isset($element['defer']) ? true : false;
         $async = isset($element['async']) ? true : false;
-        $handle = !empty($element['handle']) ? $element['handle'] : '';
+        $handle = !empty($element['handle']) ? (string) $element['handle'] : '';
 
         static::$scripts[$location][(int) $priority][md5($src) . sha1($src)] = [
             ':type' => 'file',
@@ -206,14 +206,14 @@ class Document
     public static function addInlineScript($element, $priority = 0, $location = 'head')
     {
         if (!is_array($element)) {
-            $element = ['content' => $element];
+            $element = ['content' => (string) $element];
         }
         if (empty($element['content'])) {
             return false;
         }
 
-        $content = $element['content'];
-        $type = !empty($element['type']) ? $element['type'] : 'text/javascript';
+        $content = (string) $element['content'];
+        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
 
         static::$scripts[$location][(int) $priority][md5($content).sha1($content)] = [
             ':type' => 'inline',

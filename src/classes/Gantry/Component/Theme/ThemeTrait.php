@@ -593,7 +593,34 @@ trait ThemeTrait
      * @param array $options
      * @return string|null
      */
-    protected function renderContent($item, $options = [])
+    public function renderContent($item, $options = [])
+    {
+        $content = $this->getContent($item, $options);
+
+        $html = $content['html'];
+        $assets = $content['assets'];
+
+        $gantry = static::gantry();
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        $document->appendHeaderTags($assets);
+
+        return !strstr($html, '@@DEFERRED@@') ? $html : null;
+    }
+
+    /**
+     * Renders individual content block, like particle or position.
+     *
+     * Function is used to pre-render content.
+     *
+     * @param object|array $item
+     * @param array $options
+     * @return string|null
+     * @since 5.4.3
+     */
+    public function getContent($item, $options = [])
     {
         if (is_array($item)) {
             $item = (object) $item;
@@ -603,13 +630,13 @@ trait ThemeTrait
 
         $subtype = $item->subtype;
         $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
-        $cached = false;
 
         if (!$enabled) {
             return '';
         }
 
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
+        $cached = false;
         $extra = [];
         if (isset($particle['caching'])) {
             $caching = $particle['caching'] + ['type' => 'dynamic'];
@@ -647,32 +674,23 @@ trait ThemeTrait
             $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
             $file = PhpFile::instance($filename);
             if ($file->exists()) {
-                $content = $file->content();
-
-                // Set HTML and assets from the cache.
-                $html = $content['html'];
-                $document->appendHeaderTags($content['assets']);
+                return $file->content();
             }
         }
 
-        if (!isset($html)) {
-            if (isset($file)) {
-                // Create new document context for assets.
-                $document->push();
-            }
+        // Create new document context for assets.
+        $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
 
-            $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
-            $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $document->push();
+        $content = [];
+        $content['html'] = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $content['assets'] = $document->pop();
 
-            if (isset($file)) {
-                // Restore upper level context and save HTML and assets into the cache.
-                $assets = $document->pop();
-                $document->appendHeaderTags($assets);
-                $file->save(['html' => $html, 'assets' => $assets]);
-            }
-
+        if (isset($file)) {
+            // Save HTML and assets into the cache.
+            $file->save($content);
         }
 
-        return !strstr($html, '@@DEFERRED@@') ? $html : null;
+        return $content;
     }
 }

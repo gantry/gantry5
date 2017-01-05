@@ -35,27 +35,22 @@ class ModGantryParticlesHelper
             }
         }
 
-        $context = array(
-            'gantry' => $gantry,
-            'inContent' => true,
-            'segment' => array(
-                'id' => "module-{$particle}-{$module->id}",
-                'type' => $type,
-                'subtype' => $particle,
-                'attributes' => $data['options']['particle'],
-            )
+        $object = (object) array(
+            'id' => "module-{$particle}-{$module->id}",
+            'type' => $type,
+            'subtype' => $particle,
+            'attributes' => $data['options']['particle'],
         );
 
-        /** @var \Gantry\Framework\Document $document */
-        $document = $gantry['document'];
-        $document->push();
+        $context = array(
+            'gantry' => $gantry,
+            'inContent' => true
+        );
 
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
-        $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
+        $content = $theme->getContent($object, $context);
 
-        $assets = $document->pop();
-
-        return [$html, $assets];
+        return [$content['html'], $content['assets']];
     }
 }

@@ -45,7 +45,12 @@ class Platform extends BasePlatform
                 $shared = JPATH_ROOT . "/media/gantry5/themes/{$theme}/template-shared";
                 $demo = JPATH_ROOT . "/media/gantry5/themes/{$theme}/template-demo";
 
-                Folder::create($custom);
+                try {
+                    Folder::create($custom);
+                } catch (\Exception $e) {
+                    throw new \RuntimeException(sprintf("Failed to create folder '%s'.", $custom), 500, $e);
+                }
+
                 if (is_dir("{$shared}/custom/config")) {
                     Folder::copy("{$shared}/custom/config", "{$custom}/config");
                 }
