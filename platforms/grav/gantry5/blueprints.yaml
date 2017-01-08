@@ -55,7 +55,7 @@ form:
     offline:
       type: toggle
       label: Offline
-      description: Set site to maintenance mode. When site is offline, its only visible for logged in users.
+      description: Set site to maintenance mode. When site is offline, it's only visible for logged in users.
       highlight: 1
       default: 0
       options:
