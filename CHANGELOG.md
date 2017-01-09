@@ -5,6 +5,8 @@
     1. [](#new)
         - Add particle caching when in production mode making a noticeable speed increase on particle heavy pages.
           Installed Gantry 5 themes should to be updated to a version which supports particle caching.
+    3. [](#bugfix)
+        - Fixed `$1` and `\\1` being lost inside `<pre>` and `<code>` blocks (#1782)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769)

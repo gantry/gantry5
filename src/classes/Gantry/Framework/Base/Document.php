@@ -567,12 +567,14 @@ class Document
     {
         static::$urlFilterParams = [$domain, $timestamp_age, $streamOnly];
 
-        // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
+        // Tokenize all PRE, CODE and SCRIPT tags to avoid modifying any src|href|url in them
         $tokens = [];
 
         $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', function($matches) use (&$tokens) {
             $token = '@@'. uniqid('g5_token_') . '@@';
-            $tokens['#' . preg_quote($token, '#') . '#u'] = $matches[0];
+            $match = $matches[0];
+
+            $tokens[$token] = $match;
 
             return $token;
         }, $html);
@@ -601,7 +603,7 @@ class Document
 
         $html = preg_replace_callback('^(\s)(src|href)="' . $match . '"^u', 'static::linkHandler', $html);
         $html = preg_replace_callback('^(\s)url\(' . $match . '\)^u', 'static::urlHandler', $html);
-        $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
+        $html = static::replaceTokens($tokens, $html);
 
         return $html;
     }
@@ -632,6 +634,25 @@ class Document
         $url = static::url($url, $domain, $timestamp_age, false);
 
         return "{$matches[1]}url({$url})";
+    }
+
+    /**
+     * Replace tokens with strings.
+     *
+     * @param array $tokens
+     * @param $html
+     * @return string|NUll
+     */
+    protected static function replaceTokens(array $tokens, $html)
+    {
+        foreach ($tokens as $token => $replacement) {
+            // We need to use callbacks to turn off backreferences ($1, \\1) in the replacement string.
+            $callback = function() use ($replacement) { return $replacement; };
+
+            $html = preg_replace_callback('#' . preg_quote($token, '#') . '#u', $callback, $html);
+        }
+
+        return $html;
     }
 
     /**
