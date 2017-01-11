@@ -110,21 +110,20 @@ class Particle extends \WP_Widget
                 'inContent' => true
             );
 
-            $content = $theme->getContent($object, $context);
-            $content['html'] = apply_filters('widget_content', $content['html']);
-
-            $this->content[$md5] = $content;
+            $this->content[$md5] = $theme->getContent($object, $context);
         }
 
         $content = $this->content[$md5];
 
         /** @var \Gantry\Framework\Document $document */
         $document = $this->container['document'];
-        $document->appendHeaderTags($content['assets']);
+        $document->addBlock($content);
 
-        if (trim($content['html'])) {
+        $html = apply_filters('widget_content', $content->toString());
+
+        if (trim($html)) {
             echo $args['before_widget'];
-            echo $content['html'];
+            echo $html;
             echo $args['after_widget'];
         }
     }

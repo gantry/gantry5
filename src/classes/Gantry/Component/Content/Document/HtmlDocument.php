@@ -11,19 +11,23 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Framework\Base;
+namespace Gantry\Component\Content\Document;
 
+use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Url\Url;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Document
+class HtmlDocument
 {
     use GantryTrait;
 
     public static $timestamp_age = 604800;
     public static $urlFilterParams;
 
+    /**
+     * @var array|HtmlBlock[]
+     */
     protected static $stack = [];
     protected static $frameworks = [];
     protected static $scripts = [];
@@ -43,51 +47,38 @@ class Document
         'lightcase.init' => 'registerLightcaseInit',
     ];
 
+    public function __construct()
+    {
+        static::push();
+    }
+
     /**
      * Create new local instance of document allowing asset caching.
      */
     public static function push()
     {
-        array_push(static::$stack, ['frameworks' => static::$frameworks, 'scripts' => static::$scripts, 'styles' => static::$styles]);
-
+        array_unshift(static::$stack, new HtmlBlock());
     }
 
     /**
      * Return local instance of document allowing it to be cached.
      *
-     * @return array
+     * @return HtmlBlock
      */
     public static function pop()
     {
-        $current = ['frameworks' => static::$frameworks, 'scripts' => static::$scripts, 'styles' => static::$styles];
-
-        $old = array_pop(static::$stack);
-
-        static::$frameworks = isset($old['frameworks']) ? $old['frameworks'] : [];
-        static::$scripts = isset($old['scripts']) ? $old['scripts'] : [];
-        static::$styles = isset($old['styles']) ? $old['styles'] : [];
-
-        return $current;
+        return array_shift(static::$stack);
     }
 
     /**
-     * Append local assets to the outer document.
-     *
-     * @param array $document
+     * @param HtmlBlock $block
+     * @return $this
      */
-    public static function appendHeaderTags(array $document)
+    public function addBlock(HtmlBlock $block)
     {
-        if (!empty($document['frameworks'])) {
-            static::$frameworks = static::appendArray(static::$frameworks, $document['frameworks']);
-        }
+        static::$stack[0]->addBlock($block);
 
-        if (!empty($document['scripts'])) {
-            static::$scripts = static::appendArray(static::$scripts, $document['scripts']);
-        }
-
-        if (!empty($document['styles'])) {
-            static::$styles = static::appendArray(static::$styles, $document['styles']);
-        }
+        return $this;
     }
 
     /**
@@ -100,7 +91,7 @@ class Document
             return false;
         }
 
-        static::$frameworks[] = $framework;
+        static::$stack[0]->addFramework($framework);
 
         return true;
     }
@@ -113,28 +104,7 @@ class Document
      */
     public static function addStyle($element, $priority = 0, $location = 'head')
     {
-        if (!is_array($element)) {
-            $element = ['href' => (string) $element];
-        }
-        if (empty($element['href'])) {
-            return false;
-        }
-
-        $id = !empty($element['id']) ? ['id' => (string) $element['id']] : [];
-        $href = $element['href'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
-        $media = !empty($element['media']) ? (string) $element['media'] : null;
-        unset($element['tag'], $element['id'], $element['rel'], $element['content'], $element['href'], $element['type'], $element['media']);
-
-        static::$styles[$location][(int) $priority][md5($href).sha1($href)] = [
-            ':type' => 'file',
-            'href' => $href,
-            'type' => $type,
-            'media' => $media,
-            'element' => $element
-        ] + $id;
-
-        return true;
+        return static::$stack[0]->addStyle($element, $priority, $location);
     }
 
     /**
@@ -145,23 +115,7 @@ class Document
      */
     public static function addInlineStyle($element, $priority = 0, $location = 'head')
     {
-        if (!is_array($element)) {
-            $element = ['content' => (string) $element];
-        }
-        if (empty($element['content'])) {
-            return false;
-        }
-
-        $content = (string) $element['content'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/css';
-
-        static::$styles[$location][(int) $priority][md5($content).sha1($content)] = [
-            ':type' => 'inline',
-            'content' => $content,
-            'type' => $type
-        ];
-
-        return true;
+        return static::$stack[0]->addInlineStyle($element, $priority, $location);
     }
 
     /**
@@ -172,29 +126,7 @@ class Document
      */
     public static function addScript($element, $priority = 0, $location = 'head')
     {
-        if (!is_array($element)) {
-            $element = ['src' => (string) $element];
-        }
-        if (empty($element['src'])) {
-            return false;
-        }
-
-        $src = $element['src'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
-        $defer = isset($element['defer']) ? true : false;
-        $async = isset($element['async']) ? true : false;
-        $handle = !empty($element['handle']) ? (string) $element['handle'] : '';
-
-        static::$scripts[$location][(int) $priority][md5($src) . sha1($src)] = [
-            ':type' => 'file',
-            'src' => $src,
-            'type' => $type,
-            'defer' => $defer,
-            'async' => $async,
-            'handle' => $handle
-        ];
-
-        return true;
+        return static::$stack[0]->addScript($element, $priority, $location);
     }
 
     /**
@@ -205,23 +137,7 @@ class Document
      */
     public static function addInlineScript($element, $priority = 0, $location = 'head')
     {
-        if (!is_array($element)) {
-            $element = ['content' => (string) $element];
-        }
-        if (empty($element['content'])) {
-            return false;
-        }
-
-        $content = (string) $element['content'];
-        $type = !empty($element['type']) ? (string) $element['type'] : 'text/javascript';
-
-        static::$scripts[$location][(int) $priority][md5($content).sha1($content)] = [
-            ':type' => 'inline',
-            'content' => $content,
-            'type' => $type
-        ];
-
-        return true;
+        return static::$stack[0]->addInlineScript($element, $priority, $location);
     }
 
     /**
@@ -262,87 +178,88 @@ class Document
 
     public static function getStyles($location = 'head')
     {
-        if (!isset(static::$styles[$location])) {
-            return [];
-        }
+        $styles = static::$stack[0]->getStyles($location);
 
-        krsort(static::$styles[$location], SORT_NUMERIC);
+        $output = [];
 
-        $html = [];
-
-        foreach (static::$styles[$location] as $styles) {
-            foreach ($styles as $style) {
-                switch ($style[':type']) {
-                    case 'file':
-                        $attribs = '';
-                        if ($style['media']) {
-                            $attribs .= ' media="' . static::escape($style['media']) . '"';
-                        }
-                        $html[] = sprintf(
-                            '<link rel="stylesheet" href="%s" type="%s"%s />',
-                            static::escape($style['href']),
-                            static::escape($style['type']),
-                            $attribs
-                        );
-                        break;
-                    case 'inline':
-                        $attribs = '';
-                        if ($style['type'] !== 'text/css') {
-                            $attribs .= ' type="' . static::escape($style['type']) . '"';
-                        }
-                        $html[] = sprintf(
-                            '<style%s>%s</style>', 
-                            $attribs, 
-                            $style['content']
-                        );
-                        break;
-                }
+        foreach ($styles as $style) {
+            switch ($style[':type']) {
+                case 'file':
+                    $attribs = '';
+                    if ($style['media']) {
+                        $attribs .= ' media="' . static::escape($style['media']) . '"';
+                    }
+                    $output[] = sprintf(
+                        '<link rel="stylesheet" href="%s" type="%s"%s />',
+                        static::escape($style['href']),
+                        static::escape($style['type']),
+                        $attribs
+                    );
+                    break;
+                case 'inline':
+                    $attribs = '';
+                    if ($style['type'] !== 'text/css') {
+                        $attribs .= ' type="' . static::escape($style['type']) . '"';
+                    }
+                    $output[] = sprintf(
+                        '<style%s>%s</style>',
+                        $attribs,
+                        $style['content']
+                    );
+                    break;
             }
         }
 
-        return $html;
+        return $output;
     }
 
     public static function getScripts($location = 'head')
     {
-        if (!isset(static::$scripts[$location])) {
-            return [];
-        }
+        $scripts = static::$stack[0]->getScripts($location);
 
-        krsort(static::$scripts[$location], SORT_NUMERIC);
+        $output = [];
 
-        $html = [];
-
-        foreach (static::$scripts[$location] as $scripts) {
-            foreach ($scripts as $script) {
-                switch ($script[':type']) {
-                    case 'file':
-                        $attribs = '';
-                        if ($script['async']) {
-                            $attribs .= ' async="async"';
-                        }
-                        if ($script['defer']) {
-                            $attribs .= ' defer="defer"';
-                        }
-                        $html[] = sprintf(
-                            '<script type="%s"%s src="%s"></script>',
-                            static::escape($script['type']),
-                            $attribs,
-                            static::escape($script['src'])
-                        );
-                        break;
-                    case 'inline':
-                        $html[] = sprintf(
-                            '<script type="%s">%s</script>',
-                            static::escape($script['type']),
-                            $script['content']
-                        );
-                        break;
-                }
+        foreach ($scripts as $script) {
+            switch ($script[':type']) {
+                case 'file':
+                    $attribs = '';
+                    if ($script['async']) {
+                        $attribs .= ' async="async"';
+                    }
+                    if ($script['defer']) {
+                        $attribs .= ' defer="defer"';
+                    }
+                    $output[] = sprintf(
+                        '<script type="%s"%s src="%s"></script>',
+                        static::escape($script['type']),
+                        $attribs,
+                        static::escape($script['src'])
+                    );
+                    break;
+                case 'inline':
+                    $output[] = sprintf(
+                        '<script type="%s">%s</script>',
+                        static::escape($script['type']),
+                        $script['content']
+                    );
+                    break;
             }
         }
 
-        return $html;
+        return $output;
+    }
+
+    public static function getHtml($location = 'bottom')
+    {
+        $htmls = static::$stack[0]->getHtml($location);
+
+        $output = [];
+
+        foreach ($htmls as $html) {
+            $output[] = $html['html'];
+        }
+
+        return $output;
     }
 
     /**
@@ -656,37 +573,11 @@ class Document
     }
 
     /**
-     * @param array $target
-     * @param array $source
-     * @return array
-     */
-    protected static function appendArray(array $target, array $source)
-    {
-        foreach ($source as $location => $priorities) {
-            if (is_array($priorities)) {
-                foreach ($priorities as $priority => $hashes) {
-                    if (is_array($hashes)) {
-                        foreach ($hashes as $hash => $element) {
-                            $target[$location][$priority][$hash] = $element;
-                        }
-                    } else {
-                            $target[$location][$priority] = $hashes;
-                    }
-                }
-            } else {
-                $target[$location] = $priorities;
-            }
-        }
-
-        return $target;
-    }
-
-    /**
      * Register loaded frameworks.
      */
     protected static function registerFrameworks()
     {
-        foreach (static::$frameworks as $framework) {
+        foreach (static::$stack[0]->getFrameworks() as $framework) {
             if (isset(static::$availableFrameworks[$framework])) {
                 call_user_func([get_called_class(), static::$availableFrameworks[$framework]]);
             }
@@ -749,8 +640,8 @@ class Document
     {
         static::registerJquery();
 
-        static::addScript(['src' => self::url('gantry-assets://js/lightcase.js', false, null, false)], 11, 'footer');
-        static::addStyle(['href' => self::url('gantry-assets://css/lightcase.min.css', false, null, false)], 11);
+        static::addScript(['src' => static::url('gantry-assets://js/lightcase.js', false, null, false)], 11, 'footer');
+        static::addStyle(['href' => static::url('gantry-assets://css/lightcase.min.css', false, null, false)], 11);
     }
 
     protected static function registerLightcaseInit()

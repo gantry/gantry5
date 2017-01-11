@@ -12,13 +12,11 @@ namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
-use Gantry\Component\Filesystem\Streams;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
-use Gantry5\Loader;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Types;
 use Grav\Common\Plugin;

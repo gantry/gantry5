@@ -13,9 +13,9 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Framework\Base\Document as BaseDocument;
+use Gantry\Component\Content\Document\HtmlDocument;
 
-class Document extends BaseDocument
+class Document extends HtmlDocument
 {
     public static function rootUri()
     {

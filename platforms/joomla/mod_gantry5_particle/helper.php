@@ -14,7 +14,7 @@ class ModGantryParticlesHelper
     /**
      * @param object $module
      * @param object $params
-     * @return array
+     * @return Gantry\Component\Content\Block\ContentBlockInterface
      */
     public static function render($module, $params)
     {
@@ -31,7 +31,10 @@ class ModGantryParticlesHelper
             $location = (!$enabled_outline ? 'Outline' : (!$enabled ? 'Module' : null));
 
             if ($location) {
-                return ['<div class="alert alert-error">The Particle has been disabled from the ' . $location . ' and won\'t render.</div>', []];
+                $block = \Gantry\Component\Content\Block\HtmlBlock::create();
+                $block->setContent(sprintf('<div class="alert alert-error">The Particle has been disabled from the %s and won\'t render.</div>', $location));
+
+                return $block;
             }
         }
 
@@ -49,8 +52,34 @@ class ModGantryParticlesHelper
 
         /** @var Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
-        $content = $theme->getContent($object, $context);
+        $block = $theme->getContent($object, $context);
 
-        return [$content['html'], $content['assets']];
+        return $block;
+    }
+
+    /**
+     * @param $module
+     * @param $params
+     * @return array
+     */
+    public static function cache($module, $params)
+    {
+        return static::render($module, $params)->toArray();
+    }
+
+    /**
+     * @param $module
+     * @param $params
+     * @param $cacheparams
+     * @return \Gantry\Component\Content\Block\ContentBlockInterface|null
+     */
+    public static function moduleCache($module, $params, $cacheparams)
+    {
+        $block = (array) JModuleHelper::moduleCache($module, $params, $cacheparams);
+        try {
+            return $block ? \Gantry\Component\Content\Block\HtmlBlock::fromArray($block) : null;
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }
