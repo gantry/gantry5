@@ -664,7 +664,7 @@ trait ThemeTrait
 
                     if ($cacheKey !== null) {
                         $cached = true;
-                        $extra = ['_menu_cache_key' => $cacheKey];
+                        $extra['_menu_cache_key'] = $cacheKey;
                     }
                     break;
             }
