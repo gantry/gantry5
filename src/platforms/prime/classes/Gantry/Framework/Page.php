@@ -21,7 +21,8 @@ class Page extends Base\Page
     public $baseUrl;
     public $title;
     public $description;
-    public $direction;
+    public $language = 'en';
+    public $direction = 'ltr';
 
     public function url(array $args = [])
     {
@@ -36,8 +37,8 @@ class Page extends Base\Page
     public function htmlAttributes()
     {
         $attributes = [
-                'lang' => 'en-GB',
-                'dir' => 'ltr'
+                'lang' => $this->language,
+                'dir' => $this->direction
             ]
             + (array) $this->config->get('page.html', []);
 
@@ -49,7 +50,7 @@ class Page extends Base\Page
         $gantry = Gantry::instance();
         $classes = [
             'site',
-            "dir-ltr",
+            "dir-{$this->direction}",
             "outline-{$gantry['configuration']}",
         ];
 

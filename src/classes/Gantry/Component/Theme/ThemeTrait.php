@@ -640,7 +640,7 @@ trait ThemeTrait
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
 
         $cached = false;
-        $extra = [];
+        $extra = ['_language' => $gantry['page']->language];
 
         // Enable particle caching only in production mode.
         if ($production && isset($particle['caching'])) {

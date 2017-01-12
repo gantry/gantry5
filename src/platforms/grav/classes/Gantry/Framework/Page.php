@@ -32,7 +32,7 @@ class Page extends Base\Page
         $grav = Grav::instance();
 
         $this->outline = $container['configuration'];
-        $this->language = $grav['language']->getLanguage() ?: 'en-GB';
+        $this->language = $grav['language']->getLanguage() ?: 'en';
         $this->direction = LanguageCodes::getOrientation($this->language);
     }
 
