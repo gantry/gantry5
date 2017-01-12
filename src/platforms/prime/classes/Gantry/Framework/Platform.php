@@ -132,7 +132,7 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/styles';
+        return rtrim(PRIME_URI, '/') . '/' . $theme . '/admin/configurations/default/styles';
     }
 
     public function countModules($position)

@@ -217,7 +217,7 @@ class Configurations extends HtmlController
 
         $method = $this->params['method'];
 
-        if (!isset($outline) || !isset($page)) {
+        if ((!isset($outline) || !isset($page)) && $this->params['format'] !== 'json') {
             return new RedirectResponse($this->container->route('configurations', is_string($outline) ? $outline : 'default', 'styles'));
         }
 
