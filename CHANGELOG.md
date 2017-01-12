@@ -7,7 +7,7 @@
           Installed Gantry 5 themes should to be updated to a version which supports particle caching.
     3. [](#bugfix)
         - Fixed `$1` and `\\1` being lost inside `<pre>` and `<code>` blocks (#1782)
-        - Admin: Fixed `Back to Setup` button not working after page reload 
+        - Admin: Fixed `Back to Setup` button not working after page reload
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769)

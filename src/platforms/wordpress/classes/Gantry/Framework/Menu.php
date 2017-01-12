@@ -165,7 +165,11 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        return $this->current ?: null;
+        if (is_user_logged_in()) {
+            return null;
+        }
+
+        return $this->current ?: 0;
     }
 
     public function isCurrent($item)

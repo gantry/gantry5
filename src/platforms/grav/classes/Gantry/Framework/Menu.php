@@ -142,6 +142,20 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * @return string|null
+     */
+    public function getCacheId()
+    {
+        $grav = Grav::instance();
+
+        if (isset($grav['user']) && $grav['user']->authenticated) {
+            return null;
+        }
+
+        return $this->active ?: '-inactive-';
+    }
+
+    /**
      * Get menu items from the platform.
      *
      * @param int $levels

@@ -143,7 +143,11 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        return $this->active ? $this->active->id : null;
+        if (!\JFactory::getUser()->guest) {
+            return null;
+        }
+
+        return $this->active ? $this->active->id : 0;
     }
 
     public function isActive($item)

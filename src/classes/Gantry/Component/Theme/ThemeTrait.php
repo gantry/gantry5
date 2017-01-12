@@ -14,14 +14,14 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Content\Block\ContentBlock;
+use Gantry\Component\Content\Block\ContentBlockInterface;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
-use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Framework\Base\Gantry;
 use Gantry\Framework\Document;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -615,7 +615,7 @@ trait ThemeTrait
      *
      * @param object|array $item
      * @param array $options
-     * @return HtmlBlock
+     * @return ContentBlockInterface
      * @since 5.4.3
      */
     public function getContent($item, $options = [])
@@ -660,10 +660,12 @@ trait ThemeTrait
                 case 'menu':
                     /** @var Menu $menu */
                     $menu = $gantry['menu'];
-                    $active = $menu->getCacheId();
+                    $cacheKey = $menu->getCacheId();
 
-                    $cached = true;
-                    $extra = ['_active_menu_item' => $active];
+                    if ($cacheKey !== null) {
+                        $cached = true;
+                        $extra = ['_menu_cache_key' => $cacheKey];
+                    }
                     break;
             }
         }
@@ -677,7 +679,7 @@ trait ThemeTrait
             $file = PhpFile::instance($filename);
             if ($file->exists()) {
                 try {
-                    return HtmlBlock::fromArray((array) $file->content());
+                    return ContentBlock::fromArray((array) $file->content());
                 } catch (\Exception $e) {
                     // Invalid cache, continue to rendering.
                     GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load particle %s cache', $item->id), 'debug');
