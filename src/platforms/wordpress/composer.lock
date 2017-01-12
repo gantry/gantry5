@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c5898609cbd0954be0738c691abc22c",
     "content-hash": "9eccd4ddedbfa0931f9a41ab3c83699e",
     "packages": [
         {
@@ -56,7 +55,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2014-04-16 09:44:40"
+            "time": "2014-04-16T09:44:40+00:00"
         },
         {
             "name": "asm89/twig-cache-extension",
@@ -110,7 +109,7 @@
                 "extension",
                 "twig"
             ],
-            "time": "2016-10-28 10:14:55"
+            "time": "2016-10-28T10:14:55+00:00"
         },
         {
             "name": "composer/installers",
@@ -217,7 +216,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-08-13 20:53:52"
+            "time": "2016-08-13T20:53:52+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -259,7 +258,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2016-11-02 15:56:58"
+            "time": "2016-11-02T15:56:58+00:00"
         },
         {
             "name": "erusev/parsedown-extra",
@@ -303,7 +302,7 @@
                 "parsedown",
                 "parser"
             ],
-            "time": "2015-11-01 10:19:22"
+            "time": "2015-11-01T10:19:22+00:00"
         },
         {
             "name": "filp/whoops",
@@ -363,7 +362,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-12-26 16:13:31"
+            "time": "2016-12-26T16:13:31+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -416,7 +415,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2016-09-11 01:34:11"
+            "time": "2016-09-11T01:34:11+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -462,7 +461,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-09-11 15:10:35"
+            "time": "2015-09-11T15:10:35+00:00"
         },
         {
             "name": "rockettheme/toolbox",
@@ -510,7 +509,7 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2016-10-06 18:02:45"
+            "time": "2016-10-06T18:02:45+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -570,7 +569,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-13 01:43:15"
+            "time": "2016-10-13T01:43:15+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -619,20 +618,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14 16:15:57"
+            "time": "2016-11-14T16:15:57+00:00"
         },
         {
             "name": "timber/timber",
-            "version": "1.1.12",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "8efee9e234cbf2284042df98c006358bbd8a7554"
+                "reference": "b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/8efee9e234cbf2284042df98c006358bbd8a7554",
-                "reference": "8efee9e234cbf2284042df98c006358bbd8a7554",
+                "url": "https://api.github.com/repos/timber/timber/zipball/b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7",
+                "reference": "b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +679,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2016-12-11 20:35:26"
+            "time": "2016-12-30T03:17:17+00:00"
         },
         {
             "name": "twig/twig",
@@ -741,7 +740,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-12-23 11:06:22"
+            "time": "2016-12-23T11:06:22+00:00"
         },
         {
             "name": "upstatement/routes",
@@ -792,7 +791,7 @@
                 "routes",
                 "routing"
             ],
-            "time": "2016-07-06 12:53:24"
+            "time": "2016-07-06T12:53:24+00:00"
         }
     ],
     "packages-dev": [
@@ -855,7 +854,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-09-02 10:13:14"
+            "time": "2014-09-02T10:13:14+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -902,7 +901,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -943,7 +942,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -987,7 +986,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1037,7 +1036,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-03-03 05:10:30"
+            "time": "2014-03-03T05:10:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1110,7 +1109,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-10-17 09:04:17"
+            "time": "2014-10-17T09:04:17+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1159,7 +1158,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2013-01-13 10:24:48"
+            "time": "2013-01-13T10:24:48+00:00"
         }
     ],
     "aliases": [],
