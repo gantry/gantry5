@@ -14,9 +14,6 @@
 namespace Gantry\Component\Content\Block;
 
 /**
- * The Config class contains configuration information.
- *
- * @author RocketTheme
  * @since 5.4.3
  */
 interface ContentBlockInterface extends \Serializable
