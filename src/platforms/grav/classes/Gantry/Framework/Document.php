@@ -10,12 +10,12 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Content\Document\HtmlDocument;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
-use Gantry\Framework\Base\Document as BaseDocument;
 use Grav\Common\Language\Language;
 
-class Document extends BaseDocument
+class Document extends HtmlDocument
 {
     public static function registerAssets()
     {
@@ -60,55 +60,43 @@ class Document extends BaseDocument
 
     public static function registerStyles()
     {
-        if (empty(self::$styles['head'])) {
-            return;
-        }
-
         $grav = Grav::instance();
 
-        krsort(self::$styles['head'], SORT_NUMERIC);
+        $styles = static::$stack[0]->getStyles();
 
-        foreach (self::$styles['head'] as $priority => $styles) {
-            foreach ($styles as $style) {
-                switch ($style[':type']) {
-                    case 'file':
-                        $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $priority);
-                        break;
-                    case 'inline':
-                        $grav['assets']->addInlineCss($style['content'], 90 + $priority);
-                        break;
-                }
+        foreach ($styles as $style) {
+            switch ($style[':type']) {
+                case 'file':
+                    $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $style[':priority']);
+                    break;
+                case 'inline':
+                    $grav['assets']->addInlineCss($style['content'], 90 + $style[':priority']);
+                    break;
             }
         }
     }
 
     protected static function registerScripts($group)
     {
-        if (empty(self::$scripts[$group])) {
-            return;
-        }
-
         $grav = Grav::instance();
 
-        krsort(self::$scripts[$group], SORT_NUMERIC);
+        $scripts = static::$stack[0]->getScripts($group);
 
-        foreach (self::$scripts[$group] as $priority => $scripts) {
-            foreach ($scripts as $script) {
-                switch ($script[':type']) {
-                    case 'file':
-                        $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
-                            'priority' => 90 + $priority,
-                            'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
-                            'group' => $group,
-                        ]);
-                        break;
-                    case 'inline':
-                        $grav['assets']->AddInlineJs($script['content'], [
-                            'priority' => 90 + $priority,
-                            'group' => $group,
-                        ]);
-                        break;
-                }
+        foreach ($scripts as $script) {
+            switch ($script[':type']) {
+                case 'file':
+                    $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
+                        'priority' => 90 + $script[':priority'],
+                        'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
+                        'group' => $group,
+                    ]);
+                    break;
+                case 'inline':
+                    $grav['assets']->AddInlineJs($script['content'], [
+                        'priority' => 90 + $script[':priority'],
+                        'group' => $group,
+                    ]);
+                    break;
             }
         }
     }

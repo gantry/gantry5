@@ -14,6 +14,7 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
@@ -595,18 +596,15 @@ trait ThemeTrait
      */
     public function renderContent($item, $options = [])
     {
-        $content = $this->getContent($item, $options);
-
-        $html = $content['html'];
-        $assets = $content['assets'];
-
         $gantry = static::gantry();
+
+        $content = $this->getContent($item, $options);
 
         /** @var Document $document */
         $document = $gantry['document'];
+        $document->addBlock($content);
 
-        $document->appendHeaderTags($assets);
-
+        $html = $content->toString();
         return !strstr($html, '@@DEFERRED@@') ? $html : null;
     }
 
@@ -617,7 +615,7 @@ trait ThemeTrait
      *
      * @param object|array $item
      * @param array $options
-     * @return string|null
+     * @return HtmlBlock
      * @since 5.4.3
      */
     public function getContent($item, $options = [])
@@ -636,10 +634,11 @@ trait ThemeTrait
         $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
 
         if (!$enabled) {
-            return ['html' => '', 'assets' => []];
+            return new HtmlBlock;
         }
 
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
+
         $cached = false;
         $extra = [];
 
@@ -669,9 +668,6 @@ trait ThemeTrait
             }
         }
 
-        /** @var Document $document */
-        $document = $gantry['document'];
-
         if ($cached) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -680,21 +676,28 @@ trait ThemeTrait
             $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
             $file = PhpFile::instance($filename);
             if ($file->exists()) {
-                return $file->content();
+                try {
+                    return HtmlBlock::fromArray((array) $file->content());
+                } catch (\Exception $e) {
+                    // Invalid cache, continue to rendering.
+                    GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load particle %s cache', $item->id), 'debug');
+                }
             }
         }
 
         // Create new document context for assets.
         $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
 
+        /** @var Document $document */
+        $document = $gantry['document'];
         $document->push();
-        $content = [];
-        $content['html'] = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
-        $content['assets'] = $document->pop();
+        $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $content = $document->pop()->setContent($html);
 
         if (isset($file)) {
             // Save HTML and assets into the cache.
-            $file->save($content);
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Caching particle %s', $item->id), 'debug');
+            $file->save($content->toArray());
         }
 
         return $content;

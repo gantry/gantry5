@@ -15,9 +15,9 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\System\Messages;
+use Gantry\Framework\Document;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
-use Gantry\Framework\Document as RealDocument;
 use Gantry\Framework\Page;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Positions;
@@ -29,7 +29,6 @@ use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class Gantry extends Container
 {
@@ -235,7 +234,7 @@ abstract class Gantry extends Container
         };
 
         $instance['document'] = function () {
-            return new RealDocument;
+            return new Document;
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.

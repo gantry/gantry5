@@ -33,23 +33,20 @@ $cacheid = md5($module->id);
 $cacheparams = (object) [
     'cachemode'    => 'id',
     'class'        => 'ModGantryParticlesHelper',
-    'method'       => 'render',
+    'method'       => 'cache',
     'methodparams' => [$module, $params],
     'modeparams'   => $cacheid
 ];
 
-$data = JModuleHelper::moduleCache($module, $params, $cacheparams);
-
-if (!is_array($data)) {
-    $data = ModGantryParticlesHelper::render($module, $params);
+$block = ModGantryParticlesHelper::moduleCache($module, $params, $cacheparams);
+if (!$block) {
+    $block = ModGantryParticlesHelper::render($module, $params);
 }
-
-list ($html, $assets) = $data;
 
 /** @var \Gantry\Framework\Document $document */
 $document = $gantry['document'];
-$document->appendHeaderTags($assets);
+$document->addBlock($block);
 
-echo $html;
+echo $block->toString();
 
 GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("module-{$module->id}");

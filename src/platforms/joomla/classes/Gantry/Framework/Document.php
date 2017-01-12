@@ -10,9 +10,9 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Framework\Base\Document as BaseDocument;
+use Gantry\Component\Content\Document\HtmlDocument;
 
-class Document extends BaseDocument
+class Document extends HtmlDocument
 {
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
@@ -53,48 +53,44 @@ class Document extends BaseDocument
 
     protected static function registerStyles()
     {
-        if (empty(static::$styles['head']) || static::errorPage()) {
+        if (static::errorPage()) {
             return;
         }
 
-        krsort(static::$styles['head'], SORT_NUMERIC);
-
         $doc = \JFactory::getDocument();
 
-        foreach (static::$styles['head'] as $styles) {
-            foreach ($styles as $style) {
-                switch ($style[':type']) {
-                    case 'file':
-                        $doc->addStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
-                        break;
-                    case 'inline':
-                        $doc->addStyleDeclaration($style['content'], $style['type']);
-                        break;
-                }
+        $styles = static::$stack[0]->getStyles();
+
+        foreach ($styles as $style) {
+            switch ($style[':type']) {
+                case 'file':
+                    $doc->addStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
+                    break;
+                case 'inline':
+                    $doc->addStyleDeclaration($style['content'], $style['type']);
+                    break;
             }
         }
     }
 
     protected static function registerScripts()
     {
-        if (empty(static::$scripts['head']) || static::errorPage()) {
+        if (static::errorPage()) {
             return;
         }
 
-        krsort(static::$scripts['head'], SORT_NUMERIC);
-
         $doc = \JFactory::getDocument();
 
-        foreach (static::$scripts['head'] as $scripts) {
-            foreach ($scripts as $script) {
-                switch ($script[':type']) {
-                    case 'file':
-                        $doc->addScript($script['src'], $script['type'], $script['defer'], $script['async']);
-                        break;
-                    case 'inline':
-                        $doc->addScriptDeclaration($script['content'], $script['type']);
-                        break;
-                }
+        $scripts = static::$stack[0]->getScripts();
+
+        foreach ($scripts as $script) {
+            switch ($script[':type']) {
+                case 'file':
+                    $doc->addScript($script['src'], $script['type'], $script['defer'], $script['async']);
+                    break;
+                case 'inline':
+                    $doc->addScriptDeclaration($script['content'], $script['type']);
+                    break;
             }
         }
     }

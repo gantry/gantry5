@@ -104,8 +104,10 @@ class Debugger
             self::$renderer->setBaseUrl(\JUri::root(true) . '/plugins/system/gantry5_debugbar/vendor/maximebf/debugbar/src/DebugBar/Resources');
             list($css_files, $js_files) = self::$renderer->getAssets(null, JavascriptRenderer::RELATIVE_URL);
 
+            /** @var Document $document */
+            $document = $gantry['document'];
             foreach ($css_files as $css) {
-                $gantry['document']->addHeaderTag([
+                $document->addHeaderTag([
                     'tag' => 'link',
                     'rel' => 'stylesheet',
                     'href' => $css
@@ -113,7 +115,7 @@ class Debugger
             }
 
             foreach ($js_files as $js) {
-                $gantry['document']->addHeaderTag([
+                $document->addHeaderTag([
                     'tag' => 'script',
                     'src' => $js
                 ], 'head', 0);

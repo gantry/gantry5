@@ -14,7 +14,6 @@
 namespace Gantry\Component\Stylesheet\Scss;
 
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
 use Leafo\ScssPhp\Parser;
@@ -41,7 +40,7 @@ class Compiler extends BaseCompiler
 
     public function setBasePath($basePath)
     {
-        $this->basePath = rtrim(Document::rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
+        $this->basePath = rtrim(Gantry::instance()['document']::rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
     }
 
     public function setFonts(array $fonts)
@@ -351,8 +350,6 @@ class Compiler extends BaseCompiler
      * Clean parset files.
      *
      * @api
-     *
-     * @return array
      */
     public function cleanParsedFiles()
     {

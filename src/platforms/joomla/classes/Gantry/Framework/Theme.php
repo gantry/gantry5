@@ -12,7 +12,6 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
-use Gantry\Framework\Base\Document;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
