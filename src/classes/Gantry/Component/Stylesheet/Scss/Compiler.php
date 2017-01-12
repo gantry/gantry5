@@ -40,7 +40,8 @@ class Compiler extends BaseCompiler
 
     public function setBasePath($basePath)
     {
-        $this->basePath = rtrim(Gantry::instance()['document']::rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
+        $document = Gantry::instance()['document'];
+        $this->basePath = rtrim($document::rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
     }
 
     public function setFonts(array $fonts)
