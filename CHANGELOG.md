@@ -8,7 +8,6 @@
     3. [](#bugfix)
         - Fixed `$1` and `\\1` being lost inside `<pre>` and `<code>` blocks (#1782)
         - Admin: Fixed `Back to Setup` button not working after page reload
-        - Fixed SCSS compiler incompatibility with PHP < 7.0
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769)
