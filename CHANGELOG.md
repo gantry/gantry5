@@ -22,7 +22,7 @@
         - Fixed missing particle type in position page when hovering over particle (#1771)
         - Fixed home assignment bug (#1773)
         - Fixed engine page types missing when creating a new page (#1749)
-        - Added particle for `Breadchrumbs` plugin (#1786)
+        - Added particle for `Breadcrumbs` plugin (#1786)
 
 # 5.4.2
 ## 20/12/2016
