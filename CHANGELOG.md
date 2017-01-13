@@ -1,5 +1,5 @@
 # 5.4.3
-## XX/XX/2017
+## 13/01/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -13,6 +13,7 @@
         - Fixed loading template styles `preg_replace(): Compilation failed` error (#1769)
         - Fixed blank page when rendering ACL rules in frontend Joomla forms (#1767, #1775)
         - Worked around Joomla rendering issue on duplicate module positions and modules (#1721)
+        - Fixed PHP 5.3 incompatibility in `System - Gantry 5` plugin (crashes Joomla admin)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Improved title styling for Login Form particle (#1774, thanks @adi8i)
