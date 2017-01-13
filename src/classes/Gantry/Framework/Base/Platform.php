@@ -212,4 +212,27 @@ abstract class Platform
     {
         return true;
     }
+
+    /**
+     * @param array|string $dependencies
+     * @return bool|null
+     * @since 5.4.3
+     */
+    public function checkDependencies($dependencies)
+    {
+        if (is_string($dependencies) && $dependencies !== $this->name) {
+            return false;
+        }
+
+        if (isset($dependencies['platform'])) {
+            if (is_string($dependencies['platform']) && $dependencies['platform'] !== $this->name) {
+                return false;
+            }
+            if (!isset($dependencies['platform'][$this->name])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

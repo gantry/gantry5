@@ -1,18 +1,18 @@
-name: Search
-description: Search Particle
+name: Breadcrumbs
+description: Breadcrumbs Particle
 type: particle
-icon: fa-search
+icon: fa-ellipsis-h
 
 dependencies:
   platform:
     grav:
       plugin:
-        simplesearch: true
+        breadcrumbs: true
 
 form:
   fields:
     enabled:
       type: checkbox
       label: Enabled
-      description: Globally enable search particles.
+      description: Globally enable breadcrumbs particles.
       default: true

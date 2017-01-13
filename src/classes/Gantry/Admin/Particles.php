@@ -53,14 +53,19 @@ class Particles
     {
         if (!$this->particles)
         {
+            $platform = $this->container['platform'];
             $files = $this->locateParticles();
 
             $this->particles = [];
             foreach ($files as $key => $fileArray) {
                 $filename = key($fileArray);
                 $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-                $this->particles[$key] = $file->content();
+                $particle = $file->content();
                 $file->free();
+
+                if (!isset($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
+                    $this->particles[$key] = $particle;
+                }
             }
         }
 

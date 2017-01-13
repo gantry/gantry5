@@ -230,4 +230,33 @@ class Platform extends BasePlatform
             return $length ? Utils::truncate($text, $length) : $text;
         }
     }
+
+    /**
+     * @param array|string $dependencies
+     * @return bool|null
+     * @since 5.4.3
+     */
+    public function checkDependencies($dependencies)
+    {
+        if (!parent::checkDependencies($dependencies)) {
+            return false;
+        }
+
+        if (isset($dependencies['platform'][$this->name])) {
+            $platform = $dependencies['platform'][$this->name];
+            if (isset($platform['plugin']) && is_array($platform['plugin'])) {
+                $plugins = Grav::instance()['plugins'];
+                $list = $plugins->all();
+                foreach ($platform['plugin'] as $name => $condition) {
+                    $exists = isset($list[$name]);
+
+                    if ($exists !== (bool) $condition) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }
