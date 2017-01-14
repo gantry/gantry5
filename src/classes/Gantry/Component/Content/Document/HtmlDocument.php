@@ -16,6 +16,7 @@ namespace Gantry\Component\Content\Document;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Url\Url;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class HtmlDocument
@@ -28,7 +29,7 @@ class HtmlDocument
     /**
      * @var array|HtmlBlock[]
      */
-    protected static $stack = [];
+    protected static $stack;
     protected static $frameworks = [];
     protected static $scripts = [];
     protected static $styles = [];
@@ -49,6 +50,7 @@ class HtmlDocument
 
     public function __construct()
     {
+        static::$stack = [];
         static::push();
     }
 
@@ -91,6 +93,7 @@ class HtmlDocument
             return false;
         }
 
+        static::init();
         static::$stack[0]->addFramework($framework);
 
         return true;
@@ -104,6 +107,7 @@ class HtmlDocument
      */
     public static function addStyle($element, $priority = 0, $location = 'head')
     {
+        static::init();
         return static::$stack[0]->addStyle($element, $priority, $location);
     }
 
@@ -115,6 +119,7 @@ class HtmlDocument
      */
     public static function addInlineStyle($element, $priority = 0, $location = 'head')
     {
+        static::init();
         return static::$stack[0]->addInlineStyle($element, $priority, $location);
     }
 
@@ -126,6 +131,7 @@ class HtmlDocument
      */
     public static function addScript($element, $priority = 0, $location = 'head')
     {
+        static::init();
         return static::$stack[0]->addScript($element, $priority, $location);
     }
 
@@ -137,6 +143,7 @@ class HtmlDocument
      */
     public static function addInlineScript($element, $priority = 0, $location = 'head')
     {
+        static::init();
         return static::$stack[0]->addInlineScript($element, $priority, $location);
     }
 
@@ -178,6 +185,7 @@ class HtmlDocument
 
     public static function getStyles($location = 'head')
     {
+        static::init();
         $styles = static::$stack[0]->getStyles($location);
 
         $output = [];
@@ -215,6 +223,7 @@ class HtmlDocument
 
     public static function getScripts($location = 'head')
     {
+        static::init();
         $scripts = static::$stack[0]->getScripts($location);
 
         $output = [];
@@ -251,6 +260,7 @@ class HtmlDocument
 
     public static function getHtml($location = 'bottom')
     {
+        static::init();
         $htmls = static::$stack[0]->getHtml($location);
 
         $output = [];
@@ -649,5 +659,15 @@ class HtmlDocument
         static::registerLightcase();
 
         static::addInlineScript(['content' => "jQuery(document).ready(function($) { jQuery('[data-rel^=lightcase]').lightcase(); });"], 0, 'footer');
+    }
+
+    protected static function init()
+    {
+        static $object;
+
+        if (!$object) {
+            // We need to initialize document for backwards compatibility (RokSprocket/RokGallery in WP).
+            $object = Gantry::instance()['document'];
+        }
     }
 }
