@@ -67,7 +67,6 @@ class Document extends HtmlDocument
     public static function registerScripts($pos)
     {
         $scripts = static::$stack[0]->getScripts($pos);
-
         $in_footer = ($pos != 'head');
 
         foreach ($scripts as $script) {
@@ -90,7 +89,7 @@ class Document extends HtmlDocument
             }
         }
 
-        static::$stack[0]->clearScripts();
+        static::$stack[0]->clearScripts($pos);
     }
 
     public static function domain($addDomain = false)

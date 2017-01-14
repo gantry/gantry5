@@ -4,6 +4,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed broken RokSprocket and RokGallery: `Call to a member function addScript() on null` (#1794)
+        - Fixed inline JavaScript rendered multiple times in `wp_footer` (#1795)
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed namespace reference for Grav Page, throwing errors for PHP < 7
