@@ -19,7 +19,7 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Page as GravPage;
 use Grav\Common\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -87,7 +87,7 @@ class Menu extends AbstractMenu
         $groups['mainmenu'] = array();
 
         // Build the options array.
-        /** @var Page $page */
+        /** @var GravPage $page */
         foreach ($pages as $page) {
             $name = trim($page->route(), '/') ?: $this->default;
             $path = explode('/', $name);
@@ -171,7 +171,7 @@ class Menu extends AbstractMenu
         // Return flat list of routes.
         $list = [];
         $this->pages = [];
-        /** @var Page $item */
+        /** @var GravPage $item */
         foreach ($pages as $item) {
             $level = substr_count($item->route(), '/');
 
