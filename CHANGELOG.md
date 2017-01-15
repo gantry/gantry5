@@ -1,6 +1,9 @@
 # 5.4.5
 ## XX/01/2017
 
+1. [Common](#common)
+    1. [](#bugfix)
+        - Turn off menu caching for now as it caches also modules/widgets/particles
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed positions rendering escaped HTML code (#1797)

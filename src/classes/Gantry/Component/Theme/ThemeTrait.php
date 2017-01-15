@@ -662,7 +662,8 @@ trait ThemeTrait
                     $menu = $gantry['menu'];
                     $cacheKey = $menu->getCacheId();
 
-                    if ($cacheKey !== null) {
+                    // FIXME: menu caching needs to handle dynamic modules inside menu: turning it off for now.
+                    if (false && $cacheKey !== null) {
                         $cached = true;
                         $extra['_menu_cache_key'] = $cacheKey;
                     }
