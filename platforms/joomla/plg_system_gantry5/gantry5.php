@@ -200,8 +200,10 @@ class plgSystemGantry5 extends JPlugin
     {
         $gantry = \Gantry\Framework\Gantry::instance();
 
-        // Only filter our streams.
-        $this->app->setBody($gantry['document']->urlFilter($this->app->getBody(), false, 0, true));
+        $html = $this->app->getBody();
+
+        // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
+        $this->app->setBody($gantry['document']->urlFilter($html, false, 0, true) ?: $html);
     }
 
     /**

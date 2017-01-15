@@ -3,9 +3,12 @@
 
 1. [Common](#common)
     1. [](#bugfix)
-        - Turn off menu caching for now as it caches also modules/widgets/particles
+        - Turn off menu caching for now as it caches also modules/widgets/particles inside the menu
         - Fixed bug in particle caching which causes some particles to have the same cache id
-        - Fixed offcanvas not working in some installs
+        - Fixed offcanvas menu not working properly in some sites
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fix white page if the page has bad UTF8 characters (usually from bad translations)
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed positions rendering escaped HTML code (#1797)
