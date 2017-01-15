@@ -640,7 +640,7 @@ trait ThemeTrait
         $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
 
         $cached = false;
-        $extra = ['_language' => $gantry['page']->language];
+        $cacheKey = [];
 
         // Enable particle caching only in production mode.
         if ($production && isset($particle['caching'])) {
@@ -660,21 +660,25 @@ trait ThemeTrait
                 case 'menu':
                     /** @var Menu $menu */
                     $menu = $gantry['menu'];
-                    $cacheKey = $menu->getCacheId();
+                    $cacheId = $menu->getCacheId();
 
                     // FIXME: menu caching needs to handle dynamic modules inside menu: turning it off for now.
-                    if (false && $cacheKey !== null) {
+                    if (false && $cacheId !== null) {
                         $cached = true;
-                        $extra['_menu_cache_key'] = $cacheKey;
+                        $cacheKey['menu_cache_key'] = $cacheId;
                     }
                     break;
             }
         }
 
         if ($cached) {
+            $cacheKey['language'] = $gantry['page']->language;
+            $cacheKey['attributes'] = $particle;
+            $cacheKey += (array) $item;
+
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
-            $key = md5(json_encode($particle + $extra));
+            $key = md5(json_encode($cacheKey));
 
             $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
             $file = PhpFile::instance($filename);
