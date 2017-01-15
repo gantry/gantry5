@@ -1,3 +1,10 @@
+# 5.4.5
+## XX/01/2017
+
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed positions rendering escaped HTML code (#1797)
+
 # 5.4.4
 ## 14/01/2017
 
