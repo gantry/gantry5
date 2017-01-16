@@ -1,12 +1,12 @@
 # 5.4.5
-## XX/01/2017
+## 16/01/2017
 
 1. [Common](#common)
     1. [](#bugfix)
         - Turn off menu caching for now as it caches also modules/widgets/particles inside the menu
         - Fixed bug in particle caching which causes some particles to have the same cache id
         - Fixed offcanvas menu not working properly in some sites
-        - Fixed spaces in images not being urlencoded with `%20` when using `|url` filter
+        - Fixed spaces in images not being urlencoded with `%20` when using `url()` function
         - Fixed empty badge in Atoms (#1798)
 2. [Joomla](#joomla)
     3. [](#bugfix)
