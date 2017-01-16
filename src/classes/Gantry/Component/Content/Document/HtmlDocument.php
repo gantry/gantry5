@@ -394,14 +394,14 @@ class HtmlDocument
 
         if ($url[0] === '#' || $url[0] === '?') {
             // Handle urls with query string or fragment only.
-            return $url;
+            return str_replace(' ', '%20', $url);
         }
 
         $parts = Url::parse($url);
 
         if (!is_array($parts)) {
             // URL could not be parsed.
-            return $allowNull ? null : $url;
+            return $allowNull ? null : str_replace(' ', '%20', $url);
         }
 
         // Make sure we always have scheme, host, port and path.
@@ -419,7 +419,7 @@ class HtmlDocument
 
             if (!$locator->schemeExists($scheme)) {
                 // If scheme does not exists as a stream, assume it's external.
-                return $url;
+                return str_replace(' ', '%20', $url);
             }
 
             // Attempt to find the resource (because of parse_url() we need to put host back to path).
@@ -438,7 +438,7 @@ class HtmlDocument
 
         } elseif ($host || $port) {
             // If URL doesn't have scheme but has host or port, it is external.
-            return $url;
+            return str_replace(' ', '%20', $url);
         }
 
         // At this point URL is either relative or absolute path; let us find if it is relative and not . or ..
@@ -477,7 +477,7 @@ class HtmlDocument
             $uri .= '#' . $parts['fragment'];
         }
 
-        return static::domain($domain) . $uri;
+        return static::domain($domain) . str_replace(' ', '%20', $uri);
     }
 
     /**
