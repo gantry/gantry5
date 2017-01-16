@@ -8,7 +8,7 @@
         {% endif %}
 
         {% if item %}
-            <span class="badge font-small">{{ item.subtype }}</span>
+            <span class="badge font-small">{{ item.subtype ?: item.type }}</span>
             {% if blueprints.fields.enabled %}
                 {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ item.subtype|default(item.type) ~ '.enabled', 'field': blueprints.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'disabled': not gantry.config.get('particles.' ~ item.subtype ~ '.enabled', true)} %}
             {% endif %}

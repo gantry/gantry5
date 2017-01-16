@@ -7,6 +7,7 @@
         - Fixed bug in particle caching which causes some particles to have the same cache id
         - Fixed offcanvas menu not working properly in some sites
         - Fixed spaces in images not being urlencoded with `%20` when using `|url` filter
+        - Fixed empty badge in Atoms (#1798)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fix white page if the page has bad UTF8 characters (usually from badly encoded translations)
