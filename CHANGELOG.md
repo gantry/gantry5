@@ -1,3 +1,10 @@
+# 5.4.6
+## XX/XX/2017
+
+4. [Grav](#grav)
+    3. [](#bugfix)
+       - Fixed particles inside positions having extra margin and padding (`g-content` class)
+
 # 5.4.5
 ## 16/01/2017
 

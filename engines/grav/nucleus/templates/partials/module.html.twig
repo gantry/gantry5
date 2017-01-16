@@ -9,7 +9,7 @@
 
 {% block module %}
     {% if segment.type in ['particle', 'spacer'] %}
-        {{ gantry.theme.renderContent({id: id, type: segment.type, subtype: segment.options.type, attributes: segment.options.attributes})|raw }}
+        {{ gantry.theme.renderContent({id: id, type: segment.type, subtype: segment.options.type, attributes: segment.options.attributes}, {inContent: inContent})|raw }}
     {% else %}
         {% include [
         '@nucleus/content/' ~ segment.type ~ '/' ~ segment.options.type|default('default') ~ '.html.twig',
