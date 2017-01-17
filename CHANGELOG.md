@@ -1,9 +1,15 @@
 # 5.4.6
 ## XX/XX/2017
 
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed a bug in `|html` filter
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed all `<script>` tags being corrupted in Windows due to badly behaving `uniqid()` function
 4. [Grav](#grav)
     3. [](#bugfix)
-       - Fixed particles inside positions having extra margin and padding (`g-content` class)
+        - Fixed particles inside positions having extra margin and padding (`g-content` class)
 
 # 5.4.5
 ## 16/01/2017
