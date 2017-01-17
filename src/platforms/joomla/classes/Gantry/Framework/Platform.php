@@ -36,6 +36,16 @@ class Platform extends BasePlatform
     protected $modules;
 
 
+    public function setModuleWrapper($html)
+    {
+        $this->module_wrapper = $html;
+    }
+
+    public function setComponentWrapper($html)
+    {
+        $this->component_wrapper = $html;
+    }
+
     public function init()
     {
         // Support linked sample data.
