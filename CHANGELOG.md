@@ -7,7 +7,7 @@
         - Fixed wrong ordering of custom CSS/JS assets
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Fixed all `<script>` tags being corrupted in Windows due to badly behaving `uniqid()` function
+        - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
