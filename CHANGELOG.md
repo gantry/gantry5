@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed a bug in `|html` filter
+        - Fixed wrong ordering of custom CSS/JS assets
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in Windows due to badly behaving `uniqid()` function

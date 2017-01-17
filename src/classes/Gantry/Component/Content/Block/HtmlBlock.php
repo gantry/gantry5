@@ -408,7 +408,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         uasort(
             $items,
             function ($a, $b) {
-                return ($a[':priority'] == $b[':priority']) ? $a[':order'] - $b[':order'] : $a[':priority'] - $b[':priority'];
+                return ($a[':priority'] == $b[':priority']) ? $a[':order'] - $b[':order'] : $b[':priority'] - $a[':priority'];
             }
         );
     }
