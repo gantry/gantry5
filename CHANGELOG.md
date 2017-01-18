@@ -16,6 +16,7 @@
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
         - Fixed menu rendering issues in multi-language sites
+        - Fixed login in offline mode accepting invalid credentials (#1808)
 
 # 5.4.5
 ## 16/01/2017
