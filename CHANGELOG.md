@@ -13,6 +13,7 @@
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
+        - Fixed menu rendering issues in multi-language sites
 
 # 5.4.5
 ## 16/01/2017

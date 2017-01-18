@@ -89,7 +89,7 @@ class Menu extends AbstractMenu
         // Build the options array.
         /** @var GravPage $page */
         foreach ($pages as $page) {
-            $name = trim($page->route(), '/') ?: $this->default;
+            $name = trim($page->rawRoute(), '/') ?: $this->default;
             $path = explode('/', $name);
 
             $groups['mainmenu'][$name] = [
@@ -173,21 +173,19 @@ class Menu extends AbstractMenu
         $this->pages = [];
         /** @var GravPage $item */
         foreach ($pages as $item) {
-            $level = substr_count($item->route(), '/');
+            $level = substr_count($item->rawRoute(), '/');
 
             if ($levels >= 0 && $level > $levels) {
                 continue;
             }
 
-            $name = trim($item->route(), '/') ?: $this->default;
+            $name = trim($item->rawRoute(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
             $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
 
             $list[$name] = [
                 'id' => $id,
                 'type' => $item->isPage() && $item->routable() ? 'link' : 'separator',
-                'path' => $name,
-                'alias' => $item->slug(),
                 'title' => $item->menu(),
                 'link' => $item->url(),
                 'parent_id' => $parent_id,
