@@ -1,5 +1,5 @@
 name: Search
-description: Search Particle
+description: Search Particle for Grav SimpleSearch plugin
 type: particle
 icon: fa-search
 

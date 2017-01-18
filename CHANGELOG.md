@@ -11,6 +11,8 @@
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
 4. [Grav](#grav)
+    1. [](#new)
+        - Added particle for `LangSwitcher` plugin
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
         - Fixed menu rendering issues in multi-language sites
@@ -63,11 +65,12 @@
     2. [](#improved)
         - Improved title styling for Login Form particle (#1774, thanks @adi8i)
 4. [Grav](#grav)
+    1. [](#new)
+        - Added particle for `Breadcrumbs` plugin (#1786)
     3. [](#bugfix)
         - Fixed missing particle type in position page when hovering over particle (#1771)
         - Fixed home assignment bug (#1773)
         - Fixed engine page types missing when creating a new page (#1749)
-        - Added particle for `Breadcrumbs` plugin (#1786)
 
 # 5.4.2
 ## 20/12/2016
