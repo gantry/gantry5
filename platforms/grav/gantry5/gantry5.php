@@ -52,6 +52,9 @@ class Gantry5Plugin extends Plugin
             'onThemeInitialized' => [
                 ['initializeGantryTheme', -20]
             ],
+            'onDataTypeExcludeFromDataManagerPluginHook' => [
+                ['onDataTypeExcludeFromDataManagerPluginHook', 0],
+            ],
         ];
     }
 
@@ -455,5 +458,10 @@ class Gantry5Plugin extends Plugin
         $domain = $uri->host();
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    public function onDataTypeExcludeFromDataManagerPluginHook()
+    {
+        $this->grav['admin']->dataTypesExcludedFromDataManagerPlugin[] = 'gantry5';
     }
 }
