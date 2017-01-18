@@ -1,5 +1,5 @@
-name: Feed
-description: Feed Particle for Grav Feed Plugin
+name: Feed Buttons
+description: Feed Buttons Particle for Grav Feed Plugin
 type: particle
 icon: fa-rss
 
