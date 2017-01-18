@@ -1,8 +1,8 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
 {% block particle %}
-    {% if config.plugins.feed.enabled and not page.feed.skip and page.content %}
-    <a class="button" href="{{ page.route }}.atom"><i class="fa fa-rss-square"></i> Atom 1.0</a>
-    <a class="button" href="{{ page.route }}.rss"><i class="fa fa-rss-square"></i> RSS</a>
+    {% if config.plugins.feed.enabled and not page.feed.skip and page.header.content %}
+    <a class="button" href="{{ base_url_relative ~ page.route }}.atom"><i class="fa fa-rss-square"></i> Atom 1.0</a>
+    <a class="button" href="{{ base_url_relative ~ page.route }}.rss"><i class="fa fa-rss-square"></i> RSS</a>
     {% endif %}
 {% endblock %}
