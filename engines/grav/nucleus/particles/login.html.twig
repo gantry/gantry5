@@ -3,7 +3,7 @@
 {% block particle %}
 
     {% if config.plugins.login.enabled and config.plugins.login.route %}
-    {% if grav.user.username %}
+    {% if grav.user.authenticated %}
         <h4>{{ 'PLUGIN_LOGIN.WELCOME'|t }} <strong>{{ grav.user.fullname ?: grav.user.username }}</strong></h4>
         <a class="button logout" href="{{ uri.addNonce(base_url_relative ~ uri.path ~ '/task' ~ config.system.param_sep ~ 'login.logout', 'logout-form', 'logout-nonce') }}">
             {{ 'PLUGIN_LOGIN.BTN_LOGOUT'|t }}
@@ -57,3 +57,5 @@
     {% endif %}
 
 {% endif %}
+
+{% endblock %}
