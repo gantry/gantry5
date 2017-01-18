@@ -13,6 +13,7 @@
 4. [Grav](#grav)
     1. [](#new)
         - Added particle for `LangSwitcher` plugin
+        - Added particle for `Feed` plugin
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
         - Fixed menu rendering issues in multi-language sites

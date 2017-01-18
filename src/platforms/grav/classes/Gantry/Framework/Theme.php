@@ -96,6 +96,8 @@ class Theme extends AbstractTheme
         $context = parent::getContext($context);
         $context = array_replace($context, Grav::instance()['twig']->twig_vars);
         $context['site'] = $gantry['site'];
+        $context['grav'] = Grav::instance();
+        $context['page'] = $context['grav']['page'];
 
         return $context;
     }
