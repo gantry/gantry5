@@ -314,7 +314,7 @@ class Gantry5Plugin extends Plugin
         if ($gantry['global']->get('offline', 0)) {
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
 
-            if (!isset($this->grav['user']->authenticated)) {
+            if (empty($this->grav['user']->authenticated)) {
                 $page = new Page;
                 $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
 
