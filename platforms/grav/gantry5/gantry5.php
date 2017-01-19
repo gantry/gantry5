@@ -208,6 +208,7 @@ class Gantry5Plugin extends Plugin
                 'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', 10000],
                 'onPagesInitialized' => ['onThemePagesInitialized', 100000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
+                'getMaintenancePage' => ['getMaintenancePage', 0],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
                 'onPageNotFound' => ['onPageNotFound', 1000]
@@ -306,6 +307,9 @@ class Gantry5Plugin extends Plugin
         $twig->twig_vars['gantry_url'] = $this->base;
     }
 
+    /**
+     * @param Event $event
+     */
     public function onThemePagesInitialized(Event $event)
     {
         $gantry = Gantry::instance();
@@ -314,7 +318,8 @@ class Gantry5Plugin extends Plugin
         if ($gantry['global']->get('offline', 0)) {
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
 
-            if (empty($this->grav['user']->authenticated)) {
+            $user = $this->grav['user'];
+            if (empty($user->authenticated && $user->authorize('site.login'))) {
                 GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Displaying Offline Page");
 
                 $page = new Page;
@@ -333,6 +338,29 @@ class Gantry5Plugin extends Plugin
         }
     }
 
+    /**
+     * @param Event $event
+     */
+    public function getMaintenancePage(Event $event)
+    {
+        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Displaying Maintenance Page");
+
+        $page = new Page;
+        $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
+
+        $event->page = $page;
+
+        $this->enable([
+            'onPageInitialized' => ['onOfflinePage', 1000001],
+        ]);
+
+        // Site is offline, there is nothing else to do.
+        $event->stopPropagation();
+    }
+
+    /**
+     * @param Event $event
+     */
     public function onOfflinePage(Event $event)
     {
         $this->onThemePageInitialized();

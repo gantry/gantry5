@@ -12,6 +12,7 @@
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
 4. [Grav](#grav)
     1. [](#new)
+        - Added support for `Maintenance` plugin
         - Added particle for `LangSwitcher` plugin
         - Added particle for `Feed` plugin
     3. [](#bugfix)
