@@ -329,7 +329,7 @@ class Gantry5Plugin extends Plugin
                 $this->grav['page'] = $page;
 
                 $this->enable([
-                    'onPageInitialized' => ['onOfflinePage', 100000],
+                    'onMaintenancePage' => ['onMaintenancePage', 100000],
                 ]);
 
                 // Site is offline, there is nothing else to do.
@@ -351,21 +351,9 @@ class Gantry5Plugin extends Plugin
         $event->page = $page;
 
         $this->enable([
-            'onPageInitialized' => ['onOfflinePage', 1000001],
+            'onMaintenancePage' => ['onThemePageInitialized', 0],
         ]);
 
-        // Site is offline, there is nothing else to do.
-        $event->stopPropagation();
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function onOfflinePage(Event $event)
-    {
-        $this->onThemePageInitialized();
-
-        // Site is offline, there is nothing else to do.
         $event->stopPropagation();
     }
 
