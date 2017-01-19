@@ -206,7 +206,7 @@ class Gantry5Plugin extends Plugin
 
             $this->enable([
                 'onTwigTemplatePaths' => ['onThemeTwigTemplatePaths', 10000],
-                'onPagesInitialized' => ['onThemePagesInitialized', 10000],
+                'onPagesInitialized' => ['onThemePagesInitialized', 100000],
                 'onPageInitialized' => ['onThemePageInitialized', -10000],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
@@ -306,7 +306,7 @@ class Gantry5Plugin extends Plugin
         $twig->twig_vars['gantry_url'] = $this->base;
     }
 
-    public function onThemePagesInitialized()
+    public function onThemePagesInitialized(Event $event)
     {
         $gantry = Gantry::instance();
         
@@ -315,12 +315,30 @@ class Gantry5Plugin extends Plugin
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
 
             if (empty($this->grav['user']->authenticated)) {
+                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Displaying Offline Page");
+
                 $page = new Page;
                 $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
 
+                unset($this->grav['page']);
                 $this->grav['page'] = $page;
+
+                $this->enable([
+                    'onPageInitialized' => ['onOfflinePage', 100000],
+                ]);
+
+                // Site is offline, there is nothing else to do.
+                $event->stopPropagation();
             }
         }
+    }
+
+    public function onOfflinePage(Event $event)
+    {
+        $this->onThemePageInitialized();
+
+        // Site is offline, there is nothing else to do.
+        $event->stopPropagation();
     }
 
     /**
