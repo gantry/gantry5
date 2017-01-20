@@ -131,7 +131,11 @@ class EventListener implements EventSubscriberInterface
 
         foreach ($menu['items'] as $key => $item) {
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
-                $item['object_id'] = (int) $item['object_id'];
+                if (!empty($item['object_id'])) {
+                    $item['object_id'] = (int)$item['object_id'];
+                } else {
+                    unset($item['object_id']);
+                }
                 $wpItem = $menu_items[$item['id']];
 
                 $args = [

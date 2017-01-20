@@ -10,6 +10,9 @@
         - Allow previously hardcoded module and component wrappers to be overridden
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed occasional `Undefined index: object_id` when trying to save menu with a separator
 4. [Grav](#grav)
     1. [](#new)
         - Added support for `Maintenance` plugin
