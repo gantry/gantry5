@@ -76,7 +76,7 @@
                                                 {% for childName, child in field.fields %}
                                                     {% if childName starts with '.' %}
                                                         {% set childKey = childName|trim('.') %}
-                                                        {% set childValue = val[childName[1:]] %}
+                                                        {% set childValue = nested(val, childName[1:]) %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
                                                         {% set childKey = childName %}

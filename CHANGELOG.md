@@ -5,6 +5,7 @@
     1. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets
+        - Fixed nested field selector in collection.list loosing its value when you edit all items (#1817)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden
