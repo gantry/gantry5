@@ -23,6 +23,8 @@
         - Added support for `Maintenance` plugin
         - Added particle for `LangSwitcher` plugin
         - Added particle for `Feed` plugin
+    2. [](#improved)
+        - Rename `Appearance` to `Gantry 5` as it seems to be less confusing for most users
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
         - Fixed menu rendering issues in multi-language sites
