@@ -84,6 +84,7 @@ class TwigExtension extends \Twig_Extension
     public function getTokenParsers()
     {
         return [
+            new TokenParserPageblock(),
             new TokenParserAssets(),
             new TokenParserScripts(),
             new TokenParserStyles(),
@@ -418,7 +419,8 @@ class TwigExtension extends \Twig_Extension
         return implode("\n", $raw);
     }
 
-    public function colorContrastFunc($value) {
+    public function colorContrastFunc($value)
+    {
         $value = str_replace(' ', '', $value);
         $rgb = new \stdClass;
         $opacity = 1;

@@ -36,11 +36,25 @@
 {%- set page_top %}
     {% block page_top %}
     {% endblock %}
+    {{ gantry.document.getHtml('top')|join("\n    ")|raw }}
 {% endset -%}
 
 {%- set page_bottom %}
     {% block page_bottom %}
     {% endblock %}
+    {{ gantry.document.getHtml('bottom')|join("\n    ")|raw }}
+{% endset -%}
+
+{%- set body_top %}
+    {% block body_top %}
+    {% endblock %}
+    {{ gantry.document.getHtml('body_top')|join("\n    ")|raw }}
+{% endset -%}
+
+{%- set body_bottom %}
+    {% block body_bottom %}
+    {% endblock %}
+    {{ gantry.document.getHtml('body_bottom')|join("\n    ")|raw }}
 {% endset -%}
 
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
@@ -67,6 +81,7 @@
     {% block page_body -%}
     <body{{ gantry.page.bodyAttributes({'class': [offcanvas_position, gantry.page.preset, 'g-style-' ~ gantry.theme.preset]})|raw }}>
         {{ gantry.config.page.body.body_top|raw }}
+        {{ body_top|raw }}
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim %}
@@ -76,6 +91,7 @@
             {{ page_layout|raw }}
             {{ page_bottom|raw }}
         </div>
+        {{ body_bottom|raw }}
         <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
         {{ page_footer|raw }}
         {{ gantry.config.page.body.body_bottom|raw }}

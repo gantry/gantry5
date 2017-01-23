@@ -2,10 +2,14 @@
 ## XX/XX/2017
 
 1. [Common](#common)
+    1. [](#new)
+        - Add support for `{% pageblock bottom %}...{% endpageblock %}` to add HTML into the page (#1161)
+          - where first parameter is one of: `body_top` | `top` | `bottom` | `body_bottom`
+          - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)
     1. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets
-        - Fixed nested field selector in collection.list loosing its value when you edit all items (#1817)
+        - Fixed nested field selector in `collection.list` loosing its value when you edit all items (#1817)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden

@@ -148,6 +148,18 @@ class HtmlDocument
     }
 
     /**
+     * @param string $html
+     * @param int $priority
+     * @param string $location
+     * @return bool
+     */
+    public static function addHtml($html, $priority = 0, $location = 'bottom')
+    {
+        static::getObject();
+        return static::$stack[0]->addHtml($html, $priority, $location);
+    }
+
+    /**
      * @param array $element
      * @param string $location
      * @param int $priority
@@ -262,7 +274,6 @@ class HtmlDocument
     {
         static::getObject();
         $htmls = static::$stack[0]->getHtml($location);
-
         $output = [];
 
         foreach ($htmls as $html) {
