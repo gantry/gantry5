@@ -31,6 +31,7 @@
 
                 // Sticky Posts
                 &.sticky {
+                    padding: ($content-padding / 2) $content-padding;
                     background-color: #eceff3;
                     border-radius: $core-border-radius;
                 }
