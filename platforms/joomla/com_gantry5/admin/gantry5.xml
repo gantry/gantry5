@@ -34,5 +34,9 @@
             <folder>templates</folder>
         </files>
         <menu>COM_GANTRY5</menu>
+        <submenu>
+            <menu view="themes">COM_GANTRY5_ADMIN_MENU_THEMES</menu>
+            <menu>COM_GANTRY5_ADMIN_MENU_THEME</menu>
+        </submenu>
     </administration>
 </extension>

@@ -13,6 +13,7 @@
 2. [Joomla](#joomla)
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden
+        - Administrator: Add submenu to access both `Available Themes` and `Default Theme` (#1764)
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
 3. [WordPress](#wordpress)
