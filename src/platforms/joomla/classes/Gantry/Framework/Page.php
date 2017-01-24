@@ -54,7 +54,9 @@ class Page extends Base\Page
         $this->baseUrl = \JUri::base(true);
         $this->title = $document->title;
         $this->description = $document->description;
-        $this->language = $document->language;
+
+        // Document has lower case language code, which causes issues with some JS scripts (Snipcart). Use tag instead.
+        $this->language = \JFactory::getLanguage()->getTag();
         $this->direction = $document->direction;
     }
 

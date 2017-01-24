@@ -16,6 +16,7 @@
         - Administrator: Add submenu to access both `Available Themes` and `Default Theme` (#1764)
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
+        - Fixed country code on HTML tag being in lower case, enabling translations in Snipcart (#1822)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed occasional `Undefined index: object_id` when trying to save menu with a separator (#1819)
