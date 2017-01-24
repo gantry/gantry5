@@ -18,6 +18,8 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed occasional `Undefined index: object_id` when trying to save menu with a separator (#1819)
+        - Hydrogen / Helium: Fixed deleted or renamed `Home` outline reverting back (#1785)
+          - For existing sites please see https://github.com/gantry/gantry5/issues/1785 to fix the issue
 4. [Grav](#grav)
     1. [](#new)
         - Added support for `Maintenance` plugin
