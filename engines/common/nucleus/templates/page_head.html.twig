@@ -2,22 +2,18 @@
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
-        <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
-        {% for css in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-        {% endif %}
+        <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+        <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
+        {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
 
     {% block head_overrides -%}
-        {% for css in gantry.theme.configuration.css.overrides %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-        {% endif %}
+        {% for scss in gantry.theme.configuration.css.overrides %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
     {% endblock -%}
 {% endassets -%}

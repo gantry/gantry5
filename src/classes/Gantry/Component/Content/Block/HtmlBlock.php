@@ -12,6 +12,9 @@
  */
 
 namespace Gantry\Component\Content\Block;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 
 /**
  * Class HtmlBlock
@@ -59,7 +62,35 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
      */
     public function getStyles($location = 'head')
     {
-        return $this->getAssetsInLocation('styles', $location);
+        $styles = $this->getAssetsInLocation('styles', $location);
+
+        if (!$styles) {
+            return [];
+        }
+
+        $gantry = Gantry::instance();
+
+        /** @var Theme $theme */
+        $theme = $gantry['theme'];
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        foreach ($styles as $key => $style) {
+            if (isset($style['href'])) {
+                $url = $style['href'];
+                if (preg_match('|\.scss$|', $url)) {
+                    // Compile SCSS files.
+                    $url = $theme->css(basename($url, '.scss'));
+                }
+                // Deal with streams and relative paths.
+                $url = $document->url($url, false, null, false);
+
+                $styles[$key]['href'] = $url;
+            }
+        }
+
+        return $styles;
     }
 
     /**
@@ -69,7 +100,25 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
      */
     public function getScripts($location = 'head')
     {
-        return $this->getAssetsInLocation('scripts', $location);
+        $scripts = $this->getAssetsInLocation('scripts', $location);
+
+        if (!$scripts) {
+            return [];
+        }
+
+        $gantry = Gantry::instance();
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        foreach ($scripts as $key => $script) {
+            if (isset($script['src'])) {
+                // Deal with streams and relative paths.
+                $scripts[$key]['src'] = $document->url($script['src'], false, null, false);
+            }
+        }
+
+        return $scripts;
     }
 
     /**

@@ -3,6 +3,9 @@
 
 1. [Common](#common)
     1. [](#new)
+        - Allow custom SCSS files to be inserted from particles and atoms by `<link rel="stylesheet" href="particle.scss" />`
+        - Add support to refer JS/CSS files without using `url()` function in twig files (streams are handled internally)
+        - Allow custom SCSS files to be inserted from both `Page Settings` / `Assets` / `CSS` and `Assets Atom` (#215, #424, #1692)
         - Add support for `{% pageblock bottom %}...{% endpageblock %}` to add HTML into the page (#1161)
           - where first parameter is one of: `body_top` | `top` | `bottom` | `body_bottom`
           - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)

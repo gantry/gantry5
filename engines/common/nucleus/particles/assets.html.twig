@@ -2,7 +2,7 @@
 {% if (particle.enabled) %}
     {% for css in particle.css %}
         {% if css.location %}
-            {% do gantry.document.addStyle(css.extra|default({})|merge({href: url(css.location)}), css.priority) %}
+            {% do gantry.document.addStyle(css.extra|default({})|merge({href: css.location}), css.priority) %}
         {% endif %}
 
         {% if css.inline %}
@@ -12,7 +12,7 @@
 
     {% for script in particle.javascript %}
         {% if script.location %}
-            {% do gantry.document.addScript(script.extra|default({})|merge({src: url(script.location)}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
+            {% do gantry.document.addScript(script.extra|default({})|merge({src: script.location}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
         {% endif %}
 
         {% if script.inline %}
