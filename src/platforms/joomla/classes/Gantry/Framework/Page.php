@@ -56,7 +56,10 @@ class Page extends Base\Page
         $this->description = $document->description;
 
         // Document has lower case language code, which causes issues with some JS scripts (Snipcart). Use tag instead.
-        $this->language = \JFactory::getLanguage()->getTag();
+        $code = explode('-', $document->getLanguage(), 2);
+        $language =  array_shift($code);
+        $country = strtoupper(array_shift($code));
+        $this->language = $language . ($country ? '-' . $country : '');
         $this->direction = $document->direction;
     }
 
