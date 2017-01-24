@@ -92,9 +92,9 @@
     -webkit-transform: translate3d(0px, 0px, 0px);
 }
 
-.owl-carousel .owl-controls .owl-nav .owl-prev,
-.owl-carousel .owl-controls .owl-nav .owl-next,
-.owl-carousel .owl-controls .owl-dot {
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next,
+.owl-carousel .owl-dot {
     cursor: pointer;
     cursor: hand;
     -webkit-user-select: none;
@@ -148,7 +148,7 @@
     user-select: auto;
 }
 
-.owl-carousel .owl-grab {
+.owl-carousel.owl-grab {
     cursor: move;
     cursor: -webkit-grab;
     cursor: -o-grab;
@@ -306,6 +306,10 @@
             }
         }
     }
+
+    &.disabled {
+        display: none;
+    }
 }
 
 .owl-dots {
@@ -340,6 +344,10 @@
             opacity: 1;
             background: $white;
         }
+    }
+
+    &.disabled {
+        display: none;
     }
 }
 
