@@ -53,6 +53,7 @@
 
             &.g-keyvalue-input-key {
                 width: 50%;
+                display: inline-block;
                 font-weight: bold;
                 border-right: 0;
                 border-top-right-radius: 0;
@@ -61,6 +62,7 @@
 
             &.g-keyvalue-input-value {
                 width: 50%;
+                display: inline-block;
                 border-left: 0;
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
