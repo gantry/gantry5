@@ -247,18 +247,31 @@ var Menu = new prime({
 
     _fixHeights: function(parent, sublevel, isGoingBack, isNavMenu) {
         if (parent == sublevel) { return; }
-        if (isGoingBack) { parent.attribute('style', null); }
+        if (isGoingBack) {
+            parent.attribute('style', null);
+        }
 
-        var heights = {
+        var parents, heights = {
                 from: parent[0].getBoundingClientRect(),
                 to: (!isNavMenu ? sublevel.parent('.g-dropdown')[0] : sublevel[0]).getBoundingClientRect()
             },
             height  = Math.max(heights.from.height, heights.to.height);
 
+        if (isGoingBack) {
+            parents = parent.parents('[style^="height"]');
+            (parents || []).forEach(function(element) { element.style.height = heights.from.height + 'px'; });
+        }
+
         if (!isGoingBack) {
             // if from height is < than to height set the parent height else, set the target
-            if (heights.from.height < heights.to.height) { parent[0].style.height = height + 'px'; }
-            else if (isNavMenu) { sublevel[0].style.height = height + 'px'; }
+            if (heights.from.height < heights.to.height) {
+                parent[0].style.height = height + 'px';
+
+                parents = parent.parents('[style^="height"]');
+                (parents || []).forEach(function(element) { element.style.height = height + 'px'; });
+            } else if (isNavMenu) {
+                sublevel[0].style.height = height + 'px';
+            }
 
             // fix sublevels heights in side menu (offcanvas etc)
             if (!isNavMenu) {
