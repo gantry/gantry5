@@ -11,6 +11,7 @@
           - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)
     2. [](#improved)
         - Menu items in frontend now render icons with `aria-hidden="true"` for accessibility (#1629)
+        - Helium: Content Cubes particle uses now linear gradient made out of Accent Color 1 and 2 for its background (#1809)
     3. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets
