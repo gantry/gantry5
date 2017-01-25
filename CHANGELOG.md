@@ -9,6 +9,8 @@
         - Add support for `{% pageblock bottom %}...{% endpageblock %}` to add HTML into the page (#1161)
           - where first parameter is one of: `body_top` | `top` | `bottom` | `body_bottom`
           - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)
+    1. [](#improved)
+        - Menu items in frontend now render icons with `aria-hidden="true"` for accessibility (#1629)
     1. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets

@@ -51,7 +51,7 @@
                 {% if item.image %}
                     <img src="{{ url(item.image) }}" alt="{{ item.title }}" />
                 {% elseif item.icon %}
-                    <i class="{{ item.icon }}"></i>
+                    <i class="{{ item.icon }}" aria-hidden="true"></i>
                 {% endif %}
                 {% if item.url %}
                     <span class="g-menu-item-content">
