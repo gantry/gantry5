@@ -9,9 +9,9 @@
         - Add support for `{% pageblock bottom %}...{% endpageblock %}` to add HTML into the page (#1161)
           - where first parameter is one of: `body_top` | `top` | `bottom` | `body_bottom`
           - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)
-    1. [](#improved)
+    2. [](#improved)
         - Menu items in frontend now render icons with `aria-hidden="true"` for accessibility (#1629)
-    1. [](#bugfix)
+    3. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets
         - Fixed nested field selector in `collection.list` loosing its value when you edit all items (#1817)
@@ -25,6 +25,8 @@
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
         - Fixed country code on HTML tag being in lower case, enabling translations in Snipcart (#1822)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Changed priority of `Front Page` and `Home Page` assignments to be higher than the rest of the group (#1762)
     3. [](#bugfix)
         - Fixed occasional `Undefined index: object_id` when trying to save menu with a separator (#1819)
         - Hydrogen: Fix pagination styling in mobile view (#1563)
