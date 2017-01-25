@@ -21,6 +21,7 @@
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden
         - Administrator: Add submenu to access both `Available Themes` and `Default Theme` (#1764)
+        - Hide theme prefix from Outline names (#1724)
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
         - Fixed country code on HTML tag being in lower case, enabling translations in Snipcart (#1822)
