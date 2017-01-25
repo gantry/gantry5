@@ -20,6 +20,7 @@
         - Helium: Fix logo image overlapping hamburger menu icon in mobile view (#1691)
         - Hydrogen: Fixed menu dropdowns items aligned to left when in RTL mode (#1753)
         - Fixed extended menu items starting from 3rd level and below not expanding vertically as expected (#1778)
+        - Fixed search icon misalignment in Particles/Modules/Widgets pickers (#1827)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden
