@@ -22,7 +22,7 @@ ready(function() {
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
     // Handles Positions Duplicate / Remove
-    body.delegate('click', '#positions [data-g-config]', function(event, element) {
+    body.delegate('click', '#positions [data-g-config], [data-g-create="position"]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
             encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long

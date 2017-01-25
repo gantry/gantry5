@@ -39,6 +39,7 @@
         - Fixed menu rendering issues in multi-language sites
         - Fixed login particle
         - Fixed login in offline mode accepting invalid credentials (#1808)
+        - Fixed Positions Add button (#1803)
 
 # 5.4.5
 ## 16/01/2017
