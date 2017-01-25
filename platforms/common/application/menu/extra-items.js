@@ -203,6 +203,7 @@ var StepTwo = function(data, content, button) {
                             position.find('> ul').appendChild(dummy.children());
 
                             Cards.serialize(position);
+                            Cards.updatePendingChanges();
 
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }

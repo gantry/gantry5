@@ -35,6 +35,7 @@
         - Added particle for `Feed` plugin
     2. [](#improved)
         - Rename `Appearance` to `Gantry 5` as it seems to be less confusing for most users
+        - Display changes indicator when in the Positions Manager and changes happen (#1741)
     3. [](#bugfix)
         - Fixed particles inside positions having extra margin and padding (`g-content` class)
         - Fixed menu rendering issues in multi-language sites

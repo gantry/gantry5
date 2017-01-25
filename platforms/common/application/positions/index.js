@@ -21,6 +21,8 @@ ready(function() {
     var body = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
+    Cards.init();
+
     // Handles Positions Duplicate / Remove
     body.delegate('click', '#positions [data-g-config], [data-g-create="position"]', function(event, element) {
         var mode = element.data('g-config'),
@@ -262,6 +264,7 @@ ready(function() {
                             }
 
                             Cards.serialize(element.parent('[data-position]'));
+                            Cards.updatePendingChanges();
 
                             modal.close();
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));

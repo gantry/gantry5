@@ -5304,6 +5304,7 @@ var StepTwo = function(data, content, button) {
                             position.find('> ul').appendChild(dummy.children());
 
                             Cards.serialize(position);
+                            Cards.updatePendingChanges();
 
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
@@ -9390,11 +9391,35 @@ var PositionsField = '[name="page[head][atoms][_json]"]',
 var Positions = {
     eraser: null,
     lists: [],
+    state: [],
+
+    init: function(position) {
+        Positions.state = Positions.serialize(position);
+
+        return Positions.state;
+    },
+
+    equals: function() {
+        return Positions.state === Positions.serialize();
+    },
+
+    updatePendingChanges: function() {
+        var different = false,
+
+            equals    = Positions.equals(),
+            save      = $('[data-save="Positions"]'),
+            icon      = save.find('i'),
+            indicator = save.find('.changes-indicator');
+
+        if (equals && indicator) { save.hideIndicator(); }
+        if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
+        flags.set('pending', !equals);
+    },
 
     serialize: function(position) {
         var data,
-            output = [],
-            positions  = $(position) || $('[data-position]');
+            output    = [],
+            positions = $(position) || $('[data-position]');
 
         if (!positions) {
             return '[]';
@@ -9437,7 +9462,7 @@ var Positions = {
             list = !i ? '[data-position] ul' : '#trash';
             list = $(list);
 
-            list.forEach(function(element, listIndex){
+            list.forEach(function(element, listIndex) {
                 sort = simpleSort.create(element, {
                     sort: !i,
                     filter: '[data-position-ignore]',
@@ -9483,8 +9508,8 @@ var Positions = {
                     },
 
                     onSort: function(event) {
-                        var from = $(event.from),
-                            to = $(event.to),
+                        var from  = $(event.from),
+                            to    = $(event.to),
                             lists = [from.parent('[data-position]'), to.parent('[data-position]')];
 
                         if (event.from[0] === event.to[0]) {
@@ -9492,6 +9517,7 @@ var Positions = {
                         }
 
                         Positions.serialize(lists);
+                        Positions.updatePendingChanges();
                     },
 
                     onOver: function(event) {
@@ -9560,6 +9586,8 @@ var $             = require('elements'),
 ready(function() {
     var body = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+
+    Cards.init();
 
     // Handles Positions Duplicate / Remove
     body.delegate('click', '#positions [data-g-config], [data-g-create="position"]', function(event, element) {
@@ -9802,6 +9830,7 @@ ready(function() {
                             }
 
                             Cards.serialize(element.parent('[data-position]'));
+                            Cards.updatePendingChanges();
 
                             modal.close();
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
