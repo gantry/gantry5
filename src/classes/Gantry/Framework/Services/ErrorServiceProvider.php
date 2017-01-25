@@ -20,12 +20,18 @@ use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
-use Whoops\Handler\PlainTextHandler;
 use Whoops\Run;
 use Whoops\Util\Misc;
 
 class ErrorServiceProvider implements ServiceProviderInterface
 {
+    protected $format;
+
+    public function __construct($format = 'html')
+    {
+        $this->format = $format;
+    }
+
     public function register(Container $container)
     {
         /** @var UniformResourceLocator $locator */
@@ -48,9 +54,12 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $errors->pushHandler($error_page);
 
-        $jsonRequest = $_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json';
+        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
-            $errors->pushHandler(new JsonResponseHandler);
+            $json_handler = new JsonResponseHandler;
+            //$json_handler->setJsonApi(true);
+
+            $errors->pushHandler($json_handler);
         }
 
         $errors->register();
