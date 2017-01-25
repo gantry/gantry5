@@ -23,5 +23,10 @@
 		display: block;
 		text-align: center;
 		margin: -0.85rem 0;
+
+        img, svg {
+            max-width: 190px;
+            margin: 0 auto;
+        }
 	}
 }

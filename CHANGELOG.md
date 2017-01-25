@@ -16,6 +16,7 @@
         - Fixed wrong ordering of custom CSS/JS assets
         - Fixed nested field selector in `collection.list` loosing its value when you edit all items (#1817)
         - Helium: Updated OwlCarousel, fixed a bug when OwlCarousel disappeared when only 1 item was set (#1801)
+        - Helium: Fix logo image overlapping hamburger menu icon in mobile view (#1691)
         - Fixed extended menu items starting from 3rd level and below not expanding vertically as expected (#1778)
 2. [Joomla](#joomla)
     2. [](#improved)
