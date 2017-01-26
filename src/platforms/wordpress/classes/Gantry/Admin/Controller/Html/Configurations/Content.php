@@ -10,7 +10,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
@@ -77,7 +77,7 @@ class Content extends HtmlController
     {
         $outline = $this->params['configuration'];
         $particle = $this->container['content']->get("{$group}/{$id}");
-        $blueprints = new BlueprintsForm($particle);
+        $blueprints = new BlueprintForm($particle);
         $prefix = "content.{$group}.{$id}";
 
         if($outline == 'default') {
@@ -110,7 +110,7 @@ class Content extends HtmlController
         $particle = $this->container['content']->get("{$group}/{$id}");
 
         // Load blueprints.
-        $blueprints = new BlueprintsForm($particle);
+        $blueprints = new BlueprintForm($particle);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -223,7 +223,7 @@ class Content extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['content']->get("{$group}/{$id}"));
+            $blueprints = new BlueprintForm($this->container['content']->get("{$group}/{$id}"));
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());

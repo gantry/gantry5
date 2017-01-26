@@ -14,7 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
@@ -226,8 +226,8 @@ class Menu extends HtmlController
         $name = isset($data['particle']) ? $data['particle'] : null;
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml");
-        $block = new BlueprintsForm($file->content());
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $block = new BlueprintForm($file->content());
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
         $file->free();
 
         // Load particle blueprints and default settings.
@@ -270,7 +270,7 @@ class Menu extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -456,7 +456,7 @@ class Menu extends HtmlController
      *
      * @param string $name
      *
-     * @return BlueprintsForm
+     * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
     {
@@ -464,7 +464,7 @@ class Menu extends HtmlController
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
         $file = CompiledYamlFile::instance($filename);
-        $content = new BlueprintsForm($file->content());
+        $content = new BlueprintForm($file->content());
         $file->free();
 
         return $content;

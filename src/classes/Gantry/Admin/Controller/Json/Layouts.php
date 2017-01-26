@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout;
@@ -81,14 +81,14 @@ class Layouts extends JsonController
             $particle = false;
             $defaults = [];
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml");
-            $blueprints = new BlueprintsForm($file->content());
+            $blueprints = new BlueprintForm($file->content());
             $file->free();
         } else {
             $name = $subtype;
             $particle = true;
             $defaults = $this->container['config']->get("particles.{$name}");
             $item->attributes = $item->attributes + $defaults;
-            $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+            $blueprints = new BlueprintForm($this->container['particles']->get($name));
             $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
         }
 
@@ -136,11 +136,11 @@ class Layouts extends JsonController
         $defaults = (array) $this->container['config']->get($prefix);
         $attributes = (array) $particle->attributes + $defaults;
 
-        $particleBlueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $particleBlueprints = new BlueprintForm($this->container['particles']->get($name));
         $particleBlueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        $blockBlueprints = new BlueprintsForm($file->content());
+        $blockBlueprints = new BlueprintForm($file->content());
         $file->free();
 
         // TODO: Use blueprints to merge configuration.
@@ -177,7 +177,7 @@ class Layouts extends JsonController
      protected function renderBlockFields(array $block, array $params)
      {
          $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-         $blockBlueprints = new BlueprintsForm($file->content());
+         $blockBlueprints = new BlueprintForm($file->content());
          $file->free();
 
          $paramsBlock = [

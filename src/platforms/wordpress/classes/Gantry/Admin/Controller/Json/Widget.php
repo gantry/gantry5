@@ -10,7 +10,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
@@ -67,7 +67,7 @@ class Widget extends JsonController
         if (isset($this->params['scope'])) {
             $scope = $this->params['scope'];
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/{$scope}/block.yaml");
-            $block = new BlueprintsForm($file->content());
+            $block = new BlueprintForm($file->content());
             $file->free();
 
             // Load particle blueprints.
@@ -213,7 +213,7 @@ class Widget extends JsonController
      *
      * @param string $name
      *
-     * @return BlueprintsForm
+     * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
     {
@@ -221,7 +221,7 @@ class Widget extends JsonController
         $locator = $this->container['locator'];
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
         $file = CompiledYamlFile::instance($filename);
-        $content = new BlueprintsForm($file->content());
+        $content = new BlueprintForm($file->content());
         $file->free();
 
         return $content;

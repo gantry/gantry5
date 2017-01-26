@@ -15,7 +15,7 @@ namespace Gantry\Component\Config;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Gantry;
-use RocketTheme\Toolbox\Blueprints\BlueprintForm;
+use RocketTheme\Toolbox\Blueprints\BlueprintForm as BaseBlueprintForm;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -23,7 +23,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  *
  * @author RocketTheme
  */
-class BlueprintsForm extends BlueprintForm
+class BlueprintForm extends BaseBlueprintForm
 {
     /**
      * @var string

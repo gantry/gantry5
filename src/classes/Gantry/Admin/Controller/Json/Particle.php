@@ -14,7 +14,7 @@
 namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
@@ -106,9 +106,9 @@ class Particle extends JsonController
 
         // TODO: add support for other block types as well, like menu.
         // $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        // $block = new BlueprintsForm($file->content());
+        // $block = new BlueprintForm($file->content());
         // $file->free();
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -150,7 +150,7 @@ class Particle extends JsonController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -204,7 +204,7 @@ class Particle extends JsonController
      *
      * @param string $name
      *
-     * @return BlueprintsForm
+     * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
     {
@@ -213,7 +213,7 @@ class Particle extends JsonController
 
         $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
         $file = CompiledYamlFile::instance($filename);
-        $blueprints = new BlueprintsForm($file->content());
+        $blueprints = new BlueprintForm($file->content());
         $file->free();
 
         return $blueprints;

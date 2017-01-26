@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
@@ -71,7 +71,7 @@ class Atoms extends JsonController
         $type = isset($item->type) ? $item->type : $type;
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($type));
+        $blueprints = new BlueprintForm($this->container['particles']->get($type));
         $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
 
         $params = [
@@ -120,7 +120,7 @@ class Atoms extends JsonController
 
         $prefix = "particles.{$name}";
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
         $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
 
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];

@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
@@ -79,7 +79,7 @@ class Styles extends HtmlController
     {
         $outline = $this->params['configuration'];
         $style = $this->container['styles']->get($id);
-        $blueprints = new BlueprintsForm($style);
+        $blueprints = new BlueprintForm($style);
         $prefix = 'styles.' . $id;
 
         if($outline == 'default') {
@@ -110,7 +110,7 @@ class Styles extends HtmlController
         $style = $this->container['styles']->get($id);
 
         // Load blueprints.
-        $blueprints = new BlueprintsForm($style);
+        $blueprints = new BlueprintForm($style);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 

@@ -14,7 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
@@ -183,10 +183,10 @@ class Positions extends HtmlController
         }
         $name = isset($data['options']['type']) ? $data['options']['type'] : (isset($data['particle']) ? $data['particle'] : null);
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
 
         $file = CompiledYamlFile::instance("gantry-admin://blueprints/position/chrome.yaml");
-        $chromeBlueprints = new BlueprintsForm($file->content());
+        $chromeBlueprints = new BlueprintForm($file->content());
         $file->free();
 
         $data['title'] = isset($data['title']) ? $data['title'] : $blueprints['name'];
@@ -231,7 +231,7 @@ class Positions extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = new BlueprintForm($this->container['particles']->get($name));
 
         // Create configuration from the defaults.
         $data = new Config([],
