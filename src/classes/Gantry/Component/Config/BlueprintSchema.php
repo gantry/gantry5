@@ -14,8 +14,6 @@
 namespace Gantry\Component\Config;
 
 use Gantry\Framework\Gantry;
-use RocketTheme\Toolbox\ArrayTraits\Export;
-use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\Blueprints\BlueprintSchema as BlueprintSchemaBase;
 
 /**
@@ -24,10 +22,8 @@ use RocketTheme\Toolbox\Blueprints\BlueprintSchema as BlueprintSchemaBase;
  * @author RocketTheme
  * @license MIT
  */
-class BlueprintSchema extends BlueprintSchemaBase implements ExportInterface
+class BlueprintSchema extends BlueprintSchemaBase
 {
-    use Export;
-
     protected $configuration;
 
     protected $ignoreFormKeys = [

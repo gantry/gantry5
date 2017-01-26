@@ -23,7 +23,7 @@ class CompiledBlueprints extends CompiledBase
     /**
      * @var int Version number for the compiled file.
      */
-    public $version = 2;
+    public $version = 3;
 
     /**
      * @var BlueprintSchema  Blueprints object.
