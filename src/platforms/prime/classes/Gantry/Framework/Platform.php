@@ -13,14 +13,11 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * The Platform Configuration class contains configuration information.

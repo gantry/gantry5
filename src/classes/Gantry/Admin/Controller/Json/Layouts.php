@@ -16,12 +16,8 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Base\Gantry;
-use RocketTheme\Toolbox\File\JsonFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
  * Class Layouts

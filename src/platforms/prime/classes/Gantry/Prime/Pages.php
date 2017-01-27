@@ -14,7 +14,6 @@
 namespace Gantry\Prime;
 
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;

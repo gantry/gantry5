@@ -11,7 +11,6 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
-use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 

@@ -15,9 +15,6 @@ namespace Gantry\Component\Position;
 
 use Gantry\Component\Collection\Collection;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout;
-use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\DI\Container;

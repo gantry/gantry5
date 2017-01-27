@@ -10,7 +10,6 @@
 
 namespace Gantry\Joomla\Module;
 
-use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
 
 class ModuleFinder extends Finder

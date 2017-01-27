@@ -11,7 +11,6 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Assignments\AbstractAssignments;
-use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
 use Joomla\Utilities\ArrayHelper;

@@ -13,13 +13,10 @@
 
 namespace Gantry\Framework\Services;
 
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Streams;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
-use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
-use RocketTheme\Toolbox\StreamWrapper\Stream;
 
 class StreamsServiceProvider implements ServiceProviderInterface
 {

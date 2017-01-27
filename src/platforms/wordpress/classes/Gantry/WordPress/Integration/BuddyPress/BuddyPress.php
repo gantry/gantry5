@@ -9,6 +9,7 @@
  */
 
 namespace Gantry\WordPress\Integration\BuddyPress;
+
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\Event;

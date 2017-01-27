@@ -12,7 +12,6 @@ namespace Gantry\Framework;
 
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Outlines as BaseOutlines;
 use Gantry\Joomla\StyleHelper;
 use Gantry\Joomla\TemplateInstaller;

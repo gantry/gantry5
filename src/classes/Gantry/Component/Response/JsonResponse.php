@@ -13,8 +13,6 @@
 
 namespace Gantry\Component\Response;
 
-use Gantry\Framework\Base\Gantry;
-
 class JsonResponse extends Response
 {
     public $mimeType = 'application/json';

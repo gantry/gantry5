@@ -10,7 +10,6 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use Timber\Timber;

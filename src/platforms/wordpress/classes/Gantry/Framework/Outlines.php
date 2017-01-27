@@ -10,7 +10,6 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Base\Outlines as BaseOutlines;
 
 class Outlines extends BaseOutlines

@@ -10,12 +10,8 @@
 
 namespace Gantry\Joomla;
 
-use Gantry\Admin\ThemeList;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Gantry;
-use Gantry\Joomla\TemplateInstaller;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**

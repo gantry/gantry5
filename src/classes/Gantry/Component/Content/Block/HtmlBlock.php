@@ -12,6 +12,7 @@
  */
 
 namespace Gantry\Component\Content\Block;
+
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;

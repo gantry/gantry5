@@ -15,9 +15,7 @@ namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Filesystem\Folder;
-use Gantry\Framework\Gantry;
 use Gantry\Framework\Importer;
-use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 

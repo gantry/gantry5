@@ -13,8 +13,6 @@
 
 namespace Gantry\Component\Filesystem;
 
-use RocketTheme\Toolbox\DI\ServiceProviderInterface;
-use RocketTheme\Toolbox\ResourceLocator\ResourceLocatorInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
 use RocketTheme\Toolbox\StreamWrapper\Stream;

@@ -13,8 +13,6 @@
 
 namespace Gantry\Component\Request;
 
-use Gantry\Framework\Base\Gantry;
-
 class Request
 {
     /**

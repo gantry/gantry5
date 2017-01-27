@@ -13,8 +13,6 @@
 
 namespace Gantry\Component\File;
 
-use Gantry\Component\Config\Config;
-use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 
 class CompiledYamlFile extends YamlFile

@@ -10,8 +10,7 @@
 
 namespace Gantry\Joomla\Module;
 
-use Gantry\Framework\Base\Gantry;
-use Gantry\Joomla\Category\Category;
+use Gantry\Framework\Gantry;
 use Gantry\Joomla\Object\Object;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;

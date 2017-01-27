@@ -14,7 +14,6 @@
 namespace Gantry\Framework\Base;
 
 use FilesystemIterator;
-use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;

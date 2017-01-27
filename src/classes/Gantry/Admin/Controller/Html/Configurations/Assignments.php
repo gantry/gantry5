@@ -14,9 +14,7 @@
 namespace Gantry\Admin\Controller\Html\Configurations;
 
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Request\Request;
 use Gantry\Framework\Assignments as AssignmentsObject;
-use Gantry\Framework\Menu;
 use RocketTheme\Toolbox\Event\Event;
 
 class Assignments extends HtmlController

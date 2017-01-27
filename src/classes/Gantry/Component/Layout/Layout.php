@@ -15,14 +15,12 @@ namespace Gantry\Component\Layout;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
-use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;

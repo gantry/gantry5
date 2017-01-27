@@ -15,7 +15,7 @@ namespace Gantry\Component\Theme;
 
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Streams;
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;

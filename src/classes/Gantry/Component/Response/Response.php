@@ -13,9 +13,6 @@
 
 namespace Gantry\Component\Response;
 
-
-use Gantry\Framework\Gantry;
-
 class Response
 {
     public $charset = 'utf-8';

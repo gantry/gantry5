@@ -14,7 +14,6 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;

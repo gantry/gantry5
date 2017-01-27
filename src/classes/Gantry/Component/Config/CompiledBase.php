@@ -13,7 +13,7 @@
 
 namespace Gantry\Component\Config;
 
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\PhpFile;
 
 /**

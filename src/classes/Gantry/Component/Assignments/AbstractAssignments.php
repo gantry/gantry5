@@ -15,7 +15,6 @@ namespace Gantry\Component\Assignments;
 
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;

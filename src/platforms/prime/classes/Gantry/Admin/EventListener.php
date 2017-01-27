@@ -10,7 +10,6 @@
 
 namespace Gantry\Admin;
 
-use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 

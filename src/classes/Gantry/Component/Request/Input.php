@@ -13,7 +13,6 @@
 
 namespace Gantry\Component\Request;
 
-use Gantry\Framework\Base\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;

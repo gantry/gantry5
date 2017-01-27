@@ -10,15 +10,10 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
-use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
-use Gantry\Framework\Services\ErrorServiceProvider;
 use Gantry\Joomla\Manifest;
 use RocketTheme\Toolbox\File\YamlFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ThemeInstaller extends AbstractInstaller
 {

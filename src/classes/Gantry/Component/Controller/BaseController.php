@@ -13,7 +13,6 @@
 
 namespace Gantry\Component\Controller;
 
-use Gantry\Admin\Router;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;

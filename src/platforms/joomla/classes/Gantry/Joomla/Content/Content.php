@@ -10,7 +10,7 @@
 
 namespace Gantry\Joomla\Content;
 
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Object\Object;
 
