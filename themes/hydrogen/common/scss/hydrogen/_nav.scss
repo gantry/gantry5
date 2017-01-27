@@ -76,6 +76,10 @@
 
 	.g-dropdown {
 		text-align: left;
+
+        .dir-rtl & {
+            text-align: right;
+        }
 	}
 
 	.g-sublevel {

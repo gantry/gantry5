@@ -1,5 +1,5 @@
 # 5.4.6
-## XX/XX/2017
+## 26/01/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -9,22 +9,29 @@
         - Add support for `{% pageblock bottom %}...{% endpageblock %}` to add HTML into the page (#1161)
           - where first parameter is one of: `body_top` | `top` | `bottom` | `body_bottom`
           - supports also `with { priority: n }` to set the priority for the block (recommended range 10 ... -10)
-    1. [](#improved)
+    2. [](#improved)
         - Menu items in frontend now render icons with `aria-hidden="true"` for accessibility (#1629)
-    1. [](#bugfix)
+        - Helium: Content Cubes particle uses now linear gradient made out of Accent Color 1 and 2 for its background (#1809)
+    3. [](#bugfix)
         - Fixed a bug in `|html` filter
         - Fixed wrong ordering of custom CSS/JS assets
         - Fixed nested field selector in `collection.list` loosing its value when you edit all items (#1817)
         - Helium: Updated OwlCarousel, fixed a bug when OwlCarousel disappeared when only 1 item was set (#1801)
+        - Helium: Fix logo image overlapping hamburger menu icon in mobile view (#1691)
+        - Hydrogen: Fixed menu dropdowns items aligned to left when in RTL mode (#1753)
         - Fixed extended menu items starting from 3rd level and below not expanding vertically as expected (#1778)
+        - Fixed search icon misalignment in Particles/Modules/Widgets pickers (#1827)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Allow previously hardcoded module and component wrappers to be overridden
         - Administrator: Add submenu to access both `Available Themes` and `Default Theme` (#1764)
+        - Hide theme prefix from Outline names (#1724)
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
         - Fixed country code on HTML tag being in lower case, enabling translations in Snipcart (#1822)
 3. [WordPress](#wordpress)
+    2. [](#improved)
+        - Changed priority of `Front Page` and `Home Page` assignments to be higher than the rest of the group (#1762)
     3. [](#bugfix)
         - Fixed occasional `Undefined index: object_id` when trying to save menu with a separator (#1819)
         - Hydrogen: Fix pagination styling in mobile view (#1563)
