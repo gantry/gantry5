@@ -80,16 +80,14 @@ class Layouts extends JsonController
             $name = $type;
             $particle = false;
             $defaults = [];
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$name}.yaml");
-            $blueprints = new BlueprintForm($file->content());
-            $file->free();
+            $blueprints = BlueprintForm::instance("layout/{$name}.yaml", 'gantry-admin://blueprints');
         } else {
             $name = $subtype;
             $particle = true;
             $defaults = $this->container['config']->get("particles.{$name}");
             $item->attributes = $item->attributes + $defaults;
-            $blueprints = new BlueprintForm($this->container['particles']->get($name));
-            $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+            $blueprints = $this->container['particles']->getBlueprintForm($name);
+            $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
         }
 
         $paramsParticle = [
@@ -136,12 +134,10 @@ class Layouts extends JsonController
         $defaults = (array) $this->container['config']->get($prefix);
         $attributes = (array) $particle->attributes + $defaults;
 
-        $particleBlueprints = new BlueprintForm($this->container['particles']->get($name));
-        $particleBlueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $particleBlueprints = $this->container['particles']->getBlueprintForm($name);
+        $particleBlueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        $blockBlueprints = new BlueprintForm($file->content());
-        $file->free();
+        $blockBlueprints = BlueprintForm::instance('layout/block.yaml', 'gantry-admin://blueprints');
 
         // TODO: Use blueprints to merge configuration.
         $particle->attributes = (object) $attributes;
@@ -176,13 +172,11 @@ class Layouts extends JsonController
      */
      protected function renderBlockFields(array $block, array $params)
      {
-         $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-         $blockBlueprints = new BlueprintForm($file->content());
-         $file->free();
+         $blockBlueprints = BlueprintForm::instance('layout/block.yaml', 'gantry-admin://blueprints');
 
          $paramsBlock = [
                  'title' => $this->container['translator']->translate('GANTRY5_PLATFORM_BLOCK'),
-                 'blueprints' => ['fields' => $blockBlueprints->get('form.fields.block_container.fields')],
+                 'blueprints' => ['fields' => $blockBlueprints->get('form/fields/block_container/fields')],
                  'data' => ['block' => $block],
                  'prefix' => 'block.',
              ] + $params;

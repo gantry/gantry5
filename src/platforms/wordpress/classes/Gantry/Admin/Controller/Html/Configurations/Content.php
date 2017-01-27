@@ -76,8 +76,7 @@ class Content extends HtmlController
     public function display($group, $id = null)
     {
         $outline = $this->params['configuration'];
-        $particle = $this->container['content']->get("{$group}/{$id}");
-        $blueprints = new BlueprintForm($particle);
+        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
         $prefix = "content.{$group}.{$id}";
 
         if($outline == 'default') {
@@ -107,10 +106,8 @@ class Content extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['content']->get("{$group}/{$id}");
-
         // Load blueprints.
-        $blueprints = new BlueprintForm($particle);
+        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -223,7 +220,7 @@ class Content extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintForm($this->container['content']->get("{$group}/{$id}"));
+            $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());

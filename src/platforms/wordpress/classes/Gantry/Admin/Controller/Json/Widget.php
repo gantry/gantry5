@@ -13,9 +13,7 @@ namespace Gantry\Admin\Controller\Json;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\JsonController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Widget extends JsonController
 {
@@ -66,9 +64,7 @@ class Widget extends JsonController
 
         if (isset($this->params['scope'])) {
             $scope = $this->params['scope'];
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/{$scope}/block.yaml");
-            $block = new BlueprintForm($file->content());
-            $file->free();
+            $block = BlueprintForm::instance("{$scope}/block.yaml", 'gantry-admin://blueprints');
 
             // Load particle blueprints.
             $validator = $this->loadBlueprints($scope);
@@ -217,14 +213,7 @@ class Widget extends JsonController
      */
     protected function loadBlueprints($name = 'menu')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        $file = CompiledYamlFile::instance($filename);
-        $content = new BlueprintForm($file->content());
-        $file->free();
-
-        return $content;
+        return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 
     protected function castInput(array $input)

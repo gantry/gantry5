@@ -17,7 +17,6 @@ use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Response\HtmlResponse;
@@ -207,7 +206,7 @@ class Menu extends HtmlController
         $this->params = [
                 'id'         => $resource->name(),
                 'path'       => $path,
-                'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
+                'blueprints' => ['fields' => $blueprints['form/fields/items/fields']],
                 'data'       => $item->toArray() + ['path' => $path],
             ] + $this->params;
 
@@ -225,10 +224,8 @@ class Menu extends HtmlController
 
         $name = isset($data['particle']) ? $data['particle'] : null;
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml");
-        $block = new BlueprintForm($file->content());
-        $blueprints = new BlueprintForm($this->container['particles']->get($name));
-        $file->free();
+        $block = BlueprintForm::instance('menu/block.yaml', 'gantry-admin://blueprints');
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -270,7 +267,7 @@ class Menu extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -460,14 +457,7 @@ class Menu extends HtmlController
      */
     protected function loadBlueprints($name = 'menu')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        $file = CompiledYamlFile::instance($filename);
-        $content = new BlueprintForm($file->content());
-        $file->free();
-
-        return $content;
+        return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 
 

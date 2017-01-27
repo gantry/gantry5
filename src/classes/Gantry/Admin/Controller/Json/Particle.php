@@ -17,9 +17,7 @@ use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\JsonController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Particle extends JsonController
 {
@@ -105,10 +103,8 @@ class Particle extends JsonController
         }
 
         // TODO: add support for other block types as well, like menu.
-        // $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        // $block = new BlueprintForm($file->content());
-        // $file->free();
-        $blueprints = new BlueprintForm($this->container['particles']->get($name));
+        // $block = BlueprintForm::instance('layout/block.yaml', 'gantry-admin://blueprints');
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -150,7 +146,7 @@ class Particle extends JsonController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -208,14 +204,6 @@ class Particle extends JsonController
      */
     protected function loadBlueprints($name = 'menu')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        $file = CompiledYamlFile::instance($filename);
-        $blueprints = new BlueprintForm($file->content());
-        $file->free();
-
-        return $blueprints;
+        return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 }

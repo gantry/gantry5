@@ -36,6 +36,22 @@ class BlueprintForm extends BaseBlueprintForm
     protected $blueprintSchema;
 
     /**
+     * @param string $filename
+     * @param string $context
+     * @return BlueprintForm
+     */
+    public static function instance($filename, $context = null)
+    {
+        /** @var BlueprintForm $instance */
+        $instance = new static($filename);
+        if ($context) {
+            $instance->setContext($context);
+        }
+
+        return $instance->load()->init();
+    }
+
+    /**
      * Get nested structure containing default values defined in the blueprints.
      *
      * Fields without default value are ignored in the list.
@@ -244,20 +260,17 @@ class BlueprintForm extends BaseBlueprintForm
     }
 
     /**
-     * Get blueprints by using dot notation for nested arrays/objects.
-     *
-     * @example $value = $this->resolve('this.is.my.nested.variable');
-     * returns ['this.is.my', 'nested.variable']
+     * Get blueprints by using slash notation for nested arrays/objects.
      *
      * @param array  $path
      * @param string  $separator
      * @return array
      */
-    public function resolve(array $path, $separator = '.')
+    public function resolve(array $path, $separator = '/')
     {
         $fields = false;
         $parts = [];
-        $current = $this['form.fields'];
+        $current = $this['form/fields'];
         $result = [null, null, null];
 
         while (($field = current($path)) !== null) {

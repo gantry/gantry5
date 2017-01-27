@@ -71,8 +71,8 @@ class Atoms extends JsonController
         $type = isset($item->type) ? $item->type : $type;
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
-        $blueprints = new BlueprintForm($this->container['particles']->get($type));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($type);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $params = [
             'gantry'        => $this->container,
@@ -120,8 +120,8 @@ class Atoms extends JsonController
 
         $prefix = "particles.{$name}";
 
-        $blueprints = new BlueprintForm($this->container['particles']->get($name));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 

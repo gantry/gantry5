@@ -10,6 +10,7 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Theme as SiteTheme;
@@ -76,6 +77,15 @@ class Content
         $file->free();
 
         return $item;
+    }
+
+    /**
+     * @param string $id
+     * @return BlueprintForm
+     */
+    public function getBlueprintForm($id)
+    {
+        return BlueprintForm::instance($id, 'gantry-blueprints://content');
     }
 
     protected function sort(array $blocks)

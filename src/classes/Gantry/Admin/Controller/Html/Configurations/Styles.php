@@ -78,8 +78,7 @@ class Styles extends HtmlController
     public function display($id)
     {
         $outline = $this->params['configuration'];
-        $style = $this->container['styles']->get($id);
-        $blueprints = new BlueprintForm($style);
+        $blueprints = $this->container['styles']->getBlueprintForm($id);
         $prefix = 'styles.' . $id;
 
         if($outline == 'default') {
@@ -107,10 +106,9 @@ class Styles extends HtmlController
         $path = func_get_args();
 
         $outline = $this->params['configuration'];
-        $style = $this->container['styles']->get($id);
 
         // Load blueprints.
-        $blueprints = new BlueprintForm($style);
+        $blueprints = $this->container['styles']->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 

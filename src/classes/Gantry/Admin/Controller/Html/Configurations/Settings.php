@@ -80,8 +80,7 @@ class Settings extends HtmlController
     public function display($id)
     {
         $outline = $this->params['configuration'];
-        $particle = $this->container['particles']->get($id);
-        $blueprints = new BlueprintForm($particle);
+        $blueprints = $this->container['particles']->getBlueprintForm($id);
         $prefix = 'particles.' . $id;
 
         if($outline == 'default') {
@@ -118,10 +117,8 @@ class Settings extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['particles']->get($id);
-
         // Load blueprints.
-        $blueprints = new BlueprintForm($particle);
+        $blueprints = $this->container['particles']->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -239,7 +236,7 @@ class Settings extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintForm($this->container['particles']->get($id));
+            $blueprints = $this->container['particles']->getBlueprintForm($id);
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
