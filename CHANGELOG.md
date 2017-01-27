@@ -1,3 +1,10 @@
+# 5.4.7
+## xx/xx/2017
+
+1. [Common](#common)
+    2. [](#improved)
+        - Make Whoops not to report PHP startup errors and warnings (#1821)
+
 # 5.4.6
 ## 26/01/2017
 

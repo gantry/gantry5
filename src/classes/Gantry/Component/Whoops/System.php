@@ -20,6 +20,7 @@ class System extends SystemFacade
     protected $registeredPatterns;
     protected $whoopsErrorHandler;
     protected $whoopsExceptionHandler;
+    protected $whoopsShutdownHandler;
     protected $platformExceptionHandler;
 
     /**
@@ -51,6 +52,17 @@ class System extends SystemFacade
         $this->whoopsErrorHandler = $handler;
 
         return parent::setErrorHandler([$this, 'handleError'], $types);
+    }
+
+    /**
+     * @param callable $function
+     *
+     * @return void
+     */
+    public function registerShutdownFunction(callable $function)
+    {
+        $this->whoopsShutdownHandler = $function;
+        register_shutdown_function([$this, 'handleShutdown']);
     }
 
     /**
@@ -128,6 +140,21 @@ class System extends SystemFacade
         // Propagate error to the next handler.
         if ($this->platformExceptionHandler) {
             call_user_func_array($this->platformExceptionHandler, [&$exception]);
+        }
+    }
+
+    /**
+     * Special case to deal with Fatal errors and the like.
+     */
+    public function handleShutdown()
+    {
+        $handler = $this->whoopsShutdownHandler;
+
+        $error = $this->getLastError();
+
+        // Ignore core warnings and errors.
+        if ($error && !($error['type'] & (E_CORE_WARNING | E_CORE_ERROR))) {
+            $handler();
         }
     }
 }
