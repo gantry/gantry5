@@ -17,7 +17,6 @@ use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
 use Gantry\Component\Response\JsonResponse;

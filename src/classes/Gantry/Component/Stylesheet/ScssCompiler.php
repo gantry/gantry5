@@ -13,7 +13,6 @@
 
 namespace Gantry\Component\Stylesheet;
 
-use Gantry\Component\Stylesheet\Scss\CompiledScssFile;
 use Gantry\Component\Stylesheet\Scss\Compiler;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Exception\CompilerException;

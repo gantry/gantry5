@@ -14,7 +14,6 @@
 namespace Gantry\Component\Config;
 
 use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 
 /**

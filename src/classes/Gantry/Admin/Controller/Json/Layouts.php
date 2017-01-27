@@ -15,7 +15,6 @@ namespace Gantry\Admin\Controller\Json;
 
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Controller\JsonController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 

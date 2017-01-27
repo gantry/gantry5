@@ -13,7 +13,6 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
