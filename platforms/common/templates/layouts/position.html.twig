@@ -30,7 +30,7 @@
             <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         </span>
     </h4>
-    <div class="position-container inner-params" data-position="{{ position.toJson(true)|e('html_attr') }}" data-position-name="{{ position.name }}">
+    <div class="position-container inner-params" data-g5-position="{{ position.toJson(true)|e('html_attr') }}" data-g5-position-name="{{ position.name }}">
         <ul>{% spaceless %}
             {% for module in position %}
                 {% include 'pages/positions/item.html.twig' with { module: module } %}

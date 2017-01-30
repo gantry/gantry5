@@ -36,6 +36,7 @@
     3. [](#bugfix)
         - Fixed all `<script>` tags being corrupted in some Windows installs due to broken `uniqid()` function
         - Fixed country code on HTML tag being in lower case, enabling translations in Snipcart (#1822)
+        - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
 3. [WordPress](#wordpress)
     2. [](#improved)
         - Changed priority of `Front Page` and `Home Page` assignments to be higher than the rest of the group (#1762)

@@ -197,7 +197,7 @@ var StepTwo = function(data, content, button) {
 
                         } else {
                             // case for Positions
-                            var position = $('[data-position-name="' + response.body.position + '"]'),
+                            var position = $('[data-g5-position-name="' + response.body.position + '"]'),
                                 dummy = zen('div').html(response.body.html);
 
                             position.find('> ul').appendChild(dummy.children());
