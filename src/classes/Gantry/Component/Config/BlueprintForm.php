@@ -33,7 +33,7 @@ class BlueprintForm extends BaseBlueprintForm
     /**
      * @var BlueprintSchema
      */
-    protected $blueprintSchema;
+    protected $schema;
 
     /**
      * @param string $filename
@@ -60,9 +60,7 @@ class BlueprintForm extends BaseBlueprintForm
      */
     public function getDefaults()
     {
-        $this->initInternals();
-
-        return $this->blueprintSchema->getDefaults();
+        return $this->schema()->getDefaults();
     }
 
     /**
@@ -76,9 +74,7 @@ class BlueprintForm extends BaseBlueprintForm
      */
     public function mergeData(array $data1, array $data2, $name = null, $separator = '.')
     {
-        $this->initInternals();
-
-        return $this->blueprintSchema->mergeData($data1, $data2, $name, $separator);
+        return $this->schema()->mergeData($data1, $data2, $name, $separator);
     }
 
     /**
@@ -90,9 +86,7 @@ class BlueprintForm extends BaseBlueprintForm
      */
     public function extra(array $data, $prefix = '')
     {
-        $this->initInternals();
-
-        return $this->blueprintSchema->extra($data, $prefix);
+        return $this->schema()->extra($data, $prefix);
     }
 
     /**
@@ -103,9 +97,7 @@ class BlueprintForm extends BaseBlueprintForm
      */
     public function validate(array $data)
     {
-        $this->initInternals();
-
-        $this->blueprintSchema->validate($data);
+        $this->schema()->validate($data);
     }
 
     /**
@@ -116,17 +108,15 @@ class BlueprintForm extends BaseBlueprintForm
      */
     public function filter(array $data)
     {
-        $this->initInternals();
-
-        return $this->blueprintSchema->filter($data);
+        return $this->schema()->filter($data);
     }
 
     /**
-     * Initialize validator.
+     * @return BlueprintSchema
      */
-    protected function initInternals()
+    public function schema()
     {
-        if (!isset($this->blueprintSchema)) {
+        if (!isset($this->schema)) {
             $types = [
                 'container.set' => [
                     'input@' => false
@@ -145,11 +135,13 @@ class BlueprintForm extends BaseBlueprintForm
                 ]
             ];
 
-            $this->blueprintSchema = new BlueprintSchema;
-            $this->blueprintSchema->setTypes($types);
-            $this->blueprintSchema->embed('', $this->items);
-            $this->blueprintSchema->init();
+            $this->schema = new BlueprintSchema;
+            $this->schema->setTypes($types);
+            $this->schema->embed('', $this->items);
+            $this->schema->init();
         }
+
+        return $this->schema;
     }
 
     /**

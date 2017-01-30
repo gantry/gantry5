@@ -17,7 +17,6 @@ use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
@@ -204,6 +203,7 @@ class Page extends HtmlController
     public function atom($name)
     {
         $outline = $this->params['configuration'];
+        $atoms = Atoms::instance($outline);
 
         $data = $this->request->post['data'];
         if ($data) {
@@ -212,65 +212,21 @@ class Page extends HtmlController
             $data = $this->request->post->getArray();
         }
 
-        // Load particle blueprints and default settings.
-        $blueprints = $this->container['particles']->getBlueprintForm($name);
-        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
-        $callable = function () use ($blueprints) {
-            return $blueprints;
-        };
+        // Create atom and get its blueprint.
+        $item = $atoms->createAtom($name, $data);
+        $blueprint = $item->blueprint();
 
-        // Create configuration from the defaults.
-        $item = new Config($data, $callable);
-        $item->def('type', $name);
-        $item->def('title', $blueprints->get('name'));
-        $item->def('attributes', []);
-        $item->def('inherit', []);
-
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/atom.yaml");
-        if ($file->exists()) {
-            /** @var Outlines $outlines */
-            $outlines = $this->container['outlines'];
-
-            if ($outline !== 'default') {
-                $list = (array)$outlines->getOutlinesWithAtom($item->type, false);
-                unset($list[$outline]);
-            } else {
-                $list = [];
-            }
-
-            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlinesWithAtom($outline, $item->id)) && $list)) {
-                $inheritable = true;
-                $inheritance = BlueprintForm::instance('layout/inheritance/atom.yaml', 'gantry-admin://blueprints');
-
-                $inheritance->set('form/fields/outline/filter', array_keys($list));
-                $inheritance->set('form/fields/atom/atom', $name);
-
-            } elseif (!empty($inheriting)) {
-                // Already inherited by other outlines.
-                $inheritance = BlueprintForm::instance('layout/inheritance/messages/inherited.yaml', 'gantry-admin://blueprints');
-                $inheritance->set(
-                    'form/fields/_note/content',
-                    sprintf($inheritance->get('form/fields/_note/content'), 'atom', ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
-                );
-
-            } elseif ($outline === 'default') {
-                // Base outline.
-                $inheritance = BlueprintForm::instance('layout/inheritance/messages/default.yaml', 'gantry-admin://blueprints');
-
-            } else {
-                // Nothing to inherit from.
-                $inheritance = BlueprintForm::instance('layout/inheritance/messages/empty.yaml', 'gantry-admin://blueprints');
-                $file->free();
-            }
-        }
+        // Load inheritance blueprint.
+        $inheritance = $atoms->getInheritanceBlueprint($name, $item->id);
+        $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
-            'inheritance'   => isset($inheritance) ? $inheritance : null,
-            'inheritable'   => !empty($inheritable),
+            'inheritance'   => $inheritance,
+            'inheritable'   => $inheritable,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
-            'blueprints'    => $blueprints,
+            'blueprints'    => $blueprint,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",

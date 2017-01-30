@@ -13,6 +13,8 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\BlueprintForm;
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -44,6 +46,8 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
      */
     protected static $instances;
 
+    protected $inherit = false;
+
     /**
      * @param string $outline
      * @return static
@@ -71,6 +75,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $this->name = $name;
         $this->items = array_filter($atoms);
+        $this->inherit = file_exists('gantry-admin://blueprints/layout/inheritance/atom.yaml');
 
         foreach ($this->items as &$item) {
             if (!empty($item['id'])) {
@@ -199,6 +204,119 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
             if ($item['type'] === $type) {
                 $list[] = $item;
             }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string $type
+     * @param array $data
+     * @return Config
+     */
+    public function createAtom($type, array $data = [])
+    {
+        $self = $this;
+
+        $callable = function () use ($self, $type) {
+            return $self->getBlueprint($type);
+        };
+
+        // Create configuration from the data.
+        $item = new Config($data, $callable);
+        $item->def('id', null);
+        $item->def('type', $type);
+        if (!isset($item['title'])) {
+            $item->def('title', $item->blueprint()->get('name'));
+        }
+        $item->def('attributes', []);
+        $item->def('inherit', []);
+
+        return $item;
+    }
+
+    /**
+     * @param string $type
+     * @return BlueprintForm
+     */
+    public function getBlueprint($type)
+    {
+        $blueprint = BlueprintForm::instance($type, 'gantry-blueprints://particles');
+
+        if ($this->inherit) {
+            $blueprint->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
+        }
+
+        return $blueprint;
+    }
+
+    /**
+     * @param string $type
+     * @param string $id
+     * @param bool $force
+     * @return BlueprintForm|null
+     */
+    public function getInheritanceBlueprint($type, $id = null, $force = false)
+    {
+        if (!$this->inherit) {
+            return null;
+        }
+
+        $inheriting = $id ? $this->getInheritingOutlines($id) : [];
+        $list = $this->getOutlines($type, false);
+
+        if ($force || (empty($inheriting) && $list)) {
+            $inheritance = BlueprintForm::instance('layout/inheritance/atom.yaml', 'gantry-admin://blueprints');
+            $inheritance->set('form/fields/outline/filter', array_keys($list));
+            $inheritance->set('form/fields/atom/atom', $type);
+
+        } elseif (!empty($inheriting)) {
+            // Already inherited by other outlines.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/inherited.yaml', 'gantry-admin://blueprints');
+            $inheritance->set(
+                'form/fields/_note/content',
+                sprintf($inheritance->get('form/fields/_note/content'), 'atom', ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
+            );
+
+        } elseif ($this->name === 'default') {
+            // Base outline.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/default.yaml', 'gantry-admin://blueprints');
+
+        } else {
+            // Nothing to inherit from.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/empty.yaml', 'gantry-admin://blueprints');
+        }
+
+        return $inheritance;
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     */
+    public function getInheritingOutlines($id = null)
+    {
+        /** @var Outlines $outlines */
+        $outlines = Gantry::instance()['outlines'];
+
+        return $outlines->getInheritingOutlinesWithAtom($this->name, $id);
+    }
+
+    /**
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlines($type, $includeInherited = true)
+    {
+        if ($this->name !== 'default') {
+            /** @var Outlines $outlines */
+            $outlines = Gantry::instance()['outlines'];
+
+            $list = $outlines->getOutlinesWithAtom($type, $includeInherited);
+            unset($list[$this->name]);
+        } else {
+            $list = [];
         }
 
         return $list;

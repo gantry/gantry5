@@ -227,7 +227,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      *
      * @return BlueprintSchema
      */
-    public function blueprints()
+    public function blueprint()
     {
         if (!$this->blueprints){
             $this->blueprints = new BlueprintSchema;
@@ -237,6 +237,17 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
             $this->blueprints = $blueprints();
         }
         return $this->blueprints;
+    }
+
+    /**
+     * Return blueprints.
+     *
+     * @return BlueprintSchema
+     * @deprecated 5.5.0
+     */
+    public function blueprints()
+    {
+        return $this->blueprint();
     }
 
     /**
