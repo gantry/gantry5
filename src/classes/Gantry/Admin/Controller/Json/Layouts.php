@@ -13,8 +13,8 @@
 
 namespace Gantry\Admin\Controller\Json;
 
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Config\BlueprintForm;
-use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 
@@ -101,7 +101,7 @@ class Layouts extends JsonController
             'skip'          => ['enabled']
         ] + $params;
 
-        $html['g-settings-particle'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
+        $html['g-settings-particle'] = $this->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
         $html['g-settings-block-attributes'] = $this->renderBlockFields($block, $params);
         if ($path == 'list') {
             $html['g-inherit-particle'] = $this->renderParticlesInput($inherit || $clone ? $outline : null, $subtype, $post['selected']);
@@ -157,7 +157,7 @@ class Layouts extends JsonController
             'overrideable'  => true,
         ];
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-preview.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/pages/configurations/layouts/particle-preview.html.twig', $this->params);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -180,7 +180,7 @@ class Layouts extends JsonController
                  'prefix' => 'block.',
              ] + $params;
 
-         return $this->container['admin.theme']->render('@gantry-admin/forms/fields.html.twig',  $paramsBlock);
+         return $this->render('@gantry-admin/forms/fields.html.twig',  $paramsBlock);
      }
 
     /**
@@ -226,6 +226,6 @@ class Layouts extends JsonController
             'value' => $instances['selected']
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params);
+        return $this->render('@gantry-admin/forms/fields/gantry/particles.html.twig', $params);
     }
 }

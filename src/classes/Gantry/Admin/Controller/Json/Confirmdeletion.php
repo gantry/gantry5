@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 class Confirmdeletion extends JsonController
@@ -27,7 +27,7 @@ class Confirmdeletion extends JsonController
     public function index()
     {
         $pageType = $this->request->get->get('page_type', 'OUTLINE');
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/confirm-deletion.html.twig', ['page_type' => $pageType])];
+        $response = ['html' => $this->render('@gantry-admin/ajax/confirm-deletion.html.twig', ['page_type' => $pageType])];
 
         return new JsonResponse($response);
     }

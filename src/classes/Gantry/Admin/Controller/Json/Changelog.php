@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
 
@@ -73,7 +73,7 @@ class Changelog extends JsonController
         }
 
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
+            'html' => $this->render('@gantry-admin/ajax/changelog.html.twig', [
                 'changelog' => $changelog,
                 'version'   => $version,
                 'url'       => $url,

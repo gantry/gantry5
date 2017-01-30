@@ -13,8 +13,8 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
@@ -73,7 +73,7 @@ class Settings extends HtmlController
             'page_id' => $outline
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
@@ -101,7 +101,7 @@ class Settings extends HtmlController
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -164,7 +164,7 @@ class Settings extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
     public function validate($particle)

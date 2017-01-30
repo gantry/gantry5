@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 class Unsaved extends JsonController
@@ -26,7 +26,7 @@ class Unsaved extends JsonController
 
     public function index()
     {
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/unsaved.html.twig')];
+        $response = ['html' => $this->render('@gantry-admin/ajax/unsaved.html.twig')];
         return new JsonResponse($response);
     }
 }

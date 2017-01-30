@@ -13,8 +13,8 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\RedirectResponse;
@@ -68,7 +68,7 @@ class Configurations extends HtmlController
         $layouts_core = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_'; });
         $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
     }
 
     public function createForm()
@@ -82,7 +82,7 @@ class Configurations extends HtmlController
             'outlines' => $this->container['outlines']
         ];
 
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
+        $response = ['html' => $this->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
 
         return new JsonResponse($response);
     }
@@ -105,7 +105,7 @@ class Configurations extends HtmlController
 
         $id = $outlines->create(null, $title, $preset);
 
-        $html = $this->container['admin.theme']->render(
+        $html = $this->render(
             '@gantry-admin/layouts/outline.html.twig',
             ['name' => $id, 'title' => $outlines[$id]]
         );
@@ -125,7 +125,7 @@ class Configurations extends HtmlController
 
         $id = $outlines->rename($outline, $title);
 
-        $html = $this->container['admin.theme']->render(
+        $html = $this->render(
             '@gantry-admin/layouts/outline.html.twig',
             ['name' => $id, 'title' => $outlines[$id]]
         );
@@ -145,7 +145,7 @@ class Configurations extends HtmlController
             'duplicate' => true
         ];
 
-        $response = ['html' => $this->container['admin.theme']->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
+        $response = ['html' => $this->render('@gantry-admin/ajax/outline-new.html.twig', $params)];
 
         return new JsonResponse($response);
     }
@@ -163,7 +163,7 @@ class Configurations extends HtmlController
 
         $id = $outlines->duplicate($outline, $title, $inherit);
 
-        $html = $this->container['admin.theme']->render(
+        $html = $this->render(
             '@gantry-admin/layouts/outline.html.twig',
             ['name' => $id, 'title' => $outlines[$id]]
         );
@@ -203,7 +203,7 @@ class Configurations extends HtmlController
         ];
 
         return new JsonResponse(
-            ['html' => $this->container['admin.theme']->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params)]
+            ['html' => $this->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params)]
         );
     }
 

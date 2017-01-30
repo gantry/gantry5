@@ -13,10 +13,10 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Response\JsonResponse;
@@ -73,7 +73,7 @@ class Layout extends HtmlController
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->prepareWidths()->toArray();
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
     }
 
     public function index()
@@ -115,7 +115,7 @@ class Layout extends HtmlController
         $this->params['particles'] = $groups;
         $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
 
     public function save()
@@ -287,11 +287,11 @@ class Layout extends HtmlController
         ];
 
         if ($particle) {
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
                 $this->params);
         } else {
             $typeLayout = $type == 'container' ? 'container' : 'section';
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
                 $this->params);
         }
 
@@ -301,7 +301,7 @@ class Layout extends HtmlController
     public function listSwitches()
     {
         $this->params['presets'] = LayoutObject::presets();
-        $result = $this->container['admin.theme']->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
+        $result = $this->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
 
         return new JsonResponse(['html' => $result]);
     }
@@ -329,7 +329,7 @@ class Layout extends HtmlController
         }
 
         $message = $deleted
-            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
+            ? $this->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -358,7 +358,7 @@ class Layout extends HtmlController
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
+            ? $this->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([

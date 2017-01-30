@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Importer;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -32,7 +32,7 @@ class Import extends HtmlController
 
     public function index()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/pages/import/import.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/import/import.html.twig', $this->params);
     }
 
     public function import()
@@ -80,6 +80,6 @@ class Import extends HtmlController
 
         $this->params['success'] = true;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/import/import.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/import/import.html.twig', $this->params);
     }
 }

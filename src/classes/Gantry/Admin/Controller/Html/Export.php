@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Exporter;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;

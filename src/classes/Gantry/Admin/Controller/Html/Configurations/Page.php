@@ -13,14 +13,12 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
-use Gantry\Framework\Outlines;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -88,7 +86,7 @@ class Page extends HtmlController
             'atoms_deprecated' => $deprecated
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
 
     public function save($id = null)
@@ -170,7 +168,7 @@ class Page extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
     public function validate($particle)
@@ -234,7 +232,7 @@ class Page extends HtmlController
             'skip'          => ['enabled']
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
     }
 
     /**

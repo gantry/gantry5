@@ -10,9 +10,9 @@
 
 namespace Gantry\Admin\Controller\Json;
 
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 class Widget extends JsonController
@@ -36,7 +36,7 @@ class Widget extends JsonController
      */
     public function select()
     {
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/widget-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -109,7 +109,7 @@ class Widget extends JsonController
             'action'        => "widget/{$name}/validate"
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/widget.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/widget.html.twig', $this->params)]);
     }
 
     /**
@@ -177,7 +177,7 @@ class Widget extends JsonController
             // Fill parameters to be passed to the template file.
             $this->params['item'] = $menuitem;
 
-            $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+            $html = $this->render('@gantry-admin/menu/item.html.twig', $this->params);
 
             return new JsonResponse(['item' => $menuitem, 'html' => $html]);
         }

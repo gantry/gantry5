@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Assignments as AssignmentsObject;
 use RocketTheme\Toolbox\Event\Event;
 
@@ -30,7 +30,7 @@ class Assignments extends HtmlController
             $this->params['assignment'] = $assignments->getAssignment();
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
 
     public function store()

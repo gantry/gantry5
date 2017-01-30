@@ -13,10 +13,10 @@
 
 namespace Gantry\Admin\Controller\Json;
 
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 class Particle extends JsonController
@@ -74,7 +74,7 @@ class Particle extends JsonController
         }
 
         $this->params['particles'] = $groups;
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -84,7 +84,7 @@ class Particle extends JsonController
      */
     public function selectModule()
     {
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -131,7 +131,7 @@ class Particle extends JsonController
             'action'        => "particle/{$name}/validate"
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
     }
 
     /**

@@ -13,8 +13,8 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
@@ -71,7 +71,7 @@ class Styles extends HtmlController
         $this->params['blocks'] = $this->container['styles']->group();
         $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
@@ -97,7 +97,7 @@ class Styles extends HtmlController
             'skip' => ['enabled']
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/styles/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -147,7 +147,7 @@ class Styles extends HtmlController
             $this->params['key'] = $parent['key'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
     }
 
     public function reset($id)
@@ -173,7 +173,7 @@ class Styles extends HtmlController
             $this->params += ['warnings' => $warnings];
             return new JsonResponse(
                 [
-                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'html'    => $this->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
                     'warning' => true,
                     'title'   => 'CSS Compiled With Warnings',
                 ]
@@ -227,7 +227,7 @@ class Styles extends HtmlController
             $this->params += ['warnings' => $warnings];
             return new JsonResponse(
                 [
-                    'html'    => $this->container['admin.theme']->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
+                    'html'    => $this->render('@gantry-admin/layouts/css-warnings.html.twig', $this->params),
                     'warning' => true,
                     'title'   => 'CSS Compiled With Warnings',
                 ]

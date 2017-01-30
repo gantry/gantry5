@@ -10,8 +10,8 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -69,7 +69,7 @@ class Content extends HtmlController
         $this->params['route']  = "configurations.{$outline}.content";
         $this->params['page_id'] = $outline;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
     public function display($group, $id = null)
@@ -94,7 +94,7 @@ class Content extends HtmlController
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
     }
 
     public function formfield($group, $id)
@@ -152,7 +152,7 @@ class Content extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
     }
 
     public function validate($group, $id)

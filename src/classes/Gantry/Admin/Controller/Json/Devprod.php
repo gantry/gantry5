@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Event\Event;
 

@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\ThemeInstaller;
 
 class Install extends HtmlController
@@ -33,6 +33,6 @@ class Install extends HtmlController
 
         $this->params['actions'] = $installer->actions;
         
-        return $this->container['admin.theme']->render('@gantry-admin/pages/install/install.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/install/install.html.twig', $this->params);
     }
 }

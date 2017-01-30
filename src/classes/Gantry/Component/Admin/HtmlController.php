@@ -11,17 +11,19 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Admin\Controller\Html;
+namespace Gantry\Component\Admin;
 
-use Gantry\Admin\ThemeList;
-use Gantry\Component\Admin\HtmlController;
+use Gantry\Component\Controller\HtmlController as BaseController;
 
-class Themes extends HtmlController
+abstract class HtmlController extends BaseController
 {
-    public function index()
+    /**
+     * @param string|array $file
+     * @param array $context
+     * @return string
+     */
+    public function render($file, array $context = [])
     {
-        $this->params['themes'] = (new ThemeList)->getThemes();
-
-        return $this->render('@gantry-admin/pages/themes/themes.html.twig', $this->params);
+        return $this->container['admin.theme']->render($file, $context);
     }
 }
