@@ -53,7 +53,7 @@ class Content extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -74,7 +74,7 @@ class Content extends HtmlController
 
     public function display($group, $id = null)
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
         $prefix = "content.{$group}.{$id}";
 
@@ -89,8 +89,8 @@ class Content extends HtmlController
             'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => "{$group}.{$id}", // FIXME?
-            'parent' => "configurations/{$this->params['configuration']}/content",
-            'route'  => "configurations.{$this->params['configuration']}.content.{$prefix}",
+            'parent' => "configurations/{$outline}/content",
+            'route'  => "configurations.{$outline}.content.{$prefix}",
             'skip' => ['enabled']
             ];
 
@@ -133,7 +133,8 @@ class Content extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -209,7 +210,7 @@ class Content extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}/content", true, true);
         $filename = "{$save_dir}/{$group}/{$id}.yaml";
 
