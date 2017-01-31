@@ -215,6 +215,8 @@ abstract class CompiledBase
 
         $this->createObject($cache['data']);
 
+        $this->finalizeObject();
+
         return true;
     }
 
@@ -255,7 +257,7 @@ abstract class CompiledBase
             'timestamp' => time(),
             'checksum' => $this->checksum(),
             'files' => $this->files,
-            'data' => $this->object->toArray()
+            'data' => $this->getState()
         ];
 
         $file->save($cache);
@@ -263,5 +265,10 @@ abstract class CompiledBase
         $file->free();
 
         $this->modified();
+    }
+
+    protected function getState()
+    {
+        return $this->object->toArray();
     }
 }
