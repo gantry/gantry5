@@ -11,56 +11,101 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Framework\Base;
+namespace Gantry\Component\Outline;
 
 use FilesystemIterator;
+use Gantry\Component\Collection\Collection;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Outline\AbstractOutlineCollection;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Atoms;
+use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class Outlines extends AbstractOutlineCollection
+class OutlineCollection extends Collection
 {
+    /**
+     * @var Container
+     */
+    protected $container;
+
     /**
      * @var string
      */
     protected $path;
 
     /**
-     * @param string $path
-     * @return $this
-     * @throws \RuntimeException
+     * @param Container $container
+     * @param array $items
      */
-    public function load($path = 'gantry-config://')
+    public function __construct(Container $container, $items = [])
     {
-        $this->path = $path;
+        $this->container = $container;
+        $this->items = $items;
+    }
 
-        $iterator = $this->getFilesystemIterator($path);
+    /**
+     * @param string $id
+     * @return string|null
+     */
+    public function name($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : null;
+    }
 
-        $files = [];
-        /** @var FilesystemIterator $info */
-        foreach ($iterator as $name => $info) {
-            if (!$info->isDir() || $name[0] == '.' || !is_file($info->getPathname() . '/index.yaml')) {
-                continue;
+    /**
+     * @param string $id
+     * @return string
+     */
+    public function title($id)
+    {
+        return isset($this->items[$id]) ? $this->items[$id] : $id;
+    }
+
+
+    public function all()
+    {
+        return $this;
+    }
+
+    public function system()
+    {
+        foreach ($this->items as $key => $item) {
+            if (substr($key, 0, 1) !== '_') {
+                unset($this->items[$key]);
             }
-            $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
-        unset($files['default']);
-        unset($files['menu']);
+        return $this;
+    }
 
-        asort($files);
+    public function user()
+    {
+        foreach ($this->items as $key => $item) {
+            if (substr($key, 0, 1) === '_' || $key == 'default') {
+                unset($this->items[$key]);
+            }
+        }
 
-        $this->items = $this->addDefaults($files);
+        return $this;
+    }
+
+    public function filter(array $include = null)
+    {
+        if ($include !== null) {
+            foreach ($this->items as $key => $item) {
+                if (!in_array($key, $include)) {
+                    unset($this->items[$key]);
+                }
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Returns list of all positions defined in outsets.
+     * Returns list of all positions defined in all outlines.
      *
      * @return array
      */
@@ -78,15 +123,6 @@ class Outlines extends AbstractOutlineCollection
         }
 
         return $list;
-    }
-
-    /**
-     * @param string $id
-     * @return string
-     */
-    public function title($id)
-    {
-        return isset($this->items[$id]) ? $this->items[$id] : $id;
     }
 
     /**
@@ -220,7 +256,7 @@ class Outlines extends AbstractOutlineCollection
         foreach ($list as $id => $title) {
             $item = clone $layout->find($id);
             $block = $layout->block($id);
-            $item->block = $block ? $block->attributes : new \stdClass();
+            $item->block = isset($block->attributes) ? $block->attributes : new \stdClass();
             $list[$id] = $item;
         }
 
@@ -355,7 +391,7 @@ class Outlines extends AbstractOutlineCollection
 
     /**
      * @param int|string $id
-     * @return Layout
+     * @return array
      */
     public function layoutPreset($id)
     {
@@ -365,6 +401,36 @@ class Outlines extends AbstractOutlineCollection
         unset($layout);
 
         return $preset;
+    }
+
+    /**
+     * @param string $path
+     * @return $this
+     * @throws \RuntimeException
+     */
+    public function load($path = 'gantry-config://')
+    {
+        $this->path = $path;
+
+        $iterator = $this->getFilesystemIterator($path);
+
+        $files = [];
+        /** @var FilesystemIterator $info */
+        foreach ($iterator as $name => $info) {
+            if (!$info->isDir() || $name[0] == '.' || !is_file($info->getPathname() . '/index.yaml')) {
+                continue;
+            }
+            $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
+        }
+
+        unset($files['default']);
+        unset($files['menu']);
+
+        asort($files);
+
+        $this->items = $this->addDefaults($files);
+
+        return $this;
     }
 
     /**

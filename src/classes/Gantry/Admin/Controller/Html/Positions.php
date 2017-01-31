@@ -63,15 +63,12 @@ class Positions extends HtmlController
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
 
-        $title = $this->request->post->get('title', 'Untitled');
+        $title = (string) $this->request->post->get('title', 'Untitled');
         $key = (string) $this->request->post['key'];
 
         $id = $positions->create($title, $key);
 
-        $html = $this->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['position' => ['name' => $id, 'title' => $title]]
-        );
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => ['name' => $id, 'title' => $title]]);
 
         return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
@@ -115,10 +112,7 @@ class Positions extends HtmlController
             $position = new Position($position->name, $data);
         }
 
-        $html = $this->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['position' => $position]
-        );
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => $position]);
 
         return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
     }

@@ -50,7 +50,9 @@ class Layouts extends JsonController
         $clone = $post['mode'] === 'clone';
         $id = $post['id'];
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
+
         $layout = Layout::instance($outline);
         if ($inherit) {
             $layout->inheritAll();
@@ -117,6 +119,7 @@ class Layouts extends JsonController
         $outline = $post['outline'];
         $id = $post['id'];
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $layout = Layout::instance($outline);

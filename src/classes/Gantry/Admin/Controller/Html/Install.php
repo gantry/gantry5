@@ -20,7 +20,7 @@ class Install extends HtmlController
 {
     public function index()
     {
-        if (!$this->container->authorize('updates.manage') || !class_exists('\Gantry\Framework\ThemeInstaller')) {
+        if (!$this->authorize('updates.manage') || !class_exists('\Gantry\Framework\ThemeInstaller')) {
             $this->forbidden();
         }
 

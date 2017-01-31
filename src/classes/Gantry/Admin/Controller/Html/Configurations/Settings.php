@@ -55,7 +55,7 @@ class Settings extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if ($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -69,7 +69,7 @@ class Settings extends HtmlController
         $this->params += [
             'data' => $data,
             'particles' => $this->container['particles']->group(['atom']),
-            'route'  => "configurations.{$this->params['configuration']}.settings",
+            'route'  => "configurations.{$outline}.settings",
             'page_id' => $outline
         ];
 
@@ -78,7 +78,7 @@ class Settings extends HtmlController
 
     public function display($id)
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $blueprints = $this->container['particles']->getBlueprintForm($id);
         $prefix = 'particles.' . $id;
 
@@ -96,8 +96,8 @@ class Settings extends HtmlController
             'particle' => $blueprints,
             'data' =>  ['particle' => $data->get($prefix)],
             'id' => $id,
-            'parent' => "configurations/{$this->params['configuration']}/settings",
-            'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
+            'parent' => "configurations/{$outline}/settings",
+            'route'  => "configurations.{$outline}.settings.{$prefix}",
             'skip' => ['enabled']
             ];
 
@@ -144,7 +144,8 @@ class Settings extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -154,7 +155,7 @@ class Settings extends HtmlController
                 'parent' => $path
                     ? "{$configuration}/settings/particles/{$id}/" . implode('/', $path)
                     : "{$configuration}/settings/particles/{$id}",
-                'route' => "configurations.{$this->params['configuration']}.settings.{$offset}",
+                'route' => "configurations.{$outline}.settings.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -206,7 +207,7 @@ class Settings extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}/particles", true, true);
 
         foreach ($data as $name => $values) {

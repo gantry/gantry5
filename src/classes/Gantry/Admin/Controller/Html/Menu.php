@@ -73,7 +73,7 @@ class Menu extends HtmlController
 
     public function execute($method, array $path, array $params)
     {
-        if (!$this->container->authorize('menu.manage')) {
+        if (!$this->authorize('menu.manage')) {
             $this->forbidden();
         }
 

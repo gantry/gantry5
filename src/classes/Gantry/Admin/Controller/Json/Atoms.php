@@ -50,6 +50,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -107,6 +108,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));

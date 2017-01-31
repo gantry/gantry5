@@ -78,8 +78,8 @@ class Layout extends HtmlController
 
     public function index()
     {
-        $id = $this->params['configuration'];
-        $layout = $this->getLayout($id);
+        $outline = $this->params['outline'];
+        $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
@@ -107,13 +107,13 @@ class Layout extends HtmlController
             }
         }
 
-        $this->params['page_id'] = $id;
+        $this->params['page_id'] = $outline;
         $this->params['layout'] = $layout->prepareWidths()->toArray();
         $this->params['preset'] = $layout->preset;
         $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset['name'])));
-        $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
+        $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($outline, '_')));
         $this->params['particles'] = $groups;
-        $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
+        $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$outline}.layout.switch");
 
         return $this->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
@@ -121,16 +121,13 @@ class Layout extends HtmlController
     public function save()
     {
         $layout = $this->request->post->get('layout');
-        if ($layout && $layout[0] !== '{' && $layout[0] !== '[') {
-            $layout = urldecode((string)base64_decode($layout));
-        }
         $layout = json_decode($layout);
 
         if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
@@ -162,7 +159,7 @@ class Layout extends HtmlController
     {
         if ($type == 'atom') { return ''; }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
@@ -263,7 +260,6 @@ class Layout extends HtmlController
             }
         }
 
-        // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) $attributes;
         $item->inherit = (object) $inherit;
 
@@ -287,12 +283,10 @@ class Layout extends HtmlController
         ];
 
         if ($particle) {
-            $result = $this->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
-                $this->params);
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/particle.html.twig', $this->params);
         } else {
             $typeLayout = $type == 'container' ? 'container' : 'section';
-            $result = $this->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
-                $this->params);
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig', $this->params);
         }
 
         return $result;
@@ -313,7 +307,7 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $layout = $this->getLayout($id);
         if (!$layout->toArray()) {
             // Layout hasn't been defined, return default layout instead.
@@ -377,7 +371,6 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        // FIXME: all validators!
         // Load particle blueprints and default settings.
         $validator = new BlueprintSchema;
 
@@ -454,7 +447,7 @@ class Layout extends HtmlController
 
         // Optionally send children of the object.
         if (in_array('children', $inherit['include'])) {
-            $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['configuration']);
+            $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['outline']);
             if ($clone) {
                 $item = $layout->find($inherit['section']);
             } else {

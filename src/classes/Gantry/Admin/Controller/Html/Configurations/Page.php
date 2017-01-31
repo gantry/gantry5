@@ -51,7 +51,7 @@ class Page extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if ($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -80,7 +80,7 @@ class Page extends HtmlController
         $this->params += [
             'data' => $data,
             'page' => $this->container['page']->group(),
-            'route'  => "configurations.{$this->params['configuration']}",
+            'route'  => "configurations.{$outline}",
             'page_id' => $outline,
             'atoms' => $this->getAtoms(),
             'atoms_deprecated' => $deprecated
@@ -148,7 +148,8 @@ class Page extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -158,7 +159,7 @@ class Page extends HtmlController
                 'parent' => $path
                     ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
                     : "$configuration/settings/particles/{$id}",
-                'route' => "configurations.{$this->params['configuration']}.{$offset}",
+                'route' => "configurations.{$outline}.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -200,7 +201,7 @@ class Page extends HtmlController
 
     public function atom($name)
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $atoms = Atoms::instance($outline);
 
         $data = $this->request->post['data'];
@@ -291,7 +292,7 @@ class Page extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         // Move atoms out of layout.
         if ($id === 'head') {
@@ -324,7 +325,7 @@ class Page extends HtmlController
 
     protected function getDeprecatedAtoms()
     {
-        $id     = $this->params['configuration'];
+        $id     = $this->params['outline'];
         $layout = Layout::instance($id);
 
         return $layout->atoms();

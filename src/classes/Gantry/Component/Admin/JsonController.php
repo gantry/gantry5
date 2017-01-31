@@ -26,4 +26,14 @@ abstract class JsonController extends BaseController
     {
         return $this->container['admin.theme']->render($file, $context);
     }
+
+    /**
+     * @param string $action
+     * @param string $id
+     * @return boolean
+     */
+    public function authorize($action, $id = null)
+    {
+        return $this->container['platform']->authorize($action, $id);
+    }
 }

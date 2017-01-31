@@ -57,7 +57,7 @@ class Styles extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -69,14 +69,14 @@ class Styles extends HtmlController
         }
 
         $this->params['blocks'] = $this->container['styles']->group();
-        $this->params['route']  = "configurations.{$this->params['configuration']}.styles";
+        $this->params['route']  = "configurations.{$outline}.styles";
 
         return $this->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $blueprints = $this->container['styles']->getBlueprintForm($id);
         $prefix = 'styles.' . $id;
 
@@ -92,8 +92,8 @@ class Styles extends HtmlController
         $this->params += [
             'block' => $blueprints,
             'id' => $id,
-            'parent' => "configurations/{$this->params['configuration']}/styles",
-            'route'  => "configurations.{$this->params['configuration']}.styles.{$prefix}",
+            'parent' => "configurations/{$outline}/styles",
+            'route'  => "configurations.{$outline}.styles.{$prefix}",
             'skip' => ['enabled']
         ];
 
@@ -104,7 +104,7 @@ class Styles extends HtmlController
     {
         $path = func_get_args();
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         // Load blueprints.
         $blueprints = $this->container['styles']->getBlueprintForm($id);
@@ -138,8 +138,8 @@ class Styles extends HtmlController
         $this->params = [
                 'blueprints' => $fields,
                 'parent' => $path
-                    ? "configurations/{$this->params['configuration']}/styles/blocks/{$id}/" . implode('/', $path)
-                    : "configurations/{$this->params['configuration']}/styles/blocks/{$id}",
+                    ? "configurations/{$outline}/styles/blocks/{$id}/" . implode('/', $path)
+                    : "configurations/{$outline}/styles/blocks/{$id}",
                 'route' => 'styles.' . $prefix
             ] + $this->params;
 
@@ -199,7 +199,7 @@ class Styles extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}", true, true);
         $filename = "{$save_dir}/styles.yaml";
 
@@ -244,7 +244,7 @@ class Styles extends HtmlController
     {
         /** @var Theme $theme */
         $theme = $this->container['theme'];
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         return $theme->updateCss($outline !== 'default' ? [$outline => ucfirst($outline)] : null);
     }

@@ -14,14 +14,12 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Component\Admin\HtmlController;
-use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\RedirectResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Framework\Outlines as OutlinesObject;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Configurations extends HtmlController
 {
@@ -56,24 +54,12 @@ class Configurations extends HtmlController
 
     public function index()
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $finder = new ConfigFileFinder;
-        $files = $finder->getFiles($locator->findResources('gantry-layouts://'));
-        $layouts = array_keys($files);
-        sort($layouts);
-
-        $layouts_user = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) !== '_'; });
-        $layouts_core = array_filter($layouts, function($val) { return strpos($val, 'presets/') !== 0 && substr($val, 0, 1) === '_'; });
-        $this->params['layouts'] = ['user' => $layouts_user, 'core' => $layouts_core];
-
         return $this->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
     }
 
     public function createForm()
     {
-        if (!$this->container->authorize('outline.create')) {
+        if (!$this->authorize('outline.create')) {
             $this->forbidden();
         }
 
@@ -94,7 +80,7 @@ class Configurations extends HtmlController
             return $this->duplicate($this->request->post['outline']);
         }
 
-        if (!$this->container->authorize('outline.create')) {
+        if (!$this->authorize('outline.create')) {
             $this->forbidden();
         }
 
@@ -105,17 +91,14 @@ class Configurations extends HtmlController
 
         $id = $outlines->create(null, $title, $preset);
 
-        $html = $this->render(
-            '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $outlines[$id]]
-        );
+        $html = $this->render('@gantry-admin/layouts/outline.html.twig', ['name' => $id, 'title' => $outlines[$id]]);
 
         return new JsonResponse(['html' => 'Outline created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
     public function rename($outline)
     {
-        if (!$this->container->authorize('outline.rename')) {
+        if (!$this->authorize('outline.rename')) {
             $this->forbidden();
         }
 
@@ -125,17 +108,14 @@ class Configurations extends HtmlController
 
         $id = $outlines->rename($outline, $title);
 
-        $html = $this->render(
-            '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $outlines[$id]]
-        );
+        $html = $this->render('@gantry-admin/layouts/outline.html.twig', ['name' => $id, 'title' => $outlines[$id]]);
 
         return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$outline}", 'outline' => $html]);
     }
 
     public function duplicateForm($outline)
     {
-        if (!$this->container->authorize('outline.create')) {
+        if (!$this->authorize('outline.create')) {
             $this->forbidden();
         }
 
@@ -152,7 +132,7 @@ class Configurations extends HtmlController
 
     public function duplicate($outline)
     {
-        if (!$this->container->authorize('outline.create')) {
+        if (!$this->authorize('outline.create')) {
             $this->forbidden();
         }
 
@@ -163,17 +143,14 @@ class Configurations extends HtmlController
 
         $id = $outlines->duplicate($outline, $title, $inherit);
 
-        $html = $this->render(
-            '@gantry-admin/layouts/outline.html.twig',
-            ['name' => $id, 'title' => $outlines[$id]]
-        );
+        $html = $this->render('@gantry-admin/layouts/outline.html.twig', ['name' => $id, 'title' => $outlines[$id]]);
 
         return new JsonResponse(['html' => 'Outline duplicated.', 'id' => $id, 'outline' => $html]);
     }
 
     public function delete($outline)
     {
-        if (!$this->container->authorize('outline.delete')) {
+        if (!$this->authorize('outline.delete')) {
             $this->forbidden();
         }
 
@@ -195,18 +172,24 @@ class Configurations extends HtmlController
      */
     public function confirmDeletion($id)
     {
+        /** @var OutlinesObject $outlines */
+        $outlines = $this->container['outlines'];
+
         $params = [
             'id' => $id,
             'page_type' => 'OUTLINE',
-            'outline' => $this->container['outlines']->title($id),
-            'inherited' => $this->container['outlines']->getInheritingOutlines($id)
+            'outline' => $outlines->title($id),
+            'inherited' => $outlines->getInheritingOutlines($id)
         ];
 
-        return new JsonResponse(
-            ['html' => $this->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params)]
-        );
+        $html = $this->render('@gantry-admin/pages/configurations/confirm-deletion.html.twig', $params);
+
+        return new JsonResponse(['html' => $html]);
     }
 
+    /**
+     * @return HtmlResponse|RedirectResponse|JsonResponse
+     */
     public function forward()
     {
         $path = func_get_args();
@@ -217,19 +200,22 @@ class Configurations extends HtmlController
         $method = $this->params['method'];
 
         if ((!isset($outline) || !isset($page)) && $this->params['format'] !== 'json') {
+            // Redirect path to the styles page of the selected outline.
             return new RedirectResponse($this->container->route('configurations', is_string($outline) ? $outline : 'default', 'styles'));
         }
 
-        $outlines = $this->container['outlines']->toArray();
+        $outlines = $this->container['outlines'];
 
         if (!isset($outlines[$outline])) {
             throw new \RuntimeException('Outline not found.', 404);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $resource = $this->params['location'] . '/'. $page;
 
+        $this->params['outline'] = $outline;
         $this->params['configuration'] = $outline;
         $this->params['location'] = $resource;
         $this->params['configuration_page'] = $page;
