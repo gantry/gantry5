@@ -164,7 +164,7 @@ ready(function() {
             invalid = [],
             type    = element.data('save'),
             extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-position]') ? 'positions' : 'other')),
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-g5-position]') ? 'positions' : 'other')),
             saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {

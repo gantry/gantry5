@@ -4,6 +4,9 @@
 1. [Common](#common)
     2. [](#improved)
         - Make Whoops not to report PHP startup errors and warnings (#1821)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
 
 # 5.4.6
 ## 26/01/2017

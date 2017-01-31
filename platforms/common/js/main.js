@@ -4597,7 +4597,7 @@ ready(function() {
             invalid = [],
             type    = element.data('save'),
             extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-position]') ? 'positions' : 'other')),
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-g5-position]') ? 'positions' : 'other')),
             saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
@@ -5298,7 +5298,7 @@ var StepTwo = function(data, content, button) {
 
                         } else {
                             // case for Positions
-                            var position = $('[data-position-name="' + response.body.position + '"]'),
+                            var position = $('[data-g5-position-name="' + response.body.position + '"]'),
                                 dummy = zen('div').html(response.body.html);
 
                             position.find('> ul').appendChild(dummy.children());
@@ -9419,7 +9419,7 @@ var Positions = {
     serialize: function(position) {
         var data,
             output    = [],
-            positions = $(position) || $('[data-position]');
+            positions = $(position) || $('[data-g5-position]');
 
         if (!positions) {
             return '[]';
@@ -9427,7 +9427,7 @@ var Positions = {
 
         positions.forEach(function(position) {
             position = $(position);
-            data = JSON.parse(position.data('position'));
+            data = JSON.parse(position.data('g5-position'));
             data.modules = [];
 
             // collect positions items
@@ -9437,7 +9437,7 @@ var Positions = {
             });
 
             output.push(data);
-            position.data('position', JSON.stringify(data));
+            position.data('g5-position', JSON.stringify(data));
         });
 
         return JSON.stringify(output).replace(/\//g, '\\/');
@@ -9445,12 +9445,12 @@ var Positions = {
 
     attachEraser: function() {
         if (Positions.eraser) {
-            Positions.eraser.element = $('[data-positions-erase]');
+            Positions.eraser.element = $('[data-g5-positions-erase]');
             Positions.eraser.hide('fast');
             return;
         }
 
-        Positions.eraser = new Eraser('[data-positions-erase]');
+        Positions.eraser = new Eraser('[data-g5-positions-erase]');
     },
 
     createSortables: function(element) {
@@ -9459,13 +9459,13 @@ var Positions = {
         Positions.attachEraser();
 
         groupOptions.forEach(function(groupOption, i) {
-            list = !i ? '[data-position] ul' : '#trash';
+            list = !i ? '[data-g5-position] ul' : '#trash';
             list = $(list);
 
             list.forEach(function(element, listIndex) {
                 sort = simpleSort.create(element, {
                     sort: !i,
-                    filter: '[data-position-ignore]',
+                    filter: '[data-g5-position-ignore]',
                     group: groupOption,
                     scroll: true,
                     forceFallback: true,
@@ -9510,7 +9510,7 @@ var Positions = {
                     onSort: function(event) {
                         var from  = $(event.from),
                             to    = $(event.to),
-                            lists = [from.parent('[data-position]'), to.parent('[data-position]')];
+                            lists = [from.parent('[data-g5-position]'), to.parent('[data-g5-position]')];
 
                         if (event.from[0] === event.to[0]) {
                             lists.shift();
@@ -9747,7 +9747,7 @@ ready(function() {
 
         var data = {},
             parent = element.parent('[data-pm-data]'),
-            position = JSON.parse(element.parent('[data-position]').data('position'));
+            position = JSON.parse(element.parent('[data-g5-position]').data('g5-position'));
 
         data.position = position.name;
         data.item = parent.data('pm-data');
@@ -9829,7 +9829,7 @@ ready(function() {
                                 if (save) { body.emit('click', { target: save }); }
                             }
 
-                            Cards.serialize(element.parent('[data-position]'));
+                            Cards.serialize(element.parent('[data-g5-position]'));
                             Cards.updatePendingChanges();
 
                             modal.close();
@@ -9857,7 +9857,7 @@ ready(function() {
             parent.find('[data-title-edit]').addClass('disabled');
 
             var data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
-            data.data = parent.find('[data-position]').data('position');
+            data.data = parent.find('[data-g5-position]').data('g5-position');
 
             request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
@@ -9896,7 +9896,7 @@ ready(function() {
         };
 
     // Toggle all assignments on/off
-    body.delegate('change', '[data-positions-assignments] input[type="hidden"]', function(event, element) {
+    body.delegate('change', '[data-g5-positions-assignments] input[type="hidden"]', function(event, element) {
         var card = element.parent('.card'),
             wrapper = card.find('.settings-param-wrapper');
 

@@ -181,7 +181,7 @@ ready(function() {
 
         var data = {},
             parent = element.parent('[data-pm-data]'),
-            position = JSON.parse(element.parent('[data-position]').data('position'));
+            position = JSON.parse(element.parent('[data-g5-position]').data('g5-position'));
 
         data.position = position.name;
         data.item = parent.data('pm-data');
@@ -263,7 +263,7 @@ ready(function() {
                                 if (save) { body.emit('click', { target: save }); }
                             }
 
-                            Cards.serialize(element.parent('[data-position]'));
+                            Cards.serialize(element.parent('[data-g5-position]'));
                             Cards.updatePendingChanges();
 
                             modal.close();
@@ -291,7 +291,7 @@ ready(function() {
             parent.find('[data-title-edit]').addClass('disabled');
 
             var data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
-            data.data = parent.find('[data-position]').data('position');
+            data.data = parent.find('[data-g5-position]').data('g5-position');
 
             request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
@@ -330,7 +330,7 @@ ready(function() {
         };
 
     // Toggle all assignments on/off
-    body.delegate('change', '[data-positions-assignments] input[type="hidden"]', function(event, element) {
+    body.delegate('change', '[data-g5-positions-assignments] input[type="hidden"]', function(event, element) {
         var card = element.parent('.card'),
             wrapper = card.find('.settings-param-wrapper');
 
