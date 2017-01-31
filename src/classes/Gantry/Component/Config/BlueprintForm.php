@@ -117,26 +117,7 @@ class BlueprintForm extends BaseBlueprintForm
     public function schema()
     {
         if (!isset($this->schema)) {
-            $types = [
-                'container.set' => [
-                    'input@' => false
-                ],
-                'separator.note' => [
-                    'input@' => false
-                ],
-                'separator.separator' => [
-                    'input@' => false
-                ],
-                'key' => [
-                    'input@' => false
-                ],
-                'collection.list' => [
-                    'array' => true
-                ]
-            ];
-
             $this->schema = new BlueprintSchema;
-            $this->schema->setTypes($types);
             $this->schema->embed('', $this->items);
             $this->schema->init();
         }
