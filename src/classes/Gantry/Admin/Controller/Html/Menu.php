@@ -144,7 +144,7 @@ class Menu extends HtmlController
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['data'] = ['settings' => $resource->settings()];
 
-        return $this->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/menu/edit.html.twig', $this->params);
     }
 
     public function save($id = null)
@@ -437,7 +437,7 @@ class Menu extends HtmlController
      * @param string $id
      * @param Config $config
      *
-     * @return MenuObject
+     * @return \Gantry\Component\Menu\AbstractMenu
      * @throws \RuntimeException
      */
     protected function loadResource($id, Config $config = null)
