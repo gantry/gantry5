@@ -13,15 +13,12 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
-use Gantry\Framework\Outlines;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -54,7 +51,7 @@ class Page extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if ($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -83,13 +80,13 @@ class Page extends HtmlController
         $this->params += [
             'data' => $data,
             'page' => $this->container['page']->group(),
-            'route'  => "configurations.{$this->params['configuration']}",
+            'route'  => "configurations.{$outline}",
             'page_id' => $outline,
             'atoms' => $this->getAtoms(),
             'atoms_deprecated' => $deprecated
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
 
     public function save($id = null)
@@ -123,10 +120,8 @@ class Page extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $setting = $this->container['page']->get($id);
-
         // Load blueprints.
-        $blueprints = new BlueprintsForm($setting);
+        $blueprints = $this->container['page']->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -153,7 +148,8 @@ class Page extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -163,7 +159,7 @@ class Page extends HtmlController
                 'parent' => $path
                     ? "$configuration/settings/particles/{$id}/" . implode('/', $path)
                     : "$configuration/settings/particles/{$id}",
-                'route' => "configurations.{$this->params['configuration']}.{$offset}",
+                'route' => "configurations.{$outline}.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -173,7 +169,7 @@ class Page extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
     public function validate($particle)
@@ -205,7 +201,8 @@ class Page extends HtmlController
 
     public function atom($name)
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
+        $atoms = Atoms::instance($outline);
 
         $data = $this->request->post['data'];
         if ($data) {
@@ -214,73 +211,21 @@ class Page extends HtmlController
             $data = $this->request->post->getArray();
         }
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        // Create atom and get its blueprint.
+        $item = $atoms->createAtom($name, $data);
+        $blueprint = $item->blueprint();
 
-        // Load particle blueprints and default settings.
-        $validator = new BlueprintsForm([]);
-        $callable = function () use ($validator) {
-            return $validator;
-        };
-
-        // Create configuration from the defaults.
-        $item = new Config($data, $callable);
-        $item->def('type', $name);
-        $item->def('title', $blueprints->get('name'));
-        $item->def('attributes', []);
-        $item->def('inherit', []);
-
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/atom.yaml");
-        if ($file->exists()) {
-            /** @var Outlines $outlines */
-            $outlines = $this->container['outlines'];
-
-            if ($outline !== 'default') {
-                $list = (array)$outlines->getOutlinesWithAtom($item->type, false);
-                unset($list[$outline]);
-            } else {
-                $list = [];
-            }
-
-            if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlinesWithAtom($outline, $item->id)) && $list)) {
-                $inheritable = true;
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
-
-                $inheritance->set('form.fields.outline.filter', array_keys($list));
-                $inheritance->set('form.fields.atom.atom', $name);
-
-            } elseif (!empty($inheriting)) {
-                // Already inherited by other outlines.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
-                $inheritance->set(
-                    'form.fields._note.content',
-                    sprintf($inheritance->get('form.fields._note.content'), 'atom', ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
-                );
-
-            } elseif ($outline === 'default') {
-                // Base outline.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
-
-            } else {
-                // Nothing to inherit from.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
-            }
-        }
+        // Load inheritance blueprint.
+        $inheritance = $atoms->getInheritanceBlueprint($name, $item->id);
+        $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
             'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
-            'inheritance'   => isset($inheritance) ? $inheritance : null,
-            'inheritable'   => !empty($inheritable),
+            'inheritance'   => $inheritance,
+            'inheritable'   => $inheritable,
             'item'          => $item,
             'data'          => ['particles' => [$name => $item->attributes]],
-            'blueprints'    => $blueprints,
+            'blueprints'    => $blueprint,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
             'route'         => "configurations.default.settings",
@@ -288,7 +233,7 @@ class Page extends HtmlController
             'skip'          => ['enabled']
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/atom.html.twig', $this->params)]);
     }
 
     /**
@@ -303,7 +248,7 @@ class Page extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -347,7 +292,7 @@ class Page extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         // Move atoms out of layout.
         if ($id === 'head') {
@@ -370,7 +315,7 @@ class Page extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['page']->get($id));
+            $blueprints = $this->container['page']->getBlueprintForm($id);
             $config     = new Config($data, function () use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
@@ -380,7 +325,7 @@ class Page extends HtmlController
 
     protected function getDeprecatedAtoms()
     {
-        $id     = $this->params['configuration'];
+        $id     = $this->params['outline'];
         $layout = Layout::instance($id);
 
         return $layout->atoms();

@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\File;
@@ -171,7 +171,7 @@ class Filepicker extends JsonController
 
         reset($active);
         if (!$subfolder) {
-            $response['html'] = $this->container['admin.theme']->render(
+            $response['html'] = $this->render(
                 '@gantry-admin/ajax/filepicker.html.twig', [
                     'active'    => $active,
                     'base'      => $this->base,
@@ -185,11 +185,11 @@ class Filepicker extends JsonController
         } else {
             $response['subfolder'] = !$folders[$key][$folder]->count()
                 ? false
-                : $this->container['admin.theme']->render(
+                : $this->render(
                     '@gantry-admin/ajax/filepicker/subfolders.html.twig',
                     ['folder' => $folders[$key][$folder]]
                 );
-            $response['files']     = $this->container['admin.theme']->render(
+            $response['files']     = $this->render(
                 '@gantry-admin/ajax/filepicker/files.html.twig',
                 ['files' => $files, 'value' => $this->value]
             );

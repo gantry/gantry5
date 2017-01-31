@@ -13,9 +13,8 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
@@ -56,7 +55,7 @@ class Settings extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if ($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -70,18 +69,17 @@ class Settings extends HtmlController
         $this->params += [
             'data' => $data,
             'particles' => $this->container['particles']->group(['atom']),
-            'route'  => "configurations.{$this->params['configuration']}.settings",
+            'route'  => "configurations.{$outline}.settings",
             'page_id' => $outline
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
     public function display($id)
     {
-        $outline = $this->params['configuration'];
-        $particle = $this->container['particles']->get($id);
-        $blueprints = new BlueprintsForm($particle);
+        $outline = $this->params['outline'];
+        $blueprints = $this->container['particles']->getBlueprintForm($id);
         $prefix = 'particles.' . $id;
 
         if($outline == 'default') {
@@ -98,12 +96,12 @@ class Settings extends HtmlController
             'particle' => $blueprints,
             'data' =>  ['particle' => $data->get($prefix)],
             'id' => $id,
-            'parent' => "configurations/{$this->params['configuration']}/settings",
-            'route'  => "configurations.{$this->params['configuration']}.settings.{$prefix}",
+            'parent' => "configurations/{$outline}/settings",
+            'route'  => "configurations.{$outline}.settings.{$prefix}",
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
     public function formfield($id)
@@ -118,10 +116,8 @@ class Settings extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['particles']->get($id);
-
         // Load blueprints.
-        $blueprints = new BlueprintsForm($particle);
+        $blueprints = $this->container['particles']->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -148,7 +144,8 @@ class Settings extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -158,7 +155,7 @@ class Settings extends HtmlController
                 'parent' => $path
                     ? "{$configuration}/settings/particles/{$id}/" . implode('/', $path)
                     : "{$configuration}/settings/particles/{$id}",
-                'route' => "configurations.{$this->params['configuration']}.settings.{$offset}",
+                'route' => "configurations.{$outline}.settings.{$offset}",
             ] + $this->params;
 
         if (isset($parent['key'])) {
@@ -168,7 +165,7 @@ class Settings extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
     public function validate($particle)
@@ -210,7 +207,7 @@ class Settings extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}/particles", true, true);
 
         foreach ($data as $name => $values) {
@@ -239,7 +236,7 @@ class Settings extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['particles']->get($id));
+            $blueprints = $this->container['particles']->getBlueprintForm($id);
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());

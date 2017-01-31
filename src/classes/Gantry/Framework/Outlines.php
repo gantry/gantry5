@@ -13,8 +13,8 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Framework\Base\Outlines as BaseOutlines;
+use Gantry\Component\Outline\OutlineCollection;
 
-class Outlines extends BaseOutlines
+class Outlines extends OutlineCollection
 {
 }

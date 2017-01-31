@@ -13,10 +13,10 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Response\JsonResponse;
@@ -73,13 +73,13 @@ class Layout extends HtmlController
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->prepareWidths()->toArray();
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/layouts/create.html.twig', $this->params);
     }
 
     public function index()
     {
-        $id = $this->params['configuration'];
-        $layout = $this->getLayout($id);
+        $outline = $this->params['outline'];
+        $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
         }
@@ -107,30 +107,27 @@ class Layout extends HtmlController
             }
         }
 
-        $this->params['page_id'] = $id;
+        $this->params['page_id'] = $outline;
         $this->params['layout'] = $layout->prepareWidths()->toArray();
         $this->params['preset'] = $layout->preset;
         $this->params['preset_title'] = ucwords(trim(str_replace('_', ' ', $layout->preset['name'])));
-        $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($id, '_')));
+        $this->params['id'] = ucwords(str_replace('_', ' ', ltrim($outline, '_')));
         $this->params['particles'] = $groups;
-        $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$id}.layout.switch");
+        $this->params['switcher_url'] = str_replace('.', '/', "configurations.{$outline}.layout.switch");
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/layouts/edit.html.twig', $this->params);
     }
 
     public function save()
     {
         $layout = $this->request->post->get('layout');
-        if ($layout && $layout[0] !== '{' && $layout[0] !== '[') {
-            $layout = urldecode((string)base64_decode($layout));
-        }
         $layout = json_decode($layout);
 
         if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
         }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $preset = $this->request->post->getJsonArray('preset');
 
         // Create layout from the data.
@@ -162,7 +159,7 @@ class Layout extends HtmlController
     {
         if ($type == 'atom') { return ''; }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);
         if (!$layout) {
             throw new \RuntimeException('Layout not found', 404);
@@ -196,28 +193,26 @@ class Layout extends HtmlController
             $prefix = "particles.{$type}";
             $defaults = [];
             $attributes += (array) $item->attributes;
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
-            $blueprints = new BlueprintsForm($file->content());
-            $file->free();
+            $blueprints = BlueprintForm::instance("layout/{$type}.yaml", 'gantry-admin://blueprints');
+
         } else {
             $name = $item->subtype;
             $hasBlock = true;
             $prefix = "particles.{$name}";
             $defaults = (array) $this->container['config']->get($prefix);
-            $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-            $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+
+            $blueprints = $this->container['particles']->getBlueprintForm($name);
+            $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
         }
 
         if ($hasBlock) {
-            $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-            $blockBlueprints = new BlueprintsForm($file->content());
-            $file->free();
+            $blockBlueprints = BlueprintForm::instance('layout/block.yaml', 'gantry-admin://blueprints');
         } else {
             $blockBlueprints = null;
         }
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/{$type}.yaml");
-        if ($file->exists()) {
+        $file = "gantry-admin://blueprints/layout/inheritance/{$type}.yaml";
+        if (file_exists($file)) {
             $inheritType = $particle ? 'particle' : 'section';
 
             /** @var Outlines $outlines */
@@ -236,43 +231,35 @@ class Layout extends HtmlController
 
             if (!empty($inherit['outline']) || (!($inheriting = $outlines->getInheritingOutlines($outline, [$id, $parent])) && $list)) {
                 $inheritable = true;
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
+                $inheritance = BlueprintForm::instance($file, 'gantry-admin://blueprints');
 
-                $inheritance->set('form.fields.outline.filter', array_keys($list));
+                $inheritance->set('form/fields/outline/filter', array_keys($list));
                 if (!$hasBlock) {
-                    $inheritance->undef('form.fields.include.options.block');
+                    $inheritance->undef('form/fields/include/options/block');
                 }
 
                 if ($particle) {
-                    $inheritance->set('form.fields.particle.particle', $name);
+                    $inheritance->set('form/fields/particle/particle', $name);
                 }
 
             } elseif (!empty($inheriting)) {
                 // Already inherited by other outlines.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/inherited.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
+                $inheritance = BlueprintForm::instance('layout/inheritance/messages/inherited.yaml', 'gantry-admin://blueprints');
                 $inheritance->set(
-                    'form.fields._note.content',
-                    sprintf($inheritance->get('form.fields._note.content'), $inheritType, ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
+                    'form/fields/_note/content',
+                    sprintf($inheritance->get('form/fields/_note/content'), $inheritType, ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
                 );
 
             } elseif ($outline === 'default') {
                 // Base outline.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/default.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
+                $inheritance = BlueprintForm::instance('layout/inheritance/messages/default.yaml', 'gantry-admin://blueprints');
 
             } else {
                 // Nothing to inherit from.
-                $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/inheritance/messages/empty.yaml");
-                $inheritance = new BlueprintsForm($file->content());
-                $file->free();
+                $inheritance = BlueprintForm::instance('layout/inheritance/messages/empty.yaml', 'gantry-admin://blueprints');
             }
         }
 
-        // TODO: Use blueprints to merge configuration.
         $item->attributes = (object) $attributes;
         $item->inherit = (object) $inherit;
 
@@ -296,12 +283,10 @@ class Layout extends HtmlController
         ];
 
         if ($particle) {
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle.html.twig',
-                $this->params);
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/particle.html.twig', $this->params);
         } else {
             $typeLayout = $type == 'container' ? 'container' : 'section';
-            $result = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig',
-                $this->params);
+            $result = $this->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig', $this->params);
         }
 
         return $result;
@@ -310,7 +295,7 @@ class Layout extends HtmlController
     public function listSwitches()
     {
         $this->params['presets'] = LayoutObject::presets();
-        $result = $this->container['admin.theme']->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
+        $result = $this->render('@gantry-admin/layouts/switcher.html.twig', $this->params);
 
         return new JsonResponse(['html' => $result]);
     }
@@ -322,7 +307,7 @@ class Layout extends HtmlController
             $this->undefined();
         }
 
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $layout = $this->getLayout($id);
         if (!$layout->toArray()) {
             // Layout hasn't been defined, return default layout instead.
@@ -338,7 +323,7 @@ class Layout extends HtmlController
         }
 
         $message = $deleted
-            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
+            ? $this->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -367,7 +352,7 @@ class Layout extends HtmlController
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
         $message = $deleted
-            ? $this->container['admin.theme']->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
+            ? $this->render('@gantry-admin/ajax/particles-loss.html.twig', ['particles' => $deleted])
             : null;
 
         return new JsonResponse([
@@ -462,7 +447,7 @@ class Layout extends HtmlController
 
         // Optionally send children of the object.
         if (in_array('children', $inherit['include'])) {
-            $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['configuration']);
+            $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['outline']);
             if ($clone) {
                 $item = $layout->find($inherit['section']);
             } else {

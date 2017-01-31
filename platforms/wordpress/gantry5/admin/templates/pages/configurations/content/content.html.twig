@@ -28,6 +28,7 @@
                     <div class="cards-wrapper g-grid">
                         {% for id, item in list %}
                             {% if not item.hidden %}
+                                {% set item = gantry.content.getBlueprintForm(group ~ '/' ~ id) %}
                                 {% set prefix = 'content.' ~ group ~ '.' ~ id ~ '.' %}
                                 {% set collapsed = item.form.collapsed or attribute(stored_data, prefix) %}
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}

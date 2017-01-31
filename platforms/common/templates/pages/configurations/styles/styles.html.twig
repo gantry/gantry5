@@ -86,6 +86,7 @@
         <div id="styles" class="cards-wrapper g-grid">
 
             {% for id, block in list %}
+                {% set block = gantry.styles.getBlueprintForm(id) %}
                 {% set prefix = 'styles.' ~ id ~ '.' %}
                 {% set collapsed = block.form.collapsed or attribute(stored_data, prefix) %}
                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">

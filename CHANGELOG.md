@@ -2,6 +2,8 @@
 ## xx/xx/2017
 
 1. [Common](#common)
+    1. [](#new)
+        - Added support for extending existing blueprint files without replacing them (#904)
     2. [](#improved)
         - Make Whoops not to report PHP startup errors and warnings (#1821)
 2. [Joomla](#joomla)

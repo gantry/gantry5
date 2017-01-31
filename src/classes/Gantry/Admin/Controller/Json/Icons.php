@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 class Icons extends JsonController
@@ -39,7 +39,7 @@ class Icons extends JsonController
         $list = array_unique($list);
         sort($list);
 
-        $response['html'] = $this->container['admin.theme']->render('@gantry-admin/ajax/icons.html.twig', ['icons' => $list, 'options' => $options, 'total' => count($list)]);
+        $response['html'] = $this->render('@gantry-admin/ajax/icons.html.twig', ['icons' => $list, 'options' => $options, 'total' => count($list)]);
 
         return new JsonResponse($response);
     }

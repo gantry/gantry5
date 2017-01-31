@@ -10,9 +10,8 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -54,7 +53,7 @@ class Content extends HtmlController
 
     public function index()
     {
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
 
         if($outline == 'default') {
             $this->params['overrideable'] = false;
@@ -70,14 +69,13 @@ class Content extends HtmlController
         $this->params['route']  = "configurations.{$outline}.content";
         $this->params['page_id'] = $outline;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
     public function display($group, $id = null)
     {
-        $outline = $this->params['configuration'];
-        $particle = $this->container['content']->get("{$group}/{$id}");
-        $blueprints = new BlueprintsForm($particle);
+        $outline = $this->params['outline'];
+        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
         $prefix = "content.{$group}.{$id}";
 
         if($outline == 'default') {
@@ -91,12 +89,12 @@ class Content extends HtmlController
             'particle' => $blueprints,
             'data' =>  Gantry::instance()['config']->get($prefix),
             'id' => "{$group}.{$id}", // FIXME?
-            'parent' => "configurations/{$this->params['configuration']}/content",
-            'route'  => "configurations.{$this->params['configuration']}.content.{$prefix}",
+            'parent' => "configurations/{$outline}/content",
+            'route'  => "configurations.{$outline}.content.{$prefix}",
             'skip' => ['enabled']
             ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
     }
 
     public function formfield($group, $id)
@@ -107,10 +105,8 @@ class Content extends HtmlController
             return call_user_func_array([$this, 'validate'], $path);
         }
 
-        $particle = $this->container['content']->get("{$group}/{$id}");
-
         // Load blueprints.
-        $blueprints = new BlueprintsForm($particle);
+        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
@@ -137,7 +133,8 @@ class Content extends HtmlController
 
         array_pop($path);
 
-        $configuration = "configurations/{$this->params['configuration']}";
+        $outline = $this->params['outline'];
+        $configuration = "configurations/{$outline}";
         $this->params = [
                 'configuration' => $configuration,
                 'blueprints' => $fields,
@@ -156,7 +153,7 @@ class Content extends HtmlController
             $this->params['title'] = $parent['value'];
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
     }
 
     public function validate($group, $id)
@@ -213,7 +210,7 @@ class Content extends HtmlController
         $locator = $this->container['locator'];
 
         // Save layout into custom directory for the current theme.
-        $outline = $this->params['configuration'];
+        $outline = $this->params['outline'];
         $save_dir = $locator->findResource("gantry-config://{$outline}/content", true, true);
         $filename = "{$save_dir}/{$group}/{$id}.yaml";
 
@@ -223,7 +220,7 @@ class Content extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = new BlueprintsForm($this->container['content']->get("{$group}/{$id}"));
+            $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());

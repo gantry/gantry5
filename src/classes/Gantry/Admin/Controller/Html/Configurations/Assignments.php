@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Assignments as AssignmentsObject;
 use RocketTheme\Toolbox\Event\Event;
 
@@ -21,8 +21,9 @@ class Assignments extends HtmlController
 {
     public function index()
     {
-        $outline = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($outline && $outline !== 'default' && $outline[0] !== '_') {
+        $outline = $this->params['outline'];
+
+        if ($this->hasAssignments($outline)) {
             $assignments = new AssignmentsObject($outline);
 
             $this->params['assignments'] = $assignments->get();
@@ -30,25 +31,28 @@ class Assignments extends HtmlController
             $this->params['assignment'] = $assignments->getAssignment();
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
 
     public function store()
     {
-        if (!$this->container->authorize('outline.assign')) {
+        // Authorization.
+        if (!$this->authorize('outline.assign')) {
             $this->forbidden();
         }
 
-        $outline = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($outline && ($outline === 'default' || $outline[0] === '_')) {
+        $outline = $this->params['outline'];
+        if (!$this->hasAssignments($outline)) {
             $this->undefined();
         }
 
         if (!$this->request->post->get('_end')) {
             throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
         }
+
+        // Save assignments.
         $assignments = new AssignmentsObject($outline);
-        $assignments->set($this->request->post->getArray('assignments'));
+        $assignments->save($this->request->post->getArray('assignments'));
 
         // Fire save event.
         $event = new Event;
@@ -59,5 +63,11 @@ class Assignments extends HtmlController
         $this->container->fireEvent('admin.assignments.save', $event);
 
         return '';
+    }
+
+    protected function hasAssignments($outline)
+    {
+        // Default outline and system outlines cannot have assignments.
+        return $outline !== 'default' && $outline[0] !== '_';
     }
 }

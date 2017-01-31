@@ -13,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\JsonFile;
 
@@ -32,7 +32,7 @@ class Fontpicker extends JsonController
         $this->params['fonts'] = $this->loadGoogleFonts();
         $this->params['variantsMap'] = $this->variantsMap();
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
+            'html' => $this->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
         ];
         return new JsonResponse($response);
     }

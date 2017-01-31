@@ -13,8 +13,6 @@
 
 namespace Gantry\Component\Config;
 
-use Gantry\Component\File\CompiledYamlFile;
-
 /**
  * The Compiled Blueprints class.
  */
@@ -23,10 +21,10 @@ class CompiledBlueprints extends CompiledBase
     /**
      * @var int Version number for the compiled file.
      */
-    public $version = 2;
+    public $version = 3;
 
     /**
-     * @var Blueprints  Blueprints object.
+     * @var BlueprintSchema  Blueprints object.
      */
     protected $object;
 
@@ -43,18 +41,54 @@ class CompiledBlueprints extends CompiledBase
     /**
      * Finalize configuration object.
      */
-    protected function finalizeObject() {}
+    protected function finalizeObject()
+    {
+    }
 
     /**
      * Load single configuration file and append it to the correct position.
      *
      * @param  string  $name  Name of the position.
-     * @param  string  $filename  File to be loaded.
+     * @param  array   $files  Files to be loaded.
      */
-    protected function loadFile($name, $filename)
+    protected function loadFile($name, $files)
     {
-        $file = CompiledYamlFile::instance($filename);
-        $this->object->embed($name, $file->content(), '/');
-        $file->free();
+        // Load blueprint file.
+        $blueprint = new BlueprintForm($files);
+
+        $this->object->embed($name, $blueprint->load()->toArray(), '/', true);
+    }
+
+    /**
+     * Load and join all configuration files.
+     *
+     * @return bool
+     * @internal
+     */
+    protected function loadFiles()
+    {
+        $this->createObject();
+
+        // Convert file list into parent list.
+        $list = [];
+        foreach ($this->files as $files) {
+            foreach ($files as $name => $item) {
+                $list[$name][] = $this->path . $item['file'];
+            }
+        }
+
+        // Load files.
+        foreach ($list as $name => $files) {
+            $this->loadFile($name, $files);
+        }
+
+        $this->finalizeObject();
+
+        return true;
+    }
+
+    protected function getState()
+    {
+        return $this->object->getState();
     }
 }

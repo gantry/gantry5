@@ -13,8 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Config\BlueprintsForm;
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 
 /**
@@ -51,6 +50,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -71,8 +71,8 @@ class Atoms extends JsonController
         $type = isset($item->type) ? $item->type : $type;
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($type));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($type);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $params = [
             'gantry'        => $this->container,
@@ -89,7 +89,7 @@ class Atoms extends JsonController
             'skip'          => ['enabled']
         ];
 
-        $html['g-settings-atom'] = $this->container['admin.theme']->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
+        $html['g-settings-atom'] = $this->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $params);
         if (isset($list)) {
             $html['g-inherit-atom'] = $this->renderAtomsInput($inherit ? $outline : null, $type, $selected, $list);
         }
@@ -108,6 +108,7 @@ class Atoms extends JsonController
             throw new \RuntimeException('Outline not given', 400);
         }
 
+        $this->container['outline'] = $outline;
         $this->container['configuration'] = $outline;
 
         $atoms = new \Gantry\Framework\Atoms((array) $this->container['config']->get('page.head.atoms'));
@@ -120,8 +121,8 @@ class Atoms extends JsonController
 
         $prefix = "particles.{$name}";
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-        $blueprints->set('form.fields._inherit', ['type' => 'gantry.inherit']);
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
+        $blueprints->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
 
         $item->attributes = isset($item->attributes) ? (array) $item->attributes : [];
 
@@ -139,7 +140,7 @@ class Atoms extends JsonController
             'overrideable'  => false,
         ];
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/modals/atom-preview.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/modals/atom-preview.html.twig', $this->params);
 
         return new JsonResponse(['html' => $html]);
     }
@@ -169,6 +170,6 @@ class Atoms extends JsonController
             'value' => $selected
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/atoms.html.twig', $params);
+        return $this->render('@gantry-admin/forms/fields/gantry/atoms.html.twig', $params);
     }
 }

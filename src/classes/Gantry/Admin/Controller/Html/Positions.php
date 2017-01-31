@@ -13,11 +13,10 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
 use Gantry\Component\Response\JsonResponse;
@@ -51,7 +50,7 @@ class Positions extends HtmlController
     {
         $this->params['positions'] = $this->container['positions'];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
     }
 
     public function create()
@@ -64,15 +63,12 @@ class Positions extends HtmlController
         /** @var PositionsObject $position */
         $positions = $this->container['positions'];
 
-        $title = $this->request->post->get('title', 'Untitled');
+        $title = (string) $this->request->post->get('title', 'Untitled');
         $key = (string) $this->request->post['key'];
 
         $id = $positions->create($title, $key);
 
-        $html = $this->container['admin.theme']->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['position' => ['name' => $id, 'title' => $title]]
-        );
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => ['name' => $id, 'title' => $title]]);
 
         return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
@@ -116,10 +112,7 @@ class Positions extends HtmlController
             $position = new Position($position->name, $data);
         }
 
-        $html = $this->container['admin.theme']->render(
-            '@gantry-admin/layouts/position.html.twig',
-            ['position' => $position]
-        );
+        $html = $this->render('@gantry-admin/layouts/position.html.twig', ['position' => $position]);
 
         return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
     }
@@ -183,11 +176,9 @@ class Positions extends HtmlController
         }
         $name = isset($data['options']['type']) ? $data['options']['type'] : (isset($data['particle']) ? $data['particle'] : null);
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/position/chrome.yaml");
-        $chromeBlueprints = new BlueprintsForm($file->content());
-        $file->free();
+        $chromeBlueprints = BlueprintForm::instance('position/chrome.yaml', 'gantry-admin://blueprints');
 
         $data['title'] = isset($data['title']) ? $data['title'] : $blueprints['name'];
         $data['chrome'] = isset($data['chrome']) ? $data['chrome'] : [];
@@ -212,7 +203,7 @@ class Positions extends HtmlController
             'action'        => "positions/{$position}/edit/particle/{$name}"
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
     }
 
 
@@ -231,7 +222,7 @@ class Positions extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -268,7 +259,7 @@ class Positions extends HtmlController
         $this->params['item'] = (object) $data->toArray();
         $this->params['module'] = new Module($id, $position, $data->toArray());
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/pages/positions/item.html.twig', $this->params);
 
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html, 'position' => $position]);
     }
@@ -304,7 +295,7 @@ class Positions extends HtmlController
             'route' => "positions/{$position}/edit/particle",
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+        return $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
     protected function getParticles()

@@ -13,11 +13,10 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Menu\Item;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Response\HtmlResponse;
@@ -74,7 +73,7 @@ class Menu extends HtmlController
 
     public function execute($method, array $path, array $params)
     {
-        if (!$this->container->authorize('menu.manage')) {
+        if (!$this->authorize('menu.manage')) {
             $this->forbidden();
         }
 
@@ -87,7 +86,7 @@ class Menu extends HtmlController
         try {
             $resource = $this->loadResource($id, $this->build($this->request->post));
         } catch (\Exception $e) {
-            return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
+            return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
         }
 
         // All extra arguments become the path.
@@ -119,7 +118,7 @@ class Menu extends HtmlController
                 $this->params['override'] = $item;
             }
 
-            return $this->container['admin.theme']->render('@gantry-admin//pages/menu/menu.html.twig', $this->params);
+            return $this->render('@gantry-admin//pages/menu/menu.html.twig', $this->params);
 
         } else {
             // Get layout name.
@@ -128,7 +127,7 @@ class Menu extends HtmlController
             $this->params['item'] = $item;
             $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
 
-            return $this->container['admin.theme']->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
+            return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
         }
     }
 
@@ -145,7 +144,7 @@ class Menu extends HtmlController
         $this->params['blueprints'] = $this->loadBlueprints();
         $this->params['data'] = ['settings' => $resource->settings()];
 
-        return $this->container['admin.theme']->render('@gantry-admin//pages/menu/edit.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/menu/edit.html.twig', $this->params);
     }
 
     public function save($id = null)
@@ -207,11 +206,11 @@ class Menu extends HtmlController
         $this->params = [
                 'id'         => $resource->name(),
                 'path'       => $path,
-                'blueprints' => ['fields' => $blueprints['form.fields.items.fields']],
+                'blueprints' => ['fields' => $blueprints['form/fields/items/fields']],
                 'data'       => $item->toArray() + ['path' => $path],
             ] + $this->params;
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
     }
 
     public function particle()
@@ -225,10 +224,8 @@ class Menu extends HtmlController
 
         $name = isset($data['particle']) ? $data['particle'] : null;
 
-        $file = CompiledYamlFile::instance("gantry-admin://blueprints/menu/block.yaml");
-        $block = new BlueprintsForm($file->content());
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
-        $file->free();
+        $block = BlueprintForm::instance('menu/block.yaml', 'gantry-admin://blueprints');
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -255,7 +252,7 @@ class Menu extends HtmlController
             'action'        => "menu/particle/{$name}"
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
 
 
@@ -270,7 +267,7 @@ class Menu extends HtmlController
         $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -300,21 +297,21 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['item'] = (object) $data->toArray();
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/menu/item.html.twig', $this->params);
 
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
     }
 
     public function selectModule()
     {
-        return $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
+        return $this->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
     }
 
     public function selectWidget()
     {
         $this->params['next'] = 'menu/widget';
 
-        return $this->container['admin.theme']->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
+        return $this->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
     }
 
     public function widget()
@@ -357,7 +354,7 @@ class Menu extends HtmlController
             'route' => 'menu/particle',
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
+        return $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
     public function validate($id)
@@ -417,7 +414,7 @@ class Menu extends HtmlController
             throw new \RuntimeException('Title from the Menu Item should not be empty', 400);
         }
 
-        $html = $this->container['admin.theme']->render('@gantry-admin/menu/item.html.twig', $this->params);
+        $html = $this->render('@gantry-admin/menu/item.html.twig', $this->params);
 
         return new JsonResponse(['path' => implode('/', $path), 'item' => $data->toArray(), 'html' => $html]);
     }
@@ -440,7 +437,7 @@ class Menu extends HtmlController
      * @param string $id
      * @param Config $config
      *
-     * @return MenuObject
+     * @return \Gantry\Component\Menu\AbstractMenu
      * @throws \RuntimeException
      */
     protected function loadResource($id, Config $config = null)
@@ -456,18 +453,11 @@ class Menu extends HtmlController
      *
      * @param string $name
      *
-     * @return BlueprintsForm
+     * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        $file = CompiledYamlFile::instance($filename);
-        $content = new BlueprintsForm($file->content());
-        $file->free();
-
-        return $content;
+        return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 
 
