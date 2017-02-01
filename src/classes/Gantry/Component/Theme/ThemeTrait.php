@@ -19,6 +19,7 @@ use Gantry\Component\Content\Block\ContentBlockInterface;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
@@ -61,11 +62,16 @@ trait ThemeTrait
      */
     public function registerStream($savePath = null)
     {
-        $streamName = $this->details()->addStreams();
+        $streamName = $this->details()->getStreamName();
 
         /** @var UniformResourceLocator $locator */
         $locator = self::gantry()['locator'];
         $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
+
+        /** @var Streams $streams */
+        $streams = self::gantry()['streams'];
+        $streams->register();
+
     }
 
     /**
@@ -378,7 +384,7 @@ trait ThemeTrait
     public function details()
     {
         if (!$this->details) {
-            $this->details = new ThemeDetails($this->name);
+            $this->details = ThemeDetails::instance($this->name);
         }
         return $this->details;
     }

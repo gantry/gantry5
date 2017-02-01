@@ -69,14 +69,14 @@ class CompiledConfig extends CompiledBase
     }
 
     /**
-     * @param bool $withDefaults
+     * @param bool|array $data
      * @return mixed
      */
-    public function load($withDefaults = false)
+    public function load($data = [])
     {
-        $this->withDefaults = $withDefaults;
+        $this->withDefaults = is_bool($data) ? $data : false;
 
-        return parent::load();
+        return parent::load($data);
     }
 
     /**
@@ -84,7 +84,7 @@ class CompiledConfig extends CompiledBase
      *
      * @param  array  $data
      */
-    protected function createObject(array $data = [])
+    protected function createObject(array $data)
     {
         if ($this->withDefaults && empty($data) && is_callable($this->callable)) {
             $blueprints = $this->callable;

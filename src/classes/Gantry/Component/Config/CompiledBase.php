@@ -96,17 +96,17 @@ abstract class CompiledBase
     /**
      * Load the configuration.
      *
+     * @param mixed $data
      * @return mixed
      */
-    public function load()
+    public function load($data = [])
     {
-        if ($this->object) {
-            return $this->object;
-        }
-
-        $filename = $this->createFilename();
-        if (!$this->loadCompiledFile($filename) && $this->loadFiles()) {
-            $this->saveCompiledFile($filename);
+        if (!$this->object) {
+            $data = is_array($data) ? $data : [];
+            $filename = $this->createFilename();
+            if (!$this->loadCompiledFile($filename) && $this->loadFiles($data)) {
+                $this->saveCompiledFile($filename);
+            }
         }
 
         return $this->object;
@@ -138,7 +138,7 @@ abstract class CompiledBase
      *
      * @param  array  $data
      */
-    abstract protected function createObject(array $data = []);
+    abstract protected function createObject(array $data);
 
     /**
      * Finalize configuration object.
@@ -156,12 +156,13 @@ abstract class CompiledBase
     /**
      * Load and join all configuration files.
      *
+     * @param array $data
      * @return bool
      * @internal
      */
-    protected function loadFiles()
+    protected function loadFiles(array $data)
     {
-        $this->createObject();
+        $this->createObject($data);
 
         $list = array_reverse($this->files);
         foreach ($list as $files) {

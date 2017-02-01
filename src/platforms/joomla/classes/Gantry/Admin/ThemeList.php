@@ -11,6 +11,7 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Joomla\Registry\Registry;
@@ -99,19 +100,21 @@ class ThemeList
 
         foreach ($files as $theme) {
             if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
-                $details = new ThemeDetails($theme);
-                $details->addStreams();
+                $details = ThemeDetails::instance($theme);
 
-                $details['name'] = $theme;
                 $details['title'] = $details['details.name'];
                 $details['preview_url'] = null;
                 $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
                 $details['params'] = [];
 
-                $list[$details->name] = $details;
+                $list[$theme] = $details;
 
             }
         }
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
 
         // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {
