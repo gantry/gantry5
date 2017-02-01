@@ -1,13 +1,13 @@
 name: Hydrogen
-version: "@version@"
-date: @versiondate@
+version: '@version@'
+date: '@versiondate@'
 
 gantry:
   platform: common
   engine: nucleus
 
 setup:
-  parent: hydrogen
+  parent: g5_hydrogen
   base: gantry-theme://common
   file: gantry-theme://include/theme.php
   class: \Gantry\Framework\Theme

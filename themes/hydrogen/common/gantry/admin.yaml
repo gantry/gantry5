@@ -1,15 +1,14 @@
-admin:
-  styles:
-    core:
-      - base
-      - accent
-    section:
-      - header
-      - navigation
-      - showcase
-      - feature
-      - subfeature
-      - main
-      - footer
-    configuration:
-      - breakpoints
+styles:
+  core:
+    - base
+    - accent
+  section:
+    - header
+    - navigation
+    - showcase
+    - feature
+    - subfeature
+    - main
+    - footer
+  configuration:
+    - breakpoints

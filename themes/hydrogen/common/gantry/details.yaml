@@ -7,18 +7,15 @@ author:
   link: http://www.rockettheme.com
 
 documentation:
-  link: http://www.rockettheme.com/docs/joomla/templates/hydrogen
+  link: http://docs.gantry.org/gantry5
 
 support:
-  link: http://www.rockettheme.com/forum/joomla-template-hydrogen
+  link: https://gitter.im/gantry/gantry5
 
 updates:
   link: http://updates.rockettheme.com/themes/hydrogen.yaml
 
-news:
-  link: http://news.rockettheme.com/prime/themes.yaml
-
-copyright: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
+copyright: (C) 2005 - 2017 RocketTheme, LLC. All rights reserved.
 license: GPLv2
 description: Hydrogen Theme
 

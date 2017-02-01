@@ -65,19 +65,25 @@ class CompiledTheme extends CompiledBase
     {
         $theme = $this->object->get('theme');
 
-        if ($theme) {
-            // Convert old file format into the new one.
-            $this->object->def('theme.version', (string) $this->object->get('theme.details.version'));
-            $this->object->def('theme.date', (string) $this->object->get('theme.details.date'));
-            $this->object->def('dependencies', (array) $this->object->get('theme.configuration.dependencies'));
+        if (isset($theme['details'])) {
+            $this->object->undef('theme');
 
-            $this->object->undef('theme.details.version');
-            $this->object->undef('theme.details.date');
-            $this->object->undef('theme.configuration.dependencies');
+            // Convert old file format into the new one.
+            $this->object->def('theme.name', (string) isset($theme['details']['name']) ? $theme['details']['name'] : null);
+            $this->object->def('theme.version', (string) isset($theme['details']['version']) ? $theme['details']['version'] : null);
+            $this->object->def('theme.date', (string) isset($theme['details']['date']) ? $theme['details']['date'] : null);
+            $this->object->def('theme.gantry', (array) isset($theme['configuration']['gantry']) ? $theme['configuration']['gantry'] : null);
+            $this->object->def('theme.setup', (array) isset($theme['configuration']['theme']) ? $theme['configuration']['theme'] : null);
+            $this->object->def('dependencies', (array) isset($theme['configuration']['dependencies']) ? $theme['configuration']['dependencies'] : null);
+
+            unset($theme['details']['version']);
+            unset($theme['details']['date']);
+            unset($theme['configuration']['gantry']);
+            unset($theme['configuration']['theme']);
+            unset($theme['configuration']['dependencies']);
 
             foreach ($theme as $key => $value) {
                 $this->object->def($key, $value);
-                $this->object->undef("theme.{$key}");
             }
         }
     }

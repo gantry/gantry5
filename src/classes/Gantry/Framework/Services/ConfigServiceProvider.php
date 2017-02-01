@@ -36,10 +36,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
             return $blueprints;
         };
 
-        $gantry['theme_blueprints'] = function($c) {
-            return static::themeBlueprints($c);
-        };
-
         $gantry['config'] = function($c) {
             // Make sure configuration has been set.
             if (!isset($c['configuration'])) {
@@ -58,13 +54,17 @@ class ConfigServiceProvider implements ServiceProviderInterface
             return $config;
         };
 
-        $gantry['details'] = function($c) {
+        $gantry['theme_blueprints'] = function($c) {
+            return static::themeBlueprints($c);
+        };
+
+        $gantry['theme_details'] = function($c) {
             // Make sure configuration has been set.
             if (!isset($c['theme'])) {
                 throw new \LogicException('Gantry: Please initialize theme before using $gantry["details"]', 500);
             }
 
-            return static::details($c);
+            return static::loadThemeDetails($c);
         };
     }
 
@@ -79,23 +79,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $paths = $locator->findResources('gantry-particles://');
         $files += (new ConfigFileFinder)->setBase('particles')->locateFiles($paths);
         $paths = $locator->findResources('gantry-blueprints://');
-        $files += (new ConfigFileFinder)->locateFiles($paths);
-
-        $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
-
-        return $config->load();
-    }
-
-
-    public static function themeBlueprints(Container $container)
-    {
-        /** @var UniformResourceLocator $locator */
-        $locator = $container['locator'];
-
-        $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
-
-        $files = [];
-        $paths = $locator->findResources('gantry-admin://blueprints/gantry');
         $files += (new ConfigFileFinder)->locateFiles($paths);
 
         $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
@@ -143,8 +126,23 @@ class ConfigServiceProvider implements ServiceProviderInterface
         return $config;
     }
 
+    protected static function themeBlueprints(Container $container)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $container['locator'];
 
-    protected function details(Container $container)
+        $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
+
+        $files = [];
+        $paths = $locator->findResources('gantry-admin://blueprints/gantry');
+        $files += (new ConfigFileFinder)->locateFiles($paths);
+
+        $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
+
+        return $config->load();
+    }
+
+    protected static function loadThemeDetails(Container $container)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];

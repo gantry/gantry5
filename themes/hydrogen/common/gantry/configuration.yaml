@@ -11,10 +11,12 @@ css:
     - gantry-engine://scss
   files:
     - hydrogen
+    - hydrogen-joomla
     - custom
   persistent:
     - hydrogen
   overrides:
+    - hydrogen-joomla
     - custom
 
 block-variations:
