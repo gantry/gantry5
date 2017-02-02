@@ -254,7 +254,12 @@ class Gantry5Plugin extends Plugin
     public function onAdminMenu()
     {
         $nonce = Utils::getNonce('gantry-admin');
-        $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = ['route' => "gantry/configurations/default/styles?nonce={$nonce}", 'icon' => 'fa-gantry'];
+        $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = [
+            'authorize' => 'admin.gantry',
+            'location' => 'gantry',
+            'route' => "gantry/configurations/default/styles?nonce={$nonce}",
+            'icon' => 'fa-gantry'
+        ];
     }
 
     /**
