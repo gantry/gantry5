@@ -72,7 +72,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         $gantry = Gantry::instance();
 
         /** @var Theme $theme */
-        $theme = $gantry['theme'];
+        $theme = isset($gantry['theme']) ? $gantry['theme'] : null;
 
         /** @var Document $document */
         $document = $gantry['document'];
@@ -80,7 +80,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         foreach ($styles as $key => $style) {
             if (isset($style['href'])) {
                 $url = $style['href'];
-                if (preg_match('|\.scss$|', $url)) {
+                if ($theme && preg_match('|\.scss$|', $url)) {
                     // Compile SCSS files.
                     $url = $theme->css(basename($url, '.scss'));
                 }
