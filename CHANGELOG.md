@@ -9,6 +9,7 @@
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
+        - Fixed particle button styling issues in Advanced Module Manager
         - Fixed fatal error when editing gantry menu item or particle module and Gantry theme isn't set to default (#1845)
 
 # 5.4.6

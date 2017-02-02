@@ -59,32 +59,32 @@ body.com_gantry5 > div:last-child[style^="position: absolute; z-index: -1; top: 
   display: none;
 }
 
-body.com_modules #g5-container, body.com_menus #g5-container {
+body.com_modules #g5-container, body.com_advancedmodules #g5-container, body.com_menus #g5-container {
   font-size: inherit;
 }
-body.com_modules #g5-container .inner-container, body.com_menus #g5-container .inner-container {
+body.com_modules #g5-container .inner-container, body.com_advancedmodules #g5-container .inner-container, body.com_menus #g5-container .inner-container {
   color: inherit;
   margin: 0;
   box-shadow: none;
 }
-body.com_modules #g5-container .main-block, body.com_menus #g5-container .main-block {
+body.com_modules #g5-container .main-block, body.com_advancedmodules #g5-container .main-block, body.com_menus #g5-container .main-block {
   background-color: inherit;
 }
-body.com_modules #g5-container .g-content, body.com_menus #g5-container .g-content {
+body.com_modules #g5-container .g-content, body.com_advancedmodules #g5-container .g-content, body.com_menus #g5-container .g-content {
   margin: 0;
   padding: 0;
 }
-body.com_modules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
+body.com_modules #g5-container .g-instancepicker-title, body.com_advancedmodules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
   font-size: 1rem;
   font-style: italic;
   margin-right: 0.5rem;
   vertical-align: middle;
   display: inline-block;
 }
-body.com_modules #g5-container .g-instancepicker-title:empty, body.com_menus #g5-container .g-instancepicker-title:empty {
+body.com_modules #g5-container .g-instancepicker-title:empty, body.com_advancedmodules #g5-container .g-instancepicker-title:empty, body.com_menus #g5-container .g-instancepicker-title:empty {
   margin-right: 0;
 }
-body.com_modules #g5-container .g-instancepicker-title + .button, body.com_menus #g5-container .g-instancepicker-title + .button {
+body.com_modules #g5-container .g-instancepicker-title + .button, body.com_advancedmodules #g5-container .g-instancepicker-title + .button, body.com_menus #g5-container .g-instancepicker-title + .button {
   display: inline-block;
   vertical-align: middle;
 }
