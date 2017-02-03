@@ -21,9 +21,7 @@ class Devprod extends JsonController
 {
     public function store()
     {
-        $global = $this->container['global'];
-
-        $production = ($global->get('production', 0) + 1) & 1;
+        $production = intval((bool)$this->request->post['mode']);
 
         // Fire save event.
         $event = new Event;
