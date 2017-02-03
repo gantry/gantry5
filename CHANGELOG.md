@@ -11,10 +11,13 @@
         - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
         - Fixed particle button styling issues in Advanced Module Manager
         - Fixed fatal error when editing gantry menu item or particle module and Gantry theme isn't set to default (#1845)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Add support for Bedrock (#1429)
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed `Gantry 5` menu item in the Grav Admin Panel is not being highlighted (#1840), requires Admin plugin v1.2.11
-        - Fixed issue in Production / Development Toggle (#1846)
+        - Fixed issue with Production / Development Toggle (#1846)
     
 # 5.4.6
 ## 26/01/2017

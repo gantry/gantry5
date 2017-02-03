@@ -123,7 +123,8 @@ class Document extends HtmlDocument
         static $path;
 
         if (!isset($path)) {
-            $url = \get_site_url();
+            // Support for WordPress core files stored in a non-root directory.
+            $url = defined('WP_HOME') && WP_HOME ? WP_HOME : \get_site_url();
             $components = parse_url($url);
 
             $path = !empty($components['path']) ? $components['path'] : '/';
