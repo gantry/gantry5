@@ -181,7 +181,8 @@ class Menu extends AbstractMenu
             $name = trim($item->rawRoute(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
             $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
-
+            $menu_extra_data = isset($item->header()->menu_extra_data) ? $item->header()->menu_extra_data : [];
+            
             $list[$name] = [
                 'id' => $id,
                 'type' => $item->isPage() && $item->routable() ? 'link' : 'separator',
@@ -199,6 +200,8 @@ class Menu extends AbstractMenu
                 'group' => 0,
                 'columns' => [],
                 'level' => $level,
+                'page_title' => $item->title(),
+                'menu_extra_data' => $menu_extra_data,
             ];
 
             $this->pages[$name] = 1;
