@@ -6,7 +6,7 @@
         - Added support for extending existing blueprint files without replacing them (#904)
     2. [](#improved)
         - Make Whoops not to report PHP startup errors and warnings (#1821)
-        - Helium: Remove forced font color settings for Home outline and `helium-style` body class (#1783)
+        - Helium: Remove forced font color settings for Home outline and `g-helium-style` body class (#1783)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
