@@ -6,6 +6,7 @@
         - Added support for extending existing blueprint files without replacing them (#904)
     2. [](#improved)
         - Make Whoops not to report PHP startup errors and warnings (#1821)
+        - Helium: Remove forced font color settings for Home outline and `helium-style` body class (#1783)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Namespaced positions references in the DOM to avoid Joomla conflicts (#1832)
@@ -18,7 +19,7 @@
     3. [](#bugfix)
         - Fixed `Gantry 5` menu item in the Grav Admin Panel is not being highlighted (#1840), requires Admin plugin v1.2.11
         - Fixed issue with Production / Development Toggle (#1846)
-    
+
 # 5.4.6
 ## 26/01/2017
 
