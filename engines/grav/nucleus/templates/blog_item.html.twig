@@ -1,4 +1,4 @@
-{% extends "@nucleus/page.html.twig" %}
+{% extends "partials/page.html.twig" %}
 
 {% block content %}
     {% include 'partials/blog_item.html.twig' with {'blog':page.parent, 'truncate':false, 'show_date': page.parent.header.content.show_date} %}

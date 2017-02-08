@@ -1,4 +1,4 @@
-{% extends "@nucleus/page.html.twig" %}
+{% extends "partials/page.html.twig" %}
 
 {% set show_onpage_menu = header.onpage_menu == true or header.onpage_menu is null %}
 {% macro pageLinkName(text) %}{{ text|lower|replace({' ':'_'}) }}{% endmacro %}

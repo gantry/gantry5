@@ -20,6 +20,7 @@
     3. [](#bugfix)
         - Fixed `Gantry 5` menu item in the Grav Admin Panel is not being highlighted (#1840), requires Admin plugin v1.2.11
         - Fixed issue with Production / Development Toggle (#1846)
+        - Fixed missing `bottom` JS position on default page types
 
 # 5.4.6
 ## 26/01/2017
