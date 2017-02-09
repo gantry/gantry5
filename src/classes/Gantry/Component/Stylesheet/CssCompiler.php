@@ -218,10 +218,16 @@ abstract class CssCompiler implements CssCompilerInterface
         if ($this->production) {
             // Open the file to see if it contains development comment in the beginning of the file.
             $handle = fopen($path, "rb");
-            $contents = fread($handle, 14);
+            $contents = fread($handle, 36);
             fclose($handle);
 
-            if ($contents === '/* GANTRY5 DEV') {
+            if ($contents === '/* GANTRY5 DEVELOPMENT MODE ENABLED.') {
+                $this->setVariables($variables());
+                return true;
+            }
+
+            // Compare checksum comment in the file.
+            if ($contents !== $this->checksum()) {
                 $this->setVariables($variables());
                 return true;
             }
@@ -336,6 +342,17 @@ abstract class CssCompiler implements CssCompilerInterface
      * @return null|string
      */
     abstract public function findImport($url);
+
+    protected function checksum($len = 36)
+    {
+        static $checksum;
+
+        if (!$checksum) {
+            $checksum = md5(GANTRY5_VERSION . ' ' . Gantry::instance()['theme']->version);
+        }
+
+        return '/*' . substr($checksum, 0, $len - 4) . "*/";
+    }
 
     protected function createMeta($out, $md5)
     {

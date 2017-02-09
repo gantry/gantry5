@@ -130,6 +130,8 @@ class ScssCompiler extends CssCompiler
  */
 WARN;
             $css = $warning . "\n\n" . $css;
+        } else {
+            $css = "{$this->checksum()}\n{$css}";
         }
 
         $file->save($css);
