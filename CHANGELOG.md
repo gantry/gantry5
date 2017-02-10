@@ -24,6 +24,7 @@
         - Fixed issue with Production / Development Toggle (#1846)
         - Fixed missing `bottom` JS position on default page types
         - Fixed admin and nucleus translations defaulting to English (#1855)
+        - Fixed multiple new particles of the same type not being properly saved on positions page (#1790)
 
 # 5.4.6
 ## 26/01/2017
