@@ -27,6 +27,7 @@
         > li {
 
             > .g-menu-item-container {
+                text-decoration: none;
                 line-height: 1;
                 @extend %item-container;
             }
