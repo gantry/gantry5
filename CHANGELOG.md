@@ -7,6 +7,7 @@
     2. [](#improved)
         - Make Whoops not to report PHP startup errors and warnings (#1821)
         - Helium: Remove forced font color settings for Home outline and `g-helium-style` body class (#1783)
+        - Helium: Remove underline being added by Bootstrap on social icons and menu items (#1854)
     3. [](#bugfix)
         - Fixed change in core SCSS not detected after Gantry 5 update when in production mode (#1752, #1847)
 2. [Joomla](#joomla)
