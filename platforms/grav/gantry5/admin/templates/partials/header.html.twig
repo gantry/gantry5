@@ -26,8 +26,8 @@
                         <li data-g-devprod="{{ {0: dev_mode, 1: prod_mode}|json_encode|e('html_attr') }}">
                             <i class="fa fa-fw fa-wrench"></i> <span class="devprod-mode">{{ gantry.global.production ? prod_mode : dev_mode }}</span>
                             <div class="float-right">
-                                <span class="enabler" role="checkbox" aria-checked="{{ gantry.global.production == '0' ? 'false' : 'true'}}" tabindex="0" aria-label="Switches to Production Mode">
-                                <input type="hidden" name="production_mode" value="{{ gantry.global.production }}">
+                                <span class="enabler" role="checkbox" aria-checked="{{ gantry.global.production ? 'true' : 'false'}}" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_PRODUCTION_MODE_ARIA_LABEL'|trans }}">
+                                <input type="hidden" name="production_mode" value="{{ gantry.global.production ? 1 : 0 }}">
                                     <span class="toggle"><span class="knob"></span></span>
                                 </span>
                             </div>
