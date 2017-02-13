@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fix regression: `Edit All Items` removes the field values (#1869)
+        - Fixed issue where collection is not working if the field selector is nested: `main.items` (#1867)
 
 # 5.4.7
 ## 10/02/2017

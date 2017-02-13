@@ -245,6 +245,7 @@ class BlueprintForm extends BaseBlueprintForm
         $parts = [];
         $current = $this['form/fields'];
         $result = [null, null, null];
+        $prefix = '';
 
         while (($field = current($path)) !== null) {
             if (!$fields && isset($current['fields'])) {
@@ -255,16 +256,24 @@ class BlueprintForm extends BaseBlueprintForm
                 }
 
                 $current = $current['fields'];
+                $prefix = '';
                 $fields = true;
 
-            } elseif (isset($current[$field])) {
+            } elseif (isset($current[$prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current[$field];
+                $current = $current[$prefix . $field];
+                $prefix = '';
                 $fields = false;
 
-            } elseif (isset($current['.' . $field])) {
+            } elseif (isset($current['.' . $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current['.' . $field];
+                $current = $current['.' . $prefix . $field];
+                $prefix = '';
+                $fields = false;
+
+            } elseif ($field && $this->fieldExists($prefix . $field, $current)) {
+                $parts[] = array_shift($path);
+                $prefix = "{$prefix}{$field}.";
                 $fields = false;
 
             } else {
@@ -299,6 +308,7 @@ class BlueprintForm extends BaseBlueprintForm
                 // if a deep matching field is found, set it to current and continue cycling through
                 if ($inner_fields) {
                     $current = $inner_fields;
+                    $prefix = '';
                     continue;
                 }
 
@@ -308,5 +318,17 @@ class BlueprintForm extends BaseBlueprintForm
         }
 
         return $result;
+    }
+
+    protected function fieldExists($prefix, $list)
+    {
+        foreach ($list as $field => $data) {
+            $pos = strpos($field, $prefix);
+            if ($pos === 0 || ($pos === 1 && $field[0] === '.')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
