@@ -1,3 +1,10 @@
+# 5.4.8
+## xx/xx/2017
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fix regression: `Edit All Items` removes the field values (#1869)
+
 # 5.4.7
 ## 10/02/2017
 

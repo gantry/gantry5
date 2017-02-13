@@ -92,8 +92,6 @@ abstract class Finder
     /**
      * Set limit to the query.
      *
-     * If this function isn't used, RokClub will use threads per page configuration setting.
-     *
      * @param int $limit
      *
      * @return $this

@@ -5,6 +5,8 @@
 
 {% block field %}
     {% if field.is_current %}
+        {# Editing field itself, no need to append field name #}
+        {% set name = '' %}
         <div class="g-filter-actions">
             <div class="g-panel-filters" data-g-global-filter="">
                 <div class="search settings-block">
