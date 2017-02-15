@@ -23,6 +23,6 @@
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
             {% if field.list is defined %}list="{{ field.list }}"{% endif %}
             />
-            <i class="fa fa-tint"></i>
+            <i class="fa fa-tint" aria-hidden="true"></i>
         </div>
 {% endblock %}
