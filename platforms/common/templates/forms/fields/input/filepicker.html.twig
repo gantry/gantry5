@@ -20,7 +20,7 @@
             {% set picker = {'field': 'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]', 'root': (field.root|default('gantry-media://'))|e, 'filter': (field.filter|default(false))|e } %}
             <span class="input-group-btn">
                 <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label }}" data-g5-filepicker="{{ picker|json_encode()|e('html_attr') }}">
-                    <i class="fa {{ field.icon|default('fa-file-o') }}" ></i>
+                    <i class="fa {{ field.icon|default('fa-file-o') }}" aria-hidden="true" ></i>
                 </button>
             </span>
             {% block reset_field %}{{ parent() }}{% endblock %}
