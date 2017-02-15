@@ -12,10 +12,10 @@
                 <div class="search settings-block">
                     {% set filter = {'element': '.settings-param', 'title': '.settings-param-title, h4 .g-title', 'fallback': true} %}
                     <input type="text" data-g-collapse-filter="{{ filter|json_encode|e('html_attr') }}" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
-                    <i class="fa fa-fw fa-search"></i>
+                    <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                 </div>
-                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
             </div>
         </div>
         <div class="cards-wrapper g-grid">
@@ -27,9 +27,9 @@
                     <h4
                         data-g-collapse="{{ labels|merge({collapsed: false, id: id, store: false,  target: '~ .inner-params' })|json_encode|e('html_attr') }}"
                     >
-                        <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
+                        <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up" aria-hidden="true"></i></span>
                         <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="g-title">{{ title }}</span>
-                        <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
+                        <i class="fa fa-pencil font-small" aria-hidden="true"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -66,11 +66,11 @@
                                     {% if (field.ajax == true) %}
                                         <li data-collection-item="{{ field.value }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
-                                            {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
+                                            {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
-                                            {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
-                                            {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
-                                            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
+                                            {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
+                                            {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                            <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         {% block collection_fields %}
@@ -105,15 +105,15 @@
                     <div>
                         <ul style="display: none">
                             <li data-collection-nosort="" data-collection-template="{{ field.value }}" style="display: none;">
-                                {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
+                                {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
-                                {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
-                                {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
-                                <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                                {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
+                                {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" data-title-edit=""></i>
                             </li>
                         </ul>
-                        {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>{% endif %}
-                        <a href="{{ gantry.route(field_route) }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
+                        {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small" aria-hidden="true"></i></span>{% endif %}
+                        <a href="{{ gantry.route(field_route) }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small" aria-hidden="true"></i></a>
                     </div>
                     <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
                     {% endblock %}
