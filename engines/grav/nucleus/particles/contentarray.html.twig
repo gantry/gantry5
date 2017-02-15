@@ -66,18 +66,18 @@
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'published' %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.publish_date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.publish_date|date(display.date.format) }}
                                                 {% elseif display.date.enabled == 'modified' %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.modified|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.modified|date(display.date.format) }}
                                                 {% else %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
                                         {% if display.author.enabled and (page.username or page.author) %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ page.author ?: page.username }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ page.author ?: page.username }}
                                             </span>
                                         {% endif %}
 
@@ -86,10 +86,10 @@
                                                 {% for category in page.taxonomy.category %}
                                                     {% if display.category.route %}
                                                         <a href="{{ base_url ~ display.category.route }}">
-                                                            <i class="fa fa-folder-open"></i>{{ category|raw }}
+                                                            <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
                                                         </a>
                                                     {% else %}
-                                                        <i class="fa fa-folder-open"></i>{{ category|raw }}
+                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
                                                     {% endif %}
                                                 {% endfor %}
                                             </span>
