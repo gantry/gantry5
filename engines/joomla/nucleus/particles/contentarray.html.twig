@@ -78,18 +78,18 @@
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'published' %}
-                                                    <i class="fa fa-clock-o"></i>{{ article.publish_up|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.publish_up|date(display.date.format) }}
                                                 {% elseif display.date.enabled == 'modified' %}
-                                                    <i class="fa fa-clock-o"></i>{{ article.modified|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.modified|date(display.date.format) }}
                                                 {% else %}
-                                                    <i class="fa fa-clock-o"></i>{{ article.created|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.created|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
                                         {% if display.author.enabled %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ article.author.name }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ article.author.name }}
                                             </span>
                                         {% endif %}
 
@@ -99,17 +99,17 @@
                                                 {% set cat = article.categories|last %}
                                                 {% if category_link %}
                                                     <a href="{{ cat.route }}">
-                                                        <i class="fa fa-folder-open"></i>{{ cat.title }}
+                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ cat.title }}
                                                     </a>
                                                 {% else %}
-                                                    <i class="fa fa-folder-open"></i>{{ cat.title }}
+                                                    <i class="fa fa-folder-open" aria-hidden="true"></i>{{ cat.title }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
                                         {% if display.hits.enabled %}
                                             <span class="g-array-item-hits">
-                                                <i class="fa fa-eye"></i>{{ article.hits }}
+                                                <i class="fa fa-eye" aria-hidden="true"></i>{{ article.hits }}
                                             </span>
                                         {% endif %}
                                     </div>
