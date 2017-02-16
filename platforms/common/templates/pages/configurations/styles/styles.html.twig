@@ -79,7 +79,7 @@
                     <i class="fa fa-fw fa-search"></i>
                 </div>
                 <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
             </div>
         </div>
 
@@ -92,7 +92,7 @@
                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                     <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}">
                         <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right">
-                            <i class="fa fa-fw  fa-caret-up"></i>
+                            <i class="fa fa-fw fa-caret-up" aria-hidden="true"></i>
                         </span>
                         <span class="g-title">{{ block.name }}</span>
                     </h4>
@@ -113,9 +113,9 @@
                    class="button button-secondary"
                    data-ajax-action=""
                 >
-                    <i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
+                    <i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
                 </a>
-                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
+                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
             </span>
         </div>
     </form>
