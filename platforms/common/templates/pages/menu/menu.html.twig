@@ -5,11 +5,11 @@
     <div class="menu-header">
         <span class="float-right">
             <button class="button button-back-to-conf">
-                <i class="fa fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
+                <i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
             </button>
             {% if gantry.authorize('menu.edit', id) %}
             <button type="submit" class="button button-primary button-save" data-save="Menu">
-                <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span>
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span>
             </button>
             {% endif %}
         </span>
@@ -40,31 +40,31 @@
             {% if gantry.platform.has('modules') %}
             <li data-mm-blocktype="module" data-mm-id="__module">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o"></i>
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_MODULE'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/module') }}">
-                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_MODULE_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_MODULE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
                 </a>
             </li>
             {% elseif gantry.platform.has('widgets') %}
             <li data-mm-blocktype="widget" data-mm-id="__widget">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o"></i>
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_WIDGET'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/widget') }}">
-                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_WIDGET_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_WIDGET_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
                 </a>
             </li>
             {% endif %}
             <li data-mm-blocktype="particle" data-mm-id="__particle">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o"></i>
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/particle') }}">
-                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_PARTICLE_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_PARTICLE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
                 </a>
             </li>
         </ul>
