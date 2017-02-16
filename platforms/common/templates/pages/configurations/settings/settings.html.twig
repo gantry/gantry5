@@ -8,7 +8,7 @@
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
                     <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
-                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
+                    <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                 </span>
                 {% for group, list in particles if list and (group != 'hidden') %}
                     <h2 class="page-title">
@@ -19,9 +19,9 @@
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
                                 <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." role="search" />
-                                <i class="fa fa-fw fa-search"></i>
+                                <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                             </div>
-                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
                             <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
