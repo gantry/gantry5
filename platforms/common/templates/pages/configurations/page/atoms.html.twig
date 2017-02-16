@@ -8,7 +8,7 @@
         <li data-atom-type="{{ atom }}"
             data-atom-picked="{{ { 'title': label, 'type': atom, 'attributes': gantry.config.get('particles.' ~ atom) } |json_encode|e('html_attr')}}"
         >
-            <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
+            <i class="fa fa-fw fa-hand-stop-o drag-indicator" aria-hidden="true"></i>
             <span class="atom-title">{{ label }}</span>
             <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom)|e }}" class="atom-settings config-cog">
                 <i aria-label="{{ 'GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
