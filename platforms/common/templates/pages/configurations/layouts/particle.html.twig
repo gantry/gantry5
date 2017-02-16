@@ -20,7 +20,7 @@
             {% if extra %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}" aria-hidden="true"></i>{% endif %}
                     {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>
