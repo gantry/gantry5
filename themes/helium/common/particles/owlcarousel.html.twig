@@ -50,7 +50,7 @@
                 loop: true,
                 {% if particle.nav == 'enable' %}
                 nav: true,
-                navText: ['{{ particle.prevText|default('<i class="fa fa-chevron-left"></i>')|e('js') }}', '{{ particle.nextText|default('<i class="fa fa-chevron-right" aria-hidden="true"></i>')|e('js') }}'],
+                navText: ['{{ particle.prevText|default('<i class="fa fa-chevron-left" aria-hidden="true"></i>')|e('js') }}', '{{ particle.nextText|default('<i class="fa fa-chevron-right" aria-hidden="true"></i>')|e('js') }}'],
                 {% else %}
                 nav: false,
                 {% endif %}
