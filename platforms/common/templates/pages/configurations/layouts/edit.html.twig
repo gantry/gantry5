@@ -36,7 +36,7 @@
                                 {% endif %}
                             >
                                 <span class="particle-icon" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>
-                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
+                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" aria-hidden="true" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
                                 </span>
                                 <span class="particle-title" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>{{ item.name }}</span>
                             </li>
