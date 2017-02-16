@@ -11,7 +11,7 @@
             <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
             <span class="atom-title">{{ label }}</span>
             <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom)|e }}" class="atom-settings config-cog">
-                <i aria-label="{{ 'GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                <i aria-label="{{ 'GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
             </a>
         </li>
         {%- endfor -%}
