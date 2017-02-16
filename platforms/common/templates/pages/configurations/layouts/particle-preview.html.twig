@@ -38,7 +38,7 @@
     {# Block Pane #}
     {% if extra %}
     <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
-        <div class="g-particle-preview alert alert-info"><i class="fa fa-fw fa-eye"></i> {{ 'GANTRY5_PLATFORM_PARTICLE_PREVIEW'|trans }}</div>
+        <div class="g-particle-preview alert alert-info"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PARTICLE_PREVIEW'|trans }}</div>
 
         {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
             gantry: gantry,
