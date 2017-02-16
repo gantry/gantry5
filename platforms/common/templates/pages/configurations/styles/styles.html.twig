@@ -14,10 +14,10 @@
                class="button button-secondary"
                data-ajax-action=""
             >
-                <i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
+                <i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
             </a>
             <button type="submit" class="button button-primary button-save" data-save="Styles">
-                <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span>
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span>
             </button>
         </span>
 
@@ -30,7 +30,7 @@
         >
             <span class="title">{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
             <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right" data-tip-spacing="0">
-                <i class="fa fa-fw  fa-caret-up"></i>
+                <i class="fa fa-fw  fa-caret-up" aria-hidden="true"></i>
             </span>
         </h2>
 
@@ -56,7 +56,7 @@
                             {%- endfor %})">
                     </span>
                                 {% endif %}
-                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description|trans|raw }}"><i class="fa fa-fw fa-eye"></i></button>
+                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description|trans|raw }}"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>
                                 <span class="swatch-matched"><i class="fa fa-fw fa-star" aria-hidden="true"></i></span>
                             </a>
                             <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star" aria-hidden="true"></i></span> {{ preset.description|trans|raw }}</span>
