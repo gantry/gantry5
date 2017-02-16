@@ -2,7 +2,7 @@
     <div class="g-block">
         <div class="g-content clearfix">
             <span class="theme-title">
-                <i class="fa fa-tint"></i>
+                <i class="fa fa-tint" aria-hidden="true"></i>
                 {{ 'GANTRY5_PLATFORM_THEME'|trans }}: {{ gantry.theme.title }}
                 <small>(v{{ gantry.theme.version }} / {{ gantry.theme.name }})</small>
             </span>
@@ -15,34 +15,34 @@
                        data-g5-ajaxify-target="[data-g5-content]"
                        href="{{ gantry.route('configurations') }}"
                     >
-                        <i class="fa fa-fw fa-th"></i> {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
+                        <i class="fa fa-fw fa-th" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
                     </a>
                 </li>
                 {#TODO: Hide positions for the moment#}
                 {#<li {{ (location == 'positions') ? 'class="active"' }}>
                     <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('positions') }}">
-                        <i class="fa fa-fw fa-object-group"></i> <span>{{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}</span>
+                        <i class="fa fa-fw fa-object-group" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}</span>
                     </a>
                 </li>#}
                 {% if gantry.authorize('menu.manage') %}
                 <li {{ (location == 'menu') ? 'class="active"' }}>
                     <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('menu') }}">
-                        <i class="fa fa-fw fa-bars"></i> <span>{{ 'GANTRY5_PLATFORM_MENU'|trans }}</span>
+                        <i class="fa fa-fw fa-bars" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_MENU'|trans }}</span>
                     </a>
                 </li>
                 {% endif %}
                 <li {{ (location == 'about') ? 'class="active"' }}>
                     <a data-g5-ajaxify="" data-g5-ajaxify-target="[data-g5-content]" href="{{ gantry.route('about') }}">
-                        <i class="fa fa-fw fa-question-circle"></i> <span>{{ 'GANTRY5_PLATFORM_ABOUT'|trans }}</span>
+                        <i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_ABOUT'|trans }}</span>
                     </a>
                 </li>
                 <li data-g-extras data-g-popover data-g-popover-style="extras" aria-haspopup="true" aria-expanded="false" role="presentation">
-                    <a href="#"><i class="fa fa-fw fa-cog"></i> {{ 'GANTRY5_PLATFORM_EXTRAS'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></a>
+                    <a href="#"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXTRAS'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></a>
                     <ul data-popover-content class="hidden" tabindex="0">
                         {% set prod_mode = 'GANTRY5_PLATFORM_PRODUCTION'|trans %}
                         {% set dev_mode = 'GANTRY5_PLATFORM_DEVELOPMENT'|trans %}
                         <li data-g-devprod="{{ {0: dev_mode, 1: prod_mode}|json_encode|e('html_attr') }}">
-                            <i class="fa fa-fw fa-wrench"></i> <span class="devprod-mode">{{ gantry.global.production ? prod_mode : dev_mode }}</span>
+                            <i class="fa fa-fw fa-wrench" aria-hidden="true"></i> <span class="devprod-mode">{{ gantry.global.production ? prod_mode : dev_mode }}</span>
                             <div class="float-right">
                                 <span class="enabler" role="checkbox" aria-checked="{{ gantry.global.production ? 'true' : 'false'}}" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_PRODUCTION_MODE_ARIA_LABEL'|trans }}">
                                 <input type="hidden" name="production_mode" value="{{ gantry.global.production ? 1 : 0 }}">
@@ -56,7 +56,7 @@
                                data-ajax-action=""
                                data-ajax-action-method="get"
                                data-ajax-action-indicator="li[data-g-extras]"
-                            ><i class="fa fa-fw fa-recycle"></i> {{ 'GANTRY5_PLATFORM_CLEAR_CACHE'|trans }}
+                            ><i class="fa fa-fw fa-recycle" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_CLEAR_CACHE'|trans }}
                             </a>
                         </li>
                         {% if settings_url %}
@@ -65,7 +65,7 @@
                                    href="{{ settings_url }}"
                                    data-settings-key="{{ settings_key }}"
                                 >
-                                    <i class="fa fa-fw fa-{{ gantry.platform.name }}"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}
+                                    <i class="fa fa-fw fa-{{ gantry.platform.name }}" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}
                                 </a>
                             </li>
                         {% endif %}
