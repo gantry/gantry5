@@ -30,7 +30,7 @@
                         <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
                         <span class="atom-title">{{- atom.title -}}</span>
                         <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom.type) }}" class="atom-settings config-cog">
-                            <i aria-label="Configure Atom Settings" class="fa fa-cog"></i>
+                            <i aria-label="Configure Atom Settings" class="fa fa-cog" aria-hidden="true"></i>
                         </a>
                     </li>
                 {%- endfor -%}
