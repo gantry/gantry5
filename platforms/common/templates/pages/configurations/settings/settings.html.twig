@@ -22,7 +22,7 @@
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                             <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@
                                         data-g-collapse-id="{{ prefix }}"
                                         {{ overrideable ? ' class="card-overrideable"' : '' }}
                                     >
-                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
+                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up" aria-hidden="true"></i></span>
                                         <span class="g-title">{{ particle.name }}</span>
                                         {% if particle.form.fields.enabled %}
                                             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': data.get(prefix ~ 'enabled')} %}
@@ -62,7 +62,7 @@
                 <div class="g-footer-actions">
                     <span class="float-right">
                         <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
-                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
+                            <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                     </span>
                 </div>
             </div>
