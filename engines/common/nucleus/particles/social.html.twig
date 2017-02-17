@@ -4,7 +4,7 @@
     {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
     <div class="g-social {{ particle.css.class }}">
         {% for item in particle.items %}
-            <a target="{{ particle.target|default('_blank')|e }}" href="{{ item.link|e }}" title="{{ item.text|e }}">
+            <a target="{{ particle.target|default('_blank')|e }}" href="{{ item.link|e }}" title="{{ item.text|e }}" aria-label="{{ item.text|e }}">
                 {% if particle.display in ['both', 'icons_only'] %}<span class="{{ item.icon|e }}"></span>{% endif %}
                 {% if particle.display in ['both', 'text_only'] %}<span class="g-social-text">{{ item.text|e }}</span>{% endif %}
             </a>
