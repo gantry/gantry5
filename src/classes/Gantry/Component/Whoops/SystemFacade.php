@@ -13,9 +13,7 @@
 
 namespace Gantry\Component\Whoops;
 
-use Whoops\Util\SystemFacade;
-
-class System extends SystemFacade
+class SystemFacade extends \Whoops\Util\SystemFacade
 {
     protected $registeredPatterns;
     protected $whoopsErrorHandler;
