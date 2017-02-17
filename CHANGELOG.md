@@ -1,3 +1,13 @@
+# 5.4.9
+## 14/02/2017
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed `{% pageblock bottom %}...{% endpageblock %}` not working from atoms
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed placeholder having the same color as real input values (#1876)
+
 # 5.4.8
 ## 14/02/2017
 

@@ -18,24 +18,6 @@
     {% endblock -%}
 {% endassets -%}
 
-{%- set atoms %}
-    {% if gantry.config.page.head.atoms %}
-        {% for atom in gantry.config.page.head.atoms %}
-            {% try %}
-                {% if atom.attributes.enabled is null or atom.attributes.enabled %}
-                    {% include ['particles/' ~ atom.type ~ '.html.twig', '@particles/' ~ atom.type ~ '.html.twig'] with { particle: atom.attributes }  %}
-                {% endif %}
-            {% catch %}
-                {# TODO: Add message if atom is missing. #}
-            {% endtry %}
-        {% endfor %}
-    {% endif %}
-
-    {% if gantry.config.page.assets %}
-        {% include '@particles/assets.html.twig' with { particle: gantry.config.page.assets|merge({'enabled': 1 }) } %}
-    {% endif %}
-{% endset -%}
-
 <head>
     {% block head_meta %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
