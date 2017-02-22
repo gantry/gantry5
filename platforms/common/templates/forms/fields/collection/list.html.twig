@@ -38,6 +38,7 @@
             {% endfor %}
         </div>
     {% else %}
+
         {% set can_reorder = field.reorder ?? true %}
         {% set can_remove = field.deletion ?? true %}
         {% set can_addnew = field.add_new ?? true %}
@@ -46,7 +47,7 @@
                 {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
             {% endif %}
             {% block contents %}
-                {% set field_route = (route ~ '.' ~ prefix ~ '.' ~ field.name)|replace('.', '/') %}
+                {% set field_route = (route ~ '.' ~ (prefix ? prefix ~ '.') ~ name)|replace('.', '/') %}
                 <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
@@ -57,7 +58,7 @@
                         {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                     {% endblock %}
                 </span>
-                <div class="settings-param-field" data-field-name="{{ field.name }}">
+                <div class="settings-param-field" data-field-name="{{ name }}">
                     {% block input -%}
                         <div class="g5-collection-wrapper">
                         <ul>
@@ -76,22 +77,24 @@
                                         {% block collection_fields %}
                                             <div data-g5-collections="">
                                                 {% for childName, child in field.fields %}
+                                                    {% set container = child.type starts with 'container.' %}
                                                     {% if childName starts with '.' %}
                                                         {% set childKey = childName|trim('.') %}
-                                                        {% set childValue = nested(val, childName[1:]) %}
+                                                        {% set childValue = container ? val : nested(val, childKey) %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
                                                         {% set childKey = childName %}
-                                                        {% set childValue = nested(data, scope ~ childName) %}
+                                                        {% set childValue = container ? val : nested(data, scope ~ childKey) %}
                                                         {% set childName = childName|replace({'*': key}) %}
                                                     {% endif %}
+
                                                     {% if childName not in skip and not child.skip and field.value != childKey %}
                                                          {% if child.type == 'key' %}
                                                              {% include 'forms/fields/key/key.html.twig'
                                                              with {name: childName, field: child, value: key} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
+                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: (prefix ? prefix ~ '.') ~ childName} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}

@@ -7,6 +7,8 @@
           - If you have overridden `partials/page.html.twig` or `partials/page_head.html.twig`, please update them
     3. [](#bugfix)
         - Fixed `{% pageblock bottom %}...{% endpageblock %}` not working from atoms
+        - Fixed issues with nested `collection.list` items after upgrading to Gantry 5.4.7 (#1877)
+        - Fixed issues with `container.set` and `container.tabs` (#1882)
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed placeholder having the same color as real input values (#1876)

@@ -11,19 +11,20 @@
     <div{{ field.id ? (' id="' ~ field.id|e ~ '"')|raw }}>
     {% if field.fields %}
         {% for childName, child in field.fields %}
+            {% set container = child.type starts with 'container.' %}
             {% if childName starts with '.' %}
-                {% set childValue = current_value[childName[1:]] %}
-                {% set childDefault = default_value[childName[1:]] %}
+                {% set childValue = container ? current_value : current_value[childName[1:]] %}
+                {% set childDefault = container ? default_value : default_value[childName[1:]] %}
                 {% set childName = name ~ childName %}
             {% else %}
-                {% set childValue = nested(data, scope ~ childName) %}
-                {% set childDefault = nested(defaults, scope ~ childName) %}
+                {% set childValue = container ? current_value : nested(data, scope ~ childName) %}
+                {% set childDefault = container ? default_value : nested(defaults, scope ~ childName) %}
             {% endif %}
-            {% set childPrefix = prefix ~ childName ~ '.' %}
+            {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
 
-            {% if child.type %}
+            {% if child.type and not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
                 {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix } %}
+                with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, overrideable: overrideable and child_overrideable } %}
             {% endif %}
         {% endfor %}
     {% endif %}

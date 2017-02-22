@@ -41,21 +41,24 @@
                          aria-labelledby="{{ fieldId ~ loop.index0 ~ '-tab'|lower }}"
                          aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}">
                         {% for childName, child in pane %}
+                            {% set container = child.type starts with 'container.' %}
                             {% if childName starts with '.' %}
-                                {% set childName = childName|trim('.') %}
+                                {% set childKey = childName|trim('.') %}
+                                {% set childValue = container ? value : nested(value, childKey) %}
+                                {% set childDefault = null %}
+                            {% else %}
+                                {% set childKey = childName %}
+                                {% set childValue = container ? value : nested(data, scope ~ childKey) %}
+                                {% set childDefault = container ? defaults : nested(defaults, scope ~ childKey) %}
                             {% endif %}
-
                             {% set childName = childName|trim('.') %}
-                            {% set childValue = nested(data, scope ~ childName) %}
-                            {% set childDefault = nested(defaults, scope ~ childName) %}
-                            {% set childPrefix = prefix ~ childName ~ '.' %}
 
                             {% if child.type %}
-                                {% set child_overrideable = overrideable and (child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true)) %}
+                                {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
 
-                                {% if not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
+                                {% if child.type and not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
                                     {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                        with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, prefix: childPrefix, overrideable: child_overrideable } %}
+                                        with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, overrideable: overrideable and child_overrideable } %}
                                 {% endif %}
                             {% endif %}
                         {% endfor %}

@@ -49,7 +49,7 @@ class Platform extends BasePlatform
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getCachePath()
     {

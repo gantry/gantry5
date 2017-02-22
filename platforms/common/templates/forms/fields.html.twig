@@ -8,13 +8,15 @@
     {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
 
 {% else %}
+
     {% for name, field in blueprints.fields %}
         {% if name starts with '.' %}
             {% set name = name[1:] %}
         {% endif %}
 
-        {% set current_value = nested(data, scope ~ name) %}
-        {% set default_value = nested(defaults, scope ~ name) %}
+        {% set container = field.type starts with 'container.' %}
+        {% set current_value = container ? nested(data, scope|trim('.')) : nested(data, scope ~ name) %}
+        {% set default_value = container ? nested(defaults, scope|trim('.')) : nested(defaults, scope ~ name) %}
         {% set has_value = current_value is not null %}
         {% set field_overrideable = field.overridable is defined ? field.overridable : (field.overrideable is defined ? field.overrideable : true) %}
 

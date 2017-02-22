@@ -34,19 +34,22 @@ class BlueprintSchema extends BlueprintSchemaBase
     ];
 
     protected $types = [
-            'container.set' => [
+        'container.set' => [
             'input@' => false
         ],
-            'separator.note' => [
+        'container.tabs' => [
             'input@' => false
         ],
-            'separator.separator' => [
+        'separator.note' => [
             'input@' => false
         ],
-            'key' => [
+        'separator.separator' => [
             'input@' => false
         ],
-            'collection.list' => [
+        'key' => [
+            'input@' => false
+        ],
+        'collection.list' => [
             'array' => true
         ]
     ];
