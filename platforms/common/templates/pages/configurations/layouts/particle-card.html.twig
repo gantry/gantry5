@@ -2,7 +2,7 @@
     <h4>
         {% if editable %}
             <span data-title-editable="{{ item.title|trim }}" class="title">{{ item.title|trim }}</span>
-            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title|trim) }}" data-title-edit=""></i>
+            <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title|trim) }}" data-title-edit=""></i>
         {% else %}
             {{ title }}
         {% endif %}

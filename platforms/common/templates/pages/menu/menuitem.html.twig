@@ -5,7 +5,7 @@
     <div class="card settings-block">
         <h4>
             <span data-title-editable="{{ data.title }}" class="title">{{ data.title }}</span>
-            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.title) }}" data-title-edit=""></i>
+            <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.title) }}" data-title-edit=""></i>
             {% if blueprints.fields['.enabled'] %}
             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.fields['.enabled'], 'value': data.enabled} %}
             {% endif %}

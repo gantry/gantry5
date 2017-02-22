@@ -429,7 +429,7 @@ ready(function() {
                         section.parent('li').after(section.parent('ol').find('> li'));
                     }
 
-                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"]').bottom(section);
+                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"][aria-hidden="true"]').bottom(section);
 
                     if (collapsed) {
                         section.nextSibling().style({
@@ -1221,7 +1221,7 @@ var Atom = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
             subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i aria-label="Configure Atom Settings" class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i aria-label="Configure Atom Settings" class="fa fa-cog" aria-hidden="true" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
     hasChanged: function(state, parent) {
@@ -1264,7 +1264,7 @@ var Atoms = new prime({
     },
 
     layout: function() {
-        this.deprecated = '<div class="atoms-notice">Looking for Atoms? To make it easier we moved them in the <a href="#"><i class="fa fa-fw fa-list-alt"></i> Page Settings</a>.</div>';
+        this.deprecated = '<div class="atoms-notice">Looking for Atoms? To make it easier we moved them in the <a href="#"><i class="fa fa-fw fa-list-alt" aria-hidden="true"></i> Page Settings</a>.</div>';
 
         return '<div class="atoms-section" style="display: none;" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
     },
@@ -1664,7 +1664,7 @@ var Container = new prime({
             actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
-        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Container') + '" data-tip-place="top-left"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Container') + '" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
+        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Container') + '" data-tip-place="top-left"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Container') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 
@@ -1765,7 +1765,7 @@ var Offcanvas = new prime({
             klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
         }
 
-        return '<div class="offcanvas-section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getAttribute('name') + '">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Offcanvas') + '" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
+        return '<div class="offcanvas-section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getAttribute('name') + '">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" class="fa fa-plus" aria-hidden="true"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Offcanvas') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
     },
 
     getId: function() {
@@ -1813,7 +1813,7 @@ var Particle = new prime({
             }
         }
 
-        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Particle') + '" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '" aria-hidden="true"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Particle') + '" class="fa fa-cog" aria-hidden="true" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
     enableInheritance: function() {
@@ -2038,7 +2038,7 @@ var Section = new prime({
             }
         }
 
-        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getTitle() + '">' + this.getTitle() + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" class="fa fa-plus"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Section') + '" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getTitle() + '">' + this.getTitle() + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" class="fa fa-plus" aria-hidden="true"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Section') + '" class="fa fa-cog" aria-hidden="true" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
     },
 
     adopt: function(child) {
@@ -2052,7 +2052,7 @@ var Section = new prime({
             content = '';
         }
 
-        return '<div class="g-inherit g-section-inherit"><div class="g-inherit-content" ' + this.addInheritanceTip(true) + '><i class="fa fa-lock"></i> ' + content + '</div></div>';
+        return '<div class="g-inherit g-section-inherit"><div class="g-inherit-content" ' + this.addInheritanceTip(true) + '><i class="fa fa-lock" aria-hidden="true"></i> ' + content + '</div></div>';
     },
 
     enableInheritance: function() {
@@ -7648,7 +7648,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
-            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o"></i>').bottom(li),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -7775,7 +7775,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
+                text.title('Error').html('<i class="fa fa-exclamation" aria-hidden="true"></i>').parent('[data-file-uploadprogress]').popover({
                     content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
@@ -7801,7 +7801,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.html('<i class="fa fa-check"></i>');
+                text.html('<i class="fa fa-check" aria-hidden="true"></i>');
 
                 setTimeout(bind(function() {
                     uploader.animate({ opacity: 0 }, { duration: 500 });
@@ -8281,7 +8281,7 @@ var Fonts = new prime({
         var charsetSelected = element.find('.font-charsets-selected');
         if (charsetSelected) {
             var subsetsLength = element.data('subsets').split(',').length;
-            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
+            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
         }
 
         if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
@@ -8300,7 +8300,7 @@ var Fonts = new prime({
                 var charsetSelected = this.selected.element.find('.font-charsets-selected');
                 if (charsetSelected) {
                     var subsetsLength = element.data('subsets').split(',').length;
-                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
+                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
                 }
             }
             this.selected = {
@@ -8491,7 +8491,7 @@ var Fonts = new prime({
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
 
-                        element.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
+                        element.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
                     }, this));
 
                     popover.displayContent();
@@ -8858,7 +8858,7 @@ domready(function() {
                         });
                     }
 
-                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '" aria-hidden="true"></i> <span>' + data[0] + '</span>');
                     container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
@@ -8931,7 +8931,7 @@ domready(function() {
 
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '" aria-hidden="true"></i> ';
                     }
 
                     html += '<h3>' + icon.data('g-icon') + '</h3>';

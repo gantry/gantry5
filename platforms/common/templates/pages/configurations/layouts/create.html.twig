@@ -3,21 +3,21 @@
 {% block gantry %}
     <h2>
         <span class="title">{{ 'GANTRY5_PLATFORM_NEW_LAYOUT'|trans }}</span>
-        <i class="fa fa-pencil font-small" data-title-edit=""></i>
+        <i class="fa fa-pencil font-small" aria-hidden="true" data-title-edit=""></i>
         <span class="float-right">
-            <a href="#" class="button button-primary button-save"><i class="fa fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE'|trans }}</span></a>
-            <a href="#" class="button"><i class="fa fa-sign-in"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
-            <a href="#" class="button"><i class="fa fa-sign-out"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>
-            <a href="#" class="button red"><i class="fa fa-times-circle"></i> <span>{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</span></a>
+            <a href="#" class="button button-primary button-save"><i class="fa fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE'|trans }}</span></a>
+            <a href="#" class="button"><i class="fa fa-sign-in" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
+            <a href="#" class="button"><i class="fa fa-sign-out" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>
+            <a href="#" class="button red"><i class="fa fa-times-circle" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</span></a>
         </span>
     </h2>
 
     <div class="lm-newblocks" data-lm-blocktypes="">
-        <a class="button" href="{{ gantry.route('picker/particles') }}" data-lm-addparticle=""><i class="fa fa-plus"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>
+        <a class="button" href="{{ gantry.route('picker/particles') }}" data-lm-addparticle=""><i class="fa fa-plus" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>
         <span class="float-right">
-            <a href="#" class="button"><i class="fa fa-arrow-left"></i></a>
-            <a href="#" class="button"><i class="fa fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>
-            <a href="#" class="button"><i class="fa fa-arrow-right"></i></a>
+            <a href="#" class="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+            <a href="#" class="button"><i class="fa fa-history" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>
+            <a href="#" class="button"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
         </span>
     </div>
     <div id="page">

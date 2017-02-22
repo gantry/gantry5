@@ -7,30 +7,30 @@
         {% for data in value %}
             {% for key, val in data %}
             <li data-keyvalue-item="">
-                <i class="fa fa-reorder font-small item-reorder"></i>
+                <i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>
                 <div class="g-keyvalue-wrapper">
                     <input class="g-keyvalue-input-key" type="text" data-keyvalue-key="{{ key }}" value="{{ key }}" {% if field.key_placeholder is defined %}placeholder="{{ field.key_placeholder }}"{% endif %} />
                     <i class="g-keyvalue-sep fa fa-fw fa-arrow-right"></i>
                     <input class="g-keyvalue-input-value" type="text" data-keyvalue-value="" value="{{ val }}" {% if field.value_placeholder is defined %}placeholder="{{ field.value_placeholder }}"{% endif %} />
                 </div>
-                <i class="fa fa-fw fa-trash font-small" data-keyvalue-remove=""></i>
+                <i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
             </li>
             {% endfor %}
         {% endfor %}
         {% endif -%}
         </ul>
 
-        <span class="button button-simple" data-keyvalue-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>
+        <span class="button button-simple" data-keyvalue-addnew="" title="Add new item"><i class="fa fa-plus font-small" aria-hidden="true"></i></span>
     </div>
     <ul style="display: none">
         <li data-keyvalue-nosort="" data-keyvalue-template="">
-            <i class="fa fa-reorder font-small item-reorder"></i>
+            <i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>
             <div class="g-keyvalue-wrapper">
                 <input class="g-keyvalue-input-key" type="text" data-keyvalue-key="" value="" {% if field.key_placeholder is defined %}placeholder="{{ field.key_placeholder }}"{% endif %} />
                 <i class="g-keyvalue-sep fa fa-fw fa-arrow-right"></i>
                 <input class="g-keyvalue-input-value" type="text" data-keyvalue-value="" value="" {% if field.value_placeholder is defined %}placeholder="{{ field.value_placeholder }}"{% endif %} />
             </div>
-            <i class="fa fa-fw fa-trash font-small" data-keyvalue-remove=""></i>
+            <i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-keyvalue-remove=""></i>
         </li>
     </ul>
     <input type="hidden" data-keyvalue-data="" data-keyvalue-exclude="{{ field.exclude|default([])|json_encode|e('html_attr') }}" name="{{ (scope ~ name ~ '._json')|fieldName }}" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}" />

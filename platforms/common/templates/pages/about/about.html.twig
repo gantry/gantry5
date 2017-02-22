@@ -4,16 +4,16 @@
     <div class="g-grid overview-header">
         <div class="g-block">
             <h2 class="theme-title">
-                {% if gantry.theme.icon %}<i class="fa fa-{{ gantry.theme.icon }}"></i>{% endif %} {{ gantry.theme.title }}
+                {% if gantry.theme.icon %}<i class="fa fa-{{ gantry.theme.icon }}" aria-hidden="true"></i>{% endif %} {{ gantry.theme.title }}
             </h2>
             <span class="theme-version">v{{ gantry.theme.version }}</span>
             <div>{{ 'GANTRY5_PLATFORM_BY'|trans }} <a href="{{ gantry.theme.author.link }}" aria-label="Template Author's Website" tabindex="1">{{ gantry.theme.author.name }}</a></div>
         </div>
         <div class="g-block">
             <span class="float-right">
-                <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
-                <a href="{{ gantry.theme.support.link }}" class="button button-primary"><i class="fa fa-support"></i> <span>{{ 'GANTRY5_PLATFORM_SUPPORT'|trans }}</span></a>
-                <a href="{{ gantry.theme.documentation.link }}" class="button button-primary"><i class="fa fa-book"></i> <span>{{ 'GANTRY5_PLATFORM_DOCUMENTATION'|trans }}</span></a>
+                <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
+                <a href="{{ gantry.theme.support.link }}" class="button button-primary"><i class="fa fa-support" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SUPPORT'|trans }}</span></a>
+                <a href="{{ gantry.theme.documentation.link }}" class="button button-primary"><i class="fa fa-book" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_DOCUMENTATION'|trans }}</span></a>
             </span>
         </div>
     </div>
@@ -26,9 +26,9 @@
         <div class="g-block">
             <p>Hydrogen is the default theme for the Gantry 5 framework. It features a lightweight design and basic configuration settings to help get acquainted with Gantry 5's many features and options.</p>
             <ul class="overview-list">
-                <li><i class="fa fa-asterisk"></i>Clean, minimalistic design</li>
-                <li><i class="fa fa-asterisk"></i>Fast and lightweight</li>
-                <li><i class="fa fa-asterisk"></i>Includes preset styles and outlines</li>
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>Clean, minimalistic design</li>
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>Fast and lightweight</li>
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>Includes preset styles and outlines</li>
             </ul>
         </div>
     </div>

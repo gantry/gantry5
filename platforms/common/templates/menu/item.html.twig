@@ -35,5 +35,5 @@
 </a>
 {% endif %}
 <a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle') : gantry.route('menu/edit', id, item.path) }}">
-    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_ITEM_SETTINGS'|trans }}" class="fa fa-cog"></i>
+    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_ITEM_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
 </a>

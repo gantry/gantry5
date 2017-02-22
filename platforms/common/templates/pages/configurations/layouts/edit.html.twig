@@ -16,7 +16,7 @@
         <div class="g5-lm-particles-picker">
             <div class="search settings-block">
                 <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" role="search"/>
-                <i class="fa fa-fw fa-search"></i>
+                <i class="fa fa-fw fa-search" aria-hidden="true"></i>
             </div>
             <div class="particles-container">
                 {% for key, list in particles %}
@@ -36,7 +36,7 @@
                                 {% endif %}
                             >
                                 <span class="particle-icon" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>
-                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
+                                    <i class="fa fa-fw {{ item.icon|default('fa-cube') }}" aria-hidden="true" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}></i>
                                 </span>
                                 <span class="particle-title" {{ isDisabled ? 'data-lm-disabled data-lm-nodrag' : '' }}>{{ item.name }}</span>
                             </li>
@@ -49,24 +49,24 @@
     </div>
     <div class="g-block main-block">
         <span class="float-right">
-            {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
-            <a href="#" class="button"><i class="fa fa-fw fa-sign-out"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>#}
+            {#<a href="#" class="button"><i class="fa fa-fw fa-sign-in" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_IMPORT'|trans }}</span></a>
+            <a href="#" class="button"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_EXPORT'|trans }}</span></a>#}
             <button href="#"
                     class="button"
                     role="button"
                     data-lm-switcher="{{ gantry.route(switcher_url) }}"
                     aria-label="{{ 'GANTRY5_PLATFORM_LM_LOAD_PRESET'|trans }}">
-                <i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
+                <i class="fa fa-fw fa-code-fork" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
             </button>
             <div class="button" data-g-popover aria-haspopup="true" aria-expanded="false" role="presentation">
-                <span><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></span>
+                <span><i class="fa fa-fw fa-trash-o" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="small fa fa-fw fa-chevron-down" aria-hidden="true"></i></span>
                 <ul data-popover-content class="hidden" tabindex="0">
                     <li data-g-popover-follow>
                         <a tabindex="0"
                            href="#"
                            data-lm-clear="full"
                            aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
-                        ><i class="fa fa-fw fa-trash"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
+                        ><i class="fa fa-fw fa-trash" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
                         </a>
                     </li>
                     <li data-g-popover-follow>
@@ -74,7 +74,7 @@
                            href="#"
                            data-lm-clear="keep-inheritance"
                            aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
-                        ><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
+                        ><i class="fa fa-fw fa-trash-o" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
                         </a>
                     </li>
                 </ul>
@@ -85,7 +85,7 @@
                     data-save="Layout"
                     aria-label="{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}"
             >
-                <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
             </button>
         </span>
         <h2 class="page-title layout-title">
@@ -93,11 +93,11 @@
         </h2>
 
         <div class="lm-newblocks clearfix" data-lm-blocktypes="">
-            {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle=""><i class="fa fa-plus"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>#}
+            {#<a class="button" href="{{ gantry.route('picker/particles')|e }}" data-lm-addparticle=""><i class="fa fa-plus" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_NEW_PARTICLE'|trans }}</span></a>#}
             <span class="float-right">
-                <button data-lm-back="" href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
-                {#<a href="#" class="button"><i class="fa fa-fw fa-history"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
-                <button data-lm-forward="" href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right"></i></button>
+                <button data-lm-back="" href="#" class="button disabled"><i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_UNDO'|trans }}</button>
+                {#<a href="#" class="button"><i class="fa fa-fw fa-history" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_HISTORY'|trans }}</span></a>#}
+                <button data-lm-forward="" href="#" class="button disabled">{{ 'GANTRY5_PLATFORM_REDO'|trans }} <i class="fa fa-fw fa-arrow-right" aria-hidden="true"></i></button>
             </span>
         </div>
         <div id="page">
@@ -121,17 +121,17 @@
             <div class="g-footer-actions">
             <span class="float-right">
                 <a href="#" class="button" data-lm-switcher="{{ gantry.route(switcher_url) }}">
-                    <i class="fa fa-fw fa-code-fork"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
+                    <i class="fa fa-fw fa-code-fork" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_LOAD'|trans }}</span>
                 </a>
                 <div data-g-popover class="button" aria-haspopup="true" aria-expanded="false" role="presentation">
-                <span><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="small fa fa-fw fa-chevron-down"></i></span>
+                <span><i class="fa fa-fw fa-trash-o" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_CLEAR'|trans }} <i class="fa fa-fw fa-chevron-down small" aria-hidden="true"></i></span>
                 <ul data-popover-content class="hidden" tabindex="0">
                     <li data-g-popover-follow>
                         <a tabindex="0"
                            href="#"
                            data-lm-clear="full"
                            aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
-                        ><i class="fa fa-fw fa-trash"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
+                        ><i class="fa fa-fw fa-trash" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_FULL'|trans }}
                         </a>
                     </li>
                     <li data-g-popover-follow>
@@ -139,13 +139,13 @@
                            href="#"
                            data-lm-clear="keep-inheritance"
                            aria-label="{{ 'GANTRY5_PLATFORM_LM_CLEAR_LAYOUT'|trans }}"
-                        ><i class="fa fa-fw fa-trash-o"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
+                        ><i class="fa fa-fw fa-trash-o" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE'|trans }}
                         </a>
                     </li>
                 </ul>
             </div>
                 <a href="#" class="button button-primary button-save" data-save="Layout">
-                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
+                    <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_LAYOUT'|trans }}</span>
                 </a>
             </span>
             </div>

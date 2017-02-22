@@ -3,7 +3,7 @@
     <div class="g-panel-filters" data-g-global-filter="">
         <div class="search settings-block">
             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
-            <i class="fa fa-fw fa-search"></i>
+            <i class="fa fa-fw fa-search" aria-hidden="true"></i>
         </div>
     </div>
     <div class="float-right">
@@ -36,7 +36,7 @@
                     <div class="g-panel-filters float-right align-right {{ (list.items|length > 1 and assignments|length == 1) ? 'hidden' : '' }}">
                         <div class="search settings-block">
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">
-                            <i class="fa fa-fw fa-search"></i>
+                            <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                         </div>
                         <a href="#" data-g-assignments-check="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL'|trans }}" data-tip-place="top">All</a>
                         <a href="#" data-g-assignments-uncheck="" data-tip="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL'|trans }}" data-tip-place="top">None</a>

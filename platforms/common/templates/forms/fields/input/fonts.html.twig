@@ -27,7 +27,7 @@
             {% set picker = {'field':'input[name="' ~ ((scope ~ name)|fieldName|e) ~ '"]'} %}
             <span class="input-group-btn">
                 <button class="button" type="button" aria-label="{{ 'GANTRY5_PLATFORM_SELECT'|trans }} {{ field.label }}" data-g5-fontpicker="{{ picker|json_encode()|e('html_attr') }}">
-                    <i class="fa fa-font"></i>
+                    <i class="fa fa-font" aria-hidden="true"></i>
                 </button>
             </span>
         </div>

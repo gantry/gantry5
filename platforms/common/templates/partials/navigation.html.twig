@@ -12,7 +12,7 @@
                            data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
                            href="{{ gantry.route('configurations', configuration ?: 'default', 'styles') }}"
                         >
-                            <i class="fa fa-fw fa-adjust"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
+                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
                         </a>
                     </li>
                     {% if (location == 'configurations/settings' or gantry.particles.overrides(configuration)) %}
@@ -23,7 +23,7 @@
                            data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
                            href="{{ gantry.route('configurations', configuration ?: 'default', 'settings') }}"
                         >
-                            <i class="fa fa-fw fa-wrench"></i> <span>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</span>
+                            <i class="fa fa-fw fa-wrench" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</span>
                         </a>
                     </li>
                     {% endif %}
@@ -34,7 +34,7 @@
                            data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
                            href="{{ gantry.route('configurations', configuration ?: 'default', 'page') }}"
                         >
-                            <i class="fa fa-fw fa-list-alt"></i> <span>{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span>
+                            <i class="fa fa-fw fa-list-alt" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span>
                         </a>
                     </li>
                     {% if (configuration and configuration != 'default') or not gantry.platform.no_base_layout %}
@@ -45,7 +45,7 @@
                            data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
                            href="{{ gantry.route('configurations', configuration ?: 'default', 'layout') }}"
                         >
-                            <i class="fa fa-fw fa-columns"></i> <span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span>
+                            <i class="fa fa-fw fa-columns" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span>
                         </a>
                     </li>
                     {% endif %}
@@ -57,7 +57,7 @@
                            data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
                            href="{{ gantry.route('configurations', configuration ?: 'default', 'assignments') }}"
                         >
-                            <i class="fa fa-fw fa-check-square-o"></i> <span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span>
+                            <i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span>
                         </a>
                     </li>
                     {% endif %}
