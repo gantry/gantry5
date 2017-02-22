@@ -306,16 +306,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c"
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/2abce9d956589122c6443d6265f01cf7e9388e3c",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/92bdc6800ac6e233c9e161a1768e082389a73530",
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530",
                 "shasum": ""
             },
             "require": {
@@ -362,7 +362,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-12-26T16:13:31+00:00"
+            "time": "2017-02-18T14:22:27+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -622,16 +622,16 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "296baa222614117b4300ad8ad35ccc7af676eeab"
+                "reference": "f11ed547b0e860e64cf2f2401b762151518df287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/296baa222614117b4300ad8ad35ccc7af676eeab",
-                "reference": "296baa222614117b4300ad8ad35ccc7af676eeab",
+                "url": "https://api.github.com/repos/timber/timber/zipball/f11ed547b0e860e64cf2f2401b762151518df287",
+                "reference": "f11ed547b0e860e64cf2f2401b762151518df287",
                 "shasum": ""
             },
             "require": {
@@ -679,7 +679,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2017-02-09T15:45:52+00:00"
+            "time": "2017-02-20T16:20:28+00:00"
         },
         {
             "name": "twig/twig",
