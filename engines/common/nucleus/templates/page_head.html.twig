@@ -1,4 +1,5 @@
-{% do gantry.debugger.assets() %}
+{%- do gantry.debugger.assets() -%}
+{%- do gantry.theme.loadAtoms() -%}
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}

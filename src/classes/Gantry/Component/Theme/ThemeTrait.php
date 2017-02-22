@@ -15,7 +15,6 @@ namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Content\Block\ContentBlock;
-use Gantry\Component\Content\Block\ContentBlockInterface;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -40,6 +39,7 @@ trait ThemeTrait
     use GantryTrait;
 
     protected $layoutObject;
+    protected $atoms;
     protected $segments;
     protected $preset;
     protected $cssCache;
@@ -343,6 +343,71 @@ trait ThemeTrait
     }
 
     /**
+     * Load atoms and assets from the page settings.
+     *
+     * @since 5.4.9
+     */
+    public function loadAtoms()
+    {
+        if (!isset($this->atoms)) {
+            $this->atoms = true;
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('atoms', "Preparing atoms");
+
+            $gantry = static::gantry();
+
+            /** @var Config $config */
+            $config = $gantry['config'];
+
+            /** @var \Gantry\Framework\Document $document */
+            $document = $gantry['document'];
+
+            $atoms = (array) $config->get('page.head.atoms');
+
+            foreach ($atoms as $data) {
+                $atom = [
+                    'type' => 'atom',
+                    'subtype' => $data['type'],
+                ] + $data;
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering Atom '{$atom['subtype']}' failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            $assets = (array) $config->get('page.assets');
+
+            if ($assets) {
+                $atom = [
+                    'id' => 'page-assets',
+                    'title' => 'Page Assets',
+                    'type' => 'atom',
+                    'subtype' => 'assets',
+                    'attributes' => $assets + ['enabled' => 1]
+                ];
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering CSS/JS Assets failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('atoms');
+        }
+    }
+
+    /**
      * Returns all non-empty segments from the layout.
      *
      * @return array
@@ -615,7 +680,7 @@ trait ThemeTrait
      *
      * @param object|array $item
      * @param array $options
-     * @return ContentBlockInterface
+     * @return ContentBlock
      * @since 5.4.3
      */
     public function getContent($item, $options = [])
@@ -687,7 +752,7 @@ trait ThemeTrait
                     return ContentBlock::fromArray((array) $file->content());
                 } catch (\Exception $e) {
                     // Invalid cache, continue to rendering.
-                    GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load particle %s cache', $item->id), 'debug');
+                    GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
                 }
             }
         }
@@ -703,7 +768,7 @@ trait ThemeTrait
 
         if (isset($file)) {
             // Save HTML and assets into the cache.
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Caching particle %s', $item->id), 'debug');
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
             $file->save($content->toArray());
         }
 

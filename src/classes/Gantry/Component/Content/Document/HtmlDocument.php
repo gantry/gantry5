@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Content\Document;
 
+use Gantry\Component\Content\Block\ContentBlock;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Url\Url;
@@ -73,10 +74,10 @@ class HtmlDocument
     }
 
     /**
-     * @param HtmlBlock $block
+     * @param ContentBlock $block
      * @return $this
      */
-    public function addBlock(HtmlBlock $block)
+    public function addBlock(ContentBlock $block)
     {
         static::$stack[0]->addBlock($block);
 

@@ -2,6 +2,9 @@
 ## xx/xx/2017
 
 1. [Common](#common)
+    1. [](#new)
+        - Add support for atom caching when in production mode (similar to particle caching)
+          - If you have overridden `partials/page.html.twig` or `partials/page_head.html.twig`, please update them
     3. [](#bugfix)
         - Fixed `{% pageblock bottom %}...{% endpageblock %}` not working from atoms
 3. [WordPress](#wordpress)
