@@ -10,6 +10,7 @@
 3. [WordPress](#wordpress)
     3. [](#bugfix)
         - Fixed placeholder having the same color as real input values (#1876)
+        - Fixed potential XSS vulnerability by updating Timber library
 
 # 5.4.8
 ## 14/02/2017
