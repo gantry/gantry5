@@ -36,7 +36,7 @@
         {% for mitem in site.menu %}
             <li>
                 <a href="{{ mitem.url }}">
-                    {% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}"></i>{% endif %}
+                    {% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}" aria-hidden="true"></i>{% endif %}
                     {{ mitem.text }}
                 </a>
             </li>

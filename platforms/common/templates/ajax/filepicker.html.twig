@@ -1,7 +1,7 @@
 <div class="g-particles-header filepicker-header settings-block clearfix">
     <div class="float-right files-mode">
-        <div class="file-mode active" data-files-mode="thumbnails"><i class="fa fa-th-large"></i></div>
-        <div class="file-mode" data-files-mode="list"><i class="fa fa-th-list"></i></div>
+        <div class="file-mode active" data-files-mode="thumbnails"><i class="fa fa-th-large" aria-hidden="true"></i></div>
+        <div class="file-mode" data-files-mode="list"><i class="fa fa-th-list" aria-hidden="true"></i></div>
     </div>
 </div>
 <div class="g-particles-main icons-wrapper g-grid">
@@ -13,7 +13,7 @@
                     <ul class="g-folders fa-ul">
                         {% for folder in bookmark %}
                             <li{{ (folder in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}">
-                                <i class="fa-li fa fa-folder-o"></i> <span class="path" title="{{ folder }}">{{ folder }}</span>
+                                <i class="fa-li fa fa-folder-o" aria-hidden="true"></i> <span class="path" title="{{ folder }}">{{ folder }}</span>
                             </li>
                             {% include 'ajax/filepicker/subfolders.html.twig' with {'folder': attribute(attribute(folders, index), folder), 'active': active } %}
                         {% endfor %}

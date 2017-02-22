@@ -102,7 +102,7 @@ GANTRY5_PLATFORM_PLATFORM_SETTINGS: "Platform Settings"
 GANTRY5_PLATFORM_FOOTER: '<a href="http://gantry.org">Gantry Administration</a> by <a href="http://www.rockettheme.com">RocketTheme</a>'
 GANTRY5_PLATFORM_BASE_OUTLINE: "Base Outline"
 GANTRY5_PLATFORM_GLOBAL_DEFAULTS: "Global Defaults"
-GANTRY5_PLATFORM_GANTRY_DETAILS: '<p>Gantry 5 is the most customizable and powerful version of the framework yet. Packed full of features such as drag-and-drop layout creation and the powerful particle system, Gantry 5 has been designed from the ground up to be lightning fast and hassle free.</p><ul class="overview-list"><li><i class="fa fa-asterisk"></i>Fast, flexible, easy to use framework</li><li><i class="fa fa-asterisk"></i>Drag-n-drop layout controls</li><li><i class="fa fa-asterisk"></i>Powerful dynamic particles system</li></ul>'
+GANTRY5_PLATFORM_GANTRY_DETAILS: '<p>Gantry 5 is the most customizable and powerful version of the framework yet. Packed full of features such as drag-and-drop layout creation and the powerful particle system, Gantry 5 has been designed from the ground up to be lightning fast and hassle free.</p><ul class="overview-list"><li><i class="fa fa-asterisk" aria-hidden="true"></i>Fast, flexible, easy to use framework</li><li><i class="fa fa-asterisk" aria-hidden="true"></i>Drag-n-drop layout controls</li><li><i class="fa fa-asterisk" aria-hidden="true"></i>Powerful dynamic particles system</li></ul>'
 GANTRY5_PLATFORM_THEME: "Theme"
 GANTRY5_PLATFORM_DEV: "Dev"
 GANTRY5_PLATFORM_PROD: "Prod"

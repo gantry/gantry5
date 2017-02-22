@@ -64,16 +64,16 @@
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'modified' %}
-                                                    <i class="fa fa-clock-o"></i>{{ post.post_modified|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ post.post_modified|date(display.date.format) }}
                                                 {% else %}
-                                                    <i class="fa fa-clock-o"></i>{{ post.post_date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ post.post_date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
                                         {% if display.author.enabled %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ post.author.name }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ post.author.name }}
                                             </span>
                                         {% endif %}
 
@@ -93,7 +93,7 @@
                                             {%- endset -%}
 
                                             <span class="g-array-item-category">
-                                                <i class="fa fa-folder-open"></i>{{ post_categories|raw }}
+                                                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ post_categories|raw }}
                                             </span>
                                         {% endif %}
 
@@ -109,7 +109,7 @@
                                             {%- endset -%}
 
                                             <span class="g-array-item-comments">
-                                                <i class="fa fa-comments"></i>{{ comment_count }}
+                                                <i class="fa fa-comments" aria-hidden="true"></i>{{ comment_count }}
                                             </span>
                                         {% endif %}
                                     </div>

@@ -32,12 +32,12 @@
             title="{{ file.filename }} ({{ _self.bytesToSize(file.size) }})">
             {% if file.isInCustom %}
                 <span class="g-file-delete" data-g-file-delete data-dz-remove title="{{ 'GANTRY5_PLATFORM_FILE_REMOVE'|trans }}">
-                    <i class="fa fa-fw fa-trash-o"></i>
+                    <i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>
                 </span>
             {% endif %}
             {% if file.isImage %}
                 <span class="g-file-preview" data-g-file-preview title="{{ 'GANTRY5_PLATFORM_FILE_PREVIEW'|trans }}">
-                    <i class="fa fa-fw fa-eye"></i>
+                    <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
                 </span>
                 <div class="g-thumb g-image g-image-{{ file.extension }}">
                     <div style="background-image: url('{{ url(file.pathname) }}')"></div>

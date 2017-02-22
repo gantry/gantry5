@@ -21,7 +21,7 @@
 <div class="g-particles-main icons-wrapper">
     <ul>
         {% for icon in icons %}
-            <li data-g-icon="{{ icon }}"><i class="fa fa-fw {{ icon }}"></i> {{ icon }}</li>
+            <li data-g-icon="{{ icon }}"><i class="fa fa-fw {{ icon }}" aria-hidden="true"></i> {{ icon }}</li>
         {% endfor %}
     </ul>
 </div>

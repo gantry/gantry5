@@ -14,7 +14,7 @@
                   data-title-editable="{{ title }}" class="title" data-tip="{{ title }}" data-tip-place="top-right">
                 {{ title }}
             </span>
-            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(title|e) }}" data-title-edit=""></i>
+            <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(title|e) }}" data-title-edit=""></i>
             {% else %}
                 {{ title }}
             {% endif %}
@@ -37,7 +37,7 @@
                href="{{ gantry.route('configurations', name, 'styles') }}"
                class="button button-primary"
             >
-                <i class="fa fa-fw fa-pencil"></i>
+                <i class="fa fa-fw fa-pencil" aria-hidden="true"></i>
             </a>
             {% if gantry.authorize('outline.create') and gantry.outlines.canDuplicate(name) %}
             <a href="{{ gantry.route('configurations', name, 'duplicate') }}"
@@ -45,7 +45,7 @@
                title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
                aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
                data-g5-outline-duplicate class="button button-secondary">
-                <i class="fa fa-fw fa-copy"></i>
+                <i class="fa fa-fw fa-copy" aria-hidden="true"></i>
             </a>
             {% endif %}
             {% if name != 'default' and gantry.authorize('outline.delete') and gantry.outlines.canDelete(name) %}
@@ -58,7 +58,7 @@
                     data-g-config-href-confirm="{{ gantry.route('configurations', name, 'delete/confirm') }}"
                     data-g-config-method="POST" class="button red"
             >
-                <i class="fa fa-fw fa-trash-o"></i>
+                <i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>
             </button>
             {% endif %}
         </div>

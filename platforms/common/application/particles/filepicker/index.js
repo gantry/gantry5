@@ -64,7 +64,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
-            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o"></i>').bottom(li),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -191,7 +191,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
+                text.title('Error').html('<i class="fa fa-exclamation" aria-hidden="true"></i>').parent('[data-file-uploadprogress]').popover({
                     content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
@@ -217,7 +217,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.html('<i class="fa fa-check"></i>');
+                text.html('<i class="fa fa-check" aria-hidden="true"></i>');
 
                 setTimeout(bind(function() {
                     uploader.animate({ opacity: 0 }, { duration: 500 });

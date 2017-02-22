@@ -65,7 +65,7 @@ class Changelog extends JsonController
 
                 // add icons for platforms
                 foreach($this->platforms as $platform => $icon) {
-                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '"></i> ', $changelog);
+                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '" aria-hidden="true"></i> ', $changelog);
                 }
             } else {
                 $changelog = 'No changelog for version <strong>' . $version . '</strong> was found.';

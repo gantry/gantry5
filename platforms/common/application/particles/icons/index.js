@@ -63,7 +63,7 @@ domready(function() {
                         });
                     }
 
-                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '" aria-hidden="true"></i> <span>' + data[0] + '</span>');
                     container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
@@ -136,7 +136,7 @@ domready(function() {
 
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '" aria-hidden="true"></i> ';
                     }
 
                     html += '<h3>' + icon.data('g-icon') + '</h3>';

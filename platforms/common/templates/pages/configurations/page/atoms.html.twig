@@ -8,10 +8,10 @@
         <li data-atom-type="{{ atom }}"
             data-atom-picked="{{ { 'title': label, 'type': atom, 'attributes': gantry.config.get('particles.' ~ atom) } |json_encode|e('html_attr')}}"
         >
-            <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
+            <i class="fa fa-fw fa-hand-stop-o drag-indicator" aria-hidden="true"></i>
             <span class="atom-title">{{ label }}</span>
             <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom)|e }}" class="atom-settings config-cog">
-                <i aria-label="{{ 'GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS'|trans }}" class="fa fa-cog"></i>
+                <i aria-label="{{ 'GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
             </a>
         </li>
         {%- endfor -%}
@@ -27,10 +27,10 @@
                     ~ 'GANTRY5_PLATFORM_INHERITING_FROM_X'|trans('<strong>' ~ gantry.outlines.title(atom.inherit.outline) ~ '</strong>') ~'<br />ID: ' ~ atom.inherit.atom ~ '<br />Replace: ' ~ atom.inherit.include|join(', ') ~ '"' %}
                     {% set title = atom.attributes.enabled ? '' : ' title="' ~ 'GANTRY5_PLATFORM_ATOMS_DISABLED_DESC'|trans ~ '"' %}
                     <li data-atom-picked="{{ atom|json_encode|e('html_attr') }}"{{ (classes ? ' class="' ~ classes|trim ~ '"')|raw }}{{ inheriting|raw }}{{ title|raw }} data-atom-type="{{ atom.type }}">
-                        <i class="fa fa-fw fa-hand-stop-o drag-indicator"></i>
+                        <i class="fa fa-fw fa-hand-stop-o drag-indicator" aria-hidden="true"></i>
                         <span class="atom-title">{{- atom.title -}}</span>
                         <a href="{{ gantry.route('configurations', page_id, 'page', 'atoms', atom.type) }}" class="atom-settings config-cog">
-                            <i aria-label="Configure Atom Settings" class="fa fa-cog"></i>
+                            <i aria-label="Configure Atom Settings" class="fa fa-cog" aria-hidden="true"></i>
                         </a>
                     </li>
                 {%- endfor -%}
