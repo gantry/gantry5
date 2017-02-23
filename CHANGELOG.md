@@ -1,12 +1,12 @@
 # 5.4.9
-## xx/xx/2017
+## 23/02/2017
 
 1. [Common](#common)
     1. [](#new)
         - Add support for atom caching when in production mode (similar to particle caching)
           - If you have overridden `partials/page.html.twig` or `partials/page_head.html.twig`, please update them
     2. [](#improved)
-        - Added accessibility support for Font Awesome icons (#1873)
+        - Added accessibility support for Font Awesome icons (#1873, thanks @N8Solutions)
     3. [](#bugfix)
         - Fixed `{% pageblock bottom %}...{% endpageblock %}` not working from atoms
         - Fixed issues with nested `collection.list` items after upgrading to Gantry 5.4.7 (#1877)
