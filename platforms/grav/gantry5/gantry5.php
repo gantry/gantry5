@@ -211,7 +211,8 @@ class Gantry5Plugin extends Plugin
                 'getMaintenancePage' => ['getMaintenancePage', 0],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
-                'onPageNotFound' => ['onPageNotFound', 1000]
+                'onPageNotFound' => ['onPageNotFound', 1000],
+                'onOutputGenerated' => ['onOutputGenerated', 0],
             ]);
         }
 
@@ -502,5 +503,13 @@ class Gantry5Plugin extends Plugin
     public function onDataTypeExcludeFromDataManagerPluginHook()
     {
         $this->grav['admin']->dataTypesExcludedFromDataManagerPlugin[] = 'gantry5';
+    }
+
+    public function onOutputGenerated()
+    {
+        $gantry = Gantry::instance();
+
+        // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
+        $this->grav->output = $gantry['document']->urlFilter($this->grav->output, false, 0, true) ?: $this->grav->output;
     }
 }

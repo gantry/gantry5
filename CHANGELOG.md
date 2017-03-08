@@ -6,7 +6,10 @@
         - Helium: Updated Owl Carousel to v2.2.1
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Resolve all stream URI links in WordPress pages
+        - Add content post-processing to automatically resolve all stream URI links
+4. [Grav](#grav)
+    1. [](#new)
+        - Add content post-processing to automatically resolve all stream URI links
 
 
 # 5.4.9
