@@ -3,7 +3,11 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Updated Owl Carousel to v2.2.1
+        - Helium: Updated Owl Carousel to v2.2.1
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Resolve all stream URI links in WordPress pages
+
 
 # 5.4.9
 ## 23/02/2017
