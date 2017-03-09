@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Helium: Updated Owl Carousel to v2.2.1
+    3. [](#bugfix)
+        - Fix bad HTML markup in assignments administration (#1917, thanks @Quy)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Add content post-processing to automatically resolve all stream URI links
