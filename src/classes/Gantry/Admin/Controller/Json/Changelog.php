@@ -58,10 +58,10 @@ class Changelog extends JsonController
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
                 // auto-link issues
-                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '/$1">#$1</a>', $changelog);
+                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" rel="noopener" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
                 // auto-link contributors
-                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
+                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" rel="noopener" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
 
                 // add icons for platforms
                 foreach($this->platforms as $platform => $icon) {
