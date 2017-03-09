@@ -5,14 +5,14 @@
     1. [](#new)
         - Helium: Updated Owl Carousel to v2.2.1
     3. [](#bugfix)
-        - Fix bad HTML markup in assignments administration (#1917, thanks @Quy)
+        - Fixed bad HTML markup in assignments administration (#1917, thanks @Quy)
+        - Fixed regression in handling `container.set` (#1889)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Add content post-processing to automatically resolve all stream URI links
+        - Added content post-processing to automatically resolve all stream URI links
 4. [Grav](#grav)
     1. [](#new)
-        - Add content post-processing to automatically resolve all stream URI links
-
+        - Added content post-processing to automatically resolve all stream URI links
 
 # 5.4.9
 ## 23/02/2017

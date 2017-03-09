@@ -14,7 +14,7 @@
             {% set name = name[1:] %}
         {% endif %}
 
-        {% set container = field.type starts with 'container.' %}
+        {% set container = field.type == 'container.tabs' %}
         {% set current_value = container ? nested(data, scope|trim('.')) : nested(data, scope ~ name) %}
         {% set default_value = container ? nested(defaults, scope|trim('.')) : nested(defaults, scope ~ name) %}
         {% set has_value = current_value is not null %}

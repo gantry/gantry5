@@ -41,12 +41,12 @@
                          aria-labelledby="{{ fieldId ~ loop.index0 ~ '-tab'|lower }}"
                          aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}">
                         {% for childName, child in pane %}
-                            {% set container = child.type starts with 'container.' %}
                             {% if childName starts with '.' %}
                                 {% set childKey = childName|trim('.') %}
-                                {% set childValue = container ? value : nested(value, childKey) %}
+                                {% set childValue = nested(value, childKey) %}
                                 {% set childDefault = null %}
                             {% else %}
+                                {% set container = child.type == 'container.tabs' %}
                                 {% set childKey = childName %}
                                 {% set childValue = container ? value : nested(data, scope ~ childKey) %}
                                 {% set childDefault = container ? defaults : nested(defaults, scope ~ childKey) %}
