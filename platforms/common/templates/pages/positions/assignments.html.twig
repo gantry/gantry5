@@ -46,9 +46,9 @@
                 <div class="{{ all_value ? 'hide ' }}settings-param-wrapper">
                     {% for link in list.items %}
                         {% set path = 'assignments.' ~ type ~ '.' ~ name ~ '.' ~ link.name %}
-                        {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                        {% set group = link.section ? 'data-g-assignments-group="' ~ link.name ~ '"' : 'data-g-assignments-parent="' ~ link.taxonomy ~ '"' %}
                         {% set value = 0 or nested(data, path) %}
-                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
+                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}" {{ group }}>
                             {% include 'forms/fields/enable/enable.html.twig' with {
                             'default': true,
                             'name': path|fieldName,
