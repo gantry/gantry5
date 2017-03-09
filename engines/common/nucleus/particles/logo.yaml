@@ -32,13 +32,10 @@ form:
       placeholder: 'Place your <svg> code here.'
       
     link:
-      type: select.select
+      type: input.checkbox
       label: Link
       description: Renders Logo/Image with a link.
       default: true
-      options:
-        true: Enable
-        '': Disable
 
     target:
       type: select.select
