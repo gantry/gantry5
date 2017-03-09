@@ -359,7 +359,7 @@ input[type="color"], input[type="date"], input[type="datetime"], input[type="dat
   text-align: left;
 }
 
-.control-label .hasTooltip {
+.control-label .hasTooltip, .control-label .hasPopover {
   display: inline-block;
 }
 
