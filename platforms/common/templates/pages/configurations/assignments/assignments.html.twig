@@ -75,9 +75,9 @@
                                 <div class="settings-param-wrapper">
                                     {% for link in list.items %}
                                         {% set path = 'assignments.' ~ type ~ '.' ~ name ~ '.' ~ link.name %}
-                                        {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                                        {% set group = link.section ? 'data-g-assignments-group="' ~ link.name ~ '"' : 'data-g-assignments-parent="' ~ link.taxonomy ~ '"' %}
                                         {% set value = link.value is defined ? link.value : gantry.config.get(path) %}
-                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
+                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}" {{ group }}>
                                             {% include 'forms/fields/enable/enable.html.twig' with {
                                             'default': true,
                                             'name': path|fieldName,
