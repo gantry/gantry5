@@ -24,18 +24,31 @@ form:
       type: input.imagepicker
       label: Image
       description: Select desired logo image.
-      
-    link:
-      type: input.checkbox
-      label: Link
-      description: Renders Logo/Image with a link.
-      default: true
 
     svg:
       type: textarea.textarea
       label: SVG Code
       description: Your SVG code that will be added inline to the site.
       placeholder: 'Place your <svg> code here.'
+      
+    link:
+      type: select.select
+      label: Link
+      description: Renders Logo/Image with a link.
+      default: true
+      options:
+        true: Enable
+        '': Disable
+
+    target:
+      type: select.select
+      label: Target
+      description: Target browser window when item is clicked.
+      placeholder: 'Select...'
+      default: _blank
+      options:
+          _parent: Self
+          _blank: New Window
 
     text:
       type: input.text
