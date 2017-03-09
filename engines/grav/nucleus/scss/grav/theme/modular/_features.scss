@@ -20,10 +20,12 @@
 
         .feature-items {
             margin-top: 2rem;
-            @supports not (flex-wrap: wrap) {
+        }   
+        @supports not (flex-wrap: wrap) {
+            .feature-items {
                 overflow: hidden;
             }
-        }
+        }  
 
         .feature {
             display:block;
@@ -93,7 +95,5 @@
                 }
             }
         }
-
     }
-
 }
