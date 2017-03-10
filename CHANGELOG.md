@@ -7,6 +7,8 @@
     3. [](#bugfix)
         - Fixed bad HTML markup in assignments administration (#1917, thanks @Quy)
         - Fixed regression in handling `container.set` (#1889)
+        - Fixed missing closing tag when editing layout (#1919, thanks @Quy)
+        - Fixed potential issues with URLs containing spaces (#1902)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added content post-processing to automatically resolve all stream URI links

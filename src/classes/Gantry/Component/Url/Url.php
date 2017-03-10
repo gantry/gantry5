@@ -26,7 +26,7 @@ class Url
     {
         $encodedUrl = preg_replace_callback(
             '%[^:/@?&=#]+%usD',
-            function ($matches) { return urlencode($matches[0]); },
+            function ($matches) { return rawurlencode($matches[0]); },
             $url
         );
 
@@ -57,7 +57,7 @@ class Url
         }
 
         foreach($parts as $name => $value) {
-            $parts[$name] = urldecode($value);
+            $parts[$name] = rawurldecode($value);
         }
 
         // Return query string also as an array if requested.
@@ -119,7 +119,7 @@ class Url
     {
         $list = [];
         foreach ($vars as $key => $var) {
-            $list[] = $key . '=' . urlencode($var);
+            $list[] = $key . '=' . rawurlencode($var);
         }
 
         return $list ? implode('&', $list) : null;
