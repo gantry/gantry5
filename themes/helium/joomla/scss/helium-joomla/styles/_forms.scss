@@ -43,6 +43,7 @@ input[type="color"],
     border: 1px solid $base-border-color;
     box-sizing: border-box !important;
     @include transition(border 0.2s linear, box-shadow 0.2s linear);
+    height: 41px;
 
     .input-prepend &, .input-append & {
         padding: 0.35rem;
@@ -74,6 +75,7 @@ input[type="color"],
     width: auto;
     padding: 4px 12px;
     line-height: normal;
+    height: 28px;
 }
 
 textarea {
