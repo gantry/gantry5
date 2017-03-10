@@ -69,6 +69,13 @@ input[type="color"],
     }
 }
 
+// Search in Edit Panel
+#filter_search {
+    width: auto;
+    padding: 4px 12px;
+    line-height: normal;
+}
+
 textarea {
     width: 100%;
 }
@@ -124,7 +131,11 @@ select {
         }
 
         .btn {
-            height: 35px;
+            height: 50px;
+            line-height: 33px;
+            background: #4db2b3;
+            color: #ffffff;
+            text-shadow: none;
         }
 
         .input-small {

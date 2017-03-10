@@ -2,7 +2,7 @@
 .list-blog {
     @include display(flex);
     @include flex-direction(column);
-    &[class*=' cols-'] {
+    &.cols-1, &.cols-2, &.cols-3, &.cols-4, &.cols-5, &.cols-6 {
         .list-blog-row {
             @include display(flex);
             @include breakpoint(mobile-only) {
