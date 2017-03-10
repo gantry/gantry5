@@ -1,5 +1,5 @@
 # 5.4.10
-## xx/xx/2017
+## 10/03/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -11,7 +11,7 @@
         - Fixed potential issues with URLs containing spaces (#1902)
 2. [Joomla](#joomla)
     3. [](#bugfix)
-        - Helium and Hydrogen: Frontend calendar icon size Fixes (#1914)
+        - Helium and Hydrogen: Frontend calendar icon size fixes (#1914)
         - Helium and Hydrogen: Login module styling issues (#1910, #1911)
         - Hydrogen: Frontend article editor, tooltips open up way to the right (#1912)
         - Helium: Frontend article editor, article search button misaligned and partly covered (#1913)
