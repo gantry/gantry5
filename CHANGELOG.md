@@ -9,6 +9,12 @@
         - Fixed regression in handling `container.set` (#1889)
         - Fixed missing closing tag when editing layout (#1919, thanks @Quy)
         - Fixed potential issues with URLs containing spaces (#1902)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Helium and Hydrogen: Frontend calendar icon size Fixes (#1914)
+        - Helium and Hydrogen: Login module styling issues (#1910, #1911)
+        - Hydrogen: Frontend article editor, tooltips open up way to the right (#1912)
+        - Helium: Frontend article editor, article search button misaligned and partly covered (#1913)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Added content post-processing to automatically resolve all stream URI links
