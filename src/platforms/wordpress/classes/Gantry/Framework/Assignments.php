@@ -27,10 +27,12 @@ class Assignments extends AbstractAssignments
             'archive'
         ];
 
+        $gantry = Gantry::instance();
+
         $event = new Event;
         $event->types = &$types;
 
-        Gantry::instance()->fireEvent('assignments.types', $event);
+        $gantry->fireEvent('assignments.types', $event);
 
         return apply_filters('g5_assignments_types', $types);
     }

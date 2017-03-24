@@ -1,3 +1,12 @@
+# 5.4.11
+## xx/xx/2017
+
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Add options to disable outline assignments individually for both posts and pages, including custom types (#1279)
+    2. [](#improved)
+        - Administration: Hide assignment types with no items in them to make the page shorter
+
 # 5.4.10
 ## 10/03/2017
 

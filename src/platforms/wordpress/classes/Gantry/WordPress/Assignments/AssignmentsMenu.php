@@ -105,13 +105,13 @@ class AssignmentsMenu implements AssignmentsInterface
 
         // Check if the menu is not empty
         if(!$menu_items) {
-
+            /*
             $items[] = [
                 'name'     => '',
                 'label'    => 'No items',
                 'disabled' => true
             ];
-
+            */
         } else {
 
             $walker = new AssignmentsWalker;

@@ -49,6 +49,7 @@
                 <div class="cards-wrapper clearfix">
                     {% for type, types in assignments %}
                         {% for name, list in types %}
+                            {% if list.items %}
                             <div class="card settings-block">
                                 <h4>
                                     {{ list.label }}
@@ -88,12 +89,13 @@
                                             'title': "'" ~ link.label ~ "' Menu Item"
                                             } %}
                                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
-                                {{- link.label -}}
-                            </span>
+                                                {{- link.label -}}
+                                            </span>
                                         </label>
                                     {% endfor %}
                                 </div>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 </div>
