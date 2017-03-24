@@ -117,3 +117,19 @@ form:
               label: Summary delimiter
               classes: large
               placeholder: ===
+
+            readmore:
+              type: section
+              title: Read More
+              underline: true
+
+            header.continue_link:
+              type: toggle
+              toggleable: true
+              label: Read More
+              highlight: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool

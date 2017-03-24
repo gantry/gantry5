@@ -16,7 +16,7 @@
         {% if truncate %}
         {% if page.header.link %}
             <h2 class="p-name">
-                {% if page.header.continue_link is not sameas(false) %}
+                {% if page.header.continue_link is not same as(false) %}
                 <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url" aria-hidden="true"></i></a>
                 {% endif %}
                 <a href="{{ page.header.link }}" class="u-url">{{ page.title }}</a>
@@ -53,7 +53,7 @@
 
     <div class="list-blog-padding">
 
-    {% if page.header.continue_link is same as(false) %}
+    {% if page.header.continue_link is same as(false) %} 
         <div class="e-content">
             {{ page.content|raw }}
         </div>

@@ -66,7 +66,7 @@
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'published' %}
-                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.publish_date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.publishDate()|date(display.date.format) }}
                                                 {% elseif display.date.enabled == 'modified' %}
                                                     <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.modified|date(display.date.format) }}
                                                 {% else %}
