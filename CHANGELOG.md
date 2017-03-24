@@ -1,12 +1,23 @@
 # 5.4.11
 ## xx/xx/2017
 
+1. [Common](#common)
+    1. [](#new)
+        - Updated Lightcase.js to v2.3.6
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Helium and Hydrogen: Fixed frontend calendar icon size
 3. [WordPress](#wordpress)
     1. [](#new)
         - Add options to disable outline assignments individually for both posts and pages, including custom types (#1279)
     2. [](#improved)
         - Administration: Hide assignment types with no items in them to make the page shorter
-
+4. [Grav](#grav)
+    1. [](#new)
+        - Added `Read More` toggle for blog item page
+    3. [](#bugfix)
+        - Fixed missing publish date from content array particle
+    
 # 5.4.10
 ## 10/03/2017
 
