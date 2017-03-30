@@ -13,3 +13,15 @@ form:
       options:
         content: Content
         excerpt: Excerpt
+
+    columns:
+      type: select.select
+      label: Post Columns
+      description: In how many columns should the posts appear
+      default: size-100
+      options:
+        size-100: 1 Column
+        size-50: 2 Columns
+        size-33-3: 3 Columns
+        size-25: 4 Columns
+        size-20: 5 Columns

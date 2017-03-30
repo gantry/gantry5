@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase.js to v2.3.6
+        - Helium: Blog and Archive type pages can now display posts in columns
+        - Hydrogen: Blog and Archive type pages can now display posts in columns
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Helium and Hydrogen: Fixed frontend calendar icon size
@@ -17,7 +19,7 @@
         - Added `Read More` toggle for blog item page
     3. [](#bugfix)
         - Fixed missing publish date from content array particle
-    
+
 # 5.4.10
 ## 10/03/2017
 
