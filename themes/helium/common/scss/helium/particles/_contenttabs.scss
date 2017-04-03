@@ -32,6 +32,10 @@
 
         .ui-tabs-anchor {
             text-decoration: none;
+
+            &:hover {
+                color: inherit;
+            }
         }
     }
 }
@@ -88,6 +92,12 @@
                 @include display(flex);
                 @include flex-flow(row wrap);
                 @include flex-wrap(wrap);
+
+                a {
+                    &:hover {
+                        color: inherit;
+                    }
+                }
             }
         }
     }

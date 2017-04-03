@@ -131,6 +131,12 @@
                         font-size: $core-font-size;
                         vertical-align: text-top;
                     }
+
+                    a {
+                        &:hover {
+                            color: inherit;
+                        }
+                    }
                 }
             }
         }
