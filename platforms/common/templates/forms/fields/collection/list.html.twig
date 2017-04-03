@@ -86,15 +86,16 @@
                                                         {% set childKey = childName %}
                                                         {% set childValue = container ? val : nested(data, scope ~ childKey) %}
                                                         {% set childName = childName|replace({'*': key}) %}
+                                                        {% set childParent = (childName == childKey) ? '.' ~ key ~ '.' %}
                                                     {% endif %}
 
                                                     {% if childName not in skip and not child.skip and field.value != childKey %}
                                                          {% if child.type == 'key' %}
                                                              {% include 'forms/fields/key/key.html.twig'
-                                                             with {name: childName, field: child, value: key, prefix: prefix} %}
+                                                             with {name: childName, field: child, value: key, current_value: null, default_value: null, parent: childParent} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: prefix} %}
+                                                             with {name: childName, field: child, value: null, current_value: childValue, default_value: null, parent_field: childParent} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}

@@ -150,7 +150,6 @@ class Settings extends HtmlController
                 'configuration' => $configuration,
                 'blueprints' => $fields,
                 'data' => $data,
-                'prefix' => '',
                 'scope' => $scope,
                 'parent' => $path
                     ? "{$configuration}/settings/particles/{$id}/" . implode('/', $path)

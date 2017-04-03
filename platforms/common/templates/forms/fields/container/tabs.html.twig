@@ -51,7 +51,7 @@
                                 {% set childValue = container ? value : nested(data, scope ~ childKey) %}
                                 {% set childDefault = container ? defaults : nested(defaults, scope ~ childKey) %}
                             {% endif %}
-                            {% set childName = childName|trim('.') %}
+                            {% set childName = parent_field ~ childName|trim('.') %}
 
                             {% if child.type %}
                                 {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
