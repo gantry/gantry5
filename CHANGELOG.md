@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase.js to v2.3.6
+    3. [](#bugfix)
+        - Fixed nested collection list multi-item edit not functioning (#1924)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Helium and Hydrogen: Fixed frontend calendar icon size

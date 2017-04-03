@@ -91,10 +91,10 @@
                                                     {% if childName not in skip and not child.skip and field.value != childKey %}
                                                          {% if child.type == 'key' %}
                                                              {% include 'forms/fields/key/key.html.twig'
-                                                             with {name: childName, field: child, value: key} %}
+                                                             with {name: childName, field: child, value: key, prefix: prefix} %}
                                                          {% elseif child.type %}
                                                              {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: (prefix ? prefix ~ '.') ~ childName} %}
+                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: prefix} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
