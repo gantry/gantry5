@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase.js to v2.3.6
+        - Helium: Added admin controls for setting link and link hover colors. You might need to resave your theme settings (#1626)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Helium and Hydrogen: Fixed frontend calendar icon size
