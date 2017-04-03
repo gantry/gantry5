@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase.js to v2.3.6
+        - Helium: Added admin controls for setting link and link hover colors. You might need to resave your theme settings (#1626)
     3. [](#bugfix)
         - Fixed nested collection list multi-item edit not functioning (#1924)
 2. [Joomla](#joomla)
