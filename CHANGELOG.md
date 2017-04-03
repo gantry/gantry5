@@ -4,15 +4,15 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase.js to v2.3.6
-        - Helium: Added admin controls for setting link and link hover colors. You might need to resave your theme settings (#1626)
+    3. [](#bugfix)
+        - Fixed nested collection list multi-item edit not functioning (#1924)
 2. [Joomla](#joomla)
     3. [](#bugfix)
         - Helium and Hydrogen: Fixed frontend calendar icon size
 3. [WordPress](#wordpress)
     1. [](#new)
         - Add options to disable outline assignments individually for both posts and pages, including custom types (#1279)
-        - Helium: Blog and Archive type pages can now display posts in columns
-        - Hydrogen: Blog and Archive type pages can now display posts in columns
+        - Hydrogen and Helium: Blog and Archive type pages can now display posts in columns
     2. [](#improved)
         - Administration: Hide assignment types with no items in them to make the page shorter
 4. [Grav](#grav)
