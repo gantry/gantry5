@@ -242,6 +242,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $element = $this->find($id);
                 $inheritId = isset($element->inherit->particle) ? $element->inherit->particle : $id;
                 if ($new && ($ids === null || isset($ids[$inheritId]))) {
+                    if (!isset($element->inherit)) {
+                        $element->inherit = new \stdClass;
+                    }
                     $element->inherit->outline = $new;
                 } else {
                     $element->inherit = new \stdClass;

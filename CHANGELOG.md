@@ -4,7 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Fixed potential error: `Undefined property: stdClass::$inherit` in when processing layout
-        - Fixed a bug in `Layout::updateInheritance()` when reference for inheritance is missing
+        - Fixed a bug in `Layout::updateInheritance()` when inheritance is missing
 
 # 5.4.11
 ## 03/04/2017
