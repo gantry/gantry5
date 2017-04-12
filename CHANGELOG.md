@@ -1,7 +1,9 @@
 # 5.4.12
 ## xx/xx/2017
 
-
+1. [Common](#common)
+    3. [](#bugfix)
+        - Fixed potential error: `Undefined property: stdClass::$inherit` in when processing layout
 
 # 5.4.11
 ## 03/04/2017
