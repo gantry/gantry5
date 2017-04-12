@@ -545,14 +545,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param string $id
-     * @return \stdClass
+     * @return object
      */
     public function find($id)
     {
         $this->init();
 
         if (!isset($this->references[$id])) {
-            return (object)['id' => $id];
+            return (object)['id' => $id, 'inherit' => new \stdClass];
         }
 
         return $this->references[$id];
