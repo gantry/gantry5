@@ -644,7 +644,7 @@ class HtmlDocument
     {
         static::registerJquery();
 
-        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'], 11);
+        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'], 11);
     }
 
     protected static function registerMootools()

@@ -2,6 +2,8 @@
 ## xx/xx/2017
 
 1. [Common](#common)
+    1. [](#new)
+        - Updated Bootstrap 3 to v3.3.7
     3. [](#bugfix)
         - Fixed potential error: `Undefined property: stdClass::$inherit` in when processing layout
         - Fixed a bug in `Layout::updateInheritance()` when inheritance is missing
