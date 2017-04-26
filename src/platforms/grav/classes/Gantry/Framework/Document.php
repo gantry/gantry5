@@ -106,6 +106,11 @@ class Document extends HtmlDocument
         $base = rtrim(static::rootUri(), '/') . '/';
 
         if (strpos($url, $base) === 0) {
+            if (Grav::instance()['config']->get('system.assets.css_pipeline')) {
+                // Remove file timestamp if CSS pipeline has been enabled.
+                $url = preg_replace('|[\?#].*|', '', $url);
+            }
+
             return substr($url, strlen($base) - 1);
         }
         return $url;

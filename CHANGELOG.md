@@ -10,6 +10,9 @@
 2. [Joomla](#joomla)
     1. [](#new)
         - Added official support for Joomla 3.7 
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed broken styles if CSS Pipeline has been enabled (#1941)
 
 # 5.4.11
 ## 04/03/2017
