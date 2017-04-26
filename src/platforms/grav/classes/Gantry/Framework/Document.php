@@ -67,7 +67,7 @@ class Document extends HtmlDocument
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
-                    $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $style[':priority']);
+                    $grav['assets']->addCss(static::getRelativeUrl($style['href'], $grav['config']->get('system.assets.css_pipeline')), 90 + $style[':priority']);
                     break;
                 case 'inline':
                     $grav['assets']->addInlineCss($style['content'], 90 + $style[':priority']);
@@ -85,7 +85,7 @@ class Document extends HtmlDocument
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
+                    $grav['assets']->AddJs(static::getRelativeUrl($script['src'], $grav['config']->get('system.assets.js_pipeline')), [
                         'priority' => 90 + $script[':priority'],
                         'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
                         'group' => $group,
@@ -101,12 +101,12 @@ class Document extends HtmlDocument
         }
     }
 
-    protected static function getRelativeUrl($url)
+    protected static function getRelativeUrl($url, $pipeline)
     {
         $base = rtrim(static::rootUri(), '/') . '/';
 
         if (strpos($url, $base) === 0) {
-            if (Grav::instance()['config']->get('system.assets.css_pipeline')) {
+            if ($pipeline) {
                 // Remove file timestamp if CSS pipeline has been enabled.
                 $url = preg_replace('|[\?#].*|', '', $url);
             }
