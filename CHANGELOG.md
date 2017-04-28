@@ -1,3 +1,10 @@
+# 5.4.13
+## mm/dd/2017
+
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.3.0
+
 # 5.4.12
 ## 04/26/2017
 
