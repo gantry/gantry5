@@ -4,6 +4,7 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.0
+        - Updated Lightcase to 2.4.0
 
 # 5.4.12
 ## 04/26/2017
@@ -16,7 +17,7 @@
         - Fixed a bug in `Layout::updateInheritance()` when inheritance is missing
 2. [Joomla](#joomla)
     1. [](#new)
-        - Added official support for Joomla 3.7 
+        - Added official support for Joomla 3.7
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed broken styles / scripts if CSS / JS Pipeline has been enabled (#1941)
