@@ -7,6 +7,8 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.0
+    3. [](#bugfix)
+        - Fixed checkboxes next to the setting enablers in Content tab getting unchecked after refresh (#1986)
 
 # 5.4.12
 ## 04/26/2017

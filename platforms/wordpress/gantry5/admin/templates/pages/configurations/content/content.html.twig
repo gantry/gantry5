@@ -43,10 +43,10 @@
                                         </span>
                                         <span class="g-title">{{ item.name }}</span>
                                         {% if item.form.fields.enabled %}
-                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': item.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': item.form.fields.enabled, 'value': data.get(prefix ~ 'enabled', defaults.get(prefix ~ 'enabled'))} %}
 
                                             {% if overrideable %}
-                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': gantry.config.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
+                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'has_value': data.get(prefix ~ 'enabled') is not null, 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
                                             {% endif %}
                                         {% endif %}
                                     </h4>
