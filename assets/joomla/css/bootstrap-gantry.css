@@ -5180,8 +5180,10 @@ a.badge:focus {
 	visibility: hidden;
 }
 
-.affix {
+.affix, header.affix, section.affix, footer.affix {
 	position: fixed;
+	left: 0;
+	right: 0;
 }
 
 /* Joomla JUI NOTE: Original .modal definition has to be commented in modals.less and responsive-767px-max.less */
