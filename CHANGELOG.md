@@ -9,6 +9,7 @@
         - Updated Timber to v1.3.0
     3. [](#bugfix)
         - Fixed checkboxes next to the setting enablers in Content tab getting unchecked after refresh (#1986)
+        - Fixed `Missing argument 2 for modify_gantry5_locale()`
 
 # 5.4.12
 ## 04/26/2017
