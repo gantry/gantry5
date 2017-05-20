@@ -84,7 +84,7 @@
         {{ gantry.config.page.body.body_top|raw }}
         {{ body_top|raw }}
         {{ page_offcanvas|raw }}
-        <div id="g-page-surround">
+        <div id="g-page-surround" class="{{ gantry.config.get('styles.base.layout')|default('fullwidth') }}">
             {% if page_offcanvas|trim %}
             <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars" aria-hidden="true"></i></div>
             {% endif %}
