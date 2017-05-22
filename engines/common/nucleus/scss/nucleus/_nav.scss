@@ -46,6 +46,7 @@
 
             .g-menu-item-container {
                 @include transition(transform .2s ease-out);
+                word-break: break-all;
             }
 
 	    	// Menu Parent Indicator on Main TopLevel
