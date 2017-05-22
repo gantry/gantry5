@@ -3,7 +3,7 @@
 	margin: $content-margin;
 	padding: $content-padding;
 
-	.g-flushed & {
+	.g-flushed >.g-container >.g-grid >.g-block > & {
 		margin: 0;
 		padding: 0;
 	}
