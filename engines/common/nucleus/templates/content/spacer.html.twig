@@ -4,5 +4,5 @@
 {% endif %}
 
 {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
-    <div class="spacer{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}"></div>
+    <div class="spacer{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}" style="height:{{ spacer.height }}"></div>
 {% endif %}
