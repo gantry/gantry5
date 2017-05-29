@@ -20,3 +20,10 @@ form:
       type: separator.note
       class: alert alert-info
       content: Add empty spacer column to the row. Shows up as an empty space in your layout.
+      
+    height:
+      type: input.text
+      label: Spacer Height
+      description: Allows space for setting vertical height.
+      placeholder: Enter height in px, em, rem, etc.
+      pattern: '\d+(.\d+){0,1}(rem|em|px|pt)'
