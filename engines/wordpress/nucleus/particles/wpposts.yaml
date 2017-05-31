@@ -1,0 +1,171 @@
+name: Post(s)
+description: Display selected WordPress posts and pages
+type: particle
+icon: fa-wordpress
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Globally enable Post(s) particles.
+      default: true
+
+    _tabs:
+      type: container.tabs
+      fields:
+        _tab_posts:
+          label: Posts
+          fields:
+            post.filter.posts:
+              type: wordpress.posts
+              label: Posts
+              description: Select the posts to display.
+              overridable: false
+              post_type: any
+
+            post.display.image.enabled:
+              type: input.checkbox
+              label: Show image
+              description: Select if the featured image of the post should be shown.
+              default: true
+
+            post.display.title.enabled:
+              type: input.checkbox
+              label: Show title
+              description: Select if the post title should be shown.
+              default: true
+
+            post.display.title.limit:
+              type: input.text
+              label: Title Limit
+              description: Enter the maximum number of characters the post title should be limited to.
+              pattern: '\d+(\.\d+){0,1}'
+
+            post.display.text.type:
+              type: select.select
+              label: Content Type
+              description: Select if and how the article text should be shown.
+              default: content
+              options:
+                content: Content
+                excerpt: Excerpt
+                '': Hide
+
+            post.display.text.limit:
+              type: input.text
+              label: Content Limit
+              description: Type in the number of characters the post content/excerpt should be limited to.
+              default: ''
+              pattern: '\d+'
+
+            post.display.text.formatting:
+              type: select.select
+              label: Content Formatting
+              description: Select the formatting you want to use to display the post content.
+              default: text
+              options:
+                text: Plain Text
+                html: HTML
+
+        _tab_display:
+          label: Display
+          fields:
+            post.display.date.enabled:
+              type: select.select
+              label: Date
+              description: Select if and which post date should be shown.
+              default: published
+              options:
+                published: Show Published Date
+                modified: Show Modified Date
+                '': Hide
+
+            post.display.date.format:
+              type: select.date
+              label: Date Format
+              description: Select preferred date format. Leave empty not to display a date.
+              default: l, F d, Y
+              selectize:
+                  allowEmptyOption: true
+              options:
+                  'l, F d, Y': Date1
+                  'l, d F': Date2
+                  'D, d F': Date3
+                  'F d': Date4
+                  'd F': Date5
+                  'd M': Date6
+                  'D, M d, Y': Date7
+                  'D, M d, y': Date8
+                  'l': Date9
+                  'l j F Y': Date10
+                  'j F Y': Date11
+
+            post.display.author.enabled:
+              type: input.checkbox
+              label: Show author
+              description: Select if the post author should be shown.
+              default: true
+
+            post.display.category.enabled:
+              type: select.select
+              label: Categories
+              description: Select if and how the post categories should be shown.
+              default: link
+              options:
+                show: Show
+                link: Show with Link
+                '': Hide
+
+            post.display.comments.enabled:
+              type: input.checkbox
+              label: Show comments
+              description: Select if the post comments number should be shown.
+              default: true
+
+            post.limit.columns:
+              type: select.select
+              label: Number of columns
+              description: Select the number of columns that you want posts to appear in.
+              default: 2
+              options:
+                1: 1
+                2: 2
+                3: 3
+                4: 4
+                5: 5
+                6: 6
+              overridable: false
+
+        _tab_readmore:
+          label: Read More
+          fields:
+            post.display.read_more.enabled:
+              type: input.checkbox
+              label: Read More
+              description: Select if the post 'Read More' button should be shown.
+              default: true
+
+            post.display.read_more.label:
+              type: input.text
+              label: Read More Label
+              description: Type in the label for the 'Read More' button.
+              placeholder: 'Read More...'
+
+            post.display.read_more.css:
+              type: input.selectize
+              label: Button CSS Classes
+              description: CSS class name for the 'Read More' button.
+
+    css.class:
+      type: input.selectize
+      label: CSS Classes
+      description: CSS class name for the particle.
+
+    extra:
+      type: collection.keyvalue
+      label: Tag Attributes
+      description: Extra Tag attributes.
+      key_placeholder: Key (data-*, style, ...)
+      value_placeholder: Value
+      exclude: ['id', 'class']
