@@ -16,6 +16,7 @@
     3. [](#bugfix)
         - Fixed issue with Regular Labs Cache Cleaner (#1833)
         - Fixed issue with Hydrogen textarea (#1973)
+        - Fixed some caching issues when changing between Production and Development modes
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.1
