@@ -10,6 +10,8 @@
     3. [](#bugfix)
         - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
 2. [Joomla](#joomla)
+    1. [](#new)
+        - Use the new package uninstall protection feature in Joomla 3.7
     3. [](#bugfix)
         - Fixed issue with Regular Labs Cache Cleaner (#1833)
         - Fixed issue with Hydrogen textarea (#1973)
