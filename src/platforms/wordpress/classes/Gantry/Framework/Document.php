@@ -52,6 +52,10 @@ class Document extends HtmlDocument
                     $href = array_shift($array);
                     $version = array_shift($array) ?: false;
                     $name = isset($style['id']) ? $style['id'] : basename($href, '.css');
+                    if (strpos($version, '=')) {
+                        $href .= '?' . $version;
+                        $version = null;
+                    }
                     \wp_enqueue_style($name, $href, array(), $version, $style['media']);
                     break;
                 case 'inline':
@@ -80,6 +84,10 @@ class Document extends HtmlDocument
                         $name = $script['handle'];
                     }
                     self::$script_info[$name] = $script;
+                    if (strpos($version, '=')) {
+                        $src .= '?' . $version;
+                        $version = null;
+                    }
                     \wp_enqueue_script($name, $src, array(), $version, $in_footer);
                     break;
                 case 'inline':
