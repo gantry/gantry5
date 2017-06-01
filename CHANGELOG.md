@@ -9,6 +9,7 @@
         - Menu particle: Add aria-label for icon-only menu items for better accessibility support (#1888)
     3. [](#bugfix)
         - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
+        - Helium: Add missing `System Messages` particle to Default and Offline layouts
 2. [Joomla](#joomla)
     1. [](#new)
         - Use the new package uninstall protection feature in Joomla 3.7
@@ -27,7 +28,7 @@
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed CSS/JS pipelines, though you need to set `js_minify: false` (#2001)
-        
+
 # 5.4.12
 ## 04/26/2017
 
