@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase to v2.4.0
+    2. [](#improved)
+        - Menu particle: Add aria-label for icon-only menu items for better accessibility support (#1888)
     3. [](#bugfix)
         - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
 2. [Joomla](#joomla)
