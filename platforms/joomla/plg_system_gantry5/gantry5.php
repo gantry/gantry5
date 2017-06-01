@@ -303,6 +303,9 @@ class plgSystemGantry5 extends JPlugin
         // Clean the cache.
         \Gantry\Joomla\CacheHelper::cleanPlugin();
 
+        // Update plugin settings.
+        $this->params = $params;
+
         // Trigger the onExtensionAfterSave event.
         $dispatcher->trigger('onExtensionAfterSave', array($name, $table, false));
 
@@ -337,8 +340,32 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
+    public function onExtensionBeforeSave($context, $table, $isNew)
+    {
+        if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
+            $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+            $params = new Joomla\Registry\Registry($table->params);
+
+            $data = (array) $params->get($name);
+
+            Gantry5\Loader::setup();
+
+            $this->onGantry5SaveConfig($data);
+
+            // Do not save anything into the component itself (Joomla cannot handle it).
+            $table->params = '';
+
+            return;
+        }
+    }
+
     public function onExtensionAfterSave($context, $table, $isNew)
     {
+        if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
+
+        }
+
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
             return;
         }
@@ -388,16 +415,6 @@ class plgSystemGantry5 extends JPlugin
 
         // Check that we are manipulating a valid form.
         switch ($context) {
-            // TODO: Joomla seems to be missing support for component data manipulation!
-/*
-            case 'com_config.component':
-                // Add plugin parameters under plg_type_name.
-                if ($data instanceof JRegistry) {
-                    $data->set($name, $this->params->toObject());
-                }
-                break;
-*/
-
             case 'com_menus.item':
                 break;
         }
@@ -417,20 +434,21 @@ class plgSystemGantry5 extends JPlugin
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
         switch ($form->getName()) {
-            // TODO: This part works, but Joomla seems to be missing support for component data manipulation!
-/*
             case 'com_config.component':
                 // If we are editing configuration from Gantry component, add missing fields from system plugin.
                 $rules = $form->getField('rules');
                 if ($rules && $rules->getAttribute('component') == 'com_gantry5') {
-                    $this->loadLanguage('plg_system_gantry5.sys');
+                    $this->loadLanguage("{$name}.sys");
                     // Add plugin fields to the form under plg_type_name.
                     $file = file_get_contents(__DIR__."/{$this->_name}.xml");
                     $file = preg_replace('/ name="params"/', " name=\"{$name}\"", $file);
                     $form->load($file, false, '/extension/config');
+
+                    // Joomla seems to be missing support for component data manipulation so do it manually here.
+                    $form->bind([$name => $this->params->toArray()]);
                 }
                 break;
-*/
+
             case 'com_menus.items.filter':
                 break;
 
