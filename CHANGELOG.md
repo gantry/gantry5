@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase to v2.4.0
+    3. [](#bugfix)
+        - Bug with enabled field when editing disabled particle in the layout (#1571)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.0

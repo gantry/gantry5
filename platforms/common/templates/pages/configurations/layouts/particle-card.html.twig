@@ -8,9 +8,11 @@
         {% endif %}
 
         {% if item %}
-            <span class="badge font-small">{{ item.subtype ?: item.type }}</span>
+            {% set item_type = item.subtype ?: item.type %}
+            {% set item_disabled = not gantry.config.get('particles.' ~ item_type ~ '.enabled', true) %}
+            <span class="badge font-small">{{ item_type }}</span>
             {% if blueprints.fields.enabled %}
-                {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ item.subtype|default(item.type) ~ '.enabled', 'field': blueprints.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'disabled': not gantry.config.get('particles.' ~ item.subtype ~ '.enabled', true)} %}
+                {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ item_type ~ '.enabled', 'field': blueprints.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'turned_off': item_disabled} %}
             {% endif %}
         {% endif %}
     </h4>
