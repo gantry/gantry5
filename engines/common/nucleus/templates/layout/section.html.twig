@@ -23,7 +23,7 @@
     {% endif %}
 {% endset %}
 
-{% if segment.attributes.sticky or html|trim %}
+{%- if segment.attributes.sticky or html|trim %}
     {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
         <div class="g-container">{{ html|raw }}</div>
@@ -32,11 +32,11 @@
 
     {% set html %}
     {% if boxed == 2 %}{% set attr_class = attr_class ~ ' g-flushed' %}{% endif %}
-    {% set attr_class = attr_class ? ' class="' ~ attr_class|trim ~ '"' %}
+    {% set attr_class = attr_class ? ' class="' ~ attr_class|trim ~ '"' -%}
     <{{ tag_type }} id="{{ attr_id }}"{{ attr_class|raw }}{{ attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
-    {% endset %}
+    {%- endset %}
 
     {% if boxed == 1 %}
     <div class="g-container">{{ html|raw }}</div>

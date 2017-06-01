@@ -19,10 +19,10 @@
     {% endif %}
 {% endset %}
 
-{% if html|trim %}
-    <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
-        {{ attr_extra|raw }}
-         class="g-block{{ segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')|e }}{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }} {{ segment.attributes.size|toGrid }}">
-        {{ html|raw }}
-    </div>
-{% endif %}
+{%- if html|trim %}
+        <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
+            {{- attr_extra|raw -}}
+             class="g-block{{ segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')|e }}{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }} {{ segment.attributes.size|toGrid }}">
+            {{ html|trim|raw }}
+        </div>
+{% endif -%}
