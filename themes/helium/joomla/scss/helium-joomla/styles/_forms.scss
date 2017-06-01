@@ -43,12 +43,29 @@ input[type="color"],
     border: 1px solid $base-border-color;
     box-sizing: border-box !important;
     @include transition(border 0.2s linear, box-shadow 0.2s linear);
-    height: 41px;
 
     .input-prepend &, .input-append & {
         padding: 0.35rem;
         max-width: 95%;
     }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    height: 41px;
 }
 
 .input-prepend > .add-on, .input-append > .add-on {
