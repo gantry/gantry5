@@ -5,7 +5,10 @@
     1. [](#new)
         - Updated Lightcase to v2.4.0
     3. [](#bugfix)
-        - Bug with enabled field when editing disabled particle in the layout (#1571)
+        - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Fixed issue with Regular Labs Cache Cleaner (#1833)
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.0

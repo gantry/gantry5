@@ -321,6 +321,11 @@ abstract class Folder
         $success = @mkdir($folder, 0777, true);
 
         if (!$success) {
+            // Double check if the folder exists.
+            if (is_dir($folder)) {
+                return;
+            }
+
             $error = error_get_last();
             throw new \RuntimeException($error['message']);
         }
