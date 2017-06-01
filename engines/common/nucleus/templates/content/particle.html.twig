@@ -17,13 +17,17 @@
             '@nucleus/content/missing.html.twig'] %}
         {% endif %}
     {% endset %}
+    {% set html = html|trim %}
 
     {% set classes = ((not inContent ? 'g-content g-particle ' : 'g-particle ') ~ segment.classes|join(' '))|trim %}
-    {% if html|trim %}
-    <div class="{{ classes }}">
-        {{ html|raw }}
-    </div>
-    {% endif %}
+    {%- if html -%}
+            {% if gantry.debug %}<!-- START PARTICLE {{ segment.id }} -->{% endif %}
+
+            <div class="{{ classes }}">
+            {{ html|raw }}
+            </div>
+            {% if gantry.debug %}<!-- END PARTICLE {{ segment.id }} -->{% endif %}
+    {%- endif -%}
 
 {% catch %}
     <div class="alert alert-error"><strong>Error</strong> while rendering {{ segment.subtype }} particle.</div>

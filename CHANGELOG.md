@@ -4,19 +4,19 @@
 1. [Common](#common)
     1. [](#new)
         - Updated Lightcase to v2.4.0
+        - If debug mode is enabled, add HTML comments to recognize particles and positions (#639)
     2. [](#improved)
         - Menu particle: Add aria-label for icon-only menu items for better accessibility support (#1888)
     3. [](#bugfix)
         - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
 2. [Joomla](#joomla)
-    1. [](#bugfix)
+    3. [](#bugfix)
         - Fixed issue with Regular Labs Cache Cleaner (#1833)
-    2. [](#bugfix)
         - Fixed issue with Hydrogen textarea (#1973)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Updated Timber to v1.3.0
-    2. [](#bugfix)
+        - Updated Timber to v1.3.1
+    3. [](#bugfix)
         - Fixed checkboxes next to the setting enablers in Content tab getting unchecked after refresh (#1986)
         - Fixed `Missing argument 2 for modify_gantry5_locale()`
 

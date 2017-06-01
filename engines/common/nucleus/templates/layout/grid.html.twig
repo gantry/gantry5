@@ -15,12 +15,10 @@
     {% endif %}
 {% endset %}
 
-{% if html|trim %}
-    <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
-         {{ attr_extra|raw }}
-         class="g-grid{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }}">
-      {{ html|raw }}
-    </div>
+{%- if html|trim %}
+        <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
+             {{- attr_extra|raw -}}
+             class="g-grid{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }}">
+          {{- html|raw -}}
+        </div>
 {% endif %}
-
-
