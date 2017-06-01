@@ -2,9 +2,11 @@ version: 2
 preset:
   image: 'gantry-admin://images/layouts/default.png'
   name: default
-  timestamp: 1475746793
+  timestamp: 1475750119
 layout:
   /navigation/:
+    -
+      - system-messages-7972
     -
       - 'logo-9608 15'
       - 'menu-6409 65'
