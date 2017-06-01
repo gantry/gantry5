@@ -24,7 +24,10 @@
         - Fixed checkboxes next to the setting enablers in Content tab getting unchecked after refresh (#1986)
         - Fixed `Missing argument 2 for modify_gantry5_locale()`
         - Fixed external scripts and CSS with query parameters being broken (#1975)
-
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed CSS/JS pipelines, though you need to set `js_minify: false` (#2001)
+        
 # 5.4.12
 ## 04/26/2017
 

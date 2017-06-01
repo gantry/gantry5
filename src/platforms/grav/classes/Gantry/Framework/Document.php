@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
+use Grav\Common\Assets;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
@@ -22,6 +23,7 @@ class Document extends HtmlDocument
         static::registerFrameworks();
         static::registerStyles();
         static::registerScripts('head');
+        static::registerScripts('footer');
     }
 
     public static function rootUri()
@@ -62,15 +64,22 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Assets $assets */
+        $assets = $grav['assets'];
+
         $styles = static::$stack[0]->getStyles();
 
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
-                    $grav['assets']->addCss(static::getRelativeUrl($style['href'], $grav['config']->get('system.assets.css_pipeline')), 90 + $style[':priority']);
+                    $assets->addCss(
+                        static::getRelativeUrl($style['href'], $grav['config']->get('system.assets.css_pipeline')),
+                        90 + $style[':priority'],
+                        true,
+                        'head');
                     break;
                 case 'inline':
-                    $grav['assets']->addInlineCss($style['content'], 90 + $style[':priority']);
+                    $assets->addInlineCss($style['content'], 90 + $style[':priority'], 'head');
                     break;
             }
         }
@@ -80,22 +89,28 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Assets $assets */
+        $assets = $grav['assets'];
+
         $scripts = static::$stack[0]->getScripts($group);
+        $group = $group === 'footer' ? 'bottom' : $group;
 
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $grav['assets']->AddJs(static::getRelativeUrl($script['src'], $grav['config']->get('system.assets.js_pipeline')), [
-                        'priority' => 90 + $script[':priority'],
-                        'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
-                        'group' => $group,
-                    ]);
+                    $assets->AddJs(
+                        static::getRelativeUrl($script['src'], $grav['config']->get('system.assets.js_pipeline')),
+                        90 + $script[':priority'],
+                        true,
+                        $script['async'] ? 'async' : ($script['defer'] ? 'defer' : ''),
+                        $group
+                    );
                     break;
                 case 'inline':
-                    $grav['assets']->AddInlineJs($script['content'], [
-                        'priority' => 90 + $script[':priority'],
-                        'group' => $group,
-                    ]);
+                    $assets->AddInlineJs($script['content'],
+                        90 + $script[':priority'],
+                        $group
+                    );
                     break;
             }
         }

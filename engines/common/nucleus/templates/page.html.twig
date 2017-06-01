@@ -58,6 +58,8 @@
     {{ gantry.document.getHtml('body_bottom')|join("\n    ")|raw }}
 {% endset -%}
 
+{%- do gantry.document.addScript(url('gantry-assets://js/main.js'), 11, 'footer') -%}
+
 {# Head and footer needs to come last because of any of the above blocks may have CSS or JavaScript in them #}
 
 {%- set page_head %}
@@ -93,7 +95,6 @@
             {{ page_bottom|raw }}
         </div>
         {{ body_bottom|raw }}
-        <script type="text/javascript" src="{{ url('gantry-assets://js/main.js') }}"></script>
         {{ page_footer|raw }}
         {{ gantry.config.page.body.body_bottom|raw }}
     </body>
