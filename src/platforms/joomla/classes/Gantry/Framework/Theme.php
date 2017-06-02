@@ -56,12 +56,55 @@ class Theme extends AbstractTheme
     {
         parent::extendTwig($twig, $loader);
 
+        /** @var \Twig_Extension_Core $core */
+        $core = $twig->getExtension('Twig_Extension_Core');
+
         // Get user timezone and if not set, use Joomla default.
         $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
+        $core->setTimezone(new \DateTimeZone($timezone));
 
-        $twig->getExtension('Twig_Extension_Core')->setTimezone(new \DateTimeZone($timezone));
+        // Set locale for dates and numbers.
+        $core->setDateFormat(\JText::_('DATE_FORMAT_LC2'), \JText::_('GANTRY5_X_DAYS'));
+        $core->setNumberFormat(0, \JText::_('DECIMALS_SEPARATOR'), \JText::_('THOUSANDS_SEPARATOR'));
+
+        $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], array('needs_environment' => true));
+        $twig->addFilter($filter);
 
         return $twig;
+    }
+
+    /**
+     * Converts a date to the given format.
+     *
+     * <pre>
+     *   {{ post.published_at|date("m/d/Y") }}
+     * </pre>
+     *
+     * @param \Twig_Environment                                 $env
+     * @param \DateTime|\DateTimeInterface|\DateInterval|string $date     A date
+     * @param string|null                                       $format   The target format, null to use the default
+     * @param \DateTimeZone|string|null|false                   $timezone The target timezone, null to use the default, false to leave unchanged
+     *
+     * @return string The formatted date
+     */
+    public function twig_dateFilter(\Twig_Environment $env, $date, $format = null, $timezone = null)
+    {
+        if (null === $format) {
+            $formats = $env->getExtension('Twig_Extension_Core')->getDateFormat();
+            $format = $date instanceof \DateInterval ? $formats[1] : $formats[0];
+        }
+
+        if ($date instanceof \DateInterval) {
+            return $date->format($format);
+        }
+
+        if (!($date instanceof \JDate)) {
+            // Create localized JDate object.
+            $date = \twig_date_converter($env, $date, $timezone);
+            $date = new \JDate($date->getTimestamp(), $date->getTimezone());
+        }
+
+        return $date->format($format);
     }
 
     /**
