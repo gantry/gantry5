@@ -520,7 +520,7 @@ th .tooltip-inner {
 
 .alert {
   border-radius: 0.1875rem;
-  padding: 0.938rem;
+  padding: 0.938rem 2rem 0.938rem 0.938rem;
   margin-bottom: 1.5rem;
   text-shadow: none;
 }
