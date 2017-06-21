@@ -69,7 +69,7 @@
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ SELF.displayTitle(item) }}</span>
                     {% endif %}
-                        {% if (item.children) -%}
+                        {% if (item.children) and not item.dropdown_hide -%}
                             <span class="g-menu-parent-indicator"></span>
                         {%- endif %}
                 {% endif %}
