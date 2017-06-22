@@ -1,3 +1,13 @@
+# 5.4.14
+## mm/dd/2017
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Menu: Disable Dropdowns still Shows Indicator (#2031)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.3.2
+
 # 5.4.13
 ## 06/06/2017
 
