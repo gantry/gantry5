@@ -7,6 +7,9 @@
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.2
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed Particles Picker not adapting to height and scroll position in Layout Manager (#1942)
 
 # 5.4.13
 ## 06/06/2017
