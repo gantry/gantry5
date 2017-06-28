@@ -4,6 +4,7 @@
 1. [Common](#common)
     3. [](#bugfix)
         - Menu: Disable Dropdowns still Shows Indicator (#2031)
+        - Menu: Fixed frontend menu 'Extended' option, resetting heights of wrapping containers not necessarily related to the menu itself (#2025) 
 3. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.3.2

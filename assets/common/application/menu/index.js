@@ -259,7 +259,12 @@ var Menu = new prime({
 
         if (isGoingBack) {
             parents = parent.parents('[style^="height"]');
-            (parents || []).forEach(function(element) { element.style.height = heights.from.height + 'px'; });
+            (parents || []).forEach(function(element) {
+                element = $(element);
+                if (element.parent('.g-toplevel')) {
+                    element[0].style.height = heights.from.height + 'px';
+                }
+            });
         }
 
         if (!isGoingBack) {
@@ -268,7 +273,12 @@ var Menu = new prime({
                 parent[0].style.height = height + 'px';
 
                 parents = parent.parents('[style^="height"]');
-                (parents || []).forEach(function(element) { element.style.height = height + 'px'; });
+                (parents || []).forEach(function(element) {
+                    element = $(element);
+                    if (element.parent('.g-toplevel')) {
+                        element[0].style.height = height + 'px';
+                    }
+                });
             } else if (isNavMenu) {
                 sublevel[0].style.height = height + 'px';
             }
