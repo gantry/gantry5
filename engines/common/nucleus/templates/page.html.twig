@@ -88,7 +88,7 @@
         {{ page_offcanvas|raw }}
         <div id="g-page-surround">
             {% if page_offcanvas|trim -%}
-            <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle><i class="fa fa-fw fa-bars" aria-hidden="true"></i></div>
+            <div class="g-offcanvas-hide g-offcanvas-toggle" data-offcanvas-toggle aria-controls="g-offcanvas" aria-expanded="false"><i class="fa fa-fw fa-bars"></i></div>
             {%- endif %}
             {{ page_top|raw }}
             {{ page_layout|raw }}

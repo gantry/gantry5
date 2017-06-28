@@ -601,6 +601,8 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openingClass);
+            this.offcanvas.attribute('aria-expanded', true);
+            $('[data-offcanvas-toggle]').attribute('aria-expanded', true);
             panel.style.transition = panel.style[prefix.css + 'transition'] = '';
         }, this), this.options.duration);
 
@@ -623,6 +625,8 @@ var Offcanvas = new prime({
         this._setTransition();
         this._translateXTo(0);
         this.opened = false;
+        this.offcanvas.attribute('aria-expanded', false);
+        $('[data-offcanvas-toggle]').attribute('aria-expanded', false);
 
         setTimeout(bind(function() {
             var panel = this.panel[0];
