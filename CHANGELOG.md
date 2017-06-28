@@ -4,6 +4,8 @@
 1. [Common](#common)
     2. [](#improved)
         - Accessibility: Menu / Offcanvas: Offcanvas and hamburger toggle menu are now ARIA compatible (#1891)
+        - Filepicker Field: File listing mode (thumbnails/list) is now remembered and restored (#1697)
+        - Filepicker Field: UI updates, container is now more spacious and in list view the thumbnails are visible
     3. [](#bugfix)
         - Menu: Disable Dropdowns still Shows Indicator (#2031)
         - Menu: Fixed frontend menu 'Extended' option, resetting heights of wrapping containers not necessarily related to the menu itself (#2025)

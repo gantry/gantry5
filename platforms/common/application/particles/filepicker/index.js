@@ -14,6 +14,7 @@ var $             = require('../../utils/elements.utils'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     translate     = require('../../utils/translate'),
+    Cookie        = require('../../utils/cookie'),
     dropzone      = require('dropzone');
 
 var FilePicker = new prime({
@@ -361,6 +362,7 @@ var FilePicker = new prime({
             var modes = $('[data-files-mode]');
             modes.removeClass('active');
             element.addClass('active');
+            Cookie.write('g5_files_mode', element.data('files-mode'));
 
             files.animate({ opacity: 0 }, {
                 duration: 200,

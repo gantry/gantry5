@@ -6796,7 +6796,7 @@ html.g5-dialog-open {
   cursor: pointer;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
-  width: 650px;
+  width: 80vw;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   -ms-transform: translateZ(0);
@@ -6892,7 +6892,7 @@ html.g5-dialog-open {
   padding-left: 2.14285714em;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .folders {
-  max-height: 500px;
+  height: 65vh;
   overflow: auto;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files > ul {
@@ -6953,16 +6953,16 @@ html.g5-dialog-open {
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li {
   display: inline-block;
-  max-width: 100px;
+  max-width: 150px;
   text-align: center;
   margin: 12px 15px;
   cursor: pointer;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb {
   background-color: #fff;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
   text-transform: uppercase;
   font-size: 0.8em;
   border-radius: 0.1875rem;
@@ -6970,8 +6970,8 @@ html.g5-dialog-open {
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-thumb.g-image {
   position: relative;
   float: left;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background-position: 50% 50%;
   /*&.g-image-png, &.g-image-gif, &.g-image-ico, &.g-image-svg {
       background-size: inherit;
@@ -6990,7 +6990,7 @@ html.g5-dialog-open {
   border-radius: 0.1875rem;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-name {
-  max-width: 100px;
+  max-width: 150px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-size, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-mtime {
   display: none;
@@ -7003,13 +7003,16 @@ html.g5-dialog-open {
   display: none;
   position: absolute;
   left: 50%;
-  top: 0;
-  margin-left: -29px;
-  margin-top: 21px;
+  top: 45%;
   padding: 4px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
   line-height: 1em;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li .g-file-progress .g-file-progress-text {
   position: absolute;
@@ -7047,14 +7050,27 @@ html.g5-dialog-open {
   padding-right: 20px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-preview {
-  left: inherit;
-  right: 2px;
+  left: 18px;
+  top: 18px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-delete + .g-file-preview {
   right: 26px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-thumb {
-  display: none;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-thumb div {
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+#g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-thumb {
+  width: 55px;
 }
 #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-list li .g-file-name {
   margin: 0;

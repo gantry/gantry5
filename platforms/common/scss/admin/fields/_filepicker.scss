@@ -11,7 +11,7 @@
     }
 
     .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
-        width: 650px;
+        width: 80vw;
         @include transform(translateZ(0));
 
         .g-particles-header {
@@ -125,7 +125,7 @@
         }
 
         .g-files, .folders {
-            max-height: 500px;
+            height: 65vh;
             overflow: auto;
         }
 
@@ -194,7 +194,7 @@
             }
 
             &.g-filemode-thumbnails {
-                $max-width: 100px;
+                $max-width: 150px;
                 li {
                     display: inline-block;
                     max-width: $max-width;
@@ -257,13 +257,12 @@
                         display: none;
                         position: absolute;
                         left: 50%;
-                        top: 0;
-                        margin-left: -29px;
-                        margin-top: 21px;
+                        top: 45%;
                         padding: 4px;
                         background-color: rgba(255, 255, 255, 0.5);
                         border-radius: 50px;
                         line-height: 1em;
+                        @include transform(translate(-50%, -50%));
 
                         .g-file-progress-text {
                             position: absolute;
@@ -311,8 +310,8 @@
                     }
 
                     .g-file-preview {
-                        left: inherit;
-                        right: 2px;
+                        left: 18px;
+                        top: 18px;
                     }
 
                     .g-file-delete + .g-file-preview {
@@ -320,7 +319,22 @@
                     }
 
                     .g-thumb {
-                        display: none;
+                        display: inline-block;
+                        width: 50px;
+                        height: 50px;
+                        vertical-align: middle;
+                        margin-right: 5px;
+
+                        div {
+                            height: 50px;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                    }
+
+                    .g-file-thumb {
+                        width: 55px;
                     }
 
                     .g-file-name {
