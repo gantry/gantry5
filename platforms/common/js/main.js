@@ -9270,8 +9270,7 @@ ready(function() {
         body.emit('change', { target: dataField });
     });
 
-    // Change values
-    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+    var onBlur = function(event, element) {
         var parent     = element.parent('[data-keyvalue-item]'),
             wrapper    = parent.find('.g-keyvalue-wrapper'),
             keyElement = parent.find('[data-keyvalue-key]'),
@@ -9319,7 +9318,18 @@ ready(function() {
         dataField.value(escapeUnicode(JSON.stringify(data)));
         body.emit('change', { target: dataField });
 
-    }, true);
+    };
+
+    // Catch return key
+    body.delegate('keydown', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key === 13) { // Enter
+            onBlur(event, element);
+        }
+    });
+
+    // Change values
+    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', onBlur, true);
 
     body.delegate('update', '[data-keyvalue-data]', function(event, element) {
         var parent = element.parent(),
