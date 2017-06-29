@@ -78,7 +78,10 @@ var Menu = new prime({
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
-            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
+            if (linkedParent) {
+                linkedParent.on('touchmove', this.bound('touchmove'));
+                linkedParent.on('touchend', this.bound('touchend'));
+            }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -125,6 +128,11 @@ var Menu = new prime({
         this.closeDropdown(element);
     },
 
+    touchmove: function(event) {
+        var target      = $(event.target);
+        target.isMoving = true;
+    },
+
     touchend: function(event) {
         var selectors = this.selectors,
             states    = this.states;
@@ -134,6 +142,14 @@ var Menu = new prime({
             menuType    = target.parent('.g-standard') ? 'standard' : 'megamenu',
             isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
+
+        if (target.isMoving) {
+            target.isMoving = false;
+            return false;
+        }
+
+        target.off('touchmove', this.bound('touchmove'));
+        target.isMoving = false;
 
         if (indicator) {
             target = indicator;

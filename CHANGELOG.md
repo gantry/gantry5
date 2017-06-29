@@ -10,6 +10,7 @@
         - Menu: Disable Dropdowns still Shows Indicator (#2031)
         - Menu: Fixed frontend menu 'Extended' option, resetting heights of wrapping containers not necessarily related to the menu itself (#2025)
         - Menu / Offcanvas: Fixed issue preventing the offcanvas toggle to show when Menu set with only icons (#1939)
+        - Menu: Fixed issue with touch devices where ending the scroll gesture on the offcanvas menu would trigger the expansion of a parent menu item (#1620)
         - Fixed Tag Attributes 'enter' key causing the value to get lost while triggering the Apply (#1860)
         - Filepicker: Fixed issue with upper case extensions not getting recognized and failing to upload (#1852)
 3. [WordPress](#wordpress)
