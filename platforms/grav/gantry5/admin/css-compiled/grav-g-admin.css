@@ -1,7 +1,7 @@
 .alert {
-  border-radius: 2px;
+  border-radius: 0.1875rem;
   padding: 0.938rem;
-  margin-bottom: 1.7rem;
+  margin-bottom: 1.5rem;
   text-shadow: none;
 }
 
@@ -104,14 +104,49 @@ body #admin-main .admin-block {
   left: 240px;
   height: 4.2rem;
 }
+@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+  #g5-container #main-header {
+    left: 50px;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  #g5-container #main-header {
+    left: 50px;
+  }
+}
 #g5-container #main-header .g-content {
   padding: 0 3em !important;
+}
+@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+  #g5-container #main-header .g-content {
+    padding: 0 0.7em 0 3em !important;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  #g5-container #main-header .g-content {
+    padding: 0 0.7em 0 3em !important;
+  }
 }
 #g5-container #main-header .theme-title {
   line-height: 4.2rem;
 }
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  #g5-container #main-header .theme-title small {
+    display: none;
+  }
+}
 #g5-container #main-header ul li a {
   padding: 1.33rem 0.938rem;
+}
+@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+  #g5-container #main-header ul li a {
+    padding: 1.33rem 0.638rem;
+  }
+}
+@media only all and (min-width: 48rem) and (max-width: 59.938rem) {
+  #g5-container #main-header ul li a {
+    padding: 1.33rem 0.638rem;
+  }
 }
 #g5-container .g5-popover-extras.in {
   position: fixed;
@@ -305,8 +340,13 @@ body #admin-main .admin-block {
   margin-bottom: 0;
 }
 
-body.com_gantry5 #g5-container .navbar-block #gantry-logo {
-  right: 2.1rem;
+@media only all and (min-width: 60rem) and (max-width: 74.938rem) {
+  #g5-container .navbar-block #navbar ul li:not(.config-select-wrap) a {
+    padding: 0.938rem 0.538rem;
+  }
+  #g5-container .navbar-block #navbar ul li:not(.config-select-wrap) a i {
+    margin-right: 0.3rem;
+  }
 }
 
 #g5-container .settings-block input, #g5-container .settings-block textarea, #g5-container .settings-block select {
