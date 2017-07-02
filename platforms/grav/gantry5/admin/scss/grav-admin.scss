@@ -1,9 +1,11 @@
 // Load Admin Configuration
 @import "configuration/admin/base";
-@import "configuration/nucleus/layout";
+@import "configuration/nucleus/layout";;
+@import "configuration/nucleus/breakpoints";
 
 // Load Optional Nucleus Assets
 @import "nucleus/theme/alerts";
+@import "nucleus/mixins/breakpoints";
 
 // Core
 @import "grav-admin/core";
