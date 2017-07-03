@@ -15,7 +15,7 @@
         - Filepicker: Fixed issue with upper case extensions not getting recognized and failing to upload (#1852)
 3. [WordPress](#wordpress)
     1. [](#new)
-        - Updated Timber to v1.3.2
+        - Updated Timber to v1.3.3
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed Particles Picker not adapting to height and scroll position in Layout Manager (#1942)
