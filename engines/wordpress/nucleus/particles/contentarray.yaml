@@ -149,6 +149,7 @@ form:
                   'l': Date9
                   'l j F Y': Date10
                   'j F Y': Date11
+                  'F d, Y': Date12
 
         _tab_readmore:
           label: Read More
