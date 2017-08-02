@@ -264,7 +264,7 @@ class Platform extends BasePlatform
         return $html;
     }
 
-    protected function getModule($id)
+    public function getModule($id)
     {
         $modules = $this->getModuleList();
         return $id && isset($modules[$id]) ? $modules[$id] : null;

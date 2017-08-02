@@ -9,8 +9,67 @@
  */
 defined('_JEXEC') or die;
 
-class ModGantryParticlesHelper
+class ModGantry5ParticleHelper
 {
+    /**
+     * Serve module AJAX requests in 'index.php?option=com_ajax&module=gantry5_particle&format=json'.
+     *
+     * @return array|null|string
+     */
+    public static function getAjax()
+    {
+        $input = JFactory::getApplication()->input;
+        $format = $input->getCmd('format', 'html');
+        $id = $input->getInt('id');
+
+        $props = $_GET;
+        unset($props['option'], $props['module'], $props['format'], $props['id']);
+
+        return static::ajax($id, $props, $format);
+    }
+
+    /**
+     * @param $id
+     * @param array $props
+     * @param string $format
+     * @return array|null|string
+     */
+    public static function ajax($id, $props = [], $format = 'raw')
+    {
+        if (!in_array($format, ['json', 'raw', 'debug'])) {
+            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        }
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $module = $gantry['platform']->getModule($id);
+
+        // Make sure that module really exists.
+        if (!is_object($module) || strpos($module->module, 'gantry5') === false) {
+            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        }
+
+        $attribs = ['style' => 'gantry'];
+
+        // Trigger the onRenderModule event.
+        $dispatcher = \JEventDispatcher::getInstance();
+        $dispatcher->trigger('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+
+        $params = new JRegistry($module->params);
+        $params->set('ajax', $props);
+        $block = static::render($module, $params);
+        $data = json_decode($params->get('particle'), true);
+        $type = $data['type'] . '.' . $data['particle'];
+        $identifier = static::getIdentifier($data['particle'], $module->id);
+        $html = (string) $block;
+
+        if ($format === 'raw') {
+            return $html;
+        }
+
+        return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+    }
+
     /**
      * @param object $module
      * @param object $params
@@ -39,7 +98,7 @@ class ModGantryParticlesHelper
         }
 
         $object = (object) array(
-            'id' => "module-{$particle}-{$module->id}",
+            'id' => static::getIdentifier($particle, $module->id),
             'type' => $type,
             'subtype' => $particle,
             'attributes' => $data['options']['particle'],
@@ -47,7 +106,8 @@ class ModGantryParticlesHelper
 
         $context = array(
             'gantry' => $gantry,
-            'inContent' => true
+            'inContent' => true,
+            'ajax' => $params->get('ajax'),
         );
 
         /** @var Gantry\Framework\Theme $theme */
@@ -81,5 +141,10 @@ class ModGantryParticlesHelper
         } catch (Exception $e) {
             return null;
         }
+    }
+
+    public static function getIdentifier($particle, $id)
+    {
+        return "module-{$particle}-{$id}";
     }
 }

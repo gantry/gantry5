@@ -54,7 +54,7 @@ class plgSystemGantry5 extends JPlugin
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
-             $this->onAfterRouteSite();
+            $this->onAfterRouteSite();
 
         } elseif ($this->app->isAdmin()) {
             $this->onAfterRouteAdmin();
@@ -93,10 +93,107 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Serve particle AJAX requests in 'index.php?option=com_ajax&plugin=particle&format=json'.
+     *
+     * @return array|string|null
+     */
+    public function onAjaxParticle()
+    {
+        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
+            return null;
+        }
+
+        $input = $this->app->input;
+        $format = $input->getCmd('format', 'html');
+
+        preg_match('`^([^-]+)-(.*?)-([^-]+)$`', $input->getCmd('id'), $matches);
+
+        if (!$matches || !in_array($format, ['json', 'raw', 'debug'])) {
+            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        }
+
+        $props = $_GET;
+        unset($props['option'], $props['plugin'], $props['format'], $props['id'], $props['ItemId']);
+
+        $identifier = $matches[0];
+        $type = $matches[1];
+        $subtype = $matches[2];
+        $id = $matches[3];
+        $html = '';
+
+        if ($type === 'module') {
+            require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
+
+            return ModGantry5ParticleHelper::ajax($id, $props, $format);
+        }
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+        $layout = $theme->loadLayout();
+
+        if ($type === 'particle') {
+            $particle = $layout->find($subtype . '-' . $id);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $theme->getContent($particle, $context);
+            $html = (string) $block;
+
+        } elseif ($type === 'main' && $subtype === 'particle' && $theme->hasContent()) {
+            $menu = $this->app->getMenu();
+            $menuItem = $menu->getActive();
+            $params = $menuItem ? $menuItem->getParams() : new JRegistry;
+
+            /** @var object $params */
+            $data = json_decode($params->get('particle'), true);
+            if ($data) {
+                $context = [
+                    'gantry' => $gantry,
+                    'noConfig' => true,
+                    'inContent' => true,
+                    'ajax' => $props,
+                    'segment' => [
+                        'id' => $identifier,
+                        'type' => $data['type'],
+                        'classes' => $params->get('pageclass_sfx'),
+                        'subtype' => $data['particle'],
+                        'attributes' => $data['options']['particle'],
+                    ]
+                ];
+
+                $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
+            }
+        }
+
+        if ($format === 'raw') {
+            return $html;
+        }
+
+        return ['code' => 200, 'type' => $type . '.' . $subtype, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+    }
+
+    /**
      * Load Gantry framework before dispatching to the component.
      */
     private function onAfterRouteSite()
     {
+        $input = $this->app->input;
+
+        // In AJAX we need to set the active menu item in order to use particles in the page.
+        if ($input->getCmd('option') === 'com_ajax' && ($input->getCmd('plugin') === 'particle' || $input->getCmd('module') === 'gantry5_particle')) {
+            $menu = $this->app->getMenu();
+            $menu->setActive($input->getInt('ItemId'));
+        }
+
         $templateName = $this->app->getTemplate();
 
         if (!$this->isGantryTemplate($templateName)) {
