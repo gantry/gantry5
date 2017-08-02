@@ -106,22 +106,24 @@ class plgSystemGantry5 extends JPlugin
         $input = $this->app->input;
         $format = $input->getCmd('format', 'html');
 
-        preg_match('`^([^-]+)-(.*?)-([^-]+)$`', $input->getCmd('id'), $matches);
-
-        if (!$matches || !in_array($format, ['json', 'raw', 'debug'])) {
+        if (!in_array($format, ['json', 'raw', 'debug'])) {
             throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $props = $_GET;
-        unset($props['option'], $props['plugin'], $props['format'], $props['id'], $props['ItemId']);
+        unset($props['option'], $props['plugin'], $props['format'], $props['id'], $props['Itemid']);
 
-        $identifier = $matches[0];
-        $type = $matches[1];
-        $subtype = $matches[2];
-        $id = $matches[3];
-        $html = '';
+        $identifier = $input->getCmd('id');
 
-        if ($type === 'module') {
+        if (strpos($identifier, 'module-') === 0) {
+            preg_match('`-([\d]+)$`', $input->getCmd('id'), $matches);
+
+            if (!isset($matches[1])) {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $id = $matches[1];
+
             require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
 
             return ModGantry5ParticleHelper::ajax($id, $props, $format);
@@ -132,30 +134,17 @@ class plgSystemGantry5 extends JPlugin
         /** @var \Gantry\Framework\Theme $theme */
         $theme = $gantry['theme'];
         $layout = $theme->loadLayout();
+        $html = '';
 
-        if ($type === 'particle') {
-            $particle = $layout->find($subtype . '-' . $id);
-            if (!isset($particle->type) || $particle->type !== 'particle') {
-                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
-            }
-
-            $context = array(
-                'gantry' => $gantry,
-                'inContent' => false,
-                'ajax' => $props,
-            );
-
-            $block = $theme->getContent($particle, $context);
-            $html = (string) $block;
-
-        } elseif ($type === 'main' && $subtype === 'particle' && $theme->hasContent()) {
+        if ($identifier === 'main-particle') {
+            $type = $identifier;
             $menu = $this->app->getMenu();
             $menuItem = $menu->getActive();
             $params = $menuItem ? $menuItem->getParams() : new JRegistry;
 
             /** @var object $params */
             $data = json_decode($params->get('particle'), true);
-            if ($data) {
+            if ($data && $theme->hasContent()) {
                 $context = [
                     'gantry' => $gantry,
                     'noConfig' => true,
@@ -172,13 +161,28 @@ class plgSystemGantry5 extends JPlugin
 
                 $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
             }
+        } else {
+            $particle = $layout->find($identifier);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $theme->getContent($particle, $context);
+            $type = $particle->type . '.' . $particle->subtype;
+            $html = (string) $block;
         }
 
         if ($format === 'raw') {
             return $html;
         }
 
-        return ['code' => 200, 'type' => $type . '.' . $subtype, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+        return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
     }
 
     /**
@@ -187,12 +191,6 @@ class plgSystemGantry5 extends JPlugin
     private function onAfterRouteSite()
     {
         $input = $this->app->input;
-
-        // In AJAX we need to set the active menu item in order to use particles in the page.
-        if ($input->getCmd('option') === 'com_ajax' && ($input->getCmd('plugin') === 'particle' || $input->getCmd('module') === 'gantry5_particle')) {
-            $menu = $this->app->getMenu();
-            $menu->setActive($input->getInt('ItemId'));
-        }
 
         $templateName = $this->app->getTemplate();
 

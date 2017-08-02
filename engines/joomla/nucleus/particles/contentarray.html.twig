@@ -9,12 +9,13 @@
     {% endfor %}
 {% endif %}
 
+{% set article_settings = particle.article %}
+{% set filter = article_settings.filter %}
+{% set sort = article_settings.sort %}
+{% set limit = article_settings.limit %}
+{% set display = article_settings.display %}
+
 {% block particle %}
-    {% set article_settings = particle.article %}
-    {% set filter = article_settings.filter %}
-    {% set sort = article_settings.sort %}
-    {% set limit = article_settings.limit %}
-    {% set display = article_settings.display %}
 
     {# Category Finder #}
     {% set category_options = filter.categories ? {id: [filter.categories|split(','), 0]} : {} %}
@@ -35,7 +36,16 @@
         {% do article_finder.featured(true) %}
     {% endif %}
 
-    {% set articles = article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(limit.start).find() %}
+    {% set start = limit.start + max(0, ajax.start|int) %}
+    {% do article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(start) %}
+    {% set total = article_finder.count() %}
+    {% set articles = article_finder.find() %}
+
+    {% if display.prevnext_buttons %}
+    <button class="float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+    <button class="float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+    <div class="clearfix"></div>
+    {% endif %}
 
     {# All Articles #}
     <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
@@ -142,5 +152,44 @@
             </div>
         {% endfor %}
     </div>
+{% endblock %}
 
+{% block javascript_footer %}
+{% if display.prevnext_buttons %}
+{% do gantry.load('jquery') %}
+<script>
+    (function ($) {
+        $(document).on('click', 'button.contentarray-button', function () {
+            var id = $(this).attr('data-id'),
+                start = $(this).attr('data-start'),
+                request = {
+                'option' : 'com_ajax',
+                'plugin' : 'particle',
+                'Itemid' : {{ gantry.page.itemid|int }},
+                'id'     : id,
+                'start'  : start,
+                'format' : 'json'
+            };
+            $.ajax({
+                type       : 'GET',
+                data       : request,
+                indexValue : id,
+                success: function (response) {
+                    if(response.data){
+                        $('#' + this.indexValue).html(response.data[0].html);
+                    } else {
+                        // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                        $('#' + this.indexValue).html(response.message);
+                    }
+                },
+                error: function(response) {
+                    // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                    $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                }
+            });
+            return false;
+        });
+    })(jQuery)
+</script>
+{% endif %}
 {% endblock %}

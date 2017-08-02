@@ -54,6 +54,8 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
             new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
             new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
+            new \Twig_SimpleFilter('int', [$this, 'intFilter']),
+            new \Twig_SimpleFilter('float', [$this, 'floatFilter']),
             new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
         ];
     }
@@ -210,6 +212,29 @@ class TwigExtension extends \Twig_Extension
     public function stringFilter($input)
     {
         return (string) $input;
+    }
+
+
+    /**
+     * Casts input to int.
+     *
+     * @param mixed $input
+     * @return int
+     */
+    public function intFilter($input)
+    {
+        return (int) $input;
+    }
+
+    /**
+     * Casts input to float.
+     *
+     * @param mixed $input
+     * @return float
+     */
+    public function floatFilter($input)
+    {
+        return (float) $input;
     }
 
     /**

@@ -96,6 +96,7 @@ form:
                 ASC: Ascending
                 DESC: Descending
               overridable: false
+
         _tab_display:
           label: Display
           fields:
@@ -203,6 +204,15 @@ form:
               type: input.selectize
               label: Button CSS Classes
               description: CSS class name for the 'Read More' button.
+
+            article.display.prevnext_buttons:
+              type: select.select
+              label: Prev/Next Buttons
+              description: Select if the Prev and Next buttons should be shown to allow users to see more articles.
+              default: ''
+              options:
+                show: Show
+                '': Hide
 
         _tab_extras:
           label: Extras
