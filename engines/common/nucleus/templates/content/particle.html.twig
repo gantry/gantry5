@@ -21,12 +21,12 @@
 
     {% set classes = ((not inContent ? 'g-content g-particle ' : 'g-particle ') ~ segment.classes|join(' '))|trim %}
     {%- if html -%}
-            {% if gantry.debug %}<!-- START PARTICLE {{ segment.id }} -->{% endif %}
+            {% if gantry.debug %}<!-- START PARTICLE {{ id }} -->{% endif %}
 
-            <div class="{{ classes }}">
+            {% if ajax is not defined %}<div id="{{ id }}" class="{{ classes }}">{% endif %}
             {{ html|raw }}
-            </div>
-            {% if gantry.debug %}<!-- END PARTICLE {{ segment.id }} -->{% endif %}
+            {% if ajax is not defined %}</div>{% endif %}
+            {% if gantry.debug %}<!-- END PARTICLE {{ id }} -->{% endif %}
     {%- endif -%}
 
 {% catch %}
