@@ -142,21 +142,21 @@ abstract class Widgets
     }
 
 
-    public static function getAjax($id, array $props = [])
+    public static function getAjax($sidebar_id, $id, array $props = [])
     {
-        global $wp_registered_widgets;
+        global $wp_registered_sidebars, $wp_registered_widgets;
 
-        $id = sanitize_title($id);
-
-        if (empty($wp_registered_widgets[$id])) {
-            return '';
+        // Do nothing if sidebar is not active or widget doesn't exist.
+        if (!$sidebar_id || !$id || !is_active_sidebar($sidebar_id) || empty($wp_registered_widgets[$id])) {
+            return null;
         }
 
         // Make sure we have Gantry 5 compatible widget.
         if (empty($wp_registered_widgets[$id]['gantry5'])) {
-            return '';
+            return null;
         }
 
+        $sidebar = $wp_registered_sidebars[$sidebar_id];
         $callback = $wp_registered_widgets[$id]['callback'];
 
         // Pre-render Gantry widget.
@@ -164,7 +164,7 @@ abstract class Widgets
             $name = $wp_registered_widgets[$id]['name'];
 
             $args = array_merge(
-                [[
+                [array_merge($sidebar, [
                     'widget_id' => $id,
                     'widget_name' => $name,
                     'ajax' => $props,
@@ -172,12 +172,12 @@ abstract class Widgets
                     'after_widget' => '',
                     'before_title' => '',
                     'after_title' => '',
-                ]],
+                ])],
                 (array)$wp_registered_widgets[$id]['params']
             );
 
             // Apply sidebar filter for rokbox and other plugins.
-            //$args = apply_filters('dynamic_sidebar_params', $args);
+            $args = apply_filters('dynamic_sidebar_params', $args);
 
             // Grab the content of the plugin.
             ob_start();

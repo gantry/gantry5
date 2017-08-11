@@ -71,6 +71,7 @@ class Particle extends \WP_Widget
             $instance = [];
         }
 
+        $sidebar = $args['id'] ? $args['id'] : '';
         $widget_id = isset($args['widget_id']) ? preg_replace('/[^\d]/', '', $args['widget_id']) : null;
         $md5 = md5(json_encode($instance));
         $id = isset($instance['id']) ? $instance['id'] : ($widget_id ?: "widget-{$md5}");
@@ -102,7 +103,7 @@ class Particle extends \WP_Widget
             }
 
             $object = (object) array(
-                'id' => "widget-{$particle}-{$id}",
+                'id' => "{$sidebar}-widget-{$particle}-{$id}",
                 'type' => $type,
                 'subtype' => $particle,
                 'attributes' => $instance['options']['particle'],

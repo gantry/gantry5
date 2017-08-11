@@ -527,22 +527,19 @@ class Theme extends AbstractTheme
 
         $this->setLayout($outline, true);
 
-        if (strpos($identifier, 'widget-') === 0) {
+        if (strpos($identifier, '-widget-') > 0) {
             global $wp_registered_widgets;
 
-            preg_match('`^widget-(.*?)-([\d]+)$`', $identifier, $matches);
+            preg_match('`^(.*?)-widget-(.*?)-([\d]+)$`', $identifier, $matches);
 
-            if (!isset($matches[1], $wp_registered_widgets['particle_widget-' . $matches[2]]['callback'])) {
+            $sidebar = isset($matches[1]) ? $matches[1] : null;
+            $type = isset($matches[2]) ? $matches[2] : null;
+            $id = isset($matches[3]) ? 'particle_widget-' . $matches[3] : null;
+            $html = Widgets::getAjax($sidebar, $id, $props);
+
+            if ($html === null) {
                 $this->ajax_not_found($format);
             }
-
-            $type = $matches[1];
-            $id = $matches[2];
-            $instance = $wp_registered_widgets['particle_widget-' . $id];
-            if (empty($instance['gantry5'])) {
-                $this->ajax_not_found($format);
-            }
-            $html = Widgets::getAjax('particle_widget-' . $id, $props);
 
             $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
         }
