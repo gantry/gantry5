@@ -97,17 +97,6 @@ abstract class Widgets
         return $html;
     }
 
-    protected static function displayWidgetId($next = false)
-    {
-        static $id = -1;
-
-        if ($next) {
-            $id--;
-        }
-
-        return $id;
-    }
-
     public static function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
@@ -150,6 +139,53 @@ abstract class Widgets
         }
 
         return $html;
+    }
+
+
+    public static function getAjax($id, array $props = [])
+    {
+        global $wp_registered_widgets;
+
+        $id = sanitize_title($id);
+
+        if (empty($wp_registered_widgets[$id])) {
+            return '';
+        }
+
+        // Make sure we have Gantry 5 compatible widget.
+        if (empty($wp_registered_widgets[$id]['gantry5'])) {
+            return '';
+        }
+
+        $callback = $wp_registered_widgets[$id]['callback'];
+
+        // Pre-render Gantry widget.
+        if (is_callable($callback)) {
+            $name = $wp_registered_widgets[$id]['name'];
+
+            $args = array_merge(
+                [[
+                    'widget_id' => $id,
+                    'widget_name' => $name,
+                    'ajax' => $props,
+                    'before_widget' => '',
+                    'after_widget' => '',
+                    'before_title' => '',
+                    'after_title' => '',
+                ]],
+                (array)$wp_registered_widgets[$id]['params']
+            );
+
+            // Apply sidebar filter for rokbox and other plugins.
+            //$args = apply_filters('dynamic_sidebar_params', $args);
+
+            // Grab the content of the plugin.
+            ob_start();
+            call_user_func_array($callback, $args);
+            $contents = ob_get_clean();
+        }
+
+        return $contents;
     }
 
     public static function listWidgets()
@@ -282,6 +318,17 @@ abstract class Widgets
         // Save widgets and sidebars.
         update_option("widget_{$type}", $widgets);
         update_option('sidebars_widgets', $sidebars);
+    }
+
+    protected static function displayWidgetId($next = false)
+    {
+        static $id = -1;
+
+        if ($next) {
+            $id--;
+        }
+
+        return $id;
     }
 
     protected static function getImportType($type)

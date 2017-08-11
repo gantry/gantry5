@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Timber\Timber;
 use Timber\User;
@@ -443,6 +444,10 @@ class Theme extends AbstractTheme
             register_widget('\Gantry\WordPress\Widget\Particle');
         });
 
+        // Particle AJAX actions.
+        add_action('wp_ajax_particle', [$this, 'ajax_particle']);
+        add_action('wp_ajax_nopriv_particle', [$this, 'ajax_particle']);
+
         add_shortcode('loadposition', [$this, 'loadposition_shortcode']);
 
         // Offline support.
@@ -500,6 +505,106 @@ class Theme extends AbstractTheme
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    /**
+     * Serve particle AJAX requests in '/wp-admin/admin-ajax.php?action=particle'.
+     */
+    public function ajax_particle()
+    {
+        $format = !empty($_GET['format']) ? sanitize_key($_GET['format']) : 'html';
+        $outline = !empty($_GET['outline']) ? sanitize_key($_GET['outline']) : 'default';
+        $identifier = !empty($_GET['id']) ? sanitize_key($_GET['id']) : null;
+
+        if (!in_array($format, ['json', 'raw'], true)) {
+            $this->ajax_not_found($format);
+        }
+
+        $props = $_GET;
+        unset($props['action'], $props['outline'], $props['id'], $props['format']);
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $this->setLayout($outline, true);
+
+        if (strpos($identifier, 'widget-') === 0) {
+            global $wp_registered_widgets;
+
+            preg_match('`^widget-(.*?)-([\d]+)$`', $identifier, $matches);
+
+            if (!isset($matches[1], $wp_registered_widgets['particle_widget-' . $matches[2]]['callback'])) {
+                $this->ajax_not_found($format);
+            }
+
+            $type = $matches[1];
+            $id = $matches[2];
+            $instance = $wp_registered_widgets['particle_widget-' . $id];
+            if (empty($instance['gantry5'])) {
+                $this->ajax_not_found($format);
+            }
+            $html = Widgets::getAjax('particle_widget-' . $id, $props);
+
+            $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
+        }
+
+        if ($identifier === 'main-particle') {
+            // Does not exist in WP.
+            $this->ajax_not_found($format);
+        } else {
+            $layout = $this->loadLayout();
+            $particle = $layout->find($identifier);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                $this->ajax_not_found($format);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $this->getContent($particle, $context);
+            $type = $particle->type . '.' . $particle->subtype;
+            $html = (string) $block;
+            $this->ajax_particle_output($type, $identifier, $props, $html, $format);
+        }
+    }
+
+    protected function ajax_particle_output($type, $identifier, $props, $html, $format)
+    {
+        ob_clean();
+
+        if ($format === 'raw') {
+            echo $html;
+        } else {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'code' => 200,
+                'type' => $type,
+                'id' => $identifier,
+                'props' => (object)$props,
+                'html' => $html
+            ]);
+        }
+
+        wp_die();
+    }
+
+    protected function ajax_not_found($format)
+    {
+        ob_clean();
+
+        if ($format === 'raw') {
+            echo 'Not Found';
+        } else {
+            header('Content-Type: "application/json; charset=utf-8"');
+            echo json_encode([
+                'code' => 404,
+                'message' => 'Not Found'
+            ]);
+        }
+
+        wp_die();
     }
 
     /**

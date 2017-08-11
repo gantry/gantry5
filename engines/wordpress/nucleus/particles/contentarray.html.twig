@@ -9,12 +9,14 @@
     {% endfor %}
 {% endif %}
 
+{% set post_settings = particle.post %}
+{% set filter = post_settings.filter %}
+{% set sort = post_settings.sort %}
+{% set limit = post_settings.limit %}
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% set display = post_settings.display %}
+
 {% block particle %}
-    {% set post_settings = particle.post %}
-    {% set filter = post_settings.filter %}
-    {% set sort = post_settings.sort %}
-    {% set limit = post_settings.limit %}
-    {% set display = post_settings.display %}
 
     {# Sticky Posts #}
     {% set sticky_posts = filter.sticky ? false : true %}
@@ -23,13 +25,20 @@
     {% set query_parameters = {
         'cat': filter.categories|replace(' ', ','),
         'posts_per_page': limit.total|default('-1'),
-        'offset': limit.start|default('0'),
+        'offset': start,
         'orderby': sort.orderby,
         'order': sort.ordering,
         'ignore_sticky_posts': sticky_posts
     } %}
 
-    {% set posts = wordpress.call('Timber::get_posts', query_parameters) %}
+    {% set posts = wordpress.call('Timber::query_posts', query_parameters) %}
+    {% set total = posts.get_pagination([]).total %}
+
+    {% if display.prevnext_buttons %}
+        <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+        <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+        <div class="clearfix"></div>
+    {% endif %}
 
     {# All Posts #}
     <div class="g-content-array g-wordpress-posts{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
@@ -142,4 +151,43 @@
         {% endfor %}
     </div>
 
+{% endblock %}
+
+{% block javascript_footer %}
+    {% if display.prevnext_buttons %}
+        {% do gantry.load('jquery') %}
+        <script>
+            (function ($) {
+                $(document).on('click', 'button.contentarray-button', function () {
+                    var id = $(this).attr('data-id'),
+                        start = $(this).attr('data-start'),
+                        request = {
+                            'action' : 'particle',
+                            'outline' : {{ gantry.page.outline|json_encode|raw }},
+                            'id'     : id,
+                            'start'  : start,
+                            'format' : 'json'
+                        };
+                    $.ajax({{ wordpress.call('admin_url', 'admin-ajax.php')|json_encode|raw }}, {
+                        type        : 'GET',
+                        data        : request,
+                        indexValue  : id,
+                        success: function (response) {
+                            if(response.html){
+                                $('#' + this.indexValue).html(response.html);
+                            } else {
+                                // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                                $('#' + this.indexValue).html(response.message);
+                            }
+                        },
+                        error: function(response) {
+                            // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                            $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                        }
+                    });
+                    return false;
+                });
+            })(jQuery)
+        </script>
+    {% endif %}
 {% endblock %}
