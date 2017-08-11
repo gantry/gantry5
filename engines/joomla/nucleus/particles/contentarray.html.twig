@@ -15,33 +15,32 @@
 {% set limit = article_settings.limit %}
 {% set display = article_settings.display %}
 
+{# Category Finder #}
+{% set category_options = filter.categories ? {id: [filter.categories|split(','), 0]} : {} %}
+{% set categories = joomla.finder('category', category_options).published(1).language().limit(0).find() %}
+
+{# Content Finder #}
+{% if filter.articles %}
+    {% set article_options = filter.articles ? {id: [filter.articles|replace(' ', '')|split(',')]} : {} %}
+    {% set article_finder = joomla.finder('content', article_options).published(1).language() %}
+{% else %}
+    {% set article_finder = joomla.finder('content').category(categories).published(1).language() %}
+{% endif %}
+
+{% set featured = filter.featured|default('include') %}
+{% if featured == 'exclude' %}
+    {% do article_finder.featured(false) %}
+{% elseif featured == 'only' %}
+    {% do article_finder.featured(true) %}
+{% endif %}
+
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% do article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(start) %}
+{% set total = article_finder.count() %}
+{% set articles = article_finder.find() %}
+
 {% block particle %}
-
-    {# Category Finder #}
-    {% set category_options = filter.categories ? {id: [filter.categories|split(','), 0]} : {} %}
-    {% set categories = joomla.finder('category', category_options).published(1).language().limit(0).find() %}
-
-    {# Content Finder #}
-    {% if filter.articles %}
-        {% set article_options = filter.articles ? {id: [filter.articles|replace(' ', '')|split(',')]} : {} %}
-        {% set article_finder = joomla.finder('content', article_options).published(1).language() %}
-    {% else %}
-        {% set article_finder = joomla.finder('content').category(categories).published(1).language() %}
-    {% endif %}
-
-    {% set featured = filter.featured|default('include') %}
-    {% if featured == 'exclude' %}
-        {% do article_finder.featured(false) %}
-    {% elseif featured == 'only' %}
-        {% do article_finder.featured(true) %}
-    {% endif %}
-
-    {% set start = limit.start + max(0, ajax.start|int) %}
-    {% do article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(start) %}
-    {% set total = article_finder.count() %}
-    {% set articles = article_finder.find() %}
-
-    {% if display.prevnext_buttons %}
+    {% if total >= limit.total and display.prevnext_buttons %}
     <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
     <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
     <div class="clearfix"></div>
@@ -155,7 +154,7 @@
 {% endblock %}
 
 {% block javascript_footer %}
-{% if display.prevnext_buttons %}
+{% if total >= limit.total and display.prevnext_buttons %}
 {% do gantry.load('jquery') %}
 <script>
     (function ($) {
@@ -176,7 +175,7 @@
                 indexValue : id,
                 success: function (response) {
                     if(response.data){
-                        $('#' + this.indexValue).html(response.data.html);
+                        $('#' + this.indexValue).html(response.data[0].html);
                     } else {
                         // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
                         $('#' + this.indexValue).html(response.message);

@@ -16,25 +16,24 @@
 {% set start = limit.start + max(0, ajax.start|int) %}
 {% set display = post_settings.display %}
 
+{# Sticky Posts #}
+{% set sticky_posts = filter.sticky ? false : true %}
+
+{# Query Posts #}
+{% set query_parameters = {
+    'cat': filter.categories|replace(' ', ','),
+    'posts_per_page': limit.total|default('-1'),
+    'offset': start,
+    'orderby': sort.orderby,
+    'order': sort.ordering,
+    'ignore_sticky_posts': sticky_posts
+} %}
+
+{% set posts = wordpress.call('Timber::query_posts', query_parameters) %}
+{% set total = posts.get_pagination([]).total %}
+
 {% block particle %}
-
-    {# Sticky Posts #}
-    {% set sticky_posts = filter.sticky ? false : true %}
-
-    {# Query Posts #}
-    {% set query_parameters = {
-        'cat': filter.categories|replace(' ', ','),
-        'posts_per_page': limit.total|default('-1'),
-        'offset': start,
-        'orderby': sort.orderby,
-        'order': sort.ordering,
-        'ignore_sticky_posts': sticky_posts
-    } %}
-
-    {% set posts = wordpress.call('Timber::query_posts', query_parameters) %}
-    {% set total = posts.get_pagination([]).total %}
-
-    {% if display.prevnext_buttons %}
+    {% if total >= limit.total and display.prevnext_buttons %}
         <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
         <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
         <div class="clearfix"></div>
@@ -154,7 +153,7 @@
 {% endblock %}
 
 {% block javascript_footer %}
-    {% if display.prevnext_buttons %}
+    {% if total >= limit.total and display.prevnext_buttons %}
         {% do gantry.load('jquery') %}
         <script>
             (function ($) {
