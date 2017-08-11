@@ -527,14 +527,14 @@ class Theme extends AbstractTheme
 
         $this->setLayout($outline, true);
 
-        if (strpos($identifier, '-widget-') > 0) {
-            global $wp_registered_widgets;
-
-            preg_match('`^(.*?)-widget-(.*?)-([\d]+)$`', $identifier, $matches);
-
-            $sidebar = isset($matches[1]) ? $matches[1] : null;
-            $type = isset($matches[2]) ? $matches[2] : null;
-            $id = isset($matches[3]) ? 'particle_widget-' . $matches[3] : null;
+        if ($identifier === 'main-particle') {
+            // Does not exist in WP.
+            $this->ajax_not_found($format);
+        } elseif (preg_match('`^(.*?)-widget-(.*?)-([\d]+)$`', $identifier, $matches)) {
+            // Render widget.
+            $sidebar = $matches[1];
+            $type = $matches[2];
+            $id = 'particle_widget-' . $matches[3];
             $html = Widgets::getAjax($sidebar, $id, $props);
 
             if ($html === null) {
@@ -542,12 +542,8 @@ class Theme extends AbstractTheme
             }
 
             $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
-        }
-
-        if ($identifier === 'main-particle') {
-            // Does not exist in WP.
-            $this->ajax_not_found($format);
         } else {
+            // Render particle.
             $layout = $this->loadLayout();
             $particle = $layout->find($identifier);
             if (!isset($particle->type) || $particle->type !== 'particle') {
