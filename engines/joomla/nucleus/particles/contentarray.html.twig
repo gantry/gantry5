@@ -42,8 +42,8 @@
     {% set articles = article_finder.find() %}
 
     {% if display.prevnext_buttons %}
-    <button class="float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
-    <button class="float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+    <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+    <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
     <div class="clearfix"></div>
     {% endif %}
 
@@ -176,7 +176,7 @@
                 indexValue : id,
                 success: function (response) {
                     if(response.data){
-                        $('#' + this.indexValue).html(response.data[0].html);
+                        $('#' + this.indexValue).html(response.data.html);
                     } else {
                         // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
                         $('#' + this.indexValue).html(response.message);
