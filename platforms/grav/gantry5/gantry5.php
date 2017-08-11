@@ -35,6 +35,7 @@ class Gantry5Plugin extends Plugin
      */
     protected $theme;
     protected $outline;
+    protected $apiPath;
 
     /**
      * @return array
@@ -223,6 +224,9 @@ class Gantry5Plugin extends Plugin
             Document::$timestamp_age = 0;
         }
 
+        // Initialize particle AJAX.
+        $this->initializeApi();
+
         GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
    }
 
@@ -235,6 +239,55 @@ class Gantry5Plugin extends Plugin
         $gantry = Gantry::instance();
 
         $this->grav['gantry5'] = $gantry;
+    }
+
+    /**
+     * Serve particle AJAX requests in '/api/particles'.
+     */
+    public function initializeApi()
+    {
+        $apiBase = '/api/particle';
+        $route = $this->grav['uri']->route();
+
+        if ($route !== $apiBase || !substr($route, 0, strlen($apiBase) + 1) === $apiBase . '/') {
+            return;
+        }
+
+        $root = rtrim($this->grav['pages']->base(), '/');
+        $this->apiPath = substr($route, strlen($root . $apiBase) + 1);
+
+        $this->enable([
+            'onPagesInitialized' => ['initializeParticleAjax', -9999]
+        ]);
+    }
+
+    /**
+     * Initialize Widgets page.
+     */
+    public function initializeParticleAjax()
+    {
+        // make sure page is not frozen!
+        unset($this->grav['page']);
+
+        // Replace page service with a widget.
+        $this->grav['page'] = function () {
+            $page = new Page;
+            $props = $_REQUEST;
+            $outline = !empty($props['outline']) ? $props['outline'] : 'default';
+            $id = !empty($props['id']) ? $props['id'] : null;
+            unset($props['outline'], $props['id']);
+
+            $page->init(new \SplFileInfo(__DIR__ . "/pages/particle.md"));
+            $page->header(
+                array_replace((array) $page->header(),
+                ['gantry' => ['outline' => $outline], 'particle' => ['id' => $id], 'ajax' => $props])
+            );
+            $page->slug('particle');
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("AJAX request for {$id}");
+
+            return $page;
+        };
     }
 
     /**
@@ -380,7 +433,7 @@ class Gantry5Plugin extends Plugin
         if (!empty($header->gantry['outline'])) {
             $this->outline = $header->gantry['outline'];
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Current page forces outline {$this->outline} to be used");
-        } elseif ($page->name() == 'notfound.md') {
+        } elseif ($page->name() === 'notfound.md') {
             $this->outline = '_error';
         }
 
@@ -443,7 +496,7 @@ class Gantry5Plugin extends Plugin
     public function onPageNotFound(Event $event)
     {
         $page = $this->grav['page'];
-        if ($page->name() == 'offline.md') {
+        if ($page->name() === 'offline.md') {
             $event->page = $page;
             $event->stopPropagation();
         } else {

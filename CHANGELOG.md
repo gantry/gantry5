@@ -1,10 +1,7 @@
 # 5.4.15
 ## mm/dd/2017
 
-2. [Joomla](#joomla)
-    1. [](#new)
-        - Add AJAX support for particles (#1376)
-3. [WordPress](#wordpress)
+1. [Common](#common)
     1. [](#new)
         - Add AJAX support for particles (#1376)
         

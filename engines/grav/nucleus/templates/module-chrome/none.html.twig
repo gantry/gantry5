@@ -1,0 +1,7 @@
+{% set module %}
+    {% block module %}{% endblock %}
+{%- endset -%}
+
+{%- if module|trim %}
+    {{ module }}
+{% endif -%}

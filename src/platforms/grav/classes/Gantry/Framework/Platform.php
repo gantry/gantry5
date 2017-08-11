@@ -160,6 +160,10 @@ class Platform extends BasePlatform
         /** @var Theme $theme */
         $theme = $this->container['theme'];
 
+        if (isset($attribs['ajax']) && is_array($attribs['ajax'])) {
+            $attribs['style'] = 'none';
+        }
+
         $html = trim($theme->render('@nucleus/partials/module.html.twig', $attribs + ['inContent' => true, 'segment' => $module]));
 
         return $html;
@@ -169,7 +173,7 @@ class Platform extends BasePlatform
     {
         $html = '';
         foreach ($this->getModules($position) as $module) {
-            $html .= $this->displayModule($module, $attribs);
+            $html .= $this->displayModule($module, $attribs + ['position' => $position]);
         }
 
         return $html;

@@ -1,0 +1,7 @@
+{% extends 'partials/base.html.twig' %}
+
+{%- set html = gantry.theme.particle(page.header.particle, {ajax: page.header.ajax}).toString() -%}
+
+{% block content %}
+    {{ html|raw }}
+{% endblock %}

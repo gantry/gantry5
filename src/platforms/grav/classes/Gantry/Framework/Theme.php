@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Content\Block\ContentBlock;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use Grav\Common\Grav;
@@ -68,6 +69,60 @@ class Theme extends AbstractTheme
         }
 
         return $this->renderer;
+    }
+
+    /**
+     * @param string|array $particle
+     * @param array $attribs
+     * @return ContentBlock
+     */
+    public function getParticle($particle, array $attribs = [])
+    {
+        if (is_string($particle)) {
+            $id = $particle;
+            $particle = (object)['id' => $particle];
+        } else {
+            $particle = (object)$particle;
+            $id = isset($particle->id) ? $particle->id : null;
+        }
+        if ($id) {
+            // Render module.
+            if (preg_match('`^(.*?)-module-(.*)$`', $id, $matches)) {
+                $position = $matches[1];
+                $id = $matches[2];
+
+                $gantry = Gantry::instance();
+
+                /** @var Platform $platform */
+                $platform = $gantry['platform'];
+
+                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
+
+                /** @var Document $document */
+                $document = $gantry['document'];
+                $document->push();
+                $html = trim($platform->displayModule("{$position}/{$id}", $attribs + ['position' => ['key' => $position]]));
+
+                return $document->pop()->setContent($html);
+            }
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Rendering particle {$id}", 'debug');
+
+            // Render particle.
+            $layout = $this->loadLayout();
+            $particle = $layout->find($id);
+        }
+
+        if (empty($particle->type) || $particle->type !== 'particle') {
+            throw new \RuntimeException('Not Found', 404);
+        }
+
+        $context = $attribs + array(
+            'gantry' => $this,
+            'inContent' => false
+        );
+
+        return $this->getContent($particle, $context);
     }
 
     /**

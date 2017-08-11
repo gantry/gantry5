@@ -40,7 +40,7 @@
 {% set articles = article_finder.find() %}
 
 {% block particle %}
-    {% if total >= limit.total and display.prevnext_buttons %}
+    {% if total > limit.total and display.prevnext_buttons %}
     <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
     <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
     <div class="clearfix"></div>
@@ -154,7 +154,7 @@
 {% endblock %}
 
 {% block javascript_footer %}
-{% if total >= limit.total and display.prevnext_buttons %}
+{% if total > limit.total and display.prevnext_buttons %}
 {% do gantry.load('jquery') %}
 <script>
     (function ($) {
