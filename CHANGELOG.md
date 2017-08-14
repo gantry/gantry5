@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Add AJAX support for particles (#1376)
+    3. [](#bugfix)
+        - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
         
 # 5.4.14
 ## 07/06/2017
