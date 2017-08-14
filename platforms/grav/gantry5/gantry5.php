@@ -65,7 +65,7 @@ class Gantry5Plugin extends Plugin
         $remove = isset($event['remove']) ? $event['remove'] : 'standard';
         $paths = $event['paths'];
 
-        if (in_array($remove, ['all', 'standard', 'cache-only']) && !in_array('cache://', $paths)) {
+        if (in_array($remove, ['all', 'standard', 'cache-only'], true) && !in_array('cache://', $paths, true)) {
             $paths[] = 'cache://gantry5/';
             $event['paths'] = $paths;
         }
@@ -169,9 +169,9 @@ class Gantry5Plugin extends Plugin
                 $messages = $this->grav['messages'];
                 $messages->add($message, 'error');
                 return;
-            } else {
-                throw new \LogicException($message);
             }
+
+            throw new \LogicException($message);
         }
 
         $theme->registerStream(

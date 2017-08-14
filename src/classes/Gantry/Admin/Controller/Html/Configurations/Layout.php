@@ -100,6 +100,7 @@ class Layout extends HtmlController
         foreach ($particles as &$group) {
             asort($group);
         }
+        unset($group);
 
         foreach ($groups as $section => $children) {
             foreach ($children as $key => $child) {
@@ -157,7 +158,7 @@ class Layout extends HtmlController
 
     public function particle($type, $id)
     {
-        if ($type == 'atom') { return ''; }
+        if ($type === 'atom') { return ''; }
 
         $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);
@@ -188,7 +189,7 @@ class Layout extends HtmlController
         $particle = !$layout->isLayoutType($type);
         if (!$particle) {
             $name = $type;
-            $section = ($type == 'section');
+            $section = ($type === 'section');
             $hasBlock = $section && !empty($block);
             $prefix = "particles.{$type}";
             $defaults = [];
@@ -285,7 +286,7 @@ class Layout extends HtmlController
         if ($particle) {
             $result = $this->render('@gantry-admin/pages/configurations/layouts/particle.html.twig', $this->params);
         } else {
-            $typeLayout = $type == 'container' ? 'container' : 'section';
+            $typeLayout = $type === 'container' ? 'container' : 'section';
             $result = $this->render('@gantry-admin/pages/configurations/layouts/' . $typeLayout . '.html.twig', $this->params);
         }
 
@@ -316,7 +317,7 @@ class Layout extends HtmlController
 
         $input = $this->request->post->getJson('layout');
         $deleted = isset($input) ? $layout->clearSections()->copySections($input): [];
-        if ($outline == 'default') {
+        if ($outline === 'default') {
             $layout->inheritNothing();
         } elseif (!$input && $this->request->post['inherit'] === '1') {
             $layout->inheritAll();
@@ -375,14 +376,14 @@ class Layout extends HtmlController
         $validator = new BlueprintSchema;
 
         $name = $particle;
-        if (in_array($particle, ['wrapper', 'section', 'container', 'grid', 'offcanvas'])) {
+        if (in_array($particle, ['wrapper', 'section', 'container', 'grid', 'offcanvas'], true)) {
             $type = $particle;
             $particle = null;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
             $validator->embed('options', $file->content());
             $file->free();
         } else {
-            $type = in_array($particle, ['spacer', 'system', 'position']) ? $particle :  'particle';
+            $type = in_array($particle, ['spacer', 'system', 'position'], true) ? $particle :  'particle';
             $validator->embed('options', $this->container['particles']->get($particle));
         }
 
@@ -403,7 +404,7 @@ class Layout extends HtmlController
         }
 
         if ($particle) {
-            if ($type != $particle) {
+            if ($type !== $particle) {
                 $data->set('subtype', $particle);
             }
 
@@ -418,7 +419,7 @@ class Layout extends HtmlController
                     unset($block[$key]);
                     continue;
                 }
-                if ($key == 'size') {
+                if ($key === 'size') {
                     $param = round($param, 4);
                     if ($param < 5) {
                         $param = 5;
@@ -472,6 +473,7 @@ class Layout extends HtmlController
 
     protected function getParticles($onlyEnabled = false)
     {
+        /** @var Config $config */
         $config = $this->container['config'];
 
         $particles = $this->container['particles']->all();
