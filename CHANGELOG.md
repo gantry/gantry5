@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Add AJAX support for particles (#1376)
+    2. [](#improved)
+        - Improved usability by changing order of Tabs in admin (#2061)
     3. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
         
