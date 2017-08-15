@@ -271,7 +271,7 @@ class TwigExtension extends \Twig_Extension
                 foreach ((array) $value as $key2 => $value2) {
                     $array[] = HtmlDocument::escape($key2) . '="' . HtmlDocument::escape($value2, 'html_attr') . '"';
                 }
-            } else {
+            } elseif ($key) {
                 $array[] = HtmlDocument::escape($key) . '="' . HtmlDocument::escape($value, 'html_attr') . '"';
             }
         }
