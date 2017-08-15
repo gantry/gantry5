@@ -1,13 +1,5 @@
 {% set attr_class = segment.attributes.class ? ' class="' ~ segment.attributes.class|e ~ '"' %}
-{% set attr_extra = '' %}
-
-{% if segment.attributes.extra %}
-    {% for attributes in segment.attributes.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
+{% set attr_extra = segment.attributes.extra|attribute_array %}
 
 {% set offcanvas %}
     {% for child in segment.children %}
@@ -16,7 +8,7 @@
 {% endset %}
 
 {%- if segment.attributes.sticky or offcanvas|trim -%}
-<div id="g-offcanvas" {{ attr_class|raw }}{{ attr_extra|raw }} data-g-offcanvas-swipe="{{ segment.attributes.swipe|default('1') }}" data-g-offcanvas-css3="{{ segment.attributes.css3animation|default('1') }}">
+<div id="g-offcanvas" {{ attr_class|raw }} {{- attr_extra|raw }} data-g-offcanvas-swipe="{{ segment.attributes.swipe|default('1') }}" data-g-offcanvas-css3="{{ segment.attributes.css3animation|default('1') }}">
     {{ offcanvas|raw -}}
 </div>
 {% endif %}

@@ -3,11 +3,13 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Add AJAX support for particles (#1376)
+        - Added AJAX support for particles (#1376)
+        - Added new twig filter `|attribute_array` to convert array of key => attribute into HTML
     2. [](#improved)
         - Improved usability by changing order of Tabs in admin (#2061)
     3. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
+        - Fixed no space between block attributes (#2074)
         
 # 5.4.14
 ## 07/06/2017

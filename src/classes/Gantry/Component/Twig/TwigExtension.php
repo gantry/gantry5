@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Twig;
 
+use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Gantry;
@@ -57,6 +58,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('int', [$this, 'intFilter']),
             new \Twig_SimpleFilter('float', [$this, 'floatFilter']),
             new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
+            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => true]),
         ];
     }
 
@@ -246,6 +248,34 @@ class TwigExtension extends \Twig_Extension
     public function arrayFilter($input)
     {
         return (array) $input;
+    }
+
+    /**
+     * Takes array of attribute keys and values and converts it to properly escaped HTML attributes.
+     *
+     * @example ['data-id' => 'id', 'data-key' => 'key'] => ' data-id="id" data-key="key"'
+     * @example [['data-id' => 'id'], ['data-key' => 'key']] => ' data-id="id" data-key="key"'
+     *
+     * @param string|string[] $input
+     * @return string
+     */
+    public function attributeArrayFilter($input)
+    {
+        if (!$input || is_string($input)) {
+            return $input;
+        }
+
+        $array = [];
+        foreach ((array) $input as $key => $value) {
+            if (is_array($value)) {
+                foreach ((array) $value as $key2 => $value2) {
+                    $array[] = HtmlDocument::escape($key2) . '="' . HtmlDocument::escape($value2, 'html_attr') . '"';
+                }
+            } else {
+                $array[] = HtmlDocument::escape($key) . '="' . HtmlDocument::escape($value, 'html_attr') . '"';
+            }
+        }
+        return $array ? ' ' . implode(' ', $array) : '';
     }
 
     public function is_selectedFunc($a, $b)

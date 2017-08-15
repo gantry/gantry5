@@ -1,14 +1,6 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set attr_extra = '' %}
-{% if particle.extra %}
-    {% for attributes in particle.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
-
+{% set attr_extra = particle.extra|attribute_array %}
 {% set article_settings = particle.article %}
 {% set filter = article_settings.filter %}
 {% set sort = article_settings.sort %}
@@ -47,7 +39,7 @@
     {% endif %}
 
     {# All Articles #}
-    <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+    <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
         {% for column in articles|batch(limit.columns) %}
             <div class="g-grid">
