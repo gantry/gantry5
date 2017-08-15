@@ -261,7 +261,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function attributeArrayFilter($input)
     {
-        if (!$input || is_string($input)) {
+        if (is_string($input)) {
             return $input;
         }
 
