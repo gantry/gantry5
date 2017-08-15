@@ -13,12 +13,11 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
-use Grav\Common\Uri;
 
-class AssignmentsPage implements AssignmentsInterface
+class AssignmentsType implements AssignmentsInterface
 {
-    public $type = 'page';
-    public $priority = 3;
+    public $type = 'type';
+    public $priority = 2;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -29,12 +28,10 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
-        /** @var Uri $uri */
-        $uri = $grav['uri'];
+        /** @var Page $page */
+        $page = $grav['page'];
 
-        $route = trim($uri->path(), '/');
-        $home = trim($grav['config']->get('system.home.alias', '/home'), '/');
-        $rules[$route ?: $home] = $this->priority;
+        $rules[$page->template()] = $this->priority;
 
         return [$rules];
     }
@@ -49,7 +46,7 @@ class AssignmentsPage implements AssignmentsInterface
     {
         // Get label and items for each menu
         $list = [
-                'label' => 'Pages',
+                'label' => 'Page Types',
                 'items' => $this->getItems()
         ];
 
@@ -58,20 +55,15 @@ class AssignmentsPage implements AssignmentsInterface
 
     protected function getItems()
     {
-        $grav = Grav::instance();
-
-        // Initialize pages.
-        $pages = $grav['pages']->all()->routable();
+        $pageTypes = \Grav\Plugin\AdminPlugin::pagesTypes();
 
         $items = [];
 
         /** @var Page $page */
-        foreach ($pages as $page) {
-            $route = trim($page->route(), '/');
+        foreach ($pageTypes as $name => $title) {
             $items[] = [
-                'name' => $route,
-                'disabled' => !$page->isPage(),
-                'label' => str_repeat('—', substr_count($route, '/')) . ' ' . $page->title(),
+                'name' => $name,
+                'label' => ucfirst($title),
             ];
         }
 

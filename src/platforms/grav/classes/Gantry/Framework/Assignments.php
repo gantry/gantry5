@@ -46,7 +46,7 @@ class Assignments extends AbstractAssignments
      */
     public function types()
     {
-        $types = ['page', 'language'];
+        $types = ['page', 'language', 'type'];
 
         return $types;
     }

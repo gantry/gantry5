@@ -76,7 +76,6 @@ class AssignmentsLanguage implements AssignmentsInterface
         foreach ($languages as $code) {
             $items[] = [
                 'name' => $code,
-                'field' => ['id', $code],
                 'label' => ucfirst($code),
             ];
         }
