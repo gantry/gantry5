@@ -8,7 +8,10 @@
         - Improved usability by changing order of Tabs in admin (#2061)
     3. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
-        
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Removed forced input heights set on 19px (#2063)
+
 # 5.4.14
 ## 07/06/2017
 
