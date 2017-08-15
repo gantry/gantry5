@@ -11,6 +11,7 @@
     3. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
         - Fixed no space between block attributes (#2074)
+        - Helium: Fixed typo in preset 3 (#2077)
 2. [Joomla](#joomla)
     2. [](#improved)
         - Joomla Articles particle won't display images alt tags (#2076)

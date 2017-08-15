@@ -110,7 +110,7 @@ preset2:
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
-  description: GANTRY5_PLATFORM_PRESET4
+  description: GANTRY5_PLATFORM_PRESET3
   colors:
     - '#c06c84'
     - '#355c7d'
