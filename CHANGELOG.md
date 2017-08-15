@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - Add AJAX support for particles (#1376)
+        - Helium/Hydrogen: added missing styling for disabled button state
     2. [](#improved)
         - Improved usability by changing order of Tabs in admin (#2061)
     3. [](#bugfix)
