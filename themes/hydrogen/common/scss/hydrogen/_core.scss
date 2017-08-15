@@ -40,15 +40,26 @@ h1, h2, h3, h4, h5, h6, strong {
 	vertical-align: middle;
 	text-shadow: none;
 	@include transition(background 0.1s);
+
 	&:hover {
 		background: lighten($accent-color-1, 5%);
 		color: $white;
 	}
+
 	&:active, &:focus {
 		background: darken($accent-color-1, 5%);
 		box-shadow: inset -1px -1px 1px rgba(0,0,0,0.15);
 		color: $white;
+        outline: 0;
 	}
+
+    &:disabled {
+        opacity: 0.7;
+
+        &:hover {
+            background: $accent-color-1;
+        }
+    }
 }
 
 .gantry-logo {
