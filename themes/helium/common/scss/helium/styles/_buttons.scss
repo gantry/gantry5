@@ -20,6 +20,15 @@
     &:hover, &:active, &:focus {
         background: darken($accent-color-1, 10%);
         color: $white;
+        outline: 0;
+    }
+
+    &:disabled {
+        opacity: 0.7;
+
+        &:hover {
+            background: $accent-color-1;
+        }
     }
 }
 

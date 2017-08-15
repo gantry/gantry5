@@ -42,6 +42,15 @@ form:
               pattern: '-?\d{1,2}'
               overridable: false
 
+            post.display.pagination_buttons:
+              type: select.select
+              label: Pagination
+              description: Select if the pagination buttons should be shown to allow users to see more posts.
+              default: ''
+              options:
+                show: Show
+                '': Hide
+
             post.limit.columns:
               type: select.select
               label: Number of columns
@@ -173,15 +182,6 @@ form:
               type: input.selectize
               label: Button CSS Classes
               description: CSS class name for the 'Read More' button.
-
-            post.display.prevnext_buttons:
-              type: select.select
-              label: Prev/Next Buttons
-              description: Select if the Prev and Next buttons should be shown to allow users to see more posts.
-              default: ''
-              options:
-                show: Show
-                '': Hide
 
         _tab_extras:
           label: Extras
