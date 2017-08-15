@@ -33,11 +33,6 @@
 {% set total = posts.get_pagination([]).total %}
 
 {% block particle %}
-    {% if total > limit.total and display.prevnext_buttons %}
-        <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
-        <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
-        <div class="clearfix"></div>
-    {% endif %}
 
     {# All Posts #}
     <div class="g-content-array g-wordpress-posts{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
@@ -148,12 +143,20 @@
                 {% endfor %}
             </div>
         {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
 
 {% block javascript_footer %}
-    {% if total > limit.total and display.prevnext_buttons %}
+    {% if total > limit.total and display.pagination_buttons %}
         {% do gantry.load('jquery') %}
         <script>
             (function ($) {
