@@ -17,6 +17,9 @@
         - Joomla Articles particle won't display images alt tags (#2076)
     3. [](#bugfix)
         - Removed forced input heights set on 19px (#2063)
+4. [Grav](#grav)
+    1. [](#new)
+        - Added cli command `bin/plugin gantry5 child-theme` which allows you to create a child theme
 
 # 5.4.14
 ## 07/06/2017
