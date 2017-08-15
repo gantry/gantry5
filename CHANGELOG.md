@@ -20,6 +20,7 @@
 4. [Grav](#grav)
     1. [](#new)
         - Added cli command `bin/plugin gantry5 child-theme` which allows you to create a child theme
+        - Added multi-language support for outline and module assignments (#1651, #2068)
 
 # 5.4.14
 ## 07/06/2017

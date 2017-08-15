@@ -28,9 +28,9 @@ class AssignmentFilter
      * @param array $page        In format of page[section][rule].
      * @return array
      */
-    public function scores(array &$candidates, array &$page)
+    public function scores(array &$candidates, array &$page, callable $function = null)
     {
-        $matches = $this->matches($candidates, $page);
+        $matches = $this->matches($candidates, $page, $function);
 
         $scores = [];
         foreach ($matches as $type => $candidate) {
@@ -50,7 +50,7 @@ class AssignmentFilter
      * @param array $page        In format of page[section][rule].
      * @return array
      */
-    public function matches(array &$candidates, array &$page)
+    public function matches(array $candidates, array &$page, callable $function = null)
     {
         $matches = [];
         foreach ($candidates as $type => $candidate) {
@@ -79,6 +79,9 @@ class AssignmentFilter
                         }
                     }
                 }
+            }
+            if (isset($matches[$type]) && $function && call_user_func($function, $candidate, $matches[$type], $page) === false) {
+                unset($matches[$type]);
             }
         }
 

@@ -12,13 +12,13 @@ namespace Gantry\Grav\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
+use Grav\Common\Language\Language;
 use Grav\Common\Page\Page;
-use Grav\Common\Uri;
 
-class AssignmentsPage implements AssignmentsInterface
+class AssignmentsLanguage implements AssignmentsInterface
 {
-    public $type = 'page';
-    public $priority = 2;
+    public $type = 'language';
+    public $priority = 1;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -29,12 +29,14 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
-        /** @var Uri $uri */
-        $uri = $grav['uri'];
+        /** @var Language $language */
+        $language = $grav['language'];
+        if (!$language->enabled()) {
+            return [];
+        }
 
-        $route = trim($uri->path(), '/');
-        $home = trim($grav['config']->get('system.home.alias', '/home'), '/');
-        $rules[$route ?: $home] = $this->priority;
+        $tag = $language->getActive();
+        $rules[$tag] = $this->priority;
 
         return [$rules];
     }
@@ -47,32 +49,35 @@ class AssignmentsPage implements AssignmentsInterface
      */
     public function listRules($configuration)
     {
+        $grav = Grav::instance();
+
+        /** @var Language $language */
+        $language = $grav['language'];
+        if (!$language->enabled()) {
+            return [];
+        }
+
         // Get label and items for each menu
         $list = [
-                'label' => 'Pages',
-                'items' => $this->getItems()
+                'label' => 'Languages',
+                'items' => $this->getItems($language)
         ];
 
         return [$list];
     }
 
-    protected function getItems()
+    protected function getItems(Language $language)
     {
-        $grav = Grav::instance();
-
-        // Initialize pages.
-        $pages = $grav['pages']->all()->routable();
+        $languages = $language->getLanguages();
 
         $items = [];
 
         /** @var Page $page */
-        foreach ($pages as $page) {
-            $route = trim($page->route(), '/');
+        foreach ($languages as $code) {
             $items[] = [
-                'name' => $route,
-                'field' => ['id', 'link/' . $route],
-                'disabled' => !$page->isPage(),
-                'label' => str_repeat('—', substr_count($route, '/')) . ' ' . $page->title(),
+                'name' => $code,
+                'field' => ['id', $code],
+                'label' => ucfirst($code),
             ];
         }
 
