@@ -9,6 +9,8 @@
     3. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
 2. [Joomla](#joomla)
+    2. [](#improved)
+        - Joomla Articles particle won't display images alt tags (#2076)
     3. [](#bugfix)
         - Removed forced input heights set on 19px (#2063)
 

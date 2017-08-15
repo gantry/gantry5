@@ -60,13 +60,13 @@
                                     {% if article.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}
                                         <div class="g-array-item-image">
                                             <a href="{{ article.route }}">
-                                                <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} />
+                                                <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} alt="{{ article.images.image_intro_alt }}" />
                                             </a>
                                         </div>
                                     {% elseif article.images.image_fulltext and display.image.enabled == 'full' %}
                                         <div class="g-array-item-image">
                                             <a href="{{ article.route }}">
-                                                <img src="{{ url(article.images.image_fulltext) }}" {{ article.images.image_fulltext|imagesize|raw }} />
+                                                <img src="{{ url(article.images.image_fulltext) }}" {{ article.images.image_fulltext|imagesize|raw }} alt="{{ article.images.image_fulltext_alt }}" />
                                             </a>
                                         </div>
                                     {% endif %}
