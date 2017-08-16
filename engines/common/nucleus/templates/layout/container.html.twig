@@ -10,7 +10,7 @@
     {% if boxed is not null %}
         {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
     {% endif %}
-    {% set class = 'g-wrapper' ~ segment.attributes.class ? ' ' ~ segment.attributes.class %}
+    {% set class = 'g-wrapper' ~ (segment.attributes.class ? ' ' ~ segment.attributes.class) %}
     {% set attr_extra = segment.attributes.extra|attribute_array %}
 
     {% if boxed is not null and (boxed == 0 or boxed == 2) %}

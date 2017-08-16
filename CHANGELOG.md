@@ -1,3 +1,10 @@
+# 5.4.16
+## mm/dd/2017
+
+1. [Common](#common)
+    3. [](#bugfix)
+        - Regression: Fixed missing `g-wrapper` classes in the layout
+
 # 5.4.15
 ## 08/15/2017
 
