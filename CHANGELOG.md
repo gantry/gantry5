@@ -2,7 +2,7 @@
 ## mm/dd/2017
 
 1. [Common](#common)
-    3. [](#bugfix)
+    1. [](#bugfix)
         - Regression: Fixed missing `g-wrapper` classes in the layout
 
 # 5.4.15
@@ -13,18 +13,18 @@
         - Added AJAX support for particles (#1376)
         - Added new twig filter `|attribute_array` to convert array of key => attribute into HTML
         - Helium/Hydrogen: added missing styling for disabled button state
-    2. [](#improved)
+    1. [](#improved)
         - Improved usability by changing order of Tabs in admin (#2061)
-    3. [](#bugfix)
+    1. [](#bugfix)
         - Fixed bug in nested `collection.list` on `container.tabs` (#1995)
         - Fixed no space between block attributes (#2074)
         - Helium: Fixed typo in preset 3 (#2077)
-2. [Joomla](#joomla)
-    2. [](#improved)
+1. [Joomla](#joomla)
+    1. [](#improved)
         - Joomla Articles particle won't display images alt tags (#2076)
-    3. [](#bugfix)
+    1. [](#bugfix)
         - Removed forced input heights set on 19px (#2063)
-4. [Grav](#grav)
+1. [Grav](#grav)
     1. [](#new)
         - Added cli command `bin/plugin gantry5 child-theme` which allows you to create a child theme
         - Added multi-language support for outline and position assignments (#1651, #2068)
