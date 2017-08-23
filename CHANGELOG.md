@@ -1,3 +1,10 @@
+# 5.4.17
+## mm/dd/2017
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed HTML meta tag to use property or name attribute depending on the key (#2090)
+
 # 5.4.16
 ## 08/16/2017
 

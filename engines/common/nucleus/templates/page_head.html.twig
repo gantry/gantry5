@@ -26,7 +26,11 @@
         {% if gantry.config.page.head.meta -%}
             {% for attributes in gantry.config.page.head.meta -%}
                 {%- for key, value in attributes %}
-                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e }}" />
+                    {% if key starts with 'og:' %}
+                    <meta property="{{ key|e }}" content="{{ value|e }}" />
+                    {% else %}
+                    <meta name="{{ key|e }}" content="{{ value|e }}" />
+                    {% endif %}
                 {% endfor -%}
             {%- endfor -%}
         {%- endif -%}
