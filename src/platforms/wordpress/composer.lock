@@ -113,16 +113,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045"
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/79ad876c7498c0bbfe7eed065b8651c93bfd6045",
-                "reference": "79ad876c7498c0bbfe7eed065b8651c93bfd6045",
+                "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
                 "shasum": ""
             },
             "require": {
@@ -168,6 +168,7 @@
                 "Hurad",
                 "ImageCMS",
                 "Kanboard",
+                "Lan Management System",
                 "MODX Evo",
                 "Mautic",
                 "Maya",
@@ -191,6 +192,7 @@
                 "croogo",
                 "dokuwiki",
                 "drupal",
+                "eZ Platform",
                 "elgg",
                 "expressionengine",
                 "fuelphp",
@@ -207,6 +209,7 @@
                 "mediawiki",
                 "modulework",
                 "moodle",
+                "osclass",
                 "phpbb",
                 "piwik",
                 "ppi",
@@ -223,7 +226,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-04-24T06:37:16+00:00"
+            "time": "2017-08-09T07:53:48+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -313,16 +316,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.9",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f"
+                "reference": "ffbbd2c06c64b08fb47974eed5dbce4ca2bb0eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f",
-                "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/ffbbd2c06c64b08fb47974eed5dbce4ca2bb0eec",
+                "reference": "ffbbd2c06c64b08fb47974eed5dbce4ca2bb0eec",
                 "shasum": ""
             },
             "require": {
@@ -370,7 +373,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2017-06-03T18:33:07+00:00"
+            "time": "2017-08-03T18:23:40+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -427,16 +430,16 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "v3.1.0",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "279b56046fb368deacf77e2f8f3bdcea45cc367a"
+                "reference": "4d45fb62d96418396ec58ba76e6f065bca16e10a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/279b56046fb368deacf77e2f8f3bdcea45cc367a",
-                "reference": "279b56046fb368deacf77e2f8f3bdcea45cc367a",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/4d45fb62d96418396ec58ba76e6f065bca16e10a",
+                "reference": "4d45fb62d96418396ec58ba76e6f065bca16e10a",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +452,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "3.2.x-dev"
                 }
             },
             "autoload": {
@@ -473,7 +476,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2017-07-03T14:06:46+00:00"
+            "time": "2017-07-23T07:32:15+00:00"
         },
         {
             "name": "psr/container",
@@ -573,16 +576,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "1be0986127007c9691345729607f94ba0e8a5120"
+                "reference": "0905611d963485b2fda0a7be0cba6e56cc1c85a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/1be0986127007c9691345729607f94ba0e8a5120",
-                "reference": "1be0986127007c9691345729607f94ba0e8a5120",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/0905611d963485b2fda0a7be0cba6e56cc1c85a2",
+                "reference": "0905611d963485b2fda0a7be0cba6e56cc1c85a2",
                 "shasum": ""
             },
             "require": {
@@ -617,11 +620,11 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2017-05-22T13:09:53+00:00"
+            "time": "2017-08-16T16:31:10+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.24",
+            "version": "v2.8.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -681,7 +684,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.24",
+            "version": "v2.8.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -730,16 +733,16 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.3.3",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218"
+                "reference": "06e2a3247ca80894bcf6332290ff5d2158ec3369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/8f54e7cb27f66859f43f82d3f7ad318c772f3218",
-                "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218",
+                "url": "https://api.github.com/repos/timber/timber/zipball/06e2a3247ca80894bcf6332290ff5d2158ec3369",
+                "reference": "06e2a3247ca80894bcf6332290ff5d2158ec3369",
                 "shasum": ""
             },
             "require": {
@@ -755,8 +758,6 @@
                 "wpackagist-plugin/co-authors-plus": "3.*"
             },
             "suggest": {
-                "jarednova/markdowndocs": "dev-master for generating docs",
-                "phpdocumentor/phpdocumentor": "2.* for generating docs",
                 "satooshi/php-coveralls": "1.0.* for code coverage"
             },
             "type": "library",
@@ -789,7 +790,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2017-06-19T14:24:56+00:00"
+            "time": "2017-08-10T05:48:30+00:00"
         },
         {
             "name": "twig/twig",

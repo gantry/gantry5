@@ -30,11 +30,11 @@ class Assignments extends AbstractAssignments
         $gantry = Gantry::instance();
 
         $event = new Event;
-        $event->types = &$types;
+        $event->types = $types;
 
         $gantry->fireEvent('assignments.types', $event);
 
-        return apply_filters('g5_assignments_types', $types);
+        return apply_filters('g5_assignments_types', $event->types);
     }
 
 
