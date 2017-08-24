@@ -4,7 +4,10 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed HTML meta tag to use property or name attribute depending on the key (#2090)
-
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Helium: Fixed jQuery conflict with JSN UniForm and potentially other extensions (#2082)
+        
 # 5.4.16
 ## 08/16/2017
 
