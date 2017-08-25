@@ -147,7 +147,7 @@
                     $.ajax('{{ base_url ~ '/api/particle.json' }}', {
                         type       : 'GET',
                         data       : request,
-                        indexValue : id,
+                        indexValue : id + '-particle',
                         success: function (response) {
                             if(response.html) {
                                 $('#' + this.indexValue).html(response.html);

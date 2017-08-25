@@ -167,7 +167,7 @@
             $.ajax({
                 type       : 'GET',
                 data       : request,
-                indexValue : id,
+                indexValue : id + '-particle',
                 success: function (response) {
                     if(response.data){
                         $('#' + this.indexValue).html(response.data[0].html);

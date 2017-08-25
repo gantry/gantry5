@@ -165,7 +165,7 @@
                     $.ajax({{ wordpress.call('admin_url', 'admin-ajax.php')|json_encode|raw }}, {
                         type        : 'GET',
                         data        : request,
-                        indexValue  : id,
+                        indexValue  : id + '-particle',
                         success: function (response) {
                             if(response.html){
                                 $('#' + this.indexValue).html(response.html);

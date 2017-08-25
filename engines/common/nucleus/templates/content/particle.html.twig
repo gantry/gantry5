@@ -23,7 +23,7 @@
     {%- if html -%}
             {% if gantry.debug %}<!-- START PARTICLE {{ id }} -->{% endif %}
 
-            {% if ajax is not defined %}<div id="{{ id }}" class="{{ classes }}">{% endif %}
+            {% if ajax is not defined %}<div id="{{ id }}-particle" class="{{ classes }}">{% endif %}
             {{ html|raw }}
             {% if ajax is not defined %}</div>{% endif %}
             {% if gantry.debug %}<!-- END PARTICLE {{ id }} -->{% endif %}

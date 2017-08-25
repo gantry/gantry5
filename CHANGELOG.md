@@ -4,9 +4,13 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed HTML meta tag to use property or name attribute depending on the key (#2090)
+        - Regression: Fixed the same HTML id attribute being used twice in particles (#2088)
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Helium: Fixed jQuery conflict with JSN UniForm and potentially other extensions (#2082)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.4.1
         
 # 5.4.16
 ## 08/16/2017
