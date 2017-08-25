@@ -22,7 +22,7 @@
 } %}
 
 {% set posts = wordpress.call('Timber::query_posts', query_parameters) %}
-{% set total = posts.get_pagination([]).total %}
+{% set total = posts.get_pagination([]).total|abs %}
 
 {% block particle %}
 
