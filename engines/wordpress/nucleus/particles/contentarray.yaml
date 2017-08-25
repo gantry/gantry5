@@ -217,7 +217,7 @@ form:
             post.display.text.type:
               type: select.select
               label: Content Type
-              description: Select if and how the article text should be shown.
+              description: Select if and how the post text should be shown.
               default: content
               options:
                 content: Content
