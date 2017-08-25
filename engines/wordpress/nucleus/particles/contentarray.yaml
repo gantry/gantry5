@@ -24,6 +24,12 @@ form:
               description: Select the categories the posts should be taken from.
               overridable: false
 
+            post.filter.posts:
+              type: input.text
+              label: Posts
+              description: Enter the WordPress posts that should be shown. It should be a list of post IDs separated with a comma (i.e. 1,2,3,4,5).
+              overridable: false
+
             post.filter.sticky:
               type: select.select
               label: Sticky Posts

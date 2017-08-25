@@ -11,7 +11,8 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.4.1
-        
+        - Content Array particle now allows you to use single posts by providing their ID number
+
 # 5.4.16
 ## 08/16/2017
 
