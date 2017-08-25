@@ -24,7 +24,8 @@
     }
 
     &:disabled {
-        opacity: 0.7;
+        opacity: 0.25;
+        cursor: not-allowed;
 
         &:hover {
             background: $accent-color-1;

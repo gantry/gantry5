@@ -20,6 +20,15 @@
         background: darken($accent-color-1, 10%);
         color: $white;
     }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+
+        &:hover {
+            background: $accent-color-1;
+        }
+    }
 }
 
 // Buttons

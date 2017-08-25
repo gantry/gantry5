@@ -54,7 +54,8 @@ h1, h2, h3, h4, h5, h6, strong {
 	}
 
     &:disabled {
-        opacity: 0.7;
+        opacity: 0.25;
+        cursor: not-allowed;
 
         &:hover {
             background: $accent-color-1;
