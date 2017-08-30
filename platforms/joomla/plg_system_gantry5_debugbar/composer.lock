@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "maximebf/debugbar",
-            "version": "1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "afee79a236348e39a44cb837106b7c5b4897ac2a"
+                "reference": "e23a98f2d65607d8aa6c7b409a513f8fdf4acdde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/afee79a236348e39a44cb837106b7c5b4897ac2a",
-                "reference": "afee79a236348e39a44cb837106b7c5b4897ac2a",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e23a98f2d65607d8aa6c7b409a513f8fdf4acdde",
+                "reference": "e23a98f2d65607d8aa6c7b409a513f8fdf4acdde",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -65,7 +65,7 @@
                 "debug",
                 "debugbar"
             ],
-            "time": "2017-01-05T08:46:19+00:00"
+            "time": "2017-08-17T07:17:00+00:00"
         },
         {
             "name": "psr/log",
@@ -116,16 +116,16 @@
         },
         {
             "name": "symfony/polyfill-iconv",
-            "version": "v1.3.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-iconv.git",
-                "reference": "cba36f3616d9866b3e52662e88da5c090fac1e97"
+                "reference": "1ea0e08453819ecc7130e1fb0ee10862c2f33ed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/cba36f3616d9866b3e52662e88da5c090fac1e97",
-                "reference": "cba36f3616d9866b3e52662e88da5c090fac1e97",
+                "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/1ea0e08453819ecc7130e1fb0ee10862c2f33ed0",
+                "reference": "1ea0e08453819ecc7130e1fb0ee10862c2f33ed0",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -171,20 +171,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-14T15:44:48+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -230,20 +230,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-14T15:44:48+00:00"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v2.8.18",
+            "version": "v2.8.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "c51daca85371e30ce0e3dea99c7b08e2cb5dbf46"
+                "reference": "83ebf3e92c0b2231fa63b8e584a2a3d3cd9876ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/c51daca85371e30ce0e3dea99c7b08e2cb5dbf46",
-                "reference": "c51daca85371e30ce0e3dea99c7b08e2cb5dbf46",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/83ebf3e92c0b2231fa63b8e584a2a3d3cd9876ef",
+                "reference": "83ebf3e92c0b2231fa63b8e584a2a3d3cd9876ef",
                 "shasum": ""
             },
             "require": {
@@ -254,9 +254,11 @@
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
             "require-dev": {
-                "twig/twig": "~1.20|~2.0"
+                "ext-iconv": "*",
+                "twig/twig": "~1.34|~2.4"
             },
             "suggest": {
+                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
                 "ext-symfony_debug": ""
             },
             "type": "library",
@@ -296,7 +298,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-02-20T13:37:30+00:00"
+            "time": "2017-08-27T14:29:03+00:00"
         }
     ],
     "packages-dev": [],
