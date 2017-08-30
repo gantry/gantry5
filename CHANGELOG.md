@@ -1,6 +1,9 @@
 # 5.4.18
 ## mm/dd/2017
 
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Grav Content particle looks now for authors `name`, `alias` or `username` in page header
 
 # 5.4.17
 ## 08/25/2017
