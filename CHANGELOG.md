@@ -4,6 +4,9 @@
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Particles are not using selected timezone (#2072)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Grav Content particle looks now for authors `name`, `alias` or `username` in page header
 
 # 5.4.17
 ## 08/25/2017

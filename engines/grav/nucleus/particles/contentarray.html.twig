@@ -57,7 +57,7 @@
                                     </div>
                                 {% endif %}
 
-                                {% if display.date.enabled or (display.author.enabled and page.username) or display.category.enabled %}
+                                {% if display.date.enabled or (display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias)) or display.category.enabled %}
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
@@ -71,9 +71,17 @@
                                             </span>
                                         {% endif %}
 
-                                        {% if display.author.enabled and (page.username or page.author) %}
+                                        {% if display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias) %}
+                                            {% if page.header.author.name %}
+                                                {% set author = page.header.author.name %}
+                                            {% elseif page.header.author.alias %}
+                                                {% set author = page.header.author.alias %}
+                                            {% else %}
+                                                {% set author = page.header.author.username %}
+                                            {% endif %}
+
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user" aria-hidden="true"></i>{{ page.author ?: page.username }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ author }}
                                             </span>
                                         {% endif %}
 
