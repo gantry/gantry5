@@ -100,11 +100,15 @@ class Theme extends AbstractTheme
 
         if (!($date instanceof \JDate)) {
             // Create localized JDate object.
-            $date = \twig_date_converter($env, $date, $timezone);
-            $date = new \JDate($date->getTimestamp(), $date->getTimezone());
+            $twig_date = \twig_date_converter($env, $date, $timezone);
+
+            $date = new \JDate($twig_date->getTimestamp());
+            $date->setTimezone($twig_date->getTimezone());
+        } elseif ($timezone) {
+            $date->setTimezone($timezone);
         }
 
-        return $date->format($format);
+        return $date->format($format, true);
     }
 
     /**

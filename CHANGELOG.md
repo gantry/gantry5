@@ -1,6 +1,9 @@
 # 5.4.18
 ## mm/dd/2017
 
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Particles are not using selected timezone (#2072)
 
 # 5.4.17
 ## 08/25/2017
