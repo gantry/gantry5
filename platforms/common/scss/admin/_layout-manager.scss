@@ -97,6 +97,14 @@ $atom: #9055AF;
             }
         }
 
+        .g-lm-container {
+            .g-grid .g-block {
+                > .section {
+                    position: relative !important;
+                } 
+            }
+        }
+
         .g-grid .g-block {
             .section:first-child {
                 margin-top: 0;
