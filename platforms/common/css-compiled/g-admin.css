@@ -4276,9 +4276,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions .g-tooltip:hover, #g5-container .lm-blocks [data-lm-blocktype="container"] .container-wrapper .container-actions i:hover {
   color: black;
 }
-#g5-container .lm-blocks .g-lm-container .g-grid .g-block > .section {
-  position: relative !important;
-}
 #g5-container .lm-blocks .g-grid .g-block .section:first-child {
   margin-top: 0;
 }
@@ -4286,7 +4283,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   margin-bottom: 0;
 }
 #g5-container .lm-blocks .g-grid .g-block > .section {
-  position: static !important;
+  position: relative !important;
 }
 #g5-container .lm-blocks .section, #g5-container .lm-blocks .atoms-section, #g5-container .lm-blocks .offcanvas-section, #g5-container .lm-blocks .wrapper-section {
   padding: 8px;
