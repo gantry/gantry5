@@ -454,7 +454,9 @@ class Layout extends HtmlController
             } else {
                 $item = $layout->inheritAll()->find($inherit['section']);
             }
-            $data->join('children', $item->children);
+            if(is_object($item) && property_exists($item, 'children')) {
+                $data->join('children', $item->children);
+            }
         }
 
         // TODO: validate
