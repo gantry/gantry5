@@ -3,7 +3,8 @@
 
 1. [Common](#common)
     1. [](#bugfix)
-        -  Layout Manager: Inheritance overlay is hiding all sections in a block of a container (#2114)
+        - Layout Manager: Inheritance overlay is hiding all sections in a block of a container (#2114)
+        - Error thrown when cloning a section with no particles (#2116, thanks @drnasin)
 1. [Joomla](#joomla)
     1. [](#new)
         - Add official Joomla 3.8 support (#2111)

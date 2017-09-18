@@ -71,7 +71,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         /** @var UniformResourceIterator $info */
         foreach ($iterator as $info) {
             $name = $info->getBasename('.yaml');
-            if (!$info->isFile() || $info->getExtension() != 'yaml' || $name[0] == '.') {
+            if (!$info->isFile() || $info->getExtension() !== 'yaml' || $name[0] === '.') {
                 continue;
             }
             $files[] = $name;
@@ -182,7 +182,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function init($force = false, $inherit = true)
     {
-        if ($force || !isset($this->references)) {
+        if ($force || $this->references === null) {
             $this->initReferences();
             if ($inherit) {
                 $this->initInheritance();
@@ -287,8 +287,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // If there are atoms in the layout, copy them into outline configuration.
         $atoms = $this->atoms();
-        if (is_array($atoms)) {
-            if ($cascade) {
+        if (is_array($atoms) && $cascade) {
                 // Save layout into custom directory for the current theme.
                 $filename = $locator->findResource("gantry-config://{$name}/page/head.yaml", true, true);
 
@@ -297,7 +296,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                 $file->save($config->set('atoms', json_decode(json_encode($atoms), true))->toArray());
                 $file->free();
-            }
         }
 
         // Remove atoms from the layout.
@@ -308,7 +306,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         // Make sure that base outline never uses inheritance.
-        if ($name == 'default') {
+        if ($name === 'default') {
             $this->inheritNothing();
         }
 
@@ -388,7 +386,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     public function isLayoutType($type)
     {
-        return in_array($type, $this->layout);
+        return in_array($type, $this->layout, true);
     }
 
     /**
@@ -421,9 +419,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         if (!$type) {
             return $this->types;
-        } elseif (!$subtype) {
+        }
+
+        if (!$subtype) {
             return isset($this->types[$type]) ? $this->types[$type] : [];
         }
+
         return isset($this->types[$type][$subtype]) ? $this->types[$type][$subtype] : [];
     }
 
@@ -484,7 +485,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         foreach ($blocks as $blockId => $block) {
             if (!empty($block->children)) {
                 foreach ($block->children as $id => $particle) {
-                    if (!empty($particle->layout) || in_array($particle->type, $this->layout)) {
+                    if (!empty($particle->layout) || in_array($particle->type, $this->layout, true)) {
                         continue;
                     }
                     if ($grouped) {
@@ -532,7 +533,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $list   = null;
 
         $atoms = array_filter($this->items, function ($section) {
-            return $section->type == 'atoms' && !empty($section->children);
+            return $section->type === 'atoms' && !empty($section->children);
         });
         $atoms = array_shift($atoms);
 
@@ -594,7 +595,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $this->children = $this->clearChildren($item->children);
             }
 
-            if (empty($item->children) && in_array($item->type, ['grid', 'block', 'particle', 'position', 'spacer', 'system'])) {
+            if (empty($item->children) && in_array($item->type, ['grid', 'block', 'particle', 'position', 'spacer', 'system'], true)) {
                 unset($items[$key]);
             }
         }
@@ -647,7 +648,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             }
             if (!$this->isLayoutType($item->type)) {
                 $item->inherit = (object) ['outline' => $this->name, 'include' => ['attributes', 'block']];
-            } elseif ($item->type === 'section' || $item->type == 'offcanvas') {
+            } elseif ($item->type === 'section' || $item->type === 'offcanvas') {
                 $item->inherit = (object) ['outline' => $this->name, 'include' => ['attributes', 'block', 'children']];
             }
         }
@@ -851,7 +852,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                     $item->inherit = (object) $inherit;
                     $item->inherit->particle = $item->id;
 
-                    if (isset($index['inherit'][$item->inherit->outline]) && ($newId = array_search($item->id, $index['inherit'][$item->inherit->outline]))) {
+                    if (isset($index['inherit'][$item->inherit->outline]) && ($newId = array_search($item->id, $index['inherit'][$item->inherit->outline], true))) {
                         $item->id = $newId;
                     } else {
                         $item->id = $this->id($type, $subtype);
@@ -893,15 +894,17 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
         $key = implode('-', $result);
 
-        if (!$id || isset($this->references[$key . '-'. $id])) {
+        $key_id = $key . '-'. $id;
+        if (!$id || isset($this->references[$key_id])) {
             while ($id = rand(1000, 9999)) {
-                if (!isset($this->references[$key . '-'. $id])) {
+                $key_id = $key . '-'. $id;
+                if (!isset($this->references[$key_id])) {
                     break;
                 }
             }
         }
 
-        return $key . '-'. $id;
+        return $key_id;
     }
 
     /**
@@ -959,7 +962,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
 
             // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
-            if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
+            if ($roundSize !== 100 && (string) $roundSize !== (string) ($equalized * $childrenCount)) {
                 $fraction = 0;
                 $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                 foreach ($item->children as $child) {
@@ -1026,7 +1029,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param  string $name
      * @param  bool   $autoSave
-     * @return static
+     * @return array
      */
     public static function loadIndex($name, $autoSave = false)
     {
@@ -1039,8 +1042,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $indexFile = $locator("gantry-config://{$name}/index.yaml");
         if ($indexFile) {
             $file = CompiledYamlFile::instance($indexFile);
-            $index = $file->content();
+            $index = (array)$file->content();
             $file->free();
+        } else {
+            $index = [];
         }
 
         // Find out the currently used layout file.

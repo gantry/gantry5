@@ -380,7 +380,7 @@ class Layout extends HtmlController
             $type = $particle;
             $particle = null;
             $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/{$type}.yaml");
-            $validator->embed('options', $file->content());
+            $validator->embed('options', (array)$file->content());
             $file->free();
         } else {
             $type = in_array($particle, ['spacer', 'system', 'position'], true) ? $particle :  'particle';
@@ -447,14 +447,14 @@ class Layout extends HtmlController
         }
 
         // Optionally send children of the object.
-        if (in_array('children', $inherit['include'])) {
+        if (in_array('children', $inherit['include'], true)) {
             $layout = LayoutObject::instance($inherit['outline'] ?: $this->params['outline']);
             if ($clone) {
                 $item = $layout->find($inherit['section']);
             } else {
                 $item = $layout->inheritAll()->find($inherit['section']);
             }
-            if(is_object($item) && property_exists($item, 'children')) {
+            if (!empty($item->children)) {
                 $data->join('children', $item->children);
             }
         }
