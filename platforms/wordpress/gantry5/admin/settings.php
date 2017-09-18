@@ -21,7 +21,7 @@ function gantry5_manage_settings() {
 
 function gantry5_modify_plugin_action_links( $links, $file ) {
     // Return normal links if not Gantry 5 or insufficient permissions
-    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file || !current_user_can( 'manage_options' ) ) {
+    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) !== $file || !current_user_can( 'manage_options' ) ) {
         return $links;
     }
 

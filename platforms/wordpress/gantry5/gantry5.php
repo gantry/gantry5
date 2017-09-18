@@ -105,7 +105,7 @@ load_plugin_textdomain($domain, false, $languages_path);
 function modify_gantry5_locale($locale, $domain = null)
 {
     // Revert the gantry5 domain locale to en_US
-    if (isset($domain) && $domain == 'gantry5') {
+    if (isset($domain) && $domain === 'gantry5') {
         $locale = 'en_US';
     }
 

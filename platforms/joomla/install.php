@@ -21,11 +21,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.4' => '5.4.0',
-            '0' => '7.0.19' // Preferred version
+            '0' => '7.0.23' // Preferred version
         ),
         'Joomla!' => array (
             '3.4' => '3.4.1',
-            '0' => '3.7.2' // Preferred version
+            '0' => '3.7.5' // Preferred version
         )
     );
     /**
@@ -114,7 +114,7 @@ class Pkg_Gantry5InstallerScript
             @apc_clear_cache();
         }
 
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 

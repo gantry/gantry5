@@ -368,7 +368,7 @@ class Platform extends BasePlatform
 
         $list = [];
         foreach ($updates as $update) {
-            if ($update->element == 'pkg_gantry5') {
+            if ($update->element === 'pkg_gantry5') {
                 // Rename Gantry 5 package.
                 $update->name = 'Gantry';
                 // Ignore git and CI installs and if the Gantry version is the same or higher than in the updates.

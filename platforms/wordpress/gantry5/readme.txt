@@ -94,9 +94,9 @@ Please note that Gantry Framework plugin doesn't come up with the default theme.
 We try to ensure that any Gantry theme and the Gantry Plugin specifically will work with any modern and secure server environment. The recommended minimum requirements are :
 
 * WordPress 4.2 or higher
-* PHP 5.4+ (5.5+ recommended)
+* PHP 5.4+ (7.0+ recommended)
 * MySQL 3.23 (5+ recommended)
-* Apache 1.3 (2.2+ recommended)
+* Apache 1.3 (2.4+ recommended)
 
 = Is there any documentation available ? =
 

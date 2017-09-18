@@ -3,8 +3,10 @@
 
 1. [Common](#common)
     1. [](#bugfix)
-        -  Layout Manager: Inheritance overlay rendering issues if there are multiple sections a column of a container (#2114)
+        -  Layout Manager: Inheritance overlay is hiding all sections in a block of a container (#2114)
 1. [Joomla](#joomla)
+    1. [](#new)
+        - Add official Joomla 3.8 support (#2111)
     1. [](#bugfix)
         - Particles are not using selected timezone (#2072)
 1. [Grav](#grav)
