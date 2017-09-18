@@ -9,6 +9,9 @@
         - Add official Joomla 3.8 support (#2111)
     1. [](#bugfix)
         - Particles are not using selected timezone (#2072)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Do not double escape links, titles and users name in WP Posts particle (#2085)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Grav Content particle looks now for authors `name`, `alias` or `username` in page header

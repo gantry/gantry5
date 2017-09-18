@@ -44,7 +44,7 @@
                             <div class="g-array-item">
                                 {% if display.image.enabled and post.thumbnail.src %}
                                     <div class="g-array-item-image">
-                                        <a href="{{ post.link }}">
+                                        <a href="{{ post.link|raw }}">
                                             <img src="{{ url(post.thumbnail.src) }}" />
                                         </a>
                                     </div>
@@ -53,8 +53,8 @@
                                 {% if display.title.enabled %}
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
-                                            <a href="{{ post.link }}">
-                                                {{ display.title.limit ? post.title|truncate_text(display.title.limit) : post.title }}
+                                            <a href="{{ post.link|raw }}">
+                                                {{ (display.title.limit ? post.title|truncate_text(display.title.limit) : post.title)|raw }}
                                             </a>
                                         </h3>
                                     </div>
@@ -74,7 +74,7 @@
 
                                         {% if display.author.enabled %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user" aria-hidden="true"></i>{{ post.author.name }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ post.author.name|raw }}
                                             </span>
                                         {% endif %}
 
@@ -84,10 +84,10 @@
                                                 {% for category in post.categories %}
                                                     {%- if category_link -%}
                                                         <a href="{{ category.link }}">
-                                                            {{ category.title }}
+                                                            {{ category.title|raw }}
                                                         </a>
                                                     {%- else -%}
-                                                        {{ category.title }}
+                                                        {{ category.title|raw }}
                                                     {%- endif -%}
                                                     {% if not loop.last %}{{ ','|trim }}{% endif %}
                                                 {% endfor %}
@@ -129,7 +129,7 @@
 
                                 {% if display.read_more.enabled %}
                                     <div class="g-array-item-read-more">
-                                        <a href="{{ post.link }}">
+                                        <a href="{{ post.link|raw }}">
                                             <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
                                         </a>
                                     </div>
