@@ -2,6 +2,8 @@
 ## mm/dd/2017
 
 1. [Common](#common)
+    1. [](#new)
+        - Add `responsive-font` mixin to Nucleus (#2106)
     1. [](#bugfix)
         - Layout Manager: Inheritance overlay is hiding all sections in a block of a container (#2114)
         - Error thrown when cloning a section with no particles (#2116, thanks @drnasin)
