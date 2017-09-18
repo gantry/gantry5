@@ -17,11 +17,35 @@ class Assignments extends AbstractAssignments
 {
     protected $platform = 'WordPress';
 
+    public function __construct($configuration = null)
+    {
+        parent::__construct($configuration);
+
+        // Deal with special language assignments.
+        $this->specialFilterMethod = function($candidate, $match, $page) {
+            if (!empty($candidate['language']) && !empty($page['language'])) {
+                // Always drop candidate if language does not match.
+                if (empty($match['language'])) {
+                    return false;
+                }
+
+                unset($candidate['language'], $match['language']);
+                $candidate = array_filter($candidate);
+
+                // Special check for the default outline of the language.
+                return empty($candidate) || !empty($match);
+            }
+
+            return true;
+        };
+    }
+
     public function types()
     {
         $types = [
             'context',
             'menu',
+            'language',
             'post',
             'taxonomy',
             'archive'

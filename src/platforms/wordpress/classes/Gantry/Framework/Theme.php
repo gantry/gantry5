@@ -147,9 +147,10 @@ class Theme extends AbstractTheme
         $selected = $assignments->select();
 
         if (GANTRY_DEBUGGER) {
-            \Gantry\Debugger::addMessage('Selecting outline:');
-            \Gantry\Debugger::addMessage($assignments->matches());
-            \Gantry\Debugger::addMessage($assignments->scores());
+            \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
+            \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
         }
 
         $this->setLayout($selected);

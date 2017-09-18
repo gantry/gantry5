@@ -13,6 +13,8 @@
     1. [](#bugfix)
         - Particles are not using selected timezone (#2072)
 1. [WordPress](#wordpress)
+    1. [](#new)
+        - Added WPML & PolyLang multi-language support for outline assignments (#634)
     1. [](#bugfix)
         - Do not double escape links, titles and users name in WP Posts particle (#2085)
 1. [Grav](#grav)
