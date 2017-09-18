@@ -1,6 +1,9 @@
 # 5.4.18
 ## mm/dd/2017
 
+1. [Common](#common)
+    1. [](#bugfix)
+        -  Layout Manager: Inheritance overlay rendering issues if there are multiple sections a column of a container (#2114)
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Particles are not using selected timezone (#2072)
