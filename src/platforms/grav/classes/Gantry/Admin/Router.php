@@ -61,7 +61,7 @@ class Router extends BaseRouter
         $this->path = $parts ?: ($theme ? ['configurations', true] : ['themes']);
         $this->resource = array_shift($this->path);
         $this->format = $uri->extension('html');
-        $ajax = ($this->format == 'json');
+        $ajax = ($this->format === 'json');
 
         $this->params = [
             'ajax' => $ajax,
@@ -121,6 +121,9 @@ class Router extends BaseRouter
 
     protected function send(Response $response)
     {
+        // Add missing translations to debugbar.
+        //GANTRY_DEBUGGER && \Gantry\Debugger::addCollector(new ConfigCollector(Gantry::instance()['translator']->untranslated(), 'Untranslated'));
+
         // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
         header("Content-Type: {$response->mimeType}; charset={$response->charset}");
