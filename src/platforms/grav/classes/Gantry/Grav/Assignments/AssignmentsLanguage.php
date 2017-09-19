@@ -35,7 +35,7 @@ class AssignmentsLanguage implements AssignmentsInterface
             return [];
         }
 
-        $tag = $language->getActive();
+        $tag = $language->getActive() ?: $language->getDefault();
         $rules[$tag] = $this->priority;
 
         return [$rules];

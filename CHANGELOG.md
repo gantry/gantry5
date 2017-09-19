@@ -3,23 +3,25 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Add `responsive-font` mixin to Nucleus (#2106)
+        - Added `responsive-font` mixin to Nucleus (#2106)
     1. [](#bugfix)
-        - Layout Manager: Inheritance overlay is hiding all sections in a block of a container (#2114)
-        - Error thrown when cloning a section with no particles (#2116, thanks @drnasin)
+        - Fixed inheritance overlay in Layout Manager masking all sections in a block of a container (#2114)
+        - Fixed error when cloning a section with no particles (#2116, thanks @drnasin)
 1. [Joomla](#joomla)
     1. [](#new)
-        - Add official Joomla 3.8 support (#2111)
+        - Added official Joomla 3.8 support (#2111)
     1. [](#bugfix)
-        - Particles are not using selected timezone (#2072)
+        - Fixed particles not using selected timezone (#2072)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Added WPML & PolyLang multi-language support for outline assignments (#634)
     1. [](#bugfix)
-        - Do not double escape links, titles and users name in WP Posts particle (#2085)
+        - Fixed double escaping links, titles and users name in WP Posts particle (#2085)
 1. [Grav](#grav)
-    1. [](#bugfix)
+    1. [](#improved)
         - Grav Content particle looks now for authors `name`, `alias` or `username` in page header
+    1. [](#bugfix)
+        - Fixed outline/particle assignments when `Include default language` in Grav was `No` (#2115)
 
 # 5.4.17
 ## 08/25/2017
