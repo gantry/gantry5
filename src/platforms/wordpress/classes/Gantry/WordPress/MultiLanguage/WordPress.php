@@ -21,20 +21,25 @@ class WordPress implements MultiLantuageInterface
 
     public function getCurrentLanguage()
     {
-        $code = Gantry::instance()['site']->language;
-        $code = explode('-', $code, 2);
-
-        return $code[0];
+        return get_locale();
     }
 
     public function getLanguageOptions()
     {
-        $items = [['name' => 'en', 'label' => 'en_US']];
-
+        require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+        $translations = wp_get_available_translations();
         $languages = get_available_languages();
-        foreach($languages as $lang) {
-            $code = explode('_', $lang, 2);
-            $items[] = ['name' => $code[0], 'label' => $lang];
+
+        $items = [['name' => 'en_US', 'label' => 'English (United States)']];
+
+        foreach($languages as $locale) {
+            if(isset($translations[$locale])) {
+                $translation = $translations[$locale];
+                $items[] = [
+                    'name'  => $locale,
+                    'label' => $translation['native_name'],
+                ];
+            }
         }
 
         return $items;
