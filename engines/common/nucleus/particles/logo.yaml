@@ -20,6 +20,17 @@ form:
       label: Url
       description: Url for the image. Leave empty to go to home page.
 
+    target:
+      type: select.select
+      label: Target
+      description: Target browser window when logo is clicked.
+      placeholder: 'Select...'
+      default: _self
+      options:
+          _self: Same Frame (default)
+          _parent: Parent Frame
+          _blank: New Window or Tab
+
     image:
       type: input.imagepicker
       label: Image
