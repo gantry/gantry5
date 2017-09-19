@@ -19,6 +19,7 @@ use Grav\Common\Grav;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
 /**
@@ -49,6 +50,18 @@ class ChildThemeCommand extends ConsoleCommand
                 InputOption::VALUE_REQUIRED,
                 'Child theme name'
             )
+            ->addOption(
+                'clone',
+                'l',
+                InputOption::VALUE_NONE,
+                'Clone outlines and configuration to the child theme'
+            )
+            ->addOption(
+                'no-clone',
+                'L',
+                InputOption::VALUE_NONE,
+                'Do not clone outlines and configuration to the child theme'
+            )
             ->setDescription('Creates a new child theme')
             ->setHelp('The <info>child-theme</info> creates a new child theme from an existing Gantry theme')
         ;
@@ -59,6 +72,8 @@ class ChildThemeCommand extends ConsoleCommand
         $this->options = [
             'parent' => $this->input->getOption('parent'),
             'child'   => $this->input->getOption('child'),
+            'clone'   => $this->input->getOption('clone'),
+            'no-clone'   => $this->input->getOption('no-clone'),
         ];
 
         $this->validateOptions();
@@ -90,6 +105,15 @@ class ChildThemeCommand extends ConsoleCommand
             $child = $helper->ask($this->input, $this->output, $question);
         } else {
             $child = $this->options['child'];
+        }
+
+        if (!$this->options['clone'] && !$this->options['no-clone']) {
+            // Get username and validate
+            $question = new ConfirmationQuestion('Clone outlines and configuration to the child theme [Y/n]: ', 'y');
+
+            $clone = $helper->ask($this->input, $this->output, $question);
+        } else {
+            $clone = (bool)$this->options['clone'];
         }
 
         $grav = Grav::instance();
@@ -150,6 +174,15 @@ PHP
         $content = preg_replace('|( +)name: (.*)|ui', '\\1name: \\2 Child', $content);
         $file = File::instance($folder . '/gantry/theme.yaml');
         $file->save($content);
+
+        // Clone configuration if requested.
+        if ($clone) {
+            $oldConfig = $locator->findResource('user://data/gantry5/themes/' . $parent);
+            if ($oldConfig) {
+                $newConfig = $locator->findResource('user://data/gantry5/themes/' . $child, true, true);
+                Folder::copy($oldConfig, $newConfig);
+            }
+        }
 
         $this->output->writeln('');
         $this->output->writeln('<green>Success!</green> Child theme <cyan>' . $child . '</cyan> created.');
