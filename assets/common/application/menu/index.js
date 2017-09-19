@@ -44,9 +44,14 @@ var Menu = new prime({
 
         this.selectors = this.options.selectors;
         this.states = this.options.states;
-        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
+        this.overlay = zen('div' + this.selectors.overlay);
         this.active = null;
         this.location = [];
+
+        var pageSurround = $('#g-page-surround');
+        if (pageSurround) {
+            this.overlay.top(pageSurround);
+        }
 
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
