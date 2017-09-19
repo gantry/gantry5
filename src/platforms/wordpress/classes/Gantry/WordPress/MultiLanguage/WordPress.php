@@ -29,8 +29,14 @@ class WordPress implements MultiLantuageInterface
 
     public function getLanguageOptions()
     {
-        $code = $this->getCurrentLanguage();
+        $items = [['name' => 'en', 'label' => 'en_US']];
 
-        return [['name' => $code, 'label' => Gantry::instance()['site']->language]];
+        $languages = get_available_languages();
+        foreach($languages as $lang) {
+            $code = explode('_', $lang, 2);
+            $items[] = ['name' => $code[0], 'label' => $lang];
+        }
+
+        return $items;
     }
 }
