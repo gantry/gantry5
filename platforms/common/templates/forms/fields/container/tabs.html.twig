@@ -14,7 +14,7 @@
             {# collect tabs and panes #}
             {% for tab, content in field.fields %}
                 {% if not ignore_not_overrideable or (content.overridable is not defined or content.overridable) %}
-                    {% set tabs = tabs|merge([content.label|default(tab)]) %}
+                    {% set tabs = tabs|merge([content.label|default(tab)|trans_key('GANTRY5_FORM_FIELD', scope, name, tab, 'LABEL')]) %}
                     {% set panes = panes|merge([content.fields|default([])]) %}
                 {% endif %}
             {% endfor %}

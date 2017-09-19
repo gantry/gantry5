@@ -6,7 +6,7 @@
 
 {% block contents %}
     {% if field.label %}
-    <{{ field.tag|default('h5') }}>{{ field.label }}</{{ field.tag|default('h5') }}>
+    <{{ field.tag|default('h5') }}>{{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}</{{ field.tag|default('h5') }}>
     {% endif %}
     <div{{ field.id ? (' id="' ~ field.id|e ~ '"')|raw }}>
     {% if field.fields %}
