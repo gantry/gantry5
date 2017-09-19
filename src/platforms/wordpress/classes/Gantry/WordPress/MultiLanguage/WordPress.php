@@ -10,8 +10,6 @@
 
 namespace Gantry\WordPress\MultiLanguage;
 
-use Gantry\Framework\Gantry;
-
 class WordPress implements MultiLantuageInterface
 {
     public static function enabled()

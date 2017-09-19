@@ -10,13 +10,14 @@
 
 namespace Gantry\WordPress\MultiLanguage;
 
-class PolyLang implements MultiLantuageInterface
+class PolyLang extends WordPress
 {
     public static function enabled()
     {
         return function_exists('pll_current_language') && function_exists('pll_the_languages');
     }
 
+    /*
     public function getCurrentLanguage()
     {
         return pll_current_language('slug');
@@ -36,4 +37,5 @@ class PolyLang implements MultiLantuageInterface
 
         return $items;
     }
+    */
 }

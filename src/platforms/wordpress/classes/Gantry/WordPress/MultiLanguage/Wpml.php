@@ -10,13 +10,14 @@
 
 namespace Gantry\WordPress\MultiLanguage;
 
-class Wpml implements MultiLantuageInterface
+class Wpml extends WordPress
 {
     public static function enabled()
     {
         return apply_filters('wpml_current_language', null) !== null;
     }
 
+    /*
     public function getCurrentLanguage()
     {
         return apply_filters('wpml_current_language', null);
@@ -36,4 +37,5 @@ class Wpml implements MultiLantuageInterface
 
         return $items;
     }
+    */
 }
