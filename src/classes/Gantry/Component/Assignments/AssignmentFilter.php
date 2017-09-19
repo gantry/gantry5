@@ -34,9 +34,10 @@ class AssignmentFilter
 
         $scores = [];
         foreach ($matches as $type => $candidate) {
-            $scores[$type] = $this->getScore($candidate);
+            $scores[$type] = $this->getScore($candidate) + (isset($candidate['language']) ? 0.01 : 0);
         }
 
+        // Always return matches by score in alphabetical order.
         ksort($scores, SORT_STRING);
         arsort($scores, SORT_NUMERIC);
 
