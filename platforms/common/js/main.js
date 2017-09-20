@@ -10071,7 +10071,7 @@ ready(function() {
         }
 
         var slide = function(override) {
-            collapsed = typeof override != 'number' ? override : collapsed;
+            collapsed = typeof override !== 'number' ? override : collapsed;
             if (!collapsed) {
                 card.addClass('g-collapsed');
                 element.addClass('g-collapsed-main');
@@ -10110,7 +10110,7 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode          = element.data('g-collapse-all') == 'true',
+        var mode          = element.data('g-collapse-all') === 'true',
             parent        = element.parent('.g-filter-actions'),
             container     = parent.nextSibling(),
             collapsers    = container.search('[data-g-collapse]'),
@@ -10126,6 +10126,10 @@ ready(function() {
             data = JSON.parse(collapser.data('g-collapse'));
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
+
+            handle
+                .data('title', mode ? data.expand : data.collapse)
+                .data('tip', mode ? data.expand : data.collapse);
 
             storage = ((data.store !== false) ? CookieStorage : storage) || {};
 

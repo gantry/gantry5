@@ -11,6 +11,7 @@
         - Fixed inheritance overlay in Layout Manager masking all sections in a block of a container (#2114)
         - Fixed error when cloning a section with no particles (#2116, thanks @drnasin)
         - Fixed IE Edge issue in admin where the navigation bar would disappear and never reappear (#2118)
+        - Properly update Collapse / Expand titles when using Collapse All / Expand All (#2004)
 1. [Joomla](#joomla)
     1. [](#new)
         - Added official Joomla 3.8 support (#2111)
