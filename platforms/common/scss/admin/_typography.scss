@@ -84,4 +84,16 @@
         border-bottom: 1px dotted $red;
     }
 
+    .theme-title > * {
+        display: inline-block;
+        line-height: 1rem;
+
+        &.fa-tint {
+            margin-top: 5px;
+        }
+    }
+    .g-ellipsis {
+        @include ellipsis(170px);
+    }
+
 }//endwrapper

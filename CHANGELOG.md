@@ -28,6 +28,7 @@
     1. [](#bugfix)
         - Fixed outline/particle assignments when `Include default language` in Grav was `No` (#2115)
         - Fixed outline assigment priority to slightly prefer outlines assigned to language
+        - Fixed cases where the top level menu would wrap below the theme title in admin (#2099)
 
 # 5.4.17
 ## 08/25/2017
