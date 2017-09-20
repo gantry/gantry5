@@ -6,6 +6,7 @@
         - Added `responsive-font` mixin to Nucleus (#2106)
     1. [](#improved)
         - Added link target option for `Logo / Image` particle (#1887)
+        - Trigger change visualizer when selecting an image (#2059)
     1. [](#bugfix)
         - Fixed inheritance overlay in Layout Manager masking all sections in a block of a container (#2114)
         - Fixed error when cloning a section with no particles (#2116, thanks @drnasin)

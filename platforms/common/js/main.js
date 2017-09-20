@@ -7940,6 +7940,7 @@ var FilePicker = new prime({
                 value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
+            $('body').emit('input', { target: this.data.field });
             modal.close();
         }, this));
 
