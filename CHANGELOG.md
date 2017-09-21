@@ -1,5 +1,5 @@
 # 5.4.18
-## mm/dd/2017
+## 09/21/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -26,7 +26,7 @@
 1. [Grav](#grav)
     1. [](#improved)
         - Grav Content particle looks now for authors `name`, `alias` or `username` in page header
-        - Added option to cli command `bin/plugin gantry5 child-theme` to clone the theme settings
+        - Added option to cli command `bin/plugin gantry5 child-theme` to clone the theme settings (#2086)
     1. [](#bugfix)
         - Fixed outline/particle assignments when `Include default language` in Grav was `No` (#2115)
         - Fixed outline assigment priority to slightly prefer outlines assigned to language

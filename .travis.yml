@@ -128,7 +128,7 @@ after_deploy:
       php build.php prod-versions -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
-      git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
+      git push --force --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
       curl --user ${BAMBOO_DEPLOY} -X POST -d "stage&executeAllStages&bamboo.variable.IS_RELEASE=yes&bamboo.variable.THEME_VERSION=${TRAVIS_TAG}" ${BAMBOO_SITE}THEMES-HELIUM;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
