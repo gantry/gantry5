@@ -38,7 +38,7 @@ before_install:
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
       yarn;
-      gulp -up;
+      ./node_modules/.bin/gulp -up;
     fi
   - cd $TRAVIS_BUILD_DIR/src/platforms/joomla && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/src/platforms/wordpress && composer install --no-dev;
