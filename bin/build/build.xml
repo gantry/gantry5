@@ -111,7 +111,7 @@
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
     <target name="assets-prod">
         <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
-        <exec command="gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
+        <exec command="${project_dir}/node_modules/.bin/gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
     </target>
 
     <target name="joomla">
