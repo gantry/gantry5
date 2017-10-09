@@ -1,3 +1,10 @@
+# 5.4.19
+## mm/dd/2017
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
+
 # 5.4.18
 ## 09/21/2017
 

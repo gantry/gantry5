@@ -550,12 +550,12 @@ ready(function() {
 
                             if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
-                            if (particle.getType() != 'section') {
+                            if (particle.getType() !== 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
                             }
 
-                            if (particle.getType() == 'position') {
+                            if (particle.getType() === 'position') {
                                 particle.updateKey();
                             }
 
@@ -591,6 +591,8 @@ ready(function() {
                             if (response.body.data.children) {
                                 layoutmanager.clear(particle.block, { save: false, dropLastGrid: !!response.body.data.children.length, emptyInherits: true });
                                 builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
+                            } else {
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: false, emptyInherits: true });
                             }
 
                             if (particle.hasInheritance() && !response.body.data.inherit) {
