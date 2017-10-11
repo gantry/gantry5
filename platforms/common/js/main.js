@@ -3437,14 +3437,6 @@ ready(function() {
                             if (response.body.data.children) {
                                 layoutmanager.clear(particle.block, { save: false, dropLastGrid: !!response.body.data.children.length, emptyInherits: true });
                                 builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
-                            } else {
-                                if (response.body.data.type === 'section') {
-                                    layoutmanager.clear(particle.block, {
-                                        save: false,
-                                        dropLastGrid: false,
-                                        emptyInherits: true
-                                    });
-                                }
                             }
 
                             if (particle.hasInheritance() && !response.body.data.inherit) {
