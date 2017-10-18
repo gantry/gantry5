@@ -72,7 +72,7 @@ class Theme extends AbstractTheme
     }
 
     /**
-     * @param string|array $particle
+     * @param string|array|object $particle
      * @param array $attribs
      * @return ContentBlock
      */

@@ -50,7 +50,7 @@ class Url
         }
 
         // PHP versions below 5.4.7 do not understand schemeless URLs starting with // either.
-        if (isset($schemeless) && !isset($parts['host']) && '//' == substr($encodedUrl, 0, 2)) {
+        if (isset($schemeless) && !isset($parts['host']) && 0 === strpos($encodedUrl, '//')) {
             // Path is stored in format: //[host]/[path], so let's fix it.
             list($parts['host'], $path) = explode('/', substr($parts['path'], 2), 2);
             $parts['path'] = "/{$path}";

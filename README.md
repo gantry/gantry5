@@ -17,7 +17,7 @@ The back-end administration requirements of Gantry in order of preference are as
 * Firefox 36+
 * Safari 8+
 * Opera 28+
-* Internet Explorer 10+ (9 supported at limited capacity)
+* Internet Explorer 11+ (10 supported at limited capacity)
 
 ## Installing Gantry 5 and the Hydrogen Theme
 
