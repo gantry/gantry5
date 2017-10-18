@@ -4,7 +4,10 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
-
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fix broken AJAX if `Absolute URLs` in Grav has been turned on
+    
 # 5.4.18
 ## 09/21/2017
 

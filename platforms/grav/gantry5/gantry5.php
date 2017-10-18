@@ -119,7 +119,7 @@ class Gantry5Plugin extends Plugin
             define('GANTRYADMIN_PATH', 'plugins://gantry5/admin');
         }
 
-        $base = rtrim($this->grav['base_url'], '/');
+        $base = rtrim($this->grav['base_url_relative'], '/');
         $this->base = rtrim("{$base}{$admin->base}/{$admin->location}", '/');
 
         $gantry = Gantry::instance();
