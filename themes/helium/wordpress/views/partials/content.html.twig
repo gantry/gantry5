@@ -44,6 +44,8 @@
                 {# Begin Tease #}
                 {% if gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'excerpt' and post.post_excerpt is not empty %}
                     <div class="post-excerpt">{{ post.post_excerpt|apply_filters('the_excerpt')|raw }}</div>
+                {% elseif gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt' %}
+                    <div class="post-excerpt">{{ post.preview.length(gantry.config.get('content.' ~ scope ~ '.content.gexcerpt-length', '50')).read_more(false)|apply_filters('the_excerpt')|raw }}</div>
                 {% else %}
                     <div class="post-content">
                         {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
@@ -59,7 +61,7 @@
                     </div>
                 {% endif %}
 
-                {% if gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty) )  %}
+                {% if gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty or gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt') )  %}
                     <a href="{{ post.link }}" class="read-more button button-xsmall">
                         {% if readmore[1] is not empty %}
                             {{- readmore[1] -}}

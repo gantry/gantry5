@@ -5,6 +5,9 @@
     1. [](#bugfix)
         - This release addresses a false positive issue by ClamAV. Please upgrade to this latest version as soon as possible.
         - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Helium/Hydrogen: added option for auto-generated excerpts
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fix broken AJAX if `Absolute URLs` in Grav has been turned on
