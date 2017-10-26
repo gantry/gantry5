@@ -7,6 +7,7 @@
         - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
 1. [WordPress](#wordpress)
     1. [](#new)
+        - Updated Timber to v1.5.2
         - Helium/Hydrogen: added option for auto-generated excerpts
 1. [Grav](#grav)
     1. [](#bugfix)

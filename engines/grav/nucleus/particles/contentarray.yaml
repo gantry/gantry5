@@ -15,7 +15,7 @@ form:
       type: container.tabs
       fields:
         _tab_articles:
-          label: Articles
+          label: Pages
           overridable: false
           fields:
             article.filter.categories:
