@@ -14,14 +14,14 @@
 namespace Gantry\Component\Twig;
 
 /**
- * Tests a condition.
+ * Handles try/catch in template file.
  *
  * <pre>
  * {% try %}
  *    <li>{{ user.get('name') }}</li>
  * {% catch %}
- *  {{ e }}
- * {% endtry %}
+ *    {{ e.message }}
+ * {% endcatch %}
  * </pre>
  */
 class TokenParserTry extends \Twig_TokenParser
@@ -56,7 +56,7 @@ class TokenParserTry extends \Twig_TokenParser
 
     public function decideEnd(\Twig_Token $token)
     {
-        return $token->test(array('endtry'));
+        return $token->test(array('endtry')) || $token->test(array('endcatch'));
     }
 
     /**
