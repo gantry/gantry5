@@ -1,3 +1,10 @@
+# 5.4.20
+## mm/dd/2017
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed plugin and theme packages because of a build script issue (#2154)
+
 # 5.4.19
 ## 10/18/2017
 
@@ -5,9 +12,13 @@
     1. [](#bugfix)
         - This release addresses a false positive issue by ClamAV. Please upgrade to this latest version as soon as possible.
         - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.5.2
+        - Helium/Hydrogen: added option for auto-generated excerpts
 1. [Grav](#grav)
     1. [](#bugfix)
-        - Fix broken AJAX if `Absolute URLs` in Grav has been turned on
+        - Fixed broken AJAX if `Absolute URLs` in Grav has been turned on
 
 # 5.4.18
 ## 09/21/2017
