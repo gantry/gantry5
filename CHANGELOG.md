@@ -4,6 +4,7 @@
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed plugin and theme packages because of a build script issue (#2154)
+        - Fixed missing `title` attribute for the menu items (#2107)
 
 # 5.4.19
 ## 10/18/2017
