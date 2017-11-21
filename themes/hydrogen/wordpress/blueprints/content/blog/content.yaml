@@ -4,6 +4,11 @@ type: blog
 
 form:
   fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Display content.
+      default: 1
 
     type:
       type: select.select

@@ -2,6 +2,8 @@
 ## mm/dd/2017
 
 1. [WordPress](#wordpress)
+    1. [](#new)
+        - Helium/Hydrogen: you can now disable Content display in Blog and Archive-type views
     1. [](#bugfix)
         - Fixed plugin and theme packages because of a build script issue (#2154)
         - Fixed missing `title` attribute for the menu items (#2107)
