@@ -1,6 +1,9 @@
 # 5.4.20
 ## mm/dd/2017
 
+1. [Common](#common)
+    1. [](#bugfix)
+        - Parts of layout break randomly but are fixed after a refresh (#1460)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Helium/Hydrogen: you can now disable Content display in Blog and Archive-type views
