@@ -850,7 +850,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                 if (isset($item->id)) {
                     if (isset($this->references[$item->id])) {
-                        if ($type === 'block') {
+                        if ($type === 'block' || $type === 'grid') {
                             $item->id = $this->id($type, $subtype);
                         } else {
                             throw new \RuntimeException('Layout reference conflict on #' . $item->id);
