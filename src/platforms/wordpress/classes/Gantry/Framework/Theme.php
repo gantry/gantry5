@@ -415,7 +415,7 @@ class Theme extends AbstractTheme
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
         add_filter('timber_compile_result', [$this, 'postProcessOutput']);
         add_filter('wp_theme_editor_filetypes', [$this, 'extend_theme_editor_filetypes']);
-        add_filter('get_twig', [$this, 'extendTwig'], 100);
+        add_filter('timber/twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
         add_filter('widget_text', [$this, 'url_filter'], 0);

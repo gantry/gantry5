@@ -12,6 +12,7 @@
     1. [](#bugfix)
         - Fixed plugin and theme packages because of a build script issue (#2154)
         - Fixed missing `title` attribute for the menu items (#2107)
+        - Fixed potentially registering same extension `GantryTwig` twice (#2034)
 
 # 5.4.19
 ## 10/18/2017
