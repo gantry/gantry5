@@ -2,8 +2,10 @@
 ## mm/dd/2017
 
 1. [Common](#common)
+    1. [](#improved)
+        - Remove deprecated `Twig_Extension` function
     1. [](#bugfix)
-        - Parts of layout break randomly causing layout corruption if saved (#1460)
+        - Parts of inherited layouts break randomly in Layout Manager causing layout corruption if saved (#1460)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Helium/Hydrogen: you can now disable Content display in Blog and Archive-type views
