@@ -3,11 +3,14 @@
 
 1. [Common](#common)
     1. [](#improved)
-        - Remove deprecated `Twig_Extension` function
+        - Remove a deprecated `Twig_Extension` function
     1. [](#bugfix)
         - Fixed PHP 7.2 issues when compiling SCSS
         - Fixed PHP 7.2 issue when using older layout format
         - Parts of inherited layouts break randomly in Layout Manager causing layout corruption if saved (#1460)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed PHP 7.2 issue in admin
 1. [WordPress](#wordpress)
     1. [](#new)
         - Helium/Hydrogen: you can now disable Content display in Blog and Archive-type views

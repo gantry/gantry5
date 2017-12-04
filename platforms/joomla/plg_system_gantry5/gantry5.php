@@ -277,8 +277,8 @@ class plgSystemGantry5 extends JPlugin
                 }
 
                 // Special handling for tasks coming from com_template.
-                if ($task == 'style.edit') {
-                    $item = each($selected);
+                if ($task === 'style.edit') {
+                    $item = reset($selected);
                     $id = $item['key'];
                     $theme = $item['value'];
                     $token = JSession::getFormToken();
