@@ -5,6 +5,7 @@
     1. [](#improved)
         - Remove deprecated `Twig_Extension` function
     1. [](#bugfix)
+        - Fixed PHP 7.2 issues when compiling SCSS 
         - Parts of inherited layouts break randomly in Layout Manager causing layout corruption if saved (#1460)
 1. [WordPress](#wordpress)
     1. [](#new)
