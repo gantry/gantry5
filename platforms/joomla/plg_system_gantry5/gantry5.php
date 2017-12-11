@@ -278,9 +278,8 @@ class plgSystemGantry5 extends JPlugin
 
                 // Special handling for tasks coming from com_template.
                 if ($task === 'style.edit') {
-                    $item = reset($selected);
-                    $id = $item['key'];
-                    $theme = $item['value'];
+                    $theme = reset($selected);
+                    $id = key($selected);
                     $token = JSession::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }

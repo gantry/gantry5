@@ -1,3 +1,10 @@
+# 5.4.21
+## mm/dd/2017
+
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Regression: PHP 7.2 warning fix in admin broke links from Joomla template manager (#2194)
+
 # 5.4.20
 ## 12/11/2017
 
