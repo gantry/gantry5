@@ -353,6 +353,18 @@ class Theme extends AbstractTheme
         return $filetypes;
     }
 
+    /**
+     * Register menu locations.
+     */
+    public function register_nav_menus()
+    {
+        // TODO: Not implemented
+        $locations = [];
+        foreach ($locations as $key => $val) {
+            \register_nav_menu($key, $val);
+        }
+    }
+
     public function install()
     {
         $installer = new ThemeInstaller($this->name);
@@ -429,6 +441,7 @@ class Theme extends AbstractTheme
         add_action('init', [$this, 'register_taxonomies']);
         add_action('init', [$this, 'register_menus']);
 
+//        add_action('after_setup_theme', [$this, 'register_nav_menus']);
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
