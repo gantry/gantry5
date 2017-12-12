@@ -129,7 +129,8 @@ after_deploy:
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
       git push --force --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master;
-      curl --user ${BAMBOO_DEPLOY} -X POST -d "stage&executeAllStages&bamboo.variable.IS_RELEASE=yes&bamboo.variable.THEME_VERSION=${TRAVIS_TAG}" ${BAMBOO_SITE}THEMES-HELIUM;
+      # FIXME: Enable deployment when the git push is working again.
+      # curl --user ${BAMBOO_DEPLOY} -X POST -d "stage&executeAllStages&bamboo.variable.IS_RELEASE=yes&bamboo.variable.THEME_VERSION=${TRAVIS_TAG}" ${BAMBOO_SITE}THEMES-HELIUM;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;
