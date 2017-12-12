@@ -3,6 +3,6 @@
     <version>@version@</version>
 
     <compatibility>
-        <version>30</version>
+        <version>38</version>
     </compatibility>
 </jedupdate>

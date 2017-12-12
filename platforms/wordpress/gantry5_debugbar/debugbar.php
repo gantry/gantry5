@@ -16,8 +16,8 @@ defined('ABSPATH') or die;
 
 // NOTE: This file needs to be PHP 5.2 compatible.
 
-// Fail safe version check for PHP <5.4.0.
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+// Fail safe version check for PHP <5.5.9.
+if (version_compare(PHP_VERSION, '5.5.9', '<')) {
     if (is_admin()) {
         add_action('admin_notices', 'gantry5_debugbar_php_version_warning');
     }
