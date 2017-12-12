@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     1. [](#bugfix)
+        - Regression: Removed layout reference conflict check to prevent issues with inheritance and with older layouts
 
 # 5.4.21
 ## 12/12/2017
