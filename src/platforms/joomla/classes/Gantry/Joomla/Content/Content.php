@@ -12,9 +12,9 @@ namespace Gantry\Joomla\Content;
 
 use Gantry\Framework\Gantry;
 use Gantry\Joomla\Category\Category;
-use Gantry\Joomla\Object\Object;
+use Gantry\Joomla\Object\AbstractObject;
 
-class Content extends Object
+class Content extends AbstractObject
 {
     static protected $instances = [];
 

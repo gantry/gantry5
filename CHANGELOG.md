@@ -4,7 +4,10 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Regression: Removed layout reference conflict check to prevent issues with inheritance and with older layouts
-
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed PHP 7.2 warning when using Joomla articles and categories in particles (#2188)
+        
 # 5.4.21
 ## 12/12/2017
 

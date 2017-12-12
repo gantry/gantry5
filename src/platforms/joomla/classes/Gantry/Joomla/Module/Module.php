@@ -11,13 +11,13 @@
 namespace Gantry\Joomla\Module;
 
 use Gantry\Framework\Gantry;
-use Gantry\Joomla\Object\Object;
+use Gantry\Joomla\Object\AbstractObject;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 
 \JTable::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
-class Module extends Object implements ExportInterface
+class Module extends AbstractObject implements ExportInterface
 {
     use Export;
 
