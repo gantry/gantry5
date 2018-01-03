@@ -158,16 +158,16 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.7.2",
+            "version": "v0.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "4f605a51462c85cf6df5bb45460483a138e04025"
+                "reference": "d7296256bd1bfacb8bd24e69030fd5e187181835"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/4f605a51462c85cf6df5bb45460483a138e04025",
-                "reference": "4f605a51462c85cf6df5bb45460483a138e04025",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/d7296256bd1bfacb8bd24e69030fd5e187181835",
+                "reference": "d7296256bd1bfacb8bd24e69030fd5e187181835",
                 "shasum": ""
             },
             "require": {
@@ -206,7 +206,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2017-10-14T21:35:01+00:00"
+            "time": "2017-12-21T00:18:53+00:00"
         },
         {
             "name": "pimple/pimple",
