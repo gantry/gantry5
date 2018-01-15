@@ -1,3 +1,14 @@
+# 5.4.23
+## mm/dd/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `scssphp` to v0.7.4
+        - Development Mode: Started using CSS Source Maps instead of inline comments
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.6.0
+
 # 5.4.22
 ## 12/12/2017
 
