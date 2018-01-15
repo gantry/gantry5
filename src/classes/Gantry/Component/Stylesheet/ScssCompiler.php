@@ -57,7 +57,7 @@ class ScssCompiler extends CssCompiler
                 'sourceMapBasepath' => '/',
                 'sourceRoot'        => '/',
             ]);
-            //$this->compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
+            $this->compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
         }
     }
 
