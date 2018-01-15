@@ -130,7 +130,7 @@ class Compiler extends BaseCompiler
         $value = trim($this->compileValue(reset($args)), '\'"');
 
         // It's a google font
-        if (substr($value, 0, 7) === 'family=') {
+        if (0 === strpos($value, 'family=')) {
             $fonts = $this->decodeFonts($value);
             $font = reset($fonts);
 
@@ -161,7 +161,7 @@ class Compiler extends BaseCompiler
      * get-local-fonts($my-font-variable, $my-font-variable2, ...);
      *
      * @param array $args
-     * @return string
+     * @return array
      */
     public function userGetLocalFonts($args)
     {
@@ -188,7 +188,7 @@ class Compiler extends BaseCompiler
      * get-local-font-weights(roboto);
      *
      * @param array $args
-     * @return string
+     * @return array
      */
     public function userGetLocalFontWeights($args)
     {
@@ -219,8 +219,9 @@ class Compiler extends BaseCompiler
         $weight = isset($args[1]) ? $args[1] : 400;
 
         // Only return url once per font.
-        if (isset($this->fonts[$name][$weight]) && !isset($this->usedFonts[$name . '-' . $weight])) {
-            $this->usedFonts[$name . '-' . $weight] = true;
+        $weightName = $name . '-' . $weight;
+        if (isset($this->fonts[$name][$weight]) && !isset($this->usedFonts[$weightName])) {
+            $this->usedFonts[$weightName] = true;
 
             return $this->fonts[$name][$weight];
         }
@@ -258,7 +259,7 @@ class Compiler extends BaseCompiler
     {
         array_walk($fonts, function(&$val) {
             // Check if font family is one of the 4 default ones, otherwise add quotes.
-            if (!in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'])) {
+            if (!\in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'], true)) {
                 $val = '"' . $val . '"';
             }
         });
@@ -275,7 +276,7 @@ class Compiler extends BaseCompiler
      */
     protected function decodeFonts($string, $localOnly = false)
     {
-        if (substr($string, 0, 7) === 'family=') {
+        if (0 === strpos($string, 'family=')) {
             if ($localOnly) {
                 // Do not return external fonts.
                 return [];
@@ -383,6 +384,8 @@ class Compiler extends BaseCompiler
      *
      * @param string $path
      * @param mixed  $out
+     *
+     * @throws \Exception
      */
     protected function importFile($path, $out)
     {

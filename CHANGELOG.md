@@ -14,12 +14,27 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.4.0 and Admin 1.6.7
 
+# 5.4.23
+## mm/dd/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `scssphp` to v0.7.4
+        - Development Mode: Started using CSS Source Maps instead of inline comments
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.6.0
+
 # 5.4.22
-## mm/dd/2017
+## 12/12/2017
 
 1. [Common](#common)
     1. [](#bugfix)
-
+        - Regression: Removed layout reference conflict check to prevent issues with inheritance and with older layouts
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed PHP 7.2 warning when using Joomla articles and categories in particles (#2188)
+        
 # 5.4.21
 ## 12/12/2017
 
