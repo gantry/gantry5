@@ -14,6 +14,7 @@
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Component\Stylesheet\Scss\Compiler;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
@@ -123,8 +124,12 @@ class ScssCompiler extends CssCompiler
         // Extract map from css and save it as separate file.
         if ($pos = strrpos($css, '/*# sourceMappingURL=')) {
             $map = json_decode(urldecode(substr($css, $pos + 43, -3)), true);
+
+            /** @var Document $document */
+            $document = $gantry['document'];
+
             foreach ($map['sources'] as &$source) {
-                $source = $locator->isStream($source) ? $locator->findResource($source, false) : $source;
+                $source = $document->url($source, false, -1);
             }
             unset($source);
 
