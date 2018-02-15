@@ -159,6 +159,8 @@
 			}
 		};
 
+        this._initialResized = false;
+
 		$.each([ 'onResize', 'onThrottledResize' ], $.proxy(function(i, handler) {
 			this._handlers[handler] = $.proxy(this[handler], this);
 		}, this));
@@ -905,6 +907,10 @@
 				left: coordinate + 'px'
 			});
 		}
+        if(!this._initialResized){
+            this.onResize();
+            this._initialResized = true;
+        }
 	};
 
 	/**
