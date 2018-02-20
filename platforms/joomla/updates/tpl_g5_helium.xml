@@ -5,10 +5,10 @@
 		<description>Helium Template</description>
 		<element>g5_helium</element>
 		<type>template</type>
-		<version>@version@</version>
-		<infourl title="Helium @version@">http://docs.gantry.org/gantry5</infourl>
+		<version>5.4.23</version>
+		<infourl title="Helium 5.4.23">http://docs.gantry.org/gantry5</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_helium_v@version@.zip</downloadurl>
+			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.4.23/joomla-tpl_g5_helium_v5.4.23.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>

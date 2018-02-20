@@ -2,8 +2,8 @@
 <extension version="3.4" type="package" method="upgrade">
     <name>pkg_gantry5</name>
     <packagename>gantry5</packagename>
-    <version>@version@</version>
-    <creationDate>@versiondate@</creationDate>
+    <version>5.4.23</version>
+    <creationDate>February 20, 2018</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
@@ -16,19 +16,19 @@
     <blockChildUninstall>true</blockChildUninstall>
     <files folder="packages">
         <!-- Mandatory system plugin -->
-        <file type="plugin"    group="system"     id="gantry5"              enabled="1">plg_system_gantry5_v@version@.zip</file>
+        <file type="plugin"    group="system"     id="gantry5"              enabled="1">plg_system_gantry5_v5.4.23.zip</file>
         <!-- Quick icons -->
-        <file type="plugin"    group="quickicon"  id="gantry5"              enabled="1">plg_quickicon_gantry5_v@version@.zip</file>
+        <file type="plugin"    group="quickicon"  id="gantry5"              enabled="1">plg_quickicon_gantry5_v5.4.23.zip</file>
         <!-- Mandatory system plugin -->
-        <file type="plugin"    group="gantry5"    id="preset"                          >plg_gantry5_preset_v@version@.zip</file>
+        <file type="plugin"    group="gantry5"    id="preset"                          >plg_gantry5_preset_v5.4.23.zip</file>
         <!-- Particle module -->
-        <file type="module"    client="site"      id="mod_gantry5_particle" enabled="1">mod_gantry5_particle_v@version@.zip</file>
+        <file type="module"    client="site"      id="mod_gantry5_particle" enabled="1">mod_gantry5_particle_v5.4.23.zip</file>
         <!-- Gantry framework library -->
-        <file type="library"                      id="gantry5"              enabled="1">lib_gantry5_v@version@.zip</file>
+        <file type="library"                      id="gantry5"              enabled="1">lib_gantry5_v5.4.23.zip</file>
         <!-- Common media files -->
-        <file type="file"                         id="gantry5_nucleus"      enabled="1">gantry5_nucleus_v@version@.zip</file>
+        <file type="file"                         id="gantry5_nucleus"      enabled="1">gantry5_nucleus_v5.4.23.zip</file>
         <!-- Administration component -->
-        <file type="component"                    id="com_gantry5"          enabled="1">com_gantry5_v@version@.zip</file>
+        <file type="component"                    id="com_gantry5"          enabled="1">com_gantry5_v5.4.23.zip</file>
     </files>
 
     <languages folder="language">
