@@ -1,3 +1,13 @@
+# 5.4.24
+## XX/XX/XXXX
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `Lightcase` to v2.4.4 (#2205)
+    1. [](#bugfix)
+        - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
+        - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
+
 # 5.4.23
 ## 02/20/2018
 
@@ -21,7 +31,7 @@
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed PHP 7.2 warning when using Joomla articles and categories in particles (#2188)
-        
+
 # 5.4.21
 ## 12/12/2017
 
