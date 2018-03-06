@@ -1,8 +1,8 @@
 details:
   name: Hydrogen
-  version: "@version@"
+  version: "5.4.23"
   icon: paper-plane
-  date: @versiondate@
+  date: February 20, 2018
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
