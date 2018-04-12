@@ -61,7 +61,7 @@ form:
         .target_force:
           type: input.checkbox
           label: Force Target
-          description: If checked and 'Current Window or Tab' is selected, the 'target' attribute will be forced to be rendered.
+          description: If checked and 'Current Window or Tab' is selected, the 'target' attribute rendering will be forced.
           default: ''
 
         .dropdown:
