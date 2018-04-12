@@ -55,9 +55,14 @@ form:
           label: Link Target
           placeholder: 'Select...'
           options:
-            none: None - No Target Attribution
-            _self: Self - Current Window or Tab
-            _blank: Blank - New Window or Tab
+            _self: Current Window or Tab
+            _blank: New Window or Tab
+
+        .target_force:
+          type: input.checkbox
+          label: Force Target
+          description: If checked and 'Current Window or Tab' is selected, the 'target' attribute rendering will be forced.
+          default: ''
 
         .dropdown:
           type: select.selectize
