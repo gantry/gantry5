@@ -59,8 +59,9 @@ form:
           label: Link Target
           placeholder: 'Select...'
           options:
-            _self: Current Window or Tab
-            _blank: New Window or Tab
+            none: None - No Target Attribution
+            _self: Self - Current Window or Tab
+            _blank: Blank - New Window or Tab
 
         .dropdown:
           type: select.selectize
