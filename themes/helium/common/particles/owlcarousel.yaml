@@ -105,3 +105,8 @@ form:
           label: Button Class
           description: Input the button class.
           default: 'button-outline'
+        .disable:
+          type: input.checkbox
+          label: Disable
+          description: Disables the slide.
+          default: false
