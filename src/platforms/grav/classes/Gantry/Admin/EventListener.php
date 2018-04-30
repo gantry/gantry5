@@ -10,6 +10,7 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use Gantry\Prime\Pages;
 use Grav\Common\Grav;
@@ -111,6 +112,7 @@ class EventListener implements EventSubscriberInterface
 
         // Initialize pages.
         $visible = $pages->all()->nonModular();
+        $all = [];
         $list = [];
 
         /** @var Page $page */
@@ -118,6 +120,15 @@ class EventListener implements EventSubscriberInterface
             if (!$page->order()) {
                 continue;
             }
+
+            $route = $page->route();
+            if (isset($all[$route])) {
+                $path = Folder::getRelativePath($page->path());
+                $path2 = Folder::getRelativePath($all[$route]);
+                throw new \RuntimeException("Found duplicate page: '{$path}' vs '{$path2}'. Please rename or delete one of these folders from your filesystem");
+            }
+            $all[$route] = $page->path();
+
             $updated = false;
             $route = trim($page->route(), '/');
             $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
@@ -133,7 +144,7 @@ class EventListener implements EventSubscriberInterface
             }
 
             if ($updated) {
-                $list[] = $page;
+                $list[$route] = $page;
             }
 
             // Remove fields stored in Grav.

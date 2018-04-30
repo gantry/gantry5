@@ -10,6 +10,7 @@
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
+        - Added detection for duplicate page folders before saving menu and instruct user to fix the issue in his filesystem
 
 # 5.4.23
 ## 02/20/2018
