@@ -7,6 +7,9 @@
     1. [](#bugfix)
         - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
         - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
 
 # 5.4.23
 ## 02/20/2018

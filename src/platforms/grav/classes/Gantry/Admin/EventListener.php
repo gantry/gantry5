@@ -11,6 +11,7 @@
 namespace Gantry\Admin;
 
 use Gantry\Framework\Gantry;
+use Gantry\Prime\Pages;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
@@ -104,25 +105,36 @@ class EventListener implements EventSubscriberInterface
         $ordering = $this->flattenOrdering($menu['ordering']);
 
         $grav = Grav::instance();
+
+        /** @var Pages $pages */
         $pages = $grav['pages'];
 
         // Initialize pages.
-        $visible = $pages->all()->visible();
+        $visible = $pages->all()->nonModular();
         $list = [];
 
         /** @var Page $page */
         foreach ($visible as $page) {
+            if (!$page->order()) {
+                continue;
+            }
+            $updated = false;
             $route = trim($page->route(), '/');
-            $order = isset($ordering[$route]) ? $ordering[$route] : 0;
+            $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
             $parent = $page->parent();
-            if ($order) {
-                $list[] = $page = $page->move($parent);
+            if ($order !== null && $order !== (int) $page->order()) {
+                $page = $page->move($parent);
                 $page->order($order);
-            } else {
-                $list[] = $page;
+                $updated = true;
+            }
+            if (isset($menu["items.{$route}.title"]) && $page->menu() !== $menu["items.{$route}.title"]) {
+                $page->menu($menu["items.{$route}.title"]);
+                $updated = true;
             }
 
-            $page->title($menu["items.{$route}.title"]);
+            if ($updated) {
+                $list[] = $page;
+            }
 
             // Remove fields stored in Grav.
             if (isset($menu["items.{$route}"])) {
