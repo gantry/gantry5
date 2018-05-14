@@ -10,7 +10,9 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
+use Gantry\Prime\Pages;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
@@ -104,25 +106,46 @@ class EventListener implements EventSubscriberInterface
         $ordering = $this->flattenOrdering($menu['ordering']);
 
         $grav = Grav::instance();
+
+        /** @var Pages $pages */
         $pages = $grav['pages'];
 
         // Initialize pages.
-        $visible = $pages->all()->visible();
+        $visible = $pages->all()->nonModular();
+        $all = [];
         $list = [];
 
         /** @var Page $page */
         foreach ($visible as $page) {
-            $route = trim($page->route(), '/');
-            $order = isset($ordering[$route]) ? $ordering[$route] : 0;
-            $parent = $page->parent();
-            if ($order) {
-                $list[] = $page = $page->move($parent);
-                $page->order($order);
-            } else {
-                $list[] = $page;
+            if (!$page->order()) {
+                continue;
             }
 
-            $page->title($menu["items.{$route}.title"]);
+            $route = $page->route();
+            if (isset($all[$route])) {
+                $path = Folder::getRelativePath($page->path());
+                $path2 = Folder::getRelativePath($all[$route]);
+                throw new \RuntimeException("Found duplicate page: '{$path}' vs '{$path2}'. Please rename or delete one of these folders from your filesystem");
+            }
+            $all[$route] = $page->path();
+
+            $updated = false;
+            $route = trim($page->route(), '/');
+            $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
+            $parent = $page->parent();
+            if ($order !== null && $order !== (int) $page->order()) {
+                $page = $page->move($parent);
+                $page->order($order);
+                $updated = true;
+            }
+            if (isset($menu["items.{$route}.title"]) && $page->menu() !== $menu["items.{$route}.title"]) {
+                $page->menu($menu["items.{$route}.title"]);
+                $updated = true;
+            }
+
+            if ($updated) {
+                $list[$route] = $page;
+            }
 
             // Remove fields stored in Grav.
             if (isset($menu["items.{$route}"])) {
