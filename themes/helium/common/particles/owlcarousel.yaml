@@ -77,6 +77,10 @@ form:
       ajax: true
 
       fields:
+        .class:
+          type: input.selectize
+          label: CSS Classes
+          description: CSS class names for the individual item.
         .name:
           type: input.text
         .image:
@@ -108,5 +112,5 @@ form:
         .disable:
           type: input.checkbox
           label: Disable
-          description: Disables the slide.
+          description: Disables the item on the front end.
           default: false

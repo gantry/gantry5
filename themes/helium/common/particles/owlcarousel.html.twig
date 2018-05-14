@@ -9,7 +9,7 @@
 
             {% for item in particle.items %}
                 {% if not item.disable %}
-                    <div class="g-owlcarousel-item owl-item">
+                    <div class="g-owlcarousel-item {{ item.class|e }}">
                         <div class="g-owlcarousel-item-wrapper">
                             <div class="g-owlcarousel-item-img">
                                 <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
@@ -43,7 +43,7 @@
 
 {% block javascript_footer %}
     {% do gantry.load('jquery') %}
-    <script src="{{ url('gantry-theme://js/owlcarousel.js') }}"></script>
+    <script src="{{ url('gantry-theme://js/owl.carousel.min.js') }}"></script>
     <script type="text/javascript">
         jQuery(window).load(function() {
             jQuery('#g-owlcarousel-{{ id }}').owlCarousel({

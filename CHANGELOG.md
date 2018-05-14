@@ -4,6 +4,11 @@
 1. [Common](#common)
     1. [](#new)
         - Updated `Lightcase` to v2.4.4 (#2205)
+        - Helium: Updated OwlCarousel to v2.3.4
+    1. [](#improved)
+        - Helium: Reworked parts of the OwlCarousel SCSS theme styling
+        - Helium: Add possibility to add CSS Classes to individual OwlCarousel items (#2201)
+        - Helium: Add possibility to disable single OwlCarousel item on the front end (#2286)
     1. [](#bugfix)
         - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
         - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
