@@ -56,6 +56,7 @@ form:
               options:
                 show: Show
                 '': Hide
+              overridable: false
 
             post.limit.columns:
               type: select.select
