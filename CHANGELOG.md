@@ -1,5 +1,5 @@
 # 5.4.24
-## XX/XX/XXXX
+## XX/XX/2018
 
 1. [Common](#common)
     1. [](#new)
@@ -12,7 +12,13 @@
     1. [](#bugfix)
         - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
         - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
-        - Content Array particle has extra override checkbox on admin (#2307)
+        - Fixed Content Array particle having extra override checkbox on admin (#2307)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
