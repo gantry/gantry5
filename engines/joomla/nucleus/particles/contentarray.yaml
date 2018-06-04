@@ -57,6 +57,7 @@ form:
               options:
                 show: Show
                 '': Hide
+              overridable: false
 
             article.limit.columns:
               type: select.select

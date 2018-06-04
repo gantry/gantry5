@@ -17,6 +17,8 @@ use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Markdown\Parsedown;
+use Gantry\Framework\Markdown\ParsedownExtra;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 
@@ -31,25 +33,33 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return [
-            new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
+        $filters = [
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
             new \Twig_SimpleFilter('trans_key', [$this, 'transKeyFilter']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
-            new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
-            new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
             new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
             new \Twig_SimpleFilter('int', [$this, 'intFilter']),
             new \Twig_SimpleFilter('float', [$this, 'floatFilter']),
             new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
             new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => true]),
         ];
+
+        if (GANTRY5_PLATFORM !== 'grav') {
+            $filters = array_merge($filters, [
+                new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
+                new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
+                new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
+                new \Twig_SimpleFilter('markdown', [$this, 'markdownFunction']),
+            ]);
+        }
+
+        return $filters;
     }
 
     /**
@@ -59,17 +69,24 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return [
+        $functions = [
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
-            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-            new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
-            new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc'])
+            new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc']),
+            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
         ];
+
+        if (GANTRY5_PLATFORM !== 'grav') {
+            $functions = array_merge($functions, [
+                new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            ]);
+        }
+
+        return $functions;
     }
 
     /**
@@ -312,6 +329,30 @@ class TwigExtension extends \Twig_Extension
         $platform = Gantry::instance()['platform'];
 
         return $platform->truncate($string, (int) $limit, true);
+    }
+
+    /**
+     * @param string $string
+     * @param bool $block  Block or Line processing
+     * @param array $settings
+     * @return mixed|string
+     */
+    public function markdownFunction($string, $block = true, array $settings = null)
+    {
+        // Initialize the preferred variant of Parsedown
+        if ($settings['extra']) {
+            $parsedown = new ParsedownExtra($settings);
+        } else {
+            $parsedown = new Parsedown($settings);
+        }
+
+        if ($block) {
+            $string = $parsedown->text($string);
+        } else {
+            $string = $parsedown->line($string);
+        }
+
+        return $string;
     }
 
     /**
