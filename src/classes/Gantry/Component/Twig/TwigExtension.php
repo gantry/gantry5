@@ -50,7 +50,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => true]),
         ];
 
-        if (GANTRY5_PLATFORM !== 'grav') {
+        if (1 || GANTRY5_PLATFORM !== 'grav') {
             $filters = array_merge($filters, [
                 new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
                 new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
@@ -80,7 +80,7 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
         ];
 
-        if (GANTRY5_PLATFORM !== 'grav') {
+        if (1 || GANTRY5_PLATFORM !== 'grav') {
             $functions = array_merge($functions, [
                 new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
             ]);
