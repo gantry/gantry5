@@ -729,16 +729,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "ca12fcc980dc7bdf3f955beb74278a070448a485"
+                "reference": "af25ff99af4b31a8ec897826a010985e23111a2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/ca12fcc980dc7bdf3f955beb74278a070448a485",
-                "reference": "ca12fcc980dc7bdf3f955beb74278a070448a485",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/af25ff99af4b31a8ec897826a010985e23111a2e",
+                "reference": "af25ff99af4b31a8ec897826a010985e23111a2e",
                 "shasum": ""
             },
             "require": {
@@ -774,7 +774,7 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2018-06-13T17:11:52+00:00"
+            "time": "2018-06-20T18:26:39+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
