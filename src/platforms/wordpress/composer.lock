@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b9d7109d6867a10bb8bda21dbc1aa65",
+    "content-hash": "046cd56ac3dfb03130830cafb9be30c6",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -582,16 +582,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "ca12fcc980dc7bdf3f955beb74278a070448a485"
+                "reference": "af25ff99af4b31a8ec897826a010985e23111a2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/ca12fcc980dc7bdf3f955beb74278a070448a485",
-                "reference": "ca12fcc980dc7bdf3f955beb74278a070448a485",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/af25ff99af4b31a8ec897826a010985e23111a2e",
+                "reference": "af25ff99af4b31a8ec897826a010985e23111a2e",
                 "shasum": ""
             },
             "require": {
@@ -627,11 +627,11 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2018-06-13T17:11:52+00:00"
+            "time": "2018-06-20T18:26:39+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.41",
+            "version": "v2.8.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -746,7 +746,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.41",
+            "version": "v2.8.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -796,29 +796,29 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.6.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "c6d04e1e4ff4526288c7b95936bbb578dfb7d504"
+                "reference": "a6a553d70b58d9e1f7c612511b72be60b0e98248"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/c6d04e1e4ff4526288c7b95936bbb578dfb7d504",
-                "reference": "c6d04e1e4ff4526288c7b95936bbb578dfb7d504",
+                "url": "https://api.github.com/repos/timber/timber/zipball/a6a553d70b58d9e1f7c612511b72be60b0e98248",
+                "reference": "a6a553d70b58d9e1f7c612511b72be60b0e98248",
                 "shasum": ""
             },
             "require": {
                 "asm89/twig-cache-extension": "~1.0",
                 "composer/installers": "~1.0",
                 "php": ">=5.3.0|7.*",
-                "twig/twig": "^1.0|2.*",
+                "twig/twig": "1.34.*|2.*",
                 "upstatement/routes": "0.4"
             },
             "require-dev": {
                 "phpunit/phpunit": "5.7.16",
-                "wpackagist-plugin/advanced-custom-fields": "4.*",
-                "wpackagist-plugin/co-authors-plus": "3.*"
+                "wpackagist-plugin/advanced-custom-fields": "4.4.*",
+                "wpackagist-plugin/co-authors-plus": "3.2.*"
             },
             "suggest": {
                 "satooshi/php-coveralls": "1.0.* for code coverage"
@@ -853,20 +853,20 @@
                 "timber",
                 "twig"
             ],
-            "time": "2018-01-02T18:56:42+00:00"
+            "time": "2018-05-21T15:00:50+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v1.35.3",
+            "version": "v1.34.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f"
+                "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
-                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f878bab48edb66ad9c6ed626bf817f60c6c096ee",
+                "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee",
                 "shasum": ""
             },
             "require": {
@@ -874,13 +874,13 @@
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "^2.7",
-                "symfony/phpunit-bridge": "^3.3"
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.35-dev"
+                    "dev-master": "1.34-dev"
                 }
             },
             "autoload": {
@@ -918,7 +918,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-20T04:25:58+00:00"
+            "time": "2017-07-04T13:19:31+00:00"
         },
         {
             "name": "upstatement/routes",
