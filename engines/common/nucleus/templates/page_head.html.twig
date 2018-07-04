@@ -20,6 +20,7 @@
 {% endassets -%}
 
 <head>
+    {{ gantry.document.getHtml('head_top')|join("\n    ")|raw }}
     {% block head_meta %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -34,6 +35,7 @@
                 {% endfor -%}
             {%- endfor -%}
         {%- endif -%}
+        {{ gantry.document.getHtml('head_meta')|join("\n    ")|raw }}
 
         {% if gantry.config.page.assets.favicon %}
         <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
@@ -69,4 +71,5 @@
         {{ gantry.config.page.head.head_bottom|raw }}
         {% endif %}
     {% endblock %}
+    {{ gantry.document.getHtml('head_bottom')|join("\n    ")|raw }}
 </head>
