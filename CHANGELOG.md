@@ -16,6 +16,8 @@
 1. [Joomla](#joomla)
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
+    1. [](#bugfix)
+        - Fixed `The menu selected is empty` in Gantry 5 Menu Editor if there is no default menu item (#2320)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
