@@ -14,6 +14,7 @@
         - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
         - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
         - Fixed Content Array particle having extra override checkbox on admin (#2307)
+        - Fixed issue where clearing inheritance was throwing `array_intersect_key(): Argument #1 is not an array` error (#2257)
 1. [Joomla](#joomla)
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
