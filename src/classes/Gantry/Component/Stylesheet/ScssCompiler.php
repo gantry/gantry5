@@ -130,7 +130,7 @@ class ScssCompiler extends CssCompiler
             $document = $gantry['document'];
 
             foreach ($map['sources'] as &$source) {
-                $source = $document->url($source, false, -1);
+                $source = $document->url($source, null, -1);
             }
             unset($source);
 

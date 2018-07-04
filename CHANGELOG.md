@@ -24,6 +24,8 @@
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
         - Updated Timber to v1.7.1
+    1. [](#bugfix)
+        - Fixed broken SCSS map files (#2243)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
