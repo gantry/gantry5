@@ -270,7 +270,8 @@ class Format2
                         case 'block':
                             if ($ctype === 'block') {
                                 // Keep block size and fixed status.
-                                $content['attributes'] = array_intersect_key($content['attributes'], ['fixed' => 1, 'size' => 1]);
+                                $attributes = !empty($content['attributes']) ? $content['attributes'] : [];
+                                $content['attributes'] = array_intersect_key($attributes, ['fixed' => 1, 'size' => 1]);
                             }
                             break;
                         case 'children':

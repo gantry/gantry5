@@ -1,10 +1,11 @@
 # 5.4.24
-## XX/XX/2018
+## 07/04/2018
 
 1. [Common](#common)
     1. [](#new)
         - Updated `Lightcase` to v2.4.4 (#2205)
         - Helium: Updated OwlCarousel to v2.3.4
+        - Added `head_top`, `head_meta` and `head_bottom` options for `pageblock` twig tag allowing particles to inject custom tags into <head> (#2303)
     1. [](#improved)
         - Helium: Reworked parts of the OwlCarousel SCSS theme styling
         - Helium: Add possibility to add CSS Classes to individual OwlCarousel items (#2201)
@@ -13,13 +14,18 @@
         - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
         - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
         - Fixed Content Array particle having extra override checkbox on admin (#2307)
+        - Fixed issue where clearing inheritance was throwing `array_intersect_key(): Argument #1 is not an array` error (#2257)
 1. [Joomla](#joomla)
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
+    1. [](#bugfix)
+        - Fixed `The menu selected is empty` in Gantry 5 Menu Editor if there is no default menu item (#2320)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Implemented `|markdown` filter for Twig (#2297)
         - Updated Timber to v1.7.1
+    1. [](#bugfix)
+        - Fixed broken SCSS map files (#2243)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
