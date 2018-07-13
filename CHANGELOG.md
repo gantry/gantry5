@@ -1,3 +1,10 @@
+# 5.4.25
+## mm/dd/2018
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+       - Fix broken language strings when using official WP translations (#2329)
+
 # 5.4.24
 ## 07/04/2018
 
