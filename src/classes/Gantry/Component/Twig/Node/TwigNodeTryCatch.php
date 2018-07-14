@@ -13,7 +13,6 @@
 
 namespace Gantry\Component\Twig\Node;
 
-
 class TwigNodeTryCatch extends \Twig_Node
 {
     public function __construct(\Twig_NodeInterface $try, \Twig_NodeInterface $catch = null, $lineno, $tag = null)

@@ -5,6 +5,7 @@
     1. [](#new)
         - Added twig tag `{% markdown %}...{% endmarkdown %}`
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
+        - Made `gantry` twig variable global so it can be used inside macros
 1. [WordPress](#wordpress)
     1. [](#bugfix)
        - Fix broken language strings when using official WP translations (#2329)

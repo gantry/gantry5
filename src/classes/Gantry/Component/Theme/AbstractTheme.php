@@ -75,9 +75,6 @@ abstract class AbstractTheme
      */
     public function getContext(array $context)
     {
-        $gantry = static::gantry();
-
-        $context['gantry'] = $gantry;
         $context['theme'] = $this;
 
         return $context;
