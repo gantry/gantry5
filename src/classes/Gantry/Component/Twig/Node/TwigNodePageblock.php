@@ -11,7 +11,7 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\Node;
 
 class TwigNodePageblock extends \Twig_Node implements \Twig_NodeCaptureInterface
 {

@@ -1,6 +1,9 @@
 # 5.4.25
 ## mm/dd/2018
 
+1. [Common](#common)
+    1. [](#new)
+        - Added twig tag `{% markdown %}...{% endmarkdown %}`
 1. [WordPress](#wordpress)
     1. [](#bugfix)
        - Fix broken language strings when using official WP translations (#2329)

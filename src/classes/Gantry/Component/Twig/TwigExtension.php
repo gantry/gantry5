@@ -16,6 +16,12 @@ namespace Gantry\Component\Twig;
 use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
+use Gantry\Component\Twig\TokenParser\TokenParserPageblock;
+use Gantry\Component\Twig\TokenParser\TokenParserAssets;
+use Gantry\Component\Twig\TokenParser\TokenParserScripts;
+use Gantry\Component\Twig\TokenParser\TokenParserStyles;
+use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
+use Gantry\Component\Twig\TokenParser\TwigTokenParserMarkdown;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
@@ -95,11 +101,12 @@ class TwigExtension extends \Twig_Extension
     public function getTokenParsers()
     {
         return [
-            new TokenParserPageblock(),
-            new TokenParserAssets(),
-            new TokenParserScripts(),
-            new TokenParserStyles(),
-            new TokenParserTry(),
+            new TokenParserPageblock,
+            new TokenParserAssets,
+            new TokenParserScripts,
+            new TokenParserStyles,
+            new TokenParserTryCatch,
+            new TwigTokenParserMarkdown
         ];
     }
 

@@ -11,7 +11,9 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\TokenParser;
+
+use Gantry\Component\Twig\Node\TwigNodeTryCatch;
 
 /**
  * Handles try/catch in template file.
@@ -24,7 +26,7 @@ namespace Gantry\Component\Twig;
  * {% endcatch %}
  * </pre>
  */
-class TokenParserTry extends \Twig_TokenParser
+class TokenParserTryCatch extends \Twig_TokenParser
 {
     /**
      * Parses a token and returns a node.
@@ -46,7 +48,7 @@ class TokenParserTry extends \Twig_TokenParser
         $stream->next();
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new TwigNodeTry($try, $catch, $lineno, $this->getTag());
+        return new TwigNodeTryCatch($try, $catch, $lineno, $this->getTag());
     }
 
     public function decideCatch(\Twig_Token $token)

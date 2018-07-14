@@ -11,10 +11,10 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\Node;
 
 
-class TwigNodeTry extends \Twig_Node
+class TwigNodeTryCatch extends \Twig_Node
 {
     public function __construct(\Twig_NodeInterface $try, \Twig_NodeInterface $catch = null, $lineno, $tag = null)
     {
