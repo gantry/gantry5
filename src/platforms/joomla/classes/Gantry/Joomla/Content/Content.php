@@ -65,6 +65,16 @@ class Content extends AbstractObject
         return $this->introtext . ' ' . $this->fulltext;
     }
 
+    public function preparedText()
+    {
+        return \JHtml::_('content.prepare', $this->text());
+    }
+
+    public function preparedIntroText()
+    {
+        return \JHtml::_('content.prepare', $this->introtext);
+    }
+
     public function readmore()
     {
         return (bool)strlen($this->fulltext);
