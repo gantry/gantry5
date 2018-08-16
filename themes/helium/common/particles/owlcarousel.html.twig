@@ -45,7 +45,7 @@
     {% do gantry.load('jquery') %}
     <script src="{{ url('gantry-theme://js/owl.carousel.min.js') }}"></script>
     <script type="text/javascript">
-        jQuery(window).load(function() {
+        jQuery(document).ready(function () {
             jQuery('#g-owlcarousel-{{ id }}').owlCarousel({
                 items: 1,
                 rtl: {% if gantry.page.direction == 'rtl' %}true{% else %}false{% endif %},
