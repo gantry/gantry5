@@ -19,7 +19,8 @@
         - Fixed broken language strings when using official WP translations (#2329)
 1. [Grav](#grav)
     1. [](#bugfix)
-        - Fixed Child Menu Items not appearing (#2327)
+        - Fixed child menu items not appearing (#2327)
+        - Fixed active menu issue in multilang environment (#2315)
 
 # 5.4.24
 ## 07/04/2018
