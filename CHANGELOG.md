@@ -6,9 +6,14 @@
         - Added twig tag `{% markdown %}...{% endmarkdown %}`
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
         - Made `gantry` twig variable global so it can be used inside macros
+    1. [](#bugfix)
+        - Fixed JS loading issues with Content Tabs and Own Carousel particles
 1. [WordPress](#wordpress)
     1. [](#bugfix)
-       - Fix broken language strings when using official WP translations (#2329)
+        - Fixed broken language strings when using official WP translations (#2329)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed Child Menu Items not appearing (#2327)
 
 # 5.4.24
 ## 07/04/2018

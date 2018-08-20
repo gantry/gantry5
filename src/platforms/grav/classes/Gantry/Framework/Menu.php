@@ -176,6 +176,9 @@ class Menu extends AbstractMenu
         $this->pages = [];
         /** @var GravPage $item */
         foreach ($pages as $item) {
+            if (!$item->visible()) {
+                continue;
+            }
 
             $level = substr_count($item->rawRoute(), '/');
 
