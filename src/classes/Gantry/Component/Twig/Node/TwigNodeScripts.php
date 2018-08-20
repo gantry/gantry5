@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodeScripts extends TwigNodeAssets {
+class TwigNodeScripts extends TwigNodeAssets
+{
     protected $tagName = 'scripts';
 }

@@ -6,6 +6,8 @@
         - Added twig tag `{% markdown %}...{% endmarkdown %}`
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
         - Made `gantry` twig variable global so it can be used inside macros
+    1. [](#improved)
+        - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
     1. [](#bugfix)
         - Fixed JS loading issues with Content Tabs and Own Carousel particles
 1. [WordPress](#wordpress)
