@@ -112,7 +112,7 @@
                                 {% endif %}
 
                                 {% if display.text.type %}
-                                    {% set article_text = display.text.type == 'intro' ? article.introtext : article.text %}
+                                    {% set article_text = display.text.type == 'intro' ? display.text.prepare ? article.preparedIntroText : article.introtext : display.text.prepare ? article.preparedText : article.text %}
                                     <div class="g-array-item-text">
                                         {% if display.text.formatting == 'text' %}
                                             {{ article_text|truncate_text(display.text.limit)|raw }}
