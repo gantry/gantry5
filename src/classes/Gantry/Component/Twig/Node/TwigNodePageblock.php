@@ -11,13 +11,13 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\Node;
 
 class TwigNodePageblock extends \Twig_Node implements \Twig_NodeCaptureInterface
 {
     protected $tagName = 'pageblock';
 
-    public function __construct(\Twig_NodeInterface $body = null, \Twig_Node_Expression $location = null, \Twig_Node_Expression $variables = null, $lineno, $tag = null)
+    public function __construct(\Twig_Node $body = null, \Twig_Node_Expression $location = null, \Twig_Node_Expression $variables = null, $lineno = 0, $tag = null)
     {
         parent::__construct(['body' => $body, 'location' => $location, 'variables' => $variables], [], $lineno, $tag);
     }

@@ -57,7 +57,7 @@ class Theme extends AbstractTheme
 
         $context['current_user'] = $this->user;
 
-        if (function_exists('is_rtl')) {
+        if (\function_exists('is_rtl')) {
             $context['is_rtl'] = is_rtl();
         }
 

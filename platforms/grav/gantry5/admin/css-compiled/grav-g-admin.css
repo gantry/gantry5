@@ -376,6 +376,31 @@ body #admin-main .admin-block {
   color: #003b54 !important;
 }
 
+.ga-theme-17x #admin-main .content-padding {
+  padding: 0;
+}
+.ga-theme-17x #g5-container #main-header {
+  z-index: 4;
+  color: #3D424E;
+}
+.ga-theme-17x #g5-container #main-header .g-content {
+  padding: 0 30px !important;
+}
+.ga-theme-17x #g5-container #main-header .theme-title i {
+  margin-right: 0;
+}
+.ga-theme-17x #g5-container #main-header ul li a {
+  color: #3D424E;
+}
+.ga-theme-17x #g5-container #main-header ul li a:focus, .ga-theme-17x #g5-container #main-header ul li:hover a, .ga-theme-17x #g5-container #main-header ul li.active a {
+  color: #fff;
+}
+.ga-theme-17x #g5-container #footer {
+  background: #f0f0f0;
+  margin-top: 0;
+  border-top: 0;
+}
+
 
 
 /*# sourceMappingURL=grav-g-admin.css.map */

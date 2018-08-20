@@ -52,6 +52,7 @@ class ScssCompiler extends CssCompiler
         } else {
             $this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
             // Work around bugs in SCSS compiler.
+            // TODO: Pass our own SourceMapGenerator instance instead.
             $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
             $this->compiler->setSourceMapOptions([
                 'sourceMapBasepath' => '/',
@@ -129,7 +130,7 @@ class ScssCompiler extends CssCompiler
             $document = $gantry['document'];
 
             foreach ($map['sources'] as &$source) {
-                $source = $document->url($source, false, -1);
+                $source = $document->url($source, null, -1);
             }
             unset($source);
 

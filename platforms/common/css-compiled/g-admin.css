@@ -3969,7 +3969,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container {
   font-size: 1rem;
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
   font-family: "roboto", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 #g5-container h1 {
@@ -4661,7 +4661,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   margin: 0 6px 6px 0px;
 }
 #g5-container .lm-blocks .particle-size {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.2rem;
   vertical-align: middle;
   color: #111;
@@ -4839,7 +4839,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   width: 50px;
   line-height: 50px;
   margin: 0 auto;
-  font-weight: 300;
+  font-weight: 400;
 }
 #g5-container #trash span {
   font-size: 0.8rem;
@@ -5617,7 +5617,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 }
 #g5-container .submenu-ratio .percentage {
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 60px;
   display: inline-block;
   margin-top: 5px;

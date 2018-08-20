@@ -57,6 +57,7 @@ form:
               options:
                 show: Show
                 '': Hide
+              overridable: false
 
             article.limit.columns:
               type: select.select
@@ -143,6 +144,12 @@ form:
               options:
                 text: Plain Text
                 html: HTML
+
+            article.display.text.prepare:
+              type: input.checkbox
+              label: Prepare Content
+              description: Use Joomla Content Plugins
+              default: false
 
             article.display.title.enabled:
               type: select.select

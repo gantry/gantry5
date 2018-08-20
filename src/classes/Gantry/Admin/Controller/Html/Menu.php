@@ -118,7 +118,7 @@ class Menu extends HtmlController
                 $this->params['override'] = $item;
             }
 
-            return $this->render('@gantry-admin//pages/menu/menu.html.twig', $this->params);
+            return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
 
         } else {
             // Get layout name.

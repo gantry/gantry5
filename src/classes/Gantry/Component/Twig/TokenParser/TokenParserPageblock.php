@@ -11,24 +11,25 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\TokenParser;
+
+use Gantry\Component\Twig\TwigNodePageblock;
 
 /**
  * Adds javascript / style assets to head/footer/custom location.
  *
- * {% assets in 'head' with { priority: 2 } %}
- *   <script type="text/javascript" src="{{ url('gantry-theme://js/my.js') }}"></script>
- *   <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
- * {% endassets -%}
+ * {% pageblock in 'bottom' with { priority: 0 } %}
+ *   <div>Bottom HTML</div>
+ * {% endpageblock -%}
  */
-class TokenParserAssets extends \Twig_TokenParser
+class TokenParserPageblock extends \Twig_TokenParser
 {
     /**
      * Parses a token and returns a node.
      *
      * @param \Twig_Token $token A Twig_Token instance
      *
-     * @return \Twig_NodeInterface A Twig_NodeInterface instance
+     * @return \Twig_Node A Twig_Node instance
      */
     public function parse(\Twig_Token $token)
     {
@@ -40,7 +41,7 @@ class TokenParserAssets extends \Twig_TokenParser
         $content = $this->parser->subparse([$this, 'decideBlockEnd'], true);
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new TwigNodeScripts($content, $location, $variables, $lineno, $this->getTag());
+        return new TwigNodePageblock($content, $location, $variables, $lineno, $this->getTag());
     }
 
     /**
@@ -50,13 +51,8 @@ class TokenParserAssets extends \Twig_TokenParser
     protected function parseArguments(\Twig_Token $token)
     {
         $stream = $this->parser->getStream();
-        $location = null;
-        if ($stream->nextIf(\Twig_Token::OPERATOR_TYPE, 'in')) {
-            $location = $this->parser->getExpressionParser()->parseExpression();
-        } else {
-            $lineno = $token->getLine();
-            $location = new \Twig_Node_Expression_Constant('head', $lineno);
-        }
+        $lineno = $token->getLine();
+        $location = new \Twig_Node_Expression_Constant($stream->expect(\Twig_Token::NAME_TYPE)->getValue(), $lineno);
 
         if ($stream->nextIf(\Twig_Token::NAME_TYPE, 'with')) {
             $variables = $this->parser->getExpressionParser()->parseExpression();
@@ -72,7 +68,7 @@ class TokenParserAssets extends \Twig_TokenParser
 
     public function decideBlockEnd(\Twig_Token $token)
     {
-        return $token->test('endassets');
+        return $token->test('endpageblock');
     }
 
     /**
@@ -82,6 +78,6 @@ class TokenParserAssets extends \Twig_TokenParser
      */
     public function getTag()
     {
-        return 'assets';
+        return 'pageblock';
     }
 }

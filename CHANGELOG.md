@@ -14,16 +14,76 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.4.0 and Admin 1.6.7
 
-# 5.4.23
+# 5.4.25
 ## mm/dd/2018
 
 1. [Common](#common)
     1. [](#new)
-        - Updated `scssphp` to v0.7.4
+        - Added twig tag `{% markdown %}...{% endmarkdown %}`
+        - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
+        - Made `gantry` twig variable global so it can be used inside macros
+    1. [](#improved)
+        - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
+    1. [](#bugfix)
+        - Fixed JS loading issues with Content Tabs and Own Carousel particles
+        - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Optionally use content.prepare in contentarray (#2340, thanks @Chrissi2812)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed broken language strings when using official WP translations (#2329)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed child menu items not appearing (#2327)
+        - Fixed active menu issue in multilang environment (#2315)
+
+# 5.4.24
+## 07/04/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `Lightcase` to v2.4.4 (#2205)
+        - Helium: Updated OwlCarousel to v2.3.4
+        - Added `head_top`, `head_meta` and `head_bottom` options for `pageblock` twig tag allowing particles to inject custom tags into <head> (#2303)
+    1. [](#improved)
+        - Helium: Reworked parts of the OwlCarousel SCSS theme styling
+        - Helium: Add possibility to add CSS Classes to individual OwlCarousel items (#2201)
+        - Helium: Add possibility to disable single OwlCarousel item on the front end (#2286)
+    1. [](#bugfix)
+        - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
+        - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
+        - Fixed Content Array particle having extra override checkbox on admin (#2307)
+        - Fixed issue where clearing inheritance was throwing `array_intersect_key(): Argument #1 is not an array` error (#2257)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
+    1. [](#bugfix)
+        - Fixed `The menu selected is empty` in Gantry 5 Menu Editor if there is no default menu item (#2320)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
+        - Updated Timber to v1.7.1
+    1. [](#bugfix)
+        - Fixed broken SCSS map files (#2243)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
+        - Added detection for duplicate page folders before saving menu and instruct user to fix the issue in his filesystem
+
+# 5.4.23
+## 02/20/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `scssphp` to v0.7.5
         - Development Mode: Started using CSS Source Maps instead of inline comments
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.6.0
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Added Grav Admin 1.7 styling compatibility for Gantry UI (#2236)
 
 # 5.4.22
 ## 12/12/2017
@@ -34,7 +94,7 @@
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed PHP 7.2 warning when using Joomla articles and categories in particles (#2188)
-        
+
 # 5.4.21
 ## 12/12/2017
 

@@ -11,8 +11,9 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\Node;
 
-class TwigNodeStyles extends TwigNodeScripts {
+class TwigNodeStyles extends TwigNodeScripts
+{
     protected $tagName = 'styles';
 }

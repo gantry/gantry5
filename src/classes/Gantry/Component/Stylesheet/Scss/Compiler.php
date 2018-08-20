@@ -103,7 +103,7 @@ class Compiler extends BaseCompiler
         }
 
         // Generate URL, failed streams will be transformed to 404 URLs.
-        $url = Gantry::instance()['document']->url($url, false, null, false);
+        $url = Gantry::instance()['document']->url($url, null, null, false);
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url && $url[0] === '/' && $this->basePath) {
