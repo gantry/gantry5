@@ -7,7 +7,7 @@
         "php": ">=5.4.0",
         "symfony/event-dispatcher": "~2.8",
         "symfony/yaml": "~2.8",
-        "twig/twig": "~1.23",
+        "twig/twig": "~1.34",
         "pimple/pimple": "~3.0",
         "filp/whoops": "~2.0",
         "rockettheme/toolbox": "~1.3",
