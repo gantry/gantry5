@@ -6,13 +6,13 @@
         - Updated minimum requirement to PHP 5.5.9
 1. [Joomla](#joomla)
     1. [](#new)
-        - Updated minimum requirement to Joomla! 3.8.0
+        - Updated minimum requirement to Joomla! 3.8
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated minimum requirement to WordPress 4.9.0
+        - Updated minimum requirement to WordPress 4.9
 1. [Grav](#grav)
     1. [](#new)
-        - Updated minimum requirement to Grav 1.4.0 and Admin 1.6.7
+        - Updated minimum requirement to Grav 1.5 and Admin 1.8
 
 # 5.4.25
 ## mm/dd/2018
