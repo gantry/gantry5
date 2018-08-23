@@ -48,6 +48,7 @@
         {% for child in item.children %}
             {% if child.visible and child.enabled and enabled|default(1) %}
                 {% set visibleChilds = true %}
+                {% break %}
             {% endif %}
         {% endfor %}
 
