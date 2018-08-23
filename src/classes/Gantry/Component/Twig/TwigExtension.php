@@ -16,6 +16,7 @@ namespace Gantry\Component\Twig;
 use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
+use Gantry\Component\Twig\TokenParser\TokenParserBreak;
 use Gantry\Component\Twig\TokenParser\TokenParserPageblock;
 use Gantry\Component\Twig\TokenParser\TokenParserAssets;
 use Gantry\Component\Twig\TokenParser\TokenParserScripts;
@@ -124,7 +125,8 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new TokenParserStyles,
             new TokenParserTryCatch,
             new TwigTokenParserMarkdown,
-            new TwigTokenParserSwitch
+            new TwigTokenParserSwitch,
+            new TokenParserBreak,
         ];
     }
 
