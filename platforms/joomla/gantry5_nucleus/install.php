@@ -9,11 +9,17 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Installer\InstallerAdapter;
+
 /**
  * Gantry 5 Nucleus installer script.
  */
 class Gantry5_NucleusInstallerScript
 {
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function uninstall($parent)
     {
         // Remove all Nucleus files manually as file installer only uninstalls files.
@@ -28,7 +34,7 @@ class Gantry5_NucleusInstallerScript
             if (count($eFiles->children()) > 0) {
                 // Loop through all filenames elements
                 foreach ($eFiles->children() as $eFileName) {
-                    if ($eFileName->getName() == 'folder')
+                    if ($eFileName->getName() === 'folder')
                     {
                         $folder = $targetFolder . '/' . $eFileName;
 

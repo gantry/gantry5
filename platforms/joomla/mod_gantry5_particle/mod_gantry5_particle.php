@@ -9,6 +9,12 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Gantry\Debugger;
+
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
     $lang = JFactory::getLanguage();
@@ -19,13 +25,14 @@ if (!class_exists('Gantry\Framework\Gantry')) {
     return;
 }
 
-include_once dirname(__FILE__) . '/helper.php';
+include_once __DIR__ . '/helper.php';
 
 /** @var object $params */
+/** @var object $module */
 
-$gantry = \Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+GANTRY_DEBUGGER && Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
 
 // Set up caching.
 $cacheid = md5($module->id);
@@ -39,14 +46,14 @@ $cacheparams = (object) [
 ];
 
 $block = ModGantry5ParticleHelper::moduleCache($module, $params, $cacheparams);
-if (!$block) {
+if (null === $block) {
     $block = ModGantry5ParticleHelper::render($module, $params);
 }
 
-/** @var \Gantry\Framework\Document $document */
+/** @var Document $document */
 $document = $gantry['document'];
 $document->addBlock($block);
 
 echo $block->toString();
 
-GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("module-{$module->id}");
+GANTRY_DEBUGGER && Debugger::stopTimer("module-{$module->id}");

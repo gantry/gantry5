@@ -9,6 +9,9 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Factory as JFactory;
+
 /**
  * Gantry 5 package installer script.
  */
@@ -21,11 +24,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.5' => '5.5.9',
-            '0' => '7.1.12' // Preferred version
+            '0' => '7.1.13' // Preferred version
         ),
         'Joomla!' => array (
             '3.8' => '3.8.0',
-            '0' => '3.8.2' // Preferred version
+            '0' => '3.8.3' // Preferred version
         )
     );
     /**
@@ -34,21 +37,37 @@ class Pkg_Gantry5InstallerScript
      */
     protected $extensions = array ('pcre');
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function install($parent)
     {
         return true;
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function discover_install($parent)
     {
         return self::install($parent);
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function update($parent)
     {
         return self::install($parent);
     }
 
+    /**
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function uninstall($parent)
     {
         // Hack.. Joomla really doesn't give any information from the extension that's being uninstalled..
@@ -69,9 +88,13 @@ class Pkg_Gantry5InstallerScript
         return true;
     }
 
+    /**
+     * @param string $type
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function preflight($type, $parent)
     {
-        /** @var JInstallerAdapter $parent */
         $manifest = $parent->getManifest();
 
         // Prevent installation if requirements are not met.
@@ -91,6 +114,11 @@ class Pkg_Gantry5InstallerScript
         return true;
     }
 
+    /**
+     * @param string $type
+     * @param InstallerAdapter $parent
+     * @return bool
+     */
     public function postflight($type, $parent)
     {
         // Clear Joomla system cache.
@@ -118,7 +146,6 @@ class Pkg_Gantry5InstallerScript
             return true;
         }
 
-        /** @var JInstallerAdapter $parent */
         $manifest = $parent->getManifest();
 
         // Enable and lock extensions to prevent uninstalling them individually.

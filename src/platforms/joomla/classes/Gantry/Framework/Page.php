@@ -10,6 +10,9 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Uri\Uri as JUri;
+
 class Page extends Base\Page
 {
     public $home;
@@ -18,17 +21,26 @@ class Page extends Base\Page
     public $direction;
 
     // Joomla specific properties.
+    public $tmpl;
+    public $option;
+    public $view;
+    public $layout;
+    public $task;
     public $theme;
     public $baseUrl;
+    public $sitename;
     public $title;
     public $description;
+    public $class;
+    public $printing;
+    public $itemid;
 
     public function __construct($container)
     {
         parent::__construct($container);
 
-        $app = \JFactory::getApplication();
-        $document = \JFactory::getDocument();
+        $app = JFactory::getApplication();
+        $document = JFactory::getDocument();
         $input = $app->input;
 
         $this->tmpl     = $input->getCmd('tmpl', '');
@@ -41,7 +53,8 @@ class Page extends Base\Page
 
         $this->class = '';
         if ($this->itemid) {
-            $menuItem = $app->getMenu()->getActive();
+            $menu = $app->getMenu();
+            $menuItem = $menu ? $menu->getActive() : null;
             if ($menuItem && $menuItem->id) {
                 $this->home = (bool) $menuItem->home;
                 $this->class = $menuItem->params->get('pageclass_sfx', '');
@@ -51,7 +64,7 @@ class Page extends Base\Page
         $this->outline = Gantry::instance()['configuration'];
         $this->sitename = $app->get('sitename');
         $this->theme = $templateParams->template;
-        $this->baseUrl = \JUri::base(true);
+        $this->baseUrl = JUri::base(true);
         $this->title = $document->title;
         $this->description = $document->description;
 
@@ -65,7 +78,7 @@ class Page extends Base\Page
 
     public function url(array $args = [])
     {
-        $url = \JUri::getInstance();
+        $url = JUri::getInstance();
 
         foreach ($args as $key => $val) {
             $url->setVar($key, $val);
@@ -87,7 +100,7 @@ class Page extends Base\Page
 
     public function bodyAttributes($attributes = [])
     {
-        if ($this->tmpl == 'component') {
+        if ($this->tmpl === 'component') {
             $classes = ['contentpane', 'modal'];
         } else {
             $classes = ['site', $this->option, "view-{$this->view}"];

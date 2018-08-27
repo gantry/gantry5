@@ -13,6 +13,7 @@ namespace Gantry\Admin;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
+use Joomla\CMS\Factory as JFactory;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -34,7 +35,7 @@ class ThemeList
      */
     public static function getThemes()
     {
-        if (!is_array(static::$items)) {
+        if (!\is_array(static::$items)) {
             static::loadThemes();
         }
 
@@ -66,7 +67,7 @@ class ThemeList
      */
     public static function getStyles($template = null, $force = false)
     {
-        if ($force || !is_array(static::$styles)) {
+        if ($force || !\is_array(static::$styles)) {
             static::loadStyles();
         }
 
@@ -124,7 +125,7 @@ class ThemeList
     protected static function loadStyles()
     {
         $gantry = Gantry::instance();
-        $db = \JFactory::getDbo();
+        $db = JFactory::getDbo();
 
         $query = $db
             ->getQuery(true)
@@ -141,7 +142,7 @@ class ThemeList
 
         $styles = (array) $db->loadObjectList();
 
-        if (!is_array(static::$items)) {
+        if (!\is_array(static::$items)) {
             static::loadThemes();
         }
 

@@ -8,6 +8,10 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Form\FormField as JFormField;
+
 class JFormFieldParticle extends JFormField
 {
     protected $type = 'Particle';

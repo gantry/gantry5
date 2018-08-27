@@ -13,6 +13,10 @@ namespace Gantry\Framework;
 use Gantry\Component\Assignments\AbstractAssignments;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 
 class Assignments extends AbstractAssignments
@@ -26,15 +30,16 @@ class Assignments extends AbstractAssignments
      */
     public function loadAssignments()
     {
-        $app = \JFactory::getApplication();
+        $app = JFactory::getApplication();
 
-        if (!$app->isSite()) {
+        if (!$app->isClient('site')) {
             return [];
         }
 
         // Get current template, style id and rules.
         $template = $app->getTemplate();
-        $active = $app->getMenu()->getActive();
+        $menu = $app->getMenu();
+        $active = $menu ? $menu->getActive() : null;
         if ($active) {
             $style = (int) $active->template_style_id;
             $rules = [$active->menutype => [$active->id => true]];
@@ -94,25 +99,25 @@ class Assignments extends AbstractAssignments
         $active = array_keys($active);
 
         // Detect disabled template.
-        $extension = \JTable::getInstance('Extension');
+        $extension = Table::getInstance('Extension');
 
         $template = Gantry::instance()['theme.name'];
         if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $template, 'client_id' => 0))) {
-            throw new \RuntimeException(\JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
+            throw new \RuntimeException(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
-        \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-        $style = \JTable::getInstance('Style', 'TemplatesTable');
+        Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+        $style = Table::getInstance('Style', 'TemplatesTable');
         if (!$style->load($this->configuration) || $style->client_id != 0) {
             throw new \RuntimeException('Template style does not exist');
         }
 
-        $user = \JFactory::getUser();
+        $user = JFactory::getUser();
         $n = 0;
 
         if ($user->authorise('core.edit', 'com_menus')) {
-            $db   = \JFactory::getDbo();
-            $user = \JFactory::getUser();
+            $db   = JFactory::getDbo();
+            $user = JFactory::getUser();
 
             if (!empty($active)) {
                 ArrayHelper::toInteger($active);
@@ -131,17 +136,17 @@ class Assignments extends AbstractAssignments
 
             // Remove style mappings for menu items this style is NOT assigned to.
             // If unassigned then all existing maps will be removed.
-            $query = $db->getQuery(true)
+            $query2 = $db->getQuery(true)
                 ->update('#__menu')
                 ->set('template_style_id = 0');
 
             if (!empty($active)) {
-                $query->where('id NOT IN (' . implode(',', $active) . ')');
+                $query2->where('id NOT IN (' . implode(',', $active) . ')');
             }
 
-            $query->where('template_style_id = ' . (int) $style->id)
+            $query2->where('template_style_id = ' . (int) $style->id)
                 ->where('checked_out IN (0,' . (int) $user->id . ')');
-            $db->setQuery($query);
+            $db->setQuery($query2);
             $db->execute();
 
             $n += $db->getAffectedRows();
@@ -185,7 +190,7 @@ class Assignments extends AbstractAssignments
             return [];
         }
 
-        $languages = \JHtml::_('contentlanguage.existing');
+        $languages = JHtml::_('contentlanguage.existing');
 
         $options = ['- Make Default -', 'All Languages'];
         foreach ($languages as $language) {

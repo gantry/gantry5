@@ -70,6 +70,10 @@ class CategoryFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param string|bool|int $language
+     * @return CategoryFinder
+     */
     public function language($language = true)
     {
         if (!$language) {
@@ -81,10 +85,14 @@ class CategoryFinder extends Finder
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
+    /**
+     * @param int|int[] $published
+     * @return CategoryFinder
+     */
     public function published($published = 1)
     {
         if (!is_array($published)) {
-            $published = (array) intval($published);
+            $published = (array) ((int)$published);
         }
         return $this->where('a.published', 'IN', $published);
     }

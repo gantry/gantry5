@@ -16,6 +16,7 @@ use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory as JFactory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Exporter
@@ -102,7 +103,7 @@ class Exporter
 
             // Update atom inheritance.
             $atoms = $config->get('page.head.atoms');
-            if (is_array($atoms)) {
+            if (\is_array($atoms)) {
                 $atoms = new Atoms($atoms);
                 foreach ($inheritance as $from => $to) {
                     $atoms->updateInheritance($from, $to);
@@ -134,8 +135,10 @@ class Exporter
         if (!$all) {
             $finder->particle();
         }
+        /** @var array $modules */
         $modules = $finder->find()->export();
         $list = [];
+        /** @var array $items */
         foreach ($modules as $position => &$items) {
             if (!isset($positions[$position])) {
                 continue;
@@ -146,6 +149,7 @@ class Exporter
                     $item = $this->{$func}($item);
                 }
             }
+            unset($item);
             $list[$position] = [
                 'title' => $positions[$position],
                 'items' => $items,
@@ -158,12 +162,13 @@ class Exporter
     public function menus()
     {
         $gantry = Gantry::instance();
-        $db = \JFactory::getDbo();
+        $db = JFactory::getDbo();
 
         $query = $db->getQuery(true)
             ->select('id, menutype, title, description')
             ->from('#__menu_types');
         $db->setQuery($query);
+        /** @var array $menus */
         $menus = $db->loadObjectList('id');
 
         $list = [];
@@ -174,7 +179,7 @@ class Exporter
                 $items,
                 function (&$item) {
                     $item['id'] = (int) $item['id'];
-                    if (in_array($item['type'], ['component', 'alias'])) {
+                    if (\in_array($item['type'], ['component', 'alias'], true)) {
                         $item['type'] = "joomla.{$item['type']}";
                     }
 
@@ -267,18 +272,19 @@ class Exporter
     {
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
+        $temp = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
             $token = uniqid('__g5_token');
             $tokens['#' . $token . '#'] = $matches[0];
 
             return $token;
         }, $html);
 
-        $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $html);
-        $html = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $html);
-        $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
+        $temp = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $temp);
+        $temp = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $temp);
+        $temp = preg_replace(array_keys($tokens), array_values($tokens), $temp); // restore tokens
 
-        return $html;
+        // Fall back to original input if ran into errors.
+        return null !== $temp ? $temp : $html;
     }
 
     public function url($url)
@@ -307,11 +313,13 @@ class Exporter
 
         $found = false;
         $stream = $path = '';
+        /** @var array $prefixes */
         foreach ($paths as $stream => $prefixes) {
+            /** @var array $paths */
             foreach ($prefixes as $prefix => $paths) {
                 foreach ($paths as $path) {
-                    if (is_string($path) && strpos($url, $path) === 0) {
-                        $path = ($prefix ? "{$prefix}/" : '') . substr($url, strlen($path) + 1);
+                    if (\is_string($path) && strpos($url, $path) === 0) {
+                        $path = ($prefix ? "{$prefix}/" : '') . substr($url, \strlen($path) + 1);
                         $found = true;
                         break 3;
                     }

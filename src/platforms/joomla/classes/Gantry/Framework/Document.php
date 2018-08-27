@@ -11,6 +11,10 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Document\Document as JDocument;
+use Joomla\CMS\Uri\Uri as JUri;
 
 class Document extends HtmlDocument
 {
@@ -37,7 +41,7 @@ class Document extends HtmlDocument
 
     public static function rootUri()
     {
-        return rtrim(\JUri::root(true), '/') ?: '/';
+        return rtrim(JUri::root(true), '/') ?: '/';
     }
 
     public static function errorPage($new = null)
@@ -57,7 +61,8 @@ class Document extends HtmlDocument
             return;
         }
 
-        $doc = \JFactory::getDocument();
+        /** @var JDocument $doc */
+        $doc = JFactory::getDocument();
 
         $styles = static::$stack[0]->getStyles();
 
@@ -79,7 +84,8 @@ class Document extends HtmlDocument
             return;
         }
 
-        $doc = \JFactory::getDocument();
+        /** @var JDocument $doc */
+        $doc = JFactory::getDocument();
 
         $scripts = static::$stack[0]->getScripts();
 
@@ -98,7 +104,7 @@ class Document extends HtmlDocument
     protected static function registerJquery()
     {
         if (!static::errorPage()) {
-            \JHtml::_('jquery.framework');
+            JHtml::_('jquery.framework');
 
             return;
         }
@@ -107,7 +113,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
             ],
             'head',
             100
@@ -115,7 +121,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
             ],
             'head',
             100
@@ -123,7 +129,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
             ],
             'head',
             100
@@ -133,7 +139,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiCore()
     {
         if (!static::errorPage()) {
-            \JHtml::_('jquery.ui', ['core']);
+            JHtml::_('jquery.ui', ['core']);
 
             return;
         }
@@ -143,7 +149,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
             ],
             'head',
             100
@@ -154,7 +160,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiSortable()
     {
         if (!static::errorPage()) {
-            \JHtml::_('jquery.ui', ['sortable']);
+            JHtml::_('jquery.ui', ['sortable']);
 
             return;
         }
@@ -164,7 +170,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
             ],
             'head',
             100
@@ -176,7 +182,7 @@ class Document extends HtmlDocument
         Gantry::instance()['theme']->joomla(true);
 
         if (!static::errorPage()) {
-            \JHtml::_('bootstrap.framework');
+            JHtml::_('bootstrap.framework');
 
             return;
         }
@@ -186,7 +192,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
+                'src' => JUri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
             ],
             'head',
             100
@@ -196,7 +202,7 @@ class Document extends HtmlDocument
     protected static function registerMootools()
     {
         if (!static::errorPage()) {
-            \JHtml::_('behavior.framework');
+            JHtml::_('behavior.framework');
 
             return;
         }
@@ -205,7 +211,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
+                'src' => JUri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
             ],
             'head',
             99
@@ -213,7 +219,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/system/js/core.js'
+                'src' => JUri::getInstance()->base(true) . '/media/system/js/core.js'
             ],
             'head',
             99
@@ -223,7 +229,7 @@ class Document extends HtmlDocument
     protected static function registerMootoolsMore()
     {
         if (!static::errorPage()) {
-            \JHtml::_('behavior.framework', true);
+            JHtml::_('behavior.framework', true);
 
             return;
         }
@@ -233,7 +239,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => \JUri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
+                'src' => JUri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
             ],
             'head',
             99

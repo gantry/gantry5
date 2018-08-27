@@ -14,6 +14,23 @@ use Gantry\Framework\Gantry;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Object\AbstractObject;
 
+/**
+ * Class Content
+ * @package Gantry\Joomla\Content
+ *
+ * @property $images
+ * @property $urls
+ * @property $attribs
+ * @property $metadata
+ * @property $modified
+ * @property $created
+ * @property $publish_up
+ * @property $created_by
+ * @property $catid
+ * @property $introtext
+ * @property $fulltext
+ * @property $alias
+ */
 class Content extends AbstractObject
 {
     static protected $instances = [];
@@ -77,7 +94,7 @@ class Content extends AbstractObject
 
     public function readmore()
     {
-        return (bool)strlen($this->fulltext);
+        return (bool)\strlen($this->fulltext);
     }
 
     public function route()

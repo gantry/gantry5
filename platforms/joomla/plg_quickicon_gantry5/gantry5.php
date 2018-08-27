@@ -9,6 +9,11 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Router\Route as JRoute;
+use Joomla\CMS\Language\Text as JText;
+
 class plgQuickiconGantry5 extends JPlugin
 {
     public function __construct(&$subject, $config)
@@ -34,7 +39,7 @@ class plgQuickiconGantry5 extends JPlugin
     {
         $user = JFactory::getUser();
 
-        if ($context != $this->params->get('context', 'mod_quickicon')
+        if ($context !== $this->params->get('context', 'mod_quickicon')
             || !$user->authorise('core.manage', 'com_gantry5')) {
             return null;
         }
@@ -77,7 +82,7 @@ class plgQuickiconGantry5 extends JPlugin
                 'group' => 'MOD_QUICKICON_MAINTENANCE'
             );
 
-        } elseif (!empty($updates)) {
+        } elseif ($updates) {
             // Has updates
             $quickicons[] = array(
                 'link' => JRoute::_('index.php?option=com_installer&view=update'),

@@ -10,6 +10,8 @@
 
 namespace Gantry\Joomla;
 
+use Joomla\CMS\Factory as JFactory;
+
 class CacheHelper
 {
     public static function cleanTemplates()
@@ -34,8 +36,7 @@ class CacheHelper
 
     private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache')
     {
-        $conf = \JFactory::getConfig();
-        $dispatcher = \JEventDispatcher::getInstance();
+        $conf = JFactory::getConfig();
 
         $options = array(
             'defaultgroup' => $group,
@@ -51,6 +52,6 @@ class CacheHelper
         }
 
         // Trigger the onContentCleanCache event.
-        $dispatcher->trigger($event, $options);
+        JFactory::getApplication()->triggerEvent($event, $options);
     }
 }

@@ -7,21 +7,27 @@
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
+
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+
+$app = JFactory::getApplication();
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
     $lang = JFactory::getLanguage();
     $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
-    JFactory::getApplication()->enqueueMessage(
+    $app->enqueueMessage(
         JText::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('COM_GANTRY5_COMPONENT')),
         'warning'
     );
+
     return;
 }
 
-$app = JFactory::getApplication();
 $document = JFactory::getDocument();
 $input = $app->input;
 $menu = $app->getMenu();

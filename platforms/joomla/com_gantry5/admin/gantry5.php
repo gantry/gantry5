@@ -9,6 +9,9 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+
 $user = JFactory::getUser();
 $app = JFactory::getApplication();
 

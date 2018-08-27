@@ -17,6 +17,21 @@ use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 
 \JTable::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
+/**
+ * Class Module
+ * @package Gantry\Joomla\Module
+ *
+ * @property $module
+ * @property $params
+ * @property $position
+ * @property $ordering
+ * @property $title
+ * @property $showtitle
+ * @property $note
+ * @property $published
+ * @property $content
+ * @property $language
+ */
 class Module extends AbstractObject implements ExportInterface
 {
     use Export;
@@ -162,7 +177,7 @@ class Module extends AbstractObject implements ExportInterface
      */
     public function is_not_null($val)
     {
-        return !is_null($val);
+        return null !== $val;
     }
 
     static protected function collection($items)

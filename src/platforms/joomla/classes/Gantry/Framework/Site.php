@@ -10,13 +10,16 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
+use Joomla\CMS\Factory as JFactory;
+
 class Site
 {
     public function __construct()
     {
-        $document = \JFactory::getDocument();
+        $document = JFactory::getDocument();
 
-        if ($document instanceof \JDocumentHTML) {
+        if ($document instanceof JDocumentHTML) {
             $this->theme = $document->template;
             $this->url = $document->baseurl;
             $this->title = $document->title;

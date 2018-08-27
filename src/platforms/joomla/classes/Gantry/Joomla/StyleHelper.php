@@ -12,6 +12,7 @@ namespace Gantry\Joomla;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
+use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -21,9 +22,14 @@ class StyleHelper
 {
     public static function getStyle($id)
     {
-        \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+        if (version_compare(JVERSION, '4', '<')) {
+            // Joomla 3 support.
+            \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
 
-        $style = \JTable::getInstance('Style', 'TemplatesTable');
+            $style = \JTable::getInstance('Style', 'TemplatesTable');
+        } else {
+            $style = new StyleTable(\JFactory::getDbo());
+        }
         $style->load($id);
 
         return $style;

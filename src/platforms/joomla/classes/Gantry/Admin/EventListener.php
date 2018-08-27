@@ -14,7 +14,12 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Menu;
+use Joomla\CMS\Table\MenuType;
+use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Factory as JFactory;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\IniFile;
@@ -37,29 +42,26 @@ class EventListener implements EventSubscriberInterface
 
     public function onAdminThemeInit(Event $event)
     {
-        \JPluginHelper::importPlugin('gantry5');
+        PluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5AdminInit', ['theme' => $event->theme]);
+        JFactory::getApplication()->triggerEvent('onGantry5AdminInit', ['theme' => $event->theme]);
     }
 
     public function onGlobalSave(Event $event)
     {
-        \JPluginHelper::importPlugin('gantry5');
+        PluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeUpdateCss event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5SaveConfig', [$event->data]);
+        JFactory::getApplication()->triggerEvent('onGantry5SaveConfig', [$event->data]);
     }
 
     public function onStylesSave(Event $event)
     {
-        \JPluginHelper::importPlugin('gantry5');
+        PluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeUpdateCss event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5UpdateCss', ['theme' => $event->theme]);
+        JFactory::getApplication()->triggerEvent('onGantry5UpdateCss', ['theme' => $event->theme]);
     }
 
     public function onSettingsSave(Event $event)
@@ -108,7 +110,12 @@ class EventListener implements EventSubscriberInterface
     {
     }
 
-
+    /**
+     * @param Event $event
+     * @throws \RuntimeException
+     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
+     */
     public function onMenusSave(Event $event)
     {
         $defaults = [
@@ -132,8 +139,8 @@ class EventListener implements EventSubscriberInterface
         $menu = $event->menu;
 
         // Save global menu settings into Joomla.
-        /** @var \JTableMenuType $table */
-        $menuType = \JTable::getInstance('MenuType');
+        /** @var MenuType $table */
+        $menuType = Table::getInstance('MenuType');
         if (!$menuType->load(['menutype' => $event->resource])) {
             throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.", 400);
         }
@@ -147,8 +154,8 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
-        /** @var \JTableMenu $table */
-        $table = \JTable::getInstance('menu');
+        /** @var Menu $table */
+        $table = Table::getInstance('menu');
 
         foreach ($menu['items'] as $key => $item) {
             $id = !empty($item['id']) ? (int) $item['id'] : 0;
@@ -161,19 +168,19 @@ class EventListener implements EventSubscriberInterface
                 $item['id'] = (int) $id;
 
                 $title = $menu["items.{$key}.title"];
-                $browserNav = intval($menu["items.{$key}.target"] === '_blank');
+                $browserNav = (int)($menu["items.{$key}.target"] === '_blank');
 
                 $options = [
                     // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
                     // 'menu-anchor_css' => $menu["items.{$key}.class"],
                     'menu_image' => $menu["items.{$key}.image"],
-                    'menu_text' => intval(!$menu["items.{$key}.icon_only"]),
-                    'menu_show' => intval($menu["items.{$key}.enabled"]),
+                    'menu_text' => (int)(!$menu["items.{$key}.icon_only"]),
+                    'menu_show' => (int)$menu["items.{$key}.enabled"],
                 ];
 
                 $modified = false;
 
-                if ($table->title != $title) {
+                if ($table->title !== $title) {
                     $table->title = $title;
                     $modified = true;
                 }
@@ -198,11 +205,7 @@ class EventListener implements EventSubscriberInterface
                 }
 
                 // Avoid saving values which are also stored in Joomla.
-                unset($item['title'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target']);
-                if (version_compare(JVERSION, '3.5.1', '>=')) {
-                    unset($item['enabled']);
-                }
-
+                unset($item['title'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target'], $item['enabled']);
             }
 
             // Do not save default values.

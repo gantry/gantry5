@@ -10,6 +10,9 @@
 
 namespace Gantry\Joomla\Object;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+
 /**
  * Abstract base class for database objects.
  *
@@ -115,8 +118,8 @@ abstract class AbstractObject extends \JObject
     {
         // If we are creating or loading a new item or we load instance by alternative keys,
         // we need to create a new object.
-        if (!$keys || is_array($keys) || !isset(static::$instances[(int) $keys])) {
-            $c = get_called_class();
+        if (!$keys || \is_array($keys) || !isset(static::$instances[(int) $keys])) {
+            $c = \get_called_class();
             $instance = new $c($keys);
             /** @var Object $instance */
             if (!$instance->exists()) return $instance;
@@ -127,7 +130,9 @@ abstract class AbstractObject extends \JObject
 
         // Return global instance from the identifier, possibly reloading it first.
         $instance = static::$instances[(int) $keys];
-        if ($reload) $instance->load($keys);
+        if ($reload) {
+            $instance->load($keys);
+        }
 
         return $instance;
     }
@@ -284,11 +289,10 @@ abstract class AbstractObject extends \JObject
         }
 
         // Include the content plugins for the on save events.
-        $dispatcher = \JEventDispatcher::getInstance();
-        \JPluginHelper::importPlugin('content');
+        JPluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
-        $result = $dispatcher->trigger('onContentBeforeSave', array("com_gantry5.".get_called_class(), $table, $isNew));
+        $result = JFactory::getApplication()->triggerEvent('onContentBeforeSave', array("com_gantry5.".get_called_class(), $table, $isNew));
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -310,7 +314,7 @@ abstract class AbstractObject extends \JObject
         }
 
         // Trigger the onContentAfterSave event.
-        $dispatcher->trigger('onContentAfterSave', array("com_gantry5.".get_called_class(), $table, $isNew));
+        JFactory::getApplication()->triggerEvent('onContentAfterSave', array("com_gantry5.".get_called_class(), $table, $isNew));
 
         return true;
     }
@@ -335,11 +339,10 @@ abstract class AbstractObject extends \JObject
         $table->bind($this->getProperties());
 
         // Include the content plugins for the on save events.
-        $dispatcher = \JEventDispatcher::getInstance();
-        \JPluginHelper::importPlugin('content');
+        JPluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
-        $result = $dispatcher->trigger('onContentBeforeDelete', array("com_gantry5.".get_called_class(), $table));
+        $result = JFactory::getApplication()->triggerEvent('onContentBeforeDelete', array("com_gantry5.".get_called_class(), $table));
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -352,7 +355,7 @@ abstract class AbstractObject extends \JObject
         $this->_exists = false;
 
         // Trigger the onContentAfterDelete event.
-        $dispatcher->trigger('onContentAfterDelete', array("com_gantry5.".get_called_class(), $table));
+        JFactory::getApplication()->triggerEvent('onContentAfterDelete', array("com_gantry5.".get_called_class(), $table));
 
         return true;
     }

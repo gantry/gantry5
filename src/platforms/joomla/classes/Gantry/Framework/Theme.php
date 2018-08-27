@@ -12,6 +12,12 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Joomla\CMS\Date\Date as JDate;
+use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+use Joomla\CMS\Uri\Uri as JUri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -39,7 +45,7 @@ class Theme extends AbstractTheme
             $this->joomla = true;
 
             // Workaround for Joomla! not loading bootstrap when it needs it.
-            $this->gantry()->load('bootstrap.2');
+            static::gantry()->load('bootstrap.2');
         }
 
         return $this->joomla;
@@ -60,12 +66,12 @@ class Theme extends AbstractTheme
         $core = $twig->getExtension('Twig_Extension_Core');
 
         // Get user timezone and if not set, use Joomla default.
-        $timezone = \JFactory::getUser()->getParam('timezone', \JFactory::getConfig()->get('offset', 'UTC'));
+        $timezone = JFactory::getUser()->getParam('timezone', JFactory::getConfig()->get('offset', 'UTC'));
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.
-        $core->setDateFormat(\JText::_('DATE_FORMAT_LC2'), \JText::_('GANTRY5_X_DAYS'));
-        $core->setNumberFormat(0, \JText::_('DECIMALS_SEPARATOR'), \JText::_('THOUSANDS_SEPARATOR'));
+        $core->setDateFormat(JText::_('DATE_FORMAT_LC2'), JText::_('GANTRY5_X_DAYS'));
+        $core->setNumberFormat(0, JText::_('DECIMALS_SEPARATOR'), JText::_('THOUSANDS_SEPARATOR'));
 
         $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], array('needs_environment' => true));
         $twig->addFilter($filter);
@@ -98,11 +104,11 @@ class Theme extends AbstractTheme
             return $date->format($format);
         }
 
-        if (!($date instanceof \JDate)) {
+        if (!($date instanceof JDate)) {
             // Create localized JDate object.
             $twig_date = \twig_date_converter($env, $date, $timezone);
 
-            $date = new \JDate($twig_date->getTimestamp());
+            $date = new JDate($twig_date->getTimestamp());
             $date->setTimezone($twig_date->getTimezone());
         } elseif ($timezone) {
             $date->setTimezone($timezone);
@@ -140,39 +146,38 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $lang = \JFactory::getLanguage();
+        $lang = JFactory::getLanguage();
 
         // FIXME: Do not hardcode this file.
         $lang->load('files_gantry5_nucleus', JPATH_SITE);
 
-        if (\JFactory::getApplication()->isSite()) {
+        if (JFactory::getApplication()->isClient('site')) {
             // Load our custom positions file as frontend requires the strings to be there.
             $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
 
             if ($filename) {
-                $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
+                $lang->load("tpl_{$this->name}_positions", \dirname(\dirname(\dirname($filename))), 'en-GB');
             }
 
             // Load template language files, including overrides.
             $paths = $locator->findResources('gantry-theme://language');
             foreach (array_reverse($paths) as $path) {
-                $lang->load("tpl_{$this->name}", dirname($path));
+                $lang->load("tpl_{$this->name}", \dirname($path));
             }
         }
 
-        $doc = \JFactory::getDocument();
-        if ($doc instanceof \JDocumentHtml) {
+        $doc = JFactory::getDocument();
+        if ($doc instanceof JDocumentHtml) {
             $doc->setHtml5(true);
         }
         $this->language = $doc->language;
         $this->direction = $doc->direction;
-        $this->url = \JUri::root(true) . '/templates/' . $this->name;
+        $this->url = JUri::root(true) . '/templates/' . $this->name;
 
-        \JPluginHelper::importPlugin('gantry5');
+        JPluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantry5ThemeInit', ['theme' => $this]);
+        JFactory::getApplication()->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
     }
 
     /**

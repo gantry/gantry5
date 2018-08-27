@@ -9,6 +9,8 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+
 class plgSystemGantry5_Debugbar extends JPlugin
 {
     public function __construct(&$subject, $config = array())

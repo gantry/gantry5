@@ -16,6 +16,11 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Document\Document as JDocument;
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\HTML\HTMLHelper as JHtml;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Uri\Uri as JUri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -25,9 +30,9 @@ class Router extends BaseRouter
 {
     public function boot()
     {
-        \JHtml::_('behavior.keepalive');
+        JHtml::_('behavior.keepalive');
 
-        $app = \JFactory::getApplication();
+        $app = JFactory::getApplication();
         $input = $app->input;
 
         // TODO: Remove style variable.
@@ -44,10 +49,10 @@ class Router extends BaseRouter
         $this->path = $path ?: (isset($this->container['theme.name']) ? ['configurations', true] : ['themes']);
         $this->resource = array_shift($this->path);
         $this->format = $input->getCmd('format', 'html');
-        $ajax = ($this->format == 'json');
+        $ajax = ($this->format === 'json');
 
         $this->params = [
-            'user' => \JFactory::getUser(),
+            'user' => JFactory::getUser(),
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,
@@ -61,8 +66,8 @@ class Router extends BaseRouter
     public function setTheme($theme, $style)
     {
         if ($style) {
-            \JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-            $table = \JTable::getInstance('Style', 'TemplatesTable');
+            Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+            $table = Table::getInstance('Style', 'TemplatesTable');
             $table->load(['id' => $style, 'client_id' => 0]);
 
             $theme = $table->template;
@@ -84,11 +89,12 @@ class Router extends BaseRouter
             CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
         }
 
-        $this->container['base_url'] = \JUri::base(true) . '/index.php?option=com_gantry5';
+        $this->container['base_url'] = JUri::base(true) . '/index.php?option=com_gantry5';
 
         $this->container['ajax_suffix'] = '&format=json';
 
-        $token = \JSession::getFormToken();
+        $session = JFactory::getSession();
+        $token = $session::getFormToken();
 
         $this->container['routes'] = [
             '1' => "&view=%s&theme={$theme}&{$token}=1",
@@ -106,7 +112,7 @@ class Router extends BaseRouter
 
         // Load language file for the template.
         $languageFile = 'tpl_' . $theme;
-        $lang = \JFactory::getLanguage();
+        $lang = JFactory::getLanguage();
         $lang->load($languageFile, JPATH_SITE)
             || $lang->load($languageFile, $path)
             || $lang->load($languageFile, $path, 'en-GB');
@@ -116,7 +122,9 @@ class Router extends BaseRouter
 
     protected function checkSecurityToken()
     {
-        return \JSession::checkToken('get');
+        $session = JFactory::getSession();
+
+        return $session::checkToken('get');
     }
 
     /**
@@ -127,8 +135,9 @@ class Router extends BaseRouter
      */
     protected function send(Response $response)
     {
-        $app = \JFactory::getApplication();
-        $document = \JFactory::getDocument();
+        $app = JFactory::getApplication();
+        /** @var JDocument $document */
+        $document = JFactory::getDocument();
         $document->setCharset($response->charset);
         $document->setMimeEncoding($response->mimeType);
 

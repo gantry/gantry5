@@ -10,6 +10,8 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Factory as JFactory;
+
 class Gantry extends Base\Gantry
 {
     /**
@@ -25,7 +27,7 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return \JFactory::getApplication()->isAdmin();
+        return JFactory::getApplication()->isClient('administrator');
     }
 
     /**
@@ -36,7 +38,7 @@ class Gantry extends Base\Gantry
     public function styles($location = 'head', $force = false)
     {
         // Do not display head, Joomla will take care of it (most of the time).
-        return (!$force && $location == 'head') ? [] : parent::styles($location);
+        return (!$force && $location === 'head') ? [] : parent::styles($location);
     }
 
     /**
@@ -47,7 +49,7 @@ class Gantry extends Base\Gantry
     public function scripts($location = 'head', $force = false)
     {
         // Do not display head, Joomla will take care of it (most of the time).
-        return (!$force && $location == 'head') ? [] : parent::scripts($location);
+        return (!$force && $location === 'head') ? [] : parent::scripts($location);
     }
 
     /**
@@ -58,8 +60,7 @@ class Gantry extends Base\Gantry
         $global = null;
 
         // Trigger the event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
+        JFactory::getApplication()->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
 
         return $global;
     }

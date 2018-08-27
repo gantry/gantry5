@@ -98,7 +98,7 @@ abstract class Finder
      */
     public function limit($limit = null)
     {
-        if (!is_null($limit))
+        if (null !== $limit)
         {
             $this->limit = $limit;
         }
@@ -112,7 +112,7 @@ abstract class Finder
      * This function can be used more than once to chain order by.
      *
      * @param  string $by
-     * @param  int $direction
+     * @param  string|int $direction
      * @param  string $alias
      *
      * @return $this
@@ -122,7 +122,7 @@ abstract class Finder
         if (is_numeric($direction)) {
             $direction = $direction > 0 ? 'ASC' : 'DESC';
         } else {
-            $direction = strtolower((string)$direction) == 'desc' ? 'DESC' : 'ASC';
+            $direction = strtolower((string)$direction) === 'desc' ? 'DESC' : 'ASC';
         }
         $by = (string)$alias . '.' . $this->db->quoteName($by);
         $this->query->order("{$by} {$direction}");
@@ -133,9 +133,9 @@ abstract class Finder
     /**
      * Filter by field.
      *
-     * @param  string        $field       Field name.
-     * @param  string        $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
-     * @param  string|array  $value       Value.
+     * @param  string           $field       Field name.
+     * @param  string           $operation   Operation (>|>=|<|<=|=|IN|NOT IN)
+     * @param  string|int|array $value       Value.
      *
      * @return $this
      */

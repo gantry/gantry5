@@ -28,10 +28,11 @@ class AssignmentsStyle implements AssignmentsInterface
     {
         static $rules;
 
-        if (!isset($rules)) {
+        if (null === $rules) {
             $rules = [];
 
-            $template = \JFactory::getApplication()->getTemplate(true);
+            $app = \JFactory::getApplication();
+            $template = $app->getTemplate(true);
 
             $theme = $template->template;
             $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : $template->params->get('preset', null));
@@ -40,7 +41,7 @@ class AssignmentsStyle implements AssignmentsInterface
                 GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Template Style:', 'debug') && \Gantry\Debugger::addMessage($template, 'debug');
 
                 if (!$outline) {
-                    \JFactory::getApplication()->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
+                    $app->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
                 }
             }
 

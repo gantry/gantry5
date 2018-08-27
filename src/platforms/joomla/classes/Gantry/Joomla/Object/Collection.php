@@ -39,7 +39,7 @@ class Collection extends BaseCollection
         $list = [];
 
         foreach ($this as $object) {
-            $list[$object->id] = method_exists($object, $name) ? call_user_func_array([$object, $name], $arguments) : null;
+            $list[$object->id] = method_exists($object, $name) ? \call_user_func_array([$object, $name], $arguments) : null;
         }
 
         return $list;

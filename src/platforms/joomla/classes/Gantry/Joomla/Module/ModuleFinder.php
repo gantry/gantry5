@@ -48,6 +48,10 @@ class ModuleFinder extends Finder
         return $this->addToGroup('a.id', $ids, $include);
     }
 
+    /**
+     * @param string|int|bool $language
+     * @return $this|ModuleFinder
+     */
     public function language($language = true)
     {
         if (!$language) {
@@ -59,9 +63,13 @@ class ModuleFinder extends Finder
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
+    /**
+     * @param int|int[] $published
+     * @return $this
+     */
     public function published($published = 1)
     {
-        if (!is_array($published)) {
+        if (!\is_array($published)) {
             $published = (array) intval($published);
         }
 

@@ -9,20 +9,39 @@
  */
 defined('_JEXEC') or die ();
 
-function Gantry5BuildRoute(&$query)
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Component\Router\RouterView;
+use Joomla\CMS\Component\Router\RouterViewConfiguration;
+use Joomla\CMS\Component\Router\Rules\MenuRules;
+use Joomla\CMS\Component\Router\Rules\NomenuRules;
+use Joomla\CMS\Component\Router\Rules\StandardRules;
+use Joomla\CMS\Menu\AbstractMenu;
+
+/**
+ * Class Gantry5Router
+ *
+ * TODO:
+ */
+class Gantry5Router extends RouterView
 {
-    $segments = array();
+    /**
+     * Search Component router constructor
+     *
+     * @param   CMSApplication  $app   The application object
+     * @param   AbstractMenu    $menu  The menu object to work with
+     */
+    public function __construct($app = null, $menu = null)
+    {
+        $custom = new RouterViewConfiguration('custom');
+        $this->registerView($custom);
 
-    unset($query['view']);
+        $error = new RouterViewConfiguration('error');
+        $this->registerView($error);
 
-    return $segments;
-}
+        parent::__construct($app, $menu);
 
-function Gantry5ParseRoute($segments)
-{
-    if ($segments) {
-        return array('g5_not_found' => 1);
+        $this->attachRule(new MenuRules($this));
+        $this->attachRule(new StandardRules($this));
+        $this->attachRule(new NomenuRules($this));
     }
-
-    return array();
 }

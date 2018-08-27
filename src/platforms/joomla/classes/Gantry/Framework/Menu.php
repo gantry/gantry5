@@ -14,6 +14,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
+use Joomla\CMS\Factory as JFactory;
 
 class Menu extends AbstractMenu
 {
@@ -33,7 +34,7 @@ class Menu extends AbstractMenu
     {
         $this->app = \JApplicationCms::getInstance('site');
 
-        $lang = \JFactory::getLanguage();
+        $lang = JFactory::getLanguage();
         $tag = \JLanguageMultilang::isEnabled() ? $lang->getTag() : '*';
 
         $this->menu = $this->app->getMenu();
@@ -143,7 +144,7 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        if (!\JFactory::getUser()->guest) {
+        if (!JFactory::getUser()->guest) {
             return null;
         }
 
@@ -154,14 +155,18 @@ class Menu extends AbstractMenu
     {
         $tree = $this->base->tree;
 
-        if (in_array($item->id, $tree)) {
+        if (\in_array($item->id, $tree, true)) {
             return true;
-        } elseif ($item->type == 'alias') {
+        }
+
+        if ($item->type === 'alias') {
             $aliasToId = $item->link_id;
 
-            if (count($tree) > 0 && $aliasToId == $tree[count($tree) - 1]) {
+            if (\count($tree) > 0 && $aliasToId === $tree[\count($tree) - 1]) {
                 return (bool) $this->params['highlightAlias'];
-            } elseif (in_array($aliasToId, $tree)) {
+            }
+
+            if (\in_array($aliasToId, $tree, true)) {
                 return (bool) $this->params['highlightParentAlias'];
             }
         }
@@ -172,7 +177,7 @@ class Menu extends AbstractMenu
     public function isCurrent($item)
     {
         return $item->id == $this->active->id
-        || ($item->type == 'alias' && $item->params->get('aliasoptions') == $this->active->id);
+        || ($item->type === 'alias' && $item->params->get('aliasoptions') == $this->active->id);
     }
 
     /**
@@ -187,7 +192,7 @@ class Menu extends AbstractMenu
         $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
-        if (\JFactory::getApplication()->isAdmin()) {
+        if (JFactory::getApplication()->isClient('administrator')) {
             $attributes[] = 'access';
             $values[] = null;
 
@@ -244,7 +249,7 @@ class Menu extends AbstractMenu
             return;
         }
 
-        $levels = \JFactory::getUser()->getAuthorisedViewLevels();
+        $levels = JFactory::getUser()->getAuthorisedViewLevels();
         asort($levels);
 
         // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
@@ -271,11 +276,12 @@ class Menu extends AbstractMenu
                     $itemMap[$itemRef['id']] = &$itemRef;
                 }
             }
+            unset($itemRef);
 
             foreach ($menuItems as $menuItem) {
                 if (($start && $start > $menuItem->level)
                     || ($end && $menuItem->level > $end)
-                    || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
+                    || ($start > 1 && !\in_array($menuItem->tree[$start - 2], $tree, true))) {
                     continue;
                 }
 
@@ -359,7 +365,7 @@ class Menu extends AbstractMenu
                         $app = $this->app;
                         $router = $app::getRouter();
 
-                        if ($router->getMode() == JROUTER_MODE_SEF) {
+                        if ($router->getMode() === JROUTER_MODE_SEF) {
                             $link = 'index.php?Itemid=' . $item->id;
 
                             if (isset($menuItem->query['format']) && $app->get('sef_suffix')) {
@@ -379,7 +385,7 @@ class Menu extends AbstractMenu
                     $item->url(\JRoute::_($link, false));
                 }
 
-                if ($item->type == 'url') {
+                if ($item->type === 'url') {
                     // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
                     // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
                     $item->url(

@@ -13,6 +13,17 @@ namespace Gantry\Joomla\Category;
 use Gantry\Framework\Gantry;
 use Gantry\Joomla\Object\AbstractObject;
 
+/**
+ * Class Category
+ * @package Gantry\Joomla\Category
+ *
+ * @property $extension
+ * @property $parent_id
+ * @property $path
+ * @property $alias
+ * @property $params
+ * @property $metadata
+ */
 class Category extends AbstractObject
 {
     static protected $instances = [];

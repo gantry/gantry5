@@ -61,7 +61,7 @@ class AssignmentsMenu implements AssignmentsInterface
                     'name' => $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $configuration,
-                    'disabled' => $link->type != 'component' || $link->checked_out && $link->checked_out != $userid,
+                    'disabled' => $link->type !== 'component' || $link->checked_out && $link->checked_out != $userid,
                     'label' => str_repeat('—', max(0, $link->level-1)) . ' ' . $link->text
                 ];
             }

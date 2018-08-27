@@ -67,14 +67,22 @@ class ContentFinder extends Finder
         return $this->addToGroup('a.catid', $ids, $include);
     }
 
+    /**
+     * @param int|bool $featured
+     * @return $this
+     */
     public function featured($featured = true)
     {
-        $featured = intval((bool)$featured);
+        $featured = (int)((bool)$featured);
         $this->where('a.featured', '=', $featured);
 
         return $this;
     }
 
+    /**
+     * @param string|int|bool $language
+     * @return $this|ContentFinder
+     */
     public function language($language = true)
     {
         if (!$language) {
@@ -86,9 +94,13 @@ class ContentFinder extends Finder
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
+    /**
+     * @param int|int[] $published
+     * @return ContentFinder
+     */
     public function published($published = 1)
     {
-        if (!is_array($published)) {
+        if (!\is_array($published)) {
             $published = (array) intval($published);
         }
         return $this->where('a.state', 'IN', $published);

@@ -9,6 +9,9 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+
 class plgGantry5Preset extends JPlugin
 {
     public function __construct(&$subject, $config)
@@ -28,7 +31,7 @@ class plgGantry5Preset extends JPlugin
     {
         $app = JFactory::getApplication();
 
-        if ($app->isSite()) {
+        if ($app->isClient('site')) {
             $input = $app->input;
 
             $cookie = md5($theme->name);
