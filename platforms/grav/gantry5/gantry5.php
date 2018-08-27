@@ -473,11 +473,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onThemeTwigInitialized()
     {
-        /** @var Twig $gravTwig */
-        $gravTwig = $this->grav['twig'];
-        $twig = $this->theme->renderer();
-
-        $this->theme->extendTwig($twig, $gravTwig->loader());
+        $this->theme->renderer();
     }
 
     /**
