@@ -12,6 +12,7 @@
     1. [](#bugfix)
         - Fixed JS loading issues with Content Tabs and Own Carousel particles
         - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
+        - Fixed exception when using `|markdown` filter with images (#2350)
 1. [Joomla](#joomla)
     1. [](#new)
         - Optionally use content.prepare in contentarray (#2340, thanks @Chrissi2812)
