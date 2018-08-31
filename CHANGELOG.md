@@ -8,6 +8,7 @@
         - Made `gantry` twig variable global so it can be used inside macros
     1. [](#improved)
         - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
+        - Added twig/yaml deprecation warnings into DebugBar (if installed)
         - Updated Google Fonts (as of 21 August 2018)
     1. [](#bugfix)
         - Fixed JS loading issues with Content Tabs and Own Carousel particles

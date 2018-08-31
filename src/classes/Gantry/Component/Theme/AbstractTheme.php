@@ -89,6 +89,10 @@ abstract class AbstractTheme
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
+        if ($twig->hasExtension(TwigExtension::class)) {
+            return $twig;
+        }
+
         if (!$loader) {
             $loader = $twig->getLoader();
         }
