@@ -42,12 +42,12 @@
         {% set can_reorder = field.reorder ?? true %}
         {% set can_remove = field.deletion ?? true %}
         {% set can_addnew = field.add_new ?? true %}
-        <div class="settings-param {{ field.type|replace('.', '-') }}">
+        <div class="settings-param {{ field.type|replace({'.': '-'}) }}">
             {% if overrideable and (field.overridable is not defined or field.overridable == true or has_value) and field.type != 'container.set' %}
                 {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
             {% endif %}
             {% block contents %}
-                {% set field_route = (route ~ '.' ~ (prefix ? prefix ~ '.') ~ name)|replace('.', '/') %}
+                {% set field_route = (route ~ '.' ~ (prefix ? prefix ~ '.') ~ name)|replace({'.': '/'}) %}
                 <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
@@ -95,7 +95,7 @@
                                                              {% include 'forms/fields/key/key.html.twig'
                                                              with {name: childName, field: child, value: key, current_value: null, default_value: null, parent: childParent} %}
                                                          {% elseif child.type %}
-                                                             {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                                             {% include ["forms/fields/" ~ child.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
                                                              with {name: childName, field: child, value: null, current_value: childValue, default_value: null, parent_field: childParent} %}
                                                         {% endif %}
                                                     {% endif %}

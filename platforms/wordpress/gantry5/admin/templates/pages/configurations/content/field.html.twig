@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-{% set action = gantry.route(configuration ~ '/' ~ route|replace('.', '/') ~ '/validate') %}
+{% set action = gantry.route(configuration ~ '/' ~ route|replace({'.': '/'}) ~ '/validate') %}
 <form method="post" action="{{ action|e }}">
     {% if blueprints.type == 'collection.list' %}
         {% include 'forms/fields.html.twig' %}
