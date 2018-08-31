@@ -24,12 +24,15 @@
         - Made `gantry` twig variable global so it can be used inside macros
     1. [](#improved)
         - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
+        - Updated Google Fonts (as of 21 August 2018)
     1. [](#bugfix)
         - Fixed JS loading issues with Content Tabs and Own Carousel particles
         - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
+        - Fixed exception when using `|markdown` filter with images (#2350)
 1. [Joomla](#joomla)
     1. [](#new)
         - Optionally use content.prepare in contentarray (#2340, thanks @Chrissi2812)
+        - Hydrogen / Helium: System messages particle isn't AJAX compatible (#2294)
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed broken language strings when using official WP translations (#2329)

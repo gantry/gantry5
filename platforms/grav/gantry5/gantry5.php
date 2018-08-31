@@ -189,11 +189,11 @@ class Gantry5Plugin extends Plugin
 
         $this->theme = $theme;
         if (!$this->isAdmin()) {
-            /** @var Platform $patform */
-            $patform = $gantry['platform'];
+            /** @var Platform $platform */
+            $platform = $gantry['platform'];
 
-            $nucleus = $patform->getEnginePaths('nucleus')[''];
-            $patform->set(
+            $nucleus = $platform->getEnginePaths('nucleus')[''];
+            $platform->set(
                 'streams.gantry-admin.prefixes', [
                     ''        => ['gantry-theme://admin', 'plugins://gantry5/admin', 'plugins://gantry5/admin/common', 'gantry-engine://admin'],
                     'assets/' => array_merge(['plugins://gantry5/admin', 'plugins://gantry5/admin/common'], $nucleus, ['gantry-assets://'])
@@ -201,7 +201,7 @@ class Gantry5Plugin extends Plugin
             );
 
             // Add admin paths.
-            foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
+            foreach ($platform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
                 $locator->addPath('gantry-admin', $prefix, $paths);
             }
 
@@ -473,11 +473,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onThemeTwigInitialized()
     {
-        /** @var Twig $gravTwig */
-        $gravTwig = $this->grav['twig'];
-        $twig = $this->theme->renderer();
-
-        $this->theme->extendTwig($twig, $gravTwig->loader());
+        $this->theme->renderer();
     }
 
     /**

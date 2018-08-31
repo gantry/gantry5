@@ -109,7 +109,7 @@ trait ParsedownTrait
         if (isset($excerpt['element']['attributes']['src'])) {
             $gantry = Gantry::instance();
 
-            $excerpt['element']['attributes']['href'] = $gantry['document']->url($excerpt['element']['attributes']['href']);
+            $excerpt['element']['attributes']['src'] = $gantry['document']->url($excerpt['element']['attributes']['src']);
         }
 
         return $excerpt;

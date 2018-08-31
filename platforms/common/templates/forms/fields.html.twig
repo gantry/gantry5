@@ -5,7 +5,7 @@
     {% set current_value = data %}
     {% set default_value = defaults %}
 
-    {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+    {% include ["forms/fields/" ~ field.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
 
 {% else %}
 
@@ -23,7 +23,7 @@
         {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and not field_overrideable and not has_value) and not(not has_value and not_global_overrideable) %}
             {% set field = field + {'name': name} %}
 
-            {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+            {% include ["forms/fields/" ~ field.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
         {% endif %}
     {% endfor %}
 {% endif %}

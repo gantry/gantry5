@@ -1,28 +1,22 @@
 {% extends 'forms/fields/input/group/group.html.twig' %}
 
-{% macro contrast(value) %}{% spaceless %}
-    {% if not value %}
-    light-text
-    {% endif %}
-{% endspaceless %}{% endmacro %}
-
 {% block input %}
-        {% set field = field|merge({'style': 'background-color: ' ~ value, 'pattern': '^#([a-fA-F0-9]{6})|(rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0.[0-9]+)|[01])\\s*\\))$'}) %}
-        <div class="g-colorpicker {{ _self.contrast(colorContrast(value|lower)) }}">
+    {% set field = field|merge({'style': 'background-color: ' ~ value, 'pattern': '^#([a-fA-F0-9]{6})|(rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0.[0-9]+)|[01])\\s*\\))$'}) %}
+    <div class="g-colorpicker {{ colorContrast(value|lower) ?: 'light-text' }}">
         <input
-            {# required attribute structures #}
-            type="text"
-            name="{{ (scope ~ name)|fieldName }}"
-            value="{{ value|join(', ')|lower }}"
-            {# global attribute structures #}
-            {{ block('global_attributes') }}
-            {# non-gloval attribute structures #}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
-            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
-            {% if field.pattern is defined %}pattern="{{ field.pattern }}"{% endif %}
-            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-            {% if field.list is defined %}list="{{ field.list }}"{% endif %}
-            />
-            <i class="fa fa-tint" aria-hidden="true"></i>
-        </div>
+                {# required attribute structures #}
+                type="text"
+                name="{{ (scope ~ name)|fieldName }}"
+                value="{{ value|join(', ')|lower }}"
+                {# global attribute structures #}
+                {{ block('global_attributes') }}
+                {# non-gloval attribute structures #}
+                {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
+                {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+                {% if field.pattern is defined %}pattern="{{ field.pattern }}"{% endif %}
+                {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+                {% if field.list is defined %}list="{{ field.list }}"{% endif %}
+        />
+        <i class="fa fa-tint" aria-hidden="true"></i>
+    </div>
 {% endblock %}
