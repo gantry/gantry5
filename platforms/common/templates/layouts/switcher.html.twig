@@ -67,7 +67,7 @@
                 {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
             </li>
             {% for key,current in user_conf if key != configuration %}
-                {% set label=current|replace('_', ' ')|trim|title %}
+                {% set label=current|replace({'_': ' '})|trim|title %}
                 <li tabindex="0"
                     aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
                     role="button"
@@ -83,7 +83,7 @@
             <ul class="g-switch-conf-systems float-right">
                 <li tabindex="0" class="g-switch-title" role="presentation">{{ 'GANTRY5_PLATFORM_LM_SWITCHER_SYSTEM'|trans }}</li>
                 {% for key,current in system_conf %}
-                    {% set label=current|replace('_', ' ')|trim|capitalize|e %}
+                    {% set label=current|replace({'_': ' '})|trim|capitalize|e %}
                     <li tabindex="0"
                         aria-label="{{ 'GANTRY5_PLATFORM_X_OUTLINE'|trans(label) }}"
                         role="button"

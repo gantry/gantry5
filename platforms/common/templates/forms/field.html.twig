@@ -19,7 +19,7 @@
 
 {% block field %}
 {% if not field.isset or value is not null %}
-    <div class="settings-param {{ field.type|replace('.', '-') }}">
+    <div class="settings-param {{ field.type|replace({'.': '-'}) }}">
         {% block overridable %}
         {% set field_overridable = field.overridable ?? (field.overrideable ?? true) %}
         {% if overrideable and (field_overridable or has_value) %}

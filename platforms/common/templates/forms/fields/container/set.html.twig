@@ -23,7 +23,7 @@
             {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
 
             {% if child.type and not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
-                {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                {% include ["forms/fields/" ~ child.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
                 with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, overrideable: overrideable and child_overrideable } %}
             {% endif %}
         {% endfor %}

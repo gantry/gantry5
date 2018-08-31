@@ -1,16 +1,8 @@
 {% extends 'forms/fields/input/group/group.html.twig' %}
 
-{% macro contrast(value) %}{% spaceless %}
-    {% if not value %}
-        light-text
-    {% endif %}
-{% endspaceless %}{% endmacro %}
-
-{% import _self as macro %}
-
 {% block input %}
     {% set field = field|merge({'style': 'background-color: ' ~ value, 'pattern': '^#([a-fA-F0-9]{6})|(rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0.[0-9]+)|[01])\\s*\\))$'}) %}
-    <div class="g-colorpicker {{ macro.contrast(colorContrast(value|lower)) }}">
+    <div class="g-colorpicker {{ colorContrast(value|lower) ?: 'light-text' }}">
         <input
                 {# required attribute structures #}
                 type="text"
