@@ -11,7 +11,7 @@
         - Added twig/yaml deprecation warnings into DebugBar (if installed)
         - Updated Google Fonts (as of 21 August 2018)
     1. [](#bugfix)
-        - Fixed JS loading issues with Content Tabs and Own Carousel particles
+        - Fixed JS loading issues with Content Tabs and Owl Carousel particles
         - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
         - Fixed exception when using `|markdown` filter with images (#2350)
 1. [Joomla](#joomla)
