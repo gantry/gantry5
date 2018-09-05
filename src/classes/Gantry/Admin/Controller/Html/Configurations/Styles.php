@@ -68,7 +68,7 @@ class Styles extends HtmlController
             $this->params['data'] = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
-        $this->params['blocks'] = $this->container['styles']->group();
+        $this->params['blocks'] = $this->container['styles']->group($outline);
         $this->params['route']  = "configurations.{$outline}.styles";
 
         return $this->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
