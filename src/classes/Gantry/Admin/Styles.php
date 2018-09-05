@@ -48,16 +48,42 @@ class Styles
         return $this->blocks;
     }
 
-    public function group()
+    public function group($outline = null)
     {
-        $blocks = $this->all();
-
-        $list = [];
-        foreach ($blocks as $name => $style) {
-            $type = isset($style['type']) ? $style['type'] : 'block';
-            $list[$type][$name] = $style;
+        if (!is_null($outline))
+        {
+            $locator = $this->container['locator'];
+            $outline = $locator->findResource("gantry-layouts://{$outline}.yaml");
+            $outline = CompiledYamlFile::instance($outline);
+            $available_sections = $outline->content()['layout'];
+            $outline_styles = [];
+            foreach ($available_sections as $k=>$section)
+            {
+                $outline_styles[] = str_replace('/','',$k);
+            }
         }
 
+        $blocks = $this->all();
+        $list = [];
+        if (!isset($outline_styles))
+        {
+            foreach ($blocks as $name => $style) {
+                
+                $type = isset($style['type']) ? $style['type'] : 'block';
+                $list[$type][$name] = $style;
+            }
+        }
+        else
+        {
+            foreach ($blocks as $name => $style) {
+                $type = isset($style['type']) ? $style['type'] : 'block';
+
+                if ($type !== 'section' || ($type === 'section' && in_array($name, $outline_styles)))
+                {
+                    $list[$type][$name] = $style;
+                }
+            }
+        }
         return $this->sort($list);
     }
 
