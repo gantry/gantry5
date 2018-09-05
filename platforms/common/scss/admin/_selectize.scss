@@ -112,7 +112,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         display: inline-block;
         zoom: 1;
         *display: inline;
-        @include ellipsis(215px);
+        @include ellipsis(235px);
     }
     .g-selectize-control.g-multi & > div {
         cursor: pointer;
