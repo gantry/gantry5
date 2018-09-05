@@ -50,7 +50,7 @@
 
 {% block javascript_footer %}
     <script type="text/javascript">
-        jQuery(window).load(function() {
+        jQuery(document).ready(function () {
             jQuery('#g-contenttabs-{{ id }}').tabs({
                 show: {
                     {% if particle.animation == 'up' or particle.animation == 'down' or particle.animation == 'left' or particle.animation == 'right' %}

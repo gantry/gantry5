@@ -18,7 +18,7 @@ class Translator extends BaseTranslator
     {
         static $textdomain;
 
-        if (!isset($textdomain)) {
+        if (null === $textdomain) {
             $textdomain = Gantry::instance()['theme']->details()->get('configuration.theme.textdomain', false);
         }
 
@@ -27,11 +27,21 @@ class Translator extends BaseTranslator
             $translated = \__($string, 'gantry5');
         }
 
-        if (func_num_args() === 1) {
+        if ($translated === $string) {
+            // Create WP compatible translation string.
+            $string = parent::translate($string);
+
+            $translated = $textdomain ? \__($string, $textdomain) : $string;
+            if ($translated === $string) {
+                $translated = \__($string, 'gantry5');
+            }
+        }
+
+        if (\func_num_args() === 1) {
             return $translated;
         }
 
-        $args = func_get_args();
+        $args = \func_get_args();
         $args[0] = $translated;
 
         return call_user_func_array('sprintf', $args);

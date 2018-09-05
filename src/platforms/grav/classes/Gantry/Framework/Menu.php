@@ -19,7 +19,6 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page as GravPage;
-use Grav\Common\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -32,10 +31,9 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
-        /** @var Uri $uri */
-        $uri = $grav['uri'];
-
-        $route = trim($uri->path(), '/');
+        /** @var GravPage $page */
+        $page = $grav['page'];
+        $route = trim($page->rawRoute(), '/');
 
         $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
         $this->active = $route ?: $this->default;
@@ -80,7 +78,7 @@ class Menu extends AbstractMenu
         $grav = Grav::instance();
 
         // Get the menu items.
-        $pages = $grav['pages']->all()->visible();
+        $pages = $grav['pages']->all()->nonModular();
 
         // Initialize the group.
         $groups['mainmenu'] = array();
@@ -88,6 +86,10 @@ class Menu extends AbstractMenu
         // Build the options array.
         /** @var GravPage $page */
         foreach ($pages as $page) {
+            if (!$page->order()) {
+                continue;
+            }
+
             $name = trim($page->rawRoute(), '/') ?: $this->default;
             $path = explode('/', $name);
 
@@ -165,13 +167,17 @@ class Menu extends AbstractMenu
         $grav = Grav::instance();
 
         // Initialize pages.
-        $pages = $grav['pages']->all()->visible();
+        $pages = $grav['pages']->all()->nonModular();
 
         // Return flat list of routes.
         $list = [];
         $this->pages = [];
         /** @var GravPage $item */
         foreach ($pages as $item) {
+            if (!$item->visible()) {
+                continue;
+            }
+
             $level = substr_count($item->rawRoute(), '/');
 
             if ($levels >= 0 && $level > $levels) {
@@ -180,7 +186,7 @@ class Menu extends AbstractMenu
 
             $name = trim($item->rawRoute(), '/') ?: $this->default;
             $id = preg_replace('|[^a-z0-9]|i', '-', $name);
-            $parent_id = dirname($name) != '.' ? dirname($name) : 'root';
+            $parent_id = \dirname($name) !== '.' ? \dirname($name) : 'root';
 
             $list[$name] = [
                 'id' => $id,
@@ -195,7 +201,7 @@ class Menu extends AbstractMenu
                 'image' => '',
                 'subtitle' => '',
                 'icon_only' => false,
-                'visible' => true,
+                'visible' => $item->visible(),
                 'group' => 0,
                 'columns' => [],
                 'level' => $level,
@@ -262,13 +268,13 @@ class Menu extends AbstractMenu
 
             $item = new Item($this, $name, $data);
 
-            if (!in_array($item->type, ['module', 'particle']) && !isset($gravItems[$name])) {
+            if (!isset($gravItems[$name]) && !\in_array($item->type, ['module', 'particle'], true)) {
                 // Ignore removed menu items.
                 continue;
             }
 
             // Placeholder page.
-            if ($item->type == 'link' && !isset($this->pages[$item->path])) {
+            if ($item->type === 'link' && !isset($this->pages[$item->path])) {
                 $item->type = 'separator';
             }
 
@@ -287,7 +293,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    if ($item->link == '/' . $this->default) {
+                    if ($item->link === '/' . $this->default) {
                         // Deal with home page.
                         $item->url('/');
                     } else {

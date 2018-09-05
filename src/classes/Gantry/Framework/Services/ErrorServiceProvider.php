@@ -65,5 +65,9 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $errors->register();
 
         $container['errors'] = $errors;
+
+        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setErrorHandler')) {
+            \Gantry\Debugger::setErrorHandler();
+        }
     }
 }

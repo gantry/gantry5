@@ -61,7 +61,7 @@ class Theme extends AbstractTheme
             }
 
             // Force html escaping strategy.
-            $twig->getExtension('escaper')->setDefaultStrategy('html');
+            $twig->getExtension('Twig_Extension_Escaper')->setDefaultStrategy('html');
 
             $this->setTwigLoaderPaths($loader);
 

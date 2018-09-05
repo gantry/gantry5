@@ -15,7 +15,7 @@ namespace Gantry\Joomla\Object;
  *
  *
  */
-abstract class Object extends \JObject
+abstract class AbstractObject extends \JObject
 {
     /**
      * If you don't have global instance ids, override this in extending class.

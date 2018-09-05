@@ -217,7 +217,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
         if ($this->production) {
             // Open the file to see if it contains development comment in the beginning of the file.
-            $handle = fopen($path, "rb");
+            $handle = fopen($path, 'rb');
             $contents = fread($handle, 36);
             fclose($handle);
 
@@ -249,13 +249,13 @@ abstract class CssCompiler implements CssCompilerInterface
         $metaFile->free();
 
         // Check if filename in meta file matches.
-        if (empty($content['file']) || $content['file'] != $out) {
+        if (empty($content['file']) || $content['file'] !== $out) {
             $this->setVariables($variables());
             return true;
         }
 
         // Check if meta timestamp matches to CSS file.
-        if (filemtime($path) != $content['timestamp']) {
+        if (filemtime($path) !== $content['timestamp']) {
             $this->setVariables($variables());
             return true;
         }
@@ -282,7 +282,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
         foreach ($imports as $resource => $timestamp) {
             $import = $locator->isStream($resource) ? $locator->findResource($resource) : realpath($resource);
-            if (!$import || filemtime($import) != $timestamp) {
+            if (!$import || filemtime($import) !== $timestamp) {
                 return true;
             }
         }
@@ -351,7 +351,7 @@ abstract class CssCompiler implements CssCompilerInterface
             $checksum = md5(GANTRY5_VERSION . ' ' . Gantry::instance()['theme']->version);
         }
 
-        return '/*' . substr($checksum, 0, $len - 4) . "*/";
+        return '/*' . substr($checksum, 0, $len - 4) . '*/';
     }
 
     protected function createMeta($out, $md5)

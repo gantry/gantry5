@@ -747,18 +747,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     {
         $index = null;
         if ($this->name) {
-            $gantry = Gantry::instance();
-
-            /** @var UniformResourceLocator $locator */
-            $locator = $gantry['locator'];
-
-            // Attempt to load the index file.
-            $indexFile = $locator("gantry-config://{$this->name}/index.yaml");
-            if ($indexFile) {
-                $file = CompiledYamlFile::instance($indexFile);
-                $index = $file->content();
-                $file->free();
-            }
+            $index = static::loadIndexFile($this->name);
         }
 
         $inheriting = $this->inherit();
@@ -860,6 +849,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
 
                 if (isset($item->id)) {
+                    if (isset($this->references[$item->id])) {
+                        if ($type === 'block' || $type === 'grid') {
+                            $item->id = $this->id($type, $subtype);
+                        }
+//                        elseif (null === $inherit) {
+//                            throw new \RuntimeException('Layout reference conflict on #' . $item->id);
+//                        }
+                    }
                     $this->references[$item->id] = $item;
                     $this->types[$type][$subtype][$item->id] = $item;
 
@@ -1026,12 +1023,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return new static($name, $layout);
     }
 
-    /**
-     * @param  string $name
-     * @param  bool   $autoSave
-     * @return array
-     */
-    public static function loadIndex($name, $autoSave = false)
+    protected static function loadIndexFile($name)
     {
         $gantry = Gantry::instance();
 
@@ -1047,6 +1039,23 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         } else {
             $index = [];
         }
+
+        return $index;
+    }
+
+    /**
+     * @param  string $name
+     * @param  bool   $autoSave
+     * @return array
+     */
+    public static function loadIndex($name, $autoSave = false)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $index = static::loadIndexFile($name);
 
         // Find out the currently used layout file.
         $layoutFile = $locator("gantry-config://{$name}/layout.yaml");

@@ -75,7 +75,7 @@ abstract class RealLoader
                 define('GANTRY5_ROOT', preg_replace('|' . preg_quote(CONTENT_DIR). '$|', '', WP_CONTENT_DIR));
             } else {
                 // Plain WP support.
-                define('GANTRY5_ROOT', ABSPATH);
+                define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
             }
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');

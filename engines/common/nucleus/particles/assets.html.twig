@@ -1,22 +1,40 @@
 {% spaceless %}
 {% if (particle.enabled) %}
     {% for css in particle.css %}
+        {% set params = {} %}
+        {% if css.extra %}
+            {% for attributes in css.extra %}
+                {% for key, value in attributes %}
+                    {% set params = params|default({})|merge({(key): value}) %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
         {% if css.location %}
-            {% do gantry.document.addStyle(css.extra|default({})|merge({href: css.location}), css.priority) %}
+            {% do gantry.document.addStyle(params|default({})|merge({href: css.location}), css.priority) %}
         {% endif %}
 
         {% if css.inline %}
-            {% do gantry.document.addInlineStyle(css.extra|default({})|merge({content: css.inline}), css.priority) %}
+            {% do gantry.document.addInlineStyle(params|default({})|merge({content: css.inline}), css.priority) %}
         {% endif %}
     {% endfor %}
 
     {% for script in particle.javascript %}
+        {% set params = {} %}
+        {% if script.extra %}
+            {% for attributes in script.extra %}
+                {% for key, value in attributes %}
+                    {% set params = params|default({})|merge({(key): value}) %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
         {% if script.location %}
-            {% do gantry.document.addScript(script.extra|default({})|merge({src: script.location}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
+            {% do gantry.document.addScript(params|default({})|merge({src: script.location}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
         {% endif %}
 
         {% if script.inline %}
-            {% do gantry.document.addInlineScript(script.extra|default({})|merge({content: script.inline}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
+            {% do gantry.document.addInlineScript(params|default({})|merge({content: script.inline}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
         {% endif %}
     {% endfor %}
 {% endif %}

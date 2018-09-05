@@ -4,6 +4,11 @@ type: archive
 
 form:
   fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Display content.
+      default: 1
 
     type:
       type: select.select
@@ -13,6 +18,14 @@ form:
       options:
         content: Content
         excerpt: Excerpt
+        gexcerpt: Generated Excerpt
+
+    gexcerpt-length:
+        type: input.number
+        label: Excerpt Length
+        description: Length of generated excerpt (in words)
+        default: 50
+        min: 1
 
     columns:
       type: select.select

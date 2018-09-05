@@ -11,27 +11,29 @@
  * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
  */
 
-namespace Gantry\Component\Twig;
+namespace Gantry\Component\Twig\TokenParser;
+
+use Gantry\Component\Twig\Node\TwigNodeTryCatch;
 
 /**
- * Tests a condition.
+ * Handles try/catch in template file.
  *
  * <pre>
  * {% try %}
  *    <li>{{ user.get('name') }}</li>
  * {% catch %}
- *  {{ e }}
- * {% endtry %}
+ *    {{ e.message }}
+ * {% endcatch %}
  * </pre>
  */
-class TokenParserTry extends \Twig_TokenParser
+class TokenParserTryCatch extends \Twig_TokenParser
 {
     /**
      * Parses a token and returns a node.
      *
      * @param \Twig_Token $token A Twig_Token instance
      *
-     * @return \Twig_NodeInterface A Twig_NodeInterface instance
+     * @return \Twig_Node A Twig_Node instance
      */
     public function parse(\Twig_Token $token)
     {
@@ -46,7 +48,7 @@ class TokenParserTry extends \Twig_TokenParser
         $stream->next();
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new TwigNodeTry($try, $catch, $lineno, $this->getTag());
+        return new TwigNodeTryCatch($try, $catch, $lineno, $this->getTag());
     }
 
     public function decideCatch(\Twig_Token $token)
@@ -56,7 +58,7 @@ class TokenParserTry extends \Twig_TokenParser
 
     public function decideEnd(\Twig_Token $token)
     {
-        return $token->test(array('endtry'));
+        return $token->test(array('endtry')) || $token->test(array('endcatch'));
     }
 
     /**

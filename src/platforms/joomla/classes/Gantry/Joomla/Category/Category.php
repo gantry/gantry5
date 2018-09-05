@@ -11,9 +11,9 @@
 namespace Gantry\Joomla\Category;
 
 use Gantry\Framework\Gantry;
-use Gantry\Joomla\Object\Object;
+use Gantry\Joomla\Object\AbstractObject;
 
-class Category extends Object
+class Category extends AbstractObject
 {
     static protected $instances = [];
 

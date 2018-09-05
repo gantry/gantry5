@@ -118,7 +118,7 @@ class Document extends HtmlDocument
         }
 
         // Always append domain in WP.
-        return $domain;
+        return $addDomain !== null ? $domain : '';
     }
 
     public static function siteUrl()

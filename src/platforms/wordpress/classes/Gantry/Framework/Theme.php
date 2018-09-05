@@ -57,7 +57,7 @@ class Theme extends AbstractTheme
 
         $context['current_user'] = $this->user;
 
-        if (function_exists('is_rtl')) {
+        if (\function_exists('is_rtl')) {
             $context['is_rtl'] = is_rtl();
         }
 
@@ -353,6 +353,18 @@ class Theme extends AbstractTheme
         return $filetypes;
     }
 
+    /**
+     * Register menu locations.
+     */
+    public function register_nav_menus()
+    {
+        // TODO: Not implemented
+        $locations = [];
+        foreach ($locations as $key => $val) {
+            \register_nav_menu($key, $val);
+        }
+    }
+
     public function install()
     {
         $installer = new ThemeInstaller($this->name);
@@ -415,7 +427,7 @@ class Theme extends AbstractTheme
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
         add_filter('timber_compile_result', [$this, 'postProcessOutput']);
         add_filter('wp_theme_editor_filetypes', [$this, 'extend_theme_editor_filetypes']);
-        add_filter('get_twig', [$this, 'extendTwig'], 100);
+        add_filter('timber/twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
         add_filter('widget_text', [$this, 'url_filter'], 0);
@@ -429,6 +441,7 @@ class Theme extends AbstractTheme
         add_action('init', [$this, 'register_taxonomies']);
         add_action('init', [$this, 'register_menus']);
 
+//        add_action('after_setup_theme', [$this, 'register_nav_menus']);
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);

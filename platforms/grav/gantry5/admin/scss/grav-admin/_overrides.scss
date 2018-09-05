@@ -1,0 +1,45 @@
+.ga-theme-17x {
+
+  // Override Vars
+  $header-text-color: #3D424E;
+  $footer-background-color: #f0f0f0;
+
+  #admin-main .content-padding {
+    padding: 0;
+  }
+
+  #g5-container {
+
+    #main-header{
+      z-index: 4;
+      color: $header-text-color;
+
+      .g-content {
+        padding: 0 30px !important;
+      }
+
+      .theme-title i {
+        margin-right: 0;
+      }
+
+      ul {
+        li {
+          a {
+            color: $header-text-color;
+          }
+        }
+        li a:focus, li:hover a, li.active a {
+          color: $white;
+        }
+      }
+    }
+
+    #footer {
+      background: $footer-background-color;
+      margin-top: 0;
+      border-top: 0;
+    }
+
+  }
+
+}

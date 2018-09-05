@@ -1,3 +1,117 @@
+# 5.4.25
+## mm/dd/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Added twig tag `{% markdown %}...{% endmarkdown %}`
+        - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
+        - Made `gantry` twig variable global so it can be used inside macros
+    1. [](#improved)
+        - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
+        - Added twig/yaml deprecation warnings into DebugBar (if installed)
+        - Updated Google Fonts (as of 21 August 2018)
+    1. [](#bugfix)
+        - Fixed JS loading issues with Content Tabs and Owl Carousel particles
+        - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
+        - Fixed exception when using `|markdown` filter with images (#2350)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Optionally use content.prepare in contentarray (#2340, thanks @Chrissi2812)
+        - Hydrogen / Helium: System messages particle isn't AJAX compatible (#2294)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed broken language strings when using official WP translations (#2329)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed child menu items not appearing (#2327)
+        - Fixed active menu issue in multilang environment (#2315)
+
+# 5.4.24
+## 07/04/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `Lightcase` to v2.4.4 (#2205)
+        - Helium: Updated OwlCarousel to v2.3.4
+        - Added `head_top`, `head_meta` and `head_bottom` options for `pageblock` twig tag allowing particles to inject custom tags into <head> (#2303)
+    1. [](#improved)
+        - Helium: Reworked parts of the OwlCarousel SCSS theme styling
+        - Helium: Add possibility to add CSS Classes to individual OwlCarousel items (#2201)
+        - Helium: Add possibility to disable single OwlCarousel item on the front end (#2286)
+    1. [](#bugfix)
+        - Fixed `Lightcase` hardcoded values for maxWidth and maxHeight (#2182)
+        - Updated `Lightcase` default values for video width and height to 1280x720 (#2182)
+        - Fixed Content Array particle having extra override checkbox on admin (#2307)
+        - Fixed issue where clearing inheritance was throwing `array_intersect_key(): Argument #1 is not an array` error (#2257)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
+    1. [](#bugfix)
+        - Fixed `The menu selected is empty` in Gantry 5 Menu Editor if there is no default menu item (#2320)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Implemented `|markdown` filter for Twig (#2297)
+        - Updated Timber to v1.7.1
+    1. [](#bugfix)
+        - Fixed broken SCSS map files (#2243)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed Grav duplicating pages and causing fatal errors when saving the menu (#2070)
+        - Added detection for duplicate page folders before saving menu and instruct user to fix the issue in his filesystem
+
+# 5.4.23
+## 02/20/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated `scssphp` to v0.7.5
+        - Development Mode: Started using CSS Source Maps instead of inline comments
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.6.0
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Added Grav Admin 1.7 styling compatibility for Gantry UI (#2236)
+
+# 5.4.22
+## 12/12/2017
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Regression: Removed layout reference conflict check to prevent issues with inheritance and with older layouts
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed PHP 7.2 warning when using Joomla articles and categories in particles (#2188)
+
+# 5.4.21
+## 12/12/2017
+
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Regression: PHP 7.2 warning fix in admin broke links from Joomla Template Manager (#2194)
+
+# 5.4.20
+## 12/11/2017
+
+1. [Common](#common)
+    1. [](#improved)
+        - Remove a deprecated `Twig_Extension` function
+    1. [](#bugfix)
+        - Fixed PHP 7.2 warning when compiling SCSS
+        - Fixed PHP 7.2 warning when using older layout format
+        - Parts of inherited layouts break randomly in Layout Manager causing layout corruption if saved (#1460)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed PHP 7.2 warning in admin
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Helium/Hydrogen: you can now disable Content display in Blog and Archive-type views
+    1. [](#bugfix)
+        - Fixed directory lookup issue on WordPress.com Business instances (possible fix for other MS installations) (#2179)
+        - Fixed plugin and theme packages because of a build script issue (#2154)
+        - Fixed missing `title` attribute for the menu items (#2107)
+        - Fixed potentially registering same extension `GantryTwig` twice (#2034)
+
 # 5.4.19
 ## 10/18/2017
 
@@ -5,9 +119,13 @@
     1. [](#bugfix)
         - This release addresses a false positive issue by ClamAV. Please upgrade to this latest version as soon as possible.
         - Fixed issue with inhering an empty section, not properly clearing out particles in the current one (#2137)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.5.2
+        - Helium/Hydrogen: added option for auto-generated excerpts
 1. [Grav](#grav)
     1. [](#bugfix)
-        - Fix broken AJAX if `Absolute URLs` in Grav has been turned on
+        - Fixed broken AJAX if `Absolute URLs` in Grav has been turned on
 
 # 5.4.18
 ## 09/21/2017
