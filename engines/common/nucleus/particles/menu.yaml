@@ -69,3 +69,9 @@ form:
       label: Mobile Target
       description: Check this field if you want this menu to become the target for Mobile Menu and to appear in Offcanvas
       default: 0
+
+    forceTarget:
+      type: input.checkbox
+      label: Force Target Attribute
+      description: Adds 'target="_self"' attribute to all menu items. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab.
+      default: 0

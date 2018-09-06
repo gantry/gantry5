@@ -11,6 +11,7 @@
         - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
         - Added twig/yaml deprecation warnings into DebugBar (if installed)
         - Updated Google Fonts (as of 21 August 2018)
+        - Added option to Menu particle to force `target="_self"` attribute on (#2273, thanks @thexmanxyz)
     1. [](#bugfix)
         - Fixed JS loading issues with Content Tabs and Owl Carousel particles
         - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
