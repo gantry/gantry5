@@ -3,6 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
+        - Added twig tag `{% throw 404 'Not Found' %}` with user selected error code and message
         - Added twig tag `{% markdown %}...{% endmarkdown %}`
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
         - Made `gantry` twig variable global so it can be used inside macros
