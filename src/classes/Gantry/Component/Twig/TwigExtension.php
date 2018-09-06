@@ -63,7 +63,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
-            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => true]),
+            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['all']]),
         ];
 
         if (1 || GANTRY5_PLATFORM !== 'grav') {
@@ -75,9 +75,9 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
 
                 // Casting values
                 new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
-                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => true]),
+                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
                 new \Twig_SimpleFilter('bool', [$this, 'boolFilter']),
-                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => true]),
+                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
                 new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
             ]);
         }
