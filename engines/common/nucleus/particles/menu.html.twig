@@ -41,7 +41,7 @@
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
         {% set parent = item.children ? ' g-parent' %}
-        {% set target = item.target != '_self' ? ' target="' ~ item.target|e ~ '"' %}
+        {% set target = (item.target != '_self' or item.target_force) ? ' target="' ~ item.target|e ~ '"' %}
         {% set rel = item.rel ? ' rel="' ~ item.rel|e ~ '"' %}
 
         <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
