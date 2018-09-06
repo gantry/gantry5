@@ -25,7 +25,7 @@ use Gantry\Component\Twig\Node\TwigNodeMarkdown;
  * 2. This is another item in that same list
  * {% endmarkdown %}
  */
-class TwigTokenParserMarkdown extends \Twig_TokenParser
+class TokenParserMarkdown extends \Twig_TokenParser
 {
     /**
      * {@inheritdoc}

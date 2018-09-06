@@ -21,9 +21,9 @@ use Gantry\Component\Twig\TokenParser\TokenParserAssets;
 use Gantry\Component\Twig\TokenParser\TokenParserScripts;
 use Gantry\Component\Twig\TokenParser\TokenParserStyles;
 use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
-use Gantry\Component\Twig\TokenParser\TwigTokenParserMarkdown;
-use Gantry\Component\Twig\TokenParser\TwigTokenParserSwitch;
-use Gantry\Component\Twig\TokenParser\TwigTokenParserThrow;
+use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
+use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
+use Gantry\Component\Twig\TokenParser\TokenParserThrow;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
@@ -123,10 +123,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new TokenParserAssets(),
             new TokenParserScripts(),
             new TokenParserStyles(),
-            new TwigTokenParserThrow(),
+            new TokenParserThrow(),
             new TokenParserTryCatch(),
-            new TwigTokenParserMarkdown(),
-            new TwigTokenParserSwitch()
+            new TokenParserMarkdown(),
+            new TokenParserSwitch()
         ];
     }
 

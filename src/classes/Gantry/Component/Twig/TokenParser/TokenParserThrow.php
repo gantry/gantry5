@@ -22,7 +22,7 @@ use Gantry\Component\Twig\Node\TwigNodeThrow;
  * {% throw 404 'Not Found' %}
  * </pre>
  */
-class TwigTokenParserThrow extends \Twig_TokenParser
+class TokenParserThrow extends \Twig_TokenParser
 {
     /**
      * Parses a token and returns a node.
