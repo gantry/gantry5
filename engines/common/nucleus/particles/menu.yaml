@@ -73,5 +73,5 @@ form:
     forceTarget:
       type: input.checkbox
       label: Force Target Attribute
-      description: Adds 'target="_self"' attribute to all menu items. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab.
+      description: "Adds 'target=&quot;_self&quot;' attribute to all menu links instead of omitting the default value. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab."
       default: 0
