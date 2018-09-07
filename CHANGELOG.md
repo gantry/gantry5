@@ -8,7 +8,6 @@
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
         - Added twig filter `|nicetime` for 'n days ago' etc
         - Made `gantry` twig variable global so it can be used inside macros
-       
     1. [](#improved)
         - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
         - Added twig/yaml deprecation warnings into DebugBar (if installed)
@@ -18,6 +17,7 @@
         - Fixed JS loading issues with Content Tabs and Owl Carousel particles
         - Fixed style and script attributes handled as array (#2191, thanks @Chrissi2812)
         - Fixed exception when using `|markdown` filter with images (#2350)
+        - Allow `{% scripts %}`, `{% styles %}` and `{% assets %}` outside of the block content (#2217)
 1. [Joomla](#joomla)
     1. [](#new)
         - Optionally use content.prepare in contentarray (#2340, thanks @Chrissi2812)

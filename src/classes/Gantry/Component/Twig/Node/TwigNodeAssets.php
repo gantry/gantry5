@@ -13,7 +13,7 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodeAssets extends \Twig_Node implements \Twig_NodeOutputInterface
+class TwigNodeAssets extends \Twig_Node implements \Twig_NodeCaptureInterface
 {
     protected $tagName = 'assets';
 
@@ -50,6 +50,6 @@ class TwigNodeAssets extends \Twig_Node implements \Twig_NodeOutputInterface
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
             ->write("\$content = ob_get_clean();\n")
-            ->write("echo \$assetFunction(\$content, \$location, \$priority);\n");
+            ->write("\$assetFunction(\$content, \$location, \$priority);\n");
     }
 }
