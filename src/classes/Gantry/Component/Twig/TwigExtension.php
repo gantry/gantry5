@@ -72,6 +72,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
                 new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
                 new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
                 new \Twig_SimpleFilter('markdown', [$this, 'markdownFunction'], ['is_safe' => ['html']]),
+                new \Twig_SimpleFilter('nicetime', [$this, 'nicetimeFilter']),
 
                 // Casting values
                 new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
@@ -574,6 +575,93 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         $contrast = $yiq || (!$opacity || (float) $opacity < 0.35);
 
         return $contrast;
+    }
+
+    /**
+     * Displays a facebook style 'time ago' formatted date/time.
+     *
+     * @param string|int $date
+     * @param bool $long_strings
+     *
+     * @return string
+     */
+    public function nicetimeFilter($date, $long_strings = true)
+    {
+        static $lengths = [60, 60, 24, 7, 4.35, 12, 10];
+        static $periods_long = [
+            'GANTRY5_ENGINE_NICETIME_SECOND',
+            'GANTRY5_ENGINE_NICETIME_MINUTE',
+            'GANTRY5_ENGINE_NICETIME_HOUR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WEEK',
+            'GANTRY5_ENGINE_NICETIME_MONTH',
+            'GANTRY5_ENGINE_NICETIME_YEAR',
+            'GANTRY5_ENGINE_NICETIME_DECADE'
+        ];
+        static $periods_short = [
+            'GANTRY5_ENGINE_NICETIME_SEC',
+            'GANTRY5_ENGINE_NICETIME_MIN',
+            'GANTRY5_ENGINE_NICETIME_HR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WK',
+            'GANTRY5_ENGINE_NICETIME_MO',
+            'GANTRY5_ENGINE_NICETIME_YR',
+            'GANTRY5_ENGINE_NICETIME_DEC'
+        ];
+
+        if (empty($date)) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_NO_DATE_PROVIDED');
+        }
+
+        $periods = $long_strings ? $periods_long : $periods_short;
+
+        $now = time();
+
+        // check if unix timestamp
+        if ((string)(int)$date === (string)$date) {
+            $unix_date = (int)$date;
+        } else {
+            $unix_date = strtotime($date);
+        }
+
+        // check validity of date
+        if (!$unix_date) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_BAD_DATE');
+        }
+
+        // is it future date or past date
+        if ($now > $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_AGO');
+
+        } else if ($now === $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_JUST_NOW');
+
+        } else {
+            $difference = $unix_date - $now;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_FROM_NOW');
+        }
+
+
+        for ($j = 0; $difference >= $lengths[$j] && $j < \count($lengths) - 1; $j++) {
+            $difference /= $lengths[$j];
+        }
+        $period = $periods[$j];
+
+        $difference = round($difference);
+
+        if ($difference !== 1) {
+            $period .= '_PLURAL';
+        }
+
+        $period = $this->transFilter($period);
+
+        if ($now === $unix_date) {
+            return $tense;
+        }
+
+        return "{$difference} {$period} {$tense}";
     }
 
     public function getCookie($name)

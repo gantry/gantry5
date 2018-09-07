@@ -6,7 +6,9 @@
         - Added twig tag `{% throw 404 'Not Found' %}` with user selected error code and message
         - Added twig tag `{% markdown %}...{% endmarkdown %}`
         - Added twig tag `{% switch type %}{% case 'foo' %}...{% default %}...{% endswitch %}`
+        - Added twig filter `|nicetime` for 'n days ago' etc
         - Made `gantry` twig variable global so it can be used inside macros
+       
     1. [](#improved)
         - Updated deprecated Twig code so it works in both in Twig 1.34+ and Twig 2.4+
         - Added twig/yaml deprecation warnings into DebugBar (if installed)
