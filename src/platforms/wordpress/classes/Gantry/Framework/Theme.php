@@ -486,7 +486,12 @@ class Theme extends AbstractTheme
 
         // Load theme text domains
         $domain = $this->details()->get('configuration.gantry.engine');
-        load_theme_textdomain($domain, $this->path . '/languages');
+        $lookup = GANTRY5_PATH . '/engines/' . $domain . '/languages';
+        if (!file_exists($lookup)) {
+            $lookup = GANTRY5_PATH . '/engines/wordpress/' . $domain . '/languages';
+        }
+        load_plugin_textdomain($domain, false, $lookup);
+
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         load_theme_textdomain($domain, $this->path . '/languages');
 

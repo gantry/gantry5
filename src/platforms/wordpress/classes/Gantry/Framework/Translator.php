@@ -25,7 +25,7 @@ class Translator extends BaseTranslator
         $translated = $textdomain ? \__($string, $textdomain) : $string;
 
         if ($translated === $string) {
-            $translated = \__($string, Gantry::instance()['theme']->details()->get('configuration.gantry.engine'));
+            $translated = \__($string, Gantry::instance()['theme']->details()->get('configuration.gantry.engine', 'nucleus'));
         }
 
         if ($translated === $string) {
