@@ -17,15 +17,17 @@ class Translator extends BaseTranslator
     public function translate($string)
     {
         static $textdomain;
+        static $enginedomain;
 
         if (null === $textdomain) {
             $textdomain = Gantry::instance()['theme']->details()->get('configuration.theme.textdomain', false);
+            $enginedomain = Gantry::instance()['theme']->details()->get('configuration.gantry.engine', 'nucleus');
         }
 
         $translated = $textdomain ? \__($string, $textdomain) : $string;
 
         if ($translated === $string) {
-            $translated = \__($string, Gantry::instance()['theme']->details()->get('configuration.gantry.engine', 'nucleus'));
+            $translated = \__($string, $enginedomain);
         }
 
         if ($translated === $string) {
