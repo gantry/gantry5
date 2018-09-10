@@ -1,3 +1,10 @@
+# 5.4.26
+## mm/dd/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Composer update
+
 # 5.4.25
 ## 09/10/2018
 
