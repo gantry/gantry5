@@ -2,8 +2,8 @@
 ## mm/dd/2018
 
 1. [Common](#common)
-    1. [](#new)
-        - Composer update
+    1. [](#bugfix)
+        - Fixed regression `Class 'Gantry\Component\Twig\TwigNodePageblock' not found`
 
 # 5.4.25
 ## 09/10/2018

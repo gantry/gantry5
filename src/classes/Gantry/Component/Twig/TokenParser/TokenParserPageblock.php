@@ -13,7 +13,7 @@
 
 namespace Gantry\Component\Twig\TokenParser;
 
-use Gantry\Component\Twig\TwigNodePageblock;
+use Gantry\Component\Twig\Node\TwigNodePageblock;
 
 /**
  * Adds javascript / style assets to head/footer/custom location.
