@@ -485,6 +485,8 @@ class Theme extends AbstractTheme
         $this->preset_styles_init();
 
         // Load theme text domains
+        $domain = $this->details()->get('configuration.gantry.engine');
+        load_theme_textdomain($domain, $this->path . '/languages');
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         load_theme_textdomain($domain, $this->path . '/languages');
 
