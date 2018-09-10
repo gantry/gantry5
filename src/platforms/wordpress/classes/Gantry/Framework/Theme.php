@@ -386,6 +386,15 @@ class Theme extends AbstractTheme
         return $locator->mergeResources(['gantry-theme://views', 'gantry-engine://views']);
     }
 
+    public function addMenuMeta($menu_item)
+    {
+        $meta = \get_post_meta($menu_item->ID, '_menu_item_gantry5', true);
+
+        $menu_item->gantry = $meta ? json_decode($meta, true) : [];
+
+        return $menu_item;
+    }
+
     /**
      * @see AbstractTheme::init()
      */
@@ -437,6 +446,10 @@ class Theme extends AbstractTheme
         add_filter('widget_content', 'do_shortcode');
         add_filter('widget_update_callback', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesUpdate'], 10, 4);
         add_filter('dynamic_sidebar_params', ['\Gantry\WordPress\Widgets', 'widgetCustomClassesSidebarParams'], 9);
+
+        // Menu
+        add_filter('wp_setup_nav_menu_item', [$this, 'addMenuMeta']);
+
 
         add_action('init', [$this, 'register_post_types']);
         add_action('init', [$this, 'register_taxonomies']);

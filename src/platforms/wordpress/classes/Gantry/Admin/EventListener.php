@@ -10,6 +10,7 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\Config;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
@@ -70,25 +71,6 @@ class EventListener implements EventSubscriberInterface
          * https://github.com/WordPress/WordPress/blob/master/wp-admin/nav-menus.php#L65
          */
 
-        $defaults = [
-            'id' => 0,
-            'layout' => 'list',
-            'target' => '_self',
-            'dropdown' => '',
-            'icon' => '',
-            'image' => '',
-            'subtitle' => '',
-            'icon_only' => false,
-            'visible' => true,
-            'group' => 0,
-            'columns' => [],
-            'link_title' => '',
-            'hash' => '',
-            'class' => '',
-            'anchor_class' => '',
-            'enabled' => 1,
-        ];
-
         $menu = $event->menu;
 
         $menus = array_flip($event->gantry['menu']->getMenus());
@@ -128,8 +110,10 @@ class EventListener implements EventSubscriberInterface
 
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
         $ordering = $this->flattenOrdering($menu['ordering']);
+        $this->embedMeta($menu['ordering'],$menu);
 
         foreach ($menu['items'] as $key => $item) {
+            $wpItem = null;
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
                     $item['object_id'] = (int)$item['object_id'];
@@ -149,7 +133,7 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-url' => $wpItem->url,
                     'menu-item-description' => $wpItem->description,
                     'menu-item-attr-title' => $wpItem->attr_title,
-                    'menu-item-target' => $item['target'] != '_self' ? $item['target'] : '',
+                    'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
                     'menu-item-classes' => trim($item['class']),
                     'menu-item-xfn' => $wpItem->xfn
                 ];
@@ -159,30 +143,61 @@ class EventListener implements EventSubscriberInterface
                 unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
             }
 
-            $item['enabled'] = (int) $item['enabled'];
-
-            // Do not save default values.
-            foreach ($defaults as $var => $value) {
-                if (isset($item[$var]) && $item[$var] == $value) {
-                    unset($item[$var]);
-                }
-            }
-
-            // Do not save derived values.
-            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
-
-            // Do not save WP variables we do not use.
-            unset($item['rel'], $item['attr_title']);
-
-            // Particles have no link.
-            if (isset($item['type']) && $item['type'] === 'particle') {
-                unset($item['link']);
-            }
+            $item = $this->normalizeMenuItem($item);
 
             $event->menu["items.{$key}"] = $item;
+
+            if ($wpItem) {
+                update_post_meta($wpItem->db_id, '_menu_item_gantry5', json_encode($item));
+            }
         }
 
         wp_defer_term_counting(false);
+    }
+
+    protected function normalizeMenuItem(array $item)
+    {
+        static $defaults = [
+            'id' => 0,
+            'layout' => 'list',
+            'target' => '_self',
+            'dropdown' => '',
+            'icon' => '',
+            'image' => '',
+            'subtitle' => '',
+            'icon_only' => false,
+            'visible' => true,
+            'group' => 0,
+            'columns' => [],
+            'link_title' => '',
+            'hash' => '',
+            'class' => '',
+            'anchor_class' => '',
+            'enabled' => 1,
+        ];
+
+        $item['enabled'] = (int) $item['enabled'];
+
+        // Do not save default values.
+        foreach ($defaults as $var => $value) {
+            if (isset($item[$var]) && $item[$var] == $value) {
+                unset($item[$var]);
+            }
+        }
+
+        // Do not save derived values.
+        unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
+
+        // Do not save WP variables we do not use.
+        unset($item['rel'], $item['attr_title']);
+
+        // Particles have no link.
+        if (isset($item['type']) && $item['type'] === 'particle') {
+            unset($item['link']);
+        }
+
+        return $item;
+
     }
 
     protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
@@ -196,11 +211,43 @@ class EventListener implements EventSubscriberInterface
                 $name = implode('/', $tree);
                 $list[$name] = ++$i;
             }
-            if (is_array($children)) {
+            if (\is_array($children)) {
                 $list += $this->flattenOrdering($children, $tree, $i);
             }
         }
 
         return $list;
+    }
+
+    protected function embedMeta(array $ordering, Config $menu, $parents = [], $pos = 0)
+    {
+        $isGroup = isset($ordering[0]);
+        $name = implode('/', $parents);
+
+        $counts = [];
+        foreach ($ordering as $id => $children) {
+            $tree = $parents;
+            if ($isGroup) {
+                $counts[] = \count($children);
+            } else {
+                $tree[] = $id;
+
+                if (preg_match('/^(__particle|__widget)/', $id)) {
+                    $extra = $menu["items.{$name}.extra"] ?: [];
+                    // Embed particle into the menu item.
+                    $extra[$pos] = ['id' => $id] + $this->normalizeMenuItem($menu["items.{$name}/{$id}"]);
+                    $menu["items.{$name}.extra"] = $extra;
+                }
+            }
+            if (\is_array($children)) {
+                $this->embedMeta($children, $menu, $tree, $isGroup ? $pos : 0);
+            }
+
+            $pos += \count($children);
+        }
+
+        if ($isGroup) {
+            $menu["items.{$name}.columns_count"] = $counts;
+        }
     }
 }

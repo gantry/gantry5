@@ -133,7 +133,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (!$params['menu']) {
             throw new \RuntimeException('No menu selected', 404);
         }
-        if (!in_array($params['menu'], $menus)) {
+        if (!\in_array($params['menu'], $menus)) {
             throw new \RuntimeException('Menu not found', 404);
         }
 
@@ -215,7 +215,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $list = [];
         foreach ($this->items as $name => $item) {
             $groups = $item->groups();
-            if (count($groups) === 1 && empty($groups[0])) {
+            if (\count($groups) === 1 && empty($groups[0])) {
                 continue;
             }
 
@@ -437,7 +437,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                     $order[$key] = $value;
                 }
 
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                 }
             }
@@ -452,7 +452,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                         $order[$i][$key] = $value;
                     }
 
-                    if (is_array($value)) {
+                    if (\is_array($value)) {
                         $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                     }
                 }

@@ -98,7 +98,7 @@ class Menu extends AbstractMenu
     }
 
     protected function getWPMenu($params) {
-        if (!isset($this->wp_menu)) {
+        if (null === $this->wp_menu) {
             $menus = array_flip($this->getMenus());
             if (isset($menus[$params['menu']])) {
                 $this->wp_menu = new \TimberMenu($menus[$params['menu']]);
@@ -208,7 +208,7 @@ class Menu extends AbstractMenu
         } else {
             $tree = [];
         }
-        $item->level = count($tree);
+        $item->level = \count($tree);
         $item->tree = array_merge($tree, [$item->ID]);
         $item->path = implode('/', $item->tree);
     }
@@ -222,7 +222,7 @@ class Menu extends AbstractMenu
         }
 
         foreach ($menuItems as $menuItem) {
-            $menuItem->level = count($tree);
+            $menuItem->level = \count($tree);
             $menuItem->tree = array_merge($tree, [$menuItem->ID]);
             $menuItem->path = implode('/', $menuItem->tree);
             $list[$menuItem->ID] = $menuItem;
@@ -271,7 +271,9 @@ class Menu extends AbstractMenu
         $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = $this->getItemsFromPlatform($params);
-        if($menuItems === null) return;
+        if ($menuItems === null) {
+            return;
+        }
 
         $itemMap = [];
         foreach ($items as $path => &$itemRef) {
@@ -280,6 +282,8 @@ class Menu extends AbstractMenu
                 $itemMap[$itemRef['object_id']] = $itemRef;
             }
         }
+        unset($itemRef);
+
         $slugMap = [];
 
         // Get base menu item for this menu (defaults to active menu item).
@@ -294,7 +298,7 @@ class Menu extends AbstractMenu
 
             if (($start && $start > $menuItem->level+1)
                 || ($end && $menuItem->level+1 > $end)
-                || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
+                || ($start > 1 && !\in_array($menuItem->tree[$start - 2], $tree, true))) {
                 continue;
             }
 
@@ -310,20 +314,26 @@ class Menu extends AbstractMenu
             ];
 
             // Rest of the items will come from saved configuration.
-            if (isset($itemMap[$menuItem->object_id])) {
-                // ID found, use it.
-                $itemParams += $itemMap[$menuItem->object_id];
+            if (isset($menuItem->gantry)) {
+                // Use WP options if saved.
+                $itemParams += $menuItem->gantry;
+            } else {
+                // WP options not saved into database; use YAML configuration.
+                if (isset($itemMap[$menuItem->object_id])) {
+                    // ID found, use it.
+                    $itemParams += $itemMap[$menuItem->object_id];
 
-                // Store new path for the menu item into path map.
-                if ($slugPath !== $itemMap[$menuItem->object_id]['path']) {
-                    if (!$this->pathMap) {
-                        $this->pathMap = new Config([]);
+                    // Store new path for the menu item into path map.
+                    if ($slugPath !== $itemMap[$menuItem->object_id]['path']) {
+                        if (!$this->pathMap) {
+                            $this->pathMap = new Config([]);
+                        }
+                        $this->pathMap->set(preg_replace('|/|u', '/children/', $itemMap[$menuItem->object_id]['path']) . '/path', $slugPath, '/');
                     }
-                    $this->pathMap->set(preg_replace('|/|u', '/children/', $itemMap[$menuItem->object_id]['path']) . '/path', $slugPath, '/');
+                } elseif (isset($items[$slugPath])) {
+                    // Otherwise use the slug path.
+                    $itemParams += $items[$slugPath];
                 }
-            } elseif (isset($items[$slugPath])) {
-                // Otherwise use the slug path.
-                $itemParams += $items[$slugPath];
             }
 
             // And if not available in configuration, default to WordPress.
@@ -337,7 +347,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'custom' && $item->link == '#' || $item->link == '') {
+            if ($item->type === 'custom' && ($item->link === '#' || $item->link === '')) {
                 $item->type = 'separator';
             }
 
