@@ -24,6 +24,12 @@ form:
       description: Enter CSS class names.
       default:
 
+    variations:
+      type: input.section-variations
+      label: Variations
+      description: Enter Section Variations.
+      default:        
+
     extra:
       type: collection.keyvalue
       label: Tag Attributes
