@@ -154,6 +154,21 @@ body #admin-main .admin-block {
   right: 1rem !important;
   left: inherit !important;
 }
+#g5-container input[disabled],
+#g5-container select[disabled],
+#g5-container textarea[disabled],
+#g5-container input[readonly],
+#g5-container select[readonly],
+#g5-container textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #eee;
+}
+#g5-container input[type="radio"][disabled],
+#g5-container input[type="checkbox"][disabled],
+#g5-container input[type="radio"][readonly],
+#g5-container input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
 
 .sidebar-closed #g5-container #main-header {
   left: 4.2rem;
