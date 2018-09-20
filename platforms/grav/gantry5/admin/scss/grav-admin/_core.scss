@@ -81,24 +81,6 @@ body #admin-main .admin-block {
         right: 1rem !important;
         left: inherit !important;
     }
-
-    input[disabled],
-    select[disabled],
-    textarea[disabled],
-    input[readonly],
-    select[readonly],
-    textarea[readonly] {
-        cursor: not-allowed;
-        background-color: #eee;
-    }
-
-    input[type="radio"][disabled],
-    input[type="checkbox"][disabled],
-    input[type="radio"][readonly],
-    input[type="checkbox"][readonly] {
-        background-color: transparent;
-    }
-
 }
 
 .sidebar-closed #g5-container #main-header {

@@ -154,21 +154,6 @@ body #admin-main .admin-block {
   right: 1rem !important;
   left: inherit !important;
 }
-#g5-container input[disabled],
-#g5-container select[disabled],
-#g5-container textarea[disabled],
-#g5-container input[readonly],
-#g5-container select[readonly],
-#g5-container textarea[readonly] {
-  cursor: not-allowed;
-  background-color: #eee;
-}
-#g5-container input[type="radio"][disabled],
-#g5-container input[type="checkbox"][disabled],
-#g5-container input[type="radio"][readonly],
-#g5-container input[type="checkbox"][readonly] {
-  background-color: transparent;
-}
 
 .sidebar-closed #g5-container #main-header {
   left: 4.2rem;
@@ -369,6 +354,13 @@ body #admin-main .admin-block {
 }
 #g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
   border-color: rgba(49, 128, 194, 0.5);
+}
+#g5-container .settings-block input[disabled], #g5-container .settings-block input[readonly], #g5-container .settings-block textarea[disabled], #g5-container .settings-block textarea[readonly], #g5-container .settings-block select[disabled], #g5-container .settings-block select[readonly] {
+  cursor: not-allowed;
+  background-color: #eee;
+}
+#g5-container .settings-block input[type="radio"][disabled], #g5-container .settings-block input[type="radio"][readonly], #g5-container .settings-block input[type="checkbox"][disabled], #g5-container .settings-block input[type="checkbox"][readonly], #g5-container .settings-block textarea[type="radio"][disabled], #g5-container .settings-block textarea[type="radio"][readonly], #g5-container .settings-block textarea[type="checkbox"][disabled], #g5-container .settings-block textarea[type="checkbox"][readonly], #g5-container .settings-block select[type="radio"][disabled], #g5-container .settings-block select[type="radio"][readonly], #g5-container .settings-block select[type="checkbox"][disabled], #g5-container .settings-block select[type="checkbox"][readonly] {
+  background-color: transparent;
 }
 #g5-container .settings-block .fa {
   height: 1.3rem;
