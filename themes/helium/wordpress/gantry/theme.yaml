@@ -79,6 +79,11 @@ configuration:
   dependencies:
     gantry: 5.4.0
 
+  section-variations:
+    Utility:    
+      nomarginall: No Margin
+      nopaddingall: No Padding    
+
   block-variations:
     Title Variations:
       title1: Title 1
