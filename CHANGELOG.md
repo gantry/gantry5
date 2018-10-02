@@ -4,6 +4,9 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed regression `Class 'Gantry\Component\Twig\TwigNodePageblock' not found`
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.1
 
 # 5.4.25
 ## 09/10/2018
