@@ -1,3 +1,10 @@
+# 5.4.27
+## mm/dd/2018
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed fatal error on PHP 5.4 (#2378)
+
 # 5.4.26
 ## 09/11/2018
 
