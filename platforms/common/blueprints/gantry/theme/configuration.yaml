@@ -69,6 +69,10 @@ form:
       type: input.hidden
       array: true
 
+    section-variations:
+      type: input.hidden
+      array: true  
+
     dependencies:
       type: input.hidden
       array: true

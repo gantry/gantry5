@@ -113,16 +113,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "049797d727261bf27f2690430d935067710049c2"
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/049797d727261bf27f2690430d935067710049c2",
-                "reference": "049797d727261bf27f2690430d935067710049c2",
+                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
                 "shasum": ""
             },
             "require": {
@@ -229,7 +229,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-12-29T09:13:20+00:00"
+            "time": "2018-08-27T06:10:37+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -631,7 +631,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.45",
+            "version": "v2.8.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -749,16 +749,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.45",
+            "version": "v2.8.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467"
+                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/fbf876678e29dc634430dcf0096e216eb0004467",
-                "reference": "fbf876678e29dc634430dcf0096e216eb0004467",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/5baf0f821b14eee8ca415e6a0361a9fa140c002c",
+                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c",
                 "shasum": ""
             },
             "require": {
@@ -795,20 +795,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T09:03:18+00:00"
+            "time": "2018-08-29T13:11:53+00:00"
         },
         {
             "name": "timber/timber",
-            "version": "1.7.1",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "a6a553d70b58d9e1f7c612511b72be60b0e98248"
+                "reference": "51314124b9608de85dc0400c9a2c71caf336eb6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/a6a553d70b58d9e1f7c612511b72be60b0e98248",
-                "reference": "a6a553d70b58d9e1f7c612511b72be60b0e98248",
+                "url": "https://api.github.com/repos/timber/timber/zipball/51314124b9608de85dc0400c9a2c71caf336eb6c",
+                "reference": "51314124b9608de85dc0400c9a2c71caf336eb6c",
                 "shasum": ""
             },
             "require": {
@@ -819,8 +819,9 @@
                 "upstatement/routes": "0.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "5.7.16",
-                "wpackagist-plugin/advanced-custom-fields": "4.4.*",
+                "johnpbloch/wordpress": "4.*",
+                "phpunit/phpunit": "5.7.16|6.*",
+                "wpackagist-plugin/advanced-custom-fields": "5.*",
                 "wpackagist-plugin/co-authors-plus": "3.2.*"
             },
             "suggest": {
@@ -856,7 +857,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2018-05-21T15:00:50+00:00"
+            "time": "2018-09-30T14:50:29+00:00"
         },
         {
             "name": "twig/twig",

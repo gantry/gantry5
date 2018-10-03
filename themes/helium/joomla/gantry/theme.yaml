@@ -78,6 +78,18 @@ configuration:
   dependencies:
     gantry: 5.4.0
 
+  section-variations:
+    Padding Variations:
+      section-vertical-paddings: Section Vertical Paddings
+      section-horizontal-paddings: Section Horizontal Paddings
+      section-vertical-paddings-large: Large Vertical Paddings
+      section-horizontal-paddings-large: Large Horizontal Paddings
+      section-vertical-paddings-small: Small Vertical Paddings
+      section-horizontal-paddings-small: Small Horizontal Paddings    
+    Utility:    
+      nomarginall: No Margin
+      nopaddingall: No Padding    
+
   block-variations:
     Title Variations:
       title1: Title 1

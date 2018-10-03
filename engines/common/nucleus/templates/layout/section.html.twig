@@ -1,6 +1,7 @@
 {% set tag_type = segment.subtype|default('section') %}
 {% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
-{% set attr_class = segment.attributes.class %}
+{% set attr_class = segment.attributes.class
+    ~ (segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')) %}
 {% set attr_extra = segment.attributes.extra|attribute_array %}
 {% set boxed = segment.attributes.boxed %}
 {% if boxed is not null %}
