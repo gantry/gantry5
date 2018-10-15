@@ -264,6 +264,11 @@ class Menu extends AbstractMenu
 
             $menuItems = $this->getItemsFromPlatform($params);
 
+            // Filter hidden items
+            $menuItems = array_filter($menuItems, function($item) {
+                return $item->params->get('menu_show', null) !== 0;
+            });
+
             $itemMap = [];
             foreach ($items as $path => &$itemRef) {
                 if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
