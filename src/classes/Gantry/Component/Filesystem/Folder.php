@@ -340,7 +340,7 @@ abstract class Folder
     protected static function doDelete($folder, $include_target = true)
     {
         // Special case for symbolic links.
-        if (is_link($folder)) {
+        if (is_link($folder) && $include_target) {
             return @unlink($folder);
         }
 
