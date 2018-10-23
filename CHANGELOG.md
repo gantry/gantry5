@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
+        - Fixed `Folder::doDelete($folder, false)` removing symlinks when it shoudn't (#2396)
 1. [Joomla](#joomla)
     1. [](#new)
         - Added official Joomla 3.9 support
