@@ -4,7 +4,10 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
-
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Added official Joomla 3.9 support
+        
 # 5.4.26
 ## 09/11/2018
 
