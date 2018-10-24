@@ -1,0 +1,27 @@
+{% extends 'forms/fields/input/selectize.html.twig' %}
+
+{% block global_attributes %}
+    {% set variations = gantry.theme.details.configuration['section-variations'] %}
+    {% set Options = field.selectize.Options %}
+    {% set Optgroups = field.selectize.Optgroups %}
+    {% set options = [] %}
+    {% set optgroups = [] %}
+    {% if variations %}
+        {% for key,text in variations %}
+            {% if text is iterable %}
+                {% for item_key,item_text in text %}
+                    {% set options = options|merge([{optgroup: key, value: item_key, text: item_text}])  %}
+                    {% if key not in optgroups %}{% set optgroups = optgroups|merge([{value: key, label: key}]) %}{% endif %}
+                {%  endfor %}
+            {% else %}
+                {% set options = options|merge([{value: key, text: text}])  %}
+            {% endif %}
+        {% endfor %}
+
+
+        {% set field = field|merge(field.selectize.Options|default({}))|merge(field.selectize.Optgroups|default({}))|merge({selectize: { Options: options, Optgroups: optgroups, Subtitles: true }}) %}
+    {% endif %}
+
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+    {{ parent() }}
+{% endblock %}

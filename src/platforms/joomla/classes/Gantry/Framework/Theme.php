@@ -150,13 +150,13 @@ class Theme extends AbstractTheme
             $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
 
             if ($filename) {
-                $lang->load("tpl_{$this->name}_positions", dirname(dirname(dirname($filename))), 'en-GB');
+                $lang->load("tpl_{$this->name}_positions", \dirname(\dirname(\dirname($filename))), 'en-GB');
             }
 
             // Load template language files, including overrides.
             $paths = $locator->findResources('gantry-theme://language');
             foreach (array_reverse($paths) as $path) {
-                $lang->load("tpl_{$this->name}", dirname($path));
+                $lang->load("tpl_{$this->name}", \dirname($path));
             }
         }
 

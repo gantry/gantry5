@@ -485,6 +485,13 @@ class Theme extends AbstractTheme
         $this->preset_styles_init();
 
         // Load theme text domains
+        $domain = $this->details()->get('configuration.gantry.engine', 'nucleus');
+        $lookup = '/engines/' . $domain . '/languages';
+        if (!file_exists(GANTRY5_PATH . $lookup)) {
+            $lookup = '/engines/wordpress/' . $domain . '/languages';
+        }
+        load_plugin_textdomain($domain, false, basename(GANTRY5_PATH) . $lookup);
+
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         load_theme_textdomain($domain, $this->path . '/languages');
 

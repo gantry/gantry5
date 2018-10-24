@@ -1,6 +1,6 @@
 {
   "name": "gantry5",
-  "version": "1.0.0",
+  "version": "5.4",
   "description": "Gantry 5 / JS and CSS bundler",
   "main": "gulpfile.js",
   "dependencies": {

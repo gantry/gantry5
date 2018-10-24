@@ -21,8 +21,9 @@ use Gantry\Component\Twig\TokenParser\TokenParserAssets;
 use Gantry\Component\Twig\TokenParser\TokenParserScripts;
 use Gantry\Component\Twig\TokenParser\TokenParserStyles;
 use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
-use Gantry\Component\Twig\TokenParser\TwigTokenParserMarkdown;
-use Gantry\Component\Twig\TokenParser\TwigTokenParserSwitch;
+use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
+use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
+use Gantry\Component\Twig\TokenParser\TokenParserThrow;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
@@ -62,7 +63,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new \Twig_SimpleFilter('base64', 'base64_encode'),
             new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
-            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => true]),
+            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
         ];
 
         if (1 || GANTRY5_PLATFORM !== 'grav') {
@@ -71,12 +72,13 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
                 new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
                 new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
                 new \Twig_SimpleFilter('markdown', [$this, 'markdownFunction'], ['is_safe' => ['html']]),
+                new \Twig_SimpleFilter('nicetime', [$this, 'nicetimeFilter']),
 
                 // Casting values
                 new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
-                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => true]),
+                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
                 new \Twig_SimpleFilter('bool', [$this, 'boolFilter']),
-                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => true]),
+                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
                 new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
             ]);
         }
@@ -118,13 +120,14 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     public function getTokenParsers()
     {
         return [
-            new TokenParserPageblock,
-            new TokenParserAssets,
-            new TokenParserScripts,
-            new TokenParserStyles,
-            new TokenParserTryCatch,
-            new TwigTokenParserMarkdown,
-            new TwigTokenParserSwitch
+            new TokenParserPageblock(),
+            new TokenParserAssets(),
+            new TokenParserScripts(),
+            new TokenParserStyles(),
+            new TokenParserThrow(),
+            new TokenParserTryCatch(),
+            new TokenParserMarkdown(),
+            new TokenParserSwitch()
         ];
     }
 
@@ -572,6 +575,93 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         $contrast = $yiq || (!$opacity || (float) $opacity < 0.35);
 
         return $contrast;
+    }
+
+    /**
+     * Displays a facebook style 'time ago' formatted date/time.
+     *
+     * @param string|int $date
+     * @param bool $long_strings
+     *
+     * @return string
+     */
+    public function nicetimeFilter($date, $long_strings = true)
+    {
+        static $lengths = [60, 60, 24, 7, 4.35, 12, 10];
+        static $periods_long = [
+            'GANTRY5_ENGINE_NICETIME_SECOND',
+            'GANTRY5_ENGINE_NICETIME_MINUTE',
+            'GANTRY5_ENGINE_NICETIME_HOUR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WEEK',
+            'GANTRY5_ENGINE_NICETIME_MONTH',
+            'GANTRY5_ENGINE_NICETIME_YEAR',
+            'GANTRY5_ENGINE_NICETIME_DECADE'
+        ];
+        static $periods_short = [
+            'GANTRY5_ENGINE_NICETIME_SEC',
+            'GANTRY5_ENGINE_NICETIME_MIN',
+            'GANTRY5_ENGINE_NICETIME_HR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WK',
+            'GANTRY5_ENGINE_NICETIME_MO',
+            'GANTRY5_ENGINE_NICETIME_YR',
+            'GANTRY5_ENGINE_NICETIME_DEC'
+        ];
+
+        if (empty($date)) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_NO_DATE_PROVIDED');
+        }
+
+        $periods = $long_strings ? $periods_long : $periods_short;
+
+        $now = time();
+
+        // check if unix timestamp
+        if ((string)(int)$date === (string)$date) {
+            $unix_date = (int)$date;
+        } else {
+            $unix_date = strtotime($date);
+        }
+
+        // check validity of date
+        if (!$unix_date) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_BAD_DATE');
+        }
+
+        // is it future date or past date
+        if ($now > $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_AGO');
+
+        } else if ($now === $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_JUST_NOW');
+
+        } else {
+            $difference = $unix_date - $now;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_FROM_NOW');
+        }
+
+
+        for ($j = 0; $difference >= $lengths[$j] && $j < \count($lengths) - 1; $j++) {
+            $difference /= $lengths[$j];
+        }
+        $period = $periods[$j];
+
+        $difference = round($difference);
+
+        if ($difference !== 1) {
+            $period .= '_PLURAL';
+        }
+
+        $period = $this->transFilter($period);
+
+        if ($now === $unix_date) {
+            return $tense;
+        }
+
+        return "{$difference} {$period} {$tense}";
     }
 
     public function getCookie($name)

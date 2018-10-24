@@ -47,8 +47,8 @@ class Validation
         }
 
         // Special case for files, value is never empty and errors with code 4 instead.
-        if (empty($validate['required']) && $field['type'] == 'input.file' && isset($value['error'])
-                && ($value['error'] == UPLOAD_ERR_NO_FILE || in_array(UPLOAD_ERR_NO_FILE, $value['error']))) {
+        if (empty($validate['required']) && $field['type'] === 'input.file' && isset($value['error'])
+                && ($value['error'] === UPLOAD_ERR_NO_FILE || \in_array(UPLOAD_ERR_NO_FILE, $value['error'], true))) {
             return $messages;
         }
 
@@ -100,7 +100,7 @@ class Validation
         $validate = isset($field['validate']) ? (array) $field['validate'] : [];
 
         // If value isn't required, we will return null if empty value is given.
-        if (empty($validate['required']) && ($value === null || $value === '')) {
+        if (($value === null || $value === '') && empty($validate['required'])) {
             return null;
         }
 
@@ -109,14 +109,14 @@ class Validation
         }
 
         // Special case for files, value is never empty and errors with code 4 instead.
-        if (empty($validate['required']) && $field['type'] == 'input.file' && isset($value['error'])
-            && ($value['error'] == UPLOAD_ERR_NO_FILE || in_array(UPLOAD_ERR_NO_FILE, $value['error']))) {
+        if (empty($validate['required']) && $field['type'] === 'input.file' && isset($value['error'])
+            && ($value['error'] === UPLOAD_ERR_NO_FILE || \in_array(UPLOAD_ERR_NO_FILE, $value['error'], true))) {
             return null;
         }
 
         // Validate type with fallback type text.
         $type = (string) isset($field['validate']['type']) ? $field['validate']['type'] : $field['type'];
-        $method = 'filter_' . ucfirst(strtr($type, '-', '_'));
+        $method = 'filter_' . ucfirst(str_replace('-', '_', $type));
 
         if (!method_exists(__CLASS__, $method)) {
             $method = 'filter_Input_Text';
@@ -135,20 +135,22 @@ class Validation
      */
     public static function type_Input_Text($value, array $params, array $field)
     {
-        if (!is_string($value)) {
+        if (!\is_string($value) && !is_numeric($value)) {
             return false;
         }
 
-        if (isset($params['min']) && strlen($value) < $params['min']) {
+        $value = (string)$value;
+
+        if (isset($params['min']) && \strlen($value) < $params['min']) {
             return false;
         }
 
-        if (isset($params['max']) && strlen($value) > $params['max']) {
+        if (isset($params['max']) && \strlen($value) > $params['max']) {
             return false;
         }
 
         $min = isset($params['min']) ? $params['min'] : 0;
-        if (isset($params['step']) && (strlen($value) - $min) % $params['step'] == 0) {
+        if (isset($params['step']) && (strlen($value) - $min) % $params['step'] === 0) {
             return false;
         }
 
@@ -166,12 +168,12 @@ class Validation
 
     protected static function filter_Input_CommaList($value, array $params, array $field)
     {
-        return is_array($value) ? $value : preg_split('/\s*,\s*/', $value, -1, PREG_SPLIT_NO_EMPTY);
+        return \is_array($value) ? $value : preg_split('/\s*,\s*/', $value, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     protected static function type_Input_CommaList($value, array $params, array $field)
     {
-        return is_array($value) ? true : self::type_Input_Text($value, $params, $field);
+        return \is_array($value) ? true : self::type_Input_Text($value, $params, $field);
     }
 
     /**
@@ -227,6 +229,9 @@ class Validation
      */
     public static function type_Checkboxes_Checkboxes($value, array $params, array $field)
     {
+        // Set multiple: true so checkboxes can easily use min/max counts to control number of options required
+        $field['multiple'] = true;
+
         return self::typeArray((array) $value, $params, $field);
     }
 
@@ -250,6 +255,7 @@ class Validation
         if (!isset($field['value'])) {
             $field['value'] = 1;
         }
+
         if ($value && $value != $field['value']) {
             return false;
         }
@@ -302,7 +308,7 @@ class Validation
             return (array) $value;
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return reset($value);
         }
 
@@ -330,7 +336,6 @@ class Validation
      * @param  array  $field   Blueprint for the field.
      * @return bool   True if validation succeeded.
      */
-
     public static function type_Input_Number($value, array $params, array $field)
     {
         if (!is_numeric($value)) {
@@ -346,16 +351,13 @@ class Validation
         }
 
         $min = isset($params['min']) ? $params['min'] : 0;
-        if (isset($params['step']) && fmod($value - $min, $params['step']) == 0) {
-            return false;
-        }
 
-        return true;
+        return !(isset($params['step']) && fmod($value - $min, $params['step']) === 0);
     }
 
     protected static function filter_Input_Number($value, array $params, array $field)
     {
-        return (int) $value;
+        return (string)(int)$value !== (string)(float)$value ? (float) $value : (int) $value;
     }
 
     protected static function filter_Input_DateTime($value, array $params, array $field)
@@ -435,9 +437,11 @@ class Validation
     {
         if ($value instanceof \DateTime) {
             return true;
-        } elseif (!is_string($value)) {
+        }
+        if (!\is_string($value)) {
             return false;
-        } elseif (!isset($params['format'])) {
+        }
+        if (!isset($params['format'])) {
             return false !== strtotime($value);
         }
 
@@ -469,7 +473,6 @@ class Validation
      */
     public static function type_Input_Date($value, array $params, array $field)
     {
-        $params = array($params);
         if (!isset($params['format'])) {
             $params['format'] = 'Y-m-d';
         }
@@ -486,7 +489,6 @@ class Validation
      */
     public static function type_Input_Time($value, array $params, array $field)
     {
-        $params = array($params);
         if (!isset($params['format'])) {
             $params['format'] = 'H:i';
         }
@@ -503,7 +505,6 @@ class Validation
      */
     public static function type_Input_Month($value, array $params, array $field)
     {
-        $params = array($params);
         if (!isset($params['format'])) {
             $params['format'] = 'Y-m';
         }
@@ -536,58 +537,55 @@ class Validation
      */
     public static function typeArray($value, array $params, array $field)
     {
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return false;
         }
 
         if (isset($field['multiple'])) {
-            if (isset($params['min']) && count($value) < $params['min']) {
+            if (isset($params['min']) && \count($value) < $params['min']) {
                 return false;
             }
 
-            if (isset($params['max']) && count($value) > $params['max']) {
+            if (isset($params['max']) && \count($value) > $params['max']) {
                 return false;
             }
 
             $min = isset($params['min']) ? $params['min'] : 0;
-            if (isset($params['step']) && (count($value) - $min) % $params['step'] == 0) {
+            if (isset($params['step']) && (\count($value) - $min) % $params['step'] === 0) {
                 return false;
             }
         }
 
-        $options = isset($field['options']) ? array_keys($field['options']) : array();
-        $values = isset($field['use']) && $field['use'] == 'keys' ? array_keys($value) : $value;
-        if ($options && array_diff($values, $options)) {
-            return false;
-        }
+        $options = isset($field['options']) ? array_keys($field['options']) : [];
+        $values = isset($field['use']) && $field['use'] === 'keys' ? array_keys($value) : $value;
 
-        return true;
+        return !($options && array_diff($values, $options));
     }
 
     protected static function filterArray($value, $params, $field)
     {
         $values = (array) $value;
-        $options = isset($field['options']) ? array_keys($field['options']) : array();
+        $options = isset($field['options']) ? array_keys($field['options']) : [];
         $multi = isset($field['multiple']) ? $field['multiple'] : false;
 
-        if (count($values) == 1 && isset($values[0]) && $values[0] == '') {
+        if (\count($values) === 1 && isset($values[0]) && $values[0] === '') {
             return null;
         }
 
         if ($options) {
-            $useKey = isset($field['use']) && $field['use'] == 'keys';
-            foreach ($values as $key => $value) {
-                $values[$key] = $useKey ? (bool) $value : $value;
+            $useKey = isset($field['use']) && $field['use'] === 'keys';
+            foreach ($values as $key => $val) {
+                $values[$key] = $useKey ? (bool) $val : $val;
             }
         }
 
         if ($multi) {
-            foreach ($values as $key => $value) {
-                if (is_array($value)) {
-                    $value = implode(',', $value);
+            foreach ($values as $key => $val) {
+                if (\is_array($val)) {
+                    $val = implode(',', $val);
                 }
 
-                $values[$key] =  array_map('trim', explode(',', $value));
+                $values[$key] =  array_map('trim', explode(',', $val));
             }
         }
 
@@ -637,9 +635,9 @@ class Validation
     {
         if (is_scalar($value)) {
             return (bool) $params !== true || $value !== '';
-        } else {
-            return (bool) $params !== true || !empty($value);
         }
+
+        return (bool) $params !== true || !empty($value);
     }
 
     public static function validate_Pattern($value, $params)
@@ -662,12 +660,12 @@ class Validation
 
     public static function type_Bool($value, $params)
     {
-        return is_bool($value) || $value == 1 || $value == 0;
+        return \is_bool($value) || $value == 1 || $value == 0;
     }
 
     public static function validate_Bool($value, $params)
     {
-        return is_bool($value) || $value == 1 || $value == 0;
+        return \is_bool($value) || $value == 1 || $value == 0;
     }
 
     protected static function filter_Bool($value, $params)
@@ -682,7 +680,7 @@ class Validation
 
     public static function validate_Float($value, $params)
     {
-        return is_float(filter_var($value, FILTER_VALIDATE_FLOAT));
+        return \is_float(filter_var($value, FILTER_VALIDATE_FLOAT));
     }
 
     protected static function filter_Float($value, $params)
@@ -707,10 +705,10 @@ class Validation
 
     public static function validate_Array($value, $params)
     {
-        return is_array($value)
-        || ($value instanceof \ArrayAccess
-            && $value instanceof \Traversable
-            && $value instanceof \Countable);
+        return \is_array($value)
+            || ($value instanceof \ArrayAccess
+                && $value instanceof \Traversable
+                && $value instanceof \Countable);
     }
 
     public static function validate_Json($value, $params)
