@@ -27,7 +27,7 @@ use Gantry\Component\Twig\Node\TwigNodeSwitch;
  *      {{ my_data.default }}
  * {% endswitch %}
  */
-class TwigTokenParserSwitch extends \Twig_TokenParser
+class TokenParserSwitch extends \Twig_TokenParser
 {
     /**
      * {@inheritdoc}

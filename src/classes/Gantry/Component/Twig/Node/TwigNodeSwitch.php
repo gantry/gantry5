@@ -13,7 +13,7 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodeSwitch extends \Twig_Node implements \Twig_NodeOutputInterface
+class TwigNodeSwitch extends \Twig_Node
 {
     public function __construct(\Twig_Node $value, \Twig_Node $cases, \Twig_Node $default = null, $lineno = 0, $tag = null)
     {
