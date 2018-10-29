@@ -450,7 +450,6 @@ class Theme extends AbstractTheme
         // Menu
         add_filter('wp_setup_nav_menu_item', [$this, 'addMenuMeta']);
 
-
         add_action('init', [$this, 'register_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
         add_action('init', [$this, 'register_menus']);

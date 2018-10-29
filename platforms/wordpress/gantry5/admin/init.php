@@ -8,11 +8,16 @@ add_filter( 'upgrader_package_options', 'gantry5_upgrader_package_options', 1000
 add_filter( 'upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4 );
 add_action( 'upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3 );
 
+// Custom menu type:
+add_action( 'admin_head', 'gantry5_add_menu_item_types', 99 );
+add_filter( 'wp_setup_nav_menu_item', 'gantry5_customize_menu_item_label' );
+add_filter( 'wp_edit_nav_menu_walker', 'gantry5_wp_edit_nav_menu_walker' );
 
 // Check if Timber is active before displaying sidebar button
 if ( class_exists( 'Timber' ) ) {
     // Load Gantry 5 icon styling for the admin sidebar
-    add_action( 'admin_enqueue_scripts',
+    add_action(
+        'admin_enqueue_scripts',
         function () {
             if( is_admin() ) {
                 wp_enqueue_style( 'wordpress-admin-icon', Gantry\Framework\Document::url( 'gantry-assets://css/wordpress-admin-icon.css' ) );
@@ -36,6 +41,92 @@ if ( class_exists( 'Timber' ) ) {
 function gantry5_admin_start_buffer() {
     ob_start();
     ob_implicit_flush(false);
+}
+
+function gantry5_init()
+{
+    $gantry = Gantry\Framework\Gantry::instance();
+    if (!isset($gantry['router'])) {
+        $gantry['router'] = $router = new Gantry\Admin\Router($gantry);
+        $router->boot()->load();
+    }
+
+    return $gantry;
+}
+
+function gantry5_add_menu_item_type_particle()
+{
+    global $_nav_menu_placeholder, $nav_menu_selected_id;
+
+    $_nav_menu_placeholder = 0 > $_nav_menu_placeholder ? $_nav_menu_placeholder - 1 : -1;
+
+    $gantry = gantry5_init();
+
+    // Get full list of particles.
+    $particles = $gantry['particles']->all();
+    ?>
+    <div class="posttypediv" id="custom-item-types">
+        <div id="tabs-panel-custom-item-types" class="tabs-panel tabs-panel-active">
+            <ul id ="custom-item-types-checklist" class="categorychecklist form-no-clear">
+                <?php foreach ($particles as $name => $particle): ?>
+                <?php if ($name !== 'widget' && $particle['type'] !== 'particle') continue; ?>
+                <li>
+                    <label class="menu-item-title">
+                        <input type="radio" class="menu-item-checkbox" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-object-id]" value="-1">
+                        <?php echo $particle['name']; ?>
+                    </label>
+                    <input type="hidden" class="menu-item-type" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-type]" value="custom">
+                    <input type="hidden" class="menu-item-title" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php echo $particle['name']; ?>">
+                    <input type="hidden" class="menu-item-url" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-url]" value="#gantry-particle-<?php echo $name; ?>">
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <input type="hidden" value="custom" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-type]" />
+
+        <p class="button-controls wp-clearfix">
+            <span class="add-to-menu">
+                <input type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'gantry5' ); ?>" name="add-custom-menu-item" id="submit-custom-item-types" />
+                <span class="spinner"></span>
+            </span>
+        </p>
+
+    </div>
+    <?php
+}
+
+function gantry5_customize_menu_item_label($menu_item)
+{
+    if ('custom' !== $menu_item->type || strpos($menu_item->url, '#gantry-particle-') !== 0) {
+        return $menu_item;
+    }
+
+    $gantry = gantry5_init();
+
+    // Get full list of particles.
+    $particles = $gantry['particles']->all();
+
+    $id = substr($menu_item->url, strlen('#gantry-particle-'));
+
+    if (isset($particles[$id])) {
+        $menu_item->type_label = $particles[$id]['name'];
+    } else {
+        $menu_item->type_label = __('Unknown Particle', 'gantry5');
+    }
+
+    return $menu_item;
+}
+
+function gantry5_wp_edit_nav_menu_walker()
+{
+    gantry5_init();
+
+    return \Gantry\WordPress\NavMenuEditWalker::class;
+}
+
+function gantry5_add_menu_item_types()
+{
+    add_meta_box('gantry_particles', __('Particles', 'gantry5'), 'gantry5_add_menu_item_type_particle', 'nav-menus', 'side', 'low');
 }
 
 function gantry5_admin_scripts() {
@@ -141,4 +232,3 @@ function gantry5_upgrader_post_install($success, $options, $result) {
         }
     }
 }
-
