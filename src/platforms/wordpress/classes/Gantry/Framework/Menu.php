@@ -284,14 +284,11 @@ class Menu extends AbstractMenu
         }
         unset($itemRef);
 
-        $slugMap = [];
-
         // Get base menu item for this menu (defaults to active menu item).
         $this->base = $this->calcBase($params['base']);
 
         foreach ($menuItems as $menuItem) {
             $slugPath = $this->getMenuSlug($menuItems, $menuItem->tree);
-            $slugMap[$slugPath] = $menuItem->ID;
 
             // TODO: Path is menu path to the current page..
             $tree = [];
@@ -301,6 +298,8 @@ class Menu extends AbstractMenu
                 || ($start > 1 && !\in_array($menuItem->tree[$start - 2], $tree, true))) {
                 continue;
             }
+
+            $title = html_entity_decode(is_admin() ? $menuItem->title : $menuItem->title(), ENT_COMPAT | ENT_HTML5, 'UTF-8');
 
             // These params always come from WordPress.
             $itemParams = [
@@ -317,9 +316,24 @@ class Menu extends AbstractMenu
             if (isset($menuItem->gantry)) {
                 // Use WP options if saved.
                 $itemParams += $menuItem->gantry;
+
+                // Detect particle which is saved into the menu.
+                if (isset($menuItem->gantry['particle'])) {
+                    $itemParams['type'] = 'particle';
+                }
             } else {
-                // WP options not saved into database; use YAML configuration.
-                if (isset($itemMap[$menuItem->object_id])) {
+                // Gantry WP options not saved into database.
+                // Detect newly created particle instance and convert it to a particle.
+                if ('custom' === $itemParams['type'] && strpos($itemParams['link'], '#gantry-particle-') === 0) {
+                    $itemParams['type'] = 'particle';
+                    $itemParams['particle'] = substr($itemParams['link'],  17);
+                    $itemParams['options'] = [
+                        'particle' => ['enabled' => '0'],
+                        'block' => ['extra' => []]
+                    ];
+                    unset($itemParams['link']);
+                } elseif (isset($itemMap[$menuItem->object_id])) {
+                    // Use YAML configuration.
                     // ID found, use it.
                     $itemParams += $itemMap[$menuItem->object_id];
 
@@ -338,7 +352,7 @@ class Menu extends AbstractMenu
 
             // And if not available in configuration, default to WordPress.
             $itemParams += [
-                'title' => html_entity_decode(is_admin() ? $menuItem->title : $menuItem->title(), ENT_COMPAT | ENT_HTML5, 'UTF-8'),
+                'title' => $title,
                 'target' => $menuItem->target ?: '_self',
                 'class' => implode(' ', $menuItem->classes)
             ];

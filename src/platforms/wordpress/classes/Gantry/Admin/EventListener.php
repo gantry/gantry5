@@ -241,9 +241,9 @@ class EventListener implements EventSubscriberInterface
             }
             if (\is_array($children)) {
                 $this->embedMeta($children, $menu, $tree, $isGroup ? $pos : 0);
-            }
 
-            $pos += \count($children);
+                $pos += \count($children);
+            }
         }
 
         if ($isGroup) {

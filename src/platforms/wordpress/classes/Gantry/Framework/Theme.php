@@ -390,7 +390,7 @@ class Theme extends AbstractTheme
     {
         $meta = \get_post_meta($menu_item->ID, '_menu_item_gantry5', true);
 
-        $menu_item->gantry = $meta ? json_decode($meta, true) : [];
+        $menu_item->gantry = $meta ? json_decode($meta, true) : null;
 
         return $menu_item;
     }
