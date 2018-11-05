@@ -55,6 +55,9 @@ class EventListener implements EventSubscriberInterface
     public function onMenusSave(Event $event)
     {
         /*
+         * Automatically create navigation menu items:
+         * https://clicknathan.com/web-design/automatically-create-wordpress-navigation-menu-items/
+         *
          * Add widgets and particles to any menu:
          * http://www.wpbeginner.com/wp-themes/how-to-add-custom-items-to-specific-wordpress-menus/
          *
@@ -69,6 +72,9 @@ class EventListener implements EventSubscriberInterface
          *   update_post_meta()
          *
          * https://github.com/WordPress/WordPress/blob/master/wp-admin/nav-menus.php#L65
+         *
+         * Example to handle custom menu items:
+         * https://github.com/wearerequired/custom-menu-item-types/blob/master/inc/Custom_Menu_Items.php
          */
 
         $menu = $event->menu;
@@ -113,7 +119,6 @@ class EventListener implements EventSubscriberInterface
         $this->embedMeta($menu['ordering'],$menu);
 
         foreach ($menu['items'] as $key => $item) {
-            $wpItem = null;
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
                     $item['object_id'] = (int)$item['object_id'];
@@ -138,18 +143,42 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-xfn' => $wpItem->xfn
                 ];
 
+                unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
+
                 wp_update_nav_menu_item($id, $wpItem->db_id, $args);
+                update_post_meta($wpItem->db_id, '_menu_item_gantry5', json_encode($item));
+            } elseif ($item['type'] === 'particle') {
+                // Create new menu item.
+
+                $parts = explode('/', $key);
+                array_pop($parts);
+                $parentKey = implode('/', $parts);
+                $parentItem = $parentKey && isset($menu['items'][$parentKey]) ? $menu['items'][$parentKey] : null;
+
+                $wpItem = isset($menu_items[$parentItem['object_id']]) ? $menu_items[$parentItem['object_id']] : null;
+
+                $args = [
+                    'menu-item-db-id' => 0,
+                    'menu-item-parent-id' => $wpItem->db_id ?: 0,
+                    'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
+                    'menu-item-type' => 'custom',
+                    'menu-item-title' => trim($item['title']),
+                    'menu-item-url' => '#gantry-particle-' . $item['particle'],
+                    'menu-item-classes' => '',
+                    'menu-item-status' => 'publish'
+                ];
 
                 unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
+
+                $db_id = wp_update_nav_menu_item($id, 0, $args);
+                if ($db_id) {
+                    update_post_meta($db_id, '_menu_item_gantry5', json_encode($item));
+                }
             }
 
             $item = $this->normalizeMenuItem($item);
 
             $event->menu["items.{$key}"] = $item;
-
-            if ($wpItem) {
-                update_post_meta($wpItem->db_id, '_menu_item_gantry5', json_encode($item));
-            }
         }
 
         wp_defer_term_counting(false);
@@ -206,7 +235,7 @@ class EventListener implements EventSubscriberInterface
         $group = isset($ordering[0]);
         foreach ($ordering as $id => $children) {
             $tree = $parents;
-            if (!$group && !preg_match('/^(__particle|__widget)/', $id)) {
+            if (!$group) {
                 $tree[] = $id;
                 $name = implode('/', $tree);
                 $list[$name] = ++$i;
