@@ -323,6 +323,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function add(Item $item)
     {
+        if (isset($this->items[$item->path])) {
+            // Only add the item once.
+            return $this;
+        }
+
         $this->items[$item->path] = $item;
 
         // If parent exists, assign menu item to its parent; otherwise ignore menu item.
@@ -392,7 +397,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
             // Enabled state should equal particle setting.
             $item['enabled'] = !isset($item['options']['particle']['enabled']) || !empty($item['options']['particle']['enabled']);
-            $item['level'] = $level = count($tree);
+            $item['level'] = $level = \count($tree);
             $item['parent_id'] = implode('/', $parentTree);
             if (($start && $start > $level)
                 || ($end && $level > $end)

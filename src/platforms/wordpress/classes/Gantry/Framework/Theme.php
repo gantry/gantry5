@@ -200,7 +200,6 @@ class Theme extends AbstractTheme
         }
     }
 
-
     public function url_filter($text)
     {
         $gantry = Gantry::instance();

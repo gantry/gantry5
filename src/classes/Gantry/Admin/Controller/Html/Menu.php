@@ -307,6 +307,9 @@ class Menu extends HtmlController
             }
         );
 
+        if (!empty($this->request->post['id'])) {
+            $data->set('id', $this->request->post['id']);
+        }
         $data->set('type', 'particle');
         $data->set('particle', $name);
         $data->set('title', $this->request->post['title'] ?: $blueprints->post['name']);
