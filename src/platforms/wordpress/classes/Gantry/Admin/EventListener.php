@@ -260,13 +260,6 @@ class EventListener implements EventSubscriberInterface
                 $counts[] = \count($children);
             } else {
                 $tree[] = $id;
-
-                if (preg_match('/^(__particle|__widget)/', $id)) {
-                    $extra = $menu["items.{$name}.extra"] ?: [];
-                    // Embed particle into the menu item.
-                    $extra[$pos] = ['id' => $id] + $this->normalizeMenuItem($menu["items.{$name}/{$id}"]);
-                    $menu["items.{$name}.extra"] = $extra;
-                }
             }
             if (\is_array($children)) {
                 $this->embedMeta($children, $menu, $tree, $isGroup ? $pos : 0);
