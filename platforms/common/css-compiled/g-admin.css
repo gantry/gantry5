@@ -3358,8 +3358,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   border-top: 1px solid #f4f4f4;
   margin: 0;
   padding: 10px 15px;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 #g5-container #assignments .settings-param .settings-param-title, #g5-container .settings-assignments .settings-param .settings-param-title {
   line-height: 1em;
