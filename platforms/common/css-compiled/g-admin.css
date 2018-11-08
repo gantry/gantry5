@@ -3342,12 +3342,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   font-weight: 500;
 }
 
-#g5-container #assignments .cards-wrapper, #g5-container .settings-assignments .cards-wrapper {
-  display: flex;
-}
-#g5-container #assignments .cards-wrapper .card, #g5-container .settings-assignments .cards-wrapper .card {
-  margin: 10px 10px;
-}
 #g5-container #assignments .enabler, #g5-container .settings-assignments .enabler {
   float: right;
 }
