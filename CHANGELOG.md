@@ -13,7 +13,10 @@
         - Added official Joomla 3.9 support
 1. [Grav](#grav)
     1. [](#improved)
-        - Added styling for disabled input fields in admin      
+        - Added styling for disabled input fields in admin
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.3
         
 # 5.4.26
 ## 09/11/2018
