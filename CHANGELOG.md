@@ -18,12 +18,21 @@
 ## mm/dd/2018
 
 1. [Common](#common)
+    1. [](#new)
+        - Added Section Variation field for Layout sections.
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
         - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
+        - Fixed Assignment Knobs Escaping Containers - Google Chrome bug (#2412)
 1. [Joomla](#joomla)
     1. [](#new)
         - Added official Joomla 3.9 support
+1. [Grav](#grav)
+    1. [](#improved)
+        - Added styling for disabled input fields in admin
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.3
         
 # 5.4.26
 ## 09/11/2018
