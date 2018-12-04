@@ -3345,6 +3345,14 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #assignments .enabler, #g5-container .settings-assignments .enabler {
   float: right;
 }
+#g5-container #assignments .enabler .toggle, #g5-container .settings-assignments .enabler .toggle {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+#g5-container #assignments .enabler .toggle .knob, #g5-container .settings-assignments .enabler .toggle .knob {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 #g5-container #assignments .settings-param-wrapper, #g5-container .settings-assignments .settings-param-wrapper {
   min-width: 100%;
   max-height: 455px;
