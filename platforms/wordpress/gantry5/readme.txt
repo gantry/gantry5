@@ -3,7 +3,7 @@ Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
 Requires at least: 4.2
-Tested up to: 5.0
+Tested up to: 5.0.1
 Requires PHP: 5.4
 Stable tag: @version@
 
