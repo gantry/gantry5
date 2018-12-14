@@ -11,6 +11,8 @@
 1. [Common](#common)
     1. [](#new)
         - Added Section Variation field for Layout sections.
+    1. [](#improved)
+        - Updated Lightcase version.     
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
         - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
