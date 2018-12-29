@@ -12,7 +12,7 @@
                     <div class="g-owlcarousel-item {{ item.class|e }}">
                         <div class="g-owlcarousel-item-wrapper">
                             <div class="g-owlcarousel-item-img">
-                                <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+                                <img {% if particle.lazyLoadImages %}class="owl-lazy" data-{% endif %}src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
                             </div>
                             <div class="g-owlcarousel-item-content-container">
                                 <div class="g-owlcarousel-item-content-wrapper">
@@ -66,6 +66,12 @@
                 autoplayTimeout: {{ particle.autoplaySpeed|default('5000') }},
                 {% else %}
                 autoplay: false,
+                {% endif %}
+                {% if particle.lazyLoadImages %}
+                lazyLoad: true,
+                    {% if particle.lazyLoadEager > 0 %}
+                        lazyLoadEager: {{ particle.lazyLoadEager|default('0') }},
+                    {% endif %}
                 {% endif %}
             })
         });
