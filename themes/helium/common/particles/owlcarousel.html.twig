@@ -9,9 +9,15 @@
 
             {% for item in particle.items %}
                 {% set showItem = item.showItem|default('yes') %}
-                {% if showItem == 'once' or showItem == 'annual' %}
-                    {% set dFormat = (showItem == 'once') ? 'Y-m-d' : 'm-d' %}
-                    {% if item.startDate|date(dFormat) <= "now"|date(dFormat) and item.endDate|date(dFormat) >= "now"|date(dFormat) %}
+                {% set format = (showItem == 'once') ? 'Y-m-d' : 'm-d' %}
+                {% set start, now, end = item.startDate|date(format), "now"|date(format), item.endDate|date(format) %}
+                {% if showItem == 'once' %}
+                    {% if start <= now and end >= now %}
+                        {% set showItem = 'yes' %}
+                    {% endif %}       
+                {% elseif showItem == 'annual' %}
+                    {% if (start <= end and start <= now and end >= now) or 
+                          (start > end and (start <= now or end >= now)) %}
                         {% set showItem = 'yes' %}
                     {% endif %}
                 {% endif %}
