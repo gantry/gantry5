@@ -38,7 +38,7 @@ form:
 
     height:
       type: input.text
-      label: Image Height
+      label: Maximum Height
       description: Set image max. height in rem, em, px, or percentage unit values
       pattern: '\d+(\.\d+){0,1}(rem|em|ex|ch|vw|vh|vmin|vmax|%|px|cm|mm|in|pt|pc)'
 
