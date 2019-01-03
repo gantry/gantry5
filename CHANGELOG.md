@@ -7,7 +7,10 @@
     1. [](#bugfix)   
         - Social particle: Improved link target handling (#2214)
         - Helium Copyright particle: fixed missing link (#2214)
-
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.4
+        
 # 5.4.27
 ## 12/14/2018
 
