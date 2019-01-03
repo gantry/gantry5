@@ -1,9 +1,9 @@
 # 5.4.28
-## mm/dd/yyyy
+## mm/dd/2019
 
 1. [Common](#common)
-    1. [](#new)
-        - Nothing yet
+    1. [](#improved)
+        - Logo particle: Added logo image max height (#2424) 
 
 # 5.4.27
 ## 12/14/2018
