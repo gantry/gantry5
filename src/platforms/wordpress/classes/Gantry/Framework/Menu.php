@@ -319,12 +319,13 @@ class Menu extends AbstractMenu
 
             // Rest of the items will come from saved configuration.
             if (isset($menuItem->gantry)) {
-                // Use WP options if saved.
+                // Use WP options from the database if they were saved.
                 $itemParams += $menuItem->gantry;
 
                 // Detect particle which is saved into the menu.
                 if (isset($menuItem->gantry['particle'])) {
                     $itemParams['type'] = 'particle';
+                    unset($itemParams['link']);
                 }
             } else {
                 // Gantry WP options not saved into database.
@@ -371,6 +372,7 @@ class Menu extends AbstractMenu
             }
 
             switch ($item->type) {
+                case 'particle':
                 case 'separator':
                     // Separator and heading have no link.
                     $item->url(null);
