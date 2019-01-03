@@ -79,6 +79,7 @@ form:
       label: Lazy Load Eager
       description: Number of eagerly pre-loaded images to the left and right.
       placeholder: 0
+      default: 0
 
     items:
       type: collection.list
