@@ -1,8 +1,7 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set target = particle.target|default('none')|e %}
-{% if target != 'none' %}
-    {% set targetAttrib = ' target="' ~ target ~ '"' %}
+{% if particle.target %}
+    {% set targetAttrib = ' target="' ~ particle.target|e ~ '"' %}
     {% set targetAttrib = (target == '_blank') ? targetAttrib ~ ' rel="noopener noreferrer"' : targetAttrib %}
 {% endif %}
 

@@ -3,7 +3,10 @@
 
 1. [Common](#common)
     1. [](#improved)
-        - Logo particle: Added logo image max height (#2424) 
+        - Logo particle: Added logo image max height (#2424)
+    1. [](#bugfix)   
+        - Social particle: Improved link target handling (#2214)
+        - Helium Copyright particle: fixed missing link (#2214)
 
 # 5.4.27
 ## 12/14/2018

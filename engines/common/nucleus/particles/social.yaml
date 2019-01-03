@@ -32,9 +32,9 @@ form:
       label: Target
       description: Target browser window when item is clicked.
       placeholder: 'Select...'
-      default: none
+      default: ''
       options:
-          none: None
+          '': None
           _self: Self
           _parent: Parent
           _top: Top
