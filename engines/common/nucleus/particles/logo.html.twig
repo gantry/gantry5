@@ -5,14 +5,15 @@
     {% if (url == gantry.siteUrl()) %}{% set rel='rel="home"' %}{% endif %}
     {% set class=(particle.class ? 'class="'~ particle.class ~'"') %}
     {% set image = url(particle.image) %}
-    
+    {% set height = particle.height ? 'style="max-height: ' ~ particle.height ~ '"' %}
+
     {% if particle.link == true %}
         <a href="{{ url }}" target="{{ particle.target|default('_self') }}" title="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
     {% else %}<div {{ class|default('')|raw }}>{% endif %}
         {% if particle.svg is not empty %}
             {{ particle.svg|raw }}
         {% elseif image %}
-            <img src="{{ url(particle.image) }}" alt="{{ particle.text }}" />
+            <img src="{{ url(particle.image) }}" {{ height|default('')|raw }} alt="{{ particle.text }}" />
         {% else %}
             {{ particle.text|default('Logo') }}
         {% endif %}
