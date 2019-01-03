@@ -247,10 +247,15 @@ class Menu extends AbstractMenu
             if (!isset($menuItems[$id])) {
                 throw new \RuntimeException("Menu item parent ($id) cannot be found");
             }
-            $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
+            $menuItem = $menuItems[$id];
+            $slug = is_admin() ? $menuItem->title : $menuItem->title();
             $slug = preg_replace('|[ /]|u', '-', $slug);
             if (preg_match('|^[a-zA-Z0-9-_]+$|', $slug)) {
                 $slug = \strtolower($slug);
+            }
+            if ($menuItem->type === 'custom' && strpos($menuItem->url, '#gantry-particle-') === 0) {
+                // Append particle id to make menu item unique.
+                $slug .= '-' . $menuItem->ID;
             }
             $result[] = $slug;
         }

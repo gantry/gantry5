@@ -118,6 +118,7 @@ class EventListener implements EventSubscriberInterface
         $ordering = $this->flattenOrdering($menu['ordering']);
         $this->embedMeta($menu['ordering'],$menu);
 
+        $saved_ids = [];
         foreach ($menu['items'] as $key => $item) {
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
@@ -126,9 +127,10 @@ class EventListener implements EventSubscriberInterface
                     unset($item['object_id']);
                 }
                 $wpItem = $menu_items[$item['id']];
+                $db_id = $wpItem->db_id;
 
                 $args = [
-                    'menu-item-db-id' => $wpItem->db_id,
+                    'menu-item-db-id' => $db_id,
                     'menu-item-object-id' => $wpItem->object_id,
                     'menu-item-object' => $wpItem->object,
                     'menu-item-parent-id' => $wpItem->menu_item_parent,
@@ -145,11 +147,11 @@ class EventListener implements EventSubscriberInterface
 
                 unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
 
-                wp_update_nav_menu_item($id, $wpItem->db_id, $args);
-                update_post_meta($wpItem->db_id, '_menu_item_gantry5', json_encode($item));
+                wp_update_nav_menu_item($id, $db_id, $args);
+                update_post_meta($db_id, '_menu_item_gantry5', json_encode($item));
+                $saved_ids[$db_id] = true;
             } elseif ($item['type'] === 'particle') {
-                // Create new menu item.
-
+                // Create new particle menu item.
                 $parts = explode('/', $key);
                 array_pop($parts);
                 $parentKey = implode('/', $parts);
@@ -173,12 +175,22 @@ class EventListener implements EventSubscriberInterface
                 $db_id = wp_update_nav_menu_item($id, 0, $args);
                 if ($db_id) {
                     update_post_meta($db_id, '_menu_item_gantry5', json_encode($item));
+                    $saved_ids[$db_id] = true;
                 }
             }
 
             $item = $this->normalizeMenuItem($item);
 
             $event->menu["items.{$key}"] = $item;
+        }
+
+        // Delete removed particles from the menu.
+        foreach ($menu_items as $wpItem) {
+            $db_id = $wpItem->db_id;
+            if ($wpItem->type === 'custom' && !isset($saved_ids[$db_id]) && strpos($wpItem->url, '#gantry-particle-') === 0) {
+                delete_post_meta($db_id, '_menu_item_gantry5');
+                wp_delete_post($db_id);
+            }
         }
 
         wp_defer_term_counting(false);
