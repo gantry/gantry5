@@ -1,10 +1,16 @@
 # 5.4.28
-## mm/dd/yyyy
+## mm/dd/2019
 
 1. [Common](#common)
+    1. [](#improved)
+        - Logo particle: Added logo image max height (#2424)
+    1. [](#bugfix)   
+        - Social particle: Improved link target handling (#2214)
+        - Helium Copyright particle: fixed missing link (#2214)
+1. [WordPress](#wordpress)
     1. [](#new)
-        - Nothing yet
-
+        - Updated Timber to v1.8.4
+        
 # 5.4.27
 ## 12/14/2018
 
