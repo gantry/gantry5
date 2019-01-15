@@ -41,6 +41,7 @@
 
 {% endblock %}
 
+{% set loadEager = particle.lazyLoadEager|default('0') %}
 {% block javascript_footer %}
     {% do gantry.load('jquery') %}
     <script src="{{ url('gantry-theme://js/owl.carousel.min.js') }}"></script>
@@ -63,14 +64,14 @@
                 {% endif %}
                 {% if particle.autoplay == 'enable' %}
                 autoplay: true,
-                autoplayTimeout: {{ particle.autoplaySpeed|default('5000') }},
+                autoplayTimeout: {{ particle.autoplaySpeed|default('5000')|e('js') }},
                 {% else %}
                 autoplay: false,
                 {% endif %}
                 {% if particle.lazyLoadImages %}
                 lazyLoad: true,
-                    {% if particle.lazyLoadEager > 0 %}
-                        lazyLoadEager: {{ particle.lazyLoadEager|default('0') }},
+                    {% if loadEager > 0 %}
+                        lazyLoadEager: {{ loadEager|e('js') }},
                     {% endif %}
                 {% endif %}
             })
