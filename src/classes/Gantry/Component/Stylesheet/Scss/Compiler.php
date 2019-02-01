@@ -199,7 +199,7 @@ class Compiler extends BaseCompiler
         // Create a list of numbers so that SCSS parser can parse the list.
         $list = [];
         foreach ($weights as $weight) {
-            $list[] = ['string', '', [(int) $weight]];
+            $list[] = ['string', '', [$weight]];
         }
 
         return ['list', ',', $list];

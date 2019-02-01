@@ -1,19 +1,25 @@
 // Font Import
 @mixin import-font($font-list) {
-	// Import once Google fonts.
-	$url: get-font-url($font-list);
-	@if $url {
-		@import $url;
-	}
-	// Import once all local fonts in the list.
-	@each $font in get-local-fonts($font-list) {
-		@each $weight in get-local-font-weights($font) {
-			$url: get-local-font-url($font, $weight);
-			@if $url {
-				@include font-face($font, $url, $weight);
-			}
-		}
-	}
+    // Import once Google fonts.
+    $url: get-font-url($font-list);
+    @if $url {
+        @import $url;
+    }
+    // Import once all local fonts in the list.
+    @each $font in get-local-fonts($font-list) {
+        @each $weight in get-local-font-weights($font) {
+            $url: get-local-font-url($font, $weight);
+            $style: '';
+            @if (str-index($weight, 'italic')) {
+                $style: 'italic';
+            } @else {
+                $style: 'normal';
+            }
+            @if $url {
+                @include font-face($font, $url, str-replace($weight, 'italic', ''), unquote($style));
+            }
+        }    
+    }
 }
 
 // Responsive Font Mixin
