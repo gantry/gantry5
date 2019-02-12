@@ -2,6 +2,8 @@
 ## mm/dd/2019
 
 1. [Common](#common)
+    1. [](#new)
+        - Added `webp` to supported image types for image picker (#2450)
     1. [](#improved)
         - Logo particle: Added logo image max height (#2424)
     1. [](#bugfix)   
