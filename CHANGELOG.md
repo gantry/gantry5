@@ -12,6 +12,8 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.8.4
+    1. [](#bugfix)
+        - Fixed potential query conflicts in `WordPress Posts` particle
         
 # 5.4.27
 ## 12/14/2018
