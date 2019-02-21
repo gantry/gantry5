@@ -11,7 +11,7 @@
         - Helium Copyright particle: fixed missing link (#2214)
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated Timber to v1.8.4
+        - Updated Timber to v1.9.0
     1. [](#bugfix)
         - Fixed potential query conflicts in `WordPress Posts` particle
         
