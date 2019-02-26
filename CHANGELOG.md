@@ -9,6 +9,7 @@
     1. [](#bugfix)   
         - Social particle: Improved link target handling (#2214)
         - Helium Copyright particle: fixed missing link (#2214)
+        - Fixed `mkdir(...)` race condition
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.9.0
