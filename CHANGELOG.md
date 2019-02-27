@@ -10,6 +10,9 @@
         - Social particle: Improved link target handling (#2214)
         - Helium Copyright particle: fixed missing link (#2214)
         - Fixed `mkdir(...)` race condition
+        - Fixed `Obtaining write lock failed on file...` error
+        - Fixed caching and CSS generation not working if underlaying filesystem does not support file locking or it is disabled
+        - Fixed rare file corruption issue
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.9.0
