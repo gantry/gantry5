@@ -15,7 +15,7 @@
         - Fixed rare file corruption issue
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated Timber to v1.9.0
+        - Updated Timber to v1.9.1
     1. [](#bugfix)
         - Fixed potential query conflicts in `WordPress Posts` particle
         
