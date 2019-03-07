@@ -151,6 +151,12 @@ form:
               description: Use Joomla Content Plugins
               default: false
 
+            article.display.edit:
+              type: input.checkbox
+              label: Show Edit Link
+              description: Display a link to the article edit form
+              default: false
+
             article.display.title.enabled:
               type: select.select
               label: Title
