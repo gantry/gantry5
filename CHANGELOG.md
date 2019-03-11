@@ -13,6 +13,9 @@
         - Fixed `Obtaining write lock failed on file...` error
         - Fixed caching and CSS generation not working if underlaying filesystem does not support file locking or it is disabled
         - Fixed rare file corruption issue
+1. [Joomla](#joomla)
+    1. [](#improved)
+        - Added edit link to content array (#2471, thanks @Chrissi2812)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.9.1
