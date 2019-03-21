@@ -12,7 +12,9 @@
 
 {% block head_application %}
     {% do gantry.platform.finalize %}
-    {{ assets.css()|raw }}
+{% endblock %}
 
+{% block assets deferred %}
+    {{ assets.css()|raw }}
     {{ assets.js()|raw }}
 {% endblock %}
