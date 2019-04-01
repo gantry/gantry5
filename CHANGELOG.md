@@ -1,3 +1,10 @@
+# 5.4.29
+## mm/dd/2019
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+
 # 5.4.28
 ## 03/11/2019
 
