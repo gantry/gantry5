@@ -3,6 +3,7 @@
 
 1. [WordPress](#wordpress)
     1. [](#bugfix)
+        - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
 
 # 5.4.28
