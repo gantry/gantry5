@@ -12,6 +12,9 @@ keywords: gantry, gantry5, theme
 bugs: https://github.com/gantry/gantry5/issues
 license: MIT
 
+dependencies:
+  - { name: grav, version: '>=1.5.10' }
+
 form:
   validation: loose
   fields:

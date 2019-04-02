@@ -310,7 +310,6 @@ abstract class Folder
     /**
      * @param  string  $folder
      * @throws \RuntimeException
-     * @internal
      */
     public static function create($folder)
     {
@@ -321,7 +320,8 @@ abstract class Folder
         $success = @mkdir($folder, 0777, true);
 
         if (!$success) {
-            // Double check if the folder exists.
+            // Take yet another look, make sure that the folder doesn't exist.
+            clearstatcache(true, $folder);
             if (is_dir($folder)) {
                 return;
             }

@@ -94,7 +94,7 @@ form:
             article.display.image.enabled:
               type: select.select
               label: Image
-              description: Select if and what image of the content should be shown.
+              description: Select what image should be shown (Pages -> Blog Item -> Header Image settings).
               default: intro
               options:
                 intro: Intro

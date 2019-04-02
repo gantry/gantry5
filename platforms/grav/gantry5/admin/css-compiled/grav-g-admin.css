@@ -185,6 +185,9 @@ body #admin-main .admin-block {
   background: #dfdfdf;
   color: #a2a2a2;
 }
+#admin-main #g5-container .button-simple.collection-addnew, #admin-main #g5-container .button-simple.collection-editall {
+  padding: 0 8px 6px;
+}
 #admin-main #g5-container .button-primary {
   background: #3180c2;
   color: #fff;

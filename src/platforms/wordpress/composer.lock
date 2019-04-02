@@ -582,26 +582,27 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.4.2",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "93f5c3d5e173cee7419df20eed52711471abbc3e"
+                "reference": "72d191fba4d049d2c52356f51c9254abd6946582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/93f5c3d5e173cee7419df20eed52711471abbc3e",
-                "reference": "93f5c3d5e173cee7419df20eed52711471abbc3e",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/72d191fba4d049d2c52356f51c9254abd6946582",
+                "reference": "72d191fba4d049d2c52356f51c9254abd6946582",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "php": ">=5.4.0",
                 "pimple/pimple": "~3.0",
                 "symfony/event-dispatcher": ">2.5",
                 "symfony/yaml": ">2.5"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.1.5"
+                "phpunit/phpunit": "~6"
             },
             "type": "library",
             "autoload": {
@@ -627,20 +628,20 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2018-08-08T18:03:32+00:00"
+            "time": "2019-02-28T23:09:45+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.47",
+            "version": "v2.8.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "76494bc38ff38d90d01913d23b5271acd4d78dd3"
+                "reference": "a77e974a5fecb4398833b0709210e3d5e334ffb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/76494bc38ff38d90d01913d23b5271acd4d78dd3",
-                "reference": "76494bc38ff38d90d01913d23b5271acd4d78dd3",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a77e974a5fecb4398833b0709210e3d5e334ffb0",
+                "reference": "a77e974a5fecb4398833b0709210e3d5e334ffb0",
                 "shasum": ""
             },
             "require": {
@@ -687,7 +688,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-20T23:16:31+00:00"
+            "time": "2018-11-21T14:20:20+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -749,16 +750,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.47",
+            "version": "v2.8.49",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "0e16589861f192dbffb19b06683ce3ef58f7f99d"
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/0e16589861f192dbffb19b06683ce3ef58f7f99d",
-                "reference": "0e16589861f192dbffb19b06683ce3ef58f7f99d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/02c1859112aa779d9ab394ae4f3381911d84052b",
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b",
                 "shasum": ""
             },
             "require": {
@@ -795,20 +796,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02T16:27:16+00:00"
+            "time": "2018-11-11T11:18:13+00:00"
         },
         {
             "name": "timber/timber",
-            "version": "1.8.3",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "f8d5bdce44e8638d646a9be9ff3557a783173b05"
+                "reference": "a219ba8b18d6393edf3b41fc71bdf486b5a9e3fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/f8d5bdce44e8638d646a9be9ff3557a783173b05",
-                "reference": "f8d5bdce44e8638d646a9be9ff3557a783173b05",
+                "url": "https://api.github.com/repos/timber/timber/zipball/a219ba8b18d6393edf3b41fc71bdf486b5a9e3fb",
+                "reference": "a219ba8b18d6393edf3b41fc71bdf486b5a9e3fb",
                 "shasum": ""
             },
             "require": {
@@ -857,7 +858,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2018-11-22T13:56:21+00:00"
+            "time": "2019-03-03T18:27:27+00:00"
         },
         {
             "name": "twig/twig",
@@ -1345,6 +1346,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2013-01-13T10:24:48+00:00"
         }
     ],

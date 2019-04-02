@@ -5,7 +5,7 @@
  * @author		Cornel Boppart <cornel@bopp-art.com>
  * @copyright	Author
  *
- * @version		2.4.4 (27/02/2018)
+ * @version		2.5.0 (11/03/2018)
  */
 
 ;(function ($) {
@@ -70,6 +70,7 @@
 				overlayOpacity: .9,
 				slideshow: false,
 				slideshowAutoStart: true,
+				breakBeforeShow: false,
 				timeout: 5000,
 				swipe: true,
 				useKeys: true,
@@ -167,7 +168,9 @@
 				},
 				onInit: {},
 				onStart: {},
-				onCalculateDimensions: {},
+				onBeforeCalculateDimensions: {},
+				onAfterCalculateDimensions: {},
+				onBeforeShow: {},
 				onFinish: {},
 				onResize: {},
 				onClose: {},
@@ -868,15 +871,11 @@
 
 			_self.cache.object = $object;
 
-			// Call onCalculateDimensions hook functions
-			_self._callHooks(_self.settings.onCalculateDimensions);
+			// Call onBeforeShow hook functions
+			_self._callHooks(_self.settings.onBeforeShow);
 
-			_self._calculateDimensions($object);
-
-			// Call onFinish hook functions
-			_self._callHooks(_self.settings.onFinish);
-
-			_self._startInTransition();
+			if (_self.settings.breakBeforeShow) return;
+			_self.show();
 		},
 
 		/**
@@ -923,6 +922,9 @@
 			setTimeout(function () {
 				 _self.transition.fade(_self.objects.info, 'in', _self.settings.speedIn);
 			}, _self.settings.speedIn);
+
+			// Call onFinish hook functions
+			_self._callHooks(_self.settings.onFinish);
 		},
 
 		/**
@@ -1542,10 +1544,9 @@
 		 * It stops an eventual timeout and recalculates dimensions.
 		 *
 		 * @param	{object}	dimensions
-		 * @param	{boolean}	startInTransition
 		 * @return	{void}
 		 */
-		resize: function (event, dimensions, startInTransition) {
+		resize: function (event, dimensions) {
 			if (!_self.isOpen) return;
 
 			if (_self.isSlideshowEnabled()) {
@@ -1584,10 +1585,6 @@
 
 			// Call onResize hook functions
 			_self._callHooks(_self.settings.onResize);
-
-			if (startInTransition) {
-				_self._startInTransition(_self.cache.object);
-			}
 		},
 
 		/**
@@ -1679,6 +1676,21 @@
 
 			_self.objects.document.addClass(_self.settings.classPrefix + 'open');
 			_self.objects.case.attr('aria-hidden', 'false');
+		},
+
+		/**
+		 * Shows the lightcase by starting the transition
+		 */
+		show: function () {
+			// Call onCalculateDimensions hook functions
+			_self._callHooks(_self.settings.onBeforeCalculateDimensions);
+
+			_self._calculateDimensions(_self.cache.object);
+
+			// Call onAfterCalculateDimensions hook functions
+			_self._callHooks(_self.settings.onAfterCalculateDimensions);
+
+			_self._startInTransition();
 		},
 
 		/**

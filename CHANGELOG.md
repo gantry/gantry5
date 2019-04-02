@@ -14,12 +14,45 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.5 and Admin 1.8
 
+# 5.4.29
+## mm/dd/2019
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+
+# 5.4.28
+## 03/11/2019
+
+1. [Common](#common)
+    1. [](#new)
+        - Added `webp` to supported image types for image picker (#2450)
+    1. [](#improved)
+        - Logo particle: Added logo image max height (#2424)
+    1. [](#bugfix)   
+        - Social particle: Improved link target handling (#2214)
+        - Helium Copyright particle: fixed missing link (#2214)
+        - Fixed `mkdir(...)` race condition
+        - Fixed `Obtaining write lock failed on file...` error
+        - Fixed caching and CSS generation not working if underlaying filesystem does not support file locking or it is disabled
+        - Fixed rare file corruption issue
+1. [Joomla](#joomla)
+    1. [](#improved)
+        - Added edit link to content array (#2471, thanks @Chrissi2812)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.9.1
+    1. [](#bugfix)
+        - Fixed potential query conflicts in `WordPress Posts` particle
+        
 # 5.4.27
-## mm/dd/2018
+## 12/14/2018
 
 1. [Common](#common)
     1. [](#new)
         - Added Section Variation field for Layout sections.
+    1. [](#improved)
+        - Updated Lightcase version.   
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
         - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
