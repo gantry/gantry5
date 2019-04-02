@@ -3,8 +3,8 @@ Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
 Requires at least: 4.2
-Tested up to: 5.0
-Requires PHP: 5.4
+Tested up to: 5.1
+Requires PHP: 5.6
 Stable tag: @version@
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform

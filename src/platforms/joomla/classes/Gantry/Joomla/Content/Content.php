@@ -106,6 +106,18 @@ class Content extends AbstractObject
         return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
 
+    public function edit()
+    {
+        $user = \JFactory::getUser();
+        $asset = "com_content.article.{$this->id}";
+
+        if ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset)) {
+            return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
+        }
+
+        return false;
+    }
+
     public function render($file)
     {
         return Gantry::instance()['theme']->render($file, ['article' => $this]);
