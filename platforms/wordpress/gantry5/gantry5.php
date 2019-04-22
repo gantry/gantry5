@@ -51,7 +51,7 @@ add_action('admin_init', 'gantry5_plugin_defaults');
 function gantry5_plugin_defaults()
 {
     $defaults = array(
-        'production'       => '1',
+        'production'       => '0',
         'use_media_folder' => '0',
         'assign_posts'     => '1',
         'assign_pages'     => '1',
