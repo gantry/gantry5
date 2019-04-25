@@ -5,6 +5,9 @@
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
 
 # 5.4.28
 ## 03/11/2019
