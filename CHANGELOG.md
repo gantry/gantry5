@@ -2,6 +2,8 @@
 ## mm/dd/2019
 
 1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.9.4
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
