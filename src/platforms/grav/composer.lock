@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a24a17079b7f4ed4773708d55b415fa6",
+    "content-hash": "26001d9621f59340d4ae2fe323390b88",
     "packages": [
         {
             "name": "scssphp/scssphp",
