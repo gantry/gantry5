@@ -17,7 +17,7 @@ defined('ABSPATH') or die;
 // NOTE: This file needs to be PHP 5.2 compatible.
 
 // Fail safe version check for PHP <5.4.0.
-if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+if (version_compare(PHP_VERSION, '5.6.20', '<')) {
     if (version_compare(PHP_VERSION, '5.4.0', '<')) {
         if (is_admin()) {
             add_action('admin_notices', 'gantry5_php_version_error');
@@ -127,6 +127,6 @@ function gantry5_php_version_error()
 function gantry5_php_version_warning()
 {
     echo '<div class="error"><p>';
-    echo sprintf("You are running <b>PHP %s</b>. The next version of <b>Gantry 5 Framework</b> will need at least <b>PHP 5.6.0</b> (PHP 7.2 recommended) in order to work.", PHP_VERSION);
+    echo sprintf("You are running <b>PHP %s</b>. The next version of <b>Gantry 5 Framework</b> will need at least <b>PHP 5.6.20</b> (PHP 7.2 recommended) in order to work.", PHP_VERSION);
     echo '</p></div>';
 }
