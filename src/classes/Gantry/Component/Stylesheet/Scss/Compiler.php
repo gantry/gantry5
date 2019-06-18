@@ -16,8 +16,8 @@ namespace Gantry\Component\Stylesheet\Scss;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
-use Leafo\ScssPhp\Compiler as BaseCompiler;
-use Leafo\ScssPhp\Parser;
+use ScssPhp\ScssPhp\Compiler as BaseCompiler;
+use ScssPhp\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Compiler extends BaseCompiler
@@ -71,10 +71,10 @@ class Compiler extends BaseCompiler
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null)
+    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
     {
         try {
-            return parent::get($name, $shouldThrow, $env);
+            return parent::get($name, $shouldThrow, $env, $unreduced);
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             return ['string', '', ['']];
@@ -84,7 +84,7 @@ class Compiler extends BaseCompiler
     /**
      * @param array $args
      * @return string
-     * @throws \Leafo\ScssPhp\Exception\CompilerException
+     * @throws \ScssPhp\ScssPhp\Exception\CompilerException
      */
     public function libUrl(array $args)
     {
@@ -309,7 +309,7 @@ class Compiler extends BaseCompiler
      *
      * @param string $path
      *
-     * @return \Leafo\ScssPhp\Parser
+     * @return \ScssPhp\ScssPhp\Parser
      */
     protected function parserFactory($path)
     {

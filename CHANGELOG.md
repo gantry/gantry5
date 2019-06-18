@@ -4,6 +4,8 @@
 1. [Common](#common)
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.0
+        - Updated Symfony Components from v2.8 to v3.4
+        - Updated SCSS compiler to v1.0.0
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.8
@@ -18,12 +20,16 @@
 ## mm/dd/2019
 
 1. [Common](#common)
+    1. [](#new)
+        - Upgraded SCSS compiler to v0.8.0
     1. [](#improved)
         - Logo particle: Added aria-label to meet the WCAG
+    1. [](#bugfix)
+        - Fixed PHP 7.3 issue in SCSS compilation
 1. [WordPress](#wordpress)
     1. [](#new)
         - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
-        - Updated Timber to v1.9.4
+        - Updated Timber to v1.9.5
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
