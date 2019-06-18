@@ -16,7 +16,7 @@ namespace Gantry\Component\Stylesheet;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
-use Leafo\ScssPhp\Colors;
+use ScssPhp\ScssPhp\Colors;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -313,7 +313,7 @@ abstract class CssCompiler implements CssCompilerInterface
                 continue;
             }
 
-            // Check variable against predefined color names (we use Leafo SCSS Color class to do that).
+            // Check variable against predefined color names (we use ScssPhp SCSS Color class to do that).
             if (isset(Colors::$cssColors[strtolower($value)])) {
                 continue;
             }
