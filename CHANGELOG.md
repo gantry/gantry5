@@ -11,7 +11,7 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
-        - Updated Timber to v1.9.5
+        - Updated Timber to v1.9.2 (later versions have Twig conflict with current version of WPML)
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
