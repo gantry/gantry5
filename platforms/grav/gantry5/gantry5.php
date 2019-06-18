@@ -309,7 +309,7 @@ class Gantry5Plugin extends Plugin
     {
         $nonce = Utils::getNonce('gantry-admin');
         $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = [
-            'authorize' => 'admin.gantry',
+            'authorize' => ['admin.gantry', 'admin.themes', 'admin.super'],
             'location' => 'gantry',
             'route' => "gantry/configurations/default/styles?nonce={$nonce}",
             'icon' => 'fa-gantry'

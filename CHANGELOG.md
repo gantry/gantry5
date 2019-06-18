@@ -17,9 +17,19 @@
 # 5.4.29
 ## mm/dd/2019
 
+1. [Common](#common)
+    1. [](#improved)
+        - Logo particle: Added aria-label to meet the WCAG
 1. [WordPress](#wordpress)
+    1. [](#new)
+        - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
+        - Updated Timber to v1.9.4
     1. [](#bugfix)
+        - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
 
 # 5.4.28
 ## 03/11/2019
