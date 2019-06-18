@@ -17964,7 +17964,7 @@ var $ = require('elements');
 module.exports = function(field) {
     if (!field) { return false; }
 
-    if ($('body').hasClass('wp-customizer') && jQuery) {
+    if (($('body').hasClass('wp-customizer') || $('body').hasClass('widgets-php')) && jQuery) {
         var widgetContainer = field.parent('.widget-content'),
             title = field.siblings('.g-instancepicker-title');
 

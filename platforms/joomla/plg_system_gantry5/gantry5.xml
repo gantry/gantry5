@@ -22,7 +22,7 @@
                 <field name="production"
                        type="radio"
                        class="btn-group btn-group-yesno"
-                       default="1"
+                       default="0"
                        description="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_DESC"
                        label="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_LABEL">
                     <option value="1">JYES</option>
