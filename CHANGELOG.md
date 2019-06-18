@@ -1,6 +1,9 @@
 # 5.4.29
 ## mm/dd/2019
 
+1. [Common](#common)
+    1. [](#improved)
+        - Logo particle: Added aria-label to meet the WCAG
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.9.4
