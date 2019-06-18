@@ -17,11 +17,16 @@ defined('ABSPATH') or die;
 // NOTE: This file needs to be PHP 5.2 compatible.
 
 // Fail safe version check for PHP <5.4.0.
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+    if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+        if (is_admin()) {
+            add_action('admin_notices', 'gantry5_php_version_error');
+        }
+        return;
+    }
     if (is_admin()) {
         add_action('admin_notices', 'gantry5_php_version_warning');
     }
-    return;
 }
 
 require_once dirname(__FILE__) . '/src/Loader.php';
@@ -112,9 +117,16 @@ function modify_gantry5_locale($locale, $domain = null)
     return $locale;
 }
 
+function gantry5_php_version_error()
+{
+    echo '<div class="error"><p>';
+    echo sprintf("You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP %s</b> to run.", PHP_VERSION, '5.4.0');
+    echo '</p></div>';
+}
+
 function gantry5_php_version_warning()
 {
     echo '<div class="error"><p>';
-    echo sprintf("You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.", PHP_VERSION, '5.4.0');
+    echo sprintf("You are running <b>PHP %s</b>. The next version of <b>Gantry 5 Framework</b> will need at least <b>PHP %s</b> or later version in order to work.", PHP_VERSION, '5.6.0');
     echo '</p></div>';
 }

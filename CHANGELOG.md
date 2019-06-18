@@ -6,6 +6,7 @@
         - Logo particle: Added aria-label to meet the WCAG
 1. [WordPress](#wordpress)
     1. [](#new)
+        - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
         - Updated Timber to v1.9.4
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
