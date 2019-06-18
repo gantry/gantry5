@@ -5,7 +5,7 @@
 
     "require": {
         "php": ">=5.6.0",
-        "leafo/scssphp": "~0.7"
+        "scssphp/scssphp": "~1.0"
     },
     "require-dev": {
         "symfony/event-dispatcher": "~2.8",
