@@ -68,6 +68,7 @@ class Compiler extends BaseCompiler
      * @param string    $name
      * @param boolean   $shouldThrow
      * @param BaseCompiler\Environment $env
+     * @param bool $unreduced
      *
      * @return mixed
      */
