@@ -17,6 +17,7 @@
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
 1. [Grav](#grav)
     1. [](#bugfix)
+        - Fixed compatibility issue with Grav 1.7.0-beta.1
         - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
 
 # 5.4.28
