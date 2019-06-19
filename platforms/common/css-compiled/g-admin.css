@@ -2124,6 +2124,7 @@ body.g-prime {
 }
 #g5-container .g-collapsed.card .inner-params, #g5-container .g-collapsed:not(.card) {
   overflow: hidden;
+  visibility: hidden;
   height: 0;
 }
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete):not(.g-file-preview) {
