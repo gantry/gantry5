@@ -71,10 +71,10 @@ class Compiler extends BaseCompiler
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null)
+    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
     {
         try {
-            return parent::get($name, $shouldThrow, $env);
+            return parent::get($name, $shouldThrow, $env, $unreduced);
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             return ['string', '', ['']];
