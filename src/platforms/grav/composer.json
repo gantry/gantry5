@@ -5,7 +5,7 @@
 
     "require": {
         "php": ">=5.5.9",
-        "leafo/scssphp": "0.8.0"
+        "leafo/scssphp": "~0.8"
     },
     "require-dev": {
         "symfony/event-dispatcher": "~3.4",
@@ -25,6 +25,12 @@
     "config": {
         "platform": {
             "php": "5.5.9"
+        }
+    },
+    "repositories": {
+        "leafo/scssphp": {
+            "type": "vcs",
+            "url": "https://github.com/leafo/scssphp"
         }
     }
 }

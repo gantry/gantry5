@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Upgraded SCSS compiler to v0.8.0
+        - Upgraded SCSS compiler to v0.8.4
     1. [](#improved)
         - Logo particle: Added aria-label to meet the WCAG
     1. [](#bugfix)

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f919f550e6090563b1a4e6771b7a3c5d",
+    "content-hash": "e405f88370e953a10add64873419fa9c",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -159,20 +159,30 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.8.0",
+            "version": "v0.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "71720fac3374e61cdf3cf4acc724ec2a47031aff"
+                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/71720fac3374e61cdf3cf4acc724ec2a47031aff",
-                "reference": "71720fac3374e61cdf3cf4acc724ec2a47031aff",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
+                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
                 "shasum": ""
             },
+            "archive": {
+                "exclude": [
+                    "/Makefile",
+                    "/.gitattributes",
+                    "/.gitignore",
+                    "/.travis.yml",
+                    "/phpunit.xml.dist",
+                    "/tests"
+                ]
+            },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.4.0 || ^7"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.6",
@@ -189,7 +199,11 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\Test\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -209,7 +223,12 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2019-05-02T18:01:22+00:00"
+            "support": {
+                "source": "https://github.com/leafo/scssphp/tree/v0.8.4",
+                "issues": "https://github.com/leafo/scssphp/issues"
+            },
+            "abandoned": "scssphp/scssphp",
+            "time": "2019-06-18T21:15:44+00:00"
         },
         {
             "name": "pimple/pimple",
