@@ -8,6 +8,8 @@
         - Logo particle: Added aria-label to meet the WCAG
     1. [](#bugfix)
         - Fixed PHP 7.3 issue in SCSS compilation
+        - Fixed Admin Assignments issues with Chrome 75 (#2505)
+        - Fixed Admin Styles rendering issues in Chrome 75 (#2504)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
