@@ -5,9 +5,11 @@
     <ul class="g-horizontalmenu {{ particle.class|e }}">
 
         {% for item in particle.items %}
-            <li>
-                <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">{{ item.text }}</a>
-            </li>
+            {% if item.enabled %}
+                <li>
+                    <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">{{ item.text }}</a>
+                </li>
+            {% endif %}
         {% endfor %}
 
     </ul>

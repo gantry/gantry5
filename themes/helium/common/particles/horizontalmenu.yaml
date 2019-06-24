@@ -39,6 +39,11 @@ form:
       ajax: true
 
       fields:
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables or disables this item.
+          default: true
         .name:
           type: input.text
           label: Name
