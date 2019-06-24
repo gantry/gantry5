@@ -57,6 +57,12 @@ form:
       overridable: false
 
       fields:
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables or disables this item.
+          default: true
+
         .icon:
           type: input.icon
           label: Icon

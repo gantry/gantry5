@@ -14,15 +14,17 @@
 		</div>
 		<div class="g-grid">
 			{% for sample in particle.samples %}
-				<div {% if sample.id %}id="{{ sample.id|e }}"{% endif %}
-					 class="g-block {{ sample.class }} {{ sample.variations }}">
-					<div class="g-content">
-						<i class="{{ sample.icon }} sample-icons"></i>
-						<h4>{{ sample.title|raw }}</h4>
-						{{ sample.subtitle|raw }}
-						{{ sample.description|raw }}
+				{% if item.enabled %}
+					<div {% if sample.id %}id="{{ sample.id|e }}"{% endif %}
+						 class="g-block {{ sample.class }} {{ sample.variations }}">
+						<div class="g-content">
+							<i class="{{ sample.icon }} sample-icons"></i>
+							<h4>{{ sample.title|raw }}</h4>
+							{{ sample.subtitle|raw }}
+							{{ sample.description|raw }}
+						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 	</div>
