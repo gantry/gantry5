@@ -1,14 +1,25 @@
 # 5.4.29
 ## 06/21/2019
 
+1. [Common](#common)
+    1. [](#new)
+        - Upgraded SCSS compiler to v0.8.4
+    1. [](#improved)
+        - Logo particle: Added aria-label to meet the WCAG
+    1. [](#bugfix)
+        - Fixed PHP 7.3 issues in SCSS compilation
+        - Fixed Admin Assignments issues with Chrome 75 (#2505)
+        - Fixed Admin Styles rendering issues in Chrome 75 (#2504)
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated Timber to v1.9.4
+        - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
+        - Updated Timber to v1.9.2 (later versions have Twig conflict with current version of WPML)
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
 1. [Grav](#grav)
     1. [](#bugfix)
+        - Fixed compatibility issue with Grav 1.7.0-beta.1
         - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
 
 # 5.4.28

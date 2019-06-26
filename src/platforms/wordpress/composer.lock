@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b79f3009f6420f2b427efddae24a5c97",
+    "content-hash": "c4265d36d6d0e8686e2acd9fd0b872c1",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -388,24 +388,36 @@
         },
         {
             "name": "leafo/scssphp",
-            "version": "v0.7.7",
+            "version": "v0.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "1d656f8c02a3a69404bba6b28ec4e06edddf0f49"
+                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/1d656f8c02a3a69404bba6b28ec4e06edddf0f49",
-                "reference": "1d656f8c02a3a69404bba6b28ec4e06edddf0f49",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
+                "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
                 "shasum": ""
             },
+            "archive": {
+                "exclude": [
+                    "/Makefile",
+                    "/.gitattributes",
+                    "/.gitignore",
+                    "/.travis.yml",
+                    "/phpunit.xml.dist",
+                    "/tests"
+                ]
+            },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.4.0 || ^7"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.6",
-                "squizlabs/php_codesniffer": "~2.5"
+                "squizlabs/php_codesniffer": "~2.5",
+                "twbs/bootstrap": "~4.3",
+                "zurb/foundation": "~6.5"
             },
             "bin": [
                 "bin/pscss"
@@ -416,7 +428,11 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\Test\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -436,7 +452,12 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2018-07-22T01:22:08+00:00"
+            "support": {
+                "source": "https://github.com/leafo/scssphp/tree/v0.8.4",
+                "issues": "https://github.com/leafo/scssphp/issues"
+            },
+            "abandoned": "scssphp/scssphp",
+            "time": "2019-06-18T21:15:44+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -804,16 +825,16 @@
         },
         {
             "name": "timber/timber",
-            "version": "1.9.4",
+            "version": "1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/timber/timber.git",
-                "reference": "de479c12de57d8e78839dd236035da6a1d3a5e8e"
+                "reference": "5f06e537555487d8070c5dc07a243219be6807ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/timber/timber/zipball/de479c12de57d8e78839dd236035da6a1d3a5e8e",
-                "reference": "de479c12de57d8e78839dd236035da6a1d3a5e8e",
+                "url": "https://api.github.com/repos/timber/timber/zipball/5f06e537555487d8070c5dc07a243219be6807ef",
+                "reference": "5f06e537555487d8070c5dc07a243219be6807ef",
                 "shasum": ""
             },
             "require": {
@@ -865,7 +886,7 @@
                 "timber",
                 "twig"
             ],
-            "time": "2019-04-01T01:22:06+00:00"
+            "time": "2019-03-11T19:19:17+00:00"
         },
         {
             "name": "twig/twig",
@@ -1365,5 +1386,8 @@
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.5.9"
+    }
 }

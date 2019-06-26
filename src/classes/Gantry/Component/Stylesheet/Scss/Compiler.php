@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
+use Leafo\ScssPhp\Formatter\OutputBlock;
 use Leafo\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -39,6 +40,9 @@ class Compiler extends BaseCompiler
         $this->registerFunction('get-local-font-url', [$this, 'userGetLocalFontUrl']);
     }
 
+    /**
+     * @param $basePath
+     */
     public function setBasePath($basePath)
     {
         /** @var Document $document */
@@ -46,11 +50,18 @@ class Compiler extends BaseCompiler
         $this->basePath = rtrim($document->rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
     }
 
+    /**
+     * @param array $fonts
+     */
     public function setFonts(array $fonts)
     {
         $this->fonts = $fonts;
     }
 
+    /**
+     * @param $args
+     * @return mixed
+     */
     public function compileArgs($args)
     {
         foreach ($args as &$arg) {
@@ -68,13 +79,14 @@ class Compiler extends BaseCompiler
      * @param string    $name
      * @param boolean   $shouldThrow
      * @param BaseCompiler\Environment $env
+     * @param bool $unreduced
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null)
+    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
     {
         try {
-            return parent::get($name, $shouldThrow, $env);
+            return parent::get($name, $shouldThrow, $env, $unreduced);
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             return ['string', '', ['']];
@@ -383,11 +395,11 @@ class Compiler extends BaseCompiler
      * Override function to improve the logic.
      *
      * @param string $path
-     * @param mixed  $out
+     * @param OutputBlock  $out
      *
      * @throws \Exception
      */
-    protected function importFile($path, $out)
+    protected function importFile($path, OutputBlock $out)
     {
         $this->addParsedFile($path);
 
