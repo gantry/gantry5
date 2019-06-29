@@ -9,7 +9,7 @@
 
             {% for item in particle.items %}
                 {% set showItem = item.showItem|default('yes') %}
-                {% if showItem != 'yes' && showItem != 'no' %}
+                {% if showItem != 'yes' and showItem != 'no' %}
                     {% set format = (showItem == 'once') ? 'Y-m-d' : 'm-d' %}
                     {% set start, now, end = item.startDate|date(format), "now"|date(format), item.endDate|date(format) %}
                     {% if showItem == 'once' %}
