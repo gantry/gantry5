@@ -16,8 +16,8 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use Joomla\CMS\Table\Table as JTable;
 use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Uri\Uri as JUri;
 use Joomla\Registry\Registry as JRegistry;
-use Joomla\Uri\Uri as JUri;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\FileSystem\Folder;
@@ -393,6 +393,7 @@ class plgSystemGantry5 extends CMSPlugin
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
+        /** @var CMSApplication $app */
         $app = \JFactory::getApplication();
 
         // Initialise variables;
