@@ -12,6 +12,8 @@ namespace Gantry\Joomla;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\ThemeInstaller;
+use Joomla\Component\Templates\Administrator\Model\StyleModel;
 use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -80,7 +82,7 @@ class StyleHelper
 
         $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
 
-        $installer = new TemplateInstaller($extension);
+        $installer = new ThemeInstaller($extension);
         $installer->updateStyle($new, ['configuration' => $new]);
     }
 
@@ -90,7 +92,7 @@ class StyleHelper
 
         $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
 
-        $installer = new TemplateInstaller($extension);
+        $installer = new ThemeInstaller($extension);
         $installer->updateStyle($id, ['configuration' => $id, 'preset' => $preset]);
     }
 
@@ -109,23 +111,34 @@ class StyleHelper
     }
 
     /**
-     * @return \TemplatesModelStyle
+     * @return \TemplatesModelStyle|StyleModel
      */
     public static function loadModel()
     {
         static $model;
 
         if (!$model) {
-            $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
+            if (version_compare(JVERSION, '4', '<')) {
+                // Joomla 3 support.
+                $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
 
-            \JTable::addIncludePath("{$path}/tables");
-            require_once "{$path}/models/style.php";
+                \JTable::addIncludePath("{$path}/tables");
+                require_once "{$path}/models/style.php";
 
-            // Load language strings.
-            $lang = \JFactory::getLanguage();
-            $lang->load('com_templates');
+                // Load language strings.
+                $lang = \JFactory::getLanguage();
+                $lang->load('com_templates');
 
-            $model = new \TemplatesModelStyle;
+                $model = new \TemplatesModelStyle;
+            } else {
+                // Joomla 4 support.
+                $app = \JFactory::getApplication();
+                $model = $app->bootComponent('com_templates')
+                    ->getMVCFactory()
+                    ->createModel('Style', 'Administrator', ['ignore_request' => true]);
+            }
+
+            return $model;
         }
 
         return $model;
