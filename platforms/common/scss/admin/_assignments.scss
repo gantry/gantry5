@@ -2,14 +2,6 @@
     #assignments, .settings-assignments {
         .enabler {
             float: right;
-
-            .toggle {
-                @include backface-visibility(hidden);
-
-                .knob {
-                    @include backface-visibility(hidden);
-                }
-            }
         }
 
         .settings-param-wrapper {

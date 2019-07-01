@@ -212,7 +212,10 @@ class Debugger
                 if (!$exists) {
                     static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
                 } else {
-                    static::$debugger->getCollector('Streams')->setData($paths);
+                    $collector = static::$debugger->getCollector('Streams');
+                    if ($collector) {
+                        $collector->setData($paths);
+                    }
                 }
             }
             $exists = true;
