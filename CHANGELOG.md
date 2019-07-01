@@ -16,8 +16,15 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.5 and Admin 1.8
 
+# 5.4.30
+## 06/21/2019
+
+1. [Common](#common)
+    1. [](#new)
+        - No changes yet
+
 # 5.4.29
-## mm/dd/2019
+## 06/21/2019
 
 1. [Common](#common)
     1. [](#new)
@@ -25,7 +32,9 @@
     1. [](#improved)
         - Logo particle: Added aria-label to meet the WCAG
     1. [](#bugfix)
-        - Fixed PHP 7.3 issue in SCSS compilation
+        - Fixed PHP 7.3 issues in SCSS compilation
+        - Fixed Admin Assignments issues with Chrome 75 (#2505)
+        - Fixed Admin Styles rendering issues in Chrome 75 (#2504)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
@@ -35,6 +44,7 @@
         - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
 1. [Grav](#grav)
     1. [](#bugfix)
+        - Fixed compatibility issue with Grav 1.7.0-beta.1
         - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
 
 # 5.4.28
