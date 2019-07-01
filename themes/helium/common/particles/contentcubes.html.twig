@@ -9,7 +9,7 @@
         <div class="cube-items-wrapper">
 
             {% for item in particle.items %}
-                {% if not item.disabled %}
+                {% if not item.disable %}
                     <div class="item image-position-{{ item.imageposition }} cube-row g-grid">
                         <div class="g-block size-50">
                             {% if item.image %}

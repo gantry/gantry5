@@ -59,10 +59,10 @@ form:
       ajax: true
 
       fields:
-        .disabled:
-          type: input.checkbox
-          label: Disabled
-          description: Enables or disables this item.
+        .disable:
+          type: enable.enable
+          label: Disable
+          description: Disables the item on the front end.
           default: false
 
         .name:

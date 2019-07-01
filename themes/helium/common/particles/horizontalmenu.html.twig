@@ -5,7 +5,7 @@
     <ul class="g-horizontalmenu {{ particle.class|e }}">
 
         {% for item in particle.items %}
-            {% if not item.disabled %}
+            {% if not item.disable %}
                 <li>
                     <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">{{ item.text }}</a>
                 </li>
