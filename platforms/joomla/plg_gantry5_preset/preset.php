@@ -14,7 +14,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 
 class plgGantry5Preset extends CMSPlugin
 {
-    public function __construct(&$subject, $config)
+    public function __construct(&$subject, $config = array())
     {
         // Do not load if Gantry libraries are not installed or initialised.
         if (!class_exists('Gantry5\Loader')) return;

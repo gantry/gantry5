@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\Form\Form as JForm;
-use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use Joomla\CMS\Table\Table as JTable;
 use Joomla\CMS\Language\Text as JText;
@@ -34,7 +34,7 @@ use Gantry\Joomla\StyleHelper;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
-class plgSystemGantry5 extends JPlugin
+class plgSystemGantry5 extends CMSPlugin
 {
     /**
      * @var CMSApplication
@@ -43,7 +43,7 @@ class plgSystemGantry5 extends JPlugin
     protected $styles;
     protected $modules;
 
-    public function __construct(&$subject, $config = [])
+    public function __construct(&$subject, $config = array())
     {
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';

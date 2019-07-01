@@ -13,7 +13,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 
 class plgSystemGantry5_Debugbar extends CMSPlugin
 {
-    public function __construct(&$subject, $config = [])
+    public function __construct(&$subject, $config = array())
     {
         require_once __DIR__ . '/Debugger.php';
 

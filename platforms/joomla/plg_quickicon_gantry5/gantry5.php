@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text as JText;
 
 class plgQuickiconGantry5 extends CMSPlugin
 {
-    public function __construct(&$subject, $config)
+    public function __construct(&$subject, $config = array())
     {
         // Do not load if Gantry libraries are not installed or initialised.
         if (!class_exists('Gantry5\Loader')) return;
