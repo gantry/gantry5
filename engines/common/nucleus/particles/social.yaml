@@ -59,11 +59,11 @@ form:
       ajax: true
 
       fields:
-        .disable:
+        .enabled:
           type: enable.enable
-          label: Disable
-          description: Disables the item on the front end.
-          default: false
+          label: Enabled
+          description: Enables the item on the front end.
+          default: true
 
         .name:
           type: input.text

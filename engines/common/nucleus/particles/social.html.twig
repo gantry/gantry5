@@ -9,7 +9,7 @@
     {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
     <div class="g-social {{ particle.css.class }}">
         {% for item in particle.items %}
-            {% if not item.disable %}
+            {% if item.enabled|default(true) %}
                 {% set title = (item.title is not empty) ? item.title|e : item.text|e %}
                 {% set titleAttrib = (title is not empty) ? ' title="' ~ title ~ '" aria-label="' ~ title ~ '"' : '' %}
                 <a href="{{ item.link|e }}"{{ targetAttrib|raw }}{{ titleAttrib|raw }}>

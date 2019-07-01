@@ -14,7 +14,7 @@
 		</div>
 		<div class="g-grid">
 			{% for sample in particle.samples %}
-				{% if not item.disable %}
+				{% if item.enabled|default(true) %}
 					<div {% if sample.id %}id="{{ sample.id|e }}"{% endif %}
 						 class="g-block {{ sample.class }} {{ sample.variations }}">
 						<div class="g-content">
