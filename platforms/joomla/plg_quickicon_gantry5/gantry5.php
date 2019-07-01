@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Router\Route as JRoute;
 use Joomla\CMS\Language\Text as JText;
 
-class plgQuickiconGantry5 extends JPlugin
+class plgQuickiconGantry5 extends CMSPlugin
 {
     public function __construct(&$subject, $config)
     {

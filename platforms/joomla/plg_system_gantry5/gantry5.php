@@ -43,7 +43,7 @@ class plgSystemGantry5 extends JPlugin
     protected $styles;
     protected $modules;
 
-    public function __construct(&$subject, $config = array())
+    public function __construct(&$subject, $config = [])
     {
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';

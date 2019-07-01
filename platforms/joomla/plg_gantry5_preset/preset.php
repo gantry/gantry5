@@ -10,9 +10,9 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Plugin\CMSPlugin as JPlugin;
+use Joomla\CMS\Plugin\CMSPlugin;
 
-class plgGantry5Preset extends JPlugin
+class plgGantry5Preset extends CMSPlugin
 {
     public function __construct(&$subject, $config)
     {
