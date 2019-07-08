@@ -15,12 +15,10 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
+use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Menu;
-use Joomla\CMS\Table\MenuType;
-use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -165,8 +163,7 @@ class EventListener implements EventSubscriberInterface
         $resource = $event->resource;
 
         // Save global menu settings into Joomla.
-        /** @var MenuType $table */
-        $menuType = Table::getInstance('MenuType');
+        $menuType = MenuHelper::getMenuType();
         if (!$menuType->load(['menutype' => $resource])) {
             throw new \RuntimeException("Saving menu failed: Menu type {$resource} not found.", 400);
         }
@@ -180,8 +177,7 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
-        /** @var Menu $table */
-        $table = Table::getInstance('menu');
+        $table = MenuHelper::getMenu();
 
         foreach ($menu['items'] as $key => $item) {
             $id = !empty($item['id']) ? (int) $item['id'] : 0;

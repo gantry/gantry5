@@ -14,11 +14,10 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
+use Gantry\Joomla\MenuHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Table\MenuType;
-use Joomla\CMS\Table\Table;
 
 /**
  * Class Menu
@@ -60,10 +59,7 @@ class Menu extends AbstractMenu
         parent::init($params);
 
         if (!empty($params['admin'])) {
-            /** @var MenuType $table */
-            // FIXME: Joomla 4
-            $menuType = Table::getInstance('MenuType');
-            $menuType->load(['menutype' => $params['menu']]);
+            $menuType = MenuHelper::getMenuType($params['menu']);
 
             $config = $this->config();
             $config->set('settings.title', $menuType->title);

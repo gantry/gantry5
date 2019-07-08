@@ -28,20 +28,11 @@ class StyleHelper
     /**
      * @param int|array|null $id
      * @return StyleTable|\TemplatesTableStyle
-     * @throws \Exception
      */
     public static function getStyle($id = null)
     {
-        if (version_compare(JVERSION, '4', '<')) {
-            // Joomla 3 support.
-            Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-
-            /** @var \TemplatesTableStyle $style */
-            $style = Table::getInstance('Style', 'TemplatesTable');
-        } else {
-            $model = static::loadModel();
-            $style = $model->getTable('Style');
-        }
+        $model = static::loadModel();
+        $style = $model->getTable('Style');
 
         if (null !== $id) {
             if (!is_array($id)) {
@@ -49,8 +40,6 @@ class StyleHelper
             }
 
             $style->load($id);
-        } else {
-            $style->reset();
         }
 
         return $style;
@@ -86,7 +75,6 @@ class StyleHelper
 
     /**
      * @return StyleTable|\TemplatesTableStyle
-     * @throws \Exception
      */
     public static function getDefaultStyle()
     {
@@ -151,37 +139,41 @@ class StyleHelper
     }
 
     /**
+     * @param string $name
      * @return \TemplatesModelStyle|StyleModel
      */
-    public static function loadModel()
+    public static function loadModel($name = 'Style')
     {
-        static $model;
+        static $model = [];
 
-        if (!$model) {
+        if (!isset($model[$name])) {
             if (version_compare(JVERSION, '4', '<')) {
                 // Joomla 3 support.
                 $path = JPATH_ADMINISTRATOR . '/components/com_templates/';
+                $filename = strtolower($name);
+                $className = "\\TemplatesModel{$name}";
 
                 Table::addIncludePath("{$path}/tables");
-                require_once "{$path}/models/style.php";
+
+                require_once "{$path}/models/{$filename}.php";
+
+                $application = Factory::getApplication();
 
                 // Load language strings.
-                $application = Factory::getApplication();
                 $language = $application->getLanguage();
                 $language->load('com_templates');
 
-                $model = new \TemplatesModelStyle;
+                // Load the model.
+                $model[$name] = new $className();
             } else {
                 // Joomla 4 support.
                 $application = Factory::getApplication();
-                $model = $application->bootComponent('com_templates')
+                $model[$name] = $application->bootComponent('com_templates')
                     ->getMVCFactory()
-                    ->createModel('Style', 'Administrator', ['ignore_request' => true]);
+                    ->createModel($name, 'Administrator', ['ignore_request' => true]);
             }
-
-            return $model;
         }
 
-        return $model;
+        return $model[$name];
     }
 }

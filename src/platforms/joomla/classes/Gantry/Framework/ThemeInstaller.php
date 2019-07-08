@@ -13,6 +13,7 @@ namespace Gantry\Framework;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
 use Gantry\Joomla\Manifest;
+use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
@@ -22,6 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
+use Joomla\Component\Menus\Administrator\Table\MenuTypeTable; // Joomla 4
 use Joomla\Component\Templates\Administrator\Table\StyleTable; // Joomla 4
 use RocketTheme\Toolbox\File\YamlFile;
 
@@ -131,15 +133,11 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * @param string $type
-     * @return \TableMenu
+     * @return \TableMenuType|MenuTypeTable
      */
     public function getMenu($type)
     {
-        /** @var \TableMenuType $table */
-        $table = Table::getInstance('MenuType');
-        $table->load(['menutype' => $type]);
-
-        return $table;
+        return MenuHelper::getMenuType($type);
     }
 
     public function createSampleData()
@@ -355,8 +353,7 @@ class ThemeInstaller extends AbstractInstaller
     {
         $component_id = $this->getComponent();
 
-        // FIXME: Joomla 4
-        $table = Table::getInstance('menu');
+        $table = MenuHelper::getMenu();
         $date = new Date();
         $update = false;
 
@@ -410,9 +407,7 @@ class ThemeInstaller extends AbstractInstaller
         $cache = Factory::getCache();
         $cache->clean('mod_menu');
 
-        // FIXME: Joomla 4
-        $menu = Table::getInstance('menuType');
-        $menu->load(['menutype' => $item['menutype']]);
+        $menu = MenuHelper::getMenuType($item['menutype']);
 
         if (!isset($this->actions["menu_{$item['menutype']}_created"])) {
             $postfix = $item['home'] ? '_HOME' : '';
@@ -470,8 +465,7 @@ class ThemeInstaller extends AbstractInstaller
     public function createMenu($type, $title, $description)
     {
         /** @var MenuType $table */
-        // FIXME: Joomla 4
-        $table = Table::getInstance('MenuType');
+        $table = MenuHelper::getMenuType();
         $data  = array(
             'menutype'    => $type,
             'title'       => $title,
@@ -500,9 +494,7 @@ class ThemeInstaller extends AbstractInstaller
             $this->unsetHome($type);
         }
 
-        // FIXME: Joomla 4
-        $table = Table::getInstance('MenuType');
-        $table->load(['menutype' => $type]);
+        $table = MenuHelper::getMenuType($type);
 
         if ($table->id) {
             $success = $table->delete();
