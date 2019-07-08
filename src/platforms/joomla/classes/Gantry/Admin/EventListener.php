@@ -16,6 +16,7 @@ use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Menu;
 use Joomla\CMS\Table\MenuType;
