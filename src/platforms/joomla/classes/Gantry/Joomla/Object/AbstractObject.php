@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,7 +11,8 @@
 namespace Gantry\Joomla\Object;
 
 use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
 
 /**
  * Abstract base class for database objects.
@@ -33,7 +34,7 @@ abstract class AbstractObject extends \JObject
     static protected $table;
 
     /**
-     * JTable class prefix, override if needed.
+     * Table class prefix, override if needed.
      * @var string
      */
     static protected $tablePrefix = 'JTable';
@@ -205,7 +206,7 @@ abstract class AbstractObject extends \JObject
      *
      * This method optionally takes an array of properties to ignore or allow when binding.
      *
-     * @param   array    $src     An associative array or object to bind to the JTable instance.
+     * @param   array    $src     An associative array or object to bind to the Table instance.
      * @param   array    $fields  An optional array list of properties to ignore / include only while binding.
      * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
      *
@@ -295,7 +296,7 @@ abstract class AbstractObject extends \JObject
         $app = JoomlaFactory::getApplication();
 
         // Include the content plugins for the on save events.
-        JPluginHelper::importPlugin('content');
+        PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
         // FIXME: Joomla 4
@@ -349,7 +350,7 @@ abstract class AbstractObject extends \JObject
         $app = JoomlaFactory::getApplication();
 
         // Include the content plugins for the on save events.
-        JPluginHelper::importPlugin('content');
+        PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
         // FIXME: Joomla 4
@@ -444,12 +445,12 @@ abstract class AbstractObject extends \JObject
     /**
      * Method to get the table object.
      *
-     * @return  \JTable  The table object.
+     * @return  Table  The table object.
      */
     static protected function getTable()
     {
         // FIXME: Joomla 4
-        return \JTable::getInstance(static::$table, static::$tablePrefix);
+        return Table::getInstance(static::$table, static::$tablePrefix);
     }
 
     /**

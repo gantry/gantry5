@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,14 +11,17 @@
 defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 try
 {
-    $app = JFactory::getApplication('site');
+    // FIXME: not working in Joomla 4
+    $app = Factory::getApplication('site');
     $template = $app->getTemplate(true);
 
     if (!class_exists('Gantry5\Loader')) {
-        throw new RuntimeException(JText::_('GANTRY5_THEME_INSTALL_GANTRY'));
+        throw new RuntimeException(Text::_('GANTRY5_THEME_INSTALL_GANTRY'));
     }
 
     // Setup Gantry 5 Framework or throw exception.
@@ -45,9 +48,9 @@ try
 catch (Exception $e)
 {
     // Oops, something went wrong!
-    header("HTTP/1.0 500 Internal Server Error");
+    header('HTTP/1.0 500 Internal Server Error');
 
-    $message = JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $template->template, $e->getMessage());
+    $message = Text::sprintf('GANTRY5_THEME_LOADING_FAILED', $template->template, $e->getMessage());
 
     echo <<<html
 <html>

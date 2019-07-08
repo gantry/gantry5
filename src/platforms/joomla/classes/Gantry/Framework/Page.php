@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,7 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class Page
@@ -73,7 +73,7 @@ class Page extends Base\Page
         $this->outline = Gantry::instance()['configuration'];
         $this->sitename = $app->get('sitename');
         $this->theme = $templateParams->template;
-        $this->baseUrl = JUri::base(true);
+        $this->baseUrl = Uri::base(true);
         $this->title = $document->title;
         $this->description = $document->description;
 
@@ -91,7 +91,7 @@ class Page extends Base\Page
      */
     public function url(array $args = [])
     {
-        $url = JUri::getInstance();
+        $url = Uri::getInstance();
 
         foreach ($args as $key => $val) {
             $url->setVar($key, $val);

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -150,7 +150,7 @@ class ContentFinder extends Finder
 
         // Define null and now dates
         $nullDate = $this->db->quote($this->db->getNullDate());
-        $nowDate = $this->db->quote(\JFactory::getDate()->toSql());
+        $nowDate = $this->db->quote(JoomlaFactory::getDate()->toSql());
 
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {

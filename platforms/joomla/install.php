@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,17 +98,19 @@ class Pkg_Gantry5InstallerScript
      */
     public function preflight($type, $parent)
     {
-        $manifest = $parent->getManifest();
+        if ($type !== 'uninstall') {
+            $manifest = $parent->getManifest();
 
-        // Prevent installation if requirements are not met.
-        $errors = $this->checkRequirements($manifest->version);
-        if ($errors) {
-            $app = Factory::getApplication();
+            // Prevent installation if requirements are not met.
+            $errors = $this->checkRequirements($manifest->version);
+            if ($errors) {
+                $app = Factory::getApplication();
 
-            foreach ($errors as $error) {
-                $app->enqueueMessage($error, 'error');
+                foreach ($errors as $error) {
+                    $app->enqueueMessage($error, 'error');
+                }
+                return false;
             }
-            return false;
         }
 
         // Disable and unlock existing extensions to prevent fatal errors (in the site).

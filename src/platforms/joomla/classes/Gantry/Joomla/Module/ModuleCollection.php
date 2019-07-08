@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -89,7 +89,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_keys($ids));
 
-        $db = \JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('moduleid, menuid')->from('#__modules_menu')->where("moduleid IN ($idlist)");
         $db->setQuery($query);

@@ -10,7 +10,14 @@
 
 namespace Gantry\Joomla;
 
-use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\User\User;
+use Joomla\Registry\Registry;
 
 /**
  * Class JoomlaFactory
@@ -20,65 +27,85 @@ abstract class JoomlaFactory
 {
 
     /**
-     * @return \Joomla\CMS\User\User
+     * @param string|int|null $id
+     * @return User
      * @since 5.5
      */
-    public static function getUser()
+    public static function getUser($id = null)
     {
-        return JFactory::getUser();
+        return Factory::getUser($id);
     }
 
     /**
-     * @return \Joomla\CMS\Application\CMSApplicationInterface
+     * @param null $id
+     * @param array $config
+     * @param string $prefix
+     * @return CMSApplication
+     * @throws \Exception
      * @since 5.5
      */
-    public static function getApplication()
+    public static function getApplication($id = null, array $config = [], $prefix = 'J')
     {
-        return JFactory::getApplication();
+        return Factory::getApplication($id, $config, $prefix);
     }
 
     /**
-     * @return \Joomla\CMS\Session\Session
+     * @param array $options
+     * @return Session
      * @since 5.5
      */
-    public static function getSession()
+    public static function getSession(array $options = [])
     {
-        return JFactory::getSession();
+        return Factory::getSession($options);
     }
 
     /**
-     * @return \Joomla\CMS\Document\Document
+     * @return Document
      * @since 5.5
      */
     public static function getDocument()
     {
-        return JFactory::getDocument();
+        return Factory::getDocument();
     }
 
     /**
-     * @return \Joomla\Registry\Registry
+     * @param string|null $file
+     * @param string $type
+     * @param string $namespace
+     * @return Registry
      * @since 5.5
      */
-    public static function getConfig()
+    public static function getConfig($file = null, $type = 'PHP', $namespace = '')
     {
-        return JFactory::getConfig();
+        return Factory::getConfig($file, $type, $namespace);
     }
 
     /**
-     * @return \Joomla\Database\DatabaseDriver
+     * @return \JDatabaseDriver
      * @since 5.5
      */
     public static function getDbo()
     {
-        return JFactory::getDbo();
+        return Factory::getDbo();
     }
 
     /**
-     * @return \Joomla\CMS\Language\Language
+     * @return Language
      * @since 5.5
      */
     public static function getLanguage()
     {
-        return JFactory::getLanguage();
+        return Factory::getLanguage();
+    }
+
+    /**
+     * @param string $time
+     * @param mixed|null $tzOffset
+     * @return Date
+     * @since 5.5
+     */
+    public static function getDate($time = 'now', $tzOffset = null)
+    {
+        return Factory::getDate($time, $tzOffset);
     }
 }

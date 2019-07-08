@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,9 +20,9 @@ use Gantry\Component\Router\Router as BaseRouter;
 use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Document\Document as JDocument;
-use Joomla\CMS\HTML\HTMLHelper as JHtml;
-use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -35,7 +35,7 @@ class Router extends BaseRouter
      */
     public function boot()
     {
-        JHtml::_('behavior.keepalive');
+        HTMLHelper::_('behavior.keepalive');
 
         /** @var CMSApplication $app */
         $app = JoomlaFactory::getApplication();
@@ -101,7 +101,7 @@ class Router extends BaseRouter
             CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
         }
 
-        $this->container['base_url'] = JUri::base(true) . '/index.php?option=com_gantry5';
+        $this->container['base_url'] = Uri::base(true) . '/index.php?option=com_gantry5';
 
         $this->container['ajax_suffix'] = '&format=json';
 
@@ -152,7 +152,7 @@ class Router extends BaseRouter
         /** @var CMSApplication $app */
         $app = JoomlaFactory::getApplication();
 
-        /** @var JDocument $document */
+        /** @var Document $document */
         $document = JoomlaFactory::getDocument();
         $document->setCharset($response->charset);
         $document->setMimeEncoding($response->mimeType);

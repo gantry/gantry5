@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,11 +13,11 @@ namespace Gantry\Framework;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Date\Date as JDate;
-use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
-use Joomla\CMS\Language\Text as JText;
-use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
-use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -70,8 +70,8 @@ class Theme extends AbstractTheme
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.
-        $core->setDateFormat(JText::_('DATE_FORMAT_LC2'), JText::_('GANTRY5_X_DAYS'));
-        $core->setNumberFormat(0, JText::_('DECIMALS_SEPARATOR'), JText::_('THOUSANDS_SEPARATOR'));
+        $core->setDateFormat(Text::_('DATE_FORMAT_LC2'), Text::_('GANTRY5_X_DAYS'));
+        $core->setNumberFormat(0, Text::_('DECIMALS_SEPARATOR'), Text::_('THOUSANDS_SEPARATOR'));
 
         $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], ['needs_environment' => true]);
         $twig->addFilter($filter);
@@ -104,11 +104,11 @@ class Theme extends AbstractTheme
             return $date->format($format);
         }
 
-        if (!($date instanceof JDate)) {
-            // Create localized JDate object.
+        if (!($date instanceof Date)) {
+            // Create localized Date object.
             $twig_date = \twig_date_converter($env, $date, $timezone);
 
-            $date = new JDate($twig_date->getTimestamp());
+            $date = new Date($twig_date->getTimestamp());
             $date->setTimezone($twig_date->getTimezone());
         } elseif ($timezone) {
             $date->setTimezone($timezone);
@@ -167,14 +167,14 @@ class Theme extends AbstractTheme
         }
 
         $doc = JoomlaFactory::getDocument();
-        if ($doc instanceof JDocumentHtml) {
+        if ($doc instanceof HtmlDocument) {
             $doc->setHtml5(true);
         }
         $this->language = $doc->language;
         $this->direction = $doc->direction;
-        $this->url = JUri::root(true) . '/templates/' . $this->name;
+        $this->url = Uri::root(true) . '/templates/' . $this->name;
 
-        JPluginHelper::importPlugin('gantry5');
+        PluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
         // FIXME: Joomla 4?

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,8 +12,8 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\HTML\HTMLHelper as JHtml;
-use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Class Document
@@ -50,7 +50,7 @@ class Document extends HtmlDocument
      */
     public static function rootUri()
     {
-        return rtrim(JUri::root(true), '/') ?: '/';
+        return rtrim(Uri::root(true), '/') ?: '/';
     }
 
     /**
@@ -117,7 +117,7 @@ class Document extends HtmlDocument
     protected static function registerJquery()
     {
         if (!static::errorPage()) {
-            JHtml::_('jquery.framework');
+            HTMLHelper::_('jquery.framework');
 
             return;
         }
@@ -126,7 +126,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.min.js'
             ],
             'head',
             100
@@ -134,7 +134,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery-noconflict.js'
             ],
             'head',
             100
@@ -142,7 +142,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery-migrate.min.js'
             ],
             'head',
             100
@@ -152,7 +152,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiCore()
     {
         if (!static::errorPage()) {
-            JHtml::_('jquery.ui', ['core']);
+            HTMLHelper::_('jquery.ui', ['core']);
 
             return;
         }
@@ -162,7 +162,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.ui.core.min.js'
             ],
             'head',
             100
@@ -173,7 +173,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiSortable()
     {
         if (!static::errorPage()) {
-            JHtml::_('jquery.ui', ['sortable']);
+            HTMLHelper::_('jquery.ui', ['sortable']);
 
             return;
         }
@@ -183,7 +183,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/jquery.ui.sortable.min.js'
             ],
             'head',
             100
@@ -197,7 +197,7 @@ class Document extends HtmlDocument
         $theme->joomla(true);
 
         if (!static::errorPage()) {
-            JHtml::_('bootstrap.framework');
+            HTMLHelper::_('bootstrap.framework');
 
             return;
         }
@@ -207,7 +207,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
+                'src' => Uri::getInstance()->base(true) . '/media/jui/js/bootstrap.min.js'
             ],
             'head',
             100
@@ -217,7 +217,7 @@ class Document extends HtmlDocument
     protected static function registerMootools()
     {
         if (!static::errorPage()) {
-            JHtml::_('behavior.framework');
+            HTMLHelper::_('behavior.framework');
 
             return;
         }
@@ -226,7 +226,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
+                'src' => Uri::getInstance()->base(true) . '/media/system/js/mootools-core.js'
             ],
             'head',
             99
@@ -234,7 +234,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/system/js/core.js'
+                'src' => Uri::getInstance()->base(true) . '/media/system/js/core.js'
             ],
             'head',
             99
@@ -244,7 +244,7 @@ class Document extends HtmlDocument
     protected static function registerMootoolsMore()
     {
         if (!static::errorPage()) {
-            JHtml::_('behavior.framework', true);
+            HTMLHelper::_('behavior.framework', true);
 
             return;
         }
@@ -254,7 +254,7 @@ class Document extends HtmlDocument
         static::addHeaderTag(
             [
                 'tag' => 'script',
-                'src' => JUri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
+                'src' => Uri::getInstance()->base(true) . '/media/system/js/mootools-more.js'
             ],
             'head',
             99

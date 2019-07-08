@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,15 +17,15 @@ use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
-use Joomla\CMS\Editor\Editor as JEditor;
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\HTML\HTMLHelper as JHtml;
-use Joomla\CMS\Helper\ModuleHelper as JModuleHelper;
-use Joomla\CMS\Layout\LayoutHelper as JLayoutHelper;
-use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
-use Joomla\CMS\Router\Route as JRoute;
-use Joomla\CMS\Uri\Uri as JUri;
+use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Editor\Editor;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -176,7 +176,7 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        return (string)(int) $theme === (string) $theme ? JUri::root(false) . 'index.php?templateStyle=' . $theme : null;
+        return (string)(int) $theme === (string) $theme ? Uri::root(false) . 'index.php?templateStyle=' . $theme : null;
     }
 
     /**
@@ -190,7 +190,7 @@ class Platform extends BasePlatform
         $session = JoomlaFactory::getSession();
         $token = $session::getFormToken();
 
-        return JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
+        return Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
     }
 
     /**
@@ -199,9 +199,9 @@ class Platform extends BasePlatform
      */
     public function filter($text)
     {
-        JPluginHelper::importPlugin('content');
+        PluginHelper::importPlugin('content');
 
-        return JHtml::_('content.prepare', $text, '', 'mod_custom.content');
+        return HTMLHelper::_('content.prepare', $text, '', 'mod_custom.content');
     }
 
     /**
@@ -212,7 +212,7 @@ class Platform extends BasePlatform
     {
         $document = JoomlaFactory::getDocument();
 
-        return ($document instanceof JDocumentHTML) ? $document->countModules($position) : 0;
+        return ($document instanceof HtmlDocument) ? $document->countModules($position) : 0;
     }
 
     /**
@@ -233,7 +233,7 @@ class Platform extends BasePlatform
     public function displayModule($id, $attribs = [])
     {
         $document = JoomlaFactory::getDocument();
-        if (!$document instanceof JDocumentHTML) {
+        if (!$document instanceof HtmlDocument) {
             return '';
         }
 
@@ -266,7 +266,7 @@ class Platform extends BasePlatform
                 'position' => isset($attribs['position']) ? $attribs['position'] : $module->position,
                 'menusediting' => $menusEditing
             ];
-            JLayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
+            LayoutHelper::render('joomla.edit.frontediting_modules', $displayData);
         }
 
         // Work around Joomla "issue" which corrupts content of custom html module (last checked J! 3.6.5).
@@ -290,12 +290,12 @@ class Platform extends BasePlatform
     public function displayModules($position, $attribs = [])
     {
         $document = JoomlaFactory::getDocument();
-        if (!$document instanceof JDocumentHTML) {
+        if (!$document instanceof HtmlDocument) {
             return '';
         }
 
         $html = '';
-        foreach (JModuleHelper::getModules($position) as $module) {
+        foreach (ModuleHelper::getModules($position) as $module) {
             $html .= $this->displayModule($module, $attribs);
         }
 
@@ -308,7 +308,7 @@ class Platform extends BasePlatform
      */
     public function displaySystemMessages($params = [])
     {
-        // We cannot use JDocument renderer here as it fires too early to display any messages.
+        // We cannot use DocumentHtml renderer here as it fires too early to display any messages.
         return '<jdoc:include type="message" />';
     }
 
@@ -320,7 +320,7 @@ class Platform extends BasePlatform
     public function displayContent($content, $params = [])
     {
         $document = JoomlaFactory::getDocument();
-        if (!$document instanceof JDocumentHTML) {
+        if (!$document instanceof HtmlDocument) {
             return $content;
         }
 
@@ -356,7 +356,7 @@ class Platform extends BasePlatform
     protected function &getModuleList()
     {
         if ($this->modules === null) {
-            $modules = JModuleHelper::getModuleList();
+            $modules = ModuleHelper::getModuleList();
 
             $this->modules = [];
             foreach ($modules as $module) {
@@ -405,7 +405,7 @@ class Platform extends BasePlatform
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
         $config = JoomlaFactory::getConfig();
-        $editor = JEditor::getInstance($config->get('editor'));
+        $editor = Editor::getInstance($config->get('editor'));
         if (!$height) {
             $height = 250;
         }
@@ -430,7 +430,7 @@ class Platform extends BasePlatform
             return '';
         }
 
-        return JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false) ?: '';
+        return Route::_('index.php?option=com_config&view=component&component=com_gantry5', false) ?: '';
     }
 
     /**
@@ -438,7 +438,7 @@ class Platform extends BasePlatform
      */
     public function update()
     {
-        return JRoute::_('index.php?option=com_installer&view=update', false) ?: '';
+        return Route::_('index.php?option=com_installer&view=update', false) ?: '';
     }
 
     /**
@@ -499,7 +499,7 @@ class Platform extends BasePlatform
     public function factory()
     {
         $args = func_get_args();
-        $method = [JFactory::class, 'get'. ucfirst((string) array_shift($args))];
+        $method = [Factory::class, 'get'. ucfirst((string) array_shift($args))];
         return method_exists($method[0], $method[1]) ? \call_user_func_array($method, $args) : null;
     }
 
@@ -525,7 +525,7 @@ class Platform extends BasePlatform
      */
     public function route()
     {
-        return \call_user_func_array([JRoute::class, '_'], func_get_args()) ?: '';
+        return \call_user_func_array([Route::class, '_'], func_get_args()) ?: '';
     }
 
     /**
@@ -534,10 +534,10 @@ class Platform extends BasePlatform
     public function html()
     {
         $args = func_get_args();
-        if (isset($args[0]) && method_exists(JHtml::class, $args[0])) {
-            return \call_user_func_array([JHtml::class, array_shift($args)], $args);
+        if (isset($args[0]) && method_exists(HTMLHelper::class, $args[0])) {
+            return \call_user_func_array([HTMLHelper::class, array_shift($args)], $args);
         }
-        return \call_user_func_array([JHtml::class, '_'], $args);
+        return \call_user_func_array([HTMLHelper::class, '_'], $args);
     }
 
     /**
@@ -582,7 +582,7 @@ class Platform extends BasePlatform
      */
     public function truncate($text, $length, $html = false)
     {
-        return JHtml::_('string.truncate', $text, $length, true, $html);
+        return HTMLHelper::_('string.truncate', $text, $length, true, $html);
     }
 
     /**

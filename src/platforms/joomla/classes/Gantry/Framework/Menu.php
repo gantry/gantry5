@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,6 +16,9 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\MenuType;
+use Joomla\CMS\Table\Table;
 
 class Menu extends AbstractMenu
 {
@@ -53,9 +56,9 @@ class Menu extends AbstractMenu
         parent::init($params);
 
         if (!empty($params['admin'])) {
-            /** @var \JTableMenuType $table */
+            /** @var MenuType $table */
             // FIXME: Joomla 4
-            $menuType = \JTable::getInstance('MenuType');
+            $menuType = Table::getInstance('MenuType');
             $menuType->load(['menutype' => $params['menu']]);
 
             $config = $this->config();
@@ -274,7 +277,7 @@ class Menu extends AbstractMenu
 
         // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
         //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
-        //$cache = \JFactory::getCache('mod_menu', '');
+        //$cache = Factory::getCache('mod_menu', '');
         //try {
         //    $this->items = $cache->get($key);
         //} catch (\Exception $e) {
@@ -401,9 +404,9 @@ class Menu extends AbstractMenu
                 if (!$link) {
                     $item->url(false);
                 } elseif (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
-                    $item->url(\JRoute::_($link, false, $menuItem->params->get('secure')));
+                    $item->url(Route::_($link, false, $menuItem->params->get('secure')));
                 } else {
-                    $item->url(\JRoute::_($link, false));
+                    $item->url(Route::_($link, false));
                 }
 
                 if ($item->type === 'url') {

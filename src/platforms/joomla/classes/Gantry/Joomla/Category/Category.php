@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,7 @@ namespace Gantry\Joomla\Category;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Router\Route;
 
 /**
  * Class Category
@@ -78,7 +79,7 @@ class Category extends AbstractObject
         // FIXME: Joomla 4
         require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
-        return \JRoute::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
+        return Route::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
     }
 
     /**

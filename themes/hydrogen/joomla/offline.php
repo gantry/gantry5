@@ -10,10 +10,12 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Framework\Theme;
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include __DIR__ . '/includes/gantry.php';
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme = $gantry['theme'];
 
 ob_start();

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,12 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Table\Table;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 
 // FIXME: Joomla 4
-\JTable::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
+Table::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
 /**
  * Class Module

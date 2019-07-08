@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,12 +42,12 @@ $menuItem = $menu->getActive();
 
 // Prevent direct access without menu item.
 if (!$menuItem) {
-    JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+    throw new JException(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 }
 
 // Handle non-html formats and error page.
 if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
-    JError::raiseError(404, Text::_('JERROR_PAGE_NOT_FOUND'));
+    throw new JException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
 }
 
 $gantry = Gantry::instance();

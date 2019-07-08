@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,11 +15,12 @@ use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
 use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Manifest;
 use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
-use Joomla\CMS\Date\Date as JDate;
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
-use Joomla\CMS\Router\Route as JRoute;
-use Joomla\CMS\Table\Table as JTable;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\MenuType;
+use Joomla\CMS\Table\Table;
 // TODO: Remove when droppong Joomla 3 support
 use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -40,7 +41,7 @@ class ThemeInstaller extends AbstractInstaller
         // FIXME: Joomla 4
         jimport('joomla.filesystem.folder');
 
-        JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+        Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
         if ($extension instanceof \JInstallerAdapterTemplate) {
             $this->setInstaller($extension);
         } elseif ($extension) {
@@ -76,7 +77,7 @@ class ThemeInstaller extends AbstractInstaller
             $id = ['type' => 'template', 'element' => (string) $id, 'client_id' => 0];
         }
         // FIXME: Joomla 4
-        $this->extension = JTable::getInstance('extension');
+        $this->extension = Table::getInstance('extension');
         $this->extension->load($id);
         $this->name = $this->extension->name;
     }
@@ -95,12 +96,12 @@ class ThemeInstaller extends AbstractInstaller
      */
     public function getStyleName($title)
     {
-        return JText::sprintf($title, JText::_($this->extension->name));
+        return Text::sprintf($title, Text::_($this->extension->name));
     }
 
     /**
      * @param string|null $name
-     * @return bool|JTable|StyleTable
+     * @return bool|Table|StyleTable
      */
     public function getStyle($name = null)
     {
@@ -122,13 +123,13 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @return bool|JTable|StyleTable
+     * @return bool|Table|StyleTable
      */
     public function getDefaultStyle()
     {
         if (version_compare(JVERSION, '4', '<')) {
             // Joomla 3 support.
-            $style = JTable::getInstance('Style', 'TemplatesTable');
+            $style = Table::getInstance('Style', 'TemplatesTable');
         } else {
             // FIXME: Jooma 4: better way?
             $style = new StyleTable(JoomlaFactory::getDbo());
@@ -140,13 +141,13 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * @param string $type
-     * @return \JTableMenu
+     * @return \TableMenu
      */
     public function getMenu($type)
     {
-        /** @var \JTableMenuType $table */
+        /** @var \TableMenuType $table */
         // FIXME: Joomla 4
-        $table = JTable::getInstance('MenuType');
+        $table = Table::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
         return $table;
@@ -179,23 +180,23 @@ class ThemeInstaller extends AbstractInstaller
             ],
             'copyright' => (string) $manifest->get('copyright'),
             'license' => (string) $manifest->get('license'),
-            'install_url' => JRoute::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
-            'edit_url' => JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
+            'install_url' => Route::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
+            'edit_url' => Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
         ];
 
         return parent::render($template, $context);
     }
 
     /**
-     * @return bool|JTable|StyleTable
+     * @return bool|Table|StyleTable
      */
     public function createStyle()
     {
         if (version_compare(JVERSION, '4', '<')) {
-            $style = JTable::getInstance('Style', 'TemplatesTable');
+            $style = Table::getInstance('Style', 'TemplatesTable');
         } else {
             // FIXME: Joomla 4: better way?
-            $style = new StyleTable(\JFactory::getDbo());
+            $style = new StyleTable(Factory::getDbo());
         }
         $style->reset();
         $style->template = $this->extension->element;
@@ -208,7 +209,7 @@ class ThemeInstaller extends AbstractInstaller
      * @param $title
      * @param array $configuration
      * @param int $home
-     * @return bool|JTable|StyleTable
+     * @return bool|Table|StyleTable
      */
     public function addStyle($title, array $configuration = [], $home = 0)
     {
@@ -232,7 +233,7 @@ class ThemeInstaller extends AbstractInstaller
         $style->save($data);
 
         if ($home) {
-            $this->actions[] = ['action' => 'default_style_assigned', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $title)];
+            $this->actions[] = ['action' => 'default_style_assigned', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $title)];
         }
 
         return $style;
@@ -242,7 +243,7 @@ class ThemeInstaller extends AbstractInstaller
      * @param string $name
      * @param array $configuration
      * @param string|null $home
-     * @return bool|JTable|StyleTable
+     * @return bool|Table|StyleTable
      */
     public function updateStyle($name, array $configuration, $home = null)
     {
@@ -258,7 +259,7 @@ class ThemeInstaller extends AbstractInstaller
             ];
 
             if ($home && !$style->home) {
-                $this->actions[] = ['action' => 'default_style_assigned', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $style->title)];
+                $this->actions[] = ['action' => 'default_style_assigned', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_DEFAULT_STYLE_ASSIGNED', $style->title)];
             }
 
             $style->save($data);
@@ -268,7 +269,7 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @param JTable|StyleTable $style
+     * @param Table|StyleTable $style
      */
     public function assignHomeStyle($style)
     {
@@ -284,7 +285,7 @@ class ThemeInstaller extends AbstractInstaller
         $db->execute();
 
         if ($db->getAffectedRows()) {
-            $this->actions[] = ['action' => 'home_style_assigned', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_HOME_STYLE_ASSIGNED', $style->title)];
+            $this->actions[] = ['action' => 'home_style_assigned', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_HOME_STYLE_ASSIGNED', $style->title)];
         }
     }
 
@@ -369,8 +370,8 @@ class ThemeInstaller extends AbstractInstaller
         $component_id = $this->getComponent();
 
         // FIXME: Joomla 4
-        $table = JTable::getInstance('menu');
-        $date = new JDate();
+        $table = Table::getInstance('menu');
+        $date = new Date();
         $update = false;
 
         // Defaults for the item.
@@ -420,22 +421,22 @@ class ThemeInstaller extends AbstractInstaller
 
         /** @var \JCache|\JCacheController $cache */
         // FIXME: Joomla 4
-        $cache = JFactory::getCache();
+        $cache = Factory::getCache();
         $cache->clean('mod_menu');
 
         // FIXME: Joomla 4
-        $menu = JTable::getInstance('menuType');
+        $menu = Table::getInstance('menuType');
         $menu->load(['menutype' => $item['menutype']]);
 
         if (!isset($this->actions["menu_{$item['menutype']}_created"])) {
             $postfix = $item['home'] ? '_HOME' : '';
             if ($update) {
-                $this->actions[] = ['action' => 'menu_item_updated', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_UPDATED' . $postfix, $table->title, $table->path, $menu->title)];
+                $this->actions[] = ['action' => 'menu_item_updated', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_UPDATED' . $postfix, $table->title, $table->path, $menu->title)];
             } else {
-                $this->actions[] = ['action' => 'menu_item_created', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_CREATED' . $postfix, $table->title, $table->path, $menu->title)];
+                $this->actions[] = ['action' => 'menu_item_created', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_CREATED' . $postfix, $table->title, $table->path, $menu->title)];
             }
         } elseif ($item['home']) {
-            $this->actions[] = ['action' => 'menu_item_updated', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_HOME', $table->title, $table->path, $menu->title)];
+            $this->actions[] = ['action' => 'menu_item_updated', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_MENU_ITEM_HOME', $table->title, $table->path, $menu->title)];
         }
 
         return $table->id;
@@ -482,9 +483,9 @@ class ThemeInstaller extends AbstractInstaller
      */
     public function createMenu($type, $title, $description)
     {
-        /** @var \JTableMenuType $table */
+        /** @var MenuType $table */
         // FIXME: Joomla 4
-        $table = JTable::getInstance('MenuType');
+        $table = Table::getInstance('MenuType');
         $data  = array(
             'menutype'    => $type,
             'title'       => $title,
@@ -500,7 +501,7 @@ class ThemeInstaller extends AbstractInstaller
             throw new \RuntimeException($table->getError());
         }
 
-        $this->actions["menu_{$type}_created"] = ['action' => 'menu_created', 'text' => JText::sprintf('GANTRY5_INSTALLER_ACTION_MENU_CREATED', $title)];
+        $this->actions["menu_{$type}_created"] = ['action' => 'menu_created', 'text' => Text::sprintf('GANTRY5_INSTALLER_ACTION_MENU_CREATED', $title)];
     }
 
     /**
@@ -514,7 +515,7 @@ class ThemeInstaller extends AbstractInstaller
         }
 
         // FIXME: Joomla 4
-        $table = JTable::getInstance('MenuType');
+        $table = Table::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
         if ($table->id) {
@@ -523,13 +524,13 @@ class ThemeInstaller extends AbstractInstaller
             if (!$success) {
                 JoomlaFactory::getApplication()->enqueueMessage($table->getError(), 'error');
             } else {
-                $this->actions["menu_{$type}_deleted"] = ['action' => 'menu_delete', 'text' => JText::_('GANTRY5_INSTALLER_ACTION_MENU_DELETED', $table->title)];
+                $this->actions["menu_{$type}_deleted"] = ['action' => 'menu_delete', 'text' => Text::_('GANTRY5_INSTALLER_ACTION_MENU_DELETED', $table->title)];
             }
         }
 
         /** @var \JCache|\JCacheController $cache */
         // FIXME: Joomla 4
-        $cache = JFactory::getCache();
+        $cache = Factory::getCache();
         $cache->clean('mod_menu');
     }
 

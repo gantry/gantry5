@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +15,9 @@ use Gantry\Framework\Theme;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\User\User;
 
 /**
  * Class Content
@@ -49,10 +52,10 @@ class Content extends AbstractObject
             return false;
         }
 
-        $this->images = json_decode($this->images);
-        $this->urls = json_decode($this->urls);
-        $this->attribs = json_decode($this->attribs);
-        $this->metadata = json_decode($this->metadata);
+        $this->images = json_decode($this->images, false);
+        $this->urls = json_decode($this->urls, false);
+        $this->attribs = json_decode($this->attribs, false);
+        $this->metadata = json_decode($this->metadata, false);
 
         $nullDate = JoomlaFactory::getDbo()->getNullDate();
         if ($this->modified === $nullDate) {
@@ -66,12 +69,11 @@ class Content extends AbstractObject
     }
 
     /**
-     * @return \Joomla\CMS\User\User
+     * @return User
      */
     public function author()
     {
-        // FIXME: Joomla 4
-        return \JUser::getInstance($this->created_by);
+        return User::getInstance($this->created_by);
     }
 
     /**
@@ -105,7 +107,7 @@ class Content extends AbstractObject
      */
     public function preparedText()
     {
-        return \JHtml::_('content.prepare', $this->text());
+        return HTMLHelper::_('content.prepare', $this->text());
     }
 
     /**
@@ -113,7 +115,7 @@ class Content extends AbstractObject
      */
     public function preparedIntroText()
     {
-        return \JHtml::_('content.prepare', $this->introtext);
+        return HTMLHelper::_('content.prepare', $this->introtext);
     }
 
     /**
@@ -133,7 +135,7 @@ class Content extends AbstractObject
 
         $category = $this->category();
 
-        return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+        return Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
 
     /**

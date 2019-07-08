@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,8 +14,8 @@ use Gantry\Component\Assignments\AbstractAssignments;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\HTML\HTMLHelper as JHtml;
-use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 
@@ -111,7 +111,7 @@ class Assignments extends AbstractAssignments
 
         $template = Gantry::instance()['theme.name'];
         if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $template, 'client_id' => 0))) {
-            throw new \RuntimeException(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
+            throw new \RuntimeException(Text::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
         // FIXME: Joomla 4
@@ -207,7 +207,7 @@ class Assignments extends AbstractAssignments
             return [];
         }
 
-        $languages = JHtml::_('contentlanguage.existing');
+        $languages = HTMLHelper::_('contentlanguage.existing');
 
         $options = ['- Make Default -', 'All Languages'];
         foreach ($languages as $language) {

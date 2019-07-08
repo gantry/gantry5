@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,13 +10,16 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Framework\Theme;
+use Joomla\CMS\Factory;
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include __DIR__ . '/includes/gantry.php';
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme = $gantry['theme'];
 
-$raw = JFactory::getApplication()->input->getString('type') == 'raw';
+$raw = Factory::getApplication()->input->getString('type') === 'raw';
 
 // Reset used outline configuration.
 unset($gantry['configuration']);
