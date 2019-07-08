@@ -6,6 +6,15 @@
         - No changes yet
     1. [](#bugfix)
         - equal-height CSS creating width / overflow issues
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - Content Array particle: Added Translation Field for Prev and Next Pagination
+1. [Grav](#grav)
+    1. [](#improved)
+        - Content Array particle: Added Translation Field for Prev and Next Pagination
+1. [Joomla](#joomla)
+    1. [](#improved)
+        - Content Array particle: Added Translation Field for Prev and Next Pagination
 
 # 5.4.29
 ## 06/21/2019
