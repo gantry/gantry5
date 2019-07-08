@@ -12,9 +12,9 @@ namespace Gantry\Joomla\Content;
 
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Factory;
 
 /**
  * Class ContentFinder
@@ -114,7 +114,8 @@ class ContentFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = JoomlaFactory::getLanguage()->getTag();
+            $application = Factory::getApplication();
+            $language = $application->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -146,11 +147,11 @@ class ContentFinder extends Finder
             $this->where('a.catid', 'NOT IN', $unpublished);
         }
 
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
 
         // Define null and now dates
         $nullDate = $this->db->quote($this->db->getNullDate());
-        $nowDate = $this->db->quote(JoomlaFactory::getDate()->toSql());
+        $nowDate = $this->db->quote(Factory::getDate()->toSql());
 
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {

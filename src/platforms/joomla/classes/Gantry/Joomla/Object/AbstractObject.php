@@ -10,7 +10,7 @@
 
 namespace Gantry\Joomla\Object;
 
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 
@@ -293,14 +293,14 @@ abstract class AbstractObject extends \JObject
             return false;
         }
 
-        $app = JoomlaFactory::getApplication();
+        $application = Factory::getApplication();
 
         // Include the content plugins for the on save events.
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
         // FIXME: Joomla 4
-        $result = $app->triggerEvent('onContentBeforeSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
+        $result = $application->triggerEvent('onContentBeforeSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -323,7 +323,7 @@ abstract class AbstractObject extends \JObject
 
         // Trigger the onContentAfterSave event.
         // FIXME: Joomla 4
-        $app->triggerEvent('onContentAfterSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
+        $application->triggerEvent('onContentAfterSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
 
         return true;
     }
@@ -347,14 +347,14 @@ abstract class AbstractObject extends \JObject
         $table = static::getTable();
         $table->bind($this->getProperties());
 
-        $app = JoomlaFactory::getApplication();
+        $application = Factory::getApplication();
 
         // Include the content plugins for the on save events.
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
         // FIXME: Joomla 4
-        $result = $app->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . get_called_class(), $table]);
+        $result = $application->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . get_called_class(), $table]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -368,7 +368,7 @@ abstract class AbstractObject extends \JObject
 
         // Trigger the onContentAfterDelete event.
         // FIXME: Joomla 4
-        $app->triggerEvent('onContentAfterDelete', ['com_gantry5.' . get_called_class(), $table]);
+        $application->triggerEvent('onContentAfterDelete', ['com_gantry5.' . get_called_class(), $table]);
 
         return true;
     }
@@ -459,7 +459,7 @@ abstract class AbstractObject extends \JObject
     static protected function getQuery()
     {
         $table = static::getTable();
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('a.*')->from($table->getTableName().' AS a')->order(static::$order);
 
@@ -475,7 +475,7 @@ abstract class AbstractObject extends \JObject
             $query = static::getQuery();
         }
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $db->setQuery($query);
 
         /** @var Object[] $items */

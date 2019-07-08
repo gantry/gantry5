@@ -12,8 +12,8 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Assignments\AbstractAssignments;
 use Gantry\Joomla\CacheHelper;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
@@ -30,15 +30,15 @@ class Assignments extends AbstractAssignments
      */
     public function loadAssignments()
     {
-        $app = JoomlaFactory::getApplication();
+        $application = Factory::getApplication();
 
-        if (!$app->isClient('site')) {
+        if (!$application->isClient('site')) {
             return [];
         }
 
         // Get current template, style id and rules.
-        $template = $app->getTemplate();
-        $menu = $app->getMenu();
+        $template = $application->getTemplate();
+        $menu = $application->getMenu();
         $active = $menu ? $menu->getActive() : null;
         if ($active) {
             $style = (int) $active->template_style_id;
@@ -121,11 +121,11 @@ class Assignments extends AbstractAssignments
             throw new \RuntimeException('Template style does not exist');
         }
 
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
         $n = 0;
 
         if ($user->authorise('core.edit', 'com_menus')) {
-            $db   = JoomlaFactory::getDbo();
+            $db   = Factory::getDbo();
 
             if (!empty($active)) {
                 ArrayHelper::toInteger($active);

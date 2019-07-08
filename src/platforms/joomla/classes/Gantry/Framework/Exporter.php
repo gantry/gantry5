@@ -16,9 +16,9 @@ use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -190,7 +190,7 @@ class Exporter
         /** @var Menu $menu */
         $menu = $gantry['menu'];
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
 
         $query = $db->getQuery(true)
             ->select('id, menutype, title, description')

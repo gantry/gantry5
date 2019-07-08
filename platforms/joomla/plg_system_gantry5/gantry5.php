@@ -320,7 +320,7 @@ class plgSystemGantry5 extends CMSPlugin
                 if ($task === 'style.edit') {
                     $theme = reset($selected);
                     $id = key($selected);
-                    $session = Factory::getSession();
+                    $session = $this->app->getSession();
                     $token = $session::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
@@ -349,7 +349,7 @@ class plgSystemGantry5 extends CMSPlugin
      */
     private function onAfterRenderAdmin()
     {
-        $document = Factory::getDocument();
+        $document = $this->app->getDocument();
         $type   = $document->getType();
 
         $option = $this->app->input->getString('option');
@@ -409,7 +409,7 @@ class plgSystemGantry5 extends CMSPlugin
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
         /** @var CMSApplication $app */
-        $app = Factory::getApplication();
+        $app = $this->app;
 
         // Initialise variables;
         $table = Table::getInstance('Extension');

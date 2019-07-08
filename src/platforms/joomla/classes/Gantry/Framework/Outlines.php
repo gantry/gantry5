@@ -14,9 +14,8 @@ use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Outline\OutlineCollection;
 use Gantry\Debugger;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -49,12 +48,11 @@ class Outlines extends OutlineCollection
      */
     public function current($template = null)
     {
-        /** @var CMSApplication $app */
-        $app = JoomlaFactory::getApplication();
+        $application = Factory::getApplication();
 
         if (!is_object($template)) {
             // Get the template style.
-            $template = $app->getTemplate(true);
+            $template = $application->getTemplate(true);
         }
 
         $preset = $template->params->get('preset', 'default');
@@ -67,7 +65,7 @@ class Outlines extends OutlineCollection
 
             if (!$shown) {
                 $shown = true;
-                $app->enqueueMessage('[DEBUG] JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'notice');
+                $application->enqueueMessage('[DEBUG] JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'notice');
             }
         }
 
@@ -272,7 +270,7 @@ class Outlines extends OutlineCollection
                 $error = $model->getError();
                 // Well, Joomla can always send enqueue message instead!
                 if (!$error) {
-                    $messages = JoomlaFactory::getApplication()->getMessageQueue();
+                    $messages = Factory::getApplication()->getMessageQueue();
                     $message = reset($messages);
                     $error = $message ? $message['message'] : 'Unknown error';
                 }

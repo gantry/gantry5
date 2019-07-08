@@ -10,8 +10,8 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 
 /**
  * Class Site
@@ -21,7 +21,8 @@ class Site
 {
     public function __construct()
     {
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
 
         if ($document instanceof HtmlDocument) {
             $this->theme = $document->template;

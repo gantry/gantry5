@@ -10,8 +10,8 @@
 
 namespace Gantry\Joomla\Category;
 
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Factory;
 
 /**
  * Class CategoryFinder
@@ -95,7 +95,9 @@ class CategoryFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = JoomlaFactory::getLanguage()->getTag();
+            $application = Factory::getApplication();
+
+            $language = $application->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -130,7 +132,7 @@ class CategoryFinder extends Finder
         }
 
         // Check authorization.
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
         $groups = $user->getAuthorisedViewLevels();
 
         return $this->where('a.access', 'IN', $groups);
@@ -175,7 +177,7 @@ class CategoryFinder extends Finder
         static $list;
 
         if ($list === null) {
-            $db = JoomlaFactory::getDbo();
+            $db = Factory::getDbo();
 
             $query = $db->getQuery(true)
                 ->select('cat.id AS id')

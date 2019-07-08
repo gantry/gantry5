@@ -14,7 +14,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -141,7 +141,7 @@ class ThemeList
         /** @var Platform $platform */
         $platform = $gantry['platform'];
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
 
         $query = $db
             ->getQuery(true)

@@ -13,8 +13,7 @@ namespace Gantry\Joomla\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Debugger;
 use Gantry\Framework\Gantry;
-use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -38,9 +37,8 @@ class AssignmentsStyle implements AssignmentsInterface
         if (null === $rules) {
             $rules = [];
 
-            /** @var CMSApplication $app */
-            $app = JoomlaFactory::getApplication();
-            $template = $app->getTemplate(true);
+            $application = Factory::getApplication();
+            $template = $application->getTemplate(true);
 
             $theme = $template->template;
             $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : $template->params->get('preset', null));
@@ -49,7 +47,7 @@ class AssignmentsStyle implements AssignmentsInterface
                 GANTRY_DEBUGGER && Debugger::addMessage('Template Style:', 'debug') && Debugger::addMessage($template, 'debug');
 
                 if (!$outline) {
-                    $app->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
+                    $application->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');
                 }
             }
 

@@ -10,7 +10,7 @@
 
 namespace Gantry\Joomla\Object;
 
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 
 /**
  * Class Finder
@@ -57,7 +57,7 @@ abstract class Finder
             throw new \DomainException('Table name missing from ' . get_class($this));
         }
 
-        $this->db = JoomlaFactory::getDbo();
+        $this->db = Factory::getDbo();
         $this->query = $this->db->getQuery(true);
         $this->query->from($this->table . ' AS a');
 

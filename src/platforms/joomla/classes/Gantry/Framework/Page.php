@@ -10,7 +10,7 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -48,9 +48,9 @@ class Page extends Base\Page
     {
         parent::__construct($container);
 
-        $app = JoomlaFactory::getApplication();
-        $document = JoomlaFactory::getDocument();
-        $input = $app->input;
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
+        $input = $application->input;
 
         $this->tmpl     = $input->getCmd('tmpl', '');
         $this->option   = $input->getCmd('option', '');
@@ -62,16 +62,16 @@ class Page extends Base\Page
 
         $this->class = '';
         if ($this->itemid) {
-            $menu = $app->getMenu();
+            $menu = $application->getMenu();
             $menuItem = $menu ? $menu->getActive() : null;
             if ($menuItem && $menuItem->id) {
                 $this->home = (bool) $menuItem->home;
                 $this->class = $menuItem->params->get('pageclass_sfx', '');
             }
         }
-        $templateParams = $app->getTemplate(true);
+        $templateParams = $application->getTemplate(true);
         $this->outline = Gantry::instance()['configuration'];
-        $this->sitename = $app->get('sitename');
+        $this->sitename = $application->get('sitename');
         $this->theme = $templateParams->template;
         $this->baseUrl = Uri::base(true);
         $this->title = $document->title;

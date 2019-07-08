@@ -15,7 +15,7 @@ use Gantry\Debugger;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
@@ -29,7 +29,7 @@ class ModGantry5ParticleHelper
      */
     public static function getAjax()
     {
-        $input = JoomlaFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $format = $input->getCmd('format', 'html');
         $id = $input->getInt('id');
 
@@ -65,7 +65,7 @@ class ModGantry5ParticleHelper
         $attribs = ['style' => 'gantry'];
 
         // Trigger the onRenderModule event.
-        JoomlaFactory::getApplication()->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+        Factory::getApplication()->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
 
         $params = new Registry($module->params);
         $params->set('ajax', $props);

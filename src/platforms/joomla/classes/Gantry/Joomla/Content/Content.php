@@ -13,8 +13,8 @@ namespace Gantry\Joomla\Content;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\Category\Category;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\User\User;
@@ -57,7 +57,7 @@ class Content extends AbstractObject
         $this->attribs = json_decode($this->attribs, false);
         $this->metadata = json_decode($this->metadata, false);
 
-        $nullDate = JoomlaFactory::getDbo()->getNullDate();
+        $nullDate = Factory::getDbo()->getNullDate();
         if ($this->modified === $nullDate) {
             $this->modified = $this->created;
         }
@@ -143,7 +143,7 @@ class Content extends AbstractObject
      */
     public function edit()
     {
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
         $asset = "com_content.article.{$this->id}";
 
         if ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset)) {

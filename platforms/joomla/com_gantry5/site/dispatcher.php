@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
-use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Dispatcher\Dispatcher;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Access\Exception\NotAllowed;
@@ -90,7 +89,7 @@ class Gantry5Dispatcher extends Dispatcher
             $title = Text::sprintf('JPAGETITLE', $title, $application->get('sitename'));
         }
 
-        $document = JoomlaFactory::getDocument();
+        $document = $application->getDocument();
         $document->setTitle($title);
 
         // Set description.

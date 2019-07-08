@@ -10,7 +10,7 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Factory;
 
 class Gantry extends Base\Gantry
 {
@@ -27,7 +27,7 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return JoomlaFactory::getApplication()->isClient('administrator');
+        return Factory::getApplication()->isClient('administrator');
     }
 
     /**
@@ -61,7 +61,7 @@ class Gantry extends Base\Gantry
 
         // Trigger the event.
         // FIXME: Joomla 4: check this out
-        JoomlaFactory::getApplication()->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
+        Factory::getApplication()->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
 
         return $global;
     }

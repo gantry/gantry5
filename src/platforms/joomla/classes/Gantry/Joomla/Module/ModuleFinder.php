@@ -10,8 +10,8 @@
 
 namespace Gantry\Joomla\Module;
 
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Factory;
 
 /**
  * Class ModuleFinder
@@ -73,7 +73,8 @@ class ModuleFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = JoomlaFactory::getLanguage()->getTag();
+            $application = Factory::getApplication();
+            $language = $application->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -111,7 +112,7 @@ class ModuleFinder extends Finder
             return $this;
         }
 
-        $groups = JoomlaFactory::getUser()->getAuthorisedViewLevels();
+        $groups = Factory::getUser()->getAuthorisedViewLevels();
 
         return $this->where('a.access', 'IN', $groups);
     }

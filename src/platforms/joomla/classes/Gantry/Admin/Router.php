@@ -17,10 +17,8 @@ use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Document\Document;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -37,9 +35,8 @@ class Router extends BaseRouter
     {
         HTMLHelper::_('behavior.keepalive');
 
-        /** @var CMSApplication $app */
-        $app = JoomlaFactory::getApplication();
-        $input = $app->input;
+        $application = Factory::getApplication();
+        $input = $application->input;
 
         // TODO: Remove style variable.
         $style = $input->getInt('style');
@@ -58,7 +55,7 @@ class Router extends BaseRouter
         $ajax = ($this->format === 'json');
 
         $this->params = [
-            'user' => JoomlaFactory::getUser(),
+            'user' => Factory::getUser(),
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,
@@ -105,7 +102,8 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '&format=json';
 
-        $session = JoomlaFactory::getSession();
+        $application = Factory::getApplication();
+        $session = $application->getSession();
         $token = $session::getFormToken();
 
         $this->container['routes'] = [
@@ -124,7 +122,8 @@ class Router extends BaseRouter
 
         // Load language file for the template.
         $languageFile = 'tpl_' . $theme;
-        $language = JoomlaFactory::getLanguage();
+
+        $language = $application->getLanguage();
         $language->load($languageFile, JPATH_SITE)
             || $language->load($languageFile, $path)
             || $language->load($languageFile, $path, 'en-GB');
@@ -137,7 +136,8 @@ class Router extends BaseRouter
      */
     protected function checkSecurityToken()
     {
-        $session = JoomlaFactory::getSession();
+        $application = Factory::getApplication();
+        $session = $application->getSession();
 
         return $session::checkToken('get');
     }
@@ -149,38 +149,35 @@ class Router extends BaseRouter
      */
     protected function send(Response $response)
     {
-        /** @var CMSApplication $app */
-        $app = JoomlaFactory::getApplication();
-
-        /** @var Document $document */
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
         $document->setCharset($response->charset);
         $document->setMimeEncoding($response->mimeType);
 
         // Output HTTP header.
-        $app->setHeader('Status', $response->getStatus());
-        $app->setHeader('Content-Type', $response->mimeType . '; charset=' . $response->charset);
+        $application->setHeader('Status', $response->getStatus());
+        $application->setHeader('Content-Type', $response->mimeType . '; charset=' . $response->charset);
         foreach ($response->getHeaders() as $key => $values) {
             $replace = true;
             foreach ($values as $value) {
-                $app->setHeader($key, $value, $replace);
+                $application->setHeader($key, $value, $replace);
                 $replace = false;
             }
         }
 
         if ($response instanceof JsonResponse) {
-            $app->setHeader('Expires', 'Wed, 17 Aug 2005 00:00:00 GMT', true);
-            $app->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
-            $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
-            $app->setHeader('Pragma', 'no-cache');
-            $app->sendHeaders();
+            $application->setHeader('Expires', 'Wed, 17 Aug 2005 00:00:00 GMT', true);
+            $application->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
+            $application->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            $application->setHeader('Pragma', 'no-cache');
+            $application->sendHeaders();
         }
 
         // Output Gantry response.
         echo $response;
 
         if ($response instanceof JsonResponse) {
-            $app->close();
+            $application->close();
         }
     }
 }

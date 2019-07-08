@@ -13,6 +13,7 @@ namespace Gantry\Joomla;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\Templates\Administrator\Model\StyleModel;
@@ -25,7 +26,7 @@ class StyleHelper
 {
     /**
      * @param int|array $id
-     * @return bool|\Joomla\CMS\Table\Table
+     * @return Table|\TemplatesTableStyle
      * @throws \Exception
      */
     public static function getStyle($id)
@@ -34,6 +35,7 @@ class StyleHelper
             // Joomla 3 support.
             Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
 
+            /** @var \TemplatesTableStyle $style */
             $style = Table::getInstance('Style', 'TemplatesTable');
         } else {
             $model = static::loadModel();
@@ -55,7 +57,7 @@ class StyleHelper
      */
     public static function loadStyles($template)
     {
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
 
         $query = $db
             ->getQuery(true)
@@ -78,7 +80,7 @@ class StyleHelper
     }
 
     /**
-     * @return bool|\Joomla\CMS\Table\Table
+     * @return Table
      * @throws \Exception
      */
     public static function getDefaultStyle()
@@ -159,14 +161,15 @@ class StyleHelper
                 require_once "{$path}/models/style.php";
 
                 // Load language strings.
-                $lang = JoomlaFactory::getLanguage();
-                $lang->load('com_templates');
+                $application = Factory::getApplication();
+                $language = $application->getLanguage();
+                $language->load('com_templates');
 
                 $model = new \TemplatesModelStyle;
             } else {
                 // Joomla 4 support.
-                $app = JoomlaFactory::getApplication();
-                $model = $app->bootComponent('com_templates')
+                $application = Factory::getApplication();
+                $model = $application->bootComponent('com_templates')
                     ->getMVCFactory()
                     ->createModel('Style', 'Administrator', ['ignore_request' => true]);
             }

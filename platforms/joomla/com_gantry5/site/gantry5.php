@@ -14,20 +14,18 @@ defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
-use Gantry\Joomla\JoomlaFactory;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-/** @var CMSApplication $app */
-$app = JoomlaFactory::getApplication();
+$application = Factory::getApplication();
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
-    $language = JoomlaFactory::getLanguage();
+    $language = $application->getLanguage();
     $language->load('com_gantry5', JPATH_ADMINISTRATOR)
     || $language->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
-    $app->enqueueMessage(
+    $application->enqueueMessage(
         Text::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('COM_GANTRY5_COMPONENT')),
         'warning'
     );
@@ -35,9 +33,9 @@ if (!class_exists('Gantry\Framework\Gantry')) {
     return;
 }
 
-$document = JoomlaFactory::getDocument();
-$input = $app->input;
-$menu = $app->getMenu();
+$document = $application->getDocument();
+$input = $application->input;
+$menu = $application->getMenu();
 $menuItem = $menu->getActive();
 
 // Prevent direct access without menu item.
@@ -55,16 +53,16 @@ $gantry = Gantry::instance();
 /** @var Theme $theme */
 $theme = $gantry['theme'];
 
-$params = $app->getParams();
+$params = $application->getParams();
 
 // Set page title.
 $title = $params->get('page_title');
 if (empty($title)) {
-    $title = $app->get('sitename');
-} elseif ($app->get('sitename_pagetitles', 0) == 1) {
-    $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-} elseif ($app->get('sitename_pagetitles', 0) == 2) {
-    $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+    $title = $application->get('sitename');
+} elseif ($application->get('sitename_pagetitles', 0) == 1) {
+    $title = Text::sprintf('JPAGETITLE', $application->get('sitename'), $title);
+} elseif ($application->get('sitename_pagetitles', 0) == 2) {
+    $title = Text::sprintf('JPAGETITLE', $title, $application->get('sitename'));
 }
 $document->setTitle($title);
 

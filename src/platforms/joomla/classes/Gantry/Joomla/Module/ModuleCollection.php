@@ -10,8 +10,8 @@
 
 namespace Gantry\Joomla\Module;
 
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Collection;
+use Joomla\CMS\Factory;
 
 /**
  * Class ModuleCollection
@@ -89,7 +89,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_keys($ids));
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('moduleid, menuid')->from('#__modules_menu')->where("moduleid IN ($idlist)");
         $db->setQuery($query);
@@ -118,7 +118,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_map('intval', $ids));
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id, path')->from('#__menu')->where("id IN ($idlist)");
         $db->setQuery($query);

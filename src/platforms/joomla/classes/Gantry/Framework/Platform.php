@@ -16,7 +16,6 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
-use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
@@ -104,7 +103,7 @@ class Platform extends BasePlatform
      */
     public function getCachePath()
     {
-        $path = JoomlaFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
+        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
         if (!is_dir($path)) {
             throw new \RuntimeException('Joomla cache path does not exist!');
         }
@@ -187,7 +186,8 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        $session = JoomlaFactory::getSession();
+        $application = Factory::getApplication();
+        $session = $application->getSession();
         $token = $session::getFormToken();
 
         return Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
@@ -210,7 +210,8 @@ class Platform extends BasePlatform
      */
     public function countModules($position)
     {
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
 
         return ($document instanceof HtmlDocument) ? $document->countModules($position) : 0;
     }
@@ -232,7 +233,8 @@ class Platform extends BasePlatform
      */
     public function displayModule($id, $attribs = [])
     {
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {
             return '';
         }
@@ -252,12 +254,11 @@ class Platform extends BasePlatform
         $html = trim($renderer->render($module, $attribs));
 
         // Add frontend editing feature as it has only been defined for module positions.
-        $app = JoomlaFactory::getApplication();
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
 
         // FIXME: Joomla 4: check $app->get()
-        $frontEditing = ($app->isClient('site') && $app->get('frontediting', 1) && !$user->guest);
-        $menusEditing = ($app->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
+        $frontEditing = ($application->isClient('site') && $application->get('frontediting', 1) && !$user->guest);
+        $menusEditing = ($application->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 
         if (!$isGantry && $frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
             $displayData = [
@@ -289,7 +290,8 @@ class Platform extends BasePlatform
      */
     public function displayModules($position, $attribs = [])
     {
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {
             return '';
         }
@@ -319,7 +321,8 @@ class Platform extends BasePlatform
      */
     public function displayContent($content, $params = [])
     {
-        $document = JoomlaFactory::getDocument();
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {
             return $content;
         }
@@ -328,7 +331,7 @@ class Platform extends BasePlatform
 
         $html = trim($renderer->render(null, $params, $content ?: $document->getBuffer('component')));
 
-        $isGantry = \strpos(JoomlaFactory::getApplication()->input->getCmd('option'), 'gantry5') !== false;
+        $isGantry = \strpos($application->input->getCmd('option'), 'gantry5') !== false;
 
         if ($html && !$isGantry) {
             /** @var Theme $theme */
@@ -371,7 +374,7 @@ class Platform extends BasePlatform
      */
     public function listModules()
     {
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.id, a.title, a.position, a.module, a.published AS enabled')
@@ -404,7 +407,7 @@ class Platform extends BasePlatform
      */
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
-        $config = JoomlaFactory::getConfig();
+        $config = Factory::getConfig();
         $editor = Editor::getInstance($config->get('editor'));
         if (!$height) {
             $height = 250;
@@ -460,7 +463,7 @@ class Platform extends BasePlatform
 
         $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
 
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query
             ->select('*')
@@ -563,12 +566,12 @@ class Platform extends BasePlatform
             case 'content':
                 $finder = new ContentFinder($options);
 
-                return JoomlaFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return Factory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
             case 'category':
             case 'categories':
                 $finder = (new CategoryFinder($options))->extension('content');
 
-                return JoomlaFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return Factory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
         }
 
         return null;
@@ -593,7 +596,7 @@ class Platform extends BasePlatform
      */
     public function authorize($action, $id = null)
     {
-        $user = JoomlaFactory::getUser();
+        $user = Factory::getUser();
 
         switch ($action) {
             case 'platform.settings.manage':
@@ -602,7 +605,7 @@ class Platform extends BasePlatform
                 return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
             case 'menu.edit':
                 if ($id) {
-                    $db = JoomlaFactory::getDbo();
+                    $db = Factory::getDbo();
                     $userId = $user->id;
 
                     // Verify that no items are checked out.

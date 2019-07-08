@@ -12,7 +12,6 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Manifest;
 use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
 use Joomla\CMS\Date\Date;
@@ -69,7 +68,7 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @param int|string $id
+     * @param int|string|array $id
      */
     public function loadExtension($id)
     {
@@ -132,7 +131,7 @@ class ThemeInstaller extends AbstractInstaller
             $style = Table::getInstance('Style', 'TemplatesTable');
         } else {
             // FIXME: Jooma 4: better way?
-            $style = new StyleTable(JoomlaFactory::getDbo());
+            $style = new StyleTable(Factory::getDbo());
         }
         $style->load(['home' => 1, 'client_id' => 0]);
 
@@ -166,7 +165,8 @@ class ThemeInstaller extends AbstractInstaller
      */
     public function render($template, $context = [])
     {
-        $jsession = JoomlaFactory::getSession();
+        $application = Factory::getApplication();
+        $jsession = $application->getSession();
         $token = $jsession::getFormToken();
         $manifest = $this->getManifest();
         $context += [
@@ -214,7 +214,8 @@ class ThemeInstaller extends AbstractInstaller
     public function addStyle($title, array $configuration = [], $home = 0)
     {
         // Make sure language debug is turned off.
-        $language = JoomlaFactory::getLanguage();
+        $application = Factory::getApplication();
+        $language = $application->getLanguage();
         $debug = $language->setDebug(false);
 
         // Translate title.
@@ -274,7 +275,7 @@ class ThemeInstaller extends AbstractInstaller
     public function assignHomeStyle($style)
     {
         // Update the mapping for menu items that this style IS assigned to.
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
 
         $query = $db->getQuery(true)
             ->update('#__menu')
@@ -522,7 +523,7 @@ class ThemeInstaller extends AbstractInstaller
             $success = $table->delete();
 
             if (!$success) {
-                JoomlaFactory::getApplication()->enqueueMessage($table->getError(), 'error');
+                Factory::getApplication()->enqueueMessage($table->getError(), 'error');
             } else {
                 $this->actions["menu_{$type}_deleted"] = ['action' => 'menu_delete', 'text' => Text::_('GANTRY5_INSTALLER_ACTION_MENU_DELETED', $table->title)];
             }
@@ -540,7 +541,7 @@ class ThemeInstaller extends AbstractInstaller
     public function unsetHome($type)
     {
         // Update the mapping for menu items that this style IS assigned to.
-        $db = JoomlaFactory::getDbo();
+        $db = Factory::getDbo();
 
         $query = $db->getQuery(true)
             ->update('#__menu')

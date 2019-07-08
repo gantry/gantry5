@@ -14,12 +14,16 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
-use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
 
+/**
+ * Class Menu
+ * @package Gantry\Framework
+ */
 class Menu extends AbstractMenu
 {
     use GantryTrait;
@@ -27,7 +31,7 @@ class Menu extends AbstractMenu
     /**
      * @var CMSApplication
      */
-    protected $app;
+    protected $application;
 
     /**
      * @var \JMenu
@@ -37,13 +41,13 @@ class Menu extends AbstractMenu
     public function __construct()
     {
         // FIXME: Joomla 4
-        $this->app = \JApplicationCms::getInstance('site');
+        $this->application = \JApplicationCms::getInstance('site');
 
-        $language = JoomlaFactory::getLanguage();
+        $language = $this->application->getLanguage();
         // FIXME: Joomla 4
         $tag = \JLanguageMultilang::isEnabled() ? $language->getTag() : '*';
 
-        $this->menu = $this->app->getMenu();
+        $this->menu = $this->application->getMenu();
         $this->default = $this->menu->getDefault($tag);
         $this->active  = $this->menu->getActive();
     }
@@ -159,7 +163,7 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        if (!JoomlaFactory::getUser()->guest) {
+        if (!Factory::getUser()->guest) {
             return null;
         }
 
@@ -215,7 +219,7 @@ class Menu extends AbstractMenu
         $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
-        if (JoomlaFactory::getApplication()->isClient('administrator')) {
+        if (Factory::getApplication()->isClient('administrator')) {
             $attributes[] = 'access';
             $values[] = null;
 
@@ -239,7 +243,7 @@ class Menu extends AbstractMenu
      */
     protected function calcBase($itemid = null)
     {
-        $menu = $this->app->getMenu();
+        $menu = $this->application->getMenu();
 
         // Get base menu item.
         $base = $itemid ? $menu->getItem($itemid) : null;
@@ -268,11 +272,11 @@ class Menu extends AbstractMenu
         $this->base = $this->calcBase($params['base']);
 
         // Make sure that the menu item exists.
-        if (!$this->base && !JoomlaFactory::getApplication()->isClient('administrator')) {
+        if (!$this->base && !$this->application->isClient('administrator')) {
             return;
         }
 
-        $levels = JoomlaFactory::getUser()->getAuthorisedViewLevels();
+        $levels = Factory::getUser()->getAuthorisedViewLevels();
         asort($levels);
 
         // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
@@ -385,8 +389,8 @@ class Menu extends AbstractMenu
                         break;
 
                     default:
-                        $app = $this->app;
-                        $router = $app::getRouter();
+                        $application = $this->application;
+                        $router = $application::getRouter();
 
                         // FIXME: Joomla 4: do we need anything else?
                         if (version_compare(JVERSION, 4, '<') && $router->getMode() !== JROUTER_MODE_SEF) {
@@ -394,7 +398,7 @@ class Menu extends AbstractMenu
                         } else {
                             $link = 'index.php?Itemid=' . $item->id;
 
-                            if (isset($menuItem->query['format']) && $app->get('sef_suffix')) {
+                            if (isset($menuItem->query['format']) && $application->get('sef_suffix')) {
                                 $link .= '&format=' . $menuItem->query['format'];
                             }
                         }

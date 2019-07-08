@@ -11,8 +11,8 @@
 use Gantry\Admin\Router;
 use Gantry\Admin\Theme;
 use Gantry\Framework\Gantry;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
 
@@ -31,11 +31,11 @@ class JFormFieldParticle extends FormField
      */
     protected function getInput()
     {
-        $app = JoomlaFactory::getApplication();
+        $application = Factory::getApplication();
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
-            $app->enqueueMessage(
+            $application->enqueueMessage(
                 Text::sprintf('MOD_GANTRY5_PLUGIN_MISSING', Text::_('MOD_GANTRY5_PARTICLE')),
                 'error'
             );
@@ -50,7 +50,7 @@ class JFormFieldParticle extends FormField
         try {
             Gantry5\Loader::setup();
 
-            $language = JoomlaFactory::getLanguage();
+            $language = $application->getLanguage();
             $language->load('com_gantry5', JPATH_ADMINISTRATOR)
                 || $language->load('com_gantry5', GANTRYADMIN_PATH);
 
@@ -60,7 +60,7 @@ class JFormFieldParticle extends FormField
             };
 
         } catch (Exception $e) {
-            $app->enqueueMessage(
+            $application->enqueueMessage(
                 Text::sprintf($e->getMessage()),
                 'error'
             );
@@ -71,12 +71,12 @@ class JFormFieldParticle extends FormField
         $style = StyleHelper::getDefaultStyle();
 
         if (!$style->template) {
-            $app->enqueueMessage(
+            $application->enqueueMessage(
                 Text::_('GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE'),
                 'warning'
             );
         } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
-            $app->enqueueMessage(
+            $application->enqueueMessage(
                 Text::sprintf('GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE', $style->title),
                 'warning'
             );

@@ -40,7 +40,8 @@ class plgQuickiconGantry5 extends CMSPlugin
         parent::__construct($subject, $config);
 
         // Always load language.
-        $language = Factory::getLanguage();
+        $application = Factory::getApplication();
+        $language = $application->getLanguage();
 
         $language->load('com_gantry5.sys')
         || $language->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');

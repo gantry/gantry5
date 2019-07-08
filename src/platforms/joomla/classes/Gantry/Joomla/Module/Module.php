@@ -12,8 +12,8 @@ namespace Gantry\Joomla\Module;
 
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
-use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
@@ -57,7 +57,7 @@ class Module extends AbstractObject implements ExportInterface
             $this->_assignments = array_map('intval', array_values($assignments));
 
         } elseif (!isset($this->_assignments)) {
-            $db = JoomlaFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('menuid')->from('#__modules_menu')->where('moduleid = ' . $this->id);
             $db->setQuery($query);

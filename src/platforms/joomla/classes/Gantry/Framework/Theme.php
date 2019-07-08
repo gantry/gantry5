@@ -12,9 +12,9 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
-use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
@@ -66,7 +66,7 @@ class Theme extends AbstractTheme
         $core = $twig->getExtension('Twig_Extension_Core');
 
         // Get user timezone and if not set, use Joomla default.
-        $timezone = JoomlaFactory::getUser()->getParam('timezone', JoomlaFactory::getConfig()->get('offset', 'UTC'));
+        $timezone = Factory::getUser()->getParam('timezone', Factory::getConfig()->get('offset', 'UTC'));
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.
@@ -146,12 +146,13 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $language = JoomlaFactory::getLanguage();
+        $application = Factory::getApplication();
+        $language = $application->getLanguage();
 
         // FIXME: Do not hardcode this file.
         $language->load('files_gantry5_nucleus', JPATH_SITE);
 
-        if (JoomlaFactory::getApplication()->isClient('site')) {
+        if ($application->isClient('site')) {
             // Load our custom positions file as frontend requires the strings to be there.
             $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
 
@@ -166,7 +167,7 @@ class Theme extends AbstractTheme
             }
         }
 
-        $doc = JoomlaFactory::getDocument();
+        $doc = $application->getDocument();
         if ($doc instanceof HtmlDocument) {
             $doc->setHtml5(true);
         }
@@ -178,7 +179,7 @@ class Theme extends AbstractTheme
 
         // Trigger the onGantryThemeInit event.
         // FIXME: Joomla 4?
-        JoomlaFactory::getApplication()->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
+        $application->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
     }
 
     /**
