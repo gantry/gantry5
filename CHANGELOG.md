@@ -8,7 +8,7 @@
         - Updated SCSS compiler to v1.0.0
 1. [Joomla](#joomla)
     1. [](#new)
-        - Updated minimum requirement to Joomla! 3.8
+        - Updated minimum requirement to Joomla! 3.9
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.0

@@ -30,7 +30,7 @@ class Pkg_Gantry5InstallerScript
             '0' => '7.2.19' // Preferred version
         ),
         'Joomla!' => array (
-            '3.8' => '3.8.0',
+            '3.9' => '3.9.0',
             '0' => '3.9.8' // Preferred version
         )
     );
