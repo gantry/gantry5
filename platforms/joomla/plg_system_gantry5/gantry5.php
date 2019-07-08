@@ -10,14 +10,16 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Form\Form as JForm;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
-use Joomla\CMS\Table\Table as JTable;
-use Joomla\CMS\Language\Text as JText;
-use Joomla\CMS\Uri\Uri as JUri;
-use Joomla\Registry\Registry as JRegistry;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Event\DispatcherInterface;
+use Joomla\Registry\Registry;
+use Gantry5\Loader;
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\FileSystem\Folder;
@@ -33,7 +35,9 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-
+/**
+ * Class plgSystemGantry5
+ */
 class plgSystemGantry5 extends CMSPlugin
 {
     /**
@@ -43,22 +47,29 @@ class plgSystemGantry5 extends CMSPlugin
     protected $styles;
     protected $modules;
 
+    /**
+     * plgSystemGantry5 constructor.
+     * @param DispatcherInterface $subject
+     * @param array $config
+     * @throws Exception
+     */
     public function __construct(&$subject, $config = array())
     {
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';
 
-        $this->app = JFactory::getApplication();
+        $this->app = Factory::getApplication();
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
+        // FIXME: Joomla 4
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
             if ($this->app->isClient('administrator')) {
                 $this->app->enqueueMessage(
-                    JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
+                    Text::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', Text::_('PLG_SYSTEM_GANTRY5')),
                     'warning'
                 );
             }
@@ -71,7 +82,7 @@ class plgSystemGantry5 extends CMSPlugin
     /**
      * Return global configuration for Gantry5.
      *
-     * @param $global
+     * @param array $global
      */
     public function onGantryGlobalConfig(&$global)
     {
@@ -135,7 +146,7 @@ class plgSystemGantry5 extends CMSPlugin
         $format = $input->getCmd('format', 'html');
 
         if (!in_array($format, ['json', 'raw', 'debug'], true)) {
-            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $props = $_GET;
@@ -147,11 +158,12 @@ class plgSystemGantry5 extends CMSPlugin
             preg_match('`-([\d]+)$`', $input->getCmd('id'), $matches);
 
             if (!isset($matches[1])) {
-                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+                throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
             }
 
             $id = $matches[1];
 
+            // FIXME: Joomla 4
             require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
 
             return ModGantry5ParticleHelper::ajax($id, $props, $format);
@@ -168,7 +180,7 @@ class plgSystemGantry5 extends CMSPlugin
             $type = $identifier;
             $menu = $this->app->getMenu();
             $menuItem = $menu ? $menu->getActive() : null;
-            $params = $menuItem ? $menuItem->getParams() : new JRegistry;
+            $params = $menuItem ? $menuItem->getParams() : new Registry;
 
             /** @var object $params */
             $data = json_decode($params->get('particle'), true);
@@ -192,7 +204,7 @@ class plgSystemGantry5 extends CMSPlugin
         } else {
             $particle = $layout->find($identifier);
             if (!isset($particle->type) || $particle->type !== 'particle') {
-                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+                throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
             }
 
             $context = array(
@@ -234,7 +246,7 @@ class plgSystemGantry5 extends CMSPlugin
 
             if (!$gantry) {
                 throw new \RuntimeException(
-                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $templateName, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
+                    Text::sprintf('GANTRY5_THEME_LOADING_FAILED', $templateName, Text::_('GANTRY5_THEME_INCLUDE_FAILED')),
                     500
                 );
             }
@@ -242,7 +254,7 @@ class plgSystemGantry5 extends CMSPlugin
         } else {
 
             // Setup Gantry 5 Framework or throw exception.
-            Gantry5\Loader::setup();
+            Loader::setup();
 
             // Get Gantry instance.
             $gantry = Gantry::instance();
@@ -274,7 +286,7 @@ class plgSystemGantry5 extends CMSPlugin
         $theme->setLayout($assignments->select());
 
         if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
-            $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
+            $age = (int)($this->params->get('asset_timestamps_period', 7) * 86400);
             Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
             Document::$timestamp_age = 0;
@@ -308,7 +320,7 @@ class plgSystemGantry5 extends CMSPlugin
                 if ($task === 'style.edit') {
                     $theme = reset($selected);
                     $id = key($selected);
-                    $session = JFactory::getSession();
+                    $session = Factory::getSession();
                     $token = $session::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
@@ -325,8 +337,11 @@ class plgSystemGantry5 extends CMSPlugin
 
         $html = $this->app->getBody();
 
+        /** @var Document $document */
+        $document = $gantry['document'];
+
         // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
-        $this->app->setBody($gantry['document']->urlFilter($html, false, 0, true) ?: $html);
+        $this->app->setBody($document::urlFilter($html, false, 0, true) ?: $html);
     }
 
     /**
@@ -334,7 +349,7 @@ class plgSystemGantry5 extends CMSPlugin
      */
     private function onAfterRenderAdmin()
     {
-        $document = JFactory::getDocument();
+        $document = Factory::getDocument();
         $type   = $document->getType();
 
         $option = $this->app->input->getString('option');
@@ -350,7 +365,7 @@ class plgSystemGantry5 extends CMSPlugin
         }
 
         if (($option === 'com_modules' || $option === 'com_advancedmodules') && (($view === 'g5' || $view === 'modules') || empty($view)) && $type === 'html') {
-            $db    = JFactory::getDbo();
+            $db    = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('id, title, params');
             $query->from('#__modules');
@@ -363,8 +378,8 @@ class plgSystemGantry5 extends CMSPlugin
                 $body = $this->app->getBody();
 
                 foreach ($data as $module) {
-                    $params   = json_decode($module->params);
-                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
+                    $params   = json_decode($module->params, false);
+                    $particle = isset($params->particle) ? json_decode($params->particle, false) : '';
                     $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
                     $type = isset($particle->particle) ? $particle->particle : '';
 
@@ -394,18 +409,18 @@ class plgSystemGantry5 extends CMSPlugin
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
         /** @var CMSApplication $app */
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
 
         // Initialise variables;
-        $table = JTable::getInstance('Extension');
+        $table = Table::getInstance('Extension');
 
         // Include the content plugins for the on save events.
-        JPluginHelper::importPlugin('extension');
+        PluginHelper::importPlugin('extension');
 
         // Load the row if saving an existing record.
         $table->load(array('type'=>'plugin', 'folder'=>$this->_type, 'element'=>$this->_name));
 
-        $params = new JRegistry($table->params);
+        $params = new Registry($table->params);
         $params->loadArray($data);
 
         $table->params = $params->toString();
@@ -466,16 +481,21 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     * @param bool $isNew
+     */
     public function onExtensionBeforeSave($context, $table, $isNew)
     {
         if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
             $name = 'plg_' . $this->_type . '_' . $this->_name;
 
-            $params = new JRegistry($table->params);
+            $params = new Registry($table->params);
 
             $data = (array) $params->get($name);
 
-            Gantry5\Loader::setup();
+            Loader::setup();
 
             $this->onGantry5SaveConfig($data);
 
@@ -486,6 +506,11 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     * @param bool $isNew
+     */
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
@@ -503,7 +528,7 @@ class plgSystemGantry5 extends CMSPlugin
         $template = $table->template;
 
         $this->load($template);
-        $registry = new JRegistry($table->params);
+        $registry = new Registry($table->params);
         $old = (int) $registry->get('configuration', 0);
         $new = (int) $table->id;
 
@@ -512,6 +537,10 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     */
     public function onExtensionBeforeDelete($context, $table)
     {
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
@@ -535,6 +564,11 @@ class plgSystemGantry5 extends CMSPlugin
         return true;
     }
 
+    /**
+     * @param string $context
+     * @param object $data
+     * @return bool
+     */
     public function onContentPrepareData($context, $data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
@@ -548,10 +582,15 @@ class plgSystemGantry5 extends CMSPlugin
         return true;
     }
 
+    /**
+     * @param Form $form
+     * @param object $data
+     * @return bool
+     */
     public function onContentPrepareForm($form, $data)
     {
         // Check that we are manipulating a valid form.
-        if (!($form instanceof JForm)) {
+        if (!($form instanceof Form)) {
             $this->_subject->setError('JERROR_NOT_A_FORM');
 
             return false;
@@ -588,9 +627,7 @@ class plgSystemGantry5 extends CMSPlugin
     /**
      * @param array  $matches
      * @param string $content
-     *
      * @param string $type
-     *
      * @return string
      */
     private function appendHtml(array $matches, $content = 'Gantry 5', $type = '')
@@ -598,7 +635,7 @@ class plgSystemGantry5 extends CMSPlugin
         $html = $matches[0];
 
         if (strpos($matches[2], 'task=style.edit') || strpos($matches[2], 'task=module.edit')) {
-            $uri = new JUri($matches[2]);
+            $uri = new Uri($matches[2]);
             $id = (int) $uri->getVar('id');
 
             if ($id && (isset($this->styles[$id]) || isset($this->modules[$id])) && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules'), true)) {
@@ -629,7 +666,7 @@ class plgSystemGantry5 extends CMSPlugin
 
         if ($list === null) {
             // Load styles
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db
                 ->getQuery(true)
                 ->select('s.id, s.template')
@@ -653,14 +690,22 @@ class plgSystemGantry5 extends CMSPlugin
         return $list;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     private function isGantryTemplate($name)
     {
         return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
     }
 
+    /**
+     * @param string $name
+     * @return \Gantry\Framework\Gantry
+     */
     protected function load($name)
     {
-        Gantry5\Loader::setup();
+        Loader::setup();
 
         $gantry = Gantry::instance();
 

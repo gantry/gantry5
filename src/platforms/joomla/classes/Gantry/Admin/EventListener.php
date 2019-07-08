@@ -11,7 +11,10 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Layout\Layout;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -19,14 +22,20 @@ use Joomla\CMS\Table\Menu;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Factory as JFactory;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\IniFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Gantry event listener for admin actions for Joomla.
+ * @package Gantry\Admin
+ */
 class EventListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -40,49 +49,61 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAdminThemeInit(Event $event)
     {
-        PluginHelper::importPlugin('gantry5');
-
-        // Trigger the onGantryThemeInit event.
-        JFactory::getApplication()->triggerEvent('onGantry5AdminInit', ['theme' => $event->theme]);
+        $this->triggerEvent('onGantry5AdminInit', ['theme' => $event->theme]);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onGlobalSave(Event $event)
     {
-        PluginHelper::importPlugin('gantry5');
-
-        // Trigger the onGantryThemeUpdateCss event.
-        JFactory::getApplication()->triggerEvent('onGantry5SaveConfig', [$event->data]);
+        $this->triggerEvent('onGantry5SaveConfig', [$event->data]);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onStylesSave(Event $event)
     {
-        PluginHelper::importPlugin('gantry5');
-
-        // Trigger the onGantryThemeUpdateCss event.
-        JFactory::getApplication()->triggerEvent('onGantry5UpdateCss', ['theme' => $event->theme]);
+        $this->triggerEvent('onGantry5UpdateCss', ['theme' => $event->theme]);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSettingsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onLayoutSave(Event $event)
     {
+        /** @var Gantry $gantry */
+        $gantry = $event->gantry;
+
         /** @var Layout $layout */
         $layout = $event->layout;
 
-        if ($layout->name[0] !== '_' && $layout->name !== 'default') {
+        $name = $layout->name;
+        if ($name[0] !== '_' && $name !== 'default') {
             $preset = isset($layout->preset['name']) ? $layout->preset['name'] : 'default';
 
             // Update Joomla template style.
             StyleHelper::update($layout->name, $preset);
         }
 
-        $theme = $event->gantry['theme.name'];
+        $theme = $gantry['theme.name'];
 
-        $positions = $event->gantry['outlines']->positions();
+        /** @var Outlines $outlines */
+        $outlines = $gantry['outlines'];
+        $positions = $outlines->positions();
         $positions['debug'] = 'Debug';
 
         $manifest = new Manifest($theme);
@@ -97,7 +118,7 @@ class EventListener implements EventSubscriberInterface
         }
 
         /** @var UniformResourceLocator $locator */
-        $locator = $event->gantry['locator'];
+        $locator = $gantry['locator'];
 
         $filename = "gantry-theme://language/en-GB/en-GB.tpl_{$theme}_positions.ini";
 
@@ -106,6 +127,9 @@ class EventListener implements EventSubscriberInterface
         $ini->free();
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAssignmentsSave(Event $event)
     {
     }
@@ -135,14 +159,16 @@ class EventListener implements EventSubscriberInterface
             'class' => ''
         ];
 
+        /** @var Gantry $gantry */
         $gantry = $event->gantry;
         $menu = $event->menu;
+        $resource = $event->resource;
 
         // Save global menu settings into Joomla.
         /** @var MenuType $table */
         $menuType = Table::getInstance('MenuType');
-        if (!$menuType->load(['menutype' => $event->resource])) {
-            throw new \RuntimeException("Saving menu failed: Menu type {$event->resource} not found.", 400);
+        if (!$menuType->load(['menutype' => $resource])) {
+            throw new \RuntimeException("Saving menu failed: Menu type {$resource} not found.", 400);
         }
         $options = [
             'title' => $menu['settings.title'],
@@ -165,7 +191,7 @@ class EventListener implements EventSubscriberInterface
                 // Menu item exists in Joomla, let's update it instead.
                 unset($item['type'], $item['link']);
 
-                $item['id'] = (int) $id;
+                $item['id'] = $id;
 
                 $title = $menu["items.{$key}.title"];
                 $browserNav = (int)($menu["items.{$key}.target"] === '_blank');
@@ -229,5 +255,18 @@ class EventListener implements EventSubscriberInterface
 
         // Clean the cache.
         CacheHelper::cleanMenu();
+    }
+
+    /**
+     * @param string $eventName
+     * @param array $args
+     */
+    protected function triggerEvent($eventName, $args = [])
+    {
+        PluginHelper::importPlugin('gantry5');
+
+        // Trigger the onGantryThemeInit event.
+        $app = JoomlaFactory::getApplication();
+        $app->triggerEvent($eventName, $args);
     }
 }

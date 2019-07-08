@@ -12,13 +12,25 @@ namespace Gantry\Joomla\Object;
 
 use \Gantry\Component\Collection\Collection as BaseCollection;
 
+/**
+ * Class Collection
+ * @package Gantry\Joomla\Object
+ */
 class Collection extends BaseCollection
 {
+    /**
+     * Collection constructor.
+     * @param array $items
+     */
     public function __construct(array $items)
     {
         $this->items = $items;
     }
 
+    /**
+     * @param string $property
+     * @return array
+     */
     public function get($property)
     {
         $list = [];
@@ -34,6 +46,11 @@ class Collection extends BaseCollection
         return $list;
     }
 
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return array
+     */
     public function __call($name, $arguments)
     {
         $list = [];

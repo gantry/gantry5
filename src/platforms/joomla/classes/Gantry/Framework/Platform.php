@@ -16,6 +16,7 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
 use Joomla\CMS\Editor\Editor as JEditor;
 use Joomla\CMS\Factory as JFactory;
@@ -45,18 +46,24 @@ class Platform extends BasePlatform
     protected $modules;
 
 
+    /**
+     * @param string $html
+     */
     public function setModuleWrapper($html)
     {
         $this->module_wrapper = $html;
     }
 
+    /**
+     * @param string $html
+     */
     public function setComponentWrapper($html)
     {
         $this->component_wrapper = $html;
     }
 
     /**
-     * @return $this
+     * @return BasePlatform
      * @throws \RuntimeException
      */
     public function init()
@@ -97,7 +104,7 @@ class Platform extends BasePlatform
      */
     public function getCachePath()
     {
-        $path = JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
+        $path = JoomlaFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache');
         if (!is_dir($path)) {
             throw new \RuntimeException('Joomla cache path does not exist!');
         }
@@ -105,11 +112,17 @@ class Platform extends BasePlatform
         return $path . '/gantry5';
     }
 
+    /**
+     * @return array
+     */
     public function getThemesPaths()
     {
         return ['' => ['templates']];
     }
 
+    /**
+     * @return array
+     */
     public function getMediaPaths()
     {
         $paths = ['images'];
@@ -130,6 +143,9 @@ class Platform extends BasePlatform
         return ['' => $paths];
     }
 
+    /**
+     * @return array
+     */
     public function getEnginesPaths()
     {
         if (is_link(GANTRY5_ROOT . '/media/gantry5/engines')) {
@@ -139,6 +155,9 @@ class Platform extends BasePlatform
         return ['' => ['media/gantry5/engines']];
     }
 
+    /**
+     * @return array
+     */
     public function getAssetsPaths()
     {
         if (is_link(GANTRY5_ROOT . '/media/gantry5/assets')) {
@@ -168,12 +187,16 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        $session = JFactory::getSession();
+        $session = JoomlaFactory::getSession();
         $token = $session::getFormToken();
 
         return JRoute::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public function filter($text)
     {
         JPluginHelper::importPlugin('content');
@@ -181,22 +204,35 @@ class Platform extends BasePlatform
         return JHtml::_('content.prepare', $text, '', 'mod_custom.content');
     }
 
+    /**
+     * @param string $position
+     * @return int
+     */
     public function countModules($position)
     {
-        $document = JFactory::getDocument();
+        $document = JoomlaFactory::getDocument();
 
         return ($document instanceof JDocumentHTML) ? $document->countModules($position) : 0;
     }
 
+    /**
+     * @param string $position
+     * @return array
+     */
     public function getModules($position)
     {
         // TODO:
         return [];
     }
 
+    /**
+     * @param string|object $id
+     * @param array $attribs
+     * @return string
+     */
     public function displayModule($id, $attribs = [])
     {
-        $document = JFactory::getDocument();
+        $document = JoomlaFactory::getDocument();
         if (!$document instanceof JDocumentHTML) {
             return '';
         }
@@ -216,10 +252,11 @@ class Platform extends BasePlatform
         $html = trim($renderer->render($module, $attribs));
 
         // Add frontend editing feature as it has only been defined for module positions.
-        $app = JFactory::getApplication();
-        $user = JFactory::getUser();
+        $app = JoomlaFactory::getApplication();
+        $user = JoomlaFactory::getUser();
 
-        $frontEditing = ($app->isSite() && $app->get('frontediting', 1) && !$user->guest);
+        // FIXME: Joomla 4: check $app->get()
+        $frontEditing = ($app->isClient('site') && $app->get('frontediting', 1) && !$user->guest);
         $menusEditing = ($app->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 
         if (!$isGantry && $frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
@@ -236,16 +273,23 @@ class Platform extends BasePlatform
         $module->content = $content;
 
         if ($html && !$isGantry) {
-            $this->container['theme']->joomla(true);
+            /** @var Theme $theme */
+            $theme = $this->container['theme'];
+            $theme->joomla(true);
             return sprintf($this->module_wrapper, $html);
         }
 
         return $html;
     }
 
+    /**
+     * @param string $position
+     * @param array $attribs
+     * @return string
+     */
     public function displayModules($position, $attribs = [])
     {
-        $document = JFactory::getDocument();
+        $document = JoomlaFactory::getDocument();
         if (!$document instanceof JDocumentHTML) {
             return '';
         }
@@ -258,15 +302,24 @@ class Platform extends BasePlatform
         return $html;
     }
 
+    /**
+     * @param array $params
+     * @return string
+     */
     public function displaySystemMessages($params = [])
     {
         // We cannot use JDocument renderer here as it fires too early to display any messages.
         return '<jdoc:include type="message" />';
     }
 
+    /**
+     * @param string $content
+     * @param array $params
+     * @return string
+     */
     public function displayContent($content, $params = [])
     {
-        $document = JFactory::getDocument();
+        $document = JoomlaFactory::getDocument();
         if (!$document instanceof JDocumentHTML) {
             return $content;
         }
@@ -275,22 +328,31 @@ class Platform extends BasePlatform
 
         $html = trim($renderer->render(null, $params, $content ?: $document->getBuffer('component')));
 
-        $isGantry = \strpos(JFactory::getApplication()->input->getCmd('option'), 'gantry5') !== false;
+        $isGantry = \strpos(JoomlaFactory::getApplication()->input->getCmd('option'), 'gantry5') !== false;
 
         if ($html && !$isGantry) {
-            $this->container['theme']->joomla(true);
+            /** @var Theme $theme */
+            $theme = $this->container['theme'];
+            $theme->joomla(true);
             return sprintf($this->component_wrapper, $html);
         }
 
         return $html;
     }
 
+    /**
+     * @param string $id
+     * @return mixed|null
+     */
     public function getModule($id)
     {
         $modules = $this->getModuleList();
         return $id && isset($modules[$id]) ? $modules[$id] : null;
     }
 
+    /**
+     * @return array|null
+     */
     protected function &getModuleList()
     {
         if ($this->modules === null) {
@@ -304,9 +366,12 @@ class Platform extends BasePlatform
         return $this->modules;
     }
 
+    /**
+     * @return array|false|null
+     */
     public function listModules()
     {
-        $db = JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.id, a.title, a.position, a.module, a.published AS enabled')
@@ -330,10 +395,17 @@ class Platform extends BasePlatform
         return $result;
     }
 
+    /**
+     * @param string $name
+     * @param string $content
+     * @param string|int|null $width
+     * @param string|int|null $height
+     * @return string|null
+     */
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
-        $conf = JFactory::getConfig();
-        $editor = JEditor::getInstance($conf->get('editor'));
+        $config = JoomlaFactory::getConfig();
+        $editor = JEditor::getInstance($config->get('editor'));
         if (!$height) {
             $height = 250;
         }
@@ -341,25 +413,37 @@ class Platform extends BasePlatform
         return $editor->display($name, $content, $width, $height, 50, 8, false, null, null, null, ['html_height' => $height]);
     }
 
+    /**
+     * @return array
+     */
     public function errorHandlerPaths()
     {
         return ['|gantry5|'];
     }
 
+    /**
+     * @return string
+     */
     public function settings()
     {
         if (!$this->authorize('platform.settings.manage')) {
             return '';
         }
 
-        return JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false);
+        return JRoute::_('index.php?option=com_config&view=component&component=com_gantry5', false) ?: '';
     }
 
+    /**
+     * @return string
+     */
     public function update()
     {
-        return JRoute::_('index.php?option=com_installer&view=update', false);
+        return JRoute::_('index.php?option=com_installer&view=update', false) ?: '';
     }
 
+    /**
+     * @return array
+     */
     public function updates()
     {
         if (!$this->authorize('updates.manage')) {
@@ -376,7 +460,7 @@ class Platform extends BasePlatform
 
         $extension_ids = $extension_ids ? implode(',', $extension_ids) : '-1';
 
-        $db = JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $query = $db->getQuery(true);
         $query
             ->select('*')
@@ -409,6 +493,9 @@ class Platform extends BasePlatform
         return $list;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function factory()
     {
         $args = func_get_args();
@@ -416,6 +503,9 @@ class Platform extends BasePlatform
         return method_exists($method[0], $method[1]) ? \call_user_func_array($method, $args) : null;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function instance()
     {
         $args = func_get_args();
@@ -430,11 +520,17 @@ class Platform extends BasePlatform
         return method_exists($method[0], $method[1]) ? \call_user_func_array($method, $args) : null;
     }
 
+    /**
+     * @return string
+     */
     public function route()
     {
-        return \call_user_func_array([JRoute::class, '_'], func_get_args());
+        return \call_user_func_array([JRoute::class, '_'], func_get_args()) ?: '';
     }
 
+    /**
+     * @return string
+     */
     public function html()
     {
         $args = func_get_args();
@@ -444,11 +540,20 @@ class Platform extends BasePlatform
         return \call_user_func_array([JHtml::class, '_'], $args);
     }
 
+    /**
+     * @param int|array $keys
+     * @return Object
+     */
     public function article($keys)
     {
         return Content::getInstance($keys);
     }
 
+    /**
+     * @param string $domain
+     * @param array|null $options
+     * @return CategoryFinder|ContentFinder|null
+     */
     public function finder($domain, $options = null)
     {
         $options = (array) $options;
@@ -458,17 +563,23 @@ class Platform extends BasePlatform
             case 'content':
                 $finder = new ContentFinder($options);
 
-                return JFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return JoomlaFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
             case 'category':
             case 'categories':
                 $finder = (new CategoryFinder($options))->extension('content');
 
-                return JFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return JoomlaFactory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
         }
 
         return null;
     }
 
+    /**
+     * @param string $text
+     * @param int $length
+     * @param bool $html
+     * @return string
+     */
     public function truncate($text, $length, $html = false)
     {
         return JHtml::_('string.truncate', $text, $length, true, $html);
@@ -482,7 +593,7 @@ class Platform extends BasePlatform
      */
     public function authorize($action, $id = null)
     {
-        $user = JFactory::getUser();
+        $user = JoomlaFactory::getUser();
 
         switch ($action) {
             case 'platform.settings.manage':
@@ -491,8 +602,8 @@ class Platform extends BasePlatform
                 return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
             case 'menu.edit':
                 if ($id) {
-                    $db = JFactory::getDbo();
-                    $userId = JFactory::getUser()->id;
+                    $db = JoomlaFactory::getDbo();
+                    $userId = $user->id;
 
                     // Verify that no items are checked out.
                     $query = $db->getQuery(true)

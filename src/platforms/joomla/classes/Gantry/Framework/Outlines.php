@@ -14,15 +14,23 @@ use Gantry\Admin\ThemeList;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Outline\OutlineCollection;
 use Gantry\Debugger;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
-use Gantry\Joomla\TemplateInstaller;
-use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Application\CMSApplication;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Outlines
+ * @package Gantry\Framework
+ */
 class Outlines extends OutlineCollection
 {
     protected $createId;
 
+    /**
+     * @param int|string $id
+     * @return int|string
+     */
     public function preset($id)
     {
         if (is_numeric($id)) {
@@ -35,11 +43,18 @@ class Outlines extends OutlineCollection
         return $id;
     }
 
+    /**
+     * @param object|null $template
+     * @return mixed
+     */
     public function current($template = null)
     {
+        /** @var CMSApplication $app */
+        $app = JoomlaFactory::getApplication();
+
         if (!is_object($template)) {
             // Get the template style.
-            $template = JFactory::getApplication()->getTemplate(true);
+            $template = $app->getTemplate(true);
         }
 
         $preset = $template->params->get('preset', 'default');
@@ -52,7 +67,7 @@ class Outlines extends OutlineCollection
 
             if (!$shown) {
                 $shown = true;
-                JFactory::getApplication()->enqueueMessage('[DEBUG] JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'notice');
+                $app->enqueueMessage('[DEBUG] JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'notice');
             }
         }
 
@@ -76,7 +91,7 @@ class Outlines extends OutlineCollection
 
         $styles = ThemeList::getStyles($theme);
 
-        $installer = new TemplateInstaller($this->container['theme.name']);
+        $installer = new ThemeInstaller($this->container['theme.name']);
         $title = $installer->getStyleName('%s - ');
 
         $outlines = [];
@@ -118,7 +133,7 @@ class Outlines extends OutlineCollection
 
         $title = $title ? "%s - {$title}" : '%s - Untitled';
 
-        $installer = new TemplateInstaller($this->container['theme.name']);
+        $installer = new ThemeInstaller($this->container['theme.name']);
         $title = $installer->getStyleName($title);
         $style = $installer->addStyle($title);
 
@@ -177,7 +192,7 @@ class Outlines extends OutlineCollection
 
         if ($title) {
             // Change the title.
-            $installer = new TemplateInstaller($theme);
+            $installer = new ThemeInstaller($theme);
             $title = $installer->getStyleName("%s - {$title}");
             $this->rename($style->id, $title);
         } else {
@@ -207,7 +222,7 @@ class Outlines extends OutlineCollection
         }
 
         $theme = $this->container['theme.name'];
-        $installer = new TemplateInstaller($theme);
+        $installer = new ThemeInstaller($theme);
 
         $title = $title ? "%s - {$title}" : '%s - Untitled';
         $title = $installer->getStyleName($title);
@@ -229,6 +244,11 @@ class Outlines extends OutlineCollection
         return $id;
     }
 
+    /**
+     * @param string $id
+     * @param bool $deleteModel
+     * @throws \Exception
+     */
     public function delete($id, $deleteModel = true)
     {
         if (!$this->canDelete($id)) {
@@ -252,7 +272,7 @@ class Outlines extends OutlineCollection
                 $error = $model->getError();
                 // Well, Joomla can always send enqueue message instead!
                 if (!$error) {
-                    $messages = JFactory::getApplication()->getMessageQueue();
+                    $messages = JoomlaFactory::getApplication()->getMessageQueue();
                     $message = reset($messages);
                     $error = $message ? $message['message'] : 'Unknown error';
                 }
@@ -283,12 +303,9 @@ class Outlines extends OutlineCollection
      */
     public function canDelete($id)
     {
-        $model = StyleHelper::loadModel();
+        $style = StyleHelper::getStyle($id);
 
-        $item = $model->getTable();
-        $item->load($id);
-
-        return !$item->id || $item->home ? false : true;
+        return !(!$style->id || $style->home);
     }
 
     /**
@@ -297,11 +314,8 @@ class Outlines extends OutlineCollection
      */
     public function isDefault($id)
     {
-        $model = StyleHelper::loadModel();
+        $style = StyleHelper::getStyle($id);
 
-        $item = $model->getTable();
-        $item->load($id);
-
-        return (bool) $item->home;
+        return (bool) $style->home;
     }
 }

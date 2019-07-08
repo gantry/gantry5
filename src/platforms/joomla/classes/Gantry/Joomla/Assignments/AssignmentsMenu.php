@@ -11,6 +11,8 @@
 namespace Gantry\Joomla\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Application\CMSApplication;
 
 class AssignmentsMenu implements AssignmentsInterface
 {
@@ -26,8 +28,9 @@ class AssignmentsMenu implements AssignmentsInterface
     {
         $rules = [];
 
-        $app = \JFactory::getApplication();
-        if ($app->isSite()) {
+        /** @var CMSApplication $app */
+        $app = JoomlaFactory::getApplication();
+        if ($app->isClient('site')) {
             $active = $app->getMenu()->getActive();
             if ($active) {
                 $menutype = $active->menutype;
@@ -47,10 +50,8 @@ class AssignmentsMenu implements AssignmentsInterface
      */
     public function listRules($configuration)
     {
-        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-        $data = \MenusHelper::getMenuLinks();
-
-        $userid = \JFactory::getUser()->id;
+        $data = $this->getMenulinks();
+        $userid = JoomlaFactory::getUser()->id;
 
         $list = [];
 
@@ -61,7 +62,7 @@ class AssignmentsMenu implements AssignmentsInterface
                     'name' => $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $configuration,
-                    'disabled' => $link->type !== 'component' || $link->checked_out && $link->checked_out != $userid,
+                    'disabled' => $link->type !== 'component' || ($link->checked_out && $link->checked_out != $userid),
                     'label' => str_repeat('—', max(0, $link->level-1)) . ' ' . $link->text
                 ];
             }
@@ -74,5 +75,16 @@ class AssignmentsMenu implements AssignmentsInterface
         }
 
         return $list;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMenulinks()
+    {
+        // FIXME: Joomla 4
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
+        return \MenusHelper::getMenuLinks();
     }
 }

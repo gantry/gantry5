@@ -20,7 +20,7 @@ use Joomla\CMS\Menu\AbstractMenu;
 /**
  * Class Gantry5Router
  *
- * TODO:
+ * FIXME: Joomla 4 logic missing
  */
 class Gantry5Router extends RouterView
 {

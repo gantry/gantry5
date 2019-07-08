@@ -10,7 +10,7 @@
 
 namespace Gantry\Joomla\Object;
 
-use Joomla\CMS\Factory as JFactory;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 
 /**
@@ -110,7 +110,7 @@ abstract class AbstractObject extends \JObject
      * one item by using arbitrary set of matching fields. If there are more than one matching object, first one gets returned.
      *
      * @param  int|array  $keys        An optional primary key value to load the object by, or an array of fields to match.
-     * @param  boolean    $reload      Force object reload from the database.
+     * @param  bool    $reload      Force object reload from the database.
      *
      * @return  Object
      */
@@ -119,8 +119,8 @@ abstract class AbstractObject extends \JObject
         // If we are creating or loading a new item or we load instance by alternative keys,
         // we need to create a new object.
         if (!$keys || \is_array($keys) || !isset(static::$instances[(int) $keys])) {
-            $c = \get_called_class();
-            $instance = new $c($keys);
+            $class = \get_called_class();
+            $instance = new $class($keys);
             /** @var Object $instance */
             if (!$instance->exists()) return $instance;
 
@@ -140,7 +140,7 @@ abstract class AbstractObject extends \JObject
     /**
      * Removes all or selected instances from the object cache.
      *
-     * @param null|int|array  $ids
+     * @param null|int|int[]  $ids
      */
     static public function freeInstances($ids = null)
     {
@@ -165,6 +165,7 @@ abstract class AbstractObject extends \JObject
     {
         $return = $this->_exists;
         if ($exists !== null) $this->_exists = (bool) $exists;
+
         return $return;
     }
 
@@ -185,7 +186,7 @@ abstract class AbstractObject extends \JObject
     /**
      * Returns an associative array of object properties.
      *
-     * @param   boolean  $public  If true, returns only the public properties.
+     * @param   bool  $public  If true, returns only the public properties.
      *
      * @return  array
      */
@@ -208,16 +209,19 @@ abstract class AbstractObject extends \JObject
      * @param   array    $fields  An optional array list of properties to ignore / include only while binding.
      * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
      *
-     * @return  boolean  True on success.
+     * @return  bool  True on success.
      */
     public function bind(array $src = null, array $fields = null, $include = false)
     {
-        if (empty($src)) return false;
+        if (empty($src)) {
+            return false;
+        }
 
         if (!empty($fields)) {
             $src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
         }
-        $this->setProperties ( $src );
+        $this->setProperties ($src);
+
         return true;
     }
 
@@ -227,16 +231,16 @@ abstract class AbstractObject extends \JObject
      * @param   mixed    $keys   An optional primary key value to load the object by, or an array of fields to match. If not
      *                           set the instance key value is used.
      *
-     * @return  boolean  True on success, false if the object doesn't exist.
+     * @return  bool  True on success, false if the object doesn't exist.
      */
     public function load($keys = null)
     {
         if ($keys !== null && !is_array($keys)) {
-            $keys = array('id'=>(int) $keys);
+            $keys = ['id' => (int)$keys];
         }
 
         // Create the table object.
-        $table = static::getTable ();
+        $table = static::getTable();
 
         // Make sure we set the given keys to the object even if it is not loaded.
         $table->reset();
@@ -267,7 +271,7 @@ abstract class AbstractObject extends \JObject
      * Before saving the object, this method checks if object can be safely saved.
      * It will also trigger onContentBeforeSave and onContentAfterSave events.
      *
-     * @return  boolean  True on success.
+     * @return  bool  True on success.
      */
     public function save()
     {
@@ -288,11 +292,14 @@ abstract class AbstractObject extends \JObject
             return false;
         }
 
+        $app = JoomlaFactory::getApplication();
+
         // Include the content plugins for the on save events.
         JPluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
-        $result = JFactory::getApplication()->triggerEvent('onContentBeforeSave', array("com_gantry5.".get_called_class(), $table, $isNew));
+        // FIXME: Joomla 4
+        $result = $app->triggerEvent('onContentBeforeSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -314,7 +321,8 @@ abstract class AbstractObject extends \JObject
         }
 
         // Trigger the onContentAfterSave event.
-        JFactory::getApplication()->triggerEvent('onContentAfterSave', array("com_gantry5.".get_called_class(), $table, $isNew));
+        // FIXME: Joomla 4
+        $app->triggerEvent('onContentAfterSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
 
         return true;
     }
@@ -322,7 +330,7 @@ abstract class AbstractObject extends \JObject
     /**
      * Method to delete the object from the database.
      *
-     * @return	boolean	True on success.
+     * @return bool True on success.
      */
     public function delete()
     {
@@ -338,11 +346,14 @@ abstract class AbstractObject extends \JObject
         $table = static::getTable();
         $table->bind($this->getProperties());
 
+        $app = JoomlaFactory::getApplication();
+
         // Include the content plugins for the on save events.
         JPluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
-        $result = JFactory::getApplication()->triggerEvent('onContentBeforeDelete', array("com_gantry5.".get_called_class(), $table));
+        // FIXME: Joomla 4
+        $result = $app->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . get_called_class(), $table]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -355,7 +366,8 @@ abstract class AbstractObject extends \JObject
         $this->_exists = false;
 
         // Trigger the onContentAfterDelete event.
-        JFactory::getApplication()->triggerEvent('onContentAfterDelete', array("com_gantry5.".get_called_class(), $table));
+        // FIXME: Joomla 4
+        $app->triggerEvent('onContentAfterDelete', ['com_gantry5.' . get_called_class(), $table]);
 
         return true;
     }
@@ -379,14 +391,19 @@ abstract class AbstractObject extends \JObject
         return static::collection(static::$instances);
     }
 
+    /**
+     * @param array $ids
+     * @param bool $readonly
+     * @return Collection
+     */
     static public function getInstances(array $ids, $readonly = true)
     {
         if (!$ids) {
-            return array();
+            return static::collection([]);
         }
 
-        $results = array();
-        $list = array();
+        $results = [];
+        $list = [];
 
         foreach ($ids as $id) {
             if (!isset(static::$instances[$id])) {
@@ -415,6 +432,10 @@ abstract class AbstractObject extends \JObject
 
     // Internal functions
 
+    /**
+     * @param $items
+     * @return Collection
+     */
     static protected function collection($items)
     {
         return new Collection($items);
@@ -427,6 +448,7 @@ abstract class AbstractObject extends \JObject
      */
     static protected function getTable()
     {
+        // FIXME: Joomla 4
         return \JTable::getInstance(static::$table, static::$tablePrefix);
     }
 
@@ -436,7 +458,7 @@ abstract class AbstractObject extends \JObject
     static protected function getQuery()
     {
         $table = static::getTable();
-        $db = \JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('a.*')->from($table->getTableName().' AS a')->order(static::$order);
 
@@ -452,7 +474,7 @@ abstract class AbstractObject extends \JObject
             $query = static::getQuery();
         }
 
-        $db = \JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $db->setQuery($query);
 
         /** @var Object[] $items */

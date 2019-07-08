@@ -10,8 +10,10 @@
 
 namespace Gantry\Joomla;
 
-use Joomla\CMS\Factory as JFactory;
-
+/**
+ * Class CacheHelper
+ * @package Gantry\Joomla
+ */
 class CacheHelper
 {
     public static function cleanTemplates()
@@ -34,24 +36,31 @@ class CacheHelper
         self::cleanByType('com_plugins', 1);
     }
 
+    /**
+     * @param string|null $group
+     * @param int $client_id
+     * @param string $event
+     * @throws \Exception
+     */
     private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache')
     {
-        $conf = JFactory::getConfig();
+        $config = JoomlaFactory::getConfig();
 
-        $options = array(
+        $options = [
             'defaultgroup' => $group,
-            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'),
+            'cachebase' => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $config->get('cache_path', JPATH_SITE . '/cache'),
             'result' => true
-        );
+        ];
 
         try {
+            // FIXME: Joomla 4
             $cache = \JCache::getInstance('callback', $options);
             $cache->clean();
-        } catch (\Exception $e) { // TODO: Joomla 3.7 uses JCacheException
+        } catch (\Exception $e) { // FIXME: Joomla 3.7 uses JCacheException, Joomla 4?
             $options['result'] = false;
         }
 
         // Trigger the onContentCleanCache event.
-        JFactory::getApplication()->triggerEvent($event, $options);
+        JoomlaFactory::getApplication()->triggerEvent($event, $options);
     }
 }

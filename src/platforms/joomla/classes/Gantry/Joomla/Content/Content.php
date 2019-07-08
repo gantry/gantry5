@@ -11,7 +11,9 @@
 namespace Gantry\Joomla\Content;
 
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
 use Gantry\Joomla\Category\Category;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
 
 /**
@@ -38,6 +40,9 @@ class Content extends AbstractObject
     static protected $table = 'Content';
     static protected $order = 'id';
 
+    /**
+     * @return bool
+     */
     public function initialize()
     {
         if (!parent::initialize()) {
@@ -49,7 +54,7 @@ class Content extends AbstractObject
         $this->attribs = json_decode($this->attribs);
         $this->metadata = json_decode($this->metadata);
 
-        $nullDate = \JFactory::getDbo()->getNullDate();
+        $nullDate = JoomlaFactory::getDbo()->getNullDate();
         if ($this->modified === $nullDate) {
             $this->modified = $this->created;
         }
@@ -60,16 +65,26 @@ class Content extends AbstractObject
         return true;
     }
 
+    /**
+     * @return \Joomla\CMS\User\User
+     */
     public function author()
     {
+        // FIXME: Joomla 4
         return \JUser::getInstance($this->created_by);
     }
 
+    /**
+     * @return Object
+     */
     public function category()
     {
         return Category::getInstance($this->catid);
     }
 
+    /**
+     * @return array
+     */
     public function categories()
     {
         $category = $this->category();
@@ -77,26 +92,41 @@ class Content extends AbstractObject
         return array_merge($category->parents(), [$category]);
     }
 
+    /**
+     * @return string
+     */
     public function text()
     {
         return $this->introtext . ' ' . $this->fulltext;
     }
 
+    /**
+     * @return string
+     */
     public function preparedText()
     {
         return \JHtml::_('content.prepare', $this->text());
     }
 
+    /**
+     * @return string
+     */
     public function preparedIntroText()
     {
         return \JHtml::_('content.prepare', $this->introtext);
     }
 
+    /**
+     * @return bool
+     */
     public function readmore()
     {
         return (bool)\strlen($this->fulltext);
     }
 
+    /**
+     * @return string
+     */
     public function route()
     {
         require_once JPATH_SITE . '/components/com_content/helpers/route.php';
@@ -106,9 +136,12 @@ class Content extends AbstractObject
         return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
 
+    /**
+     * @return bool|string
+     */
     public function edit()
     {
-        $user = \JFactory::getUser();
+        $user = JoomlaFactory::getUser();
         $asset = "com_content.article.{$this->id}";
 
         if ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset)) {
@@ -118,16 +151,33 @@ class Content extends AbstractObject
         return false;
     }
 
+    /**
+     * @param string $file
+     * @return string
+     */
     public function render($file)
     {
-        return Gantry::instance()['theme']->render($file, ['article' => $this]);
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+
+        return $theme->render($file, ['article' => $this]);
     }
 
+    /**
+     * @param string $string
+     * @return string
+     */
     public function compile($string)
     {
-        return Gantry::instance()['theme']->compile($string, ['article' => $this]);
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+
+        return $theme->compile($string, ['article' => $this]);
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->getProperties(true) + [

@@ -10,9 +10,11 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Dispatcher\Dispatcher;
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Access\Exception\NotAllowed;
 
 /**
@@ -44,13 +46,16 @@ class Gantry5Dispatcher extends Dispatcher
         // Check component access permission
         $this->checkAccess();
 
+        $application = $this->getApplication();
+        $language = $application->getLanguage();
+
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry\Framework\Gantry')) {
-            $this->app->getLanguage()->load('com_gantry5', JPATH_ADMINISTRATOR)
-            || $this->app->getLanguage()->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+            $language->load('com_gantry5', JPATH_ADMINISTRATOR)
+            || $language->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
-            $this->app->enqueueMessage(
-                JText::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('COM_GANTRY5_COMPONENT')),
+            $application->enqueueMessage(
+                Text::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('COM_GANTRY5_COMPONENT')),
                 'warning'
             );
 
@@ -58,34 +63,34 @@ class Gantry5Dispatcher extends Dispatcher
         }
 
         // Prevent direct access without menu item.
-        if (!$this->app->getMenu()->getActive()) {
-            throw new NotAllowed(JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+        if (!$application->getMenu()->getActive()) {
+            throw new NotAllowed(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
         }
 
         // Handle non-html formats and error page.
         if ($this->input->getCmd('format', 'html') !== 'html'
             || $this->input->getCmd('view') === 'error' || $this->input->getInt('g5_not_found')) {
-            throw new NotAllowed(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new NotAllowed(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
-        /** @var Gantry\Framework\Theme $theme */
+        /** @var Theme $theme */
         $theme = $gantry['theme'];
 
-        $params = $this->app->getParams();
+        $params = $application->getParams();
 
         // Set page title.
         $title = $params->get('page_title');
         if (empty($title)) {
-            $title = $this->app->get('sitename');
-        } elseif ($this->app->get('sitename_pagetitles', 0) == 1) {
-            $title = JText::sprintf('JPAGETITLE', $this->app->get('sitename'), $title);
-        } elseif ($this->app->get('sitename_pagetitles', 0) == 2) {
-            $title = JText::sprintf('JPAGETITLE', $title, $this->app->get('sitename'));
+            $title = $application->get('sitename');
+        } elseif ($application->get('sitename_pagetitles', 0) == 1) {
+            $title = Text::sprintf('JPAGETITLE', $application->get('sitename'), $title);
+        } elseif ($application->get('sitename_pagetitles', 0) == 2) {
+            $title = Text::sprintf('JPAGETITLE', $title, $application->get('sitename'));
         }
 
-        $document = JFactory::getDocument();
+        $document = JoomlaFactory::getDocument();
         $document->setTitle($title);
 
         // Set description.
@@ -123,6 +128,6 @@ class Gantry5Dispatcher extends Dispatcher
         ];
 
         // Render the particle.
-        echo trim($theme->render("@nucleus/content/particle.html.twig", $context));
+        echo trim($theme->render('@nucleus/content/particle.html.twig', $context));
     }
 }

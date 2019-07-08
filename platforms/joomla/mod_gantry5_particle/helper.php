@@ -9,16 +9,16 @@
  */
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Helper\ModuleHelper as JModuleHelper;
-use Joomla\CMS\Language\Text as JText;
-use Joomla\Registry\Registry as JRegistry;
 use Gantry\Component\Content\Block\ContentBlockInterface;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Debugger;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
+use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 class ModGantry5ParticleHelper
 {
@@ -29,7 +29,7 @@ class ModGantry5ParticleHelper
      */
     public static function getAjax()
     {
-        $input = JFactory::getApplication()->input;
+        $input = JoomlaFactory::getApplication()->input;
         $format = $input->getCmd('format', 'html');
         $id = $input->getInt('id');
 
@@ -48,7 +48,7 @@ class ModGantry5ParticleHelper
     public static function ajax($id, $props = [], $format = 'raw')
     {
         if (!in_array($format, ['json', 'raw', 'debug'])) {
-            throw new \RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new \RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $gantry = Gantry::instance();
@@ -59,15 +59,15 @@ class ModGantry5ParticleHelper
 
         // Make sure that module really exists.
         if (!is_object($module) || strpos($module->module, 'gantry5') === false) {
-            throw new \RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new \RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $attribs = ['style' => 'gantry'];
 
         // Trigger the onRenderModule event.
-        JFactory::getApplication()->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+        JoomlaFactory::getApplication()->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
 
-        $params = new JRegistry($module->params);
+        $params = new Registry($module->params);
         $params->set('ajax', $props);
         $block = static::render($module, $params);
         $data = json_decode($params->get('particle'), true);
@@ -147,7 +147,7 @@ class ModGantry5ParticleHelper
      */
     public static function moduleCache($module, $params, $cacheparams)
     {
-        $block = (array) JModuleHelper::moduleCache($module, $params, $cacheparams);
+        $block = (array) ModuleHelper::moduleCache($module, $params, $cacheparams);
         try {
             return $block ? HtmlBlock::fromArray($block) : null;
         } catch (Exception $e) {
@@ -155,6 +155,11 @@ class ModGantry5ParticleHelper
         }
     }
 
+    /**
+     * @param string $particle
+     * @param string $id
+     * @return string
+     */
     public static function getIdentifier($particle, $id)
     {
         return "module-{$particle}-{$id}";

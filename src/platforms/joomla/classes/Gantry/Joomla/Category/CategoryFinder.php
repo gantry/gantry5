@@ -10,8 +10,13 @@
 
 namespace Gantry\Joomla\Category;
 
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Finder;
 
+/**
+ * Class CategoryFinder
+ * @package Gantry\Joomla\Category
+ */
 class CategoryFinder extends Finder
 {
     protected $table = '#__categories';
@@ -21,6 +26,7 @@ class CategoryFinder extends Finder
     /**
      * Makes all created objects as readonly.
      *
+     * @param bool $readonly
      * @return $this
      */
     public function readonly($readonly = true)
@@ -30,6 +36,10 @@ class CategoryFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param bool $object
+     * @return array|\Gantry\Joomla\Object\Collection
+     */
     public function find($object = true)
     {
         $ids = parent::find();
@@ -41,6 +51,11 @@ class CategoryFinder extends Finder
         return Category::getInstances($ids, $this->readonly);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param int $levels
+     * @return $this
+     */
     public function id($ids, $levels = 0)
     {
         if ($ids && $levels) {
@@ -72,7 +87,7 @@ class CategoryFinder extends Finder
 
     /**
      * @param string|bool|int $language
-     * @return CategoryFinder
+     * @return $this
      */
     public function language($language = true)
     {
@@ -80,14 +95,14 @@ class CategoryFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = \JFactory::getLanguage()->getTag();
+            $language = JoomlaFactory::getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
     /**
      * @param int|int[] $published
-     * @return CategoryFinder
+     * @return $this
      */
     public function published($published = 1)
     {
@@ -97,6 +112,10 @@ class CategoryFinder extends Finder
         return $this->where('a.published', 'IN', $published);
     }
 
+    /**
+     * @param bool $authorised
+     * @return $this
+     */
     public function authorised($authorised = true)
     {
         if (!$authorised) {
@@ -111,12 +130,16 @@ class CategoryFinder extends Finder
         }
 
         // Check authorization.
-        $user = \JFactory::getUser();
+        $user = JoomlaFactory::getUser();
         $groups = $user->getAuthorisedViewLevels();
 
         return $this->where('a.access', 'IN', $groups);
     }
 
+    /**
+     * @param string $extension
+     * @return $this
+     */
     public function extension($extension)
     {
         $this->extension = static::getExtension($extension);
@@ -124,6 +147,10 @@ class CategoryFinder extends Finder
         return $this->where('a.extension', '=', $this->extension);
     }
 
+    /**
+     * @param string $extension
+     * @return string
+     */
     public static function getExtension($extension)
     {
         static $map = [
@@ -139,12 +166,16 @@ class CategoryFinder extends Finder
         return $extension;
     }
 
+    /**
+     * @param $extension
+     * @return array
+     */
     public static function getUnpublished($extension)
     {
         static $list;
 
         if ($list === null) {
-            $db = \JFactory::getDbo();
+            $db = JoomlaFactory::getDbo();
 
             $query = $db->getQuery(true)
                 ->select('cat.id AS id')
@@ -155,7 +186,7 @@ class CategoryFinder extends Finder
                 ->group('cat.id');
 
             $db->setQuery($query);
-            $list = $db->loadColumn();
+            $list = $db->loadColumn() ?: [];
         }
 
         return $list;

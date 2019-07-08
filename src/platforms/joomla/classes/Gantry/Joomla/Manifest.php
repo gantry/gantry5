@@ -52,11 +52,17 @@ class Manifest
         return $this->xml;
     }
 
+    /**
+     * @return string
+     */
     public function getScriptFile()
     {
         return (string) $this->xml->scriptfile;
     }
 
+    /**
+     * @param array $positions
+     */
     public function setPositions(array $positions)
     {
         sort($positions);
@@ -72,7 +78,6 @@ class Manifest
         $insertDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($insert), true);
         $targetDom->parentNode->replaceChild($insertDom, $targetDom);
     }
-
 
     public function save()
     {

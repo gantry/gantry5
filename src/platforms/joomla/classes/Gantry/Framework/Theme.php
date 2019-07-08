@@ -12,9 +12,9 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Date\Date as JDate;
 use Joomla\CMS\Document\HtmlDocument as JDocumentHtml;
-use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\Language\Text as JText;
 use Joomla\CMS\Plugin\PluginHelper as JPluginHelper;
 use Joomla\CMS\Uri\Uri as JUri;
@@ -66,14 +66,14 @@ class Theme extends AbstractTheme
         $core = $twig->getExtension('Twig_Extension_Core');
 
         // Get user timezone and if not set, use Joomla default.
-        $timezone = JFactory::getUser()->getParam('timezone', JFactory::getConfig()->get('offset', 'UTC'));
+        $timezone = JoomlaFactory::getUser()->getParam('timezone', JoomlaFactory::getConfig()->get('offset', 'UTC'));
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.
         $core->setDateFormat(JText::_('DATE_FORMAT_LC2'), JText::_('GANTRY5_X_DAYS'));
         $core->setNumberFormat(0, JText::_('DECIMALS_SEPARATOR'), JText::_('THOUSANDS_SEPARATOR'));
 
-        $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], array('needs_environment' => true));
+        $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], ['needs_environment' => true]);
         $twig->addFilter($filter);
 
         return $twig;
@@ -146,27 +146,27 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        $lang = JFactory::getLanguage();
+        $language = JoomlaFactory::getLanguage();
 
         // FIXME: Do not hardcode this file.
-        $lang->load('files_gantry5_nucleus', JPATH_SITE);
+        $language->load('files_gantry5_nucleus', JPATH_SITE);
 
-        if (JFactory::getApplication()->isClient('site')) {
+        if (JoomlaFactory::getApplication()->isClient('site')) {
             // Load our custom positions file as frontend requires the strings to be there.
             $filename = $locator("gantry-theme://language/en-GB/en-GB.tpl_{$this->name}_positions.ini");
 
             if ($filename) {
-                $lang->load("tpl_{$this->name}_positions", \dirname(\dirname(\dirname($filename))), 'en-GB');
+                $language->load("tpl_{$this->name}_positions", \dirname(\dirname(\dirname($filename))), 'en-GB');
             }
 
             // Load template language files, including overrides.
             $paths = $locator->findResources('gantry-theme://language');
             foreach (array_reverse($paths) as $path) {
-                $lang->load("tpl_{$this->name}", \dirname($path));
+                $language->load("tpl_{$this->name}", \dirname($path));
             }
         }
 
-        $doc = JFactory::getDocument();
+        $doc = JoomlaFactory::getDocument();
         if ($doc instanceof JDocumentHtml) {
             $doc->setHtml5(true);
         }
@@ -177,7 +177,8 @@ class Theme extends AbstractTheme
         JPluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
-        JFactory::getApplication()->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
+        // FIXME: Joomla 4?
+        JoomlaFactory::getApplication()->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
     }
 
     /**

@@ -8,23 +8,35 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
-use Joomla\CMS\Form\FormField as JFormField;
+use Gantry\Admin\Router;
+use Gantry\Admin\Theme;
+use Gantry\Framework\Gantry;
+use Gantry\Joomla\JoomlaFactory;
+use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormField;
 
-class JFormFieldParticle extends JFormField
+/**
+ * Class JFormFieldParticle
+ * FIXME: Joomla 4: Class name?
+ */
+class JFormFieldParticle extends FormField
 {
     protected $type = 'Particle';
     protected $container;
 
+    /**
+     * @return string
+     * @throws Exception
+     */
     protected function getInput()
     {
-        $app = JFactory::getApplication();
+        $app = JoomlaFactory::getApplication();
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
             $app->enqueueMessage(
-                JText::sprintf('MOD_GANTRY5_PLUGIN_MISSING', JText::_('MOD_GANTRY5_PARTICLE')),
+                Text::sprintf('MOD_GANTRY5_PLUGIN_MISSING', Text::_('MOD_GANTRY5_PARTICLE')),
                 'error'
             );
             return '';
@@ -38,38 +50,41 @@ class JFormFieldParticle extends JFormField
         try {
             Gantry5\Loader::setup();
 
-            $lang = JFactory::getLanguage();
-            $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', GANTRYADMIN_PATH);
+            $language = JoomlaFactory::getLanguage();
+            $language->load('com_gantry5', JPATH_ADMINISTRATOR)
+                || $language->load('com_gantry5', GANTRYADMIN_PATH);
 
-            $this->container = Gantry\Framework\Gantry::instance();
+            $this->container = Gantry::instance();
             $this->container['router'] = function ($c) {
-                return new \Gantry\Admin\Router($c);
+                return new Router($c);
             };
 
         } catch (Exception $e) {
             $app->enqueueMessage(
-                JText::sprintf($e->getMessage()),
+                Text::sprintf($e->getMessage()),
                 'error'
             );
             return '';
         }
 
         // TODO: Use better style detection.
-        $style = \Gantry\Joomla\StyleHelper::getDefaultStyle();
+        $style = StyleHelper::getDefaultStyle();
 
         if (!$style->template) {
             $app->enqueueMessage(
-                JText::_("GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
+                Text::_('GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE'),
                 'warning'
             );
         } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
             $app->enqueueMessage(
-                JText::sprintf("GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
+                Text::sprintf('GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE', $style->title),
                 'warning'
             );
         }
 
-        $this->container['router']->setTheme($style->template, null)->load();
+        /** @var Router $router */
+        $router = $this->container['router'];
+        $router->setTheme($style->template, null)->load();
 
         $field = [
             'default' => true,
@@ -85,10 +100,13 @@ class JFormFieldParticle extends JFormField
             'value' => json_decode($this->value, true)
         ];
 
+        /** @var Theme $adminTheme */
+        $adminTheme = $this->container['admin.theme'];
+
         $params = [
-            'content' => $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
+            'content' => $adminTheme->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
 
-        return $this->container['admin.theme']->render('@gantry-admin/partials/layout.html.twig', $params);
+        return $adminTheme->render('@gantry-admin/partials/layout.html.twig', $params);
     }
 }

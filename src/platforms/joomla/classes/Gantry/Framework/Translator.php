@@ -11,17 +11,26 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Translator\Translator as BaseTranslator;
-use Joomla\CMS\Language\Text as JText;
+use Joomla\CMS\Language\Text;
 
+/**
+ * Class Translator
+ * @package Gantry\Framework
+ */
 class Translator extends BaseTranslator
 {
+    /**
+     * @param string $string
+     * @return string
+     */
     public function translate($string)
     {
         if (\func_num_args() === 1) {
-            return JText::_($string);
+            return Text::_($string);
         }
 
         $args = \func_get_args();
-        return \call_user_func_array([JText::class, 'sprintf'], $args);
+
+        return \call_user_func_array([Text::class, 'sprintf'], $args);
     }
 }

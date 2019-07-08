@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Manifest;
 use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
 use Joomla\CMS\Date\Date as JDate;
@@ -19,6 +20,7 @@ use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\Language\Text as JText;
 use Joomla\CMS\Router\Route as JRoute;
 use Joomla\CMS\Table\Table as JTable;
+// TODO: Remove when droppong Joomla 3 support
 use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\File\YamlFile;
 
@@ -27,10 +29,15 @@ class ThemeInstaller extends AbstractInstaller
     protected $extension;
     protected $manifest;
 
+    /**
+     * ThemeInstaller constructor.
+     * @param \JInstallerAdapterTemplate|null $extension
+     */
     public function __construct($extension = null)
     {
         parent::__construct();
 
+        // FIXME: Joomla 4
         jimport('joomla.filesystem.folder');
 
         JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
@@ -41,6 +48,11 @@ class ThemeInstaller extends AbstractInstaller
         }
     }
 
+    /**
+     * @param \JInstallerAdapterTemplate $install
+     * @return $this
+     * @throws \ReflectionException
+     */
     public function setInstaller(\JInstallerAdapterTemplate $install)
     {
         // We need access to a protected variable $install->extension.
@@ -55,26 +67,41 @@ class ThemeInstaller extends AbstractInstaller
         return $this;
     }
 
+    /**
+     * @param int|string $id
+     */
     public function loadExtension($id)
     {
         if ((string)(int) $id !== (string) $id) {
             $id = ['type' => 'template', 'element' => (string) $id, 'client_id' => 0];
         }
+        // FIXME: Joomla 4
         $this->extension = JTable::getInstance('extension');
         $this->extension->load($id);
         $this->name = $this->extension->name;
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return JPATH_SITE . '/templates/' . $this->extension->name;
     }
 
+    /**
+     * @param string $title
+     * @return string
+     */
     public function getStyleName($title)
     {
         return JText::sprintf($title, JText::_($this->extension->name));
     }
 
+    /**
+     * @param string|null $name
+     * @return bool|JTable|StyleTable
+     */
     public function getStyle($name = null)
     {
         if (is_numeric($name)) {
@@ -94,13 +121,17 @@ class ThemeInstaller extends AbstractInstaller
         return $style;
     }
 
+    /**
+     * @return bool|JTable|StyleTable
+     */
     public function getDefaultStyle()
     {
         if (version_compare(JVERSION, '4', '<')) {
             // Joomla 3 support.
             $style = JTable::getInstance('Style', 'TemplatesTable');
         } else {
-            $style = new StyleTable(\JFactory::getDbo());
+            // FIXME: Jooma 4: better way?
+            $style = new StyleTable(JoomlaFactory::getDbo());
         }
         $style->load(['home' => 1, 'client_id' => 0]);
 
@@ -114,6 +145,7 @@ class ThemeInstaller extends AbstractInstaller
     public function getMenu($type)
     {
         /** @var \JTableMenuType $table */
+        // FIXME: Joomla 4
         $table = JTable::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
@@ -126,9 +158,14 @@ class ThemeInstaller extends AbstractInstaller
         $this->installMenus();
     }
 
+    /**
+     * @param string $template
+     * @param array $context
+     * @return string
+     */
     public function render($template, $context = [])
     {
-        $jsession = JFactory::getSession();
+        $jsession = JoomlaFactory::getSession();
         $token = $jsession::getFormToken();
         $manifest = $this->getManifest();
         $context += [
@@ -149,11 +186,15 @@ class ThemeInstaller extends AbstractInstaller
         return parent::render($template, $context);
     }
 
+    /**
+     * @return bool|JTable|StyleTable
+     */
     public function createStyle()
     {
         if (version_compare(JVERSION, '4', '<')) {
             $style = JTable::getInstance('Style', 'TemplatesTable');
         } else {
+            // FIXME: Joomla 4: better way?
             $style = new StyleTable(\JFactory::getDbo());
         }
         $style->reset();
@@ -163,17 +204,23 @@ class ThemeInstaller extends AbstractInstaller
         return $style;
     }
 
+    /**
+     * @param $title
+     * @param array $configuration
+     * @param int $home
+     * @return bool|JTable|StyleTable
+     */
     public function addStyle($title, array $configuration = [], $home = 0)
     {
         // Make sure language debug is turned off.
-        $lang = JFactory::getLanguage();
-        $debug = $lang->setDebug(false);
+        $language = JoomlaFactory::getLanguage();
+        $debug = $language->setDebug(false);
 
         // Translate title.
         $title = $this->getStyleName($title);
 
         // Turn language debug back on.
-        $lang->setDebug($debug);
+        $language->setDebug($debug);
 
         $data = [
             'home' => (int) $home,
@@ -191,6 +238,12 @@ class ThemeInstaller extends AbstractInstaller
         return $style;
     }
 
+    /**
+     * @param string $name
+     * @param array $configuration
+     * @param string|null $home
+     * @return bool|JTable|StyleTable
+     */
     public function updateStyle($name, array $configuration, $home = null)
     {
         $style = $this->getStyle($name);
@@ -214,10 +267,13 @@ class ThemeInstaller extends AbstractInstaller
         return $style;
     }
 
+    /**
+     * @param JTable|StyleTable $style
+     */
     public function assignHomeStyle($style)
     {
         // Update the mapping for menu items that this style IS assigned to.
-        $db = JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
 
         $query = $db->getQuery(true)
             ->update('#__menu')
@@ -312,6 +368,7 @@ class ThemeInstaller extends AbstractInstaller
     {
         $component_id = $this->getComponent();
 
+        // FIXME: Joomla 4
         $table = JTable::getInstance('menu');
         $date = new JDate();
         $update = false;
@@ -362,9 +419,11 @@ class ThemeInstaller extends AbstractInstaller
         }
 
         /** @var \JCache|\JCacheController $cache */
+        // FIXME: Joomla 4
         $cache = JFactory::getCache();
         $cache->clean('mod_menu');
 
+        // FIXME: Joomla 4
         $menu = JTable::getInstance('menuType');
         $menu->load(['menutype' => $item['menutype']]);
 
@@ -424,6 +483,7 @@ class ThemeInstaller extends AbstractInstaller
     public function createMenu($type, $title, $description)
     {
         /** @var \JTableMenuType $table */
+        // FIXME: Joomla 4
         $table = JTable::getInstance('MenuType');
         $data  = array(
             'menutype'    => $type,
@@ -453,6 +513,7 @@ class ThemeInstaller extends AbstractInstaller
             $this->unsetHome($type);
         }
 
+        // FIXME: Joomla 4
         $table = JTable::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
@@ -460,21 +521,25 @@ class ThemeInstaller extends AbstractInstaller
             $success = $table->delete();
 
             if (!$success) {
-                JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
+                JoomlaFactory::getApplication()->enqueueMessage($table->getError(), 'error');
             } else {
                 $this->actions["menu_{$type}_deleted"] = ['action' => 'menu_delete', 'text' => JText::_('GANTRY5_INSTALLER_ACTION_MENU_DELETED', $table->title)];
             }
         }
 
         /** @var \JCache|\JCacheController $cache */
+        // FIXME: Joomla 4
         $cache = JFactory::getCache();
         $cache->clean('mod_menu');
     }
 
+    /**
+     * @param $type
+     */
     public function unsetHome($type)
     {
         // Update the mapping for menu items that this style IS assigned to.
-        $db = JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
 
         $query = $db->getQuery(true)
             ->update('#__menu')
@@ -512,6 +577,12 @@ class ThemeInstaller extends AbstractInstaller
         $manifest->save();
     }
 
+    /**
+     * @param $menutype
+     * @param array $items
+     * @param $parent
+     * @throws \Exception
+     */
     protected function addMenuItems($menutype, array $items, $parent)
     {
         foreach ($items as $alias => $item) {
@@ -542,6 +613,9 @@ class ThemeInstaller extends AbstractInstaller
         }
     }
 
+    /**
+     * @return object
+     */
     protected function getInstallerScript()
     {
         if (!$this->script) {
@@ -565,6 +639,9 @@ class ThemeInstaller extends AbstractInstaller
         return $this->script;
     }
 
+    /**
+     * @return Manifest
+     */
     protected function getManifest()
     {
         if (!$this->manifest) {
@@ -574,6 +651,9 @@ class ThemeInstaller extends AbstractInstaller
         return $this->manifest;
     }
 
+    /**
+     * @return int
+     */
     protected function getComponent()
     {
         static $component_id;

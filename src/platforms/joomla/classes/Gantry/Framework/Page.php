@@ -10,9 +10,13 @@
 
 namespace Gantry\Framework;
 
-use Joomla\CMS\Factory as JFactory;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\Uri\Uri as JUri;
 
+/**
+ * Class Page
+ * @package Gantry\Framework
+ */
 class Page extends Base\Page
 {
     public $home;
@@ -35,12 +39,17 @@ class Page extends Base\Page
     public $printing;
     public $itemid;
 
+    /**
+     * Page constructor.
+     * @param Gantry $container
+     * @throws \Exception
+     */
     public function __construct($container)
     {
         parent::__construct($container);
 
-        $app = JFactory::getApplication();
-        $document = JFactory::getDocument();
+        $app = JoomlaFactory::getApplication();
+        $document = JoomlaFactory::getDocument();
         $input = $app->input;
 
         $this->tmpl     = $input->getCmd('tmpl', '');
@@ -76,6 +85,10 @@ class Page extends Base\Page
         $this->direction = $document->direction;
     }
 
+    /**
+     * @param array $args
+     * @return string
+     */
     public function url(array $args = [])
     {
         $url = JUri::getInstance();
@@ -87,6 +100,9 @@ class Page extends Base\Page
         return $url->toString();
     }
 
+    /**
+     * @return string
+     */
     public function htmlAttributes()
     {
         $attributes = [
@@ -98,6 +114,10 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return string
+     */
     public function bodyAttributes($attributes = [])
     {
         if ($this->tmpl === 'component') {

@@ -10,9 +10,18 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\DispatcherInterface;
 
+/**
+ * Class plgSystemGantry5_Debugbar
+ */
 class plgSystemGantry5_Debugbar extends CMSPlugin
 {
+    /**
+     * plgSystemGantry5_Debugbar constructor.
+     * @param DispatcherInterface $subject
+     * @param array $config
+     */
     public function __construct(&$subject, $config = array())
     {
         require_once __DIR__ . '/Debugger.php';

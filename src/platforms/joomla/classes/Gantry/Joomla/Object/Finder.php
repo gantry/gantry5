@@ -10,6 +10,8 @@
 
 namespace Gantry\Joomla\Object;
 
+use Gantry\Joomla\JoomlaFactory;
+
 /**
  * Class Finder
  * @package Gantry\Joomla\Object
@@ -55,7 +57,7 @@ abstract class Finder
             throw new \DomainException('Table name missing from ' . get_class($this));
         }
 
-        $this->db = \JFactory::getDbo();
+        $this->db = JoomlaFactory::getDbo();
         $this->query = $this->db->getQuery(true);
         $this->query->from($this->table . ' AS a');
 
@@ -64,11 +66,15 @@ abstract class Finder
         }
     }
 
+    /**
+     * @param array $options
+     * @return $this
+     */
     public function parse(array $options)
     {
-        foreach ($options as $func => $params) {
-            if (method_exists($this, $func)) {
-                call_user_func_array([$this, $func], (array) $params);
+        foreach ($options as $method => $params) {
+            if (method_exists($this, $method)) {
+                call_user_func_array([$this, $method], (array) $params);
             }
         }
 
@@ -79,12 +85,11 @@ abstract class Finder
      * Set limitstart for the query.
      *
      * @param int $limitstart
-     *
      * @return $this
      */
     public function start($limitstart = 0)
     {
-        $this->start = $limitstart;
+        $this->start = (int)$limitstart;
 
         return $this;
     }
@@ -98,9 +103,8 @@ abstract class Finder
      */
     public function limit($limit = null)
     {
-        if (null !== $limit)
-        {
-            $this->limit = $limit;
+        if (null !== $limit) {
+            $this->limit = (int)$limit;
         }
 
         return $this;
@@ -189,9 +193,8 @@ abstract class Finder
      */
     public function find()
     {
-        if ($this->skip)
-        {
-            return array();
+        if ($this->skip) {
+            return [];
         }
 
         $baseQuery = clone $this->query;
@@ -201,9 +204,8 @@ abstract class Finder
 
         $query->select('a.' . $this->primaryKey);
         $this->db->setQuery($query, $this->start, $this->limit);
-        $results = (array) $this->db->loadColumn();
 
-        return $results;
+        return $this->db->loadColumn() ?: [];
     }
 
     /**
@@ -220,9 +222,8 @@ abstract class Finder
 
         $query->select('COUNT(*)');
         $this->db->setQuery($query);
-        $count = (int) $this->db->loadResult();
 
-        return $count;
+        return (int)$this->db->loadResult();
     }
 
     /**

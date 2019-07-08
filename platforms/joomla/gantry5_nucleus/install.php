@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 /**
  * Gantry 5 Nucleus installer script.
@@ -38,13 +40,13 @@ class Gantry5_NucleusInstallerScript
                     {
                         $folder = $targetFolder . '/' . $eFileName;
 
-                        $files = JFolder::files($folder, '.', false, true);
+                        $files = Folder::files($folder, '.', false, true);
                         foreach ($files as $name) {
-                            JFile::delete($name);
+                            File::delete($name);
                         }
-                        $subFolders = JFolder::folders($folder, '.', false, true);
+                        $subFolders = Folder::folders($folder, '.', false, true);
                         foreach ($subFolders as $name) {
-                            JFolder::delete($name);
+                            Folder::delete($name);
                         }
                     }
                 }

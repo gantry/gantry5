@@ -9,11 +9,20 @@
  */
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\DispatcherInterface;
 
+/**
+ * Class plgGantry5Preset
+ */
 class plgGantry5Preset extends CMSPlugin
 {
+    /**
+     * plgGantry5Preset constructor.
+     * @param DispatcherInterface $subject
+     * @param array $config
+     */
     public function __construct(&$subject, $config = array())
     {
         // Do not load if Gantry libraries are not installed or initialised.
@@ -22,14 +31,21 @@ class plgGantry5Preset extends CMSPlugin
         parent::__construct($subject, $config);
 
         // Always load language.
-        $lang = JFactory::getLanguage();
-        $lang->load('com_gantry5.sys') || $lang->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+        $language = Factory::getLanguage();
+
+        $language->load('com_gantry5.sys')
+        || $language->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+
         $this->loadLanguage('plg_quickicon_gantry5.sys');
     }
 
+    /**
+     * @param object $theme
+     * @throws Exception
+     */
     public function onGantry5ThemeInit($theme)
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         if ($app->isClient('site')) {
             $input = $app->input;
@@ -61,6 +77,9 @@ class plgGantry5Preset extends CMSPlugin
         }
     }
 
+    /**
+     * @param object $theme
+     */
     public function onGantry5UpdateCss($theme)
     {
         $cookie = md5($theme->name);
@@ -68,9 +87,15 @@ class plgGantry5Preset extends CMSPlugin
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     * @throws Exception
+     */
     protected function updateCookie($name, $value, $expire = 0)
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $path   = $app->get('cookie_path', '/');
         $domain = $app->get('cookie_domain');
 

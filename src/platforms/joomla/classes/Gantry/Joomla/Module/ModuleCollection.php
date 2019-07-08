@@ -10,15 +10,26 @@
 
 namespace Gantry\Joomla\Module;
 
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Collection;
 
+/**
+ * Class ModuleCollection
+ * @package Gantry\Joomla\Module
+ */
 class ModuleCollection extends Collection
 {
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->__call('toArray', []);
     }
 
+    /**
+     * @return array
+     */
     public function export()
     {
         $assignments = $this->assignments();
@@ -57,6 +68,9 @@ class ModuleCollection extends Collection
         return $positions;
     }
 
+    /**
+     * @return array
+     */
     public function assignments()
     {
         $this->loadAssignments();
@@ -92,6 +106,10 @@ class ModuleCollection extends Collection
         }
     }
 
+    /**
+     * @param array $ids
+     * @return array
+     */
     protected function getAssignmentPath(array $ids)
     {
         if (!$ids) {
@@ -100,7 +118,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_map('intval', $ids));
 
-        $db = \JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id, path')->from('#__menu')->where("id IN ($idlist)");
         $db->setQuery($query);
@@ -115,6 +133,10 @@ class ModuleCollection extends Collection
         return $list;
     }
 
+    /**
+     * @param array $values
+     * @return array
+     */
     protected function values($values)
     {
         $list = [];

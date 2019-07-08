@@ -11,10 +11,13 @@
 namespace Gantry\Joomla\Module;
 
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\AbstractObject;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 
+// FIXME: Joomla 4
 \JTable::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
 /**
@@ -43,13 +46,17 @@ class Module extends AbstractObject implements ExportInterface
     
     protected $_assignments;
 
+    /**
+     * @param int[]|null $assignments
+     * @return array
+     */
     public function assignments($assignments = null)
     {
         if (is_array($assignments)) {
             $this->_assignments = array_map('intval', array_values($assignments));
 
         } elseif (!isset($this->_assignments)) {
-            $db = \JFactory::getDbo();
+            $db = JoomlaFactory::getDbo();
             $query = $db->getQuery(true);
             $query->select('menuid')->from('#__modules_menu')->where('moduleid = ' . $this->id);
             $db->setQuery($query);
@@ -60,17 +67,23 @@ class Module extends AbstractObject implements ExportInterface
         return $this->_assignments;
     }
 
+    /**
+     * @return bool
+     */
     public function initialize()
     {
         if (!parent::initialize()) {
             return false;
         }
 
-        $this->params = json_decode($this->params);
+        $this->params = json_decode($this->params, false);
 
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         $particle = $this->module === 'mod_gantry5_particle';
@@ -122,7 +135,11 @@ class Module extends AbstractObject implements ExportInterface
         return array_filter($array, [$this, 'is_not_null']);
     }
 
-    public function create(array $array)
+    /**
+     * @param array $array
+     * @return Module|null
+     */
+    public function create($array)
     {
         $type = $array['type'];
 
@@ -158,20 +175,34 @@ class Module extends AbstractObject implements ExportInterface
         return $object;
     }
 
+    /**
+     * @param string $file
+     * @return string
+     */
     public function render($file)
     {
-        return Gantry::instance()['theme']->render($file, ['particle' => $this]);
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+
+        return $theme->render($file, ['particle' => $this]);
     }
 
+    /**
+     * @param string $string
+     * @return string
+     */
     public function compile($string)
     {
-        return Gantry::instance()['theme']->compile($string, ['particle' => $this]);
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+
+        return $theme->compile($string, ['particle' => $this]);
     }
 
     // Internal functions
 
     /**
-     * @param $val
+     * @param mixed $val
      * @return bool
      * @internal
      */
@@ -180,6 +211,10 @@ class Module extends AbstractObject implements ExportInterface
         return null !== $val;
     }
 
+    /**
+     * @param array $items
+     * @return ModuleCollection
+     */
     static protected function collection($items)
     {
         return new ModuleCollection($items);

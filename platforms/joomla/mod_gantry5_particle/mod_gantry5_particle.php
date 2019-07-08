@@ -9,17 +9,17 @@
  */
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
+use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Debugger;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
-    $lang = JFactory::getLanguage();
-    JFactory::getApplication()->enqueueMessage(
-        JText::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('MOD_GANTRY5_PARTICLE')),
+    Factory::getApplication()->enqueueMessage(
+        Text::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('MOD_GANTRY5_PARTICLE')),
         'warning'
     );
     return;
@@ -45,6 +45,7 @@ $cacheparams = (object) [
     'modeparams'   => $cacheid
 ];
 
+/** @var HtmlBlock $block */
 $block = ModGantry5ParticleHelper::moduleCache($module, $params, $cacheparams);
 if (null === $block) {
     $block = ModGantry5ParticleHelper::render($module, $params);

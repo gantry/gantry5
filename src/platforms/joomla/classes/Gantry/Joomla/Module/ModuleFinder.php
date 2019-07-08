@@ -10,8 +10,13 @@
 
 namespace Gantry\Joomla\Module;
 
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Finder;
 
+/**
+ * Class ModuleFinder
+ * @package Gantry\Joomla\Module
+ */
 class ModuleFinder extends Finder
 {
     protected $table = '#__modules';
@@ -23,6 +28,7 @@ class ModuleFinder extends Finder
     /**
      * Makes all created objects as readonly.
      *
+     * @param bool $readonly
      * @return $this
      */
     public function readonly($readonly = true)
@@ -32,6 +38,10 @@ class ModuleFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param bool $object
+     * @return array|\Gantry\Joomla\Object\Collection
+     */
     public function find($object = true)
     {
         $ids = parent::find();
@@ -43,6 +53,11 @@ class ModuleFinder extends Finder
         return Module::getInstances($ids, $this->readonly);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     public function id($ids, $include = true)
     {
         return $this->addToGroup('a.id', $ids, $include);
@@ -50,7 +65,7 @@ class ModuleFinder extends Finder
 
     /**
      * @param string|int|bool $language
-     * @return $this|ModuleFinder
+     * @return $this
      */
     public function language($language = true)
     {
@@ -58,7 +73,7 @@ class ModuleFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = \JFactory::getLanguage()->getTag();
+            $language = JoomlaFactory::getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
@@ -70,7 +85,7 @@ class ModuleFinder extends Finder
     public function published($published = 1)
     {
         if (!\is_array($published)) {
-            $published = (array) intval($published);
+            $published = [(int)$published];
         }
 
         $this->published = $published;
@@ -78,22 +93,35 @@ class ModuleFinder extends Finder
         return $this;
     }
 
+    /**
+     * @return ModuleFinder
+     */
     public function particle()
     {
         return $this->where('a.module', '=', 'mod_gantry5_particle');
     }
 
+    /**
+     * @param bool $authorised
+     * @return $this
+     */
     public function authorised($authorised = true)
     {
         if (!$authorised) {
             return $this;
         }
 
-        $groups = \JFactory::getUser()->getAuthorisedViewLevels();
+        $groups = JoomlaFactory::getUser()->getAuthorisedViewLevels();
 
         return $this->where('a.access', 'IN', $groups);
     }
 
+    /**
+     * @param string $key
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     protected function addToGroup($key, $ids, $include = true)
     {
         $op = $include ? 'IN' : 'NOT IN';

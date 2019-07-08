@@ -9,11 +9,12 @@
  */
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
+use Gantry\Component\Router\Router;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
-$user = JFactory::getUser();
-$app = JFactory::getApplication();
+$user = Factory::getUser();
+$app = Factory::getApplication();
 
 // ACL for Gantry admin access.
 if (!$user->authorise('core.manage', 'com_gantry5')
@@ -21,7 +22,7 @@ if (!$user->authorise('core.manage', 'com_gantry5')
     // Editing particle module makes AJAX call to Gantry component, but has restricted access to json only.
     && !($user->authorise('core.manage', 'com_modules') && $app->input->request->getString('format') === 'json')
 ) {
-    $app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+    $app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 
     return false;
 }
@@ -33,7 +34,7 @@ if (!defined('GANTRYADMIN_PATH')) {
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry5\Loader')) {
     $app->enqueueMessage(
-        JText::sprintf('COM_GANTRY5_PLUGIN_MISSING', JText::_('COM_GANTRY5')),
+        Text::sprintf('COM_GANTRY5_PLUGIN_MISSING', Text::_('COM_GANTRY5')),
         'error'
     );
     return;
@@ -49,12 +50,12 @@ try {
     };
 
 } catch (Exception $e) {
-    $app->enqueueMessage(
-        JText::sprintf($e->getMessage()),
-        'error'
-    );
+    $app->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
+
     return;
 }
 
 // Dispatch to the controller.
-$gantry['router']->dispatch();
+/** @var Router $router */
+$router = $gantry['router'];
+$router->dispatch();

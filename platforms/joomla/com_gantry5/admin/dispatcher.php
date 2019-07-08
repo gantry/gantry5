@@ -10,6 +10,9 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Admin\Router;
+use Gantry\Framework\Gantry;
+use Gantry5\Loader;
 use Joomla\CMS\Dispatcher\Dispatcher;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Access\Exception\NotAllowed;
@@ -39,16 +42,21 @@ class Gantry5Dispatcher extends Dispatcher
      */
     protected function checkAccess()
     {
-        $identity = $this->app->getIdentity();
+        $application = $this->getApplication();
+        $identity = $application->getIdentity();
 
         // Check the user has permission to access this component if in the backend
-        if ($this->app->isClient('administrator')
-            && !$identity->authorise('core.manage', $this->option)
-            && !$identity->authorise('core.manage', 'com_templates')
-            && !($identity->authorise('core.manage', 'com_modules') && $this->input->request->getString('format') === 'json')
+        if (!$identity || (
+                $application->isClient('administrator')
+                && !$identity->authorise('core.manage', 'com_gantry5')
+                && !$identity->authorise('core.manage', 'com_templates')
+                && !($identity->authorise('core.manage', 'com_modules')
+                // FIXME: Joomla 4
+                && $this->input->request->getString('format') === 'json')
+            )
         )
         {
-            throw new NotAllowed($this->app->getLanguage()->_('JERROR_ALERTNOAUTHOR'), 403);
+            throw new NotAllowed($application->getLanguage()->_('JERROR_ALERTNOAUTHOR'), 403);
         }
     }
 
@@ -57,6 +65,7 @@ class Gantry5Dispatcher extends Dispatcher
      *
      * @return  void
      * @throws NotAllowed
+     * @throws \Whoops\Exception\ErrorException
      *
      * @since   5.5.0
      */
@@ -71,7 +80,7 @@ class Gantry5Dispatcher extends Dispatcher
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
-            $this->app->enqueueMessage(
+            $this->getApplication()->enqueueMessage(
                 Text::sprintf('COM_GANTRY5_PLUGIN_MISSING', Text::_('COM_GANTRY5')),
                 'error'
             );
@@ -80,22 +89,21 @@ class Gantry5Dispatcher extends Dispatcher
 
         // Initialize administrator or fail gracefully.
         try {
-            Gantry5\Loader::setup();
+            Loader::setup();
 
-            $gantry = Gantry\Framework\Gantry::instance();
+            $gantry = Gantry::instance();
             $gantry['router'] = function ($c) {
-                return new \Gantry\Admin\Router($c);
+                return new Router($c);
             };
 
         } catch (Exception $e) {
-            $this->app->enqueueMessage(
-                JText::sprintf($e->getMessage()),
-                'error'
-            );
+            $this->getApplication()->enqueueMessage(Text::sprintf($e->getMessage()), 'error');
             return;
         }
 
         // Dispatch to the controller.
-        $gantry['router']->dispatch();
+        /** @var Router $router */
+        $router = $gantry['router'];
+        $router->dispatch();
     }
 }

@@ -12,9 +12,14 @@ namespace Gantry\Joomla\Content;
 
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
 
+/**
+ * Class ContentFinder
+ * @package Gantry\Joomla\Content
+ */
 class ContentFinder extends Finder
 {
     protected $table = '#__content';
@@ -24,6 +29,7 @@ class ContentFinder extends Finder
     /**
      * Makes all created objects as readonly.
      *
+     * @param bool $readonly
      * @return $this
      */
     public function readonly($readonly = true)
@@ -33,6 +39,10 @@ class ContentFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param bool $object
+     * @return Collection|string[]
+     */
     public function find($object = true)
     {
         $ids = parent::find();
@@ -44,16 +54,31 @@ class ContentFinder extends Finder
         return Content::getInstances($ids, $this->readonly);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     public function id($ids, $include = true)
     {
         return $this->addToGroup('a.id', $ids, $include);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     public function author($ids, $include = true)
     {
         return $this->addToGroup('a.created_by', $ids, $include);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     public function category($ids, $include = true)
     {
         if ($ids instanceof Collection) {
@@ -81,7 +106,7 @@ class ContentFinder extends Finder
 
     /**
      * @param string|int|bool $language
-     * @return $this|ContentFinder
+     * @return $this
      */
     public function language($language = true)
     {
@@ -89,23 +114,27 @@ class ContentFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = \JFactory::getLanguage()->getTag();
+            $language = JoomlaFactory::getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
     /**
      * @param int|int[] $published
-     * @return ContentFinder
+     * @return $this
      */
     public function published($published = 1)
     {
         if (!\is_array($published)) {
-            $published = (array) intval($published);
+            $published = [(int)$published];
         }
         return $this->where('a.state', 'IN', $published);
     }
 
+    /**
+     * @param bool $authorised
+     * @return $this
+     */
     public function authorised($authorised = true)
     {
         if (!$authorised) {
@@ -117,7 +146,7 @@ class ContentFinder extends Finder
             $this->where('a.catid', 'NOT IN', $unpublished);
         }
 
-        $user = \JFactory::getUser();
+        $user = JoomlaFactory::getUser();
 
         // Define null and now dates
         $nullDate = $this->db->quote($this->db->getNullDate());
@@ -139,6 +168,12 @@ class ContentFinder extends Finder
         return $this->where('a.access', 'IN', $groups)->where('c.access', 'IN', $groups);
     }
 
+    /**
+     * @param string $key
+     * @param int|int[] $ids
+     * @param bool $include
+     * @return $this
+     */
     protected function addToGroup($key, $ids, $include = true)
     {
         $op = $include ? 'IN' : 'NOT IN';

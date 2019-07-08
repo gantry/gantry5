@@ -11,11 +11,14 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
-use Joomla\CMS\Factory as JFactory;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\CMS\HTML\HTMLHelper as JHtml;
-use Joomla\CMS\Document\Document as JDocument;
 use Joomla\CMS\Uri\Uri as JUri;
 
+/**
+ * Class Document
+ * @package Gantry\Framework
+ */
 class Document extends HtmlDocument
 {
     protected static $availableFrameworks = [
@@ -32,6 +35,9 @@ class Document extends HtmlDocument
         'lightcase.init' => 'registerLightcaseInit',
     ];
 
+    /**
+     *
+     */
     public static function registerAssets()
     {
         static::registerFrameworks();
@@ -39,11 +45,18 @@ class Document extends HtmlDocument
         static::registerScripts();
     }
 
+    /**
+     * @return string
+     */
     public static function rootUri()
     {
         return rtrim(JUri::root(true), '/') ?: '/';
     }
 
+    /**
+     * @param bool|null $new
+     * @return bool
+     */
     public static function errorPage($new = null)
     {
         static $error = false;
@@ -61,14 +74,14 @@ class Document extends HtmlDocument
             return;
         }
 
-        /** @var JDocument $doc */
-        $doc = JFactory::getDocument();
+        $doc = JoomlaFactory::getDocument();
 
         $styles = static::$stack[0]->getStyles();
 
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
+                    // FIXME: Joomla 4: addStyleSheet($url, $options = array(), $attribs = array())
                     $doc->addStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
                     break;
                 case 'inline':
@@ -84,14 +97,14 @@ class Document extends HtmlDocument
             return;
         }
 
-        /** @var JDocument $doc */
-        $doc = JFactory::getDocument();
+        $doc = JoomlaFactory::getDocument();
 
         $scripts = static::$stack[0]->getScripts();
 
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
+                    // FIXME: Joomla 4: addStyleSheet($url, $options = array(), $attribs = array())
                     $doc->addScript($script['src'], $script['type'], $script['defer'], $script['async']);
                     break;
                 case 'inline':
@@ -179,7 +192,9 @@ class Document extends HtmlDocument
 
     protected static function registerBootstrap2()
     {
-        Gantry::instance()['theme']->joomla(true);
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+        $theme->joomla(true);
 
         if (!static::errorPage()) {
             JHtml::_('bootstrap.framework');

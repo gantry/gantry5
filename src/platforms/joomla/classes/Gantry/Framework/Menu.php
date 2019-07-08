@@ -14,14 +14,15 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
-use Joomla\CMS\Factory as JFactory;
+use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Application\CMSApplication;
 
 class Menu extends AbstractMenu
 {
     use GantryTrait;
 
     /**
-     * @var \JApplicationCms
+     * @var CMSApplication
      */
     protected $app;
 
@@ -32,22 +33,28 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
+        // FIXME: Joomla 4
         $this->app = \JApplicationCms::getInstance('site');
 
-        $lang = JFactory::getLanguage();
-        $tag = \JLanguageMultilang::isEnabled() ? $lang->getTag() : '*';
+        $language = JoomlaFactory::getLanguage();
+        // FIXME: Joomla 4
+        $tag = \JLanguageMultilang::isEnabled() ? $language->getTag() : '*';
 
         $this->menu = $this->app->getMenu();
         $this->default = $this->menu->getDefault($tag);
         $this->active  = $this->menu->getActive();
     }
 
+    /**
+     * @param array $params
+     */
     public function init(&$params)
     {
         parent::init($params);
 
         if (!empty($params['admin'])) {
             /** @var \JTableMenuType $table */
+            // FIXME: Joomla 4
             $menuType = \JTable::getInstance('MenuType');
             $menuType->load(['menutype' => $params['menu']]);
 
@@ -68,6 +75,7 @@ class Menu extends AbstractMenu
         static $items;
 
         if ($items === null) {
+            // FIXME: Joomla 4
             require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
             $items = (array) \MenusHelper::getMenuTypes();
         }
@@ -75,11 +83,15 @@ class Menu extends AbstractMenu
         return $items;
     }
 
+    /**
+     * @return array
+     */
     public function getGroupedItems()
     {
-        $groups = array();
+        $groups = [];
 
         // Get the menu items.
+        // FIXME: Joomla 4
         $items = \MenusHelper::getMenuLinks();
 
         // Build the groups arrays.
@@ -144,13 +156,17 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        if (!JFactory::getUser()->guest) {
+        if (!JoomlaFactory::getUser()->guest) {
             return null;
         }
 
         return $this->active ? $this->active->id : 0;
     }
 
+    /**
+     * @param object $item TODO: which object?
+     * @return bool
+     */
     public function isActive($item)
     {
         $tree = $this->base->tree;
@@ -174,6 +190,10 @@ class Menu extends AbstractMenu
         return false;
     }
 
+    /**
+     * @param object $item TODO: which object?
+     * @return bool
+     */
     public function isCurrent($item)
     {
         return $item->id == $this->active->id
@@ -192,7 +212,7 @@ class Menu extends AbstractMenu
         $values = [$params['menu']];
 
         // Items are already filtered by access and language, in admin we need to work around that.
-        if (JFactory::getApplication()->isClient('administrator')) {
+        if (JoomlaFactory::getApplication()->isClient('administrator')) {
             $attributes[] = 'access';
             $values[] = null;
 
@@ -245,11 +265,11 @@ class Menu extends AbstractMenu
         $this->base = $this->calcBase($params['base']);
 
         // Make sure that the menu item exists.
-        if (!$this->base && !\JFactory::getApplication()->isAdmin()) {
+        if (!$this->base && !JoomlaFactory::getApplication()->isClient('administrator')) {
             return;
         }
 
-        $levels = JFactory::getUser()->getAuthorisedViewLevels();
+        $levels = JoomlaFactory::getUser()->getAuthorisedViewLevels();
         asort($levels);
 
         // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
@@ -365,14 +385,15 @@ class Menu extends AbstractMenu
                         $app = $this->app;
                         $router = $app::getRouter();
 
-                        if ($router->getMode() === JROUTER_MODE_SEF) {
+                        // FIXME: Joomla 4: do we need anything else?
+                        if (version_compare(JVERSION, 4, '<') && $router->getMode() !== JROUTER_MODE_SEF) {
+                            $link .= '&Itemid=' . $item->id;
+                        } else {
                             $link = 'index.php?Itemid=' . $item->id;
 
                             if (isset($menuItem->query['format']) && $app->get('sef_suffix')) {
                                 $link .= '&format=' . $menuItem->query['format'];
                             }
-                        } else {
-                            $link .= '&Itemid=' . $item->id;
                         }
                         break;
                 }

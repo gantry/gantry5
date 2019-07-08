@@ -10,25 +10,32 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory as JFactory;
-use Joomla\CMS\Language\Text as JText;
+// We are in Joomla 3.
 
-$app = JFactory::getApplication();
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
+use Gantry\Joomla\JoomlaFactory;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Text;
+
+/** @var CMSApplication $app */
+$app = JoomlaFactory::getApplication();
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
-    $lang = JFactory::getLanguage();
-    $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+    $language = JoomlaFactory::getLanguage();
+    $language->load('com_gantry5', JPATH_ADMINISTRATOR)
+    || $language->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
     $app->enqueueMessage(
-        JText::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('COM_GANTRY5_COMPONENT')),
+        Text::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('COM_GANTRY5_COMPONENT')),
         'warning'
     );
 
     return;
 }
 
-$document = JFactory::getDocument();
+$document = JoomlaFactory::getDocument();
 $input = $app->input;
 $menu = $app->getMenu();
 $menuItem = $menu->getActive();
@@ -40,12 +47,12 @@ if (!$menuItem) {
 
 // Handle non-html formats and error page.
 if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
-    JError::raiseError(404, JText::_('JERROR_PAGE_NOT_FOUND'));
+    JError::raiseError(404, Text::_('JERROR_PAGE_NOT_FOUND'));
 }
 
-$gantry = \Gantry\Framework\Gantry::instance();
+$gantry = Gantry::instance();
 
-/** @var Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme = $gantry['theme'];
 
 $params = $app->getParams();
@@ -55,9 +62,9 @@ $title = $params->get('page_title');
 if (empty($title)) {
     $title = $app->get('sitename');
 } elseif ($app->get('sitename_pagetitles', 0) == 1) {
-    $title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+    $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
 } elseif ($app->get('sitename_pagetitles', 0) == 2) {
-    $title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+    $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
 }
 $document->setTitle($title);
 
@@ -97,4 +104,4 @@ $context = [
 ];
 
 // Render the particle.
-echo trim($theme->render("@nucleus/content/particle.html.twig", $context));
+echo trim($theme->render('@nucleus/content/particle.html.twig', $context));

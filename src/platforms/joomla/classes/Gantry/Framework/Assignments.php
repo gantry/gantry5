@@ -12,8 +12,8 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Assignments\AbstractAssignments;
 use Gantry\Joomla\CacheHelper;
+use Gantry\Joomla\JoomlaFactory;
 use Gantry\Joomla\StyleHelper;
-use Joomla\CMS\Factory as JFactory;
 use Joomla\CMS\HTML\HTMLHelper as JHtml;
 use Joomla\CMS\Language\Text as JText;
 use Joomla\CMS\Table\Table;
@@ -30,7 +30,7 @@ class Assignments extends AbstractAssignments
      */
     public function loadAssignments()
     {
-        $app = JFactory::getApplication();
+        $app = JoomlaFactory::getApplication();
 
         if (!$app->isClient('site')) {
             return [];
@@ -84,11 +84,18 @@ class Assignments extends AbstractAssignments
         parent::save($data);
     }
 
+    /**
+     * @return array
+     */
     public function types()
     {
         return ['menu', 'style'];
     }
 
+    /**
+     * @param array $data
+     * @return bool
+     */
     public function saveMenu($data)
     {
         $active = [];
@@ -99,6 +106,7 @@ class Assignments extends AbstractAssignments
         $active = array_keys($active);
 
         // Detect disabled template.
+        // FIXME: Joomla 4
         $extension = Table::getInstance('Extension');
 
         $template = Gantry::instance()['theme.name'];
@@ -106,18 +114,18 @@ class Assignments extends AbstractAssignments
             throw new \RuntimeException(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
+        // FIXME: Joomla 4
         Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
         $style = Table::getInstance('Style', 'TemplatesTable');
         if (!$style->load($this->configuration) || $style->client_id != 0) {
             throw new \RuntimeException('Template style does not exist');
         }
 
-        $user = JFactory::getUser();
+        $user = JoomlaFactory::getUser();
         $n = 0;
 
         if ($user->authorise('core.edit', 'com_menus')) {
-            $db   = JFactory::getDbo();
-            $user = JFactory::getUser();
+            $db   = JoomlaFactory::getDbo();
 
             if (!empty($active)) {
                 ArrayHelper::toInteger($active);
@@ -158,6 +166,9 @@ class Assignments extends AbstractAssignments
         return ($n > 0);
     }
 
+    /**
+     * @return string
+     */
     public function getAssignment()
     {
         $style = StyleHelper::getStyle($this->configuration);
@@ -165,6 +176,9 @@ class Assignments extends AbstractAssignments
         return $style->home;
     }
 
+    /**
+     * @param string $value
+     */
     public function saveAssignment($value)
     {
         $options = $this->assignmentOptions();
@@ -184,6 +198,9 @@ class Assignments extends AbstractAssignments
         CacheHelper::cleanTemplates();
     }
 
+    /**
+     * @return array
+     */
     public function assignmentOptions()
     {
         if ((string)(int) $this->configuration !== (string) $this->configuration) {

@@ -14,7 +14,6 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
 use Joomla\Component\Templates\Administrator\Model\StyleModel;
-use Joomla\Component\Templates\Administrator\Table\StyleTable;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -22,6 +21,11 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class StyleHelper
 {
+    /**
+     * @param int|array $id
+     * @return bool|\Joomla\CMS\Table\Table
+     * @throws \Exception
+     */
     public static function getStyle($id)
     {
         if (version_compare(JVERSION, '4', '<')) {
@@ -30,16 +34,26 @@ class StyleHelper
 
             $style = \JTable::getInstance('Style', 'TemplatesTable');
         } else {
-            $style = new StyleTable(\JFactory::getDbo());
+            $model = static::loadModel();
+            $style = $model->getTable('Style');
         }
+
+        if (!is_array($id)) {
+            $id = ['id' => $id, 'client_id' => 0];
+        }
+
         $style->load($id);
 
         return $style;
     }
 
+    /**
+     * @param string $template
+     * @return array
+     */
     public static function loadStyles($template)
     {
-        $db = \JFactory::getDbo();
+        $db = JoomlaFactory::getDbo();
 
         $query = $db
             ->getQuery(true)
@@ -51,7 +65,7 @@ class StyleHelper
 
         $db->setQuery($query);
 
-        $list = (array) $db->loadObjectList('id');
+        $list = $db->loadObjectList('id') ?: [];
 
         foreach ($list as $id => &$style) {
             $style->title = preg_replace('/' . preg_quote(\JText::_($style->template), '/') . '\s*-\s*/u', '', $style->long_title);
@@ -61,11 +75,20 @@ class StyleHelper
         return $list;
     }
 
+    /**
+     * @return bool|\Joomla\CMS\Table\Table
+     * @throws \Exception
+     */
     public static function getDefaultStyle()
     {
         return static::getStyle(['home' => 1, 'client_id' => 0]);
     }
 
+    /**
+     * @param object $style
+     * @param string $old
+     * @param string $new
+     */
     public static function copy($style, $old, $new)
     {
         $gantry = Gantry::instance();
@@ -86,6 +109,11 @@ class StyleHelper
         $installer->updateStyle($new, ['configuration' => $new]);
     }
 
+    /**
+     * @param int|array $id
+     * @param mixed $preset
+     * @throws \Exception
+     */
     public static function update($id, $preset)
     {
         $style = static::getStyle($id);
@@ -96,6 +124,9 @@ class StyleHelper
         $installer->updateStyle($id, ['configuration' => $id, 'preset' => $preset]);
     }
 
+    /**
+     * @param string $id
+     */
     public static function delete($id)
     {
         $gantry = Gantry::instance();
@@ -126,13 +157,13 @@ class StyleHelper
                 require_once "{$path}/models/style.php";
 
                 // Load language strings.
-                $lang = \JFactory::getLanguage();
+                $lang = JoomlaFactory::getLanguage();
                 $lang->load('com_templates');
 
                 $model = new \TemplatesModelStyle;
             } else {
                 // Joomla 4 support.
-                $app = \JFactory::getApplication();
+                $app = JoomlaFactory::getApplication();
                 $model = $app->bootComponent('com_templates')
                     ->getMVCFactory()
                     ->createModel('Style', 'Administrator', ['ignore_request' => true]);

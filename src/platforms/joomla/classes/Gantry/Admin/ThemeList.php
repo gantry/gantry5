@@ -13,11 +13,14 @@ namespace Gantry\Admin;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
-use Joomla\CMS\Factory as JFactory;
+use Gantry\Framework\Platform;
+use Gantry\Joomla\JoomlaFactory;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-
+/**
+ * @package Gantry\Admin
+ */
 class ThemeList
 {
     /**
@@ -85,14 +88,20 @@ class ThemeList
         return $list;
     }
 
+    /**
+     *
+     */
     protected static function loadThemes()
     {
         $gantry = Gantry::instance();
 
+        /** @var Platform $platform */
+        $platform = $gantry['platform'];
+
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        /** @var array|ThemeDetails[] $list */
+        /** @var ThemeDetails[] $list */
         $list = [];
 
         $files = Folder::all('gantry-themes://', ['recursive' => false, 'files' => false]);
@@ -106,7 +115,7 @@ class ThemeList
                 $details['name'] = $theme;
                 $details['title'] = $details['details.name'];
                 $details['preview_url'] = null;
-                $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
+                $details['admin_url'] = $platform->getThemeAdminUrl($theme);
                 $details['params'] = [];
 
                 $list[$details->name] = $details;
@@ -116,16 +125,23 @@ class ThemeList
 
         // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {
-            $details['thumbnail'] = $details->getUrl("details.images.thumbnail");
+            $details['thumbnail'] = $details->getUrl('details.images.thumbnail');
         }
 
         static::$items = $list;
     }
 
+    /**
+     *
+     */
     protected static function loadStyles()
     {
         $gantry = Gantry::instance();
-        $db = JFactory::getDbo();
+
+        /** @var Platform $platform */
+        $platform = $gantry['platform'];
+
+        $db = JoomlaFactory::getDbo();
 
         $query = $db
             ->getQuery(true)
@@ -146,7 +162,7 @@ class ThemeList
             static::loadThemes();
         }
 
-        /** @var array|ThemeDetails[] $list */
+        /** @var ThemeDetails[] $list */
         $list = [];
 
         foreach ($styles as $style)
@@ -162,7 +178,7 @@ class ThemeList
             $details['id'] = $style->id;
             $details['extension_id'] = $style->extension_id;
             $details['style'] = $style->title;
-            $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($style->id);
+            $details['preview_url'] = $platform->getThemePreviewUrl($style->id);
             $details['params'] = $params->toArray();
 
             $list[$style->name][$style->id] = $details;

@@ -15,9 +15,14 @@ namespace Gantry\Framework\Base;
 
 abstract class Page
 {
+    /** @var \Gantry\Framework\Gantry */
     protected $container;
     protected $config;
 
+    /**
+     * Page constructor.
+     * @param \Gantry\Framework\Gantry $container
+     */
     public function __construct($container)
     {
         $this->container = $container;

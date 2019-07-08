@@ -10,7 +10,10 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Installer\InstallerAdapter;
-use Joomla\CMS\Factory as JFactory;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
+use Joomla\Filesystem\Folder;
+use Joomla\Registry\Registry;
 
 /**
  * Gantry 5 package installer script.
@@ -35,7 +38,7 @@ class Pkg_Gantry5InstallerScript
      * List of required PHP extensions.
      * @var array
      */
-    protected $extensions = array ('pcre');
+    protected $extensions = array('pcre');
 
     /**
      * @param InstallerAdapter $parent
@@ -79,10 +82,10 @@ class Pkg_Gantry5InstallerScript
 
         // Clear cached files.
         if (is_dir(JPATH_CACHE . '/gantry5')) {
-            JFolder::delete(JPATH_CACHE . '/gantry5');
+            Folder::delete(JPATH_CACHE . '/gantry5');
         }
         if (is_dir(JPATH_SITE . '/cache/gantry5')) {
-            JFolder::delete(JPATH_SITE . '/cache/gantry5');
+            Folder::delete(JPATH_SITE . '/cache/gantry5');
         }
 
         return true;
@@ -100,7 +103,7 @@ class Pkg_Gantry5InstallerScript
         // Prevent installation if requirements are not met.
         $errors = $this->checkRequirements($manifest->version);
         if ($errors) {
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
 
             foreach ($errors as $error) {
                 $app->enqueueMessage($error, 'error');
@@ -123,13 +126,13 @@ class Pkg_Gantry5InstallerScript
     {
         // Clear Joomla system cache.
         /** @var JCache|JCacheController $cache */
-        $cache = JFactory::getCache();
+        $cache = Factory::getCache();
         $cache->clean('_system');
 
         // Clear Gantry5 cache.
-        $path = JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
+        $path = Factory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
         if (is_dir($path)) {
-            JFolder::delete($path);
+            Folder::delete($path);
         }
 
         // Make sure that PHP has the latest data of the files.
@@ -159,6 +162,10 @@ class Pkg_Gantry5InstallerScript
 
     // Internal functions
 
+    /**
+     * @param $manifest
+     * @param int $state
+     */
     protected function prepareExtensions($manifest, $state = 1)
     {
         foreach ($manifest->files->children() as $file) {
@@ -177,14 +184,11 @@ class Pkg_Gantry5InstallerScript
                 $search +=  array('folder' => $group);
             }
 
-            $extension = JTable::getInstance('extension');
+            $extension = Table::getInstance('extension');
 
             if (!$extension->load($search)) {
                 continue;
             }
-
-            // Joomla 3.7 added a new package protection feature: only use individual protection in older versions.
-            $extension->protected = version_compare(JVERSION, '3.7', '<') ? $state : 0;
 
             if (isset($attributes->enabled)) {
                 $extension->enabled = $state ? (int) $attributes->enabled : 0;
@@ -196,12 +200,12 @@ class Pkg_Gantry5InstallerScript
 
     protected function adjustTemplateSettings()
     {
-        $extension = JTable::getInstance('extension');
+        $extension = Table::getInstance('extension');
         if (!$extension->load(array('type' => 'component', 'element' => 'com_templates'))) {
             return;
         }
 
-        $params = new Joomla\Registry\Registry($extension->params);
+        $params = new Registry($extension->params);
         $params->set('source_formats', $this->addParam($params->get('source_formats'), array('scss', 'yaml', 'twig')));
         $params->set('font_formats', $this->addParam($params->get('font_formats'), array('eot', 'svg')));
 
@@ -209,6 +213,11 @@ class Pkg_Gantry5InstallerScript
         $extension->store();
     }
 
+    /**
+     * @param string $string
+     * @param array $options
+     * @return string
+     */
     protected function addParam($string, array $options)
     {
         $items = array_flip(explode(',', $string)) + array_flip($options);
@@ -216,16 +225,25 @@ class Pkg_Gantry5InstallerScript
         return implode(',', array_keys($items));
     }
 
+    /**
+     * @param string $gantryVersion
+     * @return array
+     */
     protected function checkRequirements($gantryVersion)
     {
         $results = array();
-        $this->checkVersion($results, 'PHP', phpversion());
+        $this->checkVersion($results, 'PHP', PHP_VERSION);
         $this->checkVersion($results, 'Joomla!', JVERSION);
         $this->checkExtensions($results, $this->extensions);
 
         return $results;
     }
 
+    /**
+     * @param array $results
+     * @param string $name
+     * @param string $version
+     */
     protected function checkVersion(array &$results, $name, $version)
     {
         $major = $minor = 0;
@@ -267,6 +285,10 @@ class Pkg_Gantry5InstallerScript
         }
     }
 
+    /**
+     * @param array $results
+     * @param array $extensions
+     */
     protected function checkExtensions(array &$results, $extensions)
     {
         foreach ($extensions as $name) {
