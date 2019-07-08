@@ -16,7 +16,8 @@ use Gantry\Framework\ThemeInstaller;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
-use Joomla\Component\Templates\Administrator\Model\StyleModel;
+use Joomla\Component\Templates\Administrator\Model\StyleModel; // Joomla 4
+use Joomla\Component\Templates\Administrator\Table\StyleTable; // Joomla 4
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -25,11 +26,11 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 class StyleHelper
 {
     /**
-     * @param int|array $id
-     * @return Table|\TemplatesTableStyle
+     * @param int|array|null $id
+     * @return StyleTable|\TemplatesTableStyle
      * @throws \Exception
      */
-    public static function getStyle($id)
+    public static function getStyle($id = null)
     {
         if (version_compare(JVERSION, '4', '<')) {
             // Joomla 3 support.
@@ -42,11 +43,15 @@ class StyleHelper
             $style = $model->getTable('Style');
         }
 
-        if (!is_array($id)) {
-            $id = ['id' => $id, 'client_id' => 0];
-        }
+        if (null !== $id) {
+            if (!is_array($id)) {
+                $id = ['id' => $id, 'client_id' => 0];
+            }
 
-        $style->load($id);
+            $style->load($id);
+        } else {
+            $style->reset();
+        }
 
         return $style;
     }
@@ -80,7 +85,7 @@ class StyleHelper
     }
 
     /**
-     * @return Table
+     * @return StyleTable|\TemplatesTableStyle
      * @throws \Exception
      */
     public static function getDefaultStyle()

@@ -256,7 +256,6 @@ class Platform extends BasePlatform
         // Add frontend editing feature as it has only been defined for module positions.
         $user = Factory::getUser();
 
-        // FIXME: Joomla 4: check $app->get()
         $frontEditing = ($application->isClient('site') && $application->get('frontediting', 1) && !$user->guest);
         $menusEditing = ($application->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
 

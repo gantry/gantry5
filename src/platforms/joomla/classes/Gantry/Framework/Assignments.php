@@ -114,10 +114,8 @@ class Assignments extends AbstractAssignments
             throw new \RuntimeException(Text::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
         }
 
-        // FIXME: Joomla 4
-        Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-        $style = Table::getInstance('Style', 'TemplatesTable');
-        if (!$style->load($this->configuration) || $style->client_id != 0) {
+        $style = StyleHelper::getStyle();
+        if (!$style->load($this->configuration) || $style->client_id) {
             throw new \RuntimeException('Template style does not exist');
         }
 

@@ -13,17 +13,22 @@ namespace Gantry\Framework;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
 use Gantry\Joomla\Manifest;
-use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
+use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
-// TODO: Remove when droppong Joomla 3 support
-use Joomla\Component\Templates\Administrator\Table\StyleTable;
+use Joomla\Component\Templates\Administrator\Table\StyleTable; // Joomla 4
 use RocketTheme\Toolbox\File\YamlFile;
 
+/**
+ * Class ThemeInstaller
+ * @package Gantry\Framework
+ */
 class ThemeInstaller extends AbstractInstaller
 {
     protected $extension;
@@ -31,17 +36,13 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * ThemeInstaller constructor.
-     * @param \JInstallerAdapterTemplate|null $extension
+     * @param TemplateAdapter|null $extension
      */
     public function __construct($extension = null)
     {
         parent::__construct();
 
-        // FIXME: Joomla 4
-        jimport('joomla.filesystem.folder');
-
-        Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-        if ($extension instanceof \JInstallerAdapterTemplate) {
+        if ($extension instanceof TemplateAdapter) {
             $this->setInstaller($extension);
         } elseif ($extension) {
             $this->loadExtension($extension);
@@ -49,11 +50,11 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @param \JInstallerAdapterTemplate $install
+     * @param TemplateAdapter $install
      * @return $this
      * @throws \ReflectionException
      */
-    public function setInstaller(\JInstallerAdapterTemplate $install)
+    public function setInstaller(TemplateAdapter $install)
     {
         // We need access to a protected variable $install->extension.
         $reflectionClass = new \ReflectionClass($install);
@@ -75,7 +76,7 @@ class ThemeInstaller extends AbstractInstaller
         if ((string)(int) $id !== (string) $id) {
             $id = ['type' => 'template', 'element' => (string) $id, 'client_id' => 0];
         }
-        // FIXME: Joomla 4
+
         $this->extension = Table::getInstance('extension');
         $this->extension->load($id);
         $this->name = $this->extension->name;
@@ -100,7 +101,7 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * @param string|null $name
-     * @return bool|Table|StyleTable
+     * @return StyleTable|\TemplatesTableStyle
      */
     public function getStyle($name = null)
     {
@@ -111,8 +112,7 @@ class ThemeInstaller extends AbstractInstaller
             $name = $this->getStyleName($name);
         }
 
-        $style = $this->createStyle();
-        $style->load([
+        $style = StyleHelper::getStyle([
             'template' => $this->extension->element,
             'client_id' => $this->extension->client_id,
             $field => $name
@@ -122,20 +122,11 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @return bool|Table|StyleTable
+     * @return StyleTable|\TemplatesTableStyle
      */
     public function getDefaultStyle()
     {
-        if (version_compare(JVERSION, '4', '<')) {
-            // Joomla 3 support.
-            $style = Table::getInstance('Style', 'TemplatesTable');
-        } else {
-            // FIXME: Jooma 4: better way?
-            $style = new StyleTable(Factory::getDbo());
-        }
-        $style->load(['home' => 1, 'client_id' => 0]);
-
-        return $style;
+        return StyleHelper::getDefaultStyle();
     }
 
     /**
@@ -145,7 +136,6 @@ class ThemeInstaller extends AbstractInstaller
     public function getMenu($type)
     {
         /** @var \TableMenuType $table */
-        // FIXME: Joomla 4
         $table = Table::getInstance('MenuType');
         $table->load(['menutype' => $type]);
 
@@ -188,16 +178,11 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @return bool|Table|StyleTable
+     * @return StyleTable|\TemplatesTableStyle
      */
     public function createStyle()
     {
-        if (version_compare(JVERSION, '4', '<')) {
-            $style = Table::getInstance('Style', 'TemplatesTable');
-        } else {
-            // FIXME: Joomla 4: better way?
-            $style = new StyleTable(Factory::getDbo());
-        }
+        $style = StyleHelper::getStyle();
         $style->reset();
         $style->template = $this->extension->element;
         $style->client_id = $this->extension->client_id;
@@ -209,7 +194,7 @@ class ThemeInstaller extends AbstractInstaller
      * @param $title
      * @param array $configuration
      * @param int $home
-     * @return bool|Table|StyleTable
+     * @return StyleTable|\TemplatesTableStyle
      */
     public function addStyle($title, array $configuration = [], $home = 0)
     {
@@ -244,7 +229,7 @@ class ThemeInstaller extends AbstractInstaller
      * @param string $name
      * @param array $configuration
      * @param string|null $home
-     * @return bool|Table|StyleTable
+     * @return StyleTable|\TemplatesTableStyle
      */
     public function updateStyle($name, array $configuration, $home = null)
     {
@@ -270,7 +255,7 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
-     * @param Table|StyleTable $style
+     * @param StyleTable|\TemplatesTableStyle $style
      */
     public function assignHomeStyle($style)
     {
@@ -662,7 +647,7 @@ class ThemeInstaller extends AbstractInstaller
 
         if (!$component_id) {
             // Get Gantry component id.
-            $component_id = JComponentHelper::getComponent('com_gantry5')->id;
+            $component_id = ComponentHelper::getComponent('com_gantry5')->id;
         }
 
         return $component_id;

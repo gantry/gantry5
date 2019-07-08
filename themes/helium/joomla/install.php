@@ -15,6 +15,7 @@ use Gantry\Framework\ThemeInstaller;
 use Gantry5\Loader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
 
 class G5_HeliumInstallerScript
@@ -62,7 +63,7 @@ class G5_HeliumInstallerScript
 
     /**
      * @param string $type
-     * @param JInstallerAdapterTemplate $parent
+     * @param TemplateAdapter $parent
      * @throws Exception
      */
     public function postflight($type, $parent)
