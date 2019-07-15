@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,8 +16,15 @@ namespace Gantry\Admin\Controller\Html;
 use Gantry\Admin\ThemeList;
 use Gantry\Component\Admin\HtmlController;
 
+/**
+ * Class Themes
+ * @package Gantry\Admin\Controller\Html
+ */
 class Themes extends HtmlController
 {
+    /**
+     * @return string
+     */
     public function index()
     {
         $this->params['themes'] = (new ThemeList)->getThemes();

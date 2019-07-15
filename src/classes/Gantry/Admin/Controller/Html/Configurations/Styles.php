@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,6 +22,10 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Styles
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Styles extends HtmlController
 {
 
@@ -55,6 +59,9 @@ class Styles extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
@@ -74,6 +81,10 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function display($id)
     {
         $outline = $this->params['outline'];
@@ -100,6 +111,10 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -150,6 +165,10 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function reset($id)
     {
         $this->params += [
@@ -159,7 +178,9 @@ class Styles extends HtmlController
         return $this->display($id);
     }
 
-
+    /**
+     * @return JsonResponse
+     */
     public function compile()
     {
         // Validate only exists for JSON.
@@ -183,6 +204,10 @@ class Styles extends HtmlController
         }
     }
 
+    /**
+     * @param string|null $id
+     * @return JsonResponse|string
+     */
     public function save($id = null)
     {
         /** @var Config $config */

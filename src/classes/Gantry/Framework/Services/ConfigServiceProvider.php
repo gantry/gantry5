@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,8 +21,15 @@ use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ConfigServiceProvider
+ * @package Gantry\Framework\Services
+ */
 class ConfigServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param Container $gantry
+     */
     public function register(Container $gantry)
     {
         $gantry['blueprints'] = function($c) {
@@ -72,6 +79,13 @@ class ConfigServiceProvider implements ServiceProviderInterface
         return $config->load();
     }
 
+    /**
+     * @param Container $container
+     * @param string $name
+     * @param bool $combine
+     * @param bool $withDefaults
+     * @return mixed
+     */
     public static function load(Container $container, $name = 'default', $combine = true, $withDefaults = true)
     {
         /** @var UniformResourceLocator $locator */

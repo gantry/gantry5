@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,6 +21,10 @@ use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ScssCompiler
+ * @package Gantry\Component\Stylesheet
+ */
 class ScssCompiler extends CssCompiler
 {
     /**
@@ -62,6 +66,10 @@ class ScssCompiler extends CssCompiler
         }
     }
 
+    /**
+     * @param string $in
+     * @return string
+     */
     public function compile($in)
     {
         return $this->compiler->compile($in);

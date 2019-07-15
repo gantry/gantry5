@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -51,11 +51,19 @@ class TokenParserTryCatch extends \Twig_TokenParser
         return new TwigNodeTryCatch($try, $catch, $lineno, $this->getTag());
     }
 
+    /**
+     * @param \Twig_Token $token
+     * @return bool
+     */
     public function decideCatch(\Twig_Token $token)
     {
         return $token->test(array('catch'));
     }
 
+    /**
+     * @param \Twig_Token $token
+     * @return bool
+     */
     public function decideEnd(\Twig_Token $token)
     {
         return $token->test(array('endtry')) || $token->test(array('endcatch'));

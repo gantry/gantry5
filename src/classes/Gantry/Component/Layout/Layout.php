@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -581,6 +581,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return isset($this->blocks[$id]) ? $this->blocks[$id] : null;
     }
 
+    /**
+     * @return $this
+     */
     public function clearSections()
     {
         $this->items = $this->clearChildren($this->items);
@@ -588,6 +591,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @param array $items
+     * @return array
+     */
     protected function clearChildren(&$items)
     {
         foreach ($items as $key => $item) {
@@ -603,6 +610,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return array_values($items);
     }
 
+    /**
+     * @param array $old
+     * @return array
+     */
     public function copySections(array $old)
     {
         $this->init();
@@ -640,6 +651,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $leftover;
     }
 
+    /**
+     * @return $this
+     */
     public function inheritAll()
     {
         foreach ($this->references() as $item) {
@@ -658,6 +672,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function inheritNothing()
     {
         foreach ($this->references() as $item) {
@@ -669,6 +686,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @param array $data
+     * @param array $sections
+     * @param array $leftover
+     */
     protected function copyData(array $data, array $sections, array &$leftover)
     {
         foreach ($data as $type => $items) {
@@ -877,7 +899,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $type
      * @param string $subtype
-     * @param string $id
+     * @param string|int $id
      * @return string
      */
     protected function id($type, $subtype = null, $id = null)
@@ -1023,6 +1045,10 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return new static($name, $layout);
     }
 
+    /**
+     * @param string $name
+     * @return array
+     */
     protected static function loadIndexFile($name)
     {
         $gantry = Gantry::instance();
@@ -1100,6 +1126,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $index;
     }
 
+    /**
+     * @param array|null $children
+     */
     public function check(array $children = null)
     {
         if ($children === null) {

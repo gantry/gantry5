@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +13,19 @@
 
 namespace Gantry\Component\Twig\Node;
 
+/**
+ * Class TwigNodeThrow
+ * @package Gantry\Component\Twig\Node
+ */
 class TwigNodeThrow extends \Twig_Node
 {
+    /**
+     * TwigNodeThrow constructor.
+     * @param $code
+     * @param \Twig_Node $message
+     * @param int $lineno
+     * @param null $tag
+     */
     public function __construct(
         $code,
         \Twig_Node $message,

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -297,6 +297,12 @@ class BlueprintForm extends BaseBlueprintForm
         return $result;
     }
 
+    /**
+     * @param array $current
+     * @param string $prefix
+     * @param string $fieldName
+     * @return array|null
+     */
     protected function resolveContainer($current, $prefix, $fieldName)
     {
         foreach ($current as $field) {
@@ -322,6 +328,11 @@ class BlueprintForm extends BaseBlueprintForm
         return null;
     }
 
+    /**
+     * @param string $prefix
+     * @param array $list
+     * @return bool
+     */
     protected function fieldExists($prefix, $list)
     {
         foreach ($list as $field => $data) {

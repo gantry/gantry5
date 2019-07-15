@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,7 +24,6 @@ use RocketTheme\Toolbox\DI\Container;
  * @author RocketTheme
  * @license MIT
  */
-
 abstract class Platform
 {
     use NestedArrayAccess, Export;
@@ -35,6 +34,10 @@ abstract class Platform
     protected $items;
     protected $container;
 
+    /**
+     * Platform constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -118,31 +121,51 @@ abstract class Platform
     abstract public function getAssetsPaths();
     abstract public function getMediaPaths();
 
+    /**
+     * @return $this
+     */
     public function init()
     {
         return $this;
     }
 
+    /**
+     * @param string $feature
+     * @return bool
+     */
     public function has($feature)
     {
         return !empty($this->features[$feature]);
     }
 
+    /**
+     * @return array
+     */
     public function getThemePaths()
     {
         return ['' => []];
     }
 
+    /**
+     * @param string $name
+     * @return array
+     */
     public function getEnginePaths($name = 'nucleus')
     {
         return ['' => ['gantry-theme://engine', "gantry-engines://{$name}"]];
     }
 
+    /**
+     * @return array
+     */
     public function getEnginesPaths()
     {
         return ['' => []];
     }
 
+    /**
+     * @return array
+     */
     public function errorHandlerPaths()
     {
         return [];
@@ -164,6 +187,9 @@ abstract class Platform
      */
     abstract public function getThemeAdminUrl($theme);
 
+    /**
+     * @return null
+     */
     public function settings()
     {
         return null;
@@ -174,21 +200,38 @@ abstract class Platform
         return $this->settings_key;
     }
 
+    /**
+     * @return array|bool
+     */
     public function listModules()
     {
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @param string $content
+     * @param string|int|null $width
+     * @param string|int|null $height
+     * @return mixed|null
+     */
     public function getEditor($name, $content = '', $width = null, $height = null)
     {
         return null;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public function filter($text)
     {
         return $text;
@@ -201,6 +244,9 @@ abstract class Platform
         $gantry['document']->registerAssets();
     }
 
+    /**
+     * @return mixed|null
+     */
     public function call()
     {
         $args = func_get_args();
@@ -208,6 +254,10 @@ abstract class Platform
         return is_callable($callable) ? call_user_func_array($callable, $args) : null;
     }
 
+    /**
+     * @param string $action
+     * @return bool
+     */
     public function authorize($action)
     {
         return true;

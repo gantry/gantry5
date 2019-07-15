@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,8 +18,15 @@ use Gantry\Framework\Exporter;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class Export
+ * @package Gantry\Admin\Controller\Html
+ */
 class Export extends HtmlController
 {
+    /**
+     * @return void
+     */
     public function index()
     {
         if (!class_exists('Gantry\Framework\Exporter')) {

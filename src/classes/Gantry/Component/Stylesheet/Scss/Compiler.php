@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,6 +21,10 @@ use ScssPhp\ScssPhp\Formatter\OutputBlock;
 use ScssPhp\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Compiler
+ * @package Gantry\Component\Stylesheet\Scss
+ */
 class Compiler extends BaseCompiler
 {
     protected $basePath;
@@ -309,6 +313,9 @@ class Compiler extends BaseCompiler
         return $list;
     }
 
+    /**
+     * @return $this
+     */
     public function reset()
     {
         $this->usedFonts = [];

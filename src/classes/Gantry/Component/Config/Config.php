@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -117,7 +117,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * Get value from the configuration and join it with given data.
      *
      * @param string  $name       Dot separated path to the requested value.
-     * @param array   $value      Value to be joined.
+     * @param array|object $value Value to be joined.
      * @param string  $separator  Separator, defaults to '.'
      * @return array
      * @throws \RuntimeException
@@ -175,7 +175,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * Make a flat list from the configuration.
      *
      * @param string $name      Dot separated path to the requested value.
-     * @param string $separator Separator, defaults to '.'
+     * @param string|string[] $separator Separator, defaults to '.'
      * @param string $prefix    Name prefix.
      * @return array
      */
@@ -197,7 +197,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     /**
      * @param string $name
      * @param array  $element
-     * @param string $separator
+     * @param string|string[] $separator
      * @param string $prefix
      * @return array
      * @internal

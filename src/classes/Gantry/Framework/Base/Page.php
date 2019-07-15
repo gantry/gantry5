@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,10 @@
 
 namespace Gantry\Framework\Base;
 
+/**
+ * Class Page
+ * @package Gantry\Framework\Base
+ */
 abstract class Page
 {
     /** @var \Gantry\Framework\Gantry */
@@ -29,13 +33,23 @@ abstract class Page
         $this->config = $container['config'];
     }
 
+    /**
+     * @return string
+     */
     public function doctype()
     {
         return $this->config->get('page.doctype', 'html');
     }
 
+    /**
+     * @param array $args
+     * @return string
+     */
     abstract public function url(array $args = []);
 
+    /**
+     * @return string
+     */
     public function preset()
     {
         /** @var Theme $theme */
@@ -43,16 +57,28 @@ abstract class Page
         return 'g-' . preg_replace('/[^a-z0-9-]/', '', $theme->type());
     }
 
+    /**
+     * @return string
+     */
     public function htmlAttributes()
     {
         return $this->getAttributes($this->config->get('page.html'));
     }
 
+    /**
+     * @param array $attributes
+     * @return string
+     */
     public function bodyAttributes($attributes = [])
     {
         return $this->getAttributes($this->config->get('page.body.attribs'), $attributes);
     }
 
+    /**
+     * @param array $params
+     * @param array $extra
+     * @return string
+     */
     protected function getAttributes($params, $extra = [])
     {
         $params = array_merge_recursive($params, $extra);

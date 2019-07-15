@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,6 +24,10 @@ use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use Whoops\Exception\ErrorException;
 
+/**
+ * Class Router
+ * @package Gantry\Component\Router
+ */
 abstract class Router implements RouterInterface
 {
     /**
@@ -37,11 +41,19 @@ abstract class Router implements RouterInterface
     protected $path;
     protected $params;
 
+    /**
+     * Router constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @return bool
+     * @throws ErrorException
+     */
     public function dispatch()
     {
         $this->boot();
@@ -103,6 +115,9 @@ abstract class Router implements RouterInterface
      */
     abstract protected function boot();
 
+    /**
+     * @return mixed
+     */
     abstract protected function checkSecurityToken();
 
     /**
@@ -150,6 +165,11 @@ abstract class Router implements RouterInterface
         return $this;
     }
 
+    /**
+     * @param \Exception $e
+     * @param bool $json
+     * @return HtmlResponse|JsonResponse
+     */
     protected function getErrorResponse(\Exception $e, $json = false)
     {
         $response = new HtmlResponse;
@@ -169,6 +189,10 @@ abstract class Router implements RouterInterface
         return $response;
     }
 
+    /**
+     * @param Response $response
+     * @return bool
+     */
     protected function send(Response $response) {
         // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());

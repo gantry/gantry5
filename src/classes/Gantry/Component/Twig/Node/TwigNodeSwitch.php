@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +13,20 @@
 
 namespace Gantry\Component\Twig\Node;
 
+/**
+ * Class TwigNodeSwitch
+ * @package Gantry\Component\Twig\Node
+ */
 class TwigNodeSwitch extends \Twig_Node
 {
+    /**
+     * TwigNodeSwitch constructor.
+     * @param \Twig_Node $value
+     * @param \Twig_Node $cases
+     * @param \Twig_Node|null $default
+     * @param int $lineno
+     * @param null $tag
+     */
     public function __construct(\Twig_Node $value, \Twig_Node $cases, \Twig_Node $default = null, $lineno = 0, $tag = null)
     {
         parent::__construct(array('value' => $value, 'cases' => $cases, 'default' => $default), array(), $lineno, $tag);

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,6 +22,10 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Settings
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Settings extends HtmlController
 {
     protected $httpVerbs = [
@@ -54,6 +58,9 @@ class Settings extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
@@ -79,6 +86,10 @@ class Settings extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/settings/settings.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function display($id)
     {
         $outline = $this->params['outline'];
@@ -111,6 +122,10 @@ class Settings extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/settings/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -179,6 +194,10 @@ class Settings extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $particle
+     * @return JsonResponse
+     */
     public function validate($particle)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -1));
@@ -209,6 +228,10 @@ class Settings extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param string|null $id
+     * @return string
+     */
     public function save($id = null)
     {
         if (!$this->request->post->get('_end')) {
@@ -240,6 +263,11 @@ class Settings extends HtmlController
         return $id ? $this->display($id) : $this->index();
     }
 
+    /**
+     * @param string $id
+     * @param array $data
+     * @param string $save_dir
+     */
     protected function saveItem($id, $data, $save_dir)
     {
         $filename = "{$save_dir}/{$id}.yaml";
@@ -261,6 +289,10 @@ class Settings extends HtmlController
         $file->free();
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function reset($id)
     {
         $this->params += [

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,6 +19,10 @@ use Gantry\Framework\Importer;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class Import
+ * @package Gantry\Admin\Controller\Html
+ */
 class Import extends HtmlController
 {
     protected $httpVerbs = [
@@ -30,11 +34,17 @@ class Import extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         return $this->render('@gantry-admin/pages/import/import.html.twig', $this->params);
     }
 
+    /**
+     * @return string
+     */
     public function import()
     {
         if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {

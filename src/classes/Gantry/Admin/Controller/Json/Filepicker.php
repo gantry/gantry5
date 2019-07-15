@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,7 +20,10 @@ use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-
+/**
+ * Class Filepicker
+ * @package Gantry\Admin\Controller\Json
+ */
 class Filepicker extends JsonController
 {
     protected $base = false;
@@ -49,6 +52,9 @@ class Filepicker extends JsonController
         ]
     ];
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         /** @var UniformResourceLocator $locator */
@@ -198,6 +204,11 @@ class Filepicker extends JsonController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param object $node
+     * @param object $iteration
+     * @param string $folder
+     */
     protected function attachData(&$node, $iteration, $folder)
     {
         foreach (
@@ -215,9 +226,12 @@ class Filepicker extends JsonController
                 }
             }
         }
-
     }
 
+    /**
+     * @param string $folder
+     * @return \ArrayObject
+     */
     protected function listFiles($folder)
     {
         $isStream = $this->isStream($folder);
@@ -257,10 +271,13 @@ class Filepicker extends JsonController
         }
 
         $files->asort();
-        return $files;
 
+        return $files;
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function subfolder()
     {
         $response         = [];
@@ -275,9 +292,12 @@ class Filepicker extends JsonController
         $path = implode('/', func_get_args());
 
         $this->doDownload($path, false);
-
     }
 
+    /**
+     * @param string $path
+     * @param bool $download
+     */
     protected function doDownload($path, $download)
     {
         if (!$path) {
@@ -343,7 +363,6 @@ class Filepicker extends JsonController
         flush();
 
         exit();
-
     }
 
     public function downloadFile()
@@ -351,9 +370,11 @@ class Filepicker extends JsonController
         $path = implode('/', func_get_args());
 
         $this->doDownload($path, true);
-
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function upload()
     {
         /** @var UniformResourceLocator $locator */
@@ -414,10 +435,14 @@ class Filepicker extends JsonController
 
         $finfo = new \stdClass();
         $this->attachData($finfo, new \SplFileInfo($destination), $targetPath);
-        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
 
+        return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
     }
 
+    /**
+     * @param string $size_str
+     * @return float|int|string
+     */
     protected function returnBytes($size_str)
     {
         switch (strtolower(substr($size_str, -1))) {
@@ -434,8 +459,9 @@ class Filepicker extends JsonController
                 return $size_str;
         }
 
-    }
-
+    /**
+     * @return JsonResponse
+     */
     public function delete()
     {
         /** @var UniformResourceLocator $locator */
@@ -476,6 +502,10 @@ class Filepicker extends JsonController
         return new JsonResponse(['success', 'File deleted: ' . $targetPath]);
     }
 
+    /**
+     * @param string $folder
+     * @return bool
+     */
     private function isStream($folder)
     {
         return $folder instanceof UniformResourceIterator || strpos($folder, '://');

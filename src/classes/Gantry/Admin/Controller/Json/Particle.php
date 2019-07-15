@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,6 +19,10 @@ use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
 
+/**
+ * Class Particle
+ * @package Gantry\Admin\Controller\Json
+ */
 class Particle extends JsonController
 {
     protected $httpVerbs = [
@@ -80,7 +84,7 @@ class Particle extends JsonController
     /**
      * Return a modal content for selecting module.
      *
-     * @return mixed
+     * @return JsonResponse
      */
     public function selectModule()
     {
@@ -91,7 +95,7 @@ class Particle extends JsonController
      * Return form for the particle (filled with data coming from POST).
      *
      * @param string $name
-     * @return mixed
+     * @return JsonResponse
      */
     public function particle($name)
     {
@@ -180,6 +184,9 @@ class Particle extends JsonController
         return new JsonResponse(['item' => $data->toArray()]);
     }
 
+    /**
+     * @return array
+     */
     protected function getParticles()
     {
         $particles = $this->container['particles']->all();
@@ -199,7 +206,6 @@ class Particle extends JsonController
      * Load blueprints.
      *
      * @param string $name
-     *
      * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')

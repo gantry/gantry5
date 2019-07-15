@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,6 +17,10 @@ use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\JsonFile;
 
+/**
+ * Class Fontpicker
+ * @package Gantry\Admin\Controller\Json
+ */
 class Fontpicker extends JsonController
 {
     protected $google_fonts = 'gantry-admin://js/google-fonts.json';
@@ -27,6 +31,9 @@ class Fontpicker extends JsonController
         ]
     ];
 
+    /**
+     * @return JsonResponse|mixed
+     */
     public function index()
     {
         $this->params['fonts'] = $this->loadGoogleFonts();
@@ -37,6 +44,9 @@ class Fontpicker extends JsonController
         return new JsonResponse($response);
     }
 
+    /**
+     * @return \stdClass
+     */
     public function loadGoogleFonts()
     {
         $data = new \stdClass();
@@ -70,6 +80,9 @@ class Fontpicker extends JsonController
         return $data;
     }
 
+    /**
+     * @return array
+     */
     public function loadLocalFonts()
     {
         $local_fonts = $this->container['theme']->details()->get('configuration.fonts', []);
@@ -88,6 +101,9 @@ class Fontpicker extends JsonController
         return $map;
     }
 
+    /**
+     * @return array
+     */
     protected function variantsMap()
     {
         return [

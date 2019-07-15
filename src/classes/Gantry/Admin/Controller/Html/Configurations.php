@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -21,6 +21,10 @@ use Gantry\Component\Response\Response;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Framework\Outlines as OutlinesObject;
 
+/**
+ * Class Configurations
+ * @package Gantry\Admin\Controller\Html
+ */
 class Configurations extends HtmlController
 {
     protected $httpVerbs = [
@@ -52,11 +56,17 @@ class Configurations extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         return $this->render('@gantry-admin/pages/configurations/configurations.html.twig', $this->params);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function createForm()
     {
         if (!$this->authorize('outline.create')) {
@@ -73,6 +83,9 @@ class Configurations extends HtmlController
         return new JsonResponse($response);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function create()
     {
         // Check if we want to duplicate outline instead.
@@ -96,6 +109,10 @@ class Configurations extends HtmlController
         return new JsonResponse(['html' => 'Outline created.', 'id' => "outline-{$id}", 'outline' => $html]);
     }
 
+    /**
+     * @param string $outline
+     * @return JsonResponse
+     */
     public function rename($outline)
     {
         if (!$this->authorize('outline.rename')) {
@@ -113,6 +130,10 @@ class Configurations extends HtmlController
         return new JsonResponse(['html' => 'Outline renamed.', 'id' => "outline-{$outline}", 'outline' => $html]);
     }
 
+    /**
+     * @param string $outline
+     * @return JsonResponse
+     */
     public function duplicateForm($outline)
     {
         if (!$this->authorize('outline.create')) {
@@ -130,6 +151,10 @@ class Configurations extends HtmlController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param string $outline
+     * @return JsonResponse
+     */
     public function duplicate($outline)
     {
         if (!$this->authorize('outline.create')) {
@@ -148,6 +173,11 @@ class Configurations extends HtmlController
         return new JsonResponse(['html' => 'Outline duplicated.', 'id' => $id, 'outline' => $html]);
     }
 
+    /**
+     * @param string $outline
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function delete($outline)
     {
         if (!$this->authorize('outline.delete')) {

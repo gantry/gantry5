@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,20 +16,35 @@ namespace Gantry\Admin;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme as SiteTheme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Particles
+ * @package Gantry\Admin
+ */
 class Particles
 {
+    /** @var Gantry */
     protected $container;
     protected $files;
     protected $particles;
 
+    /**
+     * Particles constructor.
+     * @param Gantry $container
+     */
     public function __construct($container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @param string $outline
+     * @param string|null $particle
+     * @return bool
+     */
     public function overrides($outline, $particle = null)
     {
         if ($outline === 'default') {
@@ -50,6 +65,9 @@ class Particles
         return !empty($resource);
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         if (!$this->particles)
@@ -73,6 +91,10 @@ class Particles
         return $this->particles;
     }
 
+    /**
+     * @param array $exclude
+     * @return array
+     */
     public function group($exclude = [])
     {
         $particles = $this->all();
@@ -92,6 +114,10 @@ class Particles
         return $this->sort($list);
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     public function get($id)
     {
         if ($this->particles[$id]) {
@@ -122,6 +148,10 @@ class Particles
         return BlueprintForm::instance($id, 'gantry-blueprints://particles');
     }
 
+    /**
+     * @param array $blocks
+     * @return array
+     */
     protected function sort(array $blocks)
     {
         $list = [];
@@ -146,7 +176,11 @@ class Particles
         return $list;
     }
 
-
+    /**
+     * @param array $items
+     * @param array $ordering
+     * @return array
+     */
     protected function sortItems(array $items, array $ordering)
     {
         $list = [];
@@ -163,6 +197,9 @@ class Particles
         return $list;
     }
 
+    /**
+     * @return array
+     */
     protected function locateParticles()
     {
         if (!$this->files) {

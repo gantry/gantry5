@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -30,6 +30,10 @@ use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 
+/**
+ * Class Gantry
+ * @package Gantry\Framework\Base
+ */
 abstract class Gantry extends Container
 {
     /**
@@ -38,6 +42,9 @@ abstract class Gantry extends Container
     protected static $instance;
     protected $wrapper;
 
+    /**
+     * @return Gantry
+     */
     public static function instance()
     {
         if (!self::$instance) {
@@ -51,6 +58,9 @@ abstract class Gantry extends Container
         return self::$instance;
     }
 
+    /**
+     * @return Gantry
+     */
     public static function restart()
     {
         self::$instance = null;
@@ -155,6 +165,10 @@ abstract class Gantry extends Container
         return $events->dispatch($eventName, $event);
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     public function route($path)
     {
         $routes = $this->offsetGet('routes');
@@ -173,6 +187,11 @@ abstract class Gantry extends Container
         return preg_replace('|/+|', '/', '/' . $this->offsetGet('base_url') . sprintf($route, $path));
     }
 
+    /**
+     * @param string $action
+     * @param string|null $id
+     * @return bool
+     */
     public function authorize($action, $id = null)
     {
         return $this['platform']->authorize($action, $id);
@@ -187,6 +206,9 @@ abstract class Gantry extends Container
         return $this->wrapper;
     }
 
+    /**
+     * @return Gantry
+     */
     protected static function init()
     {
         /** @var Gantry $instance */

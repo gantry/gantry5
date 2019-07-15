@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,6 +20,10 @@ use Gantry\Component\Url\Url;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class HtmlDocument
+ * @package Gantry\Component\Content\Document
+ */
 class HtmlDocument
 {
     use GantryTrait;
@@ -196,6 +200,10 @@ class HtmlDocument
         return $success;
     }
 
+    /**
+     * @param string $location
+     * @return array
+     */
     public static function getStyles($location = 'head')
     {
         static::getObject();
@@ -234,6 +242,10 @@ class HtmlDocument
         return $output;
     }
 
+    /**
+     * @param string $location
+     * @return array
+     */
     public static function getScripts($location = 'head')
     {
         static::getObject();
@@ -271,6 +283,10 @@ class HtmlDocument
         return $output;
     }
 
+    /**
+     * @param string $location
+     * @return array
+     */
     public static function getHtml($location = 'bottom')
     {
         static::getObject();
@@ -287,7 +303,7 @@ class HtmlDocument
     /**
      * Escape string (emulates twig filter).
      *
-     * @param string $string
+     * @param string|object $string
      * @return string
      */
     public static function escape($string, $strategy = 'html')
@@ -357,6 +373,9 @@ class HtmlDocument
         static::registerFrameworks();
     }
 
+    /**
+     * @return string
+     */
     public static function siteUrl()
     {
         return static::rootUri();
@@ -581,7 +600,7 @@ class HtmlDocument
      *
      * @param array $tokens
      * @param $html
-     * @return string|NUll
+     * @return string
      */
     protected static function replaceTokens(array $tokens, $html)
     {
@@ -674,6 +693,9 @@ class HtmlDocument
         static::addInlineScript(['content' => "jQuery(document).ready(function($) { jQuery('[data-rel^=lightcase]').lightcase({maxWidth: '100%', maxHeight: '100%', video: {width: '1280', height: '720'}}); });"], 0, 'footer');
     }
 
+    /**
+     * @return HtmlDocument
+     */
     protected static function getObject()
     {
         static $object;

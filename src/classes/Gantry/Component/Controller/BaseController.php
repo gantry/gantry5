@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,6 +17,10 @@ use Gantry\Framework\Request;
 use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
 
+/**
+ * Class BaseController
+ * @package Gantry\Component\Controller
+ */
 abstract class BaseController implements RestfulControllerInterface
 {
     /**
@@ -63,6 +67,10 @@ abstract class BaseController implements RestfulControllerInterface
      */
     protected $container;
 
+    /**
+     * BaseController constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;

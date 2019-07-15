@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -69,6 +69,12 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         'anchor_class' => ''
     ];
 
+    /**
+     * Item constructor.
+     * @param AbstractMenu $menu
+     * @param string $name
+     * @param array $item
+     */
     public function __construct(AbstractMenu $menu, $name, array $item = [])
     {
         $this->menu = $menu;
@@ -90,6 +96,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         ] + static::$defaults;
     }
 
+    /**
+     * @return string
+     */
     public function getDropdown()
     {
         if (!$this->items['dropdown']) {
@@ -99,6 +108,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this->items['dropdown'];
     }
 
+    /**
+     * @return string
+     */
     public function serialize()
     {
         // FIXME: need to create collection class to gather the sibling data.
@@ -111,6 +123,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         ]);
     }
 
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         // FIXME: need to create collection class to gather the sibling data.
@@ -155,6 +170,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this->menu()[$this->items['parent_id']];
     }
 
+    /**
+     * @param string|int $column
+     * @return float|int
+     */
     public function columnWidth($column)
     {
         if (isset($this->items['columns'][$column])) {
@@ -164,6 +183,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return 100 / count($this->groups());
     }
 
+    /**
+     * @return array
+     */
     public function groups()
     {
         if ($this->groups) {
@@ -179,6 +201,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return [$this->children()];
     }
 
+    /**
+     * @return array
+     */
     public function children()
     {
         $list = [];
@@ -188,11 +213,18 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $list;
     }
 
+    /**
+     * @return bool
+     */
     public function hasChildren()
     {
         return !empty($this->children);
     }
 
+    /**
+     * @param int $i
+     * @return array
+     */
     public function getGroup($i)
     {
         $groups = $this->groups();
@@ -201,6 +233,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return isset($groups[$i]) ? $groups[$i] : [];
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function update(array $data)
     {
         $this->items = array_replace($this->items, $data);
@@ -208,6 +244,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
+    /**
+     * @param Item $child
+     * @return $this
+     */
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
@@ -217,6 +257,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
+    /**
+     * @param Item $child
+     * @return $this
+     */
     public function removeChild(Item $child)
     {
         unset($this->children[$child->alias]);
@@ -224,6 +268,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
+    /**
+     * @param array $ordering
+     * @return $this
+     */
     public function sortChildren($ordering)
     {
         // Array with keys that point to the items.
@@ -250,7 +298,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
-
+    /**
+     * @return $this
+     */
     public function reverse()
     {
         array_reverse($this->children, true);
@@ -259,6 +309,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
+    /**
+     * @param array $groups
+     * @return $this
+     */
     public function groupChildren(array $groups)
     {
         // Array with keys that point to the items.

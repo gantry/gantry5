@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,6 +19,10 @@ use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class AbstractAssignments
+ * @package Gantry\Component\Assignments
+ */
 abstract class AbstractAssignments
 {
     /**
@@ -55,7 +59,7 @@ abstract class AbstractAssignments
     protected $specialFilterMethod;
 
     /**
-     * @param string $configuration
+     * @param string|null $configuration
      */
     public function __construct($configuration = null)
     {
@@ -96,7 +100,7 @@ abstract class AbstractAssignments
     /**
      * List matching outlines sorted by score.
      *
-     * @param array $candidates
+     * @param array|null $candidates
      * @return array
      */
     public function scores(array $candidates = null)
@@ -109,7 +113,7 @@ abstract class AbstractAssignments
     /**
      * List matching outlines with matched assignments.
      *
-     * @param array $candidates
+     * @param array|null $candidates
      * @return array
      */
     public function matches(array $candidates = null)

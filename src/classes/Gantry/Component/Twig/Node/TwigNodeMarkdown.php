@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +13,18 @@
 
 namespace Gantry\Component\Twig\Node;
 
+/**
+ * Class TwigNodeMarkdown
+ * @package Gantry\Component\Twig\Node
+ */
 class TwigNodeMarkdown extends \Twig_Node implements \Twig_NodeOutputInterface
 {
+    /**
+     * TwigNodeMarkdown constructor.
+     * @param \Twig_Node $body
+     * @param $lineno
+     * @param string $tag
+     */
     public function __construct(\Twig_Node $body, $lineno, $tag = 'markdown')
     {
         parent::__construct(['body' => $body], [], $lineno, $tag);

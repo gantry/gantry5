@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,10 @@
 
 namespace Gantry\Component\Response;
 
+/**
+ * Class Response
+ * @package Gantry\Component\Response
+ */
 class Response
 {
     public $charset = 'utf-8';
@@ -46,6 +50,11 @@ class Response
         503 => 'Service Temporarily Unavailable'
     ];
 
+    /**
+     * Response constructor.
+     * @param string $content
+     * @param int $status
+     */
     public function __construct($content = '', $status = 200)
     {
         if ($content) {

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,6 +24,10 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Page
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Page extends HtmlController
 {
     protected $httpVerbs = [
@@ -49,6 +53,9 @@ class Page extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
@@ -89,6 +96,10 @@ class Page extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
 
+    /**
+     * @param string|null $id
+     * @return string
+     */
     public function save($id = null)
     {
         $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('page');
@@ -108,6 +119,10 @@ class Page extends HtmlController
         return $id ? $this->display($id) : $this->index();
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -199,6 +214,10 @@ class Page extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param string $name
+     * @return JsonResponse
+     */
     public function atom($name)
     {
         $outline = $this->params['outline'];
@@ -286,6 +305,10 @@ class Page extends HtmlController
         return new JsonResponse(['item' => $data->toArray()]);
     }
 
+    /**
+     * @param string $id
+     * @param array $data
+     */
     protected function saveItem($id, $data)
     {
         /** @var UniformResourceLocator $locator */
@@ -323,6 +346,9 @@ class Page extends HtmlController
         $file->free();
     }
 
+    /**
+     * @return array|null
+     */
     protected function getDeprecatedAtoms()
     {
         $id     = $this->params['outline'];
@@ -331,6 +357,10 @@ class Page extends HtmlController
         return $layout->atoms();
     }
 
+    /**
+     * @param bool $onlyEnabled
+     * @return array
+     */
     protected function getAtoms($onlyEnabled = false)
     {
         $config = $this->container['config'];

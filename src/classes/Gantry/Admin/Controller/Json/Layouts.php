@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -36,7 +36,10 @@ class Layouts extends JsonController
             '/particle' => 'particle'
         ]
     ];
-    
+
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $path = implode('/', func_get_args());
@@ -112,6 +115,9 @@ class Layouts extends JsonController
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function particle()
     {
         $post = $this->request->request;
@@ -192,9 +198,8 @@ class Layouts extends JsonController
      * @param string $outline
      * @param string $particle
      * @param string $selected
-     * @return string
+     * @return array
      */
-
     protected function getParticleInstances($outline, $particle, $selected)
     {
         $list = $outline ? $this->container['outlines']->getParticleInstances($outline, $particle, false) : [];

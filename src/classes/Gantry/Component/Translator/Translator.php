@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,6 +17,10 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Translator
+ * @package Gantry\Component\Translator
+ */
 class Translator implements TranslatorInterface
 {
     protected $default = 'en';
@@ -25,6 +29,10 @@ class Translator implements TranslatorInterface
     protected $translations = [];
     protected $untranslated = [];
 
+    /**
+     * @param string $string
+     * @return string
+     */
     public function translate($string)
     {
         if (preg_match('|^GANTRY5(_[A-Z0-9]+){2,}$|', $string)) {
@@ -60,11 +68,20 @@ class Translator implements TranslatorInterface
         return $previous;
     }
 
+    /**
+     * @return array
+     */
     public function untranslated()
     {
         return $this->untranslated;
     }
 
+    /**
+     * @param string $language
+     * @param string $section
+     * @param string $string
+     * @return string|null
+     */
     protected function find($language, $section, $string)
     {
         if (!isset($this->sections[$language][$section])) {
@@ -88,6 +105,11 @@ class Translator implements TranslatorInterface
         return $this->translations[$language][$string];
     }
 
+    /**
+     * @param string $language
+     * @param string $section
+     * @return array
+     */
     protected function load($language, $section)
     {
         $gantry = Gantry::instance();

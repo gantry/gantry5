@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -91,7 +91,7 @@ class Format2
      * @param array $content
      * @param int $scope
      * @param object $parent
-     * @return array
+     * @return object
      */
     protected function parse($field, array &$content, $scope = 0, $parent = null)
     {
@@ -168,7 +168,7 @@ class Format2
      * @param string $field
      * @param int $scope
      * @param object $parent
-     * @return array
+     * @return object
      */
     protected function resolve($field, $scope, $parent)
     {
@@ -498,7 +498,7 @@ class Format2
     /**
      * @param string $type
      * @param string $subtype
-     * @param string $id
+     * @param string|int $id
      * @return string
      */
     protected function id($type, $subtype = null, $id = null)

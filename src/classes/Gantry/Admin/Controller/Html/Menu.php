@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -27,6 +27,10 @@ use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Menu
+ * @package Gantry\Admin\Controller\Html
+ */
 class Menu extends HtmlController
 {
     protected $httpVerbs = [
@@ -71,6 +75,12 @@ class Menu extends HtmlController
         ]
     ];
 
+    /**
+     * @param string $method
+     * @param array $path
+     * @param array $params
+     * @return mixed // TODO?
+     */
     public function execute($method, array $path, array $params)
     {
         if (!$this->authorize('menu.manage')) {
@@ -80,6 +90,10 @@ class Menu extends HtmlController
         return parent::execute($method, $path, $params);
     }
 
+    /**
+     * @param string|null $id
+     * @return string
+     */
     public function item($id = null)
     {
         // Load the menu.
@@ -131,6 +145,10 @@ class Menu extends HtmlController
         }
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function edit($id)
     {
         $resource = $this->loadResource($id);
@@ -147,6 +165,9 @@ class Menu extends HtmlController
         return $this->render('@gantry-admin/pages/menu/edit.html.twig', $this->params);
     }
 
+    /**
+     * @param string|null $id
+     */
     public function save($id = null)
     {
         $resource = $this->loadResource($id);
@@ -172,6 +193,10 @@ class Menu extends HtmlController
         $file->free();
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function editItem($id)
     {
         // All extra arguments become the path.
@@ -213,6 +238,9 @@ class Menu extends HtmlController
         return $this->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
     }
 
+    /**
+     * @return string
+     */
     public function particle()
     {
         $data = $this->request->post['item'];
@@ -255,7 +283,10 @@ class Menu extends HtmlController
         return $this->render('@gantry-admin/pages/menu/particle.html.twig', $this->params);
     }
 
-
+    /**
+     * @param string $name
+     * @return JsonResponse
+     */
     public function validateParticle($name)
     {
         // Validate only exists for JSON.
@@ -302,11 +333,17 @@ class Menu extends HtmlController
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html]);
     }
 
+    /**
+     * @return string
+     */
     public function selectModule()
     {
         return $this->render('@gantry-admin/modals/module-picker.html.twig', $this->params);
     }
 
+    /**
+     * @return string
+     */
     public function selectWidget()
     {
         $this->params['next'] = 'menu/widget';
@@ -323,6 +360,9 @@ class Menu extends HtmlController
         return $this->executeForward('widget', 'POST', $path, $this->params);
     }
 
+    /**
+     * @return string
+     */
     public function selectParticle()
     {
         $groups = [
@@ -357,6 +397,10 @@ class Menu extends HtmlController
         return $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return JsonResponse
+     */
     public function validate($id)
     {
         // Validate only exists for JSON.
@@ -378,6 +422,10 @@ class Menu extends HtmlController
         return new JsonResponse(['settings' => (array) $data->get('settings')]);
     }
 
+    /**
+     * @param string $id
+     * @return JsonResponse
+     */
     public function validateitem($id)
     {
         // All extra arguments become the path.
@@ -419,6 +467,10 @@ class Menu extends HtmlController
         return new JsonResponse(['path' => implode('/', $path), 'item' => $data->toArray(), 'html' => $html]);
     }
 
+    /**
+     * @param int $level
+     * @return string
+     */
     protected function layoutName($level)
     {
         switch ($level) {
@@ -436,7 +488,6 @@ class Menu extends HtmlController
      *
      * @param string $id
      * @param Config $config
-     *
      * @return \Gantry\Component\Menu\AbstractMenu
      * @throws \RuntimeException
      */
@@ -452,7 +503,6 @@ class Menu extends HtmlController
      * Load blueprints.
      *
      * @param string $name
-     *
      * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
@@ -460,7 +510,10 @@ class Menu extends HtmlController
         return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 
-
+    /**
+     * @param Input $input
+     * @return Config|null
+     */
     public function build(Input $input)
     {
         try {
@@ -511,6 +564,9 @@ class Menu extends HtmlController
         return $data;
     }
 
+    /**
+     * @return array
+     */
     protected function getParticles()
     {
         $particles = $this->container['particles']->all();

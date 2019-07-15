@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,8 +17,15 @@ use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Assignments as AssignmentsObject;
 use RocketTheme\Toolbox\Event\Event;
 
+/**
+ * Class Assignments
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Assignments extends HtmlController
 {
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
@@ -34,6 +41,9 @@ class Assignments extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
 
+    /**
+     * @return string
+     */
     public function store()
     {
         // Authorization.
@@ -65,6 +75,10 @@ class Assignments extends HtmlController
         return '';
     }
 
+    /**
+     * @param string $outline
+     * @return bool
+     */
     protected function hasAssignments($outline)
     {
         // Default outline and system outlines cannot have assignments.

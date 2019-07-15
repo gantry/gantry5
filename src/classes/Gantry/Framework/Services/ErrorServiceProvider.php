@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -23,15 +23,27 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Whoops\Util\Misc;
 
+/**
+ * Class ErrorServiceProvider
+ * @package Gantry\Framework\Services
+ */
 class ErrorServiceProvider implements ServiceProviderInterface
 {
+    /** @var string */
     protected $format;
 
+    /**
+     * ErrorServiceProvider constructor.
+     * @param string $format
+     */
     public function __construct($format = 'html')
     {
         $this->format = $format;
     }
 
+    /**
+     * @param Container $container
+     */
     public function register(Container $container)
     {
         /** @var UniformResourceLocator $locator */

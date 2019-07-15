@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,10 +13,22 @@
 
 namespace Gantry\Component\Twig\Node;
 
+/**
+ * Class TwigNodeAssets
+ * @package Gantry\Component\Twig\Node
+ */
 class TwigNodeAssets extends \Twig_Node implements \Twig_NodeCaptureInterface
 {
     protected $tagName = 'assets';
 
+    /**
+     * TwigNodeAssets constructor.
+     * @param \Twig_Node|null $body
+     * @param \Twig_Node_Expression|null $location
+     * @param \Twig_Node_Expression|null $variables
+     * @param int $lineno
+     * @param null $tag
+     */
     public function __construct(\Twig_Node $body = null, \Twig_Node_Expression $location = null, \Twig_Node_Expression $variables = null, $lineno = 0, $tag = null)
     {
         parent::__construct(['body' => $body, 'location' => $location, 'variables' => $variables], [], $lineno, $tag);

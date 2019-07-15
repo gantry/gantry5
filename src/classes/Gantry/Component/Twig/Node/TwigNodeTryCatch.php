@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +13,19 @@
 
 namespace Gantry\Component\Twig\Node;
 
+/**
+ * Class TwigNodeTryCatch
+ * @package Gantry\Component\Twig\Node
+ */
 class TwigNodeTryCatch extends \Twig_Node
 {
+    /**
+     * TwigNodeTryCatch constructor.
+     * @param \Twig_Node $try
+     * @param \Twig_Node|null $catch
+     * @param int $lineno
+     * @param null $tag
+     */
     public function __construct(\Twig_Node $try, \Twig_Node $catch = null, $lineno = 0, $tag = null)
     {
         parent::__construct(array('try' => $try, 'catch' => $catch), array(), $lineno, $tag);

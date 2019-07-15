@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,6 +19,10 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Module
+ * @package Gantry\Component\Position
+ */
 class Module implements \ArrayAccess
 {
     use NestedArrayAccessWithGetters, Export;
@@ -47,6 +51,10 @@ class Module implements \ArrayAccess
         }
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function update(array $data)
     {
         $this->init($data);
@@ -100,6 +108,9 @@ class Module implements \ArrayAccess
         return $this->name ? $this->file()->exists() : false;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return  ['position' => $this->position, 'id' => $this->name] + $this->items;
@@ -112,6 +123,9 @@ class Module implements \ArrayAccess
         $file->free();
     }
 
+    /**
+     * @param array $data
+     */
     protected function init($data)
     {
         unset($data['id'], $data['position']);
@@ -132,6 +146,10 @@ class Module implements \ArrayAccess
         }
     }
 
+    /**
+     * @param bool $save
+     * @return CompiledYamlFile
+     */
     protected function file($save = false)
     {
         $position = $this->position ?: '_unassigned_';

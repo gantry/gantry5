@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,6 +22,10 @@ use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ThemeInstaller
+ * @package Gantry\Component\Theme
+ */
 abstract class ThemeInstaller
 {
     /**
@@ -36,6 +40,10 @@ abstract class ThemeInstaller
     protected $outlines;
     protected $script;
 
+    /**
+     * ThemeInstaller constructor.
+     * @param string|null $extension
+     */
     public function __construct($extension = null)
     {
         if ($extension) {
@@ -314,6 +322,10 @@ abstract class ThemeInstaller
         return true;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     protected function translate($text)
     {
         $translator = Gantry::instance()['translator'];
@@ -322,7 +334,6 @@ abstract class ThemeInstaller
 
         return call_user_func_array([$translator, 'translate'], $args);
     }
-
 
     protected function getInstallerScript()
     {

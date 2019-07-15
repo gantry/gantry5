@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,10 @@
 
 namespace Gantry\Component\Response;
 
+/**
+ * Class JsonResponse
+ * @package Gantry\Component\Response
+ */
 class JsonResponse extends Response
 {
     public $mimeType = 'application/json';
@@ -24,7 +28,7 @@ class JsonResponse extends Response
     protected $content = [];
 
     /**
-     * @param string $content
+     * @param string|array $content
      * @param bool $success
      * @return $this
      */
@@ -74,6 +78,10 @@ class JsonResponse extends Response
         return (string) json_encode($json);
     }
 
+    /**
+     * @param int|string|null $key
+     * @param $value
+     */
     protected function parseValue($key, $value)
     {
         if ($value instanceof \Exception) {
@@ -99,6 +107,10 @@ class JsonResponse extends Response
         }
     }
 
+    /**
+     * @param \Exception $e
+     * @return array
+     */
     protected function parseException(\Exception $e)
     {
         $this->code = $e->getCode();

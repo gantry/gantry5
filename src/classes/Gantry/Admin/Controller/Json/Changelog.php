@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,6 +17,10 @@ use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
 
+/**
+ * Class Changelog
+ * @package Gantry\Admin\Controller\Json
+ */
 class Changelog extends JsonController
 {
     protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
@@ -33,6 +37,9 @@ class Changelog extends JsonController
         ]
     ];
 
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $version = $this->request->post['version'];

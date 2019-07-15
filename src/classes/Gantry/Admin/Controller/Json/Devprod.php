@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,8 +17,15 @@ use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\Event\Event;
 
+/**
+ * Class Devprod
+ * @package Gantry\Admin\Controller\Json
+ */
 class Devprod extends JsonController
 {
+    /**
+     * @return JsonResponse
+     */
     public function store()
     {
         $production = intval((bool)$this->request->post['mode']);
@@ -36,6 +43,7 @@ class Devprod extends JsonController
             'title' => $production ? 'Production' : 'Development',
             'html' => $production ? 'Production mode enabled' : 'Development mode enabled',
         ];
+
         return new JsonResponse($response);
     }
 }

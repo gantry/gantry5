@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -23,6 +23,10 @@ use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class OutlineCollection
+ * @package Gantry\Component\Outline
+ */
 class OutlineCollection extends Collection
 {
     /**
@@ -63,12 +67,17 @@ class OutlineCollection extends Collection
         return isset($this->items[$id]) ? $this->items[$id] : $id;
     }
 
-
+    /**
+     * @return $this
+     */
     public function all()
     {
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function system()
     {
         foreach ($this->items as $key => $item) {
@@ -80,6 +89,9 @@ class OutlineCollection extends Collection
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function user()
     {
         foreach ($this->items as $key => $item) {
@@ -91,6 +103,10 @@ class OutlineCollection extends Collection
         return $this;
     }
 
+    /**
+     * @param string[]|null $include
+     * @return $this
+     */
     public function filter(array $include = null)
     {
         if ($include !== null) {
@@ -680,6 +696,10 @@ class OutlineCollection extends Collection
         return "{$name}_{$count}";
     }
 
+    /**
+     * @param string $path
+     * @return FilesystemIterator|UniformResourceIterator
+     */
     protected function getFilesystemIterator($path)
     {
         /** @var UniformResourceLocator $locator */

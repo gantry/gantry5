@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,11 +24,18 @@ class Format1
 
     protected $keys = [];
 
+    /**
+     * Format1 constructor.
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
+    /**
+     * @return array
+     */
     public function load()
     {
         $data = &$this->data;
@@ -64,11 +71,20 @@ class Format1
         return ['preset' => $preset] + $result;
     }
 
+    /**
+     * @param array $preset
+     * @param array $structure
+     * @return array
+     */
     public function store(array $preset, array $structure)
     {
         return ['preset' => $preset, 'children' => $structure];
     }
 
+    /**
+     * @param $item
+     * @param bool $container
+     */
     protected function normalize(&$item, $container = false)
     {
         if ($item->type === 'pagecontent') {
@@ -148,7 +164,7 @@ class Format1
      * @param array $content
      * @param int $scope
      * @param bool|null $container
-     * @return array
+     * @return object
      */
     protected function parse($field, array $content, $scope, $container = true)
     {
@@ -211,7 +227,7 @@ class Format1
     /**
      * @param string $field
      * @param int $scope
-     * @return array
+     * @return object
      */
     protected function resolve($field, $scope)
     {
@@ -254,6 +270,11 @@ class Format1
     }
 
 
+    /**
+     * @param string $type
+     * @param string|null $subtype
+     * @return string
+     */
     protected function id($type, $subtype = null)
     {
         if ($type === 'atoms') {

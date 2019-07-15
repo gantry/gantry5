@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -30,6 +30,10 @@ use Gantry\Framework\Markdown\ParsedownExtra;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 
+/**
+ * Class TwigExtension
+ * @package Gantry\Component\Twig
+ */
 class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     use GantryTrait;
@@ -209,6 +213,12 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return json_decode(html_entity_decode($str), $assoc, $depth, $options);
     }
 
+    /**
+     * @param mixed $src
+     * @param bool $attrib
+     * @param bool $remote
+     * @return array|string
+     */
     public function imageSize($src, $attrib = true, $remote = false)
     {
         // TODO: need to better handle absolute and relative paths
@@ -324,6 +334,11 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return $array ? ' ' . implode(' ', $array) : '';
     }
 
+    /**
+     * @param string $a
+     * @param string|array $b
+     * @return bool
+     */
     public function is_selectedFunc($a, $b)
     {
         $b = (array) $b;
@@ -544,6 +559,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return implode("\n", $raw);
     }
 
+    /**
+     * @param string $value
+     * @return bool
+     */
     public function colorContrastFunc($value)
     {
         $value = str_replace(' ', '', $value);
@@ -664,6 +683,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return "{$difference} {$period} {$tense}";
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function getCookie($name)
     {
         $gantry = Gantry::instance();
@@ -674,6 +697,12 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return $request->cookie[$name];
     }
 
+    /**
+     * @param $pattern
+     * @param $subject
+     * @param array $matches
+     * @return array|bool
+     */
     public function pregMatch($pattern, $subject, &$matches = [])
     {
         preg_match($pattern, $subject, $matches);

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -34,7 +34,10 @@ class Atoms extends JsonController
             '/instance' => 'atom'
         ]
     ];
-    
+
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $path = implode('/', func_get_args());
@@ -97,6 +100,9 @@ class Atoms extends JsonController
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function atom()
     {
         $post = $this->request->request;

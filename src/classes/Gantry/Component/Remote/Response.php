@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +13,10 @@
 
 namespace Gantry\Component\Remote;
 
+/**
+ * Class Response
+ * @package Gantry\Component\Remote
+ */
 class Response
 {
     /**
@@ -124,9 +128,6 @@ class Response
 
     /**
      * Progress normalized for cURL and fopen
-     *
-     * @return array Normalized array with useful data.
-     *               Format: ['code' => int|false, 'filesize' => bytes, 'transferred' => bytes, 'percent' => int]
      */
     public static function progress()
     {

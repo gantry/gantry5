@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,10 @@ namespace Gantry\Framework\Markdown;
 
 use Gantry\Framework\Gantry;
 
+/**
+ * Trait ParsedownTrait
+ * @package Gantry\Framework\Markdown
+ */
 trait ParsedownTrait
 {
     protected $special_chars;
@@ -47,7 +51,6 @@ trait ParsedownTrait
      * Setter for special chars
      *
      * @param $special_chars
-     *
      * @return $this
      */
     public function setSpecialChars($special_chars)
@@ -72,6 +75,10 @@ trait ParsedownTrait
         return null;
     }
 
+    /**
+     * @param array $excerpt
+     * @return array|null
+     */
     protected function inlineSpecialCharacter($excerpt)
     {
         if ($excerpt['text'][0] === '&' && !preg_match('/^&#?\w+;/', $excerpt['text'])) {
@@ -91,6 +98,10 @@ trait ParsedownTrait
         return null;
     }
 
+    /**
+     * @param $array excerpt
+     * @return array
+     */
     protected function inlineImage($excerpt)
     {
         if (preg_match($this->twig_link_regex, $excerpt['text'], $matches)) {
@@ -115,6 +126,10 @@ trait ParsedownTrait
         return $excerpt;
     }
 
+    /**
+     * @param array $excerpt
+     * @return array
+     */
     protected function inlineLink($excerpt)
     {
         if (!isset($excerpt['type'])) {

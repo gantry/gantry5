@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@ namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\Content\Block\ContentBlock;
+use Gantry\Component\Content\Block\ContentBlockInterface;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
@@ -246,6 +247,9 @@ trait ThemeTrait
         return $this->cssCache[$name];
     }
 
+    /**
+     * @return array
+     */
     public function getCssVariables()
     {
         if ($this->preset) {
@@ -680,7 +684,7 @@ trait ThemeTrait
      *
      * @param object|array $item
      * @param array $options
-     * @return ContentBlock
+     * @return ContentBlock|ContentBlockInterface
      * @since 5.4.3
      */
     public function getContent($item, $options = [])

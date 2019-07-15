@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,6 +18,10 @@ use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 
+/**
+ * Class Input
+ * @package Gantry\Component\Request
+ */
 class Input implements \ArrayAccess, \Iterator, ExportInterface
 {
     use NestedArrayAccessWithGetters, Iterator, Export;

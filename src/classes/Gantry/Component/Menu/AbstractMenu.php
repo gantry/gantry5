@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,6 +22,10 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class AbstractMenu
+ * @package Gantry\Component\Menu
+ */
 abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
     use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
@@ -187,16 +191,25 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $this->config;
     }
 
+    /**
+     * @return string
+     */
     public function name()
     {
         return $this->params['menu'];
     }
 
+    /**
+     * @return mixed // TOOD?
+     */
     public function root()
     {
         return $this->offsetGet('');
     }
 
+    /**
+     * @return array
+     */
     public function ordering()
     {
         $list = [];
@@ -218,6 +231,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $list;
     }
 
+    /**
+     * @param bool $withdefaults
+     * @return array
+     */
     public function items($withdefaults = true)
     {
         $list = [];
@@ -230,6 +247,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function settings()
     {
         return (array) $this->config()->get('settings');
@@ -267,6 +287,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $this->active ?: '-inactive-';
     }
 
+    /**
+     * @param object $item
+     * @return bool
+     */
     public function isActive($item)
     {
         $active = $this->getActive();
@@ -278,6 +302,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return false;
     }
 
+    /**
+     * @param object $item
+     * @return bool
+     */
     public function isCurrent($item)
     {
         $active = $this->getActive();
@@ -285,11 +313,18 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $item && $active && $item->path === $active->path;
     }
 
+    /**
+     * @param $params
+     */
     public function init(&$params)
     {
         $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
     }
 
+    /**
+     * @param Item $item
+     * @return $this
+     */
     public function add(Item $item)
     {
         $this->items[$item->path] = $item;
@@ -432,6 +467,10 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     }
 
+    /**
+     * @param array $array
+     * @return bool
+     */
     protected function isAssoc(array $array)
     {
         return (array_values($array) !== $array);
