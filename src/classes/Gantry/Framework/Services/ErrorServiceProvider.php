@@ -14,6 +14,7 @@
 namespace Gantry\Framework\Services;
 
 use Gantry\Component\Whoops\SystemFacade;
+use Gantry\Debugger;
 use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -66,7 +67,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $errors->pushHandler($error_page);
 
-        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json');
+        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
             $json_handler = new JsonResponseHandler;
             //$json_handler->setJsonApi(true);
@@ -79,7 +80,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $container['errors'] = $errors;
 
         if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setErrorHandler')) {
-            \Gantry\Debugger::setErrorHandler();
+            Debugger::setErrorHandler();
         }
     }
 }

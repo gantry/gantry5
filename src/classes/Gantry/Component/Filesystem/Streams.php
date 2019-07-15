@@ -86,7 +86,7 @@ class Streams
                 }
             }
             $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';
-            if ($type[0] != '\\') {
+            if ($type[0] !== '\\') {
                 $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
             }
             $this->schemes[$scheme] = $type;
@@ -112,7 +112,7 @@ class Streams
      */
     protected function doRegister($scheme, $type)
     {
-        if (in_array($scheme, $this->registered)) {
+        if (in_array($scheme, $this->registered, true)) {
             stream_wrapper_unregister($scheme);
         }
 

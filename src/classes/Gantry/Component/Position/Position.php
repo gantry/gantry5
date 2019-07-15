@@ -221,7 +221,7 @@ class Position extends Collection
         if (!$value instanceof Position) {
             throw new \InvalidArgumentException('Value has to be instance of Position');
         }
-        if (is_null($offset)) {
+        if (null === $offset) {
             $this->items[] = $value->name;
             $this->modules[$value->name] = $value;
         } else {
@@ -336,7 +336,7 @@ class Position extends Collection
     {
         if ($data === null) {
             $file = $this->file();
-            $data = $file->content();
+            $data = (array)$file->content();
             $file->free();
         }
 
@@ -344,7 +344,7 @@ class Position extends Collection
 
         if (isset($data['modules'])) {
             foreach ($data['modules'] as $array) {
-                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: rand());
+                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: mt_rand());
             }
 
             return;

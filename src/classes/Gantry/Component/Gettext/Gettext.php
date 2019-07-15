@@ -45,7 +45,7 @@ class Gettext
         $this->str = $string;
         $this->len = strlen($string);
 
-        $magic = self::readInt() & 0xffffffff;
+        $magic = $this->readInt() & 0xffffffff;
 
         if ($magic === 0x950412de) {
             // Low endian.
@@ -58,18 +58,18 @@ class Gettext
         }
 
         // Skip revision number.
-        self::readInt();
+        $this->readInt();
         // Total count.
-        $total = self::readInt();
+        $total = $this->readInt();
         // Offset of original table.
-        $originals = self::readInt();
+        $originals = $this->readInt();
         // Offset of translation table.
-        $translations = self::readInt();
+        $translations = $this->readInt();
 
         $this->seek($originals);
-        $table_originals = self::readIntArray($total * 2);
+        $table_originals = $this->readIntArray($total * 2);
         $this->seek($translations);
-        $table_translations = self::readIntArray($total * 2);
+        $table_translations = $this->readIntArray($total * 2);
 
         $items = [];
         for ($i = 0; $i < $total; $i++) {

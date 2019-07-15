@@ -148,12 +148,12 @@ abstract class Folder
             $iterator = new \FilesystemIterator($path);
         }
 
-        $results = array();
+        $results = [];
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
             // Ignore hidden files.
-            if ($file->getFilename()[0] == '.') {
+            if ($file->getFilename()[0] === '.') {
                 continue;
             }
             if (!$folders && $file->isDir()) {
@@ -286,7 +286,9 @@ abstract class Folder
      */
     public static function delete($target, $include_target = true)
     {
-        if (!$target) { return; }
+        if (!$target) {
+            return;
+        }
 
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
@@ -345,7 +347,7 @@ abstract class Folder
         }
 
         // Go through all items in filesystem and recursively remove everything.
-        $files = array_diff(scandir($folder), array('.', '..'));
+        $files = array_diff(scandir($folder), ['.', '..']);
         foreach ($files as $file) {
             $path = "{$folder}/{$file}";
             (is_dir($path)) ? self::doDelete($path) : @unlink($path);

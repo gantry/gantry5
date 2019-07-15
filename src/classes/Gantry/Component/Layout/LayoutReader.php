@@ -59,16 +59,16 @@ class LayoutReader
     /**
      * Read layout from yaml file and return parsed version of it.
      *
-     * @param string $file
+     * @param string $filename
      * @return array
      */
-    public static function read($file)
+    public static function read($filename)
     {
-        if (!$file) {
+        if (!$filename) {
             return [];
         }
 
-        $file = CompiledYamlFile::instance($file);
+        $file = CompiledYamlFile::instance($filename);
         $content = (array) $file->content();
         $file->free();
 

@@ -90,7 +90,7 @@ class Format1
         if ($item->type === 'pagecontent') {
             // Update pagecontent to match the new standards.
             $item->type = 'system';
-            if (!$item->subtype || $item->subtype == 'pagecontent') {
+            if (!$item->subtype || $item->subtype === 'pagecontent') {
                 $item->subtype = 'content';
                 $item->title = 'Page Content';
             } else {
@@ -173,7 +173,7 @@ class Format1
             $type = $this->scopes[$scope];
             $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
-        } elseif (substr($field, 0, 9) == 'container') {
+        } elseif (substr($field, 0, 9) === 'container') {
             // Container
             $type = 'container';
             $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
@@ -290,7 +290,8 @@ class Format1
         }
         $key = implode('-', $result);
 
-        while ($id = rand(1000, 9999)) {
+        while (true) {
+            $id = mt_rand(1000, 9999);
             if (!isset($this->keys[$key][$id])) {
                 break;
             }

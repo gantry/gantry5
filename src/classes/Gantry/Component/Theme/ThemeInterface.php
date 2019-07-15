@@ -59,7 +59,7 @@ interface ThemeInterface
      * @param array $context
      * @return string
      */
-    public function render($file, array $context = array());
+    public function render($file, array $context = []);
 
     // ThemeTrait class
 

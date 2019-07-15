@@ -39,6 +39,7 @@ class Format0 extends Format1
                 unset($result[$key]);
             }
         }
+        unset($item);
 
         $result += $invisible;
 

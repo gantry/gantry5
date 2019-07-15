@@ -95,7 +95,7 @@ class OutlineCollection extends Collection
     public function user()
     {
         foreach ($this->items as $key => $item) {
-            if (substr($key, 0, 1) === '_' || $key == 'default') {
+            if ($key === 'default' || substr($key, 0, 1) === '_') {
                 unset($this->items[$key]);
             }
         }
@@ -111,7 +111,7 @@ class OutlineCollection extends Collection
     {
         if ($include !== null) {
             foreach ($this->items as $key => $item) {
-                if (!in_array($key, $include)) {
+                if (!in_array($key, $include, true)) {
                     unset($this->items[$key]);
                 }
             }
@@ -217,7 +217,7 @@ class OutlineCollection extends Collection
 
         foreach ($this->items as $name => $title) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
-            $index = $file->content();
+            $index = (array)$file->content();
             $file->free();
             if (isset($index['atoms'])) {
                 foreach ($index['atoms'] as $atom) {
@@ -291,7 +291,7 @@ class OutlineCollection extends Collection
         $list = [];
 
         $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
-        $head = $file->content();
+        $head = (array)$file->content();
         $file->free();
         if (isset($head['atoms'])) {
             foreach ($head['atoms'] as $atom) {
@@ -316,12 +316,12 @@ class OutlineCollection extends Collection
         $list = [];
         foreach ($this->items as $name => $title) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$name}/page/head.yaml");
-            $head = $file->content();
+            $head = (array)$file->content();
             $file->free();
 
             if (isset($head['atoms'])) {
                 foreach ($head['atoms'] as $atom) {
-                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] == $outline && (!$id || $atom['inherit']['atom'] == $id)) {
+                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] === $outline && (!$id || $atom['inherit']['atom'] == $id)) {
                         $list[$name] = $title;
                     }
                 }
@@ -433,7 +433,7 @@ class OutlineCollection extends Collection
         $files = [];
         /** @var FilesystemIterator $info */
         foreach ($iterator as $name => $info) {
-            if (!$info->isDir() || $name[0] == '.' || !is_file($info->getPathname() . '/index.yaml')) {
+            if (!$info->isDir() || $name[0] === '.' || !is_file($info->getPathname() . '/index.yaml')) {
                 continue;
             }
             $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
@@ -528,7 +528,7 @@ class OutlineCollection extends Collection
             // Copy everything over except index, layout and assignments.
             Folder::copy($path, $newPath, '/^(index|layout|assignments)\..*$/');
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Duplicating Outline failed: ', $e->getMessage()), 500, $e);
+            throw new \RuntimeException(sprintf('Duplicating Outline failed: %s', $e->getMessage()), 500, $e);
         }
 
         return $new;
@@ -593,7 +593,7 @@ class OutlineCollection extends Collection
     public function delete($id)
     {
         if (!$this->canDelete($id)) {
-            throw new \RuntimeException("Outline '$id' cannot be deleted", 400);
+            throw new \RuntimeException("Outline '{$id}' cannot be deleted", 400);
         }
 
         $gantry = $this->container;
@@ -638,11 +638,7 @@ class OutlineCollection extends Collection
      */
     public function canDelete($id)
     {
-        if (!$id || $id[0] === '_' || $id === 'default') {
-            return false;
-        }
-
-        return true;
+        return !(!$id || $id[0] === '_' || $id === 'default');
     }
 
     /**
@@ -682,7 +678,7 @@ class OutlineCollection extends Collection
 
         $name = $id;
         $count = 0;
-        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|u', $id, $matches)) {
             $matches += ['', '', ''];
             list (, $name, $count) = $matches;
         }

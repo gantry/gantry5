@@ -65,7 +65,7 @@ class Filepicker extends JsonController
 
         $this->base = $locator->base;
 
-        if ($this->method == 'POST') {
+        if ($this->method === 'POST') {
             $root         = $this->request->post['root'];
             $drives       = isset($root) ? ($root !== 'false' ? (array) $root : ['/']) : ['/'];
             $subfolder    = $this->request->post['subfolder'] ? true : false;
@@ -136,7 +136,7 @@ class Filepicker extends JsonController
                 /** @var \SplFileInfo $info */
                 foreach ($iterator as $info) {
                     // no dot files nor files beginning with dot
-                    if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') {
+                    if ($info->isDot() || substr($info->getFilename(), 0, 1) === '.') {
                         continue;
                     }
 
@@ -215,13 +215,13 @@ class Filepicker extends JsonController
             ['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable',
              'isDir', 'isFile'] as $method
         ) {
-            $keyMethod          = strtolower(preg_replace("/^(is|get)/", '', $method));
+            $keyMethod          = strtolower(preg_replace('/^(is|get)/', '', $method));
             $node->{$keyMethod} = $iteration->{$method}();
 
-            if ($method == 'getPathname') {
+            if ($method === 'getPathname') {
                 $node->{$keyMethod} = $this->isStream($folder) ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
             } else {
-                if ($method == 'getExtension') {
+                if ($method === 'getExtension') {
                     $node->isImage = in_array(strtolower($node->{$keyMethod}), ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp', 'webp']);
                 }
             }
@@ -242,7 +242,7 @@ class Filepicker extends JsonController
         /** @var \SplFileInfo $info */
         foreach ($iterator as $info) {
             // no dot files nor files beginning with dot
-            if ($info->isDot() || substr($info->getFilename(), 0, 1) == '.') {
+            if ($info->isDot() || substr($info->getFilename(), 0, 1) === '.') {
                 continue;
             }
 
@@ -455,9 +455,10 @@ class Filepicker extends JsonController
             case 'g':
             case 'gb':
                 return (int)$size_str * 1073741824;
-            default:
-                return $size_str;
         }
+
+        return $size_str;
+    }
 
     /**
      * @return JsonResponse

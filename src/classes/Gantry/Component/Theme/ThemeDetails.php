@@ -77,7 +77,7 @@ class ThemeDetails implements \ArrayAccess
         $details = $this;
 
         while ($details = $details->parent()) {
-            if (in_array($details->name, $loaded)) {
+            if (in_array($details->name, $loaded, true)) {
                 break;
             }
             $this->addStream($details->name, $details->getPaths(false));

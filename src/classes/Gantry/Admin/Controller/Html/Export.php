@@ -74,6 +74,8 @@ class Export extends HtmlController
             }
             unset($data['config']);
         }
+        unset($data);
+
         $zip->addFromString("outlines/outlines.yaml", Yaml::dump($exported['outlines'], 10, 2));
 
         foreach ($exported['menus'] as $menu => $data) {

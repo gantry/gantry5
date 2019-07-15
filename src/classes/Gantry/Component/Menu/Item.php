@@ -92,7 +92,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
             'alias' => $alias,
             'title' => ucfirst($alias),
             'link' => $name,
-            'parent_id' => $parent != '.' ? $parent : '',
+            'parent_id' => $parent !== '.' ? $parent : '',
         ] + static::$defaults;
     }
 

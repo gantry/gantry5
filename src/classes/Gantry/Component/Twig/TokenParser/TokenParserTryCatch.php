@@ -57,7 +57,7 @@ class TokenParserTryCatch extends \Twig_TokenParser
      */
     public function decideCatch(\Twig_Token $token)
     {
-        return $token->test(array('catch'));
+        return $token->test(['catch']);
     }
 
     /**
@@ -66,7 +66,7 @@ class TokenParserTryCatch extends \Twig_TokenParser
      */
     public function decideEnd(\Twig_Token $token)
     {
-        return $token->test(array('endtry')) || $token->test(array('endcatch'));
+        return $token->test(['endtry']) || $token->test(['endcatch']);
     }
 
     /**

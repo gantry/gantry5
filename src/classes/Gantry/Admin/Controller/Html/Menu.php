@@ -134,15 +134,15 @@ class Menu extends HtmlController
 
             return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
 
-        } else {
-            // Get layout name.
-            $layout = $this->layoutName(count($path) + (int) isset($group));
-
-            $this->params['item'] = $item;
-            $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
-
-            return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
         }
+
+        // Get layout name.
+        $layout = $this->layoutName(count($path) + (int) isset($group));
+
+        $this->params['item'] = $item;
+        $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+
+        return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
     }
 
     /**
@@ -204,7 +204,7 @@ class Menu extends HtmlController
         $keyword = end($path);
 
         // Special case: validate instead of fetching menu item.
-        if ($this->method == 'POST' && $keyword == 'validate') {
+        if ($this->method === 'POST' && $keyword === 'validate') {
             $params = array_slice(func_get_args(), 0, -1);
             return call_user_func_array([$this, 'validateitem'], $params);
         }

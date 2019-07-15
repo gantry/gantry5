@@ -192,20 +192,20 @@ class BlueprintForm extends BaseBlueprintForm
             $params = [];
         }
 
-        list($o, $f) = preg_split('/::/', $function, 2);
+        list($o, $f) = explode('::', $function, 2);
         if (!$f) {
             if (function_exists($o)) {
                 $data = call_user_func_array($o, $params);
             }
         } else {
             if (method_exists($o, $f)) {
-                $data = call_user_func_array(array($o, $f), $params);
+                $data = call_user_func_array([$o, $f], $params);
             }
         }
 
         // If function returns a value,
         if (isset($data)) {
-            if (isset($field[$property]) && is_array($field[$property]) && is_array($data)) {
+            if (is_array($data) && isset($field[$property]) && is_array($field[$property])) {
                 // Combine field and @data-field together.
                 $field[$property] += $data;
             } else {
@@ -227,7 +227,7 @@ class BlueprintForm extends BaseBlueprintForm
         $default = isset($field[$property]) ? $field[$property] : null;
         $config = Gantry::instance()['config']->get($value, $default);
 
-        if (!is_null($config)) {
+        if (null !== $config) {
             $field[$property] = $config;
         }
     }

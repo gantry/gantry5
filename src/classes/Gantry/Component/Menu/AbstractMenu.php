@@ -127,7 +127,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                 // In admin just select the first menu if there isn't default menu to be selected.
                 $params['menu'] = reset($menus);
             };
-        } elseif ($params['menu'] == '-active-') {
+        } elseif ($params['menu'] === '-active-') {
             $params['menu'] = $this->getActiveMenuName();
         }
         if (!$params['menu']) {
@@ -183,7 +183,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             $menu = $this->params['menu'];
 
             $file = CompiledYamlFile::instance($locator("gantry-config://menu/{$menu}.yaml"));
-            $this->config = new Config($file->content());
+            $this->config = new Config((array)$file->content());
             $this->config->def('settings.title', ucfirst($menu));
             $file->free();
         }
@@ -215,7 +215,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $list = [];
         foreach ($this->items as $name => $item) {
             $groups = $item->groups();
-            if (count($groups) == 1 && empty($groups[0])) {
+            if (count($groups) === 1 && empty($groups[0])) {
                 continue;
             }
 
@@ -295,11 +295,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     {
         $active = $this->getActive();
 
-        if ($active && $item && ($active->path === $item->path || strpos($active->path, $item->path . '/') === 0)) {
-            return true;
-        }
-
-        return false;
+        return $active && $item && ($active->path === $item->path || strpos($active->path, $item->path . '/') === 0);
     }
 
     /**

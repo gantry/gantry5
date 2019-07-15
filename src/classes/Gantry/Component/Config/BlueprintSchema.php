@@ -160,7 +160,7 @@ class BlueprintSchema extends BlueprintSchemaBase
             } elseif (is_array($field) && is_array($val)) {
                 // Array has been defined in blueprints.
                 $messages += $this->validateArray($field, $val);
-            } elseif (isset($rules['validation']) && $rules['validation'] == 'strict') {
+            } elseif (isset($rules['validation']) && $rules['validation'] === 'strict') {
                 // Undefined/extra item.
                 throw new \RuntimeException(sprintf('%s is not defined in blueprints', $key));
             }
@@ -177,7 +177,7 @@ class BlueprintSchema extends BlueprintSchemaBase
      */
     protected function filterArray(array $data, array $rules)
     {
-        $results = array();
+        $results = [];
         foreach ($data as $key => $field) {
             $val = isset($rules[$key]) ? $rules[$key] : (isset($rules['*']) ? $rules['*'] : null);
             $rule = is_string($val) ? $this->items[$val] : null;
@@ -188,7 +188,7 @@ class BlueprintSchema extends BlueprintSchemaBase
             } elseif (is_array($field) && is_array($val)) {
                 // Array has been defined in blueprints.
                 $field = $this->filterArray($field, $val);
-            } elseif (isset($rules['validation']) && $rules['validation'] == 'strict') {
+            } elseif (isset($rules['validation']) && $rules['validation'] === 'strict') {
                 $field = null;
             }
 
@@ -239,7 +239,7 @@ class BlueprintSchema extends BlueprintSchemaBase
         $default = isset($field[$property]) ? $field[$property] : null;
         $config = Gantry::instance()['config']->get($value, $default);
 
-        if (!is_null($config)) {
+        if (null !== $config) {
             $field[$property] = $config;
         }
     }

@@ -70,6 +70,7 @@ class Particle extends JsonController
         foreach ($particles as &$group) {
             asort($group);
         }
+        unset($group);
 
         foreach ($groups as $section => $children) {
             foreach ($children as $key => $child) {

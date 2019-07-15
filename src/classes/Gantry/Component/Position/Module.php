@@ -119,7 +119,7 @@ class Module implements \ArrayAccess
     protected function load()
     {
         $file = $this->file();
-        $this->init($file->content());
+        $this->init((array)$file->content());
         $file->free();
     }
 
@@ -170,7 +170,7 @@ class Module implements \ArrayAccess
     {
         $position = $this->position ?: '_unassigned_';
         $name = $this->get('type');
-        $name = $name == 'particle' ? $this->get('options.type') : $name;
+        $name = $name === 'particle' ? $this->get('options.type') : $name;
 
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];

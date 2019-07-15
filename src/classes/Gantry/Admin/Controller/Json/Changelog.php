@@ -45,12 +45,12 @@ class Changelog extends JsonController
         $version = $this->request->post['version'];
         $lookup = $version;
         
-        if ($version == '@version@') {
+        if ($version === '@version@') {
             $version = 'develop';
             $lookup  = '';
         }
 
-        if (substr($version, 0, 4) == 'dev-') {
+        if (strpos($version, 'dev-') === 0) {
             $version = preg_replace('/^dev-/i', '', $version);
             $lookup  = '';
         }
@@ -65,10 +65,10 @@ class Changelog extends JsonController
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
                 // auto-link issues
-                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" rel="noopener" href="' . $this->issues . '/$1">#$1</a>', $changelog);
+                $changelog = preg_replace("/#(\\d{1,})/ui", '<a target="_blank" rel="noopener" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
                 // auto-link contributors
-                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" rel="noopener" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
+                $changelog = preg_replace("/@([\\w]+)[^\\w]/ui", '<a target="_blank" rel="noopener" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
 
                 // add icons for platforms
                 foreach($this->platforms as $platform => $icon) {

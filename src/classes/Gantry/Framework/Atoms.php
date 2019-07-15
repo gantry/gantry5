@@ -60,7 +60,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         if (!isset(static::$instances[$outline])) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
-            $head = $file->content();
+            $head = (array)$file->content();
             static::$instances[$outline] = new static(isset($head['atoms']) ? $head['atoms'] : [], $outline);
             $file->free();
 
@@ -157,7 +157,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         $this->init();
 
         foreach ($this->items as &$item) {
-            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] == $old && isset($item['inherit']['atom'])) {
+            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] === $old && isset($item['inherit']['atom'])) {
                 if ($new && ($ids === null || isset($ids[$item['inherit']['atom']]))) {
                     $item['inherit']['outline'] = $new;
                 } else {
@@ -180,7 +180,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 
             if ($loadPath && $savePath) {
                 $file = CompiledYamlFile::instance($loadPath);
-                $head = $file->content();
+                $head = (array)$file->content();
                 $head['atoms'] = $this->update()->toArray();
                 $file->free();
 
@@ -337,7 +337,8 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $type = $item['type'];
 
-        while ($num = rand(1000, 9999)) {
+        while (true) {
+            $num = mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }

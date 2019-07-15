@@ -62,7 +62,7 @@ abstract class Router implements RouterInterface
 
         // Render the page or execute the task.
         try {
-            $response = static::execute($this->resource, $this->method, $this->path, $this->params, $this->format);
+            $response = $this->execute($this->resource, $this->method, $this->path, $this->params, $this->format);
 
         } catch (ErrorException $e) {
             throw $e;
@@ -72,7 +72,7 @@ abstract class Router implements RouterInterface
             if ($this->container->debug()) {
                 throw $e;
             }
-            $response = $this->getErrorResponse($e, $this->format == 'json');
+            $response = $this->getErrorResponse($e, $this->format === 'json');
         }
 
         return $this->send($response);

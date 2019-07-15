@@ -103,10 +103,10 @@ class Format2
         } else {
             list ($type, $subtype, $id, $size, $section_id, $boxed) = $this->parseSectionString($field);
 
-            if ($type == 'grid') {
+            if ($type === 'grid') {
                 $scope = 1;
             }
-            if ($type == 'block') {
+            if ($type === 'block') {
                 $scope = 0;
             }
 
@@ -383,7 +383,7 @@ class Format2
         }
 
         // TODO: maybe collapse grid as well?
-        if ($ctype && in_array($ctype, ['block']) && count($result) <= 1 && key($result) === 0) {
+        if ($ctype && $ctype === 'block' && count($result) <= 1 && key($result) === 0) {
             unset ($this->structure[$content['id']]);
             return reset($result) ?: null;
         }
@@ -413,11 +413,11 @@ class Format2
 
         // Get section and its type.
         $section = reset($list);
-        $type = (in_array($section, $this->sections)) ? $section : 'section';
-        $subtype = ($type !== 'section' || in_array($section, $this->structures)) ? $section : 'section';
+        $type = in_array($section, $this->sections, true) ? $section : 'section';
+        $subtype = ($type !== 'section' || in_array($section, $this->structures, true)) ? $section : 'section';
 
         // Extract id.
-        if ($type == 'section' && in_array($section, $this->structures)) {
+        if ($type === 'section' && in_array($section, $this->structures, true)) {
             $id = array_pop($list);
         } else {
             $id = $section_id;
@@ -467,7 +467,7 @@ class Format2
      */
     protected function getTitle($type, $subtype, $id)
     {
-        if (in_array($type, $this->sections)) {
+        if (in_array($type, $this->sections, true)) {
             if ($type === 'offcanvas') {
                 return 'Offcanvas';
             }
@@ -513,7 +513,8 @@ class Format2
         $key = implode('-', $result);
 
         if (!$id || isset($this->keys[$key][$id])) {
-            while ($id = rand(1000, 9999)) {
+            while (true) {
+                $id = mt_rand(1000, 9999);
                 if (!isset($this->keys[$key][$id])) {
                     break;
                 }

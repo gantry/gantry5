@@ -14,6 +14,7 @@
 namespace Gantry\Framework\Services;
 
 use Gantry\Component\Filesystem\Streams;
+use Gantry\Debugger;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -43,7 +44,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             $streams = new Streams($locator);
             $streams->add($schemes);
 
-            GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator') && \Gantry\Debugger::setLocator($locator);
+            GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator') && Debugger::setLocator($locator);
 
             return $streams;
         };

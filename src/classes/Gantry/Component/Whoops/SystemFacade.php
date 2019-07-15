@@ -106,7 +106,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         // If there are registered patterns, only handle errors if error matches one of the patterns.
         if ($level & error_reporting()) {
             foreach ($this->registeredPatterns as $entry) {
-                $pathMatches = $file && preg_match($entry["pattern"], $file);
+                $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
                     return $handler($level, $message, $file, $line);
                 }
@@ -131,7 +131,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         if ($this->registeredPatterns) {
             foreach ($this->registeredPatterns as $entry) {
                 $file = $exception->getFile();
-                $pathMatches = $file && preg_match($entry["pattern"], $file);
+                $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
                     $handler($exception);
                     return;

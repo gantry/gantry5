@@ -15,6 +15,7 @@ namespace Gantry\Framework\Base;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\System\Messages;
+use Gantry\Debugger;
 use Gantry\Framework\Document;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
@@ -26,6 +27,7 @@ use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
 use Gantry\Framework\Site;
 use Gantry\Framework\Translator;
+use Gantry5\Loader;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
@@ -94,9 +96,7 @@ abstract class Gantry extends Container
      */
     public function siteUrl()
     {
-        $gantry = Gantry::instance();
-
-        return $gantry['document']->siteUrl();
+        return $this['document']->siteUrl();
     }
 
     /**
@@ -199,7 +199,7 @@ abstract class Gantry extends Container
 
     public function wrapper($value = null)
     {
-        if ($value !== null ) {
+        if ($value !== null) {
             $this->wrapper = $value;
         }
 
@@ -215,10 +215,10 @@ abstract class Gantry extends Container
         $instance = new static();
 
         if (GANTRY_DEBUGGER) {
-            $instance['debugger'] = \Gantry\Debugger::instance();
+            $instance['debugger'] = Debugger::instance();
         }
 
-        $instance['loader'] = \Gantry5\Loader::get();
+        $instance['loader'] = Loader::get();
 
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
@@ -271,7 +271,7 @@ abstract class Gantry extends Container
 
         // @deprecated 5.3
         $instance['configurations'] = $instance->factory(function ($c) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Depredated call: gantry.configurations");
+            GANTRY_DEBUGGER && Debugger::addMessage('Depredated call: gantry.configurations');
 
             static $collection;
             if (!$collection) {
@@ -335,7 +335,7 @@ abstract class Gantry extends Container
         }
 
         // Development version support.
-        if ($version === '5.3' || static::isDev()) {
+        if ($version === '5.3' || $this->isDev()) {
             return true;
         }
 
@@ -359,14 +359,7 @@ abstract class Gantry extends Container
      */
     public function isDev()
     {
-        if ('@version@' == GANTRY5_VERSION) {
-            return true;
-        }
-        if ('dev-' === substr(GANTRY5_VERSION, 0, 4)) {
-            return true;
-        }
-
-        return false;
+        return '@version@' === GANTRY5_VERSION || strpos(GANTRY5_VERSION, 'dev-') === 0;
     }
 
     /**

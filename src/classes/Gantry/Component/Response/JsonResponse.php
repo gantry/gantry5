@@ -94,7 +94,7 @@ class JsonResponse extends Response
             $key =  !$key || is_int($key) ? 'html' : $key;
             $this->content[$key] = trim((string) $value);
 
-        } elseif (is_null($key)) {
+        } elseif (null === $key) {
             // If the returned value was not an array, put the contents into data variable.
             $this->content['data'] = $value;
 

@@ -187,7 +187,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
             return [$name, $element];
         }
 
-        if (strlen($separator) == 2 && in_array($separator, ['][', ')(', '}{'])) {
+        if (strlen($separator) === 2 && in_array($separator, ['][', ')(', '}{'])) {
             $separator = [$separator[1], $separator[0]];
         }
 

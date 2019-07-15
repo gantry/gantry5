@@ -66,7 +66,7 @@ class Styles extends HtmlController
     {
         $outline = $this->params['outline'];
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config'];
         } else {
@@ -91,7 +91,7 @@ class Styles extends HtmlController
         $blueprints = $this->container['styles']->getBlueprintForm($id);
         $prefix = 'styles.' . $id;
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
@@ -141,7 +141,7 @@ class Styles extends HtmlController
         }
         array_pop($path);
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
@@ -199,9 +199,9 @@ class Styles extends HtmlController
                     'title'   => 'CSS Compiled With Warnings',
                 ]
             );
-        } else {
-            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
         }
+
+        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
     }
 
     /**
@@ -257,9 +257,9 @@ class Styles extends HtmlController
                     'title'   => 'CSS Compiled With Warnings',
                 ]
             );
-        } else {
-            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
         }
+
+        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
     }
 
     /**

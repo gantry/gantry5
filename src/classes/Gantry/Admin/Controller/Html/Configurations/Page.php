@@ -60,7 +60,7 @@ class Page extends HtmlController
     {
         $outline = $this->params['outline'];
 
-        if ($outline == 'default') {
+        if ($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -131,7 +131,7 @@ class Page extends HtmlController
         if ($end === '') {
             array_pop($path);
         }
-        if (end($path) == 'validate') {
+        if (end($path) === 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
 

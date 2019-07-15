@@ -22,6 +22,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
+use Gantry\Debugger;
 use Gantry\Framework\Document;
 use Gantry\Framework\Menu;
 use Gantry\Framework\Services\ConfigServiceProvider;
@@ -80,7 +81,7 @@ trait ThemeTrait
         $gantry = static::gantry();
         $compiler = $this->compiler();
 
-        if (is_null($outlines)) {
+        if (null === $outlines) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $path = $locator->findResource($compiler->getTarget(), true, true);
@@ -279,7 +280,7 @@ trait ThemeTrait
 
             $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
             $file = CompiledYamlFile::instance($filename);
-            $presets = new Config($file->content());
+            $presets = new Config((array)$file->content());
             $file->free();
         }
 
@@ -319,7 +320,7 @@ trait ThemeTrait
             }
         }
 
-        if (!isset($this->layoutObject) || $this->layoutObject->name != $name) {
+        if (!isset($this->layoutObject) || $this->layoutObject->name !== $name) {
             $layout = Layout::instance($name);
 
             if (!$layout->exists()) {
@@ -356,7 +357,7 @@ trait ThemeTrait
         if (!isset($this->atoms)) {
             $this->atoms = true;
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('atoms', "Preparing atoms");
+            GANTRY_DEBUGGER && Debugger::startTimer('atoms', 'Preparing atoms');
 
             $gantry = static::gantry();
 
@@ -407,7 +408,7 @@ trait ThemeTrait
                 }
             }
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('atoms');
+            GANTRY_DEBUGGER && Debugger::stopTimer('atoms');
         }
     }
 
@@ -421,11 +422,11 @@ trait ThemeTrait
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('segments', "Preparing layout");
+            GANTRY_DEBUGGER && Debugger::startTimer('segments', 'Preparing layout');
 
             $this->prepareLayout($this->segments);
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('segments');
+            GANTRY_DEBUGGER && Debugger::stopTimer('segments');
         }
 
         return $this->segments;
@@ -478,7 +479,7 @@ trait ThemeTrait
         $number = max(5, $number);
         $number = (string) ($number == 100 ? 100 : min(95, $number));
 
-        static $sizes = array(
+        static $sizes = [
             '33.3' => 'size-33-3',
             '16.7' => 'size-16-7',
             '14.3' => 'size-14-3',
@@ -486,7 +487,7 @@ trait ThemeTrait
             '11.1' => 'size-11-1',
             '9.1'  => 'size-9-1',
             '8.3'  => 'size-8-3'
-        );
+        ];
 
         return isset($sizes[$number]) ? ' ' . $sizes[$number] : 'size-' . (int) $number;
     }
@@ -499,7 +500,7 @@ trait ThemeTrait
      */
     public function __set($offset, $value)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -514,13 +515,13 @@ trait ThemeTrait
      */
     public function __get($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
         $value = $this->details()->offsetGet('details.' . $offset);
 
-        if ($offset == 'version' && is_int($value)) {
+        if ($offset === 'version' && is_int($value)) {
             $value .= '.0';
         }
 
@@ -535,7 +536,7 @@ trait ThemeTrait
      */
     public function __isset($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -549,7 +550,7 @@ trait ThemeTrait
      */
     public function __unset($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -592,7 +593,7 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
-                    GANTRY_DEBUGGER && \Gantry\Debugger::startTimer($item->id, "Rendering {$item->id}");
+                    GANTRY_DEBUGGER && Debugger::startTimer($item->id, "Rendering {$item->id}");
 
                     $item->content = $this->renderContent($item, ['prepare_layout' => true]);
                     // Note that content can also be null (postpone rendering).
@@ -600,7 +601,7 @@ trait ThemeTrait
                         unset($items[$i]);
                     }
 
-                    GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer($item->id);
+                    GANTRY_DEBUGGER && Debugger::stopTimer($item->id);
 
                     break;
 
@@ -674,7 +675,8 @@ trait ThemeTrait
         $document->addBlock($content);
 
         $html = $content->toString();
-        return !strstr($html, '@@DEFERRED@@') ? $html : null;
+
+        return false === strpos($html, '@@DEFERRED@@') ? $html : null;
     }
 
     /**
@@ -756,7 +758,7 @@ trait ThemeTrait
                     return ContentBlock::fromArray((array) $file->content());
                 } catch (\Exception $e) {
                     // Invalid cache, continue to rendering.
-                    GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
+                    GANTRY_DEBUGGER && Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
                 }
             }
         }
@@ -772,7 +774,7 @@ trait ThemeTrait
 
         if (isset($file)) {
             // Save HTML and assets into the cache.
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
+            GANTRY_DEBUGGER && Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
             $file->save($content->toArray());
         }
 

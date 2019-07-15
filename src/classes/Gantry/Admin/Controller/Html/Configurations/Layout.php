@@ -174,7 +174,9 @@ class Layout extends HtmlController
      */
     public function particle($type, $id)
     {
-        if ($type === 'atom') { return ''; }
+        if ($type === 'atom') {
+            return '';
+        }
 
         $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);

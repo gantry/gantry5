@@ -95,7 +95,7 @@ class Page
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $setting = $file->content();
+        $setting = (array)$file->content();
         $file->free();
 
         return $setting;

@@ -68,12 +68,12 @@ class Positions extends Collection
 
         /** @var UniformResourceIterator $info */
         foreach ($iterator as $info) {
-            if (!$info->isFile() || $info->getExtension() != 'yaml') {
+            if (!$info->isFile() || $info->getExtension() !== 'yaml') {
                 continue;
             }
 
             $name = $info->getBasename('.yaml');
-            $position = CompiledYamlFile::instance($info->getPathname())->content();
+            $position = (array)CompiledYamlFile::instance($info->getPathname())->content();
 
             // Only use filesystem position if it it is properly set up.
             if ($position) {
@@ -241,7 +241,7 @@ class Positions extends Collection
 
         $name  = $id;
         $count = 0;
-        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|u', $id, $matches)) {
             $matches += ['', '', ''];
             list (, $name, $count) = $matches;
         }

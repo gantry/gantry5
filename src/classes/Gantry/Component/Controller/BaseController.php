@@ -250,7 +250,7 @@ abstract class BaseController implements RestfulControllerInterface
     protected function resolveHttpVerb($method, array $items)
     {
         // HEAD has identical behavior to GET.
-        $method = ($method == 'HEAD') ? 'GET' : $method;
+        $method = ($method === 'HEAD') ? 'GET' : $method;
 
         if (!isset($this->httpVerbs[$method])) {
             // HTTP method is not defined.

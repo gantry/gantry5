@@ -38,7 +38,7 @@ class Validation
         $validate = isset($field['validate']) ? (array) $field['validate'] : [];
 
         // If value isn't required, we will stop validation if empty value is given.
-        if (empty($validate['required']) && ($value === null || $value === '')) {
+        if (($value === null || $value === '') && empty($validate['required'])) {
             return $messages;
         }
 

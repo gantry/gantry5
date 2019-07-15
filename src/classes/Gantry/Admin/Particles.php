@@ -79,7 +79,7 @@ class Particles
             foreach ($files as $key => $fileArray) {
                 $filename = key($fileArray);
                 $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-                $particle = $file->content();
+                $particle = (array)$file->content();
                 $file->free();
 
                 if (!isset($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
@@ -132,7 +132,7 @@ class Particles
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $particle = $file->content();
+        $particle = (array)$file->content();
         $particle['subtype'] = $id; // TODO: can this be done better or is it fine like that?
         $file->free();
 

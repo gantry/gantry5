@@ -61,7 +61,7 @@ class Layouts extends JsonController
             $layout->inheritAll();
         }
 
-        if ($path == 'list' && !$layout->isLayoutType($type)) {
+        if ($path === 'list' && !$layout->isLayoutType($type)) {
             $instance = $this->getParticleInstances($outline, $subtype, null);
             $id = $instance['selected'];
         }
@@ -108,7 +108,7 @@ class Layouts extends JsonController
 
         $html['g-settings-particle'] = $this->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
         $html['g-settings-block-attributes'] = $this->renderBlockFields($block, $params);
-        if ($path == 'list') {
+        if ($path === 'list') {
             $html['g-inherit-particle'] = $this->renderParticlesInput($inherit || $clone ? $outline : null, $subtype, $post['selected']);
         }
 

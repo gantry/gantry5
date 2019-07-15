@@ -15,6 +15,7 @@ namespace Gantry\Component\Layout;
 
 use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Debugger;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
@@ -340,7 +341,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \LogicException('Cannot save unnamed layout');
         }
 
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Saving layout index for outline {$this->name}");
+        GANTRY_DEBUGGER && Debugger::addMessage("Saving layout index for outline {$this->name}");
 
         $gantry = Gantry::instance();
 
@@ -775,7 +776,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $inheriting = $this->inherit();
 
         if (GANTRY_DEBUGGER && $inheriting) {
-            \Gantry\Debugger::addMessage(sprintf("Layout from outline %s inherits %s", $this->name, implode(", ", array_keys($inheriting))));
+            Debugger::addMessage(sprintf("Layout from outline %s inherits %s", $this->name, implode(", ", array_keys($inheriting))));
         }
 
         foreach ($inheriting as $outlineId => $list) {
@@ -783,7 +784,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $outline = $this->instance($outlineId);
             } catch (\Exception $e) {
                 // Outline must have been deleted.
-                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
+                GANTRY_DEBUGGER && Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
                 $outline = null;
             }
             foreach ($list as $id => $inheritId) {
@@ -915,7 +916,8 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $key_id = $key . '-'. $id;
         if (!$id || isset($this->references[$key_id])) {
-            while ($id = rand(1000, 9999)) {
+            while (true) {
+                $id = mt_rand(1000, 9999);
                 $key_id = $key . '-'. $id;
                 if (!isset($this->references[$key_id])) {
                     break;

@@ -134,7 +134,7 @@ class Response
         static $filesize = null;
 
         $args           = func_get_args();
-        $isCurlResource = is_resource($args[0]) && get_resource_type($args[0]) == 'curl';
+        $isCurlResource = is_resource($args[0]) && get_resource_type($args[0]) === 'curl';
 
         $notification_code = !$isCurlResource ? $args[0] : false;
         $bytes_transferred = $isCurlResource ? $args[2] : $args[4];
@@ -156,7 +156,7 @@ class Response
                 ];
 
                 if (self::$callback !== null) {
-                    call_user_func_array(self::$callback, [$progress]);
+                    call_user_func(self::$callback, $progress);
                 }
             }
         }
@@ -187,7 +187,7 @@ class Response
      */
     private static function getFopen()
     {
-        if (count($args = func_get_args()) == 1) {
+        if (count($args = func_get_args()) === 1) {
             $args = $args[0];
         }
 
@@ -238,7 +238,8 @@ class Response
 
         $response = curl_exec($ch);
 
-        if ($errno = curl_errno($ch)) {
+        $errno = curl_errno($ch);
+        if ($errno) {
             $error_message = curl_strerror($errno);
             throw new \RuntimeException("cURL error ({$errno}):\n {$error_message}");
         }

@@ -311,7 +311,7 @@ class HtmlDocument
         if (!is_string($string)) {
             if (is_object($string) && method_exists($string, '__toString')) {
                 $string = (string) $string;
-            } elseif (in_array($strategy, array('html', 'js', 'css', 'html_attr', 'url'))) {
+            } elseif (in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
                 return $string;
             }
         }
@@ -321,7 +321,7 @@ class HtmlDocument
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
             case 'js':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
@@ -330,7 +330,7 @@ class HtmlDocument
                 return $string;
 
             case 'css':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
@@ -339,7 +339,7 @@ class HtmlDocument
                 return $string;
 
             case 'html_attr':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
