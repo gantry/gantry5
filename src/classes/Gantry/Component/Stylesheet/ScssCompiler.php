@@ -131,7 +131,8 @@ class ScssCompiler extends CssCompiler
         }
 
         // Extract map from css and save it as separate file.
-        if ($pos = strrpos($css, '/*# sourceMappingURL=')) {
+        $pos = strrpos($css, '/*# sourceMappingURL=');
+        if ($pos !== false) {
             $map = json_decode(urldecode(substr($css, $pos + 43, -3)), true);
 
             /** @var Document $document */
