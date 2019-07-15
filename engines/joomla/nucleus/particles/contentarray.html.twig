@@ -33,6 +33,10 @@
 
 {% block particle %}
 
+     {% if particle.title %}
+            <h2 class="g-title">{{ particle.title|raw }}</h2>
+        {% endif %}
+
     {# All Articles #}
     <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
