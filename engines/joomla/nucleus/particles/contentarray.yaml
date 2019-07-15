@@ -18,6 +18,13 @@ form:
           label: Articles
           overridable: false
           fields:
+          
+            title:
+                type: input.text
+                label: Title
+                description: Customize the title text.
+                placeholder: Enter title
+                
             article.filter.categories:
               type: joomla.categories
               label: Categories
