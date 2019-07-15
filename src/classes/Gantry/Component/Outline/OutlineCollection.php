@@ -568,10 +568,10 @@ class OutlineCollection extends Collection
         }
 
         try {
-            foreach ($this->getInheritingOutlines($id) as $outline => $title) {
+            foreach ($this->getInheritingOutlines($id) as $outline => $otitle) {
                 $this->layout($outline)->updateInheritance($id, $folder)->save()->saveIndex();
             }
-            foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $title) {
+            foreach ($this->getInheritingOutlinesWithAtom($id) as $outline => $otitle) {
                 Atoms::instance($outline)->updateInheritance($id, $folder)->save();
             }
 
