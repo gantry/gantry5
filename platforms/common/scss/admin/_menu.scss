@@ -11,11 +11,16 @@ $submenu-ratio:                 60px;
             display: inline-block;
         }
     }
+
     .config-cog {
         opacity: 0;
         position: absolute;
         @include transition(opacity 0.2s);
+        @include breakpoint(no-desktop) {
+            opacity: 1;
+        }
     }
+
     li {
         &:hover {
             .config-cog {
@@ -25,6 +30,11 @@ $submenu-ratio:                 60px;
 
         .menu-item {
             display: inline-block;
+
+            &.menu-item-back {
+                display: block;
+            }
+
             .title {
                 font-size: 1rem;
             }
@@ -52,8 +62,17 @@ $submenu-ratio:                 60px;
             display: none;
         }
     }
+
     .card.full-width {
         margin: $content-margin 0;
+    }
+
+    .g-menu-item-disabled {
+        @include stripes-background(#ccc);
+
+        &:hover, &.active {
+            @include stripes-background($tertiary-accent);
+        }
     }
 }
 
@@ -123,7 +142,7 @@ $submenu-ratio:                 60px;
     right: 10px;
     top: 50%;
     @include transform(translateY(-50%));
-    color: $navbar-color;
+    color: $core-text;
 }
 
 .menu-selector {
@@ -132,7 +151,7 @@ $submenu-ratio:                 60px;
         margin: 3px;
         background: lighten($navbar-bg, 8%);
         border: 1px solid #ddd;
-        color: $navbar-color;
+        color: $core-text;
         display: flex;
         align-items: center;
         cursor: move;
@@ -146,7 +165,7 @@ $submenu-ratio:                 60px;
 
         a {
             display: inline-block;
-            color: $navbar-color;
+            color: $core-text;
         }
 
         .menu-item {
@@ -161,7 +180,7 @@ $submenu-ratio:                 60px;
 
         .config-cog {
             top: 4px;
-            right: 4px;
+            right: $content-padding - 0.2;
         }
 
         &:hover, &.active {
@@ -177,6 +196,7 @@ $submenu-ratio:                 60px;
             border-color: $black;
         }
     }
+
     .parent-indicator {
         font-size: $core-font-size - 0.4;
         margin-left: 0.2rem;
@@ -194,10 +214,10 @@ $submenu-ratio:                 60px;
         cursor: pointer;
         padding: 5px;
         font-size: $core-font-size + 0.2;
-        color: lighten($navbar-color, 20%);
+        color: lighten($core-text, 20%);
         @include transition(color 0.2s);
         &:hover {
-            color: $navbar-color;
+            color: $core-text;
         }
     }
 }
@@ -206,7 +226,7 @@ $submenu-ratio:                 60px;
     border: 6px solid #fff;
     box-shadow: 0 0 0 1px #ddd;
     border-radius: $core-border-radius;
-    color: $navbar-color;
+    color: $core-text;
     background-color: $white;
 
     &.moving .g-block .submenu-reorder {
@@ -220,19 +240,37 @@ $submenu-ratio:                 60px;
         .submenu-reorder {
             position: absolute;
             background: $navbar-bg;
-            bottom: $submenu-ratio - 15;
+            bottom: $submenu-ratio - 20;
             width: 50px;
             vertical-align: middle;
             line-height: 22px;
             text-align: center;
             z-index: 5;
-            color: $navbar-color;
+            color: $core-text;
             font-family: FontAwesome, sans-serif;
             border-radius: 0 0 $core-border-radius $core-border-radius;
             left: 50%;
             margin-left: -25px;
             cursor: ew-resize;
             opacity: 0;
+
+            @include breakpoint(no-desktop) {
+                opacity: 1;
+            }
+        }
+
+        .submenu-level {
+            position: absolute;
+            font-size: 0.8rem;
+            font-weight: bold;
+            bottom: 60px;
+            z-index: 5;
+            right: 6px;
+            text-align: center;
+            background-color: $tertiary-accent;
+            color: $white;
+            padding: 2px 6px;
+            border-radius: 3px 0 0 0;
         }
 
         &:hover {
@@ -252,6 +290,10 @@ $submenu-ratio:                 60px;
                 .submenu-items:after {
                     right: 0;
                 }
+            }
+
+            .submenu-level {
+                right: 0;
             }
         }
 
@@ -283,18 +325,18 @@ $submenu-ratio:                 60px;
     .submenu-items {
         list-style: none;
         margin: 0;
-        padding: $content-padding / 2 0;
+        padding: $content-padding 0 ($content-padding + 0.6rem);
         position: relative;
         &:after {
             margin-right: 6px;
         }
         li {
-            color: $navbar-color;
+            color: $core-text;
             cursor: pointer;
             position: relative;
             a {
                 display: block;
-                color: $navbar-color;
+                color: $core-text;
             }
             .menu-item {
                 padding: $content-padding / 2 $content-padding;
@@ -304,7 +346,7 @@ $submenu-ratio:                 60px;
                 }
             }
             .config-cog {
-                right: 4px;
+                right: $content-padding - 0.2;
                 top: 50%;
                 margin-top: -12px;
             }
@@ -321,6 +363,10 @@ $submenu-ratio:                 60px;
                 cursor: move;
                 a, span {
                     color: $white;
+                }
+
+                &:not([data-mm-id]) {
+                    cursor: pointer;
                 }
             }
 
@@ -400,7 +446,7 @@ $submenu-ratio:                 60px;
 
     .percentage {
         font-size: 20px;
-        font-weight: 300;
+        font-weight: 400;
         line-height: $submenu-ratio;
         display: inline-block;
         margin-top: 5px;
@@ -453,7 +499,7 @@ $submenu-ratio:                 60px;
         }
 
         &.selected {
-            box-shadow: 0 0 0 2px $white, 0 0 0 4px $dark-gray;
+            box-shadow: 0 0 0 2px $white, 0 0 0 4px $core-text;
         }
     }
 
@@ -468,7 +514,7 @@ $submenu-ratio:                 60px;
 
     [data-mm-module] {
         text-align: left;
-        color: $dark-gray;
+        color: $core-text;
         background-color: $light-gray;
         padding: $content-padding / 2;
         width: 47%;
@@ -478,6 +524,7 @@ $submenu-ratio:                 60px;
 
         .module-wrapper {
             top: 50%;
+            left: $content-padding / 2;
             position: absolute;
             @include transform(translate(0, -50%));
         }
@@ -500,7 +547,7 @@ $submenu-ratio:                 60px;
     .sub-title {
         margin: 0;
         display: block;
-        color: lighten($dark-gray, 10%);
+        color: lighten($core-text, 10%);
     }
 }
 

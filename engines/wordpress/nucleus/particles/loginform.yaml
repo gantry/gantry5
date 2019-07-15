@@ -1,6 +1,7 @@
 name: Login Form
 description: Display Login Form.
 type: particle
+icon: fa-user
 
 form:
   fields:

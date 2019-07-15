@@ -1,0 +1,89 @@
+.noliststyle {
+	list-style: none;
+}
+
+.g-uppercase {
+	text-transform: uppercase;
+}
+
+.g-notexttransform {
+	text-transform: none;
+}
+
+.g-positive-margin-top {
+	margin-top: 23rem;
+}
+
+.g-negative-margin-bottom {
+	margin-bottom: -25rem;
+}
+
+.g-img-circle {
+    border-radius: 50%;
+}
+
+// Section Horizontal Paddings
+.section-horizontal-paddings {
+    padding-left: 10%;
+    padding-right: 10%;
+
+    @include breakpoint(tablet-range) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @include breakpoint(mobile-only) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Section Horizontal Paddings Small
+.section-horizontal-paddings-small {
+    padding-left: 5%;
+    padding-right: 5%;
+
+    @include breakpoint(tablet-range) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @include breakpoint(mobile-only) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Section Horizontal Paddings Large
+.section-horizontal-paddings-large {
+    padding-left: 15%;
+    padding-right: 15%;
+
+    @include breakpoint(tablet-range) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @include breakpoint(mobile-only) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Section Vertical Paddings
+.section-vertical-paddings {
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+}
+
+// Section Vertical Paddings Small
+.section-vertical-paddings-small {
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+}
+
+// Section Vertical Paddings Large
+.section-vertical-paddings-large {
+    padding-top: 6vw;
+    padding-bottom: 6vw;
+}

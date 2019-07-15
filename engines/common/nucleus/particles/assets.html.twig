@@ -1,64 +1,41 @@
-{% extends '@nucleus/partials/particle.html.twig' %}
-
-{% block stylesheets %}
+{% spaceless %}
+{% if (particle.enabled) %}
     {% for css in particle.css %}
-        {% set attr_extra = '' %}
+        {% set params = {} %}
         {% if css.extra %}
             {% for attributes in css.extra %}
                 {% for key, value in attributes %}
-                    {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
+                    {% set params = params|default({})|merge({(key): value}) %}
                 {% endfor %}
             {% endfor %}
         {% endif %}
 
-        <link rel="stylesheet" href="{{ url(css.location) }}" type="text/css"{{ attr_extra|raw }} />
+        {% if css.location %}
+            {% do gantry.document.addStyle(params|default({})|merge({href: css.location}), css.priority) %}
+        {% endif %}
 
         {% if css.inline %}
-            <style type="text/css"{{ attr_extra|raw }}>{{ css.inline|raw }}</style>
+            {% do gantry.document.addInlineStyle(params|default({})|merge({content: css.inline}), css.priority) %}
         {% endif %}
     {% endfor %}
-{% endblock %}
 
-{% block javascript %}
     {% for script in particle.javascript %}
-        {% if script.in_footer == false %}
-            {% set attr_extra = '' %}
-            {% if script.extra %}
-                {% for attributes in script.extra %}
-                    {% for key, value in attributes %}
-                        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-                    {% endfor %}
+        {% set params = {} %}
+        {% if script.extra %}
+            {% for attributes in script.extra %}
+                {% for key, value in attributes %}
+                    {% set params = params|default({})|merge({(key): value}) %}
                 {% endfor %}
-            {% endif %}
+            {% endfor %}
+        {% endif %}
 
-            <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
+        {% if script.location %}
+            {% do gantry.document.addScript(params|default({})|merge({src: script.location}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
+        {% endif %}
 
-            {% if script.inline %}
-                <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
-            {% endif %}
+        {% if script.inline %}
+            {% do gantry.document.addInlineScript(params|default({})|merge({content: script.inline}), script.priority, script.in_footer == true ? 'footer' : 'head') %}
         {% endif %}
     {% endfor %}
-{% endblock %}
-
-{% block javascript_footer %}
-    {% for script in particle.javascript %}
-        {% if script.in_footer == true %}
-            {% set attr_extra = '' %}
-
-            {% if script.extra %}
-                {% for attributes in script.extra %}
-                    {% for key, value in attributes %}
-                        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-
-            <script src="{{ url(script.location) }}" type="text/javascript"{{ attr_extra|raw }}></script>
-
-            {% if script.inline %}
-                <script type="text/javascript"{{ attr_extra|raw }}>{{ script.inline|raw }}</script>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
-{% endblock %}
-
+{% endif %}
+{% endspaceless %}

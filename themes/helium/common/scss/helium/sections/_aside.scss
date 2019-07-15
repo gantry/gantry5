@@ -1,0 +1,12 @@
+#g-aside {
+    background: $base-background;
+    color: $base-text-color;
+    padding: $section-padding 0;
+}
+
+@media print {
+	#g-aside {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

@@ -2,7 +2,8 @@ var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
     merge      = require('mout/object/merge'),
-    deepEquals = require('mout/lang/deepEquals');
+    deepEquals = require('mout/lang/deepEquals'),
+    deepDiff   = require('deep-diff').diff;
 
 var History = new prime({
 
@@ -62,13 +63,21 @@ var History = new prime({
     },
 
     get: function(index) {
-        return this.session[index || this.index] || false;
+        return this.session[typeof index !== 'undefined' ? index : this.index] || false;
     },
 
     equals: function(session, compare) {
         if (!compare) { compare = this.get().data; }
 
         return deepEquals(session, compare);
+    },
+
+    diff: function(obj1, obj2) {
+        if (!obj1 && !obj2 && this.session.length <= 1) { return 'Not enough sessions to diff'; }
+        if (!obj2) { obj2 = this.get(); }
+        if (!obj1) { obj1 = this.get(this.index - 1); }
+
+        return deepDiff(obj1, obj2);
     },
 
     setSession: function(session, preset) {

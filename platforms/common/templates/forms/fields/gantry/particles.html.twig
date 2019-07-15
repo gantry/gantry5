@@ -1,0 +1,34 @@
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+
+{% set outline = field.outline ?: nested(data, scope ~ field.outline_field) %}
+{% set particles = field.particles ?: (outline ? gantry.outlines.getParticleInstances(outline, field.particle, false)) %}
+
+{% block label %}
+    {{ parent() }}
+    <div><span class="particle-label-subtype badge">{{ field.particle }}</span></div>
+{% endblock %}
+
+{% block input %}
+    <div id="{{ field.id }}">
+        {% if particles %}
+            <div class="input-group">
+                {% for id, particle in particles %}
+                    <label for="{{ field.id|default(scope ~ name) ~ '-' ~ id }}">
+                        <input
+                                id="{{ field.id|default(scope ~ name) ~ '-' ~ id }}"
+                                type="radio"
+                                name="{{ (scope ~ name)|fieldName }}"
+                                value="{{ id }}"
+                                required="required"
+                                {% if value == id %}checked="checked"{% endif %}
+                        />
+                        <span>{{ particle.title }}</span>
+                        <i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>
+                    </label>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ 'GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE'|trans }}
+        {% endif %}
+    </div>
+{% endblock %}

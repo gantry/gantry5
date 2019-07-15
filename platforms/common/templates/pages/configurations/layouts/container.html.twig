@@ -4,17 +4,17 @@
     <form method="post" action="{{ gantry.route(action) }}">
         <div class="card settings-block">
             <h4>
-                {{ particle.name|trim|e }}
+                {{ particle.name|trim }}
             </h4>
 
             <div class="inner-params">
-                {% include 'forms/fields.html.twig' with { 'overridable': true, 'blueprints': particle.form } %}
+                {% include 'forms/fields.html.twig' with { 'overrideable': false, 'blueprints': particle.form } %}
             </div>
         </div>
 
         <div class="g-modal-actions">
             <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-            <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+            <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
             <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
         </div>
     </form>

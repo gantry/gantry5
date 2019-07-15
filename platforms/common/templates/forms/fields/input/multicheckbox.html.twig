@@ -1,0 +1,25 @@
+{% extends 'forms/fields/input/group/group.html.twig' %}
+
+{% block input %}
+    {% for key, option in field.options %}
+    <label>
+        <input
+            {# required attribute structures #}
+            type="checkbox"
+            value="{{ key|e }}"
+            data-multicheckbox-field="{{ (scope ~ name)|fieldName }}"
+            {# global attribute structures #}
+            {{ block('global_attributes') }}
+            {# non-gloval attribute structures #}
+            {% if key in value %}checked="checked" {% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
+            {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+            {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
+            {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
+        />
+        <span>{{ option }}</span>
+    </label>
+    {% endfor %}
+    <input type="hidden" name="{{ (scope ~ name)|fieldName }}" value="{{ value|join(',')|trim }}" />
+    {% block reset_field %}{% endblock %}
+{% endblock %}

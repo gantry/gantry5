@@ -1,0 +1,26 @@
+// Joomla Login Module
+.rokbox-content {
+    #login-form {
+        .input-prepend .input-small,
+        .input-append .input-small {
+            width: 240px;
+        }
+    }
+
+    #modlgn-secretkey {
+        width: 200px !important;
+    }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    #login-form {
+        .input-prepend,
+        .input-append {
+            width: 95% !important;
+        }
+
+        #modlgn-secretkey {
+            width: 183px !important;
+        }
+    }
+}

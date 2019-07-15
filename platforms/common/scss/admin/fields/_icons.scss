@@ -1,0 +1,113 @@
+#g5-container {
+    .g-icons {
+        > *:not(div), label {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        > .fa {
+            cursor: pointer;
+
+            &.picker {
+                color: $tertiary-accent;
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .g5-popover-icons-preview, [data-g5-iconpicker] .fa {
+        width: auto !important;
+        font-size: 1rem !important;
+    }
+
+    .g5-popover-icons-preview h3 {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .g5-dialog.g5-dialog-theme-default.g5-modal-icons .g5-content {
+        width: 650px;
+
+        .g-icon-preview {
+            padding: 0 2px;
+            text-align: center;
+            @include transform(translateZ(0));
+
+            span {
+                color: lighten(#000, 70);
+                display: block;
+            }
+
+            i {
+                width: auto !important;
+                vertical-align: middle;
+            }
+        }
+
+        .g-particles-header {
+            color: lighten(#000, 50);
+
+            label, select, input {
+                margin: 0 !important;
+                display: inline-block !important;
+                font-size: 0.8em;
+            }
+
+            label {
+                font-size: 0.75em;
+            }
+
+            .float-right input, select {
+                width: auto !important;
+            }
+
+            .float-left.particle-search-wrapper input {
+                width: 245px;
+            }
+        }
+
+        .icons-wrapper {
+            max-height: 500px;
+            overflow: auto;
+            ul {
+                @extend %list-reset;
+                background-color: $white;
+                border-radius: 3px;
+                padding: 10px;
+
+                li {
+                    display: inline-block;
+                    min-width: 190px;
+                    font-size: 0.85em;
+                    color: lighten(#000, 70);
+                    cursor: pointer;
+                    padding: 4px;
+                    margin: 2px 0;
+                    border-radius: 3px;
+                    @include ellipsis(190px);
+
+                    i {
+                        color: #333;
+                    }
+
+                    &:hover {
+                        background-color: darken($white, 4);
+                    }
+
+                    &.active {
+                        background-color: $core-accent;
+                        color: lighten($core-accent, 50);
+
+                        i {
+                            color: $white;
+                        }
+                    }
+
+                    &.hide-icon {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

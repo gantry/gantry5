@@ -1,0 +1,101 @@
+#g5-container {
+    #positions {
+
+        .position-key {
+            @extend .font-small;
+            display: block;
+            color: #999;
+        }
+
+        .button-simple {
+            padding: 6px;
+        }
+
+        .g-grid > li {
+            &:first-child, &:last-child {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            cursor: default;
+        }
+
+        .position-container {
+            height: 257px;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            ul {
+                position: relative;
+                min-height: 95%;
+                font-size: 1rem;
+
+                &:empty:after {
+                    content: "Drop Particles Here or Use the +";
+                    display: block;
+                    text-align: center;
+                    margin: 0 auto;
+                    vertical-align: middle;
+                    line-height: 257px;
+                    color: #bababa;
+                    position: absolute;
+                    font-size: 1rem;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    @include ellipsis();
+                }
+            }
+
+            li {
+                @include align-items(center);
+                @include display(flex);
+                @include flex-direction(row);
+                @include justify-content(flex-start);
+
+                &:hover {
+                    .item-settings {
+                        opacity: 1;
+                        @include transition(opacity 0.2s);
+                    }
+                }
+            }
+
+            .position-dragging {
+                &.sortable-fallback {
+                    background: $white;
+                }
+            }
+        }
+
+        [data-pm-blocktype] {
+            margin: $content-margin ($content-margin * 2);
+        }
+
+        .item-reorder, .item-settings, .title-status {
+            color: #333;
+            text-align: left;
+            line-height: 1.2rem;
+
+            &:hover {
+                color: $core-text;
+            }
+        }
+
+        .title-status {
+            margin-right: $content-padding / 2;
+        }
+
+        .title-status, .title-status:hover {
+            color: inherit;
+        }
+
+        .item-settings {
+            cursor: pointer;
+            text-align: right;
+            opacity: 0;
+            @include transition(opacity 0.2s);
+        }
+    }
+}

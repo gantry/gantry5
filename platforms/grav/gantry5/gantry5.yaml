@@ -1,2 +1,10 @@
 enabled: true
-route: '/admin/gantry5'
+production: false
+use_media_folder: false
+offline: false
+offline_message:
+asset_timestamps: true
+asset_timestamps_period: 7
+debug: false
+compile_yaml: true
+compile_twig: true

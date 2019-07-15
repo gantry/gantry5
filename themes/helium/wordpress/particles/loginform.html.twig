@@ -1,0 +1,70 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+    {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+
+    <div class="g-loginform {{ particle.class|e }}">
+
+        {% if not is_user_logged_in %}
+
+            <form action="{{ function('wp_login_url', gantry.request.server['REQUEST_URI'])|raw }}" method="post" id="g-loginform">
+                {% do function('wp_nonce_field', 'log-in') %}
+
+                {% if particle.pretext is not empty %}
+                    <div class="login-pretext">
+                        <p>{{ particle.pretext }}</p>
+                    </div>
+                {% endif %}
+
+                <fieldset class="login-data">
+                    <p id="login-username">
+                        <label for="username">{{ __('User Name', 'gantry5') }}</label>
+                        <input id="username" type="text" name="log" class="inputbox" alt="username" size="18" value="" />
+                    </p>
+                    <p id="login-password">
+                        <label for="passwd">{{ __('Password', 'gantry5') }}</label>
+                        <input id="passwd" type="password" name="pwd" class="inputbox" size="18" alt="password" value="" />
+                    </p>
+                    <p id="login-remember">
+                        <input id="remember" type="checkbox" name="rememberme" class="inputbox" />
+                        <label for="remember">{{ __('Remember me', 'gantry5') }}</label>
+                    </p>
+                    <input type="submit" value="{{ __('Log In', 'gantry5') }}" class="button button-small" name="submit" />
+                </fieldset>
+                <ul class="login-extra">
+                    <li>
+                        <a href="{{ function('wp_lostpassword_url') }}">{{ __('Forgot your password ?', 'gantry5') }}</a>
+                    </li>
+                    {% if function('get_option', 'users_can_register') %}
+                        <li>
+                            <a href="{{ function('wp_registration_url') }}">{{ __('Register', 'gantry5') }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                {% if particle.posttext is not empty %}
+                    <div class="login-posttext">
+                        <p>{{ particle.posttext }}</p>
+                    </div>
+                {% endif %}
+
+            </form>
+
+        {% else %}
+
+            <form action="{{ function('wp_logout_url', gantry.request.server['REQUEST_URI'])|raw }}" method="post" id="g-loginform">
+                {% do function('wp_nonce_field', 'log-out') %}
+                <div class="greeting">
+                    <p>{{ particle.greeting|format(current_user.display_name) }}</p>
+                </div>
+                <div class="logout-button">
+                    <input type="submit" name="submit" class="button button-small" value="{{ __('Log Out', 'gantry5') }}" />
+                </div>
+            </form>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}

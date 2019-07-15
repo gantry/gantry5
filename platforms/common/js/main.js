@@ -1,13 +1,102 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -23,7 +112,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = setTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -40,7 +129,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    clearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -52,7 +141,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
@@ -80,6 +169,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -107,7 +200,7 @@ var Map         = map,
     Assignments = {
         toggleSection: function(e, element, index, array) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
-            if (element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card    = element.parent('.card'),
@@ -126,7 +219,7 @@ var Map         = map,
             asyncForEach(toggles.inputs, function(item) {
                 item = $(item);
 
-                if (item.parent('label').compute('display') == 'none') { return; }
+                if (item.parent('label, h4').compute('display') == 'none') { return; }
 
                 item.value(mode).emit('change');
                 $('body').emit('change', { target: item });
@@ -138,7 +231,7 @@ var Map         = map,
         },
 
         filterSection: function(e, element, value, global) {
-            if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
@@ -172,7 +265,7 @@ var Map         = map,
                 match = text.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
                 if (onlyEnabled.checked()) {
-                    match = Number(!!match) & Number(item.parent('label').find('.enabler input[type="hidden"]').value());
+                    match = Number(!!match) & Number(item.parent('label, h4').find('.enabler input[type="hidden"]').value());
                 }
 
                 if (match) {
@@ -182,10 +275,10 @@ var Map         = map,
                         if (parentGroup) { parentGroup.style('display', 'block'); }
                     }
 
-                    item.parent('label').style('display', 'block');
+                    item.parent('label, h4').style('display', 'block');
                     on++;
                 } else {
-                    item.parent('label').style('display', 'none');
+                    item.parent('label, h4').style('display', 'none');
                     off++;
                 }
 
@@ -222,7 +315,7 @@ var Map         = map,
         globalToggleSection: function(e, element) {
             var mode   = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
                 save   = $('[data-save]'),
-                search = $('#assignments .card ' + mode);
+                search = $('#assignments .card ' + mode + ', ' + '.settings-assignments .card ' + mode);
 
             if (!search) { return; }
 
@@ -236,7 +329,7 @@ var Map         = map,
         globalFilterSection: function(e, element) {
             var value       = element.value(),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
-                search      = $('#assignments .card .search input[type="text"]');
+                search      = $('#assignments .card .search input[type="text"], .settings-assignments .card .search input[type="text"]');
 
             if (!search && !onlyEnabled.checked()) { return; }
 
@@ -245,10 +338,15 @@ var Map         = map,
             });
         },
 
+        toggleStateDelegation: function(event, element) {
+            var enabled = element.value() == '1';
+            element.attribute('disabled', !enabled);
+        },
+
         // chrome workaround for overflow and columns
         chromeFix: function() {
             if (!Assignments.isChrome()) { return; }
-            var panels = $('#assignments .settings-param-wrapper'), height, maxHeight;
+            var panels = $('#assignments .settings-param-wrapper, .settings-assignments .settings-param-wrapper'), height, maxHeight;
             if (!panels) { return; }
 
             panels.forEach(function(panel){
@@ -275,10 +373,11 @@ var Map         = map,
 ready(function() {
     var body = $('body');
 
-    body.delegate('input', '#assignments .search input[type="text"]', Assignments.filterSection);
-    body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
-    body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('input', '#assignments .search input[type="text"], .settings-assignments .search input[type="text"]', Assignments.filterSection);
+    body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck], .settings-assignments .card label, .settings-assignments [data-g-assignments-check], .settings-assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck], .settings-assignments .card label, .settings-assignments [data-g-assignments-check], .settings-assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+    body.delegate('change', '#assignments input[type="hidden"][name], .settings-assignments input[type="hidden"][name]', Assignments.toggleStateDelegation);
 
     // chrome workaround for overflow and columns
     //if (Assignments.isChrome()) Assignments.chromeFix();
@@ -286,7 +385,7 @@ ready(function() {
 
 module.exports = Assignments;
 
-},{"../utils/async-foreach":56,"../utils/decouple":57,"../utils/elements.utils":58,"elements/domready":98,"mout/array/forEach":141,"mout/object/merge":201,"mout/string/trim":235,"prime/map":266}],3:[function(require,module,exports){
+},{"../utils/async-foreach":62,"../utils/decouple":64,"../utils/elements.utils":65,"elements/domready":110,"mout/array/forEach":173,"mout/object/merge":236,"mout/string/trim":271,"prime/map":301}],3:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
@@ -334,7 +433,7 @@ ready(function() {
                         section.parent('li').after(section.parent('ol').find('> li'));
                     }
 
-                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"]').bottom(section);
+                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"][aria-hidden="true"]').bottom(section);
 
                     if (collapsed) {
                         section.nextSibling().style({
@@ -362,7 +461,7 @@ ready(function() {
     });
 });
 
-},{"../ui":48,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"elements":100,"elements/domready":98,"elements/zen":103,"mout/string/interpolate":224,"mout/string/trim":235}],4:[function(require,module,exports){
+},{"../ui":53,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"elements":112,"elements/domready":110,"elements/zen":136,"mout/string/interpolate":260,"mout/string/trim":271}],4:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -402,7 +501,7 @@ var refreshWordpressLinks = function (title, value) {
         currentURI = setParam(currentURI, 'view', currentView);
         History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
     }
-}
+};
 
 ready(function() {
     var body = $('body');
@@ -417,7 +516,7 @@ ready(function() {
     });
 
     body.delegate('mousedown', '.config-select-wrap [data-title-edit]', function(event, element) {
-        selectized = element.siblings('.selectize-control');
+        selectized = element.siblings('.g-selectize-control');
         select = element.siblings('select');
         editable = element.siblings('[data-title-editable]');
 
@@ -477,7 +576,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"../utils/history":66,"agent":69,"elements":100,"elements/domready":98,"mout/queryString/getParam":211,"mout/queryString/setParam":213,"mout/random/guid":215,"mout/string/trim":235}],5:[function(require,module,exports){
+},{"../ui":53,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/history":74,"agent":79,"elements":112,"elements/domready":110,"mout/queryString/getParam":246,"mout/queryString/setParam":248,"mout/random/guid":250,"mout/string/trim":271}],5:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
@@ -497,22 +596,116 @@ var $             = require('elements'),
 require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body'),
-        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+    var body = $('body');
+
+    // Handles Creating new Configurations
+    body.delegate('click', '[data-g5-outline-create], [data-g5-outline-duplicate]', function(event, element) {
+        if (event) { event.preventDefault(); }
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.href() + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var title   = content.elements.content.find('[name="title"]'),
+                    confirm = content.elements.content.find('[data-g-outline-create-confirm]');
+
+                title.on('keyup', function(event) {
+                    var code = event.which;
+                    if (code === 13) {
+                        confirm.emit('click');
+                    }
+                });
+
+                confirm.on('click', function() {
+                    confirm.hideIndicator();
+                    confirm.showIndicator();
+
+                    var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
+                        from    = content.elements.content.find('[name="from"]:checked'),
+                        preset  = content.elements.content.find('[name="preset"]'),
+                        outline = content.elements.content.find('[name="outline"]'),
+                        inherit = content.elements.content.find('[name="inherit"]'),
+                        data = {
+                            title: title.value(),
+                            from: from ? from.value() : null,
+                            preset: preset ? preset.value() : null,
+                            outline: outline ? outline.value() : null,
+                            inherit: inherit.checked() ? 1 : 0
+                        };
+
+                    ['title', 'from', 'preset', 'outline'].forEach(function(key) {
+                        if (!data[key]) { delete data[key]; }
+                    });
+
+                    request('post', URI, data, function(error, response) {
+                        confirm.hideIndicator();
+
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var base    = $('#configurations').find('ul').find('li'),
+                                outline = zen('li').attribute('class', base.attribute('class'));
+
+                            outline.after(base).html(response.body.outline);
+
+                            toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+
+                            attachEditables(outline.find('[data-title-editable]'));
+                            modal.close();
+                        }
+
+                    });
+                });
+
+                setTimeout(function() {
+                    title[0].focus();
+                }, 5);
+            }
+        });
+    });
+
+    // Handles Preset / Outline switcher in Outline creation
+    body.delegate('change', 'input[type="radio"]#from-preset, input[type="radio"]#from-outline', function(event, element) {
+        element = $(element);
+        var value    = element.value(),
+            elements = element.parent('.card').search('.g-create-from');
+
+        var filtered = elements.style('display', 'none').filter(function(block) {
+            block = $(block);
+            return block.hasClass('g-create-from-' + value);
+        });
+
+        if (filtered) {
+            $(filtered).style('display', 'block');
+        }
+    });
 
     // Handles Configurations Duplicate / Remove
-    body.delegate('click', '[data-g-config]', function(event, element) {
-        var mode = element.data('g-config'),
-            href = element.data('g-config-href'),
-            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
-            method = (element.data('g-config-method') || 'post').toLowerCase();
+    body.delegate('click', '#configurations [data-g-config]', function(event, element) {
+        var mode        = element.data('g-config'),
+            href        = element.data('g-config-href'),
+            hrefConfirm = element.data('g-config-href-confirm'),
+            encode      = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
+            method      = (element.data('g-config-method') || 'post').toLowerCase();
 
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
             // confirm before proceeding
             flags.warning({
-                url: warningURL,
+                url: parseAjaxURI(href + getAjaxSuffix()),
                 callback: function(response, content) {
                     var confirm = content.find('[data-g-delete-confirm]'),
                         cancel  = content.find('[data-g-delete-cancel]');
@@ -548,7 +741,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
+        request(method, parseAjaxURI((hrefConfirm || href) + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -557,10 +750,10 @@ ready(function() {
                     }
                 });
             } else {
-                var confSelector = $('#configuration-selector'),
+                var confSelector   = $('#configuration-selector'),
                     currentOutline = confSelector.value(),
                     outlineDeleted = response.body.outline,
-                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                    reload         = $('[href="' + getAjaxURL('configurations') + '"]');
 
                 // if the current outline is the one that's been deleted,
                 // fallback to default
@@ -573,7 +766,7 @@ ready(function() {
 
                 if (!reload) { window.location = window.location; }
                 else {
-                    body.emit('click', {target: reload});
+                    body.emit('click', { target: reload });
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
@@ -588,13 +781,13 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original, wasCanceled) {
+    var updateTitle     = function(title, original, wasCanceled) {
             this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
-                href = element.data('g-config-href'),
-                method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                href    = element.data('g-config-href'),
+                method  = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent  = element.parent();
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
@@ -610,11 +803,11 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    element.parent('h4').data('title', title);
+                    element.data('title', title).data('tip', title);
 
                     // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.outline),
-                        id = dummy.find('h4 span:last-child'),
+                    var dummy   = zen('div').html(response.body.outline),
+                        id      = dummy.find('h4 span:last-child'),
                         actions = dummy.find('.outline-actions');
 
                     element.parent('.card').find('h4 span:last-child').html(id.html());
@@ -631,7 +824,7 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
-                editable.on('title-edit-start', function(){
+                editable.on('title-edit-start', function() {
                     editable.style('text-overflow', 'inherit');
                 });
                 editable.on('title-edit-end', updateTitle);
@@ -654,27 +847,43 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./dropdown-edit":4,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/object/keys":200,"mout/string/trim":235}],6:[function(require,module,exports){
+},{"../ui":53,"../utils/flags-state":68,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"./dropdown-edit":4,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/object/keys":235,"mout/string/trim":271}],6:[function(require,module,exports){
 "use strict";
-var ready      = require('elements/domready'),
-    $          = require('elements/attributes'),
-    storage    = require('prime/map'),
-    deepEquals = require('mout/lang/deepEquals'),
-    is         = require('mout/lang/is'),
-    isString   = require('mout/lang/isString'),
-    hasOwn     = require('mout/object/has'),
-    forEach    = require('mout/collection/forEach'),
-    invoke     = require('mout/array/invoke'),
-    History    = require('../utils/history'),
-    flags      = require('../utils/flags-state');
+var ready         = require('elements/domready'),
+    $             = require('elements/attributes'),
+    storage       = require('prime/map'),
+    deepEquals    = require('mout/lang/deepEquals'),
+    is            = require('mout/lang/is'),
+    isString      = require('mout/lang/isString'),
+    hasOwn        = require('mout/object/has'),
+    forEach       = require('mout/collection/forEach'),
+    invoke        = require('mout/array/invoke'),
+    History       = require('../utils/history'),
+    flags         = require('../utils/flags-state'),
+    submit        = require('./submit');
 
+require('./multicheckbox');
 
 var originals,
     collectFieldsValues = function(keys) {
         var map      = new storage(),
-            defaults = $('[data-g-styles-defaults]');
+            defaults = $('[data-g-styles-defaults]'),
+            overridables = $('input[type="checkbox"].settings-param-toggle');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
+
+        // keep track of overrides getting enabled / disabled
+        // in order to detect if has changed
+        if (overridables) {
+            var overrides = {};
+
+            overridables.forEach(function(override) {
+                override = $(override);
+                overrides[override.id()] = override.checked();
+            });
+
+            map.set('__js__overrides', JSON.stringify(overrides));
+        }
 
         if (keys) {
             var field;
@@ -728,9 +937,14 @@ ready(function() {
         var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
             target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
             isOverride  = parent ? parent.find('.settings-param-toggle') : false,
-            isNewWidget = false;
+            isNewWidget = false,
+            isOverrideToggle = element.hasClass('settings-param-toggle');
 
         if (!parent) { return; }
+
+        if (isOverrideToggle) {
+            return compare.whole('force');
+        }
 
         if (element.type() == 'checkbox') {
             element.value(Number(element.checked()).toString());
@@ -756,6 +970,7 @@ ready(function() {
     };
 
     compare.whole = function(force) {
+        if (!originals) { return; }
         var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
                 if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
                     return a.toLowerCase() == b.toLowerCase();
@@ -801,13 +1016,17 @@ ready(function() {
         var fields, equals;
         presetsCache.forEach(function(data, element) {
             fields = collectFieldsValues(data.map.keys());
+
+            // Do not consider __js__overrides when comparing for equality
+            fields.unset('__js__overrides');
+
             equals = deepEquals(fields, data.map, function(a, b) { return a == b; });
             $($('[data-g-styles]')[data.index]).parent()[equals ? 'addClass' : 'removeClass']('g-preset-match');
         });
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
-    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name]', compare.single);
+    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name], .settings-block input[id][type="checkbox"].settings-param-toggle', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
         var previous = element.parent('.settings-param').siblings();
@@ -855,12 +1074,130 @@ ready(function() {
 
 module.exports = {
     compare: compare,
-    collect: collectFieldsValues
+    collect: collectFieldsValues,
+    submit: submit
 };
 
-},{"../utils/flags-state":61,"../utils/history":66,"elements/attributes":95,"elements/domready":98,"mout/array/invoke":145,"mout/collection/forEach":154,"mout/lang/deepEquals":167,"mout/lang/is":168,"mout/lang/isString":177,"mout/object/has":198,"prime/map":266}],7:[function(require,module,exports){
+},{"../utils/flags-state":68,"../utils/history":74,"./multicheckbox":7,"./submit":8,"elements/attributes":107,"elements/domready":110,"mout/array/invoke":177,"mout/collection/forEach":188,"mout/lang/deepEquals":200,"mout/lang/is":201,"mout/lang/isString":210,"mout/object/has":233,"prime/map":301}],7:[function(require,module,exports){
 "use strict";
-// deprecated 5.2.0
+var $        = require('elements/attributes'),
+    ready    = require('elements/domready'),
+    remove   = require('mout/array/remove'),
+    insert   = require('mout/array/insert'),
+    contains = require('mout/array/contains');
+
+
+ready(function() {
+    var body = $('body');
+
+    body.delegate('change', '.input-multicheckbox .input-group input[name][type="hidden"]', function(event, element) {
+        var name = element.attribute('name'),
+            values = element.value().split(','),
+            fields = $('[data-multicheckbox-field="' + name +'"]');
+
+        if (fields) {
+            fields.forEach(function(field) {
+                field = $(field);
+                if (field.checked()) { insert(values, field.value()); }
+                if (!field.checked()) { remove(values, field.value()); }
+            });
+        }
+
+        element.value(values.filter(String).join(','));
+    });
+
+    body.delegate('change', '.input-multicheckbox .input-group input[data-multicheckbox-field][type="checkbox"]', function(event, element) {
+        var field     = $('[name="' + element.data('multicheckbox-field') + '"]'),
+            value     = element.value(),
+            values    = field.value().split(','),
+            isChecked = element.checked();
+
+        if (isChecked) { insert(values, value); }
+        if (!isChecked) { remove(values, value); }
+
+        field.value(values.filter(String).join(','));
+
+        body.emit('change', {target: field});
+    });
+});
+
+
+},{"elements/attributes":107,"elements/domready":110,"mout/array/contains":165,"mout/array/insert":175,"mout/array/remove":180}],8:[function(require,module,exports){
+'use strict';
+
+var $             = require('elements'),
+    isArray       = require('mout/lang/isArray'),
+    contains      = require('mout/array/contains'),
+    trim          = require('mout/string/trim'),
+    validateField = require('../utils/field-validation');
+
+var submit = function(elements, container, options) {
+    var valid   = [],
+        invalid = [];
+
+    elements = $(elements);
+    container = $(container);
+    options = options || {};
+
+    $(elements).forEach(function(input) {
+        input = $(input);
+        var name = input.attribute('name'),
+            type = input.attribute('type');
+        if (!name || input.disabled() || (type == 'radio' && !input.checked())) { return; }
+
+        input = container.find('[name="' + name + '"]' + (type == 'radio' ? ':checked' : ''));
+
+        // workaround for checkboxes trick that has both a hidden and checkbox field
+        if (type === 'checkbox' && container.find('[type="hidden"][name="' + name + '"]')) {
+            input = container.find('[name="' + name + '"][type="checkbox"]');
+        }
+
+        if (input) {
+            var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
+                parent   = input.parent('.settings-param'),
+                override = parent ? parent.find('> input[type="checkbox"]') : null;
+
+            override = override || $(input.data('override-target'));
+
+            if (contains(['select', 'select-multiple'], input.type()) && input.attribute('multiple')) {
+                value = (input.search('option[selected]') || []).map(function(selection) {
+                    return $(selection).value();
+                });
+            }
+
+            if (override && !override.checked()) { return; }
+            if (!validateField(input)) { invalid.push(input); }
+
+            if (isArray(value)) {
+                value.forEach(function(selection) {
+                    valid.push(name + '[]=' + encodeURIComponent(selection));
+                });
+            } else {
+                if (!options.submitUnchecked || (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value))) {
+                    valid.push(name + '=' + encodeURIComponent(value));
+                }
+            }
+        }
+    });
+
+    var titles = container.search('h4 [data-title-editable]'), key;
+    if (titles) {
+        titles.forEach(function(title) {
+            title = $(title);
+            if (title.parent('[data-collection-template]')) { return; }
+
+            key = title.data('collection-key') || (options.isRoot ? 'settings[title]' : 'title');
+            valid.push(key + '=' + encodeURIComponent(trim(title.data('title-editable'))));
+        });
+    }
+
+    return { valid: valid, invalid: invalid };
+};
+
+module.exports = submit;
+},{"../utils/field-validation":67,"elements":112,"mout/array/contains":165,"mout/lang/isArray":202,"mout/string/trim":271}],9:[function(require,module,exports){
+"use strict";
+// deprecated (5.2.0)
 var prime      = require('prime'),
     $          = require('elements'),
     Base       = require('./base'),
@@ -888,7 +1225,7 @@ var Atom = new prime({
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
             subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i aria-label="Configure Atom Settings" class="fa fa-cog" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getSubType() || this.getKey() || this.getType()) + '</span></span><div class="float-right"><i aria-label="Configure Atom Settings" class="fa fa-cog" aria-hidden="true" data-lm-nodrag data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
     },
 
     hasChanged: function(state, parent) {
@@ -900,7 +1237,7 @@ var Atom = new prime({
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
         if (!state && icon) { icon.remove(); }
-        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').before(this.block.find('.title')); }
+        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').before(this.block.find('.icon')); }
     },
 
     onRendered: function(element, parent) {
@@ -912,7 +1249,7 @@ var Atom = new prime({
 
 module.exports = Atom;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":100,"elements/zen":103,"prime":265}],8:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"./base":11,"elements":112,"elements/zen":136,"prime":300}],10:[function(require,module,exports){
 "use strict";
 // deprecated (5.2.0)
 var prime   = require('prime'),
@@ -931,7 +1268,7 @@ var Atoms = new prime({
     },
 
     layout: function() {
-        this.deprecated = '<div class="atoms-notice">Looking for Atoms? To make it easier we moved them in the <a href="#">Page Settings</a>, this way here you can focus on the content.</div>';
+        this.deprecated = '<div class="atoms-notice">Looking for Atoms? To make it easier we moved them in the <a href="#"><i class="fa fa-fw fa-list-alt" aria-hidden="true"></i> Page Settings</a>.</div>';
 
         return '<div class="atoms-section" style="display: none;" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4></div></div>';
     },
@@ -983,20 +1320,23 @@ var Atoms = new prime({
 
 module.exports = Atoms;
 
-},{"./section":18,"elements":100,"elements/zen":103,"mout/function/bind":157,"prime":265}],9:[function(require,module,exports){
+},{"./section":19,"elements":112,"elements/zen":136,"mout/function/bind":191,"prime":300}],11:[function(require,module,exports){
 "use strict";
-var prime   = require('prime'),
-    Options = require('prime-util/prime/options'),
-    Bound    = require('prime-util/prime/bound'),
-    Emitter = require('prime/emitter'),
-    guid    = require('mout/random/guid'),
-    zen     = require('elements/zen'),
-    trim    = require('mout/string/trim'),
-    $       = require('elements'),
+var prime     = require('prime'),
+    Options   = require('prime-util/prime/options'),
+    Bound     = require('prime-util/prime/bound'),
+    Emitter   = require('prime/emitter'),
+    zen       = require('elements/zen'),
+    trim      = require('mout/string/trim'),
+    $         = require('elements'),
+    ID        = require('../id'),
 
-    get     = require('mout/object/get'),
-    has     = require('mout/object/has'),
-    set     = require('mout/object/set');
+    size      = require('mout/object/size'),
+    get       = require('mout/object/get'),
+    has       = require('mout/object/has'),
+    set       = require('mout/object/set'),
+    translate = require('../../utils/translate'),
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
 
 require('elements/traversal');
 
@@ -1005,14 +1345,16 @@ var Base = new prime({
     inherits: Emitter,
     options: {
         subtype: false,
-        attributes: {}
+        attributes: {},
+        inherit: {}
     },
     constructor: function(options) {
         this.setOptions(options);
 
         this.fresh = !this.options.id;
-        this.id = this.options.id || this.guid();
+        this.id = this.options.id || ID(this.options);
         this.attributes = this.options.attributes || {};
+        this.inherit = this.options.inherit || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
 
@@ -1026,7 +1368,7 @@ var Base = new prime({
     },
 
     getId: function() {
-        return this.id || (this.id = this.guid());
+        return this.id || (this.id = ID(this.options));
     },
 
     getType: function() {
@@ -1065,6 +1407,10 @@ var Base = new prime({
         return this.attributes || {};
     },
 
+    getInheritance: function() {
+        return this.inherit || {};
+    },
+
     updateTitle: function() {
         return this;
     },
@@ -1080,12 +1426,28 @@ var Base = new prime({
         return this;
     },
 
+    setInheritance: function(inheritance) {
+        this.inherit = inheritance;
+
+        return this;
+    },
+
     hasAttribute: function(key) {
         return has(this.attributes, key);
     },
 
+    enableInheritance: function() {},
+
+    disableInheritance: function() {},
+
+    refreshInheritance: function() {},
+
+    hasInheritance: function() {
+        return size(this.inherit) && this.inherit.outline != getCurrentOutline();
+    },
+
     disable: function() {
-        this.block.title('This particle has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+        this.block.title(translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'particle'));
         this.block.addClass('particle-disabled');
     },
 
@@ -1115,17 +1477,17 @@ var Base = new prime({
         return 'data-lm-dropzone';
     },
 
-    addDropzone: function(){
+    addDropzone: function() {
         this.block.data('lm-dropzone', true);
     },
 
-    removeDropzone: function(){
+    removeDropzone: function() {
         this.block.data('lm-dropzone', null);
     },
 
     layout: function() {},
 
-    onRendered: function(){},
+    onRendered: function() {},
 
     setLayout: function(layout) {
         this.block = layout;
@@ -1139,7 +1501,7 @@ var Base = new prime({
 
 module.exports = Base;
 
-},{"elements":100,"elements/traversal":102,"elements/zen":103,"mout/object/get":197,"mout/object/has":198,"mout/object/set":205,"mout/random/guid":215,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],10:[function(require,module,exports){
+},{"../../utils/get-outline":71,"../../utils/translate":77,"../id":26,"elements":112,"elements/traversal":135,"elements/zen":136,"mout/object/get":232,"mout/object/has":233,"mout/object/set":240,"mout/object/size":241,"mout/string/trim":271,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],12:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     Base      = require('./base'),
@@ -1238,7 +1600,7 @@ var Block = new prime({
         this.changeState = state;
 
         if (!child) {
-            child = this.block.find('> .particle-size');
+            child = this.block.find('> .particle-size') || this.block.parent('[data-lm-blocktype="block"]').find('> .particle-size');
             icon = child.find('i:first-child');
 
             if (!state && icon) { icon.remove(); }
@@ -1254,13 +1616,14 @@ var Block = new prime({
 
 module.exports = Block;
 
-},{"../../utils/elements.utils":58,"./base":9,"elements/zen":103,"mout/function/bind":157,"mout/number/enforcePrecision":188,"prime":265}],11:[function(require,module,exports){
+},{"../../utils/elements.utils":65,"./base":11,"elements/zen":136,"mout/function/bind":191,"mout/number/enforcePrecision":221,"prime":300}],13:[function(require,module,exports){
 "use strict";
-var prime = require('prime'),
-    Base = require('./base'),
-    zen = require('elements/zen'),
-    $ = require('elements'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+var prime      = require('prime'),
+    Base       = require('./base'),
+    zen        = require('elements/zen'),
+    $          = require('elements'),
+    getAjaxURL = require('../../utils/get-ajax-url').config,
+    translate  = require('../../utils/translate');
 
 var Container = new prime({
     inherits: Base,
@@ -1305,13 +1668,13 @@ var Container = new prime({
             actions      = zen('div.container-actions').bottom(wrapper);
 
         title.html('<span class="title">' + this.getType() + '</span>');
-        actions.html('<span class="g-tooltip g-tooltip-right" data-title="Container settings"><i aria-label="Configure Container Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span>');
+        actions.html('<span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Container') + '" data-tip-place="top-left"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Container') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span>');
     }
 });
 
 module.exports = Container;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":100,"elements/zen":103,"prime":265}],12:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"../../utils/translate":77,"./base":11,"elements":112,"elements/zen":136,"prime":300}],14:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     Base       = require('./base'),
@@ -1360,7 +1723,7 @@ var Grid = new prime({
 
 module.exports = Grid;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"elements":100,"prime":265}],13:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"./base":11,"elements":112,"prime":300}],15:[function(require,module,exports){
 module.exports = {
     base: require('./base'),
     atom: require('./atom'),
@@ -1373,17 +1736,18 @@ module.exports = {
     block: require('./block'),
     particle: require('./particle'),
     position: require('./position'),
-    pagecontent: require('./pagecontent'),
-    systemmessages: require('./system-messages'),
+    system: require('./system'),
     spacer: require('./spacer')
 };
 
-},{"./atom":7,"./atoms":8,"./base":9,"./block":10,"./container":11,"./grid":12,"./offcanvas":14,"./pagecontent":15,"./particle":16,"./position":17,"./section":18,"./spacer":19,"./system-messages":20,"./wrapper":21}],14:[function(require,module,exports){
+},{"./atom":9,"./atoms":10,"./base":11,"./block":12,"./container":13,"./grid":14,"./offcanvas":16,"./particle":17,"./position":18,"./section":19,"./spacer":20,"./system":21,"./wrapper":22}],16:[function(require,module,exports){
 "use strict";
-var prime   = require('prime'),
-    Section = require('./section'),
+var prime              = require('prime'),
+    Section            = require('./section'),
 
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    getAjaxURL         = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    translate          = require('../../utils/translate');
 
 var Offcanvas = new prime({
     inherits: Section,
@@ -1395,8 +1759,17 @@ var Offcanvas = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
-        return '<div class="offcanvas-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getAttribute('name')) + '</h4><div class="section-actions float-right"><span class="g-tooltip g-tooltip-right" data-title="Adds a new row in the offcanvas"><i class="fa fa-plus"></i></span> <span class="g-tooltip g-tooltip-right" data-title="Offcanvas settings"><i aria-label="Configure Offcanvas Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            inheritance  = '',
+            klass        = '';
+
+        if (this.hasInheritance()) {
+            var outline = getOutlineNameById(this.inherit.outline);
+            inheritance = '<div class="g-inherit g-section-inherit"><div class="g-inherit-content">' + translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '</div></div>';
+            klass = ' g-inheriting g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+        }
+
+        return '<div class="offcanvas-section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getAttribute('name') + '">' + this.getAttribute('name') + '</h4><div class="section-actions float-right"><span data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Offcanvas') + '" class="fa fa-plus" aria-hidden="true"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Offcanvas') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Offcanvas') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritance + '</div>';
     },
 
     getId: function() {
@@ -1406,30 +1779,18 @@ var Offcanvas = new prime({
 
 module.exports = Offcanvas;
 
-},{"../../utils/get-ajax-url":63,"./section":18,"prime":265}],15:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"../../utils/get-outline":71,"../../utils/translate":77,"./section":19,"prime":300}],17:[function(require,module,exports){
+(function (global){
 "use strict";
-var prime    = require('prime'),
-    Particle = require('./particle');
-
-var Pagecontent = new prime({
-    inherits: Particle,
-    options: {
-        type: 'pagecontent',
-        title: 'Page Content',
-        attributes: {}
-    }
-});
-
-module.exports = Pagecontent;
-
-},{"./particle":16,"prime":265}],16:[function(require,module,exports){
-"use strict";
-var prime      = require('prime'),
-    $          = require('elements'),
-    Atom       = require('./atom'),
-    bind       = require('mout/function/bind'),
-    precision  = require('mout/number/enforcePrecision'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+var prime              = require('prime'),
+    $                  = require('elements'),
+    Atom               = require('./atom'),
+    bind               = require('mout/function/bind'),
+    precision          = require('mout/number/enforcePrecision'),
+    forOwn             = require('mout/object/forOwn'),
+    getAjaxURL         = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    translate          = require('../../utils/translate');
 
 var UID = 0;
 
@@ -1446,9 +1807,92 @@ var Particle = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
-            subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '';
+            subtype      = this.getSubType() ? 'data-lm-blocksubtype="' + this.getSubType() + '"' : '',
+            klass        = '';
 
-        return '<div class="' + this.getType() + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="Configure Particle Settings" class="fa fa-cog" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+        if (this.hasInheritance()) {
+            klass = ' g-inheriting';
+            if (this.inherit.include.length) {
+                klass += ' g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            }
+        }
+
+        return '<div class="' + this.getType() + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" ' + subtype + '><span><span class="icon" ' + this.addInheritanceTip(true) + '><i class="fa ' + this.getIcon() + '" aria-hidden="true"></i></span><span class="title">' + this.getTitle() + '</span><span class="font-small">' + (this.getKey() || this.getSubType() || this.getType()) + '</span></span><div class="float-right"><span class="particle-size"></span> <i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Particle') + '" class="fa fa-cog" aria-hidden="true" data-lm-nodrag data-lm-settings="' + settings_uri + '"></i></div></div>';
+    },
+
+    enableInheritance: function() {
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        if (this.hasInheritance()) {
+            var outline = getOutlineNameById(this.inherit.outline),
+                icon    = this.block.find('.icon');
+
+            this.block.addClass('g-inheriting');
+            if (this.inherit.include.length) {
+                this.block.addClass('g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            }
+
+            this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
+
+            forOwn(this.getInheritanceTip(), function(value, key) {
+                icon.data(key, value);
+            });
+
+            global.G5.tips.reload();
+        }
+    },
+
+    disableInheritance: function() {
+        var icon    = this.block.find('.icon');
+
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        this.block.removeClass('g-inheriting');
+        this.block.find('.icon .fa').attribute('class', 'fa ' + this.getIcon());
+
+        forOwn(this.getInheritanceTip(), function(value, key) {
+            icon.data(key, null);
+        });
+
+        global.G5.tips.reload();
+    },
+
+    refreshInheritance: function() {
+        this.block[this.hasInheritance() ? 'removeClass' : 'addClass']('g-inheritance');
+        if (this.hasInheritance()) {
+            this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        }
+    },
+
+    addInheritanceTip: function(html) {
+        var tooltip = this.getInheritanceTip();
+
+        if (html) {
+            var tooltipHTML = '';
+            forOwn(tooltip, function(value, key) {
+                tooltipHTML += 'data-' + key + '="' + value + '" ';
+            });
+
+            tooltip = tooltipHTML;
+        }
+
+        return this.hasInheritance() ? tooltip : '';
+    },
+
+    getInheritanceTip: function() {
+        var outline = getOutlineNameById(this.inherit ? this.inherit.outline : null),
+            particle = this.inherit.particle || '',
+            include = (this.inherit.include || []).join(', ');
+
+        return {
+            'tip': translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + particle + '<br />Replace: ' + include,
+            'tip-offset': -10,
+            'tip-place': 'top-right'
+        };
+    },
+
+    cleanKlass: function(klass) {
+        klass = (klass || '').split(' ');
+
+        return klass.filter(function(item) { return !item.match(/^g-inheriting-/); }).join(' ');
     },
 
     setLabelSize: function(size) {
@@ -1478,6 +1922,18 @@ var Particle = new prime({
         this.setLabelSize(resize);
     },
 
+    getIcon: function() {
+        if (this.hasInheritance()) {
+            return 'fa-lock';
+        }
+
+        var type     = this.getType(),
+            subtype  = this.getSubType(),
+            template = $('.particles-container [data-lm-blocktype="' + type + '"][data-lm-subtype="' + subtype + '"]');
+
+        return template ? template.data('lm-icon') : 'fa-cube';
+    },
+
     getLimits: function(parent) {
         if (!parent) { return false; }
 
@@ -1486,7 +1942,7 @@ var Particle = new prime({
         if (!sibling) { return [100, 100]; }
 
         var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
-            sizes = {
+            sizes        = {
                 current: this.getParent().getSize(),
                 sibling: siblingBlock.getSize()
             };
@@ -1497,7 +1953,9 @@ var Particle = new prime({
 
 module.exports = Particle;
 
-},{"../../utils/get-ajax-url":63,"./atom":7,"elements":100,"mout/function/bind":157,"mout/number/enforcePrecision":188,"prime":265}],17:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"../../utils/get-ajax-url":70,"../../utils/get-outline":71,"../../utils/translate":77,"./atom":9,"elements":112,"mout/function/bind":191,"mout/number/enforcePrecision":221,"mout/object/forOwn":231,"prime":300}],18:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     trim     = require('mout/string/trim'),
@@ -1537,17 +1995,20 @@ var Position = new prime({
 
 module.exports = Position;
 
-},{"./particle":16,"mout/string/trim":235,"prime":265}],18:[function(require,module,exports){
+},{"./particle":17,"mout/string/trim":271,"prime":300}],19:[function(require,module,exports){
 "use strict";
-var prime = require('prime'),
-    Base  = require('./base'),
-    Bound = require('prime-util/prime/bound'),
-    Grid  = require('./grid'),
-    $     = require('elements'),
-    zen   = require('elements/zen'),
+var prime              = require('prime'),
+    Base               = require('./base'),
+    Bound              = require('prime-util/prime/bound'),
+    Grid               = require('./grid'),
+    $                  = require('elements'),
+    zen                = require('elements/zen'),
 
-    bind  = require('mout/function/bind'),
-    getAjaxURL = require('../../utils/get-ajax-url').config;
+    bind               = require('mout/function/bind'),
+    forOwn             = require('mout/object/forOwn'),
+    getAjaxURL         = require('../../utils/get-ajax-url').config,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    translate          = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -1567,13 +2028,112 @@ var Section = new prime({
     },
 
     layout: function() {
-        var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
+        var settings_uri     = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId()),
+            inheritanceLabel = '',
+            klass            = '';
 
-        return '<div class="section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"><div class="section-header clearfix"><h4 class="float-left">' + (this.getTitle()) + '</h4><div class="section-actions float-right"><span class="g-tooltip g-tooltip-right" data-title="Adds a new row in the section"><i aria-label="Add a new row" class="fa fa-plus"></i></span> <span class="g-tooltip g-tooltip-right" data-title="Section settings"><i aria-label="Configure Section Settings" class="fa fa-cog" data-lm-settings="' + settings_uri + '"></i></span></div></div></div>';
+        if (this.hasInheritance()) {
+            var outline = getOutlineNameById(this.inherit.outline);
+            inheritanceLabel = this.renderInheritanceLabel(outline);
+            klass = ' g-inheriting';
+
+            if (this.inherit.include.length) {
+                klass += ' g-inheriting-' + this.inherit.include.join(' g-inheriting-');
+            }
+        }
+
+        return '<div class="section' + klass + '" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"><div class="section-header clearfix"><h4 class="float-left" title="' + this.getTitle() + '">' + this.getTitle() + '</h4><div class="section-actions float-right"><span class="section-addrow" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_ADD_ROW', 'Section') + '" class="fa fa-plus" aria-hidden="true"></i></span> <span class="section-settings" data-tip="' + translate('GANTRY5_PLATFORM_JS_LM_SETTINGS', 'Section') + '" data-tip-place="top-right"><i aria-label="' + translate('GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS', 'Section') + '" class="fa fa-cog" aria-hidden="true" data-lm-settings="' + settings_uri + '"></i></span></div></div>' + inheritanceLabel + '</div>';
     },
 
     adopt: function(child) {
         $(child).insert(this.block.find('.g-grid'));
+    },
+
+    renderInheritanceLabel: function(outline) {
+        var content = translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>');
+
+        if (this.block && this.getParent()) {
+            content = '';
+        }
+
+        return '<div class="g-inherit g-section-inherit"><div class="g-inherit-content" ' + this.addInheritanceTip(true) + '><i class="fa fa-lock" aria-hidden="true"></i> ' + content + '</div></div>';
+    },
+
+    enableInheritance: function() {
+        if (this.hasInheritance()) {
+            this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+            this.block.addClass('g-inheriting');
+            if (this.inherit.include.length) {
+                this.block.addClass('g-inheriting-' + this.inherit.include.join(' g-inheriting-'));
+            }
+
+            if (!this.block.find('> .g-inherit')) {
+                var inherit = zen('div'),
+                    outline = getOutlineNameById(this.inherit.outline),
+                    html    = this.renderInheritanceLabel(outline);
+
+                inherit.html(html).children().after(this.block.find('> .section-header'));
+            }
+        }
+    },
+
+    disableInheritance: function() {
+        if (this.block.find('> .g-inherit')) {
+            var inherit = this.block.find('> .g-inherit.g-section-inherit');
+            if (inherit) {
+                inherit.remove();
+            }
+        }
+
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        this.block.removeClass('g-inheriting');
+    },
+
+    refreshInheritance: function() {
+        this.block.attribute('class', this.cleanKlass(this.block.attribute('class')));
+        if (this.hasInheritance()) {
+            this.enableInheritance();
+            var overlay = this.block.find('> .g-inherit');
+            if (overlay) {
+                var outline = getOutlineNameById(this.inherit.outline),
+                    content = zen('div').html(this.renderInheritanceLabel(outline));
+
+                if (overlay && content) { overlay.html(content.children().html()); }
+            }
+        }
+    },
+
+    addInheritanceTip: function(html) {
+        var tooltip = this.getInheritanceTip();
+
+        if (html) {
+            var tooltipHTML = '';
+            forOwn(tooltip, function(value, key) {
+                tooltipHTML += 'data-' + key + '="' + value + '" ';
+            });
+
+            tooltip = tooltipHTML;
+        }
+
+        return this.hasInheritance() ? tooltip : '';
+    },
+
+    getInheritanceTip: function() {
+        var outline = this.inherit ? this.inherit.outline : null,
+            name    = getOutlineNameById(outline),
+            include = (this.inherit.include || []).join(', ');
+
+        return {
+            'tip': translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + name + '</strong>') + '<br />Outline ID: ' + outline + '<br />Replace: ' + include,
+            'tip-offset': -2,
+            'tip-place': 'top-right'
+        };
+    },
+
+    cleanKlass: function(klass) {
+        klass = (klass || '').split(' ');
+
+        return klass.filter(function(item) { return !item.match(/^g-inheriting-/); }).join(' ');
     },
 
     hasChanged: function(state, child) {
@@ -1606,12 +2166,14 @@ var Section = new prime({
                 this.options.builder.add(this.grid);
             }, this));
         }
+
+        this.refreshInheritance();
     },
 
     getParent: function() {
         var parent = this.block.parent('[data-lm-id]');
 
-        return this.options.builder.get(parent.data('lm-id'));
+        return parent ? this.options.builder.get(parent.data('lm-id')) : null;
     },
 
     getLimits: function(parent) {
@@ -1621,11 +2183,13 @@ var Section = new prime({
 
         if (!sibling) { return [100, 100]; }
 
-        var siblingBlock = this.options.builder.get(sibling.data('lm-id')),
-            sizes = {
-                current: this.getParent().getSize(),
-                sibling: siblingBlock.getSize()
-            };
+        var siblingBlock = this.options.builder.get(sibling.data('lm-id'));
+        if (siblingBlock.getType() !== 'block') { return false; }
+
+        var sizes = {
+            current: this.getParent().getSize(),
+            sibling: siblingBlock.getSize()
+        };
 
         return [5, (sizes.current + sizes.sibling) - 5];
     }
@@ -1633,7 +2197,7 @@ var Section = new prime({
 
 module.exports = Section;
 
-},{"../../utils/get-ajax-url":63,"./base":9,"./grid":12,"elements":100,"elements/insertion":101,"elements/zen":103,"mout/function/bind":157,"prime":265,"prime-util/prime/bound":261}],19:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"../../utils/get-outline":71,"../../utils/translate":77,"./base":11,"./grid":14,"elements":112,"elements/insertion":113,"elements/zen":136,"mout/function/bind":191,"mout/object/forOwn":231,"prime":300,"prime-util/prime/bound":296}],20:[function(require,module,exports){
 "use strict";
 var prime    = require('prime'),
     Particle = require('./particle');
@@ -1651,25 +2215,25 @@ var Spacer = new prime({
 
 module.exports = Spacer;
 
-},{"./particle":16,"prime":265}],20:[function(require,module,exports){
+},{"./particle":17,"prime":300}],21:[function(require,module,exports){
 "use strict";
-var prime       = require('prime'),
-    Pagecontent = require('./pagecontent');
+var prime    = require('prime'),
+    Particle = require('./particle');
 
-var SystemMessages = new prime({
-    inherits: Pagecontent,
+var System = new prime({
+    inherits: Particle,
     options: {
-        title: 'System Message',
+        type: 'system',
         attributes: {}
     }
 });
 
-module.exports = SystemMessages;
+module.exports = System;
 
-},{"./pagecontent":15,"prime":265}],21:[function(require,module,exports){
+},{"./particle":17,"prime":300}],22:[function(require,module,exports){
 "use strict";
-var prime   = require('prime'),
-    Section = require('./section'),
+var prime      = require('prime'),
+    Section    = require('./section'),
 
     getAjaxURL = require('../../utils/get-ajax-url').config;
 
@@ -1684,10 +2248,14 @@ var Wrapper = new prime({
 
     layout: function() {
         var settings_uri = getAjaxURL(this.getPageId() + '/layout/' + this.getType() + '/' + this.getId());
-        return '<div class="wrapper-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '"></div>';
+        return '<div class="wrapper-section" data-lm-id="' + this.getId() + '" data-lm-blocktype="' + this.getType() + '" data-lm-blocksubtype="' + this.getSubType() + '"></div>';
     },
 
     hasChanged: function() {},
+
+    getSize: function() {
+        return false;
+    },
 
     getId: function() {
         return this.id || (this.id = this.options.type);
@@ -1696,7 +2264,7 @@ var Wrapper = new prime({
 
 module.exports = Wrapper;
 
-},{"../../utils/get-ajax-url":63,"./section":18,"prime":265}],22:[function(require,module,exports){
+},{"../../utils/get-ajax-url":70,"./section":19,"prime":300}],23:[function(require,module,exports){
 "use strict";
 var prime   = require('prime'),
     $       = require('elements'),
@@ -1709,7 +2277,7 @@ var forOwn     = require('mout/object/forOwn'),
     size       = require('mout/collection/size'),
     isArray    = require('mout/lang/isArray'),
     flatten    = require('mout/array/flatten'),
-    guid       = require('mout/random/guid'),
+    ID         = require('./id'),
 
     set        = require('mout/object/set'),
     unset      = require('mout/object/unset'),
@@ -1811,6 +2379,7 @@ var Builder = new prime({
                 subtype: subtype,
                 title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
+                inherit: get(this.map, id) ? get(this.map, id).getInheritance() : {},
                 children: children
             };
 
@@ -1838,6 +2407,7 @@ var Builder = new prime({
         var Element = new (Blocks[value.type] || Blocks['section'])(deepFillIn({
             id: key,
             attributes: {},
+            inherit: {},
             subtype: value.subtype || false,
             builder: this
         }, omit(value, 'children')));
@@ -1907,7 +2477,7 @@ var Builder = new prime({
         forEach(data, function(value/*, key, object*/) {
 
             if (!value.id) {
-                value.id = guid();
+                value.id = ID({ builder: { map: this.map }, type: value.type, subtype: value.subtype });
             }
 
             // debug (flat view of the structure)
@@ -1933,7 +2503,7 @@ var Builder = new prime({
 
 module.exports = Builder;
 
-},{"./blocks/":13,"elements":100,"elements/attributes":95,"elements/traversal":102,"mout/array/flatten":140,"mout/collection/forEach":154,"mout/collection/size":156,"mout/lang/isArray":169,"mout/object/deepFillIn":190,"mout/object/forOwn":196,"mout/object/get":197,"mout/object/omit":204,"mout/object/set":205,"mout/object/unset":208,"mout/random/guid":215,"mout/string/repeat":229,"mout/string/rpad":232,"prime":265,"prime/emitter":264}],23:[function(require,module,exports){
+},{"./blocks/":15,"./id":26,"elements":112,"elements/attributes":107,"elements/traversal":135,"mout/array/flatten":172,"mout/collection/forEach":188,"mout/collection/size":190,"mout/lang/isArray":202,"mout/object/deepFillIn":224,"mout/object/forOwn":231,"mout/object/get":232,"mout/object/omit":239,"mout/object/set":240,"mout/object/unset":243,"mout/string/repeat":265,"mout/string/rpad":268,"prime":300,"prime/emitter":299}],24:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -1987,7 +2557,7 @@ var Resizer = new prime({
     start: function(event, element, siblings, offset) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection
@@ -2131,7 +2701,7 @@ var Resizer = new prime({
         elements.forEach(function(element) {
             element = $(element);
             block = this.getBlock(element);
-            if (block && block.hasAttribute('size')) {
+            if (block && block.hasAttribute('size') && typeof block.getSize === 'function') {
                 block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
             } else {
                 if (element) { element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' }); }
@@ -2142,12 +2712,13 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":46,"../utils/elements.utils":58,"elements/delegation":97,"elements/events":99,"mout/function/bind":157,"mout/lang/isString":177,"mout/math/clamp":182,"mout/math/map":184,"mout/number/enforcePrecision":188,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],24:[function(require,module,exports){
+},{"../ui/drag.events":51,"../utils/elements.utils":65,"elements/delegation":109,"elements/events":111,"mout/function/bind":191,"mout/lang/isString":210,"mout/math/clamp":215,"mout/math/map":217,"mout/number/enforcePrecision":221,"mout/object/get":232,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],25:[function(require,module,exports){
 var prime      = require('prime'),
     Emitter    = require('prime/emitter'),
     slice      = require('mout/array/slice'),
     merge      = require('mout/object/merge'),
-    deepEquals = require('mout/lang/deepEquals');
+    deepEquals = require('mout/lang/deepEquals'),
+    deepDiff   = require('deep-diff').diff;
 
 var History = new prime({
 
@@ -2207,13 +2778,21 @@ var History = new prime({
     },
 
     get: function(index) {
-        return this.session[index || this.index] || false;
+        return this.session[typeof index !== 'undefined' ? index : this.index] || false;
     },
 
     equals: function(session, compare) {
         if (!compare) { compare = this.get().data; }
 
         return deepEquals(session, compare);
+    },
+
+    diff: function(obj1, obj2) {
+        if (!obj1 && !obj2 && this.session.length <= 1) { return 'Not enough sessions to diff'; }
+        if (!obj2) { obj2 = this.get(); }
+        if (!obj1) { obj1 = this.get(this.index - 1); }
+
+        return deepDiff(obj1, obj2);
     },
 
     setSession: function(session, preset) {
@@ -2235,10 +2814,40 @@ var History = new prime({
 
 module.exports = History;
 
-},{"mout/array/slice":149,"mout/lang/deepEquals":167,"mout/object/merge":201,"prime":265,"prime/emitter":264}],25:[function(require,module,exports){
+},{"deep-diff":105,"mout/array/slice":182,"mout/lang/deepEquals":200,"mout/object/merge":236,"prime":300,"prime/emitter":299}],26:[function(require,module,exports){
+'use strict';
+
+var keys     = require('mout/object/keys'),
+    contains = require('mout/array/contains'),
+    rand     = require('mout/random/randInt');
+
+var ID = function(options) {
+    var map     = options.builder ? keys(options.builder.map) : {},
+        type    = options.type,
+        subtype = options.subtype,
+
+        result  = [], key, id;
+
+    if (type != 'particle') result.push(type);
+    if (subtype)  result.push(subtype);
+
+    key = result.join('-');
+
+    while (id = rand(1000, 9999)) {
+        if (!contains(map, key + '-' + id)) {
+            break;
+        }
+    }
+
+    return key + '-' + id;
+};
+
+module.exports = ID;
+},{"mout/array/contains":165,"mout/object/keys":235,"mout/random/randInt":253}],27:[function(require,module,exports){
 "use strict";
 var ready          = require('elements/domready'),
     $              = require('elements/attributes'),
+    Submit         = require('../fields/submit'),
     modal          = require('../ui').modal,
     toastr         = require('../ui').toastr,
     sidebar        = require('./particles-sidebar'),
@@ -2249,7 +2858,6 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
-    forEach        = require('mout/collection/forEach'),
     precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -2262,12 +2870,13 @@ var ready          = require('elements/domready'),
     validateField  = require('../utils/field-validation'),
     LMHistory      = require('./history'),
     LayoutManager  = require('./layoutmanager'),
-    SaveState      = require('../utils/save-state');
+    SaveState      = require('../utils/save-state'),
+    translate      = require('../utils/translate');
 
 require('../ui/popover');
+require('./inheritance');
 
-var builder, layoutmanager, lmhistory, savestate;
-
+var builder, layoutmanager, lmhistory, savestate, Tips;
 
 builder = new Builder();
 lmhistory = new LMHistory();
@@ -2346,7 +2955,7 @@ ready(function() {
     layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
-        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        exclude: '.section-header .button, .section-header .fa, .lm-newblocks .float-right .button, [data-lm-nodrag], [data-lm-disabled]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
         builder: builder,
         history: lmhistory,
@@ -2393,17 +3002,17 @@ ready(function() {
             if (link == element[0]) { index = i + 1; }
         });
 
-        panes.find('.active').removeClass('active');
-        parent.find('.active').removeClass('active');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
-        parent.find('li:nth-child(' + index + ')').addClass('active');
+        panes.find('> .active').removeClass('active');
+        parent.find('> ul > .active').removeClass('active');
+        panes.find('> .g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('> ul > li:nth-child(' + index + ')').addClass('active');
 
         // ARIA
-        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
-        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (panes.search('> [aria-expanded]')) { panes.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('> [aria-expanded]')) { parent.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
 
-        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
-        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
+        panes.find('> .g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('> ul >li:nth-child(' + index + ') [aria-expanded]')) { parent.find('> ul > li:nth-child(' + index + ') > [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -2448,7 +3057,7 @@ ready(function() {
     // Grid same widths button (evenize, equalize)
     ['click', 'touchend'].forEach(function(evt){
         body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
-            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            window.G5.tips.hide(element[0]);
             var clientRect = element[0].getBoundingClientRect();
             if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
@@ -2474,40 +3083,38 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
-            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+        var msg = tooltips.equalize ? translate('GANTRY5_PLATFORM_JS_LM_GRID_EQUALIZE') : translate('GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE');
 
-        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({
-            position: 'absolute',
-            top: 26
-        }).style(tooltips.equalize ? 'right' : 'left', -30);
+        element.data('tip', msg).data('tip-offset', -30);
 
-        element.LMTooltip = tooltip;
+        window.G5.tips
+            .get(element[0])
+            .content(msg)
+            .place(tooltips.equalize ? 'top-left' : 'top-right')
+            .show();
     });
 
     body.delegate('mouseout', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
     });
 
     // Clear Layout
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var type, child;
-        forEach(builder.map, function(obj, id) {
-            type = obj.getType();
-            child = obj.block.find('> [data-lm-id]');
-            if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
-                builder.remove(id);
-                obj.block.remove();
-            }
-        }, this);
+        var mode = element.data('lm-clear'),
+            options = {};
 
-        layoutmanager.singles('cleanup', builder);
+        switch (mode) {
+            case 'keep-inheritance':
+                options = { save: true, dropLastGrid: false, emptyInherits: false };
+                break;
+            case 'full':
+            default:
+                options = { save: true, dropLastGrid: false, emptyInherits: true };
+        }
 
-        lmhistory.push(builder.serialize(), lmhistory.get().preset);
+        layoutmanager.clear(null, options);
     });
 
     // Switcher
@@ -2535,6 +3142,18 @@ ready(function() {
         }
     });
 
+    // Disable keeping particles if inherit option is selected
+    body.delegate('change', '[data-g-inherit="outline"]', function(event, element) {
+        var keeper = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve="outline"]');
+        if (keeper) { keeper.checked(false); }
+    });
+
+    // Disable inheriting section/particles if keep option is selected
+    body.delegate('change', '[data-g-preserve="outline"]', function(event, element) {
+        var inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit="outline"]');
+        if (inherit) { inherit.checked(false); }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -2546,10 +3165,13 @@ ready(function() {
         element.showIndicator();
 
         var preset = $('[data-lm-preset]'),
-            checkbox = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
-            preserve = checkbox && checkbox.checked(),
+            preserve = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
+            inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit]'),
             method = !preserve ? 'get' : 'post',
             data = {};
+
+        preserve = preserve && preserve.checked();
+        inherit = inherit && inherit.checked();
 
         if (preserve) {
             var lm = layoutmanager;
@@ -2558,6 +3180,10 @@ ready(function() {
 
             data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
             data.layout = JSON.stringify(lm.builder.serialize());
+        }
+
+        if (inherit) {
+            data.inherit = 1;
         }
 
         var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
@@ -2640,7 +3266,7 @@ ready(function() {
 
         var blocktype = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data = null, parent;
+            data = null, parent, section;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
@@ -2655,37 +3281,47 @@ ready(function() {
 
         element = element.parent('[data-lm-blocktype]');
         parent = element.parent('[data-lm-blocktype]');
+        section = element.parent('[data-lm-blocktype="section"]');
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent ? parent.data('lm-id') : false;
+            parentID = parent ? parent.data('lm-id') : false,
+            parentType = parent ? parent.data('lm-blocktype') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
+            data.id = builder.get(element.data('lm-id')).getId() || null;
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
+            data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
+            data.parent = section ? section.data('lm-id') : null;
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
             if (!size(data.options)) { delete data.options; }
+            if (!size(data.inherit)) { delete data.inherit; }
+            if (!size(data.block)) { delete data.block; }
         }
 
         modal.open({
             content: 'Loading',
             method: 'post',
             data: data,
+            overlayClickToClose: false,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
-                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [], invalid = [];
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -2713,7 +3349,7 @@ ready(function() {
                     }
 
                     var isValid = function() {
-                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : translate('GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE');
                     };
 
                     blockSize.on('input', function(){
@@ -2725,45 +3361,25 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
+                    target.disabled(true);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    var post = Submit(formElements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        dataString.push('title=' + encodeURIComponent(trim(title.data('title-editable'))));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -2780,12 +3396,12 @@ ready(function() {
 
                             if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
-                            if (particle.getType() != 'section') {
+                            if (particle.getType() !== 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
                             }
 
-                            if (particle.getType() == 'position') {
+                            if (particle.getType() === 'position') {
                                 particle.updateKey();
                             }
 
@@ -2809,6 +3425,25 @@ ready(function() {
                                 }
                             }
 
+                            // particle inheritance
+                            if (response.body.data.inherit) {
+                                delete response.body.data.inherit.section;
+                                particle.setInheritance(response.body.data.inherit);
+
+                                particle.enableInheritance();
+                                particle.refreshInheritance();
+                            }
+
+                            if (response.body.data.children) {
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: !!response.body.data.children.length, emptyInherits: true });
+                                builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
+                            }
+
+                            if (particle.hasInheritance() && !response.body.data.inherit) {
+                                particle.setInheritance({});
+                                particle.disableInheritance();
+                            }
+
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel
@@ -2819,7 +3454,7 @@ ready(function() {
 
                             modal.close();
 
-                            toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED', particle.getTitle()), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();
@@ -2840,7 +3475,262 @@ module.exports = {
     savestate: savestate
 };
 
-},{"../ui":48,"../ui/popover":50,"../utils/field-validation":60,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"../utils/history":66,"../utils/save-state":68,"./builder":22,"./history":24,"./layoutmanager":26,"./particles-sidebar":27,"agent":69,"elements/attributes":95,"elements/domready":98,"elements/zen":103,"mout/array/contains":133,"mout/collection/forEach":154,"mout/collection/size":156,"mout/number/enforcePrecision":188,"mout/string/properCase":227,"mout/string/replace":230,"mout/string/trim":235}],26:[function(require,module,exports){
+},{"../fields/submit":8,"../ui":53,"../ui/popover":55,"../utils/field-validation":67,"../utils/flags-state":68,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/history":74,"../utils/save-state":76,"../utils/translate":77,"./builder":23,"./history":25,"./inheritance":28,"./layoutmanager":29,"./particles-sidebar":30,"agent":79,"elements/attributes":107,"elements/domready":110,"elements/zen":136,"mout/array/contains":165,"mout/collection/size":190,"mout/number/enforcePrecision":221,"mout/string/properCase":263,"mout/string/replace":266,"mout/string/trim":271}],28:[function(require,module,exports){
+"use strict";
+
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
+    request            = require('agent'),
+    modal              = require('../../ui').modal,
+
+    isArray            = require('mout/lang/isArray'),
+    forEach            = require('mout/collection/forEach'),
+    filter             = require('mout/object/filter'),
+    keys               = require('mout/object/keys'),
+    contains           = require('mout/collection/contains'),
+
+    getAjaxSuffix      = require('../../utils/get-ajax-suffix'),
+    parseAjaxURI       = require('../../utils/get-ajax-url').parse,
+    getAjaxURL         = require('../../utils/get-ajax-url').global,
+    getOutlineNameById = require('../../utils/get-outline').getOutlineNameById,
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
+
+
+var IDsMap = {
+    attributes: ['g-settings-particle', 'g-settings-atom'],
+    block: { panel: 'g-settings-block-attributes', tab: 'g-settings-block' },
+    particles: 'g-inherit-particle',
+    atoms: 'g-inherit-atom'
+};
+
+ready(function() {
+    var body             = $('body'),
+        currentSelection = {},
+        currentMode      = {};
+
+    body.delegate('change', '[name="inherit[outline]"]', function(event, element) {
+        var label          = element.parent('.settings-param').find('.settings-param-title'),
+            text           = element.siblings().find('.g-item'),
+            value          = element.value(),
+            name           = $('[name="inherit[section]"]') ? $('[name="inherit[section]"]').value() : '',
+            form           = element.parent('[data-g-inheritance-settings]'),
+            includesFields = $('[data-multicheckbox-field="inherit[include]"]:checked') || [],
+            particle       = {
+                list: $('#g-inherit-particle, #g-inherit-atom'),
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
+            };
+
+        if (!text) { return true; }
+
+        var hasChanged = currentSelection[name] !== value || currentMode[name] !== particle.mode.value();
+
+        if (hasChanged && !value) {
+            includesFields.forEach(function(include) {
+                $(include).checked(false);
+                body.emit('change', { target: include });
+            });
+        }
+
+        var formData = JSON.parse(form.data('g-inheritance-settings')),
+            data     = {
+                outline: value || getCurrentOutline(),
+                type: formData.type || '',
+                subtype: formData.subtype || '',
+                mode: particle.mode.value(),
+                inherit: !!value && particle.mode.value() === 'inherit' ? '1' : '0'
+            };
+
+        data.id = formData.id;
+
+        label.showIndicator();
+        element.selectizeInstance.blur();
+
+        if (particle.radios && particle.checked) {
+            if (!hasChanged) {
+                data.selected = particle.checked.value();
+                data.id = particle.checked.value();
+                particle.list = false;
+            }
+        }
+
+        var URI_mode = data.type === 'atom' ? 'atoms' : 'layouts',
+            URI      = particle.list ? URI_mode + '/list' : URI_mode;
+
+        request('POST', parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()), data, function(error, response) {
+            label.hideIndicator();
+
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+
+                return;
+            }
+
+            var data      = response.body,
+                includes  = form.find('[name="inherit[include]"]').value().split(','),
+                available = form.search('[data-multicheckbox-field="inherit[include]"]').map(function(item) { return $(item).value(); }),
+                container = modal.getByID(modal.getLast()),
+                element;
+
+            // refresh field values based on settings and ajax response
+            forEach(IDsMap, function(id, option) {
+                id = id.panel || id;
+                id = !isArray(id) ? [id] : id;
+
+                id.forEach(function(currentID) {
+                    var shouldRefresh = contains(includes, option),
+                        isAvailable   = contains(available, option);
+
+                    if ((shouldRefresh || !isAvailable) && data.html[currentID] && (element = container.find('#' + currentID))) {
+                        element.html(data.html[currentID]);
+                        var selects = element.search('[data-selectize]');
+                        if (selects) { selects.selectize(); }
+                    }
+                });
+            });
+
+            if (hasChanged && includesFields && currentSelection[name] === '') {
+                includesFields.forEach(function(include) { body.emit('change', { target: include }); });
+            }
+
+            currentSelection[name] = value;
+            currentMode[name] = particle.mode.value();
+        });
+    });
+
+    body.delegate('change', '#g-settings-inheritance [data-multicheckbox-field]', function(event, element) {
+        var outline = $('[name="inherit[outline]"]');
+        if (!outline) { return true; }
+
+        outline   = outline.value();
+
+        var value     = element.value(),
+            isChecked = element.checked(),
+            noRefresh = event.noRefresh,
+            particle  = {
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
+            };
+
+        var IDs = {
+            panel: (IDsMap[value] && IDsMap[value].panel || IDsMap[value]),
+            tab: (IDsMap[value] && IDsMap[value].tab || IDsMap[value])
+        };
+
+        if (!isArray(IDs.panel)) {
+            IDs.panel = [IDs.panel];
+            IDs.tab = [IDs.tab];
+        }
+
+        IDs.panel.forEach(function(currentPanel, index) {
+            var panel = $('#' + currentPanel),
+                tab   = $('#' + IDs.tab[index] + '-tab');
+
+            if (!panel || !tab) { return true; }
+
+            var inherit = panel.find('.g-inherit'),
+                isClone = particle.mode.value() === 'clone',
+                refresh = function(noRefresh) {
+                    if (!noRefresh) {
+                        body.emit('change', { target: element.parent('.settings-block').find('[name="inherit[outline]"]') });
+                    }
+                };
+
+            if (!isChecked || !outline || isClone) {
+                var lock = tab.find('.fa-lock');
+
+                if (lock) { lock.removeClass('fa-lock').addClass('fa-unlock'); }
+                if (inherit) { inherit.hide(); }
+                if (isClone) { refresh(noRefresh); }
+            } else {
+                var unlock = tab.find('.fa-unlock');
+
+                if (unlock) { unlock.removeClass('fa-unlock').addClass('fa-lock'); }
+                if (inherit) { inherit.show(); }
+
+                refresh(noRefresh);
+            }
+        });
+    });
+
+
+    body.delegate('change', '[name="inherit[mode]"], [name="inherit[particle]"], [name="inherit[atom]"]', function(event, element) {
+        var container  = modal.getByID(modal.getLast()),
+            outline    = container.find('[name="inherit[outline]"]'),
+            checkboxes = container.search('[data-multicheckbox-field]') || [],
+            noRefresh  = false;
+
+        if (element.attribute('name') === 'inherit[mode]') {
+            noRefresh = true;
+        }
+
+        body.emit('change', { target: outline, noRefresh: noRefresh });
+        checkboxes.forEach(function(checkbox) {
+            body.emit('change', { target: checkbox, noRefresh: noRefresh });
+        });
+    });
+
+    body.delegate('click', '#g-inherit-particle .fa-info-circle, #g-inherit-atom .fa-info-circle', function(event, element) {
+        event.preventDefault();
+
+        var container = modal.getByID(modal.getLast()),
+            outline   = container.find('[name="inherit[outline]"]'),
+            id        = element.siblings('input[name="inherit[particle]"], input[name="inherit[atom]"]');
+
+        if (!id || !outline) { return false; }
+
+        var URI = id.name() === 'inherit[atom]' ? 'atoms/instance' : 'layouts/particle';
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            data: { id: id.value(), outline: outline.value() || getCurrentOutline() },
+            remote: parseAjaxURI(getAjaxURL(URI) + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+            }
+        });
+
+        return false;
+    });
+
+    body.delegate('mouseup', '.g-tabs .fa-lock, .g-tabs .fa-unlock', function(event, element) {
+        if (!element.parent('li').hasClass('active')) { return false; }
+
+        var container = modal.getByID(modal.getLast()),
+            isLocked  = element.hasClass('fa-lock'),
+            id        = element.parent('a').id().replace(/\-tab$/, ''),
+            prop      = keys(filter(IDsMap, function(value) { return value === id || value.tab === id || contains(value, id); }) || []).shift(),
+            input     = container.find('[data-multicheckbox-field][value="' + prop + '"]'),
+            particle  = {
+                mode: $('[name="inherit[mode]"]:checked'),
+                radios: $('[name="inherit[particle]"], [name="inherit[atom]"]'),
+                checked: $('[name="inherit[particle]"]:checked, [name="inherit[atom]"]:checked')
+            };
+
+        if (input) {
+            // do not try to refresh attributes/block inheritance when there's no particle selected
+            // or if we are in clone mode
+            if (particle.mode.value() === 'clone' || (particle.radios && !particle.checked)) {
+                return false;
+            }
+
+            input.checked(!isLocked);
+            body.emit('change', { target: input });
+        }
+    });
+});
+
+},{"../../ui":53,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/get-outline":71,"agent":79,"elements":112,"elements/domready":110,"mout/collection/contains":186,"mout/collection/forEach":188,"mout/lang/isArray":202,"mout/object/filter":228,"mout/object/keys":235}],29:[function(require,module,exports){
 "use strict";
 var prime      = require('prime'),
     $          = require('../utils/elements.utils'),
@@ -2862,7 +3752,10 @@ var prime      = require('prime'),
     isArray    = require('mout/lang/isArray'),
     deepEquals = require('mout/lang/deepEquals'),
     find       = require('mout/collection/find'),
-    isObject   = require('mout/lang/isObject');
+    isObject   = require('mout/lang/isObject'),
+
+    contains   = require('mout/array/contains'),
+    forEach    = require('mout/collection/forEach');
 
 var singles = {
     disable: function() {
@@ -2873,8 +3766,9 @@ var singles = {
         var grids = $('[data-lm-root] [data-lm-blocktype="grid"]');
         if (grids) { grids.addClass('no-hover'); }
     },
-    cleanup: function(builder, dropLast) {
-        var emptyGrids = $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+    cleanup: function(builder, dropLast, start) {
+        var emptyGrids = start ? start.search('> .g-grid:empty') : $('[data-lm-blocktype="section"] > .g-grid:empty, [data-lm-blocktype="container"] > .g-grid:empty, [data-lm-blocktype="offcanvas"] > .g-grid:empty');
+
         if (emptyGrids) {
             emptyGrids.forEach(function(grid) {
                 grid = $(grid);
@@ -2930,8 +3824,36 @@ var LayoutManager = new prime({
         this.init();
     },
 
-    singles: function(mode, builder, dropLast) {
-        singles[mode](builder, dropLast);
+    singles: function(mode, builder, dropLast, start) {
+        singles[mode](builder, dropLast, start);
+    },
+
+    clear: function(parent, options) {
+        var type, child,
+            filter = !parent ? [] : (parent.search('[data-lm-id]') || []).map(function(element) { return $(element).data('lm-id'); });
+
+        options = options || { save: true, dropLastGrid: false, emptyInherits: false };
+
+        forEach(this.builder.map, function(obj, id) {
+            if (filter.length && !contains(filter, id)) { return; }
+            if (!options.emptyInherits && obj.block.parent('.g-inheriting')) { return; }
+
+            type = obj.getType();
+            child = obj.block.find('> [data-lm-id]');
+            if (child) { child = child.data('lm-blocktype'); }
+            if (contains(['particle', 'spacer', 'position', 'widget', 'system', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
+                this.builder.remove(id);
+                obj.block.remove();
+            } else if (options.emptyInherits && (type == 'section' || type == 'offcanvas' || type == 'container')) {
+                if (obj.hasInheritance) {
+                    obj.inherit = {};
+                    obj.disableInheritance();
+                }
+            }
+        }, this);
+
+        this.singles('cleanup', this.builder, options.dropLastGrid, parent);
+        if (options.save) { this.history.push(this.builder.serialize(), this.history.get().preset); }
     },
 
     updatePendingChanges: function() {
@@ -2965,7 +3887,8 @@ var LayoutManager = new prime({
 
     start: function(event, element) {
         var root = $('[data-lm-root]'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.mode = root.data('lm-root') || 'page';
@@ -2996,16 +3919,18 @@ var LayoutManager = new prime({
 
         if (!this.block.isNew()) {
             element.style({
-                position: 'absolute',
-                zIndex: 1500,
+                position: 'fixed',
+                zIndex: 2500,
                 opacity: 0.5,
                 margin: 0,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).find('[data-lm-blocktype]');
 
             if (this.block.getType() === 'grid') {
-                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
+                var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
                 if (siblings) {
                     siblings.search('[data-lm-id]').style({ 'pointer-events': 'none' });
                 }
@@ -3019,8 +3944,8 @@ var LayoutManager = new prime({
                 position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].getBoundingClientRect().left,
-                top: element[0].getBoundingClientRect().top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });
@@ -3228,7 +4153,7 @@ var LayoutManager = new prime({
         }
 
         if (this.block.getType() === 'grid') {
-            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(:empty)');
+            var siblings = this.block.block.siblings(':not(.original-placeholder):not(.section-header):not(.g-inherit):not(:empty)');
             if (siblings) {
                 siblings.search('[data-lm-id]').style({ 'pointer-events': 'inherit' });
             }
@@ -3312,7 +4237,7 @@ var LayoutManager = new prime({
             if (plus) { plus.emit('click'); }
         }
 
-        if (this.block.hasAttribute('size')) { this.block.setSize(this.placeholder.compute('flex')); }
+        if (this.block.hasAttribute('size') && typeof this.block.getSize === 'function') { this.block.setSize(this.placeholder.compute('flex')); }
 
         this.block.insert(this.placeholder);
         this.placeholder.remove();
@@ -3399,7 +4324,7 @@ var LayoutManager = new prime({
 
 module.exports = LayoutManager;
 
-},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":58,"../utils/flags-state":61,"./blocks":13,"./drag.resizer":23,"elements/zen":103,"mout/array/every":136,"mout/collection/find":153,"mout/function/bind":157,"mout/lang/deepEquals":167,"mout/lang/isArray":169,"mout/lang/isObject":174,"mout/number/enforcePrecision":188,"mout/object/get":197,"mout/object/keys":200,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],27:[function(require,module,exports){
+},{"../ui/drag.drop":50,"../ui/eraser":52,"../utils/elements.utils":65,"../utils/flags-state":68,"./blocks":15,"./drag.resizer":24,"elements/zen":136,"mout/array/contains":165,"mout/array/every":168,"mout/collection/find":187,"mout/collection/forEach":188,"mout/function/bind":191,"mout/lang/deepEquals":200,"mout/lang/isArray":202,"mout/lang/isObject":207,"mout/number/enforcePrecision":221,"mout/object/get":232,"mout/object/keys":235,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],30:[function(require,module,exports){
 "use strict";
 
 var ready          = require('elements/domready'),
@@ -3425,7 +4350,7 @@ var initSizes = function() {
     heightBottom = 0;
     initialSidebarCoords = sidebar[0].getBoundingClientRect();
     realSidebarTop = sidebar.position().top;
-    excludeTop = $('body.admin.com_gantry5 nav.navbar-fixed-top, #wpadminbar');
+    excludeTop = $('body.admin.com_gantry5 nav.navbar-fixed-top, #wpadminbar, #admin-main #titlebar, #admin-main .grav-update.grav');
     excludeBottom = $('body.admin.com_gantry5 #status');
 
     if (excludeTop) {
@@ -3445,7 +4370,7 @@ var initSizes = function() {
         overflow: 'auto'
     });
 
-    if (particles[0].scrollHeight != particles[0].offsetHeight) {
+    if (particles[0].scrollHeight !== particles[0].offsetHeight) {
         particles.addClass('has-scrollbar').style({ 'margin-right': -scrollbarWidth() });
     }
 };
@@ -3453,43 +4378,49 @@ var initSizes = function() {
 ready(function() {
     initSizes();
 
-    decouple(window, 'scroll', function() {
-        if (!container || !sidebar) { return; }
+    var scrollElement = $(GANTRY_PLATFORM === 'grav' ? Grav.default.Scrollbar.Instance.instance.getViewElement() || '#admin-main .content-padding' : window) || [window],
+        scroll        = function() {
+            if (!container || !sidebar) { return; }
 
-        var scrollTop       = this.scrollY,
-            containerBounds = container[0].getBoundingClientRect(),
-            limit           = containerBounds.top + containerBounds.height,
-            sidebarCoords   = sidebar[0].getBoundingClientRect(),
-            shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
-            reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit;
+            var scrollTop       = this.scrollY || this.scrollTop,
+                containerBounds = container[0].getBoundingClientRect(),
+                limit           = containerBounds.top + containerBounds.height,
+                sidebarCoords   = sidebar[0].getBoundingClientRect(),
+                shouldBeFixed   = (scrollTop > (initialSidebarCoords.top - heightTop - 10)) && scrollTop >= realSidebarTop - 10,
+                reachedTheLimit = sidebarCoords.height + 10 + heightTop + parseInt(container.compute('padding-bottom'), 10) >= limit,
+                sidebarTallerThanContainer = containerBounds.height <= sidebarCoords.height;
 
-        sidebar.style('width', sidebarCoords.width);
-        if (shouldBeFixed && !reachedTheLimit) {
-            sidebar.removeClass('particles-absolute').addClass('particles-fixed');
-            sidebar.style({
-                top: heightTop + 10,
-                bottom: 'inherit'
-            });
-        } else if (shouldBeFixed && reachedTheLimit) {
-            sidebar.removeClass('particles-fixed').addClass('particles-absolute');
-            sidebar.style({
-                top: 'inherit',
-                bottom: parseInt(container.compute('padding-bottom'), 10)
-            });
-        } else {
-            sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
-            sidebar.style({
-                top: 'inherit',
-                bottom: 'inherit'
-            });
-        }
-    });
+            sidebar.style('width', sidebarCoords.width);
+            if (shouldBeFixed && !reachedTheLimit) {
+                sidebar.removeClass('particles-absolute').addClass('particles-fixed');
+                sidebar.style({
+                    top: heightTop + 10,
+                    bottom: 'inherit'
+                });
+            } else if (shouldBeFixed && reachedTheLimit) {
+                if (sidebarTallerThanContainer || (GANTRY_PLATFORM === 'grav' && containerBounds.bottom < sidebarCoords.bottom)) {
+                    sidebar.removeClass('particles-fixed').addClass('particles-absolute');
+                    sidebar.style({
+                        top: 'inherit',
+                        bottom: parseInt(container.compute('padding-bottom'), 10)
+                    });
+                }
+            } else {
+                sidebar.removeClass('particles-fixed').removeClass('particles-absolute');
+                sidebar.style({
+                    top: 'inherit',
+                    bottom: 'inherit'
+                });
+            }
+        };
+
+    decouple(scrollElement[0], 'scroll', scroll.bind(scrollElement[0]));
 
     decouple(window, 'resize', function() {
         if (!particles) { return; }
 
-        sidebar.style('width', null);
-        initSizes();
+        // initSizes();
+        scroll.call(scrollElement[0]);
 
         particles.style({
             'max-height': (window.innerHeight - heightTop - heightBottom - search[0].offsetHeight - 30)
@@ -3503,7 +4434,7 @@ ready(function() {
 
 module.exports = initSizes;
 
-},{"../utils/decouple":57,"../utils/get-scrollbar-width":64,"elements":100,"elements/domready":98}],28:[function(require,module,exports){
+},{"../utils/decouple":64,"../utils/get-scrollbar-width":72,"elements":112,"elements/domready":110}],31:[function(require,module,exports){
 "use strict";
 var $              = require('elements'),
     zen            = require('elements/zen'),
@@ -3524,8 +4455,11 @@ var $              = require('elements'),
     validateField  = require('./utils/field-validation'),
     lm             = require('./lm'),
     mm             = require('./menu'),
+    pm             = require('./positions/cards'),
     configurations = require('./configurations'),
-    changelog      = require('./changelog');
+    positions      = require('./positions'),
+    changelog      = require('./changelog'),
+    translate      = require('./utils/translate');
 
 require('elements/attributes');
 require('elements/events');
@@ -3579,13 +4513,13 @@ var prettyDate = {
 
 window.onbeforeunload = function() {
     if (flags.get('pending')) {
-        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+        return translate('GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED');
     }
 };
 
 ready(function() {
     var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+        sentence = translate('GANTRY5_PLATFORM_JS_SAVE_SUCCESS');
 
     // Close notification
     body.delegate('click', '[data-g-close]', function(event, element) {
@@ -3598,21 +4532,25 @@ ready(function() {
         });
     });
 
-    // Extras
-    body.delegate('click', '[data-g-extras]', function(event, element) {
+    // Generic Popovers
+    body.delegate('click', '[data-g-popover]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
             var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
                 popover = element.getPopover({
-                    style: 'extras',
-                    width: 220,
+                    style: element.data('g-popover-style') || 'generic',
+                    width: element.data('g-popover-width') || 220,
                     content: zen('ul').html(content.html())[0].outerHTML,
-                    allowElementsClick: '.toggle'
+                    allowElementsClick: element.data('g-popover-elementsclick') || '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){
@@ -3640,7 +4578,10 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        var feedback = translate('GANTRY5_PLATFORM_LAST_SAVED') + ': ' + prettyDate.format(element.lastSaved);
+        element
+            .data('tip', feedback)
+            .data('title', feedback);
     });
 
     // Save
@@ -3648,6 +4589,11 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var saves = $('.button-save');
 
+        if (saves.disabled()) {
+            return false;
+        }
+
+        saves.disabled(true);
         saves.hideIndicator();
         saves.showIndicator();
 
@@ -3655,26 +4601,42 @@ ready(function() {
             invalid = [],
             type    = element.data('save'),
             extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-g5-position]') ? 'positions' : 'other')),
             saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
             case 'layout':
                 var preset = $('[data-lm-preset]');
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.layoutmanager.singles('cleanup', lm.builder, false);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
 
+                var layout = JSON.stringify(lm.builder.serialize());
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
+
+                data.layout = layout;
                 break;
+
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
+
+                var items = JSON.stringify(mm.menumanager.items);
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
+                break;
+
+            case 'positions':
+                data.positions = pm.serialize();
                 break;
 
             case 'other':
@@ -3685,13 +4647,14 @@ ready(function() {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name     = input.attribute('name'),
+                            type     = input.attribute('type'),
                             value    = input.value(),
                             parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         override = override || $(input.data('override-target'));
 
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!name || input.disabled() || (override && !override.checked()) || (type == 'radio' && !input.checked())) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
@@ -3699,9 +4662,10 @@ ready(function() {
         }
 
         if (invalid.length) {
+            saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
-            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
             return;
         }
 
@@ -3720,16 +4684,17 @@ ready(function() {
                 modal.close();
 
                 if ($('#styles')) {
-                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : translate('GANTRY5_PLATFORM_JS_CSS_COMPILED'));
                 }
 
                 toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
-                }), type + ' Saved');
+                }), type + ' ' + translate('GANTRY5_PLATFORM_SAVED'));
             }
 
+            saves.disabled(false);
             saves.hideIndicator();
             saves.forEach(function(save) {
                 $(save).lastSaved = new Date();
@@ -3838,7 +4803,6 @@ ready(function() {
             indicator.hideIndicator();
         })
     });
-
 });
 
 var modules = {
@@ -3858,13 +4822,14 @@ var modules = {
     particles: require('./particles'),
     zen: require('elements/zen'),
     moofx: require('moofx'),
-    atoms: require('./pagesettings')
+    atoms: require('./pagesettings'),
+    tips: require('./ui/tooltips')
 };
 
 window.G5 = modules;
 module.exports = modules;
 
-},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":25,"./menu":31,"./pagesettings":33,"./particles":39,"./styles":43,"./ui":48,"./ui/popover":50,"./utils/ajaxify-links":55,"./utils/field-validation":60,"./utils/flags-state":61,"./utils/get-ajax-suffix":62,"./utils/get-ajax-url":63,"./utils/rAF-polyfill":67,"agent":69,"elements":100,"elements/attributes":95,"elements/delegation":97,"elements/domready":98,"elements/events":99,"elements/insertion":101,"elements/traversal":102,"elements/zen":103,"moofx":104,"mout/queryString/setParam":213,"mout/string/interpolate":224,"mout/string/trim":235}],29:[function(require,module,exports){
+},{"./assignments":2,"./changelog":3,"./configurations":5,"./fields":6,"./lm":27,"./menu":34,"./pagesettings":36,"./particles":42,"./positions":47,"./positions/cards":46,"./styles":48,"./ui":53,"./ui/popover":55,"./ui/tooltips":60,"./utils/ajaxify-links":61,"./utils/field-validation":67,"./utils/flags-state":68,"./utils/get-ajax-suffix":69,"./utils/get-ajax-url":70,"./utils/rAF-polyfill":75,"./utils/translate":77,"agent":79,"elements":112,"elements/attributes":107,"elements/delegation":109,"elements/domready":110,"elements/events":111,"elements/insertion":113,"elements/traversal":135,"elements/zen":136,"moofx":137,"mout/queryString/setParam":248,"mout/string/interpolate":260,"mout/string/trim":271}],32:[function(require,module,exports){
 "use strict";
 var DragEvents = require('../ui/drag.events'),
     prime      = require('prime'),
@@ -4137,11 +5102,12 @@ var Resizer = new prime({
 
 module.exports = Resizer;
 
-},{"../ui/drag.events":46,"../utils/elements.utils":58,"elements/delegation":97,"elements/events":99,"mout/function/bind":157,"mout/lang/isString":177,"mout/math/clamp":182,"mout/math/map":184,"mout/number/enforcePrecision":188,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],30:[function(require,module,exports){
+},{"../ui/drag.events":51,"../utils/elements.utils":65,"elements/delegation":109,"elements/events":111,"mout/function/bind":191,"mout/lang/isString":210,"mout/math/clamp":215,"mout/math/map":217,"mout/number/enforcePrecision":221,"mout/object/get":232,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],33:[function(require,module,exports){
 "use strict";
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
+    Submit        = require('../fields/submit'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
@@ -4151,7 +5117,12 @@ var $             = require('elements'),
     getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
-    deepEquals    = require('mout/lang/deepEquals');
+    deepEquals    = require('mout/lang/deepEquals'),
+    translate     = require('../utils/translate'),
+
+    Cards         = require('../positions/cards'); // required for Positions
+
+var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
 
 var menumanager = null;
 
@@ -4195,7 +5166,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             //data: data,
             remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
@@ -4227,7 +5198,9 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
 
-                search[0].focus();
+                setTimeout(function(){
+                    search[0].focus();
+                }, 5);
             }
         });
     }
@@ -4275,8 +5248,7 @@ var StepTwo = function(data, content, button) {
 
         var form = content.find('form'),
             submit = content.find('input[type="submit"], button[type="submit"]'),
-            fakeDOM = zen('div').html(response.body.html).find('form'),
-            dataString = [];
+            fakeDOM = zen('div').html(response.body.html).find('form');
 
         if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -4286,34 +5258,12 @@ var StepTwo = function(data, content, button) {
         // Module / Particle Settings apply
         submit.on('click', function(e) {
             e.preventDefault();
-            dataString = [];
 
             submit.showIndicator();
 
-            $(fakeDOM[0].elements).forEach(function(input) {
-                input = $(input);
-                var name = input.attribute('name');
-                if (!name || input.disabled()) { return; }
+            var post = Submit(fakeDOM[0].elements, content, { submitUnchecked: true });
 
-                input = content.find('[name="' + name + '"]');
-                var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                    parent = input.parent('.settings-param'),
-                    override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                override = override || $(input.data('override-target'));
-
-                if (override && !override.checked()) { return; }
-                if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                    dataString.push(name + '=' + encodeURIComponent(value));
-                }
-            });
-
-            var title = content.find('[data-title-editable]');
-            if (title) {
-                dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-            }
-
-            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -4323,29 +5273,45 @@ var StepTwo = function(data, content, button) {
                     });
                 } else {
                     // it's menu
+                    // FIXME: this is now handling both the Menu and the Positions when inserting a new Particle. Needs to be separated
                     if (!picker) {
-                        var element = menumanager.element,
-                            path = element.data('mm-id') + '-',
-                            id = randomID(5),
-                            base = element.parent('[data-mm-base]').data('mm-base'),
-                            col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
-                            index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
+                        if (menumanager) {
+                            // case for Menu Manager
+                            var element = menumanager.element,
+                                path    = element.data('mm-id') + '-',
+                                id      = randomID(5),
+                                base    = element.parent('[data-mm-base]').data('mm-base'),
+                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                                index   = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
-                        while (menumanager.items[path + id]) { id = randomID(5); }
+                            while (menumanager.items[path + id]) { id = randomID(5); }
 
-                        menumanager.items[path + id] = response.body.item;
-                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
-                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
-                        menumanager.ordering[base][col].splice(index, 1, path + id);
-                        element.data('mm-id', path + id);
+                            menumanager.items[path + id] = response.body.item;
+                            if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                            if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
+                            menumanager.ordering[base][col].splice(index, 1, path + id);
+                            element.data('mm-id', path + id);
 
-                        if (response.body.html) {
-                            element.html(response.body.html);
+                            if (response.body.html) {
+                                element.html(response.body.html);
+                            }
+
+                            menumanager.isNewParticle = false;
+                            menumanager.emit('dragEnd', menumanager.map);
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+
+                        } else {
+                            // case for Positions
+                            var position = $('[data-g5-position-name="' + response.body.position + '"]'),
+                                dummy = zen('div').html(response.body.html);
+
+                            position.find('> ul').appendChild(dummy.children());
+
+                            Cards.serialize(position);
+                            Cards.updatePendingChanges();
+
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
-
-                        menumanager.isNewParticle = false;
-                        menumanager.emit('dragEnd', menumanager.map);
-                        toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                     } else { // it's field picker
                         var field = $('[name="' + picker.field + '"]'),
                             btnPicker = field.siblings('[data-g-instancepicker]'),
@@ -4365,6 +5331,7 @@ var StepTwo = function(data, content, button) {
 
                 modal.close();
                 submit.hideIndicator();
+                WordpressWidgetsCustomizer(field);
             });
         });
     });
@@ -4443,10 +5410,11 @@ ready(function() {
 
 module.exports = StepOne;
 
-},{"../ui":48,"../utils/flags-state":61,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/array/indexOf":142,"mout/lang/deepEquals":167,"mout/string/trim":235}],31:[function(require,module,exports){
+},{"../fields/submit":8,"../positions/cards":46,"../ui":53,"../utils/flags-state":68,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/translate":77,"../utils/wp-widgets-customizer":78,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/array/indexOf":174,"mout/lang/deepEquals":200,"mout/string/trim":271}],34:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     MenuManager   = require('./menumanager'),
+    Submit        = require('../fields/submit'),
     $             = require('elements'),
     zen           = require('elements/zen'),
     modal         = require('../ui').modal,
@@ -4456,24 +5424,25 @@ var ready         = require('elements/domready'),
     trim          = require('mout/string/trim'),
     clamp         = require('mout/math/clamp'),
     contains      = require('mout/array/contains'),
+    indexOf       = require('mout/array/indexOf'),
     parseAjaxURI  = require('../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    translate     = require('../utils/translate');
 
-var menumanager, map;
+var menumanager;
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-var FOCUSIN   = isFirefox ? 'focus' : 'focusin',
-    FOCUSOUT  = isFirefox ? 'blur' : 'focusout';
+var FOCUSIN  = isFirefox ? 'focus' : 'focusin',
+    FOCUSOUT = isFirefox ? 'blur' : 'focusout';
 
 ready(function() {
     var body = $('body');
 
     menumanager = new MenuManager('[data-mm-container]', {
-        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li, .column-container .g-block',
+        delegate: '.g5-mm-particles-picker ul li, #menu-editor > section ul li, .submenu-column, .submenu-column li[data-mm-id], .column-container .g-block',
         droppables: '#menu-editor [data-mm-id]',
-        exclude: '[data-lm-nodrag], .fa-cog, .config-cog',
+        exclude: '[data-lm-nodrag], .menu-item-back, .fa-cog, .config-cog',
         resize_handles: '.submenu-column:not(:last-child)',
         catchClick: true
     });
@@ -4488,7 +5457,7 @@ ready(function() {
     menumanager.setRoot();
 
     // Refresh ordering/items on menu type change or Menu navigation link
-    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(event, element) {
+    body.delegate('statechangeAfter', '#main-header [data-g5-ajaxify], select.menu-select-wrap', function(/*event, element*/) {
         menumanager.setRoot();
         menumanager.refresh();
 
@@ -4507,7 +5476,7 @@ ready(function() {
         element[0].select();
     }, true);
 
-    body.delegate('keydown', '.percentage input', function(event, element) {
+    body.delegate('keydown', '.percentage input', function(event/*, element*/) {
         if (contains([46, 8, 9, 27, 13, 110, 190], event.keyCode) ||
                 // Allow: [Ctrl|Cmd]+A | [Ctrl|Cmd]+R
             (event.keyCode == 65 && (event.ctrlKey === true || event.ctrlKey === true)) ||
@@ -4525,27 +5494,27 @@ ready(function() {
 
     body.delegate('keydown', '.percentage input', function(event, element) {
         element = $(element);
-        var value = Number(element.value()),
-            min = Number(element.attribute('min')),
-            max = Number(element.attribute('max')),
+        var value  = Number(element.value()),
+            min    = Number(element.attribute('min')),
+            max    = Number(element.attribute('max')),
             upDown = event.keyCode == 38 || event.keyCode == 40;
 
         if (upDown) {
             value += event.keyCode == 38 ? +1 : -1;
             value = clamp(value, min, max);
             element.value(value);
-            body.emit('keyup', {target: element});
+            body.emit('keyup', { target: element });
         }
     });
 
     body.delegate('keyup', '.percentage input', function(event, element) {
         element = $(element);
         var value = Number(element.value()),
-            min = Number(element.attribute('min')),
-            max = Number(element.attribute('max'));
+            min   = Number(element.attribute('min')),
+            max   = Number(element.attribute('max'));
 
         var resizer = menumanager.resizer,
-            parent = element.parent('[data-mm-id]'),
+            parent  = element.parent('[data-mm-id]'),
             sibling = parent.nextSibling('[data-mm-id]') || parent.previousSibling('[data-mm-id]');
 
         if (!value || value < min || value > max) { return; }
@@ -4581,11 +5550,11 @@ ready(function() {
         element = $(element);
 
         var container = element.parent('[data-g5-menu-columns]').find('.submenu-selector'),
-            children = container.children(),
-            last = container.find('> :last-child'),
-            count = children ? children.length : 0,
-            active = $('.menu-selector .active'),
-            path = active ? active.data('mm-id') : null;
+            children  = container.children(),
+            last      = container.find('> :last-child'),
+            count     = children ? children.length : 0,
+            active    = $('.menu-selector .active'),
+            path      = active ? active.data('mm-id') : null;
 
         // do not allow to create a new column if there's already one and it's empty
         if (count == 1 && !children.search('.submenu-items > [data-mm-id]')) { return false; }
@@ -4593,6 +5562,8 @@ ready(function() {
         var block = $(last[0].cloneNode(true));
         block.data('mm-id', 'list-' + count);
         block.find('.submenu-items').empty();
+        block.find('[data-mm-base-level]').data('mm-base-level', 1);
+        block.find('.submenu-level').text('Level 1');
         block.after(last);
 
         if (!menumanager.ordering[path]) {
@@ -4604,12 +5575,12 @@ ready(function() {
     });
 
     // Attach events to pseudo (x) for deleting a column
-    ['click', 'touchend'].forEach(function(evt){
+    ['click', 'touchend'].forEach(function(evt) {
         body.delegate(evt, '[data-g5-menu-columns] .submenu-items:empty', function(event, element) {
             var bounding = element[0].getBoundingClientRect(),
-                x = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
+                x        = event.pageX || event.changedTouches[0].pageX || 0, y = event.pageY || event.changedTouches[0].pageY || 0,
                 siblings = $('.submenu-selector > [data-mm-id]'),
-                deleter = {
+                deleter  = {
                     width: 36,
                     height: 36
                 };
@@ -4620,10 +5591,11 @@ ready(function() {
 
             if (x >= bounding.left + bounding.width - deleter.width && x <= bounding.left + bounding.width &&
                 Math.abs(window.scrollY - y) - bounding.top < deleter.height) {
-                var parent = element.parent('[data-mm-id]'),
-                    index = parent.data('mm-id').match(/\d+$/)[0],
-                    active = $('.menu-selector .active'),
-                    path = active ? active.data('mm-id') : null;
+                var parent    = element.parent('[data-mm-id]'),
+                    container = parent.parent('.submenu-selector').children('[data-mm-id]'),
+                    index     = indexOf(container, parent),
+                    active    = $('.menu-selector .active'),
+                    path      = active ? active.data('mm-id') : null;
 
                 parent.remove();
                 siblings = $('.submenu-selector > [data-mm-id]');
@@ -4646,33 +5618,41 @@ ready(function() {
         }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             data: data,
-            remote: $(element).attribute('href') + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI($(element).attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                var form = content.elements.content.find('form'),
-                    fakeDOM = zen('div').html(response.body.html).find('form'),
-                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [], invalid = [],
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
                     path;
 
-                var search = content.elements.content.find('.search input'),
-                    blocks = content.elements.content.search('[data-mm-type]'),
-                    filters = content.elements.content.search('[data-mm-filter]'),
+                var search      = content.elements.content.find('.search input'),
+                    blocks      = content.elements.content.search('[data-mm-type]'),
+                    filters     = content.elements.content.search('[data-mm-filter]'),
                     urlTemplate = content.elements.content.find('.g-urltemplate');
 
                 if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
 
-                content.elements.content.find('[data-title-editable]').on('title-edit-end', function(title, original, canceled) {
-                    title = trim(title);
-                    if (!title) {
-                        title = trim(original) || 'Title';
-                        this.text(title).data('title-editable', title);
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
 
-                        return;
-                    }
-                });
+                            return true;
+                        }
+                    });
+                }
 
                 if (search && filters && blocks) {
                     search.on('input', function() {
@@ -4697,44 +5677,34 @@ ready(function() {
                     });
                 }
 
+                if (search) {
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
+                }
+
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
                 // Menuitems Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
-
+                    var target = $(e.currentTarget);
+                    target.disabled(true);
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name) { return; }
+                    var post = Submit(fakeDOM[0].elements, content.elements.content, {isRoot: isRoot});
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(input.value()));
-                    });
-
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        dataString.push((isRoot ? 'settings[title]' : 'title') + '=' + encodeURIComponent(title.data('title-editable')));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&'), function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -4754,7 +5724,11 @@ ready(function() {
 
                             if (response.body.html) {
                                 var parent = element.parent('[data-mm-id]');
-                                if (parent) { parent.html(response.body.html); }
+                                if (parent) {
+                                    var status = response.body.item.enabled || response.body.item.options.particle.enabled;
+                                    parent.html(response.body.html);
+                                    parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                                }
                             }
 
                             menumanager.emit('dragEnd', menumanager.map);
@@ -4766,7 +5740,7 @@ ready(function() {
                             }
 
                             modal.close();
-                            toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();
@@ -4781,7 +5755,7 @@ module.exports = {
     menumanager: menumanager
 };
 
-},{"../ui":48,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./extra-items":30,"./menumanager":32,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/array/contains":133,"mout/math/clamp":182,"mout/string/trim":235}],32:[function(require,module,exports){
+},{"../fields/submit":8,"../ui":53,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/translate":77,"./extra-items":33,"./menumanager":35,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/array/contains":165,"mout/array/indexOf":174,"mout/math/clamp":215,"mout/string/trim":271}],35:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -4795,6 +5769,7 @@ var prime     = require('prime'),
     Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
+    ltrim     = require('mout/string/ltrim'),
     every     = require('mout/array/every'),
     last      = require('mout/array/last'),
     indexOf   = require('mout/array/indexOf'),
@@ -4893,7 +5868,8 @@ var MenuManager = new prime({
 
     start: function(event, element) {
         var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector') || element.parent('.g5-mm-particles-picker'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.targetLevel = undefined;
@@ -4931,25 +5907,23 @@ var MenuManager = new prime({
 
         if (!this.isNewParticle) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 1500,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).addClass('active');
 
             this.placeholder.before(element);
         } else {
-            var position = element.position(),
-                parentOffset = {
-                    top: element.parent()[0].scrollTop,
-                    left: element.parent()[0].scrollLeft
-                };
+            var position = element.position();
             this.original.style({
-                position: 'absolute',
+                position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].offsetLeft - parentOffset.left,
-                top: element[0].offsetTop - parentOffset.top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });
@@ -5004,9 +5978,11 @@ var MenuManager = new prime({
 
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
-            var submenu_items = target.find('.submenu-items');
+            var submenu_items = target.find('.submenu-items'),
+                submenu_items_level = submenu_items.data('mm-base-level');
 
-            if ((!target.hasClass('g-block') || target.find(this.block)) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
+            // extend drop areas and ensure items cannot be dragged between different levels
+            if ((!target.hasClass('g-block') || target.find(this.block)) || (!this.isParticle && originalLevel != submenu_items_level) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }
@@ -5234,8 +6210,13 @@ var MenuManager = new prime({
             // Refresh the origin if it's a particle
             base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
             if (this.isParticle && base && this.targetLevel != this.currentLevel) {
-                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0];
-                this.ordering[base.data('mm-base') || ''][list].splice(this.ParticleIndex, 1);
+                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0],
+                    location = base.data('mm-base') || '',
+                    currentLocation = ltrim([location, id].join('/'), ['/']);
+
+                this.ordering[location][list].splice(this.ParticleIndex, 1);
+                this.items[this.itemID] = this.items[currentLocation];
+                delete this.items[currentLocation];
             }
         }
 
@@ -5294,24 +6275,27 @@ var MenuManager = new prime({
 
 module.exports = MenuManager;
 
-},{"../ui/drag.drop":45,"../ui/eraser":47,"../utils/elements.utils":58,"./drag.resizer":29,"elements/zen":103,"mout/array/every":136,"mout/array/indexOf":142,"mout/array/last":146,"mout/function/bind":157,"mout/lang/deepClone":166,"mout/lang/isArray":169,"mout/lang/isObject":174,"mout/object/equals":192,"mout/object/get":197,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],33:[function(require,module,exports){
+},{"../ui/drag.drop":50,"../ui/eraser":52,"../utils/elements.utils":65,"./drag.resizer":32,"elements/zen":136,"mout/array/every":168,"mout/array/indexOf":174,"mout/array/last":178,"mout/function/bind":191,"mout/lang/deepClone":199,"mout/lang/isArray":202,"mout/lang/isObject":207,"mout/object/equals":226,"mout/object/get":232,"mout/string/ltrim":262,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],36:[function(require,module,exports){
+(function (global){
 'use strict';
-var $             = require('elements'),
-    ready         = require('elements/domready'),
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
+    zen                = require('elements/zen'),
+    Submit             = require('../fields/submit'),
+    modal              = require('../ui').modal,
+    toastr             = require('../ui').toastr,
+    Eraser             = require('../ui/eraser'),
+    request            = require('agent'),
+    indexOf            = require('mout/array/indexOf'),
+    simpleSort         = require('sortablejs'),
 
-    zen           = require('elements/zen'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    Eraser        = require('../ui/eraser'),
-    request       = require('agent'),
-    indexOf       = require('mout/array/indexOf'),
-    simpleSort    = require('sortablejs'),
+    trim               = require('mout/string/trim'),
+    size               = require('mout/object/size'),
 
-    trim          = require('mout/string/trim'),
-
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    parseAjaxURI       = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix      = require('../utils/get-ajax-suffix'),
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById,
+    translate          = require('../utils/translate');
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -5382,9 +6366,21 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item);
-                    var target = $(this.originalEvent.target);
-                    if (target.matches('#trash') || target.parent('#trash')) {
+                    var item       = $(event.item),
+                        trash      = $('#trash'),
+                        target     = $(this.originalEvent.target),
+                        touchTrash = false;
+
+                    // workaround for touch devices
+                    if (this.originalEvent.type === 'touchend') {
+                        var trashSize = trash[0].getBoundingClientRect(),
+                            oE        = this.originalEvent,
+                            position  = (oE.pageY || oE.changedTouches[0].pageY) - window.scrollY;
+
+                        touchTrash = position <= trashSize.height;
+                    }
+
+                    if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
                         item.remove();
                         Atoms.eraser.hide();
                         this.options.onSort();
@@ -5442,16 +6438,15 @@ var AttachSettings = function() {
             itemData  = item.data('atom-picked');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             data: { data: itemData },
-            remote: element.attribute('href') + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [],
-                    invalid    = [],
                     dataValue  = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
@@ -5467,44 +6462,23 @@ var AttachSettings = function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    var post = Submit(formElements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent   = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var title = content.elements.content.find('h4 [data-title-editable]');
-                    if (title) {
-                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -5521,11 +6495,24 @@ var AttachSettings = function() {
                             item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
                             // toggle enabled/disabled status as needed
-                            var enabled = Number(dataValue[index].attributes.enabled);
+                            var enabled    = Number(dataValue[index].attributes.enabled),
+                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
+                            item.attribute('title', enabled ? '' : translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'atom'));
+
+                            item.data('tip', null);
+                            if (inheriting) {
+                                var inherit = response.body.item.inherit,
+                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
+                                    atom = inherit.atom || '',
+                                    include = (inherit.include || []).join(', ');
+
+                                item.data('tip', translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + atom + '<br />Replace: ' + include);
+                            }
 
                             body.emit('change', { target: dataField });
+                            global.G5.tips.reload();
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {
@@ -5534,7 +6521,7 @@ var AttachSettings = function() {
                             }
 
                             modal.close();
-                            toastr.success('Ato Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Atom'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();
@@ -5545,21 +6532,32 @@ var AttachSettings = function() {
     });
 };
 
+var AttachSortableAtoms = function(atoms) {
+    if (!atoms) { return; }
+    if (!atoms.SimpleSort) { Atoms.createSortables(atoms); }
+};
+
 ready(function() {
+    var atoms = $('#atoms');
+
     $('body').delegate('mouseover', '#atoms', function(event, element) {
-        if (!element.SimpleSort) { Atoms.createSortables(element); }
+        AttachSortableAtoms(element);
     });
 
+    AttachSortableAtoms(atoms);
     AttachSettings();
 });
 
 module.exports = Atoms;
-},{"../ui":48,"../ui/eraser":47,"../utils/field-validation":60,"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/array/indexOf":142,"mout/string/trim":235,"sortablejs":271}],34:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"../fields/submit":8,"../ui":53,"../ui/eraser":52,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/get-outline":71,"../utils/translate":77,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/array/indexOf":174,"mout/object/size":241,"mout/string/trim":271,"sortablejs":315}],37:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
     $             = require('elements'),
     zen           = require('elements/zen'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     toastr        = require('../../ui').toastr,
     request       = require('agent'),
@@ -5571,7 +6569,7 @@ var ready         = require('elements/domready'),
 
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    validateField = require('../../utils/field-validation');
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -5633,7 +6631,7 @@ ready(function() {
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
         var param = element.parent('.settings-param'),
             list = param.find('ul'),
-            editall = list.parent().find('[data-collection-editall]'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
             tmpl = param.find('[data-collection-template]'),
             items = list.search('> [data-collection-item]') || [],
@@ -5643,7 +6641,7 @@ ready(function() {
 
         if (last) { clone.after(last); }
         else { clone.top(list); }
-
+        
         if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
@@ -5686,6 +6684,7 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var item = element.parent('[data-collection-item]'),
             list = element.parent('ul'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
             items = list.search('> [data-collection-item]'),
             index = indexOf(items, item[0]),
             dataField = element.parent('.settings-param').find('[data-collection-data]'),
@@ -5695,7 +6694,32 @@ ready(function() {
         data.splice(index, 1);
         dataField.value(JSON.stringify(data));
         item.remove();
-        if (items.length <= 2) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
+        if (items.length <= 2 && editall) { editall.style('display', 'none'); }
+        body.emit('change', { target: dataField });
+    });
+
+    // Duplicate item
+    body.delegate('click', '[data-collection-duplicate]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var param = element.parent('.settings-param'),
+            item = element.parent('[data-collection-item]'),
+            list = element.parent('ul'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
+            url = param.find('[data-collection-template]').find('a').href(),
+            items = list.search('> [data-collection-item]'),
+            index = indexOf(items, item[0]),
+            clone = $(item[0].cloneNode(true)).after(item),
+            dataField = element.parent('.settings-param').find('[data-collection-data]'),
+            data = dataField.value();
+
+        var re = new RegExp('%id%', 'g');
+        clone.find('a').href(url.replace(re, items.length + 1));
+
+        data = JSON.parse(data);
+        data.splice(index, 0, data[index]);
+        dataField.value(JSON.stringify(data));
+
+        if (items.length >= 1) { editall.style('display', 'inline-block'); }
         body.emit('change', { target: dataField });
     });
 
@@ -5726,17 +6750,21 @@ ready(function() {
 
         var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
             data: dataPost,
-            remote: element.attribute('href') + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [],
-                    invalid = [],
                     dataValue = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
@@ -5757,48 +6785,21 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var titles = content.elements.content.search('[data-title-editable]'), key;
-                    if (titles) {
-                        titles.forEach(function(title) {
-                            title = $(title);
-                            key = title.data('collection-key') || 'title';
-                            dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
-                        });
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -5831,7 +6832,7 @@ ready(function() {
                             }
 
                             modal.close();
-                            toastr.success('Collection Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Collection'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();
@@ -5844,7 +6845,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/field-validation":60,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/insertion":101,"elements/zen":103,"mout/array/indexOf":142,"mout/array/last":146,"mout/string/trim":235,"sortablejs":271}],35:[function(require,module,exports){
+},{"../../fields/submit":8,"../../ui":53,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/translate":77,"agent":79,"elements":112,"elements/domready":110,"elements/insertion":113,"elements/zen":136,"mout/array/indexOf":174,"mout/array/last":178,"mout/string/trim":271,"sortablejs":315}],38:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -5882,13 +6883,13 @@ var ColorPicker = new prime({
         var body = $('body');
 
         MOUSEDOWN.forEach(bind(function(mousedown) {
-            body.delegate(mousedown, '.colorpicker i', this.bound('iconClick'));
+            body.delegate(mousedown, '#g5-container .g-colorpicker i', this.bound('iconClick'));
         }, this));
 
-        body.delegate(FOCUSIN, '.colorpicker input', this.bound('show'), true);
+        body.delegate(FOCUSIN, '#g5-container .g-colorpicker input', this.bound('show'), true);
 
 
-        body.delegate('keydown', '.colorpicker input', bind(function(event, element) {
+        body.delegate('keydown', '#g5-container .g-colorpicker input', bind(function(event, element) {
             switch (event.keyCode) {
                 case 9: // tab
                     this.hide();
@@ -5903,13 +6904,13 @@ var ColorPicker = new prime({
         }, this));
 
         // Update on keyup
-        body.delegate('keyup', '.colorpicker input', bind(function(event, element) {
+        body.delegate('keyup', '#g5-container .g-colorpicker input', bind(function(event, element) {
             this.updateFromInput(true, element);
             return true;
         }, this));
 
         // Update on paste
-        body.delegate('paste', '.colorpicker input', bind(function(event, element) {
+        body.delegate('paste', '#g5-container .g-colorpicker input', bind(function(event, element) {
             setTimeout(bind(function() {
                 this.updateFromInput(true, element);
             }, this), 1);
@@ -5979,7 +6980,7 @@ var ColorPicker = new prime({
 
     bodyClick: function(event) {
         var target = $(event.target);
-        if (!target.parent('.cp-wrapper') && !target.parent('.colorpicker')) {
+        if (!target.parent('.cp-wrapper') && !target.parent('.g-colorpicker')) {
             this.hide();
         }
     },
@@ -6117,7 +7118,7 @@ var ColorPicker = new prime({
 
         if (this.built) {
             // opacity
-            this.opacity = opacity;
+            this.opacity = Math.max(opacity, 0);
             var sliderHeight = this.opacitySlider.position().height;
             this.opacitySlider.find('.cp-picker').style({ 'top': clamp(sliderHeight - (sliderHeight * this.opacity), 0, sliderHeight) });
 
@@ -6382,7 +7383,7 @@ var ColorPicker = new prime({
 
         // Handle opacity
         if (target.hasClass('cp-opacity-slider')) {
-            this.opacity = parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2);
+            this.opacity = Math.max(parseFloat(1 - (opacityPos.y / opacitySliderHeight)).toFixed(2), 0);
         }
 
         // Adjust case
@@ -6571,7 +7572,7 @@ ready(function() {
             element.style({ backgroundColor: hex });
         }
 
-        element.parent('.colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
+        element.parent('.g-colorpicker')[!check ? 'addClass' : 'removeClass']('light-text');
 
         this.timer = setTimeout(function() {
             element.emit('input');
@@ -6583,7 +7584,8 @@ ready(function() {
 
 module.exports = ColorPicker;
 
-},{"../../ui/drag.events":46,"elements":100,"elements/domready":98,"elements/zen":103,"mout/collection/forEach":154,"mout/function/bind":157,"mout/math/clamp":182,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],36:[function(require,module,exports){
+},{"../../ui/drag.events":51,"elements":112,"elements/domready":110,"elements/zen":136,"mout/collection/forEach":188,"mout/function/bind":191,"mout/math/clamp":215,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],39:[function(require,module,exports){
+(function (global){
 "use strict";
 
 var $             = require('../../utils/elements.utils'),
@@ -6599,6 +7601,8 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
+    Cookie        = require('../../utils/cookie'),
     dropzone      = require('dropzone');
 
 var FilePicker = new prime({
@@ -6628,9 +7632,9 @@ var FilePicker = new prime({
         modal.open({
             method: 'post',
             data: this.data,
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-filepicker',
-            remote: getAjaxURL('filepicker') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()),
             remoteLoaded: bind(this.loaded, this),
             afterClose: bind(function() {
                 if (this.dropzone) { this.dropzone.destroy(); }
@@ -6649,7 +7653,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
-            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o"></i>').bottom(li),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -6686,12 +7690,12 @@ var FilePicker = new prime({
                 accept: bind(function(file, done) {
                     if (!this.data.filter) { done(); }
                     else {
-                        if (file.name.match(this.data.filter)) { done(); }
-                        else { done('<code>' + file.name + '</code> does not match the filter: <br />  <code>' + this.data.filter + '</code>'); }
+                        if (file.name.toLowerCase().match(this.data.filter)) { done(); }
+                        else { done('<code>' + file.name + '</code> ' + translate('GANTRY5_PLATFORM_JS_FILTER_MISMATCH') + ': <br />  <code>' + this.data.filter + '</code>'); }
                     }
                 }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + global.btoa(encodeURIComponent(this.getPath() + file[0].name))) + getAjaxSuffix());
                 }, this)
             });
 
@@ -6739,7 +7743,7 @@ var FilePicker = new prime({
 
                 element.addClass('g-file-uploading');
                 uploader.progresser(progressConf);
-                uploader.attribute('title', 'processing...').find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', 'processing...');
+                uploader.attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING')).find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING'));
 
             }).on('processing', function(file) {
 
@@ -6776,7 +7780,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
+                text.title('Error').html('<i class="fa fa-exclamation" aria-hidden="true"></i>').parent('[data-file-uploadprogress]').popover({
                     content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
@@ -6802,7 +7806,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.html('<i class="fa fa-check"></i>');
+                text.html('<i class="fa fa-check" aria-hidden="true"></i>');
 
                 setTimeout(bind(function() {
                     uploader.animate({ opacity: 0 }, { duration: 500 });
@@ -6812,7 +7816,7 @@ var FilePicker = new prime({
                             element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
                             element.dropzone = file;
                             uploader.remove();
-                            mtime.text('just now');
+                            mtime.text(translate('GANTRY5_PLATFORM_JUST_NOW'));
                         }
                     });
                 }, this), 500);
@@ -6820,7 +7824,7 @@ var FilePicker = new prime({
         }
 
         // g5 events
-        content.delegate('click', '.g-bookmark-title', function(e, element) {
+        content.delegate('click', '.g-bookmark-title', function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
                 parent  = element.parent('.g-bookmark');
@@ -6894,7 +7898,7 @@ var FilePicker = new prime({
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
                 data      = JSON.parse(parent.data('file')),
-                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + global.btoa(encodeURIComponent(data.pathname)) + getAjaxSuffix()));
 
             if (!data.isInCustom) { return false; }
 
@@ -6936,6 +7940,7 @@ var FilePicker = new prime({
                 value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
+            $('body').emit('input', { target: this.data.field });
             modal.close();
         }, this));
 
@@ -6946,6 +7951,7 @@ var FilePicker = new prime({
             var modes = $('[data-files-mode]');
             modes.removeClass('active');
             element.addClass('active');
+            Cookie.write('g5_files_mode', element.data('files-mode'));
 
             files.animate({ opacity: 0 }, {
                 duration: 200,
@@ -7007,10 +8013,10 @@ var FilePicker = new prime({
         var attr = '';
         switch (filter) {
             case '.(jpe?g|gif|png|svg)$':
-                attr = '.jpg,.jpeg,.gif,.png,.svg';
+                attr = '.jpg,.jpeg,.gif,.png,.svg,.JPG,.JPEG,.GIF,.PNG,.SVG';
                 break;
             case '.(mp4|webm|ogv|mov)$':
-                attr = '.mp4,.webm,.ogv,.mov';
+                attr = '.mp4,.webm,.ogv,.mov,.MP4,.WEBM,.OGV,.MOV';
                 break;
         }
 
@@ -7042,7 +8048,9 @@ domready(function() {
 
 module.exports = FilePicker;
 
-},{"../../ui":48,"../../utils/elements.utils":58,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"dropzone":94,"elements/domready":98,"elements/zen":103,"mout/function/bind":157,"mout/lang/deepClone":166,"mout/object/deepFillIn":190,"mout/string/rtrim":233,"prime":265}],37:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"../../ui":53,"../../utils/cookie":63,"../../utils/elements.utils":65,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/translate":77,"agent":79,"dropzone":106,"elements/domready":110,"elements/zen":136,"mout/function/bind":191,"mout/lang/deepClone":199,"mout/object/deepFillIn":224,"mout/string/rtrim":269,"prime":300}],40:[function(require,module,exports){
 "use strict";
 // fonts list: https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB2yJM8DBwt66u2MVRgb6M4t9CqkW7_IRY
 var prime         = require('prime'),
@@ -7079,6 +8087,7 @@ var prime         = require('prime'),
 
     modal         = require('../../ui').modal,
     asyncForEach  = require('../../utils/async-foreach'),
+    translate     = require('../../utils/translate'),
 
     request       = require('agent'),
 
@@ -7136,7 +8145,7 @@ var Fonts = new prime({
         this.field = $(data.field);
 
         modal.open({
-            content: 'Loading...',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-fonts',
             remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {
@@ -7151,7 +8160,9 @@ var Fonts = new prime({
                 this.updateTotal();
                 this.selectFromValue();
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }, this)
         });
     },
@@ -7241,7 +8252,8 @@ var Fonts = new prime({
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
         }
 
-        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+        var noConflict = isLocal ? '[data-category="local-fonts"]' : ':not([data-category="local-fonts"])',
+            element = $('ul.g-fonts-list > [data-font="' + name + '"]' + noConflict);
         variants = variants || element.data('variants').split(',') || ['regular'];
 
         if (contains(variants, '400')) {
@@ -7276,7 +8288,7 @@ var Fonts = new prime({
         var charsetSelected = element.find('.font-charsets-selected');
         if (charsetSelected) {
             var subsetsLength = element.data('subsets').split(',').length;
-            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
+            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
         }
 
         if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
@@ -7295,7 +8307,7 @@ var Fonts = new prime({
                 var charsetSelected = this.selected.element.find('.font-charsets-selected');
                 if (charsetSelected) {
                     var subsetsLength = element.data('subsets').split(',').length;
-                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
+                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
                 }
             }
             this.selected = {
@@ -7486,7 +8498,7 @@ var Fonts = new prime({
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
 
-                        element.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
+                        element.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
                     }, this));
 
                     popover.displayContent();
@@ -7542,8 +8554,8 @@ var Fonts = new prime({
                 variation = this.selected.selected,
                 charset   = this.selected.charsets;
 
-            if (variation.length == 1 && variation[0] == 'regular') { variation = []; }
-            if (charset.length == 1 && charset[0] == 'latin') { charset = []; }
+            if (variation && variation.length == 1 && variation[0] == 'regular') { variation = []; }
+            if (charset && charset.length == 1 && charset[0] == 'latin') { charset = []; }
 
             if (contains(variation, 'regular')) {
                 removeAll(variation, 'regular');
@@ -7787,7 +8799,7 @@ domready(function() {
 
 module.exports = Fonts;
 
-},{"../../ui":48,"../../utils/async-foreach":56,"../../utils/decouple":57,"../../utils/elements.utils":58,"../../utils/elements.viewport":59,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements/domready":98,"elements/zen":103,"mout/array/append":131,"mout/array/combine":132,"mout/array/contains":133,"mout/array/find":138,"mout/array/forEach":141,"mout/array/insert":143,"mout/array/intersection":144,"mout/array/last":146,"mout/array/map":147,"mout/array/removeAll":148,"mout/array/split":151,"mout/function/bind":157,"mout/object/merge":201,"mout/string/properCase":227,"mout/string/trim":235,"mout/string/unhyphenate":238,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266,"webfontloader":272}],38:[function(require,module,exports){
+},{"../../ui":53,"../../utils/async-foreach":62,"../../utils/decouple":64,"../../utils/elements.utils":65,"../../utils/elements.viewport":66,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/translate":77,"agent":79,"elements/domready":110,"elements/zen":136,"mout/array/append":163,"mout/array/combine":164,"mout/array/contains":165,"mout/array/find":170,"mout/array/forEach":173,"mout/array/insert":175,"mout/array/intersection":176,"mout/array/last":178,"mout/array/map":179,"mout/array/removeAll":181,"mout/array/split":184,"mout/function/bind":191,"mout/object/merge":236,"mout/string/properCase":263,"mout/string/trim":271,"mout/string/unhyphenate":274,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299,"prime/map":301,"webfontloader":316}],41:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready'),
@@ -7795,6 +8807,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
 
     trim          = require('mout/string/trim'),
     contains      = require('mout/array/contains');
@@ -7822,7 +8835,7 @@ domready(function() {
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
@@ -7852,7 +8865,8 @@ domready(function() {
                         });
                     }
 
-                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '" aria-hidden="true"></i> <span>' + data[0] + '</span>');
+                    container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
                 var updateTotal = function() {
@@ -7921,10 +8935,13 @@ domready(function() {
                 icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
+
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '" aria-hidden="true"></i> ';
                     }
+
+                    html += '<h3>' + icon.data('g-icon') + '</h3>';
 
                     icon.popover({
                         content: html,
@@ -7962,7 +8979,9 @@ domready(function() {
                     }
                 });
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }
         });
     });
@@ -7970,7 +8989,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/elements.utils":58,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"elements/domready":98,"mout/array/contains":133,"mout/string/trim":235}],39:[function(require,module,exports){
+},{"../../ui":53,"../../utils/elements.utils":65,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/translate":77,"elements/domready":110,"mout/array/contains":165,"mout/string/trim":271}],42:[function(require,module,exports){
 "use strict";
 
 module.exports = {
@@ -7983,19 +9002,22 @@ module.exports = {
     keyvalue: require('./keyvalue'),
     instancepicker: require('./instancepicker')
 };
-},{"./collections":34,"./colorpicker":35,"./filepicker":36,"./fonts":37,"./icons":38,"./instancepicker":40,"./keyvalue":41,"./menu":42}],40:[function(require,module,exports){
+},{"./collections":37,"./colorpicker":38,"./filepicker":39,"./fonts":40,"./icons":41,"./instancepicker":43,"./keyvalue":44,"./menu":45}],43:[function(require,module,exports){
 "use strict";
 
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     request       = require('agent'),
     trim          = require('mout/string/trim'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
+var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
 ready(function() {
     var body = $('body'),
@@ -8046,11 +9068,17 @@ ready(function() {
         if (data.modal_close) { return true; }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
-            remote: getAjaxURL(uri) + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL(uri) + getAjaxSuffix()),
             remoteLoaded: function(response, modalInstance) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 
@@ -8080,7 +9108,9 @@ ready(function() {
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
 
-                    search[0].focus();
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));
@@ -8089,8 +9119,7 @@ ready(function() {
                 else {
                     var form = content.find('form'),
                         fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
-                        submit = content.find('input[type="submit"], button[type="submit"]'),
-                        dataString = [];
+                        submit = content.find('input[type="submit"], button[type="submit"]');
 
                     if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -8099,34 +9128,12 @@ ready(function() {
 
                     submit.on('click', function(e) {
                         e.preventDefault();
-                        dataString = [];
 
                         submit.showIndicator();
 
-                        $(fakeDOM[0].elements).forEach(function(input) {
-                            input = $(input);
-                            var name = input.attribute('name');
-                            if (!name || input.disabled()) { return; }
+                        var post = Submit(fakeDOM[0].elements, content);
 
-                            input = content.find('[name="' + name + '"]');
-                            var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                                parent = input.parent('.settings-param'),
-                                override = parent ? parent.find('> input[type="checkbox"]') : null;
-                            override = override || $(input.data('override-target'));
-
-                            if (override && !override.checked()) { return; }
-
-                            if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                                dataString.push(name + '=' + encodeURIComponent(value));
-                            }
-                        });
-
-                        var title = content.find('[data-title-editable]');
-                        if (title) {
-                            dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-                        }
-
-                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,
@@ -8148,6 +9155,8 @@ ready(function() {
 
                             modal.close();
                             submit.hideIndicator();
+
+                            WordpressWidgetsCustomizer(field);
                         });
                     });
 
@@ -8159,7 +9168,7 @@ ready(function() {
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/get-ajax-suffix":62,"../../utils/get-ajax-url":63,"agent":69,"elements":100,"elements/domready":98,"elements/zen":103,"mout/string/trim":235}],41:[function(require,module,exports){
+},{"../../fields/submit":8,"../../ui":53,"../../utils/get-ajax-suffix":69,"../../utils/get-ajax-url":70,"../../utils/translate":77,"../../utils/wp-widgets-customizer":78,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/string/trim":271}],44:[function(require,module,exports){
 "use strict";
 
 var ready         = require('elements/domready'),
@@ -8173,12 +9182,14 @@ var ready         = require('elements/domready'),
     indexOf       = require('mout/array/indexOf'),
     contains      = require('mout/array/contains'),
     lastItem      = require('mout/array/last'),
+    keys          = require('mout/object/keys'),
     simpleSort    = require('sortablejs'),
     escapeUnicode = require('mout/string/escapeUnicode'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -8262,8 +9273,7 @@ ready(function() {
         body.emit('change', { target: dataField });
     });
 
-    // Change values
-    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+    var onBlur = function(event, element) {
         var parent     = element.parent('[data-keyvalue-item]'),
             wrapper    = parent.find('.g-keyvalue-wrapper'),
             keyElement = parent.find('[data-keyvalue-key]'),
@@ -8271,8 +9281,8 @@ ready(function() {
             key        = keyElement.data('keyvalue-key'),
             keyValue   = trim(keyElement.value()),
             valValue   = trim(valElement.value()),
-            items     = element.parent('ul').search('> [data-keyvalue-item]:not(.g-keyvalue-warning):not(.g-keyvalue-excluded)'),
-            index     = indexOf(items, parent[0]),
+            items      = element.parent('ul').search('> [data-keyvalue-item]:not(.g-keyvalue-warning):not(.g-keyvalue-excluded)'),
+            index      = indexOf(items, parent[0]),
 
             dataField  = element.parent('.settings-param').find('[data-keyvalue-data]'),
             data       = JSON.parse(dataField.value()),
@@ -8290,8 +9300,17 @@ ready(function() {
             parent[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
-            wrapper[excluded || duplicate ? 'addClass' : 'removeClass']('g-tooltip');
-            wrapper.data('title', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null));
+            wrapper
+                .data('tip', duplicate ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE', keyValue) : (excluded ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED', keyValue) : null))
+                .data('tip-place', 'top-right')
+                .data('tip-spacing', 2)
+                .data('tip-offset', 8);
+
+            if (excluded || duplicate) {
+                window.G5.tips.get(wrapper[0]).show();
+            } else {
+                window.G5.tips.remove(wrapper[0]);
+            }
         }
 
         if (keyValue && !excluded && !duplicate) {
@@ -8302,13 +9321,48 @@ ready(function() {
         dataField.value(escapeUnicode(JSON.stringify(data)));
         body.emit('change', { target: dataField });
 
-    }, true);
+    };
+
+    // Catch return key
+    body.delegate('keydown', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key === 13) { // Enter
+            onBlur(event, element);
+        }
+    });
+
+    // Change values
+    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', onBlur, true);
+
+    body.delegate('update', '[data-keyvalue-data]', function(event, element) {
+        var parent = element.parent(),
+            items  = parent.search('[data-keyvalue-item]'),
+            list   = parent.find('ul'),
+            data   = JSON.parse(element.value()),
+            tmpl   = parent.find('[data-keyvalue-template]');
+
+        if (items) { items.remove(); }
+
+        data.forEach(function(obj, index) {
+            var clone = $(tmpl[0].cloneNode(true)),
+                key   = keys(obj).shift(),
+                value = obj[key];
+
+            list.appendChild(clone);
+
+            clone.attribute('style', null).data('keyvalue-item', clone.data('keyvalue-template'));
+            clone.attribute('data-keyvalue-template', null);
+            clone.attribute('data-keyvalue-nosort', null);
+            clone.find('[data-keyvalue-key]').value(key);
+            clone.find('[data-keyvalue-value]').value(value);
+        });
+    });
 
 });
 
 module.exports = {};
 
-},{"../../ui":48,"../../utils/get-ajax-suffix":62,"agent":69,"elements":100,"elements/domready":98,"elements/insertion":101,"elements/zen":103,"mout/array/contains":133,"mout/array/indexOf":142,"mout/array/last":146,"mout/array/some":150,"mout/object/has":198,"mout/string/escapeUnicode":223,"mout/string/trim":235,"sortablejs":271}],42:[function(require,module,exports){
+},{"../../ui":53,"../../utils/get-ajax-suffix":69,"../../utils/translate":77,"agent":79,"elements":112,"elements/domready":110,"elements/insertion":113,"elements/zen":136,"mout/array/contains":165,"mout/array/indexOf":174,"mout/array/last":178,"mout/array/some":183,"mout/object/has":233,"mout/object/keys":235,"mout/string/escapeUnicode":259,"mout/string/trim":271,"sortablejs":315}],45:[function(require,module,exports){
 "use strict";
 var $             = require('../../utils/elements.utils'),
     domready      = require('elements/domready');
@@ -8324,7 +9378,570 @@ domready(function() {
 });
 
 module.exports = {};
-},{"../../utils/elements.utils":58,"elements/domready":98}],43:[function(require,module,exports){
+},{"../../utils/elements.utils":65,"elements/domready":110}],46:[function(require,module,exports){
+"use strict";
+
+var $             = require('elements'),
+    zen           = require('elements/zen'),
+    ready         = require('elements/domready'),
+    trim          = require('mout/string/trim'),
+    keys          = require('mout/object/keys'),
+    modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
+    request       = require('agent'),
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
+
+    Eraser        = require('../ui/eraser'),
+    simpleSort    = require('sortablejs'),
+
+    flags         = require('../utils/flags-state');
+
+
+var PositionsField = '[name="page[head][atoms][_json]"]',
+    groupOptions   = [
+        { name: 'positions', pull: true, put: true },
+        { name: 'positions', pull: false, put: false }
+    ];
+
+var Positions = {
+    eraser: null,
+    lists: [],
+    state: [],
+
+    init: function(position) {
+        Positions.state = Positions.serialize(position);
+
+        return Positions.state;
+    },
+
+    equals: function() {
+        return Positions.state === Positions.serialize();
+    },
+
+    updatePendingChanges: function() {
+        var different = false,
+
+            equals    = Positions.equals(),
+            save      = $('[data-save="Positions"]'),
+            icon      = save.find('i'),
+            indicator = save.find('.changes-indicator');
+
+        if (equals && indicator) { save.hideIndicator(); }
+        if (!equals && !indicator) { save.showIndicator('changes-indicator fa fa-fw fa-circle-o') }
+        flags.set('pending', !equals);
+    },
+
+    serialize: function(position) {
+        var data,
+            output    = [],
+            positions = $(position) || $('[data-g5-position]');
+
+        if (!positions) {
+            return '[]';
+        }
+
+        positions.forEach(function(position) {
+            position = $(position);
+            data = JSON.parse(position.data('g5-position'));
+            data.modules = [];
+
+            // collect positions items
+            (position.search('[data-pm-data]') || []).forEach(function(item) {
+                item = $(item);
+                data.modules.push(JSON.parse(item.data('pm-data') || '{}'));
+            });
+
+            output.push(data);
+            position.data('g5-position', JSON.stringify(data));
+        });
+
+        return JSON.stringify(output).replace(/\//g, '\\/');
+    },
+
+    attachEraser: function() {
+        if (Positions.eraser) {
+            Positions.eraser.element = $('[data-g5-positions-erase]');
+            Positions.eraser.hide('fast');
+            return;
+        }
+
+        Positions.eraser = new Eraser('[data-g5-positions-erase]');
+    },
+
+    createSortables: function(element) {
+        var list, sort;
+
+        Positions.attachEraser();
+
+        groupOptions.forEach(function(groupOption, i) {
+            list = !i ? '[data-g5-position] ul' : '#trash';
+            list = $(list);
+
+            list.forEach(function(element, listIndex) {
+                sort = simpleSort.create(element, {
+                    sort: !i,
+                    filter: '[data-g5-position-ignore]',
+                    group: groupOption,
+                    scroll: true,
+                    forceFallback: true,
+                    animation: 100,
+
+                    onStart: function(event) {
+                        Positions.attachEraser();
+
+                        var item = $(event.item);
+                        item.addClass('position-dragging');
+
+                        Positions.eraser.show();
+                    },
+
+                    onEnd: function(event) {
+                        var item       = $(event.item),
+                            trash      = $('#trash'),
+                            target     = $(this.originalEvent.target),
+                            touchTrash = false;
+
+                        // workaround for touch devices
+                        if (this.originalEvent.type === 'touchend') {
+                            var trashSize = trash[0].getBoundingClientRect(),
+                                oE        = this.originalEvent,
+                                position  = (oE.pageY || oE.changedTouches[0].pageY) - window.scrollY;
+
+                            touchTrash = position <= trashSize.height;
+                        }
+
+                        if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
+                            item.remove();
+                            Positions.eraser.hide();
+                            this.options.onSort(event);
+                            return;
+                        }
+
+                        item.removeClass('position-dragging');
+
+                        Positions.eraser.hide();
+                    },
+
+                    onSort: function(event) {
+                        var from  = $(event.from),
+                            to    = $(event.to),
+                            lists = [from.parent('[data-g5-position]'), to.parent('[data-g5-position]')];
+
+                        if (event.from[0] === event.to[0]) {
+                            lists.shift();
+                        }
+
+                        Positions.serialize(lists);
+                        Positions.updatePendingChanges();
+                    },
+
+                    onOver: function(event) {
+                        if (!$(event.from).matches('ul')) { return; }
+
+                        var over = $(event.newIndex);
+                        if (over.matches('#trash') || over.parent('#trash')) {
+                            Positions.eraser.over();
+                        } else {
+                            Positions.eraser.out();
+                        }
+                    }
+                });
+
+                if (!i) {
+                    if (!Positions.lists[listIndex]) {
+                        Positions.lists[listIndex] = sort;
+                    }
+                }
+            });
+
+            if (!i) {
+                element.SimpleSort = sort;
+            }
+        });
+    }
+};
+
+
+var AttachSortablePositions = function(positions) {
+    if (!positions) { return; }
+    if (!positions.SimpleSort) { Positions.createSortables(positions); }
+};
+
+ready(function() {
+    var positions = $('#positions');
+
+    $('body').delegate('mouseover', '#positions', function(event, element) {
+        AttachSortablePositions(element);
+    });
+
+    AttachSortablePositions(positions);
+});
+
+module.exports = Positions;
+},{"../ui":53,"../ui/eraser":52,"../utils/flags-state":68,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/object/keys":235,"mout/string/trim":271,"sortablejs":315}],47:[function(require,module,exports){
+"use strict";
+
+var $             = require('elements'),
+    zen           = require('elements/zen'),
+    ready         = require('elements/domready'),
+    trim          = require('mout/string/trim'),
+    keys          = require('mout/object/keys'),
+    modal         = require('../ui').modal,
+    toastr        = require('../ui').toastr,
+    request       = require('agent'),
+    getAjaxSuffix = require('../utils/get-ajax-suffix'),
+    parseAjaxURI  = require('../utils/get-ajax-url').parse,
+    getAjaxURL    = require('../utils/get-ajax-url').global,
+    Submit        = require('../fields/submit'),
+
+    flags         = require('../utils/flags-state'),
+    translate     = require('../utils/translate'),
+    Cards         = require('./cards');
+
+ready(function() {
+    var body = $('body'),
+        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+
+    Cards.init();
+
+    // Handles Positions Duplicate / Remove
+    body.delegate('click', '#positions [data-g-config], [data-g-create="position"]', function(event, element) {
+        var mode = element.data('g-config'),
+            href = element.data('g-config-href'),
+            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
+            method = (element.data('g-config-method') || 'post').toLowerCase();
+
+        if (event && event.preventDefault) { event.preventDefault(); }
+
+        if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
+            // confirm before proceeding
+            flags.warning({
+                url: warningURL,
+                data: {page_type: 'POSITION'},
+                callback: function(response, content) {
+                    var confirm = content.find('[data-g-delete-confirm]'),
+                        cancel  = content.find('[data-g-delete-cancel]');
+
+                    if (!confirm) { return; }
+
+                    confirm.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        flags.get('free:to:delete:' + encode, true);
+                        $([confirm, cancel]).attribute('disabled');
+                        body.emit('click', { target: element });
+
+                        modal.close();
+                    });
+
+                    cancel.on('click', function(e) {
+                        e.preventDefault();
+                        if (this.attribute('disabled')) { return false; }
+
+                        $([confirm, cancel]).attribute('disabled');
+                        flags.get('free:to:delete:' + encode, false);
+
+                        modal.close();
+                    });
+                }
+            });
+
+            return false;
+        }
+
+        element.hideIndicator();
+        element.showIndicator();
+
+        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
+            if (!response.body.success) {
+                modal.open({
+                    content: response.body.html || response.body,
+                    afterOpen: function(container) {
+                        if (!response.body.html) { container.style({ width: '90%' }); }
+                    }
+                });
+            } else {
+                var positionDeleted = response.body.position,
+                    reload = $('[href="' + getAjaxURL('positions') + '"]');
+
+                if (!reload) { window.location = window.location; }
+                else {
+                    body.emit('click', {target: reload});
+                }
+
+                toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+                if (positionDeleted) {
+                    body.positionDeleted = positionDeleted;
+                }
+            }
+
+            element.hideIndicator();
+        });
+
+    });
+
+    // Positions Add
+    body.delegate('click', '#positions .position-add', function(event, element) {
+        event.preventDefault();
+
+        var data = {};
+
+        modal.open({
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
+            method: 'get',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
+
+                var search      = content.elements.content.find('.search input'),
+                    blocks      = content.elements.content.search('[data-mm-type]'),
+                    filters     = content.elements.content.search('[data-mm-filter]'),
+                    urlTemplate = content.elements.content.find('.g-urltemplate');
+
+                if (urlTemplate) { body.emit('input', { target: urlTemplate }); }
+
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
+
+                            return true;
+                        }
+                    });
+                }
+
+                if (search && filters && blocks) {
+                    search.on('input', function() {
+                        if (!this.value()) {
+                            blocks.removeClass('hidden');
+                            return;
+                        }
+
+                        blocks.addClass('hidden');
+
+                        var found = [], value = this.value().toLowerCase(), text;
+
+                        filters.forEach(function(filter) {
+                            filter = $(filter);
+                            text = trim(filter.data('mm-filter')).toLowerCase();
+                            if (text.match(new RegExp("^" + value + '|\\s' + value, 'gi'))) {
+                                found.push(filter.matches('[data-mm-type]') ? filter : filter.parent('[data-mm-type]'));
+                            }
+                        }, this);
+
+                        if (found.length) { $(found).removeClass('hidden'); }
+                    });
+                }
+
+                if (search) {
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
+                }
+
+                if ((!form && !fakeDOM) || !submit) { return true; }
+            }
+        });
+    });
+
+    // Positions Items settings
+    body.delegate('click', '#positions .item-settings', function(event, element) {
+        event.preventDefault();
+
+        var data = {},
+            parent = element.parent('[data-pm-data]'),
+            position = JSON.parse(element.parent('[data-g5-position]').data('g5-position'));
+
+        data.position = position.name;
+        data.item = parent.data('pm-data');
+
+        modal.open({
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
+            method: 'post',
+            data: data,
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL('positions/edit/' + parent.data('pm-blocktype')) + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var form       = content.elements.content.find('form'),
+                    fakeDOM    = zen('div').html(response.body.html).find('form'),
+                    submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
+
+                var editable = content.elements.content.find('[data-title-editable]');
+                if (editable) {
+                    editable.on('title-edit-end', function(title, original/*, canceled*/) {
+                        title = trim(title);
+                        if (!title) {
+                            title = trim(original) || 'Title';
+                            this.text(title).data('title-editable', title);
+
+                            return true;
+                        }
+                    });
+                }
+
+                if ((!form && !fakeDOM) || !submit) { return true; }
+
+                // Position Settings apply
+                submit.on('click', function(e) {
+                    e.preventDefault();
+                    fakeDOM = content.elements.content.find('form');
+
+                    var target = $(e.currentTarget);
+                    target.disabled(true);
+                    target.hideIndicator();
+                    target.showIndicator();
+
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
+
+                    if (post.invalid.length) {
+                        target.disabled(false);
+                        target.hideIndicator();
+                        target.showIndicator('fa fa-fw fa-exclamation-triangle');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
+                        return;
+                    }
+
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&'), function(error, response) {
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var parent = element.parent('[data-pm-data]');
+
+                            if (parent) {
+                                parent.data('pm-data', JSON.stringify(response.body.item));
+
+                                var status = response.body.item.enabled || response.body.item.options.attributes.enabled;
+                                var dummy = zen('div').html(response.body.html);
+                                parent.html(dummy.firstChild().html());
+                                parent[status == '0' ? 'addClass' : 'removeClass']('g-menu-item-disabled');
+                            }
+
+                            // if it's apply and save we also save the panel
+                            if (target.data('apply-and-save') !== null) {
+                                var save = $('body').find('.button-save');
+                                if (save) { body.emit('click', { target: save }); }
+                            }
+
+                            Cards.serialize(element.parent('[data-g5-position]'));
+                            Cards.updatePendingChanges();
+
+                            modal.close();
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+                        }
+
+                        target.hideIndicator();
+                    });
+                });
+            }
+        });
+    });
+
+    // Handles Positions Titles Rename
+    var updateTitle = function(title, original, wasCanceled) {
+            this.style('text-overflow', 'ellipsis');
+            if (wasCanceled || title == original) { return; }
+            var element = this,
+                href = element.data('g-config-href'),
+                type = element.data('title-editable-type'),
+                method = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent = element.parent('[id]');
+
+            parent.showIndicator();
+            parent.find('[data-title-edit]').addClass('disabled');
+
+            var data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
+            data.data = parent.find('[data-g5-position]').data('g5-position');
+
+            request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
+                if (!response.body.success) {
+                    modal.open({
+                        content: response.body.html || response.body,
+                        afterOpen: function(container) {
+                            if (!response.body.html) { container.style({ width: '90%' }); }
+                        }
+                    });
+
+                    element.data('title-editable', original).text(original);
+                } else {
+                    var dummy = zen('div').html(response.body.position);
+
+                    parent.html(dummy.find('[id]').html());
+
+                    var editables = parent.search('[data-title-editable]');
+                    attachEditables(editables);
+                }
+
+                parent.hideIndicator();
+                parent.find('[data-title-edit]').removeClass('disabled');
+            });
+        },
+
+        attachEditables = function(editables) {
+            if (!editables || !editables.length) { return; }
+            editables.forEach(function(editable) {
+                editable = $(editable);
+                editable.confWasAttached = true;
+                editable.on('title-edit-start', function(){
+                    editable.style('text-overflow', 'inherit');
+                });
+                editable.on('title-edit-end', updateTitle);
+            });
+        };
+
+    // Toggle all assignments on/off
+    body.delegate('change', '[data-g5-positions-assignments] input[type="hidden"]', function(event, element) {
+        var card = element.parent('.card'),
+            wrapper = card.find('.settings-param-wrapper');
+
+        wrapper[element.value() == 1 ? 'addClass' : 'removeClass']('hide');
+        wrapper.search('input[type="hidden"]').forEach(function(element) {
+            element = $(element);
+            element.value(0).disabled(true);
+        });
+    });
+
+    // Global state change
+    body.on('statechangeAfter', function(event, element) {
+        var editables = $('#positions [data-title-editable]');
+        if (!editables) { return true; }
+
+        editables = editables.filter(function(editable) {
+            return (typeof $(editable).confWasAttached) === 'undefined';
+        });
+
+        attachEditables(editables);
+    });
+
+    attachEditables($('#positions [data-title-editable]'));
+});
+
+module.exports = {};
+
+},{"../fields/submit":8,"../ui":53,"../utils/flags-state":68,"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"../utils/translate":77,"./cards":46,"agent":79,"elements":112,"elements/domready":110,"elements/zen":136,"mout/object/keys":235,"mout/string/trim":271}],48:[function(require,module,exports){
 "use strict";
 var ready = require('elements/domready'),
     $ = require('elements/attributes'),
@@ -8386,36 +10003,17 @@ ready(function() {
 
 module.exports = {};
 
-},{"../ui":48,"../ui/popover":50,"elements/attributes":95,"elements/domready":98,"mout/array/contains":133,"mout/collection/forEach":154}],44:[function(require,module,exports){
+},{"../ui":53,"../ui/popover":55,"elements/attributes":107,"elements/domready":110,"mout/array/contains":165,"mout/collection/forEach":188}],49:[function(require,module,exports){
 "use strict";
 var ready  = require('elements/domready'),
     trim   = require('mout/string/trim'),
     forOwn = require('mout/object/forOwn'),
-    $      = require('elements');
+    $      = require('elements'),
+    Cookie = require('../utils/cookie');
 
-var Cookie = {
-    write: function(name, value) {
-        var date = new Date();
-        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
-
-        var host = window.location.host.toString(),
-            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
-
-        if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
-        var cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
-
-        document.cookie = cookie.join('');
-    },
-
-    read: function(name) {
-        name = name.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-        var value = document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
-        return (value) ? JSON.parse(decodeURIComponent(value[1])) : null;
-    }
-};
 
 var loadFromStorage = function() {
-    var storage = Cookie.read('g5-collapsed') || {},
+    var storage    = Cookie.read('g5-collapsed') || {},
         collapsers = $('[data-g-collapse]');
     if (!collapsers) { return false; }
 
@@ -8428,7 +10026,9 @@ var loadFromStorage = function() {
         handle = data.handle ? item.find(data.handle) : item.find('.g-collapse');
         panel = data.target ? item.find(data.target) : item;
         card = item.parent('.card') || panel;
-        handle.data('title', value ? data.expand : data.collapse);
+        handle
+            .data('title', value ? data.expand : data.collapse)
+            .data('tip', value ? data.expand : data.collapse);
 
         panel.attribute('style', null);
         card[!value ? 'removeClass' : 'addClass']('g-collapsed');
@@ -8445,19 +10045,20 @@ ready(function() {
 
         data = JSON.parse(element.data('g-collapse'));
         target = $(event.target);
-        storage = Cookie.read('g5-collapsed') || {};
+        storage = ((data.store !== false) ? Cookie.read('g5-collapsed') : storage) || {};
         if (!data.handle) { data.handle = element.find('.g-collapse'); }
 
         if (!target.matches(data.handle) && !target.parent(data.handle)) { return false; }
 
         if (storage[data.id] === undefined) {
             storage[data.id] = data.collapsed;
-            Cookie.write('g5-collapsed', storage);
+
+            if (data.store !== false) { Cookie.write('g5-collapsed', storage); }
         }
 
         var collapsed = storage[data.id],
-            panel = data.target ? element.find(data.target) : element,
-            card = panel.parent('.card') || panel;
+            panel     = data.target ? element.find(data.target) : element,
+            card      = panel.parent('.card') || panel;
 
         if (card && card.hasClass('g-collapsed')) {
             card.removeClass('g-collapsed');
@@ -8470,14 +10071,16 @@ ready(function() {
         }
 
         var slide = function(override) {
-            collapsed = typeof override != 'number' ? override : collapsed;
+            collapsed = typeof override !== 'number' ? override : collapsed;
             if (!collapsed) {
                 card.addClass('g-collapsed');
                 element.addClass('g-collapsed-main');
                 element.attribute('style', null);
             }
 
-            data.handle.data('title', !collapsed ? data.expand : data.collapse);
+            data.handle
+                .data('title', !collapsed ? data.expand : data.collapse)
+                .data('tip', !collapsed ? data.expand : data.collapse);
             storage[data.id] = !collapsed;
             data.collapsed = !collapsed;
 
@@ -8485,7 +10088,9 @@ ready(function() {
             refreshData.collapsed = !collapsed;
             element.data('g-collapse', JSON.stringify(refreshData));
 
-            Cookie.write('g5-collapsed', storage);
+            if (data.store !== false) {
+                Cookie.write('g5-collapsed', storage);
+            }
         };
 
         if (element.gFastCollapse) {
@@ -8505,45 +10110,58 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode = element.data('g-collapse-all') == 'true',
-            parent = element.parent('.g-filter-actions'),
-            container = parent.nextSibling(),
-            collapsers = container.search('[data-g-collapse]'),
-            storage = Cookie.read('g5-collapsed') || {},
-            panel, data, handle, card;
+        var mode          = element.data('g-collapse-all') === 'true',
+            parent        = element.parent('.g-filter-actions'),
+            container     = parent.nextSibling(),
+            collapsers    = container.search('[data-g-collapse]'),
+            CookieStorage = Cookie.read('g5-collapsed') || {},
+            panel, data, handle, card, inner;
 
         if (!collapsers) { return; }
 
         collapsers.forEach(function(collapser) {
             collapser = $(collapser);
             card = collapser.parent('.card');
+            inner = card.find('> .g-collapsed');
             data = JSON.parse(collapser.data('g-collapse'));
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
 
-            storage[data.id] = mode;
-            Cookie.write('g5-collapsed', storage);
+            handle
+                .data('title', mode ? data.expand : data.collapse)
+                .data('tip', mode ? data.expand : data.collapse);
 
+            storage = ((data.store !== false) ? CookieStorage : storage) || {};
+
+            storage[data.id] = mode;
+            if (data.store !== false) {
+                Cookie.write('g5-collapsed', storage);
+            }
 
             panel.attribute('style', null);
             collapser[!mode ? 'removeClass' : 'addClass']('g-collapsed-main');
             card[!mode ? 'removeClass' : 'addClass']('g-collapsed');
+
+            if (inner) {
+                inner[!mode ? 'removeClass' : 'addClass']('g-collapsed');
+            }
         });
     });
 
     // filter by card title
     body.delegate('input', '[data-g-collapse-filter]', function(event, element) {
-        var parent = element.parent('.g-filter-actions'),
+        var filter    = JSON.parse(element.data('g-collapse-filter') || '{}'),
+            parent    = element.parent('.g-filter-actions'),
             container = parent.nextSibling(),
-            cards = container.search('.card'),
-            value = element.value();
+            cards     = container.search(filter.element || '.card'),
+            value     = element.value();
 
         if (!cards) { return; }
 
         if (!value) { cards.attribute('style', null); }
         cards.forEach(function(element, index) {
             element = $(element);
-            var title = trim(element.find('h4 .g-title').text()),
+            var title   = trim(element.find(filter.title || 'h4 .g-title').text()),
                 matches = title.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
             if (matches) { element.attribute('style', null); }
@@ -8558,7 +10176,7 @@ ready(function() {
 
 module.exports = loadFromStorage;
 
-},{"elements":100,"elements/domready":98,"mout/object/forOwn":196,"mout/string/trim":235}],45:[function(require,module,exports){
+},{"../utils/cookie":63,"elements":112,"elements/domready":110,"mout/object/forOwn":231,"mout/string/trim":271}],50:[function(require,module,exports){
 "use strict";
 
 var prime      = require('prime'),
@@ -8946,7 +10564,7 @@ var DragDrop = new prime({
 
 module.exports = DragDrop;
 
-},{"../utils/elements.utils":58,"./drag.events":46,"elements/delegation":97,"elements/events":99,"mout/array/contains":133,"mout/function/bind":157,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],46:[function(require,module,exports){
+},{"../utils/elements.utils":65,"./drag.events":51,"elements/delegation":109,"elements/events":111,"mout/array/contains":165,"mout/function/bind":191,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],51:[function(require,module,exports){
 "use strict";
 var getSupportedEvent = function(events) {
     events = events.split(' ');
@@ -9002,7 +10620,7 @@ module.exports = {
     EVENTS: EVENTS
 };
 
-},{}],47:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 var prime     = require('prime'),
     $         = require('../utils/elements.utils'),
@@ -9030,6 +10648,9 @@ var Eraser = new prime({
         if (typeof this.top !== 'undefined') { return; }
         this.top = parseInt(this.element.compute('top'), 10);
         this.left = $('#g5-container')[0].getBoundingClientRect().left;
+        if (GANTRY_PLATFORM == 'grav') {
+            this.left = 0;
+        }
     },
 
     show: function(fast){
@@ -9059,7 +10680,7 @@ var Eraser = new prime({
 
 module.exports = Eraser;
 
-},{"../utils/elements.utils":58,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],48:[function(require,module,exports){
+},{"../utils/elements.utils":65,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],53:[function(require,module,exports){
 "use strict";
 
 var Selectize = require('./selectize');
@@ -9072,7 +10693,7 @@ module.exports = {
     toastr: require('./toastr')
 };
 
-},{"./collapse":44,"./modal":49,"./selectize":52,"./toastr":53,"./togglers":54}],49:[function(require,module,exports){
+},{"./collapse":49,"./modal":54,"./selectize":57,"./toastr":58,"./togglers":59}],54:[function(require,module,exports){
 "use strict";
 // Based on Vex (https://github.com/hubspot/vex)
 
@@ -9095,17 +10716,6 @@ var prime    = require('prime'),
     request  = require('agent');
 
 var animationEndSupport = false;
-
-domready(function() {
-    var style = (document.body || document.documentElement).style;
-
-    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
-        if (animationEndSupport) {
-            return;
-        }
-        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-    });
-});
 
 var Modal = new prime({
     mixin: [Bound, Options],
@@ -9335,6 +10945,22 @@ var Modal = new prime({
         }));
     },
 
+    getLast: function() {
+        var ids, id;
+
+        ids = map(this.getAll(), function(element) {
+            element = $(element);
+
+            return storage.get(element).dialog.id;
+        });
+
+        if (!ids.length) {
+            return false;
+        }
+
+        return Math.max.apply(Math, ids);
+    },
+
     close: function(id) {
         if (!id) {
             var element = $(last(this.getAll()));
@@ -9409,19 +11035,11 @@ var Modal = new prime({
     },
 
     closeByEscape: function() {
-        var ids, id;
+        var id = this.getLast();
 
-        ids = map(this.getAll(), function(element) {
-            element = $(element);
-
-            return storage.get(element).dialog.id;
-        });
-
-        if (!ids.length) {
+        if (id === false) {
             return false;
         }
-
-        id = Math.max.apply(Math, ids);
 
         var element = this.getByID(id);
 
@@ -9431,6 +11049,23 @@ var Modal = new prime({
 
         return this.closeByID(id);
 
+    },
+
+    enableCloseByOverlay: function() {
+        var id = this.getLast();
+
+        if (id === false) {
+            return false;
+        }
+
+        var elements = storage.get(this.getByID(id)).dialog.elements;
+
+        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
+        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
+
+        elements.content.on('click', function(/*e*/){
+            return true;
+        });
     },
 
     showLoading: function() {
@@ -9457,11 +11092,22 @@ var Modal = new prime({
     }
 });
 
+domready(function() {
+    var style = (document.body || document.documentElement).style;
+
+    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
+        if (animationEndSupport) {
+            return;
+        }
+        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+    });
+});
+
 var modal = new Modal();
 
 module.exports = modal;
 
-},{"../utils/elements.utils":58,"agent":69,"elements/domready":98,"elements/zen":103,"mout/array/forEach":141,"mout/array/last":146,"mout/array/map":147,"mout/function/bind":157,"mout/object/merge":201,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],50:[function(require,module,exports){
+},{"../utils/elements.utils":65,"agent":79,"elements/domready":110,"elements/zen":136,"mout/array/forEach":173,"mout/array/last":178,"mout/array/map":179,"mout/function/bind":191,"mout/object/merge":236,"mout/string/trim":271,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299,"prime/map":301}],55:[function(require,module,exports){
 "use strict";
 
 var prime    = require('prime'),
@@ -10100,7 +11746,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../utils/elements.utils":58,"agent":69,"elements/domready":98,"elements/zen":103,"mout/array/forEach":141,"mout/array/last":146,"mout/array/map":147,"mout/function/bind":157,"mout/lang/isFunction":171,"mout/object/merge":201,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],51:[function(require,module,exports){
+},{"../utils/elements.utils":65,"agent":79,"elements/domready":110,"elements/zen":136,"mout/array/forEach":173,"mout/array/last":178,"mout/array/map":179,"mout/function/bind":191,"mout/lang/isFunction":204,"mout/object/merge":236,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299,"prime/map":301}],56:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -10284,9 +11930,9 @@ var Progresser = new prime({
 
 module.exports = Progresser;
 
-},{"elements":100,"elements/zen":103,"moofx":104,"mout/function/bind":157,"mout/lang/isArray":169,"mout/lang/isNumber":173,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264}],52:[function(require,module,exports){
+},{"elements":112,"elements/zen":136,"moofx":137,"mout/function/bind":191,"mout/lang/isArray":202,"mout/lang/isNumber":206,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299}],57:[function(require,module,exports){
 "use strict";
-// selectize (v0.12.1)
+// selectize (v0.12.1) (commit: 4dae761)
 
 var prime      = require('prime'),
     ready      = require('elements/domready'),
@@ -10405,6 +12051,12 @@ var build_hash_table = function(key, objects) {
     return table;
 };
 
+var domToString = function(d) {
+    var tmp = document.createElement('div');
+    tmp.appendChild(d.cloneNode(true));
+    return tmp.innerHTML;
+};
+
 var getSelection = function(input) {
     var result = {};
     if ('selectionStart' in input) {
@@ -10481,7 +12133,7 @@ var highlight = function($element, pattern) {
             if (pos >= 0 && node.data.length > 0) {
                 var match = node.data.match(regex);
                 var spannode = document.createElement('span');
-                spannode.className = 'highlight';
+                spannode.className = 'g-highlight';
                 var middlebit = node.splitText(pos);
                 var endbit = middlebit.splitText(match[0].length);
                 var middleclone = middlebit.cloneNode(true);
@@ -10592,7 +12244,7 @@ var Selectize = new prime({
 
         scrollDuration: 60,
         loadThrottle: 300,
-        loadingClass: 'loading',
+        loadingClass: 'g-loading',
 
         dataAttr: 'data-data',
         optgroupField: 'optgroup',
@@ -10607,10 +12259,10 @@ var Selectize = new prime({
         searchConjunction: 'and',
 
         mode: null,
-        wrapperClass: 'selectize-control',
-        inputClass: 'selectize-input',
-        dropdownClass: 'selectize-dropdown',
-        dropdownContentClass: 'selectize-dropdown-content',
+        wrapperClass: 'g-selectize-control',
+        inputClass: 'g-selectize-input',
+        dropdownClass: 'g-selectize-dropdown',
+        dropdownContentClass: 'g-selectize-dropdown-content',
 
         dropdownParent: null,
 
@@ -10666,7 +12318,7 @@ var Selectize = new prime({
         this.rtl = /rtl/i.test(dir);
         this.highlightedValue = null;
         this.isRequired = input.attribute('required');
-        forEach(['isOpen', 'isDisabled', 'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
+        forEach(['isOpen', 'isDisabled',  'isInvalid', 'isLocked', 'isFocused', 'isInputHidden', 'isSetup', 'isShiftDown', 'isCmdDown', 'isCtrlDown', 'ignoreFocus', 'ignoreBlur', 'ignoreHover', 'hasOptions'], function(option) {
             this[option] = false;
         }, this);
         this.currentResults = null;
@@ -10732,11 +12384,11 @@ var Selectize = new prime({
         inputMode = this.options.mode;
         classes = $input.attribute('class') || '';
 
-        $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass(inputMode).after(this.input);
-        $control = zen('div').addClass(this.options.inputClass).addClass('items').bottom($wrapper);
+        $wrapper = zen('div').addClass(this.options.wrapperClass).addClass(classes).addClass('g-' + inputMode).after(this.input);
+        $control = zen('div').addClass(this.options.inputClass).addClass('g-items').bottom($wrapper);
         $control_input = zen('input[type="text"][autocomplete="off"][role="textbox"]').bottom($control).attribute('tabindex', $input.disabled() ? '-1' : this.tabIndex);
         $dropdown_parent = $(this.options.dropdownParent || $wrapper);
-        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass(inputMode).hide().bottom($dropdown_parent);
+        $dropdown = zen('div').addClass(this.options.dropdownClass).addClass('g-' + inputMode).hide().bottom($dropdown_parent);
         $dropdown_content = zen('div[id="' + this.rand + '"]').addClass(this.options.dropdownContentClass).bottom($dropdown);
 
         if (this.options.copyClassesToDropdown) {
@@ -10788,7 +12440,7 @@ var Selectize = new prime({
 
         $control.on('mousedown', bind(function() { return this.onMouseDown.apply(this, arguments); }, this));
         $control.on('click', bind(function() { return this.onClick.apply(this, arguments); }, this));
-        $control.delegate('click', '.remove-single-item', bind(function() { return this.onItemRemoveViaX.apply(this, arguments); }, this));
+        $control.delegate('click', '.g-remove-single-item', bind(function() { return this.onItemRemoveViaX.apply(this, arguments); }, this));
 
         $control_input.on('mousedown', function(e) { e.stopPropagation(); });
         $control_input.on('keydown', bind(function() { return this.onKeyDown.apply(this, arguments); }, this));
@@ -10903,23 +12555,40 @@ var Selectize = new prime({
 
     setupTemplates: function() {
         var field_label    = this.options.labelField,
-            field_optgroup = this.options.optgroupLabelField;
+            field_value    = this.options.valueField,
+            field_optgroup = this.options.optgroupLabelField,
+            mode           = this.options.mode;
 
         var templates = {
             'optgroup': function(data) {
-                return '<div class="optgroup">' + data.html + '</div>';
+                return '<div class="g-optgroup">' + data.html + '</div>';
             },
             'optgroup_header': function(data, escape) {
-                return '<div class="optgroup-header">' + escape(data[field_optgroup]) + '</div>';
+                return '<div class="g-optgroup-header">' + escape(data[field_optgroup]) + '</div>';
             },
             'option': function(data, escape) {
-                return '<div class="option">' + escape(data[field_label]) + '</div>';
+                var label = '<div class="g-option">' + escape(data[field_label]) + '</div>';
+                if (this.options.Subtitles) {
+                    label = '<div class="g-option"><span>' + escape(data[field_label]) + '</span> <div class="g-option-subtitle"><small>' + escape(data[field_value]) + '</small></div></div>';
+                }
+                return label;
             },
             'item': function(data, escape) {
-                return '<div class="item" title="' + escape(data[field_label]) + '">' + escape(data[field_label]) + '<span  class="remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                var removeButton = '',
+                    title = escape(data[field_value]);
+
+                if (mode !== 'single') {
+                    removeButton = '<span  class="g-remove-single-item" tabindex="-1" title="Remove">&times;</span></div>';
+                }
+
+                if (this.options.Subtitles) {
+                    title = 'class name: ' + title;
+                }
+
+                return '<div class="g-item" title="' + title + '">' + escape(data[field_label]) + removeButton;
             },
             'option_create': function(data, escape) {
-                return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                return '<div class="g-create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
             }
         };
 
@@ -10983,7 +12652,7 @@ var Selectize = new prime({
                 }
 
                 /*e.preventDefault();
-                e.stopPropagation();*/
+                 e.stopPropagation();*/
                 return false;
             }
         } else {
@@ -11181,8 +12850,7 @@ var Selectize = new prime({
             this.setCaret(this.items.length);
             this.refreshState();
 
-            // IE11 bug: element still marked as active
-            (dest || document.body).focus();
+            dest && dest.focus();
 
             this.ignoreFocus = false;
             this.emit('blur');
@@ -11212,7 +12880,7 @@ var Selectize = new prime({
         }
 
         $target = $(element || e.currentTarget);
-        if ($target.hasClass('create')) {
+        if ($target.hasClass('g-create')) {
             this.createItem(null, bind(function() {
                 if (this.options.closeAfterSelect) {
                     this.close();
@@ -11242,7 +12910,6 @@ var Selectize = new prime({
     },
 
     onItemRemoveViaX: function(e, element) {
-        console.log(e, element);
         e.preventDefault();
         if (this.isLocked || this.options.mode == 'single') return;
 
@@ -11306,7 +12973,7 @@ var Selectize = new prime({
 
         // clear the active selection
         if (!item) {
-            if (this.$activeItems.length) { $(this.$activeItems).removeClass('active'); }
+            if (this.$activeItems.length) { $(this.$activeItems).removeClass('g-active'); }
             this.$activeItems = [];
             if (this.isFocused) {
                 this.showInput();
@@ -11318,7 +12985,7 @@ var Selectize = new prime({
         eventName = e && e.type.toLowerCase();
 
         if (eventName === 'mousedown' && this.isShiftDown && this.$activeItems.length) {
-            $last = $(last(this.$control.children('.active')));
+            $last = $(last(this.$control.children('.g-active')));
             begin = Array.prototype.indexOf.apply(this.$control[0].childNodes, [$last[0]]);
             end = Array.prototype.indexOf.apply(this.$control[0].childNodes, [item[0]]);
             if (begin > end) {
@@ -11329,24 +12996,24 @@ var Selectize = new prime({
             for (var i = begin; i <= end; i++) {
                 $item = this.$control[0].childNodes[i];
                 if (this.$activeItems.indexOf($item) === -1) {
-                    $($item).addClass('active');
+                    $($item).addClass('g-active');
                     this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $($item).attribute('data-value')));
                     this.$activeItems.push($item);
                 }
             }
             e.preventDefault();
         } else if ((eventName === 'mousedown' && this.isCtrlDown) || (eventName === 'keydown' && this.isShiftDown)) {
-            if (item.hasClass('active')) {
+            if (item.hasClass('g-active')) {
                 idx = this.$activeItems.indexOf(item[0]);
                 this.$activeItems.splice(idx, 1);
-                item.removeClass('active');
+                item.removeClass('g-active');
             } else {
-                this.$activeItems.push(item.addClass('active')[0]);
+                this.$activeItems.push(item.addClass('g-active')[0]);
                 this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
             }
         } else {
-            if ($(this.$activeItems)) $(this.$activeItems).removeClass('active');
-            this.$activeItems = [item.addClass('active')[0]];
+            if ($(this.$activeItems)) $(this.$activeItems).removeClass('g-active');
+            this.$activeItems = [item.addClass('g-active')[0]];
             this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + item.attribute('data-value')));
         }
 
@@ -11361,13 +13028,13 @@ var Selectize = new prime({
         var height_menu, height_item, y;
         var scroll_top, scroll_bottom;
 
-        if (this.$activeOption) this.$activeOption.removeClass('active');
+        if (this.$activeOption) this.$activeOption.removeClass('g-active');
         this.$activeOption = null;
 
         $option = $($option);
         if (!$option) return;
 
-        this.$activeOption = $option.addClass('active');
+        this.$activeOption = $option.addClass('g-active');
         this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $option.attribute('data-value')));
 
         if (scroll || !isset(scroll)) {
@@ -11405,7 +13072,7 @@ var Selectize = new prime({
 
         var items = this.$control.children(':not(input)');
         if (items) {
-            items.addClass('active');
+            items.addClass('g-active');
             this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + items.attribute('data-value')));
         }
 
@@ -11550,10 +13217,10 @@ var Selectize = new prime({
                     optgroup = '';
                 }
                 if (!groups.hasOwnProperty(optgroup)) {
-                    groups[optgroup] = [];
+                    groups[optgroup] = document.createDocumentFragment();
                     groups_order.push(optgroup);
                 }
-                groups[optgroup].push(option_html);
+                groups[optgroup].appendChild(option_html);
             }
         }
 
@@ -11567,23 +13234,25 @@ var Selectize = new prime({
         }
 
         // render optgroup headers & join groups
-        html = [];
+        html = document.createDocumentFragment();
         for (i = 0, n = groups_order.length; i < n; i++) {
             optgroup = groups_order[i];
-            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].length) {
+            if (this.Optgroups.hasOwnProperty(optgroup) && groups[optgroup].childNodes.length) {
                 // render the optgroup header and options within it,
                 // then pass it to the wrapper template
-                html_children = this.render('optgroup_header', this.Optgroups[optgroup]) || '';
-                html_children += groups[optgroup].join('');
-                html.push(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
-                    html: html_children
+                html_children = document.createDocumentFragment();
+                html_children.appendChild(this.render('optgroup_header', this.Optgroups[optgroup]));
+                html_children.appendChild(groups[optgroup]);
+                html.appendChild(this.render('optgroup', merge({}, this.Optgroups[optgroup], {
+                    html: domToString(html_children),
+                    dom: html_children
                 })));
             } else {
-                html.push(groups[optgroup].join(''));
+                html.appendChild(groups[optgroup]);
             }
         }
 
-        $dropdown_content.html(html.join(''));
+        $dropdown_content.html(domToString(html));
 
         // highlight matching terms inline
         if (this.options.highlight && results.query.length && results.tokens.length) {
@@ -11595,7 +13264,7 @@ var Selectize = new prime({
         // add "selected" class to selected options
         if (!this.options.hideSelected) {
             for (i = 0, n = this.items.length; i < n; i++) {
-                this.getOption(this.items[i]).addClass('selected').attribute('aria-selected', true);
+                this.getOption(this.items[i]).addClass('g-selected').attribute('aria-selected', true);
             }
         }
 
@@ -11603,7 +13272,7 @@ var Selectize = new prime({
         has_create_option = this.canCreate(query);
         if (has_create_option) {
             //$dropdown_content.prepend(this.render('option_create', { input: query }));
-            $dropdown_content.html(this.render('option_create', { input: query }) + $dropdown_content.html());
+            $(this.render('option_create', { input: query })).top($dropdown_content);
             $create = $($dropdown_content[0].childNodes[0]);
         }
 
@@ -11744,10 +13413,9 @@ var Selectize = new prime({
         // update the item if it's selected
         if (this.items.indexOf(value_new) !== -1) {
             $item = this.getItem(value);
-            var dummy = zen('div').html(this.render('item', data));
-            $item_new = dummy.firstChild();
-            if ($item.hasClass('active')) {
-                $item_new.addClass('active');
+            $item_new = $(this.render('item', data));
+            if ($item.hasClass('g-active')) {
+                $item_new.addClass('g-active');
                 this.$wrapper.attribute('aria-activedescendant', slugify(this.rand + '-' + $item_new.attribute('data-value')));
             }
 
@@ -11845,9 +13513,8 @@ var Selectize = new prime({
             if (inputMode === 'single') this.clear(silent);
             if (inputMode === 'multi' && this.isFull()) return;
 
-            var dummy = zen('div').html(this.render('item', this.Options[value]));
-            $item = dummy.firstChild();
-            if (inputMode !== 'multi') $item.find('.remove-single-item').remove();
+            $item = $(this.render('item', this.Options[value]));
+            // if (inputMode !== 'multi') $item.find('.g-remove-single-item').remove();
 
             // ARIA
             $item.attribute('id', this.rand + '-' + slugify($item.attribute('data-value')));
@@ -11891,13 +13558,13 @@ var Selectize = new prime({
     removeItem: function(value, silent) {
         var $item, i, idx;
 
-        $item = (typeof value === 'object') ? value : this.getItem(value);
+        $item = (value instanceof $) ? value : this.getItem(value);
         value = hash_key($item.attribute('data-value'));
         i = this.items.indexOf(value);
 
         if (i !== -1) {
             $item.remove();
-            if ($item.hasClass('active')) {
+            if ($item.hasClass('g-active')) {
                 idx = this.$activeItems.indexOf($item[0]);
                 this.$activeItems.splice(idx, 1);
             }
@@ -11992,19 +13659,19 @@ var Selectize = new prime({
         var isFull   = this.isFull(),
             isLocked = this.isLocked;
 
-        this.$wrapper.toggleClass('rtl', this.rtl);
+        this.$wrapper.toggleClass('g-rtl', this.rtl);
 
-        this.$control.toggleClass('focus', this.isFocused);
-        this.$control.toggleClass('disabled', this.isDisabled);
-        this.$control.toggleClass('required', this.isRequired);
-        this.$control.toggleClass('invalid', this.isInvalid);
-        this.$control.toggleClass('locked', isLocked);
-        this.$control.toggleClass('full', isFull);
-        this.$control.toggleClass('not-full', !isFull);
-        this.$control.toggleClass('input-active', this.isFocused && !this.isInputHidden);
-        this.$control.toggleClass('dropdown-active', this.isOpen);
-        this.$control.toggleClass('has-options', !size(this.options.Options));
-        this.$control.toggleClass('has-items', this.items.length > 0);
+        this.$control.toggleClass('g-focus', this.isFocused);
+        this.$control.toggleClass('g-disabled', this.isDisabled);
+        this.$control.toggleClass('g-required', this.isRequired);
+        this.$control.toggleClass('g-invalid', this.isInvalid);
+        this.$control.toggleClass('g-locked', isLocked);
+        this.$control.toggleClass('g-full', isFull);
+        this.$control.toggleClass('g-not-full', !isFull);
+        this.$control.toggleClass('g-input-active', this.isFocused && !this.isInputHidden);
+        this.$control.toggleClass('g-dropdown-active', this.isOpen);
+        this.$control.toggleClass('g-has-options', !size(this.options.Options));
+        this.$control.toggleClass('g-has-items', this.items.length > 0);
 
         // ARIA
         if (this.isOpen) {
@@ -12112,10 +13779,11 @@ var Selectize = new prime({
     },
 
     clear: function(silent) {
-        var non_input = this.$control.children(':not(input)');
         if (!this.items.length) return;
 
+        var non_input = this.$control.children(':not(input)');
         if (non_input) non_input.remove();
+
         this.items = [];
         this.lastQuery = null;
         this.setCaret(0);
@@ -12155,7 +13823,7 @@ var Selectize = new prime({
 
         if (this.$activeItems.length) {
             var children = this.$control.children(':not(input)');
-            $tail = this.$control.children('.active');
+            $tail = this.$control.children('.g-active');
             if ($tail) { $tail = $(direction > 0 ? last($tail) : $tail[0]); }
             caret = (!children ? -1 : indexOf(children, $tail[0]));
             if (direction > 0) { caret++; }
@@ -12222,9 +13890,9 @@ var Selectize = new prime({
                 this.advanceCaret(direction, e);
             }
         } else {
-            $tail = this.$control.children('.active:' + tail);
+            $tail = this.$control.children('.g-active:' + tail);
             if ($tail) {
-                idx = this.$control.children(':not(input)').index($tail);
+                idx = indexOf(this.$control.children(':not(input)'), $tail);
                 this.setActiveItem(null);
                 this.setCaret(direction > 0 ? idx + 1 : idx);
             }
@@ -12348,28 +14016,29 @@ var Selectize = new prime({
         }
 
         // render markup
-        var html = this.options.render[templateName].apply(this, [data, escapeHTML]);
+        var html = zen('div').html(this.options.render[templateName].apply(this, [data, escapeHTML]));
+        html = html.firstChild();
 
         // add mandatory attributes
         if (templateName === 'option' || templateName === 'option_create') {
-            html = html.replace(regex_tag, '<$1 data-selectable');
+            html = html.data('selectable', '');
         }
         if (templateName === 'optgroup') {
             id = data[this.options.optgroupValueField] || '';
             name = escape_replace(escapeHTML(id));
-            html = html.replace(regex_tag, '<$1 data-group="' + name + '" role="group" aria-label="' + name + '"');
+            html = html.data('group', name).attribute('role', 'group').attribute('aria-label', name);
         }
         if (templateName === 'option' || templateName === 'item') {
             name = escape_replace(escapeHTML(value || ''));
-            html = html.replace(regex_tag, '<$1 data-value="' + name + '" id="' + slugify(this.rand + '-' + name) + '" role="treeitem" aria-label="' + trim(data.text) + '" aria-selected="false"');
+            html = html.data('value', name).attribute('id', slugify(this.rand + '-' + name)).attribute('role', 'treeitem').attribute('aria-label', trim(data.text)).attribute('aria-selected', 'false');
         }
 
         // update cache
         if (cache) {
-            this.renderCache[templateName][value] = html;
+            this.renderCache[templateName][value] = html[0];
         }
 
-        return html;
+        return html[0];
     },
 
     clearCache: function(templateName) {
@@ -12519,6 +14188,7 @@ $.implement({
         };
 
         return this.forEach(function($input, i) {
+            settings = merge({}, defaults, settings_user),
             $input = $($input);
             if ($input.selectizeInstance) return;
 
@@ -12566,7 +14236,7 @@ ready(function() {
 
 module.exports = Selectize;
 
-},{"../utils/elements.utils":58,"elements/domready":98,"elements/zen":103,"moofx":104,"mout/array/indexOf":142,"mout/array/last":146,"mout/collection/forEach":154,"mout/function/bind":157,"mout/function/debounce":158,"mout/lang/isArray":169,"mout/lang/isBoolean":170,"mout/object/merge":201,"mout/object/size":206,"mout/object/unset":208,"mout/object/values":209,"mout/string/escapeHtml":222,"mout/string/slugify":234,"mout/string/trim":235,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"sifter":267}],53:[function(require,module,exports){
+},{"../utils/elements.utils":65,"elements/domready":110,"elements/zen":136,"moofx":137,"mout/array/indexOf":174,"mout/array/last":178,"mout/collection/forEach":188,"mout/function/bind":191,"mout/function/debounce":192,"mout/lang/isArray":202,"mout/lang/isBoolean":203,"mout/object/merge":236,"mout/object/size":241,"mout/object/unset":243,"mout/object/values":244,"mout/string/escapeHtml":258,"mout/string/slugify":270,"mout/string/trim":271,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299,"sifter":311}],58:[function(require,module,exports){
 "use strict";
 
 var prime   = require('prime'),
@@ -12892,7 +14562,7 @@ var toaster = new Toaster();
 
 module.exports = toaster;
 
-},{"../utils/elements.utils.js":58,"elements/zen":103,"mout/function/bind":157,"mout/object/merge":201,"prime":265,"prime-util/prime/bound":261,"prime-util/prime/options":262,"prime/emitter":264,"prime/map":266}],54:[function(require,module,exports){
+},{"../utils/elements.utils.js":65,"elements/zen":136,"mout/function/bind":191,"mout/object/merge":236,"prime":300,"prime-util/prime/bound":296,"prime-util/prime/options":297,"prime/emitter":299,"prime/map":301}],59:[function(require,module,exports){
 "use strict";
 var ready         = require('elements/domready'),
     $             = require('elements'),
@@ -12971,7 +14641,40 @@ ready(function() {
 
 module.exports = {};
 
-},{"../utils/get-ajax-suffix":62,"../utils/get-ajax-url":63,"./modal":49,"./toastr":53,"agent":69,"elements":100,"elements/domready":98}],55:[function(require,module,exports){
+},{"../utils/get-ajax-suffix":69,"../utils/get-ajax-url":70,"./modal":54,"./toastr":58,"agent":79,"elements":112,"elements/domready":110}],60:[function(require,module,exports){
+"use strict";
+
+var ready    = require('elements/domready'),
+    tooltips = require('ext/tooltips');
+
+tooltips.defaults = {
+    baseClass: 'g-tips',
+    typeClass: null,
+    effectClass: 'g-fade',
+    inClass: 'g-tip-in',
+    place: 'top',
+    spacing: 10,
+    offset: -3,
+    auto: 1
+};
+
+var Instance = null;
+
+ready(function() {
+    Instance = new tooltips(document, {
+        tooltip: tooltips.defaults,
+        key: 'tip',
+        showOn: 'mouseenter',
+        hideOn: 'mouseleave',
+        observe: 1
+    });
+
+    window.G5.tips = Instance;
+});
+
+module.exports = Instance;
+
+},{"elements/domready":110,"ext/tooltips":"ext/tooltips"}],61:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),
@@ -13093,9 +14796,14 @@ History.Adapter.bind(window, 'statechange', function() {
             var fader;
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
+                var navbar = $('#navbar');
                 fader.style({ opacity: 0 });
-                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
-                $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
+
+                if (isTopNavOrMenu) {
+                    $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true');
+                }
+
+                navbar[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
         } else { destination.html(response.body); }
@@ -13211,20 +14919,48 @@ domready(function() {
     // Update NONCE if any
     if (GANTRY_AJAX_NONCE) {
         var currentURI = History.getPageUrl(),
-            currentNonce = getParam(currentURI, '_wpnonce'),
-            currentView = getParam(currentURI, 'view');
+            currentNonce, currentView;
 
-        // hack to inject the default view in WP in case it's missing
-        if (!currentView) {
-            currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+        // hack to inject the default view in WP/Grav in case it's missing
+        switch (GANTRY_PLATFORM) {
+            case 'wordpress':
+                currentNonce = getParam(currentURI, '_wpnonce');
+                // currentView = getParam(currentURI, 'view');
+
+                /*
+                if (!currentView) {
+                    currentURI = setParam(currentURI, 'view', 'configurations/default/styles');
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                */
+
+                // refresh nonce
+                if (currentNonce !== GANTRY_AJAX_NONCE) {
+                    currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                break;
+
+            case 'grav':
+                currentNonce = getParam(currentURI, 'nonce');
+                // currentView = contains(currentURI, 'configurations/default/styles');
+
+                /*
+                if (!currentView) {
+                    currentURI += 'configurations/default/styles';
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                */
+
+                // refresh nonce
+                if (currentNonce !== GANTRY_AJAX_NONCE) {
+                    currentURI = setParam(currentURI, 'nonce', GANTRY_AJAX_NONCE);
+                    History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
+                }
+                break;
         }
 
-        // refresh nonce
-        if (currentNonce !== GANTRY_AJAX_NONCE) {
-            currentURI = setParam(currentURI, '_wpnonce', GANTRY_AJAX_NONCE);
-            History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
-        }
+
     }
 
     // back to configuration
@@ -13396,7 +15132,7 @@ domready(function() {
 
 module.exports = {};
 
-},{"../assignments":2,"../lm":25,"../menu":31,"../ui":48,"../ui/popover":50,"../utils/elements.utils":58,"./flags-state":61,"./get-ajax-suffix":62,"./get-ajax-url":63,"./history":66,"agent":69,"elements/domready":98,"elements/zen":103,"mout/array/indexOf":142,"mout/collection/size":156,"mout/object/keys":200,"mout/object/merge":201,"mout/queryString/encode":210,"mout/queryString/getParam":211,"mout/queryString/setParam":213,"mout/random/guid":215,"mout/string/contains":221,"prime":265,"prime/map":266}],56:[function(require,module,exports){
+},{"../assignments":2,"../lm":27,"../menu":34,"../ui":53,"../ui/popover":55,"../utils/elements.utils":65,"./flags-state":68,"./get-ajax-suffix":69,"./get-ajax-url":70,"./history":74,"agent":79,"elements/domready":110,"elements/zen":136,"mout/array/indexOf":174,"mout/collection/size":190,"mout/object/keys":235,"mout/object/merge":236,"mout/queryString/encode":245,"mout/queryString/getParam":246,"mout/queryString/setParam":248,"mout/random/guid":250,"mout/string/contains":256,"prime":300,"prime/map":301}],62:[function(require,module,exports){
 "use strict";
 
 // credits: https://github.com/cowboy/javascript-sync-async-foreach
@@ -13451,7 +15187,32 @@ var asyncForEach = function(arr, eachFn, doneFn) {
 
 module.exports = asyncForEach;
 
-},{}],57:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
+'use strict';
+
+var Cookie = {
+    write: function(name, value) {
+        var date = new Date();
+        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
+
+        var host   = window.location.host.toString(),
+            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
+
+        if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
+        var cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
+
+        document.cookie = cookie.join('');
+    },
+
+    read: function(name) {
+        name = name.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
+        var value = document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
+        return (value) ? JSON.parse(decodeURIComponent(value[1])) : null;
+    }
+};
+
+module.exports = Cookie;
+},{}],64:[function(require,module,exports){
 'use strict';
 
 var rAF = (function() {
@@ -13481,11 +15242,15 @@ var decouple = function(element, event, callback) {
         tracking = false;
     };
 
-    element.addEventListener(event, capture, false);
+    try {
+        element.addEventListener(event, capture, false);
+    } catch (e) {}
+
+    return capture;
 };
 
 module.exports = decouple;
-},{}],58:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 "use strict";
 var $          = require('elements'),
     moofx      = require('moofx'),
@@ -13599,11 +15364,11 @@ $.implement({
                 element.attribute('style', element.gSlideStyle);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === false) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -13613,7 +15378,7 @@ $.implement({
     },
 
     slideUp: function(animation, callback) {
-        if (typeof this.gSlideCollapsed == 'undefined') {
+        if (typeof this.gSlideCollapsed === 'undefined') {
             this.gSlideStyle = this.attribute('style');
         }
 
@@ -13625,11 +15390,11 @@ $.implement({
                 element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -13656,7 +15421,7 @@ $.implement({
             height: parseInt(this.compute('height'), 10)
         };
 
-        this.attribute('style', style);
+        this[0].style = style;
 
         return size;
     },
@@ -13668,7 +15433,7 @@ $.implement({
 
 module.exports = $;
 
-},{"../ui/progresser":51,"elements":100,"elements/zen":103,"moofx":104,"mout/array/map":147,"mout/function/series":162,"slick":269}],59:[function(require,module,exports){
+},{"../ui/progresser":56,"elements":112,"elements/zen":136,"moofx":137,"mout/array/map":179,"mout/function/series":196,"slick":313}],66:[function(require,module,exports){
 "use strict";
 var $     = require('elements');
 
@@ -13733,7 +15498,7 @@ $.implement({
 
 module.exports = $;
 
-},{"elements":100}],60:[function(require,module,exports){
+},{"elements":112}],67:[function(require,module,exports){
 "use strict";
 
 var $ = require('elements');
@@ -13814,7 +15579,7 @@ var validate = function(field) {
 
 module.exports = fieldValidation;
 
-},{"elements":100}],61:[function(require,module,exports){
+},{"elements":112}],68:[function(require,module,exports){
 "use strict";
 
 var prime         = require('prime'),
@@ -13861,6 +15626,7 @@ var FlagsState = new prime({
             modal.open({
                 content: 'Loading...',
                 remote: warningURL,
+                data: options.data || false,
                 remoteLoaded: function(response, modal) {
                     var content = modal.elements.content;
                     if (!callback) { return; }
@@ -13887,38 +15653,60 @@ var FlagsState = new prime({
 
 module.exports = new FlagsState();
 
-},{"../ui":48,"./get-ajax-suffix":62,"./get-ajax-url":63,"prime":265,"prime/emitter":264,"prime/map":266}],62:[function(require,module,exports){
+},{"../ui":53,"./get-ajax-suffix":69,"./get-ajax-url":70,"prime":300,"prime/emitter":299,"prime/map":301}],69:[function(require,module,exports){
 "use strict";
+
 var getAjaxSuffix = function() {
+    var GANTRY_AJAX_SUFFIX = window.GANTRY_AJAX_SUFFIX || undefined;
     return typeof GANTRY_AJAX_SUFFIX == 'undefined' ? '' : GANTRY_AJAX_SUFFIX;
 };
 
 module.exports = getAjaxSuffix;
-},{}],63:[function(require,module,exports){
+
+},{}],70:[function(require,module,exports){
 "use strict";
-var unescapeHtml = require('mout/string/unescapeHtml');
+var unescapeHtml  = require('mout/string/unescapeHtml'),
+    getAjaxSuffix = require('./get-ajax-suffix'),
+    endsWith      = require('mout/string/endsWith'),
+    getQuery      = require('mout/queryString/getQuery'),
+    getParam      = require('mout/queryString/getParam'),
+    setParam      = require('mout/queryString/setParam');
 
 var getAjaxURL = function(view, search) {
+    var GANTRY_AJAX_URL = window.GANTRY_AJAX_URL || '';
     if (!search) { search = '%ajax%'; }
-    var re = new RegExp(search, 'g'),
+    var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_URL == 'undefined' ? '' : GANTRY_AJAX_URL;
 
     return unescapeHtml(url.replace(re, view));
 };
 
 var getConfAjaxURL = function(view, search) {
+    var GANTRY_AJAX_CONF_URL = window.GANTRY_AJAX_CONF_URL || '';
     if (!search) { search = '%ajax%'; }
-    var re = new RegExp(search, 'g'),
+    var re  = new RegExp(search, 'g'),
         url = typeof GANTRY_AJAX_CONF_URL == 'undefined' ? '' : GANTRY_AJAX_CONF_URL;
 
     return unescapeHtml(url.replace(re, view));
 };
 
 var parseAjaxURI = function(uri) {
-    var platform = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM
-    switch(platform){
+    var GANTRY_PLATFORM = window.GANTRY_PLATFORM || '',
+        platform        = typeof GANTRY_PLATFORM == 'undefined' ? '' : GANTRY_PLATFORM;
+
+    switch (platform) {
         case 'wordpress':
             uri = uri.replace(/themes\.php/ig, 'admin-ajax.php');
+            break;
+        case 'grav':
+            // converts foo/bar?nonce=1234.json to foo/bar.json?nonce=1234
+            var suffix = getAjaxSuffix();
+            if (endsWith(uri, suffix)) {
+                var query  = '' + getQuery(uri),
+                    nonce  = '' + getParam(uri, 'nonce');
+
+                uri = uri.replace(query, suffix) + query.replace(nonce, (nonce.replace(suffix, '')));
+            }
             break;
         default:
     }
@@ -13931,7 +15719,24 @@ module.exports = {
     config: getConfAjaxURL,
     parse: parseAjaxURI
 };
-},{"mout/string/unescapeHtml":237}],64:[function(require,module,exports){
+
+},{"./get-ajax-suffix":69,"mout/queryString/getParam":246,"mout/queryString/getQuery":247,"mout/queryString/setParam":248,"mout/string/endsWith":257,"mout/string/unescapeHtml":273}],71:[function(require,module,exports){
+"use strict";
+var $    = require('elements'),
+    trim = require('mout/string/trim');
+
+var getOutlineNameById = function(outline) {
+    if (outline == null) { return ''; }
+    return trim($('#configuration-selector').selectizeInstance.Options[outline].text);
+};
+
+var getCurrentOutline = function() {
+    return trim($('#configuration-selector').selectizeInstance.getValue());
+};
+
+module.exports = { getOutlineNameById: getOutlineNameById, getCurrentOutline: getCurrentOutline };
+
+},{"elements":112,"mout/string/trim":271}],72:[function(require,module,exports){
 "use strict";
 
 var zen = require('elements/zen');
@@ -13958,7 +15763,7 @@ var cached            = null,
 
 module.exports = getScrollbarWidth;
 
-},{"elements/zen":103}],65:[function(require,module,exports){
+},{"elements/zen":136}],73:[function(require,module,exports){
 "use strict";
 
 var $        = require('elements'),
@@ -14022,7 +15827,7 @@ if (typeof History.init !== 'undefined') {
 }
 
 module.exports = History;
-},{"elements":100,"elements/domready":98}],66:[function(require,module,exports){
+},{"elements":112,"elements/domready":110}],74:[function(require,module,exports){
 "use strict";
 
 // ========================================================================
@@ -16063,7 +17868,7 @@ if (typeof History.init === 'undefined') {
 }
 
 module.exports = History;
-},{"./history-adapter":65}],67:[function(require,module,exports){
+},{"./history-adapter":73}],75:[function(require,module,exports){
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -16090,7 +17895,7 @@ module.exports = History;
 }());
 
 module.exports = {};
-},{}],68:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var prime      = require('prime'),
     deepClone  = require('mout/lang/deepClone');
 
@@ -16141,7 +17946,42 @@ var SaveState = new prime({
 
 module.exports = SaveState;
 
-},{"mout/lang/deepClone":166,"prime":265}],69:[function(require,module,exports){
+},{"mout/lang/deepClone":199,"prime":300}],77:[function(require,module,exports){
+(function (global){
+"use strict";
+
+var replace = require('mout/string/replace');
+
+module.exports = function(key, replacement) {
+    var G5T = global.G5T || function(key) { return key; };
+    return replace(G5T(key), '%s', replacement || '');
+};
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{"mout/string/replace":266}],78:[function(require,module,exports){
+var $ = require('elements');
+
+module.exports = function(field) {
+    if (!field) { return false; }
+
+    if (($('body').hasClass('wp-customizer') || $('body').hasClass('widgets-php')) && jQuery) {
+        var widgetContainer = field.parent('.widget-content'),
+            title = field.siblings('.g-instancepicker-title');
+
+        if (widgetContainer) {
+            var jQueryEvent = jQuery.Event('change');
+            jQueryEvent.target = field[0];
+            jQuery(widgetContainer[0]).trigger(jQueryEvent);
+        }
+
+        if (title) {
+            setTimeout(function(){
+                title.hideIndicator();
+            }, 5);
+        }
+    }
+};
+},{"elements":112}],79:[function(require,module,exports){
 /*
 Agent
 - heavily inspired by superagent by visionmedia https://github.com/visionmedia/superagent, released under the MIT license
@@ -16548,7 +18388,7 @@ agent.Response = Response
 
 module.exports = agent
 
-},{"mout/array/forEach":70,"mout/array/remove":72,"mout/lang/isArray":74,"mout/lang/isFunction":75,"mout/lang/isObject":77,"mout/lang/isString":78,"mout/object/forIn":81,"mout/object/mixIn":84,"mout/string/trim":88,"mout/string/upperCase":89,"prime":93,"prime/emitter":92}],70:[function(require,module,exports){
+},{"mout/array/forEach":80,"mout/array/remove":82,"mout/lang/isArray":84,"mout/lang/isFunction":85,"mout/lang/isObject":87,"mout/lang/isString":88,"mout/object/forIn":91,"mout/object/mixIn":94,"mout/string/trim":98,"mout/string/upperCase":99,"prime":103,"prime/emitter":102}],80:[function(require,module,exports){
 
 
     /**
@@ -16573,7 +18413,7 @@ module.exports = agent
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 
 
     /**
@@ -16603,7 +18443,7 @@ module.exports = agent
     module.exports = indexOf;
 
 
-},{}],72:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -16618,7 +18458,7 @@ var indexOf = require('./indexOf');
     module.exports = remove;
 
 
-},{"./indexOf":71}],73:[function(require,module,exports){
+},{"./indexOf":81}],83:[function(require,module,exports){
 var mixIn = require('../object/mixIn');
 
     /**
@@ -16638,7 +18478,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":84}],74:[function(require,module,exports){
+},{"../object/mixIn":94}],84:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16648,7 +18488,7 @@ var isKind = require('./isKind');
     module.exports = isArray;
 
 
-},{"./isKind":76}],75:[function(require,module,exports){
+},{"./isKind":86}],85:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16658,7 +18498,7 @@ var isKind = require('./isKind');
     module.exports = isFunction;
 
 
-},{"./isKind":76}],76:[function(require,module,exports){
+},{"./isKind":86}],86:[function(require,module,exports){
 var kindOf = require('./kindOf');
     /**
      * Check if value is from a specific "kind".
@@ -16669,7 +18509,7 @@ var kindOf = require('./kindOf');
     module.exports = isKind;
 
 
-},{"./kindOf":79}],77:[function(require,module,exports){
+},{"./kindOf":89}],87:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16679,7 +18519,7 @@ var isKind = require('./isKind');
     module.exports = isObject;
 
 
-},{"./isKind":76}],78:[function(require,module,exports){
+},{"./isKind":86}],88:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -16689,7 +18529,7 @@ var isKind = require('./isKind');
     module.exports = isString;
 
 
-},{"./isKind":76}],79:[function(require,module,exports){
+},{"./isKind":86}],89:[function(require,module,exports){
 
 
     var _rKind = /^\[object (.*)\]$/,
@@ -16711,7 +18551,7 @@ var isKind = require('./isKind');
     module.exports = kindOf;
 
 
-},{}],80:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 
 
     /**
@@ -16726,7 +18566,7 @@ var isKind = require('./isKind');
 
 
 
-},{}],81:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 
     var _hasDontEnumBug,
@@ -16804,7 +18644,7 @@ var hasOwn = require('./hasOwn');
 
 
 
-},{"./hasOwn":83}],82:[function(require,module,exports){
+},{"./hasOwn":93}],92:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var forIn = require('./forIn');
 
@@ -16825,7 +18665,7 @@ var forIn = require('./forIn');
 
 
 
-},{"./forIn":81,"./hasOwn":83}],83:[function(require,module,exports){
+},{"./forIn":91,"./hasOwn":93}],93:[function(require,module,exports){
 
 
     /**
@@ -16839,7 +18679,7 @@ var forIn = require('./forIn');
 
 
 
-},{}],84:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -16869,7 +18709,7 @@ var forOwn = require('./forOwn');
     module.exports = mixIn;
 
 
-},{"./forOwn":82}],85:[function(require,module,exports){
+},{"./forOwn":92}],95:[function(require,module,exports){
 
     /**
      * Contains all Unicode white-spaces. Taken from
@@ -16883,7 +18723,7 @@ var forOwn = require('./forOwn');
     ];
 
 
-},{}],86:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -16919,7 +18759,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = ltrim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85}],87:[function(require,module,exports){
+},{"../lang/toString":90,"./WHITE_SPACES":95}],97:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
     /**
@@ -16954,7 +18794,7 @@ var WHITE_SPACES = require('./WHITE_SPACES');
     module.exports = rtrim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85}],88:[function(require,module,exports){
+},{"../lang/toString":90,"./WHITE_SPACES":95}],98:[function(require,module,exports){
 var toString = require('../lang/toString');
 var WHITE_SPACES = require('./WHITE_SPACES');
 var ltrim = require('./ltrim');
@@ -16971,7 +18811,7 @@ var rtrim = require('./rtrim');
     module.exports = trim;
 
 
-},{"../lang/toString":80,"./WHITE_SPACES":85,"./ltrim":86,"./rtrim":87}],89:[function(require,module,exports){
+},{"../lang/toString":90,"./WHITE_SPACES":95,"./ltrim":96,"./rtrim":97}],99:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * "Safer" String.toUpperCase()
@@ -16983,7 +18823,7 @@ var toString = require('../lang/toString');
     module.exports = upperCase;
 
 
-},{"../lang/toString":80}],90:[function(require,module,exports){
+},{"../lang/toString":90}],100:[function(require,module,exports){
 
 
     /**
@@ -17003,7 +18843,7 @@ var toString = require('../lang/toString');
 
 
 
-},{}],91:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -17122,7 +18962,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":1,"mout/array/forEach":70,"mout/array/indexOf":71,"mout/lang/kindOf":79,"mout/time/now":90}],92:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":80,"mout/array/indexOf":81,"mout/lang/kindOf":89,"mout/time/now":100}],102:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -17188,7 +19028,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":91,"./index":93,"mout/array/forEach":70,"mout/array/indexOf":71}],93:[function(require,module,exports){
+},{"./defer":101,"./index":103,"mout/array/forEach":80,"mout/array/indexOf":81}],103:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -17280,7 +19120,480 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":73,"mout/lang/kindOf":79,"mout/object/hasOwn":83,"mout/object/mixIn":84}],94:[function(require,module,exports){
+},{"mout/lang/createObject":83,"mout/lang/kindOf":89,"mout/object/hasOwn":93,"mout/object/mixIn":94}],104:[function(require,module,exports){
+
+module.exports = function(x1, y1, x2, y2, epsilon){
+
+	var curveX = function(t){
+		var v = 1 - t;
+		return 3 * v * v * t * x1 + 3 * v * t * t * x2 + t * t * t;
+	};
+
+	var curveY = function(t){
+		var v = 1 - t;
+		return 3 * v * v * t * y1 + 3 * v * t * t * y2 + t * t * t;
+	};
+
+	var derivativeCurveX = function(t){
+		var v = 1 - t;
+		return 3 * (2 * (t - 1) * t + v * v) * x1 + 3 * (- t * t * t + 2 * v * t) * x2;
+	};
+
+	return function(t){
+
+		var x = t, t0, t1, t2, x2, d2, i;
+
+		// First try a few iterations of Newton's method -- normally very fast.
+		for (t2 = x, i = 0; i < 8; i++){
+			x2 = curveX(t2) - x;
+			if (Math.abs(x2) < epsilon) return curveY(t2);
+			d2 = derivativeCurveX(t2);
+			if (Math.abs(d2) < 1e-6) break;
+			t2 = t2 - x2 / d2;
+		}
+
+		t0 = 0, t1 = 1, t2 = x;
+
+		if (t2 < t0) return curveY(t0);
+		if (t2 > t1) return curveY(t1);
+
+		// Fallback to the bisection method for reliability.
+		while (t0 < t1){
+			x2 = curveX(t2);
+			if (Math.abs(x2 - x) < epsilon) return curveY(t2);
+			if (x > x2) t0 = t2;
+			else t1 = t2;
+			t2 = (t1 - t0) * .5 + t0;
+		}
+
+		// Failure
+		return curveY(t2);
+
+	};
+
+};
+
+},{}],105:[function(require,module,exports){
+(function (global){
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.DeepDiff = factory());
+}(this, (function () { 'use strict';
+
+var $scope;
+var conflict;
+var conflictResolution = [];
+if (typeof global === 'object' && global) {
+  $scope = global;
+} else if (typeof window !== 'undefined') {
+  $scope = window;
+} else {
+  $scope = {};
+}
+conflict = $scope.DeepDiff;
+if (conflict) {
+  conflictResolution.push(
+    function() {
+      if ('undefined' !== typeof conflict && $scope.DeepDiff === accumulateDiff) {
+        $scope.DeepDiff = conflict;
+        conflict = undefined;
+      }
+    });
+}
+
+// nodejs compatible on server side and in the browser.
+function inherits(ctor, superCtor) {
+  ctor.super_ = superCtor;
+  ctor.prototype = Object.create(superCtor.prototype, {
+    constructor: {
+      value: ctor,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+}
+
+function Diff(kind, path) {
+  Object.defineProperty(this, 'kind', {
+    value: kind,
+    enumerable: true
+  });
+  if (path && path.length) {
+    Object.defineProperty(this, 'path', {
+      value: path,
+      enumerable: true
+    });
+  }
+}
+
+function DiffEdit(path, origin, value) {
+  DiffEdit.super_.call(this, 'E', path);
+  Object.defineProperty(this, 'lhs', {
+    value: origin,
+    enumerable: true
+  });
+  Object.defineProperty(this, 'rhs', {
+    value: value,
+    enumerable: true
+  });
+}
+inherits(DiffEdit, Diff);
+
+function DiffNew(path, value) {
+  DiffNew.super_.call(this, 'N', path);
+  Object.defineProperty(this, 'rhs', {
+    value: value,
+    enumerable: true
+  });
+}
+inherits(DiffNew, Diff);
+
+function DiffDeleted(path, value) {
+  DiffDeleted.super_.call(this, 'D', path);
+  Object.defineProperty(this, 'lhs', {
+    value: value,
+    enumerable: true
+  });
+}
+inherits(DiffDeleted, Diff);
+
+function DiffArray(path, index, item) {
+  DiffArray.super_.call(this, 'A', path);
+  Object.defineProperty(this, 'index', {
+    value: index,
+    enumerable: true
+  });
+  Object.defineProperty(this, 'item', {
+    value: item,
+    enumerable: true
+  });
+}
+inherits(DiffArray, Diff);
+
+function arrayRemove(arr, from, to) {
+  var rest = arr.slice((to || from) + 1 || arr.length);
+  arr.length = from < 0 ? arr.length + from : from;
+  arr.push.apply(arr, rest);
+  return arr;
+}
+
+function realTypeOf(subject) {
+  var type = typeof subject;
+  if (type !== 'object') {
+    return type;
+  }
+
+  if (subject === Math) {
+    return 'math';
+  } else if (subject === null) {
+    return 'null';
+  } else if (Array.isArray(subject)) {
+    return 'array';
+  } else if (Object.prototype.toString.call(subject) === '[object Date]') {
+    return 'date';
+  } else if (typeof subject.toString === 'function' && /^\/.*\//.test(subject.toString())) {
+    return 'regexp';
+  }
+  return 'object';
+}
+
+function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
+  path = path || [];
+  stack = stack || [];
+  var currentPath = path.slice(0);
+  if (typeof key !== 'undefined') {
+    if (prefilter) {
+      if (typeof(prefilter) === 'function' && prefilter(currentPath, key)) {
+        return; } else if (typeof(prefilter) === 'object') {
+        if (prefilter.prefilter && prefilter.prefilter(currentPath, key)) {
+          return; }
+        if (prefilter.normalize) {
+          var alt = prefilter.normalize(currentPath, key, lhs, rhs);
+          if (alt) {
+            lhs = alt[0];
+            rhs = alt[1];
+          }
+        }
+      }
+    }
+    currentPath.push(key);
+  }
+
+  // Use string comparison for regexes
+  if (realTypeOf(lhs) === 'regexp' && realTypeOf(rhs) === 'regexp') {
+    lhs = lhs.toString();
+    rhs = rhs.toString();
+  }
+
+  var ltype = typeof lhs;
+  var rtype = typeof rhs;
+
+  var ldefined = ltype !== 'undefined' || (stack && stack[stack.length - 1].lhs && stack[stack.length - 1].lhs.hasOwnProperty(key));
+  var rdefined = rtype !== 'undefined' || (stack && stack[stack.length - 1].rhs && stack[stack.length - 1].rhs.hasOwnProperty(key));
+
+  if (!ldefined && rdefined) {
+    changes(new DiffNew(currentPath, rhs));
+  } else if (!rdefined && ldefined) {
+    changes(new DiffDeleted(currentPath, lhs));
+  } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
+    changes(new DiffEdit(currentPath, lhs, rhs));
+  } else if (realTypeOf(lhs) === 'date' && (lhs - rhs) !== 0) {
+    changes(new DiffEdit(currentPath, lhs, rhs));
+  } else if (ltype === 'object' && lhs !== null && rhs !== null) {
+    if (!stack.filter(function(x) {
+        return x.lhs === lhs; }).length) {
+      stack.push({ lhs: lhs, rhs: rhs });
+      if (Array.isArray(lhs)) {
+        var i, len = lhs.length;
+        for (i = 0; i < lhs.length; i++) {
+          if (i >= rhs.length) {
+            changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
+          } else {
+            deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
+          }
+        }
+        while (i < rhs.length) {
+          changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
+        }
+      } else {
+        var akeys = Object.keys(lhs);
+        var pkeys = Object.keys(rhs);
+        akeys.forEach(function(k, i) {
+          var other = pkeys.indexOf(k);
+          if (other >= 0) {
+            deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
+            pkeys = arrayRemove(pkeys, other);
+          } else {
+            deepDiff(lhs[k], undefined, changes, prefilter, currentPath, k, stack);
+          }
+        });
+        pkeys.forEach(function(k) {
+          deepDiff(undefined, rhs[k], changes, prefilter, currentPath, k, stack);
+        });
+      }
+      stack.length = stack.length - 1;
+    } else if (lhs !== rhs) {
+      // lhs is contains a cycle at this element and it differs from rhs
+      changes(new DiffEdit(currentPath, lhs, rhs));
+    }
+  } else if (lhs !== rhs) {
+    if (!(ltype === 'number' && isNaN(lhs) && isNaN(rhs))) {
+      changes(new DiffEdit(currentPath, lhs, rhs));
+    }
+  }
+}
+
+function accumulateDiff(lhs, rhs, prefilter, accum) {
+  accum = accum || [];
+  deepDiff(lhs, rhs,
+    function(diff) {
+      if (diff) {
+        accum.push(diff);
+      }
+    },
+    prefilter);
+  return (accum.length) ? accum : undefined;
+}
+
+function applyArrayChange(arr, index, change) {
+  if (change.path && change.path.length) {
+    var it = arr[index],
+      i, u = change.path.length - 1;
+    for (i = 0; i < u; i++) {
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case 'A':
+        applyArrayChange(it[change.path[i]], change.index, change.item);
+        break;
+      case 'D':
+        delete it[change.path[i]];
+        break;
+      case 'E':
+      case 'N':
+        it[change.path[i]] = change.rhs;
+        break;
+    }
+  } else {
+    switch (change.kind) {
+      case 'A':
+        applyArrayChange(arr[index], change.index, change.item);
+        break;
+      case 'D':
+        arr = arrayRemove(arr, index);
+        break;
+      case 'E':
+      case 'N':
+        arr[index] = change.rhs;
+        break;
+    }
+  }
+  return arr;
+}
+
+function applyChange(target, source, change) {
+  if (target && source && change && change.kind) {
+    var it = target,
+      i = -1,
+      last = change.path ? change.path.length - 1 : 0;
+    while (++i < last) {
+      if (typeof it[change.path[i]] === 'undefined') {
+        it[change.path[i]] = (typeof change.path[i] === 'number') ? [] : {};
+      }
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case 'A':
+        applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
+        break;
+      case 'D':
+        delete it[change.path[i]];
+        break;
+      case 'E':
+      case 'N':
+        it[change.path[i]] = change.rhs;
+        break;
+    }
+  }
+}
+
+function revertArrayChange(arr, index, change) {
+  if (change.path && change.path.length) {
+    // the structure of the object at the index has changed...
+    var it = arr[index],
+      i, u = change.path.length - 1;
+    for (i = 0; i < u; i++) {
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case 'A':
+        revertArrayChange(it[change.path[i]], change.index, change.item);
+        break;
+      case 'D':
+        it[change.path[i]] = change.lhs;
+        break;
+      case 'E':
+        it[change.path[i]] = change.lhs;
+        break;
+      case 'N':
+        delete it[change.path[i]];
+        break;
+    }
+  } else {
+    // the array item is different...
+    switch (change.kind) {
+      case 'A':
+        revertArrayChange(arr[index], change.index, change.item);
+        break;
+      case 'D':
+        arr[index] = change.lhs;
+        break;
+      case 'E':
+        arr[index] = change.lhs;
+        break;
+      case 'N':
+        arr = arrayRemove(arr, index);
+        break;
+    }
+  }
+  return arr;
+}
+
+function revertChange(target, source, change) {
+  if (target && source && change && change.kind) {
+    var it = target,
+      i, u;
+    u = change.path.length - 1;
+    for (i = 0; i < u; i++) {
+      if (typeof it[change.path[i]] === 'undefined') {
+        it[change.path[i]] = {};
+      }
+      it = it[change.path[i]];
+    }
+    switch (change.kind) {
+      case 'A':
+        // Array was modified...
+        // it will be an array...
+        revertArrayChange(it[change.path[i]], change.index, change.item);
+        break;
+      case 'D':
+        // Item was deleted...
+        it[change.path[i]] = change.lhs;
+        break;
+      case 'E':
+        // Item was edited...
+        it[change.path[i]] = change.lhs;
+        break;
+      case 'N':
+        // Item is new...
+        delete it[change.path[i]];
+        break;
+    }
+  }
+}
+
+function applyDiff(target, source, filter) {
+  if (target && source) {
+    var onChange = function(change) {
+      if (!filter || filter(target, source, change)) {
+        applyChange(target, source, change);
+      }
+    };
+    deepDiff(target, source, onChange);
+  }
+}
+
+Object.defineProperties(accumulateDiff, {
+
+  diff: {
+    value: accumulateDiff,
+    enumerable: true
+  },
+  observableDiff: {
+    value: deepDiff,
+    enumerable: true
+  },
+  applyDiff: {
+    value: applyDiff,
+    enumerable: true
+  },
+  applyChange: {
+    value: applyChange,
+    enumerable: true
+  },
+  revertChange: {
+    value: revertChange,
+    enumerable: true
+  },
+  isConflict: {
+    value: function() {
+      return 'undefined' !== typeof conflict;
+    },
+    enumerable: true
+  },
+  noConflict: {
+    value: function() {
+      if (conflictResolution) {
+        conflictResolution.forEach(function(it) {
+          it();
+        });
+        conflictResolution = null;
+      }
+      return accumulateDiff;
+    },
+    enumerable: true
+  }
+});
+
+return accumulateDiff;
+
+})));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+
+},{}],106:[function(require,module,exports){
 
 /*
  *
@@ -17309,10 +19622,10 @@ module.exports = prime
  */
 
 (function() {
-  var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without,
-    __slice = [].slice,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var Dropzone, Emitter, ExifRestore, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without,
+    slice = [].slice,
+    extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
   noop = function() {};
 
@@ -17331,13 +19644,13 @@ module.exports = prime
     };
 
     Emitter.prototype.emit = function() {
-      var args, callback, callbacks, event, _i, _len;
-      event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      var args, callback, callbacks, event, j, len;
+      event = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       this._callbacks = this._callbacks || {};
       callbacks = this._callbacks[event];
       if (callbacks) {
-        for (_i = 0, _len = callbacks.length; _i < _len; _i++) {
-          callback = callbacks[_i];
+        for (j = 0, len = callbacks.length; j < len; j++) {
+          callback = callbacks[j];
           callback.apply(this, args);
         }
       }
@@ -17351,7 +19664,7 @@ module.exports = prime
     Emitter.prototype.removeEventListener = Emitter.prototype.off;
 
     Emitter.prototype.off = function(event, fn) {
-      var callback, callbacks, i, _i, _len;
+      var callback, callbacks, i, j, len;
       if (!this._callbacks || arguments.length === 0) {
         this._callbacks = {};
         return this;
@@ -17364,7 +19677,7 @@ module.exports = prime
         delete this._callbacks[event];
         return this;
       }
-      for (i = _i = 0, _len = callbacks.length; _i < _len; i = ++_i) {
+      for (i = j = 0, len = callbacks.length; j < len; i = ++j) {
         callback = callbacks[i];
         if (callback === fn) {
           callbacks.splice(i, 1);
@@ -17378,10 +19691,10 @@ module.exports = prime
 
   })();
 
-  Dropzone = (function(_super) {
+  Dropzone = (function(superClass) {
     var extend, resolveOption;
 
-    __extends(Dropzone, _super);
+    extend1(Dropzone, superClass);
 
     Dropzone.prototype.Emitter = Emitter;
 
@@ -17400,6 +19713,7 @@ module.exports = prime
       url: null,
       method: "post",
       withCredentials: false,
+      timeout: 30000,
       parallelUploads: 2,
       uploadMultiple: false,
       maxFilesize: 256,
@@ -17408,9 +19722,16 @@ module.exports = prime
       maxThumbnailFilesize: 10,
       thumbnailWidth: 120,
       thumbnailHeight: 120,
+      thumbnailMethod: 'crop',
+      resizeWidth: null,
+      resizeHeight: null,
+      resizeMimeType: null,
+      resizeQuality: 0.8,
+      resizeMethod: 'contain',
       filesizeBase: 1000,
       maxFiles: null,
       params: {},
+      headers: null,
       clickable: true,
       ignoreHiddenFiles: true,
       acceptedFiles: null,
@@ -17421,6 +19742,9 @@ module.exports = prime
       previewsContainer: null,
       hiddenInputContainer: "body",
       capture: null,
+      renameFilename: null,
+      renameFile: null,
+      forceFallback: false,
       dictDefaultMessage: "Drop files here to upload",
       dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
       dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
@@ -17432,19 +19756,25 @@ module.exports = prime
       dictRemoveFile: "Remove file",
       dictRemoveFileConfirmation: null,
       dictMaxFilesExceeded: "You can not upload any more files.",
-      accept: function(file, done) {
-        return done();
+      dictFileSizeUnits: {
+        tb: "TB",
+        gb: "GB",
+        mb: "MB",
+        kb: "KB",
+        b: "b"
       },
       init: function() {
         return noop;
       },
-      forceFallback: false,
+      accept: function(file, done) {
+        return done();
+      },
       fallback: function() {
-        var child, messageElement, span, _i, _len, _ref;
-        this.element.className = "" + this.element.className + " dz-browser-not-supported";
-        _ref = this.element.getElementsByTagName("div");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          child = _ref[_i];
+        var child, j, len, messageElement, ref, span;
+        this.element.className = this.element.className + " dz-browser-not-supported";
+        ref = this.element.getElementsByTagName("div");
+        for (j = 0, len = ref.length; j < len; j++) {
+          child = ref[j];
           if (/(^| )dz-message($| )/.test(child.className)) {
             messageElement = child;
             child.className = "dz-message";
@@ -17465,7 +19795,7 @@ module.exports = prime
         }
         return this.element.appendChild(this.getFallbackForm());
       },
-      resize: function(file) {
+      resize: function(file, width, height, resizeMethod) {
         var info, srcRatio, trgRatio;
         info = {
           srcX: 0,
@@ -17474,33 +19804,50 @@ module.exports = prime
           srcHeight: file.height
         };
         srcRatio = file.width / file.height;
-        info.optWidth = this.options.thumbnailWidth;
-        info.optHeight = this.options.thumbnailHeight;
-        if ((info.optWidth == null) && (info.optHeight == null)) {
-          info.optWidth = info.srcWidth;
-          info.optHeight = info.srcHeight;
-        } else if (info.optWidth == null) {
-          info.optWidth = srcRatio * info.optHeight;
-        } else if (info.optHeight == null) {
-          info.optHeight = (1 / srcRatio) * info.optWidth;
+        if ((width == null) && (height == null)) {
+          width = info.srcWidth;
+          height = info.srcHeight;
+        } else if (width == null) {
+          width = height * srcRatio;
+        } else if (height == null) {
+          height = width / srcRatio;
         }
-        trgRatio = info.optWidth / info.optHeight;
-        if (file.height < info.optHeight || file.width < info.optWidth) {
-          info.trgHeight = info.srcHeight;
-          info.trgWidth = info.srcWidth;
-        } else {
-          if (srcRatio > trgRatio) {
-            info.srcHeight = file.height;
-            info.srcWidth = info.srcHeight * trgRatio;
+        width = Math.min(width, info.srcWidth);
+        height = Math.min(height, info.srcHeight);
+        trgRatio = width / height;
+        if (info.srcWidth > width || info.srcHeight > height) {
+          if (resizeMethod === 'crop') {
+            if (srcRatio > trgRatio) {
+              info.srcHeight = file.height;
+              info.srcWidth = info.srcHeight * trgRatio;
+            } else {
+              info.srcWidth = file.width;
+              info.srcHeight = info.srcWidth / trgRatio;
+            }
+          } else if (resizeMethod === 'contain') {
+            if (srcRatio > trgRatio) {
+              height = width / srcRatio;
+            } else {
+              width = height * srcRatio;
+            }
           } else {
-            info.srcWidth = file.width;
-            info.srcHeight = info.srcWidth / trgRatio;
+            throw new Error("Unknown resizeMethod '" + resizeMethod + "'");
           }
         }
         info.srcX = (file.width - info.srcWidth) / 2;
         info.srcY = (file.height - info.srcHeight) / 2;
+        info.trgWidth = width;
+        info.trgHeight = height;
         return info;
       },
+      transformFile: function(file, done) {
+        if ((this.options.resizeWidth || this.options.resizeHeight) && file.type.match(/image.*/)) {
+          return this.resizeImage(file, this.options.resizeWidth, this.options.resizeHeight, this.options.resizeMethod, done);
+        } else {
+          return done(file);
+        }
+      },
+      previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-image\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n  <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n  <div class=\"dz-success-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">\n      <title>Check</title>\n      <defs></defs>\n      <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">\n        <path d=\"M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" id=\"Oval-2\" stroke-opacity=\"0.198794158\" stroke=\"#747474\" fill-opacity=\"0.816519475\" fill=\"#FFFFFF\" sketch:type=\"MSShapeGroup\"></path>\n      </g>\n    </svg>\n  </div>\n  <div class=\"dz-error-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">\n      <title>Error</title>\n      <defs></defs>\n      <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">\n        <g id=\"Check-+-Oval-2\" sketch:type=\"MSLayerGroup\" stroke=\"#747474\" stroke-opacity=\"0.198794158\" fill=\"#FFFFFF\" fill-opacity=\"0.816519475\">\n          <path d=\"M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" id=\"Oval-2\" sketch:type=\"MSShapeGroup\"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>",
 
       /*
       Those functions register themselves to the events on init and handle all
@@ -17531,7 +19878,7 @@ module.exports = prime
         return this.element.classList.remove("dz-started");
       },
       addedfile: function(file) {
-        var node, removeFileEvent, removeLink, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+        var j, k, l, len, len1, len2, node, ref, ref1, ref2, removeFileEvent, removeLink, results;
         if (this.element === this.previewsContainer) {
           this.element.classList.add("dz-started");
         }
@@ -17539,14 +19886,14 @@ module.exports = prime
           file.previewElement = Dropzone.createElement(this.options.previewTemplate.trim());
           file.previewTemplate = file.previewElement;
           this.previewsContainer.appendChild(file.previewElement);
-          _ref = file.previewElement.querySelectorAll("[data-dz-name]");
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i];
+          ref = file.previewElement.querySelectorAll("[data-dz-name]");
+          for (j = 0, len = ref.length; j < len; j++) {
+            node = ref[j];
             node.textContent = file.name;
           }
-          _ref1 = file.previewElement.querySelectorAll("[data-dz-size]");
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            node = _ref1[_j];
+          ref1 = file.previewElement.querySelectorAll("[data-dz-size]");
+          for (k = 0, len1 = ref1.length; k < len1; k++) {
+            node = ref1[k];
             node.innerHTML = this.filesize(file.size);
           }
           if (this.options.addRemoveLinks) {
@@ -17572,31 +19919,31 @@ module.exports = prime
               }
             };
           })(this);
-          _ref2 = file.previewElement.querySelectorAll("[data-dz-remove]");
-          _results = [];
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            removeLink = _ref2[_k];
-            _results.push(removeLink.addEventListener("click", removeFileEvent));
+          ref2 = file.previewElement.querySelectorAll("[data-dz-remove]");
+          results = [];
+          for (l = 0, len2 = ref2.length; l < len2; l++) {
+            removeLink = ref2[l];
+            results.push(removeLink.addEventListener("click", removeFileEvent));
           }
-          return _results;
+          return results;
         }
       },
       removedfile: function(file) {
-        var _ref;
+        var ref;
         if (file.previewElement) {
-          if ((_ref = file.previewElement) != null) {
-            _ref.parentNode.removeChild(file.previewElement);
+          if ((ref = file.previewElement) != null) {
+            ref.parentNode.removeChild(file.previewElement);
           }
         }
         return this._updateMaxFilesReachedClass();
       },
       thumbnail: function(file, dataUrl) {
-        var thumbnailElement, _i, _len, _ref;
+        var j, len, ref, thumbnailElement;
         if (file.previewElement) {
           file.previewElement.classList.remove("dz-file-preview");
-          _ref = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            thumbnailElement = _ref[_i];
+          ref = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+          for (j = 0, len = ref.length; j < len; j++) {
+            thumbnailElement = ref[j];
             thumbnailElement.alt = file.name;
             thumbnailElement.src = dataUrl;
           }
@@ -17608,19 +19955,19 @@ module.exports = prime
         }
       },
       error: function(file, message) {
-        var node, _i, _len, _ref, _results;
+        var j, len, node, ref, results;
         if (file.previewElement) {
           file.previewElement.classList.add("dz-error");
           if (typeof message !== "String" && message.error) {
             message = message.error;
           }
-          _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i];
-            _results.push(node.textContent = message);
+          ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+          results = [];
+          for (j = 0, len = ref.length; j < len; j++) {
+            node = ref[j];
+            results.push(node.textContent = message);
           }
-          return _results;
+          return results;
         }
       },
       errormultiple: noop,
@@ -17634,19 +19981,19 @@ module.exports = prime
       },
       processingmultiple: noop,
       uploadprogress: function(file, progress, bytesSent) {
-        var node, _i, _len, _ref, _results;
+        var j, len, node, ref, results;
         if (file.previewElement) {
-          _ref = file.previewElement.querySelectorAll("[data-dz-uploadprogress]");
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i];
+          ref = file.previewElement.querySelectorAll("[data-dz-uploadprogress]");
+          results = [];
+          for (j = 0, len = ref.length; j < len; j++) {
+            node = ref[j];
             if (node.nodeName === 'PROGRESS') {
-              _results.push(node.value = progress);
+              results.push(node.value = progress);
             } else {
-              _results.push(node.style.width = "" + progress + "%");
+              results.push(node.style.width = progress + "%");
             }
           }
-          return _results;
+          return results;
         }
       },
       totaluploadprogress: noop,
@@ -17674,15 +20021,14 @@ module.exports = prime
       maxfilesexceeded: noop,
       maxfilesreached: noop,
       queuecomplete: noop,
-      addedfiles: noop,
-      previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-image\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n  <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n  <div class=\"dz-success-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">\n      <title>Check</title>\n      <defs></defs>\n      <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">\n        <path d=\"M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" id=\"Oval-2\" stroke-opacity=\"0.198794158\" stroke=\"#747474\" fill-opacity=\"0.816519475\" fill=\"#FFFFFF\" sketch:type=\"MSShapeGroup\"></path>\n      </g>\n    </svg>\n  </div>\n  <div class=\"dz-error-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">\n      <title>Error</title>\n      <defs></defs>\n      <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">\n        <g id=\"Check-+-Oval-2\" sketch:type=\"MSLayerGroup\" stroke=\"#747474\" stroke-opacity=\"0.198794158\" fill=\"#FFFFFF\" fill-opacity=\"0.816519475\">\n          <path d=\"M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" id=\"Oval-2\" sketch:type=\"MSShapeGroup\"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>"
+      addedfiles: noop
     };
 
     extend = function() {
-      var key, object, objects, target, val, _i, _len;
-      target = arguments[0], objects = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      for (_i = 0, _len = objects.length; _i < _len; _i++) {
-        object = objects[_i];
+      var j, key, len, object, objects, target, val;
+      target = arguments[0], objects = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      for (j = 0, len = objects.length; j < len; j++) {
+        object = objects[j];
         for (key in object) {
           val = object[key];
           target[key] = val;
@@ -17691,9 +20037,9 @@ module.exports = prime
       return target;
     };
 
-    function Dropzone(element, options) {
-      var elementOptions, fallback, _ref;
-      this.element = element;
+    function Dropzone(element1, options) {
+      var elementOptions, fallback, ref;
+      this.element = element1;
       this.version = Dropzone.version;
       this.defaultOptions.previewTemplate = this.defaultOptions.previewTemplate.replace(/\n*/g, "");
       this.clickableElements = [];
@@ -17710,7 +20056,7 @@ module.exports = prime
       }
       Dropzone.instances.push(this);
       this.element.dropzone = this;
-      elementOptions = (_ref = Dropzone.optionsForElement(this.element)) != null ? _ref : {};
+      elementOptions = (ref = Dropzone.optionsForElement(this.element)) != null ? ref : {};
       this.options = extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
       if (this.options.forceFallback || !Dropzone.isBrowserSupported()) {
         return this.options.fallback.call(this);
@@ -17727,6 +20073,13 @@ module.exports = prime
       if (this.options.acceptedMimeTypes) {
         this.options.acceptedFiles = this.options.acceptedMimeTypes;
         delete this.options.acceptedMimeTypes;
+      }
+      if (this.options.renameFilename != null) {
+        this.options.renameFile = (function(_this) {
+          return function(file) {
+            return _this.options.renameFilename.call(_this, file.name, file);
+          };
+        })(this);
       }
       this.options.method = this.options.method.toUpperCase();
       if ((fallback = this.getExistingFallback()) && fallback.parentNode) {
@@ -17750,42 +20103,42 @@ module.exports = prime
     }
 
     Dropzone.prototype.getAcceptedFiles = function() {
-      var file, _i, _len, _ref, _results;
-      _ref = this.files;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+      var file, j, len, ref, results;
+      ref = this.files;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
         if (file.accepted) {
-          _results.push(file);
+          results.push(file);
         }
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.getRejectedFiles = function() {
-      var file, _i, _len, _ref, _results;
-      _ref = this.files;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+      var file, j, len, ref, results;
+      ref = this.files;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
         if (!file.accepted) {
-          _results.push(file);
+          results.push(file);
         }
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.getFilesWithStatus = function(status) {
-      var file, _i, _len, _ref, _results;
-      _ref = this.files;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+      var file, j, len, ref, results;
+      ref = this.files;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
         if (file.status === status) {
-          _results.push(file);
+          results.push(file);
         }
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.getQueuedFiles = function() {
@@ -17801,20 +20154,20 @@ module.exports = prime
     };
 
     Dropzone.prototype.getActiveFiles = function() {
-      var file, _i, _len, _ref, _results;
-      _ref = this.files;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+      var file, j, len, ref, results;
+      ref = this.files;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
         if (file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED) {
-          _results.push(file);
+          results.push(file);
         }
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.init = function() {
-      var eventName, noPropagation, setupHiddenFileInput, _i, _len, _ref, _ref1;
+      var eventName, j, len, noPropagation, ref, ref1, setupHiddenFileInput;
       if (this.element.tagName === "form") {
         this.element.setAttribute("enctype", "multipart/form-data");
       }
@@ -17847,11 +20200,11 @@ module.exports = prime
             _this.hiddenFileInput.style.width = "0";
             document.querySelector(_this.options.hiddenInputContainer).appendChild(_this.hiddenFileInput);
             return _this.hiddenFileInput.addEventListener("change", function() {
-              var file, files, _i, _len;
+              var file, files, j, len;
               files = _this.hiddenFileInput.files;
               if (files.length) {
-                for (_i = 0, _len = files.length; _i < _len; _i++) {
-                  file = files[_i];
+                for (j = 0, len = files.length; j < len; j++) {
+                  file = files[j];
                   _this.addFile(file);
                 }
               }
@@ -17862,10 +20215,10 @@ module.exports = prime
         })(this);
         setupHiddenFileInput();
       }
-      this.URL = (_ref = window.URL) != null ? _ref : window.webkitURL;
-      _ref1 = this.events;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        eventName = _ref1[_i];
+      this.URL = (ref = window.URL) != null ? ref : window.webkitURL;
+      ref1 = this.events;
+      for (j = 0, len = ref1.length; j < len; j++) {
+        eventName = ref1[j];
         this.on(eventName, this.options[eventName]);
       }
       this.on("uploadprogress", (function(_this) {
@@ -17920,7 +20273,7 @@ module.exports = prime
                 var efct;
                 try {
                   efct = e.dataTransfer.effectAllowed;
-                } catch (_error) {}
+                } catch (undefined) {}
                 e.dataTransfer.dropEffect = 'move' === efct || 'linkMove' === efct ? 'move' : 'copy';
                 noPropagation(e);
                 return _this.emit("dragover", e);
@@ -17965,10 +20318,10 @@ module.exports = prime
     };
 
     Dropzone.prototype.destroy = function() {
-      var _ref;
+      var ref;
       this.disable();
       this.removeAllFiles(true);
-      if ((_ref = this.hiddenFileInput) != null ? _ref.parentNode : void 0) {
+      if ((ref = this.hiddenFileInput) != null ? ref.parentNode : void 0) {
         this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
         this.hiddenFileInput = null;
       }
@@ -17977,14 +20330,14 @@ module.exports = prime
     };
 
     Dropzone.prototype.updateTotalUploadProgress = function() {
-      var activeFiles, file, totalBytes, totalBytesSent, totalUploadProgress, _i, _len, _ref;
+      var activeFiles, file, j, len, ref, totalBytes, totalBytesSent, totalUploadProgress;
       totalBytesSent = 0;
       totalBytes = 0;
       activeFiles = this.getActiveFiles();
       if (activeFiles.length) {
-        _ref = this.getActiveFiles();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          file = _ref[_i];
+        ref = this.getActiveFiles();
+        for (j = 0, len = ref.length; j < len; j++) {
+          file = ref[j];
           totalBytesSent += file.upload.bytesSent;
           totalBytes += file.upload.total;
         }
@@ -18001,6 +20354,13 @@ module.exports = prime
       } else {
         return "" + this.options.paramName + (this.options.uploadMultiple ? "[" + n + "]" : "");
       }
+    };
+
+    Dropzone.prototype._renameFile = function(file) {
+      if (typeof this.options.renameFile !== "function") {
+        return file.name;
+      }
+      return this.options.renameFile(file);
     };
 
     Dropzone.prototype.getFallbackForm = function() {
@@ -18025,19 +20385,19 @@ module.exports = prime
     };
 
     Dropzone.prototype.getExistingFallback = function() {
-      var fallback, getFallback, tagName, _i, _len, _ref;
+      var fallback, getFallback, j, len, ref, tagName;
       getFallback = function(elements) {
-        var el, _i, _len;
-        for (_i = 0, _len = elements.length; _i < _len; _i++) {
-          el = elements[_i];
+        var el, j, len;
+        for (j = 0, len = elements.length; j < len; j++) {
+          el = elements[j];
           if (/(^| )fallback($| )/.test(el.className)) {
             return el;
           }
         }
       };
-      _ref = ["div", "form"];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        tagName = _ref[_i];
+      ref = ["div", "form"];
+      for (j = 0, len = ref.length; j < len; j++) {
+        tagName = ref[j];
         if (fallback = getFallback(this.element.getElementsByTagName(tagName))) {
           return fallback;
         }
@@ -18045,58 +20405,58 @@ module.exports = prime
     };
 
     Dropzone.prototype.setupEventListeners = function() {
-      var elementListeners, event, listener, _i, _len, _ref, _results;
-      _ref = this.listeners;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        elementListeners = _ref[_i];
-        _results.push((function() {
-          var _ref1, _results1;
-          _ref1 = elementListeners.events;
-          _results1 = [];
-          for (event in _ref1) {
-            listener = _ref1[event];
-            _results1.push(elementListeners.element.addEventListener(event, listener, false));
+      var elementListeners, event, j, len, listener, ref, results;
+      ref = this.listeners;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        elementListeners = ref[j];
+        results.push((function() {
+          var ref1, results1;
+          ref1 = elementListeners.events;
+          results1 = [];
+          for (event in ref1) {
+            listener = ref1[event];
+            results1.push(elementListeners.element.addEventListener(event, listener, false));
           }
-          return _results1;
+          return results1;
         })());
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.removeEventListeners = function() {
-      var elementListeners, event, listener, _i, _len, _ref, _results;
-      _ref = this.listeners;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        elementListeners = _ref[_i];
-        _results.push((function() {
-          var _ref1, _results1;
-          _ref1 = elementListeners.events;
-          _results1 = [];
-          for (event in _ref1) {
-            listener = _ref1[event];
-            _results1.push(elementListeners.element.removeEventListener(event, listener, false));
+      var elementListeners, event, j, len, listener, ref, results;
+      ref = this.listeners;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        elementListeners = ref[j];
+        results.push((function() {
+          var ref1, results1;
+          ref1 = elementListeners.events;
+          results1 = [];
+          for (event in ref1) {
+            listener = ref1[event];
+            results1.push(elementListeners.element.removeEventListener(event, listener, false));
           }
-          return _results1;
+          return results1;
         })());
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.disable = function() {
-      var file, _i, _len, _ref, _results;
+      var file, j, len, ref, results;
       this.clickableElements.forEach(function(element) {
         return element.classList.remove("dz-clickable");
       });
       this.removeEventListeners();
-      _ref = this.files;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
-        _results.push(this.cancelUpload(file));
+      ref = this.files;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
+        results.push(this.cancelUpload(file));
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype.enable = function() {
@@ -18107,12 +20467,12 @@ module.exports = prime
     };
 
     Dropzone.prototype.filesize = function(size) {
-      var cutoff, i, selectedSize, selectedUnit, unit, units, _i, _len;
+      var cutoff, i, j, len, selectedSize, selectedUnit, unit, units;
       selectedSize = 0;
       selectedUnit = "b";
       if (size > 0) {
-        units = ['TB', 'GB', 'MB', 'KB', 'b'];
-        for (i = _i = 0, _len = units.length; _i < _len; i = ++_i) {
+        units = ['tb', 'gb', 'mb', 'kb', 'b'];
+        for (i = j = 0, len = units.length; j < len; i = ++j) {
           unit = units[i];
           cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
           if (size >= cutoff) {
@@ -18123,7 +20483,7 @@ module.exports = prime
         }
         selectedSize = Math.round(10 * selectedSize) / 10;
       }
-      return "<strong>" + selectedSize + "</strong> " + selectedUnit;
+      return "<strong>" + selectedSize + "</strong> " + this.options.dictFileSizeUnits[selectedUnit];
     };
 
     Dropzone.prototype._updateMaxFilesReachedClass = function() {
@@ -18156,8 +20516,8 @@ module.exports = prime
     };
 
     Dropzone.prototype.paste = function(e) {
-      var items, _ref;
-      if ((e != null ? (_ref = e.clipboardData) != null ? _ref.items : void 0 : void 0) == null) {
+      var items, ref;
+      if ((e != null ? (ref = e.clipboardData) != null ? ref.items : void 0 : void 0) == null) {
         return;
       }
       this.emit("paste", e);
@@ -18168,66 +20528,73 @@ module.exports = prime
     };
 
     Dropzone.prototype.handleFiles = function(files) {
-      var file, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
-        _results.push(this.addFile(file));
+      var file, j, len, results;
+      results = [];
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
+        results.push(this.addFile(file));
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype._addFilesFromItems = function(items) {
-      var entry, item, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = items.length; _i < _len; _i++) {
-        item = items[_i];
+      var entry, item, j, len, results;
+      results = [];
+      for (j = 0, len = items.length; j < len; j++) {
+        item = items[j];
         if ((item.webkitGetAsEntry != null) && (entry = item.webkitGetAsEntry())) {
           if (entry.isFile) {
-            _results.push(this.addFile(item.getAsFile()));
+            results.push(this.addFile(item.getAsFile()));
           } else if (entry.isDirectory) {
-            _results.push(this._addFilesFromDirectory(entry, entry.name));
+            results.push(this._addFilesFromDirectory(entry, entry.name));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         } else if (item.getAsFile != null) {
           if ((item.kind == null) || item.kind === "file") {
-            _results.push(this.addFile(item.getAsFile()));
+            results.push(this.addFile(item.getAsFile()));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         } else {
-          _results.push(void 0);
+          results.push(void 0);
         }
       }
-      return _results;
+      return results;
     };
 
     Dropzone.prototype._addFilesFromDirectory = function(directory, path) {
-      var dirReader, entriesReader;
+      var dirReader, errorHandler, readEntries;
       dirReader = directory.createReader();
-      entriesReader = (function(_this) {
-        return function(entries) {
-          var entry, _i, _len;
-          for (_i = 0, _len = entries.length; _i < _len; _i++) {
-            entry = entries[_i];
-            if (entry.isFile) {
-              entry.file(function(file) {
-                if (_this.options.ignoreHiddenFiles && file.name.substring(0, 1) === '.') {
-                  return;
+      errorHandler = function(error) {
+        return typeof console !== "undefined" && console !== null ? typeof console.log === "function" ? console.log(error) : void 0 : void 0;
+      };
+      readEntries = (function(_this) {
+        return function() {
+          return dirReader.readEntries(function(entries) {
+            var entry, j, len;
+            if (entries.length > 0) {
+              for (j = 0, len = entries.length; j < len; j++) {
+                entry = entries[j];
+                if (entry.isFile) {
+                  entry.file(function(file) {
+                    if (_this.options.ignoreHiddenFiles && file.name.substring(0, 1) === '.') {
+                      return;
+                    }
+                    file.fullPath = path + "/" + file.name;
+                    return _this.addFile(file);
+                  });
+                } else if (entry.isDirectory) {
+                  _this._addFilesFromDirectory(entry, path + "/" + entry.name);
                 }
-                file.fullPath = "" + path + "/" + file.name;
-                return _this.addFile(file);
-              });
-            } else if (entry.isDirectory) {
-              _this._addFilesFromDirectory(entry, "" + path + "/" + entry.name);
+              }
+              readEntries();
             }
-          }
+            return null;
+          }, errorHandler);
         };
       })(this);
-      return dirReader.readEntries(entriesReader, function(error) {
-        return typeof console !== "undefined" && console !== null ? typeof console.log === "function" ? console.log(error) : void 0 : void 0;
-      });
+      return readEntries();
     };
 
     Dropzone.prototype.accept = function(file, done) {
@@ -18247,7 +20614,8 @@ module.exports = prime
       file.upload = {
         progress: 0,
         total: file.size,
-        bytesSent: 0
+        bytesSent: 0,
+        filename: this._renameFile(file)
       };
       this.files.push(file);
       file.status = Dropzone.ADDED;
@@ -18270,9 +20638,9 @@ module.exports = prime
     };
 
     Dropzone.prototype.enqueueFiles = function(files) {
-      var file, _i, _len;
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
+      var file, j, len;
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
         this.enqueueFile(file);
       }
       return null;
@@ -18309,12 +20677,15 @@ module.exports = prime
     };
 
     Dropzone.prototype._processThumbnailQueue = function() {
+      var file;
       if (this._processingThumbnail || this._thumbnailQueue.length === 0) {
         return;
       }
       this._processingThumbnail = true;
-      return this.createThumbnail(this._thumbnailQueue.shift(), (function(_this) {
-        return function() {
+      file = this._thumbnailQueue.shift();
+      return this.createThumbnail(file, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, true, (function(_this) {
+        return function(dataUrl) {
+          _this.emit("thumbnail", file, dataUrl);
           _this._processingThumbnail = false;
           return _this._processThumbnailQueue();
         };
@@ -18333,13 +20704,13 @@ module.exports = prime
     };
 
     Dropzone.prototype.removeAllFiles = function(cancelIfNecessary) {
-      var file, _i, _len, _ref;
+      var file, j, len, ref;
       if (cancelIfNecessary == null) {
         cancelIfNecessary = false;
       }
-      _ref = this.files.slice();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+      ref = this.files.slice();
+      for (j = 0, len = ref.length; j < len; j++) {
+        file = ref[j];
         if (file.status !== Dropzone.UPLOADING || cancelIfNecessary) {
           this.removeFile(file);
         }
@@ -18347,25 +20718,46 @@ module.exports = prime
       return null;
     };
 
-    Dropzone.prototype.createThumbnail = function(file, callback) {
+    Dropzone.prototype.resizeImage = function(file, width, height, resizeMethod, callback) {
+      return this.createThumbnail(file, width, height, resizeMethod, false, (function(_this) {
+        return function(dataUrl, canvas) {
+          var resizeMimeType, resizedDataURL;
+          if (canvas === null) {
+            return callback(file);
+          } else {
+            resizeMimeType = _this.options.resizeMimeType;
+            if (resizeMimeType == null) {
+              resizeMimeType = file.type;
+            }
+            resizedDataURL = canvas.toDataURL(resizeMimeType, _this.options.resizeQuality);
+            if (resizeMimeType === 'image/jpeg' || resizeMimeType === 'image/jpg') {
+              resizedDataURL = ExifRestore.restore(file.dataURL, resizedDataURL);
+            }
+            return callback(Dropzone.dataURItoBlob(resizedDataURL));
+          }
+        };
+      })(this));
+    };
+
+    Dropzone.prototype.createThumbnail = function(file, width, height, resizeMethod, fixOrientation, callback) {
       var fileReader;
       fileReader = new FileReader;
       fileReader.onload = (function(_this) {
         return function() {
+          file.dataURL = fileReader.result;
           if (file.type === "image/svg+xml") {
-            _this.emit("thumbnail", file, fileReader.result);
             if (callback != null) {
-              callback();
+              callback(fileReader.result);
             }
             return;
           }
-          return _this.createThumbnailFromUrl(file, fileReader.result, callback);
+          return _this.createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback);
         };
       })(this);
       return fileReader.readAsDataURL(file);
     };
 
-    Dropzone.prototype.createThumbnailFromUrl = function(file, imageUrl, callback, crossOrigin) {
+    Dropzone.prototype.createThumbnailFromUrl = function(file, width, height, resizeMethod, fixOrientation, callback, crossOrigin) {
       var img;
       img = document.createElement("img");
       if (crossOrigin) {
@@ -18373,32 +20765,72 @@ module.exports = prime
       }
       img.onload = (function(_this) {
         return function() {
-          var canvas, ctx, resizeInfo, thumbnail, _ref, _ref1, _ref2, _ref3;
-          file.width = img.width;
-          file.height = img.height;
-          resizeInfo = _this.options.resize.call(_this, file);
-          if (resizeInfo.trgWidth == null) {
-            resizeInfo.trgWidth = resizeInfo.optWidth;
+          var loadExif;
+          loadExif = function(callback) {
+            return callback(1);
+          };
+          if ((typeof EXIF !== "undefined" && EXIF !== null) && fixOrientation) {
+            loadExif = function(callback) {
+              return EXIF.getData(img, function() {
+                return callback(EXIF.getTag(this, 'Orientation'));
+              });
+            };
           }
-          if (resizeInfo.trgHeight == null) {
-            resizeInfo.trgHeight = resizeInfo.optHeight;
-          }
-          canvas = document.createElement("canvas");
-          ctx = canvas.getContext("2d");
-          canvas.width = resizeInfo.trgWidth;
-          canvas.height = resizeInfo.trgHeight;
-          drawImageIOSFix(ctx, img, (_ref = resizeInfo.srcX) != null ? _ref : 0, (_ref1 = resizeInfo.srcY) != null ? _ref1 : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, (_ref2 = resizeInfo.trgX) != null ? _ref2 : 0, (_ref3 = resizeInfo.trgY) != null ? _ref3 : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
-          thumbnail = canvas.toDataURL("image/png");
-          _this.emit("thumbnail", file, thumbnail);
-          if (callback != null) {
-            return callback();
-          }
+          return loadExif(function(orientation) {
+            var canvas, ctx, ref, ref1, ref2, ref3, resizeInfo, thumbnail;
+            file.width = img.width;
+            file.height = img.height;
+            resizeInfo = _this.options.resize.call(_this, file, width, height, resizeMethod);
+            canvas = document.createElement("canvas");
+            ctx = canvas.getContext("2d");
+            canvas.width = resizeInfo.trgWidth;
+            canvas.height = resizeInfo.trgHeight;
+            if (orientation > 4) {
+              canvas.width = resizeInfo.trgHeight;
+              canvas.height = resizeInfo.trgWidth;
+            }
+            switch (orientation) {
+              case 2:
+                ctx.translate(canvas.width, 0);
+                ctx.scale(-1, 1);
+                break;
+              case 3:
+                ctx.translate(canvas.width, canvas.height);
+                ctx.rotate(Math.PI);
+                break;
+              case 4:
+                ctx.translate(0, canvas.height);
+                ctx.scale(1, -1);
+                break;
+              case 5:
+                ctx.rotate(0.5 * Math.PI);
+                ctx.scale(1, -1);
+                break;
+              case 6:
+                ctx.rotate(0.5 * Math.PI);
+                ctx.translate(0, -canvas.height);
+                break;
+              case 7:
+                ctx.rotate(0.5 * Math.PI);
+                ctx.translate(canvas.width, -canvas.height);
+                ctx.scale(-1, 1);
+                break;
+              case 8:
+                ctx.rotate(-0.5 * Math.PI);
+                ctx.translate(-canvas.width, 0);
+            }
+            drawImageIOSFix(ctx, img, (ref = resizeInfo.srcX) != null ? ref : 0, (ref1 = resizeInfo.srcY) != null ? ref1 : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, (ref2 = resizeInfo.trgX) != null ? ref2 : 0, (ref3 = resizeInfo.trgY) != null ? ref3 : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
+            thumbnail = canvas.toDataURL("image/png");
+            if (callback != null) {
+              return callback(thumbnail, canvas);
+            }
+          });
         };
       })(this);
       if (callback != null) {
         img.onerror = callback;
       }
-      return img.src = imageUrl;
+      return img.src = file.dataURL;
     };
 
     Dropzone.prototype.processQueue = function() {
@@ -18431,9 +20863,9 @@ module.exports = prime
     };
 
     Dropzone.prototype.processFiles = function(files) {
-      var file, _i, _len;
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
+      var file, j, len;
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
         file.processing = true;
         file.status = Dropzone.UPLOADING;
         this.emit("processing", file);
@@ -18447,36 +20879,36 @@ module.exports = prime
     Dropzone.prototype._getFilesWithXhr = function(xhr) {
       var file, files;
       return files = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this.files;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          file = _ref[_i];
+        var j, len, ref, results;
+        ref = this.files;
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          file = ref[j];
           if (file.xhr === xhr) {
-            _results.push(file);
+            results.push(file);
           }
         }
-        return _results;
+        return results;
       }).call(this);
     };
 
     Dropzone.prototype.cancelUpload = function(file) {
-      var groupedFile, groupedFiles, _i, _j, _len, _len1, _ref;
+      var groupedFile, groupedFiles, j, k, len, len1, ref;
       if (file.status === Dropzone.UPLOADING) {
         groupedFiles = this._getFilesWithXhr(file.xhr);
-        for (_i = 0, _len = groupedFiles.length; _i < _len; _i++) {
-          groupedFile = groupedFiles[_i];
+        for (j = 0, len = groupedFiles.length; j < len; j++) {
+          groupedFile = groupedFiles[j];
           groupedFile.status = Dropzone.CANCELED;
         }
         file.xhr.abort();
-        for (_j = 0, _len1 = groupedFiles.length; _j < _len1; _j++) {
-          groupedFile = groupedFiles[_j];
+        for (k = 0, len1 = groupedFiles.length; k < len1; k++) {
+          groupedFile = groupedFiles[k];
           this.emit("canceled", groupedFile);
         }
         if (this.options.uploadMultiple) {
           this.emit("canceledmultiple", groupedFiles);
         }
-      } else if ((_ref = file.status) === Dropzone.ADDED || _ref === Dropzone.QUEUED) {
+      } else if ((ref = file.status) === Dropzone.ADDED || ref === Dropzone.QUEUED) {
         file.status = Dropzone.CANCELED;
         this.emit("canceled", file);
         if (this.options.uploadMultiple) {
@@ -18490,7 +20922,7 @@ module.exports = prime
 
     resolveOption = function() {
       var args, option;
-      option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      option = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       if (typeof option === 'function') {
         return option.apply(this, args);
       }
@@ -18502,46 +20934,45 @@ module.exports = prime
     };
 
     Dropzone.prototype.uploadFiles = function(files) {
-      var file, formData, handleError, headerName, headerValue, headers, i, input, inputName, inputType, key, method, option, progressObj, response, updateProgress, url, value, xhr, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+      var doneCounter, doneFunction, file, formData, handleError, headerName, headerValue, headers, i, input, inputName, inputType, j, k, key, l, len, len1, len2, len3, m, method, o, option, progressObj, ref, ref1, ref2, ref3, ref4, ref5, response, results, updateProgress, url, value, xhr;
       xhr = new XMLHttpRequest();
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
         file.xhr = xhr;
       }
       method = resolveOption(this.options.method, files);
       url = resolveOption(this.options.url, files);
       xhr.open(method, url, true);
+      xhr.timeout = resolveOption(this.options.timeout, files);
       xhr.withCredentials = !!this.options.withCredentials;
       response = null;
       handleError = (function(_this) {
         return function() {
-          var _j, _len1, _results;
-          _results = [];
-          for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-            file = files[_j];
-            _results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr));
+          var k, len1, results;
+          results = [];
+          for (k = 0, len1 = files.length; k < len1; k++) {
+            file = files[k];
+            results.push(_this._errorProcessing(files, response || _this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr));
           }
-          return _results;
+          return results;
         };
       })(this);
       updateProgress = (function(_this) {
         return function(e) {
-          var allFilesFinished, progress, _j, _k, _l, _len1, _len2, _len3, _results;
+          var allFilesFinished, k, l, len1, len2, len3, m, progress, results;
           if (e != null) {
             progress = 100 * e.loaded / e.total;
-            for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-              file = files[_j];
-              file.upload = {
-                progress: progress,
-                total: e.total,
-                bytesSent: e.loaded
-              };
+            for (k = 0, len1 = files.length; k < len1; k++) {
+              file = files[k];
+              file.upload.progress = progress;
+              file.upload.total = e.total;
+              file.upload.bytesSent = e.loaded;
             }
           } else {
             allFilesFinished = true;
             progress = 100;
-            for (_k = 0, _len2 = files.length; _k < _len2; _k++) {
-              file = files[_k];
+            for (l = 0, len2 = files.length; l < len2; l++) {
+              file = files[l];
               if (!(file.upload.progress === 100 && file.upload.bytesSent === file.upload.total)) {
                 allFilesFinished = false;
               }
@@ -18552,34 +20983,36 @@ module.exports = prime
               return;
             }
           }
-          _results = [];
-          for (_l = 0, _len3 = files.length; _l < _len3; _l++) {
-            file = files[_l];
-            _results.push(_this.emit("uploadprogress", file, progress, file.upload.bytesSent));
+          results = [];
+          for (m = 0, len3 = files.length; m < len3; m++) {
+            file = files[m];
+            results.push(_this.emit("uploadprogress", file, progress, file.upload.bytesSent));
           }
-          return _results;
+          return results;
         };
       })(this);
       xhr.onload = (function(_this) {
         return function(e) {
-          var _ref;
+          var error1, ref;
           if (files[0].status === Dropzone.CANCELED) {
             return;
           }
           if (xhr.readyState !== 4) {
             return;
           }
-          response = xhr.responseText;
-          if (xhr.getResponseHeader("content-type") && ~xhr.getResponseHeader("content-type").indexOf("application/json")) {
-            try {
-              response = JSON.parse(response);
-            } catch (_error) {
-              e = _error;
-              response = "Invalid JSON response from server.";
+          if (xhr.responseType !== 'arraybuffer' && xhr.responseType !== 'blob') {
+            response = xhr.responseText;
+            if (xhr.getResponseHeader("content-type") && ~xhr.getResponseHeader("content-type").indexOf("application/json")) {
+              try {
+                response = JSON.parse(response);
+              } catch (error1) {
+                e = error1;
+                response = "Invalid JSON response from server.";
+              }
             }
           }
           updateProgress();
-          if (!((200 <= (_ref = xhr.status) && _ref < 300))) {
+          if (!((200 <= (ref = xhr.status) && ref < 300))) {
             return handleError();
           } else {
             return _this._finished(files, response, e);
@@ -18594,7 +21027,7 @@ module.exports = prime
           return handleError();
         };
       })(this);
-      progressObj = (_ref = xhr.upload) != null ? _ref : xhr;
+      progressObj = (ref = xhr.upload) != null ? ref : xhr;
       progressObj.onprogress = updateProgress;
       headers = {
         "Accept": "application/json",
@@ -18612,42 +21045,54 @@ module.exports = prime
       }
       formData = new FormData();
       if (this.options.params) {
-        _ref1 = this.options.params;
-        for (key in _ref1) {
-          value = _ref1[key];
+        ref1 = this.options.params;
+        for (key in ref1) {
+          value = ref1[key];
           formData.append(key, value);
         }
       }
-      for (_j = 0, _len1 = files.length; _j < _len1; _j++) {
-        file = files[_j];
+      for (k = 0, len1 = files.length; k < len1; k++) {
+        file = files[k];
         this.emit("sending", file, xhr, formData);
       }
       if (this.options.uploadMultiple) {
         this.emit("sendingmultiple", files, xhr, formData);
       }
       if (this.element.tagName === "FORM") {
-        _ref2 = this.element.querySelectorAll("input, textarea, select, button");
-        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-          input = _ref2[_k];
+        ref2 = this.element.querySelectorAll("input, textarea, select, button");
+        for (l = 0, len2 = ref2.length; l < len2; l++) {
+          input = ref2[l];
           inputName = input.getAttribute("name");
           inputType = input.getAttribute("type");
           if (input.tagName === "SELECT" && input.hasAttribute("multiple")) {
-            _ref3 = input.options;
-            for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-              option = _ref3[_l];
+            ref3 = input.options;
+            for (m = 0, len3 = ref3.length; m < len3; m++) {
+              option = ref3[m];
               if (option.selected) {
                 formData.append(inputName, option.value);
               }
             }
-          } else if (!inputType || ((_ref4 = inputType.toLowerCase()) !== "checkbox" && _ref4 !== "radio") || input.checked) {
+          } else if (!inputType || ((ref4 = inputType.toLowerCase()) !== "checkbox" && ref4 !== "radio") || input.checked) {
             formData.append(inputName, input.value);
           }
         }
       }
-      for (i = _m = 0, _ref5 = files.length - 1; 0 <= _ref5 ? _m <= _ref5 : _m >= _ref5; i = 0 <= _ref5 ? ++_m : --_m) {
-        formData.append(this._getParamName(i), files[i], files[i].name);
+      doneCounter = 0;
+      results = [];
+      for (i = o = 0, ref5 = files.length - 1; 0 <= ref5 ? o <= ref5 : o >= ref5; i = 0 <= ref5 ? ++o : --o) {
+        doneFunction = (function(_this) {
+          return function(file, paramName, fileName) {
+            return function(transformedFile) {
+              formData.append(paramName, transformedFile, fileName);
+              if (++doneCounter === files.length) {
+                return _this.submitRequest(xhr, formData, files);
+              }
+            };
+          };
+        })(this);
+        results.push(this.options.transformFile.call(this, files[i], doneFunction(files[i], this._getParamName(i), files[i].upload.filename)));
       }
-      return this.submitRequest(xhr, formData, files);
+      return results;
     };
 
     Dropzone.prototype.submitRequest = function(xhr, formData, files) {
@@ -18655,9 +21100,9 @@ module.exports = prime
     };
 
     Dropzone.prototype._finished = function(files, responseText, e) {
-      var file, _i, _len;
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
+      var file, j, len;
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
         file.status = Dropzone.SUCCESS;
         this.emit("success", file, responseText, e);
         this.emit("complete", file);
@@ -18672,9 +21117,9 @@ module.exports = prime
     };
 
     Dropzone.prototype._errorProcessing = function(files, message, xhr) {
-      var file, _i, _len;
-      for (_i = 0, _len = files.length; _i < _len; _i++) {
-        file = files[_i];
+      var file, j, len;
+      for (j = 0, len = files.length; j < len; j++) {
+        file = files[j];
         file.status = Dropzone.ERROR;
         this.emit("error", file, message, xhr);
         this.emit("complete", file);
@@ -18692,7 +21137,7 @@ module.exports = prime
 
   })(Emitter);
 
-  Dropzone.version = "4.2.0";
+  Dropzone.version = "5.1.1";
 
   Dropzone.options = {};
 
@@ -18719,51 +21164,51 @@ module.exports = prime
   Dropzone.autoDiscover = true;
 
   Dropzone.discover = function() {
-    var checkElements, dropzone, dropzones, _i, _len, _results;
+    var checkElements, dropzone, dropzones, j, len, results;
     if (document.querySelectorAll) {
       dropzones = document.querySelectorAll(".dropzone");
     } else {
       dropzones = [];
       checkElements = function(elements) {
-        var el, _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = elements.length; _i < _len; _i++) {
-          el = elements[_i];
+        var el, j, len, results;
+        results = [];
+        for (j = 0, len = elements.length; j < len; j++) {
+          el = elements[j];
           if (/(^| )dropzone($| )/.test(el.className)) {
-            _results.push(dropzones.push(el));
+            results.push(dropzones.push(el));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       };
       checkElements(document.getElementsByTagName("div"));
       checkElements(document.getElementsByTagName("form"));
     }
-    _results = [];
-    for (_i = 0, _len = dropzones.length; _i < _len; _i++) {
-      dropzone = dropzones[_i];
+    results = [];
+    for (j = 0, len = dropzones.length; j < len; j++) {
+      dropzone = dropzones[j];
       if (Dropzone.optionsForElement(dropzone) !== false) {
-        _results.push(new Dropzone(dropzone));
+        results.push(new Dropzone(dropzone));
       } else {
-        _results.push(void 0);
+        results.push(void 0);
       }
     }
-    return _results;
+    return results;
   };
 
   Dropzone.blacklistedBrowsers = [/opera.*Macintosh.*version\/12/i];
 
   Dropzone.isBrowserSupported = function() {
-    var capableBrowser, regex, _i, _len, _ref;
+    var capableBrowser, j, len, ref, regex;
     capableBrowser = true;
     if (window.File && window.FileReader && window.FileList && window.Blob && window.FormData && document.querySelector) {
       if (!("classList" in document.createElement("a"))) {
         capableBrowser = false;
       } else {
-        _ref = Dropzone.blacklistedBrowsers;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          regex = _ref[_i];
+        ref = Dropzone.blacklistedBrowsers;
+        for (j = 0, len = ref.length; j < len; j++) {
+          regex = ref[j];
           if (regex.test(navigator.userAgent)) {
             capableBrowser = false;
             continue;
@@ -18776,16 +21221,30 @@ module.exports = prime
     return capableBrowser;
   };
 
+  Dropzone.dataURItoBlob = function(dataURI) {
+    var ab, byteString, i, ia, j, mimeString, ref;
+    byteString = atob(dataURI.split(',')[1]);
+    mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    ab = new ArrayBuffer(byteString.length);
+    ia = new Uint8Array(ab);
+    for (i = j = 0, ref = byteString.length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], {
+      type: mimeString
+    });
+  };
+
   without = function(list, rejectedItem) {
-    var item, _i, _len, _results;
-    _results = [];
-    for (_i = 0, _len = list.length; _i < _len; _i++) {
-      item = list[_i];
+    var item, j, len, results;
+    results = [];
+    for (j = 0, len = list.length; j < len; j++) {
+      item = list[j];
       if (item !== rejectedItem) {
-        _results.push(item);
+        results.push(item);
       }
     }
-    return _results;
+    return results;
   };
 
   camelize = function(str) {
@@ -18827,23 +21286,23 @@ module.exports = prime
   };
 
   Dropzone.getElements = function(els, name) {
-    var e, el, elements, _i, _j, _len, _len1, _ref;
+    var e, el, elements, error1, j, k, len, len1, ref;
     if (els instanceof Array) {
       elements = [];
       try {
-        for (_i = 0, _len = els.length; _i < _len; _i++) {
-          el = els[_i];
+        for (j = 0, len = els.length; j < len; j++) {
+          el = els[j];
           elements.push(this.getElement(el, name));
         }
-      } catch (_error) {
-        e = _error;
+      } catch (error1) {
+        e = error1;
         elements = null;
       }
     } else if (typeof els === "string") {
       elements = [];
-      _ref = document.querySelectorAll(els);
-      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-        el = _ref[_j];
+      ref = document.querySelectorAll(els);
+      for (k = 0, len1 = ref.length; k < len1; k++) {
+        el = ref[k];
         elements.push(el);
       }
     } else if (els.nodeType != null) {
@@ -18864,15 +21323,15 @@ module.exports = prime
   };
 
   Dropzone.isValidFile = function(file, acceptedFiles) {
-    var baseMimeType, mimeType, validType, _i, _len;
+    var baseMimeType, j, len, mimeType, validType;
     if (!acceptedFiles) {
       return true;
     }
     acceptedFiles = acceptedFiles.split(",");
     mimeType = file.type;
     baseMimeType = mimeType.replace(/\/.*$/, "");
-    for (_i = 0, _len = acceptedFiles.length; _i < _len; _i++) {
-      validType = acceptedFiles[_i];
+    for (j = 0, len = acceptedFiles.length; j < len; j++) {
+      validType = acceptedFiles[j];
       validType = validType.trim();
       if (validType.charAt(0) === ".") {
         if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
@@ -18938,7 +21397,7 @@ module.exports = prime
     canvas.height = ih;
     ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
-    data = ctx.getImageData(0, 0, 1, ih).data;
+    data = ctx.getImageData(1, 0, 1, ih).data;
     sy = 0;
     ey = ih;
     py = ih;
@@ -18964,6 +21423,160 @@ module.exports = prime
     vertSquashRatio = detectVerticalSquash(img);
     return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
   };
+
+  ExifRestore = (function() {
+    function ExifRestore() {}
+
+    ExifRestore.KEY_STR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+    ExifRestore.encode64 = function(input) {
+      var chr1, chr2, chr3, enc1, enc2, enc3, enc4, i, output;
+      output = '';
+      chr1 = void 0;
+      chr2 = void 0;
+      chr3 = '';
+      enc1 = void 0;
+      enc2 = void 0;
+      enc3 = void 0;
+      enc4 = '';
+      i = 0;
+      while (true) {
+        chr1 = input[i++];
+        chr2 = input[i++];
+        chr3 = input[i++];
+        enc1 = chr1 >> 2;
+        enc2 = (chr1 & 3) << 4 | chr2 >> 4;
+        enc3 = (chr2 & 15) << 2 | chr3 >> 6;
+        enc4 = chr3 & 63;
+        if (isNaN(chr2)) {
+          enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+          enc4 = 64;
+        }
+        output = output + this.KEY_STR.charAt(enc1) + this.KEY_STR.charAt(enc2) + this.KEY_STR.charAt(enc3) + this.KEY_STR.charAt(enc4);
+        chr1 = chr2 = chr3 = '';
+        enc1 = enc2 = enc3 = enc4 = '';
+        if (!(i < input.length)) {
+          break;
+        }
+      }
+      return output;
+    };
+
+    ExifRestore.restore = function(origFileBase64, resizedFileBase64) {
+      var image, rawImage, segments;
+      if (!origFileBase64.match('data:image/jpeg;base64,')) {
+        return resizedFileBase64;
+      }
+      rawImage = this.decode64(origFileBase64.replace('data:image/jpeg;base64,', ''));
+      segments = this.slice2Segments(rawImage);
+      image = this.exifManipulation(resizedFileBase64, segments);
+      return 'data:image/jpeg;base64,' + this.encode64(image);
+    };
+
+    ExifRestore.exifManipulation = function(resizedFileBase64, segments) {
+      var aBuffer, exifArray, newImageArray;
+      exifArray = this.getExifArray(segments);
+      newImageArray = this.insertExif(resizedFileBase64, exifArray);
+      aBuffer = new Uint8Array(newImageArray);
+      return aBuffer;
+    };
+
+    ExifRestore.getExifArray = function(segments) {
+      var seg, x;
+      seg = void 0;
+      x = 0;
+      while (x < segments.length) {
+        seg = segments[x];
+        if (seg[0] === 255 & seg[1] === 225) {
+          return seg;
+        }
+        x++;
+      }
+      return [];
+    };
+
+    ExifRestore.insertExif = function(resizedFileBase64, exifArray) {
+      var array, ato, buf, imageData, mae, separatePoint;
+      imageData = resizedFileBase64.replace('data:image/jpeg;base64,', '');
+      buf = this.decode64(imageData);
+      separatePoint = buf.indexOf(255, 3);
+      mae = buf.slice(0, separatePoint);
+      ato = buf.slice(separatePoint);
+      array = mae;
+      array = array.concat(exifArray);
+      array = array.concat(ato);
+      return array;
+    };
+
+    ExifRestore.slice2Segments = function(rawImageArray) {
+      var endPoint, head, length, seg, segments;
+      head = 0;
+      segments = [];
+      while (true) {
+        if (rawImageArray[head] === 255 & rawImageArray[head + 1] === 218) {
+          break;
+        }
+        if (rawImageArray[head] === 255 & rawImageArray[head + 1] === 216) {
+          head += 2;
+        } else {
+          length = rawImageArray[head + 2] * 256 + rawImageArray[head + 3];
+          endPoint = head + length + 2;
+          seg = rawImageArray.slice(head, endPoint);
+          segments.push(seg);
+          head = endPoint;
+        }
+        if (head > rawImageArray.length) {
+          break;
+        }
+      }
+      return segments;
+    };
+
+    ExifRestore.decode64 = function(input) {
+      var base64test, buf, chr1, chr2, chr3, enc1, enc2, enc3, enc4, i, output;
+      output = '';
+      chr1 = void 0;
+      chr2 = void 0;
+      chr3 = '';
+      enc1 = void 0;
+      enc2 = void 0;
+      enc3 = void 0;
+      enc4 = '';
+      i = 0;
+      buf = [];
+      base64test = /[^A-Za-z0-9\+\/\=]/g;
+      if (base64test.exec(input)) {
+        console.warning('There were invalid base64 characters in the input text.\n' + 'Valid base64 characters are A-Z, a-z, 0-9, \'+\', \'/\',and \'=\'\n' + 'Expect errors in decoding.');
+      }
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+      while (true) {
+        enc1 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc2 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc3 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc4 = this.KEY_STR.indexOf(input.charAt(i++));
+        chr1 = enc1 << 2 | enc2 >> 4;
+        chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+        chr3 = (enc3 & 3) << 6 | enc4;
+        buf.push(chr1);
+        if (enc3 !== 64) {
+          buf.push(chr2);
+        }
+        if (enc4 !== 64) {
+          buf.push(chr3);
+        }
+        chr1 = chr2 = chr3 = '';
+        enc1 = enc2 = enc3 = enc4 = '';
+        if (!(i < input.length)) {
+          break;
+        }
+      }
+      return buf;
+    };
+
+    return ExifRestore;
+
+  })();
 
 
   /*
@@ -18999,11 +21612,11 @@ module.exports = prime
       }
     };
     poll = function() {
-      var e;
+      var e, error1;
       try {
         root.doScroll("left");
-      } catch (_error) {
-        e = _error;
+      } catch (error1) {
+        e = error1;
         setTimeout(poll, 50);
         return;
       }
@@ -19013,7 +21626,7 @@ module.exports = prime
       if (doc.createEventObject && root.doScroll) {
         try {
           top = !win.frameElement;
-        } catch (_error) {}
+        } catch (undefined) {}
         if (top) {
           poll();
         }
@@ -19034,7 +21647,7 @@ module.exports = prime
 
 }).call(this);
 
-},{}],95:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 /*
 attributes
 */"use strict"
@@ -19253,7 +21866,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":96,"mout/array/filter":137,"mout/array/forEach":141,"mout/array/indexOf":142,"mout/string/trim":235}],96:[function(require,module,exports){
+},{"./base":108,"mout/array/filter":115,"mout/array/forEach":116,"mout/array/indexOf":117,"mout/string/trim":134}],108:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -19384,7 +21997,7 @@ var Elements = prime({
 
 module.exports = $
 
-},{"mout/array/every":136,"mout/array/filter":137,"mout/array/forEach":141,"mout/array/map":147,"mout/array/some":150,"prime":265}],97:[function(require,module,exports){
+},{"mout/array/every":114,"mout/array/filter":115,"mout/array/forEach":116,"mout/array/map":118,"mout/array/some":119,"prime":300}],109:[function(require,module,exports){
 /*
 delegation
 */"use strict"
@@ -19467,7 +22080,7 @@ $.implement({
 
 module.exports = $
 
-},{"./events":99,"./traversal":102,"prime/map":266}],98:[function(require,module,exports){
+},{"./events":111,"./traversal":135,"prime/map":301}],110:[function(require,module,exports){
 /*
 domready
 */"use strict"
@@ -19567,7 +22180,7 @@ module.exports = function(ready){
     return null
 }
 
-},{"./events":99}],99:[function(require,module,exports){
+},{"./events":111}],111:[function(require,module,exports){
 /*
 events
 */"use strict"
@@ -19647,7 +22260,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":96,"prime/emitter":264}],100:[function(require,module,exports){
+},{"./base":108,"prime/emitter":299}],112:[function(require,module,exports){
 /*
 elements
 */"use strict"
@@ -19661,7 +22274,7 @@ var $ = require("./base")
 
 module.exports = $
 
-},{"./attributes":95,"./base":96,"./delegation":97,"./events":99,"./insertion":101,"./traversal":102}],101:[function(require,module,exports){
+},{"./attributes":107,"./base":108,"./delegation":109,"./events":111,"./insertion":113,"./traversal":135}],113:[function(require,module,exports){
 /*
 insertion
 */"use strict"
@@ -19755,7 +22368,266 @@ $.implement({
 
 module.exports = $
 
-},{"./base":96}],102:[function(require,module,exports){
+},{"./base":108}],114:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array every
+     */
+    function every(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = true;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if (!callback(arr[i], i, arr) ) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = every;
+
+
+},{"../function/makeIterator_":121}],115:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array filter
+     */
+    function filter(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null) {
+            return results;
+        }
+
+        var i = -1, len = arr.length, value;
+        while (++i < len) {
+            value = arr[i];
+            if (callback(value, i, arr)) {
+                results.push(value);
+            }
+        }
+
+        return results;
+    }
+
+    module.exports = filter;
+
+
+
+},{"../function/makeIterator_":121}],116:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],117:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"dup":81}],118:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array map
+     */
+    function map(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var results = [];
+        if (arr == null){
+            return results;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            results[i] = callback(arr[i], i, arr);
+        }
+
+        return results;
+    }
+
+     module.exports = map;
+
+
+},{"../function/makeIterator_":121}],119:[function(require,module,exports){
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Array some
+     */
+    function some(arr, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var result = false;
+        if (arr == null) {
+            return result;
+        }
+
+        var i = -1, len = arr.length;
+        while (++i < len) {
+            // we iterate over sparse items since there is no way to make it
+            // work properly on IE 7-8. see #64
+            if ( callback(arr[i], i, arr) ) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    module.exports = some;
+
+
+},{"../function/makeIterator_":121}],120:[function(require,module,exports){
+
+
+    /**
+     * Returns the first argument provided to it.
+     */
+    function identity(val){
+        return val;
+    }
+
+    module.exports = identity;
+
+
+
+},{}],121:[function(require,module,exports){
+var identity = require('./identity');
+var prop = require('./prop');
+var deepMatches = require('../object/deepMatches');
+
+    /**
+     * Converts argument into a valid iterator.
+     * Used internally on most array/object/collection methods that receives a
+     * callback/iterator providing a shortcut syntax.
+     */
+    function makeIterator(src, thisObj){
+        if (src == null) {
+            return identity;
+        }
+        switch(typeof src) {
+            case 'function':
+                // function is the first to improve perf (most common case)
+                // also avoid using `Function#call` if not needed, which boosts
+                // perf a lot in some cases
+                return (typeof thisObj !== 'undefined')? function(val, i, arr){
+                    return src.call(thisObj, val, i, arr);
+                } : src;
+            case 'object':
+                return function(val){
+                    return deepMatches(val, src);
+                };
+            case 'string':
+            case 'number':
+                return prop(src);
+        }
+    }
+
+    module.exports = makeIterator;
+
+
+
+},{"../object/deepMatches":127,"./identity":120,"./prop":122}],122:[function(require,module,exports){
+
+
+    /**
+     * Returns a function that gets a property of the passed object
+     */
+    function prop(name){
+        return function(obj){
+            return obj[name];
+        };
+    }
+
+    module.exports = prop;
+
+
+
+},{}],123:[function(require,module,exports){
+arguments[4][84][0].apply(exports,arguments)
+},{"./isKind":124,"dup":84}],124:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./kindOf":125,"dup":86}],125:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"dup":89}],126:[function(require,module,exports){
+arguments[4][90][0].apply(exports,arguments)
+},{"dup":90}],127:[function(require,module,exports){
+var forOwn = require('./forOwn');
+var isArray = require('../lang/isArray');
+
+    function containsMatch(array, pattern) {
+        var i = -1, length = array.length;
+        while (++i < length) {
+            if (deepMatches(array[i], pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function matchArray(target, pattern) {
+        var i = -1, patternLength = pattern.length;
+        while (++i < patternLength) {
+            if (!containsMatch(target, pattern[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function matchObject(target, pattern) {
+        var result = true;
+        forOwn(pattern, function(val, key) {
+            if (!deepMatches(target[key], val)) {
+                // Return false to break out of forOwn early
+                return (result = false);
+            }
+        });
+
+        return result;
+    }
+
+    /**
+     * Recursively check if the objects match.
+     */
+    function deepMatches(target, pattern){
+        if (target && typeof target === 'object') {
+            if (isArray(target) && isArray(pattern)) {
+                return matchArray(target, pattern);
+            } else {
+                return matchObject(target, pattern);
+            }
+        } else {
+            return target === pattern;
+        }
+    }
+
+    module.exports = deepMatches;
+
+
+
+},{"../lang/isArray":123,"./forOwn":129}],128:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"./hasOwn":130,"dup":91}],129:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./forIn":128,"./hasOwn":130,"dup":92}],130:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"dup":93}],131:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"dup":95}],132:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../lang/toString":126,"./WHITE_SPACES":131,"dup":96}],133:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../lang/toString":126,"./WHITE_SPACES":131,"dup":97}],134:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../lang/toString":126,"./WHITE_SPACES":131,"./ltrim":132,"./rtrim":133,"dup":98}],135:[function(require,module,exports){
 /*
 traversal
 */"use strict"
@@ -19860,7 +22732,7 @@ $.implement({
 
 module.exports = $
 
-},{"./base":96,"mout/array/map":147,"slick":269}],103:[function(require,module,exports){
+},{"./base":108,"mout/array/map":118,"slick":313}],136:[function(require,module,exports){
 /*
 zen
 */"use strict"
@@ -19918,7 +22790,7 @@ module.exports = function(expression, doc){
 
 }
 
-},{"./base":96,"mout/array/forEach":141,"mout/array/map":147,"slick/parser":270}],104:[function(require,module,exports){
+},{"./base":108,"mout/array/forEach":116,"mout/array/map":118,"slick/parser":314}],137:[function(require,module,exports){
 /*          .-   3
 .-.-..-..-.-|-._.
 ' ' '`-'`-' ' ' '
@@ -19947,7 +22819,7 @@ moofx.color = color
 
 module.exports = moofx
 
-},{"./lib/browser":105,"./lib/color":106,"./lib/frame":107,"./lib/fx":108}],105:[function(require,module,exports){
+},{"./lib/browser":138,"./lib/color":139,"./lib/frame":140,"./lib/fx":141}],138:[function(require,module,exports){
 (function (global){
 /*
 MooFx
@@ -20885,7 +23757,7 @@ module.exports = moofx
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./color":106,"./frame":107,"./fx":108,"./unmatrix2d":109,"elements":111,"prime":118,"prime/array/forEach":114,"prime/array/indexOf":115,"prime/array/map":116,"prime/string/camelize":125,"prime/string/capitalize":126,"prime/string/clean":127,"prime/string/hyphenate":128}],106:[function(require,module,exports){
+},{"./color":139,"./frame":140,"./fx":141,"./unmatrix2d":142,"elements":143,"prime":150,"prime/array/forEach":146,"prime/array/indexOf":147,"prime/array/map":148,"prime/string/camelize":157,"prime/string/capitalize":158,"prime/string/clean":159,"prime/string/hyphenate":160}],139:[function(require,module,exports){
 /*
 color
 */"use strict"
@@ -21012,7 +23884,7 @@ color.x = RegExp([skeys, shex, srgb + slist, shsl + slist].join("|"), "gi")
 
 module.exports = color
 
-},{}],107:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 (function (global){
 /*
 requestFrame / cancelFrame
@@ -21056,7 +23928,7 @@ exports.cancel = cancel
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime/array/indexOf":115}],108:[function(require,module,exports){
+},{"prime/array/indexOf":147}],141:[function(require,module,exports){
 /*
 fx
 */"use strict"
@@ -21292,7 +24164,7 @@ fx.prototype = Fx.prototype
 
 module.exports = fx
 
-},{"./frame":107,"cubic-bezier":110,"prime":118,"prime/array/map":116}],109:[function(require,module,exports){
+},{"./frame":140,"cubic-bezier":104,"prime":150,"prime/array/map":148}],142:[function(require,module,exports){
 /*
 Unmatrix 2d
  - a crude implementation of the slightly bugged pseudo code in http://www.w3.org/TR/css3-2d-transforms/#matrix-decomposition
@@ -21368,60 +24240,7 @@ module.exports = function(a, b, c, d, tx, ty){
 
 }
 
-},{}],110:[function(require,module,exports){
-
-module.exports = function(x1, y1, x2, y2, epsilon){
-
-	var curveX = function(t){
-		var v = 1 - t;
-		return 3 * v * v * t * x1 + 3 * v * t * t * x2 + t * t * t;
-	};
-
-	var curveY = function(t){
-		var v = 1 - t;
-		return 3 * v * v * t * y1 + 3 * v * t * t * y2 + t * t * t;
-	};
-
-	var derivativeCurveX = function(t){
-		var v = 1 - t;
-		return 3 * (2 * (t - 1) * t + v * v) * x1 + 3 * (- t * t * t + 2 * v * t) * x2;
-	};
-
-	return function(t){
-
-		var x = t, t0, t1, t2, x2, d2, i;
-
-		// First try a few iterations of Newton's method -- normally very fast.
-		for (t2 = x, i = 0; i < 8; i++){
-			x2 = curveX(t2) - x;
-			if (Math.abs(x2) < epsilon) return curveY(t2);
-			d2 = derivativeCurveX(t2);
-			if (Math.abs(d2) < 1e-6) break;
-			t2 = t2 - x2 / d2;
-		}
-
-		t0 = 0, t1 = 1, t2 = x;
-
-		if (t2 < t0) return curveY(t0);
-		if (t2 > t1) return curveY(t1);
-
-		// Fallback to the bisection method for reliability.
-		while (t0 < t1){
-			x2 = curveX(t2);
-			if (Math.abs(x2 - x) < epsilon) return curveY(t2);
-			if (x > x2) t0 = t2;
-			else t1 = t2;
-			t2 = (t1 - t0) * .5 + t0;
-		}
-
-		// Failure
-		return curveY(t2);
-
-	};
-
-};
-
-},{}],111:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 (function (global){
 /*
 elements
@@ -21546,7 +24365,7 @@ module.exports = $
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"prime":118,"prime/array/every":112,"prime/array/filter":113,"prime/array/forEach":114,"prime/array/map":116,"prime/array/some":117}],112:[function(require,module,exports){
+},{"prime":150,"prime/array/every":144,"prime/array/filter":145,"prime/array/forEach":146,"prime/array/map":148,"prime/array/some":149}],144:[function(require,module,exports){
 /*
 array:every
 */"use strict"
@@ -21560,7 +24379,7 @@ var every = function(self, method, context){
 
 module.exports = every
 
-},{}],113:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 /*
 array:filter
 */"use strict"
@@ -21576,7 +24395,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{}],114:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 /*
 array:forEach
 */"use strict"
@@ -21590,7 +24409,7 @@ var forEach = function(self, method, context){
 
 module.exports = forEach
 
-},{}],115:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 /*
 array:indexOf
 */"use strict"
@@ -21604,7 +24423,7 @@ var indexOf = function(self, item, from){
 
 module.exports = indexOf
 
-},{}],116:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 /*
 array:map
 */"use strict"
@@ -21619,7 +24438,7 @@ var map = function(self, method, context){
 
 module.exports = map
 
-},{}],117:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 /*
 array:some
 */"use strict"
@@ -21633,7 +24452,7 @@ var some = function(self, method, context){
 
 module.exports = some
 
-},{}],118:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -21722,7 +24541,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"./object/create":119,"./object/filter":120,"./object/forIn":121,"./object/hasOwn":123,"./object/mixIn":124,"./type":130}],119:[function(require,module,exports){
+},{"./object/create":151,"./object/filter":152,"./object/forIn":153,"./object/hasOwn":155,"./object/mixIn":156,"./type":162}],151:[function(require,module,exports){
 /*
 object:create
 */"use strict"
@@ -21735,7 +24554,7 @@ var create = function(self){
 
 module.exports = create
 
-},{}],120:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 /*
 object:filter
 */"use strict"
@@ -21752,7 +24571,7 @@ var filter = function(self, method, context){
 
 module.exports = filter
 
-},{"./forIn":121}],121:[function(require,module,exports){
+},{"./forIn":153}],153:[function(require,module,exports){
 /*
 object:forIn
 */"use strict"
@@ -21782,7 +24601,7 @@ if (!({valueOf: 0}).propertyIsEnumerable("valueOf")){ // fix for stupid IE enume
 
 module.exports = forIn
 
-},{"./hasOwn":123}],122:[function(require,module,exports){
+},{"./hasOwn":155}],154:[function(require,module,exports){
 /*
 object:forOwn
 */"use strict"
@@ -21799,7 +24618,7 @@ var forOwn = function(self, method, context){
 
 module.exports = forOwn
 
-},{"./forIn":121,"./hasOwn":123}],123:[function(require,module,exports){
+},{"./forIn":153,"./hasOwn":155}],155:[function(require,module,exports){
 /*
 object:hasOwn
 */"use strict"
@@ -21812,7 +24631,7 @@ var hasOwn = function(self, key){
 
 module.exports = hasOwn
 
-},{}],124:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 /*
 object:mixIn
 */"use strict"
@@ -21830,7 +24649,7 @@ var mixIn = function(self){
 
 module.exports = mixIn
 
-},{"./forOwn":122}],125:[function(require,module,exports){
+},{"./forOwn":154}],157:[function(require,module,exports){
 /*
 string:camelize
 */"use strict"
@@ -21843,7 +24662,7 @@ var camelize = function(self){
 
 module.exports = camelize
 
-},{}],126:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 /*
 string:capitalize
 */"use strict"
@@ -21856,7 +24675,7 @@ var capitalize = function(self){
 
 module.exports = capitalize
 
-},{}],127:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 /*
 string:clean
 */"use strict"
@@ -21869,7 +24688,7 @@ var clean = function(self){
 
 module.exports = clean
 
-},{"./trim":129}],128:[function(require,module,exports){
+},{"./trim":161}],160:[function(require,module,exports){
 /*
 string:hyphenate
 */"use strict"
@@ -21882,7 +24701,7 @@ var hyphenate = function(self){
 
 module.exports = hyphenate
 
-},{}],129:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 /*
 string:trim
 */"use strict"
@@ -21893,7 +24712,7 @@ var trim = function(self){
 
 module.exports = trim
 
-},{}],130:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 /*
 type
 */"use strict"
@@ -21911,7 +24730,7 @@ var type = function(object){
 
 module.exports = type
 
-},{}],131:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 
 
     /**
@@ -21934,7 +24753,7 @@ module.exports = type
     module.exports = append;
 
 
-},{}],132:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -21958,7 +24777,7 @@ var indexOf = require('./indexOf');
     module.exports = combine;
 
 
-},{"./indexOf":142}],133:[function(require,module,exports){
+},{"./indexOf":174}],165:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -21970,7 +24789,7 @@ var indexOf = require('./indexOf');
     module.exports = contains;
 
 
-},{"./indexOf":142}],134:[function(require,module,exports){
+},{"./indexOf":174}],166:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var some = require('./some');
@@ -21995,7 +24814,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":133,"./filter":137,"./slice":149,"./some":150,"./unique":152}],135:[function(require,module,exports){
+},{"./contains":165,"./filter":169,"./slice":182,"./some":183,"./unique":185}],167:[function(require,module,exports){
 var is = require('../lang/is');
 var isArray = require('../lang/isArray');
 var every = require('./every');
@@ -22027,64 +24846,11 @@ var every = require('./every');
 
 
 
-},{"../lang/is":168,"../lang/isArray":169,"./every":136}],136:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array every
-     */
-    function every(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = true;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if (!callback(arr[i], i, arr) ) {
-                result = false;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = every;
-
-
-},{"../function/makeIterator_":160}],137:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array filter
-     */
-    function filter(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null) {
-            return results;
-        }
-
-        var i = -1, len = arr.length, value;
-        while (++i < len) {
-            value = arr[i];
-            if (callback(value, i, arr)) {
-                results.push(value);
-            }
-        }
-
-        return results;
-    }
-
-    module.exports = filter;
-
-
-
-},{"../function/makeIterator_":160}],138:[function(require,module,exports){
+},{"../lang/is":201,"../lang/isArray":202,"./every":168}],168:[function(require,module,exports){
+arguments[4][114][0].apply(exports,arguments)
+},{"../function/makeIterator_":194,"dup":114}],169:[function(require,module,exports){
+arguments[4][115][0].apply(exports,arguments)
+},{"../function/makeIterator_":194,"dup":115}],170:[function(require,module,exports){
 var findIndex = require('./findIndex');
 
     /**
@@ -22099,7 +24865,7 @@ var findIndex = require('./findIndex');
 
 
 
-},{"./findIndex":139}],139:[function(require,module,exports){
+},{"./findIndex":171}],171:[function(require,module,exports){
 var makeIterator = require('../function/makeIterator_');
 
     /**
@@ -22124,7 +24890,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = findIndex;
 
 
-},{"../function/makeIterator_":160}],140:[function(require,module,exports){
+},{"../function/makeIterator_":194}],172:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var append = require('./append');
 
@@ -22133,9 +24899,7 @@ var append = require('./append');
      * Used to remove the need to create intermediate arrays while flattening.
      */
     function flattenTo(arr, result, level) {
-        if (arr == null) {
-            return result;
-        } else if (level === 0) {
+        if (level === 0) {
             append(result, arr);
             return result;
         }
@@ -22157,10 +24921,14 @@ var append = require('./append');
     /**
      * Recursively flattens an array.
      * A new array containing all the elements is returned.
-     * If `shallow` is true, it will only flatten one level.
+     * If level is specified, it will only flatten up to that level.
      */
     function flatten(arr, level) {
-        level = level == null? -1 : level;
+        if (arr == null) {
+            return [];
+        }
+
+        level = level == null ? -1 : level;
         return flattenTo(arr, [], level);
     }
 
@@ -22169,11 +24937,11 @@ var append = require('./append');
 
 
 
-},{"../lang/isArray":169,"./append":131}],141:[function(require,module,exports){
-arguments[4][70][0].apply(exports,arguments)
-},{"dup":70}],142:[function(require,module,exports){
-arguments[4][71][0].apply(exports,arguments)
-},{"dup":71}],143:[function(require,module,exports){
+},{"../lang/isArray":202,"./append":163}],173:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],174:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"dup":81}],175:[function(require,module,exports){
 var difference = require('./difference');
 var slice = require('./slice');
 
@@ -22190,7 +24958,7 @@ var slice = require('./slice');
     module.exports = insert;
 
 
-},{"./difference":134,"./slice":149}],144:[function(require,module,exports){
+},{"./difference":166,"./slice":182}],176:[function(require,module,exports){
 var unique = require('./unique');
 var filter = require('./filter');
 var every = require('./every');
@@ -22216,7 +24984,7 @@ var slice = require('./slice');
 
 
 
-},{"./contains":133,"./every":136,"./filter":137,"./slice":149,"./unique":152}],145:[function(require,module,exports){
+},{"./contains":165,"./every":168,"./filter":169,"./slice":182,"./unique":185}],177:[function(require,module,exports){
 var slice = require('./slice');
 
     /**
@@ -22241,7 +25009,7 @@ var slice = require('./slice');
     module.exports = invoke;
 
 
-},{"./slice":149}],146:[function(require,module,exports){
+},{"./slice":182}],178:[function(require,module,exports){
 
 
     /**
@@ -22259,31 +25027,11 @@ var slice = require('./slice');
 
 
 
-},{}],147:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array map
-     */
-    function map(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var results = [];
-        if (arr == null){
-            return results;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            results[i] = callback(arr[i], i, arr);
-        }
-
-        return results;
-    }
-
-     module.exports = map;
-
-
-},{"../function/makeIterator_":160}],148:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
+arguments[4][118][0].apply(exports,arguments)
+},{"../function/makeIterator_":194,"dup":118}],180:[function(require,module,exports){
+arguments[4][82][0].apply(exports,arguments)
+},{"./indexOf":174,"dup":82}],181:[function(require,module,exports){
 var indexOf = require('./indexOf');
 
     /**
@@ -22300,7 +25048,7 @@ var indexOf = require('./indexOf');
     module.exports = removeAll;
 
 
-},{"./indexOf":142}],149:[function(require,module,exports){
+},{"./indexOf":174}],182:[function(require,module,exports){
 
 
     /**
@@ -22337,36 +25085,9 @@ var indexOf = require('./indexOf');
 
 
 
-},{}],150:[function(require,module,exports){
-var makeIterator = require('../function/makeIterator_');
-
-    /**
-     * Array some
-     */
-    function some(arr, callback, thisObj) {
-        callback = makeIterator(callback, thisObj);
-        var result = false;
-        if (arr == null) {
-            return result;
-        }
-
-        var i = -1, len = arr.length;
-        while (++i < len) {
-            // we iterate over sparse items since there is no way to make it
-            // work properly on IE 7-8. see #64
-            if ( callback(arr[i], i, arr) ) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    module.exports = some;
-
-
-},{"../function/makeIterator_":160}],151:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
+arguments[4][119][0].apply(exports,arguments)
+},{"../function/makeIterator_":194,"dup":119}],184:[function(require,module,exports){
 
 
     /**
@@ -22403,7 +25124,7 @@ var makeIterator = require('../function/makeIterator_');
     module.exports = split;
 
 
-},{}],152:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var filter = require('./filter');
 
     /**
@@ -22430,7 +25151,18 @@ var filter = require('./filter');
 
 
 
-},{"./filter":137}],153:[function(require,module,exports){
+},{"./filter":169}],186:[function(require,module,exports){
+var make = require('./make_');
+var arrContains = require('../array/contains');
+var objContains = require('../object/contains');
+
+    /**
+     */
+    module.exports = make(arrContains, objContains);
+
+
+
+},{"../array/contains":165,"../object/contains":223,"./make_":189}],187:[function(require,module,exports){
 var make = require('./make_');
 var arrFind = require('../array/find');
 var objFind = require('../object/find');
@@ -22442,7 +25174,7 @@ var objFind = require('../object/find');
 
 
 
-},{"../array/find":138,"../object/find":194,"./make_":155}],154:[function(require,module,exports){
+},{"../array/find":170,"../object/find":229,"./make_":189}],188:[function(require,module,exports){
 var make = require('./make_');
 var arrForEach = require('../array/forEach');
 var objForEach = require('../object/forOwn');
@@ -22453,7 +25185,7 @@ var objForEach = require('../object/forOwn');
 
 
 
-},{"../array/forEach":141,"../object/forOwn":196,"./make_":155}],155:[function(require,module,exports){
+},{"../array/forEach":173,"../object/forOwn":231,"./make_":189}],189:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -22474,7 +25206,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":149}],156:[function(require,module,exports){
+},{"../array/slice":182}],190:[function(require,module,exports){
 var isArray = require('../lang/isArray');
 var objSize = require('../object/size');
 
@@ -22495,7 +25227,7 @@ var objSize = require('../object/size');
 
 
 
-},{"../lang/isArray":169,"../object/size":206}],157:[function(require,module,exports){
+},{"../lang/isArray":202,"../object/size":241}],191:[function(require,module,exports){
 var slice = require('../array/slice');
 
     /**
@@ -22516,7 +25248,7 @@ var slice = require('../array/slice');
 
 
 
-},{"../array/slice":149}],158:[function(require,module,exports){
+},{"../array/slice":182}],192:[function(require,module,exports){
 
 
     /**
@@ -22550,73 +25282,13 @@ var slice = require('../array/slice');
 
 
 
-},{}],159:[function(require,module,exports){
-
-
-    /**
-     * Returns the first argument provided to it.
-     */
-    function identity(val){
-        return val;
-    }
-
-    module.exports = identity;
-
-
-
-},{}],160:[function(require,module,exports){
-var identity = require('./identity');
-var prop = require('./prop');
-var deepMatches = require('../object/deepMatches');
-
-    /**
-     * Converts argument into a valid iterator.
-     * Used internally on most array/object/collection methods that receives a
-     * callback/iterator providing a shortcut syntax.
-     */
-    function makeIterator(src, thisObj){
-        if (src == null) {
-            return identity;
-        }
-        switch(typeof src) {
-            case 'function':
-                // function is the first to improve perf (most common case)
-                // also avoid using `Function#call` if not needed, which boosts
-                // perf a lot in some cases
-                return (typeof thisObj !== 'undefined')? function(val, i, arr){
-                    return src.call(thisObj, val, i, arr);
-                } : src;
-            case 'object':
-                return function(val){
-                    return deepMatches(val, src);
-                };
-            case 'string':
-            case 'number':
-                return prop(src);
-        }
-    }
-
-    module.exports = makeIterator;
-
-
-
-},{"../object/deepMatches":191,"./identity":159,"./prop":161}],161:[function(require,module,exports){
-
-
-    /**
-     * Returns a function that gets a property of the passed object
-     */
-    function prop(name){
-        return function(obj){
-            return obj[name];
-        };
-    }
-
-    module.exports = prop;
-
-
-
-},{}],162:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
+arguments[4][120][0].apply(exports,arguments)
+},{"dup":120}],194:[function(require,module,exports){
+arguments[4][121][0].apply(exports,arguments)
+},{"../object/deepMatches":225,"./identity":193,"./prop":195,"dup":121}],195:[function(require,module,exports){
+arguments[4][122][0].apply(exports,arguments)
+},{"dup":122}],196:[function(require,module,exports){
 
 
     /**
@@ -22640,7 +25312,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],163:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 
 
     // Reference to the global context (works on ES3 and ES5-strict mode)
@@ -22649,7 +25321,7 @@ var deepMatches = require('../object/deepMatches');
 
 
 
-},{}],164:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -22700,9 +25372,7 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":202,"./isPlainObject":175,"./kindOf":178}],165:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"../object/mixIn":202,"dup":73}],166:[function(require,module,exports){
+},{"../object/mixIn":237,"./isPlainObject":208,"./kindOf":211}],199:[function(require,module,exports){
 var clone = require('./clone');
 var forOwn = require('../object/forOwn');
 var kindOf = require('./kindOf');
@@ -22752,7 +25422,7 @@ var isPlainObject = require('./isPlainObject');
 
 
 
-},{"../object/forOwn":196,"./clone":164,"./isPlainObject":175,"./kindOf":178}],167:[function(require,module,exports){
+},{"../object/forOwn":231,"./clone":198,"./isPlainObject":208,"./kindOf":211}],200:[function(require,module,exports){
 var is = require('./is');
 var isObject = require('./isObject');
 var isArray = require('./isArray');
@@ -22784,7 +25454,7 @@ var arrEquals = require('../array/equals');
 
 
 
-},{"../array/equals":135,"../object/equals":192,"./is":168,"./isArray":169,"./isObject":174}],168:[function(require,module,exports){
+},{"../array/equals":167,"../object/equals":226,"./is":201,"./isArray":202,"./isObject":207}],201:[function(require,module,exports){
 
 
     /**
@@ -22809,9 +25479,9 @@ var arrEquals = require('../array/equals');
 
 
 
-},{}],169:[function(require,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"./isKind":172,"dup":74}],170:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
+arguments[4][84][0].apply(exports,arguments)
+},{"./isKind":205,"dup":84}],203:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22821,11 +25491,11 @@ var isKind = require('./isKind');
     module.exports = isBoolean;
 
 
-},{"./isKind":172}],171:[function(require,module,exports){
-arguments[4][75][0].apply(exports,arguments)
-},{"./isKind":172,"dup":75}],172:[function(require,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"./kindOf":178,"dup":76}],173:[function(require,module,exports){
+},{"./isKind":205}],204:[function(require,module,exports){
+arguments[4][85][0].apply(exports,arguments)
+},{"./isKind":205,"dup":85}],205:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./kindOf":211,"dup":86}],206:[function(require,module,exports){
 var isKind = require('./isKind');
     /**
      */
@@ -22835,9 +25505,9 @@ var isKind = require('./isKind');
     module.exports = isNumber;
 
 
-},{"./isKind":172}],174:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"./isKind":172,"dup":77}],175:[function(require,module,exports){
+},{"./isKind":205}],207:[function(require,module,exports){
+arguments[4][87][0].apply(exports,arguments)
+},{"./isKind":205,"dup":87}],208:[function(require,module,exports){
 
 
     /**
@@ -22852,7 +25522,7 @@ arguments[4][77][0].apply(exports,arguments)
 
 
 
-},{}],176:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 
 
     /**
@@ -22875,11 +25545,11 @@ arguments[4][77][0].apply(exports,arguments)
 
 
 
-},{}],177:[function(require,module,exports){
-arguments[4][78][0].apply(exports,arguments)
-},{"./isKind":172,"dup":78}],178:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],179:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
+arguments[4][88][0].apply(exports,arguments)
+},{"./isKind":205,"dup":88}],211:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"dup":89}],212:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var GLOBAL = require('./GLOBAL');
 
@@ -22911,7 +25581,7 @@ var GLOBAL = require('./GLOBAL');
     module.exports = toArray;
 
 
-},{"./GLOBAL":163,"./kindOf":178}],180:[function(require,module,exports){
+},{"./GLOBAL":197,"./kindOf":211}],213:[function(require,module,exports){
 var isArray = require('./isArray');
 
     /**
@@ -22933,9 +25603,9 @@ var isArray = require('./isArray');
 
 
 
-},{"./isArray":169}],181:[function(require,module,exports){
-arguments[4][80][0].apply(exports,arguments)
-},{"dup":80}],182:[function(require,module,exports){
+},{"./isArray":202}],214:[function(require,module,exports){
+arguments[4][90][0].apply(exports,arguments)
+},{"dup":90}],215:[function(require,module,exports){
 
     /**
      * Clamps value inside range.
@@ -22946,7 +25616,7 @@ arguments[4][80][0].apply(exports,arguments)
     module.exports = clamp;
 
 
-},{}],183:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 
     /**
     * Linear interpolation.
@@ -22959,7 +25629,7 @@ arguments[4][80][0].apply(exports,arguments)
     module.exports = lerp;
 
 
-},{}],184:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 var lerp = require('./lerp');
 var norm = require('./norm');
     /**
@@ -22972,7 +25642,7 @@ var norm = require('./norm');
     module.exports = map;
 
 
-},{"./lerp":183,"./norm":185}],185:[function(require,module,exports){
+},{"./lerp":216,"./norm":218}],218:[function(require,module,exports){
 
     /**
     * Gets normalized ratio of value inside range.
@@ -22987,7 +25657,7 @@ var norm = require('./norm');
     module.exports = norm;
 
 
-},{}],186:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 /**
  * @constant Maximum 32-bit signed integer value. (2^31 - 1)
  */
@@ -22995,7 +25665,7 @@ var norm = require('./norm');
     module.exports = 2147483647;
 
 
-},{}],187:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 /**
  * @constant Minimum 32-bit signed integer value (-2^31).
  */
@@ -23003,7 +25673,7 @@ var norm = require('./norm');
     module.exports = -2147483648;
 
 
-},{}],188:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 var toNumber = require('../lang/toNumber');
     /**
      * Enforce a specific amount of decimal digits and also fix floating
@@ -23017,7 +25687,7 @@ var toNumber = require('../lang/toNumber');
     module.exports = enforcePrecision;
 
 
-},{"../lang/toNumber":180}],189:[function(require,module,exports){
+},{"../lang/toNumber":213}],222:[function(require,module,exports){
 
 
     /**
@@ -23036,7 +25706,22 @@ var toNumber = require('../lang/toNumber');
 
 
 
-},{}],190:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
+var some = require('./some');
+
+    /**
+     * Check if object contains value
+     */
+    function contains(obj, needle) {
+        return some(obj, function(val) {
+            return (val === needle);
+        });
+    }
+    module.exports = contains;
+
+
+
+},{"./some":242}],224:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isPlainObject = require('../lang/isPlainObject');
 
@@ -23071,7 +25756,7 @@ var isPlainObject = require('../lang/isPlainObject');
 
 
 
-},{"../lang/isPlainObject":175,"./forOwn":196}],191:[function(require,module,exports){
+},{"../lang/isPlainObject":208,"./forOwn":231}],225:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var isArray = require('../lang/isArray');
 
@@ -23113,7 +25798,8 @@ var isArray = require('../lang/isArray');
      * Recursively check if the objects match.
      */
     function deepMatches(target, pattern){
-        if (target && typeof target === 'object') {
+        if (target && typeof target === 'object' &&
+            pattern && typeof pattern === 'object') {
             if (isArray(target) && isArray(pattern)) {
                 return matchArray(target, pattern);
             } else {
@@ -23128,7 +25814,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":169,"./forOwn":196}],192:[function(require,module,exports){
+},{"../lang/isArray":202,"./forOwn":231}],226:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var every = require('./every');
 var isObject = require('../lang/isObject');
@@ -23163,7 +25849,7 @@ var is = require('../lang/is');
     module.exports = equals;
 
 
-},{"../lang/is":168,"../lang/isObject":174,"./every":193,"./hasOwn":199}],193:[function(require,module,exports){
+},{"../lang/is":201,"../lang/isObject":207,"./every":227,"./hasOwn":234}],227:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23188,7 +25874,29 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./forOwn":196}],194:[function(require,module,exports){
+},{"../function/makeIterator_":194,"./forOwn":231}],228:[function(require,module,exports){
+var forOwn = require('./forOwn');
+var makeIterator = require('../function/makeIterator_');
+
+    /**
+     * Creates a new object with all the properties where the callback returns
+     * true.
+     */
+    function filterValues(obj, callback, thisObj) {
+        callback = makeIterator(callback, thisObj);
+        var output = {};
+        forOwn(obj, function(value, key, obj) {
+            if (callback(value, key, obj)) {
+                output[key] = value;
+            }
+        });
+
+        return output;
+    }
+    module.exports = filterValues;
+
+
+},{"../function/makeIterator_":194,"./forOwn":231}],229:[function(require,module,exports){
 var some = require('./some');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23211,11 +25919,11 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./some":207}],195:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":199,"dup":81}],196:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":195,"./hasOwn":199,"dup":82}],197:[function(require,module,exports){
+},{"../function/makeIterator_":194,"./some":242}],230:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"./hasOwn":234,"dup":91}],231:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./forIn":230,"./hasOwn":234,"dup":92}],232:[function(require,module,exports){
 var isPrimitive = require('../lang/isPrimitive');
 
     /**
@@ -23237,7 +25945,7 @@ var isPrimitive = require('../lang/isPrimitive');
 
 
 
-},{"../lang/isPrimitive":176}],198:[function(require,module,exports){
+},{"../lang/isPrimitive":209}],233:[function(require,module,exports){
 var get = require('./get');
 
     var UNDEF;
@@ -23254,9 +25962,9 @@ var get = require('./get');
 
 
 
-},{"./get":197}],199:[function(require,module,exports){
-arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],200:[function(require,module,exports){
+},{"./get":232}],234:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"dup":93}],235:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23274,7 +25982,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],201:[function(require,module,exports){
+},{"./forOwn":231}],236:[function(require,module,exports){
 var hasOwn = require('./hasOwn');
 var deepClone = require('../lang/deepClone');
 var isObject = require('../lang/isObject');
@@ -23316,9 +26024,9 @@ var isObject = require('../lang/isObject');
 
 
 
-},{"../lang/deepClone":166,"../lang/isObject":174,"./hasOwn":199}],202:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":196,"dup":84}],203:[function(require,module,exports){
+},{"../lang/deepClone":199,"../lang/isObject":207,"./hasOwn":234}],237:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"./forOwn":231,"dup":94}],238:[function(require,module,exports){
 var forEach = require('../array/forEach');
 
     /**
@@ -23339,7 +26047,7 @@ var forEach = require('../array/forEach');
 
 
 
-},{"../array/forEach":141}],204:[function(require,module,exports){
+},{"../array/forEach":173}],239:[function(require,module,exports){
 var slice = require('../array/slice');
 var contains = require('../array/contains');
 
@@ -23362,7 +26070,7 @@ var contains = require('../array/contains');
 
 
 
-},{"../array/contains":133,"../array/slice":149}],205:[function(require,module,exports){
+},{"../array/contains":165,"../array/slice":182}],240:[function(require,module,exports){
 var namespace = require('./namespace');
 
     /**
@@ -23381,7 +26089,7 @@ var namespace = require('./namespace');
 
 
 
-},{"./namespace":203}],206:[function(require,module,exports){
+},{"./namespace":238}],241:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23399,7 +26107,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],207:[function(require,module,exports){
+},{"./forOwn":231}],242:[function(require,module,exports){
 var forOwn = require('./forOwn');
 var makeIterator = require('../function/makeIterator_');
 
@@ -23422,7 +26130,7 @@ var makeIterator = require('../function/makeIterator_');
 
 
 
-},{"../function/makeIterator_":160,"./forOwn":196}],208:[function(require,module,exports){
+},{"../function/makeIterator_":194,"./forOwn":231}],243:[function(require,module,exports){
 var has = require('./has');
 
     /**
@@ -23447,7 +26155,7 @@ var has = require('./has');
 
 
 
-},{"./has":198}],209:[function(require,module,exports){
+},{"./has":233}],244:[function(require,module,exports){
 var forOwn = require('./forOwn');
 
     /**
@@ -23465,7 +26173,7 @@ var forOwn = require('./forOwn');
 
 
 
-},{"./forOwn":196}],210:[function(require,module,exports){
+},{"./forOwn":231}],245:[function(require,module,exports){
 var forOwn = require('../object/forOwn');
 var isArray = require('../lang/isArray');
 var forEach = require('../array/forEach');
@@ -23494,7 +26202,7 @@ var forEach = require('../array/forEach');
     module.exports = encode;
 
 
-},{"../array/forEach":141,"../lang/isArray":169,"../object/forOwn":196}],211:[function(require,module,exports){
+},{"../array/forEach":173,"../lang/isArray":202,"../object/forOwn":231}],246:[function(require,module,exports){
 var typecast = require('../string/typecast');
 var getQuery = require('./getQuery');
 
@@ -23511,22 +26219,22 @@ var getQuery = require('./getQuery');
     module.exports = getParam;
 
 
-},{"../string/typecast":236,"./getQuery":212}],212:[function(require,module,exports){
+},{"../string/typecast":272,"./getQuery":247}],247:[function(require,module,exports){
 
 
     /**
      * Gets full query as string with all special chars decoded.
      */
     function getQuery(url) {
-        url = url.replace(/#.*/, ''); //removes hash (to avoid getting hash query)
+        // url = url.replace(/#.*\?/, '?'); //removes hash (to avoid getting hash query)
         var queryString = /\?[a-zA-Z0-9\=\&\%\$\-\_\.\+\!\*\'\(\)\,]+/.exec(url); //valid chars according to: http://www.ietf.org/rfc/rfc1738.txt
-        return (queryString)? decodeURIComponent(queryString[0]) : '';
+        return (queryString)? decodeURIComponent(queryString[0].replace(/\+/g,' ')) : '';
     }
 
     module.exports = getQuery;
 
 
-},{}],213:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 
 
     /**
@@ -23556,7 +26264,7 @@ var getQuery = require('./getQuery');
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 var randInt = require('./randInt');
 var isArray = require('../lang/isArray');
 
@@ -23573,7 +26281,7 @@ var isArray = require('../lang/isArray');
 
 
 
-},{"../lang/isArray":169,"./randInt":218}],215:[function(require,module,exports){
+},{"../lang/isArray":202,"./randInt":253}],250:[function(require,module,exports){
 var randHex = require('./randHex');
 var choice = require('./choice');
 
@@ -23599,7 +26307,7 @@ var choice = require('./choice');
   module.exports = guid;
 
 
-},{"./choice":214,"./randHex":217}],216:[function(require,module,exports){
+},{"./choice":249,"./randHex":252}],251:[function(require,module,exports){
 var random = require('./random');
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
@@ -23616,7 +26324,7 @@ var MAX_INT = require('../number/MAX_INT');
     module.exports = rand;
 
 
-},{"../number/MAX_INT":186,"../number/MIN_INT":187,"./random":219}],217:[function(require,module,exports){
+},{"../number/MAX_INT":219,"../number/MIN_INT":220,"./random":254}],252:[function(require,module,exports){
 var choice = require('./choice');
 
     var _chars = '0123456789abcdef'.split('');
@@ -23637,7 +26345,7 @@ var choice = require('./choice');
 
 
 
-},{"./choice":214}],218:[function(require,module,exports){
+},{"./choice":249}],253:[function(require,module,exports){
 var MIN_INT = require('../number/MIN_INT');
 var MAX_INT = require('../number/MAX_INT');
 var rand = require('./rand');
@@ -23657,7 +26365,7 @@ var rand = require('./rand');
     module.exports = randInt;
 
 
-},{"../number/MAX_INT":186,"../number/MIN_INT":187,"./rand":216}],219:[function(require,module,exports){
+},{"../number/MAX_INT":219,"../number/MIN_INT":220,"./rand":251}],254:[function(require,module,exports){
 
 
     /**
@@ -23677,9 +26385,9 @@ var rand = require('./rand');
 
 
 
-},{}],220:[function(require,module,exports){
-arguments[4][85][0].apply(exports,arguments)
-},{"dup":85}],221:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
+arguments[4][95][0].apply(exports,arguments)
+},{"dup":95}],256:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23695,7 +26403,22 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],222:[function(require,module,exports){
+},{"../lang/toString":214}],257:[function(require,module,exports){
+var toString = require('../lang/toString');
+    /**
+     * Checks if string ends with specified suffix.
+     */
+    function endsWith(str, suffix) {
+        str = toString(str);
+        suffix = toString(suffix);
+
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    module.exports = endsWith;
+
+
+},{"../lang/toString":214}],258:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23715,7 +26438,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],223:[function(require,module,exports){
+},{"../lang/toString":214}],259:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -23738,7 +26461,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],224:[function(require,module,exports){
+},{"../lang/toString":214}],260:[function(require,module,exports){
 var toString = require('../lang/toString');
 var get = require('../object/get');
 
@@ -23759,7 +26482,7 @@ var get = require('../object/get');
 
 
 
-},{"../lang/toString":181,"../object/get":197}],225:[function(require,module,exports){
+},{"../lang/toString":214,"../object/get":232}],261:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * "Safer" String.toLowerCase()
@@ -23772,9 +26495,9 @@ var toString = require('../lang/toString');
     module.exports = lowerCase;
 
 
-},{"../lang/toString":181}],226:[function(require,module,exports){
-arguments[4][86][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"dup":86}],227:[function(require,module,exports){
+},{"../lang/toString":214}],262:[function(require,module,exports){
+arguments[4][96][0].apply(exports,arguments)
+},{"../lang/toString":214,"./WHITE_SPACES":255,"dup":96}],263:[function(require,module,exports){
 var toString = require('../lang/toString');
 var lowerCase = require('./lowerCase');
 var upperCase = require('./upperCase');
@@ -23789,7 +26512,7 @@ var upperCase = require('./upperCase');
     module.exports = properCase;
 
 
-},{"../lang/toString":181,"./lowerCase":225,"./upperCase":239}],228:[function(require,module,exports){
+},{"../lang/toString":214,"./lowerCase":261,"./upperCase":275}],264:[function(require,module,exports){
 var toString = require('../lang/toString');
     // This pattern is generated by the _build/pattern-removeNonWord.js script
     var PATTERN = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
@@ -23805,7 +26528,7 @@ var toString = require('../lang/toString');
     module.exports = removeNonWord;
 
 
-},{"../lang/toString":181}],229:[function(require,module,exports){
+},{"../lang/toString":214}],265:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toInt = require('../number/toInt');
 
@@ -23833,7 +26556,7 @@ var toInt = require('../number/toInt');
 
 
 
-},{"../lang/toString":181,"../number/toInt":189}],230:[function(require,module,exports){
+},{"../lang/toString":214,"../number/toInt":222}],266:[function(require,module,exports){
 var toString = require('../lang/toString');
 var toArray = require('../lang/toArray');
 
@@ -23868,7 +26591,7 @@ var toArray = require('../lang/toArray');
 
 
 
-},{"../lang/toArray":179,"../lang/toString":181}],231:[function(require,module,exports){
+},{"../lang/toArray":212,"../lang/toString":214}],267:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
     * Replaces all accented chars with regular ones
@@ -23906,7 +26629,7 @@ var toString = require('../lang/toString');
     module.exports = replaceAccents;
 
 
-},{"../lang/toString":181}],232:[function(require,module,exports){
+},{"../lang/toString":214}],268:[function(require,module,exports){
 var toString = require('../lang/toString');
 var repeat = require('./repeat');
 
@@ -23923,9 +26646,9 @@ var repeat = require('./repeat');
 
 
 
-},{"../lang/toString":181,"./repeat":229}],233:[function(require,module,exports){
-arguments[4][87][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"dup":87}],234:[function(require,module,exports){
+},{"../lang/toString":214,"./repeat":265}],269:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"../lang/toString":214,"./WHITE_SPACES":255,"dup":97}],270:[function(require,module,exports){
 var toString = require('../lang/toString');
 var replaceAccents = require('./replaceAccents');
 var removeNonWord = require('./removeNonWord');
@@ -23951,9 +26674,9 @@ var trim = require('./trim');
     module.exports = slugify;
 
 
-},{"../lang/toString":181,"./removeNonWord":228,"./replaceAccents":231,"./trim":235}],235:[function(require,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"../lang/toString":181,"./WHITE_SPACES":220,"./ltrim":226,"./rtrim":233,"dup":88}],236:[function(require,module,exports){
+},{"../lang/toString":214,"./removeNonWord":264,"./replaceAccents":267,"./trim":271}],271:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"../lang/toString":214,"./WHITE_SPACES":255,"./ltrim":262,"./rtrim":269,"dup":98}],272:[function(require,module,exports){
 
 
     var UNDEF;
@@ -23984,7 +26707,7 @@ arguments[4][88][0].apply(exports,arguments)
     module.exports = typecast;
 
 
-},{}],237:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 var toString = require('../lang/toString');
 
     /**
@@ -24004,7 +26727,7 @@ var toString = require('../lang/toString');
 
 
 
-},{"../lang/toString":181}],238:[function(require,module,exports){
+},{"../lang/toString":214}],274:[function(require,module,exports){
 var toString = require('../lang/toString');
     /**
      * Replaces hyphens with spaces. (only hyphens between word chars)
@@ -24016,15 +26739,13 @@ var toString = require('../lang/toString');
     module.exports = unhyphenate;
 
 
-},{"../lang/toString":181}],239:[function(require,module,exports){
-arguments[4][89][0].apply(exports,arguments)
-},{"../lang/toString":181,"dup":89}],240:[function(require,module,exports){
-arguments[4][90][0].apply(exports,arguments)
-},{"dup":90}],241:[function(require,module,exports){
-arguments[4][149][0].apply(exports,arguments)
-},{"dup":149}],242:[function(require,module,exports){
-arguments[4][157][0].apply(exports,arguments)
-},{"../array/slice":241,"dup":157}],243:[function(require,module,exports){
+},{"../lang/toString":214}],275:[function(require,module,exports){
+arguments[4][99][0].apply(exports,arguments)
+},{"../lang/toString":214,"dup":99}],276:[function(require,module,exports){
+arguments[4][182][0].apply(exports,arguments)
+},{"dup":182}],277:[function(require,module,exports){
+arguments[4][191][0].apply(exports,arguments)
+},{"../array/slice":276,"dup":191}],278:[function(require,module,exports){
 var kindOf = require('./kindOf');
 var isPlainObject = require('./isPlainObject');
 var mixIn = require('../object/mixIn');
@@ -24075,41 +26796,41 @@ var mixIn = require('../object/mixIn');
 
 
 
-},{"../object/mixIn":253,"./isPlainObject":247,"./kindOf":248}],244:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"../object/forOwn":250,"./clone":243,"./isPlainObject":247,"./kindOf":248,"dup":166}],245:[function(require,module,exports){
-arguments[4][76][0].apply(exports,arguments)
-},{"./kindOf":248,"dup":76}],246:[function(require,module,exports){
-arguments[4][77][0].apply(exports,arguments)
-},{"./isKind":245,"dup":77}],247:[function(require,module,exports){
-arguments[4][175][0].apply(exports,arguments)
-},{"dup":175}],248:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],249:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":251,"dup":81}],250:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":249,"./hasOwn":251,"dup":82}],251:[function(require,module,exports){
-arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],252:[function(require,module,exports){
-arguments[4][201][0].apply(exports,arguments)
-},{"../lang/deepClone":244,"../lang/isObject":246,"./hasOwn":251,"dup":201}],253:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":250,"dup":84}],254:[function(require,module,exports){
+},{"../object/mixIn":288,"./isPlainObject":282,"./kindOf":283}],279:[function(require,module,exports){
+arguments[4][199][0].apply(exports,arguments)
+},{"../object/forOwn":285,"./clone":278,"./isPlainObject":282,"./kindOf":283,"dup":199}],280:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"./kindOf":283,"dup":86}],281:[function(require,module,exports){
+arguments[4][87][0].apply(exports,arguments)
+},{"./isKind":280,"dup":87}],282:[function(require,module,exports){
+arguments[4][208][0].apply(exports,arguments)
+},{"dup":208}],283:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"dup":89}],284:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"./hasOwn":286,"dup":91}],285:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./forIn":284,"./hasOwn":286,"dup":92}],286:[function(require,module,exports){
 arguments[4][93][0].apply(exports,arguments)
-},{"dup":93,"mout/lang/createObject":255,"mout/lang/kindOf":256,"mout/object/hasOwn":259,"mout/object/mixIn":260}],255:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"../object/mixIn":260,"dup":73}],256:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],257:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./hasOwn":259,"dup":81}],258:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"./forIn":257,"./hasOwn":259,"dup":82}],259:[function(require,module,exports){
+},{"dup":93}],287:[function(require,module,exports){
+arguments[4][236][0].apply(exports,arguments)
+},{"../lang/deepClone":279,"../lang/isObject":281,"./hasOwn":286,"dup":236}],288:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"./forOwn":285,"dup":94}],289:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"dup":103,"mout/lang/createObject":290,"mout/lang/kindOf":291,"mout/object/hasOwn":294,"mout/object/mixIn":295}],290:[function(require,module,exports){
 arguments[4][83][0].apply(exports,arguments)
-},{"dup":83}],260:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"./forOwn":258,"dup":84}],261:[function(require,module,exports){
+},{"../object/mixIn":295,"dup":83}],291:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"dup":89}],292:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"./hasOwn":294,"dup":91}],293:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./forIn":292,"./hasOwn":294,"dup":92}],294:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"dup":93}],295:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"./forOwn":293,"dup":94}],296:[function(require,module,exports){
 "use strict";
 
 // credits to @cpojer's Class.Binds, released under the MIT license
@@ -24129,7 +26850,7 @@ var bound = prime({
 
 module.exports = bound
 
-},{"mout/function/bind":242,"prime":254}],262:[function(require,module,exports){
+},{"mout/function/bind":277,"prime":289}],297:[function(require,module,exports){
 "use strict";
 
 var prime = require("prime")
@@ -24148,7 +26869,7 @@ var Options = prime({
 
 module.exports = Options
 
-},{"mout/object/merge":252,"prime":254}],263:[function(require,module,exports){
+},{"mout/object/merge":287,"prime":289}],298:[function(require,module,exports){
 (function (process,global){
 /*
 defer
@@ -24267,7 +26988,7 @@ module.exports = defer
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":1,"mout/array/forEach":141,"mout/array/indexOf":142,"mout/lang/kindOf":178,"mout/time/now":240}],264:[function(require,module,exports){
+},{"_process":1,"mout/array/forEach":302,"mout/array/indexOf":303,"mout/lang/kindOf":305,"mout/time/now":310}],299:[function(require,module,exports){
 /*
 Emitter
 */"use strict"
@@ -24338,7 +27059,7 @@ Emitter.EMIT_SYNC = {}
 
 module.exports = Emitter
 
-},{"./defer":263,"./index":265,"mout/array/forEach":141,"mout/array/indexOf":142}],265:[function(require,module,exports){
+},{"./defer":298,"./index":300,"mout/array/forEach":302,"mout/array/indexOf":303}],300:[function(require,module,exports){
 /*
 prime
  - prototypal inheritance
@@ -24430,7 +27151,7 @@ var prime = function(proto){
 
 module.exports = prime
 
-},{"mout/lang/createObject":165,"mout/lang/kindOf":178,"mout/object/hasOwn":199,"mout/object/mixIn":202}],266:[function(require,module,exports){
+},{"mout/lang/createObject":304,"mout/lang/kindOf":305,"mout/object/hasOwn":308,"mout/object/mixIn":309}],301:[function(require,module,exports){
 /*
 Map
 */"use strict"
@@ -24556,7 +27277,25 @@ map.prototype = Map.prototype
 
 module.exports = map
 
-},{"./index":265,"mout/array/indexOf":142}],267:[function(require,module,exports){
+},{"./index":300,"mout/array/indexOf":303}],302:[function(require,module,exports){
+arguments[4][80][0].apply(exports,arguments)
+},{"dup":80}],303:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"dup":81}],304:[function(require,module,exports){
+arguments[4][83][0].apply(exports,arguments)
+},{"../object/mixIn":309,"dup":83}],305:[function(require,module,exports){
+arguments[4][89][0].apply(exports,arguments)
+},{"dup":89}],306:[function(require,module,exports){
+arguments[4][91][0].apply(exports,arguments)
+},{"./hasOwn":308,"dup":91}],307:[function(require,module,exports){
+arguments[4][92][0].apply(exports,arguments)
+},{"./forIn":306,"./hasOwn":308,"dup":92}],308:[function(require,module,exports){
+arguments[4][93][0].apply(exports,arguments)
+},{"dup":93}],309:[function(require,module,exports){
+arguments[4][94][0].apply(exports,arguments)
+},{"./forOwn":307,"dup":94}],310:[function(require,module,exports){
+arguments[4][100][0].apply(exports,arguments)
+},{"dup":100}],311:[function(require,module,exports){
 /**
  * sifter.js
  * Copyright (c) 2013 Brian Reavis & contributors
@@ -24673,13 +27412,14 @@ module.exports = map
 	 * @returns {function}
 	 */
 	Sifter.prototype.getScoreFunction = function(search, options) {
-		var self, fields, tokens, token_count;
+		var self, fields, tokens, token_count, nesting;
 
 		self        = this;
 		search      = self.prepareSearch(search, options);
 		tokens      = search.tokens;
 		fields      = search.options.fields;
 		token_count = tokens.length;
+		nesting     = search.options.nesting;
 
 		/**
 		 * Calculates how close of a match the
@@ -24716,12 +27456,12 @@ module.exports = map
 			}
 			if (field_count === 1) {
 				return function(token, data) {
-					return scoreValue(data[fields[0]], token);
+					return scoreValue(getattr(data, fields[0], nesting), token);
 				};
 			}
 			return function(token, data) {
 				for (var i = 0, sum = 0; i < field_count; i++) {
-					sum += scoreValue(data[fields[i]], token);
+					sum += scoreValue(getattr(data, fields[i], nesting), token);
 				}
 				return sum / field_count;
 			};
@@ -24782,7 +27522,7 @@ module.exports = map
 		 */
 		get_field = function(name, result) {
 			if (name === '$score') return result.score;
-			return self.items[result.id][name];
+			return getattr(self.items[result.id], name, options.nesting);
 		};
 
 		// parse options
@@ -24971,6 +27711,21 @@ module.exports = map
 		return a;
 	};
 
+	/**
+	 * A property getter resolving dot-notation
+	 * @param  {Object}  obj     The root object to fetch property on
+	 * @param  {String}  name    The optionally dotted property name to fetch
+	 * @param  {Boolean} nesting Handle nesting or not
+	 * @return {Object}          The resolved property value
+	 */
+	var getattr = function(obj, name, nesting) {
+	    if (!obj || !name) return;
+	    if (!nesting) return obj[name];
+	    var names = name.split(".");
+	    while(names.length && (obj = obj[names.shift()]));
+	    return obj;
+	};
+
 	var trim = function(str) {
 		return (str + '').replace(/^\s+|\s+$|/g, '');
 	};
@@ -24979,25 +27734,36 @@ module.exports = map
 		return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
 	};
 
-	var is_array = Array.isArray || ($ && $.isArray) || function(object) {
+	var is_array = Array.isArray || (typeof $ !== 'undefined' && $.isArray) || function(object) {
 		return Object.prototype.toString.call(object) === '[object Array]';
 	};
 
 	var DIACRITICS = {
-		'a': '[aÀÁÂÃÄÅàáâãäåĀāąĄ]',
-		'c': '[cÇçćĆčČ]',
-		'd': '[dđĐďĎð]',
-		'e': '[eÈÉÊËèéêëěĚĒēęĘ]',
-		'i': '[iÌÍÎÏìíîïĪī]',
-		'l': '[lłŁ]',
-		'n': '[nÑñňŇńŃ]',
-		'o': '[oÒÓÔÕÕÖØòóôõöøŌō]',
-		'r': '[rřŘ]',
-		's': '[sŠšśŚ]',
-		't': '[tťŤ]',
-		'u': '[uÙÚÛÜùúûüůŮŪū]',
-		'y': '[yŸÿýÝ]',
-		'z': '[zŽžżŻźŹ]'
+		'a': '[aḀḁĂăÂâǍǎȺⱥȦȧẠạÄäÀàÁáĀāÃãÅåąĄÃąĄ]',
+		'b': '[b␢βΒB฿𐌁ᛒ]',
+		'c': '[cĆćĈĉČčĊċC̄c̄ÇçḈḉȻȼƇƈɕᴄＣｃ]',
+		'd': '[dĎďḊḋḐḑḌḍḒḓḎḏĐđD̦d̦ƉɖƊɗƋƌᵭᶁᶑȡᴅＤｄð]',
+		'e': '[eÉéÈèÊêḘḙĚěĔĕẼẽḚḛẺẻĖėËëĒēȨȩĘęᶒɆɇȄȅẾếỀềỄễỂểḜḝḖḗḔḕȆȇẸẹỆệⱸᴇＥｅɘǝƏƐε]',
+		'f': '[fƑƒḞḟ]',
+		'g': '[gɢ₲ǤǥĜĝĞğĢģƓɠĠġ]',
+		'h': '[hĤĥĦħḨḩẖẖḤḥḢḣɦʰǶƕ]',
+		'i': '[iÍíÌìĬĭÎîǏǐÏïḮḯĨĩĮįĪīỈỉȈȉȊȋỊịḬḭƗɨɨ̆ᵻᶖİiIıɪＩｉ]',
+		'j': '[jȷĴĵɈɉʝɟʲ]',
+		'k': '[kƘƙꝀꝁḰḱǨǩḲḳḴḵκϰ₭]',
+		'l': '[lŁłĽľĻļĹĺḶḷḸḹḼḽḺḻĿŀȽƚⱠⱡⱢɫɬᶅɭȴʟＬｌ]',
+		'n': '[nŃńǸǹŇňÑñṄṅŅņṆṇṊṋṈṉN̈n̈ƝɲȠƞᵰᶇɳȵɴＮｎŊŋ]',
+		'o': '[oØøÖöÓóÒòÔôǑǒŐőŎŏȮȯỌọƟɵƠơỎỏŌōÕõǪǫȌȍՕօ]',
+		'p': '[pṔṕṖṗⱣᵽƤƥᵱ]',
+		'q': '[qꝖꝗʠɊɋꝘꝙq̃]',
+		'r': '[rŔŕɌɍŘřŖŗṘṙȐȑȒȓṚṛⱤɽ]',
+		's': '[sŚśṠṡṢṣꞨꞩŜŝŠšŞşȘșS̈s̈]',
+		't': '[tŤťṪṫŢţṬṭƮʈȚțṰṱṮṯƬƭ]',
+		'u': '[uŬŭɄʉỤụÜüÚúÙùÛûǓǔŰűŬŭƯưỦủŪūŨũŲųȔȕ∪]',
+		'v': '[vṼṽṾṿƲʋꝞꝟⱱʋ]',
+		'w': '[wẂẃẀẁŴŵẄẅẆẇẈẉ]',
+		'x': '[xẌẍẊẋχ]',
+		'y': '[yÝýỲỳŶŷŸÿỸỹẎẏỴỵɎɏƳƴ]',
+		'z': '[zŹźẐẑŽžŻżẒẓẔẕƵƶ]'
 	};
 
 	var asciifold = (function() {
@@ -25029,7 +27795,7 @@ module.exports = map
 }));
 
 
-},{}],268:[function(require,module,exports){
+},{}],312:[function(require,module,exports){
 /*
 Slick Finder
 */"use strict"
@@ -25860,7 +28626,7 @@ slick.parse = parse;
 
 module.exports = slick
 
-},{"./parser":270}],269:[function(require,module,exports){
+},{"./parser":314}],313:[function(require,module,exports){
 (function (global){
 /*
 slick
@@ -25870,7 +28636,7 @@ module.exports = "document" in global ? require("./finder") : { parse: require("
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./finder":268,"./parser":270}],270:[function(require,module,exports){
+},{"./finder":312,"./parser":314}],314:[function(require,module,exports){
 /*
 Slick Parser
  - originally created by the almighty Thomas Aylott <@subtlegradient> (http://subtlegradient.com)
@@ -26122,7 +28888,7 @@ var parse = function(expression){
 
 module.exports = parse
 
-},{}],271:[function(require,module,exports){
+},{}],315:[function(require,module,exports){
 /**!
  * Sortable
  * @author	RubaXa   <trash@rubaxa.org>
@@ -26148,6 +28914,12 @@ module.exports = parse
 	}
 })(function () {
 	"use strict";
+
+	if (typeof window == "undefined" || typeof window.document == "undefined") {
+		return function() {
+			throw new Error( "Sortable.js requires a window with a document" );
+		}
+	}
 
 	var dragEl,
 		parentEl,
@@ -26396,7 +29168,7 @@ module.exports = parse
 			}
 
 			// get the index of the dragged element within its parent
-			oldIndex = _index(target);
+			oldIndex = _index(target, options.draggable);
 
 			// Check filter
 			if (typeof filter === 'function') {
@@ -26700,8 +29472,7 @@ module.exports = parse
 
 			moved = true;
 
-			_dispatchEvent(this, rootEl, 'over', dragEl, rootEl, evt, evt.target);
-
+			_dispatchEvent(this, rootEl, 'over', dragEl, rootEl, evt, evt.target); // Gantry 5
 			if (activeGroup && !options.disabled &&
 				(isOwner
 					? canSort || (revert = !rootEl.contains(dragEl)) // Reverting item into the original list
@@ -26893,7 +29664,7 @@ module.exports = parse
 					_toggleClass(dragEl, this.options.chosenClass, false);
 
 					if (rootEl !== parentEl) {
-						newIndex = _index(dragEl);
+						newIndex = _index(dragEl, options.draggable);
 
 						if (newIndex >= 0) {
 							// drag from one list and drop into another
@@ -26913,7 +29684,7 @@ module.exports = parse
 
 						if (dragEl.nextSibling !== nextEl) {
 							// Get the index of the dragged element within its parent
-							newIndex = _index(dragEl);
+							newIndex = _index(dragEl, options.draggable);
 
 							if (newIndex >= 0) {
 								// drag & drop within the same list
@@ -26928,7 +29699,7 @@ module.exports = parse
 							newIndex = oldIndex;
 						}
 
-						this.originalEvent = evt;
+						this.originalEvent = evt; // Gantry 5
 						_dispatchEvent(this, rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
 
 						// Save sorting
@@ -26936,31 +29707,34 @@ module.exports = parse
 					}
 				}
 
-				// Nulling
-				rootEl =
-				dragEl =
-				parentEl =
-				ghostEl =
-				nextEl =
-				cloneEl =
-
-				scrollEl =
-				scrollParentEl =
-
-				tapEvt =
-				touchEvt =
-
-				moved =
-				newIndex =
-
-				lastEl =
-				lastCSS =
-
-				activeGroup =
-				Sortable.active = null;
 			}
+			this._nulling();
 		},
 
+		_nulling: function() {
+			// Nulling
+			rootEl =
+			dragEl =
+			parentEl =
+			ghostEl =
+			nextEl =
+			cloneEl =
+
+			scrollEl =
+			scrollParentEl =
+
+			tapEvt =
+			touchEvt =
+
+			moved =
+			newIndex =
+
+			lastEl =
+			lastCSS =
+
+			activeGroup =
+			Sortable.active = null;
+		},
 
 		handleEvent: function (/**Event*/evt) {
 			var type = evt.type;
@@ -27107,17 +29881,11 @@ module.exports = parse
 	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
 		if (el) {
 			ctx = ctx || document;
-			selector = selector.split('.');
-
-			var tag = selector.shift().toUpperCase(),
-				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
 
 			do {
 				if (
-					(tag === '>*' && el.parentNode === ctx) || (
-						(tag === '' || el.nodeName.toUpperCase() == tag) &&
-						(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
-					)
+					(selector === '>*' && el.parentNode === ctx)
+					|| _matches(el, selector)
 				) {
 					return el;
 				}
@@ -27267,6 +30035,7 @@ module.exports = parse
 		var lastEl = el.lastElementChild,
 				rect = lastEl.getBoundingClientRect();
 
+		// return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - rect.right > 5)) && lastEl; // min delta // Gantry 5
 		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - (rect.right + rect.width) > 5)) && lastEl; // min delta
 	}
 
@@ -27290,11 +30059,13 @@ module.exports = parse
 	}
 
 	/**
-	 * Returns the index of an element within its parent
+	 * Returns the index of an element within its parent for a selected set of
+	 * elements
 	 * @param  {HTMLElement} el
+	 * @param  {selector} selector
 	 * @return {number}
 	 */
-	function _index(el) {
+	function _index(el, selector) {
 		var index = 0;
 
 		if (!el || !el.parentNode) {
@@ -27302,12 +30073,29 @@ module.exports = parse
 		}
 
 		while (el && (el = el.previousElementSibling)) {
-			if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
+			if (el.nodeName.toUpperCase() !== 'TEMPLATE'
+					&& _matches(el, selector)) {
 				index++;
 			}
 		}
 
 		return index;
+	}
+
+	function _matches(/**HTMLElement*/el, /**String*/selector) {
+		if (el) {
+			selector = selector.split('.');
+
+			var tag = selector.shift().toUpperCase(),
+				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
+
+			return (
+				(tag === '' || el.nodeName.toUpperCase() == tag) &&
+				(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
+			);
+		}
+
+		return false;
 	}
 
 	function _throttle(callback, ms) {
@@ -27372,31 +30160,1651 @@ module.exports = parse
 
 
 	// Export
-	Sortable.version = '1.3.0';
+	Sortable.version = '1.4.2';
 	return Sortable;
 });
 
-},{}],272:[function(require,module,exports){
-/* Web Font Loader v1.6.10 - (c) Adobe Systems, Google. License: Apache 2.0 */
-(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var p=Date.now||function(){return+new Date};function q(a,b){this.F=a;this.k=b||a;this.H=this.k.document}var ca=!!window.FontFace;q.prototype.createElement=function(a,b,c){a=this.H.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.H.createTextNode(c));return a};function s(a,b,c){a=a.H.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}
-function t(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function u(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
-function v(a){if("string"===typeof a.fa)return a.fa;var b=a.k.location.protocol;"about:"==b&&(b=a.F.location.protocol);return"https:"==b?"https:":"http:"}function x(a,b,c){function d(){l&&e&&f&&(l(g),l=null)}b=a.createElement("link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,l=c||null;ca?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);s(a,"head",b)}
-function y(a,b,c,d){var e=a.H.getElementsByTagName("head")[0];if(e){var f=a.createElement("script",{src:b}),g=!1;f.onload=f.onreadystatechange=function(){g||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(g=!0,c&&c(null),f.onload=f.onreadystatechange=null,"HEAD"==f.parentNode.tagName&&e.removeChild(f))};e.appendChild(f);setTimeout(function(){g||(g=!0,c&&c(Error("Script load timeout")))},d||5E3);return f}return null};function z(){this.S=0;this.K=null}function A(a){a.S++;return function(){a.S--;B(a)}}function C(a,b){a.K=b;B(a)}function B(a){0==a.S&&a.K&&(a.K(),a.K=null)};function D(a){this.ea=a||"-"}D.prototype.d=function(a){for(var b=[],c=0;c<arguments.length;c++)b.push(arguments[c].replace(/[\W_]+/g,"").toLowerCase());return b.join(this.ea)};function E(a,b){this.Q=a;this.M=4;this.L="n";var c=(b||"n4").match(/^([nio])([1-9])$/i);c&&(this.L=c[1],this.M=parseInt(c[2],10))}E.prototype.getName=function(){return this.Q};function da(a){return G(a)+" "+(a.M+"00")+" 300px "+H(a.Q)}function H(a){var b=[];a=a.split(/,\s*/);for(var c=0;c<a.length;c++){var d=a[c].replace(/['"]/g,"");-1!=d.indexOf(" ")||/^\d/.test(d)?b.push("'"+d+"'"):b.push(d)}return b.join(",")}function I(a){return a.L+a.M}
-function G(a){var b="normal";"o"===a.L?b="oblique":"i"===a.L&&(b="italic");return b}function ea(a){var b=4,c="n",d=null;a&&((d=a.match(/(normal|oblique|italic)/i))&&d[1]&&(c=d[1].substr(0,1).toLowerCase()),(d=a.match(/([1-9]00|normal|bold)/i))&&d[1]&&(/bold/i.test(d[1])?b=7:/[1-9]00/.test(d[1])&&(b=parseInt(d[1].substr(0,1),10))));return c+b};function fa(a,b){this.a=a;this.j=a.k.document.documentElement;this.O=b;this.g="wf";this.e=new D("-");this.da=!1!==b.events;this.u=!1!==b.classes}function ga(a){a.u&&t(a.j,[a.e.d(a.g,"loading")]);J(a,"loading")}function K(a){if(a.u){var b=u(a.j,a.e.d(a.g,"active")),c=[],d=[a.e.d(a.g,"loading")];b||c.push(a.e.d(a.g,"inactive"));t(a.j,c,d)}J(a,"inactive")}function J(a,b,c){if(a.da&&a.O[b])if(c)a.O[b](c.getName(),I(c));else a.O[b]()};function ha(){this.t={}}function ia(a,b,c){var d=[],e;for(e in b)if(b.hasOwnProperty(e)){var f=a.t[e];f&&d.push(f(b[e],c))}return d};function L(a,b){this.a=a;this.h=b;this.m=this.a.createElement("span",{"aria-hidden":"true"},this.h)}function M(a,b){var c=a.m,d;d="display:block;position:absolute;top:-9999px;left:-9999px;font-size:300px;width:auto;height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;white-space:nowrap;font-family:"+H(b.Q)+";"+("font-style:"+G(b)+";font-weight:"+(b.M+"00")+";");c.style.cssText=d}function N(a){s(a.a,"body",a.m)}L.prototype.remove=function(){var a=this.m;a.parentNode&&a.parentNode.removeChild(a)};function O(a,b,c,d,e,f){this.G=a;this.J=b;this.f=d;this.a=c;this.v=e||3E3;this.h=f||void 0}O.prototype.start=function(){var a=this.a.k.document,b=this;Promise.race([new Promise(function(a,d){setTimeout(function(){d(b.f)},b.v)}),a.fonts.load(da(this.f),this.h)]).then(function(a){1===a.length?b.G(b.f):b.J(b.f)},function(){b.J(b.f)})};function P(a,b,c,d,e,f,g){this.G=a;this.J=b;this.a=c;this.f=d;this.h=g||"BESbswy";this.s={};this.v=e||3E3;this.Z=f||null;this.D=this.C=this.A=this.w=null;this.w=new L(this.a,this.h);this.A=new L(this.a,this.h);this.C=new L(this.a,this.h);this.D=new L(this.a,this.h);M(this.w,new E(this.f.getName()+",serif",I(this.f)));M(this.A,new E(this.f.getName()+",sans-serif",I(this.f)));M(this.C,new E("serif",I(this.f)));M(this.D,new E("sans-serif",I(this.f)));N(this.w);N(this.A);N(this.C);N(this.D)}
-var Q={ia:"serif",ha:"sans-serif"},R=null;function S(){if(null===R){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent);R=!!a&&(536>parseInt(a[1],10)||536===parseInt(a[1],10)&&11>=parseInt(a[2],10))}return R}P.prototype.start=function(){this.s.serif=this.C.m.offsetWidth;this.s["sans-serif"]=this.D.m.offsetWidth;this.ga=p();T(this)};function ja(a,b,c){for(var d in Q)if(Q.hasOwnProperty(d)&&b===a.s[Q[d]]&&c===a.s[Q[d]])return!0;return!1}
-function T(a){var b=a.w.m.offsetWidth,c=a.A.m.offsetWidth,d;(d=b===a.s.serif&&c===a.s["sans-serif"])||(d=S()&&ja(a,b,c));d?p()-a.ga>=a.v?S()&&ja(a,b,c)&&(null===a.Z||a.Z.hasOwnProperty(a.f.getName()))?U(a,a.G):U(a,a.J):ka(a):U(a,a.G)}function ka(a){setTimeout(n(function(){T(this)},a),50)}function U(a,b){setTimeout(n(function(){this.w.remove();this.A.remove();this.C.remove();this.D.remove();b(this.f)},a),0)};function V(a,b,c){this.a=a;this.p=b;this.P=0;this.ba=this.Y=!1;this.v=c}var la=!!window.FontFace;V.prototype.V=function(a){var b=this.p;b.u&&t(b.j,[b.e.d(b.g,a.getName(),I(a).toString(),"active")],[b.e.d(b.g,a.getName(),I(a).toString(),"loading"),b.e.d(b.g,a.getName(),I(a).toString(),"inactive")]);J(b,"fontactive",a);this.ba=!0;ma(this)};
-V.prototype.W=function(a){var b=this.p;if(b.u){var c=u(b.j,b.e.d(b.g,a.getName(),I(a).toString(),"active")),d=[],e=[b.e.d(b.g,a.getName(),I(a).toString(),"loading")];c||d.push(b.e.d(b.g,a.getName(),I(a).toString(),"inactive"));t(b.j,d,e)}J(b,"fontinactive",a);ma(this)};function ma(a){0==--a.P&&a.Y&&(a.ba?(a=a.p,a.u&&t(a.j,[a.e.d(a.g,"active")],[a.e.d(a.g,"loading"),a.e.d(a.g,"inactive")]),J(a,"active")):K(a.p))};function na(a){this.F=a;this.q=new ha;this.$=0;this.T=this.U=!0}na.prototype.load=function(a){this.a=new q(this.F,a.context||this.F);this.U=!1!==a.events;this.T=!1!==a.classes;oa(this,new fa(this.a,a),a)};
-function pa(a,b,c,d,e){var f=0==--a.$;(a.T||a.U)&&setTimeout(function(){var a=e||null,l=d||null||{};if(0===c.length&&f)K(b.p);else{b.P+=c.length;f&&(b.Y=f);var h,k=[];for(h=0;h<c.length;h++){var m=c[h],w=l[m.getName()],r=b.p,F=m;r.u&&t(r.j,[r.e.d(r.g,F.getName(),I(F).toString(),"loading")]);J(r,"fontloading",F);r=null;r=la?new O(n(b.V,b),n(b.W,b),b.a,m,b.v,w):new P(n(b.V,b),n(b.W,b),b.a,m,b.v,a,w);k.push(r)}for(h=0;h<k.length;h++)k[h].start()}},0)}
-function oa(a,b,c){var d=[],e=c.timeout;ga(b);var d=ia(a.q,c,a.a),f=new V(a.a,b,e);a.$=d.length;b=0;for(c=d.length;b<c;b++)d[b].load(function(b,c,d){pa(a,f,b,c,d)})};function qa(a,b,c){this.N=a?a:b+ra;this.o=[];this.R=[];this.ca=c||""}var ra="//fonts.googleapis.com/css";function sa(a,b){for(var c=b.length,d=0;d<c;d++){var e=b[d].split(":");3==e.length&&a.R.push(e.pop());var f="";2==e.length&&""!=e[1]&&(f=":");a.o.push(e.join(f))}}
-qa.prototype.d=function(){if(0==this.o.length)throw Error("No fonts to load!");if(-1!=this.N.indexOf("kit="))return this.N;for(var a=this.o.length,b=[],c=0;c<a;c++)b.push(this.o[c].replace(/ /g,"+"));a=this.N+"?family="+b.join("%7C");0<this.R.length&&(a+="&subset="+this.R.join(","));0<this.ca.length&&(a+="&text="+encodeURIComponent(this.ca));return a};function ta(a){this.o=a;this.aa=[];this.I={}}
-var ua={latin:"BESbswy",cyrillic:"&#1081;&#1103;&#1046;",greek:"&#945;&#946;&#931;",khmer:"&#x1780;&#x1781;&#x1782;",Hanuman:"&#x1780;&#x1781;&#x1782;"},va={thin:"1",extralight:"2","extra-light":"2",ultralight:"2","ultra-light":"2",light:"3",regular:"4",book:"4",medium:"5","semi-bold":"6",semibold:"6","demi-bold":"6",demibold:"6",bold:"7","extra-bold":"8",extrabold:"8","ultra-bold":"8",ultrabold:"8",black:"9",heavy:"9",l:"3",r:"4",b:"7"},wa={i:"i",italic:"i",n:"n",normal:"n"},xa=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
-ta.prototype.parse=function(){for(var a=this.o.length,b=0;b<a;b++){var c=this.o[b].split(":"),d=c[0].replace(/\+/g," "),e=["n4"];if(2<=c.length){var f;var g=c[1];f=[];if(g)for(var g=g.split(","),l=g.length,h=0;h<l;h++){var k;k=g[h];if(k.match(/^[\w-]+$/))if(k=xa.exec(k.toLowerCase()),null==k)k="";else{var m;m=k[1];if(null==m||""==m)m="4";else{var w=va[m];m=w?w:isNaN(m)?"4":m.substr(0,1)}k=k[2];k=[null==k||""==k?"n":wa[k],m].join("")}else k="";k&&f.push(k)}0<f.length&&(e=f);3==c.length&&(c=c[2],f=
-[],c=c?c.split(","):f,0<c.length&&(c=ua[c[0]])&&(this.I[d]=c))}this.I[d]||(c=ua[d])&&(this.I[d]=c);for(c=0;c<e.length;c+=1)this.aa.push(new E(d,e[c]))}};function ya(a,b){this.a=a;this.c=b}var za={Arimo:!0,Cousine:!0,Tinos:!0};ya.prototype.load=function(a){var b=new z,c=this.a,d=new qa(this.c.api,v(c),this.c.text),e=this.c.families;sa(d,e);var f=new ta(e);f.parse();x(c,d.d(),A(b));C(b,function(){a(f.aa,f.I,za)})};function W(a,b){this.a=a;this.c=b;this.X=[]}W.prototype.B=function(a){var b=this.a;return v(this.a)+(this.c.api||"//f.fontdeck.com/s/css/js/")+(b.k.location.hostname||b.F.location.hostname)+"/"+a+".js"};
-W.prototype.load=function(a){var b=this.c.id,c=this.a.k,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,l=c.fonts.length;g<l;++g){var h=c.fonts[g];d.X.push(new E(h.name,ea("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.X)},y(this.a,this.B(b),function(b){b&&a([])})):a([])};function X(a,b){this.a=a;this.c=b}X.prototype.B=function(a){return(this.c.api||"https://use.typekit.net")+"/"+a+".js"};X.prototype.load=function(a){var b=this.c.id,c=this.a.k;b?y(this.a,this.B(b),function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],l=b[f+1],h=0;h<l.length;h++)e.push(new E(g,l[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(k){}a(e)}},2E3):a([])};function Y(a,b){this.a=a;this.c=b}Y.prototype.B=function(a,b){var c=v(this.a),d=(this.c.api||"fast.fonts.net/jsapi").replace(/^.*http(s?):(\/\/)?/,"");return c+"//"+d+"/"+a+".js"+(b?"?v="+b:"")};
-Y.prototype.load=function(a){function b(){if(e["__mti_fntLst"+c]){var d=e["__mti_fntLst"+c](),g=[],l;if(d)for(var h=0;h<d.length;h++){var k=d[h].fontfamily;void 0!=d[h].fontStyle&&void 0!=d[h].fontWeight?(l=d[h].fontStyle+d[h].fontWeight,g.push(new E(k,l))):g.push(new E(k))}a(g)}else setTimeout(function(){b()},50)}var c=this.c.projectId,d=this.c.version;if(c){var e=this.a.k;y(this.a,this.B(c,d),function(c){c?a([]):b()}).id="__MonotypeAPIScript__"+c}else a([])};function Aa(a,b){this.a=a;this.c=b}Aa.prototype.load=function(a){var b,c,d=this.c.urls||[],e=this.c.families||[],f=this.c.testStrings||{},g=new z;b=0;for(c=d.length;b<c;b++)x(this.a,d[b],A(g));var l=[];b=0;for(c=e.length;b<c;b++)if(d=e[b].split(":"),d[1])for(var h=d[1].split(","),k=0;k<h.length;k+=1)l.push(new E(d[0],h[k]));else l.push(new E(d[0]));C(g,function(){a(l,f)})};var Z=new na(window);Z.q.t.custom=function(a,b){return new Aa(b,a)};Z.q.t.fontdeck=function(a,b){return new W(b,a)};Z.q.t.monotype=function(a,b){return new Y(b,a)};Z.q.t.typekit=function(a,b){return new X(b,a)};Z.q.t.google=function(a,b){return new ya(b,a)};var $={load:n(Z.load,Z)};"function"===typeof define&&define.amd?define(function(){return $}):"undefined"!==typeof module&&module.exports?module.exports=$:(window.WebFont=$,window.WebFontConfig&&Z.load(window.WebFontConfig));}());
+},{}],316:[function(require,module,exports){
+/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
+function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
+function ea(a){return a.o.location.hostname||a.a.location.hostname}function z(a,b,c){function d(){m&&e&&f&&(m(g),m=null)}b=t(a,"link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,m=c||null;da?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);u(a,"head",b)}
+function A(a,b,c,d){var e=a.c.getElementsByTagName("head")[0];if(e){var f=t(a,"script",{src:b}),g=!1;f.onload=f.onreadystatechange=function(){g||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(g=!0,c&&c(null),f.onload=f.onreadystatechange=null,"HEAD"==f.parentNode.tagName&&e.removeChild(f))};e.appendChild(f);setTimeout(function(){g||(g=!0,c&&c(Error("Script load timeout")))},d||5E3);return f}return null};function B(){this.a=0;this.c=null}function C(a){a.a++;return function(){a.a--;D(a)}}function E(a,b){a.c=b;D(a)}function D(a){0==a.a&&a.c&&(a.c(),a.c=null)};function F(a){this.a=a||"-"}F.prototype.c=function(a){for(var b=[],c=0;c<arguments.length;c++)b.push(arguments[c].replace(/[\W_]+/g,"").toLowerCase());return b.join(this.a)};function G(a,b){this.c=a;this.f=4;this.a="n";var c=(b||"n4").match(/^([nio])([1-9])$/i);c&&(this.a=c[1],this.f=parseInt(c[2],10))}function fa(a){return H(a)+" "+(a.f+"00")+" 300px "+I(a.c)}function I(a){var b=[];a=a.split(/,\s*/);for(var c=0;c<a.length;c++){var d=a[c].replace(/['"]/g,"");-1!=d.indexOf(" ")||/^\d/.test(d)?b.push("'"+d+"'"):b.push(d)}return b.join(",")}function J(a){return a.a+a.f}function H(a){var b="normal";"o"===a.a?b="oblique":"i"===a.a&&(b="italic");return b}
+function ga(a){var b=4,c="n",d=null;a&&((d=a.match(/(normal|oblique|italic)/i))&&d[1]&&(c=d[1].substr(0,1).toLowerCase()),(d=a.match(/([1-9]00|normal|bold)/i))&&d[1]&&(/bold/i.test(d[1])?b=7:/[1-9]00/.test(d[1])&&(b=parseInt(d[1].substr(0,1),10))));return c+b};function ha(a,b){this.c=a;this.f=a.o.document.documentElement;this.h=b;this.a=new F("-");this.j=!1!==b.events;this.g=!1!==b.classes}function ia(a){a.g&&w(a.f,[a.a.c("wf","loading")]);K(a,"loading")}function L(a){if(a.g){var b=y(a.f,a.a.c("wf","active")),c=[],d=[a.a.c("wf","loading")];b||c.push(a.a.c("wf","inactive"));w(a.f,c,d)}K(a,"inactive")}function K(a,b,c){if(a.j&&a.h[b])if(c)a.h[b](c.c,J(c));else a.h[b]()};function ja(){this.c={}}function ka(a,b,c){var d=[],e;for(e in b)if(b.hasOwnProperty(e)){var f=a.c[e];f&&d.push(f(b[e],c))}return d};function M(a,b){this.c=a;this.f=b;this.a=t(this.c,"span",{"aria-hidden":"true"},this.f)}function N(a){u(a.c,"body",a.a)}function O(a){return"display:block;position:absolute;top:-9999px;left:-9999px;font-size:300px;width:auto;height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;white-space:nowrap;font-family:"+I(a.c)+";"+("font-style:"+H(a)+";font-weight:"+(a.f+"00")+";")};function P(a,b,c,d,e,f){this.g=a;this.j=b;this.a=d;this.c=c;this.f=e||3E3;this.h=f||void 0}P.prototype.start=function(){var a=this.c.o.document,b=this,c=q(),d=new Promise(function(d,e){function f(){q()-c>=b.f?e():a.fonts.load(fa(b.a),b.h).then(function(a){1<=a.length?d():setTimeout(f,25)},function(){e()})}f()}),e=null,f=new Promise(function(a,d){e=setTimeout(d,b.f)});Promise.race([f,d]).then(function(){e&&(clearTimeout(e),e=null);b.g(b.a)},function(){b.j(b.a)})};function Q(a,b,c,d,e,f,g){this.v=a;this.B=b;this.c=c;this.a=d;this.s=g||"BESbswy";this.f={};this.w=e||3E3;this.u=f||null;this.m=this.j=this.h=this.g=null;this.g=new M(this.c,this.s);this.h=new M(this.c,this.s);this.j=new M(this.c,this.s);this.m=new M(this.c,this.s);a=new G(this.a.c+",serif",J(this.a));a=O(a);this.g.a.style.cssText=a;a=new G(this.a.c+",sans-serif",J(this.a));a=O(a);this.h.a.style.cssText=a;a=new G("serif",J(this.a));a=O(a);this.j.a.style.cssText=a;a=new G("sans-serif",J(this.a));a=
+O(a);this.m.a.style.cssText=a;N(this.g);N(this.h);N(this.j);N(this.m)}var R={D:"serif",C:"sans-serif"},S=null;function T(){if(null===S){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent);S=!!a&&(536>parseInt(a[1],10)||536===parseInt(a[1],10)&&11>=parseInt(a[2],10))}return S}Q.prototype.start=function(){this.f.serif=this.j.a.offsetWidth;this.f["sans-serif"]=this.m.a.offsetWidth;this.A=q();U(this)};
+function la(a,b,c){for(var d in R)if(R.hasOwnProperty(d)&&b===a.f[R[d]]&&c===a.f[R[d]])return!0;return!1}function U(a){var b=a.g.a.offsetWidth,c=a.h.a.offsetWidth,d;(d=b===a.f.serif&&c===a.f["sans-serif"])||(d=T()&&la(a,b,c));d?q()-a.A>=a.w?T()&&la(a,b,c)&&(null===a.u||a.u.hasOwnProperty(a.a.c))?V(a,a.v):V(a,a.B):ma(a):V(a,a.v)}function ma(a){setTimeout(p(function(){U(this)},a),50)}function V(a,b){setTimeout(p(function(){v(this.g.a);v(this.h.a);v(this.j.a);v(this.m.a);b(this.a)},a),0)};function W(a,b,c){this.c=a;this.a=b;this.f=0;this.m=this.j=!1;this.s=c}var X=null;W.prototype.g=function(a){var b=this.a;b.g&&w(b.f,[b.a.c("wf",a.c,J(a).toString(),"active")],[b.a.c("wf",a.c,J(a).toString(),"loading"),b.a.c("wf",a.c,J(a).toString(),"inactive")]);K(b,"fontactive",a);this.m=!0;na(this)};
+W.prototype.h=function(a){var b=this.a;if(b.g){var c=y(b.f,b.a.c("wf",a.c,J(a).toString(),"active")),d=[],e=[b.a.c("wf",a.c,J(a).toString(),"loading")];c||d.push(b.a.c("wf",a.c,J(a).toString(),"inactive"));w(b.f,d,e)}K(b,"fontinactive",a);na(this)};function na(a){0==--a.f&&a.j&&(a.m?(a=a.a,a.g&&w(a.f,[a.a.c("wf","active")],[a.a.c("wf","loading"),a.a.c("wf","inactive")]),K(a,"active")):L(a.a))};function oa(a){this.j=a;this.a=new ja;this.h=0;this.f=this.g=!0}oa.prototype.load=function(a){this.c=new ca(this.j,a.context||this.j);this.g=!1!==a.events;this.f=!1!==a.classes;pa(this,new ha(this.c,a),a)};
+function qa(a,b,c,d,e){var f=0==--a.h;(a.f||a.g)&&setTimeout(function(){var a=e||null,m=d||null||{};if(0===c.length&&f)L(b.a);else{b.f+=c.length;f&&(b.j=f);var h,l=[];for(h=0;h<c.length;h++){var k=c[h],n=m[k.c],r=b.a,x=k;r.g&&w(r.f,[r.a.c("wf",x.c,J(x).toString(),"loading")]);K(r,"fontloading",x);r=null;if(null===X)if(window.FontFace){var x=/Gecko.*Firefox\/(\d+)/.exec(window.navigator.userAgent),xa=/OS X.*Version\/10\..*Safari/.exec(window.navigator.userAgent)&&/Apple/.exec(window.navigator.vendor);
+X=x?42<parseInt(x[1],10):xa?!1:!0}else X=!1;X?r=new P(p(b.g,b),p(b.h,b),b.c,k,b.s,n):r=new Q(p(b.g,b),p(b.h,b),b.c,k,b.s,a,n);l.push(r)}for(h=0;h<l.length;h++)l[h].start()}},0)}function pa(a,b,c){var d=[],e=c.timeout;ia(b);var d=ka(a.a,c,a.c),f=new W(a.c,b,e);a.h=d.length;b=0;for(c=d.length;b<c;b++)d[b].load(function(b,d,c){qa(a,f,b,d,c)})};function ra(a,b){this.c=a;this.a=b}
+ra.prototype.load=function(a){function b(){if(f["__mti_fntLst"+d]){var c=f["__mti_fntLst"+d](),e=[],h;if(c)for(var l=0;l<c.length;l++){var k=c[l].fontfamily;void 0!=c[l].fontStyle&&void 0!=c[l].fontWeight?(h=c[l].fontStyle+c[l].fontWeight,e.push(new G(k,h))):e.push(new G(k))}a(e)}else setTimeout(function(){b()},50)}var c=this,d=c.a.projectId,e=c.a.version;if(d){var f=c.c.o;A(this.c,(c.a.api||"https://fast.fonts.net/jsapi")+"/"+d+".js"+(e?"?v="+e:""),function(e){e?a([]):(f["__MonotypeConfiguration__"+
+d]=function(){return c.a},b())}).id="__MonotypeAPIScript__"+d}else a([])};function sa(a,b){this.c=a;this.a=b}sa.prototype.load=function(a){var b,c,d=this.a.urls||[],e=this.a.families||[],f=this.a.testStrings||{},g=new B;b=0;for(c=d.length;b<c;b++)z(this.c,d[b],C(g));var m=[];b=0;for(c=e.length;b<c;b++)if(d=e[b].split(":"),d[1])for(var h=d[1].split(","),l=0;l<h.length;l+=1)m.push(new G(d[0],h[l]));else m.push(new G(d[0]));E(g,function(){a(m,f)})};function ta(a,b){a?this.c=a:this.c=ua;this.a=[];this.f=[];this.g=b||""}var ua="https://fonts.googleapis.com/css";function va(a,b){for(var c=b.length,d=0;d<c;d++){var e=b[d].split(":");3==e.length&&a.f.push(e.pop());var f="";2==e.length&&""!=e[1]&&(f=":");a.a.push(e.join(f))}}
+function wa(a){if(0==a.a.length)throw Error("No fonts to load!");if(-1!=a.c.indexOf("kit="))return a.c;for(var b=a.a.length,c=[],d=0;d<b;d++)c.push(a.a[d].replace(/ /g,"+"));b=a.c+"?family="+c.join("%7C");0<a.f.length&&(b+="&subset="+a.f.join(","));0<a.g.length&&(b+="&text="+encodeURIComponent(a.g));return b};function ya(a){this.f=a;this.a=[];this.c={}}
+var za={latin:"BESbswy","latin-ext":"\u00e7\u00f6\u00fc\u011f\u015f",cyrillic:"\u0439\u044f\u0416",greek:"\u03b1\u03b2\u03a3",khmer:"\u1780\u1781\u1782",Hanuman:"\u1780\u1781\u1782"},Aa={thin:"1",extralight:"2","extra-light":"2",ultralight:"2","ultra-light":"2",light:"3",regular:"4",book:"4",medium:"5","semi-bold":"6",semibold:"6","demi-bold":"6",demibold:"6",bold:"7","extra-bold":"8",extrabold:"8","ultra-bold":"8",ultrabold:"8",black:"9",heavy:"9",l:"3",r:"4",b:"7"},Ba={i:"i",italic:"i",n:"n",normal:"n"},
+Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
+function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
+g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)};"function"===typeof define&&define.amd?define(function(){return Z}):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
+
+},{}],"ext/tooltips":[function(require,module,exports){
+/*!
+ * tooltips 0.1.0 - 20th Dec 2013
+ * https://github.com/darsain/tooltip
+ *
+ * Licensed under the MIT license.
+ * http://opensource.org/licenses/MIT
+ *
+ * @modified by Djamil Legato
+ */
+;(function(){
+
+    /**
+     * Require the given path.
+     *
+     * @param {String} path
+     * @return {Object} exports
+     * @api public
+     */
+
+    function fakeRequire(path, parent, orig) {
+        var resolved = fakeRequire.resolve(path);
+
+        // lookup failed
+        if (null == resolved) {
+            orig = orig || path;
+            parent = parent || 'root';
+            var err = new Error('Failed to fakeRequire "' + orig + '" from "' + parent + '"');
+            err.path = orig;
+            err.parent = parent;
+            err.fakeRequire = true;
+            throw err;
+        }
+
+        var module = fakeRequire.modules[resolved];
+
+        // perform real fakeRequire()
+        // by invoking the module's
+        // registered function
+        if (!module._resolving && !module.exports) {
+            var mod = {};
+            mod.exports = {};
+            mod.client = mod.component = true;
+            module._resolving = true;
+            module.call(this, mod.exports, fakeRequire.relative(resolved), mod);
+            delete module._resolving;
+            module.exports = mod.exports;
+        }
+
+        return module.exports;
+    }
+
+    /**
+     * Registered modules.
+     */
+
+    fakeRequire.modules = {};
+
+    /**
+     * Registered aliases.
+     */
+
+    fakeRequire.aliases = {};
+
+    /**
+     * Resolve `path`.
+     *
+     * Lookup:
+     *
+     *   - PATH/index.js
+     *   - PATH.js
+     *   - PATH
+     *
+     * @param {String} path
+     * @return {String} path or null
+     * @api private
+     */
+
+    fakeRequire.resolve = function(path) {
+        if (path.charAt(0) === '/') path = path.slice(1);
+
+        var paths = [
+            path,
+            path + '.js',
+            path + '.json',
+            path + '/index.js',
+            path + '/index.json'
+        ];
+
+        for (var i = 0; i < paths.length; i++) {
+            var path = paths[i];
+            if (fakeRequire.modules.hasOwnProperty(path)) return path;
+            if (fakeRequire.aliases.hasOwnProperty(path)) return fakeRequire.aliases[path];
+        }
+    };
+
+    /**
+     * Normalize `path` relative to the current path.
+     *
+     * @param {String} curr
+     * @param {String} path
+     * @return {String}
+     * @api private
+     */
+
+    fakeRequire.normalize = function(curr, path) {
+        var segs = [];
+
+        if ('.' != path.charAt(0)) return path;
+
+        curr = curr.split('/');
+        path = path.split('/');
+
+        for (var i = 0; i < path.length; ++i) {
+            if ('..' == path[i]) {
+                curr.pop();
+            } else if ('.' != path[i] && '' != path[i]) {
+                segs.push(path[i]);
+            }
+        }
+
+        return curr.concat(segs).join('/');
+    };
+
+    /**
+     * Register module at `path` with callback `definition`.
+     *
+     * @param {String} path
+     * @param {Function} definition
+     * @api private
+     */
+
+    fakeRequire.register = function(path, definition) {
+        fakeRequire.modules[path] = definition;
+    };
+
+    /**
+     * Alias a module definition.
+     *
+     * @param {String} from
+     * @param {String} to
+     * @api private
+     */
+
+    fakeRequire.alias = function(from, to) {
+        if (!fakeRequire.modules.hasOwnProperty(from)) {
+            throw new Error('Failed to alias "' + from + '", it does not exist');
+        }
+        fakeRequire.aliases[to] = from;
+    };
+
+    /**
+     * Return a fakeRequire function relative to the `parent` path.
+     *
+     * @param {String} parent
+     * @return {Function}
+     * @api private
+     */
+
+    fakeRequire.relative = function(parent) {
+        var p = fakeRequire.normalize(parent, '..');
+
+        /**
+         * lastIndexOf helper.
+         */
+
+        function lastIndexOf(arr, obj) {
+            var i = arr.length;
+            while (i--) {
+                if (arr[i] === obj) return i;
+            }
+            return -1;
+        }
+
+        /**
+         * The relative fakeRequire() itself.
+         */
+
+        function localRequire(path) {
+            var resolved = localRequire.resolve(path);
+            return fakeRequire(resolved, parent, path);
+        }
+
+        /**
+         * Resolve relative to the parent.
+         */
+
+        localRequire.resolve = function(path) {
+            var c = path.charAt(0);
+            if ('/' == c) return path.slice(1);
+            if ('.' == c) return fakeRequire.normalize(p, path);
+
+            // resolve deps by returning
+            // the dep in the nearest "deps"
+            // directory
+            var segs = parent.split('/');
+            var i = lastIndexOf(segs, 'deps') + 1;
+            if (!i) i = 0;
+            path = segs.slice(0, i + 1).join('/') + '/deps/' + path;
+            return path;
+        };
+
+        /**
+         * Check if module is defined at `path`.
+         */
+
+        localRequire.exists = function(path) {
+            return fakeRequire.modules.hasOwnProperty(localRequire.resolve(path));
+        };
+
+        return localRequire;
+    };
+    fakeRequire.register("darsain-position/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = position;\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var win = window;\n\
+        var doc = win.document;\n\
+        var docEl = doc.documentElement;\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Checks whether object is window.\n\
+         *\n\
+         * @param {Object} obj\n\
+         *\n\
+         * @return {Boolean}\n\
+         */\n\
+        function isWin(obj) {\n\
+        \treturn obj && obj.setInterval != null;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Returns element's object with `left`, `top`, `bottom`, `right`, `width`, and `height`\n\
+         * properties indicating the position and dimensions of element on a page.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function position(element) {\n\
+        \tvar winTop = win.pageYOffset || docEl.scrollTop;\n\
+        \tvar winLeft = win.pageXOffset || docEl.scrollLeft;\n\
+        \tvar box = { left: 0, right: 0, top: 0, bottom: 0, width: 0, height: 0 };\n\
+        \n\
+        \tif (isWin(element)) {\n\
+        \t\tbox.width = win.innerWidth || docEl.clientWidth;\n\
+        \t\tbox.height = win.innerHeight || docEl.clientHeight;\n\
+        \t} else if (docEl.contains(element) && element.getBoundingClientRect != null) {\n\
+        \t\textend(box, element.getBoundingClientRect());\n\
+        \t\t// width & height don't exist in <IE9\n\
+        \t\tbox.width = box.right - box.left;\n\
+        \t\tbox.height = box.bottom - box.top;\n\
+        \t} else {\n\
+        \t\treturn box;\n\
+        \t}\n\
+        \n\
+        \tbox.top = box.top + winTop - docEl.clientTop;\n\
+        \tbox.left = box.left + winLeft - docEl.clientLeft;\n\
+        \tbox.right = box.left + box.width;\n\
+        \tbox.bottom = box.top + box.height;\n\
+        \n\
+        \treturn box;\n\
+        }//# sourceURL=darsain-position/index.js"
+    ));
+    fakeRequire.register("component-classes/index.js", Function("exports, fakeRequire, module",
+        "/**\n\
+         * Module dependencies.\n\
+         */\n\
+        \n\
+        var index = fakeRequire('indexof');\n\
+        \n\
+        /**\n\
+         * Whitespace regexp.\n\
+         */\n\
+        \n\
+        var re = /\\s+/;\n\
+        \n\
+        /**\n\
+         * toString reference.\n\
+         */\n\
+        \n\
+        var toString = Object.prototype.toString;\n\
+        \n\
+        /**\n\
+         * Wrap `el` in a `ClassList`.\n\
+         *\n\
+         * @param {Element} el\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        module.exports = function(el){\n\
+          return new ClassList(el);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Initialize a new ClassList for `el`.\n\
+         *\n\
+         * @param {Element} el\n\
+         * @api private\n\
+         */\n\
+        \n\
+        function ClassList(el) {\n\
+          if (!el) throw new Error('A DOM element reference is fakeRequired');\n\
+          this.el = el;\n\
+          this.list = el.classList;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Add class `name` if not already present.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.add = function(name){\n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.add(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          var arr = this.array();\n\
+          var i = index(arr, name);\n\
+          if (!~i) arr.push(name);\n\
+          this.el.className = arr.join(' ');\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove class `name` when present, or\n\
+         * pass a regular expression to remove\n\
+         * any which match.\n\
+         *\n\
+         * @param {String|RegExp} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.remove = function(name){\n\
+          if ('[object RegExp]' == toString.call(name)) {\n\
+            return this.removeMatching(name);\n\
+          }\n\
+        \n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.remove(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          var arr = this.array();\n\
+          var i = index(arr, name);\n\
+          if (~i) arr.splice(i, 1);\n\
+          this.el.className = arr.join(' ');\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove all classes matching `re`.\n\
+         *\n\
+         * @param {RegExp} re\n\
+         * @return {ClassList}\n\
+         * @api private\n\
+         */\n\
+        \n\
+        ClassList.prototype.removeMatching = function(re){\n\
+          var arr = this.array();\n\
+          for (var i = 0; i < arr.length; i++) {\n\
+            if (re.test(arr[i])) {\n\
+              this.remove(arr[i]);\n\
+            }\n\
+          }\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Toggle class `name`.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.toggle = function(name){\n\
+          // classList\n\
+          if (this.list) {\n\
+            this.list.toggle(name);\n\
+            return this;\n\
+          }\n\
+        \n\
+          // fallback\n\
+          if (this.has(name)) {\n\
+            this.remove(name);\n\
+          } else {\n\
+            this.add(name);\n\
+          }\n\
+          return this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Return an array of classes.\n\
+         *\n\
+         * @return {Array}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.array = function(){\n\
+          var str = this.el.className.replace(/^\\s+|\\s+$/g, '');\n\
+          var arr = str.split(re);\n\
+          if ('' === arr[0]) arr.shift();\n\
+          return arr;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Check if class `name` is present.\n\
+         *\n\
+         * @param {String} name\n\
+         * @return {ClassList}\n\
+         * @api public\n\
+         */\n\
+        \n\
+        ClassList.prototype.has =\n\
+        ClassList.prototype.contains = function(name){\n\
+          return this.list\n\
+            ? this.list.contains(name)\n\
+            : !! ~index(this.array(), name);\n\
+        };\n\
+        //# sourceURL=component-classes/index.js"
+    ));
+    fakeRequire.register("darsain-tooltip/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Dependencies.\n\
+         */\n\
+        var evt = fakeRequire('event');\n\
+        var classes = fakeRequire('classes');\n\
+        var indexOf = fakeRequire('indexof');\n\
+        var position = fakeRequire('position');\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var win = window;\n\
+        var doc = win.document;\n\
+        var body = doc.body;\n\
+        var verticalPlaces = ['top', 'bottom'];\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = Tooltip;\n\
+        \n\
+        /**\n\
+         * Prototypal inheritance.\n\
+         *\n\
+         * @param {Object} o\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        var objectCreate = Object.create || (function () {\n\
+        \tfunction F() {}\n\
+        \treturn function (o) {\n\
+        \t\tF.prototype = o;\n\
+        \t\treturn new F();\n\
+        \t};\n\
+        })();\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Parse integer from strings like '-50px'.\n\
+         *\n\
+         * @param {Mixed} value\n\
+         *\n\
+         * @return {Integer}\n\
+         */\n\
+        function parsePx(value) {\n\
+        \treturn 0 | Math.round(String(value).replace(/[^\\-0-9.]/g, ''));\n\
+        }\n\
+        \n\
+        /**\n\
+         * Get computed style of element.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @type {String}\n\
+         */\n\
+        var style = win.getComputedStyle ? function style(element, name) {\n\
+        \treturn win.getComputedStyle(element, null)[name];\n\
+        } : function style(element, name) {\n\
+        \treturn element.currentStyle[name];\n\
+        };\n\
+        \n\
+        /**\n\
+         * Returns transition duration of element in ms.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Int}\n\
+         */\n\
+        function transitionDuration(element) {\n\
+        \tvar duration = String(style(element, transitionDuration.propName));\n\
+        \tvar match = duration.match(/([0-9.]+)([ms]{1,2})/);\n\
+        \tif (match) {\n\
+        \t\tduration = Number(match[1]);\n\
+        \t\tif (match[2] === 's') {\n\
+        \t\t\tduration *= 1000;\n\
+        \t\t}\n\
+        \t}\n\
+        \treturn 0|duration;\n\
+        }\n\
+        transitionDuration.propName = (function () {\n\
+        \tvar element = doc.createElement('div');\n\
+        \tvar names = ['transitionDuration', 'webkitTransitionDuration'];\n\
+        \tvar value = '1s';\n\
+        \tfor (var i = 0; i < names.length; i++) {\n\
+        \t\telement.style[names[i]] = value;\n\
+        \t\tif (element.style[names[i]] === value) {\n\
+        \t\t\treturn names[i];\n\
+        \t\t}\n\
+        \t}\n\
+        }());\n\
+        \n\
+        /**\n\
+         * Tooltip construnctor.\n\
+         *\n\
+         * @param {String|Element} content\n\
+         * @param {Object}         options\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        function Tooltip(content, options) {\n\
+        \tif (!(this instanceof Tooltip)) {\n\
+        \t\treturn new Tooltip(content, options);\n\
+        \t}\n\
+        \tthis.hidden = 1;\n\
+        \tthis.options = extend(objectCreate(Tooltip.defaults), options);\n\
+        \tthis._createElement();\n\
+        \tthis.content(content);\n\
+        }\n\
+        \n\
+        /**\n\
+         * Creates a tooltip element.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._createElement = function () {\n\
+        \tthis.element = doc.createElement('div');\n\
+        \tthis.classes = classes(this.element);\n\
+        \tthis.classes.add(this.options.baseClass);\n\
+        \tvar propName;\n\
+        \tfor (var i = 0; i < Tooltip.classTypes.length; i++) {\n\
+        \t\tpropName = Tooltip.classTypes[i] + 'Class';\n\
+        \t\tif (this.options[propName]) {\n\
+        \t\t\tthis.classes.add(this.options[propName]);\n\
+        \t\t}\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes tooltip's type class type.\n\
+         *\n\
+         * @param {String} name\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.type = function (name) {\n\
+        \treturn this.changeClassType('type', name);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes tooltip's effect class type.\n\
+         *\n\
+         * @param {String} name\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.effect = function (name) {\n\
+        \treturn this.changeClassType('effect', name);\n\
+        };\n\
+        \n\
+        /**\n\
+         * Changes class type.\n\
+         *\n\
+         * @param {String} propName\n\
+         * @param {String} newClass\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.changeClassType = function (propName, newClass) {\n\
+        \tpropName += 'Class';\n\
+        \tif (this.options[propName]) {\n\
+        \t\tthis.classes.remove(this.options[propName]);\n\
+        \t}\n\
+        \tthis.options[propName] = newClass;\n\
+        \tif (newClass) {\n\
+        \t\tthis.classes.add(newClass);\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Updates tooltip's dimensions.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.updateSize = function () {\n\
+        \tif (this.hidden) {\n\
+        \t\tthis.element.style.visibility = 'hidden';\n\
+        \t\twindow.document.body.appendChild(this.element);\n\
+        \t}\n\
+        \tthis.width = this.element.offsetWidth;\n\
+        \tthis.height = this.element.offsetHeight;\n\
+        \tif (this.spacing == null) {\n\
+        \t\tthis.spacing = this.options.spacing != null ? this.options.spacing : parsePx(style(this.element, 'top'));\n\
+        \t}\n\
+        \tif (this.offset == null) {\n\
+        \t\tthis.offset = this.options.offset != null ? this.options.offset : 0;\n\
+    \t}\n\
+        \tif (this.hidden) {\n\
+        \t\twindow.document.body.removeChild(this.element);\n\
+        \t\tthis.element.style.visibility = '';\n\
+        \t} else {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Change tooltip content.\n\
+         *\n\
+         * When tooltip is visible, its size is automatically\n\
+         * synced and tooltip correctly repositioned.\n\
+         *\n\
+         * @param {String|Element} content\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.content = function (content) {\n\
+        \tif (typeof content === 'object') {\n\
+        \t\tthis.element.innerHTML = '';\n\
+        \t\tthis.element.appendChild(content);\n\
+        \t} else {\n\
+        \t\tthis.element.innerHTML = content;\n\
+        \t}\n\
+        \tthis.updateSize();\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Pick new place tooltip should be displayed at.\n\
+         *\n\
+         * When the tooltip is visible, it is automatically positioned there.\n\
+         *\n\
+         * @param {String} place\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.place = function (place) {\n\
+        \tthis.options.place = place;\n\
+        \tif (!this.hidden) {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Attach tooltip to an element.\n\
+         *\n\
+         * @param {Element} element\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.attach = function (element) {\n\
+        \tthis.attachedTo = element;\n\
+        \tif (!this.hidden) {\n\
+        \t\tthis.position();\n\
+        \t}\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Detach tooltip from element.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.detach = function () {\n\
+        \tthis.hide();\n\
+        \tthis.attachedTo = null;\n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Pick the most reasonable place for target position.\n\
+         *\n\
+         * @param {Object} target\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype._pickPlace = function (target) {\n\
+        \tif (!this.options.auto) {\n\
+        \t\treturn this.options.place;\n\
+        \t}\n\
+        \tvar winPos = position(win);\n\
+        \tvar place = this.options.place.split('-');\n\
+        \tvar spacing = this.spacing;\n\
+        \n\
+        \tif (~indexOf(verticalPlaces, place[0])) {\n\
+        \t\tif (target.top - this.height - spacing <= winPos.top) {\n\
+        \t\t\tplace[0] = 'bottom';\n\
+        \t\t} else if (target.bottom + this.height + spacing >= winPos.bottom) {\n\
+        \t\t\tplace[0] = 'top';\n\
+        \t\t}\n\
+        \t\tswitch (place[1]) {\n\
+        \t\t\tcase 'left':\n\
+        \t\t\t\tif (target.right - this.width <= winPos.left) {\n\
+        \t\t\t\t\tplace[1] = 'right';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tcase 'right':\n\
+        \t\t\t\tif (target.left + this.width >= winPos.right) {\n\
+        \t\t\t\t\tplace[1] = 'left';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tdefault:\n\
+        \t\t\t\tif (target.left + target.width / 2 + this.width / 2 >= winPos.right) {\n\
+        \t\t\t\t\tplace[1] = 'left';\n\
+        \t\t\t\t} else if (target.right - target.width / 2 - this.width / 2 <= winPos.left) {\n\
+        \t\t\t\t\tplace[1] = 'right';\n\
+        \t\t\t\t}\n\
+        \t\t}\n\
+        \t} else {\n\
+        \t\tif (target.left - this.width - spacing <= winPos.left) {\n\
+        \t\t\tplace[0] = 'right';\n\
+        \t\t} else if (target.right + this.width + spacing >= winPos.right) {\n\
+        \t\t\tplace[0] = 'left';\n\
+        \t\t}\n\
+        \t\tswitch (place[1]) {\n\
+        \t\t\tcase 'top':\n\
+        \t\t\t\tif (target.bottom - this.height <= winPos.top) {\n\
+        \t\t\t\t\tplace[1] = 'bottom';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tcase 'bottom':\n\
+        \t\t\t\tif (target.top + this.height >= winPos.bottom) {\n\
+        \t\t\t\t\tplace[1] = 'top';\n\
+        \t\t\t\t}\n\
+        \t\t\t\tbreak;\n\
+        \t\t\tdefault:\n\
+        \t\t\t\tif (target.top + target.height / 2 + this.height / 2 >= winPos.bottom) {\n\
+        \t\t\t\t\tplace[1] = 'top';\n\
+        \t\t\t\t} else if (target.bottom - target.height / 2 - this.height / 2 <= winPos.top) {\n\
+        \t\t\t\t\tplace[1] = 'bottom';\n\
+        \t\t\t\t}\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \treturn place.join('-');\n\
+        };\n\
+        \n\
+        /**\n\
+         * Position the element to an element or a specific coordinates.\n\
+         *\n\
+         * @param {Integer|Element} x\n\
+         * @param {Integer}         y\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.position = function (x, y) {\n\
+        \tif (this.attachedTo) {\n\
+        \t\tx = this.attachedTo;\n\
+        \t}\n\
+        \tif (x == null && this._p) {\n\
+        \t\tx = this._p[0];\n\
+        \t\ty = this._p[1];\n\
+        \t} else {\n\
+        \t\tthis._p = arguments;\n\
+        \t}\n\
+        \tvar target = typeof x === 'number' ? {\n\
+        \t\tleft: 0|x,\n\
+        \t\tright: 0|x,\n\
+        \t\ttop: 0|y,\n\
+        \t\tbottom: 0|y,\n\
+        \t\twidth: 0,\n\
+        \t\theight: 0\n\
+        \t} : position(x);\n\
+        \tvar spacing = Number(this.spacing), offset = Number(this.offset);\n\
+        \tvar newPlace = this._pickPlace(target);\n\
+        \n\
+        \t// Add/Change place class when necessary\n\
+        \tif (newPlace !== this.curPlace) {\n\
+        \t\tif (this.curPlace) {\n\
+        \t\t\tthis.classes.remove(this.curPlace);\n\
+        \t\t}\n\
+        \t\tthis.classes.add(newPlace);\n\
+        \t\tthis.curPlace = newPlace;\n\
+        \t}\n\
+        \n\
+        \t// Position the tip\n\
+        \tvar top, left;\n\
+        \tswitch (this.curPlace) {\n\
+        \t\tcase 'top':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.left + target.width / 2 - this.width / 2;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'top-left':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.right - this.width - offset;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'top-right':\n\
+        \t\t\ttop = target.top - this.height - spacing;\n\
+        \t\t\tleft = target.left + offset;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'bottom':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.left + target.width / 2 - this.width / 2;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'bottom-left':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.right - this.width - offset;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'bottom-right':\n\
+        \t\t\ttop = target.bottom + spacing;\n\
+        \t\t\tleft = target.left + offset;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'left':\n\
+        \t\t\ttop = target.top + target.height / 2 - this.height / 2;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'left-top':\n\
+        \t\t\ttop = target.bottom - this.height;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'left-bottom':\n\
+        \t\t\ttop = target.top;\n\
+        \t\t\tleft = target.left - this.width - spacing;\n\
+        \t\t\tbreak;\n\
+        \n\
+        \t\tcase 'right':\n\
+        \t\t\ttop = target.top + target.height / 2 - this.height / 2;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'right-top':\n\
+        \t\t\ttop = target.bottom - this.height;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t\tcase 'right-bottom':\n\
+        \t\t\ttop = target.top;\n\
+        \t\t\tleft = target.right + spacing;\n\
+        \t\t\tbreak;\n\
+        \t}\n\
+        \n\
+        \t// Set tip position & class\n\
+        \tthis.element.style.top = Math.round(top) + 'px';\n\
+        \tthis.element.style.left = Math.round(left) + 'px';\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Show the tooltip.\n\
+         *\n\
+         * @param {Integer|Element} x\n\
+         * @param {Integer}         y\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.show = function (x, y) {\n\
+        \tx = this.attachedTo ? this.attachedTo : x;\n\
+        \n\
+        \t// Clear potential ongoing animation\n\
+        \tclearTimeout(this.aIndex);\n\
+        \n\
+        \t// Position the element when requested\n\
+        \tif (x != null) {\n\
+        \t\tthis.position(x, y);\n\
+        \t}\n\
+        \n\
+        \t// Stop here if tip is already visible\n\
+        \tif (this.hidden) {\n\
+        \t\tthis.hidden = 0;\n\
+        \t\twindow.document.body.appendChild(this.element);\n\
+        \t}\n\
+        \n\
+        \t// Make tooltip aware of window resize\n\
+        \tif (this.attachedTo) {\n\
+        \t\tthis._aware();\n\
+        \t}\n\
+        \n\
+        \t// Trigger layout and kick in the transition\n\
+        \tif (this.options.inClass) {\n\
+        \t\tif (this.options.effectClass) {\n\
+        \t\t\tvoid this.element.clientHeight;\n\
+        \t\t}\n\
+        \t\tthis.classes.add(this.options.inClass);\n\
+        \t}\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Hide the tooltip.\n\
+         *\n\
+         * @return {Tooltip}\n\
+         */\n\
+        Tooltip.prototype.hide = function () {\n\
+        \tif (this.hidden) {\n\
+        \t\treturn;\n\
+        \t}\n\
+        \n\
+        \tvar self = this;\n\
+        \tvar duration = 0;\n\
+        \n\
+        \t// Remove .in class and calculate transition duration if any\n\
+        \tif (this.options.inClass) {\n\
+        \t\tthis.classes.remove(this.options.inClass);\n\
+        \t\tif (this.options.effectClass) {\n\
+        \t\t\tduration = transitionDuration(this.element);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t// Remove tip from window resize awareness\n\
+        \tif (this.attachedTo) {\n\
+        \t\tthis._unaware();\n\
+        \t}\n\
+        \n\
+        \t// Remove the tip from the DOM when transition is done\n\
+        \tclearTimeout(this.aIndex);\n\
+        \tthis.aIndex = setTimeout(function () {\n\
+        \t\tself.aIndex = 0;\n\
+        \t\twindow.document.body.removeChild(self.element);\n\
+        \t\tself.hidden = 1;\n\
+        \t}, duration);\n\
+        \n\
+        \treturn this;\n\
+        };\n\
+        \n\
+        Tooltip.prototype.toggle = function (x, y) {\n\
+        \treturn this[this.hidden ? 'show' : 'hide'](x, y);\n\
+        };\n\
+        \n\
+        Tooltip.prototype.destroy = function () {\n\
+        \tclearTimeout(this.aIndex);\n\
+        \tthis._unaware();\n\
+        \tif (!this.hidden) {\n\
+        \t\twindow.document.body.removeChild(this.element);\n\
+        \t}\n\
+        \tthis.element = this.options = null;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Make the tip window resize aware.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._aware = function () {\n\
+        \tvar index = indexOf(Tooltip.winAware, this);\n\
+        \tif (!~index) {\n\
+        \t\tTooltip.winAware.push(this);\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Remove the window resize awareness.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.prototype._unaware = function () {\n\
+        \tvar index = indexOf(Tooltip.winAware, this);\n\
+        \tif (~index) {\n\
+        \t\tTooltip.winAware.splice(index, 1);\n\
+        \t}\n\
+        };\n\
+        \n\
+        /**\n\
+         * Handles repositioning of tooltips on window resize.\n\
+         *\n\
+         * @return {Void}\n\
+         */\n\
+        Tooltip.reposition = (function () {\n\
+        \tvar rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (fn) {\n\
+        \t\treturn setTimeout(fn, 17);\n\
+        \t};\n\
+        \tvar rIndex;\n\
+        \n\
+        \tfunction requestReposition() {\n\
+        \t\tif (rIndex || !Tooltip.winAware.length) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\trIndex = rAF(reposition, 17);\n\
+        \t}\n\
+        \n\
+        \tfunction reposition() {\n\
+        \t\trIndex = 0;\n\
+        \t\tvar tip;\n\
+        \t\tfor (var i = 0, l = Tooltip.winAware.length; i < l; i++) {\n\
+        \t\t\ttip = Tooltip.winAware[i];\n\
+        \t\t\ttip.position();\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \treturn requestReposition;\n\
+        }());\n\
+        Tooltip.winAware = [];\n\
+        \n\
+        // Bind winAware repositioning to window resize event\n\
+        evt.bind(window, 'resize', Tooltip.reposition);\n\
+        evt.bind(window, 'scroll', Tooltip.reposition);\n\
+        \n\
+        /**\n\
+         * Array with dynamic class types.\n\
+         *\n\
+         * @type {Array}\n\
+         */\n\
+        Tooltip.classTypes = ['type', 'effect'];\n\
+        \n\
+        /**\n\
+         * Default options for Tooltip constructor.\n\
+         *\n\
+         * @type {Object}\n\
+         */\n\
+        Tooltip.defaults = {\n\
+        \tbaseClass:   'tooltip', // Base tooltip class name.\n\
+        \ttypeClass:   null,      // Type tooltip class name.\n\
+        \teffectClass: null,      // Effect tooltip class name.\n\
+        \tinClass:     'in',      // Class used to transition stuff in.\n\
+        \tplace:       'top',     // Default place.\n\
+        \tspacing:     null,      // Gap between target and tooltip.\n\
+        \toffset:      null,      // Horizontal offset to align arrow\n\
+        \tauto:        0          // Whether to automatically adjust place to fit into window.\n\
+        };//# sourceURL=darsain-tooltip/index.js"
+    ));
+    fakeRequire.register("darsain-event/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Bind `el` event `type` to `fn`.\n\
+         *\n\
+         * @param {Element}  el\n\
+         * @param {String}   type\n\
+         * @param {Function} fn\n\
+         * @param {Boolean}  capture\n\
+         *\n\
+         * @return {Function}\n\
+         */\n\
+        exports.bind = window.addEventListener ? function (el, type, fn, capture) {\n\
+        \tel.addEventListener(type, fn, capture || false);\n\
+        \treturn fn;\n\
+        } : function (el, type, fn) {\n\
+        \tvar fnid = type + fn;\n\
+        \tel[fnid] = el[fnid] || function () {\n\
+        \t\tvar event = window.event;\n\
+        \t\tevent.target = event.srcElement;\n\
+        \t\tevent.preventDefault = function () {\n\
+        \t\t\tevent.returnValue = false;\n\
+        \t\t};\n\
+        \t\tevent.stopPropagation = function () {\n\
+        \t\t\tevent.cancelBubble = true;\n\
+        \t\t};\n\
+        \t\tfn.call(el, event);\n\
+        \t};\n\
+        \tel.attachEvent('on' + type, el[fnid]);\n\
+        \treturn fn;\n\
+        };\n\
+        \n\
+        /**\n\
+         * Unbind `el` event `type`'s callback `fn`.\n\
+         *\n\
+         * @param {Element}  el\n\
+         * @param {String}   type\n\
+         * @param {Function} fn\n\
+         * @param {Boolean}  capture\n\
+         *\n\
+         * @return {Function}\n\
+         */\n\
+        exports.unbind = window.removeEventListener ? function (el, type, fn, capture) {\n\
+        \tel.removeEventListener(type, fn, capture || false);\n\
+        \treturn fn;\n\
+        } : function (el, type, fn) {\n\
+        \tvar fnid = type + fn;\n\
+        \tel.detachEvent('on' + type, el[fnid]);\n\
+        \ttry {\n\
+        \t\tdelete el[fnid];\n\
+        \t} catch (err) {\n\
+        \t\t// can't delete window object properties\n\
+        \t\tel[fnid] = undefined;\n\
+        \t}\n\
+        \treturn fn;\n\
+        };//# sourceURL=darsain-event/index.js"
+    ));
+    fakeRequire.register("component-indexof/index.js", Function("exports, fakeRequire, module",
+        "module.exports = function(arr, obj){\n\
+          if (arr.indexOf) return arr.indexOf(obj);\n\
+          for (var i = 0; i < arr.length; ++i) {\n\
+            if (arr[i] === obj) return i;\n\
+          }\n\
+          return -1;\n\
+        };//# sourceURL=component-indexof/index.js"
+    ));
+    fakeRequire.register("code42day-dataset/index.js", Function("exports, fakeRequire, module",
+        "module.exports=dataset;\n\
+        \n\
+        /*global document*/\n\
+        \n\
+        \n\
+        // replace namesLikeThis with names-like-this\n\
+        function toDashed(name) {\n\
+          return name.replace(/([A-Z])/g, function(u) {\n\
+            return \"-\" + u.toLowerCase();\n\
+          });\n\
+        }\n\
+        \n\
+        var fn;\n\
+        \n\
+        if (document.head.dataset) {\n\
+          fn = {\n\
+            set: function(node, attr, value) {\n\
+               if (!node.dataset) return;\
+               node.dataset[attr] = value;\n\
+            },\n\
+            get: function(node, attr) {\n\
+              return node.dataset && node.dataset[attr];\n\
+            }\n\
+          };\n\
+        } else {\n\
+          fn = {\n\
+            set: function(node, attr, value) {\n\
+              node.setAttribute('data-' + toDashed(attr), value);\n\
+            },\n\
+            get: function(node, attr) {\n\
+              return node.getAttribute('data-' + toDashed(attr));\n\
+            }\n\
+          };\n\
+        }\n\
+        \n\
+        function dataset(node, attr, value) {\n\
+          var self = {\n\
+            set: set,\n\
+            get: get\n\
+          };\n\
+        \n\
+          function set(attr, value) {\n\
+            fn.set(node, attr, value);\n\
+            return self;\n\
+          }\n\
+        \n\
+          function get(attr) {\n\
+            return fn.get(node, attr);\n\
+          }\n\
+        \n\
+          if (arguments.length === 3) {\n\
+            return set(attr, value);\n\
+          }\n\
+          if (arguments.length == 2) {\n\
+            return get(attr);\n\
+          }\n\
+        \n\
+          return self;\n\
+        }//# sourceURL=code42day-dataset/index.js"
+    ));
+    fakeRequire.register("tooltips/index.js", Function("exports, fakeRequire, module",
+        "'use strict';\n\
+        \n\
+        /**\n\
+         * Dependencies.\n\
+         */\n\
+        var evt = fakeRequire('event');\n\
+        var indexOf = fakeRequire('indexof');\n\
+        var Tooltip = fakeRequire('tooltip');\n\
+        var dataset = fakeRequire('dataset');\n\
+        \n\
+        /**\n\
+         * Transport.\n\
+         */\n\
+        module.exports = Tooltips;\n\
+        \n\
+        /**\n\
+         * Globals.\n\
+         */\n\
+        var MObserver = window.MutationObserver || window.WebkitMutationObserver;\n\
+        \n\
+        /**\n\
+         * Prototypal inheritance.\n\
+         *\n\
+         * @param {Object} o\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        var objectCreate = Object.create || (function () {\n\
+        \tfunction F() {}\n\
+        \treturn function (o) {\n\
+        \t\tF.prototype = o;\n\
+        \t\treturn new F();\n\
+        \t};\n\
+        })();\n\
+        \n\
+        /**\n\
+         * Poor man's shallow object extend.\n\
+         *\n\
+         * @param {Object} a\n\
+         * @param {Object} b\n\
+         *\n\
+         * @return {Object}\n\
+         */\n\
+        function extend(a, b) {\n\
+        \tfor (var key in b) {\n\
+        \t\ta[key] = b[key];\n\
+        \t}\n\
+        \treturn a;\n\
+        }\n\
+        \n\
+        /**\n\
+         * Capitalize the first letter of a string.\n\
+         *\n\
+         * @param {String} string\n\
+         *\n\
+         * @return {String}\n\
+         */\n\
+        function ucFirst(string) {\n\
+        \treturn string.charAt(0).toUpperCase() + string.slice(1);\n\
+        }\n\
+        \n\
+        /**\n\
+         * Tooltips constructor.\n\
+         *\n\
+         * @param {Element} container\n\
+         * @param {Object}  options\n\
+         *\n\
+         * @return {Tooltips}\n\
+         */\n\
+        function Tooltips(container, options) {\n\
+        \tif (!(this instanceof Tooltips)) {\n\
+        \t\treturn new Tooltips(container, options);\n\
+        \t}\n\
+        \n\
+        \tvar self = this;\n\
+        \tvar observer, TID;\n\
+        \n\
+        \t/**\n\
+        \t * Show tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.show = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'show');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Hide tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.hide = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'hide');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Toggle tooltip attached to an element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.toggle = function (element) {\n\
+        \t\treturn callTooltipMethod(element, 'toggle');\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Retrieve tooltip attached to an element and call it's method.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t * @param {String}  method\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tfunction callTooltipMethod(element, method) {\n\
+        \t\tvar tip = self.get(element);\n\
+        \t\tif (tip) {\n\
+        \t\t\ttip[method]();\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Return a tooltip attached to an element. Tooltip is created if it doesn't exist yet.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltip}\n\
+        \t */\n\
+        \tself.get = function (element) {\n\
+        \t\tvar tip = !!element && (element[TID] || createTip(element));\n\
+        \t\tif (tip && !element[TID]) {\n\
+        \t\t\telement[TID] = tip;\n\
+        \t\t}\n\
+        \t\treturn tip;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Add element(s) to Tooltips instance.\n\
+        \t *\n\
+        \t * @param {[type]} element Can be element, or container containing elements to be added.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.add = function (element) {\n\
+        \t\tif (!element || element.nodeType !== 1) {\n\
+        \t\t\treturn self;\n\
+        \t\t}\n\
+        \t\tif (dataset(element).get(options.key)) {\n\
+        \t\t\tbindElement(element);\n\
+        \t\t} else if (element.children) {\n\
+        \t\t\tbindElements(element.querySelectorAll(self.selector));\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Remove element(s) from Tooltips instance.\n\
+        \t *\n\
+        \t * @param {Element} element Can be element, or container containing elements to be removed.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.remove = function (element) {\n\
+        \t\tif (!element || element.nodeType !== 1) {\n\
+        \t\t\treturn self;\n\
+        \t\t}\n\
+        \t\tif (dataset(element).get(options.key)) {\n\
+        \t\t\tunbindElement(element);\n\
+        \t\t} else if (element.children) {\n\
+        \t\t\tunbindElements(element.querySelectorAll(self.selector));\n\
+        \t\t}\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Reload Tooltips instance.\n\
+        \t *\n\
+        \t * Unbinds current tooltipped elements, than selects the\n\
+        \t * data-key elements from container and binds them again.\n\
+        \t *\n\
+        \t * @return {Tooltips}\n\
+        \t */\n\
+        \tself.reload = function () {\n\
+        \t\t// Unbind old elements\n\
+        \t\tunbindElements(self.elements);\n\
+        \t\t// Bind new elements\n\
+        \t\tbindElements(self.container.querySelectorAll(self.selector));\n\
+        \t\treturn self;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Destroy Tooltips instance.\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tself.destroy = function () {\n\
+        \t\tunbindElements(this.elements);\n\
+        \t\tif (observer) {\n\
+        \t\t\tobserver.disconnect();\n\
+        \t\t}\n\
+        \t\tthis.container = this.elements = this.options = observer = null;\n\
+        \t};\n\
+        \n\
+        \t/**\n\
+        \t * Create a tip from element data attributes.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Tooltip}\n\
+        \t */\n\
+        \tfunction createTip(element) {\n\
+        \t\tvar data = dataset(element);\n\
+        \t\tvar content = data.get(options.key);\n\
+        \t\tif (!content) {\n\
+        \t\t\treturn false;\n\
+        \t\t}\n\
+        \t\tvar tipOptions = objectCreate(options.tooltip);\n\
+        \t\tvar keyData;\n\
+        \t\tfor (var key in Tooltip.defaults) {\n\
+        \t\t\tkeyData = data.get(options.key + ucFirst(key.replace(/Class$/, '')));\n\
+        \t\t\tif (!keyData) {\n\
+        \t\t\t\tcontinue;\n\
+        \t\t\t}\n\
+        \t\t\ttipOptions[key] = keyData;\n\
+        \t\t}\n\
+        \t\treturn new Tooltip(content, tipOptions).attach(element);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Bind Tooltips events to Array/NodeList of elements.\n\
+        \t *\n\
+        \t * @param {Array} elements\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction bindElements(elements) {\n\
+        \t\tfor (var i = 0, l = elements.length; i < l; i++) {\n\
+        \t\t\tbindElement(elements[i]);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Bind Tooltips events to element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction bindElement(element) {\n\
+        \t\tif (element[TID] || ~indexOf(self.elements, element)) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\tevt.bind(element, options.showOn, eventHandler);\n\
+        \t\tevt.bind(element, options.hideOn, eventHandler);\n\
+        \t\tself.elements.push(element);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Unbind Tooltips events from Array/NodeList of elements.\n\
+        \t *\n\
+        \t * @param {Array} elements\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction unbindElements(elements) {\n\
+        \t\tif (self.elements === elements) {\n\
+        \t\t\telements = elements.slice();\n\
+        \t\t}\n\
+        \t\tfor (var i = 0, l = elements.length; i < l; i++) {\n\
+        \t\t\tunbindElement(elements[i]);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Unbind Tooltips events from element.\n\
+        \t *\n\
+        \t * @param {Element} element\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction unbindElement(element) {\n\
+        \t\tvar index = indexOf(self.elements, element);\n\
+        \t\tif (!~index) {\n\
+        \t\t\treturn;\n\
+        \t\t}\n\
+        \t\tif (element[TID]) {\n\
+        \t\t\telement[TID].destroy();\n\
+        \t\t\tdelete element[TID];\n\
+        \t\t}\n\
+        \t\tevt.unbind(element, options.showOn, eventHandler);\n\
+        \t\tevt.unbind(element, options.hideOn, eventHandler);\n\
+        \t\tself.elements.splice(index, 1);\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Tooltips events handler.\n\
+        \t *\n\
+        \t * @param {Event} event\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction eventHandler(event) {\n\
+        \t\t/*jshint validthis:true */\n\
+        \t\tif (options.showOn === options.hideOn) {\n\
+        \t\t\tself.toggle(this);\n\
+        \t\t} else {\n\
+        \t\t\tself[event.type === options.showOn ? 'show' : 'hide'](this);\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t/**\n\
+        \t * Mutations handler.\n\
+        \t *\n\
+        \t * @param {Array} mutations\n\
+        \t *\n\
+        \t * @return {Void}\n\
+        \t */\n\
+        \tfunction mutationsHandler(mutations) {\n\
+        \t\tvar added, removed, i, l;\n\
+        \t\tfor (var m = 0, ml = mutations.length; m < ml; m++) {\n\
+        \t\t\tadded = mutations[m].addedNodes;\n\
+        \t\t\tremoved = mutations[m].removedNodes;\n\
+        \t\t\tfor (i = 0, l = added.length; i < l; i++) {\n\
+        \t\t\t\tself.add(added[i]);\n\
+        \t\t\t}\n\
+        \t\t\tfor (i = 0, l = removed.length; i < l; i++) {\n\
+        \t\t\t\tself.remove(removed[i]);\n\
+        \t\t\t}\n\
+        \t\t\tif (mutations[m].type == 'attributes' && mutations[m].attributeName == 'data-title'){\n\
+        \t\t\t\tif (!self.get(mutations[m])) { self.add(mutations[m].target); }\n\
+        \t\t\t\tself.get(mutations[m].target).content(dataset(mutations[m].target).get('title'));\n\
+        \t\t\t}\n\
+        \t\t}\n\
+        \t}\n\
+        \n\
+        \t// Construct\n\
+        \t(function () {\n\
+        \t\tself.container = container;\n\
+        \t\tself.options = options = extend(objectCreate(Tooltips.defaults), options);\n\
+        \t\tself.ID = TID = options.key + Math.random().toString(36).slice(2);\n\
+        \t\tself.elements = [];\n\
+        \n\
+        \t\t// Create tips selector\n\
+        \t\tself.selector = '[data-' + options.key + ']';\n\
+        \n\
+        \t\t// Load tips\n\
+        \t\tself.reload();\n\
+        \n\
+        \t\t// Create mutations observer\n\
+        \t\tif (options.observe && MObserver) {\n\
+        \t\t\tobserver = new MObserver(mutationsHandler);\n\
+        \t\t\tobserver.observe(self.container, {\n\
+        \t\t\t\tchildList: true,\n\
+        \t\t\t\tsubtree: true,\n\
+        \t\t\t\tattributes: true\n\
+        \t\t\t});\n\
+        \t\t}\n\
+        \t}());\n\
+        }\n\
+        \n\
+        /**\n\
+         * Expose Tooltip.\n\
+         */\n\
+        Tooltips.Tooltip = Tooltip;\n\
+        \n\
+        /**\n\
+         * Default Tooltips options.\n\
+         *\n\
+         * @type {Object}\n\
+         */\n\
+        Tooltips.defaults = {\n\
+        \ttooltip:    {},          // Options for individual Tooltip instances.\n\
+        \tkey:       'tooltip',    // Tooltips data attribute key.\n\
+        \tshowOn:    'mouseenter', // Show tooltip event.\n\
+        \thideOn:    'mouseleave', // Hide tooltip event.\n\
+        \tobserve:   0             // Enable mutation observer (used only when supported).\n\
+        };//# sourceURL=tooltips/index.js"
+    ));
 
 
-},{}]},{},[28])
 
+
+
+
+
+
+
+
+    fakeRequire.alias("darsain-tooltip/index.js", "tooltips/deps/tooltip/index.js");
+    fakeRequire.alias("darsain-tooltip/index.js", "tooltip/index.js");
+    fakeRequire.alias("darsain-event/index.js", "darsain-tooltip/deps/event/index.js");
+
+    fakeRequire.alias("darsain-position/index.js", "darsain-tooltip/deps/position/index.js");
+
+    fakeRequire.alias("component-classes/index.js", "darsain-tooltip/deps/classes/index.js");
+    fakeRequire.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
+    fakeRequire.alias("component-indexof/index.js", "darsain-tooltip/deps/indexof/index.js");
+
+    fakeRequire.alias("darsain-event/index.js", "tooltips/deps/event/index.js");
+    fakeRequire.alias("darsain-event/index.js", "event/index.js");
+
+    fakeRequire.alias("component-indexof/index.js", "tooltips/deps/indexof/index.js");
+    fakeRequire.alias("component-indexof/index.js", "indexof/index.js");
+
+    fakeRequire.alias("code42day-dataset/index.js", "tooltips/deps/dataset/index.js");
+    fakeRequire.alias("code42day-dataset/index.js", "dataset/index.js");
+    if (typeof exports == "object") {
+        module.exports = fakeRequire("tooltips");
+    } else if (typeof define == "function" && define.amd) {
+        define(function(){ return fakeRequire("tooltips"); });
+    } else {
+        this["Tooltips"] = fakeRequire("tooltips");
+    }})();
+
+},{}]},{},[31])
 
 //# sourceMappingURL=main.js.map

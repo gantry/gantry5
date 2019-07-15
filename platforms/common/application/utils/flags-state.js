@@ -44,6 +44,7 @@ var FlagsState = new prime({
             modal.open({
                 content: 'Loading...',
                 remote: warningURL,
+                data: options.data || false,
                 remoteLoaded: function(response, modal) {
                     var content = modal.elements.content;
                     if (!callback) { return; }

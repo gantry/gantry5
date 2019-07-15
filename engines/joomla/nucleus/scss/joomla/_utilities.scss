@@ -10,6 +10,21 @@ body.modal {
 .thumbnail.pull-right {
 	margin: 0 0 10px 10px;
 }
+body.modal {
+    .manager {
+        .height-50 .icon-folder-2 {
+            font-size: 30px;
+            height: 35px;
+            width: 35px;
+            line-height: 35px;
+        }
+        &.thumbnails {
+            .small {
+                font-size: 12px;
+            }
+        }
+    }
+}
 
 // Accordian
 .accordion-body.in:hover {
@@ -221,5 +236,5 @@ th .tooltip-inner {
 // Third Party Resets
 // RokSprocket
 .sprocket-strips.loading .sprocket-strips-overlay {
-    @include box-sizing(content-box);
+    box-sizing: content-box;
 }

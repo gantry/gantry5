@@ -1,0 +1,175 @@
+legend {
+    color: $base-text-color;
+    font-family: get-font-family($font-family-title);
+    font-weight: $font-weight-bold;
+    font-size: $core-font-size + 0.5;
+    line-height: $core-line-height;
+    margin: 1rem 0;
+}
+
+.input-prepend .chzn-container-single .chzn-single,
+.input-append .chzn-container-single .chzn-single {
+    border-color: $base-border-color;
+}
+
+.input-prepend .chzn-container-single .chzn-drop,
+.input-append .chzn-container-single .chzn-drop {
+    border-color: $base-border-color;
+}
+
+.form-actions {
+    background: none;
+    border: 0;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    color: $base-text-color;
+    background-color: $base-background;
+    border: 1px solid $base-border-color;
+    box-sizing: border-box !important;
+    @include transition(border 0.2s linear, box-shadow 0.2s linear);
+
+    .input-prepend &, .input-append & {
+        padding: 0.35rem;
+        max-width: 95%;
+    }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    height: 41px;
+}
+
+.input-prepend > .add-on, .input-append > .add-on {
+    background: darken($base-background, 15%);
+    border: 1px solid $base-border-color;
+    padding: 0.275rem;
+    -webkit-padding-before: 7px;
+    -webkit-padding-after: 7px;
+    margin-right: -2px;
+
+    .dir-rtl & {
+        margin-right: auto;
+        margin-left: -2px;
+
+        .btn {
+            margin-right: auto;
+            margin-left: -2px;
+        }
+    }
+}
+
+// Search in Edit Panel
+#filter_search {
+    width: auto;
+    padding: 4px 12px;
+    line-height: normal;
+    height: 28px;
+}
+
+textarea {
+    width: 100%;
+}
+
+.dir-rtl {
+    .form-horizontal {
+        .control-label {
+            float: right;
+            text-align: left;
+        }
+
+        .controls {
+            margin-left: 0;
+            margin-right: 180px;
+        }
+    }
+}
+
+select {
+    color: $base-text-color;
+    background: $base-background;
+    border: 1px solid $base-border-color;
+}
+
+// Mailto and Print Windows
+.view-mailto, .body-only {
+    padding: 0 $leading-margin;
+    #g-page-surround {
+        box-shadow: none;
+    }
+}
+
+// Module Editing
+.controls {
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+}
+
+.layout-edit {
+    #sbox-content.sbox-content-iframe {
+        overflow: hidden;
+    }
+}
+
+// Login Module
+#login-form {
+    .input-prepend, .input-append {
+        width: 100%;
+
+        .add-on, .input-small {
+            height: 50px;
+        }
+
+        .btn {
+            height: 50px;
+            line-height: 33px;
+            background: #4db2b3;
+            color: #ffffff;
+            text-shadow: none;
+        }
+
+        .input-small {
+            width: 80%;
+        }
+    }
+
+    #modlgn-secretkey {
+        width: 65%;
+    }
+}
+
+// Search
+#finder-search {
+    .inputbox {
+        margin: 1rem 0 0.5rem 0;
+    }
+}

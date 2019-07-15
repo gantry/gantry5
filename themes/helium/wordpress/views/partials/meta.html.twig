@@ -1,0 +1,119 @@
+{% set twigTemplate = 'meta.html.twig' %}
+
+<div class="entry-meta">
+
+    {% block meta %}
+
+        {# Begin Meta - Date #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') and post.date %}
+            <div class="meta-date">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-date.link', '1') %}
+                    <a href="{{ post.link }}" title="{{ post.title }}" class="meta-date-link">
+                        <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                    </a>
+                {% else %}
+                    <span class="date">{{ post.date(gantry.config.get('content.' ~ scope ~ '.meta-date.format', 'j F Y')) }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {# End Meta - Date #}
+
+        {# Begin Meta - Author #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') and post.author.name %}
+            <div class="meta-author">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-author.link', '1') %}
+                    <a href="{{ post.author.link }}" title="{{ post.author.name }}" class="meta-author-link"><span class="author">{{ post.author.name }}</span></a>
+                {% else %}
+                    <span class="author">{{ post.author.name }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {# End Meta - Author #}
+
+        {# Begin Meta - Comments #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') %}
+            <div class="meta-comments-count">
+                <i class="fa fa-comments" aria-hidden="true"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') ~ ' ' }}</span>
+                {% endif %}
+
+                {% if post.comment_count == '0' %}
+                    {% set comment_count = __('No comments', 'g5_helium') %}
+                {% elseif post.comment_count == '1' %}
+                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comment', 'g5_helium') %}
+                {% else %}
+                    {% set comment_count = post.comment_count ~ ' ' ~ __('Comments', 'g5_helium') %}
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.link', '0') %}
+                    <a href="{{ post.link ~ '#comments' }}" title="{{ post.comment_count }}" class="meta-comments-link"><span class="comment-count">{{ comment_count }}</span></a>
+                {% else %}
+                    <span class="comments-count">{{ comment_count }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {# End Meta - Comments #}
+
+        {# Begin Meta - Categories #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') and post.categories is not empty %}
+            <div class="meta-categories">
+                <i class="fa fa-folder-open" aria-hidden="true"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') ~ ' ' }}</span>
+                {% endif %}
+
+                <span class="categories">
+                    {% for category in post.categories %}
+                        {%- if gantry.config.get('content.' ~ scope ~ '.meta-categories.link', '1') -%}
+                            <a href="{{ category.link }}" title="{{ category.name }}" class="meta-category-link"><span class="single-cat">{{ category.name }}</span></a>
+                        {%- else -%}
+                            <span class="single-cat">{{ category.name }}</span>
+                        {%- endif -%}
+                        {% if not loop.last %}{{ ','|trim }}{% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        {% endif %}
+        {# End Meta - Categories #}
+
+        {# Begin Meta - Tags #}
+        {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '1') and post.tags is not empty %}
+            <div class="meta-tags">
+                <i class="fa fa-tags" aria-hidden="true"></i>
+
+                {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') is not empty %}
+                    <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') ~ ' ' }}</span>
+                {% endif %}
+
+                <span class="tags">
+                    {% for tag in post.tags %}
+                        {%- if gantry.config.get('content.' ~ scope ~ '.meta-tags.link', '1') -%}
+                            <a href="{{ tag.link }}" title="{{ tag.name }}" class="meta-tag-link"><span class="single-tag">{{ tag.name }}</span></a>
+                        {%- else -%}
+                            <span class="single-tag">{{ tag.name }}</span>
+                        {%- endif -%}
+                        {% if not loop.last %}{{ ','|trim }}{% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        {% endif %}
+        {# End Meta - Tags #}
+
+    {% endblock %}
+
+</div>

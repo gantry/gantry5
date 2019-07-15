@@ -13,7 +13,7 @@ var Map         = map,
     Assignments = {
         toggleSection: function(e, element, index, array) {
             if (e.type.match(/^touch/)) { e.preventDefault(); }
-            if (element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalToggleSection(e, element); }
             if (element.matches('label')) { return Assignments.treatLabel(e, element); }
 
             var card    = element.parent('.card'),
@@ -32,7 +32,7 @@ var Map         = map,
             asyncForEach(toggles.inputs, function(item) {
                 item = $(item);
 
-                if (item.parent('label').compute('display') == 'none') { return; }
+                if (item.parent('label, h4').compute('display') == 'none') { return; }
 
                 item.value(mode).emit('change');
                 $('body').emit('change', { target: item });
@@ -44,7 +44,7 @@ var Map         = map,
         },
 
         filterSection: function(e, element, value, global) {
-            if (element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
+            if (element.siblings('[data-g-global-filter]') || element.parent('[data-g-global-filter]')) { return Assignments.globalFilterSection(e, element); }
 
             var card        = element.parent('.card'),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
@@ -78,7 +78,7 @@ var Map         = map,
                 match = text.match(new RegExp("^" + value + '|\\s' + value, 'gi'));
 
                 if (onlyEnabled.checked()) {
-                    match = Number(!!match) & Number(item.parent('label').find('.enabler input[type="hidden"]').value());
+                    match = Number(!!match) & Number(item.parent('label, h4').find('.enabler input[type="hidden"]').value());
                 }
 
                 if (match) {
@@ -88,10 +88,10 @@ var Map         = map,
                         if (parentGroup) { parentGroup.style('display', 'block'); }
                     }
 
-                    item.parent('label').style('display', 'block');
+                    item.parent('label, h4').style('display', 'block');
                     on++;
                 } else {
-                    item.parent('label').style('display', 'none');
+                    item.parent('label, h4').style('display', 'none');
                     off++;
                 }
 
@@ -128,7 +128,7 @@ var Map         = map,
         globalToggleSection: function(e, element) {
             var mode   = element.data('g-assignments-check') == null ? '[data-g-assignments-uncheck]' : '[data-g-assignments-check]',
                 save   = $('[data-save]'),
-                search = $('#assignments .card ' + mode);
+                search = $('#assignments .card ' + mode + ', ' + '.settings-assignments .card ' + mode);
 
             if (!search) { return; }
 
@@ -142,7 +142,7 @@ var Map         = map,
         globalFilterSection: function(e, element) {
             var value       = element.value(),
                 onlyEnabled = $('[data-assignments-enabledonly]'),
-                search      = $('#assignments .card .search input[type="text"]');
+                search      = $('#assignments .card .search input[type="text"], .settings-assignments .card .search input[type="text"]');
 
             if (!search && !onlyEnabled.checked()) { return; }
 
@@ -151,10 +151,15 @@ var Map         = map,
             });
         },
 
+        toggleStateDelegation: function(event, element) {
+            var enabled = element.value() == '1';
+            element.attribute('disabled', !enabled);
+        },
+
         // chrome workaround for overflow and columns
         chromeFix: function() {
             if (!Assignments.isChrome()) { return; }
-            var panels = $('#assignments .settings-param-wrapper'), height, maxHeight;
+            var panels = $('#assignments .settings-param-wrapper, .settings-assignments .settings-param-wrapper'), height, maxHeight;
             if (!panels) { return; }
 
             panels.forEach(function(panel){
@@ -181,10 +186,11 @@ var Map         = map,
 ready(function() {
     var body = $('body');
 
-    body.delegate('input', '#assignments .search input[type="text"]', Assignments.filterSection);
-    body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
-    body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('input', '#assignments .search input[type="text"], .settings-assignments .search input[type="text"]', Assignments.filterSection);
+    body.delegate('click', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck], .settings-assignments .card label, .settings-assignments [data-g-assignments-check], .settings-assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
+    body.delegate('touchend', '#assignments .card label, #assignments [data-g-assignments-check], #assignments [data-g-assignments-uncheck], .settings-assignments .card label, .settings-assignments [data-g-assignments-check], .settings-assignments [data-g-assignments-uncheck]', Assignments.toggleSection);
     body.delegate('change', '[data-assignments-enabledonly]', Assignments.filterEnabledOnly);
+    body.delegate('change', '#assignments input[type="hidden"][name], .settings-assignments input[type="hidden"][name]', Assignments.toggleStateDelegation);
 
     // chrome workaround for overflow and columns
     //if (Assignments.isChrome()) Assignments.chromeFix();

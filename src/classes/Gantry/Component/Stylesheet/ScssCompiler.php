@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,12 +13,12 @@
 
 namespace Gantry\Component\Stylesheet;
 
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Stylesheet\Scss\CompiledScssFile;
 use Gantry\Component\Stylesheet\Scss\Compiler;
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Leafo\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
-use RocketTheme\Toolbox\File\PhpFile;
+use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ScssCompiler extends CssCompiler
@@ -52,6 +51,13 @@ class ScssCompiler extends CssCompiler
             $this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
         } else {
             $this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
+            // Work around bugs in SCSS compiler.
+            // TODO: Pass our own SourceMapGenerator instance instead.
+            $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            $this->compiler->setSourceMapOptions([
+                'sourceMapBasepath' => '/',
+                'sourceRoot'        => '/',
+            ]);
             $this->compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
         }
     }
@@ -68,11 +74,15 @@ class ScssCompiler extends CssCompiler
     /**
      * @param string $in    Filename without path or extension.
      * @return bool         True if the output file was saved.
+     * @throws \RuntimeException
      */
     public function compileFile($in)
     {
         // Buy some extra time as compilation may take a lot of time in shared environments.
         @set_time_limit(30);
+        @set_time_limit(60);
+        @set_time_limit(90);
+        @set_time_limit(120);
         ob_start();
 
         $gantry = Gantry::instance();
@@ -103,9 +113,32 @@ class ScssCompiler extends CssCompiler
         // Run the compiler.
         $this->compiler->setVariables($this->getVariables());
         $scss = '@import "' . $in . '.scss"';
-        $css = $this->compiler->compile($scss);
+        try {
+            $css = $this->compiler->compile($scss);
+        } catch (CompilerException $e) {
+            throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
+        }
         if (strpos($css, $scss) === 0) {
             $css = '/* ' . $scss . ' */';
+        }
+
+        // Extract map from css and save it as separate file.
+        if ($pos = strrpos($css, '/*# sourceMappingURL=')) {
+            $map = json_decode(urldecode(substr($css, $pos + 43, -3)), true);
+
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            foreach ($map['sources'] as &$source) {
+                $source = $document->url($source, null, -1);
+            }
+            unset($source);
+
+            $mapFile = JsonFile::instance($path . '.map');
+            $mapFile->save($map);
+            $mapFile->free();
+
+            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
         }
 
         $warnings = trim(ob_get_clean());
@@ -126,6 +159,8 @@ class ScssCompiler extends CssCompiler
  */
 WARN;
             $css = $warning . "\n\n" . $css;
+        } else {
+            $css = "{$this->checksum()}\n{$css}";
         }
 
         $file->save($css);
@@ -133,6 +168,7 @@ WARN;
         $file->free();
 
         $this->createMeta($out, md5($css));
+        $this->compiler->cleanParsedFiles();
 
         return true;
     }
@@ -160,8 +196,9 @@ WARN;
         return $this;
     }
 
-
     /**
+     * @param string $url
+     * @return null|string
      * @internal
      */
     public function findImport($url)

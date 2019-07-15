@@ -1,0 +1,134 @@
+details:
+  name: Hydrogen Child
+  version: '@version@'
+  icon: paper-plane
+  date: '@versiondate@'
+  author:
+    name: RocketTheme, LLC
+    email: support@rockettheme.com
+    link: http://www.rockettheme.com
+
+  documentation:
+    link: http://docs.gantry.org/gantry5
+
+  support:
+    link: https://gitter.im/gantry/gantry5
+
+  updates:
+    link: http://updates.rockettheme.com/themes/hydrogen.yaml
+
+  copyright: (C) 2005 - 2019 RocketTheme, LLC. All rights reserved.
+  license: GPLv2
+  description: Hydrogen Child Theme
+  images:
+    thumbnail: admin/images/preset1.png
+    preview: admin/images/preset1.png
+
+configuration:
+  gantry:
+    platform: wordpress
+    engine: nucleus
+
+  theme:
+    parent: g5_hydrogen
+    base: gantry-theme://common
+    file: gantry-theme://includes/theme.php
+    class: \Gantry\Framework\Theme
+    textdomain: g5_hydrogen
+
+  fonts:
+    roboto:
+      400: 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont'
+      500: 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont'
+      700: 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont'
+
+  css:
+    compiler: \Gantry\Component\Stylesheet\ScssCompiler
+    paths:
+      - gantry-theme://scss
+      - gantry-engine://scss
+    files:
+      - hydrogen
+      - hydrogen-wordpress
+      - custom
+    persistent:
+      - hydrogen
+    overrides:
+      - hydrogen-wordpress
+      - custom
+
+  dependencies:
+    gantry: 5.4.0
+
+  block-variations:
+    Box Variations:
+      box1: Box 1
+      box2: Box 2
+      box3: Box 3
+      box4: Box 4
+    Effects:
+      shadow: Shadow 1
+      shadow2: Shadow 2
+      rounded: Rounded
+      square: Square
+    Utility:
+      disabled: Disabled
+      align-right: Align Right
+      align-left: Align Left
+      center: Center
+      full-width: Full Width
+      equal-height: Equal Height
+      nomarginall: No Margin
+      nopaddingall: No Padding
+
+chrome:
+  gantry:
+    before_widget: <div id="%1$s" class="widget %2$s">
+    after_widget: </div>
+    before_title: <h2 class="widgettitle">
+    after_title: </h2>
+
+admin:
+  styles:
+    section:
+      - header
+      - showcase
+      - subfeature
+    core:
+      - base
+  content:
+    general:
+      - wpautop
+    blog:
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more
+    single:
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+    page:
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+    archive:
+      - heading
+      - featured-image
+      - title
+      - meta-date
+      - meta-author
+      - meta-comments
+      - meta-categories
+      - meta-tags
+      - read-more

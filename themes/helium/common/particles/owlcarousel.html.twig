@@ -1,0 +1,73 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+    <div class="{{ particle.class|e }}">
+        {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+
+        <div id="g-owlcarousel-{{ id }}" class="g-owlcarousel owl-carousel {% if particle.imageOverlay == 'enable' %}has-color-overlay{% endif %}">
+
+            {% for item in particle.items %}
+                {% if not item.disable %}
+                    <div class="g-owlcarousel-item {{ item.class|e }}">
+                        <div class="g-owlcarousel-item-wrapper">
+                            <div class="g-owlcarousel-item-img">
+                                <img src="{{ url(item.image)|e }}" alt="{{ item.title|e }}" />
+                            </div>
+                            <div class="g-owlcarousel-item-content-container">
+                                <div class="g-owlcarousel-item-content-wrapper">
+                                    <div class="g-owlcarousel-item-content">
+                                        {% if item.title %}
+                                            <h1 class="g-owlcarousel-item-title">{{ item.title|raw }}</h1>{% endif %}
+                                        {% if item.desc %}
+                                            <h2 class="g-owlcarousel-item-desc">{{ item.desc|raw }}</h2>{% endif %}
+                                        {% if item.link %}
+                                            <div class="g-owlcarousel-item-link">
+                                                <a target="_self" class="g-owlcarousel-item-button button {{ item.buttonclass|e }}" href="{{ item.link|e }}">
+                                                    {{ item.linktext|raw }}
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript_footer %}
+    {% do gantry.load('jquery') %}
+    <script src="{{ url('gantry-theme://js/owl.carousel.min.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#g-owlcarousel-{{ id }}').owlCarousel({
+                items: 1,
+                rtl: {% if gantry.page.direction == 'rtl' %}true{% else %}false{% endif %},
+                loop: true,
+                {% if particle.nav == 'enable' %}
+                nav: true,
+                navText: ['{{ particle.prevText|default('<i class="fa fa-chevron-left" aria-hidden="true"></i>')|e('js') }}', '{{ particle.nextText|default('<i class="fa fa-chevron-right" aria-hidden="true"></i>')|e('js') }}'],
+                {% else %}
+                nav: false,
+                {% endif %}
+                {% if particle.dots == 'enable' %}
+                dots: true,
+                {% else %}
+                dots: false,
+                {% endif %}
+                {% if particle.autoplay == 'enable' %}
+                autoplay: true,
+                autoplayTimeout: {{ particle.autoplaySpeed|default('5000') }},
+                {% else %}
+                autoplay: false,
+                {% endif %}
+            })
+        });
+    </script>
+{% endblock %}

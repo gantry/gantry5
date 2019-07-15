@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,26 +13,37 @@
 
 namespace Gantry\Component\Twig;
 
+use Gantry\Component\Content\Document\HtmlDocument;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Translator\TranslatorInterface;
-use Gantry\Framework\Document;
+use Gantry\Component\Twig\TokenParser\TokenParserPageblock;
+use Gantry\Component\Twig\TokenParser\TokenParserAssets;
+use Gantry\Component\Twig\TokenParser\TokenParserScripts;
+use Gantry\Component\Twig\TokenParser\TokenParserStyles;
+use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
+use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
+use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
+use Gantry\Component\Twig\TokenParser\TokenParserThrow;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Markdown\Parsedown;
+use Gantry\Framework\Markdown\ParsedownExtra;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-class TwigExtension extends \Twig_Extension
+class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     use GantryTrait;
 
     /**
-     * Returns extension name.
+     * Register some standard globals
      *
-     * @return string
+     * @return array
      */
-    public function getName()
+    public function getGlobals()
     {
-        return 'GantryTwig';
+        return [
+            'gantry' => static::gantry(),
+        ];
     }
 
     /**
@@ -43,16 +53,37 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return [
-            new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
+        $filters = [
             new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
             new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
+            new \Twig_SimpleFilter('trans_key', [$this, 'transKeyFilter']),
             new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
             new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
-            new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
             new \Twig_SimpleFilter('base64', 'base64_encode'),
+            new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
+            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
         ];
+
+        if (1 || GANTRY5_PLATFORM !== 'grav') {
+            $filters = array_merge($filters, [
+                new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
+                new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
+                new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
+                new \Twig_SimpleFilter('markdown', [$this, 'markdownFunction'], ['is_safe' => ['html']]),
+                new \Twig_SimpleFilter('nicetime', [$this, 'nicetimeFilter']),
+
+                // Casting values
+                new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
+                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
+                new \Twig_SimpleFilter('bool', [$this, 'boolFilter']),
+                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
+                new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
+            ]);
+        }
+
+        return $filters;
     }
 
     /**
@@ -62,15 +93,25 @@ class TwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return [
+        $functions = [
             new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
-            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-            new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
+            new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc']),
+            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
         ];
+
+        if (1 || GANTRY5_PLATFORM !== 'grav') {
+            $functions = array_merge($functions, [
+                new \Twig_SimpleFunction('array', [$this, 'arrayFilter']),
+                new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+            ]);
+        }
+
+        return $functions;
     }
 
     /**
@@ -79,10 +120,14 @@ class TwigExtension extends \Twig_Extension
     public function getTokenParsers()
     {
         return [
+            new TokenParserPageblock(),
             new TokenParserAssets(),
             new TokenParserScripts(),
             new TokenParserStyles(),
-            new TokenParserTry(),
+            new TokenParserThrow(),
+            new TokenParserTryCatch(),
+            new TokenParserMarkdown(),
+            new TokenParserSwitch()
         ];
     }
 
@@ -100,6 +145,24 @@ class TwigExtension extends \Twig_Extension
     }
 
     /**
+     * Translate by using key, default on original string.
+     *
+     * @param $str
+     * @return string
+     */
+    public function transKeyFilter($str)
+    {
+        $params = \func_get_args();
+        array_shift($params);
+
+        $key = preg_replace('|[^A-Z0-9]+|', '_', strtoupper(implode('_', $params)));
+
+        $translation = $this->transFilter($key);
+
+        return $translation === $key ? $str : $translation;
+    }
+
+    /**
      * Translate string.
      *
      * @param  string  $str
@@ -110,11 +173,13 @@ class TwigExtension extends \Twig_Extension
         /** @var TranslatorInterface $translator */
         static $translator;
 
+        $params = \func_get_args();
+
         if (!$translator) {
             $translator = self::gantry()['translator'];
         }
 
-        return $translator->translate($str);
+        return \call_user_func_array([$translator, 'translate'], $params);
     }
 
     /**
@@ -141,7 +206,27 @@ class TwigExtension extends \Twig_Extension
      */
     public function jsonDecodeFilter($str, $assoc = false, $depth = 512, $options = 0)
     {
-        return json_decode($str, $assoc, $depth, $options);
+        return json_decode(html_entity_decode($str), $assoc, $depth, $options);
+    }
+
+    public function imageSize($src, $attrib = true, $remote = false)
+    {
+        // TODO: need to better handle absolute and relative paths
+        //$url = Gantry::instance()['document']->url(trim((string) $src), false, false);
+        $width = $height = null;
+        $sizes = ['width' => $width, 'height' => $height];
+        $attr = '';
+
+        if (@is_file($src) || $remote) {
+            try {
+                list($width, $height,, $attr) = @getimagesize($src);
+            } catch (\Exception $e) {}
+
+            $sizes['width'] = $width;
+            $sizes['height'] = $height;
+        }
+
+        return $attrib ? $attr : $sizes;
     }
 
     /**
@@ -153,6 +238,160 @@ class TwigExtension extends \Twig_Extension
     public function valuesFilter(array $array)
     {
         return array_values($array);
+    }
+
+    /**
+     * Casts input to string.
+     *
+     * @param mixed $input
+     * @return string
+     */
+    public function stringFilter($input)
+    {
+        return (string) $input;
+    }
+
+
+    /**
+     * Casts input to int.
+     *
+     * @param mixed $input
+     * @return int
+     */
+    public function intFilter($input)
+    {
+        return (int) $input;
+    }
+
+    /**
+     * Casts input to bool.
+     *
+     * @param mixed $input
+     * @return bool
+     */
+    public function boolFilter($input)
+    {
+        return (bool) $input;
+    }
+
+    /**
+     * Casts input to float.
+     *
+     * @param mixed $input
+     * @return float
+     */
+    public function floatFilter($input)
+    {
+        return (float) $input;
+    }
+
+    /**
+     * Casts input to array.
+     *
+     * @param mixed $input
+     * @return array
+     */
+    public function arrayFilter($input)
+    {
+        return (array) $input;
+    }
+
+    /**
+     * Takes array of attribute keys and values and converts it to properly escaped HTML attributes.
+     *
+     * @example ['data-id' => 'id', 'data-key' => 'key'] => ' data-id="id" data-key="key"'
+     * @example [['data-id' => 'id'], ['data-key' => 'key']] => ' data-id="id" data-key="key"'
+     *
+     * @param string|string[] $input
+     * @return string
+     */
+    public function attributeArrayFilter($input)
+    {
+        if (\is_string($input)) {
+            return $input;
+        }
+
+        $array = [];
+        foreach ((array) $input as $key => $value) {
+            if (\is_array($value)) {
+                foreach ((array) $value as $key2 => $value2) {
+                    $array[] = HtmlDocument::escape($key2) . '="' . HtmlDocument::escape($value2, 'html_attr') . '"';
+                }
+            } elseif ($key) {
+                $array[] = HtmlDocument::escape($key) . '="' . HtmlDocument::escape($value, 'html_attr') . '"';
+            }
+        }
+        return $array ? ' ' . implode(' ', $array) : '';
+    }
+
+    public function is_selectedFunc($a, $b)
+    {
+        $b = (array) $b;
+        array_walk(
+            $b,
+            function (&$item) {
+                if (\is_bool($item)) {
+                    $item = (int) $item;
+                }
+                $item = (string) $item;
+            }
+        );
+
+        return \in_array((string) $a, $b, true);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words. Removes html tags.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateText($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, (int) $limit, false);
+    }
+
+    /**
+     * Truncate text by number of characters but can cut off words.
+     *
+     * @param  string $string
+     * @param  int    $limit       Max number of characters.
+     *
+     * @return string
+     */
+    public function truncateHtml($string, $limit = 150)
+    {
+        $platform = Gantry::instance()['platform'];
+
+        return $platform->truncate($string, (int) $limit, true);
+    }
+
+    /**
+     * @param string $string
+     * @param bool $block  Block or Line processing
+     * @param array $settings
+     * @return mixed|string
+     */
+    public function markdownFunction($string, $block = true, array $settings = null)
+    {
+        // Initialize the preferred variant of Parsedown
+        if ($settings['extra']) {
+            $parsedown = new ParsedownExtra($settings);
+        } else {
+            $parsedown = new Parsedown($settings);
+        }
+
+        if ($block) {
+            $string = $parsedown->text($string);
+        } else {
+            $string = $parsedown->line($string);
+        }
+
+        return $string;
     }
 
     /**
@@ -174,9 +413,9 @@ class TwigExtension extends \Twig_Extension
         $path = explode($separator, $name);
         $current = $items;
         foreach ($path as $field) {
-            if (is_object($current) && isset($current->{$field})) {
+            if (\is_object($current) && isset($current->{$field})) {
                 $current = $current->{$field};
-            } elseif (is_array($current) && isset($current[$field])) {
+            } elseif (\is_array($current) && isset($current[$field])) {
                 $current = $current[$field];
             } else {
                 return $default;
@@ -199,13 +438,15 @@ class TwigExtension extends \Twig_Extension
      */
     public function urlFunc($input, $domain = false, $timestamp_age = null)
     {
-        return Document::url(trim((string) $input), $domain, $timestamp_age);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->url(trim((string) $input), $domain, $timestamp_age);
     }
 
     /**
      * Filter stream URLs from HTML input.
      *
-     * @param  string $html         HTML input to be filtered.
+     * @param  string $str          HTML input to be filtered.
      * @param  bool $domain         True to include domain name.
      * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
      *                              Use value <= 0 to disable the feature.
@@ -213,7 +454,9 @@ class TwigExtension extends \Twig_Extension
      */
     public function htmlFilter($str, $domain = false, $timestamp_age = null)
     {
-        return Document::urlFilter($str, $domain, $timestamp_age);
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->urlFilter($str, $domain, $timestamp_age);
     }
 
     /**
@@ -236,6 +479,9 @@ class TwigExtension extends \Twig_Extension
                 $level = 3;
                 $message = "Fatal DOM Error {$error->code}: ";
                 break;
+            default:
+                $level = 3;
+                $message = "Unknown DOM Error {$error->code}: ";
         }
         $message .= "{$error->message} while parsing:\n{$input}\n";
 
@@ -257,12 +503,15 @@ class TwigExtension extends \Twig_Extension
      */
     public function parseAssetsFunc($input, $location = 'head', $priority = 0)
     {
-        if ($location == 'head') {
+        if ($location === 'head') {
             $scope = 'head';
+            $html = "<!doctype html>\n<html><head>{$input}</head><body></body></html>";
         } else {
             $scope = 'body';
+            $html = "<!doctype html>\n<html><head></head><body>{$input}</body></html>";
         }
-        $html = "<html><{$scope}>{$input}</{$scope}></html>";
+
+        libxml_clear_errors();
 
         $internal = libxml_use_internal_errors(true);
 
@@ -286,7 +535,7 @@ class TwigExtension extends \Twig_Extension
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Document::addHeaderTag($result, $location, (int) $priority);
+            $success = Gantry::instance()['document']->addHeaderTag($result, $location, (int) $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }
@@ -295,14 +544,15 @@ class TwigExtension extends \Twig_Extension
         return implode("\n", $raw);
     }
 
-    public function colorContrastFunc($value) {
+    public function colorContrastFunc($value)
+    {
         $value = str_replace(' ', '', $value);
         $rgb = new \stdClass;
         $opacity = 1;
 
-        if (substr($value, 0, 3) != 'rgb') {
+        if (0 !== strpos($value, 'rgb')) {
             $value = str_replace('#', '', $value);
-            if (strlen($value) == 3) {
+            if (\strlen($value) === 3) {
                 $h0 = str_repeat(substr($value, 0, 1), 2);
                 $h1 = str_repeat(substr($value, 1, 1), 2);
                 $h2 = str_repeat(substr($value, 2, 1), 2);
@@ -318,13 +568,100 @@ class TwigExtension extends \Twig_Extension
             $rgb->g = $matches[2];
             $rgb->b = $matches[3];
             $opacity = isset($matches[4]) ? $matches[4] : 1;
-            $opacity = substr($opacity, 0, 1) == '.' ? '0' . $opacity : $opacity;
+            $opacity = substr($opacity, 0, 1) === '.' ? '0' . $opacity : $opacity;
         }
 
         $yiq = ((($rgb->r * 299) + ($rgb->g * 587) + ($rgb->b * 114)) / 1000) >= 128;
-        $contrast = $yiq || ($opacity == 0 || (float) $opacity < 0.35);
+        $contrast = $yiq || (!$opacity || (float) $opacity < 0.35);
 
         return $contrast;
+    }
+
+    /**
+     * Displays a facebook style 'time ago' formatted date/time.
+     *
+     * @param string|int $date
+     * @param bool $long_strings
+     *
+     * @return string
+     */
+    public function nicetimeFilter($date, $long_strings = true)
+    {
+        static $lengths = [60, 60, 24, 7, 4.35, 12, 10];
+        static $periods_long = [
+            'GANTRY5_ENGINE_NICETIME_SECOND',
+            'GANTRY5_ENGINE_NICETIME_MINUTE',
+            'GANTRY5_ENGINE_NICETIME_HOUR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WEEK',
+            'GANTRY5_ENGINE_NICETIME_MONTH',
+            'GANTRY5_ENGINE_NICETIME_YEAR',
+            'GANTRY5_ENGINE_NICETIME_DECADE'
+        ];
+        static $periods_short = [
+            'GANTRY5_ENGINE_NICETIME_SEC',
+            'GANTRY5_ENGINE_NICETIME_MIN',
+            'GANTRY5_ENGINE_NICETIME_HR',
+            'GANTRY5_ENGINE_NICETIME_DAY',
+            'GANTRY5_ENGINE_NICETIME_WK',
+            'GANTRY5_ENGINE_NICETIME_MO',
+            'GANTRY5_ENGINE_NICETIME_YR',
+            'GANTRY5_ENGINE_NICETIME_DEC'
+        ];
+
+        if (empty($date)) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_NO_DATE_PROVIDED');
+        }
+
+        $periods = $long_strings ? $periods_long : $periods_short;
+
+        $now = time();
+
+        // check if unix timestamp
+        if ((string)(int)$date === (string)$date) {
+            $unix_date = (int)$date;
+        } else {
+            $unix_date = strtotime($date);
+        }
+
+        // check validity of date
+        if (!$unix_date) {
+            return $this->transFilter('GANTRY5_ENGINE_NICETIME_BAD_DATE');
+        }
+
+        // is it future date or past date
+        if ($now > $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_AGO');
+
+        } else if ($now === $unix_date) {
+            $difference = $now - $unix_date;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_JUST_NOW');
+
+        } else {
+            $difference = $unix_date - $now;
+            $tense      = $this->transFilter('GANTRY5_ENGINE_NICETIME_FROM_NOW');
+        }
+
+
+        for ($j = 0; $difference >= $lengths[$j] && $j < \count($lengths) - 1; $j++) {
+            $difference /= $lengths[$j];
+        }
+        $period = $periods[$j];
+
+        $difference = round($difference);
+
+        if ($difference !== 1) {
+            $period .= '_PLURAL';
+        }
+
+        $period = $this->transFilter($period);
+
+        if ($now === $unix_date) {
+            return $tense;
+        }
+
+        return "{$difference} {$period} {$tense}";
     }
 
     public function getCookie($name)
@@ -337,13 +674,10 @@ class TwigExtension extends \Twig_Extension
         return $request->cookie[$name];
     }
 
-    public function pregMatch($pattern, $subject, &$matches = []) {
-        $preg_match = preg_match($pattern, $subject, $matches);
+    public function pregMatch($pattern, $subject, &$matches = [])
+    {
+        preg_match($pattern, $subject, $matches);
 
-        if(isset($matches) && !empty($matches)) {
-            return $matches;
-        } else {
-            return false;
-        }
+        return $matches ?: false;
     }
 }

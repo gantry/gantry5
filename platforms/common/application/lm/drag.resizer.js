@@ -51,7 +51,7 @@ var Resizer = new prime({
     start: function(event, element, siblings, offset) {
         if (event && event.type.match(/^touch/i)) { event.preventDefault(); }
 
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
         if (event.which && event.which !== 1) { return true; }
 
         // Stops text selection
@@ -195,7 +195,7 @@ var Resizer = new prime({
         elements.forEach(function(element) {
             element = $(element);
             block = this.getBlock(element);
-            if (block && block.hasAttribute('size')) {
+            if (block && block.hasAttribute('size') && typeof block.getSize === 'function') {
                 block[animated ? 'setAnimatedSize' : 'setSize'](size, size !== block.getSize());
             } else {
                 if (element) { element[animated ? 'animate' : 'style']({ flex: '0 1 ' + size + '%' }); }

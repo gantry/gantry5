@@ -1,0 +1,20 @@
+#g5-container {
+    .navbar-block {
+		#navbar {
+			ul {
+			    li:not(.config-select-wrap) {
+			        a {
+			        	@include breakpoint(desktop-range) {
+			                padding: $content-padding $content-padding - 0.4;
+			                i {
+			            		margin-right: 0.3rem;
+			            	}
+			            }
+			        }
+			    }
+			}
+		}            
+    }
+}
+
+

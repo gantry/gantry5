@@ -1,0 +1,17 @@
+// Login Form particle
+.g-loginform {
+    .login-pretext {
+        margin-bottom: 1rem;
+    }
+
+    fieldset.login-data {
+        #login-username {
+            margin-top: 0;
+        }
+    }
+
+    .login-extra {
+        list-style-type: none;
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,30 @@
+// Font Family
+$font-family-default:           "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", "Apple Color Emoji", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !default;
+$font-family-title:             "Lato", "Helvetica", "Tahoma", "Geneva", "Arial", "Apple Color Emoji", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !default;
+
+$font-family-mono: 				"Menlo", "Monaco", monospace;
+$font-family-serif:				"Georgia", "Times", "Times New Roman", serif;
+
+// Font Weights
+$font-weight-light:				200;
+$font-weight-regular:			400;
+$font-weight-medium:			500;
+$font-weight-semibold:			600;
+$font-weight-bold:				700;
+$font-weight-ultrabold:		  	900;
+
+// Base Sizes
+$core-font-size:				1rem !default;
+$responsive-font-size:			1vw !default;
+$core-line-height:				2 !default;
+
+// Navigation Sizes
+$navigation-line-height:        1.5 !default;
+
+// Heading Sizes
+$h1-font-size:					$core-font-size + 1.25 !default;
+$h2-font-size:					$core-font-size + 0.90 !default;
+$h3-font-size:					$core-font-size + 0.50 !default;
+$h4-font-size:					$core-font-size + 0.25 !default;
+$h5-font-size:					$core-font-size !default;
+$h6-font-size:					$core-font-size - 0.15 !default;

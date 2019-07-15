@@ -1,0 +1,18 @@
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+
+{% block input %}
+    {% for key, text in field.options %}
+        {% set childName = name|fieldName %}
+        {% set key = (field.use == 'keys' ? '1' : key) %}
+        <span class="radios">
+            <input type="radio"
+                   id="{{ childName ~ '-' ~ key|lower }}"
+                   value="{{ key }}"
+                   name="{{ (scope ~ childName)|fieldName }}"
+                   {% if value == key %}checked="checked"{% endif %}
+                    {% if field.validate.required %}required="required"{% endif %}
+            >
+            <label for="{{ childName ~ '-' ~ key|lower }}">{{ text }}</label>
+        </span>
+    {% endfor %}
+{% endblock %}

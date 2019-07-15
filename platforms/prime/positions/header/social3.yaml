@@ -1,0 +1,19 @@
+title: Another Social
+type: particle
+options:
+  type: social
+  attributes:
+    css:
+      class: social-items
+    items:
+      -
+        icon: 'fa fa-rss'
+        text: RSS
+        link: 'http://www.rockettheme.com/product-updates?rss'
+        name: RSS
+      -
+        icon: 'fa fa-twitter'
+        text: Twitter
+        link: 'http://twitter.com/rockettheme'
+        name: Twitter
+

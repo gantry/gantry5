@@ -2,12 +2,12 @@
 
 {% block head_title -%}
     <meta http-equiv="Content-Type" content="text/html; charset={{ site.charset }}" />
-    <meta name="description" content="{{ site.description }}">
+    <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="pingback" href="{{ site.pingback_url }}" />
 {%- endblock %}
 
 {% block head_application -%}
-    {{ wp_head }}
+    {{ wp_head|raw }}
 {%- endblock %}
 
 {% block head_platform -%}

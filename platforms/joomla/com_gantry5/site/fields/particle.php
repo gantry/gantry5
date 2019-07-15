@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,9 @@ class JFormFieldParticle extends JFormField
         try {
             Gantry5\Loader::setup();
 
+            $lang = JFactory::getLanguage();
+            $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', GANTRYADMIN_PATH);
+
             $this->container = Gantry\Framework\Gantry::instance();
             $this->container['router'] = function ($c) {
                 return new \Gantry\Admin\Router($c);
@@ -47,11 +50,22 @@ class JFormFieldParticle extends JFormField
             return '';
         }
 
-        // FIXME: Better style detection.
-        $style = \Gantry\Joomla\StyleHelper::getStyle(['home' => 1, 'client_id' => 0]);
-        $theme = \Gantry\Joomla\StyleHelper::getDefaultStyle()->template;
+        // TODO: Use better style detection.
+        $style = \Gantry\Joomla\StyleHelper::getDefaultStyle();
 
-        $this->container['router']->setTheme($theme, $style->id)->load();
+        if (!$style->template) {
+            $app->enqueueMessage(
+                JText::_("GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
+                'warning'
+            );
+        } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
+            $app->enqueueMessage(
+                JText::sprintf("GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
+                'warning'
+            );
+        }
+
+        $this->container['router']->setTheme($style->template, null)->load();
 
         $field = [
             'default' => true,

@@ -1,7 +1,12 @@
 name: Mobile Menu
 description: Renders the mobile menu container for the offcanvas section.
 type: particle
+icon: fa-ellipsis-v
 hidden: false
+
+configuration:
+  caching:
+    type: static
 
 form:
   fields:

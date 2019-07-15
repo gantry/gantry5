@@ -1,0 +1,201 @@
+%g-button {
+    display: inline-block;
+    font-family: get-font-family($font-family-title);
+    font-weight: $font-weight-semibold;
+    font-size: $core-font-size - 0.2;
+    line-height: 1.15;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    background: $accent-color-1;
+    color: $white;
+    border: 1px solid transparent;
+    border-radius: 2.5rem;
+    margin: 0 0 0.5rem 0;
+    padding: 1.5rem 3.125rem;
+    vertical-align: middle;
+    text-shadow: none;
+    @include transition(all 0.2s);
+
+    &:hover, &:active, &:focus {
+        background: darken($accent-color-1, 10%);
+        color: $white;
+    }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+
+        &:hover {
+            background: $accent-color-1;
+        }
+    }
+}
+
+// Buttons
+.btn {
+    border-radius: $core-border-radius;
+    border: 0;
+    color: $base-text-color;
+    box-shadow: none;
+
+    span {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.btn-mini {
+    margin: 0.5rem 0;
+}
+
+.btn-primary {
+    font-family: get-font-family($font-family-title);
+    font-weight: $font-weight-semibold;
+    font-size: $core-font-size - 0.2;
+    line-height: 1.15;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    background: $accent-color-1;
+    color: $white;
+    border: 1px solid transparent;
+    vertical-align: middle;
+    text-shadow: none;
+    @include transition(all 0.2s);
+
+    &:hover, &:active, &:focus {
+        background: darken($accent-color-1, 10%);
+        color: $white;
+    }
+}
+
+.btn-group > .btn.dropdown-toggle {
+    background: darken($base-background, 12%);
+}
+
+.btn-group.open .btn-primary.dropdown-toggle {
+    background: $accent-color-2;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
+    background-image: none;
+    background: $accent-color-2;
+}
+
+.btn-link {
+    color: $accent-color-1;
+}
+
+// Tables
+table.table-bordered {
+    border-collapse: separate;
+    *border-collapse: collapse;
+
+    th {
+        background-color: #eceff3;
+    }
+
+    thead th {
+        background-color: darken(#eceff3, 5%);
+    }
+}
+
+.table-striped tbody tr:nth-child(2n+1) td, .table-striped tbody tr:nth-child(2n+1) th {
+    background: #eceff3;
+}
+
+.table-hover tbody tr:hover {
+    > td, > th {
+        background: darken(#eceff3, 3%);
+    }
+}
+
+.table, .table-bordered {
+    border-color: $base-border-color $base-border-color $base-border-color transparent;
+
+    th, td {
+        border-left-color: $base-border-color;
+    }
+}
+
+// Edit Page
+.edit.item-page {
+    .inputbox,
+    .chzn-choices {
+        border-radius: 6px;;
+    }
+
+    .input-append {
+        .inputbox {
+            border-radius: 6px 0 0 6px;
+        }
+
+        button {
+            border-radius: 0 6px 6px 0;
+        }
+    }
+
+    .btn-toolbar {
+        .btn {
+            @extend %g-button;
+            font-size: $core-font-size - 0.4;
+            padding: 1.1rem 2.725rem;
+            margin-left: 5px;
+
+            span {
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+// Labels and Badges
+.label,
+.badge {
+    vertical-align: middle;
+    font-size: $core-font-size - 0.2;
+    font-weight: $font-weight-regular;
+}
+
+.label-info,
+.badge-info {
+    background: $accent-color-2;
+
+    &[href] {
+        background: $accent-color-2;
+    }
+}
+
+// Pager PageNav
+.pager.pagenav {
+    a {
+        @extend %g-button;
+    }
+}
+
+// Pagintation
+.pagination {
+    text-align: center;
+}
+
+// Print Mode
+.print-mode {
+    #g-page-surround {
+        padding: $content-padding;
+
+        .btn {
+            a {
+                font-family: get-font-family($font-family-title);
+                font-weight: $font-weight-semibold;
+                font-size: $core-font-size - 0.2;
+                letter-spacing: 0.1rem;
+                text-transform: uppercase;
+                border: 1px solid transparent;
+                text-shadow: none;
+            }
+
+            .icon-print {
+                margin-right: 5px;
+            }
+        }
+    }
+}

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -62,6 +61,11 @@ abstract class CssCompiler implements CssCompilerInterface
      * @var array
      */
     protected $files;
+
+    /**
+     * @var mixed
+     */
+    protected $compiler;
 
     /**
      * @var bool
@@ -207,16 +211,23 @@ abstract class CssCompiler implements CssCompilerInterface
         // Check if CSS file exists at all.
         if (!$path) {
             $this->setVariables($variables());
+
             return true;
         }
 
         if ($this->production) {
             // Open the file to see if it contains development comment in the beginning of the file.
-            $handle = fopen($path, "rb");
-            $contents = fread($handle, 14);
+            $handle = fopen($path, 'rb');
+            $contents = fread($handle, 36);
             fclose($handle);
 
-            if ($contents === '/* GANTRY5 DEV') {
+            if ($contents === '/* GANTRY5 DEVELOPMENT MODE ENABLED.') {
+                $this->setVariables($variables());
+                return true;
+            }
+
+            // Compare checksum comment in the file.
+            if ($contents !== $this->checksum()) {
                 $this->setVariables($variables());
                 return true;
             }
@@ -238,13 +249,13 @@ abstract class CssCompiler implements CssCompilerInterface
         $metaFile->free();
 
         // Check if filename in meta file matches.
-        if (empty($content['file']) || $content['file'] != $out) {
+        if (empty($content['file']) || $content['file'] !== $out) {
             $this->setVariables($variables());
             return true;
         }
 
         // Check if meta timestamp matches to CSS file.
-        if (filemtime($path) != $content['timestamp']) {
+        if (filemtime($path) !== $content['timestamp']) {
             $this->setVariables($variables());
             return true;
         }
@@ -257,11 +268,21 @@ abstract class CssCompiler implements CssCompilerInterface
             return true;
         }
 
+        // Preload all CSS files to locator cache.
+        foreach ($this->paths as $path) {
+            $locator->fillCache($path);
+        }
+
         // Check if any of the imported files have been changed.
         $imports = isset($content['imports']) ? $content['imports'] : [];
+
+        if (!$imports) {
+            return $this->findImport($in) !== null;
+        }
+
         foreach ($imports as $resource => $timestamp) {
-            $import = $locator->findResource($resource);
-            if (!$import || filemtime($import) != $timestamp) {
+            $import = $locator->isStream($resource) ? $locator->findResource($resource) : realpath($resource);
+            if (!$import || filemtime($import) !== $timestamp) {
                 return true;
             }
         }
@@ -314,6 +335,23 @@ abstract class CssCompiler implements CssCompilerInterface
         $this->compiler->reset();
 
         return $this;
+    }
+
+    /**
+     * @param string $url
+     * @return null|string
+     */
+    abstract public function findImport($url);
+
+    protected function checksum($len = 36)
+    {
+        static $checksum;
+
+        if (!$checksum) {
+            $checksum = md5(GANTRY5_VERSION . ' ' . Gantry::instance()['theme']->version);
+        }
+
+        return '/*' . substr($checksum, 0, $len - 4) . '*/';
     }
 
     protected function createMeta($out, $md5)

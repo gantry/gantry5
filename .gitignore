@@ -10,10 +10,13 @@ Thumbs.db
 bin/**/composer.lock
 bin/**/vendor/**
 src/vendor/**
+src/platforms/*/vendor
+platforms/*/*debugbar*/vendor
 
 # Symbolic links in admin
 platforms/joomla/com_gantry5/admin/common
 platforms/wordpress/gantry5/admin/common
+platforms/grav/gantry5/admin/common
 platforms/*/*/common
 platforms/*/*/src
 platforms/*/*/assets
@@ -31,3 +34,5 @@ themes/*/*/custom
 **/*.map
 **/node_modules/*
 platforms/**/cache
+npm-debug.log
+/themes/multisite

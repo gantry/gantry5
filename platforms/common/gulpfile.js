@@ -5,6 +5,7 @@ var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     gulpif     = require('gulp-if'),
     uglify     = require('gulp-uglify'),
+    rename     = require('gulp-rename'),
     buffer     = require('vinyl-buffer'),
     source     = require('vinyl-source-stream'),
     merge      = require('merge-stream'),
@@ -26,7 +27,7 @@ var paths = {
     css: [
         { // admin
             in: './scss/admin.scss',
-            out: './css-compiled/admin.css',
+            out: './css-compiled/g-admin.css',
             load: '../../engines/common/nucleus/scss'
         }
     ]
@@ -38,6 +39,7 @@ var compileCSS = function(app) {
     var _in = app.in,
         _load = app.load || false,
         _dest = app.out.substring(0, app.out.lastIndexOf('/')),
+        _out  = app.out.split(/[\\/]/).pop(),
         _maps = '../' + app.in.substring(0, app.in.lastIndexOf('/')).split(/[\\/]/).pop();
 
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
@@ -55,7 +57,8 @@ var compileCSS = function(app) {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
         .on('error', gutil.log)
-        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps })))
+        .pipe(rename(_out))
+        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; } })))
         .pipe(gulp.dest(_dest));
 };
 

@@ -1,0 +1,20 @@
+{% if particle.jquery.enabled %}
+    {% do gantry.load('jquery') %}
+    {% if particle.jquery.ui_core %}
+        {% do gantry.load('jquery.ui.core') %}
+    {% endif %}
+    {% if particle.jquery.ui_sortable %}
+        {% do gantry.load('jquery.ui.sortable') %}
+    {% endif %}
+{% endif %}
+
+{% if particle.bootstrap.enabled %}
+    {% do gantry.load('bootstrap.2') %}
+{% endif %}
+
+{% if particle.mootools.enabled %}
+    {% do gantry.load('mootools') %}
+    {% if particle.mootools.more %}
+        {% do gantry.load('mootools.more') %}
+    {% endif %}
+{% endif %}

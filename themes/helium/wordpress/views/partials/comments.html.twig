@@ -1,0 +1,105 @@
+{% set twigTemplate = 'comments.html.twig' %}
+
+{% if function('get_option', 'thread_comments') == '1' %}
+    {% scripts in 'footer' %}
+        {{ wordpress.call('wp_enqueue_script', 'comment-reply') }}
+    {% endscripts %}
+{% endif %}
+
+{% block comments %}
+
+    {# Begin Comments #}
+    <section id="comments" class="comments-area">
+
+        {% if post.comments %}
+            <div id="responses">
+                <h2 class="g-title">{{ post.comment_count ~ ' ' ~ __('Comments', 'g5_helium') }}</h2>
+
+                <ol class="commentlist">
+                    {{ function('wp_list_comments', {style: 'ol', type: 'comment', callback: ['G5ThemeHelper', 'comments']}) }}
+                </ol>
+
+                <footer>
+                    <nav id="comments-nav">
+                        <div class="comments-previous">{{ function('previous_comments_link', '<i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i><span> ' ~ __( 'Older comments', 'g5_helium') ~ '</span>') }}</div>
+                        <div class="comments-next">{{ function('next_comments_link', '<span>' ~ __( 'Newer comments', 'g5_helium') ~ ' </span><i class="fa fa-chevron-right fa-fw" aria-hidden="true"></i>') }}</div>
+                    </nav>
+                </footer>
+            </div>
+        {% endif %}
+
+        {% if post.comment_status == 'open' %}
+
+            {% do action('comment_form_before') %}
+
+            <div id="respond">
+                <h3>{{ function('comment_form_title', __('Leave a Reply', 'g5_helium'), __('Leave a Reply to %s', 'g5_helium')) }}</h3>
+
+                <p class="cancel-comment-reply">{{ function('cancel_comment_reply_link') }}</p>
+
+                {% if site.comment_registration and not is_user_logged_in %}
+
+                    <div class="notice">
+                        <p class="alert alert-info">{{ __('You must be <a href="%s">logged in</a> to post a comment.', 'g5_helium')|format(function('wp_login_url', post.link)) }}</p>
+                    </div>
+
+                    {% do action('comment_form_must_log_in_after') %}
+
+                {% else %}
+
+                    {% set req = function('get_option', 'require_name_email') %}
+
+                    <form action="{{ site.url }}/wp-comments-post.php" method="post" id="commentform">
+
+                        {% do action('comment_form_top') %}
+
+                        {% if is_user_logged_in %}
+
+                            <p>{{ __('Logged in as <a href="%s/wp-admin/profile.php">%s</a>.', 'g5_helium')|format(site.url, current_user.display_name) }} <a href="{{ function('wp_logout_url', post.link) }}" title="{{ __('Log out of this account', 'g5_helium') }}">{{ __('Log out &raquo;', 'g5_helium') }}</a></p>
+
+                            {% do action('comment_form_logged_in_after', 'current_user', 'current_user.display_name') %}
+
+                        {% else %}
+
+                            {% do action('comment_form_before_fields') %}
+
+                            <p>
+                                <input type="text" class="inputbox respond-author" name="author" id="author" placeholder="{{ __('Name', 'g5_helium') }} {{ req ? __('(required)', 'g5_helium') : '' }}" value="{{ comment_author|e }}" size="40" tabindex="1" aria-required='true' />
+                            </p>
+                            <p>
+                                <input type="text" class="inputbox respond-email" name="email" id="email" placeholder="{{ __('Email', 'g5_helium') }} {{ req ? __('(required)', 'g5_helium') : '' }}" value="{{ comment_author_email|e }}" size="40" tabindex="2" aria-required='true' />
+                            </p>
+                            <p>
+                                <input type="text" class="inputbox respond-website" name="url" id="url" placeholder="{{ __( 'Website', 'g5_helium') }}" value="{{ comment_author_url|e }}" size="40" tabindex="3">
+                            </p>
+
+                            {% do action('comment_form_after_fields') %}
+
+                        {% endif %}
+
+                        <p>
+                            <textarea class="inputbox respond-textarea" name="comment" id="comment" placeholder="{{ __( 'Your comment goes here.', 'g5_helium') }}" tabindex="4"></textarea>
+                        </p>
+
+                        <p id="allowed_tags" class="small"><strong>XHTML:</strong> {{ __('You can use these tags:', 'g5_helium') }} <code>{{ function('allowed_tags') }}</code></p>
+                        <p><input name="submit" class="button" type="submit" id="submit" tabindex="5" value="{{ __('Submit Comment', 'g5_helium')|e }}"></p>
+
+                        {{ function('comment_id_fields') }}
+                        {% do action('comment_form', post.id) %}
+                    </form>
+
+                {% endif %}
+            </div>
+
+            {% do action('comment_form_after') %}
+
+        {% else %}
+
+            {% do action('comment_form_comments_closed') %}
+
+        {% endif %}
+
+    </section>
+    {# End Comments #}
+
+{% endblock %}

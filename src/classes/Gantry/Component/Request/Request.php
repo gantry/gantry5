@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +12,6 @@
  */
 
 namespace Gantry\Component\Request;
-
-use Gantry\Framework\Base\Gantry;
 
 class Request
 {
@@ -50,11 +47,7 @@ class Request
 
     public function __construct()
     {
-        $this->get = new Input($_GET);
-        $this->post = new Input($_POST);
-        $this->cookie = new Input($_COOKIE);
-        $this->server = new Input($_SERVER);
-        $this->request = new Input($_REQUEST);
+        $this->init();
     }
 
     public function getMethod()
@@ -69,5 +62,14 @@ class Request
         }
 
         return $this->method;
+    }
+
+    protected function init()
+    {
+        $this->get = new Input($_GET);
+        $this->post = new Input($_POST);
+        $this->cookie = new Input($_COOKIE);
+        $this->server = new Input($_SERVER);
+        $this->request = new Input($_REQUEST);
     }
 }

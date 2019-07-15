@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -137,6 +136,8 @@ abstract class Folder
         $levels = isset($params['levels']) ? $params['levels'] : -1;
         $key = isset($params['key']) ? 'get' . $params['key'] : null;
         $value = isset($params['value']) ? 'get' . $params['value'] : ($recursive ? 'getSubPathname' : 'getFilename');
+        $folders = isset($params['folders']) ? $params['folders'] : true;
+        $files = isset($params['files']) ? $params['files'] : true;
 
         if ($recursive) {
             $directory = new \RecursiveDirectoryIterator($path,
@@ -155,6 +156,12 @@ abstract class Folder
             if ($file->getFilename()[0] == '.') {
                 continue;
             }
+            if (!$folders && $file->isDir()) {
+                continue;
+            }
+            if (!$files && $file->isFile()) {
+                continue;
+            }
             if ($compare && $pattern && !preg_match($pattern, $file->{$compare}())) {
                 continue;
             }
@@ -162,8 +169,13 @@ abstract class Folder
             $filePath = $file->{$value}();
             if ($filters) {
                 if (isset($filters['key'])) {
+                    $filter = $filters['key'];
                     $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
-                    $fileKey = $pre . preg_replace($filters['key'], '', $fileKey);
+                    if (is_callable($filter)) {
+                        $fileKey = $pre . call_user_func($filter, $fileKey);
+                    } else {
+                        $fileKey = $pre . preg_replace($filter, '', $fileKey);
+                    }
                 }
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];
@@ -274,6 +286,8 @@ abstract class Folder
      */
     public static function delete($target, $include_target = true)
     {
+        if (!$target) { return; }
+
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
         }
@@ -296,7 +310,6 @@ abstract class Folder
     /**
      * @param  string  $folder
      * @throws \RuntimeException
-     * @internal
      */
     public static function create($folder)
     {
@@ -307,6 +320,12 @@ abstract class Folder
         $success = @mkdir($folder, 0777, true);
 
         if (!$success) {
+            // Take yet another look, make sure that the folder doesn't exist.
+            clearstatcache(true, $folder);
+            if (is_dir($folder)) {
+                return;
+            }
+
             $error = error_get_last();
             throw new \RuntimeException($error['message']);
         }
@@ -321,7 +340,7 @@ abstract class Folder
     protected static function doDelete($folder, $include_target = true)
     {
         // Special case for symbolic links.
-        if (is_link($folder)) {
+        if ($include_target && is_link($folder)) {
             return @unlink($folder);
         }
 

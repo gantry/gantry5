@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -32,12 +31,17 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     protected $active;
     protected $params;
     protected $override = false;
-    private $config;
+    protected $config;
 
     /**
      * @var array|Item[]
      */
     protected $items;
+
+    /**
+     * @var Config|null
+     */
+    protected $pathMap;
 
     protected $defaults = [
         'menu' => '',
@@ -99,6 +103,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return false;
     }
 
+    /**
+     * @param array $params
+     * @param Config $menu
+     * @return AbstractMenu
+     */
     public function instance(array $params = [], Config $menu = null)
     {
         $params = $params + $this->defaults;
@@ -209,12 +218,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $list;
     }
 
-    public function items()
+    public function items($withdefaults = true)
     {
         $list = [];
         foreach ($this->items as $key => $item) {
             if ($key !== '') {
-                $list[$item->path] = $item->toArray();
+                $list[$item->path] = $item->toArray($withdefaults);
             }
         }
 
@@ -250,9 +259,19 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         return $this->offsetGet($this->active);
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCacheId()
+    {
+        return $this->active ?: '-inactive-';
+    }
+
     public function isActive($item)
     {
-        if ($item->path && strpos($this->base, $item->path) === 0) {
+        $active = $this->getActive();
+
+        if ($active && $item && ($active->path === $item->path || strpos($active->path, $item->path . '/') === 0)) {
             return true;
         }
 
@@ -261,7 +280,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     public function isCurrent($item)
     {
-        return $item->path == $this->getActive()->path;
+        $active = $this->getActive();
+
+        return $item && $active && $item->path === $active->path;
     }
 
     public function init(&$params)
@@ -338,6 +359,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             $parentTree = $tree;
             array_pop($parentTree);
 
+            // Enabled state should equal particle setting.
+            $item['enabled'] = !isset($item['options']['particle']['enabled']) || !empty($item['options']['particle']['enabled']);
             $item['level'] = $level = count($tree);
             $item['parent_id'] = implode('/', $parentTree);
             if (($start && $start > $level)
@@ -355,10 +378,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * @param array $ordering
      * @param string $path
+     * @param array $map
      */
-    public function sortAll(array &$ordering = null, $path = '')
+    public function sortAll(array $ordering = null, $path = '', $map = null)
     {
-        if (!$ordering) {
+        if ($ordering === null) {
             $config = $this->config();
             $ordering = $config['ordering'] ? $config['ordering'] : [];
         }
@@ -367,25 +391,43 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             return;
         }
 
+        if ($map === null) {
+            $map = $this->pathMap ? $this->pathMap->toArray() : [];
+        }
+
+        $order = [];
+        $newMap = [];
         $item = $this->items[$path];
         if ($this->isAssoc($ordering)) {
-            $item->sortChildren($ordering);
+            foreach ($ordering as $key => $value) {
+                if ($map) {
+                    $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
+                    $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                    $order[$key] = $value;
+                }
 
-            foreach ($ordering as $key => &$value) {
                 if (is_array($value)) {
-                    $this->sortAll($value, $path ? $path . '/' . $key : $key);
+                    $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                 }
             }
-        } else {
-            $item->groupChildren($ordering);
 
-            foreach ($ordering as &$group) {
-                foreach ($group as $key => &$value) {
+            $item->sortChildren($order ?: $ordering);
+        } else {
+            foreach ($ordering as $i => $group) {
+                foreach ($group as $key => $value) {
+                    if ($map) {
+                        $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
+                        $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                        $order[$i][$key] = $value;
+                    }
+
                     if (is_array($value)) {
-                        $this->sortAll($value, $path ? $path . '/' . $key : $key);
+                        $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
                     }
                 }
             }
+
+            $item->groupChildren($order ?: $ordering);
         }
 
     }

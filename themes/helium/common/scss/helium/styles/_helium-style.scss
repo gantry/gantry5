@@ -1,0 +1,200 @@
+.g-home-particles {
+    &.g-helium-style {
+        // Navigation Section
+        #g-navigation {
+            @include breakpoint(no-mobile) {
+                background: transparent;
+
+                // Logo Particle
+                .g-logo {
+                    color: $white;
+
+                    &.g-logo-helium {
+                        svg {
+                            fill: $white;
+                        }
+                    }
+                }
+            }
+
+            // Social Particle
+            .g-social {
+                a {
+                    color: fadeout($white, 50%);
+
+                    @include breakpoint(mobile-only) {
+                        color: inherit;
+                    }
+
+                    &:hover {
+                        color: $white;
+
+                        @include breakpoint(mobile-only) {
+                            color: $accent-color-1;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Header Section
+        #g-header {
+            text-align: center;
+            padding: 0;
+
+            @include breakpoint(no-mobile) {
+                margin-top: -9.5rem;
+                padding: 0;
+            }
+
+            @include breakpoint(large-mobile-range) {
+                padding-top: 2rem;
+            }
+
+            // Button Outline
+            .button {
+                &.button-outline {
+                    background: transparent;
+                    color: $white;
+                    border-color: fadeout($white, 50%);
+
+                    &:hover, &:active, &:focus {
+                        background: fadeout($white, 50%);
+                        border-color: transparent;
+                    }
+                }
+            }
+        }
+
+        // Intro Section
+        #g-intro {
+            padding-bottom: 0;
+
+            .g-content {
+                margin-bottom: 0;
+                padding-bottom: 0;
+
+                .fp-intro {
+                    p {
+                        margin-bottom: 2rem;
+                    }
+                }
+            }
+        }
+
+        // Features
+        .fp-features {
+            .g-block {
+                @include breakpoint(mobile-only) {
+                    &:not(:last-child) {
+                        margin-bottom: 4.5rem;
+                    }
+                }
+
+                .card {
+                    .card-block {
+                        padding: 0 $content-padding;
+
+                        .fa {
+                            width: 120px;
+                            height: 120px;
+                            font-size: 4.125rem;
+                            line-height: 6.5rem;
+                            margin: 0 auto 20px;
+                            border: 8px solid fadeout($base-border-color, 60%);
+                            border-radius: 50%;
+                        }
+
+                        .card-title {
+                            margin-bottom: 5px;
+                            font-size: 2.25rem;
+                            line-height: 1.66rem;
+                            font-weight: $font-weight-semibold;
+                        }
+
+                        .card-subtitle {
+                            display: block;
+                            color: fadeout($base-text-color, 50%);
+                            margin-bottom: 1.5rem;
+                            font-weight: $font-weight-light;
+
+                            &:after {
+                                display: block;
+                                width: 80%;
+                                height: 1px;
+                                margin: 30px auto 0;
+                                content: "";
+                                background-color: fadeout($base-border-color, 20%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Testimonials
+        .fp-testimonials {
+            blockquote {
+                margin: 2.5rem 0;
+                border-left: none;
+
+                p {
+                    color: $testimonials-text-color;
+                }
+
+                footer {
+                    &:after {
+                        display: block;
+                        margin: 0 auto;
+                        width: 2.5rem;
+                        height: 1px;
+                        content: "";
+                        background-color: fadeout($white, 75%);
+                    }
+                }
+            }
+
+            img {
+                margin-bottom: $content-margin * 2;
+                border: 4px solid $white;
+            }
+        }
+
+        // Multi Column Text
+        .fp-multi-column-text {
+            .g-block {
+                p {
+                    padding: 0 5rem;
+                    border-left: 1px solid $base-border-color;
+
+                    @include breakpoint(mobile-only) {
+                        border: none;
+                    }
+                }
+
+                &:first-child {
+                    p {
+                        padding-left: 0;
+                        padding-right: 5rem;
+                        border-left: none;
+
+                        @include breakpoint(mobile-only) {
+                            padding: 0;
+                        }
+                    }
+                }
+
+                &:last-child {
+                    p {
+                        padding-right: 0;
+                        padding-left: 5rem;
+
+                        @include breakpoint(mobile-only) {
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

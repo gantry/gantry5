@@ -1,0 +1,12 @@
+#g-intro {
+    background: $intro-background;
+    color: $intro-text-color;
+    padding: $section-padding 0;
+}
+
+@media print {
+    #g-intro {
+        background: #fff !important;
+        color: #000 !important;
+    }
+}

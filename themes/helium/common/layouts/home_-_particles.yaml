@@ -1,0 +1,196 @@
+version: 2
+preset:
+  image: 'gantry-admin://images/layouts/default.png'
+  name: home_-_particles
+  timestamp: 1475608600
+layout:
+  navigation: {  }
+  /header/:
+    -
+      - owlcarousel-2455
+  /intro/:
+    -
+      - custom-5807
+  /features/:
+    -
+      - custom-3119
+  /utility/:
+    -
+      - contenttabs-3854
+  /above/:
+    -
+      - contentcubes-7850
+  /testimonials/:
+    -
+      - custom-7658
+  /expanded/:
+    -
+      - custom-6355
+  /container-main/:
+    -
+      -
+        'mainbar 75': {  }
+      -
+        'sidebar 25': {  }
+  footer: {  }
+  offcanvas: {  }
+structure:
+  navigation:
+    type: section
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
+  header:
+    attributes:
+      boxed: ''
+      class: g-flushed
+  intro:
+    type: section
+    attributes:
+      boxed: ''
+  features:
+    type: section
+    attributes:
+      boxed: ''
+  utility:
+    type: section
+    attributes:
+      boxed: ''
+      class: ''
+  above:
+    type: section
+    attributes:
+      boxed: ''
+  testimonials:
+    type: section
+    attributes:
+      boxed: ''
+  expanded:
+    type: section
+    attributes:
+      boxed: ''
+  mainbar:
+    type: section
+    subtype: main
+  sidebar:
+    type: section
+    subtype: aside
+  container-main:
+    attributes:
+      boxed: ''
+  footer:
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
+  offcanvas:
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
+content:
+  owlcarousel-2455:
+    title: 'Owl Carousel'
+    attributes:
+      items:
+        -
+          image: 'gantry-media://header/img01.jpg'
+          title: 'Helium is here!'
+          desc: 'Begin your journey with a brand new &raquo;free&laquo; Gantry 5 template from RocketTheme.'
+          link: 'http://gantry.org/downloads'
+          linktext: 'Download Now'
+          buttonicon: 'fa fa-rocket'
+          buttonclass: button-outline
+          name: 'Item 1'
+        -
+          image: 'gantry-media://header/img02.jpg'
+          title: 'Helium is Gantry powered!'
+          desc: 'Helium is based on the powerful Gantry framework.'
+          link: 'http://gantry.org/downloads'
+          linktext: 'Download Now'
+          buttonclass: button-outline
+          name: 'Item 2'
+  custom-5807:
+    title: Intro
+    attributes:
+      html: "<div class=\"fp-intro\">\n    <h2 class=\"g-title\">Build your beautiful theme, the way you want it, with Helium</h2>\n    <p>Craft memorable, emotive experiences with our Gantry 5 framework.</p>\n    <div class=\"ipad-mockup\">\n        <img src=\"gantry-media://intro/mockup.png\" alt=\"\" />\n    </div>\n</div>"
+    block:
+      variations: center
+  custom-3119:
+    title: Features
+    attributes:
+      html: "<div class=\"fp-features\">\n    <div class=\"g-grid\">\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-joomla\"></i>\n                    <h4 class=\"card-title\">Joomla</h4>\n                    <p class=\"card-text\">Bring your website to life with one of the most powerful and popular theming frameworks for Joomla.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-wordpress\"></i>\n                    <h4 class=\"card-title\">WordPress</h4>\n                    <p class=\"card-text\">Gantry extends WordPress' native functionality, empowering users to manipulate virtually every aspect of their visitors' experience.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-grav\"></i>\n                    <h4 class=\"card-title\">Grav</h4>\n                    <p class=\"card-text\">Gantry 5 is the first theming framework for Grav, designed by members of the same team that developed the CMS.</p>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+    block:
+      variations: center
+  contenttabs-3854:
+    title: 'Content Tabs'
+    attributes:
+      items:
+        -
+          content: "<p>Gantry 5 includes a new, powerful Menu editor that makes menu organization,\nparticle and module injection, and visual enhancements a breeze. Here are just\na handful of things you can do with Gantry 5’s powerful Menu Editor.</p>\n<div class=\"g-grid size-100\">\n    <div class=\"g-block size-50\">\n        <ul>\n            <li>\n                FontAwesome Icons\n            </li>\n            <li>\n                Easy Module Injection\n            </li>\n            <li>\n                Simple Particle Injection\n            </li>\n            <li>\n                Drag-and-drop Functionality\n            </li>\n            <li>\n                Per-item CSS Classes\n            </li>\n            <li>\n                Submenu Column Control\n            </li>\n        </ul>\n    </div>\n    <div class=\"g-block size-50\">\n        <ul>\n            <li>\n                Easy Organization / Reordering\n            </li>\n            <li>\n                Link Target Designation\n            </li>\n            <li>\n                Multiple Dropdown Styles\n            </li>\n            <li>\n                Per-item Image Support\n            </li>\n            <li>\n                Subtitles\n            </li>\n            <li>\n                Non-destructive\n            </li>\n        </ul>\n    </div>\n</div>\n<div class=\"g-grid\">\n    <div class=\"g-block size-100\">\n        Find out more about using the Menu Editor in our <a href=\"http://docs.gantry.org/gantry5/configure/menu-editor\">documentation</a>.\n    </div>\n</div>"
+          title: 'Menu Editor'
+        -
+          content: "<p>The Layout Manager makes it easier than ever to arrange and customize your users’ experience with drag-and-drop simplicity from start to finish. A handful of the many features found in the Layout Manager are listed below.</p>\n<div class=\"g-grid size-100\">\n    <div class=\"g-block size-50\">\n        <ul>\n            <li>Drag-and-drop Functionality</li>\n            <li>Unlimited Items Per Row</li>\n            <li>Unlimited Rows Per Section</li>\n            <li>Easy Widget Position Placement</li>\n            <li>Resize Items with Simple Sliders</li>\n            <li>Per-section CSS Classes and Tag Attributes</li>\n        </ul>\n    </div>\n    <div class=\"g-block size-50\">\n        <ul>\n            <li>Per-block CSS Classes, Variations, and Tag Attributes</li>\n            <li>Quick Preset Loading</li>\n            <li>Undo and Redo</li>\n            <li>Access to Easy-to-use Particles</li>\n            <li>Intuitive Visual Interface</li>\n            <li>Touch-screen Friendly</li>\n        </ul>\n    </div>\n</div>\n<div>Find out more about using the Layout Manager in our <a href=\"http://docs.gantry.org/gantry5/configure/layout-manager\">documentation</a>.</div>"
+          title: 'Layout Manager'
+  contentcubes-7850:
+    title: 'Content Cubes'
+    attributes:
+      items:
+        -
+          image: 'gantry-media://above/img01.jpeg'
+          imageposition: left
+          label: Featured
+          title: 'Gantry 5 Won "Best Framework System" at J and Beyond 2016 '
+          tags:
+            -
+              icon: 'fa fa-tag'
+              link: '#'
+              target: _self
+              text: 'Design Studio'
+            -
+              icon: 'fa fa-tag'
+              link: '#'
+              target: _self
+              text: Photo
+          link: 'http://gantry.org/blog/gantry5-wins-joscar'
+          linktext: '&rarr;'
+          buttonclass: ''
+          buttontarget: _self
+          name: 'Item 1'
+        -
+          image: 'gantry-media://above/img02.jpeg'
+          imageposition: right
+          label: Featured
+          title: 'Gantry 5 Has Been Downloaded Over Half a Million Times'
+          tags:
+            -
+              icon: 'fa fa-tag'
+              link: '#'
+              target: _self
+              text: 'Graphic Design'
+            -
+              icon: 'fa fa-tag'
+              link: '#'
+              target: _self
+              text: 'Website Creation'
+          link: 'http://gantry.org'
+          linktext: '&rarr;'
+          buttonclass: ''
+          buttontarget: _self
+          name: 'Item 2'
+  custom-7658:
+    title: 'Customer Testimonials'
+    attributes:
+      html: "<div class=\"fp-testimonials\">\n    <blockquote>\n        <img src=\"gantry-media://testimonials/face.jpg\" alt=\"Avatar\" class=\"g-img-circle\" height=\"80\" width=\"80\">\n        <p class=\"h3\">\"Helium is a beautiful, free theme made by the RocketTheme team in appreciation of the incredible Gantry community.\"</p>\n        <footer>Andy Miller</footer>\n    </blockquote>\n</div>"
+    block:
+      variations: center
+  custom-6355:
+    title: 'Develop CMS themes quickly'
+    attributes:
+      html: "<div class=\"fp-multi-column-text\">\n    <h2 class=\"g-title\">Develop CMS themes quickly and efficiently</h2>\n    <div class=\"g-grid\">\n        <div class=\"g-block size-50\">\n            <p>\n                Helium was crafted with love by the <a href=\"http://rockettheme.com\">RocketTheme</a> team to showcase the capabilities of the Gantry 5 framework. Helium is open source and available for free under a dual license system (<a href=\"http://www.opensource.org/licenses/mit-license.php\">MIT</a> or <a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\">GPL version 2 or later</a>). You do not have to keep the Gantry or RocketTheme links and logos in the front end, however, you must ensure that all copyright notices in the code are retained.\n            </p>\n        </div>\n        <div class=\"g-block size-50\">\n            <p>\n                Documentation for Gantry 5 is available on the <a href=\"http://docs.gantry.org\">official Gantry website</a>. You can submit any issues or feature requests for Gantry through <a href=\"http://github.com/gantry/gantry5\">GitHub</a>. A chat room has been set up using <a href=\"https://gitter.im/gantry/gantry5\">Gitter</a> where you can go to talk about the project with developers, contributors, and other members of the community. This is the best place to go to get quick tips and discuss features with others.\n            </p>\n        </div>\n    </div>\n</div>"
+    block:
+      variations: title-center

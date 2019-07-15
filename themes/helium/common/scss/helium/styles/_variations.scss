@@ -1,0 +1,300 @@
+// Flush
+.flush,
+.g-flushed {
+    > .g-container,
+    > .g-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.g-container-flushed {
+    margin: -4rem 0;
+}
+
+// no(margin/padding)(left/right/top/bottom)
+// (margin/padding)(2x/3x)
+$css_properties: "margin", "padding";
+$css_directions: "left", "right", "top", "bottom", "all";
+$css_multipliers: 2, 3;
+@each $prop in $css_properties {
+    @each $dir in $css_directions {
+        .no#{$prop}#{$dir} {
+            &, > .g-content {
+                @if ($dir != "all") {
+                    #{$prop}-#{$dir}: 0;
+                }
+                @else {
+                    #{$prop}: 0;
+                }
+            }
+        }
+    }
+    @each $multi in $css_multipliers {
+        .#{$prop}#{$multi}x {
+            > .g-content {
+                @if ($prop == "padding") {
+                    #{$prop}: $content-padding * $multi;
+                }
+                @elseif ($prop == "margin") {
+                    #{$prop}: $content-margin * $multi;
+                }
+            }
+        }
+    }
+}
+
+// Centered Title
+.title-center {
+    .g-title {
+        text-align: center;
+        margin: 0 0 2rem 0;
+    }
+}
+
+
+// General
+.title1, .title2, .title-gradient, .title-outline {
+    .g-title {
+        margin: -($content-padding) -($content-padding) 1.5rem -($content-padding);
+        padding: $content-margin 1rem;
+    }
+}
+
+.platform-content, .moduletable, .widget {
+    margin: ($content-margin) 0;
+    padding: ($content-padding) 0;
+
+    .moduletable, .widget {
+        margin: 0;
+        padding: 0
+    }
+
+    &:first-child {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}
+
+.moduletable, .widget {
+    &[class*="box"] {
+        padding: $content-padding;
+        margin: $content-margin;
+    }
+
+    &[class*="title"] {
+        .g-title {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+        }
+    }
+}
+
+// Title 1
+.title1 {
+    .g-title {
+        background: $box1-background;
+        color: $white;
+    }
+}
+
+// Box 1
+.box1 {
+    &.moduletable, &.widget,
+    &.g-outer-box,
+    > .g-content  {
+        background: darken($box1-background, 8%);
+    }
+
+    &.moduletable, &.widget,
+    > .g-content  {
+        color: $white;
+    }
+
+    .button {
+        color: $white;
+
+        &:hover {
+            background: darken($box1-background, 15%);
+        }
+    }
+
+    a {
+        color: lighten($box1-background, 30%);
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+// Box 1, Title 1
+.box1.title1 {
+    .g-title {
+        background: darken($box1-background, 15%);
+    }
+}
+
+// Title 2
+.title2 {
+    .g-title {
+        background: $box2-background;
+        color: $white;
+    }
+}
+
+// Box 2
+.box2 {
+    &.moduletable, &.widget,
+    &.g-outer-box,
+    > .g-content {
+        background: $box2-background;
+    }
+
+    &.moduletable, &.widget,
+    > .g-content {
+        color: $white;
+    }
+
+    .button {
+        color: $white;
+        background: darken($box2-background, 10%);
+
+        &:hover {
+            background: darken($box2-background, 15%);
+        }
+    }
+
+    a {
+        color: darken($box2-background, 30%);
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+// Box 2, Title 2
+.box2.title2 {
+    .g-title {
+        background: darken($box2-background, 10%);
+    }
+}
+
+// Title Gradient
+.title-gradient {
+    .g-title {
+        @include linear-gradient(90deg, $accent-color-1, $accent-color-2);
+        color: $white;
+    }
+}
+
+// Box Gradient
+.box-gradient {
+    &.moduletable, &.widget,
+    &.g-outer-box,
+    > .g-content  {
+        @include linear-gradient(45deg, $accent-color-1, $accent-color-2);
+    }
+
+    &.moduletable, &.widget,
+    > .g-content  {
+        color: $white;
+    }
+
+    .button {
+        color: $white;
+        background: darken($accent-color-1, 5%);
+
+        &:hover {
+            background: darken($accent-color-1, 15%);
+        }
+    }
+
+    a {
+        color: lighten($accent-color-1, 30%);
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+// Box Gradient, Title Gradient
+.box-gradient.title-gradient {
+    .g-title {
+        @include linear-gradient(10deg, $accent-color-1, $accent-color-2);
+    }
+}
+
+// Title Outline
+.title-outline {
+    .g-title {
+        border: 1px solid $accent-color-1;
+    }
+}
+
+// Box Outline
+.box-outline {
+    &.moduletable, &.widget,
+    &.g-outer-box,
+    > .g-content  {
+        border: 1px solid $accent-color-1;
+    }
+}
+
+// Box Outline, Title Outline
+.box-outline.title-outline {
+    .g-title {
+        border: none;
+        border-bottom: 1px solid $accent-color-1;
+    }
+}
+
+// Spaced
+.spaced {
+    .g-content {
+        margin: 1px;
+    }
+}
+
+// Shadow
+.shadow {
+    .g-content {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+}
+
+// Disabled
+.disabled {
+    .g-content {
+        opacity: 0.4;
+    }
+}
+
+// Rounded
+.rounded {
+    .g-content {
+        border-radius: $core-border-radius;
+        overflow: hidden;
+    }
+}
+
+// Equal Height
+.equal-height {
+    #g-aside,
+    #g-mainbar,
+    #g-sidebar {
+        width: 100%;
+    }
+
+    .g-content {
+        width: auto;
+    }
+}

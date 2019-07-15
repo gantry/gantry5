@@ -1,75 +1,66 @@
+version: 2
+
 preset:
   image: gantry-admin://images/layouts/3-col.png
 
 layout:
-  drawer:
-    container:
-      - [position-drawer 100]
+  /drawer/:
+    - [position-drawer 100]
 
-  top:
-    container:
-      - [position-top-a 33.3,position-top-b 33.3,position-top-c 33.3]
+  /top/:
+    - [position-top-a 33.3,position-top-b 33.3,position-top-c 33.3]
 
-  navigation:
-    container:
-      - [position-header-a 30, particle-menu 70]
+  /navigation/:
+    - [position-header-a 30, menu 70]
 
-  showcase:
-    container:
-      - [position-showcase-a 33.3,position-showcase-b 33.3,position-showcase-c 33.3]
+  /showcase/:
+    - [position-showcase-a 33.3,position-showcase-b 33.3,position-showcase-c 33.3]
 
-  feature:
-    container:
-      - [position-feature-a 33.3,position-feature-b 33.3,position-feature-c 33.3]
+  /feature/:
+    - [position-feature-a 33.3,position-feature-b 33.3,position-feature-c 33.3]
 
-  utility:
-    container:
-      - [position-utility-a 33.3,position-utility-b 33.3,position-utility-c 33.3]
+  /utility/:
+    - [position-utility-a 33.3,position-utility-b 33.3,position-utility-c 33.3]
 
-  breadcrumb:
-    container:
-      - [position-breadcrumb 100]
+  /breadcrumb/:
+    - [position-breadcrumb 100]
 
-  maintop:
-    container:
-      - [position-maintop-a 33.3,position-maintop-b 33.3,position-maintop-c 33.3]
+  /maintop/:
+    - [position-maintop-a 33.3,position-maintop-b 33.3,position-maintop-c 33.3]
 
-  container:
-    1:
-      - mainbody 80:
+  /container-main/:
+    -
+      - main-mainbody 80:
         - system-messages
         - [position-content-top-a 33.3,position-content-top-b 33.3,position-content-top-c 33.3]
-        - pagecontent
+        - system-content
         - [position-content-bottom-a 33.3,position-content-bottom-b 33.3,position-content-bottom-c 33.3]
       - sidebar 20:
         - position-sidebar-a
         - position-sidebar-b
         - position-sidebar-c
 
+  /mainbottom/:
+    - [position-mainbottom-a 33.3,position-mainbottom-b 33.3,position-mainbottom-c 33.3]
 
-  mainbottom:
-    container:
-      - [position-mainbottom-a 33.3,position-mainbottom-b 33.3,position-mainbottom-c 33.3]
+  /extension/:
+    - [position-extension-a 33.3,position-extension-b 33.3,position-extension-c 33.3]
 
-  extension:
-    container:
-      - [position-extension-a 33.3,position-extension-b 33.3,position-extension-c 33.3]
+  /bottom/:
+    - [position-bottom-a 33.3,position-bottom-b 33.3,position-bottom-c 33.3]
 
-  bottom:
-    container:
-      - [position-bottom-a 33.3,position-bottom-b 33.3,position-bottom-c 33.3]
+  /footer/:
+    - [position-footer-a 33.3,position-footer-b 33.3,position-footer-c 33.3]
 
-  footer:
-    container:
-      - [position-footer-a 33.3,position-footer-b 33.3,position-footer-c 33.3]
-
-  copyright:
-    container:
-      - [position-copyright-a 33.3,position-copyright-b 33.3,position-copyright-c 33.3]
-      - [particle-copyright 40, spacer 30, particle-branding 30]
+  /copyright/:
+    - [position-copyright-a 33.3,position-copyright-b 33.3,position-copyright-c 33.3]
+    - [copyright 40, spacer 30, branding 30]
 
   offcanvas:
-    - particle-mobile-menu
+    - mobile-menu
 
-  atoms:
-    - atom-google-analytics
+structure:
+  sidebar:
+    subtype: aside
+    block:
+      fixed: 1

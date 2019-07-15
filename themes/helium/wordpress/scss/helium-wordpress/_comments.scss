@@ -1,0 +1,147 @@
+#comments {
+    padding: 10px 0 25px;
+
+    h3 {
+        color: $black;
+    }
+
+    // Comments List
+    ol.commentlist {
+        margin-top: 0;
+
+        // Single Comment
+        li.comment {
+
+            .comment-body {
+                position: relative;
+                margin-left: 5px;
+                padding: 0 20px;
+                border-radius: 5px;
+                background: $white;
+                border: 1px solid $border-color-light;
+                font-size: $comment-font-size;
+
+                .child-arrow-indicator {
+                    visibility: hidden;
+                    position: absolute;
+                    top: 4px;
+                    left: -16px;
+                    color: $white;
+                }
+
+                .comment-reply {
+                    position: absolute;
+                    right: 20px;
+                    top: 20px;
+                }
+            }
+
+            .comment-author {
+                line-height: normal;
+                padding-top: 20px;
+                height: auto;
+
+                .author-avatar {
+                    @include flex(0 $avatar-size);
+                    width: $avatar-size;
+                    height: $avatar-size;
+                    margin-right: 20px;
+
+                    .avatar {
+                        border-radius: 50%;
+                    }
+                }
+
+                .author-meta {
+
+                    .author-name {
+                        font-size: $core-font-size;
+
+                        a {
+                            color: $black;
+
+                            &:hover {
+                                color: $accent-color-1;
+                            }
+                        }
+                    }
+
+                    time, .edit-link {
+                        a {
+                            color: $base-text-color;
+                            &:hover {
+                                color: $accent-color-1;
+                            }
+                        }
+
+                        @include breakpoint(mobile-only) {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+
+            &.bypostauthor {
+                > .comment-body {
+                    > .comment-author {
+                        .author-name {
+                            a {
+                                color: $accent-color-1;
+
+                                &:hover {
+                                    color: $base-text-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .comment-content {
+                overflow: hidden;
+                margin-left: 60px;
+                padding: 0 15px 15px 0;
+            }
+        }
+
+        // Child Comments
+
+        ol.children {
+            li.comment {
+                .comment-body {
+                    border-left: 20px solid $border-color-light;
+
+                    .child-arrow-indicator {
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+
+    #responses {
+        > ol.commentlist {
+            > li.comment:first-child {
+                margin-top: 0;
+
+                > .comment-body {
+                    .comment-author {
+                        border-top: none;
+                    }
+                }
+            }
+        }
+    }
+
+    // Comments Pagination
+    #comments-nav {
+
+        .comments-previous, .comments-next {
+            .button {
+                span {
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+}

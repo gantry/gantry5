@@ -1,30 +1,76 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route('menu', id) }}" data-mm-container>
+<form method="post" action="{{ gantry.route('menu', id) }}" data-mm-container="">
     <div class="menu-header">
         <span class="float-right">
-            <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
-            <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_MENU'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span></button>
+            <button class="button button-back-to-conf">
+                <i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
+            </button>
+            {% if gantry.authorize('menu.edit', id) %}
+            <button type="submit" class="button button-primary button-save" data-save="Menu">
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span>
+            </button>
+            {% endif %}
         </span>
         <h2 class="page-title">{{ 'GANTRY5_PLATFORM_MENU_EDITOR'|trans }}</h2>
-        <select placeholder="{{ 'GANTRY5_PLATFORM_SELECT_ELI'|trans }}" data-selectize-ajaxify data-selectize data-g5-ajaxify-target="[data-g5-content]" class="menu-select-wrap">
+        <select placeholder="{{ 'GANTRY5_PLATFORM_SELECT_ELI'|trans }}"
+                data-selectize-ajaxify=""
+                data-selectize=""
+                data-g5-ajaxify-target="[data-g5-content]"
+                class="menu-select-wrap"
+        >
             {% for menu_name in menus %}
-            <option value="{{ menu_name|e }}"
+            <option value="{{ menu_name }}"
                     {% if id == menu_name %}selected="selected"{% endif %}
                     data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
-                {{ menu_name|capitalize|e }}{{ default_menu == menu_name ? ' ★' : '' }}
+                {{ menu_name|capitalize }}{{ default_menu == menu_name ? ' ★' : '' }}
             </option>
             {% endfor %}
         </select>
     </div>
 
+    {% if not gantry.authorize('menu.edit', id) %}
+        <div class="alert alert-danger">{{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED'|trans }} {{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED_PLATFORM'|trans }}</div>
+    {% endif %}
+
+    {% if gantry.authorize('menu.edit', id) %}
     <div class="g5-mm-particles-picker">
         <ul class="g-menu-addblock">
-            <li data-mm-blocktype="module" data-mm-id="__module"><span class="menu-item"><i class="fa fa-fw fa-hand-stop-o"></i> <span class="title">{{ 'GANTRY5_PLATFORM_MODULE'|trans }}</span></span> <a class="config-cog" href="{{ gantry.route('menu/select/module') }}"><i aria-label="Menu Module Item Settings" class="fa fa-cog"></i></a></li>
-            <li data-mm-blocktype="particle" data-mm-id="__particle"><span class="menu-item"><i class="fa fa-fw fa-hand-stop-o"></i> <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</span></span></span> <a class="config-cog" href="{{ gantry.route('menu/select/particle') }}"><i aria-label="Menu Particle Item Settings" class="fa fa-cog"></i></a></li>
+            {% if gantry.platform.has('modules') %}
+            <li data-mm-blocktype="module" data-mm-id="__module">
+                <span class="menu-item">
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <span class="title">{{ 'GANTRY5_PLATFORM_MODULE'|trans }}</span>
+                </span>
+                <a class="config-cog" href="{{ gantry.route('menu/select/module') }}">
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_MODULE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
+                </a>
+            </li>
+            {% elseif gantry.platform.has('widgets') %}
+            <li data-mm-blocktype="widget" data-mm-id="__widget">
+                <span class="menu-item">
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <span class="title">{{ 'GANTRY5_PLATFORM_WIDGET'|trans }}</span>
+                </span>
+                <a class="config-cog" href="{{ gantry.route('menu/select/widget') }}">
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_WIDGET_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
+                </a>
+            </li>
+            {% endif %}
+            <li data-mm-blocktype="particle" data-mm-id="__particle">
+                <span class="menu-item">
+                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</span>
+                </span>
+                <a class="config-cog" href="{{ gantry.route('menu/select/particle') }}">
+                    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_PARTICLE_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
+                </a>
+            </li>
         </ul>
     </div>
+    {% endif %}
+
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
          data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
@@ -36,6 +82,6 @@
         {% endif %}
     </div>
 
-    <div id="trash" data-mm-eraseparticle><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+    <div id="trash" data-mm-eraseparticle=""><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
 </form>
 {% endblock %}

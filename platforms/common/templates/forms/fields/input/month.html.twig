@@ -4,19 +4,19 @@
     <input
             {# required attribute structures #}
             type="month"
-            name="{{ (scope ~ name)|fieldName|e }}"
-            value="{{ value|join(', ')|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
+            value="{{ value|join(', ') }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
-            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete|e }}"{% endif %}
+            {% if field.autocomplete in ['on', 'off'] %}autocomplete="{{ field.autocomplete }}"{% endif %}
             {% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-            {% if field.list is defined %}list="{{ field.list|e }}"{% endif %}
-            {% if field.max is defined %}max="{{ field.max|e }}"{% endif %}
-            {% if field.min is defined %}min="{{ field.min|e }}"{% endif %}
+            {% if field.list is defined %}list="{{ field.list }}"{% endif %}
+            {% if field.max is defined %}max="{{ field.max }}"{% endif %}
+            {% if field.min is defined %}min="{{ field.min }}"{% endif %}
             {% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
-            {% if field.step is defined %}step="{{ field.step|e }}"{% endif %}
+            {% if field.step is defined %}step="{{ field.step }}"{% endif %}
             />
 {% endblock %}

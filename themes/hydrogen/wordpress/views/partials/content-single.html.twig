@@ -5,8 +5,8 @@
         {# Begin Entry Header #}
         <section class="entry-header">
 
+            {# Begin Entry Title #}
             {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
-                {# Begin Entry Title #}
                 <h2 class="entry-title">
                     {% if gantry.config.get('content.' ~ scope ~ '.title.link', '0') %}
                         <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
@@ -14,11 +14,11 @@
                         {{ post.title }}
                     {% endif %}
                 </h2>
-                {# End Entry Title #}
             {% endif %}
+            {# End Entry Title #}
 
             {# Begin Entry Meta #}
-            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') %}
+            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
                 {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
             {% endif %}
             {# End Entry Meta #}
@@ -26,7 +26,7 @@
         </section>
         {# End Entry Header #}
 
-        {# Check if page is password protected #}
+        {# Check if post is password protected #}
         {% if not function( 'post_password_required', post.ID ) %}
 
             {# Begin Entry Content #}
@@ -42,7 +42,7 @@
                 {# End Featured Image #}
 
                 {# Begin Page Content #}
-                {{ post.paged_content }}
+                {{ post.paged_content|raw }}
 
                 {{ function('wp_link_pages', {'before': '<div class="page-links" itemprop="pagination">', 'after': '</div>', 'link_before': '<span class="page-number page-numbers">', 'link_after': '</span>', 'echo': 0}) }}
                 {# End Page Content #}
@@ -56,7 +56,7 @@
 
             {# Begin Comments #}
             {% if (post.comment_status == 'open' or post.comment_count > 0) and post.post_type != 'product' %}
-                {{ function('comments_template') }}
+                {{ function('comments_template')|raw }}
             {% endif %}
             {# End Comments #}
 

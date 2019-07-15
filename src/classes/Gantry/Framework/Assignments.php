@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,37 +13,11 @@
 
 namespace Gantry\Framework;
 
-class Assignments
+use Gantry\Component\Assignments\AbstractAssignments;
+
+class Assignments extends AbstractAssignments
 {
-    public function __construct()
-    {
-    }
-
-    public function get()
-    {
-        return [];
-    }
-
-    public function set($data)
-    {
-    }
-
     public function types()
-    {
-        return [];
-    }
-
-    public function getAssignment()
-    {
-        return 'default';
-    }
-
-    public function setAssignment($value)
-    {
-        throw new \RuntimeException('Not implemented');
-    }
-
-    public function assignmentOptions()
     {
         return [];
     }

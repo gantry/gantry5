@@ -11,12 +11,14 @@ var ready         = require('elements/domready'),
     indexOf       = require('mout/array/indexOf'),
     contains      = require('mout/array/contains'),
     lastItem      = require('mout/array/last'),
+    keys          = require('mout/object/keys'),
     simpleSort    = require('sortablejs'),
     escapeUnicode = require('mout/string/escapeUnicode'),
 
     trim          = require('mout/string/trim'),
 
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -100,8 +102,7 @@ ready(function() {
         body.emit('change', { target: dataField });
     });
 
-    // Change values
-    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+    var onBlur = function(event, element) {
         var parent     = element.parent('[data-keyvalue-item]'),
             wrapper    = parent.find('.g-keyvalue-wrapper'),
             keyElement = parent.find('[data-keyvalue-key]'),
@@ -109,8 +110,8 @@ ready(function() {
             key        = keyElement.data('keyvalue-key'),
             keyValue   = trim(keyElement.value()),
             valValue   = trim(valElement.value()),
-            items     = element.parent('ul').search('> [data-keyvalue-item]:not(.g-keyvalue-warning):not(.g-keyvalue-excluded)'),
-            index     = indexOf(items, parent[0]),
+            items      = element.parent('ul').search('> [data-keyvalue-item]:not(.g-keyvalue-warning):not(.g-keyvalue-excluded)'),
+            index      = indexOf(items, parent[0]),
 
             dataField  = element.parent('.settings-param').find('[data-keyvalue-data]'),
             data       = JSON.parse(dataField.value()),
@@ -128,8 +129,17 @@ ready(function() {
             parent[duplicate ? 'addClass' : 'removeClass']('g-keyvalue-warning');
             parent[excluded ? 'addClass' : 'removeClass']('g-keyvalue-excluded');
 
-            wrapper[excluded || duplicate ? 'addClass' : 'removeClass']('g-tooltip');
-            wrapper.data('title', duplicate ? 'The key "' + keyValue + '" is a duplicate' : (excluded ? 'The key "' + keyValue + '" has been excluded and cannot be used' : null));
+            wrapper
+                .data('tip', duplicate ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE', keyValue) : (excluded ? translate('GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED', keyValue) : null))
+                .data('tip-place', 'top-right')
+                .data('tip-spacing', 2)
+                .data('tip-offset', 8);
+
+            if (excluded || duplicate) {
+                window.G5.tips.get(wrapper[0]).show();
+            } else {
+                window.G5.tips.remove(wrapper[0]);
+            }
         }
 
         if (keyValue && !excluded && !duplicate) {
@@ -140,7 +150,42 @@ ready(function() {
         dataField.value(escapeUnicode(JSON.stringify(data)));
         body.emit('change', { target: dataField });
 
-    }, true);
+    };
+
+    // Catch return key
+    body.delegate('keydown', '[data-keyvalue-item] input[type="text"]', function(event, element) {
+        var key = (event.which ? event.which : event.keyCode);
+        if (key === 13) { // Enter
+            onBlur(event, element);
+        }
+    });
+
+    // Change values
+    body.delegate('blur', '[data-keyvalue-item] input[type="text"]', onBlur, true);
+
+    body.delegate('update', '[data-keyvalue-data]', function(event, element) {
+        var parent = element.parent(),
+            items  = parent.search('[data-keyvalue-item]'),
+            list   = parent.find('ul'),
+            data   = JSON.parse(element.value()),
+            tmpl   = parent.find('[data-keyvalue-template]');
+
+        if (items) { items.remove(); }
+
+        data.forEach(function(obj, index) {
+            var clone = $(tmpl[0].cloneNode(true)),
+                key   = keys(obj).shift(),
+                value = obj[key];
+
+            list.appendChild(clone);
+
+            clone.attribute('style', null).data('keyvalue-item', clone.data('keyvalue-template'));
+            clone.attribute('data-keyvalue-template', null);
+            clone.attribute('data-keyvalue-nosort', null);
+            clone.find('[data-keyvalue-key]').value(key);
+            clone.find('[data-keyvalue-value]').value(value);
+        });
+    });
 
 });
 

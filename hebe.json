@@ -1,12 +1,7 @@
 {
     "project":"Gantry5",
-    "aliases":[
-        {
-            "joomla32":"joomla34"
-        }
-    ],
     "platforms":{
-        "joomla34":{
+        "joomla":{
             "nodes":{
                 "manifests":[
                     {
@@ -50,10 +45,6 @@
                         "destination":"/libraries/gantry5/language"
                     },
                     {
-                        "source":"/src/vendor",
-                        "destination":"/libraries/gantry5/vendor"
-                    },
-                    {
                         "source":"/src/bootstrap.php",
                         "destination":"/libraries/gantry5/bootstrap.php"
                     },
@@ -78,6 +69,10 @@
                     {
                         "source":"/platforms/joomla/plg_quickicon_gantry5",
                         "destination":"/plugins/quickicon/gantry5"
+                    },
+                    {
+                        "source":"/platforms/joomla/plg_system_gantry5_debugbar",
+                        "destination":"/plugins/system/gantry5_debugbar"
                     }
                 ],
                 "modules":[
@@ -104,6 +99,14 @@
                     {
                         "source":"/themes/hydrogen/common",
                         "destination":"/templates/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/helium/joomla",
+                        "destination":"/templates/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/templates/g5_helium/common"
                     }
                 ]
             }
@@ -118,6 +121,10 @@
                     {
                         "source":"/platforms/common",
                         "destination":"/wp-content/plugins/gantry5/admin/common"
+                    },
+                    {
+                        "source":"/platforms/wordpress/gantry5_debugbar",
+                        "destination":"/wp-content/plugins/gantry5_debugbar"
                     }
                 ],
                 "library":[
@@ -139,11 +146,35 @@
                 "themes":[
                     {
                         "source":"/themes/hydrogen/wordpress",
-                        "destination":"/wp-content/themes/hydrogen"
+                        "destination":"/wp-content/themes/g5_hydrogen"
                     },
                     {
                         "source":"/themes/hydrogen/common",
-                        "destination":"/wp-content/themes/hydrogen/common"
+                        "destination":"/wp-content/themes/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/hydrogen-child/wordpress",
+                        "destination":"/wp-content/themes/g5_hydrogen_child"
+                    },
+                    {
+                        "source":"/themes/hydrogen/common",
+                        "destination":"/wp-content/themes/g5_hydrogen_child/common"
+                    },
+                    {
+                        "source":"/themes/helium/wordpress",
+                        "destination":"/wp-content/themes/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/wp-content/themes/g5_helium/common"
+                    },
+                    {
+                        "source":"/themes/helium-child/wordpress",
+                        "destination":"/wp-content/themes/g5_helium_child"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/wp-content/themes/g5_helium_child/common"
                     }
                 ]
             }
@@ -157,7 +188,7 @@
                     },
                     {
                         "source":"/platforms/common",
-                        "destination":"/user/plugins/gantry5/common"
+                        "destination":"/user/plugins/gantry5/admin/common"
                     }
                 ],
                 "libraries":[
@@ -169,27 +200,41 @@
                 "assets":[
                     {
                         "source":"/engines",
-                        "destination":"/user/gantry5/engines"
+                        "destination":"/user/plugins/gantry5/engines"
                     },
                     {
                         "source":"/assets",
-                        "destination":"/user/gantry5/assets"
+                        "destination":"/user/plugins/gantry5/assets"
                     }
                 ],
                 "themes":[
                     {
                         "source":"/themes/hydrogen/grav",
-                        "destination":"/user/themes/hydrogen"
+                        "destination":"/user/themes/g5_hydrogen"
                     },
                     {
                         "source":"/themes/hydrogen/common",
-                        "destination":"/user/themes/hydrogen/common"
+                        "destination":"/user/themes/g5_hydrogen/common"
+                    },
+                    {
+                        "source":"/themes/helium/grav",
+                        "destination":"/user/themes/g5_helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/user/themes/g5_helium/common"
                     }
                 ]
             }
         },
         "prime":{
             "nodes":{
+                "debugbar":[
+                    {
+                        "source":"/platforms/prime/debugbar",
+                        "destination":"/debugbar"
+                    }
+                ],
                 "admin":[
                     {
                         "source":"/platforms/prime/admin",
@@ -204,12 +249,6 @@
                     {
                         "source":"/platforms/prime/config",
                         "destination":"/config"
-                    }
-                ],
-                "includes":[
-                    {
-                        "source":"/platforms/prime/includes",
-                        "destination":"/includes"
                     }
                 ],
                 "layouts":[
@@ -274,6 +313,22 @@
                     {
                         "source":"/themes/hydrogen-demo/common",
                         "destination":"/themes/hydrogen-demo/common"
+                    },
+                    {
+                        "source":"/themes/helium/prime",
+                        "destination":"/themes/helium"
+                    },
+                    {
+                        "source":"/themes/helium/common",
+                        "destination":"/themes/helium/common"
+                    },
+                    {
+                        "source":"/themes/helium-demo/prime",
+                        "destination":"/themes/helium-demo"
+                    },
+                    {
+                        "source":"/themes/helium-demo/common",
+                        "destination":"/themes/helium-demo/common"
                     }
                 ]
             }

@@ -1,0 +1,27 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+    <div id="import">
+        <span class="float-right">
+            <button class="button button-back-to-conf" tabindex="0"
+                    aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left" aria-hidden="true"></i>
+                <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
+        </span>
+    </div>
+    <form method="post" enctype="multipart/form-data" action="{{ gantry.route('import') }}">
+        <div class="card settings-block">
+            {% if success %}
+                <div class="alert alert-success">{{  'GANTRY5_PLATFORM_SAVED'|trans }}</div>
+            {% endif %}
+            <h2 class="page-title">
+                {{ 'GANTRY5_PLATFORM_IMPORT'|trans }}
+            </h2>
+            <div class="inner-params">
+                {% include 'forms/fields/input/file.html.twig' with { field: { name: 'file', type: 'input.file', label: 'Import File', accept: '.zip' }} %}
+            </div>
+            <div class="g-modal-actions">
+                <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

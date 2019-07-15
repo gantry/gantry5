@@ -1,34 +1,69 @@
 <div class="g-grid">
     <div class="g-block navbar-block">
         <nav id="gantry">
-            {% set style = location in ['menu', 'about', 'configurations']  ? ' style="overflow: hidden; height: 0; visibility: hidden;"' : '' %}
+            {% set style = location in ['menu', 'about', 'configurations', 'positions']  ? ' style="overflow: hidden; height: 0; visibility: hidden;"' : '' %}
             <section id="navbar"{{ style|raw }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
                     <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-nav="styles" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'styles')|e }}"><i class="fa fa-fw fa-adjust"></i><span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span></a>
-                    </li>
-                    <li {{ (location == 'configurations/settings') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-nav="settings" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'settings')|e }}"><i class="fa fa-fw fa-wrench"></i><span>{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span></a>
-                    </li>
-                    <li {{ (location == 'configurations/page') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-nav="page" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'page')|e }}"><i class="fa fa-fw fa-list-alt"></i><span>{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span></a>
+                        <a data-g5-ajaxify=""
+                           data-g5-nav="styles"
+                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                           href="{{ gantry.route('configurations', configuration ?: 'default', 'styles') }}"
+                        >
+                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
+                        </a>
                     </li>
                     {% if (configuration and configuration != 'default') or not gantry.platform.no_base_layout %}
-                    <li {{ (location == 'configurations/layout') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-nav="layout" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'layout')|e }}"><i class="fa fa-fw fa-columns"></i><span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span></a>
+                        <li {{ (location == 'configurations/layout') ? 'class="active"' }}>
+                            <a data-g5-ajaxify=""
+                               data-g5-nav="layout"
+                               data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                               data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                               href="{{ gantry.route('configurations', configuration ?: 'default', 'layout') }}"
+                            >
+                                <i class="fa fa-fw fa-columns" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li {{ (location == 'configurations/page') ? 'class="active"' }}>
+                        <a data-g5-ajaxify=""
+                           data-g5-nav="page"
+                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                           href="{{ gantry.route('configurations', configuration ?: 'default', 'page') }}"
+                        >
+                            <i class="fa fa-fw fa-list-alt" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_PAGESETTINGS'|trans }}</span>
+                        </a>
+                    </li>
+                    {% if configuration and configuration != 'default' and not (configuration starts with '_') %}
+                    <li {{ (location == 'configurations/assignments') ? 'class="active"' }}>
+                        <a data-g5-ajaxify=""
+                           data-g5-nav="assignments"
+                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                           href="{{ gantry.route('configurations', configuration ?: 'default', 'assignments') }}"
+                        >
+                            <i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span>
+                        </a>
                     </li>
                     {% endif %}
-                    {% if configuration and configuration != 'default' %}
-                    <li {{ (location == 'configurations/assignments') ? 'class="active"' }}>
-                        <a data-g5-ajaxify data-g5-nav="assignments" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', configuration, 'assignments')|e }}"><i class="fa fa-fw fa-check-square-o"></i><span>{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}</span></a>
-                    </li>
+                    {% if (location == 'configurations/settings' or gantry.particles.overrides(configuration)) %}
+                        <li {{ (location == 'configurations/settings') ? 'class="active"' }}>
+                            <a data-g5-ajaxify=""
+                               data-g5-nav="settings"
+                               data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                               data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                               href="{{ gantry.route('configurations', configuration ?: 'default', 'settings') }}"
+                            >
+                                <i class="fa fa-fw fa-wrench" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</span>
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
-            </section>
-        </nav>
-        <a href="{{ gantry.route('themes') }}" aria-hidden="true" tabindex="-1">
-            <svg version="1.1" id="gantry-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="81px" height="28.239px" viewBox="0 0 81 28.239" style="enable-background:new 0 0 81 28.239;" xml:space="preserve">
+                <a href="{{ gantry.route('themes') }}" aria-hidden="true" tabindex="-1">
+                    <svg version="1.1" id="gantry-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="81px" height="28.239px" viewBox="0 0 81 28.239" style="enable-background:new 0 0 81 28.239;" xml:space="preserve">
                 <g>
                     <path style="fill:#a0a0a0;" d="M8.101,26.332c2.639-0.358,4.636-2.603,4.672-5.311l0.008-1.451l-1.184,0.847
                         c-1.255,0.903-2.734,1.38-4.27,1.38C3.288,21.797,0,18.511,0,14.471c0-4.039,3.286-7.325,7.325-7.325
@@ -48,6 +83,8 @@
                         v4.602H46.695z"/>
                 </g>
             </svg>
-        </a>
+                </a>
+            </section>
+        </nav>
     </div>
 </div>

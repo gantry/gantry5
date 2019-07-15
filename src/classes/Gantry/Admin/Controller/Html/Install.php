@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,36 +13,26 @@
 
 namespace Gantry\Admin\Controller\Html;
 
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Joomla\TemplateInstaller;
-use RocketTheme\Toolbox\File\YamlFile;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Gantry\Component\Admin\HtmlController;
+use Gantry\Framework\ThemeInstaller;
 
 class Install extends HtmlController
 {
     public function index()
     {
-        if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
-            $installer = new TemplateInstaller;
-            $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus();
-            $installer->cleanup();
+        if (!$this->authorize('updates.manage') || !class_exists('\Gantry\Framework\ThemeInstaller')) {
+            $this->forbidden();
         }
 
-        return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);
-    }
+        $installer = new ThemeInstaller();
+        $installer->initialized = true;
+        $installer->loadExtension($this->container['theme.name']);
+        $installer->installDefaults();
+        $installer->installSampleData();
+        $installer->finalize();
 
-    public function display($id)
-    {
-        if (class_exists('\Gantry\Joomla\TemplateInstaller')) {
-            $installer = new TemplateInstaller;
-            $installer->loadExtension($this->container['theme.name']);
-            $installer->installMenus();
-            $installer->cleanup();
-        }
-
-        return new JsonResponse(['html' => 'Menus have been installed!', 'title' => 'Installed']);
+        $this->params['actions'] = $installer->actions;
+        
+        return $this->render('@gantry-admin/pages/install/install.html.twig', $this->params);
     }
 }

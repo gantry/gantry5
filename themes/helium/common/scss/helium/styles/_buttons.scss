@@ -1,0 +1,115 @@
+// Buttons
+%g-button {
+    display: inline-block;
+    font-family: get-font-family($font-family-title);
+    font-weight: $font-weight-semibold;
+    font-size: $core-font-size - 0.2;
+    line-height: 1.15;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    background: $accent-color-1;
+    color: $white;
+    border: 1px solid transparent;
+    border-radius: 2.5rem;
+    margin: 0 0 0.5rem 0;
+    padding: 1.5rem 3.125rem;
+    vertical-align: middle;
+    text-shadow: none;
+    @include transition(all 0.2s);
+
+    &:hover, &:active, &:focus {
+        background: darken($accent-color-1, 10%);
+        color: $white;
+        outline: 0;
+    }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+
+        &:hover {
+            background: $accent-color-1;
+        }
+    }
+}
+
+.button {
+    @extend %g-button;
+
+    &.fa {
+        line-height: 1.15;
+
+        &[class*="fa-"] {
+            &:before, &:after {
+                font-family: FontAwesome;
+            }
+        }
+    }
+
+    &.button-block {
+        width: 100%;
+        display: block;
+    }
+
+    &.button-xlarge {
+        font-size: $core-font-size + 0.2;
+        padding: 1.9rem 3.525rem;
+        border-radius: 3.5rem;
+    }
+
+    &.button-large {
+        font-size: $core-font-size;
+        padding: 1.7rem 3.325rem;
+    }
+
+    &.button-small {
+        font-size: $core-font-size - 0.3;
+        padding: 1.2rem 2.825rem;
+    }
+
+    &.button-xsmall {
+        font-size: $core-font-size - 0.4;
+        padding: 1.1rem 2.725rem;
+    }
+
+    &.button-2 {
+        background: $accent-color-2;
+
+        @include transition(all 0.2s);
+
+        &:hover, &:active, &:focus {
+            background: darken($accent-color-2, 10%);
+            color: $white;
+        }
+    }
+
+    &.button-outline {
+        background: transparent;
+        color: $accent-color-1;
+        border-color: $accent-color-1;
+
+        &:hover, &:active, &:focus {
+            background: $accent-color-1;
+            border-color: transparent;
+            color: $white;
+        }
+    }
+
+    &.button-gradient {
+        @include linear-gradient(90deg, $accent-color-1, $accent-color-2);
+        border: none;
+
+        &:hover, &:active, &:focus {
+            background: $accent-color-1;
+            color: white;
+        }
+    }
+
+    &.button-bevel {
+        border-radius: 0.4rem;
+    }
+
+    &.button-square {
+        border-radius: 0;
+    }
+}

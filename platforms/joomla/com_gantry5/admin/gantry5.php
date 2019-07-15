@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,12 @@ defined('_JEXEC') or die;
 $user = JFactory::getUser();
 $app = JFactory::getApplication();
 
-// ACL for hardening the access to the template manager.
-if ((!$user->authorise('core.manage', 'com_templates') || !$user->authorise('core.manage', 'com_gantry5'))
-    || !$user->authorise('core.edit', 'com_templates')
-    || !$user->authorise('core.create', 'com_templates')
-    || !$user->authorise('core.admin', 'com_templates')) {
+// ACL for Gantry admin access.
+if (!$user->authorise('core.manage', 'com_gantry5')
+    && !$user->authorise('core.manage', 'com_templates')
+    // Editing particle module makes AJAX call to Gantry component, but has restricted access to json only.
+    && !($user->authorise('core.manage', 'com_modules') && $app->input->request->getString('format') === 'json')
+) {
     $app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
 
     return false;

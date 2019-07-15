@@ -176,7 +176,8 @@ textarea {
 }
 
 .row {
-	margin-left: -20px;
+/*	margin-left: -20px;*/
+	margin-left: 0px;
 	*zoom: 1;
 }
 
@@ -1654,6 +1655,7 @@ table {
 }
 
 .table {
+	border: 0 solid;
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -1664,7 +1666,9 @@ table {
 	line-height: 20px;
 	text-align: left;
 	vertical-align: top;
+	border: 0 solid;
 	border-top: 1px solid #dddddd;
+	background-color: transparent;
 }
 
 .table th {
@@ -2947,7 +2951,6 @@ input[type="submit"].btn.btn-mini {
 }
 
 .alert .close {
-	position: relative;
 	top: -2px;
 	right: -21px;
 	line-height: 20px;
@@ -4032,6 +4035,7 @@ input[type="submit"].btn.btn-mini {
 .pagination ul {
 	display: inline-block;
 	*display: inline;
+	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 0;
 	-webkit-border-radius: 4px;

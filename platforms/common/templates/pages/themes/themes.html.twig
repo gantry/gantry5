@@ -14,11 +14,13 @@
                                 <div class="g-content" data-g5-content="">
                                     <div class="g-grid overview-header">
                                         <div class="g-block">
-                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug"></i> {{ 'GANTRY5_PLATFORM_AVAILABLE_THEMES'|trans }}</h2>
+                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_AVAILABLE_THEMES'|trans }}</h2>
                                         </div>
                                     {% if settings_url %}
                                         <div class="g-block">
-                                            <a class="button button-primary float-right" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-cog"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}</a>
+                                            <a class="button button-primary float-right" href="{{ settings_url }}" data-settings-key="{{ settings_key }}">
+                                                <i class="fa fa-cog" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}
+                                            </a>
                                         </div>
                                     {% endif %}
                                     </div>
@@ -27,24 +29,30 @@
                                         {% for id, theme in themes %}
                                             <div class="theme card">
                                                 <div class="theme-id">
-                                                    {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon|e }}"></i>{% endif %}
-                                                    {{ theme.title|e }} <span class="theme-info">(v{{ theme.details.version }} / {{ theme.name|e }})</span>
+                                                    {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon }}" aria-hidden="true"></i>{% endif %}
+                                                    {{ theme.title }} <span class="theme-info">(v{{ theme.details.version }} / {{ theme.name }})</span>
                                                 </div>
                                                 <div class="theme-screenshot">
-                                                    <a href="{{ theme.admin_url|e }}">
-                                                        <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4')|e }}" />
+                                                    {% if theme.admin_url %}
+                                                    <a href="{{ theme.admin_url }}">
+                                                    {% endif %}
+                                                        <img src="{{ url(theme.thumbnail)|default('http://www.placehold.it/206x150/f4f4f4') }}" />
+                                                    {% if theme.admin_url %}
                                                     </a>
+                                                    {% endif %}
                                                 </div>
                                                 <div class="theme-name">
                                                     {% if theme.preview_url %}
-                                                    <a class="button" href="{{ theme.preview_url|e }}" target="_blank">Preview</a>
+                                                    <a class="button" href="{{ theme.preview_url }}" target="_blank">{{ 'GANTRY5_PLATFORM_PREVIEW'|trans }}</a>
                                                     {% endif %}
-                                                    <a class="button button-primary" href="{{ theme.admin_url|e }}">Configure</a>
+                                                    {% if theme.admin_url %}
+                                                    <a class="button button-primary" href="{{ theme.admin_url }}">{{ 'GANTRY5_PLATFORM_CONFIGURE'|trans }}</a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         {% endfor %}
                                         {% else %}
-                                            <p>No themes installed.</p>
+                                            <p>{{ 'GANTRY5_PLATFORM_NO_THEMES_INSTALLED'|trans }}</p>
                                         {% endif %}
                                     </div>
                                 </div>

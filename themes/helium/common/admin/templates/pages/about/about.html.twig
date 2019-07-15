@@ -1,0 +1,37 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+    <div class="g-grid overview-header">
+        <div class="g-block">
+            <h2 class="theme-title">
+                {% if gantry.theme.icon %}<i class="fa fa-{{ gantry.theme.icon }}" aria-hidden="true"></i>{% endif %} {{ gantry.theme.title }}
+            </h2>
+            <span class="theme-version">v{{ gantry.theme.version }}</span>
+            <div>By <a href="{{ gantry.theme.author.link }}">{{ gantry.theme.author.name }}</a></div>
+        </div>
+        <div class="g-block">
+            <span class="float-right">
+                <button class="button button-back-to-conf"><i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> <span>Back to Setup</span></button>
+                <a href="{{ gantry.theme.support.link }}" class="button button-primary"><i class="fa fa-support" aria-hidden="true"></i> <span>Support</span></a>
+                <a href="{{ gantry.theme.documentation.link }}" class="button button-primary"><i class="fa fa-book" aria-hidden="true"></i> <span>Documentation</span></a>
+            </span>
+        </div>
+    </div>
+
+    <div class="g-grid overview-details">
+        <div class="g-block size-35">
+             <img src="{{ url(info.thumbnail) }}" class="preview-image" alt="">
+        </div>
+
+        <div class="g-block">
+            <p>Helium is a beautiful, free theme made by the RocketTheme team in appreciation of the incredible Gantry community.</p>
+            <ul class="overview-list">
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>OwlCarousel</li>
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>Content Cubes</li>
+                <li><i class="fa fa-asterisk" aria-hidden="true"></i>Content Tabs</li>
+            </ul>
+        </div>
+    </div>
+
+    {% include '@gantry-admin/partials/gantry-details.html.twig' %}
+{% endblock %}

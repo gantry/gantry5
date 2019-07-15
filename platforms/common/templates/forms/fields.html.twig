@@ -1,24 +1,29 @@
-{% set scope = prefix %}
+{% set scope = scope ?? prefix %}
 
 {% if blueprints.type %}
     {% set field = blueprints %}
-    {% set value = data %}
+    {% set current_value = data %}
     {% set default_value = defaults %}
 
-    {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+    {% include ["forms/fields/" ~ field.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
 
 {% else %}
+
     {% for name, field in blueprints.fields %}
         {% if name starts with '.' %}
             {% set name = name[1:] %}
         {% endif %}
 
-        {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and field.overridable is same as(false)) %}
-            {% set field = field + {'name': name} %}
-            {% set value = nested(data, scope ~ name) %}
-            {% set default_value = nested(defaults, scope ~ name) %}
+        {% set container = field.type == 'container.tabs' %}
+        {% set current_value = container ? nested(data, scope|trim('.')) : nested(data, scope ~ name) %}
+        {% set default_value = container ? nested(defaults, scope|trim('.')) : nested(defaults, scope ~ name) %}
+        {% set has_value = current_value is not null %}
+        {% set field_overrideable = field.overridable is defined ? field.overridable : (field.overrideable is defined ? field.overrideable : true) %}
 
-            {% include ["forms/fields/" ~ field.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
+        {% if field.type and name not in skip and not field.skip and not(ignore_not_overrideable and not field_overrideable and not has_value) and not(not has_value and not_global_overrideable) %}
+            {% set field = field + {'name': name} %}
+
+            {% include ["forms/fields/" ~ field.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig'] %}
         {% endif %}
     {% endfor %}
 {% endif %}

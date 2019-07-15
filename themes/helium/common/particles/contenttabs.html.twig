@@ -1,0 +1,67 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+    <div class="{{ particle.class|e }}">
+        {% if particle.title %}<h2 class="g-title">{{ particle.title|raw }}</h2>{% endif %}
+
+        <div class="g-contenttabs">
+            <div id="g-contenttabs-{{ id }}" class="g-contenttabs-container">
+                <ul class="g-contenttabs-tab-wrapper-container">
+
+                    {% for item in particle.items %}
+                        <li class="g-contenttabs-tab-wrapper">
+                            <span class="g-contenttabs-tab-wrapper-head">
+                                <a class="g-contenttabs-tab" href="#g-contenttabs-item-{{ id }}-{{ loop.index }}">
+                                    <span class="g-contenttabs-tab-title">{{ item.title|raw }}</span>
+                                </a>
+                            </span>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+                <div class="clearfix"></div>
+
+                <ul class="g-contenttabs-content-wrapper-container">
+
+                    {% for item in particle.items %}
+                        <li class="g-contenttabs-tab-wrapper">
+                            <div class="g-contenttabs-tab-wrapper-body">
+                                <div id="g-contenttabs-item-{{ id }}-{{ loop.index }}" class="g-contenttabs-content">
+                                    {{ item.content|raw }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {% do gantry.load('jquery') %}
+    <script src="{{ url('gantry-theme://js/juitabs.js') }}"></script>
+{% endblock %}
+
+{% block javascript_footer %}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#g-contenttabs-{{ id }}').tabs({
+                show: {
+                    {% if particle.animation == 'up' or particle.animation == 'down' or particle.animation == 'left' or particle.animation == 'right' %}
+                    effect: 'slide',
+                    direction: '{{ particle.animation }}',
+                    {% else %}
+                    effect: '{{ particle.animation|default('slide') }}',
+                    {% endif %}
+                    duration: 500
+                }
+            });
+        });
+    </script>
+{% endblock %}

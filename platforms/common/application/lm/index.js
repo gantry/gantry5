@@ -1,6 +1,7 @@
 "use strict";
 var ready          = require('elements/domready'),
     $              = require('elements/attributes'),
+    Submit         = require('../fields/submit'),
     modal          = require('../ui').modal,
     toastr         = require('../ui').toastr,
     sidebar        = require('./particles-sidebar'),
@@ -11,7 +12,6 @@ var ready          = require('elements/domready'),
     trim           = require('mout/string/trim'),
     strReplace     = require('mout/string/replace'),
     properCase     = require('mout/string/properCase'),
-    forEach        = require('mout/collection/forEach'),
     precision      = require('mout/number/enforcePrecision'),
 
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
@@ -24,12 +24,13 @@ var ready          = require('elements/domready'),
     validateField  = require('../utils/field-validation'),
     LMHistory      = require('./history'),
     LayoutManager  = require('./layoutmanager'),
-    SaveState      = require('../utils/save-state');
+    SaveState      = require('../utils/save-state'),
+    translate      = require('../utils/translate');
 
 require('../ui/popover');
+require('./inheritance');
 
-var builder, layoutmanager, lmhistory, savestate;
-
+var builder, layoutmanager, lmhistory, savestate, Tips;
 
 builder = new Builder();
 lmhistory = new LMHistory();
@@ -108,7 +109,7 @@ ready(function() {
     layoutmanager = new LayoutManager('[data-lm-container]', {
         delegate: '[data-lm-root] .g-grid > .g-block > [data-lm-blocktype]:not([data-lm-nodrag]) !> .g-block, .g5-lm-particles-picker [data-lm-blocktype], [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="section"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag]), [data-lm-root] [data-lm-blocktype="offcanvas"] > [data-lm-blocktype="container"] > [data-lm-blocktype="grid"]:not(:empty):not(.no-move):not([data-lm-nodrag])',
         droppables: '[data-lm-dropzone]',
-        exclude: '.section-header .button, .lm-newblocks .float-right .button, [data-lm-nodrag]',
+        exclude: '.section-header .button, .section-header .fa, .lm-newblocks .float-right .button, [data-lm-nodrag], [data-lm-disabled]',
         resize_handles: '[data-lm-root] .g-grid > .g-block:not(:last-child)',
         builder: builder,
         history: lmhistory,
@@ -155,17 +156,17 @@ ready(function() {
             if (link == element[0]) { index = i + 1; }
         });
 
-        panes.find('.active').removeClass('active');
-        parent.find('.active').removeClass('active');
-        panes.find('.g-pane:nth-child(' + index + ')').addClass('active');
-        parent.find('li:nth-child(' + index + ')').addClass('active');
+        panes.find('> .active').removeClass('active');
+        parent.find('> ul > .active').removeClass('active');
+        panes.find('> .g-pane:nth-child(' + index + ')').addClass('active');
+        parent.find('> ul > li:nth-child(' + index + ')').addClass('active');
 
         // ARIA
-        if (panes.search('[aria-expanded]')) { panes.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
-        if (parent.search('[aria-expanded]')) { parent.search('[aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (panes.search('> [aria-expanded]')) { panes.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
+        if (parent.search('> [aria-expanded]')) { parent.search('> [aria-expanded]').attribute('aria-expanded', 'false'); }
 
-        panes.find('.g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
-        if (parent.find('li:nth-child(' + index + ') [aria-expanded]')) { parent.find('li:nth-child(' + index + ') [aria-expanded]').attribute('aria-expanded', 'true'); }
+        panes.find('> .g-pane:nth-child(' + index + ')').attribute('aria-expanded', 'true');
+        if (parent.find('> ul >li:nth-child(' + index + ') [aria-expanded]')) { parent.find('> ul > li:nth-child(' + index + ') > [aria-expanded]').attribute('aria-expanded', 'true'); }
     });
 
     // Picker
@@ -210,7 +211,7 @@ ready(function() {
     // Grid same widths button (evenize, equalize)
     ['click', 'touchend'].forEach(function(evt){
         body.delegate(evt, '[data-lm-samewidth]:not(:empty)', function(event, element) {
-            if (element.LMTooltip) { element.LMTooltip.remove(); }
+            window.G5.tips.hide(element[0]);
             var clientRect = element[0].getBoundingClientRect();
             if ((event.clientX || event.pageX || event.changedTouches[0].pageX || 0) < clientRect.width + clientRect.left) { return; }
 
@@ -236,40 +237,38 @@ ready(function() {
 
         if (!tooltips.equalize && !tooltips.move) { return; }
 
-        var msg = tooltips.equalize ? 'Equalize the width of blocks in this grid' : 'Sort or Move the Grid',
-            tooltip = zen('span.g-tooltip.g-tooltip-force[data-title="' + msg + '"]').top(element);
+        var msg = tooltips.equalize ? translate('GANTRY5_PLATFORM_JS_LM_GRID_EQUALIZE') : translate('GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE');
 
-        if (tooltips.equalize) { tooltip.addClass('g-tooltip-right'); }
-        tooltip.style({
-            position: 'absolute',
-            top: 26
-        }).style(tooltips.equalize ? 'right' : 'left', -30);
+        element.data('tip', msg).data('tip-offset', -30);
 
-        element.LMTooltip = tooltip;
+        window.G5.tips
+            .get(element[0])
+            .content(msg)
+            .place(tooltips.equalize ? 'top-left' : 'top-right')
+            .show();
     });
 
     body.delegate('mouseout', '[data-lm-samewidth]:not(:empty)', function(event, element) {
-        if (element.LMTooltip) { element.LMTooltip.remove(); }
+        window.G5.tips.hide(element[0]);
     });
 
     // Clear Layout
     body.delegate('click', '[data-lm-clear]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
-        var type, child;
-        forEach(builder.map, function(obj, id) {
-            type = obj.getType();
-            child = obj.block.find('> [data-lm-id]');
-            if (child) { child = child.data('lm-blocktype'); }
-            if (contains(['particle', 'grid', 'block'], type) && (type == 'block' && (child && (child !== 'section' && child !== 'container')))) {
-                builder.remove(id);
-                obj.block.remove();
-            }
-        }, this);
+        var mode = element.data('lm-clear'),
+            options = {};
 
-        layoutmanager.singles('cleanup', builder);
+        switch (mode) {
+            case 'keep-inheritance':
+                options = { save: true, dropLastGrid: false, emptyInherits: false };
+                break;
+            case 'full':
+            default:
+                options = { save: true, dropLastGrid: false, emptyInherits: true };
+        }
 
-        lmhistory.push(builder.serialize(), lmhistory.get().preset);
+        layoutmanager.clear(null, options);
     });
 
     // Switcher
@@ -297,6 +296,18 @@ ready(function() {
         }
     });
 
+    // Disable keeping particles if inherit option is selected
+    body.delegate('change', '[data-g-inherit="outline"]', function(event, element) {
+        var keeper = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve="outline"]');
+        if (keeper) { keeper.checked(false); }
+    });
+
+    // Disable inheriting section/particles if keep option is selected
+    body.delegate('change', '[data-g-preserve="outline"]', function(event, element) {
+        var inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit="outline"]');
+        if (inherit) { inherit.checked(false); }
+    });
+
     body.delegate('mousedown', '[data-switch]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
@@ -308,10 +319,13 @@ ready(function() {
         element.showIndicator();
 
         var preset = $('[data-lm-preset]'),
-            checkbox = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
-            preserve = checkbox && checkbox.checked(),
+            preserve = element.parent('.g-pane').find('input[type="checkbox"][data-g-preserve]'),
+            inherit = element.parent('.g-pane').find('input[type="checkbox"][data-g-inherit]'),
             method = !preserve ? 'get' : 'post',
             data = {};
+
+        preserve = preserve && preserve.checked();
+        inherit = inherit && inherit.checked();
 
         if (preserve) {
             var lm = layoutmanager;
@@ -320,6 +334,10 @@ ready(function() {
 
             data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
             data.layout = JSON.stringify(lm.builder.serialize());
+        }
+
+        if (inherit) {
+            data.inherit = 1;
         }
 
         var uri = parseAjaxURI(element.data('switch') + getAjaxSuffix());
@@ -402,7 +420,7 @@ ready(function() {
 
         var blocktype = element.data('lm-blocktype'),
             settingsURL = element.data('lm-settings'),
-            data = null, parent;
+            data = null, parent, section;
 
         // grid is a special case, since relies on pseudo elements for sorting and same width (evenize)
         // we need to check where the user clicked.
@@ -417,37 +435,47 @@ ready(function() {
 
         element = element.parent('[data-lm-blocktype]');
         parent = element.parent('[data-lm-blocktype]');
+        section = element.parent('[data-lm-blocktype="section"]');
         blocktype = element.data('lm-blocktype');
 
         var ID = element.data('lm-id'),
-            parentID = parent ? parent.data('lm-id') : false;
+            parentID = parent ? parent.data('lm-id') : false,
+            parentType = parent ? parent.data('lm-blocktype') : false;
 
         if (!contains(['block', 'grid'], blocktype)) {
             data = {};
+            data.id = builder.get(element.data('lm-id')).getId() || null;
             data.type = builder.get(element.data('lm-id')).getType() || element.data('lm-blocktype') || false;
             data.subtype = builder.get(element.data('lm-id')).getSubType() || element.data('lm-blocksubtype') || false;
             data.title = (element.find('h4') || element.find('.title')).text() || data.type || 'Untitled';
             data.options = builder.get(element.data('lm-id')).getAttributes() || {};
-            data.block = parent ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
+            data.inherit = builder.get(element.data('lm-id')).getInheritance() || {};
+            data.block = parent && parentType !== 'wrapper' ? builder.get(parent.data('lm-id')).getAttributes() || {} : {};
             data.size_limits = builder.get(element.data('lm-id')).getLimits(!parent ? false : builder.get(parent.data('lm-id')));
+            data.parent = section ? section.data('lm-id') : null;
 
             if (!data.type) { delete data.type; }
             if (!data.subtype) { delete data.subtype; }
             if (!size(data.options)) { delete data.options; }
+            if (!size(data.inherit)) { delete data.inherit; }
+            if (!size(data.block)) { delete data.block; }
         }
 
         modal.open({
             content: 'Loading',
             method: 'post',
             data: data,
+            overlayClickToClose: false,
             remote: parseAjaxURI(settingsURL + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
-                if (!response.body.success) { return; }
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
 
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
-                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [], invalid = [];
+                    submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]');
 
                 if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -475,7 +503,7 @@ ready(function() {
                     }
 
                     var isValid = function() {
-                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : 'You need to stay in between the min and max range';
+                        return parseFloat(blockSize.value()) >= min && parseFloat(blockSize.value()) <= max ? '' : translate('GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE');
                     };
 
                     blockSize.on('input', function(){
@@ -487,45 +515,25 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
+                    target.disabled(true);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    var post = Submit(formElements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var title = content.elements.content.find('[data-title-editable]');
-                    if (title) {
-                        dataString.push('title=' + encodeURIComponent(trim(title.data('title-editable'))));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
+                        target.disabled(false);
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -542,12 +550,12 @@ ready(function() {
 
                             if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
-                            if (particle.getType() != 'section') {
+                            if (particle.getType() !== 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
                             }
 
-                            if (particle.getType() == 'position') {
+                            if (particle.getType() === 'position') {
                                 particle.updateKey();
                             }
 
@@ -571,6 +579,25 @@ ready(function() {
                                 }
                             }
 
+                            // particle inheritance
+                            if (response.body.data.inherit) {
+                                delete response.body.data.inherit.section;
+                                particle.setInheritance(response.body.data.inherit);
+
+                                particle.enableInheritance();
+                                particle.refreshInheritance();
+                            }
+
+                            if (response.body.data.children) {
+                                layoutmanager.clear(particle.block, { save: false, dropLastGrid: !!response.body.data.children.length, emptyInherits: true });
+                                builder.recursiveLoad(response.body.data.children, builder.insert, 0, particle.getId());
+                            }
+
+                            if (particle.hasInheritance() && !response.body.data.inherit) {
+                                particle.setInheritance({});
+                                particle.disableInheritance();
+                            }
+
                             lmhistory.push(builder.serialize(), lmhistory.get().preset);
 
                             // if it's apply and save we also save the panel
@@ -581,7 +608,7 @@ ready(function() {
 
                             modal.close();
 
-                            toastr.success('The particle "' + particle.getTitle() + '" settings have been applied to the Layout. <br />Remember to click the Save button to store them.', 'Settings Applied');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED', particle.getTitle()), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

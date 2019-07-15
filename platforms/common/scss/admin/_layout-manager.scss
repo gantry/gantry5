@@ -1,9 +1,8 @@
 $particle: #2A82B7;
 $position: #359AD9;
 $spacer: #eee;
-$pagecontent: #20A085;
+$system: #20A085;
 $atom: #9055AF;
-$stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%) 50%, #ccc 50%, #ccc 75%, darken(#ccc, 3%) 75%, darken(#ccc, 3%));
 
 #g5-container {
     // wrapper
@@ -106,6 +105,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             .section:last-child {
                 margin-bottom: 0;
             }
+
+            > .section {
+                position: relative !important;
+            }
         }
 
         .section, .atoms-section, .offcanvas-section, .wrapper-section {
@@ -127,6 +130,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     font-weight: $font-weight-regular;
                     font-family: $font-family-default;
                     font-size: 24px;
+                    @include ellipsis();
                 }
 
                 i {
@@ -137,7 +141,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             .section-actions {
-                opacity: 0;
+                opacity: 0.5;
                 @include transition(opacity 0.2s ease-out);
 
                 i {
@@ -153,6 +157,48 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 .section-actions {
                     opacity: 1;
                     @include transition(opacity 0.2s ease-in);
+                }
+            }
+
+            @mixin inheritance-actions() {
+                position: relative;
+                z-index: 6;
+                i {
+                    color: lighten($core-text, 5%);
+
+                    &:hover {
+                        color: darken($core-text, 10%);
+                    }
+                }
+            }
+
+            &.g-inheriting {
+                h4 {
+                    z-index: 6;
+                    position: relative;
+                }
+
+                .section-actions {
+                    opacity: 1;
+                    .section-settings {
+                        @include inheritance-actions();
+                    }
+                }
+
+                &:not(.g-inheriting-children) .section-addrow {
+                    @include inheritance-actions();
+                }
+
+                &:hover {
+                    .section-actions {
+                        opacity: 1;
+                    }
+                }
+
+                &.g-inheriting-children > .g-grid:not(:empty) {
+                    &:before, &:after {
+                        display: none !important;
+                    }
                 }
             }
 
@@ -228,6 +274,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     vertical-align: middle;
                     line-height: 47px;
                     color: #bababa;
+                    @include ellipsis();
                 }
             }
         }
@@ -264,7 +311,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
 
             > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         display: none;
                         opacity: 0;
@@ -280,7 +327,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 }
 
                 &:last-child {
-                .particle, .position, .spacer, .pagecontent {
+                .particle, .position, .spacer, .system {
                     margin-right: 0;
                 }
             }
@@ -309,39 +356,48 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         .offcanvas-section, .wrapper-section {
             .g-grid:empty:after {
                 content: "Drop particles here...";
+                @include ellipsis();
             }
         }
 
-        > .g-grid > .g-block, .g-lm-container > .g-grid > .g-block {
-            margin-right: 14px;
-            background: $white;
-            padding-bottom: 50px;
+        > .g-grid > .g-block, .g-lm-container > .g-grid {
+            border-bottom: 8px solid #e0e0e0;
 
-            > .section {
-                border-bottom: 14px solid #eee;
-                margin-top: 0;
-                margin-bottom: 0;
-
-                &:last-child {
-                    border-bottom: 0;
-                }
+            &:last-child {
+                border-bottom: 0;
             }
 
-            > .particle-size {
-                margin-right: 0;
-                position: absolute;
-                bottom: 12px;
-                right: 12px;
+            > .g-block {
+                margin-right: 14px;
+                background: $white;
+                padding-bottom: 50px;
 
-                i {
-                    margin-right: 5px;
+                > .section {
+                    border-bottom: 14px solid #eee;
+                    margin-top: 0;
+                    margin-bottom: 0;
+
+                    &:last-child {
+                        border-bottom: 0;
+                    }
+                }
+
+                > .particle-size {
+                    margin-right: 0;
+                    position: absolute;
+                    bottom: 12px;
+                    right: 12px;
+
+                    i {
+                        margin-right: 5px;
+                    }
                 }
             }
         }
 
         .g-grid {
             &:hover > .g-block {
-                > .particle, > .position, > .spacer, > .pagecontent {
+                > .particle, > .position, > .spacer, > .system {
                     &:after {
                         content: "";
                         top: 0;
@@ -358,11 +414,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .section > .g-grid > .g-block:last-child, .section > .g-lm-container > .g-grid > .g-block:last-child, .offcanvas-section > .g-grid > .g-block:last-child, .wrapper-section > .g-grid > .g-block:last-child {
-            .particle, .position, .spacer, .pagecontent, .atom {
+            .particle, .position, .spacer, .system, .atom {
                 margin-right: 0;
             }
 
-            > .particle, > .position, > .spacer, > .pagecontent {
+            > .particle, > .position, > .spacer, > .system {
                 &:after {
                     display: none;
                 }
@@ -386,7 +442,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 right: -10px;
                 width: 6px;
                 background: #00baaa;
-                z-index: 3;
+                z-index: 0;
                 cursor: col-resize;
             }
 
@@ -395,7 +451,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
-        .particle, .position, .spacer, .pagecontent, .atom {
+        .particle, .position, .spacer, .system, .atom {
             cursor: move;
             padding: 6px 13px;
             color: $white;
@@ -403,6 +459,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             margin-right: 6px;
             position: relative;
             white-space: nowrap;
+
+
+            &.g-inheriting {
+                @include stripes-background($position);
+            }
 
             &[data-lm-nodrag] {
                 cursor: default;
@@ -436,6 +497,15 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     text-overflow: ellipsis;
                 }
 
+                .icon {
+                    width: auto;
+                    float: left;
+                    line-height: 2.5rem;
+                    margin-right: 13px;
+                    opacity: 0.7;
+                }
+
+
                 .font-small {
                     line-height: $core-line-height - 0.2;
                     overflow: hidden;
@@ -460,6 +530,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                     z-index: 2;
                 }
             }
+
+            &.g-inheriting.particle-disabled {
+                @include stripes-background(#ccc, 50px, 45deg);
+            }
         }
 
         .atom {
@@ -467,7 +541,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         .particle-size {
-            font-weight: 300;
+            font-weight: 400;
             font-size: $core-font-size + 0.2;
             vertical-align: middle;
             color: $core-text;
@@ -482,20 +556,28 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .particle {
             background-color: $particle;
+
+            &.g-inheriting {
+                @include stripes-background($particle);
+            }
         }
 
         .spacer {
             background-color: $spacer;
-            color: rgba(#666, 0.8);
+            color: rgba($dark-gray, 0.8);
+
+            &.g-inheriting {
+                @include stripes-background($spacer);
+            }
 
             .particle-size {
-                color: rgba(#666, 0.8);
+                color: rgba($dark-gray, 0.8);
             }
 
             > span {
                 span {
                     &:last-child {
-                        color: rgba(#666, 0.8);
+                        color: rgba($dark-gray, 0.8);
                     }
                 }
             }
@@ -503,10 +585,18 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         .atom {
             background-color: $atom;
+
+            &.g-inheriting {
+                @include stripes-background($atom);
+            }
         }
 
-        .pagecontent {
-            background-color: $pagecontent;
+        .system {
+            background-color: $system;
+
+            &.g-inheriting {
+                @include stripes-background($system);
+            }
         }
 
         .placeholder {
@@ -547,6 +637,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             }
         }
 
+        .particle-disabled, [data-lm-disabled], .g-inheriting .particle-disabled {
+            @include stripes-background(#ccc, 50px, 45deg);
+        }
+
         .atoms-section .placeholder.in-between {
             margin-bottom: 6px;
         }
@@ -566,15 +660,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 top: 12px;
             }
 
-            > span .title, > span .font-small {
+            > span .title, > span .font-small, > span .icon {
                 margin-left: 15px;
             }
         }
-    }
-
-    .particle-disabled, [data-lm-disabled] {
-        @include background($stripes !important);
-        background-size: 50px 50px !important;
     }
 
     /* history */
@@ -646,7 +735,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
             @include size(50px 50px);
             line-height: 50px;
             margin: 0 auto;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         span {
@@ -656,17 +745,21 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
     }
 
-    .g5-dialog .g-tabs, .g5-popover-content .g-tabs {
+    .g5-dialog > .g-tabs, .g5-popover-content > .g-tabs,
+    .g5-dialog form > .g-tabs, .g5-popover-content form > .g-tabs,
+    .g5-dialog .g5-content > .g-tabs, .g5-popover-content .g5-content > .g-tabs {
         @extend #navbar;
 
-        margin-right: 0 !important;
+        &, i {
+            margin-right: 0 !important;
+        }
 
         ul {
             background-color: $navbar-bg;
             margin: -1rem -1rem 1rem !important;
             border-radius: $core-border-radius $core-border-radius 0 0;
 
-            li:first-child {
+            li:first-child, li:first-child a {
                 border-radius: $core-border-radius 0 0 0;
             }
         }
@@ -710,6 +803,10 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 border-radius: $core-border-radius;
             }
         }
+
+        .settings-block {
+            position: relative;
+        }
     }
 
     .g5-popover-content .g-pane {
@@ -737,6 +834,11 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
 
         label {
             @include user-select(none);
+            padding-left: 20px;
+        }
+
+        input {
+            margin-left: -20px !important;
         }
     }
 
@@ -751,8 +853,8 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
     }
 
     .particles-sidebar-block {
-        @include flex(0 170px);
-        width: 170px;
+        @include flex(0 200px);
+        width: 200px;
 
         @include breakpoint(mobile-only) {
             @include flex(0 100%);
@@ -776,7 +878,7 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
     }
 
-    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker {
+    .g5-lm-particles-picker, .g5-mm-particles-picker, .g5-mm-modules-picker, .g5-mm-widgets-picker, #positions {
 
         ul, li {
             @extend %list-reset;
@@ -799,11 +901,12 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         }
 
         li {
-            padding: $content-padding / 3;
-            margin: ($content-padding / 3) 0;
-            text-align: center;
+            padding: $content-padding / 2;
+            margin: ($content-padding / 2) 0;
+            text-align: left;
             border-radius: $core-border-radius;
             cursor: move;
+            position: relative;
 
             &[data-lm-nodrag], &[data-mm-nodrag] {
                 cursor: default;
@@ -821,36 +924,94 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
                 margin-bottom: 0;
             }
 
-            &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"] {
-                background-color: $spacer;
-                color: #666;
-                border: 1px solid darken($medium-gray, 5);
+            &[data-lm-blocktype="spacer"], &[data-mm-blocktype="spacer"], &[data-pm-blocktype="spacer"] {
+                color: $dark-gray;
+                border: 2px solid darken($medium-gray, 5);
+
+                &.original-placeholder {
+                    background-color: $spacer;
+                }
+
+                .particle-icon {
+                    background-color: darken($medium-gray, 5);
+                }
             }
 
             &.g5-lm-particle-spacer[data-lm-disabled], &.g5-mm-particle-spacer[data-mm-disabled] {
                 color: #fff;
             }
 
-            &[data-lm-blocktype="position"], &[data-mm-blocktype="position"],
-            &[data-lm-blocktype="module"], &[data-mm-blocktype="module"],
-            &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"] {
-                color: #fff;
-                background-color: $position;
+            .particle-icon {
+                float: left;
+                margin: (-$content-padding / 2) ($content-padding / 2) (-$content-padding / 2) (-$content-padding / 2);
+                display: inline-block;
+                height: 2.2rem;
+                vertical-align: middle;
+                width: 1.7em;
+                text-align: center;
+                line-height: 1.5rem;
+
+                i {
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-100%);
+                }
             }
 
-            &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"] {
-                color: #fff;
-                background-color: $particle;
+            &.original-placeholder .particle-icon {
+                border-radius: 3px;
             }
 
-            &[data-lm-blocktype="pagecontent"] {
-                color: #fff;
-                background-color: $pagecontent;
+            &[data-lm-blocktype="position"], &[data-mm-blocktype="position"], &[data-pm-blocktype="position"],
+            &[data-lm-blocktype="module"], &[data-mm-blocktype="module"], &[data-pm-blocktype="module"],
+            &[data-lm-blocktype="widget"], &[data-mm-blocktype="widget"], &[data-pm-blocktype="widget"] {
+                color: $position;
+                border: 2px solid $position;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $position;
+                    color: #fff;
+                }
+            }
+
+            &[data-lm-blocktype="particle"], &[data-mm-blocktype="particle"], &[data-pm-blocktype="particle"] {
+                color: $particle;
+                border: 2px solid $particle;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $particle;
+                    color: #fff;
+                }
+            }
+
+            &[data-lm-blocktype="system"] {
+                color: $system;
+                border: 2px solid $system;
+
+                &.original-placeholder, .particle-icon {
+                    border: 0;
+                    background-color: $system;
+                    color: #fff;
+                }
             }
 
             &[data-lm-blocktype="atom"] {
                 color: #fff;
                 background-color: $atom;
+            }
+
+            &[data-lm-disabled] {
+                color: #666;
+                border: 2px solid #aaa;
+                @include stripes-background(#ccc, 50px, 45deg);
+
+                .particle-icon {
+                    border: 0;
+                    background-color: #aaa;
+                    color: #fff;
+                }
             }
         }
 
@@ -861,14 +1022,49 @@ $stripes: linear-gradient(45deg, #ccc 25%, darken(#ccc, 3%) 25%, darken(#ccc, 3%
         .search {
             position: relative;
             margin-bottom: 10px;
-
-            i {
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                margin-top: -12px;
-            }
         }
+    }
+
+    [data-lm-blocktype] {
+        position: relative;
+    }
+
+    .g-inherit {
+        //@include background($section-stripes !important);
+        @include stripes-background(transparentize(#ccc, 0.4), 'auto' !important);
+        z-index: 5;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+
+        .g-inherit-content {
+            position: absolute;
+            text-align: center;
+            transform: translateX(-50%);
+            top: 0;
+            left: 50%;
+            background-color: $white;
+            padding: 0.5rem;
+            border-radius: 0 0 3px 3px;
+            opacity: 0.7;
+        }
+    }
+
+    [data-lm-blocktype="container"] .section .g-inherit .g-inherit-content {
+        top: auto;
+        bottom: 0;
+        border-radius: 3px 3px 0 0;
+        padding: 8px 16px;
+    }
+
+    .g-inheriting:not(.g-inheriting-children) .g-inherit {
+        z-index: 0;
+    }
+
+    .g-inheriting:not(.g-inheriting-children) .g-grid {
+        z-index: inherit;
     }
 
     @include breakpoint(no-mobile) {

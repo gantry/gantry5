@@ -1,0 +1,48 @@
+@import "fields/colorpicker";
+@import "fields/fonts";
+@import "fields/icons";
+@import "fields/filepicker";
+@import "fields/keyvalue";
+@import "fields/tabs";
+
+#g5-container {
+    .g-particles-footer, .g-particles-header {
+        margin: 0 !important;
+        input, select {
+            margin: 0 !important;
+        }
+    }
+
+    .g-particles-footer select {
+        margin-top: 10px !important;
+    }
+
+    .g-particles-main {
+        width: 100%;
+    }
+
+    .g-particles-header {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 15px;
+
+        .particle-search-wrapper {
+            display: inline-block;
+            position: relative;
+            @include transform(translateZ(0));
+
+            span {
+                position: absolute;
+                right: 5px;
+                top: 2px;
+                font-size: 0.6em;
+                color: $core-accent;
+            }
+        }
+
+    }
+
+    .g-particles-footer {
+        padding-top: 15px;
+        border-top: 1px solid #ccc;
+    }
+}

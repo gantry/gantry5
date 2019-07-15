@@ -1,0 +1,58 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<div class="g-tabs" role="tablist">
+    <ul>
+        {# Settings Tab #}
+        <li class="active">
+            <a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">
+                {% block title %}
+                {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
+                {% endblock %}
+            </a>
+        </li>
+        {# Block Tab #}
+        {% if extra %}
+        <li>
+            <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
+                {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="g-panes">
+    {# Settings Pane #}
+    <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
+        <div class="g-particle-preview alert alert-warning"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PARTICLE_PREVIEW'|trans }}</div>
+
+        {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
+            title: item.title,
+            blueprints: particle.form,
+            overrideable: overrideable and (particle.form.overrideable is not defined or particle.form.overrideable),
+            inherit: 'attributes' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
+        } %}
+    </div>
+
+    {# Block Pane #}
+    {% if extra %}
+    <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
+        <div class="g-particle-preview alert alert-info"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PARTICLE_PREVIEW'|trans }}</div>
+
+        {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
+            gantry: gantry,
+            title: 'GANTRY5_PLATFORM_BLOCK'|trans,
+            blueprints: extra.form,
+            data: {block: item.block},
+            prefix: 'block.',
+            inherit: 'block' in item.inherit.include and item.inherit.outline in inheritance.form.fields.outline.filter ? item.inherit.outline : null
+        } only %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="g-modal-actions">
+    <button class="button button-primary g5-dialog-close">{{ 'GANTRY5_PLATFORM_CLOSE'|trans }}</button>
+</div>
+{% endblock %}

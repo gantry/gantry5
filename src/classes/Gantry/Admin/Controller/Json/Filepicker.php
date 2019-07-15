@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,17 +13,17 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 
 class Filepicker extends JsonController
 {
     protected $base = false;
-    protected $isStream = false;
     protected $value = false;
     protected $filter = false;
     protected $httpVerbs = [
@@ -55,79 +54,72 @@ class Filepicker extends JsonController
         /** @var UniformResourceLocator $locator */
         $locator   = $this->container['locator'];
         $bookmarks = [];
-        $drives    = [DS];
+        $drives    = ['/'];
         $subfolder = false;
 
         $this->base = $locator->base;
 
         if ($this->method == 'POST') {
             $root         = $this->request->post['root'];
-            $drives       = isset($root) ? ($root !== 'false' ? $root : [DS]) : [DS];
+            $drives       = isset($root) ? ($root !== 'false' ? (array) $root : ['/']) : ['/'];
             $subfolder    = $this->request->post['subfolder'] ? true : false;
             $filter       = $this->request->post['filter'];
             $this->filter = isset($filter) ? ($filter !== 'false' ? $filter : false) : false;
             $this->value  = $this->request->post['value'] ?: '';
         }
 
-        if (!is_array($drives)) {
-            $drives = [$drives];
-        }
-
         foreach ($drives as $drive) {
             // cleanup of the path so it's chrooted.
             $drive  = str_replace('..', '', $drive);
-            $stream = explode('://', $drive);
-            $scheme = $stream[0];
 
-            $isStream = $locator->schemeExists($scheme);
-            $path     = rtrim($this->base, DS) . DS . ltrim($scheme, DS);
+            $isStream = $locator->isStream($drive);
+            $path     = rtrim($this->base, '/') . '/' . ltrim($drive, '/');
 
             // It's a stream but the scheme doesn't exist. we skip it.
-            if (!$isStream && (count($stream) == 2 || !file_exists($path))) {
+            if (!$isStream && (strpos($drive, '://') || !file_exists($path))) {
                 continue;
             }
 
-            if ($isStream && !count($locator->findResources($drive, false))) {
+            if ($isStream && !$locator->findResources($drive)) {
                 continue;
             }
 
-            $key = $isStream
-                ? $drive
-                : preg_replace('#' . DS . '{2,}+#', DS, $drive);
+            $key = $isStream ? $drive : preg_replace('#/{2,}+#', '/', $drive);
 
             if (!array_key_exists($key, $bookmarks)) {
                 $bookmarks[$key] = $isStream
                     ? [$locator->getIterator($drive)]
-                    : [rtrim(Folder::getRelativePath($path), DS) . DS];
+                    : [rtrim(Folder::getRelativePath($path), '/') . '/'];
             }
         }
 
         if (!count($bookmarks)) {
-            throw new \RuntimeException((count($drives) > 1 ? 'directories' : 'directory') . ' "' . implode('", "', $drives) . '" not found', 404);
+            throw new \RuntimeException(sprintf('%s "%s" not found', count($drives) > 1 ? 'directories' : 'directory', implode('", "', $drives)), 404);
         }
 
         $folders = [];
         $active  = [];
 
         $index = 0;
+        $activeFallback = '';
 
         // iterating the folder and collecting subfolders and files
         foreach ($bookmarks as $key => $bookmark) {
             $folders[$key] = [];
 
             if (!$index) {
-                $active[] = $key;
+                $activeFallback = $key;
             }
 
             foreach ($bookmark as $folder) {
-                $this->isStream = $folder instanceof \RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
+                $isStream = $this->isStream($folder);
 
-                if ($this->isStream) {
+                if ($isStream) {
                     unset($bookmarks[$key]);
                     $iterator = new \IteratorIterator($folder);
                     $folder   = $key;
                 } else {
-                    $iterator = new \DirectoryIterator($this->base . DS . ltrim($folder, DS));
+                    $iterator = new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
                 }
 
                 $folders[$key][$folder] = new \ArrayObject();
@@ -143,7 +135,7 @@ class Filepicker extends JsonController
                     }
 
                     $file = new \stdClass();
-                    $this->attachData($file, $info);
+                    $this->attachData($file, $info, $folder);
 
                     if ($file->dir) {
                         if ($file->pathname == dirname($this->value)) {
@@ -161,7 +153,7 @@ class Filepicker extends JsonController
                     }
                 }
 
-                if ($this->isStream) {
+                if ($isStream) {
                     $bookmarks[$key][] = $key;
                 }
 
@@ -169,13 +161,17 @@ class Filepicker extends JsonController
             }
         }
 
-        $lastItem = reset($active);
+        if (!count($active)) {
+            $active[] = $activeFallback;
+        }
+
+        $lastItem = end($active);
         $files    = $this->listFiles($lastItem);
         $response = [];
 
         reset($active);
         if (!$subfolder) {
-            $response['html'] = $this->container['admin.theme']->render(
+            $response['html'] = $this->render(
                 '@gantry-admin/ajax/filepicker.html.twig', [
                     'active'    => $active,
                     'base'      => $this->base,
@@ -189,11 +185,11 @@ class Filepicker extends JsonController
         } else {
             $response['subfolder'] = !$folders[$key][$folder]->count()
                 ? false
-                : $this->container['admin.theme']->render(
+                : $this->render(
                     '@gantry-admin/ajax/filepicker/subfolders.html.twig',
                     ['folder' => $folders[$key][$folder]]
                 );
-            $response['files']     = $this->container['admin.theme']->render(
+            $response['files']     = $this->render(
                 '@gantry-admin/ajax/filepicker/files.html.twig',
                 ['files' => $files, 'value' => $this->value]
             );
@@ -202,7 +198,7 @@ class Filepicker extends JsonController
         return new JsonResponse($response);
     }
 
-    protected function attachData(&$node, $iteration)
+    protected function attachData(&$node, $iteration, $folder)
     {
         foreach (
             ['getFilename', 'getExtension', 'getPerms', 'getMTime', 'getBasename', 'getPathname', 'getSize', 'getType', 'isReadable', 'isWritable',
@@ -212,10 +208,10 @@ class Filepicker extends JsonController
             $node->{$keyMethod} = $iteration->{$method}();
 
             if ($method == 'getPathname') {
-                $node->{$keyMethod} = $this->isStream ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
+                $node->{$keyMethod} = $this->isStream($folder) ? $iteration->getUrl() : Folder::getRelativePath($node->{$keyMethod});
             } else {
                 if ($method == 'getExtension') {
-                    $node->isImage = in_array($node->{$keyMethod}, ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp']);
+                    $node->isImage = in_array(strtolower($node->{$keyMethod}), ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg', 'bmp', 'webp']);
                 }
             }
         }
@@ -224,8 +220,9 @@ class Filepicker extends JsonController
 
     protected function listFiles($folder)
     {
+        $isStream = $this->isStream($folder);
         $locator  = $this->container['locator'];
-        $iterator = $this->isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . DS . ltrim($folder, DS));
+        $iterator = $isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
         $files    = new \ArrayObject();
 
         /** @var \SplFileInfo $info */
@@ -236,7 +233,7 @@ class Filepicker extends JsonController
             }
 
             $file = new \stdClass();
-            $this->attachData($file, $info);
+            $this->attachData($file, $info, $folder);
 
             if (!$file->dir) {
                 if ($this->filter && !preg_match("/" . $this->filter . "/i", $file->filename)) {
@@ -245,7 +242,7 @@ class Filepicker extends JsonController
 
                 $file->isInCustom = false;
 
-                if ($this->isStream) {
+                if ($isStream) {
                     $stream         = explode('://', $folder);
                     $stream         = array_shift($stream) . '://';
                     $customLocation = $locator->findResource($stream, true, true);
@@ -259,6 +256,7 @@ class Filepicker extends JsonController
             }
         }
 
+        $files->asort();
         return $files;
 
     }
@@ -290,7 +288,7 @@ class Filepicker extends JsonController
         $targetPath = GANTRY5_ROOT . '/' . $path;
 
         if (!file_exists($targetPath)) {
-            throw new \RuntimeException('File not found: ' . $path, 404);
+            throw new \RuntimeException(sprintf('File not found: %s', $path), 404);
         }
 
         $hash = md5_file($path);
@@ -363,7 +361,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
@@ -415,7 +413,7 @@ class Filepicker extends JsonController
         }
 
         $finfo = new \stdClass();
-        $this->attachData($finfo, new \SplFileInfo($destination));
+        $this->attachData($finfo, new \SplFileInfo($destination), $targetPath);
         return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
 
     }
@@ -445,7 +443,7 @@ class Filepicker extends JsonController
         $path    = implode('/', func_get_args());
 
         if (base64_decode($path, true) !== false) {
-            $path = base64_decode($path);
+            $path = urldecode(base64_decode($path));
         }
 
         $stream = explode('://', $path);
@@ -465,16 +463,21 @@ class Filepicker extends JsonController
         $file = File::instance($targetPath);
 
         if (!$file->exists()) {
-            throw new \RuntimeException('File not found: ' . $targetPath, 404);
+            throw new \RuntimeException(sprintf('File not found: %s', $targetPath), 404);
         }
 
         try {
             $file->delete();
         } catch (\Exception $e) {
-            throw new \RuntimeException('File could not be deleted: ' . $targetPath, 500);
+            throw new \RuntimeException(sprintf('File could not be deleted: %s', $targetPath), 500);
         }
         $file->free();
 
         return new JsonResponse(['success', 'File deleted: ' . $targetPath]);
+    }
+
+    private function isStream($folder)
+    {
+        return $folder instanceof UniformResourceIterator || strpos($folder, '://');
     }
 }

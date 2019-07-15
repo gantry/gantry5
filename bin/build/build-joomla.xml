@@ -84,45 +84,52 @@
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
-                <include name="composer.*"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
-            <fileset dir="${path.src}/vendor">
-                <exclude name="**/test/"/>
-                <exclude name="**/tests/"/>
-                <exclude name="**/Tests/"/>
-                <exclude name="**/doc/"/>
-                <exclude name="**/docs/"/>
-                <exclude name="**/examples/"/>
-                <exclude name="**/ext/"/>
-                <exclude name="**/bin/"/>
-                <exclude name="**/site/"/>
-                <exclude name="**/.*.yml"/>
-                <exclude name="**/.editor*"/>
-                <exclude name="**/phpunit.xml*"/>
-                <exclude name="**/*.md"/>
-                <exclude name="**/*.rst"/>
-                <exclude name="**/*.sh"/>
-                <exclude name="**/CHANGELOG"/>
-                <exclude name="**/LICENSE"/>
-                <exclude name="**/Makefile"/>
-                <exclude name="**/todo"/>
-                <exclude name="filp/whoops/src/deprecated"/>
-            </fileset>
+        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/lib_gantry5"/>
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes" overwrite="true">
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes/Gantry" overwrite="true">
-            <fileset dir="${path.src}/platforms/joomla"/>
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
+            <fileset dir="${path.src}/platforms/joomla">
+                <exclude name="vendor/**"/>
+            </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/lib_gantry5"/>
+        <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
+            <fileset dir="${path.src}/platforms/joomla/vendor">
+                <exclude name="bin/"/>
+                <exclude name="**/test/"/>
+                <exclude name="**/tests/"/>
+                <exclude name="**/Tests/"/>
+                <exclude name="**/doc/"/>
+                <exclude name="**/docs/"/>
+                <exclude name="**/phpdoc.xml"/>
+                <exclude name="**/phpdocs-md"/>
+                <exclude name="**/examples/"/>
+                <exclude name="**/ext/"/>
+                <exclude name="**/bin/"/>
+                <exclude name="**/site/"/>
+                <exclude name="**/.github"/>
+                <exclude name="**/.*.yml"/>
+                <exclude name="**/.editor*"/>
+                <exclude name="**/phpunit.xml*"/>
+                <exclude name="**/*.md"/>
+                <exclude name="**/*.rst"/>
+                <exclude name="**/*.sh"/>
+                <exclude name="**/readme.txt"/>
+                <exclude name="**/CHANGELOG*"/>
+                <exclude name="**/LICENSE*"/>
+                <exclude name="**/Makefile"/>
+                <exclude name="**/todo"/>
+                <exclude name="**/composer.lock"/>
+                <exclude name="filp/whoops/src/deprecated"/>
+            </fileset>
         </copy>
 
         <!-- Add version information to all xml files -->

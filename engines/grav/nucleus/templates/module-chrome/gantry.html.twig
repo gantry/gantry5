@@ -1,0 +1,17 @@
+{% set title %}
+    {% block title %}{% endblock %}
+{%- endset -%}
+
+{% set module %}
+    {% block module %}{% endblock %}
+{%- endset -%}
+
+{% if module|trim %}
+<div class="moduletable{{ chrome.class ? ' ' ~ chrome.class }}">
+    {% if title|trim %}
+        <h2 class="g-title">{{ title }}</h2>
+    {% endif %}
+
+    {{ module }}
+</div>
+{% endif %}

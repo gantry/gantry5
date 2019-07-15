@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gantry 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-14 09:39:35+0000\n"
-"PO-Revision-Date: 2015-10-08 12:24-0700\n"
+"PO-Revision-Date: 2016-07-27 15:34-0500\n"
 "Last-Translator: Gantry 5 Team\n"
 "Language-Team: Gantry 5 Team\n"
 "Language: en\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 msgid "COM_GANTRY5"
@@ -49,7 +49,13 @@ msgid "GANTRY5_PLATFORM_DELETE_OUTLINE"
 msgstr "Delete Outline"
 
 msgid "GANTRY5_PLATFORM_DELETE_OUTLINE_DESC"
-msgstr "Are you sure you want to delete this Outline?"
+msgstr "Are you sure you want to delete <strong>%s</strong> Outline?"
+
+msgid "GANTRY5_PLATFORM_DELETE_POSITION"
+msgstr "Delete Position"
+
+msgid "GANTRY5_PLATFORM_DELETE_POSITION_DESC"
+msgstr "Are you sure you want to delete this Position?"
 
 msgid "GANTRY5_PLATFORM_CONFIRM"
 msgstr "Confirm"
@@ -129,6 +135,9 @@ msgstr "Outlines"
 msgid "GANTRY5_PLATFORM_ADD_NEW_OUTLINE"
 msgstr "Add New Outline"
 
+msgid "GANTRY5_PLATFORM_POSITIONS"
+msgstr "Positions"
+
 msgid "GANTRY5_PLATFORM_SWITCH_PRESET_DESC"
 msgstr "Keep the current Particles while changing Preset"
 
@@ -156,6 +165,9 @@ msgstr "Particle"
 msgid "GANTRY5_PLATFORM_BLOCK"
 msgstr "Block"
 
+msgid "GANTRY5_PLATFORM_INHERITANCE"
+msgstr "Inheritance"
+
 msgid "GANTRY5_PLATFORM_APPLY"
 msgstr "Apply"
 
@@ -179,9 +191,6 @@ msgstr "Save Assignments"
 
 msgid "GANTRY5_PLATFORM_ASSIGNMENTS"
 msgstr "Assignments"
-
-msgid "GANTRY5_PLATFORM_HIDE_ASSIGNMENTS"
-msgstr "Hide Unassigned Items"
 
 msgid "GANTRY5_PLATFORM_FILTER"
 msgstr "Filter"
@@ -261,11 +270,11 @@ msgstr "<p>This outline has no layout specified and will use layout defined in <
 msgid "GANTRY5_PLATFORM_BACK"
 msgstr "Back"
 
-msgid "GANTRY5_PLATFORM_SAVE_SETTINGS"
-msgstr "Save Settings"
+msgid "GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS"
+msgstr "Save Particle Defaults"
 
-msgid "GANTRY5_PLATFORM_SETTINGS"
-msgstr "Settings"
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS"
+msgstr "Particle Defaults"
 
 msgid "GANTRY5_PLATFORM_SAVE_PAGESETTINGS"
 msgstr "Save Page Settings"
@@ -401,3 +410,345 @@ msgstr "Enables the override for the field '%s'"
 
 msgid "GANTRY5_PLATFORM_EDIT_TITLE"
 msgstr "Edit Title '%s'"
+
+msgid "GANTRY5_PLATFORM_EDIT_X"
+msgstr "Edit %s"
+
+msgid "GANTRY5_PLATFORM_DUPLICATE_X"
+msgstr "Duplicate %s"
+
+msgid "GANTRY5_PLATFORM_DELETE_X"
+msgstr "Delete %s"
+
+msgid "GANTRY5_PLATFORM_FILE_REMOVE"
+msgstr "Remove File"
+
+msgid "GANTRY5_PLATFORM_FILE_PREVIEW"
+msgstr "Preview File"
+
+msgid "GANTRY5_PLATFORM_FOLDER_EMPTY"
+msgstr "Folder is Empty"
+
+msgid "GANTRY5_PLATFORM_CHANGELOG_FULL"
+msgstr "Full Changelog"
+
+msgid "GANTRY5_PLATFORM_CHANGELOG_GITHUB"
+msgstr "View in GitHub"
+
+msgid "GANTRY5_PLATFORM_CLOSE"
+msgstr "Close"
+
+msgid "GANTRY5_PLATFORM_FILEPICKER_UPLOAD_DESC"
+msgstr "Upload files by dragging &amp; dropping or by <a href=\"#\" data-upload=\"\">selecting them</a>."
+
+msgid "GANTRY5_PLATFORM_FILEPICKER_CURRENT_FILTERS"
+msgstr "Current filters:"
+
+msgid "GANTRY5_PLATFORM_FILEPICKER_NO_FILTER"
+msgstr "No Filter"
+
+msgid "GANTRY5_PLATFORM_FONTS_PREVIEW"
+msgstr "Font Preview..."
+
+msgid "GANTRY5_PLATFORM_FONTS_SAMPLE"
+msgstr "Wizard boy Jack loves the grumpy Queen's fox."
+
+msgid "GANTRY5_PLATFORM_FONTS_LOCAL"
+msgstr "Local Fonts"
+
+msgid "GANTRY5_PLATFORM_FONTS_X_STYLE"
+msgstr "%s style"
+
+msgid "GANTRY5_PLATFORM_FONTS_X_STYLES"
+msgstr "%s styles"
+
+msgid "GANTRY5_PLATFORM_FONTS_REMOTE"
+msgstr "Remote Fonts"
+
+msgid "GANTRY5_PLATFORM_FONTS_X_CHARSETS"
+msgstr "%s charsets"
+
+msgid "GANTRY5_PLATFORM_FONTS_X_OF_Y"
+msgstr "%s of %s"
+
+msgid "GANTRY5_PLATFORM_FONTS_SELECTED"
+msgstr "selected"
+
+msgid "GANTRY5_PLATFORM_FONTS_UNKNOWN_VARIANT"
+msgstr "Unknown Variant"
+
+msgid "GANTRY5_PLATFORM_LM_PARTICLE_LOSS_WARNING"
+msgstr "Warning: Some particles may get lost"
+
+msgid "GANTRY5_PLATFORM_LM_PARTICLE_LOSS_SECTIONS_X"
+msgstr "The sections %s do not exist in the Layout that is about to get loaded."
+
+msgid "GANTRY5_PLATFORM_LM_PARTICLE_LOSS_SECTION_X"
+msgstr "The section %s does not exist in the Layout that is about to get loaded."
+
+msgid "GANTRY5_PLATFORM_LM_PARTICLE_LOSS_TEXT"
+msgstr "Any particles within those sections will be lost."
+
+msgid "GANTRY5_PLATFORM_ID_UPPER"
+msgstr "ID"
+
+msgid "GANTRY5_PLATFORM_ID_X"
+msgstr "id %s"
+
+msgid "GANTRY5_PLATFORM_LM_SWITCHER_USER"
+msgstr "User"
+
+msgid "GANTRY5_PLATFORM_LM_SWITCHER_SYSTEM"
+msgstr "System"
+
+msgid "GANTRY5_PLATFORM_LM_SWITCHER_PLATFORM"
+msgstr "Platform"
+
+msgid "GANTRY5_PLATFORM_X_PRESET"
+msgstr "%s Preset"
+
+msgid "GANTRY5_PLATFORM_X_OUTLINE"
+msgstr "%s Outline"
+
+msgid "GANTRY5_PLATFORM_MENU_GLOBAL_SETTINGS"
+msgstr "Global Menu Settings"
+
+msgid "GANTRY5_PLATFORM_MENU_ITEM_SETTINGS"
+msgstr "Menu Item Settings"
+
+msgid "GANTRY5_PLATFORM_MENU_MODULE_SETTINGS"
+msgstr "Menu Module Item Settings"
+
+msgid "GANTRY5_PLATFORM_MENU_WIDGET_SETTINGS"
+msgstr "Menu Widget Item Settings"
+
+msgid "GANTRY5_PLATFORM_MENU_PARTICLE_SETTINGS"
+msgstr "Menu Particle Item Settings"
+
+msgid "GANTRY5_PLATFORM_PUBLISHED"
+msgstr "Published"
+
+msgid "GANTRY5_PLATFORM_UNPUBLISHED"
+msgstr "Unpublished"
+
+msgid "GANTRY5_PLATFORM_FOOTER_VERSION"
+msgstr "Version:"
+
+msgid "GANTRY5_PLATFORM_FOOTER_RELEASED"
+msgstr "Released:"
+
+msgid "GANTRY5_PLATFORM_PRODUCTION_MODE_ARIA_LABEL"
+msgstr "Switches to Production Mode"
+
+msgid "GANTRY5_PLATFORM_PREVIEW"
+msgstr "Preview"
+
+msgid "GANTRY5_PLATFORM_CONFIGURE"
+msgstr "Configure"
+
+msgid "GANTRY5_PLATFORM_NO_THEMES_INSTALLED"
+msgstr "No themes installed"
+
+msgid "GANTRY5_PLATFORM_ATOMS"
+msgstr "Atoms"
+
+msgid "GANTRY5_PLATFORM_ATOMS_CONFIGURE_SETTINGS"
+msgstr "Configure Atom Settings"
+
+msgid "GANTRY5_PLATFORM_ATOMS_DISABLED_DESC"
+msgstr "This atom has been disabled and it won't be rendered on front-end. You can still configure, move and delete."
+
+msgid "GANTRY5_PLATFORM_ATOMS_DEPRECATED_MESSAGE"
+msgstr "The above Atoms have been imported from the current Outline Layout. Since Gantry 5.2.0 Atoms are no longer located in the Layout Manager. While we are automatically migrating the Atoms for you, please ensure all the settings are correct and resave the Page Settings, as well as the Layout, if needed."
+
+msgid "GANTRY5_PLATFORM_LM_LOAD_PRESET"
+msgstr "Load Preset"
+
+msgid "GANTRY5_PLATFORM_LM_CLEAR_LAYOUT"
+msgstr "Clear Layout"
+
+msgid "GANTRY5_PLATFORM_LM_PRESET_UNKNOWN"
+msgstr "Unknown"
+
+msgid "GANTRY5_PLATFORM_ASSIGNMENTS_HIDE_UNASSIGNED"
+msgstr "Hide Unassigned Items"
+
+msgid "GANTRY5_PLATFORM_ASSIGNMENTS_UNSELECT_ALL"
+msgstr "Unselect all items"
+
+msgid "GANTRY5_PLATFORM_ASSIGNMENTS_SELECT_ALL"
+msgstr "Select all items"
+
+msgid "GANTRY5_PLATFORM_WIDGET"
+msgstr "Widget"
+
+msgid "GANTRY5_PLATFORM_PICK_A_WIDGET"
+msgstr "Pick a Widget"
+
+msgid "GANTRY5_PLATFORM_CONTENT_SETTINGS"
+msgstr "Content Settings"
+
+msgid "GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS"
+msgstr "Save Content Settings"
+
+msgid "GANTRY5_PLATFORM_CREATE_OUTLINE"
+msgstr "Create New Outline"
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE"
+msgstr "You can define default options for Particles from <a %s href=\"%s\">%s</a>."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING"
+msgstr "As of Gantry v5.3.0, the <strong>%s</strong> (previously known as <strong>Settings</strong>) tab in the Gantry admin has been hidden. This was done to cut down on any confusion as it presents an extra level of inheritance that is only needed for advanced usage cases."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER"
+msgstr "If required, you can still enter to this administrative panel by <a %s href=\"%s\">clicking here</a>."
+
+msgid "GANTRY5_PLATFORM_PARTICLE_PREVIEW"
+msgstr "Attention! This is a read-only view of the Particle you selected. Any change made here cannot be saved."
+
+msgid "GANTRY5_PLATFORM_ATOM_PREVIEW"
+msgstr "Attention! This is a read-only view of the Atom you selected. Any change made here cannot be saved."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_X"
+msgstr "The following Outlines depend on %s."
+
+msgid "GANTRY5_PLATFORM_DELETE_INHERIT_DESC"
+msgstr "By proceeding they will stop inheriting and all the Attributes and Children will be copied over:"
+
+msgid "GANTRY5_PLATFORM_SWITCH_OUTLINE_INHERIT_DESC"
+msgstr "Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned."
+
+msgid "GANTRY5_PLATFORM_ATOM"
+msgstr "Atom"
+
+msgid "GANTRY5_PLATFORM_NO_INHERITANCE_SELECT_OUTLINE"
+msgstr "No Inheritance, select an Outline first"
+
+msgid "GANTRY5_PLATFORM_INHERITING_FROM_X"
+msgstr "Inheriting from %s"
+
+msgid "GANTRY5_PLATFORM_LM_CLEAR_FULL"
+msgstr "Full Layout"
+
+msgid "GANTRY5_PLATFORM_LM_CLEAR_KEEP_INHERITANCE"
+msgstr "Keep Inheritance"
+
+msgid "GANTRY5_PLATFORM_CREATE_OUTLINE_FROM_X"
+msgstr "Create New Outline From '%s'"
+
+msgid "GANTRY5_PLATFORM_PRESET1"
+msgstr "Preset 1"
+
+msgid "GANTRY5_PLATFORM_PRESET2"
+msgstr "Preset 2"
+
+msgid "GANTRY5_PLATFORM_PRESET3"
+msgstr "Preset 3"
+
+msgid "GANTRY5_PLATFORM_PRESET4"
+msgstr "Preset 4"
+
+msgid "GANTRY5_PLATFORM_PRESET5"
+msgstr "Preset 5"
+
+msgid "GANTRY5_PLATFORM_PRESET6"
+msgstr "Preset 6"
+
+msgid "GANTRY5_PLATFORM_PRESET7"
+msgstr "Preset 7"
+
+msgid "GANTRY5_PLATFORM_PRESET8"
+msgstr "Preset 8"
+
+msgid "GANTRY5_PLATFORM_PRESET9"
+msgstr "Preset 9"
+
+msgid "GANTRY5_PLATFORM_PRESET10"
+msgstr "Preset 10"
+
+msgid "GANTRY5_PLATFORM_JS_LOADING"
+msgstr "Loading..."
+
+msgid "GANTRY5_PLATFORM_JS_PROCESSING"
+msgstr "Processing..."
+
+msgid "GANTRY5_PLATFORM_JS_LM_SETTINGS"
+msgstr "%s Settings"
+
+msgid "GANTRY5_PLATFORM_JS_LM_CONFIGURE_SETTINGS"
+msgstr "Configure %s Settings"
+
+msgid "GANTRY5_PLATFORM_JS_LM_ADD_ROW"
+msgstr "Add new row in %s"
+
+msgid "GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE"
+msgstr "This %s has been disabled and it will not be rendered on front-end. You can still configure, move and delete."
+
+msgid "GANTRY5_PLATFORM_JS_LM_GRID_EQUALIZE"
+msgstr "Equalize the width of blocks in this grid"
+
+msgid "GANTRY5_PLATFORM_JS_LM_GRID_SORT_MOVE"
+msgstr "Sort or Move the Grid"
+
+msgid "GANTRY5_PLATFORM_JS_LM_SIZE_LIMITS_RANGE"
+msgstr "You need to stay in between the min and max range"
+
+msgid "GANTRY5_PLATFORM_JS_REVIEW_FIELDS"
+msgstr "Please review the fields in the modal and ensure you correct any invalid one."
+
+msgid "GANTRY5_PLATFORM_JS_INVALID_FIELDS"
+msgstr "Invalid Fields"
+
+msgid "GANTRY5_PLATFORM_JS_PARTICLE_SETTINGS_APPLIED"
+msgstr "The Particle \"%s\" settings have been applied to the Layout. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED"
+msgstr "The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED"
+msgstr "The %s settings have been applied. <br />Remember to click the Save button to store them."
+
+msgid "GANTRY5_PLATFORM_JS_SETTINGS_APPLIED"
+msgstr "Settings Applied"
+
+msgid "GANTRY5_PLATFORM_JS_FILTER_MISMATCH"
+msgstr "does not match the filter"
+
+msgid "GANTRY5_PLATFORM_JUST_NOW"
+msgstr "just now"
+
+msgid "GANTRY5_PLATFORM_JS_KEYVALUE_DUPLICATE"
+msgstr "The key \"%s\" is a duplicate"
+
+msgid "GANTRY5_PLATFORM_JS_KEYVALUE_EXCLUDED"
+msgstr "The key \"%s\" has been excluded and cannot be used"
+
+msgid "GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED"
+msgstr "You haven't saved your changes and by leaving the page they will be lost. Do you want to leave without saving?"
+
+msgid "GANTRY5_PLATFORM_JS_SAVE_SUCCESS"
+msgstr "The {{type}} {{verb}} been successfully saved! {{extras}}"
+
+msgid "GANTRY5_PLATFORM_SAVED"
+msgstr "Saved"
+
+msgid "GANTRY5_PLATFORM_LAST_SAVED"
+msgstr "Last Saved"
+
+msgid "GANTRY5_PLATFORM_JS_CSS_COMPILED"
+msgstr "The CSS was successfully compiled!"
+
+msgid "GANTRY5_PLATFORM_PHP54_WARNING"
+msgstr "You are currently running PHP <strong>%s</strong> which will soon no longer be supported by Gantry. Please upgrade as soon as possible. <a target=\"_blank\" href=\"http://gantry.org/blog/php54-end-of-support\">More Details.</a>"
+
+msgid "GANTRY5_PLATFORM_SAMPLE_DATA_INSTALLED"
+msgstr "Sample Data Installed"
+
+msgid "GANTRY5_PLATFORM_CHROME"
+msgstr "Chrome"
+
+msgid "GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED"
+msgstr "You are not allowed to edit this menu."
+
+msgid "GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED_PLATFORM"
+msgstr ""

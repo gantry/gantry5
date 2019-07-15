@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -30,6 +29,8 @@ abstract class Platform
 {
     use NestedArrayAccess, Export;
 
+    protected $name;
+    protected $features = [];
     protected $settings_key;
     protected $items;
     protected $container;
@@ -117,6 +118,16 @@ abstract class Platform
     abstract public function getAssetsPaths();
     abstract public function getMediaPaths();
 
+    public function init()
+    {
+        return $this;
+    }
+
+    public function has($feature)
+    {
+        return !empty($this->features[$feature]);
+    }
+
     public function getThemePaths()
     {
         return ['' => []];
@@ -136,6 +147,22 @@ abstract class Platform
     {
         return [];
     }
+
+    /**
+     * Get preview url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemePreviewUrl($theme);
+
+    /**
+     * Get administrator url for individual theme.
+     *
+     * @param string $theme
+     * @return string|null
+     */
+    abstract public function getThemeAdminUrl($theme);
 
     public function settings()
     {
@@ -169,6 +196,9 @@ abstract class Platform
 
     public function finalize()
     {
+        $gantry = Gantry::instance();
+
+        $gantry['document']->registerAssets();
     }
 
     public function call()
@@ -176,5 +206,33 @@ abstract class Platform
         $args = func_get_args();
         $callable = array_shift($args);
         return is_callable($callable) ? call_user_func_array($callable, $args) : null;
+    }
+
+    public function authorize($action)
+    {
+        return true;
+    }
+
+    /**
+     * @param array|string $dependencies
+     * @return bool|null
+     * @since 5.4.3
+     */
+    public function checkDependencies($dependencies)
+    {
+        if (is_string($dependencies) && $dependencies !== $this->name) {
+            return false;
+        }
+
+        if (isset($dependencies['platform'])) {
+            if (is_string($dependencies['platform']) && $dependencies['platform'] !== $this->name) {
+                return false;
+            }
+            if (!isset($dependencies['platform'][$this->name])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

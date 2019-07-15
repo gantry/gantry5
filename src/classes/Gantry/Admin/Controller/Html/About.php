@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,7 +14,7 @@
 namespace Gantry\Admin\Controller\Html;
 
 use Gantry\Admin\ThemeList;
-use Gantry\Component\Controller\HtmlController;
+use Gantry\Component\Admin\HtmlController;
 
 class About extends HtmlController
 {
@@ -24,6 +23,6 @@ class About extends HtmlController
         // TODO: Find better way:
         $this->params['info'] = (new ThemeList)->getTheme($this->container['theme.name']);
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/about/about.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/about/about.html.twig', $this->params);
     }
 }

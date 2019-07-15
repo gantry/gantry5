@@ -1,9 +1,10 @@
 === Gantry 5 Framework ===
 Contributors: gantry
 Author URI: http://gantry.org
-Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, less, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
-Requires at least: 4.2+
-Tested up to: 4.3.1
+Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
+Requires at least: 4.2
+Tested up to: 5.2.2
+Requires PHP: 5.6
 Stable tag: @version@
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
@@ -12,7 +13,7 @@ Gantry is a comprehensive set of building blocks to enable the rapid development
 
 Gantry 5 is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform theme.
 
-* Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
+> Please visit http://gantry.org to download a FREE WordPress Gantry 5 default theme which can be used as a base for your own themes!
 
 Gantry 5 is packed full of features created to empower the development of designs into fully functional layouts with the absolute minimum effort and fuss.
 
@@ -24,7 +25,7 @@ Gantry 5 uses the **Nucleus** grid system, built from scratch using Flexbox and 
 
 = Cross-platform Support =
 
-The new responsive Gantry 5 framework is available for **WordPress 4.2+**, **Joomla 3.4+**, **phpBB 3.1+**, **Grav 1.0+**, and **Magento CE 1.9.1+**.
+The new responsive Gantry 5 framework is available for **WordPress 4.2+**, **Joomla 3.4+** and **Grav 1.1+**.
 
 = Intuitive YAML-driven Configuration =
 
@@ -62,9 +63,9 @@ Change the way your site's menus look with Gantry 5's powerful Menu Editor. Quic
 
 Theme overrides are now part of Gantry 5's Outline system, enabling you to easily create and manage Layouts, Settings, Styles, and more and assign them as needed.
 
-= Use SCSS, LESS or CSS =
+= Use SCSS or CSS =
 
-Gantry 5 has built-in support for SCSS and pure CSS, with the ability to support LESS.
+Gantry 5 has built-in support for SCSS and pure CSS.
 
 > For video tutorials and documentation please visit official [Gantry Framework](http://gantry.org/ "Gantry Framework") site.
 
@@ -94,9 +95,9 @@ Please note that Gantry Framework plugin doesn't come up with the default theme.
 We try to ensure that any Gantry theme and the Gantry Plugin specifically will work with any modern and secure server environment. The recommended minimum requirements are :
 
 * WordPress 4.2 or higher
-* PHP 5.4+ (5.5+ recommended)
+* PHP 5.4+ (7.0+ recommended)
 * MySQL 3.23 (5+ recommended)
-* Apache 1.3 (2.2+ recommended)
+* Apache 1.3 (2.4+ recommended)
 
 = Is there any documentation available ? =
 

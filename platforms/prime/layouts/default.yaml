@@ -1,27 +1,32 @@
-container:
-  header:
-    - [particle-logo 20, particle-menu 80]
+version: 2
+
+preset:
+  image: gantry-admin://images/layouts/default.png
+
+layout:
+  /header/:
+    - [logo 20, menu 80]
     - position-header
 
-  1:
+  /container-main/:
     - showcase 75:
         - [position-showcase-1 50, position-showcase-2 50]
       feature:
         - [position-feature-1 50, position-feature-2 50]
       main:
         - system-messages
-        - pagecontent
+        - system-content
       bottom:
         - position-bottom
 
     - sidebar 25:
-      - particle-social
+      - social
       - position-sidebar
       - position-right
 
-  footer:
+  /footer/:
     - position-footer
-    - [particle-date 25, particle-copyright 50, particle-branding 25]
+    - [date 25, copyright 50, branding 25]
 
-offcanvas:
-  - particle-mobile-menu
+  offcanvas:
+    - particle-mobile-menu

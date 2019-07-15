@@ -1,86 +1,120 @@
 .flush {
-	.g-container {
-		> .g-grid {
-			> .g-block {
-				> .g-content {
-					margin: 0;
-					padding: 0;
-				}
-			}
-		}
-	}
+  .g-container {
+    > .g-grid {
+      > .g-block {
+        > .g-content {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+.moduletable, .widget {
+  &[class*="box"], &[class*="shadow"] {
+    padding: $content-padding;
+    margin: $content-margin;
+  }
 }
 
 .box1 {
-	.g-content {
-		background: $box1-background;
-	}
+  &.moduletable, &.widget, &.g-outer-box,> .g-content {
+    background: $box1-background;
+  }
+  &.moduletable, &.widget, > .g-content {
+    &, h1, h2, h3, h4, h5, h6, strong, i {
+      color: darken($box1-background, 65%);
+    }
+  }
 }
 
 .box2 {
-	.g-content {
-		background: $box2-background;
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    background: $box2-background;
+  }
+  &.moduletable, &.widget, > .g-content {
+    &, h1, h2, h3, h4, h5, h6, strong, i {
+      color: darken($box2-background, 45%);
+    }
+  }
 }
 
 .box3 {
-	.g-content {
-		background: $accent-color-1;
-		color: $white;
-		h1, h2, h3, h4, h5, h6, strong, i {
-			color: $white;
-		}
-		a {
-			color: lighten($accent-color-1, 35%);
-			&:hover {
-				color: $white;
-			}
-		}
-	}
+  &.moduletable, &.widget, &.g-outer-box,
+  > .g-content {
+    background: $accent-color-1;
+  }
+  &.moduletable, &.widget, > .g-content {
+    &, h1, h2, h3, h4, h5, h6, strong, i {
+      color: $white;
+    }
+    a {
+      color: lighten($accent-color-1, 35%);
+      &:hover {
+        color: $white;
+      }
+    }
+    .button {
+      color: if(lightness($accent-color-1) > 50, darken($accent-color-1, 65%), lighten($accent-color-1, 65%));
+      background: if(lightness($accent-color-1) > 50, darken($accent-color-1, 10%), lighten($accent-color-1, 10%));
+      &:hover {
+        background: if(lightness($accent-color-1) > 50, darken($accent-color-1, 15%), lighten($accent-color-1, 15%));
+      }
+    }
+  }
 }
 
 .box4 {
-	.g-content {
-		background: $accent-color-2;
-		color: $white;
-		h1, h2, h3, h4, h5, h6, strong, i {
-			color: $white;
-		}
-		a {
-			color: lighten($accent-color-2, 35%);
-			&:hover {
-				color: $white;
-			}
-		}
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    background: $accent-color-2;
+  }
+  &.moduletable, &.widget, > .g-content {
+    &, h1, h2, h3, h4, h5, h6, strong, i {
+      color: $white;
+    }
+    a {
+      color: lighten($accent-color-2, 35%);
+      &:hover {
+        color: $white;
+      }
+    }
+    .button {
+      color: if(lightness($accent-color-2) > 50, darken($accent-color-2, 45%), lighten($accent-color-2, 45%));
+      background: if(lightness($accent-color-2) > 50, darken($accent-color-2, 15%), lighten($accent-color-2, 15%));
+      &:hover {
+        background: if(lightness($accent-color-2) > 50, darken($accent-color-2, 10%), lighten($accent-color-2, 10%));
+      }
+    }
+  }
 }
 
 .shadow {
-	.g-content {
-		box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  }
 }
 
 .shadow2 {
-	.g-content {
-		box-shadow: 0 0 4px rgba(0,0,0,0.15);
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  }
 }
 
 .disabled {
-	.g-content {
-		opacity: 0.4;
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    opacity: 0.4;
+  }
 }
 
 .square {
-	.g-content {
-		border-radius: none;
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    border-radius: none;
+  }
 }
 
 .rounded {
-	.g-content {
-		border-radius: $core-border-radius;
-	}
+  &.moduletable, &.widget, &.g-outer-box, > .g-content {
+    border-radius: $core-border-radius;
+  }
 }

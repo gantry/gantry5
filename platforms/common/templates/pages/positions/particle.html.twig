@@ -1,0 +1,73 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+<form method="post" action="{{ gantry.route(action) }}">
+    <div class="g-tabs" role="tablist">
+        <ul>
+            <li class="active">
+                <a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">
+                    {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="#" id="g-chrome-tab" role="presentation" aria-controls="g-chrome" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_CHROME'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="#" id="g-settings-assignments-tab" role="presentation" aria-controls="g-settings-assignments" role="tab" aria-expanded="false">
+                    {{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="g-panes">
+        <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
+            <div class="card settings-block">
+                <h4>
+                    <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span>
+                    <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title) }}" data-title-edit=""></i>
+                    <span class="badge font-small">{{ item.options.type }}</span>
+                    {% if particle.form.fields.enabled %}
+                    {% include 'forms/fields/enable/enable.html.twig' with {'name': prefix ~ 'enabled', 'field': particle.form.fields.enabled, 'value': item.options.particle.enabled, 'default': 1} %}
+                    {% endif %}
+                </h4>
+
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': particle.form, 'data': data, 'prefix': prefix, 'skip': ['enabled']} %}
+                    <input type="hidden" name="id" value="{{ item.id }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="g-pane" role="tabpanel" id="g-chrome" aria-labelledby="g-chrome-tab" aria-expanded="false">
+            <div class="card settings-block">
+                <h4>
+                    {{ 'GANTRY5_PLATFORM_CHROME'|trans }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'forms/fields.html.twig' with {'blueprints': chrome.form, 'data': data, 'prefix': 'chrome.'} %}
+                </div>
+            </div>
+        </div>
+
+        <div class="g-pane" role="tabpanel" id="g-settings-assignments" aria-labelledby="g-settings-assignments-tab" aria-expanded="false">
+            <div class="card settings-assignments">
+                <h4>
+                    {{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}
+                </h4>
+                <div class="inner-params">
+                    {% include 'pages/positions/assignments.html.twig' with { assignments: assignments } %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="g-modal-actions">
+        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
+    </div>
+    <input type="hidden" name="_end" value="1" />
+</form>
+{% endblock %}

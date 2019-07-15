@@ -1,0 +1,23 @@
+<div class="card settings-block">
+    <h4>
+        {% if editable %}
+            <span data-title-editable="{{ item.title|trim }}" class="title">{{ item.title|trim }}</span>
+            <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title|trim) }}" data-title-edit=""></i>
+        {% else %}
+            {{ title }}
+        {% endif %}
+
+        {% if item %}
+            {% set item_type = item.subtype ?: item.type %}
+            {% set item_disabled = not gantry.config.get('particles.' ~ item_type ~ '.enabled', true) %}
+            <span class="badge font-small">{{ item_type }}</span>
+            {% if blueprints.fields.enabled %}
+                {% include 'forms/fields/enable/enable.html.twig' with {'name': 'particles.' ~ item_type ~ '.enabled', 'field': blueprints.fields.enabled, 'value': item.attributes.enabled, 'default': 1, 'turned_off': item_disabled} %}
+            {% endif %}
+        {% endif %}
+    </h4>
+
+    <div class="inner-params">
+        {% include 'forms/fields.html.twig' %}
+    </div>
+</div>

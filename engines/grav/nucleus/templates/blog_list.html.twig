@@ -1,25 +1,59 @@
-{% extends 'partials/base.html.twig' %}
+{% extends "partials/page.html.twig" %}
 
-{% set layout = 'sidebar' %}
 {% set collection = page.collection() %}
 
-{% block breadcrumbs %}
-    {% include 'breadcrumbs.html.twig' %}
-{% endblock %}
+{% block content %}
 
-{% block content_sidebar %}
-    {{ content }}
-    {% for child in collection %}
-        {% include 'partials/blog_item.html.twig' with {'page':child, 'truncate':true} %}
-    {% endfor %}
-{% endblock %}
+    {% if page.content %}
+        <div class="blog-header">
+            {{ page.content|raw }}
+        </div>
+    {% endif %}
 
-{% block sidebar %}
-    {% include 'partials/blog_sidebar.html.twig' %}
-{% endblock %}
+    <div class="list-blog cols-{{ page.header.content.columns }}">
 
-{% block pagination %}
-    {% if collection.params.pagination %}
-    {% include 'pagination.html.twig' with {'pagination':collection.params.pagination} %}
+        {# Leading #}
+        {% if page.header.content.leading > 0 %}
+            {% for child in collection | slice(0, page.header.content.leading) %}
+                <div class="list-blog-row">
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date } %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {# Column Layout #}
+        {% if page.header.content.columns > 1 %}
+            {% if page.header.content.leading %}
+                {% for row in collection | slice(page.header.content.leading) | batch(page.header.content.columns) %}
+                    <div class="list-blog-row">
+                        {% for child in row %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for row in collection | batch(page.header.content.columns) %}
+                    <div class="list-blog-row">
+                        {% for child in row %}
+                            {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% if page.header.content.leading > 0 %}
+                {% for child in collection | slice(page.header.content.leading) %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
+                {% endfor %}
+            {% else %}
+                {% for child in collection %}
+                    {% include 'partials/blog_item.html.twig' with {'blog': page, 'page': child, 'truncate': true, 'show_date': page.header.content.show_date} %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if config.plugins.pagination.enabled and collection.params.pagination %}
+        {% include 'partials/pagination.html.twig' with {'base_url': page.url, 'pagination': collection.params.pagination} %}
     {% endif %}
 {% endblock %}

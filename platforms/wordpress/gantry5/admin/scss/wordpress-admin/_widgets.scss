@@ -14,6 +14,10 @@ body.wp-admin.widgets-php, body.wp-customizer {
         .g5-dialog {
             z-index: 99999;
 
+            .button-primary {
+                text-shadow: none;
+            }
+
             .settings-block {
                 max-width: 100%;
             }

@@ -1,7 +1,12 @@
 name: Spacer
 description: Add empty column to the row.
 type: spacer
+icon: fa-arrows-h
 hidden: false
+
+configuration:
+  caching:
+    type: static
 
 form:
   fields:

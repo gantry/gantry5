@@ -1,0 +1,61 @@
+#g-page-surround {
+    // Global
+    .nav {
+        margin-bottom: 20px;
+        margin-left: 0;
+        list-style: none;
+
+        > li {
+            > a {
+                display: block;
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+
+                > img {
+                    max-width: none;
+                }
+            }
+        }
+    }
+
+    // Platform Content
+    .platform-content {
+
+        // Entries
+        .entries {
+            margin: 0 -$content-padding;
+
+            .g-block {
+                padding: 0 $content-padding;
+
+                .tease {
+                    margin: 0;
+                    padding: 0;
+
+                    // Sticky Posts
+                    &.sticky {
+                        padding: ($content-padding / 2) $content-padding;
+                        background-color: #eceff3;
+                        border-radius: $core-border-radius;
+                    }
+                }
+            }
+        }
+
+        // Password Form
+        form.password-form {
+            .password-box {
+                margin: 0.625rem 0;
+            }
+        }
+    }
+
+    // Search Form
+    .search-form {
+        input.search-field {
+            color: $base-text-color;
+        }
+    }
+}

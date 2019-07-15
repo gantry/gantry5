@@ -18,6 +18,12 @@ form:
           label: Path
           skip: true
 
+        .enabled:
+          type: input.checkbox
+          label: Enabled
+          description: Enables the menu item.
+          default: true
+
         .id:
           type: input.text
           label: Menu Item Id
@@ -66,6 +72,16 @@ form:
             '': - Use Default -
             standard: Simple
             fullwidth: Extended
+
+        .dropdown_dir:
+          type: select.selectize
+          label: Dropdown Direction
+          description: Where the dropdown should open relative to the menu item
+          default: 'right'
+          options:
+            left: Expand Left
+            center: Keep Centered
+            right: Expand Right
 
         .dropdown_hide:
           type: input.checkbox

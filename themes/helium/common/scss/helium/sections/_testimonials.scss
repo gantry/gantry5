@@ -1,0 +1,41 @@
+#g-testimonials {
+	background: $testimonials-background;
+	color: $testimonials-text-color;
+    padding: $section-padding 0;
+    position: relative;
+    z-index: 10;
+
+    @if $testimonials-background-image {
+        background: url($testimonials-background-image) no-repeat center top;
+        background-size: cover;
+
+        @if $testimonials-background-overlay == 'enabled' {
+            &:before {
+                @include linear-gradient(40deg, $accent-color-1, $accent-color-2);
+                opacity: 0.9;
+                position: absolute;
+                content: "";
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: -1;
+            }
+        }
+    }
+
+    a {
+        color: lighten($accent-color-1, 20%);
+
+        &:hover {
+            color: inherit;
+        }
+    }
+}
+
+@media print {
+	#g-testimonials {
+		background: #fff !important;
+		color: #000 !important;
+	}
+}

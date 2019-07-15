@@ -1,0 +1,40 @@
+@include font-face('rockettheme-apps', 'gantry-theme://fonts/rockettheme-apps/rockettheme-apps');
+
+// RocketTheme Apps Support
+i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full,
+i.fa-grav-logo, i.fa-grav-symbol, i.fa-grav-logo-both, i.fa-grav-both,
+i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-gantry-both {
+    font-family: 'rockettheme-apps';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Grav
+.fa-grav-logo:before, .fa-grav-text:before {
+    content: "\61";
+}
+.fa-grav-symbol:before, .fa-grav-spaceman:before {
+    content: "\62";
+}
+.fa-grav-logo-both:before, .fa-grav-both:before, .fa-grav-full:before {
+    content: "\66";
+}
+
+// Gantry
+.fa-gantry-logo:before {
+    content: "\64";
+}
+.fa-gantry:before, .fa-gantry-symbol:before {
+    content: "\63";
+}
+.fa-gantry-logo-both:before, .fa-gantry-both:before {
+    content: "\65";
+}

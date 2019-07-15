@@ -27,7 +27,11 @@ var decouple = function(element, event, callback) {
         tracking = false;
     };
 
-    element.addEventListener(event, capture, false);
+    try {
+        element.addEventListener(event, capture, false);
+    } catch (e) {}
+
+    return capture;
 };
 
 module.exports = decouple;

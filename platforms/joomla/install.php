@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,11 +21,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.4' => '5.4.0',
-            '0' => '5.6.13' // Preferred version
+            '0' => '7.0.32' // Preferred version
         ),
         'Joomla!' => array (
             '3.4' => '3.4.1',
-            '0' => '3.4.4' // Preferred version
+            '0' => '3.8.13' // Preferred version
         )
     );
     /**
@@ -98,12 +98,23 @@ class Pkg_Gantry5InstallerScript
         $cache = JFactory::getCache();
         $cache->clean('_system');
 
-        // Remove all compiled files from APC cache.
-        if (function_exists('apc_clear_cache')) {
+        // Clear Gantry5 cache.
+        $path = JFactory::getConfig()->get('cache_path', JPATH_SITE . '/cache') . '/gantry5';
+        if (is_dir($path)) {
+            JFolder::delete($path);
+        }
+
+        // Make sure that PHP has the latest data of the files.
+        clearstatcache();
+
+        // Remove all compiled files from opcode cache.
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        } elseif (function_exists('apc_clear_cache')) {
             @apc_clear_cache();
         }
 
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 
@@ -145,8 +156,13 @@ class Pkg_Gantry5InstallerScript
                 continue;
             }
 
-            $extension->protected = $state;
-            $extension->enabled = $state;
+            // Joomla 3.7 added a new package protection feature: only use individual protection in older versions.
+            $extension->protected = version_compare(JVERSION, '3.7', '<') ? $state : 0;
+
+            if (isset($attributes->enabled)) {
+                $extension->enabled = $state ? (int) $attributes->enabled : 0;
+            }
+
             $extension->store();
         }
     }
@@ -173,7 +189,7 @@ class Pkg_Gantry5InstallerScript
         return implode(',', array_keys($items));
     }
 
-    protected function checkRequirements()
+    protected function checkRequirements($gantryVersion)
     {
         $results = array();
         $this->checkVersion($results, 'PHP', phpversion());

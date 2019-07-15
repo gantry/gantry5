@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +13,7 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Theme as SiteTheme;
@@ -30,32 +30,60 @@ class Particles
         $this->container = $container;
     }
 
+    public function overrides($outline, $particle = null)
+    {
+        if ($outline === 'default') {
+            return true;
+        }
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $this->container['locator'];
+
+        if ($particle) {
+            // PHP 5.4
+            $resource = $locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml");
+            return !empty($resource);
+        }
+
+        // PHP 5.4
+        $resource = $locator->findResources("gantry-theme://config/{$outline}/particles");
+        return !empty($resource);
+    }
+
     public function all()
     {
         if (!$this->particles)
         {
+            $platform = $this->container['platform'];
             $files = $this->locateParticles();
 
             $this->particles = [];
             foreach ($files as $key => $fileArray) {
                 $filename = key($fileArray);
                 $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-                $this->particles[$key] = $file->content();
+                $particle = $file->content();
                 $file->free();
+
+                if (!isset($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
+                    $this->particles[$key] = $particle;
+                }
             }
         }
 
         return $this->particles;
     }
 
-    public function group()
+    public function group($exclude = [])
     {
         $particles = $this->all();
 
         $list = [];
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
-            if (in_array($type, ['spacer', 'pagecontent'])) {
+            if (in_array($type, $exclude)) {
+                continue;
+            }
+            if (in_array($type, ['spacer', 'system'])) {
                 $type = 'position';
             }
             $list[$type][$name] = $particle;
@@ -73,7 +101,7 @@ class Particles
         $files = $this->locateParticles();
 
         if (empty($files[$id])) {
-            throw new \RuntimeException("Settings for '{$id}' not found.", 404);
+            throw new \RuntimeException(sprintf("Settings for '%s' not found.", $id), 404);
         }
 
         $filename = key($files[$id]);
@@ -85,6 +113,15 @@ class Particles
         return $particle;
     }
 
+    /**
+     * @param string $id
+     * @return BlueprintForm
+     */
+    public function getBlueprintForm($id)
+    {
+        return BlueprintForm::instance($id, 'gantry-blueprints://particles');
+    }
+
     protected function sort(array $blocks)
     {
         $list = [];
@@ -93,7 +130,7 @@ class Particles
         $theme = $this->container['theme'];
         $ordering = (array) $theme->details()['admin.settings'] ?: [
                 'particle' => [],
-                'position' => ['module', 'spacer', 'pagecontent'],
+                'position' => ['position', 'spacer', 'messages', 'content'],
                 'atom' => []
             ];
 

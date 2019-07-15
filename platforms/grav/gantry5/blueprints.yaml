@@ -1,26 +1,130 @@
-name: Gantry 5 Template Framework
-version: 5.1.3
-description: Allows Gantry 5 templates to run.
-icon: tint
+name: Gantry 5 Framework
+version: '@version@'
+description: Theme framework.
+icon: gantry
 author:
   name: RocketTheme
   email: support@rockettheme.com
   url: http://www.rockettheme.com
 homepage: http://gantry.org
-keywords: gantry, gantry5, theme, theme framework
+readme: https://github.com/gantry/gantry5/blob/master/README.md
+keywords: gantry, gantry5, theme, framework
 bugs: https://github.com/gantry/gantry5/issues
 license: MIT
+dependencies:
+   - { name: grav, version: '>=1.1.9' }
+   - { name: admin, version: '>=1.2.5' }
 
 form:
-  validation: strict
+  validation: loose
   fields:
     enabled:
-        type: toggle
-        label: Plugin status
-        highlight: 1
-        default: 1
-        options:
-          1: Enabled
-          0: Disabled
-        validate:
-          type: bool
+      type: toggle
+      label: Plugin Status
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    production:
+      type: toggle
+      label: Production Mode
+      description: Production mode makes Gantry faster by more aggressive caching and ignoring changed files in the filesystem. Most changes made from admin should still be detected.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    use_media_folder:
+      type: toggle
+      label: Use Grav Images Folder
+      description: By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      highlight: 1
+      default: 0
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
+
+    offline:
+      type: toggle
+      label: Offline
+      description: Set site to maintenance mode. When site is offline, it's only visible for logged in users.
+      highlight: 1
+      default: 0
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
+
+    offline_message:
+      type: textarea
+      label: Offline Message
+      description: Set your own offline message explaining why the site is offline. Field accepts Markdown and HTML.
+
+    asset_timestamps:
+      type: toggle
+      label: Asset Timestamps
+      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page. NOTE: Timestamps are always enabled in development mode.'
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    asset_timestamps_period:
+      type: text
+      label: Timestamp Period
+      description: Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.
+      default: 7
+      validate:
+        type: float
+
+    debug:
+      type: toggle
+      label: Debug Mode
+      description: By enabling debugging mode, you will get more information what's going on inside Gantry.
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    compile_yaml:
+      type: toggle
+      label: Compile YAML
+      description: Compile YAML configuration files into PHP, making page loads significantly faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    compile_twig:
+      type: toggle
+      label: Compile Twig
+      description: Compile Twig template files into PHP, making page loads significantly faster.
+      highlight: 1
+      default: 1
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+
+    _redirect:
+      type: hidden

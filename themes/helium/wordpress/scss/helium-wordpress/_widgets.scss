@@ -1,0 +1,59 @@
+// Widgets
+.widget {
+    &.widget_archive,
+    &.widget_categories,
+    &.widget_meta,
+    &.widget_pages,
+    &.widget_recent_comments,
+    &.widget_recent_entries {
+        ul {
+            list-style-type: none;
+            margin: 0;
+
+            ul {
+                list-style-type: none;
+
+                &.children {
+                    margin-left: 1.5rem;
+                }
+            }
+        }
+    }
+
+    // Search Widget
+    &.widget_search {
+        input.search-field {
+            margin-bottom: 10px;
+        }
+    }
+
+    // Tag Cloud Widget
+    &.widget_tag_cloud {
+        a {
+            display: inline-block;
+            font-family: get-font-family($font-family-title);
+            border-radius: $border-radius;
+            background: $accent-color-1;
+            color: $white;
+            padding: 5px 8px;
+            margin: 0 4px 8px 0;
+            vertical-align: bottom;
+
+            &:before {
+                font-family: FontAwesome;
+                margin-right: 5px;
+                content: "\f02b";
+            }
+
+            &:hover {
+                background: darken($accent-color-1, 10%);
+                color: $white;
+            }
+        }
+    }
+
+    // Calendar Widget
+    &.widget_calendar {
+        margin-bottom: 1.5rem;
+    }
+}

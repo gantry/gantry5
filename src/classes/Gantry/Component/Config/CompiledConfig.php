@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,7 +23,7 @@ class CompiledConfig extends CompiledBase
     /**
      * @var int Version number for the compiled file.
      */
-    public $version = 1;
+    public $version = 2;
 
     /**
      * @var Config  Configuration object.
@@ -42,21 +41,31 @@ class CompiledConfig extends CompiledBase
     protected $withDefaults;
 
     /**
-     * @param  string $cacheFolder  Cache folder to be used.
-     * @param  array  $files  List of files as returned from ConfigFileFinder class.
-     * @param  callable  $blueprints  Lazy load function for blueprints.
-     * @throws \BadMethodCallException
+     * Get filename for the compiled PHP file.
+     *
+     * @param string $name
+     * @return $this
      */
-    public function __construct($cacheFolder, array $files, callable $blueprints = null)
+    public function name($name = null)
     {
-        /*
-        if (is_null($blueprints)) {
-            throw new \BadMethodCallException('You cannot instantiate configuration without blueprints.');
+        if (!$this->name) {
+            $this->name = $name ?: md5(json_encode(array_keys($this->files)) . (int) $this->withDefaults);
         }
-        */
-        parent::__construct($cacheFolder, $files);
 
+        return $this;
+    }
+
+    /**
+     * Set blueprints for the configuration.
+     *
+     * @param callable $blueprints
+     * @return $this
+     */
+    public function setBlueprints(callable $blueprints)
+    {
         $this->callable = $blueprints;
+
+        return $this;
     }
 
     /**
@@ -83,6 +92,13 @@ class CompiledConfig extends CompiledBase
         }
 
         $this->object = new Config($data, $this->callable);
+    }
+
+    /**
+     * Finalize configuration object.
+     */
+    protected function finalizeObject()
+    {
     }
 
     /**

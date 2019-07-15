@@ -2,7 +2,7 @@
 
 {% block global_attributes %}
     type="text"
-    data-selectize="{{ (field.selectize is defined ? field.selectize|merge({'create': true}) : {'create': true})|json_encode()|e('html_attr') }}"
+    data-selectize="{{ (field.selectize is defined ? {'create': true}|merge(field.selectize) : {'create': true})|json_encode()|e('html_attr') }}"
 
     {{ parent() }}
 {% endblock %}

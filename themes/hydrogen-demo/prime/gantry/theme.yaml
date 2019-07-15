@@ -17,7 +17,7 @@ details:
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml
 
-  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2019 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Demo Theme
   images:
@@ -70,10 +70,7 @@ configuration:
       nopaddingall: No Padding
 
   dependencies:
-    gantry: 5.0.*
-    engine/nucleus: 1.0.*
-    asset/font-awesome: 4.2
-    particle/menu: 1.0.*
+    gantry: 5.4.0
 
 admin:
   styles:

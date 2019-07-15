@@ -1,0 +1,24 @@
+// Search Component
+.search, .finder {
+    #searchForm, #search-form {
+        input.inputbox {
+            height: 51px;
+            border-radius: $border-radius;
+        }
+
+        .btn {
+            @extend %g-button;
+            font-size: $core-font-size - 0.4;
+            padding: 1.1rem 2.725rem;
+
+            span {
+                margin-right: $content-margin;
+            }
+        }
+    }
+
+    // Search Highlight
+    span.highlight {
+        background-color: darken($base-background, 10%);
+    }
+}

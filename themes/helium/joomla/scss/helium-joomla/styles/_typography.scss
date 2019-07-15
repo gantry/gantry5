@@ -1,0 +1,61 @@
+// Lists and Tables
+.list-striped,
+.row-striped {
+    border: 1px solid $base-border-color;
+}
+
+.list-striped li:not(:last-child),
+.list-striped dd:not(:last-child),
+.row-striped .row:not(:last-child),
+.row-striped .row-fluid:not(:last-child) {
+    border-bottom: 1px solid $base-border-color;
+}
+
+.list-striped li:nth-child(odd),
+.list-striped dd:nth-child(odd),
+.row-striped .row:nth-child(odd),
+.row-striped .row-fluid:nth-child(odd) {
+    background-color: lighten($off-white, 2%);
+}
+
+.list-bordered,
+.row-bordered {
+    border: 1px solid $base-border-color;
+}
+
+.row-even,
+.row-odd {
+    border-bottom: 1px solid $base-border-color;
+}
+
+.row-even {
+    background-color: lighten($off-white, 2%);
+}
+
+.iframe-bordered {
+    border: 1px solid $base-border-color;
+}
+
+// Blockquote and Code
+blockquote {
+    border-left: 5px solid $base-border-color;
+}
+
+blockquote small {
+    color: lighten($base-text-color, 20%);
+}
+
+blockquote.pull-right {
+    border-right: 5px solid $base-border-color;
+}
+
+code, pre {
+    background-color: $off-white;
+    border: 1px solid $base-border-color;
+}
+
+pre {
+    &.prettyprint {
+        padding: 1rem !important;
+    }
+}

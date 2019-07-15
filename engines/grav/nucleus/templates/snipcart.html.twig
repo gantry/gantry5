@@ -1,0 +1,16 @@
+{% extends 'partials/snipcart_base.html.twig' %}
+
+{% block content %}
+
+    {% include 'modular/lightslider.html.twig' with {'page': page.find('/slider', true)} %}
+
+    {{ page.content|raw }}
+
+    <div class="snipcart-categories">
+    {% for child in page.collection() %}
+        {% if (child.header.unpublished is not defined or (child.header.unpublished == false)) %}
+            {% include 'partials/snipcart_category_item.html.twig' with {'page': child, 'parent': page} %}
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+.g-offline {
+    #g-header {
+        .g-content {
+            padding: 3.5rem $content-padding;
+            text-align: center;
+
+            h2.g-title {
+                font-size: 3.5rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+
+            @include breakpoint(tablet-range) {
+                h2.g-title {
+                    font-size: 3rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            @include breakpoint(mobile-only) {
+                padding: 1rem $content-padding;
+
+                h2.g-title {
+                    font-size: 2rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    #g-footer {
+        .g-content {
+            // To Top
+            .g-totop {
+                text-align: center;
+            }
+        }
+    }
+    #grav-login {
+        max-width: 36rem;
+        .form-actions {
+            margin-top: $content-margin;
+            @include breakpoint(mobile-only) {
+                text-align: center;
+            }
+        }
+        .button {
+            text-transform: capitalize;
+            font-size: 1rem;
+            padding: 1rem 2.5rem;
+        }
+        .rememberme { 
+            @include breakpoint(mobile-only) {
+                float: none;
+                display: block;
+            }
+        }
+    }  
+}

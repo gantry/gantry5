@@ -5,6 +5,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
 
     trim          = require('mout/string/trim'),
     contains      = require('mout/array/contains');
@@ -32,7 +33,7 @@ domready(function() {
             value = trim(field.value()).replace(/\s{2,}/g, ' ').split(' ');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-icons',
             remote: parseAjaxURI(getAjaxURL('icons') + getAjaxSuffix()),
             afterClose: function() {
@@ -62,7 +63,8 @@ domready(function() {
                         });
                     }
 
-                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '"></i> <span>' + data[0] + '</span>');
+                    container.find('.g-icon-preview').html('<i class="fa ' + data.join(' ') + '" aria-hidden="true"></i> <span>' + data[0] + '</span>');
+                    container.find('[data-g-select]').disabled(container.find('[data-g-icon].active') ? null : true);
                 };
 
                 var updateTotal = function() {
@@ -131,10 +133,13 @@ domready(function() {
                 icons.forEach(function(icon) {
                     icon = $(icon);
                     html = '';
+
                     for (var i = 5, l = 0; i > l; i--) {
                         large = (!i) ? 'lg' : i + 'x';
-                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '"></i> ';
+                        html += '<i class="fa ' + icon.data('g-icon') + ' fa-' + large + '" aria-hidden="true"></i> ';
                     }
+
+                    html += '<h3>' + icon.data('g-icon') + '</h3>';
 
                     icon.popover({
                         content: html,
@@ -172,7 +177,9 @@ domready(function() {
                     }
                 });
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }
         });
     });

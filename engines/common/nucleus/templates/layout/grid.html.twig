@@ -1,4 +1,7 @@
-{% set html %}
+{% set attr_extra = segment.attributes.extra|attribute_array %}
+{% set class = 'g-grid' ~ (segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')) %}
+
+{%- set html %}
     {% if segment.children %}
         {% for segment in segments %}
             {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
@@ -6,11 +9,8 @@
     {% endif %}
 {% endset %}
 
-
-{% if html|trim %}
-    <div class="g-grid{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }}">
-      {{ html|raw }}
-    </div>
+{%- if html|trim %}
+        <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}" {% endif %}class="{{ class }}" {{- attr_extra|raw }}>
+          {{- html|raw -}}
+        </div>
 {% endif %}
-
-

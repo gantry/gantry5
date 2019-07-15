@@ -17,22 +17,116 @@ var $             = require('elements'),
 require('./dropdown-edit');
 
 ready(function() {
-    var body = $('body'),
-        warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
+    var body = $('body');
+
+    // Handles Creating new Configurations
+    body.delegate('click', '[data-g5-outline-create], [data-g5-outline-duplicate]', function(event, element) {
+        if (event) { event.preventDefault(); }
+
+        modal.open({
+            content: 'Loading',
+            method: 'post',
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.href() + getAjaxSuffix()),
+            remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
+                var title   = content.elements.content.find('[name="title"]'),
+                    confirm = content.elements.content.find('[data-g-outline-create-confirm]');
+
+                title.on('keyup', function(event) {
+                    var code = event.which;
+                    if (code === 13) {
+                        confirm.emit('click');
+                    }
+                });
+
+                confirm.on('click', function() {
+                    confirm.hideIndicator();
+                    confirm.showIndicator();
+
+                    var URI  = parseAjaxURI(confirm.data('g-outline-create-confirm') + getAjaxSuffix()),
+                        from    = content.elements.content.find('[name="from"]:checked'),
+                        preset  = content.elements.content.find('[name="preset"]'),
+                        outline = content.elements.content.find('[name="outline"]'),
+                        inherit = content.elements.content.find('[name="inherit"]'),
+                        data = {
+                            title: title.value(),
+                            from: from ? from.value() : null,
+                            preset: preset ? preset.value() : null,
+                            outline: outline ? outline.value() : null,
+                            inherit: inherit.checked() ? 1 : 0
+                        };
+
+                    ['title', 'from', 'preset', 'outline'].forEach(function(key) {
+                        if (!data[key]) { delete data[key]; }
+                    });
+
+                    request('post', URI, data, function(error, response) {
+                        confirm.hideIndicator();
+
+                        if (!response.body.success) {
+                            modal.open({
+                                content: response.body.html || response.body,
+                                afterOpen: function(container) {
+                                    if (!response.body.html) { container.style({ width: '90%' }); }
+                                }
+                            });
+                        } else {
+                            var base    = $('#configurations').find('ul').find('li'),
+                                outline = zen('li').attribute('class', base.attribute('class'));
+
+                            outline.after(base).html(response.body.outline);
+
+                            toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
+
+                            attachEditables(outline.find('[data-title-editable]'));
+                            modal.close();
+                        }
+
+                    });
+                });
+
+                setTimeout(function() {
+                    title[0].focus();
+                }, 5);
+            }
+        });
+    });
+
+    // Handles Preset / Outline switcher in Outline creation
+    body.delegate('change', 'input[type="radio"]#from-preset, input[type="radio"]#from-outline', function(event, element) {
+        element = $(element);
+        var value    = element.value(),
+            elements = element.parent('.card').search('.g-create-from');
+
+        var filtered = elements.style('display', 'none').filter(function(block) {
+            block = $(block);
+            return block.hasClass('g-create-from-' + value);
+        });
+
+        if (filtered) {
+            $(filtered).style('display', 'block');
+        }
+    });
 
     // Handles Configurations Duplicate / Remove
-    body.delegate('click', '[data-g-config]', function(event, element) {
-        var mode = element.data('g-config'),
-            href = element.data('g-config-href'),
-            encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
-            method = (element.data('g-config-method') || 'post').toLowerCase();
+    body.delegate('click', '#configurations [data-g-config]', function(event, element) {
+        var mode        = element.data('g-config'),
+            href        = element.data('g-config-href'),
+            hrefConfirm = element.data('g-config-href-confirm'),
+            encode      = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
+            method      = (element.data('g-config-method') || 'post').toLowerCase();
 
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (mode == 'delete' && !flags.get('free:to:delete:' + encode, false)) {
             // confirm before proceeding
             flags.warning({
-                url: warningURL,
+                url: parseAjaxURI(href + getAjaxSuffix()),
                 callback: function(response, content) {
                     var confirm = content.find('[data-g-delete-confirm]'),
                         cancel  = content.find('[data-g-delete-cancel]');
@@ -68,7 +162,7 @@ ready(function() {
         element.hideIndicator();
         element.showIndicator();
 
-        request(method, parseAjaxURI(href + getAjaxSuffix()), {}, function(error, response) {
+        request(method, parseAjaxURI((hrefConfirm || href) + getAjaxSuffix()), {}, function(error, response) {
             if (!response.body.success) {
                 modal.open({
                     content: response.body.html || response.body,
@@ -77,10 +171,10 @@ ready(function() {
                     }
                 });
             } else {
-                var confSelector = $('#configuration-selector'),
+                var confSelector   = $('#configuration-selector'),
                     currentOutline = confSelector.value(),
                     outlineDeleted = response.body.outline,
-                    reload = $('[href="' + getAjaxURL('configurations') + '"]');
+                    reload         = $('[href="' + getAjaxURL('configurations') + '"]');
 
                 // if the current outline is the one that's been deleted,
                 // fallback to default
@@ -93,7 +187,7 @@ ready(function() {
 
                 if (!reload) { window.location = window.location; }
                 else {
-                    body.emit('click', {target: reload});
+                    body.emit('click', { target: reload });
                 }
 
                 toastr.success(response.body.html || 'Action successfully completed.', response.body.title || '');
@@ -108,13 +202,13 @@ ready(function() {
     });
 
     // Handles Configurations Titles Rename
-    var updateTitle = function(title, original, wasCanceled) {
+    var updateTitle     = function(title, original, wasCanceled) {
             this.style('text-overflow', 'ellipsis');
             if (wasCanceled || title == original) { return; }
             var element = this,
-                href = element.data('g-config-href'),
-                method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                href    = element.data('g-config-href'),
+                method  = (element.data('g-config-method') || 'post').toLowerCase(),
+                parent  = element.parent();
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
@@ -130,11 +224,11 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    element.parent('h4').data('title', title);
+                    element.data('title', title).data('tip', title);
 
                     // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.outline),
-                        id = dummy.find('h4 span:last-child'),
+                    var dummy   = zen('div').html(response.body.outline),
+                        id      = dummy.find('h4 span:last-child'),
                         actions = dummy.find('.outline-actions');
 
                     element.parent('.card').find('h4 span:last-child').html(id.html());
@@ -151,7 +245,7 @@ ready(function() {
             editables.forEach(function(editable) {
                 editable = $(editable);
                 editable.confWasAttached = true;
-                editable.on('title-edit-start', function(){
+                editable.on('title-edit-start', function() {
                     editable.style('text-overflow', 'inherit');
                 });
                 editable.on('title-edit-end', updateTitle);

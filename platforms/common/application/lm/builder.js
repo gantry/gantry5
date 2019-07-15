@@ -10,7 +10,7 @@ var forOwn     = require('mout/object/forOwn'),
     size       = require('mout/collection/size'),
     isArray    = require('mout/lang/isArray'),
     flatten    = require('mout/array/flatten'),
-    guid       = require('mout/random/guid'),
+    ID         = require('./id'),
 
     set        = require('mout/object/set'),
     unset      = require('mout/object/unset'),
@@ -112,6 +112,7 @@ var Builder = new prime({
                 subtype: subtype,
                 title: get(this.map, id) ? get(this.map, id).getTitle() : 'Untitled',
                 attributes: get(this.map, id) ? get(this.map, id).getAttributes() : {},
+                inherit: get(this.map, id) ? get(this.map, id).getInheritance() : {},
                 children: children
             };
 
@@ -139,6 +140,7 @@ var Builder = new prime({
         var Element = new (Blocks[value.type] || Blocks['section'])(deepFillIn({
             id: key,
             attributes: {},
+            inherit: {},
             subtype: value.subtype || false,
             builder: this
         }, omit(value, 'children')));
@@ -208,7 +210,7 @@ var Builder = new prime({
         forEach(data, function(value/*, key, object*/) {
 
             if (!value.id) {
-                value.id = guid();
+                value.id = ID({ builder: { map: this.map }, type: value.type, subtype: value.subtype });
             }
 
             // debug (flat view of the structure)

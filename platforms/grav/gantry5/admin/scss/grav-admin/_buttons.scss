@@ -1,0 +1,58 @@
+@mixin button-color($color, $text: $white) {
+    background: $color;
+    color: $text;
+    &:not(.disabled):not([disabled]):hover, &:focus {
+        background: darken($color, 6%);
+        color: $text;
+    }
+}
+
+#admin-main #g5-container {
+    .button {
+        @include button-color($button-bg, $white);
+    }
+
+    button.disabled, .button[disabled],
+    button.disabled:focus, .button[disabled]:focus {
+        background: darken(#f0f0f0, 10%);
+        color: $white;
+        cursor: default;
+        &:active {
+            margin: 0;
+        }
+    }
+
+    .button-simple {
+        @include button-color(#eee, #a2a2a2);
+
+        &.collection-addnew, &.collection-editall {
+            padding: 0 8px 6px;
+        }
+    }
+
+    .button-primary {
+        @include button-color($core-accent);
+    }
+
+    .button-secondary {
+        @include button-color($secondary-text);
+    }
+
+    .button.red {
+        @include button-color($red);
+    }
+
+    .button.yellow {
+        @include button-color($yellow, darken($yellow, 40%));
+    }
+
+    .input-group-btn {
+        .button {
+            @include button-color(#f6f6f6, $core-text);
+        }
+    }
+
+	.button-primary {
+	    @include button-color($core-accent);
+	}
+}

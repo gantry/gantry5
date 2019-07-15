@@ -1,0 +1,34 @@
+{% extends 'forms/fields/select/selectize.html.twig' %}
+
+{% block options %}
+    {{ parent() }}
+    {% if not field.filter or 'default' in field.filter %}
+        <optgroup label="{{ 'GANTRY5_PLATFORM_GLOBAL_DEFAULTS'|trans }}">
+        <option value="default"{% if 'default' == value %} selected="selected"{% endif %}>
+            {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
+        </option>
+    </optgroup>
+    {% endif %}
+
+    {% set user_conf = gantry.outlines.user.filter(field.filter) %}
+    {% if user_conf.count %}
+    <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
+        {% for name, title in user_conf %}
+            <option value="{{ name }}"{% if name == value %} selected="selected"{% endif %}>
+                {{ title }}
+            </option>
+        {% endfor %}
+    </optgroup>
+    {% endif %}
+
+    {% set system_conf = gantry.outlines.system.filter(field.filter) %}
+    {% if system_conf.count %}
+    <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
+        {% for name, title in system_conf %}
+            <option value="{{ name }}"{% if name == value %} selected="selected"{% endif %}>
+                {{ title }}
+            </option>
+        {% endfor %}
+    </optgroup>
+    {% endif %}
+{% endblock %}

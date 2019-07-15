@@ -2,11 +2,12 @@
 defined('ABSPATH') or die;
 
 add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
-add_action( 'admin_init', 'gantry5_register_admin_settings' );
-add_filter( 'plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
-add_filter( 'network_admin_plugin_action_links', 'gantry5_modify_plugin_action_links', 10, 2 );
 add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
 add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
+add_filter( 'upgrader_package_options', 'gantry5_upgrader_package_options', 10000 );
+add_filter( 'upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4 );
+add_action( 'upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3 );
+
 
 // Check if Timber is active before displaying sidebar button
 if ( class_exists( 'Timber' ) ) {
@@ -27,7 +28,6 @@ if ( class_exists( 'Timber' ) ) {
             $theme = $gantry['theme']->details()['details.name'];
             remove_submenu_page( 'themes.php', 'theme-editor.php' );
             add_menu_page( $theme . ' Theme', $theme . ' Theme', 'manage_options', 'layout-manager', 'gantry5_layout_manager' );
-            add_submenu_page( null, 'Gantry 5 Settings', 'Gantry 5 Settings', 'manage_options', 'g5-settings', 'gantry5_plugin_settings' );
         },
         100
     );
@@ -39,7 +39,7 @@ function gantry5_admin_start_buffer() {
 }
 
 function gantry5_admin_scripts() {
-    if( isset( $_GET['page'] ) && $_GET['page'] == 'layout-manager' ) {
+    if( isset( $_GET['page'] ) && $_GET['page'] === 'layout-manager' ) {
         gantry5_layout_manager();
     }
 }
@@ -83,99 +83,62 @@ function gantry5_layout_manager() {
     }
 }
 
-function gantry5_modify_plugin_action_links( $links, $file ) {
-    // Return normal links if not Gantry 5
-    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file ) {
-        return $links;
+// SimpleXmlElement is a weird class that acts like a boolean, we are going to take advantage from that.
+class Gantry5Truthy extends SimpleXmlElement { }
+
+function gantry5_upgrader_package_options($options) {
+    if (isset($options['hook_extra']['type']) && !$options['clear_destination']) {
+        if ($options['hook_extra']['type'] === 'theme' && $options['abort_if_destination_exists']) {
+            // Prepare for manual theme upgrade.
+            $options['abort_if_destination_exists'] = new Gantry5Truthy('<bool><true></true></bool>');
+            $options['hook_extra']['gantry5_abort'] = $options['abort_if_destination_exists'];
+        } elseif ($options['hook_extra']['type'] === 'plugin' && strstr(basename($options['package']), 'gantry5')) {
+            // Allow Gantry plugin to be manually upgraded / downgraded.
+            $options['clear_destination'] = true;
+        }
     }
 
-    // Add a few links to the existing links array
-    return array_merge( $links, array(
-        'settings' => '<a href="' . esc_url( add_query_arg( [ 'page' => 'g5-settings' ] ) ) . '">' . esc_html__( 'Settings', 'gantry5' ) . '</a>'
-    ) );
-
+    return $options;
 }
 
-function gantry5_register_admin_settings() {
-    register_setting( 'gantry5_plugin_options', 'gantry5_plugin' );
-}
-
-function gantry5_plugin_settings() {
-    $option = get_option( 'gantry5_plugin' );
-
-    if( isset( $_GET[ 'settings-updated' ] ) && $_GET[ 'settings-updated' ] == 'true' ) {
-        echo '<div id="message" class="updated fade"><p>' . __( 'Gantry 5 plugin settings saved.', 'gantry5' ) . '</p></div>';
+function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $options = []) {
+    if (isset($options['gantry5_abort'])) {
+        // Allow upgrading Gantry themes from uploader.
+        if (file_exists($source . '/gantry/theme.yaml')) {
+            $upgrader->skin->feedback('Gantry 5 theme detected.');
+            unset($options['gantry5_abort']->true);
+        }
     }
 
-    ?>
-
-    <div id="g5-options-main">
-        <div class="wrap">
-            <form method="post" action="options.php">
-                <?php settings_fields( 'gantry5_plugin_options' ); ?>
-
-                <h1 class="available-options"><?php _e( 'Gantry 5 Settings', 'gantry5' ); ?></h1>
-
-                <table class="form-table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <label for="production1"><?php _e( 'Production Mode', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="production1" type="radio" <?php checked( $option[ 'production' ], '1' ); ?> value="1" name="gantry5_plugin[production]"/>
-                                <label for="production1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
-                                <input id="production2" class="second" type="radio" <?php checked( $option['production'], '0' ); ?> value="0" name="gantry5_plugin[production]"/>
-                                <label for="production2"><?php _e( 'Disable', 'gantry5' ); ?></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="debug1"><?php _e( 'Debug Mode', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="debug1" type="radio" <?php checked( $option[ 'debug' ], '1' ); ?> value="1" name="gantry5_plugin[debug]"/>
-                                <label for="debug1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
-                                <input id="debug2" class="second" type="radio" <?php checked( $option['debug'], '0' ); ?> value="0" name="gantry5_plugin[debug]"/>
-                                <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="offline1"><?php _e( 'Offline Mode', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="offline1" type="radio" <?php checked( $option[ 'offline' ], '1' ); ?> value="1" name="gantry5_plugin[offline]"/>
-                                <label for="offline1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
-                                <input id="offline2" class="second" type="radio" <?php checked( $option['offline'], '0' ); ?> value="0" name="gantry5_plugin[offline]"/>
-                                <label for="offline2"><?php _e( 'Disable', 'gantry5' ); ?></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="offline_message"><?php _e( 'Offline Message', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="offline_message" type="text" value="<?php echo $option[ 'offline_message' ]; ?>" class="regular-text" name="gantry5_plugin[offline_message]" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="cache_path"><?php _e( 'Cache Path', 'gantry5' ); ?></label>
-                            </th>
-                            <td>
-                                <input id="cache_path" type="text" value="<?php echo $option[ 'cache_path' ]; ?>" placeholder="<?php echo WP_CONTENT_DIR; ?>/cache/gantry5" class="regular-text" name="gantry5_plugin[cache_path]" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <p class="submit">
-                    <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Save Changes' ); ?>" />
-                </p>
-            </form>
-        </div>
-    </div>
-
-<?php
+    return $source;
 }
+
+function gantry5_upgrader_post_install($success, $options, $result) {
+    if ($success) {
+        $theme = isset($options['gantry5_abort']) && !$options['gantry5_abort'];
+        $plugin = (isset($options['plugin']) && $options['plugin'] === 'gantry5/gantry5.php')
+            || (isset($options['type']) && $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5');
+
+        // Clear gantry cache after plugin / Gantry theme installs.
+        if ($theme || $plugin) {
+            global $wp_filesystem;
+
+            $gantry = \Gantry\Framework\Gantry::instance();
+            $path = $gantry['platform']->getCachePath();
+            if ($wp_filesystem->is_dir($path)) {
+                $wp_filesystem->rmdir($path, true);
+            }
+
+            // Make sure that PHP has the latest data of the files.
+            clearstatcache();
+
+            // Remove all compiled files from opcode cache.
+            if (function_exists('opcache_reset')) {
+                @opcache_reset();
+            } elseif (function_exists('apc_clear_cache')) {
+                @apc_clear_cache();
+            }
+        }
+    }
+}
+

@@ -12,13 +12,11 @@ form:
       key_placeholder: og:title, og:site_name, twitter:site
       value_placeholder: Value
       default:
-        -
-          'viewport': 'width=device-width, initial-scale=1.0'
 
     head_bottom:
       type: textarea.textarea
       label: Custom Content
-      description: Anything in this field will be appended to the <head>
+      description: Anything in this field will be appended to the head tag
 
     atoms:
       type: input.hidden

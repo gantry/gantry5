@@ -71,8 +71,15 @@
     .g-instancepicker-title {
         margin-right: 0.5rem;
         font-style: italic;
+        vertical-align: middle;
+        display: inline-block;
         &:empty {
             margin: 0;
+        }
+
+        + .button {
+            display: inline-block;
+            vertical-align: middle;
         }
     }
 
@@ -130,7 +137,7 @@
             vertical-align: middle;
             padding-left: 4px; // 4px is the display: inline-block gap
         }
-        
+
         textarea + .g-reset-field {
             vertical-align: top;
         }
@@ -147,6 +154,10 @@
     .settings-param-title {
         max-width: 175px;
         margin: 5px;
+
+        .particle-label-subtype {
+            margin-left: 0;
+        }
     }
 
 
@@ -156,6 +167,7 @@
 
     .fa {
         width: 1rem;
+        vertical-align: middle;
         text-align: center;
     }
 
@@ -171,7 +183,7 @@
         height: auto;
         max-width: 100%;
         font-size: $core-font-size;
-        line-height: $core-line-height;
+        line-height: $core-line-height + 0.1;
         border-radius: $core-border-radius;
         vertical-align: middle;
 
@@ -180,7 +192,7 @@
         }
     }
 
-    .colorpicker {
+    .g-colorpicker {
         input {
             &:focus {
                 border-color: $medium-gray;
@@ -194,7 +206,7 @@
         height: 38px;
     }
 
-    input:not(.settings-param-toggle):not([type="checkbox"]), select, .collection-list ul, .colorpicker, .multi.selectize-control {
+    input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), select, .collection-list ul, .g-colorpicker, .g-multi.g-selectize-control {
         width: 250px;
         @include breakpoint(no-desktop) {
             width: 100%;
@@ -209,7 +221,7 @@
     .input-group {
         &.append, &.prepend {
             input {
-                width: 210px;
+                width: 210px !important;
                 @include breakpoint(tablet-range) {
                     width: 100% !important;
                 }
@@ -220,7 +232,7 @@
         }
     }
 
-    .selectize-control.single {
+    .g-selectize-control.g-single {
         width: 250px !important;
         @include breakpoint(tablet-range) {
             width: 100% !important;
@@ -242,7 +254,8 @@
             position: absolute;
             right: 10px;
             top: 50%;
-            margin-top: -12px;
+            transform: translateY(-50%);
+            margin-top: -2px;
         }
     }
 }
@@ -261,21 +274,28 @@
 
     .search, input, .button {
         font-size: 0.85rem;
+        display: inline-block;
     }
 }
 
 .g-filters-bar {
-    label {
+    label, a {
         @extend .font-small;
         display: inline-block;
-        margin: 0 0 0 1rem;
+        margin: 0 0 0 0.5rem;
         border-left: 1px solid $medium-gray;
-        line-height: 30px;
-        padding-left: 1rem;
+        padding-left: 0.5rem;
+        line-height: 1;
+        // line-height: 30px;
 
         input {
             display: inline-block;
         }
+    }
+
+    label {
+        padding-left: 0;
+        border: 0;
     }
 }
 
@@ -353,9 +373,14 @@
     }
 }
 
+.g5-collection-wrapper {
+    max-height: 350px;
+    overflow: auto;
+}
+
 .collection-list .settings-param-field {
     ul:not(.collection-sorting) li {
-        &:hover [data-title-edit], &:hover [data-collection-remove] {
+        &:hover [data-title-edit], &:hover [data-collection-remove], &:hover [data-collection-duplicate] {
             color: $dark-gray;
             opacity: 1;
         }
@@ -373,7 +398,7 @@
         padding: 0.3rem 0.4rem;
     }
 
-    [data-title-edit], [data-collection-remove] {
+    [data-title-edit], [data-collection-remove], [data-collection-duplicate] {
         cursor: pointer;
         color: lighten($dark-gray, 40%);
         //float: right;

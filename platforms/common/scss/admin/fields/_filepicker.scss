@@ -1,0 +1,433 @@
+#g5-container {
+    .g-filepicker {
+        > *:not(div), label {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        > .fa {
+            cursor: pointer;
+        }
+    }
+
+    .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content {
+        width: 80vw;
+        @include transform(translateZ(0));
+
+        .g-particles-header {
+            input, label, select {
+                font-size: 0.8em;
+            }
+
+            .files-mode {
+                .file-mode {
+                    display: inline-block;
+                    padding: 6px 8px;
+                    background-color: #ddd;
+                    color: #999;
+                    margin-left: -4px;
+                    cursor: pointer;
+
+                    &.active {
+                        background-color: $core-accent;
+                        color: lighten($core-accent, 50%);
+                    }
+
+                    &:first-child {
+                        border-radius: $core-border-radius 0 0 $core-border-radius;
+                    }
+
+                    &:last-child {
+                        border-radius: 0 $core-border-radius $core-border-radius 0;
+                    }
+                }
+            }
+        }
+
+        .g-bookmarks, [data-file] {
+            @extend %list-reset;
+        }
+
+        .g-bookmarks {
+
+            .g-bookmark {
+                font-family: "Monaco", "Courier New", Courier, monospace;
+                font-size: 0.8em;
+
+                .g-bookmark-title {
+                    width: 100%;
+                    background: darken($light-gray, 2); //#e9e9e9;
+                    display: block;
+                    border-radius: 3px;
+                    color: lighten($dark-gray, 20); //#888;
+                    margin-top: 1rem;
+                    padding: 4px 16px 4px 4px;
+                    white-space: pre;
+                    position: relative;
+                    @include ellipsis();
+
+                    .g-bookmark-collapse {
+                        position: absolute;
+                        right: 2px;
+                        top: 0;
+                        bottom: 0;
+                        line-height: 2.2em;
+                        cursor: pointer;
+                    }
+                }
+
+                &.collapsed {
+                    .g-bookmark-collapse::before {
+                        content: "\f067";
+                    }
+                }
+
+                &:first-child span {
+                    margin-top: 0;
+                }
+
+                .fa-ul {
+                    margin-left: 1.14285714em;
+                    > li {
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $secondary-accent;
+                        }
+
+                        &.active > .fa.fa-folder-o::before {
+                            content: "\f115";
+                        }
+
+                        .path {
+                            @include ellipsis();
+                        }
+                    }
+                }
+            }
+        }
+
+        .g-particles-footer {
+            .footer-upload-info {
+                line-height: 1.1rem;
+            }
+
+            code {
+                font-size: 0.70rem;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+
+        .g-folders {
+            margin: 0;
+            padding-left: 2.14285714em;
+        }
+
+        .g-files, .folders {
+            height: 65vh;
+            overflow: auto;
+        }
+
+        .g-files {
+            > ul {
+                margin: 6px 0;
+                list-style: none;
+            }
+
+            li {
+                vertical-align: middle;
+                position: relative;
+                @include transition(transform 0.2s ease-out);
+                @extend .font-small;
+
+                .g-file-delete, .g-file-preview {
+                    position: absolute;
+                    z-index: 2;
+                    background-color: $red;
+                    border-radius: 16px;
+                    color: $white;
+                    right: 2px;
+                    top: 2px;
+                    line-height: 1rem;
+                    padding: 2px;
+                    opacity: 0;
+                    cursor: pointer;
+                }
+
+                .g-file-preview {
+                    right: inherit;
+                    left: 2px;
+                    background-color: $blue;
+                }
+
+                &.g-file-deleted {
+                    @include transform(scale(0));
+                }
+
+                > span {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+                &:hover .g-file-delete, &:hover .g-file-preview {
+                    opacity: 1;
+                }
+            }
+
+            .g-list-labels {
+                display: none;
+            }
+
+            .g-file-error {
+                i {
+                    font-size: 1rem;
+                }
+            }
+
+            .g-file-name {
+                font-size: 0.7rem;
+                margin: 0.5em -6px 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            &.g-filemode-thumbnails {
+                $max-width: 150px;
+                li {
+                    display: inline-block;
+                    max-width: $max-width;
+                    text-align: center;
+                    margin: 12px 15px;
+                    cursor: pointer;
+
+                    .g-thumb {
+                        background-color: $white;
+                        width: $max-width;
+                        height: $max-width;
+                        line-height: $max-width;
+                        text-transform: uppercase;
+                        font-size: 0.8em;
+                        border-radius: $core-border-radius;
+
+                        &.g-image {
+                            @extend %g-transparent-bg;
+                            position: relative;
+                            float: left;
+                            width: $max-width;
+                            height: $max-width;
+                            background-position: 50% 50%;
+                            //background-repeat: no-repeat;
+                            //background-size: cover;
+
+                            /*&.g-image-png, &.g-image-gif, &.g-image-ico, &.g-image-svg {
+                                background-size: inherit;
+                                background-repeat: repeat;
+                            }*/
+
+                            > div {
+                                background-position: 50% 50%;
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                border-radius: $core-border-radius;
+                            }
+                        }
+                    }
+
+                    .g-file-name {
+                        max-width: $max-width;
+                    }
+
+                    .g-file-size, .g-file-mtime {
+                        display: none;
+
+                        strong, b {
+                            color: inherit !important;
+                            font-weight: inherit !important;
+                        }
+                    }
+
+                    .g-file-progress {
+                        display: none;
+                        position: absolute;
+                        left: 50%;
+                        top: 45%;
+                        padding: 4px;
+                        background-color: rgba(255, 255, 255, 0.5);
+                        border-radius: 50px;
+                        line-height: 1em;
+                        @include transform(translate(-50%, -50%));
+
+                        .g-file-progress-text {
+                            position: absolute;
+                            line-height: 50px;
+                            text-align: center;
+                            display: block;
+                            width: 100%;
+                            left: 0;
+
+                            i {
+                                line-height: 50px;
+                                color: $white;
+                            }
+                        }
+                    }
+
+                    &.g-file-uploading {
+                        .g-thumb {
+                            opacity: 0.1;
+                        }
+                        .g-file-progress {
+                            display: block;
+                        }
+                    }
+
+                    &.selected span:not(.g-file-delete):not(.g-file-preview) {
+                        @extend .badge;
+                        background-color: $core-accent !important;
+                        color: $white !important;
+                        padding: 0 6px !important;
+                    }
+                }
+            }
+
+            &.g-filemode-list {
+                margin-top: 0;
+                li {
+                    display: block;
+                    padding: 4px;
+
+                    > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
+                        color: #aaa;
+                        text-align: right;
+                        padding-right: 20px;
+                    }
+
+                    .g-file-preview {
+                        left: 18px;
+                        top: 18px;
+                    }
+
+                    .g-file-delete + .g-file-preview {
+                        right: 26px;
+                    }
+
+                    .g-thumb {
+                        display: inline-block;
+                        width: 50px;
+                        height: 50px;
+                        vertical-align: middle;
+                        margin-right: 5px;
+
+                        div {
+                            height: 50px;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                    }
+
+                    .g-file-thumb {
+                        width: 55px;
+                    }
+
+                    .g-file-name {
+                        margin: 0;
+                        width: 50%;
+                    }
+
+                    .g-file-size {
+                        width: 20%;
+
+                        strong, b {
+                            color: inherit !important;
+                            font-weight: inherit !important;
+                        }
+                    }
+
+                    &:nth-child(odd) {
+                        background-color: #f5f5f5;
+                    }
+
+                    &.selected {
+                        background-color: $core-accent !important;
+                        color: $white !important;
+
+                        > span:not(.g-file-name):not(.g-file-delete):not(.g-file-preview) {
+                            color: lighten($core-accent, 15%);
+                        }
+                    }
+
+                    &.g-file-uploading {
+                        .g-file-mtime, .g-file-progress-text {
+                            display: none;
+                        }
+
+                        .g-file-mtime.g-file-progress {
+                            display: block;
+                        }
+
+                        .g-file-progress {
+                            width: 20%;
+                        }
+                    }
+
+                    &.g-file-error {
+                        .g-file-progress-text {
+                            display: block !important;
+                            position: relative;
+
+                            i {
+                                position: absolute;
+                                text-align: center;
+                                left: 50%;
+                                margin-left: -2px;
+                                margin-top: 4px;
+                                color: white;
+                                font-size: 0.8rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.g-filemode-list .g-list-labels {
+                margin: 0 0 -6px;
+                display: block;
+
+                li {
+                    background-color: #e9e9e9;
+                    > span {
+                        color: #888;
+                    }
+                }
+            }
+
+            &.g-filemode-list, &.g-filemode-thumbnails {
+                li.no-files-found {
+                    width: 100%;
+                    max-width: inherit;
+                    margin: 0;
+                    position: absolute;
+                    margin-top: -6px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    color: #c9c9c9;
+                    text-align: center;
+                    background-color: inherit;
+                }
+            }
+        }
+    }
+
+    .g5-popover-filepicker {
+        max-width: 400px;
+        word-wrap: break-word;
+    }
+}

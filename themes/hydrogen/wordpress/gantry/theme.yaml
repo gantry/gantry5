@@ -1,8 +1,8 @@
 details:
   name: Hydrogen
-  version: "@version@"
+  version: '@version@'
   icon: paper-plane
-  date: @versiondate@
+  date: '@versiondate@'
   author:
     name: RocketTheme, LLC
     email: support@rockettheme.com
@@ -17,7 +17,7 @@ details:
   updates:
     link: http://updates.rockettheme.com/themes/hydrogen.yaml
 
-  copyright: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+  copyright: (C) 2005 - 2019 RocketTheme, LLC. All rights reserved.
   license: GPLv2
   description: Hydrogen Theme
   images:
@@ -32,7 +32,7 @@ configuration:
   theme:
     parent: hydrogen
     base: gantry-theme://common
-    file: gantry-theme://include/theme.php
+    file: gantry-theme://includes/theme.php
     class: \Gantry\Framework\Theme
     textdomain: g5_hydrogen
 
@@ -58,10 +58,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.0.*
-    engine/nucleus: 1.0.*
-    asset/font-awesome: 4.2
-    particle/menu: 1.0.*
+    gantry: 5.4.0
 
   block-variations:
     Box Variations:
@@ -103,6 +100,7 @@ admin:
     general:
       - wpautop
     blog:
+      - content
       - heading
       - featured-image
       - title
@@ -126,6 +124,7 @@ admin:
       - meta-date
       - meta-author
     archive:
+      - content
       - heading
       - featured-image
       - title

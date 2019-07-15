@@ -8,24 +8,42 @@ notifications:
   email:
     on_success: never
     on_failure: always
+  webhooks:
+      urls:
+        - https://webhooks.gitter.im/e/4205227638a80c69f2e0
+      on_success: always
+      on_failure: always
+      on_start: never
+  slack:
+      secure: cHbnVNoDkoOMPCs1lzD4u3NA0ALfQMtXQdkntADSCqgleHHuRS1SmSGU2o7lj1HkOLGNDEyIHmpeQMaZBvvVG1iq3qVHWROnIx9lV2uuXPRDB7xlFSZ71pxr2GRG2fzO5DVIye+sMsyie2A5RCQ6NHaCzO6B3Q0pss0pza3TZ8sYXbezkGoEI4NLXPKCZaQboZAA8uPsiAPg1G4KGazDYkXQ2jg5lk9Uokf51OehzbkpAYfn2f8A+ZxJ8T48LrFC8sLxl+cDWRRdRneX32WCzksoSlOhsbRsLkf8IZVWxLlX9QC1QMg8JIe6/tU98fPMZBF3ZWuSNuLVOHpMAr+/fXxqwBW7bss+vYR/bW5L7oRSyJx5tMAwR5BOcSvIUCXOs4Tq00JMELbn7oL/cesie6L3SJcuxtXPggOdRrhMfX5ehRvFETp+mAbIDtr19+JRhTkjLpMIXx7y2IrJijtCxqAavhJ2iMGzpDp343tRCTNYml/yOB23VnyWSI/43Y87pqIa93GfddbcTidSbnTO6bdiSoIRumiFYdmpX/plmH/jdOxjBeDo6uKc2+KoJgdgr7HIGdOQRdQdqoOMF8H+ZxiUmCs3000pzEsb0ugV7yNubRBboVSEKnegeDWpj04V6iQCAWZx6PHkJWRb9a7XnGyPS3f0YReh5blL9NpZYno=
 env:
   global:
     # GH_TOKEN
     - secure: "GIFHCpRBw07hm/RwDUbeh1EZS3nUCRFnsAhyeBm02a5dKbCCIrAUoI5HVjTPyFiG/UKaRo3u/7byA3ROmXgVE48Hg5n4E3+ga8zOwdRdXql7V6pwu4bII4Kr+4qFgIDkn8ca1Ut1bxKQZI/NP/FR73pZ/pst/rtw27M4Au/PZSHAtAkMF1KSqcRSfvggAtqnhh3xFTFx13XvakX7zpP1AyD1Yft4dHhhZN+BHTxQgRrl+fJLky1MAwIwOl1xOF1VH+RQDdh3yXLHMfbznTjdeE9vJCiEjnZPUgZ+aXusLj1bJoNgrRNVCCikrOMLFK854YxxzGuzRtN/6xhcB/8LeFypw8jhHNnswJ5TX8heB7i4Jbu/7OTCk5/Ew0uG6kveTtvWsAOmVZZAqSl4Z/hZowCAavXy2X1DmZpsjQ0ljxZC271a5UQpI5HF7EKVoFhzvxyxZrxlUYSSDFTOoNGauKvsZbtgz6A0eAQOpjtuWXRTYnbxsOEZFuZCuOwUU6EdDtSA0RIpxnUI3qwn26+GzGTaaxjwTQ+ZtytmHaddC3jgKZ9EfZB6yOUeXXdnI+h0coSR8lp4yjOU/ZWnA9n96+fMqwnR5zCbxJeErhI8RJFWJL1/so1k0wq3t4OixVjDGY1rJkkugD8AnIUEPgB/gfGtF5t6J4WGrpFhWzej9/c="
-    # G5_WP_REPO
-    - secure: "uDjqM6QMdeUHN6Ky+jFma2hV4prdra5WTREiK9+24xnq7cLKQiRAXuSZgYj574buD/kbSj5dMdnhpRRVHn5cv6U3I8mF9FPymu76rv9uNveQHw3Go1HFetiMuD8q3ZFsUpzFXH7JTrMq13g3K7W3EJM/uM0lSUQM+v0/NFK8pO3fgx0sIl5DPIsGB1rUVtmHir3Sz/GTTlmdOSzSIUJ5pz8Ucbf0CoqTGbDWKf0eKT5o7tJ/Ly9EmXaY4rYo0yb8VejOhxvw/Wnh/+8Xzk8sFXwI+hRd2wmRQYuG1QOJTAVg01dslKtHaglbNYTIOEXtzGtP7b+pXzgURQrkOTgWWyWiQ2Z7qONUDiHufbAqxX+nQZ2Y22a5+IptTndi5pKD+FgsQ+450+1CZSo7pUo4nU/gU/AVzVDa2H9BEVIYVpY6vjiDQp6G2k7ZRNcSi1aB9ld8C1nx8OMohw8PxfoW7PqPBFpwbGRsrurgIUKDyXaX5cdpLLKTN4VBJHMWPEz51yVEiDPpSqr83Dwt29sSegiBTA4J9XiGoHyEoYB64A8j4K4khRJP0SwjYpQN3K0x19yQitKI0ZORFPehDVjy0q69hhQp/bIQ4QbemTSKfocNEIWZCqN+u/GeyFnfABGzoNSnKRJiA/XQj2Qjja2fF0BGmxrWF66TYj8xOSWBq40="
+    # BAMBOO_SITE
+    - secure: "I35JOZgBkZvetCp+Twfeq1aXvDmNqR7N6VTsLii1d6oV4nB93qcDcgEj9wO+Ou3vqW/RnDVG6e+KJmgl+/HdFd+dVmaJJGsxRxBkUQ7Wz1y/5JGy8dodwwBp/aBxz47NCqmgO22MYA8prEo8wverwmtxJRfBXU0KChfTGzwf60P/ipqrYY4kxc6hAH1X5S9wzJN9YgkFFfo4o267mCvo40N3rvrkgZg9PRy5Ok67EIqF2xfVkESORGQIJ0flqzONz32GOsinpQtU9qQbNtABQdnjwhch51HhW5mlM0LgvcIqJcDWOG3shd49rkxHmiEm2m3UiJTL1g2bdX36lAYKi0CK6j/vfF9uXfenCBObQq40HgxRlrICK/cQcRgdm/rIELOqqIMT+b+5OAWeoDjEJxIn119ye6G9k2FNrUjkf+BeWmhiuG3nNtmgQg/UuUxDPEsaY9MKsi3Fupv0jM5/+H7FmVJFOtSyubw1kSf/v2NlD9ee2qoWFwqPsSCUa5TGPblhEtD6qFBUXMyF0IXo5qmpXFZR0bWDzdiGlvkqlsoNCAV41sPDCXQWQy4xYNmExjpjzC55FGhgN2KC8e03KedXfYIKOMr/ei0XZW/fIoL4OmSprPYky3E2hQloym1IT02Mxsao/e3xELW97aMDig0ORcr5ckbah5gnVNUg33A="
+    # BAMBOO_DEPLOY
+    - secure: "PaqUd7fcOF9zQ68E1uRbZtigh+2u7QDoczBt/WqE6F75Ja1gbGadTqwvy28JdQbBhVjqkGh7MwkEJ5DvHLGKQQjuIbDRRuV5vNoWDRugkuw2m9io7M/3Af9vys7RU2MFst7zGeD7a0xdDctgg3guk+MOHacWPMiL6KzRgPce1HmTxfejXeJpG6R5opVQSv2H97024yybQkW/7iieso9wG3saiH7RUMfjdtdo7BLhR99wS1im7bbfA5KPyUGcOl64HmFDMYE3GaxODM/gTjB3CRLSptMl6kFAAwH8EoEGxUf0tzU019iRHQOmcF5fbH+8BBe2xnI931V1AXAT/xieI1SffHzUHqYbtnF3Rc1UhEG6UOwPNLzlyz0J6j+DtwhwF/3rHCVCnilb4WhKXWeUGs4n6ijwN2oFqN9o449kLESZoyYXDJQ1N9TRqAzqRBWa3u0l+g9ylf1njKF5QIq7CziU5xgnYLp7Qi0qDeKItUmv3+KVaVKoYVI9uERlXLKdI5wWCG3BQnWnRUZqogmMcrkT/9DbmfJ93g9akMSMNpnDERj6/V+d/hdJk2rMYI1CAGvQWouPRpLOoIingtu8NdOhSO8VCzLLD+6aLHhe+i0XlgEMEL0SvQBRGhbd7DOYtc/kLbWLkY0LbhCdgbePIDwEbfXPpwOf+rGOS/zMfuc="
 before_install:
+  - rvm install 2.0.0
+  - nvm install 7
+  - nvm use 7
   - composer self-update
+  - npm config set spin false
+  - npm install -g yarn
   - if [ ! -z "$TRAVIS_TAG" ]; then
       gem install sass;
-      npm install -g gulp &>/dev/null;
+      yarn global add gulp;
     fi
 install:
   - if [ ! -z "$TRAVIS_TAG" ]; then
-      npm install &>/dev/null;
-      gulp -up &>/dev/null;
+      yarn;
+      ./node_modules/.bin/gulp -up;
     fi
-  - cd $TRAVIS_BUILD_DIR/src && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/joomla && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/wordpress && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/grav && composer install --no-dev;
+  - cd $TRAVIS_BUILD_DIR/src/platforms/prime && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev
 script:
   - export SHORT_COMMIT=$(echo $TRAVIS_COMMIT | cut -c1-9)
@@ -110,31 +128,7 @@ after_deploy:
       php build.php prod-versions -Dupdate_versions=true -Dxml.version=$TRAVIS_TAG;
       cd $TRAVIS_BUILD_DIR;
       git commit -am "Release [$TRAVIS_TAG] - Automatic Version Number Updates";
-      git push --force --quiet --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master &>/dev/null;
-    fi
-  - export WPREPO=$TRAVIS_BUILD_DIR/../wprepo
-  - if [ ! -z "$TRAVIS_TAG" ]; then
-      mkdir $WPREPO && cd $WPREPO;
-      echo "# Checking out WP Plugin";
-      svn checkout $G5_WP_REPO --no-auth-cache --non-interactive --depth empty https://plugins.svn.wordpress.org/gantry5 .;
-      echo "# Checking out Tags and Trunk";
-      svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth empty tags;
-      svn update $G5_WP_REPO --no-auth-cache --non-interactive --set-depth infinity trunk;
-      echo "# Unzipping Release into emptied Trunk";
-      unzip -o $PROJ_PKGS_PATH/wordpress-pkg_gantry5_v${TRAVIS_TAG} -d __plugin_unzip && svn delete trunk/* && cp -Rf __plugin_unzip/gantry5/* trunk && rm -rf __plugin_unzip;
-      echo "# Adding and Removing based on svn status";
-      cd $WPREPO/trunk;
-      svn add . --force;
-      svn status | grep '^?' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn add;
-      svn status | grep '^!' | awk '{print $2}' | xargs --no-run-if-empty -d '\n' svn delete --force;
-      echo "# Committing changes to Trunk";
-      svn commit $G5_WP_REPO --message "[automatic] Updated Gantry 5 to $TRAVIS_TAG";
-      echo "# Creating Tag";
-      cd $WPREPO;
-      svn copy trunk/ tags/$TRAVIS_TAG/;
-      echo "# Committing Tag";
-      cd $WPREPO/tags/$TRAVIS_TAG;
-      svn commit $G5_WP_REPO --message "[automatic] Created Gantry $TRAVIS_TAG Tag";
+      git push --force --set-upstream https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git develop:master;
     fi
   - if [ "$TRAVIS_BRANCH" == 'develop' ]; then
       curl -L http://gantry.org/cibuilds >/dev/null 2>&1;

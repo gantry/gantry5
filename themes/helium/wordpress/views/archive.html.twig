@@ -1,0 +1,58 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'archive.html.twig' %}
+{% set scope = 'archive' %}
+
+{% block content %}
+
+    <div class="platform-content">
+        <div class="archive">
+
+            {# Begin Page Header #}
+            {% if gantry.config.get('content.' ~ scope ~ '.heading.enabled', '0') %}
+                <header class="page-header">
+                    <h1>
+                        {% if gantry.config.get('content.' ~ scope ~ '.heading.text') is not empty %}
+                            {{ gantry.config.get('content.' ~ scope ~ '.heading.text') }}
+                        {% else %}
+                            {{ title }}
+                        {% endif %}
+                    </h1>
+                </header>
+            {% endif %}
+            {# End Page Header #}
+
+            {% if posts is not empty %}
+
+                {# Begin Post Entries #}
+                <section class="entries">
+                    <div class="g-grid">
+                        {% for post in posts %}
+                            <div class="g-block {% if pagination.current == 1 and 'sticky' in post.class %}size-100{% else %}{{ gantry.config.get('content.' ~ scope ~ '.content.columns')|default('size-100') }}{% endif %}">
+                                {% include ['partials/content-' ~ scope ~ '.html.twig', (post.format) ? 'partials/content-' ~ post.format ~ '.html.twig' : '', 'partials/content.html.twig'] %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {# End Post Entries #}
+
+                {# Begin Pagination #}
+                {% if pagination.pages and pagination.pages|length > 1 %}
+                    {% include 'partials/pagination.html.twig' %}
+                {% endif %}
+                {# End Pagination #}
+
+            {% else %}
+
+                {# No posts found #}
+                <div class="no-matches-notice">
+                    <h1>
+                        {{ __( 'Sorry, but there aren\'t any posts matching your query.', 'g5_helium' ) }}
+                    </h1>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

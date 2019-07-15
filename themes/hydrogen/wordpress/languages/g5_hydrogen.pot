@@ -1,4 +1,4 @@
-# Copyright (C) 2015 RocketTheme, LLC
+# Copyright (C) 2017 RocketTheme, LLC
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
@@ -24,7 +24,11 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: functions.php:26
+#: functions.php:23
+msgid "Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!"
+msgstr ""
+
+#: functions.php:44
 msgid "Error locating %s for inclusion"
 msgstr ""
 
@@ -38,10 +42,6 @@ msgstr ""
 
 #: includes/helper.php:50
 msgid "<span class=\"author-name\">%s</span>"
-msgstr ""
-
-#: includes/helper.php:53
-msgid "%1$s"
 msgstr ""
 
 #: includes/helper.php:56
@@ -166,10 +166,6 @@ msgstr ""
 
 #. views/partials/meta.html.twig
 msgid "Comment"
-msgstr ""
-
-#. views/partials/meta.html.twig
-msgid "Comments"
 msgstr ""
 
 #. views/partials/pagination.html.twig

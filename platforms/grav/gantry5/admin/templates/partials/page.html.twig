@@ -1,0 +1,25 @@
+{% assets with { priority: 10 } %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/grav-g-admin.css') }}" type="text/css" />
+    {% endblock %}
+
+    {% block javascript %}
+        <script>
+            var GANTRY_AJAX_SUFFIX = '{{ gantry.ajax_suffix|raw }}';
+            var GANTRY_AJAX_URL = '{{ gantry.route('%ajax%')|e }}';
+            var GANTRY_AJAX_CONF_URL = '{{ gantry.route('configurations/%ajax%')|e }}';
+            var GANTRY_AJAX_NONCE = '{{ gantry.ajax_nonce|raw }}';
+            var GANTRY_PLATFORM = 'grav';
+        </script>
+    {% endblock %}
+{% endassets -%}
+
+<div id="g5-container">
+    {% block content %}
+    {% endblock %}
+
+    {% block footer_section %}
+    {% endblock %}
+</div>
+
+{% do gantry.platform.finalize() %}

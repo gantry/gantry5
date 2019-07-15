@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
 use RocketTheme\Toolbox\File\JsonFile;
 
@@ -33,7 +32,7 @@ class Fontpicker extends JsonController
         $this->params['fonts'] = $this->loadGoogleFonts();
         $this->params['variantsMap'] = $this->variantsMap();
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
+            'html' => $this->render('@gantry-admin/ajax/fontpicker.html.twig', $this->params)
         ];
         return new JsonResponse($response);
     }

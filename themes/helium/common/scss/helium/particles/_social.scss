@@ -1,0 +1,10 @@
+.g-social {
+    a {
+        padding: 0.1875rem 0.4rem;
+        text-decoration: none;
+
+        @include breakpoint(tablet-range) {
+            padding: 0.1875rem 0.25rem;
+        }
+    }
+}

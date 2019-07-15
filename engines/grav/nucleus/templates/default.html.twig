@@ -1,5 +1,5 @@
-{% extends "@nucleus/page.html.twig" %}
+{% extends "partials/page.html.twig" %}
 
 {% block content %}
-    {{ content }}
+    {{ page.content|raw }}
 {% endblock %}

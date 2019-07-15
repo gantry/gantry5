@@ -41,12 +41,12 @@
 		float: none;
 		width: 100%;
 		margin-left: 0;
-		@include box-sizing(border-box);
+		box-sizing: border-box;
 	}
 	.span12,
 	.row-fluid .span12 {
 		width: 100%;
-		@include box-sizing(border-box);
+		box-sizing: border-box;
 	}
 	.row-fluid [class*="offset"]:first-child {
 		margin-left: 0;
@@ -61,7 +61,7 @@
 		display: block;
 		width: 100%;
 		min-height: 30px;
-		@include box-sizing(border-box);
+		box-sizing: border-box;
 	}
 	.input-prepend input,
 	.input-append input,
@@ -223,7 +223,7 @@
 		width: 100%;
 		min-height: 30px;
 		margin-left: 2.7624309392265194%;
-		@include box-sizing(border-box);
+		box-sizing: border-box;
 	}
 	.row-fluid [class*="span"]:first-child {
 		margin-left: 0;

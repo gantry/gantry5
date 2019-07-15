@@ -8,16 +8,30 @@
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <form method="post" action="{{ gantry.route('configurations', configuration, 'styles') }}">
         <span class="float-right">
-            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
-            <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
+            <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}"
+               title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}"
+               aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}"
+               class="button button-secondary"
+               data-ajax-action=""
+            >
+                <i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
+            </a>
+            <button type="submit" class="button button-primary button-save" data-save="Styles">
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span>
+            </button>
         </span>
 
         {% set presets = gantry.theme.presets %}
         {% if presets.count() %}
         {% set collapsed = attribute(stored_data, 'swatches') %}
-        <h2 class="page-title{{ collapsed ? ' g-collapsed-main' : '' }}" data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}" data-g-collapse-id="swatches">
+        <h2 class="page-title{{ collapsed ? ' g-collapsed-main' : '' }}"
+            data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: 'swatches', target: '~ .swatches-container' })|json_encode|e('html_attr') }}"
+            data-g-collapse-id="swatches"
+        >
             <span class="title">{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
-            <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
+            <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right" data-tip-spacing="0">
+                <i class="fa fa-fw  fa-caret-up" aria-hidden="true"></i>
+            </span>
         </h2>
 
         <div class="swatches-container{{ collapsed ? ' g-collapsed' : '' }}"{% if defaultStyles %} data-g-styles-defaults="{{ defaultStyles|json_encode|escape('html_attr') }}"{% endif %}>
@@ -30,7 +44,7 @@
                         {% set counter = 0 %}
                         <li class="g-block{{ presetKey == key ? ' g-preset-match' }}">
                             <a href="#" class="swatch" data-g-styles="{{ presets.def(key ~ '.styles.preset', key).flatten(key ~ '.styles', '][', 'styles')|json_encode|escape('html_attr') }}">
-                                <img src="{{ url(preset.image)|default(url('gantry-admin://images/placeholder.png'))|e }}" class="swatch-image" alt="{{ 'GANTRY5_PLATFORM_STYLES_APPLY'|trans }} {{ preset.description }}"/>
+                                <img src="{{ url(preset.image)|default(url('gantry-admin://images/placeholder.png')) }}" class="swatch-image" alt="{{ 'GANTRY5_PLATFORM_STYLES_APPLY'|trans }} {{ preset.description|trans|raw }}"/>
                                 {% if preset.colors|length %}
                                     {% set stop = (100 / preset.colors|length)|number_format(3, '.') %}
                                     <span class="swatch-colors"
@@ -42,10 +56,10 @@
                             {%- endfor %})">
                     </span>
                                 {% endif %}
-                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description }}"><i class="fa fa-fw fa-eye"></i></button>
-                                <span class="swatch-matched"><i class="fa fa-fw fa-star"></i></span>
+                                <button class="swatch-preview" aria-label="{{ 'GANTRY5_PLATFORM_STYLES_PREVIEW'|trans }} {{ preset.description|trans|raw }}"><i class="fa fa-fw fa-eye" aria-hidden="true"></i></button>
+                                <span class="swatch-matched"><i class="fa fa-fw fa-star" aria-hidden="true"></i></span>
                             </a>
-                            <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star"></i></span> {{ preset.description }}</span>
+                            <span class="swatch-description"><span class="swatch-title-matched"><i class="fa fa-fw fa-star" aria-hidden="true"></i></span> {{ preset.description|trans|raw }}</span>
                         </li>
                     {% endfor %}
                 </ul>
@@ -55,32 +69,35 @@
         <input type="hidden" name="styles[preset]" value="{{ presetKey }}" />
         {% endif %}
 
-        {% for group, list in blocks %}
+        {% for group, list in blocks if (group != 'hidden') %}
         <h2>{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_STYLES'|trans }}</h2>
 
         <div class="g-filter-actions">
             <div class="g-panel-filters" data-g-global-filter="">
                 <div class="search settings-block">
                     <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
-                    <i class="fa fa-fw fa-search"></i>
+                    <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                 </div>
-                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
             </div>
         </div>
 
         <div id="styles" class="cards-wrapper g-grid">
 
             {% for id, block in list %}
+                {% set block = gantry.styles.getBlueprintForm(id) %}
                 {% set prefix = 'styles.' ~ id ~ '.' %}
                 {% set collapsed = block.form.collapsed or attribute(stored_data, prefix) %}
                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                     <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}">
-                        <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
+                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right">
+                            <i class="fa fa-fw fa-caret-up" aria-hidden="true"></i>
+                        </span>
                         <span class="g-title">{{ block.name }}</span>
                     </h4>
                     <div class="inner-params">
-                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': block.form, 'data': gantry.config} %}
+                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': block.form, 'data': data} %}
                     </div>
                 </div>
             {% endfor %}
@@ -89,8 +106,16 @@
 
         <div class="g-footer-actions">
             <span class="float-right">
-                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}" role="button" title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}" class="button button-secondary" data-ajax-action><i class="fa fa-fw fa-tasks"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span></a>
-                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
+                <a href="{{ gantry.route('configurations', configuration, 'styles/compile') }}"
+                   role="button"
+                   title="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}"
+                   aria-label="{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}"
+                   class="button button-secondary"
+                   data-ajax-action=""
+                >
+                    <i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_RECOMPILE_CSS'|trans }}</span>
+                </a>
+                <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_STYLES'|trans }}"><i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_STYLES'|trans }}</span></button>
             </span>
         </div>
     </form>

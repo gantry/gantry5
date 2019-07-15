@@ -1,0 +1,56 @@
+#g5-container {
+	h1, h2, h3, h4, h5, h6 {
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	h1, h2 {
+		margin: 0.5rem 0 1.5rem !important;
+	}
+
+	.page-title {
+        color: inherit;
+        text-shadow: none;
+        line-height: inherit;
+    }
+
+	.g-optgroup-header {
+		font-size: 0.75em;
+	}
+
+	.alert {
+		margin: ($content-padding / 2) 0 !important;
+		padding: 1rem;
+
+		p {
+			padding: 0;
+			margin: 1rem 0;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	a {
+		color: $grav-link-color;
+		&:hover {
+			color: $grav-link-hover;
+		}
+	}
+}
+
+.notice.alert {
+	border-radius: 0;
+	border: 0;
+}
+
+#messages .alert {
+	border: inherit;
+	border-radius: inherit;
+	margin-bottom: 0;
+}

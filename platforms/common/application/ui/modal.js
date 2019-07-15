@@ -21,17 +21,6 @@ var prime    = require('prime'),
 
 var animationEndSupport = false;
 
-domready(function() {
-    var style = (document.body || document.documentElement).style;
-
-    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
-        if (animationEndSupport) {
-            return;
-        }
-        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
-    });
-});
-
 var Modal = new prime({
     mixin: [Bound, Options],
 
@@ -260,6 +249,22 @@ var Modal = new prime({
         }));
     },
 
+    getLast: function() {
+        var ids, id;
+
+        ids = map(this.getAll(), function(element) {
+            element = $(element);
+
+            return storage.get(element).dialog.id;
+        });
+
+        if (!ids.length) {
+            return false;
+        }
+
+        return Math.max.apply(Math, ids);
+    },
+
     close: function(id) {
         if (!id) {
             var element = $(last(this.getAll()));
@@ -334,19 +339,11 @@ var Modal = new prime({
     },
 
     closeByEscape: function() {
-        var ids, id;
+        var id = this.getLast();
 
-        ids = map(this.getAll(), function(element) {
-            element = $(element);
-
-            return storage.get(element).dialog.id;
-        });
-
-        if (!ids.length) {
+        if (id === false) {
             return false;
         }
-
-        id = Math.max.apply(Math, ids);
 
         var element = this.getByID(id);
 
@@ -356,6 +353,23 @@ var Modal = new prime({
 
         return this.closeByID(id);
 
+    },
+
+    enableCloseByOverlay: function() {
+        var id = this.getLast();
+
+        if (id === false) {
+            return false;
+        }
+
+        var elements = storage.get(this.getByID(id)).dialog.elements;
+
+        elements.container.on('click', bind(this._overlayClick, this, elements.container[0]));
+        elements.overlay.on('click', bind(this._overlayClick, this, elements.overlay[0]));
+
+        elements.content.on('click', function(/*e*/){
+            return true;
+        });
     },
 
     showLoading: function() {
@@ -380,6 +394,17 @@ var Modal = new prime({
     _closeButtonClick: function(element) {
         return this.close(storage.get($(element)).dialog.id);
     }
+});
+
+domready(function() {
+    var style = (document.body || document.documentElement).style;
+
+    forEach(['animation', 'WebkitAnimation', 'MozAnimation', 'MsAnimation', 'OAnimation'], function(animation, index) {
+        if (animationEndSupport) {
+            return;
+        }
+        animationEndSupport = style[animation] !== undefined ? Modal.prototype.animationEndEvent[index] : false;
+    });
 });
 
 var modal = new Modal();

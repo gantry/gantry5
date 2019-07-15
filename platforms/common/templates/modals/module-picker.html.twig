@@ -9,23 +9,35 @@ module.[id | title | position | enabled | access]
         </h4>
         <div class="inner-params">
             <div class="g5-mm-modules-picker menu-editor-modules">
-                <div class="search">
+                <div class="search settings-block">
                     <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_SEARCH_ELI'|trans }}" />
-                    <i class="fa fa-search"></i>
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
                 <div class="modules-wrapper">
                     <ul>
                         {% for module in gantry.platform.listModules %}
                         <li data-mm-module="{{ module.id }}" data-mm-type="module">
                             <span class="module-infos">
-                                <span class="g-tooltip g-tooltip-right g-tooltip-bottom" data-title="{{ (module.enabled ? 'Published' : 'Unpublished') ~ ' / ' ~ module.access }}"><i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}"></i></span>
+                                <span data-title="{{ (module.enabled ? 'GANTRY5_PLATFORM_PUBLISHED'|trans : 'GANTRY5_PLATFORM_UNPUBLISHED'|trans) ~ ' / ' ~ module.access }}"
+                                      data-tip="{{ (module.enabled ? 'GANTRY5_PLATFORM_PUBLISHED'|trans : 'GANTRY5_PLATFORM_UNPUBLISHED'|trans) ~ ' / ' ~ module.access }}"
+                                      data-tip-place="top-left"
+                                >
+                                    <i class="fa fa-fw fa-{{ module.enabled ? 'toggle-on' : 'toggle-off' }}" aria-hidden="true"></i>
+                                </span>
                             </span>
                             <span class="module-wrapper">
-                                <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title|e }}">
+                                <span class="title" data-mm-title="{{ module.title }}" data-mm-filter="{{ module.title }}">
                                     {{ module.title }}
                                 </span>
-                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none')|e }}"><strong>{{ 'GANTRY5_PLATFORM_TYPE'|trans }}</strong>: {{ module.module|default('none') }}</span>
-                                <span class="sub-title font-small"><strong>{{ 'GANTRY5_PLATFORM_POSITION'|trans }}</strong>: {{ module.position|default('none') }}</span>
+                                <span class="sub-title font-small">
+                                    <strong>{{ 'GANTRY5_PLATFORM_ID_UPPER'|trans }}</strong>: {{ module.id|default('unknown') }}
+                                </span>
+                                <span class="sub-title font-small" data-mm-filter="{{ module.module|default('none') }}">
+                                    <strong>{{ 'GANTRY5_PLATFORM_TYPE'|trans }}</strong>: {{ module.module|default('none') }}
+                                </span>
+                                <span class="sub-title font-small">
+                                    <strong>{{ 'GANTRY5_PLATFORM_POSITION'|trans }}</strong>: {{ module.position|default('none') }}
+                                </span>
                             </span>
                         </li>
                         {% endfor %}

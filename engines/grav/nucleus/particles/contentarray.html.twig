@@ -1,0 +1,180 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set attr_extra = particle.extra|attribute_array %}
+{% set article_settings = particle.article %}
+{% set filter = article_settings.filter %}
+{% set sort = article_settings.sort %}
+{% set limit = article_settings.limit %}
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% set display = article_settings.display %}
+{% set collection = grav.page.collection(
+    {
+        items: {'@taxonomy.category': filter.categories|split(' ')},
+        order: {by: sort.orderby, dir: sort.ordering},
+        url_taxonomy_filters: false
+    },
+    false) %}
+{% set total = collection.count() %}
+{% set pages = collection.slice(start, limit.total) %}
+
+{% block particle %}
+
+    {# All pages #}
+    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
+
+        {% for column in pages.batch(limit.columns) %}
+            <div class="g-grid">
+                {% for page in column %}
+
+                    <div class="g-block">
+                        <div class="g-content">
+                            <div class="g-array-item">
+                                {% if display.image.enabled %}
+                                    {% if display.image.enabled == 'intro' %}
+                                        {% set file = page.header.image.summary.enabled|defined(false) ? (page.header.image.summary.file ?: true) %}
+                                    {% elseif display.image.enabled == 'full' %}
+                                        {% set file = page.header.image.text.enabled|defined(false) ? (page.header.image.text.file ?: true) %}
+                                    {% endif %}
+
+                                    {% set image = file is same as(true) ? page.media.images|first : (file ? page.media.images[file]) %}
+
+                                    {% if image %}
+                                    <div class="g-array-item-image">
+                                        <a href="{{ page.url }}">
+                                            {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if display.title.enabled %}
+                                    <div class="g-array-item-title">
+                                        <h3 class="g-item-title">
+                                            <a href="{{ page.url }}">
+                                                {{ (display.title.limit ? page.title|e|truncate_text(display.title.limit) : page.title|e)|raw }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                {% endif %}
+
+                                {% if display.date.enabled or (display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias)) or display.category.enabled %}
+                                    <div class="g-array-item-details">
+                                        {% if display.date.enabled %}
+                                            <span class="g-array-item-date">
+                                                {% if display.date.enabled == 'published' %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.publishDate()|date(display.date.format) }}
+                                                {% elseif display.date.enabled == 'modified' %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.modified|date(display.date.format) }}
+                                                {% else %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.date|date(display.date.format) }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias) %}
+                                            {% if page.header.author.name %}
+                                                {% set author = page.header.author.name %}
+                                            {% elseif page.header.author.alias %}
+                                                {% set author = page.header.author.alias %}
+                                            {% else %}
+                                                {% set author = page.header.author.username %}
+                                            {% endif %}
+
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ author }}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.category.enabled %}
+                                            <span class="g-array-item-category">
+                                                {% for category in page.taxonomy.category %}
+                                                    {% if display.category.route %}
+                                                        <a href="{{ base_url ~ display.category.route }}">
+                                                            <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
+                                                        </a>
+                                                    {% else %}
+                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.text.type %}
+                                    {% set page_text = display.text.type == 'intro' ? page.summary : page.content %}
+                                    <div class="g-array-item-text">
+                                        {% if display.text.formatting == 'text' %}
+                                            {{ page_text|truncate_text(display.text.limit)|raw }}
+                                        {% else %}
+                                            {{ page_text|truncate_html(display.text.limit)|raw }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.read_more.enabled %}
+                                    <div class="g-array-item-read-more">
+                                        <a href="{{ page.url }}">
+                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block javascript_footer %}
+    {% if total > limit.total and display.pagination_buttons %}
+        {% do gantry.load('jquery') %}
+        <script>
+            (function ($) {
+                $(document).on('click', 'button.contentarray-button', function () {
+                    var id = $(this).attr('data-id'),
+                        start = $(this).attr('data-start'),
+                        request = {
+                            'outline': {{ gantry.page.outline|json_encode|raw }},
+                            'id'     : id,
+                            'start'  : start
+                        };
+                    $.ajax('{{ base_url ~ '/api/particle.json' }}', {
+                        type       : 'GET',
+                        data       : request,
+                        indexValue : id + '-particle',
+                        success: function (response) {
+                            if(response.html) {
+                                $('#' + this.indexValue).html(response.html);
+                            } else {
+                                // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                                $('#' + this.indexValue).html(response.message);
+                            }
+                            if (response._debugbar && window.phpdebugbar) {
+                                window.phpdebugbar.addDataSet(response._debugbar);
+                            }
+                        },
+                        error: function(response) {
+                            // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                            $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                        }
+                    });
+                    return false;
+                });
+            })(jQuery)
+        </script>
+    {% endif %}
+{% endblock %}

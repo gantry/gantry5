@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,4 +15,8 @@ namespace Gantry\Framework;
 
 class Page extends Base\Page
 {
+    public function url(array $args = [])
+    {
+        throw new \Exception('Please override class');
+    }
 }

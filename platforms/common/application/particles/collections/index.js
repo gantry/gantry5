@@ -3,6 +3,7 @@
 var ready         = require('elements/domready'),
     $             = require('elements'),
     zen           = require('elements/zen'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     toastr        = require('../../ui').toastr,
     request       = require('agent'),
@@ -14,7 +15,7 @@ var ready         = require('elements/domready'),
 
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
-    validateField = require('../../utils/field-validation');
+    translate     = require('../../utils/translate');
 
 require('elements/insertion');
 
@@ -76,7 +77,7 @@ ready(function() {
     body.delegate('click', '[data-collection-addnew]', function(event, element) {
         var param = element.parent('.settings-param'),
             list = param.find('ul'),
-            editall = list.parent().find('[data-collection-editall]'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
             dataField = param.find('[data-collection-data]'),
             tmpl = param.find('[data-collection-template]'),
             items = list.search('> [data-collection-item]') || [],
@@ -86,7 +87,7 @@ ready(function() {
 
         if (last) { clone.after(last); }
         else { clone.top(list); }
-
+        
         if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
@@ -129,6 +130,7 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var item = element.parent('[data-collection-item]'),
             list = element.parent('ul'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
             items = list.search('> [data-collection-item]'),
             index = indexOf(items, item[0]),
             dataField = element.parent('.settings-param').find('[data-collection-data]'),
@@ -138,7 +140,32 @@ ready(function() {
         data.splice(index, 1);
         dataField.value(JSON.stringify(data));
         item.remove();
-        if (items.length <= 2) { list.parent().find('[data-collection-editall]').style('display', 'none'); }
+        if (items.length <= 2 && editall) { editall.style('display', 'none'); }
+        body.emit('change', { target: dataField });
+    });
+
+    // Duplicate item
+    body.delegate('click', '[data-collection-duplicate]', function(event, element) {
+        if (event && event.preventDefault) { event.preventDefault(); }
+        var param = element.parent('.settings-param'),
+            item = element.parent('[data-collection-item]'),
+            list = element.parent('ul'),
+            editall = list.parent('[data-field-name]').find('[data-collection-editall]'),
+            url = param.find('[data-collection-template]').find('a').href(),
+            items = list.search('> [data-collection-item]'),
+            index = indexOf(items, item[0]),
+            clone = $(item[0].cloneNode(true)).after(item),
+            dataField = element.parent('.settings-param').find('[data-collection-data]'),
+            data = dataField.value();
+
+        var re = new RegExp('%id%', 'g');
+        clone.find('a').href(url.replace(re, items.length + 1));
+
+        data = JSON.parse(data);
+        data.splice(index, 0, data[index]);
+        dataField.value(JSON.stringify(data));
+
+        if (items.length >= 1) { editall.style('display', 'inline-block'); }
         body.emit('change', { target: dataField });
     });
 
@@ -169,17 +196,21 @@ ready(function() {
 
         var dataPost = { data: isEditAll ? data : JSON.stringify(JSON.parse(data)[indexOf(items, item[0])]) };
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             className: 'g5-dialog-theme-default g5-modal-collection g5-modal-collection-' + (isEditAll ? 'editall' : 'single'),
             data: dataPost,
-            remote: element.attribute('href') + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+                
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [],
-                    invalid = [],
                     dataValue = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
@@ -200,48 +231,21 @@ ready(function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    var post = Submit(fakeDOM[0].elements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var titles = content.elements.content.search('[data-title-editable]'), key;
-                    if (titles) {
-                        titles.forEach(function(title) {
-                            title = $(title);
-                            key = title.data('collection-key') || 'title';
-                            dataString.push(key + '=' + encodeURIComponent(title.data('title-editable')));
-                        });
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -274,7 +278,7 @@ ready(function() {
                             }
 
                             modal.close();
-                            toastr.success('Collection Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Collection'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();

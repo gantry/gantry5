@@ -5,3 +5,8 @@
     <title>{{ site.title|e }}</title>
     <meta name="description" content="{{ site.description|e }}">
 {% endblock %}
+
+{% block head_application %}
+    {{ gantry.platform.finalize }}
+    {{ parent() }}
+{% endblock %}

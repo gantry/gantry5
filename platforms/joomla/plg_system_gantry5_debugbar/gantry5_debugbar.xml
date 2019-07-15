@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="plugin" group="system" method="upgrade">
+    <name>plg_system_gantry5_debugbar</name>
+    <version>@version@</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2005 - 2019 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+    <description>PLG_SYSTEM_GANTRY5_DEBUGBAR_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="gantry5_debugbar">gantry5_debugbar.php</filename>
+        <!--filename>MD5SUMS</filename-->
+        <filename>composer.json</filename>
+        <filename>composer.lock</filename>
+        <filename>Debugger.php</filename>
+        <folder>language</folder>
+        <folder>vendor</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+        </fields>
+    </config>
+</extension>

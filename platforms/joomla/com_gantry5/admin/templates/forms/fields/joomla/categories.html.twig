@@ -1,0 +1,14 @@
+{% extends 'forms/fields/input/selectize.html.twig' %}
+
+{% block global_attributes %}
+    {% set categories = field.options|default([])|merge(gantry.platform.finder('categories').published([0,1]).limit(0).find()) %}
+    {% set Options = field.selectize.Options %}
+    {% set options = [] %}
+    {% for key,category in categories %}
+        {% set options = options|merge([{value: category.id, text: '- '|repeat(category.level-1)|raw ~ category.title }])  %}
+    {% endfor %}
+    {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { delimiter: ',', Options: options }}) %}
+
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+    {{ parent() }}
+{% endblock %}

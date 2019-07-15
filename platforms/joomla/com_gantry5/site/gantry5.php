@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,6 +11,9 @@ defined('_JEXEC') or die;
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
+    $lang = JFactory::getLanguage();
+    $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+
     JFactory::getApplication()->enqueueMessage(
         JText::sprintf('COM_GANTRY5_PARTICLE_NOT_INITIALIZED', JText::_('COM_GANTRY5_COMPONENT')),
         'warning'
@@ -30,8 +33,8 @@ if (!$menuItem) {
 }
 
 // Handle non-html formats and error page.
-if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error') {
-    JError::raiseError(404, 'Page not found');
+if ($input->getCmd('format', 'html') !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
+    JError::raiseError(404, JText::_('JERROR_PAGE_NOT_FOUND'));
 }
 
 $gantry = \Gantry\Framework\Gantry::instance();
@@ -70,6 +73,7 @@ if ($params->get('robots')) {
 /** @var object $params */
 $data = json_decode($params->get('particle'), true);
 if (!$data) {
+    // No component output.
     return;
 }
 
@@ -78,6 +82,7 @@ $context = [
     'noConfig' => true,
     'inContent' => true,
     'segment' => [
+        'id' => 'main-particle',
         'type' => $data['type'],
         'classes' => $params->get('pageclass_sfx'),
         'subtype' => $data['particle'],
@@ -85,5 +90,5 @@ $context = [
     ]
 ];
 
-// Render the page.
-echo $theme->render("@nucleus/content/particle.html.twig", $context);
+// Render the particle.
+echo trim($theme->render("@nucleus/content/particle.html.twig", $context));

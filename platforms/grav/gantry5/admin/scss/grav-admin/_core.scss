@@ -1,0 +1,88 @@
+// reset Grav inherited style for admin-block
+body #admin-main .admin-block {
+    padding: 0;
+}
+
+// G5 Container
+#g5-container {
+    font-family: inherit;
+    font-weight: inherit;
+
+    .button i {
+        margin-right: 0 !important;
+    }
+
+    .inner-container {
+        margin: 0;
+        box-shadow: none;
+        color: inherit;
+    }
+
+    form select {
+        -webkit-appearance: menulist;
+        -moz-appearance: menulist;
+        appearance: menulist;
+    }
+
+    #menu-editor {
+        li.block.in-between.placeholder {
+            flex: inherit;
+        }
+    }
+
+    #main-header {
+        $grav-header-height: 4.2rem;
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        left: 240px;
+        @include breakpoint(desktop-range) {
+            left: 50px;
+        }
+        @include breakpoint(tablet-range) {
+            left: 50px;
+        }
+        height: $grav-header-height;
+
+        .g-content {
+            padding: 0 3em !important;
+            @include breakpoint(desktop-range) {
+                padding: 0 0.7em 0 3em !important;
+            }
+            @include breakpoint(tablet-range) {
+                padding: 0 0.7em 0 3em !important;
+            }
+        }
+
+        .theme-title {
+            line-height: $grav-header-height;
+            small {
+                @include breakpoint(tablet-range) {
+                    display: none;
+                }
+            }
+        }
+
+        ul li a {
+            padding: 1.33rem 0.938rem;
+            @include breakpoint(desktop-range) {
+                padding: 1.33rem 0.638rem; 
+            }     
+            @include breakpoint(tablet-range) {      
+                padding: 1.33rem 0.638rem;     
+            }
+        }
+    }
+
+    .g5-popover-extras.in {
+        position: fixed;
+        top: 4rem !important;
+        right: 1rem !important;
+        left: inherit !important;
+    }
+}
+
+.sidebar-closed #g5-container #main-header {
+    left: 4.2rem;
+}

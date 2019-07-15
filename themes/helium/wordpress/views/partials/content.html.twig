@@ -1,0 +1,95 @@
+<article class="tease tease-{{ post.post_type }} {{ post.class }} clearfix" id="tease-{{ post.ID }}">
+
+    {% block content %}
+
+        {# Begin Entry Header #}
+        <section class="entry-header">
+
+            {# Begin Entry Title #}
+            {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
+                <h2 class="entry-title">
+                    {% if gantry.config.get('content.' ~ scope ~ '.title.link', '0') %}
+                        <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+                    {% else %}
+                        {{ post.title }}
+                    {% endif %}
+                </h2>
+            {% endif %}
+            {# End Entry Title #}
+
+            {# Begin Entry Meta #}
+            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
+                {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
+            {% endif %}
+            {# End Entry Meta #}
+
+        </section>
+        {# End Entry Header #}
+
+        {# Check if post is password protected #}
+        {% if not function( 'post_password_required', post.ID ) %}
+
+            {# Begin Entry Content #}
+            <section class="entry-content">
+
+                {# Begin Featured Image #}
+                {% if gantry.config.get('content.' ~ scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
+                    {% set position = (gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') == 'none') ? '' : 'float-' ~ gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') %}
+                    <a href="{{ post.link }}" class="post-thumbnail" aria-hidden="true">
+                        <img src="{{ post.thumbnail.src|resize(gantry.config.get('content.' ~ scope ~ '.featured-image.width', '1200'), gantry.config.get('content.' ~ scope ~ '.featured-image.height', '350')) }}" class="featured-image tease-featured-image {{ position }}" alt="{{ post.title }}" />
+                    </a>
+                {% endif %}
+                {# End Featured Image #}
+
+                {# Begin Tease #}
+                {% if gantry.config.get('content.' ~ scope ~ '.content.enabled', '1') %}
+                    {% if gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'excerpt' and post.post_excerpt is not empty %}
+                        <div class="post-excerpt">{{ post.post_excerpt|apply_filters('the_excerpt')|raw }}</div>
+                    {% elseif gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt' %}
+                        <div class="post-excerpt">{{ post.preview.length(gantry.config.get('content.' ~ scope ~ '.content.gexcerpt-length', '50')).read_more(false)|apply_filters('the_excerpt')|raw }}</div>
+                    {% else %}
+                        <div class="post-content">
+                            {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
+                            {% if readmore %}
+                                {% set split_content = post.post_content|split(readmore[0], 2) %}
+                                {{ split_content[0]|apply_filters('the_content')|raw }}
+                            {% elseif '<!--nextpage-->' in post.post_content %}
+                                {% set split_content = post.post_content|split('<!--nextpage-->', 2) %}
+                                {{ split_content[0]|apply_filters('the_content')|raw }}
+                            {% else %}
+                                {{ post.content|raw }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'always' or (gantry.config.get('content.' ~ scope ~ '.read-more.mode', 'auto') == 'auto' and (readmore or post.post_excerpt is not empty or gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt') )  %}
+                    <a href="{{ post.link }}" class="read-more button button-xsmall">
+                        {% if readmore[1] is not empty %}
+                            {{- readmore[1] -}}
+                        {% else %}
+                            {{ gantry.config.get('content.' ~ scope ~ '.read-more.label', 'Read More') }}
+                        {% endif %}
+                    </a>
+                {% endif %}
+                {# End Tease #}
+
+            </section>
+            {# End Entry Content #}
+
+        {% else %}
+
+            {# Begin Password Protected Form #}
+            <div class="password-form">
+
+                {# Include the password form #}
+                {% include 'partials/password-form.html.twig' %}
+
+            </div>
+            {# End Password Protected Form #}
+
+        {% endif %}
+
+    {% endblock %}
+
+</article>

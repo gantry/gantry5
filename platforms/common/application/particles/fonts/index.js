@@ -34,6 +34,7 @@ var prime         = require('prime'),
 
     modal         = require('../../ui').modal,
     asyncForEach  = require('../../utils/async-foreach'),
+    translate     = require('../../utils/translate'),
 
     request       = require('agent'),
 
@@ -91,7 +92,7 @@ var Fonts = new prime({
         this.field = $(data.field);
 
         modal.open({
-            content: 'Loading...',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-fonts',
             remote: parseAjaxURI(getAjaxURL('fontpicker') + getAjaxSuffix()),
             remoteLoaded: bind(function(response, content) {
@@ -106,7 +107,9 @@ var Fonts = new prime({
                 this.updateTotal();
                 this.selectFromValue();
 
-                container.find('.particle-search-wrapper input')[0].focus();
+                setTimeout(function() {
+                    container.find('.particle-search-wrapper input')[0].focus();
+                }, 5);
             }, this)
         });
     },
@@ -196,7 +199,8 @@ var Fonts = new prime({
             subset = split[1] ? split[1].replace('subset=', '').split(',') : ['latin'];
         }
 
-        var element = $('ul.g-fonts-list > [data-font="' + name + '"]');
+        var noConflict = isLocal ? '[data-category="local-fonts"]' : ':not([data-category="local-fonts"])',
+            element = $('ul.g-fonts-list > [data-font="' + name + '"]' + noConflict);
         variants = variants || element.data('variants').split(',') || ['regular'];
 
         if (contains(variants, '400')) {
@@ -231,7 +235,7 @@ var Fonts = new prime({
         var charsetSelected = element.find('.font-charsets-selected');
         if (charsetSelected) {
             var subsetsLength = element.data('subsets').split(',').length;
-            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
+            charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + subset.length + ' of ' + subsetsLength + '</span> selected)');
         }
 
         if (!isLocal) { $('ul.g-fonts-list')[0].scrollTop = element[0].offsetTop; }
@@ -250,7 +254,7 @@ var Fonts = new prime({
                 var charsetSelected = this.selected.element.find('.font-charsets-selected');
                 if (charsetSelected) {
                     var subsetsLength = element.data('subsets').split(',').length;
-                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
+                    charsetSelected.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">1 of ' + subsetsLength + '</span> selected)');
                 }
             }
             this.selected = {
@@ -441,7 +445,7 @@ var Fonts = new prime({
                         checked = content.search('input[type="checkbox"]:checked');
                         this.selected.charsets = checked ? checked.map('value') : [];
 
-                        element.html('(<i class="fa fa-fw fa-check-square-o"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
+                        element.html('(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>  <span class="font-charsets-details">' + this.selected.charsets.length + ' of ' + subsets.length + '</span> selected)');
                     }, this));
 
                     popover.displayContent();
@@ -497,8 +501,8 @@ var Fonts = new prime({
                 variation = this.selected.selected,
                 charset   = this.selected.charsets;
 
-            if (variation.length == 1 && variation[0] == 'regular') { variation = []; }
-            if (charset.length == 1 && charset[0] == 'latin') { charset = []; }
+            if (variation && variation.length == 1 && variation[0] == 'regular') { variation = []; }
+            if (charset && charset.length == 1 && charset[0] == 'latin') { charset = []; }
 
             if (contains(variation, 'regular')) {
                 removeAll(variation, 'regular');

@@ -1,0 +1,121 @@
+#g5-container .settings-block .g-keyvalue-field {
+    ul {
+        &:empty {
+            margin-top: -8px;
+        }
+
+        li {
+            margin: 5px 0;
+
+            .g-keyvalue-wrapper {
+                display: inline-block;
+                position: relative;
+                width: 86%;
+            }
+
+            &:hover {
+                [data-keyvalue-remove] {
+                    display: inline-block;
+                }
+            }
+
+            .g-tooltip {
+                &:after {
+                    bottom: 2.25rem;
+                }
+
+                &:before {
+                    bottom: 1.90rem;
+                    left: 0.8rem;
+                }
+            }
+
+            &.g-keyvalue-excluded {
+                color: $red;
+            }
+
+            &.g-keyvalue-warning {
+                color: orange;
+            }
+        }
+
+        .g-keyvalue-sep {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            color: $medium-gray;
+            margin: -12px 0 0 -8px;
+        }
+
+        input {
+            margin-right: -4px; // Fixes space between inline-block elements
+
+            &.g-keyvalue-input-key {
+                width: 50%;
+                display: inline-block;
+                font-weight: bold;
+                border-right: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            &.g-keyvalue-input-value {
+                width: 50%;
+                display: inline-block;
+                border-left: 0;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        [data-keyvalue-remove] {
+            cursor: pointer;
+            display: none;
+            margin-right: -1rem;
+        }
+    }
+
+
+
+    &.g-keyvalue-small ul {
+        .g-keyvalue-sep {
+            left: 35%;
+        }
+
+        input {
+            &.g-keyvalue-input-key {
+                width: 35%;
+            }
+
+            &.g-keyvalue-input-value {
+                width: 65%;
+            }
+        }
+    }
+
+    &.g-keyvalue-large ul {
+        .g-keyvalue-sep {
+            left: 65%;
+        }
+
+        input {
+            &.g-keyvalue-input-key {
+                width: 65%;
+            }
+
+            &.g-keyvalue-input-value {
+                width: 35%;
+            }
+        }
+    }
+
+    .g-keyvalue-key {
+        margin-right: 1em;
+    }
+
+    .g-keyvalue-value {
+        margin-left: 1em;
+    }
+
+}

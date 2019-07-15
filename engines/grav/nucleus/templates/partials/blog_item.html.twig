@@ -1,43 +1,104 @@
-<section class="blog-item">
-    {% set banner = page.assets.images|first %}
-    {% if banner %}
-    <div class="blog-header">
-        {{ banner.cropZoom(900,300).html }}
-        <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
-    </div>
+<div class="list-item h-entry">
+
+    {% if truncate %}
+        {% set image_file = page.header.image.summary.enabled|defined(false) ? (page.header.image.summary.file ?: true) %}
     {% else %}
-    <div class="blog-title">
-        <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
-    </div>
+        {% set image_file = page.header.image.text.enabled|defined(false) ? (page.header.image.text.file ?: true) %}
     {% endif %}
 
-    <div class="blog-details">
-        <span class="blog-date">Posted: {{ page.date|date() }}</span>
+    <div class="list-blog-header">
+        {% if image_file %}
+            {% set image = image_file is same as(true) ? page.media.images|first : (image_file ? page.media.images[image_file]) %}
+            {% if image %}
+                {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
+            {% endif %}
+        {% endif %}
+        {% if truncate %}
+        {% if page.header.link %}
+            <h2 class="p-name">
+                {% if page.header.continue_link is not same as(false) %}
+                <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url" aria-hidden="true"></i></a>
+                {% endif %}
+                <a href="{{ page.header.link }}" class="u-url">{{ page.title }}</a>
+            </h2>
+        {% else %}
+            <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
+        {% endif %}
+        {% else %}
+            <h2 class="p-name">{{ page.title }}</h2>
+        {% endif %}
 
-        {% if page.taxonomy.tag %}
-        <span class="tags">
-            {% for tag in page.taxonomy.tag %}
-            <a href="{{ base_url_relative }}{{ list_url }}/tag:{{ tag }}">{{ tag }}</a>
-            {% endfor %}
-        </span>
+
+
+        {% if page.taxonomy.tag or show_date  %}
+        <div class="list-blog-meta">
+            {% if show_date %}
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <time class="dt-published" datetime="{{ page.date|date("c") }}">
+                {{ page.date|date('jS M Y') }}
+            </time>
+            {% endif %}
+            {% if page.taxonomy.tag %} <span class="separator">/</span> {% endif %}
+            {% if page.taxonomy.tag %}
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <span class="tags">
+                {% for tag in page.taxonomy.tag %}
+                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
         {% endif %}
     </div>
 
-    <div class="blog-padding">
-    {% if truncate %}
-    <p>{{ page.content|truncate(550) }}</p>
-    <p><a class="button" href="{{ page.url }}">Continue: {{ page.title }}</a></p>
+    <div class="list-blog-padding">
+
+    {% if page.header.continue_link is same as(false) %} 
+        <div class="e-content">
+            {{ page.content|raw }}
+        </div>
+        {% if not truncate %}
+        {% set show_prev_next = true %}
+        {% endif %}
+    {% elseif truncate and page.summary != page.content %}
+        <div class="p-summary e-content">
+            {{ page.summary|raw }}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
+        </div>
+    {% elseif truncate %}
+        <div class="p-summary e-content">
+            {% if page.summary != page.content %}
+                    {{ page.content|truncate(550)|raw }}
+            {% else %}
+                    {{ page.content|raw }}
+
+            {% endif %}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
+        </div>
     {% else %}
-    <p>{{ page.content }}</p>
-    {% endif %}
-    </div>
+        <div class="e-content">
+            {{ page.content|raw }}
+        </div>
 
-    {% if not truncate %}
-    <div class="blog-images">
-    {% for asset in page.assets.all %}
-        {{ asset.lightbox.cropResize(1000,100).html }}
-    {% endfor %}
-    </div>
+        {% if config.plugins.comments.enabled %}
+            {% include 'partials/comments.html.twig' %}
+        {% endif %}
+
+        {% set show_prev_next = true %}
     {% endif %}
 
-</section>
+    {% if show_prev_next %}
+
+        <p class="prev-next">
+            {% if not page.isFirst %}
+                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ 'GANTRY5_ENGINE_BLOG_ITEM_NEXT_POST'|trans }}</a>
+            {% endif %}
+
+            {% if not page.isLast %}
+                <a class="button" href="{{ page.prevSibling.url }}">{{ 'GANTRY5_ENGINE_BLOG_ITEM_PREV_POST'|trans }} <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            {% endif %}
+        </p>
+    {% endif %}
+
+    </div>
+</div>

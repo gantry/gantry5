@@ -3,50 +3,35 @@
     {% set selected_value = configuration == 'default' ? 'default' : '' %}
     {% set selected_editable = true %}
     <select id="configuration-selector" class="config-select" data-selectize-ajaxify data-selectize="{{ {allowEmptyOption: true}|json_encode|e('html_attr') }}">
-        <optgroup label="{{ 'GANTRY5_PLATFORM_GLOBAL_DEFAULTS'|trans }}">
-            <option value="default"
-                {% if configuration == 'default' %}selected="selected"{% endif %}
-                data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                {{ 'Base Outline' }}
-            </option>
-        </optgroup>
-
-        {% set user_conf = gantry.configurations.user %}
-        {% if user_conf.count %}
-        <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
-            {% for name, title in user_conf %}
-                {% if name == configuration %}
-                    {% set selected_title = title|e %}
-                    {% set selected_value = name|e %}
-                {% endif %}
-            <option value="{{ name|e }}"
-                        {% if name == configuration %}selected="selected"{% endif %}
-                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                    {{ title|e }}
-                </option>
-            {% endfor %}
-        </optgroup>
-        {% endif %}
-
-        {% set system_conf = gantry.configurations.system %}
-        {% if system_conf.count %}
-        <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
-            {% for name, title in system_conf %}
-                {% if name == configuration %}
-                    {% set selected_title = title|e %}
-                    {% set selected_value = name|e %}
-                    {% set selected_editable = false %}
-                {% endif %}
-                <option value="{{ name|e }}"
-                        {% if name == configuration %}selected="selected"{% endif %}
-                        data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
-                    {{ title|e }}
-                </option>
-            {% endfor %}
-        </optgroup>
-        {% endif %}
+        {% include 'partials/outlines-list.html.twig' %}
     </select>
-    {% if selected_editable %}
-    <span data-title-editable="{{ selected_title }}" data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename')|e }}" class="title g-conf-title-edit">{{ selected_title }}</span> <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': selected_title}) }}"  data-title-editable="{{ selected_title }}" data-title-edit=""></i>
+
+    {% for name, title in gantry.outlines.user %}
+        {% if name == configuration %}
+            {% set selected_title = title %}
+            {% set selected_value = name %}
+        {% endif %}
+    {% endfor %}
+    {% for name, title in gantry.outlines.system %}
+        {% if name == configuration %}
+            {% set selected_title = title %}
+            {% set selected_value = name %}
+            {% set selected_editable = false %}
+        {% endif %}
+    {% endfor %}
+
+    {% if selected_editable and gantry.authorize('outline.rename') and configuration != 'default' %}
+    <span data-title-editable="{{ selected_title }}"
+          data-g-config-href="{{ gantry.route('configurations', selected_value, 'rename') }}"
+          class="title g-conf-title-edit"
+    >
+        {{ selected_title }}
+    </span>
+    <i class="fa fa-pencil font-small"
+       aria-hidden="true"
+       tabindex="0"
+       aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(selected_title) }}"
+       data-title-editable="{{ selected_title }}"
+       data-title-edit=""></i>
     {% endif %}
 </li>

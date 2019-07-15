@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -44,6 +43,32 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     protected $children = [];
     protected $url;
 
+    protected static $defaults = [
+        'id' => 0,
+        'type' => 'link',
+        'path' => null,
+        'alias' => null,
+        'title' => null,
+        'link' => null,
+        'parent_id' => null,
+        'layout' => 'list',
+        'target' => '_self',
+        'dropdown' => '',
+        'icon' => '',
+        'image' => '',
+        'subtitle' => '',
+        'hash' => '',
+        'class' => '',
+        'icon_only' => false,
+        'enabled' => true,
+        'visible' => true,
+        'group' => 0,
+        'columns' => [],
+        'level' => 0,
+        'link_title' => '',
+        'anchor_class' => ''
+    ];
+
     public function __construct(AbstractMenu $menu, $name, array $item = [])
     {
         $this->menu = $menu;
@@ -57,24 +82,12 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
         $this->items = $item + [
             'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
-            'type' => 'link',
             'path' => $name,
             'alias' => $alias,
             'title' => ucfirst($alias),
             'link' => $name,
             'parent_id' => $parent != '.' ? $parent : '',
-            'layout' => 'list',
-            'target' => '_self',
-            'dropdown' => '',
-            'icon' => '',
-            'image' => '',
-            'subtitle' => '',
-            'icon_only' => false,
-            'visible' => true,
-            'group' => 0,
-            'columns' => [],
-            'level' => 0,
-        ];
+        ] + static::$defaults;
     }
 
     public function getDropdown()
@@ -361,5 +374,25 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     public function valid()
     {
         return key($this->children) !== null;
+    }
+
+    /**
+     * Convert object into an array.
+     *
+     * @return array
+     */
+    public function toArray($withDefaults = true)
+    {
+        $items = $this->items;
+
+        if (!$withDefaults) {
+            foreach (static::$defaults as $key => $value) {
+                if ($items[$key] === $value) {
+                    unset($items[$key]);
+                }
+            }
+        }
+
+        return $items;
     }
 }

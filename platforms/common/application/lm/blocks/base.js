@@ -1,16 +1,19 @@
 "use strict";
-var prime   = require('prime'),
-    Options = require('prime-util/prime/options'),
-    Bound    = require('prime-util/prime/bound'),
-    Emitter = require('prime/emitter'),
-    guid    = require('mout/random/guid'),
-    zen     = require('elements/zen'),
-    trim    = require('mout/string/trim'),
-    $       = require('elements'),
+var prime     = require('prime'),
+    Options   = require('prime-util/prime/options'),
+    Bound     = require('prime-util/prime/bound'),
+    Emitter   = require('prime/emitter'),
+    zen       = require('elements/zen'),
+    trim      = require('mout/string/trim'),
+    $         = require('elements'),
+    ID        = require('../id'),
 
-    get     = require('mout/object/get'),
-    has     = require('mout/object/has'),
-    set     = require('mout/object/set');
+    size      = require('mout/object/size'),
+    get       = require('mout/object/get'),
+    has       = require('mout/object/has'),
+    set       = require('mout/object/set'),
+    translate = require('../../utils/translate'),
+    getCurrentOutline  = require('../../utils/get-outline').getCurrentOutline;
 
 require('elements/traversal');
 
@@ -19,14 +22,16 @@ var Base = new prime({
     inherits: Emitter,
     options: {
         subtype: false,
-        attributes: {}
+        attributes: {},
+        inherit: {}
     },
     constructor: function(options) {
         this.setOptions(options);
 
         this.fresh = !this.options.id;
-        this.id = this.options.id || this.guid();
+        this.id = this.options.id || ID(this.options);
         this.attributes = this.options.attributes || {};
+        this.inherit = this.options.inherit || {};
 
         this.block = zen('div').html(this.layout()).firstChild();
 
@@ -40,7 +45,7 @@ var Base = new prime({
     },
 
     getId: function() {
-        return this.id || (this.id = this.guid());
+        return this.id || (this.id = ID(this.options));
     },
 
     getType: function() {
@@ -79,6 +84,10 @@ var Base = new prime({
         return this.attributes || {};
     },
 
+    getInheritance: function() {
+        return this.inherit || {};
+    },
+
     updateTitle: function() {
         return this;
     },
@@ -94,12 +103,28 @@ var Base = new prime({
         return this;
     },
 
+    setInheritance: function(inheritance) {
+        this.inherit = inheritance;
+
+        return this;
+    },
+
     hasAttribute: function(key) {
         return has(this.attributes, key);
     },
 
+    enableInheritance: function() {},
+
+    disableInheritance: function() {},
+
+    refreshInheritance: function() {},
+
+    hasInheritance: function() {
+        return size(this.inherit) && this.inherit.outline != getCurrentOutline();
+    },
+
     disable: function() {
-        this.block.title('This particle has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+        this.block.title(translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'particle'));
         this.block.addClass('particle-disabled');
     },
 
@@ -129,17 +154,17 @@ var Base = new prime({
         return 'data-lm-dropzone';
     },
 
-    addDropzone: function(){
+    addDropzone: function() {
         this.block.data('lm-dropzone', true);
     },
 
-    removeDropzone: function(){
+    removeDropzone: function() {
         this.block.data('lm-dropzone', null);
     },
 
     layout: function() {},
 
-    onRendered: function(){},
+    onRendered: function() {},
 
     setLayout: function(layout) {
         this.block = layout;

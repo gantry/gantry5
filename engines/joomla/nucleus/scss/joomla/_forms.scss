@@ -1,6 +1,6 @@
 // Box model Resets for Joomla / Bootstrap2
 .platform-content input {
-    @include box-sizing(content-box);
+    box-sizing: content-box;
 }
 
 legend {
@@ -95,7 +95,7 @@ input[type="color"]:focus,
 	text-align: left;
 }
 
-.control-label .hasTooltip {
+.control-label .hasTooltip, .control-label .hasPopover {
     display: inline-block;
 }
 

@@ -1,0 +1,9 @@
+helium-theme:
+  title: 'Helium Theme'
+  description: 'Sample menu for Helium theme.'
+
+  items:
+    helium:
+      title: 'Home'
+      outline: home
+      home: 1

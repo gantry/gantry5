@@ -1,63 +1,81 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-    <div class="menu-header">
-        <span class="float-right">
-            <button class="button button-back-to-conf" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
-        </span>
-        <h2 class="page-title">
-            {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
-            <button data-g-config="create" data-g-config-href="{{ gantry.route('configurations', name, 'create')|e }}" title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}" data-g-config-method="POST" class="button button-primary">
-                <i class="fa fa-fw fa-plus"></i>
-            </button>
-            {# TODO: Adding a new outline should be a two step process: 1. you pick title and Layout, 2. creates it. #}
-            {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}" class="button button-primary"><i class="fa fa-fw fa-plus"></i></a>#}
-        </h2>
-    </div>
-
     <div id="configurations">
+        <div class="menu-header">
+        <span class="float-right">
+            <button class="button button-back-to-conf" tabindex="0"
+                    aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"><i class="fa fa-fw fa-fw fa-arrow-left" aria-hidden="true"></i>
+                <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span></button>
+        </span>
+            <h2 class="page-title">
+                {{ 'GANTRY5_PLATFORM_OUTLINES'|trans }}
+                {% if gantry.authorize('outline.create') %}
+                <a href="{{ gantry.route('configurations', 'create') }}"
+                   title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
+                   aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
+                   data-g5-outline-create class="button button-primary">
+                    <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
+                </a>
+                {% endif %}
+            </h2>
+        </div>
+
         <ul class="g-grid">
-            {# TODO: Need to inject the Base Outline at the top of the list #}
-            {% for name, title in gantry.configurations.user %}
-                <li class="card g-block size-1-4{{ gantry.configurations.isDefault(name) ? ' outline-is-default' : '' }}">
+            <li class="card g-block size-1-4">
+                {% set name = 'default' %}
+                {% include '@gantry-admin/layouts/outline.html.twig' %}
+            </li>
+            {% for name, title in gantry.outlines.user %}
+                <li class="card g-block size-1-4{{ gantry.outlines.isDefault(name) ? ' outline-is-default' : '' }}">
                     {% include '@gantry-admin/layouts/outline.html.twig' %}
                 </li>
             {% endfor %}
+            {% if gantry.authorize('outline.create') %}
             <li class="card g-block size-1-4 add-new">
                 <div class="page">
-                    <a data-g-config="create" data-g-config-href="{{ gantry.route('configurations', name, 'create')|e }}" title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}" data-g-config-method="POST" data-g5-lm-add tabindex="0">
-                        <i class="fa fa-fw fa-plus"></i>
+                    <a href="{{ gantry.route('configurations', 'create') }}"
+                       title="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
+                       aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_OUTLINE'|trans }}"
+                       data-g5-outline-create tabindex="0">
+                        <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
                     </a>
-                    {#<a data-g5-lm-add href="{{ gantry.route('picker/layouts')|e }}"><i class="fa fa-fw fa-plus"></i></a>#}
                 </div>
             </li>
+            {% endif %}
         </ul>
 
         <h2>{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}</h2>
         <ul class="g-grid">
-            {% for name, title in gantry.configurations.system %}
-                {%  set preset = gantry.configurations.layoutPreset(name) %}
+            {% for name, title in gantry.outlines.system %}
+                {% set preset = gantry.outlines.layoutPreset(name) %}
                 <li class="card g-block size-1-4">
                     <div class="page">
-                        <h4>{{ title }} <span class="float-right font-small">(id: {{ name }})</span></h4>
+                        <h4>{{ title }} <span class="float-right font-small">({{ 'GANTRY5_PLATFORM_ID_X'|trans(name) }})</span></h4>
                         <div class="inner-params">
                             <img src="{{ url(preset.image|default('gantry-admin://images/layouts/default.png')) }}" />
                         </div>
                         <div class="inner-params">
-                            {#<span class="float-left">
-                                <a href="{{ gantry.route('configurations', layout)|e }}" class="button">
-                                    <i class="fa fa-fw fa-pencil-square-o"></i>
-
-                                </a>
-                            </span>
-                            <span class="float-right">23 positions</span>#}
                             <div class="center">
-                                <a data-title="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}" title="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_EDIT'|trans  ~ ' ' ~ title|e }}" data-g5-ajaxify data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}" href="{{ gantry.route('configurations', name, 'styles')|e }}" class="button button-primary g-tooltip">
-                                    <i class="fa fa-fw fa-pencil"></i>
+                                <a data-tip="{{ 'GANTRY5_PLATFORM_EDIT'|trans }}"
+                                   title="{{ 'GANTRY5_PLATFORM_EDIT_X'|trans(title) }}"
+                                   aria-label="{{ 'GANTRY5_PLATFORM_EDIT_X'|trans(title) }}"
+                                   data-g5-ajaxify=""
+                                   data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                                   data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                                   href="{{ gantry.route('configurations', name, 'styles') }}"
+                                   class="button button-primary">
+                                    <i class="fa fa-fw fa-pencil" aria-hidden="true"></i>
                                 </a>
-                                <button data-title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}" title="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans  ~ ' ' ~ title|e }}" data-g-config="duplicate" data-g-config-href="{{ gantry.route('configurations', name, 'duplicate')|e }}" data-g-config-method="POST" class="button button-secondary g-tooltip">
-                                    <i class="fa fa-fw fa-copy"></i>
-                                </button>
+                                {% if gantry.authorize('outline.create') %}
+                                <a href="{{ gantry.route('configurations', name, 'duplicate') }}"
+                                   data-tip="{{ 'GANTRY5_PLATFORM_DUPLICATE'|trans }}"
+                                   title="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                                   aria-label="{{ 'GANTRY5_PLATFORM_DUPLICATE_X'|trans(title) }}"
+                                   data-g5-outline-duplicate class="button button-secondary">
+                                    <i class="fa fa-fw fa-copy" aria-hidden="true"></i>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

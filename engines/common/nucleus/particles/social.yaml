@@ -1,6 +1,11 @@
 name: Social
 description: Display social buttons.
 type: particle
+icon: fa-share-alt
+
+configuration:
+  caching:
+    type: static
 
 form:
   fields:
@@ -23,14 +28,27 @@ form:
       placeholder: Enter title
 
     target:
-      type: select.selectize
+      type: select.select
       label: Target
       description: Target browser window when item is clicked.
       placeholder: 'Select...'
-      default: _blank
+      default: ''
       options:
-          _parent: Self
+          '': None
+          _self: Self
+          _parent: Parent
+          _top: Top
           _blank: New Window
+
+    display:
+      type: input.radios
+      label: Display
+      description: How to display the Social Icons
+      default: both
+      options:
+        icons_only: Icons Only
+        text_only: Text Only
+        both: Both
 
     items:
       type: collection.list
@@ -41,7 +59,6 @@ form:
       ajax: true
 
       fields:
-
         .name:
           type: input.text
           label: Name
@@ -54,6 +71,10 @@ form:
         .text:
           type: input.text
           label: Text
+
+        .title:
+          type: input.text
+          label: Title
 
         .link:
           type: input.text

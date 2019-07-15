@@ -1,18 +1,18 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-{% set action = gantry.route(configuration ~ '/' ~ route|replace('.', '/') ~ '/validate') %}
-<form method="post" action="{{ action|e }}">
+{% set action = gantry.route(route|replace({'.': '/'}) ~ '/validate') %}
+<form method="post" action="{{ action }}">
     {% if blueprints.type == 'collection.list' %}
         {% include 'forms/fields.html.twig' %}
     {% else %}
         <div class="card settings-block">
             <h4>
                 {% if title %}
-                    <span data-title-editable="{{ data.data[title]|trim|e }}" data-collection-key="{{ (prefix ~ title)|fieldName }}" class="title">
-                        {{ data.data[title]|e }}
+                    <span data-title-editable="{{ data.data[title]|trim }}" data-collection-key="{{ (scope ~ title)|fieldName }}" class="title">
+                        {{ data.data[title] }}
                     </span>
-                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': data.data[title]|trim|e }) }}" data-title-edit=""></i>
+                    <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.data[title]|trim) }}" data-title-edit=""></i>
                 {% else %}
                 {{ 'GANTRY5_PLATFORM_EDIT'|trans }}
                 {% endif %}
@@ -24,7 +24,7 @@
     {% endif %}
     <div class="g-modal-actions">
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
+        <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
         <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </form>

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,15 +14,15 @@
 namespace Gantry\Component\Router;
 
 use Gantry\Admin\EventListener;
+use Gantry\Admin\Theme;
 use Gantry\Component\Controller\BaseController;
-use Gantry\Component\Request\Request;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Component\Router\RouterInterface;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
+use Whoops\Exception\ErrorException;
 
 abstract class Router implements RouterInterface
 {
@@ -53,11 +52,14 @@ abstract class Router implements RouterInterface
         try {
             $response = static::execute($this->resource, $this->method, $this->path, $this->params, $this->format);
 
-        } catch (\Whoops\Exception\ErrorException $e) {
+        } catch (ErrorException $e) {
             throw $e;
 
         } catch (\Exception $e) {
             // Handle errors.
+            if ($this->container->debug()) {
+                throw $e;
+            }
             $response = $this->getErrorResponse($e, $this->format == 'json');
         }
 
@@ -74,7 +76,7 @@ abstract class Router implements RouterInterface
         }
 
         if (!class_exists($class)) {
-            if ($format == 'json') {
+            if ($format === 'json') {
                 // Special case: All HTML requests can be returned also as JSON.
                 $response = $this->execute($resource, $method, $path, $params, 'html');
                 return $response instanceof JsonResponse ? $response : new JsonResponse($response);
@@ -111,7 +113,7 @@ abstract class Router implements RouterInterface
         static $loaded = false;
 
         if ($loaded) {
-            return;
+            return $this;
         }
 
         $loaded = true;
@@ -130,11 +132,8 @@ abstract class Router implements RouterInterface
         }
 
         $this->container['admin.theme'] = function () {
-            return new \Gantry\Admin\Theme(GANTRYADMIN_PATH);
+            return new Theme(GANTRYADMIN_PATH);
         };
-
-        // Boot the service.
-        $this->container['admin.theme'];
 
         // Add event listener.
         if (class_exists('Gantry\\Admin\\EventListener')) {
@@ -144,6 +143,9 @@ abstract class Router implements RouterInterface
             $events = $this->container['events'];
             $events->addSubscriber($listener);
         }
+
+        // Boot the service.
+        $this->container['admin.theme'];
 
         return $this;
     }

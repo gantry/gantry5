@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +13,7 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Remote\Response as RemoteResponse;
 use Gantry\Component\Response\JsonResponse;
 
@@ -59,14 +58,14 @@ class Changelog extends JsonController
                 $changelog = \Parsedown::instance()->parse($changelog[0]);
 
                 // auto-link issues
-                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" href="' . $this->issues . '/$1">#$1</a>', $changelog);
+                $changelog = preg_replace("/#(\\d{1,})/uis", '<a target="_blank" rel="noopener" href="' . $this->issues . '/$1">#$1</a>', $changelog);
 
                 // auto-link contributors
-                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
+                $changelog = preg_replace("/@([\\w]+)[^\\w]/uis", '<a target="_blank" rel="noopener" href="' . $this->contrib . '/$1">@$1</a> ', $changelog);
 
                 // add icons for platforms
                 foreach($this->platforms as $platform => $icon) {
-                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '"></i> ', $changelog);
+                    $changelog = preg_replace('/(<a href="\#' . $platform . '">)/uis', '$1<i class="fa fa-' . ($icon ?: $platform) . '" aria-hidden="true"></i> ', $changelog);
                 }
             } else {
                 $changelog = 'No changelog for version <strong>' . $version . '</strong> was found.';
@@ -74,7 +73,7 @@ class Changelog extends JsonController
         }
 
         $response = [
-            'html' => $this->container['admin.theme']->render('@gantry-admin/ajax/changelog.html.twig', [
+            'html' => $this->render('@gantry-admin/ajax/changelog.html.twig', [
                 'changelog' => $changelog,
                 'version'   => $version,
                 'url'       => $url,

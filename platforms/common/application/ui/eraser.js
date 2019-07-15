@@ -25,6 +25,9 @@ var Eraser = new prime({
         if (typeof this.top !== 'undefined') { return; }
         this.top = parseInt(this.element.compute('top'), 10);
         this.left = $('#g5-container')[0].getBoundingClientRect().left;
+        if (GANTRY_PLATFORM == 'grav') {
+            this.left = 0;
+        }
     },
 
     show: function(fast){

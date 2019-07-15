@@ -1,0 +1,19 @@
+{% include 'style.html.twig' %}
+
+<div class="g5i">
+    <h1>
+        <span class="g5-title">{{ name }} Template Installed</span>
+        <span class="g5-info">v{{ version }} / {{ date }}</span>
+    </h1>
+
+    <p>By Installing Sample Data a new Home menu item will be created. The Home menu item and this template will be set as default. Other sample pages will be created as well. Click the button below to proceed.</p>
+
+    <div class="g5-actions">
+        <a href="{{ install_url }}" class="g5-button"><span class="g5-icon icon-cube"></span> Install Sample Data</a>
+        <a href="{{ edit_url }}" class="g5-button">Configure {{ name }} <span class="g5-icon icon-chevron-right"></span></a>
+    </div>
+
+    <div class="g5-rockettheme">
+        <a href="http://rockettheme.com"><span>RocketTheme</span></a>
+    </div>
+</div>

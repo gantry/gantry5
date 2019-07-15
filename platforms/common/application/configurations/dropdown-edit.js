@@ -37,7 +37,7 @@ var refreshWordpressLinks = function (title, value) {
         currentURI = setParam(currentURI, 'view', currentView);
         History.replaceState({ uuid: guid(), doNothing: true }, window.document.title, currentURI);
     }
-}
+};
 
 ready(function() {
     var body = $('body');
@@ -52,7 +52,7 @@ ready(function() {
     });
 
     body.delegate('mousedown', '.config-select-wrap [data-title-edit]', function(event, element) {
-        selectized = element.siblings('.selectize-control');
+        selectized = element.siblings('.g-selectize-control');
         select = element.siblings('select');
         editable = element.siblings('[data-title-editable]');
 

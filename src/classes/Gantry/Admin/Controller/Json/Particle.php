@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,15 +13,11 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Admin\Controller\Html\Settings;
-use Gantry\Component\Config\BlueprintsForm;
+use Gantry\Component\Admin\JsonController;
+use Gantry\Component\Config\BlueprintSchema;
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
-use Gantry\Component\Controller\JsonController;
-use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Particle extends JsonController
 {
@@ -60,8 +56,8 @@ class Particle extends JsonController
         $particles = [
             'position'    => [],
             'spacer'      => [],
-            'pagecontent' => [],
-            'particle' => [],
+            'system'      => [],
+            'particle'    => [],
         ];
 
         $particles = array_replace($particles, $this->getParticles());
@@ -78,7 +74,7 @@ class Particle extends JsonController
         }
 
         $this->params['particles'] = $groups;
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle-picker.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -88,7 +84,7 @@ class Particle extends JsonController
      */
     public function selectModule()
     {
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/module-picker.html.twig', $this->params)]);
     }
 
     /**
@@ -107,10 +103,8 @@ class Particle extends JsonController
         }
 
         // TODO: add support for other block types as well, like menu.
-        // $file = CompiledYamlFile::instance("gantry-admin://blueprints/layout/block.yaml");
-        // $block = new BlueprintsForm($file->content());
-        // $file->free();
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        // $block = BlueprintForm::instance('layout/block.yaml', 'gantry-admin://blueprints');
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
@@ -137,7 +131,7 @@ class Particle extends JsonController
             'action'        => "particle/{$name}/validate"
         ];
 
-        return new JsonResponse(['html' => $this->container['admin.theme']->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
+        return new JsonResponse(['html' => $this->render('@gantry-admin/modals/particle.html.twig', $this->params)]);
     }
 
     /**
@@ -149,10 +143,10 @@ class Particle extends JsonController
     public function validate($name)
     {
         // Load particle blueprints and default settings.
-        $validator = new Blueprints();
+        $validator = new BlueprintSchema;
         $validator->embed('options', $this->container['particles']->get($name));
 
-        $blueprints = new BlueprintsForm($this->container['particles']->get($name));
+        $blueprints = $this->container['particles']->getBlueprintForm($name);
 
         // Create configuration from the defaults.
         $data = new Config([],
@@ -194,7 +188,8 @@ class Particle extends JsonController
         foreach ($particles as $name => $particle) {
             $type = isset($particle['type']) ? $particle['type'] : 'particle';
             $particleName = isset($particle['name']) ? $particle['name'] : $name;
-            $list[$type][$name] = $particleName;
+            $particleIcon = isset($particle['icon']) ? $particle['icon'] : null;
+            $list[$type][$name] = ['name' => $particleName, 'icon' => $particleIcon];
         }
 
         return $list;
@@ -205,18 +200,10 @@ class Particle extends JsonController
      *
      * @param string $name
      *
-     * @return BlueprintsForm
+     * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
     {
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-
-        $filename = $locator("gantry-admin://blueprints/menu/{$name}.yaml");
-        $file = CompiledYamlFile::instance($filename);
-        $blueprints = new BlueprintsForm($file->content());
-        $file->free();
-
-        return $blueprints;
+        return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 }

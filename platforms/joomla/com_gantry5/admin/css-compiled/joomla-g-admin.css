@@ -1,0 +1,197 @@
+html {
+  height: inherit !important;
+}
+
+textarea, input, .input-append, .input-prepend, #sbox-window {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+body.com_gantry5 {
+  color: #ddd;
+  background-color: #404040 !important;
+}
+@media (max-width: 767px) {
+  body.com_gantry5 #g5-container {
+    margin-left: -20px;
+    margin-right: -5px;
+  }
+}
+body.com_gantry5 textarea, body.com_gantry5 input, body.com_gantry5 .input-append, body.com_gantry5 .input-prepend {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body.com_gantry5 a {
+  text-decoration: none;
+}
+body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header {
+  display: none;
+}
+body.com_gantry5 .container-main {
+  padding: 0;
+}
+body.com_gantry5 #status {
+  box-shadow: none !important;
+}
+body.com_gantry5 #footer a {
+  color: #3180C2;
+}
+body.com_gantry5 #g5-container .inner-container {
+  margin: 0;
+}
+body.com_gantry5 #g5-container li {
+  line-height: inherit;
+}
+body.com_gantry5 #g5-container textarea, body.com_gantry5 #g5-container input {
+  box-shadow: none;
+}
+body.com_gantry5 #g5-container input, body.com_gantry5 #g5-container button, body.com_gantry5 #g5-container select, body.com_gantry5 #g5-container textarea {
+  font-family: inherit;
+}
+body.com_gantry5 nav.navbar * {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+body.com_gantry5 > div:last-child[style^="position: absolute; z-index: -1; top: 0px; left: 0px; right: 0px; height: "] {
+  display: none;
+}
+
+body.com_modules #g5-container, body.com_advancedmodules #g5-container, body.com_menus #g5-container {
+  font-size: inherit;
+}
+body.com_modules #g5-container .inner-container, body.com_advancedmodules #g5-container .inner-container, body.com_menus #g5-container .inner-container {
+  color: inherit;
+  margin: 0;
+  box-shadow: none;
+}
+body.com_modules #g5-container .main-block, body.com_advancedmodules #g5-container .main-block, body.com_menus #g5-container .main-block {
+  background-color: inherit;
+}
+body.com_modules #g5-container .g-content, body.com_advancedmodules #g5-container .g-content, body.com_menus #g5-container .g-content {
+  margin: 0;
+  padding: 0;
+}
+body.com_modules #g5-container .g-instancepicker-title, body.com_advancedmodules #g5-container .g-instancepicker-title, body.com_menus #g5-container .g-instancepicker-title {
+  font-size: 1rem;
+  font-style: italic;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  display: inline-block;
+}
+body.com_modules #g5-container .g-instancepicker-title:empty, body.com_advancedmodules #g5-container .g-instancepicker-title:empty, body.com_menus #g5-container .g-instancepicker-title:empty {
+  margin-right: 0;
+}
+body.com_modules #g5-container .g-instancepicker-title + .button, body.com_advancedmodules #g5-container .g-instancepicker-title + .button, body.com_menus #g5-container .g-instancepicker-title + .button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#g5-container .button-primary {
+  background: #3180C2;
+  color: #fff;
+}
+#g5-container .button-primary:not(.disabled):not([disabled]):hover, #g5-container .button-primary:focus {
+  background: #2b70aa;
+  color: #fff;
+}
+
+body.com_gantry5 #g5-container [data-mode-indicator="production"] {
+  background-color: #3180C2;
+}
+body.com_gantry5 #g5-container #main-header .g-content {
+  padding: 0 1.563rem;
+}
+body.com_gantry5 #g5-container #main-header .dev-mode-toggle {
+  background: #276599;
+}
+body.com_gantry5 #g5-container #main-header .dev-mode-toggle a {
+  background: #67a5d9;
+}
+body.com_gantry5 #g5-container #main-header .button-save {
+  background: #67a5d9;
+  color: #fff;
+}
+body.com_gantry5 #g5-container #main-header .button-save:not(.disabled):not([disabled]):hover, body.com_gantry5 #g5-container #main-header .button-save:focus {
+  background: #4e96d2;
+  color: #fff;
+}
+body.com_gantry5 #g5-container #main-header ul li a:focus {
+  background: #296ba1;
+}
+body.com_gantry5 #g5-container #main-header ul li:hover a {
+  background: #296ba1;
+}
+body.com_gantry5 #g5-container #main-header ul li.active a {
+  background: #225885;
+}
+body.com_gantry5 #g5-container #navbar {
+  padding: 0 0.625rem;
+}
+body.com_gantry5 #g5-container .inner-header {
+  background-color: #222;
+  color: #3180C2;
+}
+body.com_gantry5 #g5-container .settings-state {
+  background: #3180C2;
+  color: #fff;
+}
+body.com_gantry5 #g5-container .button.button-update {
+  background: #633679;
+  color: #fff;
+}
+body.com_gantry5 #g5-container .button.button-update:not(.disabled):not([disabled]):hover, body.com_gantry5 #g5-container .button.button-update:focus {
+  background: #522c64;
+  color: #fff;
+}
+body.com_gantry5 #g5-container .tooltip {
+  position: static;
+  opacity: 1;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+#g5-container .overview-header .theme-title {
+  color: #3180C2;
+}
+
+#g5-container h1 {
+  font-size: 2.25rem;
+}
+#g5-container h2 {
+  font-size: 1.9rem;
+}
+#g5-container h3 {
+  font-size: 1.5rem;
+}
+#g5-container h4 {
+  font-size: 1.15rem;
+}
+#g5-container h5 {
+  font-size: 1rem;
+}
+#g5-container h6 {
+  font-size: 0.85rem;
+}
+#g5-container h1, #g5-container h2, #g5-container h3, #g5-container h4, #g5-container h5, #g5-container h6 {
+  line-height: inherit;
+}
+#g5-container .page-title {
+  color: inherit;
+  text-shadow: none;
+  line-height: inherit;
+}
+
+body.com_gantry5 #g5-container .navbar-block #gantry-logo {
+  right: 2.1rem;
+}
+
+#g5-container .settings-block input:focus, #g5-container .settings-block textarea:focus, #g5-container .settings-block select:focus {
+  border-color: rgba(49, 128, 194, 0.5);
+}
+
+
+
+/*# sourceMappingURL=joomla-g-admin.css.map */

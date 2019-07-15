@@ -1,23 +1,39 @@
 "use strict";
-var ready      = require('elements/domready'),
-    $          = require('elements/attributes'),
-    storage    = require('prime/map'),
-    deepEquals = require('mout/lang/deepEquals'),
-    is         = require('mout/lang/is'),
-    isString   = require('mout/lang/isString'),
-    hasOwn     = require('mout/object/has'),
-    forEach    = require('mout/collection/forEach'),
-    invoke     = require('mout/array/invoke'),
-    History    = require('../utils/history'),
-    flags      = require('../utils/flags-state');
+var ready         = require('elements/domready'),
+    $             = require('elements/attributes'),
+    storage       = require('prime/map'),
+    deepEquals    = require('mout/lang/deepEquals'),
+    is            = require('mout/lang/is'),
+    isString      = require('mout/lang/isString'),
+    hasOwn        = require('mout/object/has'),
+    forEach       = require('mout/collection/forEach'),
+    invoke        = require('mout/array/invoke'),
+    History       = require('../utils/history'),
+    flags         = require('../utils/flags-state'),
+    submit        = require('./submit');
 
+require('./multicheckbox');
 
 var originals,
     collectFieldsValues = function(keys) {
         var map      = new storage(),
-            defaults = $('[data-g-styles-defaults]');
+            defaults = $('[data-g-styles-defaults]'),
+            overridables = $('input[type="checkbox"].settings-param-toggle');
 
         defaults = defaults ? JSON.parse(defaults.data('g-styles-defaults')) : {};
+
+        // keep track of overrides getting enabled / disabled
+        // in order to detect if has changed
+        if (overridables) {
+            var overrides = {};
+
+            overridables.forEach(function(override) {
+                override = $(override);
+                overrides[override.id()] = override.checked();
+            });
+
+            map.set('__js__overrides', JSON.stringify(overrides));
+        }
 
         if (keys) {
             var field;
@@ -71,9 +87,14 @@ ready(function() {
         var parent      = element.parent('.settings-param') || element.parent('h4') || element.parent('.input-group'),
             target      = parent ? (parent.matches('h4') ? parent : parent.find('.settings-param-title, .g-instancepicker-title')) : null,
             isOverride  = parent ? parent.find('.settings-param-toggle') : false,
-            isNewWidget = false;
+            isNewWidget = false,
+            isOverrideToggle = element.hasClass('settings-param-toggle');
 
         if (!parent) { return; }
+
+        if (isOverrideToggle) {
+            return compare.whole('force');
+        }
 
         if (element.type() == 'checkbox') {
             element.value(Number(element.checked()).toString());
@@ -99,6 +120,7 @@ ready(function() {
     };
 
     compare.whole = function(force) {
+        if (!originals) { return; }
         var equals = deepEquals(originals, collectFieldsValues(force ? originals.keys() : null), function(a, b) {
                 if (isString(a) && isString(b) && a.substr(0, 1) == '#' && b.substr(0, 1) == '#') {
                     return a.toLowerCase() == b.toLowerCase();
@@ -144,13 +166,17 @@ ready(function() {
         var fields, equals;
         presetsCache.forEach(function(data, element) {
             fields = collectFieldsValues(data.map.keys());
+
+            // Do not consider __js__overrides when comparing for equality
+            fields.unset('__js__overrides');
+
             equals = deepEquals(fields, data.map, function(a, b) { return a == b; });
             $($('[data-g-styles]')[data.index]).parent()[equals ? 'addClass' : 'removeClass']('g-preset-match');
         });
     };
 
     body.delegate('input', '.settings-block input[name][type="text"], .settings-block textarea[name]', compare.single);
-    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name]', compare.single);
+    body.delegate('change', '.settings-block input[name][type="hidden"], .settings-block input[name][type="checkbox"], .settings-block select[name], .settings-block .selectized[name], .settings-block input[id][type="checkbox"].settings-param-toggle', compare.single);
 
     body.delegate('input', '.g-urltemplate', function(event, element) {
         var previous = element.parent('.settings-param').siblings();
@@ -198,5 +224,6 @@ ready(function() {
 
 module.exports = {
     compare: compare,
-    collect: collectFieldsValues
+    collect: collectFieldsValues,
+    submit: submit
 };

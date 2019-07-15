@@ -1,20 +1,22 @@
 'use strict';
-var $             = require('elements'),
-    ready         = require('elements/domready'),
+var $                  = require('elements'),
+    ready              = require('elements/domready'),
+    zen                = require('elements/zen'),
+    Submit             = require('../fields/submit'),
+    modal              = require('../ui').modal,
+    toastr             = require('../ui').toastr,
+    Eraser             = require('../ui/eraser'),
+    request            = require('agent'),
+    indexOf            = require('mout/array/indexOf'),
+    simpleSort         = require('sortablejs'),
 
-    zen           = require('elements/zen'),
-    modal         = require('../ui').modal,
-    toastr        = require('../ui').toastr,
-    Eraser        = require('../ui/eraser'),
-    request       = require('agent'),
-    indexOf       = require('mout/array/indexOf'),
-    simpleSort    = require('sortablejs'),
+    trim               = require('mout/string/trim'),
+    size               = require('mout/object/size'),
 
-    trim          = require('mout/string/trim'),
-
-    parseAjaxURI  = require('../utils/get-ajax-url').parse,
-    getAjaxSuffix = require('../utils/get-ajax-suffix'),
-    validateField = require('../utils/field-validation');
+    parseAjaxURI       = require('../utils/get-ajax-url').parse,
+    getAjaxSuffix      = require('../utils/get-ajax-suffix'),
+    getOutlineNameById = require('../utils/get-outline').getOutlineNameById,
+    translate          = require('../utils/translate');
 
 var AtomsField   = '[name="page[head][atoms][_json]"]',
     groupOptions = [
@@ -85,9 +87,21 @@ var Atoms = {
                 },
 
                 onEnd: function(event) {
-                    var item = $(event.item);
-                    var target = $(this.originalEvent.target);
-                    if (target.matches('#trash') || target.parent('#trash')) {
+                    var item       = $(event.item),
+                        trash      = $('#trash'),
+                        target     = $(this.originalEvent.target),
+                        touchTrash = false;
+
+                    // workaround for touch devices
+                    if (this.originalEvent.type === 'touchend') {
+                        var trashSize = trash[0].getBoundingClientRect(),
+                            oE        = this.originalEvent,
+                            position  = (oE.pageY || oE.changedTouches[0].pageY) - window.scrollY;
+
+                        touchTrash = position <= trashSize.height;
+                    }
+
+                    if (target.matches('#trash') || target.parent('#trash') || touchTrash) {
                         item.remove();
                         Atoms.eraser.hide();
                         this.options.onSort();
@@ -145,16 +159,15 @@ var AttachSettings = function() {
             itemData  = item.data('atom-picked');
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             data: { data: itemData },
-            remote: element.attribute('href') + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(element.attribute('href') + getAjaxSuffix()),
             remoteLoaded: function(response, content) {
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
-                    dataString = [],
-                    invalid    = [],
                     dataValue  = JSON.parse(data);
 
                 if (modal.getAll().length > 1) {
@@ -170,44 +183,23 @@ var AttachSettings = function() {
                 submit.on('click', function(e) {
                     e.preventDefault();
 
-                    var target = $(e.target);
-
-                    dataString = [];
-                    invalid = [];
+                    var target = $(e.currentTarget);
 
                     target.hideIndicator();
                     target.showIndicator();
 
-                    $(fakeDOM[0].elements).forEach(function(input) {
-                        input = $(input);
-                        var name = input.attribute('name');
-                        if (!name || input.disabled()) { return; }
+                    // Refresh the form to collect fresh and dynamic fields
+                    var formElements = content.elements.content.find('form')[0].elements;
+                    var post = Submit(formElements, content.elements.content);
 
-                        input = content.elements.content.find('[name="' + name + '"]');
-                        var value    = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                            parent   = input.parent('.settings-param'),
-                            override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                        override = override || $(input.data('override-target'));
-
-                        if (override && !override.checked()) { return; }
-                        if (!validateField(input)) { invalid.push(input); }
-                        dataString.push(name + '=' + encodeURIComponent(value));
-                    });
-
-                    var title = content.elements.content.find('h4 [data-title-editable]');
-                    if (title) {
-                        dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-                    }
-
-                    if (invalid.length) {
+                    if (post.invalid.length) {
                         target.hideIndicator();
                         target.showIndicator('fa fa-fw fa-exclamation-triangle');
-                        toastr.error('Please review the fields in the modal and ensure you correct any invalid one.', 'Invalid Fields');
+                        toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
                         return;
                     }
 
-                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                    request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                         if (!response.body.success) {
                             modal.open({
                                 content: response.body.html || response.body,
@@ -224,11 +216,24 @@ var AttachSettings = function() {
                             item.data('atom-picked', JSON.stringify(dataValue[index]).replace(/\//g, '\\/'));
 
                             // toggle enabled/disabled status as needed
-                            var enabled = Number(dataValue[index].attributes.enabled);
+                            var enabled    = Number(dataValue[index].attributes.enabled),
+                                inheriting = response.body.item.inherit && size(response.body.item.inherit);
                             item[enabled ? 'removeClass' : 'addClass']('atom-disabled');
-                            item.attribute('title', enabled ? null : 'This atom has been disabled and it won\'t be rendered on front-end. You can still configure, move and delete.');
+                            item[!inheriting ? 'removeClass' : 'addClass']('g-inheriting');
+                            item.attribute('title', enabled ? '' : translate('GANTRY5_PLATFORM_JS_LM_DISABLED_PARTICLE', 'atom'));
+
+                            item.data('tip', null);
+                            if (inheriting) {
+                                var inherit = response.body.item.inherit,
+                                    outline = getOutlineNameById(inherit ? inherit.outline : null),
+                                    atom = inherit.atom || '',
+                                    include = (inherit.include || []).join(', ');
+
+                                item.data('tip', translate('GANTRY5_PLATFORM_INHERITING_FROM_X', '<strong>' + outline + '</strong>') + '<br />ID: ' + atom + '<br />Replace: ' + include);
+                            }
 
                             body.emit('change', { target: dataField });
+                            global.G5.tips.reload();
 
                             // if it's apply and save we also save the panel
                             if (target.data('apply-and-save') !== null) {
@@ -237,7 +242,7 @@ var AttachSettings = function() {
                             }
 
                             modal.close();
-                            toastr.success('Atom Item updated', 'Item Updated');
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_GENERIC_SETTINGS_APPLIED', 'Atom'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
 
                         target.hideIndicator();
@@ -248,11 +253,19 @@ var AttachSettings = function() {
     });
 };
 
+var AttachSortableAtoms = function(atoms) {
+    if (!atoms) { return; }
+    if (!atoms.SimpleSort) { Atoms.createSortables(atoms); }
+};
+
 ready(function() {
+    var atoms = $('#atoms');
+
     $('body').delegate('mouseover', '#atoms', function(event, element) {
-        if (!element.SimpleSort) { Atoms.createSortables(element); }
+        AttachSortableAtoms(element);
     });
 
+    AttachSortableAtoms(atoms);
     AttachSettings();
 });
 

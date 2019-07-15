@@ -1,0 +1,108 @@
+version: 2
+preset:
+  image: 'gantry-admin://images/layouts/default.png'
+  name: _offline
+  timestamp: 1468259562
+layout:
+  /navigation/:
+    -
+      - system-messages-9719
+    -
+      - 'logo-9608 15'
+      - 'spacer-6015 65'
+      - 'social-3171 20'
+  /header/:
+    -
+      - custom-7185
+  /intro/: {  }
+  /features/: {  }
+  /utility/: {  }
+  /above/: {  }
+  /testimonials/: {  }
+  /expanded/: {  }
+  /container-main/:
+    -
+      -
+        'mainbar 75':
+          -
+            - system-content-3997
+          -
+            - system-messages-9096
+      -
+        'sidebar 25': {  }
+  /footer/:
+    -
+      - 'logo-9571 10'
+      - 'copyright-1736 30'
+      - 'spacer-8094 45'
+      - 'totop-8670 15'
+  /offcanvas/: {  }
+structure:
+  navigation:
+    type: section
+    attributes:
+      boxed: ''
+  header:
+    type: section
+    subtype: header
+    attributes:
+      boxed: ''
+      class: ''
+  intro:
+    type: section
+    attributes:
+      boxed: ''
+  features:
+    type: section
+    attributes:
+      boxed: ''
+  utility:
+    type: section
+    attributes:
+      boxed: ''
+      class: ''
+  above:
+    type: section
+    attributes:
+      boxed: ''
+  testimonials:
+    type: section
+    attributes:
+      boxed: ''
+  expanded:
+    type: section
+    attributes:
+      boxed: ''
+  mainbar:
+    type: section
+    subtype: main
+  sidebar:
+    type: section
+    subtype: aside
+  container-main:
+    attributes:
+      boxed: ''
+  footer:
+    type: section
+    subtype: footer
+    attributes:
+      boxed: ''
+  offcanvas:
+    attributes:
+      boxed: ''
+content:
+  logo-9608:
+    title: 'Logo / Image'
+  social-3171:
+    block:
+      class: g-social-header
+  custom-7185:
+    title: 'Custom HTML'
+    attributes:
+      html: "<h2 class=\"g-title\">Offline</h2>\n<p>Sorry, We are Down for Maintenance.</p>"
+  logo-9571:
+    title: 'Logo / Image'
+    attributes:
+      image: 'gantry-media://logo/logo-footer.svg'
+  totop-8670:
+    title: 'To Top'

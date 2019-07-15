@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +14,8 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Framework\Base\Gantry;
+use Gantry\Component\Filesystem\Streams;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -28,6 +29,7 @@ class ThemeDetails implements \ArrayAccess
     use NestedArrayAccessWithGetters, Export;
 
     protected $items;
+    protected $parent;
 
     /**
      * Create new theme details.
@@ -54,10 +56,39 @@ class ThemeDetails implements \ArrayAccess
 
         $this->offsetSet('name', $theme);
 
-        $parent = (string) $this->offsetGet('configuration.theme.parent', $theme);
+        $parent = (string) $this->get('configuration.theme.parent', $theme);
         $parent = $parent != $theme ? $parent : null;
 
         $this->offsetSet('parent', $parent);
+    }
+
+    /**
+     * @return string
+     */
+    public function addStreams()
+    {
+        $gantry = Gantry::instance();
+
+        // Initialize theme stream.
+        $streamName = $this->addStream($this->offsetGet('name'), $this->getPaths());
+
+        // Initialize parent theme streams.
+        $loaded = [$this->offsetGet('name')];
+        $details = $this;
+
+        while ($details = $details->parent()) {
+            if (in_array($details->name, $loaded)) {
+                break;
+            }
+            $this->addStream($details->name, $details->getPaths(false));
+            $loaded[] = $details->name;
+        }
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
+
+        return $streamName;
     }
 
     /**
@@ -70,7 +101,7 @@ class ThemeDetails implements \ArrayAccess
     {
         $parent = $this->offsetGet('parent');
 
-        if ($parent && !$this->parent) {
+        if (!$this->parent && $parent) {
             try {
                 $this->parent = new ThemeDetails($parent);
             } catch (\RuntimeException $e) {
@@ -86,10 +117,10 @@ class ThemeDetails implements \ArrayAccess
      *
      * @return array
      */
-    public function getPaths()
+    public function getPaths($overrides = true)
     {
         $paths = array_merge(
-            (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom'),
+            $overrides ? (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom') : [],
             ['gantry-theme://'],
             (array) $this->get('configuration.theme.base', 'gantry-theme://common')
         );
@@ -115,7 +146,7 @@ class ThemeDetails implements \ArrayAccess
         $uri = (string) $this->offsetGet($path);
 
         if (strpos($uri, 'gantry-theme://') === 0) {
-            list ($scheme, $uri) = explode('://', $uri, 2);
+            list (, $uri) = explode('://', $uri, 2);
         }
         if (!strpos($uri, '://')) {
             $name = $this->offsetGet('name');
@@ -152,7 +183,7 @@ class ThemeDetails implements \ArrayAccess
     public function parsePath($path)
     {
         if (strpos($path, 'gantry-theme://') === 0) {
-            list ($scheme, $path) = explode('://', $path, 2);
+            list (, $path) = explode('://', $path, 2);
         }
         if (!strpos($path, '://')) {
             $name = $this->offsetGet('name');
@@ -169,5 +200,29 @@ class ThemeDetails implements \ArrayAccess
     public function getParent()
     {
         return $this->offsetGet('parent');
+    }
+
+    /**
+     * @param string $name
+     * @param array $paths
+     * @return string|null
+     */
+    protected function addStream($name, $paths)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+
+        // Add theme stream.
+        $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $name);
+        if (!$locator->schemeExists($streamName)) {
+            $streams->add([$streamName => ['paths' => $paths]]);
+        }
+
+        return $streamName;
     }
 }

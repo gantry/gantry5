@@ -1,19 +1,33 @@
 {% set children = (item.level == 1 ? item.group(group) : item.children) %}
 
+<div class="submenu-level">Level {{ item.level }}</div>
 <ul class="submenu-items" data-mm-base="{{ item.path }}" data-mm-base-level="{{ item.level }}">
     {%- if item.level > 1 %}
         <li>
-            <a class="menu-item" data-g5-ajaxify="" data-g5-ajaxify-params="{{ {'inline': 1, 'group': group}|json_encode|escape('html_attr') }}" data-g5-ajaxify-target-parent=".submenu-column" href="{{ gantry.route('menu', id, item.parent.path) }}">
+            <a class="menu-item menu-item-back"
+               data-g5-ajaxify=""
+               data-g5-ajaxify-params="{{ {'inline': 1, 'group': group}|json_encode|escape('html_attr') }}"
+               data-g5-ajaxify-target-parent=".submenu-column"
+               href="{{ gantry.route('menu', id, item.parent.path) }}"
+            >
                 {% for i in range(1, item.level-1) %}
-                <i class="fa fa-fw fa-chevron-left"></i> &nbsp;
+                <i class="fa fa-fw fa-chevron-left" aria-hidden="true"></i> &nbsp;
                 {% endfor %}
             </a>
         </li>
     {% endif -%}
     {%- for child in children %}
-        <li data-mm-id="{{ child.path }}" data-mm-level="{{ child.level }}"{% if child.type == 'particle' or child.type == 'module' %} class="g-menu-item-{{ child.type }}" data-mm-original-type="{{ child.type }}"{% endif %}>
+        <li data-mm-id="{{ child.path }}"
+            data-mm-level="{{ child.level }}"
+            {% if child.type == 'particle' or child.type == 'module' %}
+            class="g-menu-item-{{ child.type }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
+            data-mm-original-type="{{ child.type }}"
+            {% else %}
+                class="{% if child.enabled == false %}g-menu-item-disabled{% endif %}"
+            {% endif %}
+        >
             {% include 'menu/item.html.twig' with {'item': child, 'target': 'list-' ~ group } %}
         </li>
     {% endfor -%}
 </ul>
-<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h"></i></span>
+<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h" aria-hidden="true"></i></span>

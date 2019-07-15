@@ -1,0 +1,22 @@
+// Entry Meta
+#g-page-surround {
+    .entry-meta {
+        margin-top: 0;
+        margin-bottom: 2rem;
+
+        > div[class^="meta-"] {
+            display: inline-block;
+            margin: 0;
+            font-family: get-font-family($font-family-default);
+            text-transform: uppercase;
+            font-size: $core-font-size - 0.15;
+            line-height: $core-line-height - 0.15;
+
+            &:not(:last-child):after {
+                content: "/";
+                margin: 0 5px;
+                color: $base-border-color;
+            }
+        }
+    }
+}

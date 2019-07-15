@@ -3,6 +3,8 @@
  * Helper class G5ThemeHelper containing useful theme functions and hooks
  */
 
+defined('ABSPATH') or die;
+
 // Extend Timber context
 add_filter('timber_context', array('G5ThemeHelper', 'add_to_context'));
 
@@ -25,7 +27,7 @@ class G5ThemeHelper
     public static function add_to_context(array $context)
     {
         $context['is_user_logged_in'] = is_user_logged_in();
-        $context['pagination']        = Timber::get_pagination();
+        $context['pagination']        = Timber\Timber::get_pagination();
 
         return $context;
     }
@@ -70,7 +72,7 @@ class G5ThemeHelper
                 <?php comment_text(); ?>
 
                 <?php comment_reply_link(array_merge($args,
-                    array('before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
+                    array('add_below' => 'div-comment', 'before' => '<div class="comment-reply">', 'after' => '</div>', 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
             </section>
 
         </article>

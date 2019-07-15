@@ -3,13 +3,16 @@
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
+    Submit        = require('../../fields/submit'),
     modal         = require('../../ui').modal,
     request       = require('agent'),
     trim          = require('mout/string/trim'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
-    getAjaxSuffix = require('../../utils/get-ajax-suffix');
+    getAjaxSuffix = require('../../utils/get-ajax-suffix'),
+    translate     = require('../../utils/translate');
 
+var WordpressWidgetsCustomizer = require('../../utils/wp-widgets-customizer');
 
 ready(function() {
     var body = $('body'),
@@ -60,11 +63,17 @@ ready(function() {
         if (data.modal_close) { return true; }
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: !value || data.type == 'module' ? 'get' : 'post', // data.type == moduleType[GANTRY_PLATFORM]
             data: !value || data.type == 'module' ? {} : value, // data.type == moduleType[GANTRY_PLATFORM]
-            remote: getAjaxURL(uri) + getAjaxSuffix(),
+            overlayClickToClose: false,
+            remote: parseAjaxURI(getAjaxURL(uri) + getAjaxSuffix()),
             remoteLoaded: function(response, modalInstance) {
+                if (!response.body.success) {
+                    modal.enableCloseByOverlay();
+                    return;
+                }
+
                 var content = modalInstance.elements.content,
                     select = content.find('[data-mm-select]');
 
@@ -94,7 +103,9 @@ ready(function() {
                         if (found.length) { $(found).removeClass('hidden'); }
                     });
 
-                    search[0].focus();
+                    setTimeout(function() {
+                        search[0].focus();
+                    }, 5);
                 }
 
                 var elementData = JSON.parse(element.data('g-instancepicker'));
@@ -103,8 +114,7 @@ ready(function() {
                 else {
                     var form = content.find('form'),
                         fakeDOM = zen('div').html(response.body.html || response.body).find('form'),
-                        submit = content.find('input[type="submit"], button[type="submit"]'),
-                        dataString = [];
+                        submit = content.find('input[type="submit"], button[type="submit"]');
 
                     if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -113,34 +123,12 @@ ready(function() {
 
                     submit.on('click', function(e) {
                         e.preventDefault();
-                        dataString = [];
 
                         submit.showIndicator();
 
-                        $(fakeDOM[0].elements).forEach(function(input) {
-                            input = $(input);
-                            var name = input.attribute('name');
-                            if (!name || input.disabled()) { return; }
+                        var post = Submit(fakeDOM[0].elements, content);
 
-                            input = content.find('[name="' + name + '"]');
-                            var value = value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                                parent = input.parent('.settings-param'),
-                                override = parent ? parent.find('> input[type="checkbox"]') : null;
-                            override = override || $(input.data('override-target'));
-
-                            if (override && !override.checked()) { return; }
-
-                            if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                                dataString.push(name + '=' + encodeURIComponent(value));
-                            }
-                        });
-
-                        var title = content.find('[data-title-editable]');
-                        if (title) {
-                            dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-                        }
-
-                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+                        request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                             if (!response.body.success) {
                                 modal.open({
                                     content: response.body.html || response.body,
@@ -162,6 +150,8 @@ ready(function() {
 
                             modal.close();
                             submit.hideIndicator();
+
+                            WordpressWidgetsCustomizer(field);
                         });
                     });
 

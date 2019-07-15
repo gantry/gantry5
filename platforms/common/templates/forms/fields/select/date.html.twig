@@ -5,10 +5,10 @@
         <option
                 {# required attribute structures #}
                 {% if key == value %}selected="selected"{% endif %}
-                value="{{ key|e }}"
+                value="{{ key }}"
                 {# non-gloval attribute structures #}
                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                {% if field.options.label is defined %}label="{{ field.options.label|e }}"{% endif %}
-                >{{ key is empty ? text : "now"|date(key)|e }}</option>
+                {% if field.options.label is defined %}label="{{ field.options.label }}"{% endif %}
+                >{{ key is empty ? text : "now"|date(key) }}</option>
     {% endfor %}
 {% endblock %}

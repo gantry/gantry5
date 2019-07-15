@@ -60,7 +60,7 @@ $close-color:               #000;
         border: 1px solid $popover-border-color;
         border-radius: $border-radius-large;
         box-shadow: 0 2px 6px rgba(0,0,0,.15);
-        color: #444;
+        color: $core-text;
         outline: transparent;
 
         &.top,&.top-left,&.top-right     { margin-top: -$popover-arrow-width; }
@@ -298,6 +298,29 @@ $close-color:               #000;
         position: absolute;
     }
 
+    // Generic popovers
+    .g5-popover-generic {
+        ul {
+            @extend %list-reset;
+        }
+
+        a {
+            display: block;
+            padding: 0.4rem;
+            color: $core-text !important;
+
+            &:hover {
+                color: $core-text !important;
+                background-color: #eee;
+                border-radius: $border-radius-base;
+            }
+
+            &:focus {
+                outline: auto;
+            }
+        }
+    }
+
     // Extras
     .g5-popover-extras {
         ul {
@@ -307,10 +330,10 @@ $close-color:               #000;
         a, [data-g-devprod] {
             display: block;
             padding: 0.4rem;
-            color: $core-text;
+            color: $core-text !important;
 
             &:hover {
-                color: $core-text;
+                color: $core-text !important;
                 background-color: #eee;
                 border-radius: $border-radius-base;
             }

@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,8 +17,8 @@ use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\AbstractTheme;
-use Gantry\Component\Theme\ThemeTrait;
 use Gantry\Framework\Platform;
+use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Theme extends AbstractTheme
@@ -53,7 +53,8 @@ class Theme extends AbstractTheme
 
             $files = (new ConfigFileFinder)->locateFiles($paths);
 
-            $config = new CompiledConfig($cache, $files, function() use ($c) {
+            $config = new CompiledConfig($cache, $files, GANTRY5_ROOT);
+            $config->setBlueprints(function() use ($c) {
                 return $c['blueprints'];
             });
 
@@ -69,7 +70,11 @@ class Theme extends AbstractTheme
         $locator = $gantry['locator'];
 
         $nucleus = $patform->getEnginePaths('nucleus')[''];
-        $relpath = Folder::getRelativePath($this->path);
+        if (strpos($this->path, '://')) {
+            $relpath = $this->path;
+        } else {
+            $relpath = Folder::getRelativePath($this->path);
+        }
         $patform->set(
             'streams.gantry-admin.prefixes', [
                 ''        => ['gantry-theme://admin', $relpath, $relpath . '/common', 'gantry-engine://admin'],
@@ -81,6 +86,12 @@ class Theme extends AbstractTheme
         foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
             $locator->addPath('gantry-admin', $prefix, $paths);
         }
+
+        // Fire admin init event.
+        $event = new Event;
+        $event->gantry = $gantry;
+        $event->theme = $this;
+        $gantry->fireEvent('admin.init.theme', $event);
     }
 
     /**
@@ -103,10 +114,14 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */

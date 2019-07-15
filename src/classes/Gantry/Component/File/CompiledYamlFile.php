@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,21 +13,23 @@
 
 namespace Gantry\Component\File;
 
-use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 
 class CompiledYamlFile extends YamlFile
 {
     use CompiledFile;
 
+    static public $defaultCachePath;
+    static public $defaultCaching = true;
+
     protected function __construct()
     {
         parent::__construct();
 
-        $gantry = Gantry::instance();
+        $this->caching(static::$defaultCaching);
 
-        if (isset($gantry['file.yaml.cache.path'])) {
-            $this->setCachePath($gantry['file.yaml.cache.path']);
+        if (static::$defaultCachePath) {
+            $this->setCachePath(static::$defaultCachePath);
         }
     }
 }

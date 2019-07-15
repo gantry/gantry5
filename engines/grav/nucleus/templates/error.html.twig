@@ -1,11 +1,7 @@
-{% extends 'partials/base.html.twig' %}
+{% extends "partials/page.html.twig" %}
 
-{% block content_full %}
-    <div class="error">
-    {{ content }}
-    </div>
-{% endblock %}
+{% block content %}
+    <h1>{{ 'PLUGIN_ERROR.ERROR'|t }} {{ header.http_response_code }}</h1>
 
-{% block footer_section %}
-<br /><br /><br />
+    {{ content|raw }}
 {% endblock %}

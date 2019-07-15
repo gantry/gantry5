@@ -1,0 +1,11 @@
+{% extends "partials/page.html.twig" %}
+
+{% block content %}
+    {{ content|raw }}
+    {{ gantry.global.offline_message|markdown|raw }}
+
+    {% if (page.header.form) %}
+    {% set show_login_form = 1 %}
+    {% include 'partials/login-form.html.twig' %}
+    {% endif %}
+{% endblock %}

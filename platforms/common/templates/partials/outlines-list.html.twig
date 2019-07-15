@@ -1,0 +1,44 @@
+<optgroup label="{{ 'GANTRY5_PLATFORM_GLOBAL_DEFAULTS'|trans }}">
+    <option value="default"
+            {% if configuration == 'default' %}selected="selected"{% endif %}
+            data-data="{{ {params: {navbar: true}, url: gantry.route('configurations/default', configuration_page|default('styles'))}|json_encode|e('html_attr') }}">
+        {{ 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans }}
+    </option>
+</optgroup>
+
+{% set user_conf = gantry.outlines.user %}
+{% if user_conf.count %}
+    <optgroup label="{{ 'GANTRY5_PLATFORM_THEME_OUTLINES'|trans }}">
+        {% for name, title in user_conf %}
+            {% if name == configuration %}
+                {% set selected_title = title %}
+                {% set selected_value = name %}
+            {% endif %}
+            <option value="{{ name }}"
+                    {% if name == configuration %}selected="selected"{% endif %}
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+            >
+                {{ title }}
+            </option>
+        {% endfor %}
+    </optgroup>
+{% endif %}
+
+{% set system_conf = gantry.outlines.system %}
+{% if system_conf.count %}
+    <optgroup label="{{ 'GANTRY5_PLATFORM_SYSTEM_OUTLINES'|trans }}">
+        {% for name, title in system_conf %}
+            {% if name == configuration %}
+                {% set selected_title = title %}
+                {% set selected_value = name %}
+                {% set selected_editable = false %}
+            {% endif %}
+            <option value="{{ name }}"
+                    {% if name == configuration %}selected="selected"{% endif %}
+                    data-data="{{ {params: {navbar: true}, url: gantry.route('configurations', name|e, configuration_page|default('styles'))}|json_encode|e('html_attr') }}"
+            >
+                {{ title }}
+            </option>
+        {% endfor %}
+    </optgroup>
+{% endif %}

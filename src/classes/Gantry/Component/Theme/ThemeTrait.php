@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,13 +14,17 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Content\Block\ContentBlock;
+use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
-use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Framework\Document;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Services\ConfigServiceProvider;
+use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -35,9 +39,13 @@ trait ThemeTrait
     use GantryTrait;
 
     protected $layoutObject;
+    protected $atoms;
     protected $segments;
     protected $preset;
     protected $cssCache;
+    /**
+     * @var CssCompilerInterface
+     */
     protected $compiler;
     protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
 
@@ -47,17 +55,31 @@ trait ThemeTrait
     protected $details;
 
     /**
+     * Register Theme stream.
+     *
+     * @param string $savePath
+     */
+    public function registerStream($savePath = null)
+    {
+        $streamName = $this->details()->addStreams();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = self::gantry()['locator'];
+        $locator->addPath('gantry-theme', '', array_merge((array) $savePath, [[$streamName, '']]));
+    }
+
+    /**
      * Update all CSS files in the theme.
      *
-     * @param array $configurations
+     * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $configurations = null)
+    public function updateCss(array $outlines = null)
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();
 
-        if (is_null($configurations)) {
+        if (is_null($outlines)) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $path = $locator->findResource($compiler->getTarget(), true, true);
@@ -67,21 +89,21 @@ trait ThemeTrait
                 Folder::delete($path, false);
             }
 
-            $configurations = $gantry['configurations'];
+            $outlines = $gantry['outlines'];
         }
 
         // Make sure that PHP has the latest data of the files.
         clearstatcache();
 
         $warnings = [];
-        foreach ($configurations as $configuration => $title) {
-            $config = ConfigServiceProvider::load($gantry, $configuration);
+        foreach ($outlines as $outline => $title) {
+            $config = ConfigServiceProvider::load($gantry, $outline);
 
-            $compiler->reset()->setConfiguration($configuration)->setVariables($config->flatten('styles', '-'));
+            $compiler->reset()->setConfiguration($outline)->setVariables($config->flatten('styles', '-'));
 
             $results = $compiler->compileAll()->getWarnings();
             if ($results) {
-                $warnings[$configuration] = $results;
+                $warnings[$outline] = $results;
             }
         }
 
@@ -109,10 +131,12 @@ trait ThemeTrait
             $name = 'default';
         }
 
-        $configuration = isset($gantry['configuration']) ? $gantry['configuration'] : null;
+        $outline = isset($gantry['configuration']) ? $gantry['configuration'] : null;
 
         // Set configuration if given.
-        if ($name && $name != $configuration) {
+        if ($name && $name != $outline) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
+
             $gantry['configuration'] = $name;
         }
 
@@ -136,8 +160,7 @@ trait ThemeTrait
         }
 
         if ($preset && !isset($presets[$preset])) {
-            $keys = array_keys($presets);
-            $preset = reset($keys);
+            $preset = null;
         }
 
         return $preset;
@@ -210,7 +233,11 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
+                GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && \Gantry\Debugger::addMessage("Compiling CSS: {$name}");
+
                 $compiler->compileFile($name);
+
+                GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("css-{$name}");
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);
@@ -295,7 +322,8 @@ trait ThemeTrait
                 $layout = Layout::instance('default');
             }
 
-            $this->layoutObject = $layout;
+            // TODO: Optimize
+            $this->layoutObject = $layout->init();
         }
 
         return $this->layoutObject;
@@ -309,9 +337,74 @@ trait ThemeTrait
     public function hasContent()
     {
         $layout = $this->loadLayout();
-        $content = $layout->referencesByType('pagecontent', 'pagecontent');
+        $content = $layout->referencesByType('system', 'content');
 
         return !empty($content);
+    }
+
+    /**
+     * Load atoms and assets from the page settings.
+     *
+     * @since 5.4.9
+     */
+    public function loadAtoms()
+    {
+        if (!isset($this->atoms)) {
+            $this->atoms = true;
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('atoms', "Preparing atoms");
+
+            $gantry = static::gantry();
+
+            /** @var Config $config */
+            $config = $gantry['config'];
+
+            /** @var \Gantry\Framework\Document $document */
+            $document = $gantry['document'];
+
+            $atoms = (array) $config->get('page.head.atoms');
+
+            foreach ($atoms as $data) {
+                $atom = [
+                    'type' => 'atom',
+                    'subtype' => $data['type'],
+                ] + $data;
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering Atom '{$atom['subtype']}' failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            $assets = (array) $config->get('page.assets');
+
+            if ($assets) {
+                $atom = [
+                    'id' => 'page-assets',
+                    'title' => 'Page Assets',
+                    'type' => 'atom',
+                    'subtype' => 'assets',
+                    'attributes' => $assets + ['enabled' => 1]
+                ];
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering CSS/JS Assets failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('atoms');
+        }
     }
 
     /**
@@ -323,7 +416,12 @@ trait ThemeTrait
     {
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('segments', "Preparing layout");
+
             $this->prepareLayout($this->segments);
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('segments');
         }
 
         return $this->segments;
@@ -460,37 +558,54 @@ trait ThemeTrait
      * Action is needed before displaying the layout as it recalculates block widths based on the visible content.
      *
      * @param array $items
+     * @param bool  $temporary
+     * @param bool  $sticky
      * @internal
      */
-    protected function prepareLayout(array &$items)
+    protected function prepareLayout(array &$items, $temporary = false, $sticky = false)
     {
         foreach ($items as $i => &$item) {
             // Non-numeric items are meta-data which should be ignored.
             if (((string)(int) $i !== (string) $i) || !is_object($item)) {
                 continue;
             }
+
             if (!empty($item->children)) {
-                $this->prepareLayout($item->children);
+                $fixed = true;
+                foreach ($item->children as $child) {
+                    $fixed &= !empty($child->attributes->fixed);
+                }
+
+                $this->prepareLayout($item->children, $fixed, $temporary);
             }
 
             // TODO: remove hard coded types.
             switch ($item->type) {
-                case 'pagecontent':
+                case 'system':
                     break;
 
                 case 'atom':
                 case 'particle':
                 case 'position':
                 case 'spacer':
-                    $item->content = $this->renderContent($item);
+                    GANTRY_DEBUGGER && \Gantry\Debugger::startTimer($item->id, "Rendering {$item->id}");
+
+                    $item->content = $this->renderContent($item, ['prepare_layout' => true]);
                     // Note that content can also be null (postpone rendering).
                     if ($item->content === '') {
                         unset($items[$i]);
                     }
 
+                    GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer($item->id);
+
                     break;
 
                 default:
+                    if ($sticky) {
+                        $item->attributes->sticky = 1;
+                        break;
+                    }
+
                     if (empty($item->children)) {
                         unset($items[$i]);
                         break;
@@ -540,15 +655,123 @@ trait ThemeTrait
      *
      * Function is used to pre-render content.
      *
-     * @param object $item
+     * @param object|array $item
+     * @param array $options
      * @return string|null
      */
-    protected function renderContent($item)
+    public function renderContent($item, $options = [])
     {
-        $context = $this->getContext(['segment' => $item, 'prepare_layout' => true]);
+        $gantry = static::gantry();
 
-        $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $content = $this->getContent($item, $options);
 
+        /** @var Document $document */
+        $document = $gantry['document'];
+        $document->addBlock($content);
+
+        $html = $content->toString();
         return !strstr($html, '@@DEFERRED@@') ? $html : null;
+    }
+
+    /**
+     * Renders individual content block, like particle or position.
+     *
+     * Function is used to pre-render content.
+     *
+     * @param object|array $item
+     * @param array $options
+     * @return ContentBlock
+     * @since 5.4.3
+     */
+    public function getContent($item, $options = [])
+    {
+        if (is_array($item)) {
+            $item = (object) $item;
+        }
+
+        $gantry = static::gantry();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        $production = (bool) $global->get('production');
+        $subtype = $item->subtype;
+        $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
+
+        if (!$enabled) {
+            return new HtmlBlock;
+        }
+
+        $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
+
+        $cached = false;
+        $cacheKey = [];
+
+        // Enable particle caching only in production mode.
+        if ($production && isset($particle['caching'])) {
+            $caching = $particle['caching'] + ['type' => 'dynamic'];
+
+            switch ($caching['type']) {
+                case 'static':
+                    $cached = true;
+                    break;
+                case 'config_matches':
+                    if (isset($particle['caching']['values'])) {
+                        $values = (array) $particle['caching']['values'];
+                        $compare = array_intersect_key($particle, $values);
+                        $cached = ($values === $compare);
+                    }
+                    break;
+                case 'menu':
+                    /** @var Menu $menu */
+                    $menu = $gantry['menu'];
+                    $cacheId = $menu->getCacheId();
+
+                    // FIXME: menu caching needs to handle dynamic modules inside menu: turning it off for now.
+                    if (false && $cacheId !== null) {
+                        $cached = true;
+                        $cacheKey['menu_cache_key'] = $cacheId;
+                    }
+                    break;
+            }
+        }
+
+        if ($cached) {
+            $cacheKey['language'] = $gantry['page']->language;
+            $cacheKey['attributes'] = $particle;
+            $cacheKey += (array) $item;
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+            $key = md5(json_encode($cacheKey));
+
+            $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
+            $file = PhpFile::instance($filename);
+            if ($file->exists()) {
+                try {
+                    return ContentBlock::fromArray((array) $file->content());
+                } catch (\Exception $e) {
+                    // Invalid cache, continue to rendering.
+                    GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
+                }
+            }
+        }
+
+        // Create new document context for assets.
+        $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+        $document->push();
+        $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $content = $document->pop()->setContent($html);
+
+        if (isset($file)) {
+            // Save HTML and assets into the cache.
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
+            $file->save($content->toArray());
+        }
+
+        return $content;
     }
 }

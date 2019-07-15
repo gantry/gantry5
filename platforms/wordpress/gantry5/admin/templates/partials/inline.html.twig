@@ -1,13 +1,14 @@
 {% extends "@gantry-admin/partials/page.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css')|e }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css')|e }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css-compiled/admin.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('gantry-admin://assets/css/font-awesome.min.css') }}" type="text/css" />
     {{ parent() }}
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js')|e }}"></script>
+    <script type="text/javascript" async="async" src="{{ url('gantry-admin://assets/js/main.js') }}"></script>
+    {% include "@gantry-admin/partials/js-translations.html.twig" %}
     {{ parent() }}
 {% endblock %}
 

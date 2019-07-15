@@ -5,5 +5,5 @@ hydrogen-theme:
   items:
     hydrogen:
       title: 'Home'
-      layout: home
+      outline: home
       home: 1

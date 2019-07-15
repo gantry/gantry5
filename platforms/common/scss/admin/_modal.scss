@@ -6,7 +6,7 @@ html.g5-dialog-open {
 
 #g5-container {
     .g5-dialog, .g5-dialog *, .g5-dialog *:before, .g5-dialog *:after {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
     .g5-dialog {
@@ -19,7 +19,7 @@ html.g5-dialog-open {
         -webkit-overflow-scrolling: touch;
         z-index: 1111;
 
-        .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-*):not([type="checkbox"]), .settings-block select, .settings-block .collection-list ul, .settings-block .colorpicker, .settings-block .selectize-input {
+        .settings-block input:not(.settings-param-toggle):not(.g-keyvalue-input-key):not(.g-keyvalue-input-value):not([type="checkbox"]):not([type="radio"]), .settings-block select, .settings-block .collection-list ul, .settings-block .g-colorpicker, .settings-block .g-selectize-input {
             width: 250px;
             @include breakpoint(mobile-only) {
                 width: 90% !important;
@@ -59,8 +59,7 @@ html.g5-dialog-open {
     }
 
     .g5-dialog.g5-dialog-theme-default {
-        padding-top: 10vh;
-        padding-bottom: 10vh;
+
         &.g5-closing .g5-content {
             @include animation(flyOut 0.5s);
         }
@@ -70,10 +69,10 @@ html.g5-dialog-open {
         .g5-content {
             border-radius: 5px;
             background: #f0f0f0;
-            color: #444444;
+            color: $core-text;
             padding: 1rem;
             position: relative;
-            margin: 0 auto;
+            margin: 10vh auto;
             max-width: 100%;
             width: 600px;
             font-size: 1rem;
@@ -143,9 +142,13 @@ html.g5-dialog-open {
         width: 90%;
 
         .settings-block:not(:only-child) {
+            margin: 10px 0;
+        }
+
+        /*.settings-block:not(:only-child) {
             width: 48% !important;
             margin: 10px 1% !important;
-        }
+        }*/
 
         @include breakpoint(mobile-only) {
             .settings-block {

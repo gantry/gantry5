@@ -1,8 +1,9 @@
+{% set files_mode = get_cookie('g5_files_mode')|json_decode|default('thumbnails') %}
+
 <div class="g-particles-header filepicker-header settings-block clearfix">
-    {#{{ active|join(', ') }}#}
     <div class="float-right files-mode">
-        <div class="file-mode active" data-files-mode="thumbnails"><i class="fa fa-th-large"></i></div>
-        <div class="file-mode" data-files-mode="list"><i class="fa fa-th-list"></i></div>
+        <div class="file-mode{{ files_mode == 'thumbnails' ? ' active' : '' }}" data-files-mode="thumbnails"><i class="fa fa-th-large" aria-hidden="true"></i></div>
+        <div class="file-mode{{ files_mode == 'list' ? ' active' : '' }}" data-files-mode="list"><i class="fa fa-th-list" aria-hidden="true"></i></div>
     </div>
 </div>
 <div class="g-particles-main icons-wrapper g-grid">
@@ -13,7 +14,9 @@
                     <span class="g-bookmark-title" title="{{ index }}">{{ index }} <i class="g-bookmark-collapse fa fa-fw fa-minus"></i></span>
                     <ul class="g-folders fa-ul">
                         {% for folder in bookmark %}
-                            <li{{ (folder in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}"><i class="fa-li fa fa-folder-o"></i> <span class="path" title="{{ folder }}">{{ folder }}</span></li>
+                            <li{{ (folder in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}">
+                                <i class="fa-li fa fa-folder-o" aria-hidden="true"></i> <span class="path" title="{{ folder }}">{{ folder }}</span>
+                            </li>
                             {% include 'ajax/filepicker/subfolders.html.twig' with {'folder': attribute(attribute(folders, index), folder), 'active': active } %}
                         {% endfor %}
                     </ul>
@@ -24,18 +27,20 @@
             {% endfor %}#}
         </ul>
     </div>
-    <div class="g-files g-block g-filemode-thumbnails">
+    <div class="g-files g-block g-filemode-{{ files_mode }}">
         {% include 'ajax/filepicker/files.html.twig' with {'files': files, 'value': value } %}
     </div>
 </div>
 {#<div class="g-breadcrumbs">{{ base }}</div>#}
 <div class="g-particles-footer settings-block clearfix">
     <div class="float-left footer-upload-info font-small">
-        Upload files by draggin & dropping or by <a href="#" data-upload>selecting them</a>. <br/>
-        Current filters: {{ filter ? ('<code>' ~ filter ~ '</code>')|raw : ('<strong>No Filter</strong>')|raw }}
+        {{ 'GANTRY5_PLATFORM_FILEPICKER_UPLOAD_DESC'|trans|raw }}
+        <br/>
+        {{ 'GANTRY5_PLATFORM_FILEPICKER_CURRENT_FILTERS'|trans }} {{ filter ? ('<code>' ~ filter ~ '</code>')|raw :
+        ('<strong>' ~ 'GANTRY5_PLATFORM_FILEPICKER_NO_FILTER'|trans ~ '</strong>')|raw }}
     </div>
     <div class="float-right">
-        <button href="#" class="button button-primary" data-select>{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</button>
+        <button href="#" class="button button-primary" data-select="">{{ 'GANTRY5_PLATFORM_SELECT'|trans }}</button>
         <button href="#" class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </div>

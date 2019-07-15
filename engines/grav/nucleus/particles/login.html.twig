@@ -1,0 +1,61 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+    {% if config.plugins.login.enabled and config.plugins.login.route %}
+    {% if grav.user.authenticated %}
+        <h4>{{ 'PLUGIN_LOGIN.WELCOME'|t }} <strong>{{ grav.user.fullname ?: grav.user.username }}</strong></h4>
+        <a class="button logout" href="{{ uri.addNonce(base_url_relative ~ (uri.path != '/' ? uri.path) ~ '/task' ~ config.system.param_sep ~ 'login.logout', 'logout-form', 'logout-nonce') }}">
+            {{ 'PLUGIN_LOGIN.BTN_LOGOUT'|t }}
+        </a>
+
+    {% else %}
+        <form method="post">
+            {% if grav.twig.plugins_hooked_loginPage %}
+                {% for label in grav.twig.plugins_hooked_loginPage %}
+                    {% include label %}
+                {% endfor %}
+            {% endif %}
+
+            {% for field in [{
+                name: 'username',
+                type: 'text',
+                id: 'username',
+                placeholder: 'Username',
+                label: 'PLUGIN_LOGIN.USERNAME',
+                autofocus: true
+            }, {
+                name: 'password',
+                type: 'password',
+                id: 'password',
+                placeholder: 'Password',
+                label: 'PLUGIN_LOGIN.PASSWORD'
+            }] %}
+                {% if field.type %}
+                    <div>
+                        {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="form-actions secondary-accent">
+                {% if config.plugins.login.rememberme.enabled %}
+                    <div class="form-data rememberme" data-grav-default="null" data-grav-disabled="true" data-grav-field="checkbox">
+                        <div class="form-input-wrapper">
+                            <input type="checkbox" value="1" name="rememberme" id="#rememberme">
+                            <label class="inline" for="#rememberme" title="{{ 'PLUGIN_LOGIN.REMEMBER_ME_HELP'|t }}">{{ 'PLUGIN_LOGIN.REMEMBER_ME'|t }}</label>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <a class="button secondary" href="{{ base_url_relative }}{{ config.plugins.login.route_forgot }}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'PLUGIN_LOGIN.BTN_FORGOT'|t }}</a>
+
+                <button type="submit" class="button primary" name="task" value="login.login"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'PLUGIN_LOGIN.BTN_LOGIN'|t }}</button>
+            </div>
+
+            {{ nonce_field('login-form', 'login-form-nonce')|raw }}
+        </form>
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}

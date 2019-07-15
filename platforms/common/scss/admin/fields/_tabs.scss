@@ -1,0 +1,68 @@
+#g5-container {
+    .settings-param.container-tabs {
+        padding: 0;
+    }
+
+    .g5-tabs-container {
+        border-bottom: 1px solid #dedede;
+
+        .g-tabs {
+            ul {
+                @extend %list-reset;
+                /*@include border-width(null 1px 1px 1px);
+                @include border-style(null solid solid solid);
+                @include border-color(null #e6e6e6 #e6e6e6 #e6e6e6);*/
+                border-bottom: 1px solid #e6e6e6;
+                padding: 0.5rem 0;
+            }
+
+            li {
+                display: inline-block;
+
+                a {
+                    display: block;
+                    color: $core-accent;
+
+                    span {
+                        padding: 0.2rem 0.5rem;
+                    }
+
+                    &:hover {
+                        color: darken($core-accent, 20%);
+                    }
+                }
+
+                &.active {
+                    a span {
+                        color: $white;
+                        background-color: $core-accent;
+                        border-radius: 1rem;
+                    }
+                }
+            }
+        }
+
+        .g-panes {
+            @include border-width(null 1px null 1px);
+            @include border-style(null solid null solid);
+            @include border-color(null #e6e6e6 null #e6e6e6);
+
+            .settings-param {
+                background-color: #fafafa;
+                border-bottom: 1px solid darken(#fafafa, 5%);
+
+                /*.settings-param-override {
+                    background-color: transparentize(#e2e2e2, 0.5);
+                }*/
+            }
+
+            .g-pane {
+                display: none;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+    }
+}

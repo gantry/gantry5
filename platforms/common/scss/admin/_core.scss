@@ -1,11 +1,11 @@
 html {
     width:100vw;
     overflow-x:hidden;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 *, *::before, *::after {
-    @include box-sizing(inherit);
+    box-sizing: inherit;
 }
 
 body {
@@ -27,6 +27,21 @@ body.g-prime {
     -moz-osx-font-smoothing: grayscale;
     font-family: $font-family-default;
     position: relative;
+
+    .g-php-outdated {
+        line-height: 1em;
+        font-size: 0.9rem;
+        text-align: center;
+        padding: 8px 0;
+        margin: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        a {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    }
 
     a {
         color: $core-accent;
@@ -70,11 +85,13 @@ body.g-prime {
         .g-collapse {
             i {
                 @include transform(rotate(180deg));
+                @include backface-visibility(hidden);
             }
         }
 
         &.card .inner-params, &:not(.card) {
             overflow: hidden;
+            visibility: hidden;
             height: 0;
         }
     }
@@ -220,7 +237,7 @@ body.g-prime {
 } // end wrapper
 
 // Footer
-.com_gantry5, .gantry5 {
+.com_gantry5, .gantry5, .admin-block {
     #footer {
         background-color: #e7e7e7;
         padding: 1em 0 3rem;

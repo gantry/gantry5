@@ -1,0 +1,5 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    {{ gantry.platform.displayModules(particle.key, {'style': particle.chrome|default('gantry'), 'position': particle})|raw }}
+{% endblock %}

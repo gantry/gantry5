@@ -3,7 +3,7 @@
 {% block input %}
     <select
             {# required attribute structures #}
-            name="{{ (scope ~ name)|fieldName|e }}"
+            name="{{ (scope ~ name)|fieldName }}"
             {# global attribute structures #}
             {{ block('global_attributes') }}
             {# non-gloval attribute structures #}
@@ -11,20 +11,20 @@
             {% if field.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
             {% if field.multiple in ['on', 'true', 1] %}multiple="multiple"{% endif %}
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
-            {% if field.placeholder is defined %}data-placeholder="{{ field.placeholder|e }}"{% endif %}
-            {% if field.size is defined %}size="{{ field.size|e }}"{% endif %}
+            {% if field.placeholder is defined %}data-placeholder="{{ field.placeholder }}"{% endif %}
+            {% if field.size is defined %}size="{{ field.size }}"{% endif %}
             >
 
         {% block options %}
             {% for key, text in field.options %}
                 <option
                         {# required attribute structures #}
-                        {% if key == value %}selected="selected"{% endif %}
-                        value="{{ key|e }}"
-                        {# non-gloval attribute structures #}
+                        {% if is_selected(key, value) %}selected="selected"{% endif %}
+                        value="{{ key }}"
+                        {# non-global attribute structures #}
                         {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                        {% if field.options.label is defined %}label="{{ field.options.label|e }}"{% endif %}
-                        >{{ text|e }}</option>
+                        {% if field.options.label is defined %}label="{{ field.options.label }}"{% endif %}
+                        >{{ text }}</option>
             {% endfor %}
         {% endblock %}
     </select>

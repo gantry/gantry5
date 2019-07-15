@@ -1,15 +1,14 @@
 #g5-container {
-    #assignments {
+    #assignments, .settings-assignments {
         .enabler {
             float: right;
         }
 
         .settings-param-wrapper {
             min-width: 100%;
-            // Overflow disabled until Chrome issue fixed (see #851)
-            /*max-height: 455px;
+            max-height: 455px;
             overflow-y: auto;
-            overflow-x: hidden;*/
+            overflow-x: hidden;
             margin: 0 -10px -10px;
         }
 
@@ -33,26 +32,16 @@
 
         .g-panel-filters {
 
-            .search.settings-block {
-                margin-right: 25px;
-            }
-
             [data-g-assignments-check], [data-g-assignments-uncheck] {
                 background-color: transparent;
-                padding: 0;
                 font-size: 0.85rem;
-                cursor: pointer;
-                position: absolute;
                 line-height: 1;
-                right: 0;
-            }
+                border-left: 1px solid $medium-gray;
+                padding: 0 0.5rem;
 
-            [data-g-assignments-check] {
-                top: 4px;
-            }
-
-            [data-g-assignments-uncheck] {
-                bottom: 0;
+                &:last-child {
+                    padding-right: 0;
+                }
             }
 
             .g-tooltip:hover:before {
@@ -61,11 +50,7 @@
         }
 
         .card .g-panel-filters .search {
-            width: 65%;
-
-            i {
-                margin-top: -15px;
-            }
+            width: 40%;
         }
 
         h4 {
@@ -73,4 +58,22 @@
             line-height: 2;
         }
     }
+
+    .settings-assignments {
+        width: 100%;
+        margin-top: 0;
+
+        .enabler {
+            float: right;
+        }
+
+        .cards-wrapper {
+            margin: 0 0 -10px;
+
+            &.only-child {
+                @include column-count(1);
+            }
+        }
+    }
+
 }

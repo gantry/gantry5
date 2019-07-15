@@ -1,0 +1,12 @@
+{
+    "name": "prime-debugbar",
+    "description": "DebugBar for Gantry Prime",
+    "license": "MIT",
+
+    "require": {
+        "php": ">=5.4.0",
+        "maximebf/debugbar": "~1.10",
+        "symfony/polyfill-iconv": "~1.0",
+        "symfony/var-dumper": "~2.8"
+    }
+}

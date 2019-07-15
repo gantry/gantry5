@@ -2,7 +2,7 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,22 +19,34 @@ if (!class_exists('Gantry\Framework\Gantry')) {
     return;
 }
 
-$gantry = \Gantry\Framework\Gantry::instance();
-
-/** @var Gantry\Framework\Theme $theme */
-$theme = $gantry['theme'];
+include_once dirname(__FILE__) . '/helper.php';
 
 /** @var object $params */
-$data = json_decode($params->get('particle'), true);
 
-$context = array(
-    'gantry' => $gantry,
-    'inContent' => true,
-    'segment' => array(
-        'type' => $data['type'],
-        'subtype' => $data['particle'],
-        'attributes' =>  $data['options']['particle'],
-    )
-);
+$gantry = \Gantry\Framework\Gantry::instance();
 
-echo $theme->render("@nucleus/content/particle.html.twig", $context);
+GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+
+// Set up caching.
+$cacheid = md5($module->id);
+
+$cacheparams = (object) [
+    'cachemode'    => 'id',
+    'class'        => 'ModGantry5ParticleHelper',
+    'method'       => 'cache',
+    'methodparams' => [$module, $params],
+    'modeparams'   => $cacheid
+];
+
+$block = ModGantry5ParticleHelper::moduleCache($module, $params, $cacheparams);
+if (!$block) {
+    $block = ModGantry5ParticleHelper::render($module, $params);
+}
+
+/** @var \Gantry\Framework\Document $document */
+$document = $gantry['document'];
+$document->addBlock($block);
+
+echo $block->toString();
+
+GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("module-{$module->id}");

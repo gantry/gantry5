@@ -1,0 +1,9 @@
+doctype: html
+attribs:
+  id: ''
+  class: 'gantry g-helium-style'
+  extra: {  }
+layout:
+  sections: '0'
+body_top: ''
+body_bottom: ''

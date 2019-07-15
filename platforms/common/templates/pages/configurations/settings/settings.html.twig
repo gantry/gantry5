@@ -1,52 +1,57 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
+    {% if gantry.particles.overrides(configuration) or gantry.request.get.get('enable') %}
     {% set stored_data = get_cookie('g5-collapsed')|default('{}')|json_decode %}
     <div id="settings">
         <form method="post">
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
-                    <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}">
-                    <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_SETTINGS'|trans }}</span></button>
+                    <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
+                    <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                 </span>
-                {% for group, list in particles %}
+                {% for group, list in particles if list and (group != 'hidden') %}
                     <h2 class="page-title">
-                        <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}</span>
+                        <span class="title">{{ group|capitalize }} {{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</span>
                     </h2>
 
                     <div class="g-filter-actions">
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
                                 <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans }} {{ group|capitalize }}..." role="search" />
-                                <i class="fa fa-fw fa-search"></i>
+                                <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                             </div>
-                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
 
                     <div class="cards-wrapper g-grid">
                         {% for id, particle in list %}
                             {% if not particle.hidden %}
+                                {% set particle = gantry.particles.getBlueprintForm(id) %}
                                 {% set prefix = 'particles.' ~ id ~ '.' %}
                                 {% set collapsed = particle.form.collapsed or attribute(stored_data, prefix) %}
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                                     <input type="hidden" name="particles[{{ id }}]"/>
-                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}"{{ overrideable ? ' class="card-overrideable"' : '' }}>
-                                        <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
+                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                                        data-g-collapse-id="{{ prefix }}"
+                                        {{ overrideable ? ' class="card-overrideable"' : '' }}
+                                    >
+                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up" aria-hidden="true"></i></span>
                                         <span class="g-title">{{ particle.name }}</span>
                                         {% if particle.form.fields.enabled %}
-                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': particle.form.fields.enabled, 'value': data.get(prefix ~ 'enabled')} %}
 
                                             {% if overrideable %}
-                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': gantry.config.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
+                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'has_value': data.get(prefix ~ 'enabled') is not null, 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
                                             {% endif %}
                                         {% endif %}
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'blueprints': particle.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'ignore_not_overrideable': true, 'overrideable': overrideable, 'not_global_overrideable': particle.form.overrideable is same as(false), 'blueprints': particle.form, skip: ['enabled'], data: data, "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}
@@ -56,11 +61,19 @@
 
                 <div class="g-footer-actions">
                     <span class="float-right">
-                        <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_SETTINGS'|trans }}">
-                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_SETTINGS'|trans }}</span></button>
+                        <button type="submit" class="button button-primary button-save" data-save="Particle Defaults">
+                            <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_PARTICLE_DEFAULTS'|trans }}</span></button>
                     </span>
                 </div>
             </div>
+            <input type="hidden" name="_end" value="1" />
         </form>
+        {% else %}
+            {% set ajaxify %}data-g5-ajaxify="" data-g5-nav="settings" data-g5-ajaxify-target="[data-g5-content-wrapper]" data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"{% endset %}
+            <h2 class="page-title">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans }}</h2>
+            <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_FROM_BASE'|trans(ajaxify, gantry.route('configurations/default/settings'), 'GANTRY5_PLATFORM_BASE_OUTLINE'|trans)|raw }}</p>
+            <p>{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_ENTER'|trans(ajaxify, gantry.route('configurations', configuration, 'settings') ~ '&enable=1')|raw }}</p>
+            <p class="alert alert-notice">{{ 'GANTRY5_PLATFORM_PARTICLE_DEFAULTS_WARNING'|trans('GANTRY5_PLATFORM_PARTICLE_DEFAULTS'|trans)|raw }}</p>
+        {% endif %}
     </div>
 {% endblock %}

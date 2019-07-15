@@ -1,0 +1,15 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+
+    <ul class="g-horizontalmenu {{ particle.class|e }}">
+
+        {% for item in particle.items %}
+            <li>
+                <a target="{{ particle.target }}" href="{{ item.link|e }}" title="{{ item.text }}">{{ item.text }}</a>
+            </li>
+        {% endfor %}
+
+    </ul>
+
+{% endblock %}

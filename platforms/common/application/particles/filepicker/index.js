@@ -13,6 +13,8 @@ var $             = require('../../utils/elements.utils'),
     getAjaxSuffix = require('../../utils/get-ajax-suffix'),
     parseAjaxURI  = require('../../utils/get-ajax-url').parse,
     getAjaxURL    = require('../../utils/get-ajax-url').global,
+    translate     = require('../../utils/translate'),
+    Cookie        = require('../../utils/cookie'),
     dropzone      = require('dropzone');
 
 var FilePicker = new prime({
@@ -42,9 +44,9 @@ var FilePicker = new prime({
         modal.open({
             method: 'post',
             data: this.data,
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             className: 'g5-dialog-theme-default g5-modal-filepicker',
-            remote: getAjaxURL('filepicker') + getAjaxSuffix(),
+            remote: parseAjaxURI(getAjaxURL('filepicker') + getAjaxSuffix()),
             remoteLoaded: bind(this.loaded, this),
             afterClose: bind(function() {
                 if (this.dropzone) { this.dropzone.destroy(); }
@@ -63,7 +65,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
-            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o"></i>').bottom(li),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -100,12 +102,12 @@ var FilePicker = new prime({
                 accept: bind(function(file, done) {
                     if (!this.data.filter) { done(); }
                     else {
-                        if (file.name.match(this.data.filter)) { done(); }
-                        else { done('<code>' + file.name + '</code> does not match the filter: <br />  <code>' + this.data.filter + '</code>'); }
+                        if (file.name.toLowerCase().match(this.data.filter)) { done(); }
+                        else { done('<code>' + file.name + '</code> ' + translate('GANTRY5_PLATFORM_JS_FILTER_MISMATCH') + ': <br />  <code>' + this.data.filter + '</code>'); }
                     }
                 }, this),
                 url: bind(function(file) {
-                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + window.btoa(this.getPath() + file[0].name)) + getAjaxSuffix());
+                    return parseAjaxURI(getAjaxURL('filepicker/upload/' + global.btoa(encodeURIComponent(this.getPath() + file[0].name))) + getAjaxSuffix());
                 }, this)
             });
 
@@ -153,7 +155,7 @@ var FilePicker = new prime({
 
                 element.addClass('g-file-uploading');
                 uploader.progresser(progressConf);
-                uploader.attribute('title', 'processing...').find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', 'processing...');
+                uploader.attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING')).find('.g-file-progress-text').html('&bull;&bull;&bull;').attribute('title', translate('GANTRY5_PLATFORM_JS_PROCESSING'));
 
             }).on('processing', function(file) {
 
@@ -190,7 +192,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.title('Error').html('<i class="fa fa-exclamation"></i>').parent('[data-file-uploadprogress]').popover({
+                text.title('Error').html('<i class="fa fa-exclamation" aria-hidden="true"></i>').parent('[data-file-uploadprogress]').popover({
                     content: error.html ? error.html : (error.error && error.error.message ? error.error.message : error),
                     placement: 'auto',
                     trigger: 'mouse',
@@ -216,7 +218,7 @@ var FilePicker = new prime({
                     thickness: isList ? 10 : 25
                 });
 
-                text.html('<i class="fa fa-check"></i>');
+                text.html('<i class="fa fa-check" aria-hidden="true"></i>');
 
                 setTimeout(bind(function() {
                     uploader.animate({ opacity: 0 }, { duration: 500 });
@@ -226,7 +228,7 @@ var FilePicker = new prime({
                             element.data('file', JSON.stringify(response.finfo)).data('file-url', response.url).removeClass('g-file-uploading');
                             element.dropzone = file;
                             uploader.remove();
-                            mtime.text('just now');
+                            mtime.text(translate('GANTRY5_PLATFORM_JUST_NOW'));
                         }
                     });
                 }, this), 500);
@@ -234,7 +236,7 @@ var FilePicker = new prime({
         }
 
         // g5 events
-        content.delegate('click', '.g-bookmark-title', function(e, element) {
+        content.delegate('click', '.g-bookmark-title', function(event, element) {
             if (event && event.preventDefault) { event.preventDefault(); }
             var sibling = element.nextSibling('.g-folders'),
                 parent  = element.parent('.g-bookmark');
@@ -308,7 +310,7 @@ var FilePicker = new prime({
             event.preventDefault();
             var parent    = element.parent('[data-file]'),
                 data      = JSON.parse(parent.data('file')),
-                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + window.btoa(data.pathname)) + getAjaxSuffix());
+                deleteURI = parseAjaxURI(getAjaxURL('filepicker/' + global.btoa(encodeURIComponent(data.pathname)) + getAjaxSuffix()));
 
             if (!data.isInCustom) { return false; }
 
@@ -350,6 +352,7 @@ var FilePicker = new prime({
                 value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
+            $('body').emit('input', { target: this.data.field });
             modal.close();
         }, this));
 
@@ -360,6 +363,7 @@ var FilePicker = new prime({
             var modes = $('[data-files-mode]');
             modes.removeClass('active');
             element.addClass('active');
+            Cookie.write('g5_files_mode', element.data('files-mode'));
 
             files.animate({ opacity: 0 }, {
                 duration: 200,
@@ -421,10 +425,10 @@ var FilePicker = new prime({
         var attr = '';
         switch (filter) {
             case '.(jpe?g|gif|png|svg)$':
-                attr = '.jpg,.jpeg,.gif,.png,.svg';
+                attr = '.jpg,.jpeg,.gif,.png,.svg,.JPG,.JPEG,.GIF,.PNG,.SVG';
                 break;
             case '.(mp4|webm|ogv|mov)$':
-                attr = '.mp4,.webm,.ogv,.mov';
+                attr = '.mp4,.webm,.ogv,.mov,.MP4,.WEBM,.OGV,.MOV';
                 break;
         }
 

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -108,6 +107,23 @@ class ConfigFileFinder
     }
 
     /**
+     * Find filename from a list of folders.
+     *
+     * @param array $folders
+     * @param string $filename
+     * @return array
+     */
+    public function locateInFolders(array $folders, $filename = null)
+    {
+        $list = [];
+        foreach ($folders as $folder) {
+            $path = trim(Folder::getRelativePath($folder), '/');
+            $list[$path] = $this->detectInFolder($folder, $filename);
+        }
+        return $list;
+    }
+
+    /**
      * Return all existing locations for a single file with a timestamp.
      *
      * @param  array  $paths   Filesystem paths to look up from.
@@ -184,7 +200,9 @@ class ConfigFileFinder
      */
     protected function detectInFolder($folder, $lookup = null)
     {
+        $folder = rtrim($folder, '/');
         $path = trim(Folder::getRelativePath($folder), '/');
+        $base = $path === $folder ? '' : ($path ? substr($folder, 0, -strlen($path)) : $folder . '/');
 
         $list = [];
 
@@ -201,9 +219,9 @@ class ConfigFileFinder
                 $find = ($lookup ?: $name) . '.yaml';
                 $filename = "{$path}/{$name}/{$find}";
 
-                if (file_exists(GANTRY5_ROOT . '/' . $filename)) {
+                if (file_exists($base . $filename)) {
                     $basename = $this->base . $name;
-                    $list[$basename] = ['file' => $filename, 'modified' => filemtime(GANTRY5_ROOT . '/' .$filename)];
+                    $list[$basename] = ['file' => $filename, 'modified' => filemtime($base . $filename)];
                 }
             }
         }

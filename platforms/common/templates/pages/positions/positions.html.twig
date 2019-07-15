@@ -1,0 +1,58 @@
+{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+
+{% block gantry %}
+    <div class="menu-header">
+        <span class="float-right">
+            <button class="button button-back-to-conf"
+                    tabindex="0"
+                    aria-label="{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}"
+            >
+                <i class="fa fa-fw fa-fw fa-arrow-left" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
+            </button>
+            <button type="submit"
+                    class="button button-primary button-save"
+                    data-save="{{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}"
+            >
+                <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_POSITIONS'|trans }}</span>
+            </button>
+        </span>
+        <h2 class="page-title">
+            {{ 'GANTRY5_PLATFORM_POSITIONS'|trans }}
+            <button data-g-config="create"
+                    data-g-create="position"
+                    data-g-config-href="{{ gantry.route('positions/create') }}"
+                    title="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
+                    aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
+                    data-g-config-method="POST"
+                    data-g5-lm-add tabindex="0"
+                    class="button button-primary"
+            >
+                <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
+            </button>
+        </h2>
+    </div>
+
+    <div id="positions">
+        <ul class="g-grid">
+            {% for name, position in positions %}
+                <li class="card g-block size-1-4">
+                    {% include '@gantry-admin/layouts/position.html.twig' %}
+                </li>
+            {% endfor %}
+            <li class="card g-block size-1-4 add-new">
+                <div class="page">
+                    <a data-g-config="create"
+                       data-g-config-href="{{ gantry.route('positions/create') }}"
+                       title="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
+                       aria-label="{{ 'GANTRY5_PLATFORM_ADD_NEW_POSITION'|trans }}"
+                       data-g-config-method="POST"
+                       data-g5-lm-add tabindex="0"
+                    >
+                        <i class="fa fa-fw fa-plus" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div id="trash" data-g5-positions-erase=""><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+    </div>
+{% endblock %}

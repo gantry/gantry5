@@ -3,7 +3,7 @@ $selectize-font-smoothing: inherit;
 $selectize-font-size: inherit;
 $selectize-line-height: normal;
 
-$selectize-color-text: #666;
+$selectize-color-text: $core-text;
 $selectize-color-border: $medium-gray;
 $selectize-color-highlight: rgba($tertiary-accent, 0.5);
 $selectize-color-input: #fff;
@@ -57,14 +57,14 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     visibility: hidden;
 }
 
-.selectize-control {
+.g-selectize-control {
     position: relative;
     display: inline-block;
     vertical-align: middle;
     line-height: 1rem;
 }
 
-.selectize-dropdown, .selectize-input, .selectize-input input {
+.g-selectize-dropdown, .g-selectize-input, .g-selectize-input input {
     color: $selectize-color-text;
     font-family: $selectize-font-family;
     font-size: $selectize-font-size;
@@ -72,37 +72,37 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     -webkit-font-smoothing: $selectize-font-smoothing;
 }
 
-.selectize-input, .selectize-control.single .selectize-input.input-active {
+.g-selectize-input, .g-selectize-control.g-single .g-selectize-input.g-input-active {
     background: $selectize-color-input;
     cursor: text;
     display: inline-block;
 }
 
-.selectize-input {
+.g-selectize-input {
     border: $selectize-border;
     padding: $selectize-padding-y $selectize-padding-x;
     display: inline-block;
     width: 100%;
     position: relative;
     z-index: 1;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     box-shadow: $selectize-shadow-input;
     border-radius: $selectize-border-radius;
 
-    .selectize-control.multi &.has-items {
+    .g-selectize-control.g-multi &.g-has-items {
         padding: 4px 0 1px;
     }
 
-    &.full {
+    &.g-full {
         background-color: $selectize-color-input-full;
     }
-    &.disabled, &.disabled * {
+    &.g-disabled, &.g-disabled * {
         cursor: default !important;
     }
-    &.focus {
+    &.g-focus {
         box-shadow: $selectize-shadow-input-focus;
     }
-    &.dropdown-active {
+    &.g-dropdown-active {
         border-radius: $selectize-border-radius $selectize-border-radius 0 0;
     }
 
@@ -112,9 +112,9 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         display: inline-block;
         zoom: 1;
         *display: inline;
-        @include ellipsis(215px);
+        @include ellipsis(235px);
     }
-    .selectize-control.multi & > div {
+    .g-selectize-control.g-multi & > div {
         cursor: pointer;
         margin: 0 $selectize-margin-item-x $selectize-margin-item-y 0;
         padding: $selectize-padding-item-y $selectize-padding-item-x;
@@ -122,14 +122,14 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         color: $selectize-color-item-text;
         border: $selectize-width-item-border solid $selectize-color-item-border;
 
-        &.active {
+        &.g-active {
             background: $selectize-color-item-active;
             color: $selectize-color-item-active-text;
             border: $selectize-width-item-border solid $selectize-color-item-active-border;
         }
     }
-    .selectize-control.multi &.disabled > div {
-        &, &.active {
+    .g-selectize-control.g-multi &.g-disabled > div {
+        &, &.g-active {
             color: lighten(desaturate($selectize-color-item-text, 100%), $selectize-lighten-disabled-item-text);
             background: lighten(desaturate($selectize-color-item, 100%), $selectize-lighten-disabled-item);
             border: $selectize-width-item-border solid lighten(desaturate($selectize-color-item-border, 100%), $selectize-lighten-disabled-item-border);
@@ -157,13 +157,13 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
 }
 
-.selectize-input::after {
+.g-selectize-input::after {
     content: ' ';
     display: block;
     clear: left;
 }
 
-.selectize-input.dropdown-active::before {
+.g-selectize-input.g-dropdown-active::before {
     content: ' ';
     display: block;
     position: absolute;
@@ -174,7 +174,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     right: 0;
 }
 
-.selectize-dropdown {
+.g-selectize-dropdown {
     position: absolute;
     z-index: 10;
     border: $selectize-border;
@@ -182,52 +182,59 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     margin: -1px 0 0 0;
     border-top: 0 none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     border-radius: 0 0 $selectize-border-radius $selectize-border-radius;
 
     [data-selectable] {
         @include word-wrap(normal);
         cursor: pointer;
         overflow: hidden;
-        .highlight {
+        .g-highlight {
             background: $selectize-color-highlight;
             border-radius: 1px;
         }
     }
-    [data-selectable], .optgroup-header {
+    [data-selectable], .g-optgroup-header {
         padding: $selectize-padding-dropdown-item-y $selectize-padding-dropdown-item-x;
     }
-    .optgroup:first-child .optgroup-header {
+    .g-optgroup:first-child .g-optgroup-header {
         border-top: 0 none;
     }
-    .optgroup-header {
+    .g-optgroup-header {
         color: $selectize-color-optgroup-text;
         background: $selectize-color-optgroup;
         cursor: default;
     }
-    .active {
+    .g-active {
         background-color: $selectize-color-dropdown-item-active;
         color: $selectize-color-dropdown-item-active-text;
-        &.create {
+        &.g-create {
             color: $selectize-color-dropdown-item-create-active-text;
         }
     }
-    .create {
+    .g-create {
         color: $selectize-color-dropdown-item-create-text;
+    }
+
+    .g-option-subtitle {
+        display: inline-block;
+        border-radius: 3px;
+        padding: 0 5px;
+        color: #8c8c8c;
     }
 }
 
-.selectize-dropdown-content {
+.g-selectize-dropdown-content {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: $selectize-max-height-dropdown;
 }
 
-.selectize-control.single .selectize-input {
+.g-selectize-control.g-single .g-selectize-input {
     &, input {
         cursor: pointer;
     }
-    &.input-active, &.input-active input {
+    &.g-input-active, &.g-input-active input {
         cursor: text;
     }
 
@@ -245,49 +252,49 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         font-size: 0.8em;
     }
 
-    &.dropdown-active:after {
+    &.g-dropdown-active:after {
         content: "\f077";
         font-family: FontAwesome;
     }
 }
 
-.selectize-control .selectize-input.disabled {
+.g-selectize-control .g-selectize-input.g-disabled {
     opacity: $selectize-opacity-disabled;
     background-color: $selectize-color-disabled;
 }
 
-.selectize-control {
-    &.multi {
-        .selectize-input {
-            &.has-items {
+.g-selectize-control {
+    &.g-multi {
+        .g-selectize-input {
+            &.g-has-items {
                 $padding-x: $selectize-padding-x - 7px;
                 padding-left: $padding-x;
                 padding-right: $padding-x;
             }
-            &.disabled [data-value] {
+            &.g-disabled [data-value] {
                 color: #999;
                 text-shadow: none;
                 background: none;
                 box-shadow: none;
 
-                &, .remove {
+                &, .g-remove {
                     border-color: #e6e6e6;
                 }
-                .remove {
+                .g-remove {
                     background: none;
                 }
             }
             [data-value] {
                 text-shadow: 0 1px 0 opacify(darken($selectize-color-item, 10), 0.3);
                 border-radius: 3px;
-                &.active {
+                &.g-active {
                     background-color: darken($selectize-color-item, 10);
                 }
             }
         }
     }
-    &.single {
-        .selectize-input {
+    &.g-single {
+        .g-selectize-input {
             height: 38px;
             //box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
             //@include linear-gradient(#fefefe, #f2f2f2);
@@ -295,19 +302,19 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
 }
 
-.selectize-control.single .selectize-input, .selectize-dropdown.single {
+.g-selectize-control.g-single .g-selectize-input, .g-selectize-dropdown.g-single {
     border-color: $selectize-color-border;
 }
 
-.selectize-dropdown {
-    .optgroup-header {
+.g-selectize-dropdown {
+    .g-optgroup-header {
         padding-top: $selectize-padding-dropdown-item-y + 2px;
         font-weight: bold;
         font-size: 0.85em;
         color: $medium-gray;
         text-transform: uppercase;
     }
-    .optgroup {
+    .g-optgroup {
         border-top: 1px solid $selectize-color-dropdown-border-top;
         &:first-child {
             border-top: 0 none;
@@ -333,13 +340,13 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 }
 
 // remove X plugin
-.selectize-control.multi .items {
+.g-selectize-control.g-multi .g-items {
     [data-value] {
         position: relative;
         padding-right: 24px !important;
         overflow: visible;
     }
-    [data-value] .remove-single-item {
+    [data-value] .g-remove-single-item {
         z-index: 1; /* fixes ie bug (see #392) */
         position: absolute;
         top: 0;
@@ -354,19 +361,19 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         padding: $selectize-padding-item-y 0 0 0;
         border-left: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 0 2px 2px 0;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
-    [data-value] .remove-single-item:hover {
+    [data-value] .g-remove-single-item:hover {
         background: rgba(0,0,0,0.05);
     }
-    [data-value].active .remove-single-item {
+    [data-value].g-active .g-remove-single-item {
         border-left-color: rgba(0, 0, 0, 0.2);
     }
-    .disabled [data-value] .remove-single-item:hover {
+    .g-disabled [data-value] .g-remove-single-item:hover {
         background: none;
     }
-    .disabled [data-value] .remove-single-item {
+    .g-disabled [data-value] .g-remove-single-item {
         border-left-color: lighten(desaturate($selectize-color-item-border, 100%), $selectize-lighten-disabled-item-border);
     }
 }

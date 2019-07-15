@@ -1,0 +1,32 @@
+.g-logo {
+    font-family: get-font-family($font-family-title);
+    font-weight: $font-weight-ultrabold;
+    font-size: $core-font-size + 0.35;
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    img, svg {
+        display: block;
+    }
+
+    &.g-logo-helium {
+        img, svg {
+            max-height: 50px;
+        }
+
+        svg {
+            fill: $white;
+        }
+    }
+
+	@include breakpoint(mobile-only) {
+		display: block;
+		text-align: center;
+		margin: -0.85rem 0;
+        padding-left: $content-padding;
+
+        img, svg {
+            margin: 0 auto;
+        }
+	}
+}

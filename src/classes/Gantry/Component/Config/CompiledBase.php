@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,7 +13,7 @@
 
 namespace Gantry\Component\Config;
 
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\PhpFile;
 
 /**
@@ -28,6 +27,11 @@ abstract class CompiledBase
     public $version = 1;
 
     /**
+     * @var string  Filename (base name) of the compiled configuration.
+     */
+    public $name;
+
+    /**
      * @var string|bool  Configuration checksum.
      */
     public $checksum;
@@ -38,14 +42,14 @@ abstract class CompiledBase
     protected $cacheFolder;
 
     /**
-     * @var string  Filename
-     */
-    protected $filename;
-
-    /**
      * @var array  List of files to load.
      */
     protected $files;
+
+    /**
+     * @var string
+     */
+    protected $path;
 
     /**
      * @var mixed  Configuration object.
@@ -55,9 +59,10 @@ abstract class CompiledBase
     /**
      * @param  string $cacheFolder  Cache folder to be used.
      * @param  array  $files  List of files as returned from ConfigFileFinder class.
+     * @param string $path  Base path for the file list.
      * @throws \BadMethodCallException
      */
-    public function __construct($cacheFolder, array $files)
+    public function __construct($cacheFolder, array $files, $path = GANTRY5_ROOT)
     {
         if (!$cacheFolder) {
             throw new \BadMethodCallException('Cache folder not defined.');
@@ -65,7 +70,28 @@ abstract class CompiledBase
 
         $this->cacheFolder = $cacheFolder;
         $this->files = $files;
+        $this->path = $path ? rtrim($path, '\\/') . '/' : '';
     }
+
+    /**
+     * Get filename for the compiled PHP file.
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function name($name = null)
+    {
+        if (!$this->name) {
+            $this->name = $name ?: md5(json_encode(array_keys($this->files)));
+        }
+
+        return $this;
+    }
+
+    /**
+     * Function gets called when cached configuration is saved.
+     */
+    public function modified() {}
 
     /**
      * Load the configuration.
@@ -78,7 +104,7 @@ abstract class CompiledBase
             return $this->object;
         }
 
-        $filename = $this->filename();
+        $filename = $this->createFilename();
         if (!$this->loadCompiledFile($filename) && $this->loadFiles()) {
             $this->saveCompiledFile($filename);
         }
@@ -102,16 +128,9 @@ abstract class CompiledBase
         return $this->checksum;
     }
 
-    /**
-     * Get filename for the compiled PHP file.
-     *
-     * @return string
-     */
-    protected function filename()
+    protected function createFilename()
     {
-        $name = md5(json_encode(array_keys($this->files)));
-
-        return "{$this->cacheFolder}/{$name}.php";
+        return "{$this->cacheFolder}/{$this->name()->name}.php";
     }
 
     /**
@@ -120,6 +139,11 @@ abstract class CompiledBase
      * @param  array  $data
      */
     abstract protected function createObject(array $data = []);
+
+    /**
+     * Finalize configuration object.
+     */
+    abstract protected function finalizeObject();
 
     /**
      * Load single configuration file and append it to the correct position.
@@ -139,11 +163,14 @@ abstract class CompiledBase
     {
         $this->createObject();
 
-        foreach (array_reverse($this->files) as $files) {
+        $list = array_reverse($this->files);
+        foreach ($list as $files) {
             foreach ($files as $name => $item) {
-                $this->loadFile($name, GANTRY5_ROOT . '/' . $item['file']);
+                $this->loadFile($name, $this->path . $item['file']);
             }
         }
+
+        $this->finalizeObject();
 
         return true;
     }
@@ -157,6 +184,15 @@ abstract class CompiledBase
      */
     protected function loadCompiledFile($filename)
     {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if (!$global->get('compile_yaml', 1)) {
+            return false;
+        }
+
         if (!file_exists($filename)) {
             return false;
         }
@@ -179,6 +215,8 @@ abstract class CompiledBase
 
         $this->createObject($cache['data']);
 
+        $this->finalizeObject();
+
         return true;
     }
 
@@ -191,6 +229,15 @@ abstract class CompiledBase
      */
     protected function saveCompiledFile($filename)
     {
+        $gantry = Gantry::instance();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        if (!$global->get('compile_yaml', 1)) {
+            return;
+        }
+
         $file = PhpFile::instance($filename);
 
         // Attempt to lock the file for writing.
@@ -210,11 +257,18 @@ abstract class CompiledBase
             'timestamp' => time(),
             'checksum' => $this->checksum(),
             'files' => $this->files,
-            'data' => $this->object->toArray()
+            'data' => $this->getState()
         ];
 
         $file->save($cache);
         $file->unlock();
         $file->free();
+
+        $this->modified();
+    }
+
+    protected function getState()
+    {
+        return $this->object->toArray();
     }
 }

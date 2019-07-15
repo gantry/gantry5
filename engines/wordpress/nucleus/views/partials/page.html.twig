@@ -2,12 +2,13 @@
 
 {% block page_head -%}
     {% if page_head %}
-        {{ page_head }}
+        {{ page_head|raw }}
     {% else %}
         {{ parent() }}
     {% endif %}
 {%- endblock %}
 
 {% block page_footer %}
-    {{ wp_footer }}
+    {% do gantry.platform.finalize() %}
+    {{ wp_footer|raw }}
 {% endblock %}

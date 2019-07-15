@@ -1,25 +1,23 @@
+version: 2
+
 preset:
   image: gantry-admin://images/layouts/default.png
 
 layout:
-  header:
-    container:
-      - [particle-logo 30, position-header 70]
+  /header/:
+    - [logo 30, position-header 70]
 
-  navigation:
-    container:
-      - particle-menu
+  /navigation/:
+    - menu
 
-  main:
-    container:
-      - position-breadcrumbs
-      - system-messages
-      - pagecontent
+  /main/:
+    - position-breadcrumbs
+    - system-messages
+    - system-content
 
-  footer:
-    container:
+  /footer/:
     - position-footer
-    - [particle-copyright 40, spacer 30, particle-branding 30]
+    - [copyright 40, spacer 30, branding 30]
 
   offcanvas:
-    - particle-mobile-menu
+    - mobile-menu

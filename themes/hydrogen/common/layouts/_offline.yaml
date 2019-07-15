@@ -1,17 +1,16 @@
+version: 2
+
 preset:
   image: gantry-admin://images/layouts/offline.png
 
 layout:
-  header:
-    container:
-      - [particle-logo 30, spacer 70]
+  /header/:
+    - [logo 30, spacer 70]
 
-  main:
-    container:
-      - system-messages
-      - pagecontent
+  /main/:
+    - system-messages
+    - system-content
 
-  footer:
-    container:
+  /footer/:
     - position-footer
-    - [particle-copyright 40, spacer 30, particle-branding 30]
+    - [copyright 40, spacer 30, branding 30]

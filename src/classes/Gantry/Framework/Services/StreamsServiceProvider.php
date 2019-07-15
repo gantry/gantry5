@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,13 +13,10 @@
 
 namespace Gantry\Framework\Services;
 
-use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Streams;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
-use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
-use RocketTheme\Toolbox\StreamWrapper\Stream;
 
 class StreamsServiceProvider implements ServiceProviderInterface
 {
@@ -28,17 +24,19 @@ class StreamsServiceProvider implements ServiceProviderInterface
     {
         $sp = $this;
 
-        $gantry['locator'] = function($c) use ($sp) {
+        $gantry['locator'] = function() use ($sp) {
             return new UniformResourceLocator(GANTRY5_ROOT);
         };
         $gantry['streams'] = function($c) use ($sp) {
-            $schemes = (array) $c['platform']->get('streams');
+            $schemes = (array) $c['platform']->init()->get('streams');
 
             /** @var UniformResourceLocator $locator */
             $locator = $c['locator'];
 
             $streams = new Streams($locator);
             $streams->add($schemes);
+
+            GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator') && \Gantry\Debugger::setLocator($locator);
 
             return $streams;
         };

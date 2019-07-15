@@ -9,20 +9,20 @@
 {% endif %}
 {% if item.type == 'particle' %}
     <span class="menu-item-content">
-        <span class="menu-item-title">{{ item.title|e }}</span>
-        {% if item.subtitle %}<span class="menu-item-subtitle">{{ item.subtitle|e }}</span>{% endif %}
+        <span class="menu-item-title">{{ item.title }}</span>
+        {% if item.subtitle %}<span class="menu-item-subtitle">{{ item.subtitle }}</span>{% endif %}
     </span>
-    <span class="badge menu-item-type">{{ item.particle|e }}</span>
+    <span class="badge menu-item-type">{{ item.particle }}</span>
 {% else %}
     {% if item.image %}
-        <img src="{{ url(item.image)|e }}" />
+        <img src="{{ url(item.image) }}" />
     {% elseif item.icon %}
-        <i class="{{ item.icon|e }}"></i>
+        <i class="{{ item.icon }}"></i>
     {% endif %}
     {% if not item.icon_only or not (item.image or item.icon) %}
         <span class="menu-item-content">
-            <span class="menu-item-title">{{ item.title|e }}</span>
-                {% if item.subtitle %}<span class="menu-item-subtitle">{{ item.subtitle|e }}</span>{% endif %}
+            <span class="menu-item-title">{{ item.title }}</span>
+                {% if item.subtitle %}<span class="menu-item-subtitle">{{ item.subtitle }}</span>{% endif %}
         </span>
     {% endif %}
     {% if (item.children) -%}
@@ -34,6 +34,6 @@
 {% else %}
 </a>
 {% endif %}
-<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle')|e : gantry.route('menu/edit', id, item.path)|e }}">
-    <i aria-label="Menu Item Settings" class="fa fa-cog"></i>
+<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle') : gantry.route('menu/edit', id, item.path) }}">
+    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_ITEM_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
 </a>

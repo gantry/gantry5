@@ -15,4 +15,20 @@
             }
         }
     }
+
+    // Post Thumbnails
+    .post-thumbnail {
+        display: block;
+        margin: 0.65rem 0;
+        min-width: 0;
+        min-height: 0;
+
+        .float-left {
+            margin: 0 1rem 0.65rem 0;
+        }
+
+        .float-right {
+            margin: 0 0 0.65rem 1rem;
+        }
+    }
 }

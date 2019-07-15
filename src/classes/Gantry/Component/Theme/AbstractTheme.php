@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +13,11 @@
 
 namespace Gantry\Component\Theme;
 
+use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
+use Gantry\Component\Twig\TwigCacheFilesystem;
 use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -49,7 +52,7 @@ abstract class AbstractTheme
     /**
      * Construct theme object.
      *
-     * @param sting $path
+     * @param string $path
      * @param string $name
      */
     public function __construct($path, $name = null)
@@ -72,9 +75,6 @@ abstract class AbstractTheme
      */
     public function getContext(array $context)
     {
-        $gantry = static::gantry();
-
-        $context['gantry'] = $gantry;
         $context['theme'] = $this;
 
         return $context;
@@ -84,11 +84,15 @@ abstract class AbstractTheme
      * Define twig environment.
      *
      * @param \Twig_Environment $twig
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
      * @return \Twig_Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
+        if ($twig->hasExtension('Gantry\Component\Twig\TwigExtension')) {
+            return $twig;
+        }
+
         if (!$loader) {
             $loader = $twig->getLoader();
         }
@@ -98,7 +102,8 @@ abstract class AbstractTheme
         $twig->addExtension(new TwigExtension);
 
         if (method_exists($this, 'toGrid')) {
-            $twig->addFilter('toGrid', new \Twig_Filter_Function([$this, 'toGrid']));
+            $filter = new \Twig_SimpleFilter('toGrid', [$this, 'toGrid']);
+            $twig->addFilter($filter);
         }
 
         return $twig;
@@ -114,12 +119,18 @@ abstract class AbstractTheme
         if (!$this->renderer) {
             $gantry = static::gantry();
 
+            /** @var Config $global */
+            $global = $gantry['global'];
+
+            $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
+            $cache = $cachePath ? new TwigCacheFilesystem($cachePath, \Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION) : null;
             $debug = $gantry->debug();
+            $production = (bool) $global->get('production', 1);
             $loader = new \Twig_Loader_Filesystem();
             $params = [
-                'cache' => $this->getCachePath('twig'),
+                'cache' => $cache,
                 'debug' => $debug,
-                'auto_reload' => true,
+                'auto_reload' => !$production,
                 'autoescape' => 'html'
             ];
 
@@ -153,6 +164,24 @@ abstract class AbstractTheme
     }
 
     /**
+     * Compile and render twig string.
+     *
+     * @param string $string
+     * @param array $context
+     * @return string
+     */
+    public function compile($string, array $context = [])
+    {
+        $renderer = $this->renderer();
+        $template = $renderer->createTemplate($string);
+
+        // Include Gantry specific things to the context.
+        $context = $this->getContext($context);
+
+        return $template->render($context);
+    }
+
+    /**
      * Initialize theme.
      */
     protected function init()
@@ -165,9 +194,6 @@ abstract class AbstractTheme
             $gantry->register(new ErrorServiceProvider);
         }
 
-        /** @var Platform $patform */
-        $patform = $gantry['platform'];
-
         // Initialize theme cache stream.
         $cachePath = $this->getCachePath();
 
@@ -177,17 +203,27 @@ abstract class AbstractTheme
         $locator = $gantry['locator'];
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
 
-        $gantry['file.yaml.cache.path'] = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
     }
 
     /**
      * Set twig lookup paths to the loader.
      *
-     * @param \Twig_Loader_Filesystem $loader
+     * @param \Twig_LoaderInterface $loader
+     * @return \Twig_Loader_Filesystem|null
      * @internal
      */
-    protected function setTwigLoaderPaths(\Twig_Loader_Filesystem $loader)
+    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
+        if ($loader instanceof \Twig_Loader_Chain) {
+            $new = new \Twig_Loader_Filesystem();
+            $loader->addLoader($new);
+            $loader = $new;
+        } elseif (!($loader instanceof \Twig_Loader_Filesystem)) {
+            return null;
+        }
+
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
@@ -195,6 +231,8 @@ abstract class AbstractTheme
 
         $loader->setPaths($locator->findResources('gantry-engine://templates'), 'nucleus');
         $loader->setPaths($locator->findResources('gantry-particles://'), 'particles');
+
+        return $loader;
     }
 
     /**
@@ -202,7 +240,6 @@ abstract class AbstractTheme
      *
      * @param string $path
      * @return string
-     * @internal
      */
     protected function getCachePath($path = '')
     {
@@ -234,7 +271,7 @@ abstract class AbstractTheme
     /**
      * @deprecated 5.1.5
      */
-    public function add_to_twig(\Twig_Environment $twig, \Twig_Loader_Filesystem $loader = null)
+    public function add_to_twig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
         return $this->extendTwig($twig, $loader);
     }

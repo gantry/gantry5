@@ -1,0 +1,121 @@
+// Article Info
+dl.article-info {
+    margin-top: 0;
+    margin-bottom: 2rem;
+
+    dt {
+        display: none;
+    }
+
+    dd {
+        display: inline-block;
+        margin: 0;
+        font-family: get-font-family($font-family-default);
+        text-transform: uppercase;
+        color: $base-text-color;
+        font-size: $core-font-size - 0.15;
+        line-height: $core-line-height - 0.15;
+
+        > * {
+            display: inline-block;
+        }
+
+        &:not(:last-child):after {
+            content: "/";
+            margin: 0 5px;
+            color: $base-border-color;
+        }
+    }
+}
+
+.article-info-term {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: $content-margin * 2;
+    background: darken($base-background, 8%);
+    border-radius: $border-radius;
+    padding: ($content-padding/3) $content-padding;
+}
+
+// Read More
+p.readmore {
+    .btn {
+        @extend %g-button;
+    }
+}
+
+// Filter Search
+.filter-search {
+    .btn {
+        height: 40px;
+        padding: 0 1.5rem;
+    }
+}
+
+// Blog
+.blog, .item-page {
+    .items-row {
+        margin-bottom: $content-margin;
+        padding-bottom: $content-padding;
+    }
+
+    .g-lead {
+        font-size: $core-font-size + 0.5;
+        padding-bottom: $content-padding * 2;
+
+        @include breakpoint(tablet-range) {
+            font-size: $core-font-size + 0.25;
+        }
+
+        @include breakpoint(mobile-only) {
+            font-size: $core-font-size;
+        }
+    }
+}
+
+.blog {
+    dl.article-info {
+        margin-left: 0;
+
+        dt, dd {
+            margin-left: 0;
+        }
+    }
+
+    ol.nav {
+        padding-left: 0;
+
+        .dir-rtl & {
+            padding-right: 0;
+        }
+    }
+
+    .icons .pull-right {
+        top: -1rem;
+    }
+}
+
+// Archived Articles
+.chzn-container-single .chzn-single, .chzn-container-active.chzn-with-drop .chzn-single {
+    background: $base-background;
+    border: 1px solid $border-color-light;
+    box-shadow: none;
+    height: 40px;
+    line-height: 36px;
+    border-radius: 6px;
+
+    div b {
+        position: relative;
+        top: 6px;
+    }
+}
+
+.chzn-container-active.chzn-with-drop .chzn-single {
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.chzn-container-active.chzn-with-drop .chzn-single div b {
+    background-position: -15px 2px;
+}

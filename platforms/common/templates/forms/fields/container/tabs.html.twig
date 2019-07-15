@@ -1,0 +1,71 @@
+{% extends 'forms/' ~ layout|default('field') ~ '.html.twig' %}
+
+{# Not overridable #}
+{% block overridable %}
+{% endblock %}
+
+{% block contents %}
+    <div class="g5-tabs-container">
+        {% if field.fields %}
+            {% set tabs = [] %}
+            {% set panes = [] %}
+            {% set fieldId = 'g-tabs-container-' ~ (name|fieldName) ~ '-' %}
+
+            {# collect tabs and panes #}
+            {% for tab, content in field.fields %}
+                {% if not ignore_not_overrideable or (content.overridable is not defined or content.overridable) %}
+                    {% set tabs = tabs|merge([content.label|default(tab)|trans_key('GANTRY5_FORM_FIELD', scope, name, tab, 'LABEL')]) %}
+                    {% set panes = panes|merge([content.fields|default([])]) %}
+                {% endif %}
+            {% endfor %}
+
+            <div class="g-tabs" role="tablist">
+                <ul>
+                    {% for tab in tabs %}
+                        <li {{ not loop.index0 ? 'class="active"' : '' }}>
+                            <a href="#"
+                               id="{{ fieldId ~ loop.index0 ~ '-tab'|lower }}"
+                               aria-controls="{{ fieldId ~ loop.index0 ~ '-pane'|lower }}"
+                               aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}"
+                               role="presentation"><span>{{ tab }}</span></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="g-panes">
+                {% for pane in panes %}
+                    <div class="g-pane clearfix {{ not loop.index0 ? 'active' : '' }}"
+                         role="tabpanel"
+                         id="{{ fieldId ~ loop.index0 ~ '-pane'|lower }}"
+                         aria-labelledby="{{ fieldId ~ loop.index0 ~ '-tab'|lower }}"
+                         aria-expanded="{{ not loop.index0 ? 'true' : 'false' }}">
+                        {% for childName, child in pane %}
+                            {% if childName starts with '.' %}
+                                {% set childKey = childName|trim('.') %}
+                                {% set childValue = nested(value, childKey) %}
+                                {% set childDefault = null %}
+                            {% else %}
+                                {% set container = child.type == 'container.tabs' %}
+                                {% set childKey = childName %}
+                                {% set childValue = container ? value : nested(data, scope ~ childKey) %}
+                                {% set childDefault = container ? defaults : nested(defaults, scope ~ childKey) %}
+                            {% endif %}
+                            {% set childName = parent_field ~ childName|trim('.') %}
+
+                            {% if child.type %}
+                                {% set child_overrideable = child.overridable is defined ? child.overridable : (child.overrideable is defined ? child.overrideable : true) %}
+
+                                {% if child.type and not child.skip and not(ignore_not_overrideable and not child_overrideable and childValue is null) and not(childValue is null and not_global_overrideable) %}
+                                    {% include ["forms/fields/" ~ child.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                        with {name: childName, field: child, current_value: childValue, value: null, default_value: childDefault, overrideable: overrideable and child_overrideable } %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+    </div>
+{% endblock %}

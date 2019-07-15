@@ -18,8 +18,11 @@ var $              = require('elements'),
     validateField  = require('./utils/field-validation'),
     lm             = require('./lm'),
     mm             = require('./menu'),
+    pm             = require('./positions/cards'),
     configurations = require('./configurations'),
-    changelog      = require('./changelog');
+    positions      = require('./positions'),
+    changelog      = require('./changelog'),
+    translate      = require('./utils/translate');
 
 require('elements/attributes');
 require('elements/events');
@@ -73,13 +76,13 @@ var prettyDate = {
 
 window.onbeforeunload = function() {
     if (flags.get('pending')) {
-        return 'You haven\'t saved your changes and by leaving the page they will be lost.\nDo you want to leave without saving?';
+        return translate('GANTRY5_PLATFORM_JS_NO_SAVE_DETECTED');
     }
 };
 
 ready(function() {
     var body     = $('body'),
-        sentence = 'The {{type}} {{verb}} been successfully saved! {{extras}}';
+        sentence = translate('GANTRY5_PLATFORM_JS_SAVE_SUCCESS');
 
     // Close notification
     body.delegate('click', '[data-g-close]', function(event, element) {
@@ -92,21 +95,25 @@ ready(function() {
         });
     });
 
-    // Extras
-    body.delegate('click', '[data-g-extras]', function(event, element) {
+    // Generic Popovers
+    body.delegate('click', '[data-g-popover]', function(event, element) {
         if (event && event.preventDefault) { event.preventDefault(); }
 
         if (!element.PopoverDefined) {
             var content = element.find('[data-popover-content]') || element.siblings('[data-popover-content]'),
                 popover = element.getPopover({
-                    style: 'extras',
-                    width: 220,
+                    style: element.data('g-popover-style') || 'generic',
+                    width: element.data('g-popover-width') || 220,
                     content: zen('ul').html(content.html())[0].outerHTML,
-                    allowElementsClick: '.toggle'
+                    allowElementsClick: element.data('g-popover-elementsclick') || '.toggle'
                 });
             element.on('shown.popover', function(popover){
+                var enabler = element.find('.enabler');
                 element.attribute('aria-expanded', true).attribute('aria-hidden', false);
-                element.find('.enabler')[0].focus();
+
+                if (enabler) {
+                    enabler[0].focus();
+                }
             });
 
             element.on('hide.popover', function(popover){
@@ -134,7 +141,10 @@ ready(function() {
     // Save Tooltip
     body.delegate('mouseover', '.button-save', function(event, element) {
         if (!element.lastSaved) { return true; }
-        element.addClass('g-tooltip').addClass('g-tooltip-right').data('title', 'Last Saved: ' + prettyDate.format(element.lastSaved));
+        var feedback = translate('GANTRY5_PLATFORM_LAST_SAVED') + ': ' + prettyDate.format(element.lastSaved);
+        element
+            .data('tip', feedback)
+            .data('title', feedback);
     });
 
     // Save
@@ -142,6 +152,11 @@ ready(function() {
         if (event && event.preventDefault) { event.preventDefault(); }
         var saves = $('.button-save');
 
+        if (saves.disabled()) {
+            return false;
+        }
+
+        saves.disabled(true);
         saves.hideIndicator();
         saves.showIndicator();
 
@@ -149,26 +164,42 @@ ready(function() {
             invalid = [],
             type    = element.data('save'),
             extras  = '',
-            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : 'other'),
+            page    = $('[data-lm-root]') ? 'layout' : ($('[data-mm-id]') ? 'menu' : ($('[data-g5-position]') ? 'positions' : 'other')),
             saveURL = parseAjaxURI(trim(window.location.href, '#') + getAjaxSuffix());
 
         switch (page) {
             case 'layout':
                 var preset = $('[data-lm-preset]');
-                lm.layoutmanager.singles('cleanup', lm.builder, true);
+                lm.layoutmanager.singles('cleanup', lm.builder, false);
                 lm.savestate.setSession(lm.builder.serialize(null, true));
 
                 data.preset = preset && preset.data('lm-preset') ? preset.data('lm-preset') : 'default';
-                data.layout = JSON.stringify(lm.builder.serialize());
 
+                var layout = JSON.stringify(lm.builder.serialize());
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.layout = btoa ? btoa(encodeURIComponent(layout)) : layout;
+
+                data.layout = layout;
                 break;
+
             case 'menu':
                 data.menutype = $('select.menu-select-wrap').value();
                 data.settings = JSON.stringify(mm.menumanager.settings);
                 data.ordering = JSON.stringify(mm.menumanager.ordering);
-                data.items = JSON.stringify(mm.menumanager.items);
+
+                var items = JSON.stringify(mm.menumanager.items);
+
+                // base64 encoding doesn't quite work with mod_security
+                // data.items = btoa ? btoa(encodeURIComponent(items)) : items;
+
+                data.items = items;
 
                 saveURL = parseAjaxURI(element.parent('form').attribute('action') + getAjaxSuffix());
+                break;
+
+            case 'positions':
+                data.positions = pm.serialize();
                 break;
 
             case 'other':
@@ -179,13 +210,14 @@ ready(function() {
                     $(form[0].elements).forEach(function(input) {
                         input = $(input);
                         var name     = input.attribute('name'),
+                            type     = input.attribute('type'),
                             value    = input.value(),
                             parent   = input.parent('.settings-param, .card-overrideable'),
                             override = parent ? parent.find('> input[type="checkbox"]') : null;
 
                         override = override || $(input.data('override-target'));
 
-                        if (!name || input.disabled() || (override && !override.checked())) { return; }
+                        if (!name || input.disabled() || (override && !override.checked()) || (type == 'radio' && !input.checked())) { return; }
                         if (!validateField(input)) { invalid.push(input); }
                         data[name] = value;
                     });
@@ -193,9 +225,10 @@ ready(function() {
         }
 
         if (invalid.length) {
+            saves.disabled(false);
             saves.hideIndicator();
             saves.showIndicator('fa fa-fw fa-exclamation-triangle');
-            toastr.error('Please review the fields in the page and ensure you correct any invalid one.', 'Invalid Fields');
+            toastr.error(translate('GANTRY5_PLATFORM_JS_REVIEW_FIELDS'), translate('GANTRY5_PLATFORM_JS_INVALID_FIELDS'));
             return;
         }
 
@@ -214,16 +247,17 @@ ready(function() {
                 modal.close();
 
                 if ($('#styles')) {
-                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : 'The CSS was successfully compiled!');
+                    extras = '<br />' + (response.body.warning ? '<hr />' + response.body.title + '<br />' + response.body.html : translate('GANTRY5_PLATFORM_JS_CSS_COMPILED'));
                 }
 
                 toastr[response.body.warning ? 'warning' : 'success'](interpolate(sentence, {
                     verb: type.slice(-1) == 's' ? 'have' : 'has',
                     type: type,
                     extras: extras
-                }), type + ' Saved');
+                }), type + ' ' + translate('GANTRY5_PLATFORM_SAVED'));
             }
 
+            saves.disabled(false);
             saves.hideIndicator();
             saves.forEach(function(save) {
                 $(save).lastSaved = new Date();
@@ -332,7 +366,6 @@ ready(function() {
             indicator.hideIndicator();
         })
     });
-
 });
 
 var modules = {
@@ -352,7 +385,8 @@ var modules = {
     particles: require('./particles'),
     zen: require('elements/zen'),
     moofx: require('moofx'),
-    atoms: require('./pagesettings')
+    atoms: require('./pagesettings'),
+    tips: require('./ui/tooltips')
 };
 
 window.G5 = modules;

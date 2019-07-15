@@ -1,0 +1,52 @@
+[dir="rtl"] {
+    #g5-container {
+        .g-selectize-control.g-single .g-selectize-input:after {
+            right: inherit;
+            left: 23px;
+        }
+
+        .settings-block.search i,
+        .g-colorpicker i {
+            right: inherit;
+            left: 10px;
+        }
+
+        .card h4 .enabler {
+            float: left;
+        }
+
+        .float-right {
+            float: left !important;
+        }
+
+        .float-left {
+            float: right !important;
+        }
+
+        .settings-block .settings-param-field {
+            margin-left: 0;
+            margin-right: 175px;
+        }
+
+        #g-changelog ul li {
+            padding-left: 0;
+            padding-right: 6rem;
+
+            &:before {
+                margin-left: 1rem;
+                margin-right: -6rem;
+            }
+        }
+
+        .settings-block i {
+            right: inherit;
+            left: 10px;
+        }
+
+        .sidebar-block {
+            $negate: -($content-padding + $content-margin);
+            $compensate: $content-padding + $content-margin;
+            margin: $negate $negate $negate $compensate;
+        }
+    }
+}

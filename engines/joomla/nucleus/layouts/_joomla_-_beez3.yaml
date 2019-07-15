@@ -1,35 +1,43 @@
+version: 2
+
 preset:
   image: gantry-admin://images/layouts/3-col.png
 
 layout:
-  header:
-    container:
-      - [particle-logo, position-position-0]
+  /header/:
+    - [logo, position-0]
 
-  navigation:
-    container:
-      - particle-menu
+  /navigation/:
+    - menu
 
-  container:
-    1:
+  /container-main/:
+    -
       - sidebar 20:
-        - position-position-7
-        - position-position-4
-        - position-position-5
+        - position-7
+        - position-4
+        - position-5
       - main 60:
-        - position-position-2
-        - position-position-12
+        - position-2
+        - position-12
         - system-messages
-        - pagecontent
+        - system-content
       - aside 20:
-        - position-position-6
-        - position-position-8
-        - position-position-3
+        - position-6
+        - position-8
+        - position-3
 
-  footer:
-    container:
-      - [position-position-9, position-position-10, position-position-11]
-      - position-position-14
+  /footer/:
+    - [position-9, position-10, position-11]
+    - position-14
 
   offcanvas:
-    - particle-mobile-menu
+    - mobile-menu
+
+structure:
+  sidebar:
+    subtype: aside
+    block:
+      fixed: 1
+  aside:
+    block:
+      fixed: 1

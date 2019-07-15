@@ -3,22 +3,19 @@
 {% block head_title %}
     <meta charset="utf-8" />
     <title>{% if header.title %}{{ header.title }} | {% endif %}{{ site.title }}</title>
-    {% if header.description %}
-        <meta name="description" content="{{ header.description }}">
-    {% else %}
-        <meta name="description" content="{{ site.description }}">
-    {% endif %}
+    {% include 'partials/metadata.html.twig' %}
+    <link rel="canonical" href="{{ page.url(true, true) }}" />
     {% if header.robots %}
         <meta name="robots" content="{{ header.robots }}">
     {% endif %}
 {% endblock %}
 
 {% block head_application %}
-    {{ assets.css() }}
-    {% for stylesheet in stylesheets %}
-        <link rel="stylesheet" href="{{ base_url_relative }}/{{ stylesheet }}" type="text/css" />
-    {% endfor %}
+    {% do gantry.platform.finalize %}
 
-    {% do assets.addJs('gantry-theme://js/jquery-2.1.1.min.js',101) %}
-    {{ assets.js() }}
+    {% block assets deferred %}
+        {{ assets.css()|raw }}
+        {{ assets.js()|raw }}
+    {% endblock %}
+
 {% endblock %}

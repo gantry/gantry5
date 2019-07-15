@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,17 +13,22 @@
 
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Config\Config;
+use Gantry\Component\System\Messages;
+use Gantry\Framework\Document;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
-use Gantry\Framework\Document as RealDocument;
+use Gantry\Framework\Page;
 use Gantry\Framework\Platform;
+use Gantry\Framework\Positions;
 use Gantry\Framework\Request;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Services\StreamsServiceProvider;
+use Gantry\Framework\Site;
 use Gantry\Framework\Translator;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventDispatcher;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 abstract class Gantry extends Container
 {
@@ -37,7 +41,7 @@ abstract class Gantry extends Container
     public static function instance()
     {
         if (!self::$instance) {
-            self::$instance = static::load();
+            self::$instance = static::init();
 
             if (!defined('GANTRY5_DEBUG')) {
                 define('GANTRY5_DEBUG', self::$instance->debug());
@@ -59,21 +63,30 @@ abstract class Gantry extends Container
      *
      * @return boolean
      */
-    public abstract function debug();
+    public function debug()
+    {
+        return $this['global']->get('debug', false);
+    }
 
     /**
      * Returns true if we are in administration.
      *
      * @return boolean
      */
-    public abstract function admin();
+    public function admin()
+    {
+        return defined('GANTRYADMIN_PATH');
+    }
+
 
     /**
      * @return string
      */
     public function siteUrl()
     {
-        return RealDocument::siteUrl();
+        $gantry = Gantry::instance();
+
+        return $gantry['document']->siteUrl();
     }
 
     /**
@@ -82,7 +95,7 @@ abstract class Gantry extends Container
      */
     public function styles($location = 'head')
     {
-        return RealDocument::getStyles($location);
+        return $this['document']->getStyles($location);
     }
 
     /**
@@ -91,7 +104,18 @@ abstract class Gantry extends Container
      */
     public function scripts($location = 'head')
     {
-        return RealDocument::getScripts($location);
+        return $this['document']->getScripts($location);
+    }
+
+    /**
+     * Load Javascript framework / extension in platform independent way.
+     *
+     * @param string $framework
+     * @return bool
+     */
+    public function load($framework)
+    {
+        return $this['document']->addFramework($framework);
     }
 
     /**
@@ -143,7 +167,15 @@ abstract class Gantry extends Container
 
         $path = implode('/', array_filter(func_get_args(), function($var) { return isset($var) && $var !== ''; }));
 
+        // rawurlencode() the whole path, but keep the slashes.
+        $path = preg_replace(['|%2F|', '|%25|'], ['/', '%'], rawurlencode($path));
+
         return preg_replace('|/+|', '/', '/' . $this->offsetGet('base_url') . sprintf($route, $path));
+    }
+
+    public function authorize($action, $id = null)
+    {
+        return $this['platform']->authorize($action, $id);
     }
 
     public function wrapper($value = null)
@@ -155,19 +187,25 @@ abstract class Gantry extends Container
         return $this->wrapper;
     }
 
-    protected static function load()
+    protected static function init()
     {
         /** @var Gantry $instance */
         $instance = new static();
 
+        if (GANTRY_DEBUGGER) {
+            $instance['debugger'] = \Gantry\Debugger::instance();
+        }
+
+        $instance['loader'] = \Gantry5\Loader::get();
+
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
-        $instance['request'] = function ($c) {
+        $instance['request'] = function () {
             return new Request;
         };
 
-        $instance['events'] = function ($c) {
+        $instance['events'] = function () {
             return new EventDispatcher;
         };
 
@@ -175,12 +213,32 @@ abstract class Gantry extends Container
             return new Platform($c);
         };
 
-        $instance['translator'] = function ($c) {
+        $instance['translator'] = function () {
             return new Translator;
         };
 
+        $instance['site'] = function () {
+            return new Site;
+        };
+
+        $instance['menu'] = function () {
+            return new Menu;
+        };
+
+        $instance['messages'] = function () {
+            return new Messages;
+        };
+
+        $instance['page'] = function ($c) {
+            return new Page($c);
+        };
+
+        $instance['document'] = function () {
+            return new Document;
+        };
+
         // Make sure that nobody modifies the original collection by making it a factory.
-        $instance['configurations'] = $instance->factory(function ($c) {
+        $instance['outlines'] = $instance->factory(function ($c) {
             static $collection;
             if (!$collection) {
                 $collection = (new Outlines($c))->load();
@@ -188,6 +246,41 @@ abstract class Gantry extends Container
 
             return $collection->copy();
         });
+
+        // @deprecated 5.3
+        $instance['configurations'] = $instance->factory(function ($c) {
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Depredated call: gantry.configurations");
+
+            static $collection;
+            if (!$collection) {
+                $collection = (new Outlines($c))->load();
+            }
+
+            return $collection->copy();
+        });
+
+        $instance['positions'] = $instance->factory(function ($c) {
+            static $collection;
+            if (!$collection) {
+                $collection = (new Positions($c))->load();
+            }
+
+            return $collection->copy();
+        });
+
+        $instance['global'] = function ($c) {
+            $data = $c->loadGlobal() + [
+                    'debug' => false,
+                    'production' => true,
+                    'use_media_folder' => false,
+                    'asset_timestamps' => true,
+                    'asset_timestamps_period' => 7,
+                    'compile_yaml' => true,
+                    'compile_twig' => true
+                ];
+
+            return new Config($data);
+        };
 
         return $instance;
     }
@@ -220,7 +313,7 @@ abstract class Gantry extends Container
         }
 
         // Development version support.
-        if ($version === '5.0' || static::isDev()) {
+        if ($version === '5.3' || static::isDev()) {
             return true;
         }
 
@@ -252,5 +345,13 @@ abstract class Gantry extends Container
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadGlobal()
+    {
+        return [];
     }
 }

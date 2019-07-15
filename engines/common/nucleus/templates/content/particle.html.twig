@@ -1,30 +1,33 @@
 {% try %}
-    {% if noConfig %}
-        {% set enabled = true %}
-        {% set particle = segment.attributes %}
-    {% else %}
-        {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
-        {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+    {% set id = segment.id %}
+    {% if not particle %}
+        {% if noConfig %}
+            {% set enabled = true %}
+            {% set particle = segment.attributes %}
+        {% else %}
+            {% set enabled = gantry.config.get('particles.' ~ segment.subtype ~ '.enabled', 1) %}
+            {% set particle = gantry.config.getJoined('particles.' ~ segment.subtype, segment.attributes) %}
+        {% endif %}
     {% endif %}
 
     {% set html %}
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
             {% include ['particles/' ~ segment.subtype ~ '.html.twig',
-            '@particles/' ~ segment.subtype ~ '.html.twig']
-            ignore missing %}
+            '@particles/' ~ segment.subtype ~ '.html.twig',
+            '@nucleus/content/missing.html.twig'] %}
         {% endif %}
     {% endset %}
+    {% set html = html|trim %}
 
-    {% set classes = ((not inContent ? 'g-content ' : '') ~ segment.classes|join(' '))|trim %}
-    {% if html|trim %}
-    {% if classes %}
-    <div class="{{ classes }}">
-        {{ html|raw }}
-    </div>
-    {% else %}
-        {{ html|raw }}
-    {% endif %}
-    {% endif %}
+    {% set classes = ((not inContent ? 'g-content g-particle ' : 'g-particle ') ~ segment.classes|join(' '))|trim %}
+    {%- if html -%}
+            {% if gantry.debug %}<!-- START PARTICLE {{ id }} -->{% endif %}
+
+            {% if ajax is not defined %}<div id="{{ id }}-particle" class="{{ classes }}">{% endif %}
+            {{ html|raw }}
+            {% if ajax is not defined %}</div>{% endif %}
+            {% if gantry.debug %}<!-- END PARTICLE {{ id }} -->{% endif %}
+    {%- endif -%}
 
 {% catch %}
     <div class="alert alert-error"><strong>Error</strong> while rendering {{ segment.subtype }} particle.</div>

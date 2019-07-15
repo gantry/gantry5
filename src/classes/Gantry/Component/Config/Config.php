@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,12 +13,10 @@
 
 namespace Gantry\Component\Config;
 
-use RocketTheme\Toolbox\ArrayTraits\Countable;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
-use RocketTheme\Toolbox\Blueprints\Blueprints;
 
 /**
  * The Config class contains configuration information.
@@ -28,7 +25,7 @@ use RocketTheme\Toolbox\Blueprints\Blueprints;
  */
 class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
 {
-    use NestedArrayAccessWithGetters, Countable, Iterator, Export;
+    use NestedArrayAccessWithGetters, Iterator, Export;
 
     /**
      * @var array
@@ -36,9 +33,9 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     protected $items;
 
     /**
-     * @var Blueprints|callable
+     * @var BlueprintSchema|BlueprintForm|callable
      */
-    protected $blueprints;
+    protected $blueprint;
 
     /**
      * Constructor to initialize array.
@@ -46,10 +43,10 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * @param  array  $items  Initial items inside the iterator.
      * @param  callable $blueprints  Function to load Blueprints for the configuration.
      */
-    public function __construct(array $items, callable $blueprints = null)
+    public function __construct(array $items, callable $blueprint = null)
     {
         $this->items = $items;
-        $this->blueprints = $blueprints;
+        $this->blueprint = $blueprint;
     }
 
     /**
@@ -66,14 +63,14 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             if (!is_array($old)) {
-                throw new \RuntimeException('Value ' . $old);
+                throw new \RuntimeException("Value is not array in {$name}: " . print_r($old, true));
             }
             if (is_object($value)) {
                 $value = (array) $value;
             } elseif (!is_array($value)) {
-                throw new \RuntimeException('Value ' . $value);
+                throw new \RuntimeException("Value is not array in {$name}: " . print_r($value, true));
             }
-            $value = $this->blueprints()->mergeData($old, $value, $name, $separator);
+            $value = $this->blueprint()->mergeData($old, $value, $name, $separator);
         }
 
         $this->set($name, $value, $separator);
@@ -90,7 +87,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      */
     public function getDefaults()
     {
-        return $this->blueprints()->getDefaults();
+        return $this->blueprint()->getDefaults();
     }
 
     /**
@@ -108,7 +105,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         }
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
-            $value = $this->blueprints()->mergeData($value, $old, $name, $separator);
+            $value = $this->blueprint()->mergeData($value, $old, $name, $separator);
         }
 
         $this->set($name, $value, $separator);
@@ -130,7 +127,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         if (is_object($value)) {
             $value = (array) $value;
         } elseif (!is_array($value)) {
-            throw new \RuntimeException('Value ' . $value);
+            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
         }
 
         $old = $this->get($name, null, $separator);
@@ -141,11 +138,11 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         }
 
         if (!is_array($old)) {
-            throw new \RuntimeException('Value ' . $old);
+            throw new \RuntimeException("Value is not array in '{$name}': " . print_r($value, true));
         }
 
         // Return joined data.
-        return $this->blueprints()->mergeData($old, $value, $name, $separator);
+        return $this->blueprint()->mergeData($old, $value, $name, $separator);
     }
 
     /**
@@ -156,7 +153,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      */
     public function merge(array $data)
     {
-        $this->items = $this->blueprints()->mergeData($this->items, $data);
+        $this->items = $this->blueprint()->mergeData($this->items, $data);
 
         return $this;
     }
@@ -169,7 +166,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      */
     public function setDefaults(array $data)
     {
-        $this->items = $this->blueprints()->mergeData($data, $this->items);
+        $this->items = $this->blueprint()->mergeData($data, $this->items);
 
         return $this;
     }
@@ -198,9 +195,10 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     }
 
     /**
-     * @param $name
-     * @param $element
-     * @param $separator
+     * @param string $name
+     * @param array  $element
+     * @param string $separator
+     * @param string $prefix
      * @return array
      * @internal
      */
@@ -225,19 +223,45 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     }
 
     /**
+     * Return blueprint.
+     *
+     * @return BlueprintSchema|BlueprintForm
+     * @since 5.4.7
+     */
+    public function blueprint()
+    {
+        if (!$this->blueprint){
+            $this->blueprint = new BlueprintSchema;
+        } elseif (is_callable($this->blueprint)) {
+            // Lazy load blueprints.
+            $blueprint = $this->blueprint;
+            $this->blueprint = $blueprint();
+        }
+        return $this->blueprint;
+    }
+
+    /**
      * Return blueprints.
      *
-     * @return Blueprints
+     * @return BlueprintSchema
+     * @deprecated 5.4.7
      */
     public function blueprints()
     {
-        if (!$this->blueprints){
-            $this->blueprints = new Blueprints;
-        } elseif (is_callable($this->blueprints)) {
-            // Lazy load blueprints.
-            $blueprints = $this->blueprints;
-            $this->blueprints = $blueprints();
-        }
-        return $this->blueprints;
+        return $this->blueprint();
+    }
+
+    /**
+     * Count items in nested array.
+     *
+     * @param string $path
+     * @param string $separator
+     * @return int
+     */
+    public function count($path = null, $separator = '.')
+    {
+        $items = $path ? $this->get($path, null, $separator) : $this->items;
+
+        return is_array($items) ? count($items) : 0;
     }
 }

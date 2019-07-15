@@ -2,6 +2,7 @@
 *.yaml linguistic-language=PHP
 *.twig linguistic-language=PHP
 **/gulpfile.js linguist-vendored
+**/hebe.json linguist-vendored
 **/js/*.js linguist-vendored
 **/js/*.json linguist-vendored
 **/css-compiled/*.css linguist-vendored

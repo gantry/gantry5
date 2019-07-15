@@ -19,7 +19,7 @@
         {% endfor %}
 
 
-        {% set field = field|merge(field.selectize.Options|default({}))|merge(field.selectize.Optgroups|default({}))|merge({selectize: { Options: options, Optgroups: optgroups }}) %}
+        {% set field = field|merge(field.selectize.Options|default({}))|merge(field.selectize.Optgroups|default({}))|merge({selectize: { Options: options, Optgroups: optgroups, Subtitles: true }}) %}
     {% endif %}
 
     data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"

@@ -5,18 +5,18 @@ widget.[id | title | description]
 <div data-mm-particle-stepone="{{ gantry.route(next|default('widget')) }}" class="menu-editor-extras">
     <div class="card settings-block">
         <h4>
-            {{ 'Pick a Widget'|trans }}
+            {{ 'GANTRY5_PLATFORM_PICK_A_WIDGET'|trans }}
         </h4>
         <div class="inner-params">
             <div class="g5-mm-modules-picker menu-editor-modules">
-                <div class="search">
+                <div class="search settings-block">
                     <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_SEARCH_ELI'|trans }}" />
-                    <i class="fa fa-search"></i>
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
                 <div class="modules-wrapper">
                     <ul>
                         {% for widget in gantry.platform.listWidgets %}
-                        {% if widget.id != 'particle_widget' %}
+                        {% if widget.id not in ['particle_widget', 'roksprocket_options', 'rokgallery_options'] %}
                         <li data-lm-nodrag
                             data-mm-type="widget"
                             data-lm-subtype="{{ widget.id }}"
@@ -32,7 +32,7 @@ widget.[id | title | description]
         </div>
     </div>
     <div class="g-modal-actions">
-        <button class="button button-primary" type="submit" data-mm-select disabled>{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i></button>
+        <button class="button button-primary" type="submit" data-mm-select="" disabled="disabled">{{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right" aria-hidden="true"></i></button>
         <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
     </div>
 </div>

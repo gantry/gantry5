@@ -2,6 +2,7 @@
 var $             = require('elements'),
     zen           = require('elements/zen'),
     ready         = require('elements/domready'),
+    Submit        = require('../fields/submit'),
     modal         = require('../ui').modal,
     toastr        = require('../ui').toastr,
     request       = require('agent'),
@@ -11,7 +12,12 @@ var $             = require('elements'),
     getAjaxURL    = require('../utils/get-ajax-url').global,
     getAjaxSuffix = require('../utils/get-ajax-suffix'),
     flags         = require('../utils/flags-state'),
-    deepEquals    = require('mout/lang/deepEquals');
+    deepEquals    = require('mout/lang/deepEquals'),
+    translate     = require('../utils/translate'),
+
+    Cards         = require('../positions/cards'); // required for Positions
+
+var WordpressWidgetsCustomizer = require('../utils/wp-widgets-customizer');
 
 var menumanager = null;
 
@@ -55,7 +61,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
         zen('span.menu-item-type.badge').text(blocktype).after(this.block.find('.menu-item .title'));
 
         modal.open({
-            content: 'Loading',
+            content: translate('GANTRY5_PLATFORM_JS_LOADING'),
             method: 'post',
             //data: data,
             remote: parseAjaxURI($(this.block).find('.config-cog').attribute('href') + getAjaxSuffix()),
@@ -87,7 +93,9 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
                     if (found.length) { $(found).removeClass('hidden'); }
                 });
 
-                search[0].focus();
+                setTimeout(function(){
+                    search[0].focus();
+                }, 5);
             }
         });
     }
@@ -135,8 +143,7 @@ var StepTwo = function(data, content, button) {
 
         var form = content.find('form'),
             submit = content.find('input[type="submit"], button[type="submit"]'),
-            fakeDOM = zen('div').html(response.body.html).find('form'),
-            dataString = [];
+            fakeDOM = zen('div').html(response.body.html).find('form');
 
         if ((!form && !fakeDOM) || !submit) { return true; }
 
@@ -146,34 +153,12 @@ var StepTwo = function(data, content, button) {
         // Module / Particle Settings apply
         submit.on('click', function(e) {
             e.preventDefault();
-            dataString = [];
 
             submit.showIndicator();
 
-            $(fakeDOM[0].elements).forEach(function(input) {
-                input = $(input);
-                var name = input.attribute('name');
-                if (!name || input.disabled()) { return; }
+            var post = Submit(fakeDOM[0].elements, content, { submitUnchecked: true });
 
-                input = content.find('[name="' + name + '"]');
-                var value = input.type() == 'checkbox' ? Number(input.checked()) : input.value(),
-                    parent = input.parent('.settings-param'),
-                    override = parent ? parent.find('> input[type="checkbox"]') : null;
-
-                override = override || $(input.data('override-target'));
-
-                if (override && !override.checked()) { return; }
-                if (input.type() != 'checkbox' || (input.type() == 'checkbox' && !!value)) {
-                    dataString.push(name + '=' + encodeURIComponent(value));
-                }
-            });
-
-            var title = content.find('[data-title-editable]');
-            if (title) {
-                dataString.push('title=' + encodeURIComponent(title.data('title-editable')));
-            }
-
-            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), dataString.join('&') || {}, function(error, response) {
+            request(fakeDOM.attribute('method'), parseAjaxURI(fakeDOM.attribute('action') + getAjaxSuffix()), post.valid.join('&') || {}, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -183,29 +168,45 @@ var StepTwo = function(data, content, button) {
                     });
                 } else {
                     // it's menu
+                    // FIXME: this is now handling both the Menu and the Positions when inserting a new Particle. Needs to be separated
                     if (!picker) {
-                        var element = menumanager.element,
-                            path = element.data('mm-id') + '-',
-                            id = randomID(5),
-                            base = element.parent('[data-mm-base]').data('mm-base'),
-                            col = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
-                            index = indexOf(element.parent().children('[data-mm-id]'), element[0]);
+                        if (menumanager) {
+                            // case for Menu Manager
+                            var element = menumanager.element,
+                                path    = element.data('mm-id') + '-',
+                                id      = randomID(5),
+                                base    = element.parent('[data-mm-base]').data('mm-base'),
+                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                                index   = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
-                        while (menumanager.items[path + id]) { id = randomID(5); }
+                            while (menumanager.items[path + id]) { id = randomID(5); }
 
-                        menumanager.items[path + id] = response.body.item;
-                        if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
-                        if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
-                        menumanager.ordering[base][col].splice(index, 1, path + id);
-                        element.data('mm-id', path + id);
+                            menumanager.items[path + id] = response.body.item;
+                            if (!menumanager.ordering[base]) menumanager.ordering[base] = [];
+                            if (!menumanager.ordering[base][col]) menumanager.ordering[base][col] = [];
+                            menumanager.ordering[base][col].splice(index, 1, path + id);
+                            element.data('mm-id', path + id);
 
-                        if (response.body.html) {
-                            element.html(response.body.html);
+                            if (response.body.html) {
+                                element.html(response.body.html);
+                            }
+
+                            menumanager.isNewParticle = false;
+                            menumanager.emit('dragEnd', menumanager.map);
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_MENU_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
+
+                        } else {
+                            // case for Positions
+                            var position = $('[data-g5-position-name="' + response.body.position + '"]'),
+                                dummy = zen('div').html(response.body.html);
+
+                            position.find('> ul').appendChild(dummy.children());
+
+                            Cards.serialize(position);
+                            Cards.updatePendingChanges();
+
+                            toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
                         }
-
-                        menumanager.isNewParticle = false;
-                        menumanager.emit('dragEnd', menumanager.map);
-                        toastr.success('The Menu Item settings have been applied to the Main Menu. <br />Remember to click the Save button to store them.', 'Settings Applied');
                     } else { // it's field picker
                         var field = $('[name="' + picker.field + '"]'),
                             btnPicker = field.siblings('[data-g-instancepicker]'),
@@ -225,6 +226,7 @@ var StepTwo = function(data, content, button) {
 
                 modal.close();
                 submit.hideIndicator();
+                WordpressWidgetsCustomizer(field);
             });
         });
     });

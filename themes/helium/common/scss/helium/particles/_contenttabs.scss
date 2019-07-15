@@ -1,0 +1,114 @@
+.ui-tabs {
+    position: relative;
+
+    .ui-tabs-nav {
+        margin: 0;
+        @include display(flex);
+        @include breakpoint(mobile-only) {
+          flex-direction: column;
+        }
+
+        li {
+            list-style: none;
+            float: left;
+            border-bottom-width: 0;
+            padding: 0;
+            outline: none;
+
+            &.ui-tabs-active {
+                .ui-tabs-anchor {
+                    cursor: text;
+                }
+            }
+
+            &.ui-state-disabled .ui-tabs-anchor {
+                cursor: text;
+            }
+
+            &.ui-tabs-loading .ui-tabs-anchor {
+                cursor: text;
+            }
+        }
+
+        .ui-tabs-anchor {
+            text-decoration: none;
+
+            &:hover {
+                color: inherit;
+            }
+        }
+    }
+}
+
+.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+    cursor: pointer;
+}
+
+.g-contenttabs {
+    .g-contenttabs-tab-wrapper-container {
+        list-style: none;
+        margin: 0 0 1rem 0;
+        border-bottom: 1px solid $base-border-color;
+        @include breakpoint(mobile-only) {
+          border: 0 none;
+        }
+    }
+
+    .g-contenttabs-tab {
+        outline: none;
+    }
+
+    .g-contenttabs-tab-wrapper-head {
+        display: block;
+        height: 100%;
+        margin-bottom: -1px;
+        margin-right: 3px;
+        padding: $content-padding ($content-padding * 2);
+        border-radius: $core-border-radius $core-border-radius 0 0;
+        background: fadeout($accent-color-1, 85%);
+
+        @include breakpoint(mobile-only) {
+            border-radius: 0;
+        }
+
+        .g-contenttabs-tab-title {
+            display: block;
+            outline: none;
+            font-size: $core-font-size - 0.2;
+            text-transform: uppercase;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .g-contenttabs-content-wrapper-container {
+        list-style: none;
+        margin: 0;
+        padding: $content-padding 0;
+
+        .g-contenttabs-tab-wrapper-body {
+            padding: 0;
+
+            .g-contenttabs-content {
+                @include display(flex);
+                @include flex-flow(row wrap);
+                @include flex-wrap(wrap);
+
+                a {
+                    &:hover {
+                        color: inherit;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ui-tabs-active {
+    .g-contenttabs-tab-wrapper-head {
+        background: $accent-color-1;
+    }
+
+    .g-contenttabs-tab-title {
+        color: $white;
+    }
+}

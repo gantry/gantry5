@@ -1,0 +1,78 @@
+<article class="post-type-{{ post.post_type }} {{ post.class }}" id="post-{{ post.ID }}">
+
+    {% block content %}
+
+        {# Begin Entry Header #}
+        <section class="entry-header">
+
+            {% if gantry.config.get('content.' ~ scope ~ '.title.enabled', '1') %}
+                {# Begin Entry Title #}
+                <h2 class="entry-title">
+                    {% if gantry.config.get('content.' ~ scope ~ '.title.link', '0') %}
+                        <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+                    {% else %}
+                        {{ post.title }}
+                    {% endif %}
+                </h2>
+                {# End Entry Title #}
+            {% endif %}
+
+            {# Begin Entry Meta #}
+            {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') or gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '0') %}
+                {% include ['partials/meta-' ~ scope ~ '.html.twig', 'partials/meta.html.twig'] %}
+            {% endif %}
+            {# End Entry Meta #}
+
+        </section>
+        {# End Entry Header #}
+
+        {# Check if post is password protected #}
+        {% if not function( 'post_password_required', post.ID ) %}
+
+            {# Begin Entry Content #}
+            <section class="entry-content">
+
+                {# Begin Featured Image #}
+                {% if gantry.config.get('content.' ~ scope ~ '.featured-image.enabled', '1') and post.thumbnail.src %}
+                    {% set position = (gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') == 'none') ? '' : 'float-' ~ gantry.config.get('content.' ~ scope ~ '.featured-image.position', 'none') %}
+                    <a href="{{ post.link }}" class="post-thumbnail" aria-hidden="true">
+                        <img src="{{ post.thumbnail.src|resize(gantry.config.get('content.' ~ scope ~ '.featured-image.width', '1200'), gantry.config.get('content.' ~ scope ~ '.featured-image.height', '350')) }}" class="featured-image tease-featured-image {{ position }}" alt="{{ post.title }}" />
+                    </a>
+                {% endif %}
+                {# End Featured Image #}
+
+                {# Begin Page Content #}
+                {{ post.paged_content|raw }}
+
+                {{ function('wp_link_pages', {'before': '<div class="page-links" itemprop="pagination"><ul class="pagination-list">', 'after': '</ul></div>', 'link_before': '<span class="page-number page-numbers">', 'link_after': '</span>', 'echo': 0}) }}
+                {# End Page Content #}
+
+                {# Begin Edit Link #}
+                {{ function('edit_post_link', __('Edit', 'g5_helium'), '<span class="edit-link">', '</span>') }}
+                {# End Edit Link #}
+
+            </section>
+            {# End Entry Content #}
+
+            {# Begin Comments #}
+            {% if (post.comment_status == 'open' or post.comment_count > 0) and post.post_type != 'product' %}
+                {{ function('comments_template')|raw }}
+            {% endif %}
+            {# End Comments #}
+
+        {% else %}
+
+            {# Begin Password Protected Form #}
+            <div class="password-form">
+
+                {# Include the password form #}
+                {% include 'partials/password-form.html.twig' %}
+
+            </div>
+            {# End Password Protected Form #}
+
+        {% endif %}
+
+    {% endblock %}
+
+</article>

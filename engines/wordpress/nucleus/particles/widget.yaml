@@ -1,5 +1,6 @@
 name: Widget
 description: Display a single widget.
+icon: fa-object-ungroup
 type: position
 
 form:

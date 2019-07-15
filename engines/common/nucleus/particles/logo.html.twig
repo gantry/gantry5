@@ -4,13 +4,18 @@
     {% set url = url(particle.url)|default(gantry.siteUrl()) %}
     {% if (url == gantry.siteUrl()) %}{% set rel='rel="home"' %}{% endif %}
     {% set class=(particle.class ? 'class="'~ particle.class ~'"') %}
-
-<a href="{{ url }}" title="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
     {% set image = url(particle.image) %}
-    {% if image %}
-    <img src="{{ url(particle.image) }}" alt="{{ particle.text }}" />
-    {% else %}
-    {{ particle.text|default('Logo') }}
-    {% endif %}
-</a>
+    {% set height = particle.height ? 'style="max-height: ' ~ particle.height ~ '"' %}
+
+    {% if particle.link == true %}
+        <a href="{{ url }}" target="{{ particle.target|default('_self') }}" title="{{ particle.text }}" aria-label="{{ particle.text }}" {{ rel|default('')|raw }} {{ class|default('')|raw }}>
+    {% else %}<div {{ class|default('')|raw }}>{% endif %}
+        {% if particle.svg is not empty %}
+            {{ particle.svg|raw }}
+        {% elseif image %}
+            <img src="{{ url(particle.image) }}" {{ height|default('')|raw }} alt="{{ particle.text }}" />
+        {% else %}
+            {{ particle.text|default('Logo') }}
+        {% endif %}
+    {% if particle.link == true %}</a>{% else %}</div>{% endif %}
 {% endblock %}

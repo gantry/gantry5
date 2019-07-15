@@ -1,0 +1,93 @@
+{% set create_route = duplicate ? gantry.route('configurations', outline, 'duplicate/new') : gantry.route('configurations', 'create/new') %}
+
+<div class="card settings-block">
+    <h4 id="g-modal-labelledby">{{ outline ? 'GANTRY5_PLATFORM_CREATE_OUTLINE_FROM_X'|trans(outlines[outline]) : 'GANTRY5_PLATFORM_CREATE_OUTLINE'|trans }}</h4>
+    <div class="inner-params" id="g-modal-describedby">
+        <div class="settings-param input-text">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline Title" data-tip-place="top-right" aria-label="Outline Title" data-title="Outline Title">Title</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <input type="text" name="title" placeholder="{{ duplicate ? 'Auto generate' : 'Untitled' }}" aria-label="Outline Title Field" pattern="[A-Za-z0-9-\s]+">
+                </div>
+            </div>
+        </div>
+
+        {% if presets %}
+        <div class="settings-param input-radios">
+            <span class="settings-param-title float-left">
+                <span data-tip="Create from a Preset or from an Outline" data-tip-place="top-right" aria-label="Create from a Preset or from an Outline" data-title="Create from a Preset or from an Outline">Create From</span>
+            </span>
+            <div class="settings-param-field">
+                <span class="radios">
+                    <input type="radio" id="from-preset" value="preset" name="from" checked="checked" />
+                    <label for="from-preset">Preset</label>
+                </span>
+                <span class="radios">
+                    <input type="radio" id="from-outline" value="outline" name="from" />
+                    <label for="from-outline">Outline</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="settings-param input-text g-create-from g-create-from-preset">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline Preset" data-tip-place="top-right" aria-label="Outline Preset" data-title="Outline Preset">Preset</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <select name="preset" value="Untitled" {{ duplicate ? 'disabled="disabled"' : '' }} aria-label="Outline Preset Field" data-selectize="">
+                        {% for group, options in presets %}
+                            <optgroup label="{{ group|title }}">
+                                {% for key, option in options %}
+                                    {% set selected = key == outline|default('default') ? 'selected="selected"' : '' %}
+                                    <option value="{{ key }}"{{ selected }}>{{ option }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-param input-text g-create-from g-create-from-outline" style="display: none;">
+            <span class="settings-param-title float-left">
+                <span data-tip="Outline" data-tip-place="top-right" aria-label="Outline" data-title="Outline">Outline</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <select name="outline" value="default" aria-label="Outline Field" title="Outline Field" data-selectize="">
+                        {% include 'partials/outlines-list.html.twig' %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <input type="hidden" id="from-preset" value="outline" name="from" />
+            <input type="hidden" value="{{ outline }}" name="outline" />
+        {% endif %}
+
+        <div class="settings-param input-multicheckbox g-create-from g-create-from-outline"{% if presets %} style="display: none;"{% endif %}>
+            <span class="settings-param-title float-left">
+                <span data-tip="Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned." data-tip-place="top-right" aria-label="Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned." data-title="Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned.">Inherit</span>
+            </span>
+            <div class="settings-param-field">
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" name="inherit" value="1" aria-label="Inherit" checked="checked">
+                        <span>Inherit every Section and Children of the selected Outline. If left unchecked they will be cloned.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="g-modal-actions">
+    <button tabindex="0" class="button button-primary" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}" data-g-outline-create-confirm="{{ create_route }}">
+        {{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}
+    </button>
+    <button tabindex="0" class="button g5-dialog-close" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}" data-g-outline-create-cancel="">
+        {{ 'GANTRY5_PLATFORM_CANCEL'|trans }}
+    </button>
+</div>

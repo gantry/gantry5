@@ -7,7 +7,7 @@
             <div data-set-page="{{ page_id }}" data-set-root="">
                 <span class="float-right">
                     <button type="submit" class="button button-primary button-save" data-save="Content Settings">
-                    <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
+                    <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS'|trans }}</span></button>
                 </span>
                 {% for group, list in content %}
                     <h2 class="page-title">
@@ -17,36 +17,42 @@
                     <div class="g-filter-actions">
                         <div class="g-panel-filters" data-g-global-filter="">
                             <div class="search settings-block">
-                                <input type="text" data-g-collapse-filter placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
-                                <i class="fa fa-fw fa-search"></i>
+                                <input type="text" data-g-collapse-filter="" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
+                                <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                             </div>
-                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                            <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
                         </div>
                     </div>
 
                     <div class="cards-wrapper g-grid">
                         {% for id, item in list %}
                             {% if not item.hidden %}
+                                {% set item = gantry.content.getBlueprintForm(group ~ '/' ~ id) %}
                                 {% set prefix = 'content.' ~ group ~ '.' ~ id ~ '.' %}
                                 {% set collapsed = item.form.collapsed or attribute(stored_data, prefix) %}
                                 {% set labels = {collapse: 'GANTRY5_PLATFORM_COLLAPSE'|trans, expand: 'GANTRY5_PLATFORM_EXPAND'|trans} %}
                                 <div class="card settings-block{{ collapsed ? ' g-collapsed' : '' }}">
                                     <input type="hidden" name="content[{{ group }}][{{ id }}]"/>
-                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}" data-g-collapse-id="{{ prefix }}"{{ overrideable ? ' class="card-overrideable"' : '' }}>
-                                        <span class="g-collapse g-tooltip" data-title="{{ collapsed ? labels.expand : labels.collapse }}"><i class="fa fa-fw  fa-caret-up"></i></span>
+                                    <h4 data-g-collapse="{{ labels|merge({collapsed: collapsed ? true : false, id: prefix, target: '~ .inner-params' })|json_encode|e('html_attr') }}"
+                                        data-g-collapse-id="{{ prefix }}"
+                                        {{ overrideable ? ' class="card-overrideable"' : '' }}
+                                    >
+                                        <span class="g-collapse" data-title="{{ collapsed ? labels.expand : labels.collapse }}" data-tip="{{ collapsed ? labels.expand : labels.collapse }}" data-tip-place="top-right">
+                                            <i class="fa fa-fw  fa-caret-up" aria-hidden="true"></i>
+                                        </span>
                                         <span class="g-title">{{ item.name }}</span>
                                         {% if item.form.fields.enabled %}
-                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': item.form.fields.enabled, 'value': gantry.config.get(prefix ~ 'enabled')} %}
+                                            {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'scope': prefix, 'name': 'enabled', 'field': item.form.fields.enabled, 'value': data.get(prefix ~ 'enabled', defaults.get(prefix ~ 'enabled'))} %}
 
                                             {% if overrideable %}
-                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'default_value': attribute(defaults, prefix ~ 'enabled'), 'value': gantry.config.get(prefix ~ 'enabled'), 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
+                                                {% include 'forms/override.html.twig' with {'scope': prefix, 'name': 'enabled', 'has_value': data.get(prefix ~ 'enabled') is not null, 'field': {'label': 'Enabled of the ' ~ particle.name ~ ' Particle' }} %}
                                             {% endif %}
                                         {% endif %}
                                     </h4>
 
                                     <div class="inner-params">
-                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': item.form, skip: ['enabled'], data: gantry.config, "prefix": prefix} %}
+                                        {% include 'forms/fields.html.twig' with {'overrideable': overrideable, 'blueprints': item.form, skip: ['enabled'], "prefix": prefix} %}
                                     </div>
                                 </div>
                             {% endif %}
@@ -57,7 +63,7 @@
                 <div class="g-footer-actions">
                     <span class="float-right">
                         <button type="submit" class="button button-primary button-save" data-save="Content Settings">
-                            <i class="fa fa-fw fa-check"></i> <span>Save Content Settings</span></button>
+                            <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_CONTENT_SETTINGS'|trans }}</span></button>
                     </span>
                 </div>
             </div>

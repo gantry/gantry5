@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -27,7 +26,7 @@ abstract class Page
 
     public function doctype()
     {
-        return $this->config->get('page.doctype');
+        return $this->config->get('page.doctype', 'html');
     }
 
     abstract public function url(array $args = []);
@@ -55,14 +54,15 @@ abstract class Page
 
         $list = [];
         foreach ($params as $param => $value) {
+            if (!$value) { continue; }
             if (!is_array($value) || !count(array_filter($value, 'is_array'))) {
                 $value = array_filter(array_unique((array) $value));
                 $list[] = $param . '="' . implode(' ', $value) . '"';
             } else {
                 $values = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($value));
-                foreach ($values as $param => $value) {
-                    $value = array_filter(array_unique((array) $value));
-                    $list[] = $param . '="' . implode(' ', $value) . '"';
+                foreach ($values as $iparam => $ivalue) {
+                    $ivalue = array_filter(array_unique((array) $ivalue));
+                    $list[] = $iparam . '="' . implode(' ', $ivalue) . '"';
                 }
             }
 

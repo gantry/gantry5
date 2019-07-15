@@ -11,6 +11,7 @@ var prime     = require('prime'),
     Resizer   = require('./drag.resizer'),
     get       = require('mout/object/get'),
 
+    ltrim     = require('mout/string/ltrim'),
     every     = require('mout/array/every'),
     last      = require('mout/array/last'),
     indexOf   = require('mout/array/indexOf'),
@@ -109,7 +110,8 @@ var MenuManager = new prime({
 
     start: function(event, element) {
         var root = element.parent('.menu-selector') || element.parent('.submenu-column') || element.parent('.submenu-selector') || element.parent('.g5-mm-particles-picker'),
-            size = $(element).position();
+            size = $(element).position(),
+            coords = $(element)[0].getBoundingClientRect();
 
         this.block = null;
         this.targetLevel = undefined;
@@ -147,25 +149,23 @@ var MenuManager = new prime({
 
         if (!this.isNewParticle) {
             element.style({
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: 1500,
                 width: Math.ceil(size.width),
-                height: Math.ceil(size.height)
+                height: Math.ceil(size.height),
+                left: coords.left,
+                top: coords.top
             }).addClass('active');
 
             this.placeholder.before(element);
         } else {
-            var position = element.position(),
-                parentOffset = {
-                    top: element.parent()[0].scrollTop,
-                    left: element.parent()[0].scrollLeft
-                };
+            var position = element.position();
             this.original.style({
-                position: 'absolute',
+                position: 'fixed',
                 opacity: 0.5
             }).style({
-                left: element[0].offsetLeft - parentOffset.left,
-                top: element[0].offsetTop - parentOffset.top,
+                left: coords.left,
+                top: coords.top,
                 width: position.width,
                 height: position.height
             });
@@ -220,9 +220,11 @@ var MenuManager = new prime({
 
         // Workaround for layout and style of columns
         if (dataLevel === null && (this.type === 'columns_items' || this.isParticle)) {
-            var submenu_items = target.find('.submenu-items');
+            var submenu_items = target.find('.submenu-items'),
+                submenu_items_level = submenu_items.data('mm-base-level');
 
-            if ((!target.hasClass('g-block') || target.find(this.block)) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
+            // extend drop areas and ensure items cannot be dragged between different levels
+            if ((!target.hasClass('g-block') || target.find(this.block)) || (!this.isParticle && originalLevel != submenu_items_level) && (!submenu_items || submenu_items.children() || originalLevel > 2)) {
                 this.dragdrop.matched = false;
                 return;
             }
@@ -450,8 +452,13 @@ var MenuManager = new prime({
             // Refresh the origin if it's a particle
             base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
             if (this.isParticle && base && this.targetLevel != this.currentLevel) {
-                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0];
-                this.ordering[base.data('mm-base') || ''][list].splice(this.ParticleIndex, 1);
+                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0],
+                    location = base.data('mm-base') || '',
+                    currentLocation = ltrim([location, id].join('/'), ['/']);
+
+                this.ordering[location][list].splice(this.ParticleIndex, 1);
+                this.items[this.itemID] = this.items[currentLocation];
+                delete this.items[currentLocation];
             }
         }
 

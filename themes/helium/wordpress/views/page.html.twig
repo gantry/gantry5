@@ -1,0 +1,17 @@
+{% extends "partials/page.html.twig" %}
+{% set twigTemplate = 'page.html.twig' %}
+{% set scope = 'page' %}
+
+{% block content %}
+
+    <div class="platform-content">
+        <div class="content-wrapper">
+            <section class="entry">
+
+                {% include ['partials/content-' ~ scope ~ '.html.twig', 'partials/content.html.twig'] %}
+
+            </section>
+        </div> <!-- /content-wrapper -->
+    </div>
+
+{% endblock %}

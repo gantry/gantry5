@@ -1,41 +1,41 @@
+{%- do gantry.debugger.assets() -%}
+{%- do gantry.theme.loadAtoms() -%}
+
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        <link rel="stylesheet" href="{{ url('gantry-assets://css/font-awesome.min.css') }}" type="text/css"/>
-        <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/nucleus.css') }}" type="text/css"/>
-        {% for css in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-        {% endif %}
+        <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+        <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
+        {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
     {% endblock -%}
 
     {% block head_platform %}{% endblock %}
 
     {% block head_overrides -%}
-        {% for css in gantry.theme.configuration.css.overrides %}
-            {%- set url = url(gantry.theme.css(css)) %}{% if url %}
-            <link rel="stylesheet" href="{{ url(gantry.theme.css(css)) }}" type="text/css"/>
-        {% endif %}
+        {% for scss in gantry.theme.configuration.css.overrides %}
+        <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>
         {%- endfor %}
     {% endblock -%}
 {% endassets -%}
 
-{% if gantry.config.page.head.atoms %}
-    {% for atom in gantry.config.page.head.atoms %}
-        {% include '@particles/' ~ atom.type ~ '.html.twig' with { particle: atom.attributes } %}
-    {% endfor %}
-{% endif %}
-
 <head>
+    {{ gantry.document.getHtml('head_top')|join("\n    ")|raw }}
     {% block head_meta %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         {% if gantry.config.page.head.meta -%}
             {% for attributes in gantry.config.page.head.meta -%}
                 {%- for key, value in attributes %}
-                    <meta name="{{ key|e }}" property="{{ key|e }}" content="{{ value|e }}" />
+                    {% if key starts with 'og:' %}
+                    <meta property="{{ key|e }}" content="{{ value|e }}" />
+                    {% else %}
+                    <meta name="{{ key|e }}" content="{{ value|e }}" />
+                    {% endif %}
                 {% endfor -%}
             {%- endfor -%}
         {%- endif -%}
+        {{ gantry.document.getHtml('head_meta')|join("\n    ")|raw }}
 
         {% if gantry.config.page.assets.favicon %}
         <link rel="icon" type="image/x-icon" href="{{ url(gantry.config.page.assets.favicon) }}" />
@@ -71,4 +71,5 @@
         {{ gantry.config.page.head.head_bottom|raw }}
         {% endif %}
     {% endblock %}
+    {{ gantry.document.getHtml('head_bottom')|join("\n    ")|raw }}
 </head>

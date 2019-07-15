@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,37 +13,46 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
-use Gantry\Component\Controller\HtmlController;
-use Gantry\Component\Request\Request;
+use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Assignments as AssignmentsObject;
-use Gantry\Framework\Menu;
 use RocketTheme\Toolbox\Event\Event;
 
 class Assignments extends HtmlController
 {
     public function index()
     {
-        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration !== 'default') {
-            $assignments = new AssignmentsObject($configuration);
+        $outline = $this->params['outline'];
+
+        if ($this->hasAssignments($outline)) {
+            $assignments = new AssignmentsObject($outline);
 
             $this->params['assignments'] = $assignments->get();
             $this->params['options'] = $assignments->assignmentOptions();
             $this->params['assignment'] = $assignments->getAssignment();
         }
 
-        return $this->container['admin.theme']->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
+        return $this->render('@gantry-admin/pages/configurations/assignments/assignments.html.twig', $this->params);
     }
 
     public function store()
     {
-        $configuration = isset($this->params['configuration']) ? $this->params['configuration'] : null;
-        if ($configuration === 'default') {
+        // Authorization.
+        if (!$this->authorize('outline.assign')) {
+            $this->forbidden();
+        }
+
+        $outline = $this->params['outline'];
+        if (!$this->hasAssignments($outline)) {
             $this->undefined();
         }
 
-        $assignments = new AssignmentsObject($configuration);
-        $assignments->set($this->request->post->getArray());
+        if (!$this->request->post->get('_end')) {
+            throw new \OverflowException("Incomplete data received. Please increase the value of 'max_input_vars' variable (in php.ini or .htaccess)", 400);
+        }
+
+        // Save assignments.
+        $assignments = new AssignmentsObject($outline);
+        $assignments->save($this->request->post->getArray('assignments'));
 
         // Fire save event.
         $event = new Event;
@@ -55,5 +63,11 @@ class Assignments extends HtmlController
         $this->container->fireEvent('admin.assignments.save', $event);
 
         return '';
+    }
+
+    protected function hasAssignments($outline)
+    {
+        // Default outline and system outlines cannot have assignments.
+        return $outline !== 'default' && $outline[0] !== '_';
     }
 }

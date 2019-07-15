@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension version="3.4" type="template" client="site" method="upgrade">
+    <name>g5_helium</name>
+    <version>@version@</version>
+    <creationDate>@versiondate@</creationDate>
+    <author>RocketTheme, LLC</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>(C) 2007 - 2019 RocketTheme, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+    <description>TPL_G5_HELIUM_DESC</description>
+
+    <scriptfile>install.php</scriptfile>
+
+    <files>
+        <folder>admin</folder>
+        <folder>blueprints</folder>
+        <folder>config</folder>
+        <folder>fields</folder>
+        <folder>fonts</folder>
+        <folder>gantry</folder>
+        <folder>html</folder>
+        <folder>images</folder>
+        <folder>includes</folder>
+        <folder>install</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+        <folder>particles</folder>
+        <folder>scss</folder>
+        <file>component.php</file>
+        <file>error.php</file>
+        <file>index.php</file>
+        <file>offline.php</file>
+        <file>template_preview.png</file>
+        <file>template_thumbnail.png</file>
+        <file>MD5SUMS</file>
+    </files>
+
+    <positions>
+      <position>navigation-a</position>
+      <position>navigation-b</position>
+      <position>navigation-c</position>
+      <position>header-a</position>
+      <position>header-b</position>
+      <position>header-c</position>
+      <position>intro-a</position>
+      <position>intro-b</position>
+      <position>intro-c</position>
+      <position>features-a</position>
+      <position>features-b</position>
+      <position>features-c</position>
+      <position>utility-a</position>
+      <position>utility-b</position>
+      <position>utility-c</position>
+      <position>above-a</position>
+      <position>above-b</position>
+      <position>above-c</position>
+      <position>testimonials-a</position>
+      <position>testimonials-b</position>
+      <position>testimonials-c</position>
+      <position>expanded-a</position>
+      <position>expanded-b</position>
+      <position>expanded-c</position>
+      <position>main</position>
+      <position>sidebar</position>
+      <position>footer-a</position>
+      <position>footer-b</position>
+      <position>footer-c</position>
+      <position>offcanvas-c</position>
+    </positions>
+
+    <config>
+        <fields name="params" addfieldpath="/templates/g5_helium/fields">
+            <fieldset name="advanced">
+                <field name="warning" type="warning" />
+            </fieldset>
+        </fields>
+    </config>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Helium Template">http://updates.gantry.org/5.0/joomla/tpl_g5_helium.xml</server>
+    </updateservers>
+</extension>

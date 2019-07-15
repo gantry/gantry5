@@ -1,47 +1,5 @@
-{% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
+{% extends '@gantry-admin/pages/configurations/layouts/particle.html.twig' %}
 
-{% block gantry %}
-<form method="post" action="{{ gantry.route(action) }}">
-    <div class="g-tabs" role="tablist">
-        <ul>
-            <li class="active"><a href="#" id="g-switcher-platforms-tab" role="presentation" aria-controls="g-switcher-platforms" role="tab" aria-expanded="true">{{ particle.name|trim|e }}</a></li>
-            {% if extra %}
-            <li><a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">{{ 'GANTRY5_PLATFORM_BLOCK'|trans }}</a></li>
-            {% endif %}
-        </ul>
-    </div>
-
-    <div class="g-panes">
-        <div class="g-pane active" role="tabpanel" id="g-settings-particle" aria-labelledby="g-settings-particle-tab" aria-expanded="true">
-            <div class="card settings-block">
-                <h4>
-                    {{ item.title|trim|e }}
-                </h4>
-
-                <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'overrideable': false, 'blueprints': particle.form} %}
-                </div>
-            </div>
-        </div>
-
-        {% if extra %}
-        <div class="g-pane" role="tabpanel" id="g-settings-block" aria-labelledby="g-settings-block-tab" aria-expanded="false">
-            <div class="card settings-block">
-                <h4>
-                    {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
-                </h4>
-                <div class="inner-params">
-                    {% include 'forms/fields.html.twig' with {'blueprints': extra.form, 'data': {'block': item.block}, 'prefix': 'block.'} %}
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="g-modal-actions">
-        <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
-        <button class="button button-primary" data-apply-and-save>{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>
-        <button class="button g5-dialog-close">{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
-    </div>
-</form>
+{% block title %}
+    {{ particle.name|trim }}
 {% endblock %}

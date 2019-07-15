@@ -1,0 +1,21 @@
+// Publishing Tags
+.chzn-container .chzn-drop, .chzn-container .chzn-results li.no-results {
+    border: 1px solid $border-color-light;
+    color: $base-text-color;
+}
+
+.chzn-container-multi .chzn-choices {
+    color: $base-text-color;
+    border: 1px solid $border-color-light;
+    border-radius: 6px;
+    width: 250px;
+    background-image: none;
+
+    li.search-field input[type="text"] {
+        box-shadow: none;
+        height: 35px;
+        margin: 0;
+        padding: 0 5px;
+        color: $base-text-color !important;
+    }
+}

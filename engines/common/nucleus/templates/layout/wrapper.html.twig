@@ -1,0 +1,14 @@
+{% set html %}
+    {% for segment in segments %}
+        {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
+    {% endfor %}
+{% endset %}
+
+{% if segment.attributes.sticky or html|trim %}
+    {% set attr_id = segment.attributes.id|default('g-' ~ segment.id) %}
+    {% set attr_extra = segment.attributes.extra|attribute_array %}
+
+    <div id="{{ attr_id }}" {{- attr_extra|raw }} class="{{ segment.attributes.class|default(attr_id) }}">
+        {{ html|raw }}
+    </div>
+{% endif %}

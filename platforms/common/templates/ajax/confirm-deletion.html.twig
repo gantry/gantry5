@@ -1,11 +1,17 @@
 <div class="card settings-block">
-    <h4 id="g-modal-labelledby">{{ 'GANTRY5_PLATFORM_DELETE_OUTLINE'|trans }}</h4>
+    <h4 id="g-modal-labelledby">{{ ('GANTRY5_PLATFORM_DELETE_' ~ page_type)|trans }}</h4>
     <div class="inner-params" id="g-modal-describedby">
-        {{ 'GANTRY5_PLATFORM_DELETE_OUTLINE_DESC'|trans }}
+        {% block message %}
+        {{ ('GANTRY5_PLATFORM_DELETE_' ~ page_type ~ '_DESC')|trans(outline)|raw }}
+        {% endblock %}
     </div>
 </div>
 
 <div class="g-modal-actions">
-    <button tabindex="0" class="button button-primary" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}" data-g-delete-confirm>{{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}</button>
-    <button tabindex="0" class="button g5-dialog-close" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}" data-g-delete-cancel>{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}</button>
+    <button tabindex="0" class="button button-primary" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}" data-g-delete-confirm="">
+        {{ 'GANTRY5_PLATFORM_CONFIRM'|trans }}
+    </button>
+    <button tabindex="0" class="button g5-dialog-close" role="button" aria-label="{{ 'GANTRY5_PLATFORM_CANCEL'|trans }}" data-g-delete-cancel="">
+        {{ 'GANTRY5_PLATFORM_CANCEL'|trans }}
+    </button>
 </div>

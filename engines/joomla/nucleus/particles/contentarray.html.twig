@@ -1,0 +1,192 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set attr_extra = particle.extra|attribute_array %}
+{% set article_settings = particle.article %}
+{% set filter = article_settings.filter %}
+{% set sort = article_settings.sort %}
+{% set limit = article_settings.limit %}
+{% set display = article_settings.display %}
+
+{# Category Finder #}
+{% set category_options = filter.categories ? {id: [filter.categories|split(','), 0]} : {} %}
+{% set categories = joomla.finder('category', category_options).published(1).language().limit(0).find() %}
+
+{# Content Finder #}
+{% if filter.articles %}
+    {% set article_options = filter.articles ? {id: [filter.articles|replace({' ': ''})|split(',')]} : {} %}
+    {% set article_finder = joomla.finder('content', article_options).published(1).language() %}
+{% else %}
+    {% set article_finder = joomla.finder('content').category(categories).published(1).language() %}
+{% endif %}
+
+{% set featured = filter.featured|default('include') %}
+{% if featured == 'exclude' %}
+    {% do article_finder.featured(false) %}
+{% elseif featured == 'only' %}
+    {% do article_finder.featured(true) %}
+{% endif %}
+
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% do article_finder.order(sort.orderby, sort.ordering).limit(limit.total).start(start) %}
+{% set total = article_finder.count() %}
+{% set articles = article_finder.find() %}
+
+{% block particle %}
+
+    {# All Articles #}
+    <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
+
+        {% for column in articles|batch(limit.columns) %}
+            <div class="g-grid">
+                {% for article in column %}
+
+                    <div class="g-block">
+                        <div class="g-content">
+                            <div class="g-array-item">
+                                {% if display.edit and article.edit %}
+                                    <a class="g-array-item-edit" href="{{ article.edit }}">{{ 'COM_CONTENT_FORM_EDIT_ARTICLE'|trans }}</a>
+                                {% endif %}
+                                {% if display.image.enabled and article.images.image_intro or article.images.image_fulltext %}
+                                    {% if article.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}
+                                        <div class="g-array-item-image">
+                                            <a href="{{ article.route }}">
+                                                <img src="{{ url(article.images.image_intro) }}" {{ article.images.image_intro|imagesize|raw }} alt="{{ article.images.image_intro_alt }}" />
+                                            </a>
+                                        </div>
+                                    {% elseif article.images.image_fulltext and display.image.enabled == 'full' %}
+                                        <div class="g-array-item-image">
+                                            <a href="{{ article.route }}">
+                                                <img src="{{ url(article.images.image_fulltext) }}" {{ article.images.image_fulltext|imagesize|raw }} alt="{{ article.images.image_fulltext_alt }}" />
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if display.title.enabled %}
+                                    <div class="g-array-item-title">
+                                        <h3 class="g-item-title">
+                                            <a href="{{ article.route }}">
+                                                {{ display.title.limit ? article.title|truncate_text(display.title.limit) : article.title }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                {% endif %}
+
+                                {% if display.date.enabled or display.author.enabled or display.category.enabled or display.hits.enabled %}
+                                    <div class="g-array-item-details">
+                                        {% if display.date.enabled %}
+                                            <span class="g-array-item-date">
+                                                {% if display.date.enabled == 'published' %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.publish_up|date(display.date.format) }}
+                                                {% elseif display.date.enabled == 'modified' %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.modified|date(display.date.format) }}
+                                                {% else %}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ article.created|date(display.date.format) }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.author.enabled %}
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ article.author.name }}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.category.enabled %}
+                                            {% set category_link = display.category.enabled == 'link' %}
+                                            <span class="g-array-item-category">
+                                                {% set cat = article.categories|last %}
+                                                {% if category_link %}
+                                                    <a href="{{ cat.route }}">
+                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ cat.title }}
+                                                    </a>
+                                                {% else %}
+                                                    <i class="fa fa-folder-open" aria-hidden="true"></i>{{ cat.title }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if display.hits.enabled %}
+                                            <span class="g-array-item-hits">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>{{ article.hits }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.text.type %}
+                                    {% set article_text = display.text.type == 'intro' ? display.text.prepare ? article.preparedIntroText : article.introtext : display.text.prepare ? article.preparedText : article.text %}
+                                    <div class="g-array-item-text">
+                                        {% if display.text.formatting == 'text' %}
+                                            {{ article_text|truncate_text(display.text.limit)|raw }}
+                                        {% else %}
+                                            {{ article_text|truncate_html(display.text.limit)|raw }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if display.read_more.enabled %}
+                                    <div class="g-array-item-read-more">
+                                        <a href="{{ article.route }}">
+                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascript_footer %}
+{% if total > limit.total and display.pagination_buttons %}
+{% do gantry.load('jquery') %}
+<script>
+    (function ($) {
+        $(document).on('click', 'button.contentarray-button', function () {
+            var id = $(this).attr('data-id'),
+                start = $(this).attr('data-start'),
+                request = {
+                'option' : 'com_ajax',
+                'plugin' : 'particle',
+                'Itemid' : {{ gantry.page.itemid|int }},
+                'id'     : id,
+                'start'  : start,
+                'format' : 'json'
+            };
+            $.ajax({
+                type       : 'GET',
+                data       : request,
+                indexValue : id + '-particle',
+                success: function (response) {
+                    if(response.data){
+                        $('#' + this.indexValue).html(response.data[0].html);
+                    } else {
+                        // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                        $('#' + this.indexValue).html(response.message);
+                    }
+                },
+                error: function(response) {
+                    // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                    $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                }
+            });
+            return false;
+        });
+    })(jQuery)
+</script>
+{% endif %}
+{% endblock %}

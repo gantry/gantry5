@@ -7,16 +7,16 @@
     {% for key, text in field.options %}
         {% set id = "toggle_" ~ name ~ key %}
         <input type="radio"
-               value="{{ key|e }}"
-               id="{{ id|e }}"
-               name="{{ (scope ~ name)|fieldName|e }}"
+               value="{{ key }}"
+               id="{{ id }}"
+               name="{{ (scope ~ name)|fieldName }}"
                 {% if field.highlight is defined %}
                     class="{{ field.highlight == '' ~ key ? 'highlight' : '' }}"
                 {% endif %}
                 {% if '' ~ key == '' ~ value %}checked="checked" {% endif %}
                 {% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
                 />
-        <label for="{{ id|e }}">{{ text|e }}</label>
+        <label for="{{ id }}">{{ text }}</label>
         <a></a>
     {% endfor %}
     </div>

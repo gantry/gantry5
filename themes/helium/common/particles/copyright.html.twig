@@ -1,0 +1,16 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% set start_date = particle.date.start|trim in ['now', ''] ? 'now'|date('Y') : particle.date.start|e %}
+{% set end_date = particle.date.end|trim in ['now', ''] ? 'now'|date('Y') : particle.date.end|e %}
+
+{% block particle %}
+<div class="g-copyright {{ particle.css.class }}">
+    &copy;
+    {% if particle.link is not empty %}<a target="{{ particle.target|default('_blank')|e }}" href="{{ particle.link|e }}" title="{{ particle.owner|e }}">{% endif %}
+        {{ particle.owner|e }}
+    {% if particle.link is not empty %}</a>{% endif %}
+    {% if (start_date != end_date) %}{{ start_date|e }} - {% endif %}
+    {{ end_date|e }}
+    {% if particle.additional.text is not empty %}<br />{{ particle.additional.text|raw }}{% endif %}
+</div>
+{% endblock %}

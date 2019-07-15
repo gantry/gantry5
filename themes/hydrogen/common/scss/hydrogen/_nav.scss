@@ -20,6 +20,7 @@
 		a {
 			background: darken($navigation-background, 6%);
 			border: none;
+			text-decoration: none;
 			color: $navigation-text-color;
 			@include transition(background 0.2s);
 			&:hover {
@@ -59,6 +60,7 @@
 		> li {
 
 			> .g-menu-item-container {
+				text-decoration: none;
 				padding: 1.2rem $content-padding;
 			}
 
@@ -76,6 +78,10 @@
 
 	.g-dropdown {
 		text-align: left;
+
+        .dir-rtl & {
+            text-align: right;
+        }
 	}
 
 	.g-sublevel {

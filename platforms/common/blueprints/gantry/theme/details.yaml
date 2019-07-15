@@ -51,7 +51,7 @@ form:
     copyright:
       type: input.text
       label: Copyright
-      default: (C) 2005 - 2015 RocketTheme, LLC. All rights reserved.
+      default: (C) 2005 - 2019 RocketTheme, LLC. All rights reserved.
 
     license:
       type: input.text

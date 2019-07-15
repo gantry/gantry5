@@ -1,0 +1,51 @@
+.g-error {
+    #g-header {
+        .g-content {
+            padding: 3.5rem $content-padding;
+            text-align: center;
+
+            h2.g-title {
+                font-size: 3.5rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+
+            @include breakpoint(tablet-range) {
+                h2.g-title {
+                    font-size: 3rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            @include breakpoint(mobile-only) {
+                padding: 1rem $content-padding;
+
+                h2.g-title {
+                    font-size: 2rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    #g-mainbar {
+        text-align: center;
+    }
+
+    #g-footer {
+        .g-content {
+            // To Top
+            .g-totop {
+                text-align: center;
+            }
+        }
+    }
+}
