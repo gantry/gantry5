@@ -197,6 +197,10 @@ abstract class Gantry extends Container
         return $this['platform']->authorize($action, $id);
     }
 
+    /**
+     * @param mixed|null $value
+     * @return mixed|null
+     */
     public function wrapper($value = null)
     {
         if ($value !== null) {
@@ -290,7 +294,7 @@ abstract class Gantry extends Container
             return $collection->copy();
         });
 
-        $instance['global'] = function ($c) {
+        $instance['global'] = function (\Gantry\Framework\Gantry $c) {
             $data = $c->loadGlobal() + [
                     'debug' => false,
                     'production' => true,

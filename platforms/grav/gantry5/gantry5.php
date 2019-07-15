@@ -12,6 +12,7 @@ namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
 use Gantry\Admin\Router;
+use Gantry\Debugger;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
@@ -139,7 +140,7 @@ class Gantry5Plugin extends Plugin
         ]);
         }
 
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Inside Gantry administration');
+        GANTRY_DEBUGGER && Debugger::addMessage('Inside Gantry administration');
     }
 
     /**
@@ -227,7 +228,7 @@ class Gantry5Plugin extends Plugin
         // Initialize particle AJAX.
         $this->initializeApi();
 
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
+        GANTRY_DEBUGGER && Debugger::addMessage("Gantry theme {$theme->name} selected");
    }
 
     public function initAdminTheme()
@@ -284,7 +285,7 @@ class Gantry5Plugin extends Plugin
             );
             $page->slug('particle');
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("AJAX request for {$id}");
+            GANTRY_DEBUGGER && Debugger::addMessage("AJAX request for {$id}");
 
             return $page;
         };
@@ -375,11 +376,11 @@ class Gantry5Plugin extends Plugin
         
         // Set page to offline.
         if ($gantry['global']->get('offline', 0)) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
+            GANTRY_DEBUGGER && Debugger::addMessage("Site is Offline!");
 
             $user = $this->grav['user'];
             if (empty($user->authenticated && $user->authorize('site.login'))) {
-                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Displaying Offline Page");
+                GANTRY_DEBUGGER && Debugger::addMessage("Displaying Offline Page");
 
                 $page = new Page;
                 $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -402,7 +403,7 @@ class Gantry5Plugin extends Plugin
      */
     public function getMaintenancePage(Event $event)
     {
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Displaying Maintenance Page");
+        GANTRY_DEBUGGER && Debugger::addMessage("Displaying Maintenance Page");
 
         $page = new Page;
         $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -432,17 +433,17 @@ class Gantry5Plugin extends Plugin
         $header = $page->header();
         if (!empty($header->gantry['outline'])) {
             $this->outline = $header->gantry['outline'];
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Current page forces outline {$this->outline} to be used");
+            GANTRY_DEBUGGER && Debugger::addMessage("Current page forces outline {$this->outline} to be used");
         } elseif ($page->name() === 'notfound.md') {
             $this->outline = '_error';
         }
 
         if (!$this->outline) {
             if (GANTRY_DEBUGGER) {
-                \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):');
-                \Gantry\Debugger::addMessage($assignments->getPage());
-                \Gantry\Debugger::addMessage($assignments->matches());
-                \Gantry\Debugger::addMessage($assignments->scores());
+                Debugger::addMessage('Selecting outline (rules, matches, scores):');
+                Debugger::addMessage($assignments->getPage());
+                Debugger::addMessage($assignments->matches());
+                Debugger::addMessage($assignments->scores());
             }
 
             $this->outline = $assignments->select();
@@ -454,7 +455,7 @@ class Gantry5Plugin extends Plugin
         if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator')) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
-            \Gantry\Debugger::setLocator($locator);
+            Debugger::setLocator($locator);
         }
     }
 
@@ -496,7 +497,7 @@ class Gantry5Plugin extends Plugin
             $event->page = $page;
             $event->stopPropagation();
         } else {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Page not found');
+            GANTRY_DEBUGGER && Debugger::addMessage('Page not found');
             $this->outline = '_error';
         }
     }
@@ -533,7 +534,7 @@ class Gantry5Plugin extends Plugin
             $theme->setPreset($preset);
             if (GANTRY_DEBUGGER) {
                 $preset = $theme->preset();
-                $preset && \Gantry\Debugger::addMessage("Using preset {$preset}");
+                $preset && Debugger::addMessage("Using preset {$preset}");
             }
         }
     }

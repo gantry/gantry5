@@ -195,6 +195,9 @@ abstract class Platform
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function settings_key()
     {
         return $this->settings_key;

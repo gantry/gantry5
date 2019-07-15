@@ -277,7 +277,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \LogicException('Cannot save unnamed layout');
         }
 
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Saving layout for outline {$this->name}");
+        GANTRY_DEBUGGER && Debugger::addMessage("Saving layout for outline {$this->name}");
 
         $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
 
@@ -325,6 +325,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function export()
     {
         return LayoutReader::store($this->preset, $this->items);

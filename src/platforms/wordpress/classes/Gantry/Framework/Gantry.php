@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Debugger;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use Timber\Timber;
@@ -63,11 +64,11 @@ class Gantry extends Base\Gantry
 
         if (class_exists('TimberHelper')) {
             // Using Timber plugin.
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Using Timber Plugin v' . Timber::$version);
+            GANTRY_DEBUGGER && Debugger::addMessage('Using Timber Plugin v' . Timber::$version);
         } else {
             // Using composer version of Timber; Initialize it.
             new Timber;
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage('Using Timber Library v' . Timber::$version);
+            GANTRY_DEBUGGER && Debugger::addMessage('Using Timber Library v' . Timber::$version);
         }
 
         $lookup = $container['loader']->getPrefixesPsr4()['Gantry\\'];

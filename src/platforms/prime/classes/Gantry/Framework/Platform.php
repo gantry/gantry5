@@ -16,6 +16,7 @@ namespace Gantry\Framework;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
+use Gantry\Debugger;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use RocketTheme\Toolbox\DI\Container;
 
@@ -159,9 +160,9 @@ class Platform extends BasePlatform
                 // TODO: move Assignments to DI to speed it up.
                 $matches = (new Assignments)->matches(['test' => $assignments]);
                 if (GANTRY_DEBUGGER) {
-                    \Gantry\Debugger::addMessage("Module assignments for '{$module['id']}' (rules, matches):", 'debug');
-                    \Gantry\Debugger::addMessage($assignments, 'debug');
-                    \Gantry\Debugger::addMessage(isset($matches['test']) ? $matches['test'] : [], 'debug');
+                    Debugger::addMessage("Module assignments for '{$module['id']}' (rules, matches):", 'debug');
+                    Debugger::addMessage($assignments, 'debug');
+                    Debugger::addMessage(isset($matches['test']) ? $matches['test'] : [], 'debug');
                 }
                 if (!$matches) {
                     return '';

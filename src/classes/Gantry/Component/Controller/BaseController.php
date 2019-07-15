@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Controller;
 
+use Gantry\Component\Response\Response;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
@@ -83,7 +84,7 @@ abstract class BaseController implements RestfulControllerInterface
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return mixed
+     * @return Response
      * @throws \RuntimeException
      */
     public function execute($method, array $path, array $params)

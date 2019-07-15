@@ -78,7 +78,15 @@ abstract class Router implements RouterInterface
         return $this->send($response);
     }
 
-    public function execute($resource, $method = 'GET', $path, $params = [], $format = 'html')
+    /**
+     * @param string $resource
+     * @param string $method
+     * @param array $path
+     * @param array $params
+     * @param string $format
+     * @return HtmlResponse|JsonResponse|Response
+     */
+    public function execute($resource, $method = 'GET', $path = [], $params = [], $format = 'html')
     {
         $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
 

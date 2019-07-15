@@ -187,6 +187,10 @@ class Page extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $particle
+     * @return JsonResponse
+     */
     public function validate($particle)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -1));

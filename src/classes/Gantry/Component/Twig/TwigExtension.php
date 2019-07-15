@@ -344,7 +344,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         $b = (array) $b;
         array_walk(
             $b,
-            function (&$item) {
+            static function (&$item) {
                 if (\is_bool($item)) {
                     $item = (int) $item;
                 }

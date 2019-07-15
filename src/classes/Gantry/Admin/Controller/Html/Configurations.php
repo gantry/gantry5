@@ -254,7 +254,14 @@ class Configurations extends HtmlController
         return $this->executeForward($resource, $method, $path, $this->params);
     }
 
-    protected function executeForward($resource, $method = 'GET', $path, $params = [])
+    /**
+     * @param string $resource
+     * @param string $method
+     * @param array $path
+     * @param array $params
+     * @return HtmlResponse|Response
+     */
+    protected function executeForward($resource, $method = 'GET', $path = [], $params = [])
     {
         $class = '\\Gantry\\Admin\\Controller\\Html\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
         if (!class_exists($class)) {

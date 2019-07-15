@@ -90,6 +90,10 @@ abstract class ThemeInstaller
         return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
     }
 
+    /**
+     * @param string $name
+     * @return array
+     */
     public function getOutline($name)
     {
         $list = $this->getOutlines([$name]);

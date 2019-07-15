@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\Debugger;
 use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Timber\Timber;
@@ -147,10 +148,10 @@ class Theme extends AbstractTheme
         $selected = $assignments->select();
 
         if (GANTRY_DEBUGGER) {
-            \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
-            \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
-            \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
-            \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
+            Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
+            Debugger::addMessage($assignments->getPage(), 'debug');
+            Debugger::addMessage($assignments->matches(), 'debug');
+            Debugger::addMessage($assignments->scores(), 'debug');
         }
 
         $this->setLayout($selected);

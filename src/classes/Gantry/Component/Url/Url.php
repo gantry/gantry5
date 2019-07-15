@@ -29,8 +29,8 @@ class Url
     public static function parse($url, $queryArray = false)
     {
         $encodedUrl = preg_replace_callback(
-            '%[^:/@?&=#]+%usD',
-            function ($matches) { return rawurlencode($matches[0]); },
+            '%[^:/@?&=#]+%u',
+            static function ($matches) { return rawurlencode($matches[0]); },
             $url
         );
 

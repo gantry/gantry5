@@ -1,7 +1,9 @@
 <?php
 namespace Gantry;
+
 use DebugBar\DataCollector\ConfigCollector;
 use Gantry\Component\Config\Config;
+use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -25,7 +27,7 @@ class Debugger
      */
     public function __construct()
     {
-        static::$debugger = \Grav\Common\Grav::instance()['debugger'];
+        static::$debugger = Grav::instance()['debugger'];
     }
 
     /**

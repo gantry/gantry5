@@ -79,7 +79,7 @@ class Menu extends HtmlController
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return mixed // TODO?
+     * @return Response
      */
     public function execute($method, array $path, array $params)
     {
@@ -257,7 +257,7 @@ class Menu extends HtmlController
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
-        $callable = function () use ($validator) {
+        $callable = static function () use ($validator) {
             return $validator;
         };
 
@@ -351,6 +351,9 @@ class Menu extends HtmlController
         return $this->render('@gantry-admin/modals/widget-picker.html.twig', $this->params);
     }
 
+    /**
+     * @return HtmlResponse|Response
+     */
     public function widget()
     {
         $data = $this->request->post->getJson('item');
@@ -410,7 +413,7 @@ class Menu extends HtmlController
 
         // Load particle blueprints and default settings.
         $validator = $this->loadBlueprints('menu');
-        $callable = function () use ($validator) {
+        $callable = static function () use ($validator) {
             return $validator;
         };
 
@@ -582,7 +585,14 @@ class Menu extends HtmlController
         return $list;
     }
 
-    protected function executeForward($resource, $method = 'GET', $path, $params = [])
+    /**
+     * @param string $resource
+     * @param string $method
+     * @param array $path
+     * @param array $params
+     * @return HtmlResponse|Response
+     */
+    protected function executeForward($resource, $method = 'GET', $path = [], $params = [])
     {
         $class = '\\Gantry\\Admin\\Controller\\Json\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
         if (!class_exists($class)) {

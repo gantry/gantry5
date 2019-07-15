@@ -28,7 +28,7 @@ abstract class HtmlController extends BaseController
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return mixed
+     * @return Response
      * @throws \RuntimeException
      */
     public function execute($method, array $path, array $params)

@@ -137,7 +137,7 @@ trait ThemeTrait
 
         // Set configuration if given.
         if ($name && $name != $outline) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
+            GANTRY_DEBUGGER && Debugger::addMessage("Using Gantry outline {$name}");
 
             $gantry['configuration'] = $name;
         }
@@ -235,11 +235,11 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
-                GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && \Gantry\Debugger::addMessage("Compiling CSS: {$name}");
+                GANTRY_DEBUGGER && Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && Debugger::addMessage("Compiling CSS: {$name}");
 
                 $compiler->compileFile($name);
 
-                GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("css-{$name}");
+                GANTRY_DEBUGGER && Debugger::stopTimer("css-{$name}");
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);

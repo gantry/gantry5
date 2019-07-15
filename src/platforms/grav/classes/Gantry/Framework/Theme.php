@@ -14,6 +14,7 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Content\Block\ContentBlock;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\Debugger;
 use Grav\Common\Grav;
 use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -96,7 +97,7 @@ class Theme extends AbstractTheme
                 /** @var Platform $platform */
                 $platform = $gantry['platform'];
 
-                GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
+                GANTRY_DEBUGGER && Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
 
                 /** @var Document $document */
                 $document = $gantry['document'];
@@ -106,7 +107,7 @@ class Theme extends AbstractTheme
                 return $document->pop()->setContent($html);
             }
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Rendering particle {$id}", 'debug');
+            GANTRY_DEBUGGER && Debugger::addMessage("Rendering particle {$id}", 'debug');
 
             // Render particle.
             $layout = $this->loadLayout();
