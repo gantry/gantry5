@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
+use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
@@ -85,6 +86,35 @@ class ThemeInstaller extends AbstractInstaller
     }
 
     /**
+     * @param string $template
+     * @param array $context
+     * @return string
+     */
+    public function render($template, $context = [])
+    {
+        $application = Factory::getApplication();
+        $jsession = $application->getSession();
+        $token = $jsession::getFormToken();
+        $manifest = $this->getManifest();
+        $context += [
+            'description' => $this->translate((string) $manifest->get('description')),
+            'version' => (string) $manifest->get('version'),
+            'date' => (string) $manifest->get('creationDate'),
+            'author' => [
+                'name' => (string) $manifest->get('author'),
+                'email' => (string) $manifest->get('authorEmail'),
+                'url' => (string) $manifest->get('authorUrl')
+            ],
+            'copyright' => (string) $manifest->get('copyright'),
+            'license' => (string) $manifest->get('license'),
+            'install_url' => Route::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
+            'edit_url' => Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
+        ];
+
+        return parent::render($template, $context);
+    }
+
+    /**
      * @return string
      */
     public function getPath()
@@ -144,35 +174,6 @@ class ThemeInstaller extends AbstractInstaller
     {
         $this->updateStyle('JLIB_INSTALLER_DEFAULT_STYLE', [], 1);
         $this->installMenus();
-    }
-
-    /**
-     * @param string $template
-     * @param array $context
-     * @return string
-     */
-    public function render($template, $context = [])
-    {
-        $application = Factory::getApplication();
-        $jsession = $application->getSession();
-        $token = $jsession::getFormToken();
-        $manifest = $this->getManifest();
-        $context += [
-            'description' => $this->translate((string) $manifest->get('description')),
-            'version' => (string) $manifest->get('version'),
-            'date' => (string) $manifest->get('creationDate'),
-            'author' => [
-                'name' => (string) $manifest->get('author'),
-                'email' => (string) $manifest->get('authorEmail'),
-                'url' => (string) $manifest->get('authorUrl')
-            ],
-            'copyright' => (string) $manifest->get('copyright'),
-            'license' => (string) $manifest->get('license'),
-            'install_url' => Route::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
-            'edit_url' => Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
-        ];
-
-        return parent::render($template, $context);
     }
 
     /**
@@ -402,10 +403,7 @@ class ThemeInstaller extends AbstractInstaller
             throw new \Exception($table->getError());
         }
 
-        /** @var \JCache|\JCacheController $cache */
-        // FIXME: Joomla 4
-        $cache = Factory::getCache();
-        $cache->clean('mod_menu');
+        CacheHelper::cleanMenu();
 
         $menu = MenuHelper::getMenuType($item['menutype']);
 
@@ -506,10 +504,7 @@ class ThemeInstaller extends AbstractInstaller
             }
         }
 
-        /** @var \JCache|\JCacheController $cache */
-        // FIXME: Joomla 4
-        $cache = Factory::getCache();
-        $cache->clean('mod_menu');
+        CacheHelper::cleanMenu();
     }
 
     /**
