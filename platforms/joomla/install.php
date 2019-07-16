@@ -11,6 +11,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
@@ -159,10 +161,32 @@ class Pkg_Gantry5InstallerScript
         // Make sure that all file formats used by Gantry 5 are editable from template manager.
         $this->adjustTemplateSettings();
 
+        // Install sample data on first install.
+        if (in_array($type, array('install', 'discover_install'))) {
+            $this->renderSplash('install', $manifest);
+        } else {
+            $this->renderSplash('update', $manifest);
+        }
+
         return true;
     }
 
     // Internal functions
+
+        /**
+     * @param string $template
+     * @param \SimpleXMLElement $manifest
+     */
+    public function renderSplash($template, $manifest)
+    {
+        // Define variables for the template file.
+        $name = Text::sprintf($manifest->name);
+        $version = $manifest->version;
+        $date = $manifest->creationDate;
+        $edit_url = Route::_('index.php?option=com_gantry5', false);
+
+        include JPATH_ADMINISTRATOR . "/components/com_gantry5/install/templates/{$template}.php";
+    }
 
     /**
      * @param $manifest
