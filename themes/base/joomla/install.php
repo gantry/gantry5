@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 
 class G5_BaseInstallerScript
 {
-    public $requiredGantryVersion = '5.5.0';
+    public $requiredGantryVersion = '5.5';
 
     /**
      * @param string $type

@@ -74,7 +74,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.5.0
+    gantry: 5.5
 
   block-variations:
     Title Variations:
