@@ -5,7 +5,7 @@
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
-        - Updated SCSS compiler to v1.0.0
+        - Updated SCSS compiler to v1.0.2
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
