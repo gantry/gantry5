@@ -98,9 +98,9 @@ class Pkg_Gantry5InstallerScript
      */
     public function preflight($type, $parent)
     {
-        if ($type !== 'uninstall') {
-            $manifest = $parent->getManifest();
+        $manifest = $parent->getManifest();
 
+        if ($type !== 'uninstall') {
             // Prevent installation if requirements are not met.
             $errors = $this->checkRequirements($manifest->version);
             if ($errors) {
