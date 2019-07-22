@@ -238,23 +238,6 @@ class plgSystemGantry5 extends CMSPlugin
         return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
     }
 
-
-    /**
-     * Document gets set during dispatch, we need language and direction.
-     */
-    public function onAfterDispatchSiteAdmin()
-    {
-        $gantry = Gantry::instance();
-        $theme = $gantry['theme'];
-
-        $document = $this->app->getDocument();
-        if ($document instanceof HtmlDocument) {
-            $document->setHtml5(true);
-        }
-        $theme->language = $document->language;
-        $theme->direction = $document->direction;
-    }
-
     /**
      * Load Gantry framework before dispatching to the component.
      *
@@ -356,6 +339,22 @@ class plgSystemGantry5 extends CMSPlugin
                 }
             }
         }
+    }
+
+    /**
+     * Document gets set during dispatch, we need language and direction.
+     */
+    public function onAfterDispatchSiteAdmin()
+    {
+        $gantry = Gantry::instance();
+        $theme = $gantry['theme'];
+
+        $document = $this->app->getDocument();
+        if ($document instanceof HtmlDocument) {
+            $document->setHtml5(true);
+        }
+        $theme->language = $document->language;
+        $theme->direction = $document->direction;
     }
 
     /**

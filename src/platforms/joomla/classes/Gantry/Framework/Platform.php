@@ -67,6 +67,11 @@ class Platform extends BasePlatform
      */
     public function init()
     {
+        if (version_compare(JVERSION, '4', '>=')) {
+            // TODO: Joomla 4 Font Awesome 5 support
+            //$this->features['fontawesome'] = true;
+        }
+
         // Support linked sample data.
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
         if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
