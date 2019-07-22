@@ -9,6 +9,7 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\DispatcherInterface;
@@ -18,6 +19,9 @@ use Joomla\Event\DispatcherInterface;
  */
 class plgGantry5Preset extends CMSPlugin
 {
+    /** @var CMSApplication */
+    protected $app;
+
     /**
      * plgGantry5Preset constructor.
      * @param DispatcherInterface $subject
@@ -30,9 +34,13 @@ class plgGantry5Preset extends CMSPlugin
 
         parent::__construct($subject, $config);
 
+        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
+        if (!$this->app) {
+            $this->app = Factory::getApplication();
+        }
+
         // Always load language.
-        $application = Factory::getApplication();
-        $language = $application->getLanguage();
+        $language = $this->app->getLanguage();
 
         $language->load('com_gantry5.sys')
         || $language->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
@@ -46,10 +54,8 @@ class plgGantry5Preset extends CMSPlugin
      */
     public function onGantry5ThemeInit($theme)
     {
-        $app = Factory::getApplication();
-
-        if ($app->isClient('site')) {
-            $input = $app->input;
+        if ($this->app->isClient('site')) {
+            $input = $this->app->input;
 
             $cookie = md5($theme->name);
             $presetVar = $this->params->get('preset', 'presets');
@@ -96,11 +102,10 @@ class plgGantry5Preset extends CMSPlugin
      */
     protected function updateCookie($name, $value, $expire = 0)
     {
-        $app = Factory::getApplication();
-        $path   = $app->get('cookie_path', '/');
-        $domain = $app->get('cookie_domain');
+        $path   = $this->app->get('cookie_path', '/');
+        $domain = $this->app->get('cookie_domain');
 
-        $input = $app->input;
+        $input = $this->app->input;
         $input->cookie->set($name, $value, $expire, $path, $domain);
     }
 }

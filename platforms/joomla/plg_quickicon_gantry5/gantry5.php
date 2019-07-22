@@ -13,6 +13,7 @@ use Gantry\Component\Filesystem\Streams;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry5\Loader;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Router\Route;
@@ -25,6 +26,9 @@ use Joomla\Event\DispatcherInterface;
  */
 class plgQuickiconGantry5 extends CMSPlugin
 {
+    /** @var CMSApplication */
+    protected $app;
+
     /**
      * plgQuickiconGantry5 constructor.
      * @param DispatcherInterface $subject
@@ -39,9 +43,13 @@ class plgQuickiconGantry5 extends CMSPlugin
 
         parent::__construct($subject, $config);
 
+        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
+        if (!$this->app) {
+            $this->app = Factory::getApplication();
+        }
+
         // Always load language.
-        $application = Factory::getApplication();
-        $language = $application->getLanguage();
+        $language = $this->app->getLanguage();
 
         $language->load('com_gantry5.sys')
         || $language->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
@@ -81,8 +89,7 @@ class plgQuickiconGantry5 extends CMSPlugin
                 $updates = $platform->updates();
             }
         } catch (Exception $e) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage($e->getMessage(), 'warning');
+            $this->app->enqueueMessage($e->getMessage(), 'warning');
             $updates = false;
         }
 

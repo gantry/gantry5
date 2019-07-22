@@ -41,9 +41,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class plgSystemGantry5 extends CMSPlugin
 {
-    /**
-     * @var CMSApplication
-     */
+    /** @var CMSApplication */
     protected $app;
     protected $styles;
     protected $modules;
@@ -59,7 +57,10 @@ class plgSystemGantry5 extends CMSPlugin
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';
 
-        $this->app = Factory::getApplication();
+        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
+        if (!$this->app) {
+            $this->app = Factory::getApplication();
+        }
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
@@ -246,14 +247,12 @@ class plgSystemGantry5 extends CMSPlugin
         $gantry = Gantry::instance();
         $theme = $gantry['theme'];
 
-        /** @var  CMSApplication $application */
-        $application = Factory::getApplication();
-        $document = $application->getDocument();
+        $document = $this->app->getDocument();
         if ($document instanceof HtmlDocument) {
             $document->setHtml5(true);
         }
         $theme->language = $document->language;
-            $theme->direction = $document->direction;
+        $theme->direction = $document->direction;
     }
 
     /**
@@ -439,9 +438,6 @@ class plgSystemGantry5 extends CMSPlugin
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
-        /** @var CMSApplication $app */
-        $app = $this->app;
-
         // Initialise variables;
         $table = Table::getInstance('Extension');
 
@@ -462,7 +458,7 @@ class plgSystemGantry5 extends CMSPlugin
         }
 
         // Trigger the onContentBeforeSave event.
-        $result = $app->triggerEvent('onExtensionBeforeSave', array($name, $table, false));
+        $result = $this->app->triggerEvent('onExtensionBeforeSave', array($name, $table, false));
         if (in_array(false, $result, true)) {
             throw new RuntimeException($table->getError());
         }
@@ -479,7 +475,7 @@ class plgSystemGantry5 extends CMSPlugin
         $this->params = $params;
 
         // Trigger the onExtensionAfterSave event.
-        $app->triggerEvent('onExtensionAfterSave', array($name, $table, false));
+        $this->app->triggerEvent('onExtensionAfterSave', array($name, $table, false));
 
         return true;
     }
