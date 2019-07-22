@@ -12,8 +12,8 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Date\Date;
-use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -146,6 +146,7 @@ class Theme extends AbstractTheme
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $language = $application->getLanguage();
 
@@ -167,12 +168,8 @@ class Theme extends AbstractTheme
             }
         }
 
-        $doc = $application->getDocument();
-        if ($doc instanceof HtmlDocument) {
-            $doc->setHtml5(true);
-        }
-        $this->language = $doc->language;
-        $this->direction = $doc->direction;
+        $this->language = 'en-gb';
+        $this->direction = 'ltr';
         $this->url = Uri::root(true) . '/templates/' . $this->name;
 
         PluginHelper::importPlugin('gantry5');

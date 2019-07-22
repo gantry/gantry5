@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -87,6 +88,17 @@ class plgSystemGantry5 extends CMSPlugin
     public function onGantryGlobalConfig(&$global)
     {
         $global = $this->params->toArray();
+    }
+
+
+    /**
+     * Document gets set during dispatch, we need language and direction.
+     */
+    public function onAfterDispatch()
+    {
+        if (class_exists('Gantry\Framework\Gantry')) {
+            $this->onAfterDispatchSiteAdmin();
+        }
     }
 
     public function onAfterRoute()
@@ -223,6 +235,25 @@ class plgSystemGantry5 extends CMSPlugin
         }
 
         return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+    }
+
+
+    /**
+     * Document gets set during dispatch, we need language and direction.
+     */
+    public function onAfterDispatchSiteAdmin()
+    {
+        $gantry = Gantry::instance();
+        $theme = $gantry['theme'];
+
+        /** @var  CMSApplication $application */
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
+        if ($document instanceof HtmlDocument) {
+            $document->setHtml5(true);
+        }
+        $theme->language = $document->language;
+            $theme->direction = $document->direction;
     }
 
     /**
