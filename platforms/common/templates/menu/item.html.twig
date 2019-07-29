@@ -15,7 +15,7 @@
     <span class="badge menu-item-type">{{ item.particle }}</span>
 {% else %}
     {% if item.image %}
-        <img src="{{ url(item.image) }}" />
+        <img alt="" src="{{ url(item.image) }}" />
     {% elseif item.icon %}
         <i class="{{ item.icon }}"></i>
     {% endif %}

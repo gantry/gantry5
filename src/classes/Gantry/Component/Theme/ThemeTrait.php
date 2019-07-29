@@ -702,7 +702,8 @@ trait ThemeTrait
             return new HtmlBlock;
         }
 
-        $particle = $gantry['config']->getJoined("particles.{$subtype}", $item->attributes);
+        $attributes = isset($item->attributes) ? $item->attributes : [];
+        $particle = $gantry['config']->getJoined("particles.{$subtype}", $attributes);
 
         $cached = false;
         $cacheKey = [];
