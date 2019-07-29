@@ -152,6 +152,6 @@
     @include display(flex);
 
 	.g-content {
-		width: 100%;
+		flex-basis: 100%;
 	}
 }
