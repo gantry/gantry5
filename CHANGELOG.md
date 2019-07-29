@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed equal-height CSS creating width / overflow issues
+        - Fixed fatal error if content block is missing attributes
 
 # 5.4.29
 ## 06/21/2019
