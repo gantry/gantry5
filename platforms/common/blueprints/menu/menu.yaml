@@ -12,4 +12,4 @@ form:
     settings.base:
       type: input.text
       label: Base Path
-      default: /
+      default: '/'

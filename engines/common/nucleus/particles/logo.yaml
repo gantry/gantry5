@@ -1,4 +1,4 @@
-name: Logo / Image
+name: 'Logo / Image'
 description: Display a logo or an image.
 type: particle
 icon: fa-file-image-o
@@ -45,7 +45,7 @@ form:
     link:
       type: input.checkbox
       label: Link
-      description: Renders Logo/Image with a link.
+      description: 'Renders Logo/Image with a link.'
       default: true
 
     svg:

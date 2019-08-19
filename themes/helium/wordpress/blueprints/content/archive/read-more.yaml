@@ -14,7 +14,7 @@ form:
     mode:
       type: select.select
       label: Display Mode
-      description: When set to Auto - theme detects <!--more--> tag inside of the post content.
+      description: 'When set to Auto - theme detects <!--more--> tag inside of the post content.'
       default: auto
       options:
         auto: Auto

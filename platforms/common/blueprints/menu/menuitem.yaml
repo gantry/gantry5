@@ -69,7 +69,7 @@ form:
           selectize:
             allowEmptyOption: true
           options:
-            '': - Use Default -
+            '': '- Use Default -'
             standard: Simple
             fullwidth: Extended
 
@@ -92,7 +92,7 @@ form:
         .width:
           type: input.text
           label: Dropdown Width
-          description: Set the width of this parent's dropdowns in rem, em, px units or auto.
+          description: "Set the width of this parent's dropdowns in rem, em, px units or auto."
           default: "auto"
           pattern: '((\d+(\.\d+){0,1}(rem|em|px))|auto)'
 

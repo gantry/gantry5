@@ -14,7 +14,7 @@ form:
     _instructions:
       type: separator.note
       class: alert alert-info
-      content: Basic usage: <pre>&lt;a href="path/to/media.jpg"<br />   data-rel="lightcase"<br />   title="Your title"<br />><br />    Your link description or thumb<br />&lt;/a></pre>
+      content: 'Basic usage: <pre>&lt;a href="path/to/media.jpg"<br />   data-rel="lightcase"<br />   title="Your title"<br />><br />    Your link description or thumb<br />&lt;/a></pre>'
 
     _info:
       type: separator.note

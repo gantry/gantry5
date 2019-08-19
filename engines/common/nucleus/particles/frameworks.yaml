@@ -8,13 +8,13 @@ form:
     enabled:
       type: input.checkbox
       label: Enabled
-      description: Globally enable Frameworks atom.
+      description: 'Globally enable Frameworks atom.'
       default: true
 
     _info:
       type: separator.note
       class: alert alert-info
-      content: <strong>TIP</strong>: Only enable following frameworks if you need them in your own particles or your content.
+      content: '<strong>TIP</strong>: Only enable following frameworks if you need them in your own particles or your content.'
 
     jquery:
       type: container.set

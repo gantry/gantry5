@@ -24,7 +24,7 @@ form:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
-      key_placeholder: Key (data-*, style, ...)
+      key_placeholder: 'Key (data-*, style, ...)'
       value_placeholder: Value
       exclude: ['id', 'class']
 

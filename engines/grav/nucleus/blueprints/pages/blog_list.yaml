@@ -5,9 +5,6 @@ extends@:
 
 child_type: item
 
-
-title: Default
-
 rules:
   slug:
     pattern: '[a-z][a-z0-9_\-]+'

@@ -21,17 +21,17 @@ form:
     theme.base:
       type: input.text
       label: Base Theme
-      default: gantry-theme://common
+      default: 'gantry-theme://common'
 
     theme.file:
       type: input.text
       label: Theme Loader
-      default: gantry-theme://include/theme.php
+      default: 'gantry-theme://include/theme.php'
 
     theme.class:
       type: input.text
       label: Theme Class
-      default: \Gantry\Framework\Theme
+      default: '\Gantry\Framework\Theme'
 
     fonts:
       type: input.hidden
@@ -40,15 +40,15 @@ form:
     css.compiler:
       type: input.text
       label: CSS Compiler
-      default: \Gantry\Component\Stylesheet\ScssCompiler
+      default: '\Gantry\Component\Stylesheet\ScssCompiler'
 
     css.paths:
       type: input.text
       label: CSS Lookup Paths
       array: true
       default:
-        - gantry-theme://scss
-        - gantry-engine://scss
+        - 'gantry-theme://scss'
+        - 'gantry-engine://scss'
 
     css.files:
       type: input.text
@@ -71,7 +71,7 @@ form:
 
     section-variations:
       type: input.hidden
-      array: true  
+      array: true
 
     dependencies:
       type: input.hidden

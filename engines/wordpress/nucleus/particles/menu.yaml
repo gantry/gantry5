@@ -30,7 +30,7 @@ form:
     base:
       type: menu.item
       label: Base Item
-      description: "Select a menu item to always be used as the base for the menu display."
+      description: 'Select a menu item to always be used as the base for the menu display.'
       default: '/'
       options:
         '/': Active
@@ -56,7 +56,7 @@ form:
     hoverExpand:
       type: input.checkbox
       label: Expand on Hover
-      description: Allows to enable / disable the ability to expand menu items by hover or click only
+      description: 'Allows to enable / disable the ability to expand menu items by hover or click only'
       default: 1
 
     mobileTarget:
@@ -68,5 +68,5 @@ form:
     forceTarget:
       type: input.checkbox
       label: Force Target Attribute
-      description: Adds 'target="_self"' attribute to all menu items. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab.
+      description: 'Adds ''target="_self"'' attribute to all menu items. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab.'
       default: 0
