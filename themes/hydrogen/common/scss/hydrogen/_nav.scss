@@ -93,6 +93,13 @@
 	}
 }
 
+.g-main-nav.g-hide-mobile{
+    @include breakpoint(mobile-only) {
+        display: none;
+        visibility: hidden;
+    }
+}
+
 #g-navigation, #g-header {
 	.align-left {
 		.g-toplevel {
