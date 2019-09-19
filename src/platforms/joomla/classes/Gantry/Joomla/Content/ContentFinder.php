@@ -111,20 +111,21 @@ class ContentFinder extends Finder
         $nullDate = $this->db->quote($this->db->getNullDate());
         $nowDate = $this->db->quote(\JFactory::getDate()->toSql());
 
+		$groups = $user->getAuthorisedViewLevels();
+		$comma_separated_groups = implode(",", $groups);
+
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
             $this->query
                 ->where("(a.publish_up = {$nullDate} OR a.publish_up <= {$nowDate})")
                 ->where("(a.publish_down = {$nullDate} OR a.publish_down >= {$nowDate})")
                 ->where("a.state >= 1")
+				->where("(a.access IN ({$comma_separated_groups}) OR JSON_EXTRACT(a.attribs, '$.show_noauth') =1)")
             ;
         }
 
-        $groups = $user->getAuthorisedViewLevels();
-
-        $this->query->join('INNER', '#__categories AS c ON c.id = a.catid');
-
-        return $this->where('a.access', 'IN', $groups)->where('c.access', 'IN', $groups);
+		$this->query->join('INNER', '#__categories AS c ON c.id = a.catid');
+		return $this;
     }
 
     protected function addToGroup($key, $ids, $include = true)
