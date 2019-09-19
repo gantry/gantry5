@@ -106,7 +106,7 @@ class CategoryFinder extends Finder
         $user = \JFactory::getUser();
         $groups = $user->getAuthorisedViewLevels();
 
-        return $this->where('a.access', 'IN', $groups);
+        return $this;
     }
 
     public function extension($extension)
