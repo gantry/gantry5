@@ -120,7 +120,9 @@ class ContentFinder extends Finder
                 ->where("(a.publish_up = {$nullDate} OR a.publish_up <= {$nowDate})")
                 ->where("(a.publish_down = {$nullDate} OR a.publish_down >= {$nowDate})")
                 ->where("a.state >= 1")
-				->where("(a.access IN ({$comma_separated_groups}) OR JSON_EXTRACT(a.attribs, '$.show_noauth') =1)")
+				->where("(a.access IN ({$comma_separated_groups}) OR 
+                (CASE WHEN JSON_EXTRACT(attribs, '$.show_noauth') IS NULL THEN (select JSON_EXTRACT(params, '$.show_noauth')  FROM #__extensions where element='com_content')
+                ELSE JSON_EXTRACT(attribs, '$.show_noauth') END) =1)")
             ;
         }
 
