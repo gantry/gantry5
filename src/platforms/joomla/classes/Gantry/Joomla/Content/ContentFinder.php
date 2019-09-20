@@ -122,7 +122,7 @@ class ContentFinder extends Finder
                 ->where("a.state >= 1")
 			    ->where("(a.access IN ({$comma_separated_groups}) OR 
                     ( CASE WHEN JSON_UNQUOTE(JSON_EXTRACT(attribs, '$.show_noauth' )) IS NULL OR JSON_UNQUOTE(JSON_EXTRACT(attribs, '$.show_noauth' )) ='' THEN 
-                    JSON_UNQUOTE((select JSON_EXTRACT(params, '$.show_noauth') FROM josvz_extensions where element='com_content'))
+                    JSON_UNQUOTE((select JSON_EXTRACT(params, '$.show_noauth') FROM #__extensions where element='com_content'))
                     ELSE JSON_UNQUOTE(JSON_EXTRACT(attribs, '$.show_noauth')) END) =1)")
             ;
         }
