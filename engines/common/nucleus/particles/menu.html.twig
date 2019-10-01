@@ -131,7 +131,7 @@
 {% import _self as macro %}
 
 {% if menu.root.count() %}
-<nav class="g-main-nav" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }} data-g-hover-expand="{{ particle.hoverExpand|default('true') ? 'true': 'false' }}">
+<nav class="g-main-nav{{ particle.disableMobile ? ' g-hide-mobile' : '' }}" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }} data-g-hover-expand="{{ particle.hoverExpand|default('true') ? 'true': 'false' }}">
     <ul class="g-toplevel">
         {{ macro.displayItems(menu.root, menu, _context) }}
     </ul>
