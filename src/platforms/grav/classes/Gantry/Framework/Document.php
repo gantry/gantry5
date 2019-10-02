@@ -26,6 +26,25 @@ class Document extends HtmlDocument
         static::registerScripts('footer');
     }
 
+    /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @param bool $addDomain
+     * @return string
+     */
+    public static function domain($addDomain = false)
+    {
+        if (!$addDomain) {
+            return '';
+        }
+
+        $grav = Grav::instance();
+        $absolute = $grav['base_url_absolute'];
+        $relative = $grav['base_url_relative'];
+
+        return substr($absolute, 0, -strlen($relative));
+    }
+
     public static function rootUri()
     {
         $grav = Grav::instance();
