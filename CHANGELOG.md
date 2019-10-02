@@ -2,6 +2,9 @@
 ## mm/dd/2019
 
 1. [Common](#common)
+    1. [](#new)
+        - Helium: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
+        - Hydrogen: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
     1. [](#improved)
         - Added option to disable `Font Awesome` from the outline `Page Settings` (#2540, thanks @thexmanxyz)
         - Added option to define custom attributes on menu items (#2541, thanks @thexmanxyz)
