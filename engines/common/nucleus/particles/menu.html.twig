@@ -1,7 +1,7 @@
 {% try %}
-{% set menu = gantry.menu.instance(particle) %}
+    {% set menu = gantry.menu.instance(particle) %}
 {% catch %}
-<div class="alert alert-error">{{ e.getMessage }}</div>
+    <div class="alert alert-error">{{ e.getMessage }}</div>
 {% endtry %}
 
 {% macro getCustomWidth(item, menu, mode, dropdown_type) -%}
@@ -16,8 +16,8 @@
     {% set context = context|merge({ particle: item.options.particle }) %}
     {% set classes = item.options.block.class %}
     <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
-    {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
-    ignore missing with context only %}
+        {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
+        ignore missing with context only %}
     </div>
 {% endmacro %}
 
@@ -32,7 +32,7 @@
 
 {% macro displayItem(item, menu, context, dropdown_type) %}
     {% import _self as self %}
-    {% if item.type == 'particle' and not item.options.particle.enabled %} 
+    {% if item.type == 'particle' and not item.options.particle.enabled %}
         {% set enabled = 0 %}
     {% endif %}
     {% if item.visible and item.enabled and enabled|default(1) %}
@@ -131,9 +131,9 @@
 {% import _self as macro %}
 
 {% if menu.root.count() %}
-<nav class="g-main-nav{{ particle.disableMobile ? ' g-hide-mobile' : '' }}" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }} data-g-hover-expand="{{ particle.hoverExpand|default('true') ? 'true': 'false' }}">
-    <ul class="g-toplevel">
-        {{ macro.displayItems(menu.root, menu, _context) }}
-    </ul>
-</nav>
+    <nav class="g-main-nav" role="navigation"{{ particle.mobileTarget ? ' data-g-mobile-target' : '' }} data-g-hover-expand="{{ particle.hoverExpand|default('true') ? 'true': 'false' }}">
+        <ul class="g-toplevel">
+            {{ macro.displayItems(menu.root, menu, _context) }}
+        </ul>
+    </nav>
 {% endif %}

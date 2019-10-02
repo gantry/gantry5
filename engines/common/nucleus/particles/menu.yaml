@@ -75,9 +75,3 @@ form:
       label: Force Target Attribute
       description: "Adds 'target=&quot;_self&quot;' attribute to all menu links instead of omitting the default value. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab."
       default: 0
-
-    disableMobile:
-      type: input.checkbox
-      label: Disable on Mobile
-      description: Check this field to completely disable the menu on mobile devices. This prevents menu flickering but you might end with no menu when JS is not supported by the respective device.
-      default: 0
