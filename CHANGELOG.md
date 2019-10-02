@@ -6,6 +6,7 @@
         - Added option to disable `Font Awesome` from the outline `Page Settings` (#2540, thanks @thexmanxyz)
         - Added option to define custom attributes on menu items (#2541, thanks @thexmanxyz)
         - Added option to `Menu` particle to hide menu on mobile devices during page load (#2536, thanks @thexmanxyz)
+        - Added option to `Content Array` particle to add a title
     1. [](#bugfix)
         - Fixed equal-height CSS creating width / overflow issues
         - Fixed fatal error if content block is missing attributes
