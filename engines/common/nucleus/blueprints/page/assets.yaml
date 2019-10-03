@@ -13,7 +13,7 @@ form:
     touchicon:
       type: input.imagepicker
       label: Touch Icon
-      description: A PNG only image that will be used as icon for Touch Devices. Recommended 180x180 or 192x192.
+      description: 'A PNG only image that will be used as icon for Touch Devices. Recommended 180x180 or 192x192.'
       filter: '.png$'
 
     css:
@@ -47,19 +47,19 @@ form:
         _info:
           type: separator.note
           class: alert alert-info
-          content: Only add your inline CSS code, the &lt;style&gt;&lt;/style&gt; tags will get automatically added for you.
+          content: 'Only add your inline CSS code, the &lt;style&gt;&lt;/style&gt; tags will get automatically added for you.'
 
         .extra:
           type: collection.keyvalue
           label: Tag attributes
-          key_placeholder: Key (data-*, style, ...)
+          key_placeholder: 'Key (data-*, style, ...)'
           value_placeholder: Value
           exclude: ['rel', 'href', 'type']
 
         .priority:
           type: input.number
           label: Load Priority
-          description: Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.
+          description: 'Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.'
           default: 0
           min: -10
           max: 10
@@ -95,11 +95,11 @@ form:
         _info:
           type: separator.note
           class: alert alert-info
-          content: Only add your inline JavaScript code, the &lt;script&gt;&lt;/script&gt; tags will get automatically added for you.
+          content: 'Only add your inline JavaScript code, the &lt;script&gt;&lt;/script&gt; tags will get automatically added for you.'
 
         .in_footer:
           type: input.checkbox
-          label: Before </body>
+          label: 'Before </body>'
           description: Whether you want the script to load at the end of the body tag or inside head
           default: false
 
@@ -111,7 +111,7 @@ form:
         .priority:
           type: input.number
           label: Load Priority
-          description: Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.
+          description: 'Sets the load priority of the asset in the page. Value can be between 10 (first) and -10 (last). Default value is 0.'
           default: 0
           min: -10
           max: 10

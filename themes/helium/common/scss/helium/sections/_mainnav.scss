@@ -23,9 +23,7 @@
     }
 
     .g-toplevel {
-
         > li {
-
             > .g-menu-item-container {
                 text-decoration: none;
                 line-height: 1;
@@ -55,10 +53,12 @@
         &:before {
             top: -7px !important;
         }
+
         .g-dropdown {
             top: -7px;
         }
     }
+
     .g-standard .g-dropdown, .g-fullwidth .g-dropdown {
         &:after {
             left: -30px !important;
@@ -68,29 +68,35 @@
     .g-dropdown {
         text-align: left;
         border-radius: $border-radius;
+
         .dir-rtl & {
             text-align: right;
         }
     }
+
     .g-sublevel {
         > li {
             margin: $content-margin/2 $content-margin*1.5;
             padding: 0 0 $content-padding/4 0;
+
             > .g-menu-item-container {
                 line-height: normal;
                 @extend %item-container;
                 font-size: $core-font-size - 0.15;
                 font-weight: bold;
+
                 > .g-menu-item-content {
                     word-break: normal;
                     vertical-align: top;
                 }
             }
+
             &.g-parent {
                 .g-menu-parent-indicator {
                     right: 0;
                     top: 0;
                     margin-top: -0.35rem;
+
                     &:after {
                         content: "\f0da";
                         position: relative;
@@ -99,6 +105,17 @@
                     }
                 }
             }
+        }
+    }
+}
+
+// Hide on Mobile Menu Breakpoint
+@if $menu-hide-on-mobile == 1 {
+    @media only all and (max-width: $breakpoints-mobile-menu-breakpoint) {
+        [data-g-mobile-target] {
+            display: none;
+            visibility: hidden;
+            pointer-events: none;
         }
     }
 }
@@ -112,6 +129,7 @@
 .g-preset-thumbnails {
     .g-block {
         @include flex(1 1 auto !important);
+
         > .g-content {
             margin: 1rem 0;
             padding: 0 0.5rem !important;

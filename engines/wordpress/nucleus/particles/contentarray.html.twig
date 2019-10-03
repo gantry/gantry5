@@ -26,7 +26,7 @@
     {% set query_parameters = query_parameters|merge({'cat': filter.categories|replace({' ': ',', ', ': ','})}) %}
 {% endif %}
 
-{% set posts = wordpress.call('Timber::query_posts', query_parameters) %}
+{% set posts = wordpress.query_posts(query_parameters) %}
 {% set total = posts.get_pagination([]).total|abs %}
 {% set total = max(posts|length, (total * max(0, limit.total)) - 1) %}
 
@@ -54,7 +54,7 @@
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
                                             <a href="{{ post.link|raw }}">
-                                                {{ (display.title.limit ? post.title|truncate_text(display.title.limit) : post.title)|raw }}
+                                                {{ display.title.limit ? post.title|truncate_text(display.title.limit)|raw : post.title)|raw }}
                                             </a>
                                         </h3>
                                     </div>

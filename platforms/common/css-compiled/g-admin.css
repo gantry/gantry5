@@ -2124,6 +2124,7 @@ body.g-prime {
 }
 #g5-container .g-collapsed.card .inner-params, #g5-container .g-collapsed:not(.card) {
   overflow: hidden;
+  visibility: hidden;
   height: 0;
 }
 #g5-container .badge, #g5-container .g5-dialog.g5-dialog-theme-default.g5-modal-filepicker .g5-content .g-files.g-filemode-thumbnails li.selected span:not(.g-file-delete):not(.g-file-preview) {
@@ -3348,8 +3349,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
 #g5-container #assignments .settings-param-wrapper, #g5-container .settings-assignments .settings-param-wrapper {
   min-width: 100%;
   max-height: 455px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible !important;
   margin: 0 -10px -10px;
 }
 #g5-container #assignments .settings-param, #g5-container .settings-assignments .settings-param {

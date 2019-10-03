@@ -12,12 +12,12 @@ form:
                 column1:
                   fields:
                     name:
-                      default: modular/features
+                      default: 'modular/features'
                       data-options@: '\Grav\Common\Page\Pages::modularTypes'
             overrides:
               fields:
                 header.template:
-                  default: modular/features
+                  default: 'modular/features'
                   data-options@: '\Grav\Common\Page\Pages::modularTypes'
         features:
           type: tab

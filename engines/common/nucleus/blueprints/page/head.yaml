@@ -9,7 +9,7 @@ form:
       type: collection.keyvalue
       label: Meta Tags
       description: Meta Tags for extras such as Facebook and Twitter.
-      key_placeholder: og:title, og:site_name, twitter:site
+      key_placeholder: 'og:title, og:site_name, twitter:site'
       value_placeholder: Value
       default:
 

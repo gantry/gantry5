@@ -1,5 +1,5 @@
 enabled: true
-production: true
+production: false
 use_media_folder: false
 offline: false
 offline_message:

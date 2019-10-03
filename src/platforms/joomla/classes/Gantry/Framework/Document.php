@@ -35,6 +35,24 @@ class Document extends HtmlDocument
         static::registerScripts();
     }
 
+    /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @param bool $addDomain
+     * @return string
+     */
+    public static function domain($addDomain = false)
+    {
+        if (!$addDomain) {
+            return '';
+        }
+
+        $absolute = \JUri::root(false);
+        $relative = \JUri::root(true);
+
+        return substr($absolute, 0, -strlen($relative));
+    }
+
     public static function rootUri()
     {
         return rtrim(\JUri::root(true), '/') ?: '/';

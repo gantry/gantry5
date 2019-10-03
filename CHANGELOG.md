@@ -1,9 +1,109 @@
+# 5.4.30
+## mm/dd/2019
+
+1. [Common](#common)
+    1. [](#new)
+        - Helium: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
+        - Hydrogen: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
+        - Do not force asset timestamps in development mode, use configuration option instead (#2531)
+    1. [](#improved)
+        - Added option to disable `Font Awesome` from the outline `Page Settings` (#2540, thanks @thexmanxyz)
+        - Added option to define custom attributes on menu items (#2541, thanks @thexmanxyz)
+        - Added option to `Menu` particle to hide menu on mobile devices during page load (#2536, thanks @thexmanxyz)
+        - Added option to `Content Array` particle to add a title (#2521, thanks @topwebs)
+    1. [](#bugfix)
+        - Fixed equal-height CSS creating width / overflow issues
+        - Fixed fatal error if content block is missing attributes
+        - Fixed old YAML syntax
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed `Document::uri()` not adding domain when asked for absolute path
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed escaped letters such as `&amp;` in `Content Array` particle title
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed `Document::uri()` not adding domain when asked for absolute path
+
+# 5.4.29
+## 06/21/2019
+
+1. [Common](#common)
+    1. [](#new)
+        - Upgraded SCSS compiler to v0.8.4
+    1. [](#improved)
+        - Logo particle: Added aria-label to meet the WCAG
+    1. [](#bugfix)
+        - Fixed PHP 7.3 issues in SCSS compilation
+        - Fixed Admin Assignments issues with Chrome 75 (#2505)
+        - Fixed Admin Styles rendering issues in Chrome 75 (#2504)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Added admin warning if server is still using unmaintained PHP 5.4 or 5.5 versions
+        - Updated Timber to v1.9.2 (later versions have Twig conflict with current version of WPML)
+    1. [](#bugfix)
+        - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
+        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed compatibility issue with Grav 1.7.0-beta.1
+        - Fixed inconsistent admin permissions to be always `admin.gantry` or `admin.themes` (#2488)
+
+# 5.4.28
+## 03/11/2019
+
+1. [Common](#common)
+    1. [](#new)
+        - Added `webp` to supported image types for image picker (#2450)
+    1. [](#improved)
+        - Logo particle: Added logo image max height (#2424)
+    1. [](#bugfix)   
+        - Social particle: Improved link target handling (#2214)
+        - Helium Copyright particle: fixed missing link (#2214)
+        - Fixed `mkdir(...)` race condition
+        - Fixed `Obtaining write lock failed on file...` error
+        - Fixed caching and CSS generation not working if underlaying filesystem does not support file locking or it is disabled
+        - Fixed rare file corruption issue
+1. [Joomla](#joomla)
+    1. [](#improved)
+        - Added edit link to content array (#2471, thanks @Chrissi2812)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.9.1
+    1. [](#bugfix)
+        - Fixed potential query conflicts in `WordPress Posts` particle
+        
+# 5.4.27
+## 12/14/2018
+
+1. [Common](#common)
+    1. [](#new)
+        - Added Section Variation field for Layout sections.
+    1. [](#improved)
+        - Updated Lightcase version.     
+    1. [](#bugfix)
+        - Fixed fatal error on PHP 5.4 (#2378)
+        - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
+        - Fixed Assignment Knobs Escaping Containers - Google Chrome bug (#2412)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Added official Joomla 3.9 support
+1. [Grav](#grav)
+    1. [](#improved)
+        - Added styling for disabled input fields in admin
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.3
+        
 # 5.4.26
 ## 09/11/2018
 
 1. [Common](#common)
     1. [](#bugfix)
         - Fixed regression `Class 'Gantry\Component\Twig\TwigNodePageblock' not found`
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.8.1
 
 # 5.4.25
 ## 09/10/2018

@@ -33,6 +33,10 @@
 
 {% block particle %}
 
+     {% if particle.title %}
+            <h2 class="g-title">{{ particle.title|raw }}</h2>
+        {% endif %}
+
     {# All Articles #}
     <div class="g-content-array g-joomla-articles{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
@@ -43,6 +47,9 @@
                     <div class="g-block">
                         <div class="g-content">
                             <div class="g-array-item">
+                                {% if display.edit and article.edit %}
+                                    <a class="g-array-item-edit" href="{{ article.edit }}">{{ 'COM_CONTENT_FORM_EDIT_ARTICLE'|trans }}</a>
+                                {% endif %}
                                 {% if display.image.enabled and article.images.image_intro or article.images.image_fulltext %}
                                     {% if article.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}
                                         <div class="g-array-item-image">

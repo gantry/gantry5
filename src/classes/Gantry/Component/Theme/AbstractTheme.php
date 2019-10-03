@@ -89,7 +89,7 @@ abstract class AbstractTheme
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
-        if ($twig->hasExtension(TwigExtension::class)) {
+        if ($twig->hasExtension('Gantry\Component\Twig\TwigExtension')) {
             return $twig;
         }
 

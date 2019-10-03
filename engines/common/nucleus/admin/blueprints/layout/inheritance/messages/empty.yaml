@@ -6,5 +6,5 @@ form:
   fields:
     _note:
       type: separator.note
-      class: alert alert-warning blocksize-note
+      class: 'alert alert-warning blocksize-note'
       content: 'This item does not exist in any other Outline and cannot be inherited because of that.'
