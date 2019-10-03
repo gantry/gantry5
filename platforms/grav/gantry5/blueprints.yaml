@@ -73,7 +73,7 @@ form:
     asset_timestamps:
       type: toggle
       label: Asset Timestamps
-      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page. NOTE: Timestamps are always enabled in development mode.'
+      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page.'
       highlight: 1
       default: 1
       options:
