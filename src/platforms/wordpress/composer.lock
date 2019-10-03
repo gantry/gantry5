@@ -117,16 +117,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b"
+                "reference": "141b272484481432cda342727a427dc1e206bfa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/cfcca6b1b60bc4974324efb5783c13dca6932b5b",
-                "reference": "cfcca6b1b60bc4974324efb5783c13dca6932b5b",
+                "url": "https://api.github.com/repos/composer/installers/zipball/141b272484481432cda342727a427dc1e206bfa0",
+                "reference": "141b272484481432cda342727a427dc1e206bfa0",
                 "shasum": ""
             },
             "require": {
@@ -182,6 +182,7 @@
                 "RadPHP",
                 "SMF",
                 "Thelia",
+                "Whmcs",
                 "WolfCMS",
                 "agl",
                 "aimeos",
@@ -204,6 +205,7 @@
                 "installer",
                 "itop",
                 "joomla",
+                "known",
                 "kohana",
                 "laravel",
                 "lavalite",
@@ -233,7 +235,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2018-08-27T06:10:37+00:00"
+            "time": "2019-08-12T15:00:31+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -327,16 +329,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.4.1",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "6fb502c23885701a991b0bba974b1a8eb6673577"
+                "reference": "cde50e6720a39fdacb240159d3eea6865d51fd96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/6fb502c23885701a991b0bba974b1a8eb6673577",
-                "reference": "6fb502c23885701a991b0bba974b1a8eb6673577",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/cde50e6720a39fdacb240159d3eea6865d51fd96",
+                "reference": "cde50e6720a39fdacb240159d3eea6865d51fd96",
                 "shasum": ""
             },
             "require": {
@@ -384,7 +386,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2019-07-04T09:00:00+00:00"
+            "time": "2019-08-07T09:00:00+00:00"
         },
         {
             "name": "leafo/scssphp",
@@ -717,16 +719,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.11.0",
+            "version": "v1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "82ebae02209c21113908c229e9883c419720738a"
+                "reference": "550ebaac289296ce228a706d0867afc34687e3f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
-                "reference": "82ebae02209c21113908c229e9883c419720738a",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/550ebaac289296ce228a706d0867afc34687e3f4",
+                "reference": "550ebaac289296ce228a706d0867afc34687e3f4",
                 "shasum": ""
             },
             "require": {
@@ -738,7 +740,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11-dev"
+                    "dev-master": "1.12-dev"
                 }
             },
             "autoload": {
@@ -755,12 +757,12 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                },
-                {
                     "name": "Gert de Pagter",
                     "email": "BackEndTea@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -771,7 +773,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-02-06T07:57:58+00:00"
+            "time": "2019-08-06T08:03:45+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -1054,8 +1056,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -1243,8 +1245,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "Wrapper around PHP's tokenizer extension.",
@@ -1314,8 +1316,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
