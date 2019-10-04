@@ -1,5 +1,5 @@
 # 5.4.30
-## mm/dd/2019
+## 10/04/2019
 
 1. [Common](#common)
     1. [](#new)
@@ -15,6 +15,7 @@
         - Fixed equal-height CSS creating width / overflow issues
         - Fixed fatal error if content block is missing attributes
         - Fixed old YAML syntax
+        - Fixed W3C navigation role validation issues
 1. [Joomla](#joomla)
     1. [](#bugfix)
         - Fixed `Document::uri()` not adding domain when asked for absolute path
