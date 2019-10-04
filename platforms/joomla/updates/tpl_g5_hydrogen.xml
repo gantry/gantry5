@@ -5,10 +5,10 @@
 		<description>Hydrogen Template</description>
 		<element>g5_hydrogen</element>
 		<type>template</type>
-		<version>@version@</version>
-		<infourl title="Hydrogen @version@">http://docs.gantry.org/gantry5</infourl>
+		<version>5.4.29</version>
+		<infourl title="Hydrogen 5.4.29">http://docs.gantry.org/gantry5</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_hydrogen_v@version@.zip</downloadurl>
+			<downloadurl type="full" format="zip">http://updates.gantry.org/download/5.4.29/joomla-tpl_g5_hydrogen_v5.4.29.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>
