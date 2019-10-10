@@ -85,7 +85,8 @@
 
                 &:before {
                     text-align: center;
-                    font-family: FontAwesome;
+                    font-family: FontAwesome, "Font Awesome 5 Free";
+					font-weight: 600;
                     content: "\f054";
                     position: absolute;
                     vertical-align: middle;

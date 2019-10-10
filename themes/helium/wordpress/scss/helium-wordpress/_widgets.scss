@@ -40,7 +40,8 @@
             vertical-align: bottom;
 
             &:before {
-                font-family: FontAwesome;
+                font-family: FontAwesome, "Font Awesome 5 Free";
+				font-weight: 600;
                 margin-right: 5px;
                 content: "\f02b";
             }

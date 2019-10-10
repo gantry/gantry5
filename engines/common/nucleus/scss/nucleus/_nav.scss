@@ -60,7 +60,8 @@
 						cursor: pointer;
 						width: 1.5rem;
 						opacity: 0.5;
-						font-family: FontAwesome, serif;
+						font-family: FontAwesome, "Font Awesome 5 Free", serif;
+						font-weight: 600;
 						content: "\f078";
 						text-align: right;
 					}
@@ -290,7 +291,8 @@
 			display: block;
 		    text-align: center;
 		    width: 1.28571em;
-			font-family: FontAwesome;
+			font-family: FontAwesome, "Font Awesome 5 Free";
+			font-weight: 600;
 			content: "\f053";
 			opacity: 0.5;
 		}
@@ -366,7 +368,8 @@
 						opacity: 0.5;
 						width: 1.5rem;
 						line-height: normal;
-						font-family: FontAwesome;
+						font-family: FontAwesome, "Font Awesome 5 Free";
+						font-weight: 600;
 						content: "\f054";
 					}
 				}
