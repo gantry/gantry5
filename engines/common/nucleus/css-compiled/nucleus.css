@@ -1465,7 +1465,7 @@ th {
   width: 1.5rem;
   opacity: 0.5;
   font-family: FontAwesome, "Font Awesome 5 Free", serif;
-  font-weight: 600;
+  font-weight: 900;
   content: "\f078";
   text-align: right;
 }
@@ -1647,7 +1647,7 @@ th {
   text-align: center;
   width: 1.28571em;
   font-family: FontAwesome, "Font Awesome 5 Free";
-  font-weight: 600;
+  font-weight: 900;
   content: "\f053";
   opacity: 0.5;
 }
@@ -1707,7 +1707,7 @@ th {
   width: 1.5rem;
   line-height: normal;
   font-family: FontAwesome, "Font Awesome 5 Free";
-  font-weight: 600;
+  font-weight: 900;
   content: "\f054";
 }
 #g-mobilemenu-container .g-toplevel .g-dropdown {
