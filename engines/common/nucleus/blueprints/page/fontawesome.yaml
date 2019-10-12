@@ -17,16 +17,16 @@ form:
         manual: Manual
         disable: Disable
 
-    fa4_compability:
+    fa4_compatibility:
       type: enable.enable
-      label: V4 Compability
-      description: Enable or disable the backwards compability for version 4.x of the Font Awesome library when using version 5.x.
+      label: V4 Compatibility
+      description: Enable or disable the backwards compatibility for version 4.x of the Font Awesome library when using version 5.x.
       default: 1
 
-    content_compability:
+    content_compatibility:
       type: enable.enable
-      label: Content Compability
-      description: Enable or disable the content (pseudo-element) compability when using the SVG / JS version of Font Awesome 5.x. This also applies when loading the library manually.
+      label: Content Compatibility
+      description: Enable or disable the content (pseudo-element) compatibility when using the SVG / JS version of Font Awesome 5.x. This also applies when loading the library manually.
       default: 1
 
     html_css_import:
