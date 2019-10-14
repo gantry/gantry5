@@ -347,6 +347,10 @@ class plgSystemGantry5 extends CMSPlugin
     public function onAfterDispatchSiteAdmin()
     {
         $gantry = Gantry::instance();
+        if (!isset($antry['theme'])) {
+            return;
+        }
+
         $theme = $gantry['theme'];
 
         $document = $this->app->getDocument();
