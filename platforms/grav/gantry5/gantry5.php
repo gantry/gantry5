@@ -70,7 +70,7 @@ class Gantry5Plugin extends Plugin
             $event['paths'] = $paths;
         }
     }
-    
+
     /**
      * Bootstrap Gantry loader.
      */
@@ -217,7 +217,7 @@ class Gantry5Plugin extends Plugin
             ]);
         }
 
-        if (!$gantry['global']->get('production', 0) || $gantry['global']->get('asset_timestamps', 1)) {
+        if ($gantry['global']->get('asset_timestamps', 1)) {
             $age = (int) ($gantry['global']->get('asset_timestamps_period', 7) * 86400);
             Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
@@ -372,7 +372,7 @@ class Gantry5Plugin extends Plugin
     public function onThemePagesInitialized(Event $event)
     {
         $gantry = Gantry::instance();
-        
+
         // Set page to offline.
         if ($gantry['global']->get('offline', 0)) {
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
@@ -450,7 +450,7 @@ class Gantry5Plugin extends Plugin
 
         $theme->setLayout($this->outline);
         $this->setPreset();
-        
+
         if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator')) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -500,7 +500,7 @@ class Gantry5Plugin extends Plugin
             $this->outline = '_error';
         }
     }
-    
+
     public function setPreset()
     {
         $gantry = Gantry::instance();

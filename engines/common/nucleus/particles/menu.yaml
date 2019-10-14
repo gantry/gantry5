@@ -61,7 +61,7 @@ form:
     hoverExpand:
       type: input.checkbox
       label: Expand on Hover
-      description: Allows to enable / disable the ability to expand menu items by hover or click only
+      description: 'Allows to enable / disable the ability to expand menu items by hover or click only'
       default: 1
 
     mobileTarget:

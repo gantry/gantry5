@@ -7,7 +7,7 @@ form:
     boxed:
       type: select.selectize
       label: Layout
-      description: Select the Layout container behavior. 'Inherit' refers to Page Settings.
+      description: "Select the Layout container behavior. 'Inherit' refers to Page Settings."
       isset: true
       selectize:
         allowEmptyOption: true
@@ -28,6 +28,6 @@ form:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
-      key_placeholder: Key (data-*, style, ...)
+      key_placeholder: 'Key (data-*, style, ...)'
       value_placeholder: Value
       exclude: ['class']

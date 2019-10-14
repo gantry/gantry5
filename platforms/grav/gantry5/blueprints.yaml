@@ -4,12 +4,12 @@ description: Theme framework.
 icon: gantry
 author:
   name: RocketTheme
-  email: support@rockettheme.com
-  url: http://www.rockettheme.com
-homepage: http://gantry.org
-readme: https://github.com/gantry/gantry5/blob/master/README.md
+  email: 'support@rockettheme.com'
+  url: 'http://www.rockettheme.com'
+homepage: 'http://gantry.org'
+readme: 'https://github.com/gantry/gantry5/blob/master/README.md'
 keywords: gantry, gantry5, theme, framework
-bugs: https://github.com/gantry/gantry5/issues
+bugs: 'https://github.com/gantry/gantry5/issues'
 license: MIT
 dependencies:
    - { name: grav, version: '>=1.5' }
@@ -44,7 +44,7 @@ form:
     use_media_folder:
       type: toggle
       label: Use Grav Images Folder
-      description: By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.
+      description: 'By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.'
       highlight: 1
       default: 0
       options:
@@ -56,7 +56,7 @@ form:
     offline:
       type: toggle
       label: Offline
-      description: Set site to maintenance mode. When site is offline, it's only visible for logged in users.
+      description: "Set site to maintenance mode. When site is offline, it's only visible for logged in users."
       highlight: 1
       default: 0
       options:
@@ -73,7 +73,7 @@ form:
     asset_timestamps:
       type: toggle
       label: Asset Timestamps
-      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page. NOTE: Timestamps are always enabled in development mode.'
+      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page.'
       highlight: 1
       default: 1
       options:
@@ -85,7 +85,7 @@ form:
     asset_timestamps_period:
       type: text
       label: Timestamp Period
-      description: Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.
+      description: 'Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.'
       default: 7
       validate:
         type: float

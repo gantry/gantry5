@@ -82,7 +82,7 @@ form:
               type: section
               title: Summary
               underline: true
-              
+
             header.summary.enabled:
               type: toggle
               toggleable: true
@@ -116,7 +116,7 @@ form:
               toggleable: true
               label: Summary delimiter
               classes: large
-              placeholder: ===
+              placeholder: '==='
 
             readmore:
               type: section
