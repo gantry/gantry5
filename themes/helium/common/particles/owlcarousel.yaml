@@ -28,8 +28,8 @@ form:
 
     nav:
       type: select.select
-      label: Prev / Next
-      description: Enable or disable the Prev / Next navigation.
+      label: 'Prev / Next'
+      description: 'Enable or disable the Prev / Next navigation.'
       default: disable
       options:
         enable: Enable

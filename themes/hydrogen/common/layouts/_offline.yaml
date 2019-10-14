@@ -1,7 +1,7 @@
 version: 2
 
 preset:
-  image: gantry-admin://images/layouts/offline.png
+  image: 'gantry-admin://images/layouts/offline.png'
 
 layout:
   /header/:

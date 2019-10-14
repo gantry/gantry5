@@ -3,7 +3,9 @@
 
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+        {% if gantry.config.page.fontawesome.enable|default(1) %}
+            <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+        {% endif %}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
         <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>

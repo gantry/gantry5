@@ -18,11 +18,41 @@
 
 # 5.4.30
 ## mm/dd/2019
+# 5.4.31
+## 10/04/2019
 
 1. [Common](#common)
+    1. [](#new)
+        - Helium: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
+        - Hydrogen: Added a new menu configuration checkbox `Hide on Mobile` to help prevent dropdown menu flickering when loading a site on a mobile device (#2536)
+        - Do not force asset timestamps in development mode, use configuration option instead (#2531)
+    1. [](#improved)
+        - Added option to disable `Font Awesome` from the outline `Page Settings` (#2540, thanks @thexmanxyz)
+        - Added option to define custom attributes on menu items (#2541, thanks @thexmanxyz)
+        - Added option to `Menu` particle to hide menu on mobile devices during page load (#2536, thanks @thexmanxyz)
+        - Added option to `Content Array` particle to add a title (#2521, thanks @topwebs)
     1. [](#bugfix)
         - Fixed equal-height CSS creating width / overflow issues
         - Fixed fatal error if content block is missing attributes
+        - Fixed old YAML syntax
+        - Fixed W3C navigation role validation issues
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed `Document::uri()` not adding domain when asked for absolute path
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Fixed escaped letters such as `&amp;` in `Content Array` particle title
+        - Fixed regression in 5.4.30: Content Array displays error (#2547)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed `Document::uri()` not adding domain when asked for absolute path
+
+# 5.4.30
+## 10/04/2019
+
+1. [Common](#common)
+    1. [](#new)
+       - Release replaced by v5.4.31
 
 # 5.4.29
 ## 06/21/2019

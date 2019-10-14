@@ -46,6 +46,24 @@ class Document extends HtmlDocument
     }
 
     /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @param bool $addDomain
+     * @return string
+     */
+    public static function domain($addDomain = false)
+    {
+        if (!$addDomain) {
+            return '';
+        }
+
+        $absolute = Uri::root(false);
+        $relative = Uri::root(true);
+
+        return substr($absolute, 0, -strlen($relative));
+    }
+
+    /**
      * @return string
      */
     public static function rootUri()

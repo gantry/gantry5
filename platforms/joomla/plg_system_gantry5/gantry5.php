@@ -298,7 +298,7 @@ class plgSystemGantry5 extends CMSPlugin
 
         $theme->setLayout($assignments->select());
 
-        if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
+        if ($this->params->get('asset_timestamps', 1)) {
             $age = (int)($this->params->get('asset_timestamps_period', 7) * 86400);
             Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {

@@ -19,7 +19,7 @@ form:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
-      key_placeholder: Key (data-*, style, ...)
+      key_placeholder: 'Key (data-*, style, ...)'
       value_placeholder: Value
       exclude: ['id', 'class']
 
@@ -36,10 +36,10 @@ form:
 
     body_top:
       type: textarea.textarea
-      label: After <body>
+      label: 'After <body>'
       description: Anything in this field will be appended right after the opening body tag
 
     body_bottom:
       type: textarea.textarea
-      label: Before </body>
+      label: 'Before </body>'
       description: Anything in this field will be appended right before the closing body tag
