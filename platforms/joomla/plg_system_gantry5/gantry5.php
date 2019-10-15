@@ -674,7 +674,8 @@ class plgSystemGantry5 extends CMSPlugin
                 $content = $content ?: 'No Particle Selected';
                 $title = $type ? ' title="Particle Type: ' . $type . '"' : '';
 
-                $html .= ' <span class="label" ' . $title . ' style="' . $colors . 'color:#fff;">' . $content . '</span>';
+                // TODO: remove label when dropping Joomla 3 support.
+                $html .= ' <span class="label badge bagde-info" ' . $title . ' style="' . $colors . 'color:#fff;">' . $content . '</span>';
 
                 if (isset($this->modules[$id])) {
                     unset($this->modules[$id]);
