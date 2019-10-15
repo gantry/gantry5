@@ -4910,7 +4910,7 @@ var Resizer = new prime({
         if (!parent) { return false; }
 
         parent.addClass('moving');
-        
+
         this.siblings = {
             occupied: 0,
             elements: siblings,
@@ -5628,7 +5628,7 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
-                
+
                 var form       = content.elements.content.find('form'),
                     fakeDOM    = zen('div').html(response.body.html).find('form'),
                     submit     = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -6641,7 +6641,7 @@ ready(function() {
 
         if (last) { clone.after(last); }
         else { clone.top(list); }
-        
+
         if (items.length && editall) { editall.style('display', 'inline-block'); }
 
         title = clone.find('a');
@@ -6761,7 +6761,7 @@ ready(function() {
                     modal.enableCloseByOverlay();
                     return;
                 }
-                
+
                 var form = content.elements.content.find('form'),
                     fakeDOM = zen('div').html(response.body.html).find('form'),
                     submit = content.elements.content.search('input[type="submit"], button[type="submit"], [data-apply-and-save]'),
@@ -7653,7 +7653,7 @@ var FilePicker = new prime({
 
     getPreviewTemplate: function() {
         var li    = zen('li[data-file]'),
-            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o" aria-hidden="true"></i>').bottom(li),
+            del   = zen('span.g-file-delete[data-g-file-delete][data-dz-remove]').html('<i class="fa fa-fw fa-trash-o fa-trash-alt" aria-hidden="true"></i>').bottom(li),
             thumb = zen('div.g-thumb[data-dz-thumbnail]').bottom(li),
             name  = zen('span.g-file-name[data-dz-name]').bottom(li),
             size  = zen('span.g-file-size[data-dz-size]').bottom(li),
@@ -19701,9 +19701,9 @@ return accumulateDiff;
 
     /*
     This is a list of all available events you can register on a dropzone object.
-    
+
     You can register an event handler like this:
-    
+
         dropzone.on("dragEnter", function() { });
      */
 
@@ -21382,7 +21382,7 @@ return accumulateDiff;
 
 
   /*
-  
+
   Bugfix for iOS 6 and 7
   Source: http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
   based on the work of https://github.com/stomita/ios-imagefile-megapixel
