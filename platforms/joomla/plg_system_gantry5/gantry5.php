@@ -156,7 +156,7 @@ class plgSystemGantry5 extends CMSPlugin
         }
 
         $input = $this->app->input;
-        $format = $input->getCmd('format', 'html');
+        $format = strtolower($input->getCmd('format', 'html'));
 
         if (!in_array($format, ['json', 'raw', 'debug'], true)) {
             throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);

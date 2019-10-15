@@ -10,6 +10,8 @@
 
 namespace Gantry\Joomla;
 
+use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\Exception\CacheExceptionInterface;
 use Joomla\CMS\Factory;
 
 /**
@@ -42,7 +44,6 @@ class CacheHelper
      * @param string|null $group
      * @param int $client_id
      * @param string $event
-     * @throws \Exception
      */
     private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache')
     {
@@ -55,10 +56,9 @@ class CacheHelper
         ];
 
         try {
-            // FIXME: Joomla 4
-            $cache = \JCache::getInstance('callback', $options);
+            $cache = Cache::getInstance('callback', $options);
             $cache->clean();
-        } catch (\Exception $e) { // FIXME: Joomla 3.7 uses JCacheException, Joomla 4?
+        } catch (CacheExceptionInterface $e) {
             $options['result'] = false;
         }
 

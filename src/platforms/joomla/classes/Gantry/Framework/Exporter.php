@@ -18,6 +18,7 @@ use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -131,7 +132,7 @@ class Exporter
                     $config->set('assignments', $this->getOutlineAssignments($id));
                 }
             }
-            
+
             $style['config'] = $config->toArray();
         }
 
@@ -280,7 +281,7 @@ class Exporter
     {
         // FIXME: Joomla 4
         require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-        $app = \JApplicationCms::getInstance('site');
+        $app = CMSApplication::getInstance('site');
         $menu = $app->getMenu();
         $data = \MenusHelper::getMenuLinks();
 

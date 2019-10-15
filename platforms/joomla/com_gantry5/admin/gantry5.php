@@ -13,14 +13,14 @@ use Gantry\Component\Router\Router;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-$user = Factory::getUser();
 $app = Factory::getApplication();
+$user = $app->getIdentity();
 
 // ACL for Gantry admin access.
 if (!$user->authorise('core.manage', 'com_gantry5')
     && !$user->authorise('core.manage', 'com_templates')
     // Editing particle module makes AJAX call to Gantry component, but has restricted access to json only.
-    && !($user->authorise('core.manage', 'com_modules') && $app->input->request->getString('format') === 'json')
+    && !($user->authorise('core.manage', 'com_modules') && strtolower($app->input->getCmd('format', 'html')) === 'json')
 ) {
     $app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 

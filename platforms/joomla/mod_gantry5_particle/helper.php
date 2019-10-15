@@ -30,7 +30,7 @@ class ModGantry5ParticleHelper
     public static function getAjax()
     {
         $input = Factory::getApplication()->input;
-        $format = $input->getCmd('format', 'html');
+        $format = strtolower($input->getCmd('format', 'html'));
         $id = $input->getInt('id');
 
         $props = $_GET;

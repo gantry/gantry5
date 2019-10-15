@@ -17,6 +17,7 @@ use Gantry\Component\Menu\Item;
 use Gantry\Joomla\MenuHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Router\Route;
 
 /**
@@ -39,12 +40,14 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
-        // FIXME: Joomla 4
-        $this->application = \JApplicationCms::getInstance('site');
+        $this->application = CMSApplication::getInstance('site');
 
-        $language = $this->application->getLanguage();
-        // FIXME: Joomla 4
-        $tag = \JLanguageMultilang::isEnabled() ? $language->getTag() : '*';
+        if (Multilanguage::isEnabled()) {
+            $language = $this->application->getLanguage();
+            $tag = $language->getTag();
+        } else {
+            $tag = '*';
+        }
 
         $this->menu = $this->application->getMenu();
         $this->default = $this->menu->getDefault($tag);
@@ -94,7 +97,6 @@ class Menu extends AbstractMenu
         $groups = [];
 
         // Get the menu items.
-        // FIXME: Joomla 4
         $items = \MenusHelper::getMenuLinks();
 
         // Build the groups arrays.
@@ -382,6 +384,8 @@ class Menu extends AbstractMenu
                     case 'alias':
                         // If this is an alias use the item id stored in the parameters to make the link.
                         $link = 'index.php?Itemid=' . $menuItem->params->get('aliasoptions', 0);
+
+                        // FIXME: Joomla 4: missing multilanguage support
                         break;
 
                     default:

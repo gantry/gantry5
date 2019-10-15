@@ -67,7 +67,7 @@ class Gantry5Dispatcher extends Dispatcher
         }
 
         // Handle non-html formats and error page.
-        if ($this->input->getCmd('format', 'html') !== 'html'
+        if (strtolower($this->input->getCmd('format', 'html')) !== 'html'
             || $this->input->getCmd('view') === 'error' || $this->input->getInt('g5_not_found')) {
             throw new NotAllowed(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }

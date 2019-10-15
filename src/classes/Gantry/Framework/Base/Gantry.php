@@ -45,7 +45,7 @@ abstract class Gantry extends Container
     protected $wrapper;
 
     /**
-     * @return Gantry
+     * @return static
      */
     public static function instance()
     {
@@ -61,7 +61,7 @@ abstract class Gantry extends Container
     }
 
     /**
-     * @return Gantry
+     * @return static
      */
     public static function restart()
     {
