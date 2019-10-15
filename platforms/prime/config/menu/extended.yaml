@@ -172,7 +172,7 @@ items:
     icon: fa fa-fw fa-paint-brush
 
   special/component:
-    icon: fa fa-fw fa-file-text-o
+    icon: fa fa-fw fa-file-text-o fa-file-alt
 
   special/raw:
     icon: fa fa-fw fa-file-code-o
