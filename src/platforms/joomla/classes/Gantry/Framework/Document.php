@@ -100,8 +100,9 @@ class Document extends HtmlDocument
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
-                    // FIXME: Joomla 4: addStyleSheet($url, $options = array(), $attribs = array())
-                    $doc->addStyleSheet($style['href'], $style['type'], $style['media'], $style['element']);
+                    $attribs = array_replace(['type' => $style['type'], 'media' => $style['media']], $style['element']);
+                    $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
+                    $doc->addStyleSheet($style['href'], [], $attribs);
                     break;
                 case 'inline':
                     $doc->addStyleDeclaration($style['content'], $style['type']);
@@ -124,8 +125,9 @@ class Document extends HtmlDocument
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    // FIXME: Joomla 4: addStyleSheet($url, $options = array(), $attribs = array())
-                    $doc->addScript($script['src'], $script['type'], $script['defer'], $script['async']);
+                    $attribs = ['mime' => $script['type'], 'defer' => $script['defer'], 'async' => $script['async']];
+                    $attribs = array_filter($attribs, static function($arg) { return null !== $arg; });
+                    $doc->addScript($script['src'], [], $attribs);
                     break;
                 case 'inline':
                     $doc->addScriptDeclaration($script['content'], $script['type']);
