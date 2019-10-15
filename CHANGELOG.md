@@ -5,10 +5,11 @@
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
-        - Updated SCSS compiler to v1.0.2
+        - Updated SCSS compiler to v1.0.5
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
+        - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes/gantry5.php` to your theme!)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.0
