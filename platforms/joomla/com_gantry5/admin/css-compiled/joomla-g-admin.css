@@ -26,8 +26,11 @@ body.com_gantry5 textarea, body.com_gantry5 input, body.com_gantry5 .input-appen
 body.com_gantry5 a {
   text-decoration: none;
 }
-body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header {
+body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header, body.com_gantry5 #subhead {
   display: none;
+}
+body.com_gantry5 #header {
+    display: block;
 }
 body.com_gantry5 .container-main {
   padding: 0;

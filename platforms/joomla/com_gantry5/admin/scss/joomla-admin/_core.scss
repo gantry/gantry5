@@ -29,16 +29,20 @@ body.com_gantry5 {
         text-decoration: none;
     }
 
-    .btn-subhead, .subhead-collapse.collapse, .header {
-    	display: none;
+    .btn-subhead, .subhead-collapse.collapse, .header, #subhead { // #subhead is for Joomla 4
+        display: none;
+    }
+
+    #header { // Joomla 4
+        display: block;
     }
 
     .container-main {
-    	padding: 0;
+        padding: 0;
     }
 
     #status {
-    	box-shadow: none !important;
+        box-shadow: none !important;
     }
 
     #footer {
