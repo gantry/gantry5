@@ -72,7 +72,7 @@
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
                                             {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
-                                            <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
+                                            <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         {% block collection_fields %}
@@ -114,7 +114,7 @@
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
                                 {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
-                                <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" data-title-edit=""></i>
+                                <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" data-title-edit=""></i>
                             </li>
                         </ul>
                         {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small" aria-hidden="true"></i></span>{% endif %}

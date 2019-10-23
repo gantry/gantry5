@@ -9,7 +9,7 @@
         >
             {{ position.title }}
         </span>
-        <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
+        <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         <span class="float-right font-small">
             <a href="{{ gantry.route('positions', position.name, 'add') }}" class="button button-primary button-simple position-add"
                     title="{{ 'GANTRY5_PLATFORM_POSITION_ADD'|trans }}"
@@ -27,7 +27,7 @@
                 >
                 {{ position.name }}
             </span>
-            <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
+            <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(position.title) }}" data-title-edit=""></i>
         </span>
     </h4>
     <div class="position-container inner-params" data-g5-position="{{ position.toJson(true)|e('html_attr') }}" data-g5-position-name="{{ position.name }}">
