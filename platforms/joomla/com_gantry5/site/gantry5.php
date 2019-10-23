@@ -42,7 +42,7 @@ $menuItem = $menu->getActive();
 // Prevent direct access without menu item.
 if (!$menuItem) {
     // Joomla 3 support
-    if (class_exists(JException::class)) {
+    if (class_exists('JException')) {
         throw new JException(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
     }
     throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
@@ -51,7 +51,7 @@ if (!$menuItem) {
 // Handle non-html formats and error page.
 if (strtolower($input->getCmd('format', 'html')) !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
     // Joomla 3 support
-    if (class_exists(JException::class)) {
+    if (class_exists('JException')) {
         throw new JException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
     }
     throw new Exception(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
@@ -83,12 +83,12 @@ if ($params->get('menu-meta_description')) {
 
 // Set Keywords.
 if ($params->get('menu-meta_keywords')) {
-    $document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+    $document->setMetaData('keywords', $params->get('menu-meta_keywords'));
 }
 
 // Set robots.
 if ($params->get('robots')) {
-    $document->setMetadata('robots', $params->get('robots'));
+    $document->setMetaData('robots', $params->get('robots'));
 }
 
 /** @var object $params */

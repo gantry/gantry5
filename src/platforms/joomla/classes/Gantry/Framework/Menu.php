@@ -43,7 +43,9 @@ class Menu extends AbstractMenu
         $this->application = CMSApplication::getInstance('site');
 
         if (Multilanguage::isEnabled()) {
-            $language = Factory::getLanguage();
+            /** @var CMSApplication $app */
+            $app = Factory::getApplication();
+            $language = $app->getLanguage();
             $tag = $language->getTag();
         } else {
             $tag = '*';
