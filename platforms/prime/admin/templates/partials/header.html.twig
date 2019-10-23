@@ -37,7 +37,7 @@
                         </li>
                         {% if settings_url %}
                             <li>
-                                <a tabindex="0" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-fw fa-{{ gantry.platform.name }}" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}</a>
+                                <a tabindex="0" href="{{ settings_url|e }}" data-settings-key="{{ settings_key|e }}"><i class="fa fa-fw fa-{{ gantry.platform.name }} fab fab-{{ gantry.platform.name }}" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}</a>
                             </li>
                         {% endif %}
                     </ul>
