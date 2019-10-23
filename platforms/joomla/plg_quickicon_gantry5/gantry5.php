@@ -96,7 +96,7 @@ class plgQuickiconGantry5 extends CMSPlugin
         $quickicons = array(
             array(
                 'link' => Route::_('index.php?option=com_gantry5'),
-                'image' => 'eye',
+                'image' => 'eye fa fa-eye',
                 'text' => Text::_('COM_GANTRY5'),
                 'group' => 'MOD_QUICKICON_EXTENSIONS',
                 'access' => array('core.manage', 'com_gantry5')
@@ -107,7 +107,7 @@ class plgQuickiconGantry5 extends CMSPlugin
             // Disabled
             $quickicons[] = array(
                 'link' => Route::_('index.php?option=com_gantry5'),
-                'image' => 'eye',
+                'image' => 'eye fa fa-eye',
                 'text' => Text::_('PLG_QUICKICON_GANTRY5_UPDATES_DISABLED'),
                 'group' => 'MOD_QUICKICON_MAINTENANCE'
             );
@@ -116,7 +116,7 @@ class plgQuickiconGantry5 extends CMSPlugin
             // Has updates
             $quickicons[] = array(
                 'link' => Route::_('index.php?option=com_installer&view=update'),
-                'image' => 'download',
+                'image' => 'download fa fa-download',
                 'text' => Text::_('PLG_QUICKICON_GANTRY5_UPDATE_NOW'),
                 'group' => 'MOD_QUICKICON_MAINTENANCE'
             );
