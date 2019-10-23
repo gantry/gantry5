@@ -14,6 +14,7 @@ use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Object\Collection;
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
 /**
@@ -114,6 +115,7 @@ class ContentFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
+            /** @var CMSApplication $application */
             $application = Factory::getApplication();
             $language = $application->getLanguage()->getTag();
         }

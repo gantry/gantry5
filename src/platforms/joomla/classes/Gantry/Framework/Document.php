@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
@@ -92,6 +93,7 @@ class Document extends HtmlDocument
             return;
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $doc = $application->getDocument();
 
@@ -117,6 +119,7 @@ class Document extends HtmlDocument
             return;
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $doc = $application->getDocument();
 

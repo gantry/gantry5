@@ -16,6 +16,7 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
 use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
@@ -68,7 +69,7 @@ class Platform extends BasePlatform
     public function init()
     {
         if (version_compare(JVERSION, '4', '>=')) {
-            // TODO: Joomla 4 Font Awesome 5 support
+            // FIXME: Joomla 4 Font Awesome 5 support
             //$this->features['fontawesome'] = true;
         }
 
@@ -215,6 +216,7 @@ class Platform extends BasePlatform
      */
     public function countModules($position)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
 
@@ -238,6 +240,7 @@ class Platform extends BasePlatform
      */
     public function displayModule($id, $attribs = [])
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {
@@ -294,6 +297,7 @@ class Platform extends BasePlatform
      */
     public function displayModules($position, $attribs = [])
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {
@@ -325,6 +329,7 @@ class Platform extends BasePlatform
      */
     public function displayContent($content, $params = [])
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
         if (!$document instanceof HtmlDocument) {

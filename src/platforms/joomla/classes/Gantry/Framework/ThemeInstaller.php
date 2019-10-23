@@ -16,6 +16,7 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
@@ -198,6 +199,7 @@ class ThemeInstaller extends AbstractInstaller
     public function addStyle($title, array $configuration = [], $home = 0)
     {
         // Make sure language debug is turned off.
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $language = $application->getLanguage();
         $debug = $language->setDebug(false);

@@ -101,6 +101,7 @@ class ModuleCollection extends Collection
             $list[$value[0]][] = (int) $value[1];
         }
 
+        /** @var Module $module */
         foreach ($this as $module) {
             $module->assignments(isset($list[$module->id]) ? $list[$module->id] : []);
         }

@@ -18,6 +18,7 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
@@ -35,6 +36,7 @@ class Router extends BaseRouter
     {
         HTMLHelper::_('behavior.keepalive');
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $input = $application->input;
 
@@ -102,6 +104,7 @@ class Router extends BaseRouter
 
         $this->container['ajax_suffix'] = '&format=json';
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $session = $application->getSession();
         $token = $session::getFormToken();
@@ -149,6 +152,7 @@ class Router extends BaseRouter
      */
     protected function send(Response $response)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
         $document->setCharset($response->charset);

@@ -11,6 +11,7 @@
 namespace Gantry\Joomla\Category;
 
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
 /**
@@ -95,6 +96,7 @@ class CategoryFinder extends Finder
             return $this;
         }
         if ($language === true || is_numeric($language)) {
+            /** @var CMSApplication $application */
             $application = Factory::getApplication();
 
             $language = $application->getLanguage()->getTag();
@@ -125,7 +127,7 @@ class CategoryFinder extends Finder
         }
 
         // Ignore unpublished categories.
-        $unpublished = $this->getUnpublished($this->extension);
+        $unpublished = self::getUnpublished($this->extension);
 
         if ($unpublished) {
             $this->where('a.id', 'NOT IN', $unpublished);

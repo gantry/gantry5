@@ -29,7 +29,8 @@ class AssignmentsMenu implements AssignmentsInterface
 
         $application = Factory::getApplication();
         if ($application->isClient('site')) {
-            $active = $application->getMenu()->getActive();
+            $menu = $application->getMenu();
+            $active = $menu ? $menu->getActive() : null;
             if ($active) {
                 $menutype = $active->menutype;
                 $id = $active->id;

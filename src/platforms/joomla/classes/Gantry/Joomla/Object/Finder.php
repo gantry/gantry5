@@ -11,6 +11,7 @@
 namespace Gantry\Joomla\Object;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Service\Provider\Database;
 
 /**
  * Class Finder
@@ -36,7 +37,7 @@ abstract class Finder
     protected $query;
 
     /**
-     * @var \JDatabase
+     * @var Database
      */
     protected $db;
 

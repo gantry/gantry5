@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
@@ -48,6 +49,7 @@ class Page extends Base\Page
     {
         parent::__construct($container);
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
         $input = $application->input;

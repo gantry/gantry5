@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\User\User;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 /**
  * Class Content
@@ -131,11 +132,17 @@ class Content extends AbstractObject
      */
     public function route()
     {
-        require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-
         $category = $this->category();
 
-        return Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+        if (version_compare(JVERSION, '4.0', '<')) {
+            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+
+            return Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+        }
+
+        require_once JPATH_SITE . '/components/com_content/Helper/RouteHelper.php';
+
+        return Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
 
     /**

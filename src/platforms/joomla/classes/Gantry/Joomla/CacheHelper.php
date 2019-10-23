@@ -57,6 +57,7 @@ class CacheHelper
         ];
 
         try {
+            /** @var Cache $cache */
             $cache = Cache::getInstance('callback', $options);
             $cache->clean();
         } catch (CacheExceptionInterface $e) {

@@ -285,7 +285,7 @@ abstract class AbstractObject extends \JObject
         $isNew = !$this->_exists;
 
         // Initialize table object.
-        $table = static::getTable ();
+        $table = static::getTable();
         $table->bind($this->getProperties());
 
         // Check the table object.
@@ -386,6 +386,9 @@ abstract class AbstractObject extends \JObject
         return true;
     }
 
+    /**
+     * @return Collection
+     */
     static public function getAvailableInstances()
     {
         return static::collection(static::$instances);

@@ -99,6 +99,9 @@ class Menu extends AbstractMenu
     {
         $groups = [];
 
+        // Works also in Joomla 4
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
         // Get the menu items.
         $items = \MenusHelper::getMenuLinks();
 

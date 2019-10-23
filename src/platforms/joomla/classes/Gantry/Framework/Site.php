@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 
@@ -21,6 +22,7 @@ class Site
 {
     public function __construct()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $document = $application->getDocument();
 

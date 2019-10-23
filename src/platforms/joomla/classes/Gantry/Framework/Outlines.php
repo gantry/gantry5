@@ -146,9 +146,9 @@ class Outlines extends OutlineCollection
         StyleHelper::update($style->id, $presetId);
 
         // Create configuration folder.
-        $id = parent::create($style->id, $title, $preset);
+        $newId = parent::create($style->id, $title, $preset);
 
-        if ($id != $style->id) {
+        if ($newId != $style->id) {
             throw new \RuntimeException(sprintf("Creating outline: folder '%s' already exists!", $style->id));
         }
 
