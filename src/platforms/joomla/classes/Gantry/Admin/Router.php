@@ -55,7 +55,7 @@ class Router extends BaseRouter
         $ajax = ($this->format === 'json');
 
         $this->params = [
-            'user' => Factory::getUser(),
+            'user' => $application->getIdentity(),
             'ajax' => $ajax,
             'location' => $this->resource,
             'method' => $this->method,

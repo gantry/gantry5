@@ -162,7 +162,10 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        if (!Factory::getUser()->guest) {
+        $application = Factory::getApplication();
+        $user = $application->getIdentity();
+
+        if ($user && !$user->guest) {
             return null;
         }
 
@@ -275,10 +278,11 @@ class Menu extends AbstractMenu
             return;
         }
 
-        $levels = Factory::getUser()->getAuthorisedViewLevels();
-        asort($levels);
-
         // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
+        // $application = Factory::getApplication();
+        //$user = $application->getIdentity();
+        //$levels = $user ? $user->getAuthorisedViewLevels() : [];
+        //asort($levels);
         //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
         //$cache = Factory::getCache('mod_menu', '');
         //try {

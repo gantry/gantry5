@@ -48,8 +48,11 @@ class AssignmentsMenu implements AssignmentsInterface
      */
     public function listRules($configuration)
     {
+        $application = Factory::getApplication();
+
         $data = $this->getMenulinks();
-        $userid = Factory::getUser()->id;
+        $user = $application->getIdentity();
+        $userid = $user ? $user->id : 0;
 
         $list = [];
 

@@ -65,10 +65,10 @@ class plgQuickiconGantry5 extends CMSPlugin
      */
     public function onGetIcons($context)
     {
-        $user = Factory::getUser();
+        $user = $this->app->getIdentity();
 
         if ($context !== $this->params->get('context', 'mod_quickicon')
-            || !$user->authorise('core.manage', 'com_gantry5')) {
+            || !$user || !$user->authorise('core.manage', 'com_gantry5')) {
             return null;
         }
 

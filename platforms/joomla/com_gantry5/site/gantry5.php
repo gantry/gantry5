@@ -12,9 +12,12 @@ defined('_JEXEC') or die;
 
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
+/** @var CMSApplication $application */
 $application = Factory::getApplication();
 
 // Detect Gantry Framework or fail gracefully.
@@ -59,6 +62,7 @@ $gantry = Gantry::instance();
 /** @var Theme $theme */
 $theme = $gantry['theme'];
 
+/** @var Registry $params */
 $params = $application->getParams();
 
 // Set page title.

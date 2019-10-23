@@ -259,12 +259,12 @@ class Platform extends BasePlatform
         $html = trim($renderer->render($module, $attribs));
 
         // Add frontend editing feature as it has only been defined for module positions.
-        $user = Factory::getUser();
+        $user = $application->getIdentity();
 
-        $frontEditing = ($application->isClient('site') && $application->get('frontediting', 1) && !$user->guest);
-        $menusEditing = ($application->get('frontediting', 1) == 2) && $user->authorise('core.edit', 'com_menus');
+        $frontEditing = ($application->isClient('site') && $application->get('frontediting', 1) && $user && !$user->guest);
+        $menusEditing = ($application->get('frontediting', 1) == 2) && $user && $user->authorise('core.edit', 'com_menus');
 
-        if (!$isGantry && $frontEditing && $html && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
+        if (!$isGantry && $frontEditing && $html && $user && $user->authorise('module.edit.frontend', 'com_modules.module.' . $module->id)) {
             $displayData = [
                 'moduleHtml' => &$html,
                 'module' => $module,
@@ -600,7 +600,11 @@ class Platform extends BasePlatform
      */
     public function authorize($action, $id = null)
     {
-        $user = Factory::getUser();
+        $application = Factory::getApplication();
+        $user = $application->getIdentity();
+        if (!$user) {
+            return false;
+        }
 
         switch ($action) {
             case 'platform.settings.manage':

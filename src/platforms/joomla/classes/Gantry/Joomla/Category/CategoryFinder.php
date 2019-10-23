@@ -131,9 +131,16 @@ class CategoryFinder extends Finder
             $this->where('a.id', 'NOT IN', $unpublished);
         }
 
+        $app = Factory::getApplication();
+
         // Check authorization.
-        $user = Factory::getUser();
-        $groups = $user->getAuthorisedViewLevels();
+        $user = $app->getIdentity();
+        $groups = $user ? $user->getAuthorisedViewLevels() : [];
+        if (!$groups) {
+            $this->skip = true;
+
+            return $this;
+        }
 
         return $this->where('a.access', 'IN', $groups);
     }

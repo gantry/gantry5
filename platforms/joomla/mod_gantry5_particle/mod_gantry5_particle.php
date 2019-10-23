@@ -18,7 +18,8 @@ use Joomla\CMS\Language\Text;
 
 // Detect Gantry Framework or fail gracefully.
 if (!class_exists('Gantry\Framework\Gantry')) {
-    Factory::getApplication()->enqueueMessage(
+    $app = Factory::getApplication();
+    $app->enqueueMessage(
         Text::sprintf('MOD_GANTRY5_PARTICLE_NOT_INITIALIZED', Text::_('MOD_GANTRY5_PARTICLE')),
         'warning'
     );

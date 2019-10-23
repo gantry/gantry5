@@ -118,10 +118,12 @@ class Assignments extends AbstractAssignments
             throw new \RuntimeException('Template style does not exist');
         }
 
-        $user = Factory::getUser();
+        $application = Factory::getApplication();
+
+        $user = $application->getIdentity();
         $n = 0;
 
-        if ($user->authorise('core.edit', 'com_menus')) {
+        if ($user && $user->authorise('core.edit', 'com_menus')) {
             $db   = Factory::getDbo();
 
             if (!empty($active)) {

@@ -65,8 +65,14 @@ class Theme extends AbstractTheme
         /** @var \Twig_Extension_Core $core */
         $core = $twig->getExtension('Twig_Extension_Core');
 
+        $application = Factory::getApplication();
+        $user = $application->getIdentity();
+
         // Get user timezone and if not set, use Joomla default.
-        $timezone = Factory::getUser()->getParam('timezone', Factory::getConfig()->get('offset', 'UTC'));
+        $timezone = Factory::getConfig()->get('offset', 'UTC');
+        if ($user) {
+            $timezone = $user->getParam('timezone', $timezone);
+        }
         $core->setTimezone(new \DateTimeZone($timezone));
 
         // Set locale for dates and numbers.

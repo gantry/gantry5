@@ -12,13 +12,14 @@ use Gantry\Admin\Router;
 use Gantry\Admin\Theme;
 use Gantry\Framework\Gantry;
 use Gantry\Joomla\StyleHelper;
+use Gantry5\Loader;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
 
 /**
  * Class JFormFieldParticle
- * TODO: Drop Joomla 3.9 compatibility
  */
 class JFormFieldParticle extends FormField
 {
@@ -31,6 +32,7 @@ class JFormFieldParticle extends FormField
      */
     protected function getInput()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         // Detect Gantry Framework or fail gracefully.
@@ -48,7 +50,7 @@ class JFormFieldParticle extends FormField
 
         // Initialize administrator or fail gracefully.
         try {
-            Gantry5\Loader::setup();
+            Loader::setup();
 
             $language = $application->getLanguage();
             $language->load('com_gantry5', JPATH_ADMINISTRATOR)

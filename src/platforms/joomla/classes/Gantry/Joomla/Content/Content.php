@@ -143,10 +143,11 @@ class Content extends AbstractObject
      */
     public function edit()
     {
-        $user = Factory::getUser();
+        $application = Factory::getApplication();
+        $user = $application->getIdentity();
         $asset = "com_content.article.{$this->id}";
 
-        if ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset)) {
+        if ($user && ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset))) {
             return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
         }
 
