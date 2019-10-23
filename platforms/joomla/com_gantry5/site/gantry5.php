@@ -10,8 +10,6 @@
 
 defined('_JEXEC') or die;
 
-// We are in Joomla 3.
-
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Joomla\CMS\Factory;
@@ -40,12 +38,20 @@ $menuItem = $menu->getActive();
 
 // Prevent direct access without menu item.
 if (!$menuItem) {
-    throw new JException(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+    // Joomla 3 support
+    if (class_exists(JException::class)) {
+        throw new JException(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
+    }
+    throw new Exception(Text::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'), 404);
 }
 
 // Handle non-html formats and error page.
 if (strtolower($input->getCmd('format', 'html')) !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
-    throw new JException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
+    // Joomla 3 support
+    if (class_exists(JException::class)) {
+        throw new JException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
+    }
+    throw new Exception(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
 }
 
 $gantry = Gantry::instance();

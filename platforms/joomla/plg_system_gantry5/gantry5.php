@@ -91,7 +91,6 @@ class plgSystemGantry5 extends CMSPlugin
         $global = $this->params->toArray();
     }
 
-
     /**
      * Document gets set during dispatch, we need language and direction.
      */

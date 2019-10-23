@@ -9,39 +9,76 @@
  */
 defined('_JEXEC') or die ();
 
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Component\Router\RouterView;
-use Joomla\CMS\Component\Router\RouterViewConfiguration;
-use Joomla\CMS\Component\Router\Rules\MenuRules;
-use Joomla\CMS\Component\Router\Rules\NomenuRules;
-use Joomla\CMS\Component\Router\Rules\StandardRules;
-use Joomla\CMS\Menu\AbstractMenu;
+use Joomla\CMS\Component\Router\RouterBase;
+use Joomla\CMS\Factory;
 
 /**
  * Class Gantry5Router
- *
- * FIXME: Joomla 4 logic missing
  */
-class Gantry5Router extends RouterView
+class Gantry5Router extends RouterBase
 {
     /**
-     * Search Component router constructor
+     * Build the route for the Gantry5 component
      *
-     * @param   CMSApplication  $app   The application object
-     * @param   AbstractMenu    $menu  The menu object to work with
+     * @param   array  &$query  An array of URL arguments
+     * @return  array  The URL arguments to use to assemble the subsequent URL.
      */
-    public function __construct($app = null, $menu = null)
+    public function build(&$query)
     {
-        $custom = new RouterViewConfiguration('custom');
-        $this->registerView($custom);
+        $segments = array();
 
-        $error = new RouterViewConfiguration('error');
-        $this->registerView($error);
+        unset($query['view']);
 
-        parent::__construct($app, $menu);
-
-        $this->attachRule(new MenuRules($this));
-        $this->attachRule(new StandardRules($this));
-        $this->attachRule(new NomenuRules($this));
+        return $segments;
     }
+
+    /**
+     * Parse the segments of a URL.
+     *
+     * @param   array  &$segments  The segments of the URL to parse.
+     * @return  array  The URL attributes to be used by the application.
+     */
+    public function parse(&$segments)
+    {
+        if ($segments) {
+            return array('g5_not_found' => 1);
+        }
+
+        return array();
+    }
+}
+
+/**
+ * Content router functions
+ *
+ * These functions are proxys for the new router interface
+ * for old SEF extensions.
+ *
+ * @param   array  &$query  An array of URL arguments
+ *
+ * @return  array  The URL arguments to use to assemble the subsequent URL.
+ */
+function Gantry5BuildRoute(&$query)
+{
+	$app = Factory::getApplication();
+	$router = new Gantry5Router($app, $app->getMenu());
+
+	return $router->build($query);
+}
+
+/**
+ * Parse the segments of a URL.
+ *
+ * This function is a proxy for the new router interface
+ * for old SEF extensions.
+ *
+ * @param   array  $segments  The segments of the URL to parse.
+ * @return  array  The URL attributes to be used by the application.
+ */
+function Gantry5ParseRoute($segments)
+{
+	$app = Factory::getApplication();
+	$router = new Gantry5Router($app, $app->getMenu());
+
+	return $router->parse($segments);
 }

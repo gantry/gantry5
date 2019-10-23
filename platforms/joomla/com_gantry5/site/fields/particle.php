@@ -18,7 +18,7 @@ use Joomla\CMS\Form\FormField;
 
 /**
  * Class JFormFieldParticle
- * FIXME: Joomla 4: Class name?
+ * TODO: Drop Joomla 3.9 compatibility
  */
 class JFormFieldParticle extends FormField
 {
