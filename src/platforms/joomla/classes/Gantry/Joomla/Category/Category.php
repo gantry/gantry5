@@ -14,6 +14,7 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Router\Route;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 /**
  * Class Category
@@ -76,10 +77,15 @@ class Category extends AbstractObject
      */
     public function route()
     {
-        // FIXME: Joomla 4
-        require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+        if (version_compare(JVERSION, '4.0', '<')) {
+            require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
-        return Route::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
+            return Route::_(\ContentHelperRoute::getCategoryRoute($this->id . ':' . $this->alias), false);
+        }
+
+        require_once JPATH_SITE . '/components/com_content/Helper/RouteHelper.php';
+
+        return Route::_(RouteHelper::getCategoryRoute($this->id . ':' . $this->alias), false);
     }
 
     /**

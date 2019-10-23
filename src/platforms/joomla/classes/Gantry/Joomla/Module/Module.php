@@ -18,7 +18,6 @@ use Joomla\CMS\Table\Table;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 
-// FIXME: Joomla 4
 Table::addIncludePath(JPATH_LIBRARIES . '/legacy/table/');
 
 /**
@@ -44,7 +43,7 @@ class Module extends AbstractObject implements ExportInterface
 
     static protected $table = 'Module';
     static protected $order = 'id';
-    
+
     protected $_assignments;
 
     /**
@@ -64,7 +63,7 @@ class Module extends AbstractObject implements ExportInterface
 
             $this->_assignments = array_map('intval', (array) $db->loadColumn());
         }
-        
+
         return $this->_assignments;
     }
 

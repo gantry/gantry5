@@ -80,7 +80,7 @@ class AssignmentsMenu implements AssignmentsInterface
      */
     protected function getMenulinks()
     {
-        // FIXME: Joomla 4
+        // Works also in Joomla 4
         require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
 
         return \MenusHelper::getMenuLinks();

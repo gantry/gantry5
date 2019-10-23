@@ -81,9 +81,10 @@ class Menu extends AbstractMenu
         static $items;
 
         if ($items === null) {
-            // FIXME: Joomla 4
+            // Works also in Joomla 4
             require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-            $items = (array) \MenusHelper::getMenuTypes();
+
+            $items = (array)\MenusHelper::getMenuTypes();
         }
 
         return $items;

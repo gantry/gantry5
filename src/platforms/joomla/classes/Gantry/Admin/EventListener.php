@@ -17,6 +17,7 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
 use Gantry\Joomla\MenuHelper;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
@@ -261,8 +262,10 @@ class EventListener implements EventSubscriberInterface
     {
         PluginHelper::importPlugin('gantry5');
 
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
         // Trigger the onGantryThemeInit event.
-        $application = Factory::getApplication();
-        $application->triggerEvent($eventName, $args);
+        $app->triggerEvent($eventName, $args);
     }
 }

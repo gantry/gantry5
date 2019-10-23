@@ -10,6 +10,7 @@
 
 namespace Gantry\Joomla;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Cache\Exception\CacheExceptionInterface;
 use Joomla\CMS\Factory;
@@ -62,8 +63,10 @@ class CacheHelper
             $options['result'] = false;
         }
 
-        // Trigger the onContentCleanCache event.
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
+
+        // Trigger the onContentCleanCache event.
         $application->triggerEvent($event, $options);
     }
 }

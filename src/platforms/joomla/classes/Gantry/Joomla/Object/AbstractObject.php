@@ -10,6 +10,7 @@
 
 namespace Gantry\Joomla\Object;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
@@ -293,13 +294,13 @@ abstract class AbstractObject extends \JObject
             return false;
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         // Include the content plugins for the on save events.
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
-        // FIXME: Joomla 4
         $result = $application->triggerEvent('onContentBeforeSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
@@ -322,7 +323,6 @@ abstract class AbstractObject extends \JObject
         }
 
         // Trigger the onContentAfterSave event.
-        // FIXME: Joomla 4
         $application->triggerEvent('onContentAfterSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
 
         return true;
@@ -347,13 +347,13 @@ abstract class AbstractObject extends \JObject
         $table = static::getTable();
         $table->bind($this->getProperties());
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         // Include the content plugins for the on save events.
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
-        // FIXME: Joomla 4
         $result = $application->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . get_called_class(), $table]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
@@ -367,7 +367,6 @@ abstract class AbstractObject extends \JObject
         $this->_exists = false;
 
         // Trigger the onContentAfterDelete event.
-        // FIXME: Joomla 4
         $application->triggerEvent('onContentAfterDelete', ['com_gantry5.' . get_called_class(), $table]);
 
         return true;
@@ -449,7 +448,6 @@ abstract class AbstractObject extends \JObject
      */
     static protected function getTable()
     {
-        // FIXME: Joomla 4
         return Table::getInstance(static::$table, static::$tablePrefix);
     }
 

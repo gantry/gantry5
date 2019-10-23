@@ -175,7 +175,6 @@ class Theme extends AbstractTheme
         PluginHelper::importPlugin('gantry5');
 
         // Trigger the onGantryThemeInit event.
-        // FIXME: Joomla 4?
         $application->triggerEvent('onGantry5ThemeInit', ['theme' => $this]);
     }
 

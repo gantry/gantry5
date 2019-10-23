@@ -279,11 +279,13 @@ class Exporter
      */
     public function getOutlineAssignments($configuration)
     {
-        // FIXME: Joomla 4
-        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
         $app = CMSApplication::getInstance('site');
         $menu = $app->getMenu();
-        $data = \MenusHelper::getMenuLinks();
+
+        // Works also in Joomla 4
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
+        $data = (array)\MenusHelper::getMenuTypes();
 
         $items = [];
         foreach ($data as $item) {

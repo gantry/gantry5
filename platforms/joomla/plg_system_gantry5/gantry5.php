@@ -64,7 +64,6 @@ class plgSystemGantry5 extends CMSPlugin
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
-        // FIXME: Joomla 4
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
 
         // Detect Gantry Framework or fail gracefully.
@@ -175,7 +174,6 @@ class plgSystemGantry5 extends CMSPlugin
 
             $id = $matches[1];
 
-            // FIXME: Joomla 4
             require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
 
             return ModGantry5ParticleHelper::ajax($id, $props, $format);

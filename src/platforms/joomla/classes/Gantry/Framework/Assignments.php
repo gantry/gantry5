@@ -106,7 +106,6 @@ class Assignments extends AbstractAssignments
         $active = array_keys($active);
 
         // Detect disabled template.
-        // FIXME: Joomla 4
         $extension = Table::getInstance('Extension');
 
         $template = Gantry::instance()['theme.name'];

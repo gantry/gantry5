@@ -10,6 +10,7 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
 class Gantry extends Base\Gantry
@@ -59,9 +60,11 @@ class Gantry extends Base\Gantry
     {
         $global = null;
 
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
         // Trigger the event.
-        // FIXME: Joomla 4: check this out
-        Factory::getApplication()->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
+        $app->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
 
         return $global;
     }
