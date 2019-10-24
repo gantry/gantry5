@@ -62,6 +62,9 @@ class plgSystemGantry5 extends CMSPlugin
             $this->app = Factory::getApplication();
         }
 
+        // In Joomla 3.9 we need to make sure that user identity has been loaded.
+        $this->app->loadIdentity();
+
         $this->loadLanguage('plg_system_gantry5.sys');
 
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
