@@ -1,3 +1,10 @@
+# 5.4.32
+## mm/dd/2019
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
+
 # 5.4.31
 ## 10/04/2019
 

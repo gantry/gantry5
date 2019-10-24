@@ -13,6 +13,7 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
 
 class AssignmentsPage implements AssignmentsInterface
@@ -60,8 +61,12 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
-        // Initialize pages.
-        $pages = $grav['pages']->all()->routable();
+        /** @var Pages $pages */
+        $pages = $grav['pages'];
+
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        $pages->enablePages();
+        $pages = $pages->all()->routable();
 
         $items = [];
 
