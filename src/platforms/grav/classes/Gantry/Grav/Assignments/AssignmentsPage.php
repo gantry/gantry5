@@ -65,7 +65,9 @@ class AssignmentsPage implements AssignmentsInterface
         $pages = $grav['pages'];
 
         // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
-        $pages->enablePages();
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
         $pages = $pages->all()->routable();
 
         $items = [];
