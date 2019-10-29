@@ -74,7 +74,7 @@ class AssignmentsPage implements AssignmentsInterface
 
         /** @var Page $page */
         foreach ($pages as $page) {
-            $route = trim($page->route(), '/');
+            $route = trim($page->rawRoute(), '/');
             $items[] = [
                 'name' => $route,
                 'disabled' => !$page->isPage(),
