@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.4" type="plugin" group="gantry5" method="upgrade">
+<extension version="3.9" type="plugin" group="gantry5" method="upgrade">
     <name>plg_gantry5_preset</name>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>

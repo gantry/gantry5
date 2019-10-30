@@ -17,7 +17,7 @@
 		<maintainer>RocketTheme, LLC</maintainer>
 		<maintainerurl>http://gantry.org</maintainerurl>
 		<section>Updates</section>
-		<targetplatform name="joomla" version="3.[89]|4.0"/>
+		<targetplatform name="joomla" version="3.9|4.0"/>
 		<php_minimum>5.6.0</php_minimum>
 	</update>
 </updates>

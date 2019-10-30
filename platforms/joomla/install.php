@@ -21,11 +21,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.6' => '5.6.0',
-            '0' => '7.2.19' // Preferred version
+            '0' => '7.3.11' // Preferred version
         ),
         'Joomla!' => array (
-            '3.8' => '3.8.0',
-            '0' => '3.9.8' // Preferred version
+            '3.9' => '3.9.0',
+            '0' => '3.9.12' // Preferred version
         )
     );
     /**
@@ -156,8 +156,7 @@ class Pkg_Gantry5InstallerScript
                 continue;
             }
 
-            // Joomla 3.7 added a new package protection feature: only use individual protection in older versions.
-            $extension->protected = version_compare(JVERSION, '3.7', '<') ? $state : 0;
+            $extension->protected = 0;
 
             if (isset($attributes->enabled)) {
                 $extension->enabled = $state ? (int) $attributes->enabled : 0;
