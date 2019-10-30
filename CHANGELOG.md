@@ -5,20 +5,25 @@
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
-        - Updated SCSS compiler to v1.0.5
+        - Updated SCSS compiler to v1.0
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
         - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes/gantry5.php` to your theme!)
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated minimum requirement to WordPress 5.0
+        - Updated minimum requirement to WordPress 5.1
 1. [Grav](#grav)
     1. [](#new)
-        - Updated minimum requirement to Grav 1.5 and Admin 1.8
+        - Updated minimum requirement to Grav 1.6 and Admin 1.9
 
-# 5.4.30
+# 5.4.32
 ## mm/dd/2019
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
+
 # 5.4.31
 ## 10/04/2019
 
