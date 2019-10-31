@@ -148,4 +148,16 @@ class ContentFinder extends Finder
             }
         }
     }
+
+    public function tags($tagIds = [])
+    {
+        if (empty($tagIds['id'][0])) {
+            return $this;
+        }
+
+        $tagIdsArray = $tagIds['id'][0];
+        $this->query->join('INNER', '#__contentitem_tag_map AS t ON t.content_item_id  = a.id');
+
+        return $this->where('t.tag_id', 'IN', $tagIdsArray);
+    }
 }
