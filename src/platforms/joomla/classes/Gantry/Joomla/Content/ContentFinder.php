@@ -156,7 +156,7 @@ class ContentFinder extends Finder
         }
 
         $tagIdsArray = array_map('intval', $tagIds['id'][0]);
-        $this->query->join('INNER', '#__contentitem_tag_map AS t ON t.content_item_id  = a.id');
+        $this->query->join('INNER', '#__contentitem_tag_map AS t ON t.content_item_id = a.id');
 
         return $this->where('t.tag_id', 'IN', $tagIdsArray)->where('t.type_alias', '=', 'com_content.article');
     }
