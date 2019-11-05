@@ -42,7 +42,7 @@
                         {% endif %}
                         {%- if font.subsets|length > 1 -%}
                         , <span class="font-charsets">{{ 'GANTRY5_PLATFORM_FONTS_X_CHARSETS'|trans(font.subsets|length) }}
-                            <span class="font-charsets-selected">(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>
+                            <span class="font-charsets-selected">(<i class="fa fa-fw fa-check-square-o fa-check-square" aria-hidden="true"></i>
                                 <span class="font-charsets-details">{{ 'GANTRY5_PLATFORM_FONTS_X_OF_Y'|trans(1, font.subsets|length) }}</span>
                                 {{ 'GANTRY5_PLATFORM_FONTS_SELECTED'|trans }})
                             </span>

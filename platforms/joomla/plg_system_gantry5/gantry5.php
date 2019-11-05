@@ -41,6 +41,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class plgSystemGantry5 extends CMSPlugin
 {
+    protected $autoloadLanguage = true;
+
     /** @var CMSApplication */
     protected $app;
     protected $styles;
@@ -95,12 +97,12 @@ class plgSystemGantry5 extends CMSPlugin
      */
     public function onAfterDispatch()
     {
-        if (version_compare(JVERSION, '4.0', '<')) {
-            // In Joomla 3.9 we need to make sure that user identity has been loaded.
-            $this->app->loadIdentity();
-        }
-
         if (class_exists('Gantry\Framework\Gantry')) {
+            if (version_compare(JVERSION, '4.0', '<')) {
+                // In Joomla 3.9 we need to make sure that user identity has been loaded.
+                $this->app->loadIdentity();
+            }
+
             $this->onAfterDispatchSiteAdmin();
         }
     }
