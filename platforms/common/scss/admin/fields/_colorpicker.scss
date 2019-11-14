@@ -1,6 +1,7 @@
 #g5-container {
     .g-colorpicker {
         @extend %g-transparent-bg;
+        display: inline-block;
         position: relative;
         border-radius: $core-border-radius;
         max-width: 100%;

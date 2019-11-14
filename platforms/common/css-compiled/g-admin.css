@@ -3008,7 +3008,6 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   transition: opacity 0.2s ease-in-out;
 }
 #g5-container .settings-block .settings-param-field .input-group .g-reset-field {
-  display: table-cell;
   vertical-align: middle;
   padding-left: 4px;
 }
@@ -4122,7 +4121,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   z-index: 2;
 }
 #g5-container .input-group input, #g5-container .input-group-addon, #g5-container .input-group-btn {
-  display: table-cell;
+  display: inline-block;
 }
 #g5-container .input-group-addon:first-child {
   border-right: 0 none;
@@ -4135,7 +4134,7 @@ i.fa-gantry, i.fa-gantry-logo, i.fa-gantry-symbol, i.fa-gantry-logo-both, i.fa-g
   vertical-align: middle;
 }
 #g5-container .input-group-addon {
-  padding: 6px 0;
+  padding: 8px 0;
   width: 42px;
   font-size: 0.9rem;
   font-weight: 400;
@@ -6401,6 +6400,7 @@ html.g5-dialog-open {
   /* Default theme */
 }
 #g5-container .g-colorpicker {
+  display: inline-block;
   position: relative;
   border-radius: 0.1875rem;
   max-width: 100%;
