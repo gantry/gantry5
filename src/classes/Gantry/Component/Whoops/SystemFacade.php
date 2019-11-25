@@ -46,11 +46,6 @@ class SystemFacade extends \Whoops\Util\SystemFacade
      */
     public function setErrorHandler(callable $handler, $types = 'use-php-defaults')
     {
-        // Workaround for PHP 5.5
-        if ($types === 'use-php-defaults') {
-            $types = E_ALL | E_STRICT;
-        }
-
         $this->whoopsErrorHandler = $handler;
 
         return parent::setErrorHandler([$this, 'handleError'], $types);

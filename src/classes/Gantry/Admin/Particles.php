@@ -55,12 +55,10 @@ class Particles
         $locator = $this->container['locator'];
 
         if ($particle) {
-            // PHP 5.4
             $resource = $locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml");
             return !empty($resource);
         }
 
-        // PHP 5.4
         $resource = $locator->findResources("gantry-theme://config/{$outline}/particles");
         return !empty($resource);
     }

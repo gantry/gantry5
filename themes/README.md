@@ -10,4 +10,3 @@ Every platform (excluding common) has '''scss.sh''' script which runs in the bac
 ## prime/ - Our prime development and testing platform.
 
 Gantry prime template which can be used to develop the template as it should contain enough test pages to get the general look done, but also to allow us to do general, platform independent testing. Could contain a collection of static pages made with simple php, html and yaml.
-    

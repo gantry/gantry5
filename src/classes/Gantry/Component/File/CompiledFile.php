@@ -113,9 +113,6 @@ trait CompiledFile
                         if (function_exists('opcache_invalidate')) {
                             // Silence error in case if `opcache.restrict_api` directive is set.
                             @opcache_invalidate($file->filename(), true);
-                        } elseif (function_exists('apc_compile_file')) {
-                            // PHP 5.4
-                            @apc_compile_file($file->filename());
                         }
                     }
                 }
