@@ -57,7 +57,7 @@ abstract class Finder
 
         $this->db = \JFactory::getDbo();
         $this->query = $this->db->getQuery(true);
-        $this->query->from($this->table . ' AS a');
+        $this->query->from($this->quoteName($this->table, 'a'));
 
         if ($options) {
             $this->parse($options);
@@ -124,7 +124,7 @@ abstract class Finder
         } else {
             $direction = strtolower((string)$direction) == 'desc' ? 'DESC' : 'ASC';
         }
-        $by = (string)$alias . '.' . $this->quoteName($by);
+        $by = $this->quoteName((string)$alias) . '.' . $this->quoteName($by);
         $this->query->order("{$by} {$direction}");
 
         return $this;
@@ -224,21 +224,27 @@ abstract class Finder
     /**
      * Quote value.
      *
+     * @param  mixed         $text        A string or an array of strings to quote.
+     * @param  boolean       $escape      True to escape the string, false to leave it unchanged.
+     *
      * @return string
      */
-    protected function quote($value)
+    protected function quote($text, $escape = true)
     {
-        return $this->db->quote($value);
+        return $this->db->quote($text, $escape);
     }
     
     /**
      * Quote name.
      *
+     * @param  mixed         $name        The name to wrap in quotes.
+     * @param  mixed         $as          The AS query part associated to $name.
+     *
      * @return string
      */
-    protected function quoteName($value)
+    protected function quoteName($name, $as = null)
     {
-        return $this->db->quoteName($value);
+        return $this->db->quoteName($name, $as);
     }
     
     /**
@@ -254,7 +260,6 @@ abstract class Finder
         array_walk($value, function (&$value) { $value = (string)(int)$value === (string)$value ? (int)$value : $this->quote($value); });
         return '(' . implode(',', $value) . ')';
     }
-    
 
     /**
      * Override to include common where rules.

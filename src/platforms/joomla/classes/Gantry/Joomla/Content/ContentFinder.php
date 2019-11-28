@@ -117,7 +117,8 @@ class ContentFinder extends Finder
 
         $groups = $user->getAuthorisedViewLevels();
 
-        $this->query->join('INNER', '#__categories AS c ON c.id = a.catid');
+        $this->query->join('INNER', $this->quoteName('#__categories', 'c') 
+                           . ' ON c.id = a.catid');
 
         return $this->where('a.access', 'IN', $groups)->where('c.access', 'IN', $groups);
     }
@@ -157,12 +158,15 @@ class ContentFinder extends Finder
         // match any tag id a/o title
         } else {
 
-            $this->query->join('INNER', '#__contentitem_tag_map AS tm ON tm.content_item_id = a.id');
+            $this->query->join('INNER', $this->quoteName('#__contentitem_tag_map', 'tm') 
+                               . ' ON tm.content_item_id = a.id');
 
             // check if tag title exists for article
             if (!is_null($tagTitles)) {
-                $this->query->join('INNER', '#__tags AS ta ON tm.tag_id = ta.id');
-                $condition .= "{$this->quoteName('ta.title')} IN {$this->toQuotedList($tagTitles)}";
+                $this->query->join('INNER', $this->quoteName('#__tags', 'ta') 
+                                   . ' ON tm.tag_id = ta.id');
+                
+                $condition .= "ta.title IN {$this->toQuotedList($tagTitles)}";
             }
 
             // check if tag id exists for article
@@ -171,7 +175,7 @@ class ContentFinder extends Finder
                     $condition .= ' OR ';
                 }
                 
-                $condition .= "{$this->quoteName('tm.tag_id')} IN {$this->toQuotedList($tagIds)}";
+                $condition .= "tm.tag_id IN {$this->toQuotedList($tagIds)}";
             }
 
             $this->query->where($condition);
@@ -193,24 +197,28 @@ class ContentFinder extends Finder
     protected function tagsCountSubQuery($tags = [], $ids = false)
     {
         // build up sub query for tag count
-        $subQuery = $this->db->getQuery(true)->select('COUNT(tm_s.tag_id)')->from($this->table . ' AS a_s');
-        $subQuery->join('INNER', '#__contentitem_tag_map AS tm_s ON tm_s.content_item_id = a_s.id');
+        $subQuery = $this->db->getQuery(true)->select('COUNT(tm_s.tag_id)');
+        $subQuery->from($this->quoteName($this->table, 'a_s'));
+
+        $subQuery->join('INNER', $this->quoteName('#__contentitem_tag_map', 'tm_s')
+                        . ' ON tm_s.content_item_id = a_s.id');
         
         if (!$ids) {
-            $subQuery->join('INNER', '#__tags AS ta_s ON tm_s.tag_id = ta_s.id');
+            $subQuery->join('INNER',  $this->quoteName('#__tags', 'ta_s')
+                            . ' ON tm_s.tag_id = ta_s.id');
         }
         
         // the referenced article has to match
-        $subQuery->where("{$this->quoteName('a_s.id')} = {$this->quoteName('a.id')}");
+        $subQuery->where("a_s.id = a.id");
         
         // check for tag ids or tag titles
         if ($ids) {
-            $subQuery->where("{$this->quoteName('tm_s.tag_id')} IN {$this->toQuotedList($tags)}");
+            $subQuery->where("tm_s.tag_id IN {$this->toQuotedList($tags)}");
         } else {
-            $subQuery->where("{$this->quoteName('ta_s.title')} IN {$this->toQuotedList($tags)}");
+            $subQuery->where("ta_s.title IN {$this->toQuotedList($tags)}");
         }
         
-        return $subQuery->where("{$this->quoteName('tm_s.type_alias')} = {$this->quote('com_content.article')}");
+        return $subQuery->where("tm_s.type_alias = {$this->quote('com_content.article')}");
     }
 
     protected function addToGroup($key, $ids, $include = true)
