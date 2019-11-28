@@ -136,7 +136,6 @@ class ContentFinder extends Finder
         // generalize input
         $tagTitles = $this->toArray($tagTitles);
         $tagIds = $this->toArray($tagIds);
-        
 
         // match all tag ids a/o titles
         if ($matchAll){
