@@ -124,7 +124,7 @@ abstract class Finder
         } else {
             $direction = strtolower((string)$direction) == 'desc' ? 'DESC' : 'ASC';
         }
-        $by = (string)$alias . '.' . $this->db->quoteName($by);
+        $by = (string)$alias . '.' . $this->quoteName($by);
         $this->query->order("{$by} {$direction}");
 
         return $this;
@@ -141,7 +141,6 @@ abstract class Finder
      */
     public function where($field, $operation, $value)
     {
-        $db = $this->db;
         $operation = strtoupper($operation);
         switch ($operation)
         {
@@ -151,16 +150,16 @@ abstract class Finder
             case '<=':
             case '=':
                 // Quote all non integer values.
-                $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value);
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$value}");
+                $value = (string)(int)$value === (string)$value ? (int)$value : $this->quote($value);
+                $this->query->where("{$this->quoteName($field)} {$operation} {$value}");
                 break;
             case 'BETWEEN':
             case 'NOT BETWEEN':
                 list($a, $b) = (array) $value;
                 // Quote all non integer values.
-                $a = (string)(int)$a === (string)$a ? (int)$a : $db->quote($a);
-                $b = (string)(int)$b === (string)$b ? (int)$b : $db->quote($b);
-                $this->query->where("{$this->db->quoteName($field)} {$operation} {$a} AND {$b}");
+                $a = (string)(int)$a === (string)$a ? (int)$a : $this->quote($a);
+                $b = (string)(int)$b === (string)$b ? (int)$b : $this->quote($b);
+                $this->query->where("{$this->quoteName($field)} {$operation} {$a} AND {$b}");
                 break;
             case 'IN':
             case 'NOT IN':
@@ -169,10 +168,7 @@ abstract class Finder
                     // WHERE field IN (nothing).
                     $this->query->where('0');
                 } else {
-                    // Quote all non integer values.
-                    array_walk($value, function (&$value) use ($db) { $value = (string)(int)$value === (string)$value ? (int)$value : $db->quote($value); });
-                    $list = implode(',', $value);
-                    $this->query->where("{$this->db->quoteName($field)} {$operation} ({$list})");
+                    $this->query->where("{$this->quoteName($field)} {$operation} {$this->toQuotedList($value)}");
                 }
                 break;
         }
@@ -224,6 +220,41 @@ abstract class Finder
 
         return $count;
     }
+    
+    /**
+     * Quote value.
+     *
+     * @return string
+     */
+    protected function quote($value)
+    {
+        return $this->db->quote($value);
+    }
+    
+    /**
+     * Quote name.
+     *
+     * @return string
+     */
+    protected function quoteName($value)
+    {
+        return $this->db->quoteName($value);
+    }
+    
+    /**
+     * Quote all non integer values and return as string in the form
+     * (int1, int2, int3) or ('string1', 'string2', 'string3').
+     *
+     * @param  string|array  $value       Value.
+     *
+     * @return string
+     */
+    protected function toQuotedList($value)
+    {
+        array_walk($value, function (&$value) { $value = (string)(int)$value === (string)$value ? (int)$value : $this->quote($value); });
+        return '(' . implode(',', $value) . ')';
+    }
+    
 
     /**
      * Override to include common where rules.
