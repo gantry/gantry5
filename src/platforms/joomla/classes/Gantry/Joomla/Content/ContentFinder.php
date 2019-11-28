@@ -140,7 +140,7 @@ class ContentFinder extends Finder
         // match all tag ids a/o titles
         if ($matchAll){
             
-            //build up sub query and check for count
+            //build up sub query with check for count
             if(!is_null($tagTitles)) {
                 $condition .=  "({$this->tagsCountSubQuery($tagTitles)}) >= " . count($tagTitles);
             }
@@ -170,8 +170,7 @@ class ContentFinder extends Finder
                 if(strlen($condition) > 0){
                     $condition .= ' OR ';
                 }
-
-                array_map('intval', $tagIds);
+                
                 $condition .= "{$this->quoteName('tm.tag_id')} IN {$this->toQuotedList($tagIds)}";
             }
 
