@@ -55,13 +55,8 @@ class ContentFinder extends Finder
     }
 
     public function category($ids, $include = true)
-    {
-        if ($ids instanceof Collection) {
-            $ids = $ids->toArray();
-        } else {
-            $ids = (array)$ids;
-        }
-
+    {   
+        $ids = $this->toArray($ids);
         array_walk($ids, function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
 
         return $this->addToGroup('a.catid', $ids, $include);
@@ -129,14 +124,19 @@ class ContentFinder extends Finder
     
     public function tags($tags = [], $matchAll = false)
     {
-        $tagTitles = !empty($tags['title'][0]) ? $tags['title'][0] : NULL;
-        $tagIds = !empty($tags['id'][0]) ? $tags['id'][0] : NULL;
+        $tagTitles = !empty($tags['titles']) ? $tags['titles'] : NULL;
+        $tagIds = !empty($tags['ids']) ? $tags['ids'] : NULL;
         $condition = '';
         $result = $this;
         
         if (is_null($tagTitles) && is_null($tagIds)) {
             return $result;
         }
+        
+        // generalize input
+        $tagTitles = $this->toArray($tagTitles);
+        $tagIds = $this->toArray($tagIds);
+        
 
         // match all tag ids a/o titles
         if ($matchAll){
@@ -226,6 +226,16 @@ class ContentFinder extends Finder
         }
 
         return $this;
+    }
+    
+    protected function toArray($values){
+        if (is_null($values)) {
+            return $values;
+        } elseif ($values instanceof Collection) {
+            return $values->toArray();
+        } else {
+            return (array)$values;
+        }
     }
 
     protected function prepare()
