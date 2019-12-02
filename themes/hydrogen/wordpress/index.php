@@ -34,7 +34,7 @@ $context['posts'] = Timber::get_posts();
 
 $templates = ['index.html.twig'];
 
-if (is_home()) {
+if (\is_home()) {
     array_unshift($templates, 'home.html.twig');
 }
 

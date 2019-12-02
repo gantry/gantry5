@@ -8,7 +8,9 @@ class_exists('\\Gantry\\Framework\\Gantry') or die;
 class GantryTheme extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.
-$gantry['platform']->set(
+/** @var \Gantry\Framework\Platform $platform */
+$platform = $gantry['platform'];
+$platform->set(
     'streams.gantry-theme.prefixes',
     ['' => [
         "gantry-custom://",
@@ -17,7 +19,7 @@ $gantry['platform']->set(
         ]
     ]
 );
-$gantry['platform']->set(
+$platform->set(
     'streams.gantry-custom.prefixes',
     ['' => [
         "gantry-prime://custom/{$gantry['theme.name']}",
@@ -26,6 +28,6 @@ $gantry['platform']->set(
 );
 
 // Define Gantry services.
-$gantry['theme'] = function($c)  {
+$gantry['theme'] = static function($c)  {
     return new GantryTheme($c['theme.path'], $c['theme.name']);
 };

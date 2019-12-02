@@ -94,6 +94,8 @@ class G5_HydrogenInstallerScript
         }
 
         $installer->finalize();
+
+        return true;
     }
 
     /**

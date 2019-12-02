@@ -94,6 +94,8 @@ class G5_BaseInstallerScript
         }
 
         $installer->finalize();
+
+        return true;
     }
 
     /**

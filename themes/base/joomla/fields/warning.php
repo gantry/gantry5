@@ -32,5 +32,7 @@ class JFormFieldWarning extends JFormField
         } else {
             $app->enqueueMessage(Text::_('GANTRY5_THEME_FRONTEND_SETTINGS_DISABLED'), 'warning');
         }
+
+        return '';
     }
 }

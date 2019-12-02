@@ -17,9 +17,9 @@ defined('ABSPATH') or die;
 $requiredGantryVersion = '5.5';
 
 // Bootstrap Gantry framework or fail gracefully.
-$gantry_include = get_stylesheet_directory() . '/includes/gantry.php';
+$gantry_include = \get_stylesheet_directory() . '/includes/gantry.php';
 if (!file_exists($gantry_include)) {
-    $gantry_include = get_template_directory() . '/includes/gantry.php';
+    $gantry_include = \get_template_directory() . '/includes/gantry.php';
 }
 $gantry = include_once $gantry_include;
 
@@ -28,15 +28,15 @@ if (!$gantry) {
 }
 
 if (!$gantry->isCompatible($requiredGantryVersion)) {
-    $current_theme = wp_get_theme();
-    $error = sprintf(__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', 'g5_hydrogen'), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
+    $current_theme = \wp_get_theme();
+    $error = sprintf(\__('Please upgrade Gantry 5 Framework to v%s (or later) before using %s theme!', 'g5_hydrogen'), strtoupper($requiredGantryVersion), $current_theme->get('Name'));
 
-    if(is_admin()) {
-        add_action('admin_notices', function () use ($error) {
+    if(\is_admin()) {
+        \add_action('admin_notices', static function () use ($error) {
             echo '<div class="error"><p>' . $error . '</p></div>';
         });
     } else {
-        wp_die($error);
+        \wp_die($error);
     }
 }
 
@@ -49,8 +49,8 @@ $helpers = array(
 );
 
 foreach ($helpers as $file) {
-    if (!$filepath = locate_template($file)) {
-        trigger_error(sprintf(__('Error locating %s for inclusion', 'g5_hydrogen'), $file), E_USER_ERROR);
+    if (!$filepath = \locate_template($file)) {
+        trigger_error(sprintf(\__('Error locating %s for inclusion', 'g5_hydrogen'), $file), E_USER_ERROR);
     }
 
     require $filepath;

@@ -22,7 +22,7 @@ $context = Timber::get_context();
 $post            = new \Timber\Post();
 $context['post'] = $post;
 
-if (post_password_required($post)) {
+if (\post_password_required($post)) {
     return;
 }
 

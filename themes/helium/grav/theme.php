@@ -53,9 +53,9 @@ class G5_Helium extends Theme
                 $messages = $this->grav['messages'];
                 $messages->add('Please enable Gantry 5 plugin in order to use current theme!', 'error');
                 return;
-            } else {
-                throw new \LogicException('Please install and enable Gantry 5 Framework plugin!');
             }
+
+            throw new \LogicException('Please install and enable Gantry 5 Framework plugin!');
         }
 
         // Setup Gantry 5 Framework or throw exception.
@@ -72,7 +72,7 @@ class G5_Helium extends Theme
         require $locator('theme://includes/theme.php');
 
         // Define Gantry services.
-        $gantry['theme'] = function ($c) {
+        $gantry['theme'] = static function ($c) {
             return new \Gantry\Theme\G5_Helium($c['theme.path'], $c['theme.name']);
         };
     }

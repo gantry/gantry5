@@ -33,7 +33,7 @@ $context['posts'] = Timber::get_posts();
 if (isset($authordata)) {
     $author            = new \Timber\User($authordata->ID);
     $context['author'] = $author;
-    $context['title']  = __('Author:', 'g5_hydrogen') . ' ' . $author->name();
+    $context['title']  = \__('Author:', 'g5_hydrogen') . ' ' . $author->name();
 }
 
 Timber::render(['author.html.twig', 'archive.html.twig', 'index.html.twig'], $context);
