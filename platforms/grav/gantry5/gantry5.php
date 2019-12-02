@@ -78,8 +78,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onBeforeCacheClear(Event $event)
     {
-        // TODO: remove BC to 1.1.9-rc.3
-        $remove = isset($event['remove']) ? $event['remove'] : 'standard';
+        $remove = $event['remove'];
         $paths = $event['paths'];
 
         if (in_array($remove, ['all', 'standard', 'cache-only'], true) && !in_array('cache://', $paths, true)) {
@@ -95,7 +94,7 @@ class Gantry5Plugin extends Plugin
     {
         /** @var ClassLoader $loader */
         $loader = $this->grav['loader'];
-        $loader->addClassMap(['Gantry5\\Loader' => __DIR__ . '/src/Loader.php']);
+        $loader->addClassMap([Loader::class => __DIR__ . '/src/Loader.php']);
 
         include_once __DIR__ . '/Debugger.php';
 
@@ -130,7 +129,7 @@ class Gantry5Plugin extends Plugin
         }
 
         // Setup Gantry 5 Framework or throw exception.
-        \Gantry5\Loader::setup();
+        Loader::setup();
 
         if (!defined('GANTRYADMIN_PATH')) {
             define('GANTRYADMIN_PATH', 'plugins://gantry5/admin');
@@ -166,7 +165,7 @@ class Gantry5Plugin extends Plugin
      */
     public function initializeGantryTheme()
     {
-        if (!class_exists('Gantry\Framework\Gantry')) {
+        if (!class_exists(Gantry::class)) {
             return;
         }
 
@@ -235,8 +234,10 @@ class Gantry5Plugin extends Plugin
             ]);
         }
 
-        if ($gantry['global']->get('asset_timestamps', 1)) {
-            $age = (int) ($gantry['global']->get('asset_timestamps_period', 7) * 86400);
+        /** @var Config $global */
+        $global = $gantry['global'];
+        if ($global->get('asset_timestamps', 1)) {
+            $age = $global->get('asset_timestamps_period', 7) * 86400;
             Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
             Document::$timestamp_age = 0;
@@ -264,14 +265,20 @@ class Gantry5Plugin extends Plugin
      */
     public function initializeApi()
     {
+        /** @var Uri $uri */
+        $uri = $this->grav['uri'];
+
         $apiBase = '/api/particle';
-        $route = $this->grav['uri']->route();
+        $route = $uri->route();
 
         if ($route !== $apiBase || !substr($route, 0, strlen($apiBase) + 1) === $apiBase . '/') {
             return;
         }
 
-        $root = rtrim($this->grav['pages']->base(), '/');
+        /** @var Pages $pages */
+        $pages = $this->grav['pages'];
+
+        $root = rtrim($pages->base(), '/');
         $this->apiPath = substr($route, strlen($root . $apiBase) + 1);
 
         $this->enable([
@@ -288,14 +295,14 @@ class Gantry5Plugin extends Plugin
         unset($this->grav['page']);
 
         // Replace page service with a widget.
-        $this->grav['page'] = function () {
-            $page = new Page;
+        $this->grav['page'] = static function() {
+            $page = new Page();
             $props = $_REQUEST;
             $outline = !empty($props['outline']) ? $props['outline'] : 'default';
             $id = !empty($props['id']) ? $props['id'] : null;
             unset($props['outline'], $props['id']);
 
-            $page->init(new \SplFileInfo(__DIR__ . "/pages/particle.md"));
+            $page->init(new \SplFileInfo(__DIR__ . '/pages/particle.md'));
             $page->header(
                 array_replace((array) $page->header(),
                 ['gantry' => ['outline' => $outline], 'particle' => ['id' => $id], 'ajax' => $props])
@@ -343,13 +350,17 @@ class Gantry5Plugin extends Plugin
     {
         // Create admin page.
         $page = new Page;
-        $page->init(new \SplFileInfo(__DIR__ . "/pages/gantry.md"));
+        $page->init(new \SplFileInfo(__DIR__ . '/pages/gantry.md'));
         $page->slug('gantry');
 
         // Dispatch Gantry in output buffer.
         ob_start();
         $gantry = Gantry::instance();
-        $gantry['router']->dispatch();
+
+        /** @var Router $router */
+        $router = $gantry['router'];
+        $router->dispatch();
+
         $content = ob_get_clean();
 
         // Store response into the page.
@@ -357,7 +368,7 @@ class Gantry5Plugin extends Plugin
 
         // Hook page into Grav as current page.
         unset( $this->grav['page']);
-        $this->grav['page'] = function () use ($page) { return $page; };
+        $this->grav['page'] = $page;;
     }
 
     /**
@@ -393,14 +404,17 @@ class Gantry5Plugin extends Plugin
     {
         $gantry = Gantry::instance();
 
+        /** @var Config $global */
+        $global = $gantry['global'];
+
         // Set page to offline.
-        if ($gantry['global']->get('offline', 0)) {
-            GANTRY_DEBUGGER && Debugger::addMessage("Site is Offline!");
+        if ($global->get('offline', 0)) {
+            GANTRY_DEBUGGER && Debugger::addMessage('Site is Offline!');
 
             /** @var UserInterface $user */
             $user = $this->grav['user'];
             if (empty($user->authenticated && $user->authorize('site.login'))) {
-                GANTRY_DEBUGGER && Debugger::addMessage("Displaying Offline Page");
+                GANTRY_DEBUGGER && Debugger::addMessage('Displaying Offline Page');
 
                 $page = new Page;
                 $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -423,7 +437,7 @@ class Gantry5Plugin extends Plugin
      */
     public function getMaintenancePage(Event $event)
     {
-        GANTRY_DEBUGGER && Debugger::addMessage("Displaying Maintenance Page");
+        GANTRY_DEBUGGER && Debugger::addMessage('Displaying Maintenance Page');
 
         $page = new Page;
         $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -598,6 +612,6 @@ class Gantry5Plugin extends Plugin
         $document = $gantry['document'];
 
         // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
-        $this->grav->output = $gantry['document']->urlFilter($this->grav->output, false, 0, true) ?: $this->grav->output;
+        $this->grav->output = $document::urlFilter($this->grav->output, false, 0, true) ?: $this->grav->output;
     }
 }

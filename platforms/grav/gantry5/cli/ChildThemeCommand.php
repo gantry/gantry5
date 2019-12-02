@@ -119,7 +119,10 @@ class ChildThemeCommand extends ConsoleCommand
         }
 
         $grav = Grav::instance();
-        $grav['config']->set('system.pages.theme', $parent);
+
+        /** @var Config $config */
+        $config = $grav['config'];
+        $config->set('system.pages.theme', $parent);
 
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
@@ -138,7 +141,7 @@ class ChildThemeCommand extends ConsoleCommand
         } else {
             $parentClass = '\\' . $parentClass;
         }
-        $childClass = $inflector->camelize($child);
+        $childClass = $inflector::camelize($child);
 
         Folder::create($folder);
         $file = File::instance("{$folder}/{$child}.yaml");
@@ -271,7 +274,7 @@ PHP
             if (!is_object($class)) {
                 $themeClassFormat = [
                     'Grav\\Theme\\' . $name,
-                    'Grav\\Theme\\' . $inflector->camelize($name)
+                    'Grav\\Theme\\' . $inflector::camelize($name)
                 ];
 
                 foreach ($themeClassFormat as $themeClass) {
