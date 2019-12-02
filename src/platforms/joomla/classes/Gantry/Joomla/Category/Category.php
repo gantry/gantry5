@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -29,9 +30,11 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
  */
 class Category extends AbstractObject
 {
+    /** @var array */
     static protected $instances = [];
-
+    /** @var string */
     static protected $table = 'Category';
+    /** @var string */
     static protected $order = 'lft';
 
     /**

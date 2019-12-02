@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,7 +14,9 @@
 
 namespace Gantry\Component\Admin;
 
+use Gantry\Admin\Theme;
 use Gantry\Component\Controller\JsonController as BaseController;
+use Gantry\Framework\Platform;
 
 /**
  * Class JsonController

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,6 +21,8 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use ScssPhp\ScssPhp\Formatter\Crunched;
+use ScssPhp\ScssPhp\Formatter\Expanded;
 
 /**
  * Class ScssCompiler
@@ -27,19 +30,12 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class ScssCompiler extends CssCompiler
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $type = 'scss';
-
-    /**
-     * @var string
-     */
+    /** @var string */
     public $name = 'SCSS';
 
-    /**
-     * @var Compiler
-     */
+    /** @var Compiler */
     protected $compiler;
 
     /**

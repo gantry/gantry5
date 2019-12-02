@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,24 +20,24 @@ namespace Gantry\Component\Response;
  */
 class Response
 {
+    /** @var string */
     public $charset = 'utf-8';
+    /** @var string */
     public $mimeType = 'text/html';
 
+    /** @var int */
     protected $code = 200;
+    /** @var string */
     protected $message = 'OK';
+    /** @var int */
     protected $lifetime = 0;
+    /** @var string */
     protected $etag;
-
-    /**
-     * @var array Response headers.
-     */
+    /** @var array Response headers. */
     protected $headers = [];
-
-    /**
-     * @var string Response body.
-     */
+    /** @var string Response body. */
     protected $content;
-
+    /** @var array */
     protected $responseCodes = [
         200 => 'OK',
         400 => 'Bad Request',

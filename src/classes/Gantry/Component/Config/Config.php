@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,14 +28,10 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
 {
     use NestedArrayAccessWithGetters, Iterator, Export;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
 
-    /**
-     * @var BlueprintSchema|BlueprintForm|callable
-     */
+    /** @var BlueprintSchema|BlueprintForm|callable */
     protected $blueprint;
 
     /**
@@ -103,6 +100,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
         if (is_object($value)) {
             $value = (array) $value;
         }
+
         $old = $this->get($name, null, $separator);
         if ($old !== null) {
             $value = $this->blueprint()->mergeData($value, $old, $name, $separator);

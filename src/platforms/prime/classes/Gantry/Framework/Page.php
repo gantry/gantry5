@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,15 +16,29 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Url\Url;
 
+/**
+ * Class Page
+ * @package Gantry\Framework
+ */
 class Page extends Base\Page
 {
+    /** @var string */
     public $theme;
+    /** @var string */
     public $baseUrl;
+    /** @var string */
     public $title;
+    /** @var string */
     public $description;
+    /** @var string */
     public $language = 'en';
+    /** @var string */
     public $direction = 'ltr';
 
+    /**
+     * @param array $args
+     * @return string
+     */
     public function url(array $args = [])
     {
         $url = PRIME_URI;
@@ -34,6 +49,9 @@ class Page extends Base\Page
         return Url::build($parts);
     }
 
+    /**
+     * @return string
+     */
     public function htmlAttributes()
     {
         $attributes = [
@@ -45,6 +63,10 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return string
+     */
     public function bodyAttributes($attributes = [])
     {
         $gantry = Gantry::instance();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,7 +12,13 @@
 
 defined('_JEXEC') or die;
 
-// Gantry Specific Module Chrome
+/**
+ * Gantry Specific Module Chrome
+ *
+ * @param object $module
+ * @param object $params
+ * @param string $attribs
+ */
 function modChrome_gantry($module, &$params, &$attribs)
 {
 	$moduleTag      = $params->get('module_tag', 'div');

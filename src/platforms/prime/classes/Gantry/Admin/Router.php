@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,6 +17,10 @@ namespace Gantry\Admin;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Router\Router as BaseRouter;
 
+/**
+ * Class Router
+ * @package Gantry\Admin
+ */
 class Router extends BaseRouter
 {
     public function boot()
@@ -75,6 +80,9 @@ class Router extends BaseRouter
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         // TODO: add CSRF check.

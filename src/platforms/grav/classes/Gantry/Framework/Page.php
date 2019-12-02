@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -12,19 +13,35 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Url\Url;
 use Grav\Common\Grav;
+use Grav\Common\Language\Language;
 use Grav\Common\Language\LanguageCodes;
+use Grav\Common\Page\Page as GravPage;
 
+/**
+ * Class Page
+ * @package Gantry\Framework
+ */
 class Page extends Base\Page
 {
+    /** @var string */
     public $theme;
+    /** @var string */
     public $baseUrl;
+    /** @var string */
     public $title;
+    /** @var string */
     public $description;
-
+    /** @var string */
     public $outline;
+    /** @var string */
     public $language;
+    /** @var string */
     public $direction;
 
+    /**
+     * Page constructor.
+     * @param Gantry $container
+     */
     public function __construct($container)
     {
         parent::__construct($container);
@@ -36,6 +53,10 @@ class Page extends Base\Page
         $this->direction = LanguageCodes::getOrientation($this->language);
     }
 
+    /**
+     * @param array $args
+     * @return string
+     */
     public function url(array $args = [])
     {
         $grav = Grav::instance();
@@ -47,6 +68,9 @@ class Page extends Base\Page
         return Url::build($parts);
     }
 
+    /**
+     * @return string
+     */
     public function htmlAttributes()
     {
         $attributes = [
@@ -58,9 +82,15 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return string
+     */
     public function bodyAttributes($attributes = [])
     {
         $grav = Grav::instance();
+
+        /** @var GravPage $page */
         $page = $grav['page'];
 
         $classes = [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -15,6 +16,8 @@ namespace Gantry\Framework\Services;
 
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Debugger;
+use Gantry\Framework\Base\Platform;
+use Gantry\Framework\Gantry;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;

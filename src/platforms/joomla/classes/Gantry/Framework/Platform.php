@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,6 +12,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Admin\ThemeList;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
@@ -36,15 +38,21 @@ use Joomla\CMS\Uri\Uri;
 
 class Platform extends BasePlatform
 {
+    /** @var bool */
     public $no_base_layout = false;
+    /** @var string */
     public $module_wrapper = '<div class="platform-content">%s</div>';
+    /** @var string */
     public $component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
 
+    /** @var string */
     protected $name = 'joomla';
+    /** @var array */
     protected $features = ['modules' => true];
+    /** @var string */
     protected $settings_key = 'return';
+    /** @var array|null */
     protected $modules;
-
 
     /**
      * @param string $html

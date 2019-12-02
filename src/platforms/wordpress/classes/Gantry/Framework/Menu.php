@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +15,19 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 
+/**
+ * Class Menu
+ * @package Gantry\Framework
+ */
 class Menu extends AbstractMenu
 {
+    /** @var array */
     protected $menus;
+    /** @var \TimberMenu */
     protected $wp_menu;
+    /** @var int */
     protected $current;
+    /** @var array */
     protected $active = [];
 
     public function __construct()
@@ -52,6 +61,9 @@ class Menu extends AbstractMenu
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function getGroupedItems()
     {
         $groups = [];
@@ -97,6 +109,10 @@ class Menu extends AbstractMenu
         return $config;
     }
 
+    /**
+     * @param array $params
+     * @return \TimberMenu
+     */
     protected function getWPMenu($params) {
         if (!isset($this->wp_menu)) {
             $menus = array_flip($this->getMenus());
@@ -154,13 +170,17 @@ class Menu extends AbstractMenu
         return null;
     }
 
+    /**
+     * @param Item $item
+     * @return bool
+     */
     public function isActive($item)
     {
         return isset($this->active[$item->id]);
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
     public function getCacheId()
     {
@@ -171,6 +191,10 @@ class Menu extends AbstractMenu
         return $this->current ?: 0;
     }
 
+    /**
+     * @param Item $item
+     * @return bool
+     */
     public function isCurrent($item)
     {
         return $this->current == $item->id;
@@ -184,7 +208,6 @@ class Menu extends AbstractMenu
      * If there is no home page, return null.
      *
      * @param   int  $itemid
-     *
      * @return  object|null
      */
     protected function calcBase($itemid = null)
@@ -196,6 +219,10 @@ class Menu extends AbstractMenu
         return $base;
     }
 
+    /**
+     * @param $item
+     * @param array $items
+     */
     protected function updateMenuItem($item, array $items)
     {
         if (!empty($item->menu_item_parent) && isset($items[$item->menu_item_parent])) {
@@ -213,6 +240,11 @@ class Menu extends AbstractMenu
         $item->path = implode('/', $item->tree);
     }
 
+    /**
+     * @param array $menuItems
+     * @param array $tree
+     * @return array
+     */
     protected function buildList($menuItems, $tree = [])
     {
         $list = [];
@@ -240,6 +272,11 @@ class Menu extends AbstractMenu
         return $list;
     }
 
+    /**
+     * @param array $menuItems
+     * @param array $tree
+     * @return string
+     */
     protected function getMenuSlug(array &$menuItems, $tree)
     {
         $result = [];

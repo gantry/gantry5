@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,13 +11,25 @@
 
 namespace Gantry\Framework;
 
+/**
+ * Class Page
+ * @package Gantry\Framework
+ */
 class Page extends Base\Page
 {
+    /** @var string */
     public $home;
+    /** @var string */
     public $outline;
+    /** @var string */
     public $language;
+    /** @var string */
     public $direction;
 
+    /**
+     * Page constructor.
+     * @param Gantry $container
+     */
     public function __construct($container)
     {
         parent::__construct($container);
@@ -29,11 +42,18 @@ class Page extends Base\Page
         $this->direction = function_exists('is_rtl') && is_rtl() ? 'rtl' : 'ltr';
     }
 
+    /**
+     * @param array $args
+     * @return string
+     */
     public function url(array $args = [])
     {
         return home_url(add_query_arg($args, $GLOBALS['wp']->request));
     }
 
+    /**
+     * @return string
+     */
     public function htmlAttributes()
     {
         $attributes = [
@@ -45,6 +65,10 @@ class Page extends Base\Page
         return $this->getAttributes($attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return string
+     */
     public function bodyAttributes($attributes = [])
     {
         // TODO: we might need something like

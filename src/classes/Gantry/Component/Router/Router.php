@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,6 +17,7 @@ namespace Gantry\Component\Router;
 use Gantry\Admin\EventListener;
 use Gantry\Admin\Theme;
 use Gantry\Component\Controller\BaseController;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
@@ -30,15 +32,17 @@ use Whoops\Exception\ErrorException;
  */
 abstract class Router implements RouterInterface
 {
-    /**
-     * @var Container
-     */
+    /** @var Container */
     protected $container;
-
+    /** @var string */
     protected $format;
+    /** @var string */
     protected $resource;
+    /** @var string */
     protected $method;
+    /** @var array */
     protected $path;
+    /** @var array */
     protected $params;
 
     /**
@@ -57,7 +61,6 @@ abstract class Router implements RouterInterface
     public function dispatch()
     {
         $this->boot();
-
         $this->load();
 
         // Render the page or execute the task.

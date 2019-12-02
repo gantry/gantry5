@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,10 +13,17 @@ namespace Gantry\WordPress\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 
+/**
+ * Class AssignmentsTaxonomy
+ * @package Gantry\WordPress\Assignments
+ */
 class AssignmentsTaxonomy implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'taxonomy';
+    /** @var string */
     public $label = 'Taxonomies: %s';
+    /** @var int */
     public $priority = 8;
 
     /**
@@ -67,6 +75,10 @@ class AssignmentsTaxonomy implements AssignmentsInterface
         return $list;
     }
 
+    /**
+     * @param array $args
+     * @return mixed
+     */
     protected function getTaxonomies($args = [])
     {
         $defaults = [
@@ -80,6 +92,11 @@ class AssignmentsTaxonomy implements AssignmentsInterface
         return $taxonomies;
     }
 
+    /**
+     * @param object $tax
+     * @param array $args
+     * @return mixed
+     */
     protected function getItems($tax, $args = [])
     {
         $items = [];

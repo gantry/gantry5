@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -15,8 +16,11 @@ namespace Gantry\Joomla;
  */
 class Manifest
 {
+    /** @var string */
     protected $theme;
+    /** @var string */
     protected $path;
+    /** @var \SimpleXMLElement */
     protected $xml;
 
     /**

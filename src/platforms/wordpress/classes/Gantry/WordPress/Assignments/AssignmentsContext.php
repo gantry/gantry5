@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,16 +13,23 @@ namespace Gantry\WordPress\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 
+/**
+ * Class AssignmentsContext
+ * @package Gantry\WordPress\Assignments
+ */
 class AssignmentsContext implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'context';
+    /** @var int */
     public $priority = 2;
 
+    /** @var array */
     protected $priorities = [
         'is_front_page'     => 0.9,
         'is_home'           => 0.9,
     ];
-
+    /** @var array */
     protected $context = [
         'is_404'            => '404 Not Found Page',
         'is_search'         => 'Search Page',

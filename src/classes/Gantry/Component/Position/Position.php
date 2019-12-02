@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -26,8 +27,11 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Position extends Collection
 {
+    /** @var string */
     public $name;
+    /** @var string */
     public $title;
+    /** @var array */
     protected $modules = [];
 
     /**
@@ -141,7 +145,7 @@ class Position extends Collection
 
         return $this;
     }
-    
+
     /**
      * @param Module|string $item
      * @param string        $name  Temporary name for the module.
@@ -330,7 +334,7 @@ class Position extends Collection
     }
 
     /**
-     * @param $data
+     * @param array|null $data
      */
     protected function load($data)
     {

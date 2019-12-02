@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -29,14 +30,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class OutlineCollection extends Collection
 {
-    /**
-     * @var Container
-     */
+    /** @var Container */
     protected $container;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
 
     /**

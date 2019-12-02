@@ -1,7 +1,10 @@
 <?php
+
 class_exists('\\Gantry\\Framework\\Gantry') or die;
 
-// Define the template.
+/**
+ * Define the template.
+ */
 class GantryTheme extends \Gantry\Framework\Theme {}
 
 // Initialize theme stream.

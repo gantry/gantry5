@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -17,16 +18,19 @@ use RocketTheme\Toolbox\File\MarkdownFile;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Importer
+ * @package Gantry\Framework
+ */
 class Importer
 {
+    /** @var string */
     protected $folder;
-
+    /** @var array */
     protected $articles;
+    /** @var array */
     protected $categories;
-
-    /**
-     * @var UniformResourceLocator
-     */
+    /** @var UniformResourceLocator */
     protected $locator;
 
     /**
@@ -122,6 +126,9 @@ class Importer
         }
     }
 
+    /**
+     * @param array $menu
+     */
     protected function menu(array $menu)
     {
         $config = new Config([]);
@@ -161,7 +168,6 @@ class Importer
             $item['folder'] = $folder;
 
             $config->set($location, $item, '/');
-
         }
 
         foreach ($menu['items'] as $path => $menuitem) {
@@ -177,6 +183,9 @@ class Importer
         }
     }
 
+    /**
+     * @return array
+     */
     protected function fetchArticles()
     {
         if (!isset($this->articles)) {
@@ -195,16 +204,28 @@ class Importer
         return $this->articles;
     }
 
+    /**
+     * @param string $id
+     * @return string|null
+     */
     protected function getCategoryAlias($id)
     {
         return isset($this->categories[$id]['alias']) ? $this->categories[$id]['alias'] : null;
     }
 
+    /**
+     * @param string $id
+     * @return string|null
+     */
     protected function getCategoryTitle($id)
     {
         return isset($this->categories[$id]['title']) ? $this->categories[$id]['title'] : null;
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     protected function readArticle($id)
     {
         if (!isset($this->articles[$id])) {
@@ -254,6 +275,10 @@ class Importer
         return $article;
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createComponentPage(array $item)
     {
         $page = [];
@@ -363,6 +388,10 @@ class Importer
         return $page;
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createAliasPage(array $item)
     {
         return [
@@ -374,6 +403,10 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createUrlPage(array $item)
     {
         return [
@@ -386,6 +419,10 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createSeparatorPage(array $item)
     {
         return [
@@ -398,7 +435,10 @@ class Importer
         ];
     }
 
-
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createParticlePage(array $item)
     {
         return [
@@ -411,6 +451,10 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $v
+     * @return array
+     */
     protected function filterNull($v)
     {
         if (is_array($v)) {
@@ -431,9 +475,6 @@ class Importer
      * Filter stream URLs from HTML.
      *
      * @param  string $html         HTML input to be filtered.
-     * @param  bool $domain         True to include domain name.
-     * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
-     *                              Use value <= 0 to disable the feature.
      * @return string               Returns modified HTML.
      */
     protected function urlFilter($html)

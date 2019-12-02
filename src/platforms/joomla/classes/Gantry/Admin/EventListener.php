@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -160,7 +161,9 @@ class EventListener implements EventSubscriberInterface
 
         /** @var Gantry $gantry */
         $gantry = $event->gantry;
+        /** @var array $menu */
         $menu = $event->menu;
+        /** @var string $resource */
         $resource = $event->resource;
 
         // Save global menu settings into Joomla.

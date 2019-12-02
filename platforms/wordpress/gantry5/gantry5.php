@@ -14,7 +14,7 @@
 
 defined('ABSPATH') or die;
 
-// NOTE: This file needs to be PHP 5.2 compatible.
+// NOTE: This file needs to be PHP 5.2.7 compatible.
 
 // Fail safe version check for PHP <5.6.20.
 if (version_compare(PHP_VERSION, '7.1.3', '<')) {

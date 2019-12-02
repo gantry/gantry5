@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
+ * @license   MIT
+ *
+ * http://opensource.org/licenses/MIT
+ */
+
 namespace Grav\Theme;
 
 use Gantry\Framework\Gantry;
@@ -6,13 +16,15 @@ use Gantry\Framework\Theme as GantryTheme;
 use Grav\Common\Theme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class G5_Helium
+ * @package Grav\Theme
+ */
 class G5_Helium extends Theme
 {
+    /** @var string */
     public $gantry = '5.5';
-
-    /**
-     * @var GantryTheme
-     */
+    /** @var GantryTheme */
     protected $theme;
 
     /**

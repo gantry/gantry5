@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -22,6 +23,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
+use Gantry\Component\Stylesheet\ScssCompiler;
 use Gantry\Debugger;
 use Gantry\Framework\Document;
 use Gantry\Framework\Menu;
@@ -40,20 +42,21 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    /** @var Layout */
     protected $layoutObject;
-    protected $atoms;
+    /** @var bool */
+    protected $atoms = false;
+    /** @var array */
     protected $segments;
+    /** @var string|null */
     protected $preset;
-    protected $cssCache;
-    /**
-     * @var CssCompilerInterface
-     */
+    /** @var array */
+    protected $cssCache = [];
+    /** @var CssCompilerInterface */
     protected $compiler;
+    /** @var array */
     protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
-
-    /**
-     * @var ThemeDetails
-     */
+    /** @var ThemeDetails */
     protected $details;
 
     /**
@@ -364,7 +367,7 @@ trait ThemeTrait
             /** @var Config $config */
             $config = $gantry['config'];
 
-            /** @var \Gantry\Framework\Document $document */
+            /** @var Document $document */
             $document = $gantry['document'];
 
             $atoms = (array) $config->get('page.head.atoms');

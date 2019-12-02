@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -18,14 +19,10 @@ namespace Gantry\Component\Config;
  */
 class CompiledBlueprints extends CompiledBase
 {
-    /**
-     * @var int Version number for the compiled file.
-     */
+    /** @var int Version number for the compiled file. */
     public $version = 3;
 
-    /**
-     * @var BlueprintSchema  Blueprints object.
-     */
+    /** @var BlueprintSchema  Blueprints object. */
     protected $object;
 
     /**

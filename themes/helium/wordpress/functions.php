@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +21,7 @@ $gantry_include = get_stylesheet_directory() . '/includes/gantry.php';
 if (!file_exists($gantry_include)) {
     $gantry_include = get_template_directory() . '/includes/gantry.php';
 }
+
 $gantry = include_once $gantry_include;
 
 if (!$gantry) {

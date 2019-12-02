@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,14 +26,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class BlueprintForm extends BaseBlueprintForm
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $context = 'gantry-blueprints://';
 
-    /**
-     * @var BlueprintSchema
-     */
+    /** @var BlueprintSchema */
     protected $schema;
 
     /**

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -12,10 +13,18 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Assignments\AbstractAssignments;
 
+/**
+ * Class Assignments
+ * @package Gantry\Framework
+ */
 class Assignments extends AbstractAssignments
 {
     protected $platform = 'Grav';
 
+    /**
+     * Assignments constructor.
+     * @param string|null $configuration
+     */
     public function __construct($configuration = null)
     {
         parent::__construct($configuration);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,10 +21,15 @@ use Joomla\CMS\Factory;
  */
 class ModuleFinder extends Finder
 {
+    /** @var string */
     protected $table = '#__modules';
+    /** @var bool */
     protected $readonly = true;
+    /** @var array */
     protected $state = [];
+    /** @var array */
     protected $published = [0, 1];
+    /** @var int */
     protected $limit = 0;
 
     /**

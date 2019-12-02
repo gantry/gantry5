@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,9 +26,7 @@ class Collection implements CollectionInterface
 {
     use ArrayAccess, Countable, Export;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items = [];
 
     /**

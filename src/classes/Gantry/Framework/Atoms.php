@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -30,27 +31,17 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    /**
-     * @var  string
-     */
+    /** @var string */
     protected $name;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $ids;
-
-    /**
-     * @var array|static[]
-     */
-    protected static $instances;
-
+    /** @var bool */
     protected $inherit = false;
+
+    /** @var static[] */
+    protected static $instances;
 
     /**
      * @param string $outline

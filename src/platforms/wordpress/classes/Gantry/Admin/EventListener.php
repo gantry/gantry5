@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,8 +14,15 @@ namespace Gantry\Admin;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
+/**
+ * Class EventListener
+ * @package Gantry\Admin
+ */
 class EventListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -27,6 +35,9 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function onGlobalSave(Event $event)
     {
         $option = (array) \get_option('gantry5_plugin');
@@ -34,23 +45,38 @@ class EventListener implements EventSubscriberInterface
         \update_option('gantry5_plugin', $option);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onStylesSave(Event $event)
     {
         $event->theme->preset_styles_update_css();
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSettingsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onLayoutSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAssignmentsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onMenusSave(Event $event)
     {
         /*
@@ -185,6 +211,12 @@ class EventListener implements EventSubscriberInterface
         wp_defer_term_counting(false);
     }
 
+    /**
+     * @param array $ordering
+     * @param array $parents
+     * @param int $i
+     * @return array
+     */
     protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
     {
         $list = [];

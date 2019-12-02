@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -21,39 +22,25 @@ use RocketTheme\Toolbox\File\PhpFile;
  */
 abstract class CompiledBase
 {
-    /**
-     * @var int Version number for the compiled file.
-     */
+    /** @var int Version number for the compiled file. */
     public $version = 1;
 
-    /**
-     * @var string  Filename (base name) of the compiled configuration.
-     */
+    /** @var string  Filename (base name) of the compiled configuration. */
     public $name;
 
-    /**
-     * @var string|bool  Configuration checksum.
-     */
+    /** @var string|bool  Configuration checksum. */
     public $checksum;
 
-    /**
-     * @var string Cache folder to be used.
-     */
+    /** @var string Cache folder to be used. */
     protected $cacheFolder;
 
-    /**
-     * @var array  List of files to load.
-     */
+    /** @var array  List of files to load. */
     protected $files;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
 
-    /**
-     * @var mixed  Configuration object.
-     */
+    /** @var mixed  Configuration object. */
     protected $object;
 
     /**

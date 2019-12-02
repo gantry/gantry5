@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@ namespace Gantry\Prime\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Prime\Pages;
 
+/**
+ * Class AssignmentsPage
+ * @package Gantry\Prime\Assignments
+ */
 class AssignmentsPage implements AssignmentsInterface
 {
     public $type = 'page';
@@ -47,6 +52,9 @@ class AssignmentsPage implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @return array
+     */
     protected function getItems()
     {
         $pages = new Pages();

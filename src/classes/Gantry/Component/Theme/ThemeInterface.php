@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,6 +17,8 @@ namespace Gantry\Component\Theme;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
+use Twig\Environment;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Class ThemeTrait
@@ -39,9 +42,9 @@ interface ThemeInterface
     /**
      * Define twig environment.
      *
-     * @param \Twig_Environment $twig
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @param LoaderInterface $loader
+     * @return Environment
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null);
 

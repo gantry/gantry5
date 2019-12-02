@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,10 @@
 
 namespace Gantry\Component\Translator;
 
+/**
+ * Interface TranslatorInterface
+ * @package Gantry\Component\Translator
+ */
 interface TranslatorInterface
 {
     /**

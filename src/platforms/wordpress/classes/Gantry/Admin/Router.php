@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +21,9 @@ use Gantry\Component\Router\Router as BaseRouter;
  */
 class Router extends BaseRouter
 {
+    /**
+     * @return $this
+     */
     public function boot()
     {
         /** @var Request $request */
@@ -52,6 +56,10 @@ class Router extends BaseRouter
         return $this;
     }
 
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function makeUri($url)
     {
         $components = parse_url($url);
@@ -63,6 +71,9 @@ class Router extends BaseRouter
         return "{$path}{$query}{$fragment}";
     }
 
+    /**
+     * @return $this
+     */
     public function setTemplate()
     {
         // FIXME: in here use pages.php, but in AJAX we need admin-ajax.php.
@@ -85,6 +96,9 @@ class Router extends BaseRouter
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         // Check security nonce and return false on failure.

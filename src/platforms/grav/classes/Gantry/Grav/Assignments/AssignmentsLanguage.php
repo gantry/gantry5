@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -15,9 +16,15 @@ use Grav\Common\Grav;
 use Grav\Common\Language\Language;
 use Grav\Common\Page\Page;
 
+/**
+ * Class AssignmentsLanguage
+ * @package Gantry\Grav\Assignments
+ */
 class AssignmentsLanguage implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'language';
+    /** @var int */
     public $priority = 1;
 
     /**
@@ -66,6 +73,10 @@ class AssignmentsLanguage implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @param Language $language
+     * @return array
+     */
     protected function getItems(Language $language)
     {
         $languages = $language->getLanguages();

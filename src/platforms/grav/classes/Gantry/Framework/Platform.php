@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,11 +11,13 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Position\Module;
 use Gantry\Component\Position\Position;
 use Gantry\Debugger;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Grav\Common\Grav;
+use Grav\Common\Plugins;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -28,9 +31,15 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Platform extends BasePlatform
 {
+    /** @var string */
     protected $name = 'grav';
+    /** @var array */
     protected $features = ['fontawesome' => false];
 
+    /**
+     * Platform constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -75,6 +84,9 @@ class Platform extends BasePlatform
         return $locator->getPaths('themes');
     }
 
+    /**
+     * @return array
+     */
     public function getMediaPaths()
     {
         $paths = ['image://'];
@@ -88,6 +100,9 @@ class Platform extends BasePlatform
         return ['' => $paths];
     }
 
+    /**
+     * @return array
+     */
     public function getEnginesPaths()
     {
         $grav = Grav::instance();
@@ -102,6 +117,9 @@ class Platform extends BasePlatform
         return ['' => ['plugin://gantry5/engines']];
     }
 
+    /**
+     * @return array
+     */
     public function getAssetsPaths()
     {
         $grav = Grav::instance();
@@ -117,16 +135,29 @@ class Platform extends BasePlatform
         return ['' => ['gantry-theme://', 'plugin://gantry5/assets']];
     }
 
+    /**
+     * @param string $position
+     * @return int
+     */
     public function countModules($position)
     {
         return count($this->getModules($position));
     }
 
+    /**
+     * @param string $position
+     * @return array
+     */
     public function getModules($position)
     {
         return (new Position($position))->listModules();
     }
 
+    /**
+     * @param string|array $id
+     * @param array $attribs
+     * @return string
+     */
     public function displayModule($id, $attribs = [])
     {
         $module = is_array($id) ? $id : $this->getModule($id);
@@ -170,6 +201,11 @@ class Platform extends BasePlatform
         return $html;
     }
 
+    /**
+     * @param string $position
+     * @param array $attribs
+     * @return string
+     */
     public function displayModules($position, $attribs = [])
     {
         $html = '';
@@ -180,7 +216,10 @@ class Platform extends BasePlatform
         return $html;
     }
 
-
+    /**
+     * @param array $params
+     * @return string
+     */
     public function displaySystemMessages($params = [])
     {
         return Gantry::instance()['theme']->compile(
@@ -188,6 +227,10 @@ class Platform extends BasePlatform
         );
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     protected function getModule($id)
     {
         list($position, $module) = explode('/', $id, 2);
@@ -220,12 +263,22 @@ class Platform extends BasePlatform
         return "{$base}/themes/{$theme}";
     }
 
+    /**
+     * @return string
+     */
     public function settings()
     {
         $grav = Grav::instance();
+
         return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
     }
 
+    /**
+     * @param string $text
+     * @param int $length
+     * @param bool $html
+     * @return string
+     */
     public function truncate($text, $length, $html = false)
     {
         if ($html) {
@@ -249,7 +302,9 @@ class Platform extends BasePlatform
 
         if (isset($dependencies['platform'][$this->name])) {
             $platform = $dependencies['platform'][$this->name];
+
             if (isset($platform['plugin']) && is_array($platform['plugin'])) {
+                /** @var Plugins $plugins */
                 $plugins = Grav::instance()['plugins'];
                 $list = $plugins->all();
                 foreach ($platform['plugin'] as $name => $condition) {

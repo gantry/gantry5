@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,7 @@
 
 namespace Gantry\Framework\Markdown;
 
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 
 /**
@@ -21,13 +23,15 @@ use Gantry\Framework\Gantry;
  */
 trait ParsedownTrait
 {
+    /** @var array */
     protected $special_chars;
+    /** @var string */
     protected $twig_link_regex = '/\!*\[(?:.*)\]\((\{([\{%#])\s*(.*?)\s*(?:\2|\})\})\)/';
 
     /**
      * Initialization function to setup key variables needed by the MarkdownGravLinkTrait
      *
-     * @param $defaults
+     * @param array $defaults
      */
     protected function init(array $defaults)
     {
@@ -50,7 +54,7 @@ trait ParsedownTrait
     /**
      * Setter for special chars
      *
-     * @param $special_chars
+     * @param array $special_chars
      * @return $this
      */
     public function setSpecialChars($special_chars)
@@ -99,7 +103,7 @@ trait ParsedownTrait
     }
 
     /**
-     * @param $array excerpt
+     * @param array $excerpt
      * @return array
      */
     protected function inlineImage($excerpt)

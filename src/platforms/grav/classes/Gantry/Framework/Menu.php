@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,10 +18,16 @@ use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
+use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page as GravPage;
+use Grav\Common\Page\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Menu
+ * @package Gantry\Framework
+ */
 class Menu extends AbstractMenu
 {
     use GantryTrait;
@@ -84,6 +91,7 @@ class Menu extends AbstractMenu
         $groups['mainmenu'] = array();
 
         // Build the options array.
+
         /** @var GravPage $page */
         foreach ($pages as $page) {
             if (!$page->order()) {
@@ -172,6 +180,7 @@ class Menu extends AbstractMenu
         // Return flat list of routes.
         $list = [];
         $this->pages = [];
+
         /** @var GravPage $item */
         foreach ($pages as $item) {
             if (!$item->visible()) {
@@ -221,7 +230,6 @@ class Menu extends AbstractMenu
      * If there is no home page, return null.
      *
      * @param   string  $path
-     *
      * @return  string
      */
     protected function calcBase($path)

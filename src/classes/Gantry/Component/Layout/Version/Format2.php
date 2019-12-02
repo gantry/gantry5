@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -18,13 +19,19 @@ namespace Gantry\Component\Layout\Version;
  */
 class Format2
 {
+    /** @var array */
     protected $scopes = [0 => 'grid', 1 => 'block'];
+    /** @var array */
     protected $sections = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
+    /** @var array */
     protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer', 'main'];
-
+    /** @var array */
     protected $data;
+    /** @var array */
     protected $structure;
+    /** @var array */
     protected $content;
+    /** @var array */
     protected $keys;
 
     /**
@@ -79,6 +86,7 @@ class Format2
         if ($this->structure) {
             $result['structure'] = $this->structure;
         }
+
         if ($this->content) {
             $result['content'] = $this->content;
         }

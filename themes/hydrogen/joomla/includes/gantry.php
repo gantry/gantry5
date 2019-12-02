@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,7 +15,6 @@ use Gantry\Framework\Gantry;
 use Gantry5\Loader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-
 
 /**
  * @param Gantry|null $gantry

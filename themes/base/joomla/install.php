@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,6 +17,9 @@ use Gantry5\Loader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
+/**
+ * Class G5_BaseInstallerScript
+ */
 class G5_BaseInstallerScript
 {
     public $requiredGantryVersion = '5.5';
@@ -62,6 +66,7 @@ class G5_BaseInstallerScript
     /**
      * @param string $type
      * @param object $parent
+     * @return bool
      * @throws Exception
      */
     public function postflight($type, $parent)

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,13 +11,18 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use Gantry\Debugger;
+use Gantry\WordPress\Widget\Particle;
 use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Timber\Timber;
 use Timber\User;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Class Theme
@@ -26,18 +32,16 @@ class Theme extends AbstractTheme
 {
     use ThemeTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $url;
 
+    /** @var User */
+    protected $user;
     /**
      * @var bool
      * @deprecated 5.1.5
      */
     protected $wordpress = false;
-
-    protected $user;
 
     /**
      * @param array $context
@@ -69,9 +73,9 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::extendTwig()
      *
-     * @param \Twig_Environment $twig
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @param LoaderInterface $loader
+     * @return Environment
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
@@ -200,7 +204,10 @@ class Theme extends AbstractTheme
         }
     }
 
-
+    /**
+     * @param string $text
+     * @return string
+     */
     public function url_filter($text)
     {
         $gantry = Gantry::instance();
@@ -306,6 +313,11 @@ class Theme extends AbstractTheme
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    /**
+     * @param mixed $atts
+     * @param mixed|null $content
+     * @return mixed
+     */
     public function loadposition_shortcode($atts, $content = null)
     {
         extract(shortcode_atts(['id' => ''], $atts));
@@ -317,8 +329,8 @@ class Theme extends AbstractTheme
     }
 
     /**
-     * @param \Twig_Environment $twig
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @return Environment
      */
     public function timber_loader_twig(\Twig_Environment $twig)
     {
@@ -341,7 +353,6 @@ class Theme extends AbstractTheme
      * Extend file type support in WP Theme Editor
      *
      * @param $default_types
-     *
      * @return array
      */
     public function extend_theme_editor_filetypes($default_types) {
@@ -394,6 +405,8 @@ class Theme extends AbstractTheme
         parent::init();
 
         $gantry = Gantry::instance();
+
+        /** @var Config $global */
         $global = $gantry['global'];
 
         /** @var UniformResourceLocator $locator */
@@ -506,13 +519,13 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Loader_Filesystem
+     * @param LoaderInterface $loader
+     * @return FilesystemLoader
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
         $loader = parent::setTwigLoaderPaths($loader);
-        
+
         if ($loader) {
             // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
             $loader->setPaths($this->getTwigPaths());
@@ -521,6 +534,11 @@ class Theme extends AbstractTheme
         return $loader;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     */
     protected function updateCookie($name, $value, $expire = 0)
     {
         $path   = SITECOOKIEPATH;
@@ -585,6 +603,13 @@ class Theme extends AbstractTheme
         }
     }
 
+    /**
+     * @param string $type
+     * @param string $identifier
+     * @param array|object $props
+     * @param string $html
+     * @param string $format
+     */
     protected function ajax_particle_output($type, $identifier, $props, $html, $format)
     {
         ob_clean();
@@ -605,6 +630,9 @@ class Theme extends AbstractTheme
         wp_die();
     }
 
+    /**
+     * @param string $format
+     */
     protected function ajax_not_found($format)
     {
         ob_clean();

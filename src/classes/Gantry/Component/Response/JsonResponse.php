@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,12 +20,18 @@ namespace Gantry\Component\Response;
  */
 class JsonResponse extends Response
 {
+    /** @var string */
     public $mimeType = 'application/json';
 
+    /** @var bool */
     protected $success = true;
+    /** @var string */
     protected $message;
+    /** @var array */
     protected $exceptions = [];
+    /** @var array */
     protected $messages = [];
+    /** @var array */
     protected $content = [];
 
     /**

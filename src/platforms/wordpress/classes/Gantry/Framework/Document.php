@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,12 +13,20 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
 
+/**
+ * Class Document
+ * @package Gantry\Framework
+ */
 class Document extends HtmlDocument
 {
+    /** @var array */
     public static $wp_styles = [];
+    /** @var array */
     public static $wp_scripts = ['head' => [], 'footer' => []];
 
+    /** @var array */
     protected static $script_info = [];
+    /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
         'jquery.framework' => 'registerJquery',
@@ -68,6 +77,9 @@ class Document extends HtmlDocument
         static::$stack[0]->clearStyles();
     }
 
+    /**
+     * @param string $pos
+     */
     public static function registerScripts($pos)
     {
         $scripts = static::$stack[0]->getScripts($pos);
@@ -100,6 +112,10 @@ class Document extends HtmlDocument
         static::$stack[0]->clearScripts($pos);
     }
 
+    /**
+     * @param bool $addDomain
+     * @return string
+     */
     public static function domain($addDomain = false)
     {
         static $domain;
@@ -121,11 +137,17 @@ class Document extends HtmlDocument
         return $addDomain !== null ? $domain : '';
     }
 
+    /**
+     * @return string
+     */
     public static function siteUrl()
     {
         return \get_site_url();
     }
 
+    /**
+     * @return string
+     */
     public static function rootUri()
     {
         static $path;
@@ -141,6 +163,11 @@ class Document extends HtmlDocument
         return $path;
     }
 
+    /**
+     * @param string $tag
+     * @param string $handle
+     * @return string
+     */
     public static function script_add_attributes($tag, $handle)
     {
         if (!isset(self::$script_info[$handle])) {

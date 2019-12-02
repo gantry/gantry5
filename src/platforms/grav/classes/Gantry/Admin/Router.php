@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,21 +11,29 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
+use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Router
+ * @package Gantry\Admin
+ */
 class Router extends BaseRouter
 {
     public function boot()
     {
-        static $booted;
+        /** @var bool */
+        static $booted = false;
 
         if ($booted) {
             return;
@@ -91,6 +100,10 @@ class Router extends BaseRouter
         }
     }
 
+    /**
+     * @param string|null $theme
+     * @return $this
+     */
     public function setTheme(&$theme)
     {
         $path = "themes://{$theme}";
@@ -111,14 +124,22 @@ class Router extends BaseRouter
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         /** @var Request $request */
         $request = $this->container['request'];
         $nonce = $request->get->get('nonce');
+
         return isset($nonce) && Utils::verifyNonce($nonce, 'gantry-admin');
     }
 
+    /**
+     * @param Response $response
+     * @return bool
+     */
     protected function send(Response $response)
     {
         // Add missing translations to debugbar.

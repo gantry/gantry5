@@ -1,12 +1,19 @@
 <?php
 defined('ABSPATH') or die;
 
-add_action( 'admin_init', 'gantry5_admin_start_buffer', -10000 );
-add_action( 'admin_enqueue_scripts', 'gantry5_admin_scripts' );
-add_action( 'wp_ajax_gantry5', 'gantry5_layout_manager' );
-add_filter( 'upgrader_package_options', 'gantry5_upgrader_package_options', 10000 );
-add_filter( 'upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4 );
-add_action( 'upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3 );
+use Gantry\Admin\Router;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Platform;
+use Gantry\Framework\Theme;
+use Gantry5\Loader;
+
+add_action('admin_init', 'gantry5_admin_start_buffer', -10000);
+add_action('admin_enqueue_scripts', 'gantry5_admin_scripts');
+add_action('wp_ajax_gantry5', 'gantry5_layout_manager');
+add_filter('upgrader_package_options', 'gantry5_upgrader_package_options', 10000);
+add_filter('upgrader_source_selection', 'gantry5_upgrader_source_selection', 0, 4);
+add_action('upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3);
 
 
 // Check if Timber is active before displaying sidebar button

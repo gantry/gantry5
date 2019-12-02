@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,10 +20,15 @@ namespace Gantry\Component\Whoops;
  */
 class SystemFacade extends \Whoops\Util\SystemFacade
 {
+    /** @var array */
     protected $registeredPatterns;
+    /** @var callable */
     protected $whoopsErrorHandler;
+    /** @var callable */
     protected $whoopsExceptionHandler;
+    /** @var callable */
     protected $whoopsShutdownHandler;
+    /** @var callable */
     protected $platformExceptionHandler;
 
     /**

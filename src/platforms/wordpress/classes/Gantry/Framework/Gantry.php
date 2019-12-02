@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +16,10 @@ use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use Timber\Timber;
 
+/**
+ * Class Gantry
+ * @package Gantry\Framework
+ */
 class Gantry extends Base\Gantry
 {
     /**
@@ -48,7 +53,7 @@ class Gantry extends Base\Gantry
     }
 
     /**
-     * @return Gantry
+     * @return static
      * @throws \LogicException
      */
     protected static function init()

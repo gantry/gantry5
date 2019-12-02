@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -23,19 +24,13 @@ use RocketTheme\Toolbox\StreamWrapper\Stream;
  */
 class Streams
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $schemes = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $registered;
 
-    /**
-     * @var UniformResourceLocator
-     */
+    /** @var UniformResourceLocator */
     protected $locator;
 
     /**

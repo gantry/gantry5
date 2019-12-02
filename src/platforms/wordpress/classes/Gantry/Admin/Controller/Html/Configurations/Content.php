@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,15 +11,19 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Content as ContentConfig;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Content
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Content extends HtmlController
 {
     protected $httpVerbs = [
@@ -51,6 +56,9 @@ class Content extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
@@ -72,6 +80,11 @@ class Content extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string|null $id
+     * @return string
+     */
     public function display($group, $id = null)
     {
         $outline = $this->params['outline'];
@@ -97,6 +110,11 @@ class Content extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return string
+     */
     public function formfield($group, $id)
     {
         $path = func_get_args();
@@ -156,6 +174,11 @@ class Content extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return JsonResponse
+     */
     public function validate($group, $id)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -2));
@@ -183,6 +206,11 @@ class Content extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param null $group
+     * @param null $id
+     * @return string
+     */
     public function save($group = null, $id = null)
     {
         $data = $id ? [$group => [$id => $this->request->post->getArray()]] : $this->request->post->getArray('content');
@@ -204,6 +232,11 @@ class Content extends HtmlController
         return $id ? $this->display($group, $id) : $this->index();
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @param array|null $data
+     */
     protected function saveItem($group, $id, $data)
     {
         /** @var UniformResourceLocator $locator */
@@ -228,6 +261,11 @@ class Content extends HtmlController
         $file->free();
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return string
+     */
     public function reset($group, $id)
     {
         $this->params += [

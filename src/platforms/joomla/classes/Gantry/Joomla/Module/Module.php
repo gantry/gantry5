@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -39,11 +40,14 @@ class Module extends AbstractObject implements ExportInterface
 {
     use Export;
 
+    /** @var array */
     static protected $instances = [];
-
+    /** @var string */
     static protected $table = 'Module';
+    /** @var string */
     static protected $order = 'id';
 
+    /** @var array */
     protected $_assignments;
 
     /**

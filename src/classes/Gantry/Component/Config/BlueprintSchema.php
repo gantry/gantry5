@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,8 +25,10 @@ use RocketTheme\Toolbox\Blueprints\BlueprintSchema as BlueprintSchemaBase;
  */
 class BlueprintSchema extends BlueprintSchemaBase
 {
+    /** @var Config */
     protected $configuration;
 
+    /** @var array */
     protected $ignoreFormKeys = [
         'title' => true,
         'help' => true,
@@ -33,6 +36,7 @@ class BlueprintSchema extends BlueprintSchemaBase
         'fields' => true
     ];
 
+    /** @var array */
     protected $types = [
         'container.set' => [
             'input@' => false
@@ -91,7 +95,7 @@ class BlueprintSchema extends BlueprintSchemaBase
     /**
      * Embed an array to the blueprint.
      *
-     * @param $name
+     * @param string $name
      * @param array $value
      * @param string $separator
      * @param bool $merge   Merge fields instead replacing them.

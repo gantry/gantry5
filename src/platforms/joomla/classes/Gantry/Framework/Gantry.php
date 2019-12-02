@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,10 +14,14 @@ namespace Gantry\Framework;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 
+/**
+ * Class Gantry
+ * @package Gantry\Framework
+ */
 class Gantry extends Base\Gantry
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function debug()
     {
@@ -24,7 +29,7 @@ class Gantry extends Base\Gantry
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function admin()
     {

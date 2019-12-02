@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +14,10 @@ namespace Gantry\Framework;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Request\Request as BaseRequest;
 
+/**
+ * Class Request
+ * @package Gantry\Framework
+ */
 class Request extends BaseRequest
 {
     public function init()

@@ -1,6 +1,12 @@
 <?php
+
 /**
- * Helper class G5ThemeHelper containing useful theme functions and hooks
+ * @package   Gantry 5 Theme
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
+ * @license   GNU/GPLv2 and later
+ *
+ * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('ABSPATH') or die;
@@ -15,13 +21,15 @@ add_theme_support('admin-bar', array('callback' => array('G5ThemeHelper', 'admin
 add_filter('previous_comments_link_attributes', array('G5ThemeHelper', 'comments_pagination_attributes'));
 add_filter('next_comments_link_attributes', array('G5ThemeHelper', 'comments_pagination_attributes'));
 
+/**
+ * Helper class G5ThemeHelper containing useful theme functions and hooks
+ */
 class G5ThemeHelper
 {
     /**
      * Extend the Timber context
      *
      * @param array $context
-     *
      * @return array
      */
     public static function add_to_context(array $context)
@@ -37,9 +45,9 @@ class G5ThemeHelper
      *
      * Using the callback so the walker can go through and give us nested comments
      *
-     * @param type $comment
-     * @param type $args
-     * @param type $depth
+     * @param object $comment
+     * @param array $args
+     * @param int $depth
      */
     public static function comments($comment, $args, $depth)
     {
@@ -79,14 +87,22 @@ class G5ThemeHelper
         <?php
     }
 
-    // Add comments pagination link attributes
+    /**
+     * Add comments pagination link attributes
+     *
+     * @param string $attributes
+     * @return string
+     */
     public static function comments_pagination_attributes($attributes)
     {
         $attributes .= 'class="button"';
+
         return $attributes;
     }
 
-    // Modify the default Admin Bar margins to render properly in the mobile mode
+    /**
+     * Modify the default Admin Bar margins to render properly in the mobile mode
+     */
     public static function admin_bar_margins()
     { ?>
         <style type="text/css" media="screen">

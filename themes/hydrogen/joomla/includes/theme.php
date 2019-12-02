@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -12,7 +13,9 @@ class_exists('\\Gantry\\Framework\\Gantry') or die;
 
 use Gantry\Framework\Theme;
 
-// Define the template.
+/**
+ * Define the template.
+ */
 class GantryTheme extends Theme {}
 
 // Initialize theme stream.

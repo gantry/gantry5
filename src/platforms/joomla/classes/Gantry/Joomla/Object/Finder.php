@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,32 +20,19 @@ use Joomla\CMS\Service\Provider\Database;
  */
 abstract class Finder
 {
-    /**
-     * Table associated with the model.
-     *
-     * @var string
-     */
+    /** @var string Table associated with the model. */
     protected $table;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $primaryKey = 'id';
-
-    /**
-     * @var \JDatabaseQuery
-     */
+    /** @var \JDatabaseQuery */
     protected $query;
-
-    /**
-     * @var Database
-     */
+    /** @var Database */
     protected $db;
-
+    /** @var int */
     protected $start = 0;
-
+    /** @var int */
     protected $limit = 20;
-
+    /** @var bool */
     protected $skip = false;
 
     /**

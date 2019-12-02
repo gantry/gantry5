@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,6 +15,7 @@
 namespace Gantry\Framework\Base;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Framework\Document;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
 use RocketTheme\Toolbox\DI\Container;
@@ -28,10 +30,15 @@ abstract class Platform
 {
     use NestedArrayAccess, Export;
 
+    /** @var string */
     protected $name;
+    /** @var array */
     protected $features = [];
+    /** @var string */
     protected $settings_key;
+    /** @var array */
     protected $items;
+    /** @var Container */
     protected $container;
 
     /**
@@ -268,7 +275,7 @@ abstract class Platform
 
     /**
      * @param array|string $dependencies
-     * @return bool|null
+     * @return bool
      * @since 5.4.3
      */
     public function checkDependencies($dependencies)

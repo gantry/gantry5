@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,11 +25,16 @@ use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
 use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
 use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
 use Gantry\Component\Twig\TokenParser\TokenParserThrow;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class TwigExtension
@@ -365,6 +371,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      */
     public function truncateText($string, $limit = 150)
     {
+        /** @var Platform $platform */
         $platform = Gantry::instance()['platform'];
 
         return $platform->truncate($string, (int) $limit, false);
@@ -380,6 +387,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      */
     public function truncateHtml($string, $limit = 150)
     {
+        /** @var Platform $platform */
         $platform = Gantry::instance()['platform'];
 
         return $platform->truncate($string, (int) $limit, true);
@@ -475,7 +483,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     }
 
     /**
-     * @param \libXMLError $error
+     * @param \LibXMLError $error
      * @param string $input
      * @throws \RuntimeException
      */

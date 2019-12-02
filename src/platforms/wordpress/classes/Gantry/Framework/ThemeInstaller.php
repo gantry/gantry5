@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,13 +13,18 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
 
+/**
+ * Class ThemeInstaller
+ * @package Gantry\Framework
+ */
 class ThemeInstaller extends AbstractInstaller
 {
+    /** @var bool */
     public $initialized = true;
 
-    protected $extension;
-    protected $manifest;
-
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return get_theme_root() . '/' . $this->name;

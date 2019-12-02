@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -15,6 +16,7 @@ namespace Gantry\Component\Position;
 
 use Gantry\Component\Collection\Collection;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Framework\Outlines;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\DI\Container;
@@ -25,19 +27,11 @@ use RocketTheme\Toolbox\DI\Container;
  */
 class Positions extends Collection
 {
-    /**
-     * @var array|Position[]
-     */
+    /** @var array|Position[] */
     protected $items;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
-
-    /**
-     * @var Container
-     */
+    /** @var Container */
     protected $container;
 
     /**
@@ -51,7 +45,6 @@ class Positions extends Collection
 
     /**
      * @param string $path
-     *
      * @return $this
      * @throws \RuntimeException
      */

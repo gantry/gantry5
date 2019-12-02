@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,17 +14,23 @@
 
 namespace Gantry\Component\Twig;
 
+use Twig\Cache\CacheInterface;
+
 /**
  * Class TwigCacheFilesystem
  * @package Gantry\Component\Twig
  *
- * Replaces \Twig_Cache_Filesystem, needed for being able to change PHP versions on fly.
+ * Replaces \Twig\FilesystemCache, needed for being able to change PHP versions on fly.
  */
 class TwigCacheFilesystem implements \Twig_CacheInterface
 {
     const FORCE_BYTECODE_INVALIDATION = 1;
+
+    /** @var string */
     private $directory;
+    /** @var int */
     private $options;
+
     /**
      * @param $directory string The root cache directory
      * @param $options   int    A set of options

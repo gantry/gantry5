@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -22,6 +23,13 @@ use Gantry\Component\Twig\TwigExtension;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Cache\FilesystemCache;
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
+use Twig\TwigFilter;
 
 /**
  * Class AbstractTheme
@@ -34,19 +42,12 @@ abstract class AbstractTheme
 {
     use GantryTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $name;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     public $path;
 
-    /**
-     * @var \Twig_Environment
-     */
+    /** @var Environment */
     protected $renderer;
 
     /**
@@ -83,9 +84,9 @@ abstract class AbstractTheme
     /**
      * Define twig environment.
      *
-     * @param \Twig_Environment $twig
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @param LoaderInterface $loader
+     * @return Environment
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
@@ -112,7 +113,7 @@ abstract class AbstractTheme
     /**
      * Return renderer.
      *
-     * @return \Twig_Environment
+     * @return Environment
      */
     public function renderer()
     {
@@ -210,8 +211,8 @@ abstract class AbstractTheme
     /**
      * Set twig lookup paths to the loader.
      *
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Loader_Filesystem|null
+     * @param LoaderInterface $loader
+     * @return FilesystemLoader|null
      * @internal
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -35,21 +36,37 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     const VERSION = 7;
 
+    /** @var array */
     protected static $instances = [];
+    /** @var array */
     protected static $indexes = [];
-    protected $layout = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
 
+    /** @var string */
     public $name;
+    /** @var int */
     public $timestamp = 0;
+    /** @var array */
     public $preset = [];
+    /** @var array */
     public $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
 
+    /** @var array */
+    protected $layout = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
+    /** @var bool */
     protected $exists;
+    /** @var array */
     protected $items;
+    /** @var array|null */
     protected $references;
-    protected $parents;
-    protected $blocks;
+    /** @var array|null */
+    protected $children;
+    /** @var array */
+    protected $parents = [];
+    /** @var array */
+    protected $blocks = [];
+    /** @var array|null */
     protected $types;
+    /** @var array */
     protected $inherit;
 
     /**
@@ -336,6 +353,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * Save index.
      *
+     * @param array|null $index
      * @return $this
      */
     public function saveIndex($index = null)
@@ -394,7 +412,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @param $id
+     * @param string $id
      * @return string|null
      */
     public function getParentId($id)
@@ -832,7 +850,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 }
             }
         }
-
     }
 
     /**
@@ -1030,7 +1047,6 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         // If layout file doesn't exists, figure out what preset was used.
         if (!$filename) {
-
             // Attempt to load the index file.
             $indexFile = $locator("gantry-config://{$name}/index.yaml");
             if ($indexFile || !$preset) {

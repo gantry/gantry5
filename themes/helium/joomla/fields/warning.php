@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,10 +12,18 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
+/**
+ * Class JFormFieldWarning
+ */
 class JFormFieldWarning extends JFormField
 {
+    /** @var string */
     protected $type = 'Warning';
 
+    /**
+     * @return string
+     * @throws Exception
+     */
     protected function getInput()
     {
         $app = Factory::getApplication();

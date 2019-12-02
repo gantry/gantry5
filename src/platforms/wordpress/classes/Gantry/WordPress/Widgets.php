@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,12 +14,22 @@ namespace Gantry\WordPress;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Theme;
 
+/**
+ * Class Widgets
+ * @package Gantry\WordPress
+ */
 abstract class Widgets
 {
     use GantryTrait;
 
+    /** @var array */
     static protected $chromeArgs = [];
 
+    /**
+     * @param string $key
+     * @param array $params
+     * @return false|string|null
+     */
     public static function displayPosition($key, array $params = [])
     {
         $key = sanitize_title($key);
@@ -97,6 +108,11 @@ abstract class Widgets
         return $html;
     }
 
+    /**
+     * @param array|string $instance
+     * @param array $params
+     * @return string|null
+     */
     public static function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
@@ -141,7 +157,12 @@ abstract class Widgets
         return $html;
     }
 
-
+    /**
+     * @param string|int $sidebar_id
+     * @param string|int $id
+     * @param array $props
+     * @return string|null
+     */
     public static function getAjax($sidebar_id, $id, array $props = [])
     {
         global $wp_registered_sidebars, $wp_registered_widgets;
@@ -188,6 +209,9 @@ abstract class Widgets
         return $contents;
     }
 
+    /**
+     * @return array
+     */
     public static function listWidgets()
     {
         static $list;
@@ -212,6 +236,10 @@ abstract class Widgets
         return $list;
     }
 
+    /**
+     * @param bool $particlesOnly
+     * @return array
+     */
     public static function export($particlesOnly = true)
     {
         global $wp_registered_widget_controls;
@@ -277,6 +305,9 @@ abstract class Widgets
         return $sidebars;
     }
 
+    /**
+     * @param array $positions
+     */
     public static function import(array $positions)
     {
         // Load sidebars.
@@ -306,6 +337,11 @@ abstract class Widgets
         update_option('sidebars_widgets', $sidebars);
     }
 
+    /**
+     * @param string $type
+     * @param array $data
+     * @param string $sidebar
+     */
     public static function create($type, array $data, $sidebar = 'wp_inactive_widgets')
     {
         // Load widgets and sidebars.
@@ -320,6 +356,10 @@ abstract class Widgets
         update_option('sidebars_widgets', $sidebars);
     }
 
+    /**
+     * @param bool $next
+     * @return int
+     */
     protected static function displayWidgetId($next = false)
     {
         static $id = -1;
@@ -331,6 +371,10 @@ abstract class Widgets
         return $id;
     }
 
+    /**
+     * @param string $type
+     * @return string|false
+     */
     protected static function getImportType($type)
     {
         if ($type === 'gantry.particle') {
@@ -352,6 +396,13 @@ abstract class Widgets
         return $type;
     }
 
+    /**
+     * @param string $type
+     * @param array $data
+     * @param string|int $sidebar
+     * @param array $widgets
+     * @param array $sidebars
+     */
     protected static function addWidget($type, array $data, $sidebar, array &$widgets, array &$sidebars)
     {
         global $wp_registered_sidebars;
@@ -384,6 +435,10 @@ abstract class Widgets
         $sidebars[$sidebar][] = "{$type}-{$id}";
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public static function sidebarChromeFilter($params)
     {
         if (empty(static::$chromeArgs)) {
@@ -399,6 +454,10 @@ abstract class Widgets
         return $params;
     }
 
+    /**
+     * @param string|object $id
+     * @return string
+     */
     protected static function getWidgetClassname($id)
     {
         if (is_string($id)) {
@@ -420,6 +479,10 @@ abstract class Widgets
         return ltrim($classname, '_');
     }
 
+    /**
+     * @param string|int $id
+     * @return array|null
+     */
     protected static function getWidgetData($id)
     {
         $widgets = static::listWidgets();
@@ -429,13 +492,23 @@ abstract class Widgets
         return $widgets[$id];
     }
 
+    /**
+     * @param string $chrome
+     * @return array
+     */
     protected static function getChromeArgs($chrome = 'gantry')
     {
         /** @var Theme $theme */
         $theme = static::gantry()['theme'];
+
         return (array)$theme->details()->get('chrome.' . $chrome);
     }
 
+    /**
+     * @param string $widgetClass
+     * @param mixed $chrome
+     * @return array
+     */
     protected static function getWidgetChrome($widgetClass, $chrome)
     {
         global $wp_widget_factory;
@@ -474,6 +547,12 @@ abstract class Widgets
         return $args + ['widget_id' => $widgetObj->id, 'widget_name' => $widgetObj->name];
     }
 
+    /**
+     * @param object $widget
+     * @param mixed $return
+     * @param array $instance
+     * @return null
+     */
     public static function widgetCustomClassesForm($widget, $return, $instance)
     {
         $instance = wp_parse_args($instance, ['g5_classes' => '']);
@@ -492,6 +571,13 @@ abstract class Widgets
         return null;
     }
 
+    /**
+     * @param array $instance
+     * @param array $new_instance
+     * @param array $old_instance
+     * @param mixed $widget
+     * @return array
+     */
     public static function widgetCustomClassesUpdate($instance, $new_instance, $old_instance, $widget)
     {
         if (!empty($new_instance['g5_classes'])) {
@@ -503,9 +589,14 @@ abstract class Widgets
         return $instance;
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public static function widgetCustomClassesSidebarParams($params)
     {
         global $wp_registered_widgets;
+
         $widget_id  = $params[0]['widget_id'];
         $widget_obj = $wp_registered_widgets[$widget_id];
 

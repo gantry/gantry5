@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,8 +11,13 @@
 
 namespace Gantry\Framework;
 
+use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 
+/**
+ * Class Gantry
+ * @package Gantry\Framework
+ */
 class Gantry extends Base\Gantry
 {
     /**

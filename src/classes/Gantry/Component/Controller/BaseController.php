@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,19 +25,13 @@ use RuntimeException;
  */
 abstract class BaseController implements RestfulControllerInterface
 {
-    /**
-     * @var string Default HTTP method.
-     */
+    /** @var string Default HTTP method. */
     protected $method = 'GET';
 
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
-    /**
-     * @var array List of HTTP verbs and their actions.
-     */
+    /** @var array List of HTTP verbs and their actions. */
     protected $httpVerbs = [
         'GET' => [
             '/'         => 'index',
@@ -58,18 +53,15 @@ abstract class BaseController implements RestfulControllerInterface
         ]
     ];
 
-    /**
-     * @var array Parameters from router.
-     */
+    /** @var array Parameters from router. */
     protected $params = [];
 
-    /**
-     * @var Container
-     */
+    /** @var Container */
     protected $container;
 
     /**
      * BaseController constructor.
+     *
      * @param Container $container
      */
     public function __construct(Container $container)

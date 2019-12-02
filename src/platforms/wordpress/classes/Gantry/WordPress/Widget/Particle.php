@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,14 +12,24 @@
 namespace Gantry\WordPress\Widget;
 
 use Gantry\Admin\Router;
+use Gantry\Component\Config\Config;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
+use Gantry\Admin\Theme as AdminTheme;
 
+/**
+ * Class Particle
+ * @package Gantry\WordPress\Widget
+ */
 class Particle extends \WP_Widget
 {
+    /** @var bool */
     public $gantry5 = true;
 
+    /** @var Gantry */
     protected $container;
+    /** @var array */
     protected $content = [];
 
     public function __construct()
@@ -122,7 +133,7 @@ class Particle extends \WP_Widget
 
         $content = $this->content[$md5];
 
-        /** @var \Gantry\Framework\Document $document */
+        /** @var Document $document */
         $document = $this->container['document'];
         $document->addBlock($content);
 

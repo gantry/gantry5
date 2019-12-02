@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -17,55 +18,26 @@ use Joomla\CMS\Table\Table;
 
 /**
  * Abstract base class for database objects.
- *
- *
  */
 abstract class AbstractObject extends \JObject
 {
-    /**
-     * If you don't have global instance ids, override this in extending class.
-     * @var array
-     */
+    /** @var array If you don't have global instance ids, override this in extending class. */
     static protected $instances = [];
-
-    /**
-     * Override table class in your own class.
-     * @var string
-     */
+    /** @var string Override table class in your own class. */
     static protected $table;
-
-    /**
-     * Table class prefix, override if needed.
-     * @var string
-     */
+    /** @var string Table class prefix, override if needed. */
     static protected $tablePrefix = 'JTable';
-
-    /**
-     * Override table in your own class.
-     * @var string
-     */
+    /** @var string Override table in your own class. */
     static protected $order;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     public $id;
 
-    /**
-     * Is object stored into database?
-     * @var boolean
-     */
+    /** @var boolean Is object stored into database? */
     protected $_exists = false;
-
-    /**
-     * Readonly object.
-     * @var bool
-     */
+    /** @var bool Readonly object. */
     protected $_readonly = false;
-
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $_initialized = false;
 
     /**

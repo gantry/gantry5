@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,6 +20,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Environment;
+use Twig\Extension\CoreExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
+use Twig\TwigFilter;
 
 /**
  * Class Theme
@@ -28,9 +34,7 @@ class Theme extends AbstractTheme
 {
     use ThemeTrait;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $joomla = false;
 
     /**
@@ -55,15 +59,15 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::extendTwig()
      *
-     * @param \Twig_Environment $twig
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @param LoaderInterface $loader
+     * @return Environment
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
         parent::extendTwig($twig, $loader);
 
-        /** @var \Twig_Extension_Core $core */
+        /** @var CoreExtension $core */
         $core = $twig->getExtension('Twig_Extension_Core');
 
         $application = Factory::getApplication();
@@ -93,7 +97,7 @@ class Theme extends AbstractTheme
      *   {{ post.published_at|date("m/d/Y") }}
      * </pre>
      *
-     * @param \Twig_Environment                                 $env
+     * @param Environment                                       $env
      * @param \DateTime|\DateTimeInterface|\DateInterval|string $date     A date
      * @param string|null                                       $format   The target format, null to use the default
      * @param \DateTimeZone|string|null|false                   $timezone The target timezone, null to use the default, false to leave unchanged
@@ -201,8 +205,8 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Loader_Filesystem
+     * @param LoaderInterface $loader
+     * @return FilesystemLoader
      */
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {

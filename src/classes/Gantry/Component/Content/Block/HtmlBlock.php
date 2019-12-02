@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -197,9 +198,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['href' => (string) $element];
         }
+
         if (empty($element['href'])) {
             return false;
         }
+
         if (!isset($this->styles[$location])) {
             $this->styles[$location] = [];
         }
@@ -234,9 +237,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['content' => (string) $element];
         }
+
         if (empty($element['content'])) {
             return false;
         }
+
         if (!isset($this->styles[$location])) {
             $this->styles[$location] = [];
         }
@@ -266,9 +271,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['src' => (string) $element];
         }
+
         if (empty($element['src'])) {
             return false;
         }
+
         if (!isset($this->scripts[$location])) {
             $this->scripts[$location] = [];
         }
@@ -304,9 +311,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['content' => (string) $element];
         }
+
         if (empty($element['content'])) {
             return false;
         }
+
         if (!isset($this->scripts[$location])) {
             $this->scripts[$location] = [];
         }
@@ -336,6 +345,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (empty($html) || !is_string($html)) {
             return false;
         }
+
         if (!isset($this->html[$location])) {
             $this->html[$location] = [];
         }

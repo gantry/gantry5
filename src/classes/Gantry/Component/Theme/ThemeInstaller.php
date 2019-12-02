@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,14 +14,18 @@
 
 namespace Gantry\Component\Theme;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Class ThemeInstaller
@@ -28,16 +33,16 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 abstract class ThemeInstaller
 {
-    /**
-     * Set to true if in Gantry.
-     *
-     * @var bool
-     */
+    /** @var bool Set to true if in Gantry. */
     public $initialized = false;
+    /** @var array */
     public $actions = [];
 
+    /** @var string|null */
     protected $name;
+    /** @var array */
     protected $outlines;
+    /** @var object */
     protected $script;
 
     /**
@@ -339,6 +344,9 @@ abstract class ThemeInstaller
         return call_user_func_array([$translator, 'translate'], $args);
     }
 
+    /**
+     * @return object
+     */
     protected function getInstallerScript()
     {
         if (!$this->script) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,8 +21,11 @@ use Joomla\CMS\Factory;
  */
 class CategoryFinder extends Finder
 {
+    /** @var string */
     protected $table = '#__categories';
+    /** @var string */
     protected $extension = 'com_content';
+    /** @var bool */
     protected $readonly = true;
 
     /**

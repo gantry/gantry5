@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,8 +25,9 @@ class AssignmentFilter
     /**
      * Return all matching candidates with their score. Candidates are ordered by their scores.
      *
-     * @param array $candidates  In format of candidates[name][section][rule].
-     * @param array $page        In format of page[section][rule].
+     * @param array $candidates         In format of candidates[name][section][rule].
+     * @param array $page               In format of page[section][rule].
+    * @param callable|null $function    Matching function.
      * @return array
      */
     public function scores(array &$candidates, array &$page, callable $function = null)
@@ -49,6 +51,7 @@ class AssignmentFilter
      *
      * @param array $candidates  In format of candidates[name][section][rule].
      * @param array $page        In format of page[section][rule].
+     * @param callable|null      Matching function.
      * @return array
      */
     public function matches(array $candidates, array &$page, callable $function = null)

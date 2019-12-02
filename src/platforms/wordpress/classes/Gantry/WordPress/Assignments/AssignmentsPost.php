@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +14,10 @@ namespace Gantry\WordPress\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Framework\Gantry;
 
+/**
+ * Class AssignmentsPost
+ * @package Gantry\WordPress\Assignments
+ */
 class AssignmentsPost implements AssignmentsInterface
 {
     public $type = 'post';
@@ -103,7 +108,6 @@ class AssignmentsPost implements AssignmentsInterface
      * Get all available Post Types
      *
      * @param array $args
-     *
      * @return array
      */
     protected function getPostTypes($args = [])
@@ -122,9 +126,8 @@ class AssignmentsPost implements AssignmentsInterface
     /**
      * List all available Items
      *
-     * @param       $post_type
+     * @param object $post_type
      * @param array $args
-     *
      * @return mixed
      */
     protected function getItems($post_type, $args = [])
@@ -191,7 +194,6 @@ class AssignmentsPost implements AssignmentsInterface
             ];
             */
         } else {
-
             $walker = new AssignmentsWalker;
 
             $new_posts = [];
@@ -219,6 +221,12 @@ class AssignmentsPost implements AssignmentsInterface
 
     }
 
+    /**
+     * @param array $taxonomies
+     * @param string $post_type
+     * @param array $args
+     * @return mixed
+     */
     protected function getTerms($taxonomies, $post_type, $args = [])
     {
         $items = [];

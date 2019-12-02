@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +14,15 @@ namespace Gantry\Admin;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
+/**
+ * Class EventListener
+ * @package Gantry\Admin
+ */
 class EventListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -27,26 +35,44 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function onGlobalSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onStylesSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSettingsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onLayoutSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAssignmentsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onMenusSave(Event $event)
     {
         $defaults = [

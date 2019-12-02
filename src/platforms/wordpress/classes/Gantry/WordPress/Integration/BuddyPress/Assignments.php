@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,13 +20,18 @@ use Gantry\Component\Assignments\AssignmentsInterface;
  */
 class AssignmentsBuddyPress implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'buddypress';
+    /** @var int */
     public $priority = 4;
-
+    /** @var bool */
     public $_active = false;
 
+    /** @var array */
     protected $components = [];
+    /** @var array */
     protected $member_types = [];
+    /** @var array */
     protected $groups = [];
 
     public function __construct()
@@ -135,6 +141,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return [$components, $member_types, $groups];
     }
 
+    /**
+     * @return array
+     */
     protected function getComponents()
     {
         $items = [];
@@ -150,6 +159,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return $items;
     }
 
+    /**
+     * @return array
+     */
     protected function getMemberTypes()
     {
         $items = [];
@@ -165,6 +177,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return $items;
     }
 
+    /**
+     * @return array
+     */
     protected function getGroups()
     {
         $items = [];

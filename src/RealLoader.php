@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,7 +24,9 @@ namespace Gantry5;
  */
 abstract class RealLoader
 {
+    /** @var string */
     protected static $errorMessagePhpMin = 'You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.';
+    /** @var string */
     protected static $errorMessageGantryLoaded = 'Attempting to load Gantry 5 Framework multiple times.';
 
     /**

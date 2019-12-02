@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -38,10 +39,10 @@ use RocketTheme\Toolbox\Event\EventDispatcher;
  */
 abstract class Gantry extends Container
 {
-    /**
-     * @var static
-     */
+    /** @var static */
     protected static $instance;
+
+    /** @var mixed */
     protected $wrapper;
 
     /**
@@ -162,6 +163,7 @@ abstract class Gantry extends Container
     {
         /** @var EventDispatcher $events */
         $events = $this['events'];
+
         return $events->dispatch($eventName, $event);
     }
 
@@ -211,11 +213,10 @@ abstract class Gantry extends Container
     }
 
     /**
-     * @return Gantry
+     * @return static
      */
     protected static function init()
     {
-        /** @var Gantry $instance */
         $instance = new static();
 
         if (GANTRY_DEBUGGER) {

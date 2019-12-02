@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,10 +28,15 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Compiler extends BaseCompiler
 {
+    /** @var string */
     protected $basePath;
-    protected $fonts;
-    protected $usedFonts;
-    protected $streamNames;
+    /** @var array */
+    protected $fonts = [];
+    /** @var array */
+    protected $usedFonts = [];
+    /** @var array */
+    protected $streamNames = [];
+    /** @var array */
     protected $parsedFiles = [];
 
     public function __construct()
@@ -340,6 +346,7 @@ class Compiler extends BaseCompiler
         $this->sourceNames[] = $locator->isStream($path) ? $locator->findResource($path, false) : $path;
         $this->streamNames[] = $path;
         $this->addParsedFile($path);
+
         return $parser;
     }
 

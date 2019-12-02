@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -18,10 +19,11 @@ namespace Gantry\Component\Layout\Version;
  */
 class Format1
 {
+    /** @var array */
     protected $scopes = [0 => 'grid', 1 => 'block'];
-
+    /** @var array */
     protected $data;
-
+    /** @var array */
     protected $keys = [];
 
     /**
@@ -107,6 +109,7 @@ class Format1
         } elseif ($item->type === 'offcanvas') {
             $item->id = $item->subtype = $item->type;
             unset ($item->attributes->name, $item->attributes->boxed);
+
             return;
         } else {
             // Update all ids to match the new standards.
@@ -134,6 +137,7 @@ class Format1
         if (isset($item->attributes->boxed)) {
             // Boxed already set, just change boxed=0 to boxed='' to use default settings.
             $item->attributes->boxed = $item->attributes->boxed ?: '';
+
             return;
         }
 

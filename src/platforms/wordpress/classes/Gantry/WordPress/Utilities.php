@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,8 +11,20 @@
 
 namespace Gantry\WordPress;
 
+/**
+ * Class Utilities
+ * @package Gantry\WordPress
+ */
 abstract class Utilities
 {
+    /**
+     * @param string $text
+     * @param int $length
+     * @param string $ending
+     * @param bool $exact
+     * @param bool $considerHtml
+     * @return string
+     */
     static function truncate($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
     {
         if (!function_exists('mb_strlen')) {
@@ -36,7 +49,6 @@ abstract class Utilities
      * @param string  $ending       Ending to be appended to the trimmed string.
      * @param boolean $exact        If false, $text will not be cut mid-word
      * @param boolean $considerHtml If true, HTML tags would be handled correctly
-     *
      * @return string Trimmed string.
      */
     static function truncateUtf8($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
@@ -100,6 +112,7 @@ abstract class Utilities
                         }
                     }
                     $truncate .= mb_substr($line_matchings[2], 0, $left + $entities_length);
+
                     // maximum length is reached, so get off the loop
                     break;
                 } else {
@@ -158,7 +171,6 @@ abstract class Utilities
      * @param string  $ending       Ending to be appended to the trimmed string.
      * @param boolean $exact        If false, $text will not be cut mid-word
      * @param boolean $considerHtml If true, HTML tags would be handled correctly
-     *
      * @return string Trimmed string.
      */
     static function truncateCompat($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
@@ -263,7 +275,5 @@ abstract class Utilities
         }
 
         return $truncate;
-
     }
-
 }

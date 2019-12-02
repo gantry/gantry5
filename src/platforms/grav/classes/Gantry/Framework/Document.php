@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -15,7 +16,12 @@ use Grav\Common\Assets;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
+use Grav\Common\Page\Pages;
 
+/**
+ * Class Document
+ * @package Gantry\Framework
+ */
 class Document extends HtmlDocument
 {
     public static function registerAssets()
@@ -45,6 +51,9 @@ class Document extends HtmlDocument
         return substr($absolute, 0, -strlen($relative));
     }
 
+    /**
+     * @return string
+     */
     public static function rootUri()
     {
         $grav = Grav::instance();
@@ -52,6 +61,9 @@ class Document extends HtmlDocument
         return rtrim($grav['base_url'], '/') ?: '/';
     }
 
+    /**
+     * @return string
+     */
     public static function siteUrl()
     {
         static $url;
@@ -104,6 +116,9 @@ class Document extends HtmlDocument
         }
     }
 
+    /**
+     * @param string $group
+     */
     protected static function registerScripts($group)
     {
         $grav = Grav::instance();
@@ -135,6 +150,11 @@ class Document extends HtmlDocument
         }
     }
 
+    /**
+     * @param string $url
+     * @param bool $pipeline
+     * @return string
+     */
     protected static function getRelativeUrl($url, $pipeline)
     {
         $base = rtrim(static::rootUri(), '/') . '/';

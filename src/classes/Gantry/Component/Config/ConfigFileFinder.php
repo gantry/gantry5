@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,6 +21,7 @@ use Gantry\Component\Filesystem\Folder;
  */
 class ConfigFileFinder
 {
+    /** @var string */
     protected $base = '';
 
     /**

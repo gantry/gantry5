@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,9 +13,15 @@ namespace Gantry\WordPress\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 
+/**
+ * Class AssignmentsMenu
+ * @package Gantry\WordPress\Assignments
+ */
 class AssignmentsMenu implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'menu';
+    /** @var int */
     public $priority = 3;
 
     /**
@@ -81,6 +88,10 @@ class AssignmentsMenu implements AssignmentsInterface
         return $list;
     }
 
+    /**
+     * @param array $args
+     * @return array
+     */
     protected function getMenus($args = [])
     {
         $defaults = [
@@ -94,6 +105,10 @@ class AssignmentsMenu implements AssignmentsInterface
         return $menus;
     }
 
+    /**
+     * @param object $menu
+     * @return mixed
+     */
     protected function getItems($menu)
     {
         $items = [];
@@ -139,6 +154,11 @@ class AssignmentsMenu implements AssignmentsInterface
         return apply_filters('g5_assignments_' . $menu->slug . '_menu_list_items', $items, $menu->slug, $this->type);
     }
 
+    /**
+     * @param array $s
+     * @param bool $use_forwarded_host
+     * @return string
+     */
     function _URLorigin($s, $use_forwarded_host = false)
     {
         $s_port = apply_filters('gantry5_current_url_server_port', '80');
@@ -155,6 +175,11 @@ class AssignmentsMenu implements AssignmentsInterface
         return $protocol . '://' . $host;
     }
 
+    /**
+     * @param array $s
+     * @param bool $use_forwarded_host
+     * @return string
+     */
     function _curPageURL($s, $use_forwarded_host = false)
     {
         return $this->_URLorigin($s, $use_forwarded_host) . $s['REQUEST_URI'];
