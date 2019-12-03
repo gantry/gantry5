@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -96,12 +97,12 @@ class Export extends HtmlController
         foreach ($exported['files'] as $stream => $files) {
             foreach ($files as $path => $uri) {
                 $filename = $locator->findResource($uri);
-                
+
                 if (file_exists($filename)) {
                     $zip->addFile($filename, "files/{$stream}/{$path}");
                 }
             }
-            
+
         }
 
         $zip->close();

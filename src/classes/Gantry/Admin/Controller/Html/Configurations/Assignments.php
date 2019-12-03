@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,9 +14,9 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\AssigmentsEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Framework\Assignments as AssignmentsObject;
-use RocketTheme\Toolbox\Event\Event;
 
 /**
  * Class Assignments
@@ -65,7 +66,7 @@ class Assignments extends HtmlController
         $assignments->save($this->request->post->getArray('assignments'));
 
         // Fire save event.
-        $event = new Event;
+        $event = new AssigmentsEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;

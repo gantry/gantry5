@@ -472,7 +472,7 @@ class Format2
      * @param string $type
      * @param string $subtype
      * @param string $id
-     * @return string
+     * @return string|null
      */
     protected function getTitle($type, $subtype, $id)
     {

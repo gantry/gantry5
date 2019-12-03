@@ -66,7 +66,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected $blocks = [];
     /** @var array|null */
     protected $types;
-    /** @var array */
+    /** @var array|null */
     protected $inherit;
 
     /**

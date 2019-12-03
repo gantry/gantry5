@@ -23,4 +23,11 @@ class ThemeInstaller extends AbstractInstaller
     {
         throw new \RuntimeException('Not Implemented');
     }
+
+    /**
+     * @param int|string|array $id
+     */
+    public function loadExtension($id)
+    {
+    }
 }

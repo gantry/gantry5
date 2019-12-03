@@ -91,7 +91,7 @@ class Gettext
     }
 
     /**
-     * @return int
+     * @return int|false
      */
     protected function readInt()
     {

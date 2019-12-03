@@ -39,7 +39,7 @@ use RocketTheme\Toolbox\Event\EventDispatcher;
  */
 abstract class Gantry extends Container
 {
-    /** @var static */
+    /** @var static|null */
     protected static $instance;
 
     /** @var mixed */
@@ -50,7 +50,7 @@ abstract class Gantry extends Container
      */
     public static function instance()
     {
-        if (!self::$instance) {
+        if (null === self::$instance) {
             self::$instance = static::init();
 
             if (!defined('GANTRY5_DEBUG')) {
@@ -179,7 +179,10 @@ abstract class Gantry extends Container
         /** @var EventDispatcher $events */
         $events = $this['events'];
 
-        return $events->dispatch($eventName, $event);
+        /** @var Event $event */
+        $event = $events->dispatch($eventName, $event);
+
+        return $event;
     }
 
     /**

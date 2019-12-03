@@ -46,12 +46,12 @@ class CompiledBlueprints extends CompiledBase
      * Load single configuration file and append it to the correct position.
      *
      * @param  string  $name  Name of the position.
-     * @param  array   $files  Files to be loaded.
+     * @param  string  $filename  File to be loaded.
      */
-    protected function loadFile($name, $files)
+    protected function loadFile($name, $filename)
     {
         // Load blueprint file.
-        $blueprint = new BlueprintForm($files);
+        $blueprint = new BlueprintForm($filename);
 
         $this->object->embed($name, $blueprint->load()->toArray(), '/', true);
     }

@@ -322,7 +322,7 @@ class HtmlDocument
             if (is_object($string) && method_exists($string, '__toString')) {
                 $string = (string) $string;
             } elseif (in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
-                return $string;
+                return '';
             }
         }
 

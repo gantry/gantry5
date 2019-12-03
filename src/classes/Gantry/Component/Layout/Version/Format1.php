@@ -117,13 +117,15 @@ class Format1
         }
 
         if (!empty($item->attributes->extra)) {
-            foreach ($item->attributes->extra as $i => $extra) {
+            /** @var \stdClass $attributes */
+            $attributes = $item->attributes;
+            foreach ($attributes->extra as $i => $extra) {
                 $v = reset($extra);
                 $k = key($extra);
                 if ($k === 'id') {
                     $item->id = preg_replace('/^g-/', '', $v);
-                    $item->attributes->id = $v;
-                    unset ($item->attributes->extra[$i]);
+                    $attributes->id = $v;
+                    unset ($attributes->extra[$i]);
                 }
             }
             if (empty($item->attributes->extra)) {

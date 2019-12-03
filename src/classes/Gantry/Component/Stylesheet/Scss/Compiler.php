@@ -148,7 +148,7 @@ class Compiler extends BaseCompiler
      * get-font-url($my-font-variable);
      *
      * @param array $args
-     * @return string
+     * @return string|false
      */
     public function userGetFontUrl($args)
     {
@@ -234,7 +234,7 @@ class Compiler extends BaseCompiler
      * get-local-font-url(roboto, 400);
      *
      * @param array $args
-     * @return string
+     * @return string|false
      */
     public function userGetLocalFontUrl($args)
     {

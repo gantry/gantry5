@@ -197,7 +197,7 @@ class Position extends Collection
      * Returns the value at specified offset.
      *
      * @param string $offset  The offset to retrieve.
-     * @return Module
+     * @return Module|null
      */
     public function offsetGet($offset)
     {

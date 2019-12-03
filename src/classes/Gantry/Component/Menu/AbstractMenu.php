@@ -71,7 +71,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Return default menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getDefaultMenuName()
     {
@@ -91,7 +91,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Return active menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveMenuName()
     {

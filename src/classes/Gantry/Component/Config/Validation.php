@@ -737,7 +737,7 @@ class Validation
     /**
      * @param mixed $value
      * @param array $params
-     * @return string
+     * @return bool
      */
     public static function validate_Alpha($value, $params)
     {
@@ -787,7 +787,7 @@ class Validation
     /**
      * @param mixed $value
      * @param array $params
-     * @return int|float
+     * @return bool
      */
     public static function validate_Digit($value, $params)
     {

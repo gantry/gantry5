@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -26,8 +27,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Filepicker extends JsonController
 {
-    /** @var bool */
-    protected $base = false;
+    /** @var string */
+    protected $base;
     /** @var bool */
     protected $value = false;
     /** @var bool */

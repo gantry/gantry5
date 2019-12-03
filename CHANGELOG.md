@@ -6,6 +6,7 @@
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.0
+        - Platform independent code passes phpstan level 3 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6+
 1. [Joomla](#joomla)
@@ -18,6 +19,7 @@
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
+        - Grav specific code passes phpstan level 1 tests
 
 # 5.4.32
 ## mm/dd/2019

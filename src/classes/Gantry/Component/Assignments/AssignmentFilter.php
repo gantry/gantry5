@@ -97,7 +97,7 @@ class AssignmentFilter
      *
      * @param array $matches
      * @param string $method
-     * @return int
+     * @return float
      */
     public function getScore(array &$matches, $method = 'max')
     {

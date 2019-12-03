@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,12 +14,12 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Admin\Events\InitThemeEvent;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Framework\Platform;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -92,9 +93,10 @@ class Theme extends AbstractTheme
         }
 
         // Fire admin init event.
-        $event = new Event;
+        $event = new InitThemeEvent();
         $event->gantry = $gantry;
         $event->theme = $this;
+
         $gantry->fireEvent('admin.init.theme', $event);
     }
 
