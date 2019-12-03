@@ -49,7 +49,7 @@ class ModuleCollection extends Collection
             }
             if (empty($item['assignments'])) {
                 $item['assignments'] = [];
-            } elseif (in_array(0, $item['assignments'])) {
+            } elseif (in_array(0, $item['assignments'], true)) {
                 $item['assignments'] = ['page' => true];
             } else {
                 $list = [];
@@ -143,8 +143,9 @@ class ModuleCollection extends Collection
     {
         $list = [];
         foreach ($values as $array) {
-            $list = array_merge($list, (array) $array);
+            $list[] = (array) $array;
         }
+        $list = array_merge([], ...$list);
 
         return array_unique($list);
     }

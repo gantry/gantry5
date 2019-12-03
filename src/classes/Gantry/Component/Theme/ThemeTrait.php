@@ -139,7 +139,7 @@ trait ThemeTrait
         $outline = isset($gantry['configuration']) ? $gantry['configuration'] : null;
 
         // Set configuration if given.
-        if ($name && $name != $outline) {
+        if ($name && $name !== $outline) {
             GANTRY_DEBUGGER && Debugger::addMessage("Using Gantry outline {$name}");
 
             $gantry['configuration'] = $name;
@@ -161,7 +161,9 @@ trait ThemeTrait
         $preset = $this->preset;
 
         if (!$preset && !$forced) {
-            $preset = static::gantry()['config']->get('styles.preset', '-undefined-');
+            /** @var Config $config */
+            $config = static::gantry()['config'];
+            $preset = $config->get('styles.preset', '-undefined-');
         }
 
         if ($preset && !isset($presets[$preset])) {
@@ -196,7 +198,7 @@ trait ThemeTrait
     public function compiler()
     {
         if (!$this->compiler) {
-            $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
+            $compilerClass = (string) $this->details()->get('configuration.css.compiler', ScssCompiler::class);
 
             if (!class_exists($compilerClass)) {
                 throw new \RuntimeException('CSS compiler used by the theme not found');
@@ -260,7 +262,9 @@ trait ThemeTrait
             $variables = $this->presets()->flatten($this->preset . '.styles', '-');
         } else {
             $gantry = self::gantry();
-            $variables = $gantry['config']->flatten('styles', '-');
+            /** @var Config $config */
+            $config = $gantry['config'];
+            $variables = $config->flatten('styles', '-');
         }
 
         return $variables;
@@ -281,7 +285,7 @@ trait ThemeTrait
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
+            $filename = $locator->findResource('gantry-theme://gantry/presets.yaml');
             $file = CompiledYamlFile::instance($filename);
             $presets = new Config((array)$file->content());
             $file->free();
@@ -357,7 +361,7 @@ trait ThemeTrait
      */
     public function loadAtoms()
     {
-        if (!isset($this->atoms)) {
+        if (!$this->atoms) {
             $this->atoms = true;
 
             GANTRY_DEBUGGER && Debugger::startTimer('atoms', 'Preparing atoms');
@@ -480,7 +484,7 @@ trait ThemeTrait
 
         $number = round($text, 1);
         $number = max(5, $number);
-        $number = (string) ($number == 100 ? 100 : min(95, $number));
+        $number = (string) ($number === 100.0 ? 100 : min(95, $number));
 
         static $sizes = [
             '33.3' => 'size-33-3',
@@ -637,7 +641,7 @@ trait ThemeTrait
                     $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
 
                     // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
-                    if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
+                    if ($roundSize !== 100.0 && (string) $roundSize !== (string) ($equalized * $childrenCount)) {
                         $fraction = 0;
                         $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                         foreach ($item->children as $child) {
@@ -703,16 +707,19 @@ trait ThemeTrait
         /** @var Config $global */
         $global = $gantry['global'];
 
+        /** @var Config $config */
+        $config = $gantry['config'];
+
         $production = (bool) $global->get('production');
         $subtype = $item->subtype;
-        $enabled = $gantry['config']->get("particles.{$subtype}.enabled", 1);
+        $enabled = $config->get("particles.{$subtype}.enabled", 1);
 
         if (!$enabled) {
             return new HtmlBlock;
         }
 
         $attributes = isset($item->attributes) ? $item->attributes : [];
-        $particle = $gantry['config']->getJoined("particles.{$subtype}", $attributes);
+        $particle = $config->getJoined("particles.{$subtype}", $attributes);
 
         $cached = false;
         $cacheKey = [];
@@ -772,9 +779,9 @@ trait ThemeTrait
 
         /** @var Document $document */
         $document = $gantry['document'];
-        $document->push();
+        $document::push();
         $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
-        $content = $document->pop()->setContent($html);
+        $content = $document::pop()->setContent($html);
 
         if (isset($file)) {
             // Save HTML and assets into the cache.

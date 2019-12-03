@@ -24,16 +24,16 @@ class Request extends BaseRequest
     {
         // Replaces parent contructor.
 
-        $get = stripslashes_deep($_GET);
+        $get = \stripslashes_deep($_GET);
         $this->get = new Input($get);
 
-        $post = stripslashes_deep($_POST);
+        $post = \stripslashes_deep($_POST);
         $this->post = new Input($post);
 
-        $cookie = stripslashes_deep($_COOKIE);
+        $cookie = \stripslashes_deep($_COOKIE);
         $this->cookie = new Input($cookie);
 
-        $server = stripslashes_deep($_SERVER);
+        $server = \stripslashes_deep($_SERVER);
         $this->server = new Input($server);
 
         $request = array_merge($get, $post);

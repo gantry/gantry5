@@ -41,7 +41,7 @@ class EventListener implements EventSubscriberInterface
     public function onGlobalSave(Event $event)
     {
         $option = (array) \get_option('gantry5_plugin');
-        $option['production'] = intval((bool) $event->data['production']);
+        $option['production'] = (int)(bool) $event->data['production'];
         \update_option('gantry5_plugin', $option);
     }
 
@@ -121,24 +121,24 @@ class EventListener implements EventSubscriberInterface
         $id = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
 
         // Save global menu settings into Wordpress.
-        $menuObject = wp_get_nav_menu_object($id);
-        if (is_wp_error($menuObject)) {
+        $menuObject = \wp_get_nav_menu_object($id);
+        if (\is_wp_error($menuObject)) {
             throw new \RuntimeException("Saving menu failed: Menu {$event->resource} ({$id}) not found", 400);
         }
 
         $options = [
-            'menu-name' => trim(esc_html($menu['settings.title']))
+            'menu-name' => trim(\esc_html($menu['settings.title']))
         ];
 
-        $id = wp_update_nav_menu_object($id, $options);
-        if (is_wp_error($id)) {
+        $id = \wp_update_nav_menu_object($id, $options);
+        if (\is_wp_error($id)) {
             throw new \RuntimeException("Saving menu failed: Failed to update {$event->resource}", 400);
         }
 
         unset($menu['settings']);
 
         // Get all menu items (or false).
-        $unsorted_menu_items = wp_get_nav_menu_items(
+        $unsorted_menu_items = \wp_get_nav_menu_items(
             $id,
             ['orderby' => 'ID', 'output' => ARRAY_A, 'output_key' => 'ID', 'post_status' => 'draft,publish']
         );
@@ -150,7 +150,7 @@ class EventListener implements EventSubscriberInterface
             }
         }
 
-        wp_defer_term_counting(true);
+        \wp_defer_term_counting(true);
 
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
         $ordering = $this->flattenOrdering($menu['ordering']);
@@ -175,12 +175,12 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-url' => $wpItem->url,
                     'menu-item-description' => $wpItem->description,
                     'menu-item-attr-title' => $wpItem->attr_title,
-                    'menu-item-target' => $item['target'] != '_self' ? $item['target'] : '',
+                    'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
                     'menu-item-classes' => trim($item['class']),
                     'menu-item-xfn' => $wpItem->xfn
                 ];
 
-                wp_update_nav_menu_item($id, $wpItem->db_id, $args);
+                \wp_update_nav_menu_item($id, $wpItem->db_id, $args);
 
                 unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
             }
@@ -208,7 +208,7 @@ class EventListener implements EventSubscriberInterface
             $event->menu["items.{$key}"] = $item;
         }
 
-        wp_defer_term_counting(false);
+        \wp_defer_term_counting(false);
     }
 
     /**

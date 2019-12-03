@@ -250,8 +250,10 @@ abstract class Platform
     public function finalize()
     {
         $gantry = Gantry::instance();
+        /** @var Document $document */
+        $document = $gantry['document'];
 
-        $gantry['document']->registerAssets();
+        $document::registerAssets();
     }
 
     /**
@@ -266,9 +268,10 @@ abstract class Platform
 
     /**
      * @param string $action
+     * @param int|string|null $id
      * @return bool
      */
-    public function authorize($action)
+    public function authorize($action, $id = null)
     {
         return true;
     }

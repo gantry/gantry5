@@ -33,7 +33,7 @@ use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use Grav\Common\User\Interfaces\UserInterface;
 use Grav\Common\Utils;
-use Grav\Plugin\Admin;
+use Grav\Plugin\Admin\Admin;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\Session\Message;
@@ -47,7 +47,7 @@ class Gantry5Plugin extends Plugin
     public $base;
     /** @var Theme */
     protected $theme;
-    /** @var Outline */
+    /** @var string */
     protected $outline;
     protected $apiPath;
 

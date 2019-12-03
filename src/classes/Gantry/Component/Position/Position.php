@@ -128,7 +128,7 @@ class Position extends Collection
             $name = ($item instanceof Module) ? $item->name : $item;
 
             $list[] = $name;
-            if (!in_array($name, $this->items)) {
+            if (!in_array($name, $this->items, true)) {
                 $this->add($item);
             }
         }
@@ -181,7 +181,7 @@ class Position extends Collection
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return Module
      */
     public function get($name)
@@ -299,7 +299,7 @@ class Position extends Collection
      */
     public function toYaml($inline = 3, $indent = 2, $includeModules = false)
     {
-        return Yaml::dump($this->toArray($includeModules), $inline, $indent, true, false);
+        return Yaml::dump($this->toArray($includeModules), $inline, $indent);
     }
 
     /**

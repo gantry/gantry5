@@ -47,5 +47,7 @@ class RedirectResponse extends Response
     public function setContent($content)
     {
         $this->setHeader('Location', $content);
+
+        return $this;
     }
 }

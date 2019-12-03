@@ -23,8 +23,9 @@ use RocketTheme\Toolbox\File\JsonFile;
  */
 class Fontpicker extends JsonController
 {
+    /** @var string */
     protected $google_fonts = 'gantry-admin://js/google-fonts.json';
-
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index'

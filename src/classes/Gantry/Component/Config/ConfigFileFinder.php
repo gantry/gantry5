@@ -85,9 +85,10 @@ class ConfigFileFinder
     {
         $list = [];
         foreach ($paths as $folder) {
-            $list = array_merge_recursive($list, $this->detectAll($folder, $pattern, $levels));
+            $list[] = $this->detectAll($folder, $pattern, $levels);
         }
-        return $list;
+
+        return array_merge_recursive([], ...$list);
     }
 
     /**
@@ -135,7 +136,7 @@ class ConfigFileFinder
      */
     public function locateFile(array $paths, $name, $ext = '.yaml')
     {
-        $filename = preg_replace('|[.\/]+|', '/', $name) . $ext;
+        $filename = preg_replace('|[./]+|', '/', $name) . $ext;
 
         $list = [];
         foreach ($paths as $folder) {
@@ -204,7 +205,11 @@ class ConfigFileFinder
     {
         $folder = rtrim($folder, '/');
         $path = trim(Folder::getRelativePath($folder), '/');
-        $base = $path === $folder ? '' : ($path ? substr($folder, 0, -strlen($path)) : $folder . '/');
+        if ($path === $folder) {
+            $base = '';
+        } else {
+            $base = $path ? substr($folder, 0, -strlen($path)) : $folder . '/';
+        }
 
         $list = [];
 
@@ -253,7 +258,7 @@ class ConfigFileFinder
                 'filters' => [
                     'pre-key' => $this->base,
                     'key' => $pattern,
-                    'value' => function (\RecursiveDirectoryIterator $file) use ($path) {
+                    'value' => static function (\RecursiveDirectoryIterator $file) use ($path) {
                         return ["{$path}/{$file->getSubPathname()}" => $file->getMTime()];
                     }
                 ],

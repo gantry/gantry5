@@ -216,7 +216,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $self = $this;
 
-        $callable = function () use ($self, $type) {
+        $callable = static function () use ($self, $type) {
             return $self->getBlueprint($type);
         };
 
@@ -328,12 +328,12 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $type = $item['type'];
 
-        while (true) {
+        do {
             $num = mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }
-        }
+        } while (true);
 
         $id = "{$type}-{$num}";
 

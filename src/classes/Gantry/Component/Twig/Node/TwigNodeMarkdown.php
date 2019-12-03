@@ -22,7 +22,7 @@ class TwigNodeMarkdown extends \Twig_Node implements \Twig_NodeOutputInterface
     /**
      * TwigNodeMarkdown constructor.
      * @param \Twig_Node $body
-     * @param $lineno
+     * @param int $lineno
      * @param string $tag
      */
     public function __construct(\Twig_Node $body, $lineno, $tag = 'markdown')
@@ -32,7 +32,7 @@ class TwigNodeMarkdown extends \Twig_Node implements \Twig_NodeOutputInterface
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler A Twig_Compiler instance
+     * @param \Twig_Compiler $compiler A Twig_Compiler instance
      */
     public function compile(\Twig_Compiler $compiler)
     {

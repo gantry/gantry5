@@ -96,7 +96,7 @@ class Content
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $item = $file->content();
+        $item = (array)$file->content();
         $file->free();
 
         return $item;

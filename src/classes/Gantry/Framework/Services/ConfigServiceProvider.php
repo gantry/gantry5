@@ -35,28 +35,28 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $gantry)
     {
-        $gantry['blueprints'] = function($c) {
+        $gantry['blueprints'] = static function(Gantry $gantry) {
             GANTRY_DEBUGGER && Debugger::startTimer('blueprints', 'Loading blueprints');
 
-            $blueprints = static::blueprints($c);
+            $blueprints = static::blueprints($gantry);
 
             GANTRY_DEBUGGER && Debugger::stopTimer('blueprints');
 
             return $blueprints;
         };
 
-        $gantry['config'] = function($c) {
+        $gantry['config'] = static function(Gantry $gantry) {
             // Make sure configuration has been set.
-            if (!isset($c['configuration'])) {
+            if (!isset($gantry['configuration'])) {
                 throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
             }
 
             GANTRY_DEBUGGER && Debugger::startTimer('config', 'Loading configuration');
 
             // Get the current configuration and lock the value from modification.
-            $outline = $c->lock('configuration');
+            $outline = $gantry->lock('configuration');
 
-            $config = static::load($c, $outline);
+            $config = static::load($gantry, $outline);
 
             GANTRY_DEBUGGER && Debugger::setConfig($config)->stopTimer('config');
 
@@ -105,8 +105,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
         $paths = [];
         foreach ($uris as $uri) {
-            $paths = array_merge($paths, $locator->findResources($uri));
+            $paths[] = $locator->findResources($uri);
         }
+        $paths = array_merge([], ...$paths);
 
         // Locate all configuration files to be compiled.
         $files = (new ConfigFileFinder)->locateFiles($paths);
@@ -118,7 +119,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
         }
 
         $compiled = new CompiledConfig($cache, $files, GANTRY5_ROOT);
-        $compiled->setBlueprints(function() use ($container) {
+        $compiled->setBlueprints(static function() use ($container) {
             return $container['blueprints'];
         });
 

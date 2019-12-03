@@ -460,6 +460,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $positions = $this->referencesByType('position', 'position');
 
         $list = [];
+        /** @var \stdClass $position */
         foreach($positions as $position) {
             if (!isset($position->attributes->key)) {
                 continue;
@@ -548,13 +549,14 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      * Return atoms from the layout.
      *
      * @return array|null
-     * @deprecated
+     *
+     * (deprecated)
      */
     public function atoms()
     {
         $list   = null;
 
-        $atoms = array_filter($this->items, function ($section) {
+        $atoms = array_filter($this->items, static function ($section) {
             return $section->type === 'atoms' && !empty($section->children);
         });
         $atoms = array_shift($atoms);
@@ -641,12 +643,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $this->init();
 
         /** @var Layout $old */
-        $old = new static('tmp', $old);
+        $oldLayout = new static('tmp', $old);
 
         $leftover = [];
 
         // Copy normal sections.
-        $data = $old->referencesByType('section');
+        $data = $oldLayout->referencesByType('section');
 
         if (isset($this->types['section'])) {
             $sections = $this->types['section'];
@@ -655,7 +657,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         // Copy offcanvas.
-        $data = $old->referencesByType('offcanvas');
+        $data = $oldLayout->referencesByType('offcanvas');
         if (isset($this->types['offcanvas'])) {
             $offcanvas = $this->types['offcanvas'];
 
@@ -663,7 +665,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         }
 
         // Copy atoms.
-        $data = $old->referencesByType('atoms');
+        $data = $oldLayout->referencesByType('atoms');
         if (isset($this->types['atoms'])) {
             $atoms = $this->types['atoms'];
 
@@ -716,6 +718,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     protected function copyData(array $data, array $sections, array &$leftover)
     {
         foreach ($data as $type => $items) {
+            /** @var \stdClass $item */
             foreach ($items as $item) {
                 $found = false;
                 if (isset($sections[$type])) {
@@ -765,6 +768,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
      */
     protected function cleanLayout(array $items)
     {
+        /** @var \stdClass $item */
         foreach ($items as $item) {
             if (!empty($item->inherit->include)) {
                 $include = $item->inherit->include;
@@ -797,12 +801,12 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $inheriting = $this->inherit();
 
         if (GANTRY_DEBUGGER && $inheriting) {
-            Debugger::addMessage(sprintf("Layout from outline %s inherits %s", $this->name, implode(", ", array_keys($inheriting))));
+            Debugger::addMessage(sprintf('Layout from outline %s inherits %s', $this->name, implode(', ', array_keys($inheriting))));
         }
 
         foreach ($inheriting as $outlineId => $list) {
             try {
-                $outline = $this->instance($outlineId);
+                $outline = $this::instance($outlineId);
             } catch (\Exception $e) {
                 // Outline must have been deleted.
                 GANTRY_DEBUGGER && Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
@@ -845,7 +849,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
                 if (!$outline || !isset($inherited->attributes)) {
                     // Remove inheritance information if outline doesn't exist.
-                    $item->inherit = new \stdClass;
+                    $item->inherit = new \stdClass();
                     unset($this->inherit[$item->id]);
                 }
             }
@@ -868,6 +872,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             $this->inherit = [];
         }
 
+        /** @var \stdClass $item */
         foreach ($items as $item) {
             if (is_object($item)) {
                 $type = $item->type;
@@ -936,13 +941,13 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
         $key_id = $key . '-'. $id;
         if (!$id || isset($this->references[$key_id])) {
-            while (true) {
+            do {
                 $id = mt_rand(1000, 9999);
                 $key_id = $key . '-'. $id;
                 if (!isset($this->references[$key_id])) {
                     break;
                 }
-            }
+            } while (true);
         }
 
         return $key_id;
@@ -1117,7 +1122,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $timestamp = $layoutFile ? filemtime($layoutFile) : 0;
 
         // If layout index file doesn't exist or is not up to date, rebuild it.
-        if (empty($index['timestamp']) || $index['timestamp'] != $timestamp || !isset($index['version']) || $index['version'] != static::VERSION) {
+        if (empty($index['timestamp']) || $index['timestamp'] !== $timestamp || !isset($index['version']) || $index['version'] !== static::VERSION) {
             $layout = isset($preset) ? new static($name, static::preset($preset)) : static::instance($name);
             $layout->timestamp = $timestamp;
 

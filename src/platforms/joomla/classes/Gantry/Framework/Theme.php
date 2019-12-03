@@ -63,7 +63,7 @@ class Theme extends AbstractTheme
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
+    public function extendTwig(Environment $twig, LoaderInterface $loader = null)
     {
         parent::extendTwig($twig, $loader);
 
@@ -84,7 +84,7 @@ class Theme extends AbstractTheme
         $core->setDateFormat(Text::_('DATE_FORMAT_LC2'), Text::_('GANTRY5_X_DAYS'));
         $core->setNumberFormat(0, Text::_('DECIMALS_SEPARATOR'), Text::_('THOUSANDS_SEPARATOR'));
 
-        $filter = new \Twig_SimpleFilter('date', [$this, 'twig_dateFilter'], ['needs_environment' => true]);
+        $filter = new TwigFilter('date', [$this, 'twig_dateFilter'], ['needs_environment' => true]);
         $twig->addFilter($filter);
 
         return $twig;
@@ -208,7 +208,7 @@ class Theme extends AbstractTheme
      * @param LoaderInterface $loader
      * @return FilesystemLoader
      */
-    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
+    protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
         $loader = parent::setTwigLoaderPaths($loader);
 

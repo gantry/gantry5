@@ -58,18 +58,18 @@ class AssignmentsContext implements AssignmentsInterface
 
         $rules = [];
         foreach($this->context as $var => $label) {
-            if (isset($wp_query->$var) && $wp_query->$var === true) {
+            if (isset($wp_query->{$var}) && $wp_query->{$var} === true) {
                 $rules[$var] = $this->priority + (isset($this->priorities[$var]) ? $this->priorities[$var] : 0);
             }
         }
 
         // Workaround for when is_front_page is missing in the $wp_query
-        if(is_front_page() === true) {
+        if(\is_front_page() === true) {
             $rules['is_front_page'] = $this->priority + $this->priorities['is_front_page'];
         }
 
         // Allow to filter out rules by 3rd party plugin integration
-        $rules = apply_filters('g5_assignments_page_context_rules', $rules, $this->priority);
+        $rules = \apply_filters('g5_assignments_page_context_rules', $rules, $this->priority);
 
         return [$rules];
     }
@@ -95,7 +95,7 @@ class AssignmentsContext implements AssignmentsInterface
     {
         $items = [];
 
-        $context = apply_filters('g5_assignments_page_context_array', $this->context, $this->type);
+        $context = \apply_filters('g5_assignments_page_context_array', $this->context, $this->type);
         ksort($context);
 
         foreach($context as $conditional => $label) {
@@ -105,7 +105,7 @@ class AssignmentsContext implements AssignmentsInterface
             ];
         }
 
-        return apply_filters('g5_assignments_page_context_list_items', $items, $this->type);
+        return \apply_filters('g5_assignments_page_context_list_items', $items, $this->type);
     }
 
 }

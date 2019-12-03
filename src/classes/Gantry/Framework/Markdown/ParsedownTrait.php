@@ -124,7 +124,10 @@ trait ParsedownTrait
         if (isset($excerpt['element']['attributes']['src'])) {
             $gantry = Gantry::instance();
 
-            $excerpt['element']['attributes']['src'] = $gantry['document']->url($excerpt['element']['attributes']['src']);
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            $excerpt['element']['attributes']['src'] = $document::url($excerpt['element']['attributes']['src']);
         }
 
         return $excerpt;
@@ -156,7 +159,10 @@ trait ParsedownTrait
         if (isset($excerpt['element']['attributes']['href'])) {
             $gantry = Gantry::instance();
 
-            $excerpt['element']['attributes']['href'] = $gantry['document']->url($excerpt['element']['attributes']['href']);
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            $excerpt['element']['attributes']['href'] = $document::url($excerpt['element']['attributes']['href']);
         }
 
         return $excerpt;

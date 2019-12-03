@@ -35,10 +35,10 @@ class AssignmentsTaxonomy implements AssignmentsInterface
     {
         $rules = [];
 
-        $queried_object = get_queried_object();
+        $queried_object = \get_queried_object();
 
-        if((is_archive() || is_tax()) && $queried_object !== null) {
-            if(isset($queried_object->taxonomy) && isset($queried_object->term_id)) {
+        if ((\is_archive() || \is_tax()) && $queried_object !== null) {
+            if (isset($queried_object->taxonomy) && isset($queried_object->term_id)) {
                 $taxonomy = $queried_object->taxonomy;
                 $id = $queried_object->term_id;
 
@@ -65,8 +65,8 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 
         // Get label and items for each taxonomy
         $list = [];
-        foreach($taxonomies as $tax) {
-            $tax = apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_object', $tax);
+        foreach ($taxonomies as $tax) {
+            $tax = \apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_object', $tax);
 
             $list[$tax->name]['label'] = sprintf($this->label, $tax->labels->name);
             $list[$tax->name]['items'] = $this->getItems($tax);
@@ -85,9 +85,9 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             'show_ui' => true
         ];
 
-        $args = wp_parse_args($args, $defaults);
+        $args = \wp_parse_args($args, $defaults);
 
-        $taxonomies = get_taxonomies(apply_filters('g5_assignments_get_taxonomies_args', $args), 'object');
+        $taxonomies = \get_taxonomies(\apply_filters('g5_assignments_get_taxonomies_args', $args), 'object');
 
         return $taxonomies;
     }
@@ -113,11 +113,11 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             'pad_counts'               => false,
         ];
 
-        $args = wp_parse_args($args, $defaults);
+        $args = \wp_parse_args($args, $defaults);
 
-        $terms = get_terms($tax->name, $args);
+        $terms = \get_terms($tax->name, $args);
 
-        if(empty($terms) || is_wp_error($terms)) {
+        if (empty($terms) || \is_wp_error($terms)) {
             /*
             $items[] = [
                 'name'     => '',
@@ -129,7 +129,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             $walker = new AssignmentsWalker;
 
             $new_terms = [];
-            foreach($terms as $new_term) {
+            foreach ($terms as $new_term) {
                 $new_term->id           = $new_term->term_id;
                 $new_term->parent_id    = $new_term->parent;
                 $new_terms[] = $new_term;
@@ -137,7 +137,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 
             $terms = $walker->walk($new_terms, 0);
 
-            foreach($terms as $term) {
+            foreach ($terms as $term) {
                 $items[] = [
                     'name'     => $term->term_id,
                     'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level)) . ' ' . $term->name : $term->name,
@@ -146,7 +146,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             }
         }
 
-        return apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_list_items', $items, $tax, $this->type);
+        return \apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_list_items', $items, $tax, $this->type);
 
     }
 

@@ -238,13 +238,16 @@ class BlueprintSchema extends BlueprintSchemaBase
      */
     protected function dynamicConfig(array &$field, $property, array &$call)
     {
-        $value = $call['params'];
+        $var = $call['params'];
 
         $default = isset($field[$property]) ? $field[$property] : null;
-        $config = Gantry::instance()['config']->get($value, $default);
 
-        if (null !== $config) {
-            $field[$property] = $config;
+        /** @var Config $config */
+        $config = Gantry::instance()['config'];
+        $value = $config->get($var, $default);
+
+        if (null !== $value) {
+            $field[$property] = $value;
         }
     }
 }

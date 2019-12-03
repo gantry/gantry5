@@ -48,9 +48,9 @@ class ScssCompiler extends CssCompiler
         $this->compiler = new Compiler();
 
         if ($this->production) {
-            $this->compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Crunched');
+            $this->compiler->setFormatter(Crunched::class);
         } else {
-            $this->compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Expanded');
+            $this->compiler->setFormatter(Expanded::class);
             // Work around bugs in SCSS compiler.
             // TODO: Pass our own SourceMapGenerator instance instead.
             $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
@@ -135,7 +135,7 @@ class ScssCompiler extends CssCompiler
             $document = $gantry['document'];
 
             foreach ($map['sources'] as &$source) {
-                $source = $document->url($source, null, -1);
+                $source = $document::url($source, null, -1);
             }
             unset($source);
 
@@ -219,7 +219,7 @@ WARN;
         }
 
         // Try both normal and the _partial filename.
-        $files = array($url, preg_replace('/[^\/]+$/', '_\0', $url));
+        $files = [$url, preg_replace('/[^\/]+$/', '_\0', $url)];
 
         foreach ($this->paths as $base) {
             foreach ($files as $file) {

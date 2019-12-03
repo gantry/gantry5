@@ -21,7 +21,7 @@ class TwigNodeThrow extends \Twig_Node
 {
     /**
      * TwigNodeThrow constructor.
-     * @param $code
+     * @param int $code
      * @param \Twig_Node $message
      * @param int $lineno
      * @param null $tag

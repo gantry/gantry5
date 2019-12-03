@@ -176,7 +176,7 @@ class Menu extends AbstractMenu
             if (($start && $start > $level)
                 || ($end && $level > $end)
                 || ($start > 1 && strpos(dirname($parent), $this->base) !== 0)
-                || (!$name || $name[0] == '_' || strpos($name, '_'))
+                || (!$name || $name[0] === '_' || strpos($name, '_'))
             ) {
                 continue;
             }
@@ -185,7 +185,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'link' && !isset($this->pages[$item->path])) {
+            if ($item->type === 'link' && !isset($this->pages[$item->path])) {
                 $item->type = 'separator';
             }
 
@@ -203,7 +203,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    if ($item->link == 'home') {
+                    if ($item->link === 'home') {
                         // Deal with home page.
                         $item->url('/' . trim(PRIME_URI . '/' . THEME, '/'));
                     } else {

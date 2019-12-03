@@ -78,7 +78,10 @@ abstract class Gantry extends Container
      */
     public function debug()
     {
-        return $this['global']->get('debug', false);
+        /** @var Config $global */
+        $global = $this['global'];
+
+        return $global->get('debug', false);
     }
 
     /**
@@ -97,7 +100,10 @@ abstract class Gantry extends Container
      */
     public function siteUrl()
     {
-        return $this['document']->siteUrl();
+        /** @var Document $document */
+        $document = $this['document'];
+
+        return $document::siteUrl();
     }
 
     /**
@@ -106,7 +112,10 @@ abstract class Gantry extends Container
      */
     public function styles($location = 'head')
     {
-        return $this['document']->getStyles($location);
+        /** @var Document $document */
+        $document = $this['document'];
+
+        return $document::getStyles($location);
     }
 
     /**
@@ -115,7 +124,10 @@ abstract class Gantry extends Container
      */
     public function scripts($location = 'head')
     {
-        return $this['document']->getScripts($location);
+        /** @var Document $document */
+        $document = $this['document'];
+
+        return $document::getScripts($location);
     }
 
     /**
@@ -126,7 +138,10 @@ abstract class Gantry extends Container
      */
     public function load($framework)
     {
-        return $this['document']->addFramework($framework);
+        /** @var Document $document */
+        $document = $this['document'];
+
+        return $document::addFramework($framework);
     }
 
     /**
@@ -141,7 +156,7 @@ abstract class Gantry extends Container
 
         try {
             // Create a dummy service.
-            $this[$id] = function () use ($value) {
+            $this[$id] = static function () use ($value) {
                 return $value;
             };
         } catch (\RuntimeException $e) {
@@ -181,7 +196,7 @@ abstract class Gantry extends Container
             return $this->offsetGet('base_url');
         }
 
-        $path = implode('/', array_filter(func_get_args(), function($var) { return isset($var) && $var !== ''; }));
+        $path = implode('/', array_filter(func_get_args(), static function($var) { return isset($var) && $var !== ''; }));
 
         // rawurlencode() the whole path, but keep the slashes.
         $path = preg_replace(['|%2F|', '|%25|'], ['/', '%'], rawurlencode($path));
@@ -196,7 +211,10 @@ abstract class Gantry extends Container
      */
     public function authorize($action, $id = null)
     {
-        return $this['platform']->authorize($action, $id);
+        /** @var Platform $platform */
+        $platform = $this['platform'];
+
+        return $platform->authorize($action, $id);
     }
 
     /**
@@ -228,44 +246,44 @@ abstract class Gantry extends Container
         $instance->register(new ConfigServiceProvider);
         $instance->register(new StreamsServiceProvider);
 
-        $instance['request'] = function () {
-            return new Request;
+        $instance['request'] = static function () {
+            return new Request();
         };
 
-        $instance['events'] = function () {
-            return new EventDispatcher;
+        $instance['events'] = static function () {
+            return new EventDispatcher();
         };
 
-        $instance['platform'] = function ($c) {
+        $instance['platform'] = static function ($c) {
             return new Platform($c);
         };
 
-        $instance['translator'] = function () {
-            return new Translator;
+        $instance['translator'] = static function () {
+            return new Translator();
         };
 
-        $instance['site'] = function () {
-            return new Site;
+        $instance['site'] = static function () {
+            return new Site();
         };
 
-        $instance['menu'] = function () {
-            return new Menu;
+        $instance['menu'] = static function () {
+            return new Menu();
         };
 
-        $instance['messages'] = function () {
-            return new Messages;
+        $instance['messages'] = static function () {
+            return new Messages();
         };
 
-        $instance['page'] = function ($c) {
+        $instance['page'] = static function ($c) {
             return new Page($c);
         };
 
-        $instance['document'] = function () {
-            return new Document;
+        $instance['document'] = static function () {
+            return new Document();
         };
 
         // Make sure that nobody modifies the original collection by making it a factory.
-        $instance['outlines'] = $instance->factory(function ($c) {
+        $instance['outlines'] = $instance->factory(static function ($c) {
             static $collection;
             if (!$collection) {
                 $collection = (new Outlines($c))->load();
@@ -275,7 +293,7 @@ abstract class Gantry extends Container
         });
 
         // @deprecated 5.3
-        $instance['configurations'] = $instance->factory(function ($c) {
+        $instance['configurations'] = $instance->factory(static function ($c) {
             GANTRY_DEBUGGER && Debugger::addMessage('Depredated call: gantry.configurations');
 
             static $collection;
@@ -286,7 +304,7 @@ abstract class Gantry extends Container
             return $collection->copy();
         });
 
-        $instance['positions'] = $instance->factory(function ($c) {
+        $instance['positions'] = $instance->factory(static function ($c) {
             static $collection;
             if (!$collection) {
                 $collection = (new Positions($c))->load();
@@ -295,7 +313,7 @@ abstract class Gantry extends Container
             return $collection->copy();
         });
 
-        $instance['global'] = function (\Gantry\Framework\Gantry $c) {
+        $instance['global'] = static function (Gantry $c) {
             $data = $c->loadGlobal() + [
                     'debug' => false,
                     'production' => true,

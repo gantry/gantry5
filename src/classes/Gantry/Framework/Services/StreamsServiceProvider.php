@@ -33,16 +33,18 @@ class StreamsServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $gantry)
     {
-        $sp = $this;
-
-        $gantry['locator'] = function() use ($sp) {
+        $gantry['locator'] = static function() {
             return new UniformResourceLocator(GANTRY5_ROOT);
         };
-        $gantry['streams'] = function($c) use ($sp) {
-            $schemes = (array) $c['platform']->init()->get('streams');
+
+        $gantry['streams'] = static function(Gantry $gantry) {
+            /** @var Platform $platform */
+            $platform = $gantry['platform'];
+
+            $schemes = (array) $platform->init()->get('streams');
 
             /** @var UniformResourceLocator $locator */
-            $locator = $c['locator'];
+            $locator = $gantry['locator'];
 
             $streams = new Streams($locator);
             $streams->add($schemes);

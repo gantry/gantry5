@@ -310,7 +310,7 @@ abstract class CssCompiler implements CssCompilerInterface
             }
 
             // Check variable against predefined color names (we use ScssPhp SCSS Color class to do that).
-            if (isset(Colors::$cssColors[strtolower($value)])) {
+            if (Colors::colorNameToRGBa(strtolower($value))) {
                 continue;
             }
 

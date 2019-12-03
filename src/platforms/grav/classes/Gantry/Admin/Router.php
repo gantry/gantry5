@@ -50,7 +50,7 @@ class Router extends BaseRouter
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
-        $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
+        $parts = array_filter(explode('/', $admin->route), static function($var) { return $var !== ''; });
         $base = '';
 
         // Set theme.
@@ -58,7 +58,10 @@ class Router extends BaseRouter
             $base = '/' . array_shift($parts);
             $theme = array_shift($parts);
         } else {
-            $theme = $grav['config']->get('system.pages.theme');
+            /** @var GravConfig $config */
+            $config = $grav['config'];
+
+            $theme = $config->get('system.pages.theme');
         }
         $this->setTheme($theme);
 
@@ -110,15 +113,22 @@ class Router extends BaseRouter
 
         if (!$theme || !is_file("{$path}/gantry/theme.yaml") || !is_file("{$path}/theme.php")) {
             $theme = null;
-            $this->container['streams']->register();
+            /** @var Streams $streams */
+            $streams = $this->container['streams'];
+            $streams->register();
 
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
 
+            /** @var Config $global */
+            $global = $this->container['global'];
+
             CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-            CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
+            CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
         } else {
-            Grav::instance()['config']->set('system.pages.theme', $theme);
+            /** @var GravConfig $config */
+            $config = Grav::instance()['config'];
+            $config->set('system.pages.theme', $theme);
         }
 
         return $this;

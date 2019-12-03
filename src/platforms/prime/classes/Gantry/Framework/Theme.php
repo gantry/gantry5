@@ -60,7 +60,7 @@ class Theme extends AbstractTheme
      * @param LoaderInterface $loader
      * @return FilesystemLoader
      */
-    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
+    protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
         $loader = parent::setTwigLoaderPaths($loader);
 
@@ -70,7 +70,7 @@ class Theme extends AbstractTheme
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $loader->setPaths($this->getTwigPaths());
+            $loader->setPaths(static::getTwigPaths());
             $loader->setPaths($locator->findResources('gantry-pages://'), 'pages');
             $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
         }

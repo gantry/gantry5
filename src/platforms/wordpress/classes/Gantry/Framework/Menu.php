@@ -50,8 +50,8 @@ class Menu extends AbstractMenu
                 'orderby' => 'name'
             ];
 
-            $args = wp_parse_args($args, $defaults);
-            $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
+            $args = \wp_parse_args($args, $defaults);
+            $get_menus = \wp_get_nav_menus(\apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
                 $list[$menu->term_id] = urldecode($menu->slug);
@@ -132,19 +132,19 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        if (is_admin()) {
+        if (\is_admin()) {
             $gantry = static::gantry();
             $menus = array_flip($gantry['menu']->getMenus());
             $id = isset($menus[$params['menu']]) ? $menus[$params['menu']] : 0;
 
             // Save global menu settings into Wordpress.
-            $menuObject = wp_get_nav_menu_object($id);
-            if (is_wp_error($menuObject)) {
+            $menuObject = \wp_get_nav_menu_object($id);
+            if (\is_wp_error($menuObject)) {
                 return null;
             }
 
             // Get all menu items.
-            $unsorted_menu_items = wp_get_nav_menu_items(
+            $unsorted_menu_items = \wp_get_nav_menu_items(
                 $id,
                 ['post_status' => 'draft,publish']
             );
@@ -184,7 +184,7 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
-        if (is_user_logged_in()) {
+        if (\is_user_logged_in()) {
             return null;
         }
 
@@ -213,10 +213,7 @@ class Menu extends AbstractMenu
     protected function calcBase($itemid = null)
     {
         // Use current menu item or fall back to default menu item.
-        $base = $this->current ?: $this->default;
-
-        // Return base menu item.
-        return $base;
+        return $this->current ?: $this->default;
     }
 
     /**
@@ -284,7 +281,7 @@ class Menu extends AbstractMenu
             if (!isset($menuItems[$id])) {
                 throw new \RuntimeException("Menu item parent ($id) cannot be found");
             }
-            $slug = is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
+            $slug = \is_admin() ? $menuItems[$id]->title : $menuItems[$id]->title();
             $slug = preg_replace('|[ /]|u', '-', $slug);
             if (preg_match('|^[a-zA-Z0-9-_]+$|', $slug)) {
                 $slug = \strtolower($slug);
@@ -308,7 +305,9 @@ class Menu extends AbstractMenu
         $end     = $max ? $start + $max - 1 : 0;
 
         $menuItems = $this->getItemsFromPlatform($params);
-        if($menuItems === null) return;
+        if ($menuItems === null) {
+            return;
+        }
 
         $itemMap = [];
         foreach ($items as $path => &$itemRef) {
@@ -317,6 +316,8 @@ class Menu extends AbstractMenu
                 $itemMap[$itemRef['object_id']] = $itemRef;
             }
         }
+        unset($itemRef);
+
         $slugMap = [];
 
         // Get base menu item for this menu (defaults to active menu item).
@@ -331,7 +332,7 @@ class Menu extends AbstractMenu
 
             if (($start && $start > $menuItem->level+1)
                 || ($end && $menuItem->level+1 > $end)
-                || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree))) {
+                || ($start > 1 && !in_array($menuItem->tree[$start - 2], $tree, true))) {
                 continue;
             }
 
@@ -340,7 +341,7 @@ class Menu extends AbstractMenu
                 'id' => $menuItem->ID,
                 'object_id' => $menuItem->object_id,
                 'type' => $menuItem->type,
-                'link' => is_admin() ? $menuItem->url : $menuItem->link(),
+                'link' => \is_admin() ? $menuItem->url : $menuItem->link(),
                 'link_title' => $menuItem->attr_title,
                 'rel' => $menuItem->xfn,
                 'level' => $menuItem->level + 1
@@ -365,7 +366,7 @@ class Menu extends AbstractMenu
 
             // And if not available in configuration, default to WordPress.
             $itemParams += [
-                'title' => html_entity_decode(is_admin() ? $menuItem->title : $menuItem->title(), ENT_COMPAT | ENT_HTML5, 'UTF-8'),
+                'title' => html_entity_decode(\is_admin() ? $menuItem->title : $menuItem->title(), ENT_COMPAT | ENT_HTML5, 'UTF-8'),
                 'target' => $menuItem->target ?: '_self',
                 'class' => implode(' ', $menuItem->classes)
             ];
@@ -374,7 +375,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'custom' && $item->link == '#' || $item->link == '') {
+            if ($item->type === 'custom' && ($item->link === '#' || $item->link === '')) {
                 $item->type = 'separator';
             }
 
@@ -385,9 +386,6 @@ class Menu extends AbstractMenu
                     break;
 
                 case 'custom':
-                    $item->url($item->link);
-                    break;
-
                 default:
                     $item->url($item->link);
                     break;

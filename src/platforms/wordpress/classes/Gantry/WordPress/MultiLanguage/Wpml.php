@@ -22,7 +22,7 @@ class Wpml extends WordPress
      */
     public static function enabled()
     {
-        return apply_filters('wpml_current_language', null) !== null;
+        return \apply_filters('wpml_current_language', null) !== null;
     }
 
     /*

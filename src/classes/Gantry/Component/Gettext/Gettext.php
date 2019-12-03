@@ -107,7 +107,7 @@ class Gettext
     }
 
     /**
-     * @param $count
+     * @param int $count
      * @return array
      */
     protected function readIntArray($count)
@@ -116,7 +116,7 @@ class Gettext
     }
 
     /**
-     * @param $bytes
+     * @param int $bytes
      * @return string
      */
     private function read($bytes)
@@ -128,7 +128,7 @@ class Gettext
     }
 
     /**
-     * @param $pos
+     * @param int $pos
      * @return mixed
      */
     private function seek($pos)

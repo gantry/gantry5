@@ -88,7 +88,7 @@ abstract class AbstractObject extends \JObject
      *
      * @return  Object
      */
-    static public function getInstance($keys = null, $reload = false)
+    public static function getInstance($keys = null, $reload = false)
     {
         // If we are creating or loading a new item or we load instance by alternative keys,
         // we need to create a new object.
@@ -116,7 +116,7 @@ abstract class AbstractObject extends \JObject
      *
      * @param null|int|int[]  $ids
      */
-    static public function freeInstances($ids = null)
+    public static function freeInstances($ids = null)
     {
         if ($ids === null) {
             $ids = array_keys(static::$instances);
@@ -167,7 +167,7 @@ abstract class AbstractObject extends \JObject
     public function getProperties($public = true)
     {
         if ($public) {
-            $getProperties = function($obj) { return get_object_vars($obj); };
+            $getProperties = static function($obj) { return get_object_vars($obj); };
             return $getProperties($this);
         }
 
@@ -218,13 +218,17 @@ abstract class AbstractObject extends \JObject
 
         // Make sure we set the given keys to the object even if it is not loaded.
         $table->reset();
-        if ($keys !== null) $table->bind($keys);
+        if ($keys !== null) {
+            $table->bind($keys);
+        }
 
         // Load the object based on the keys.
         $this->_exists = $table->load($keys, false);
 
         // Work around Joomla 3.1.1 bug on load() returning true if keys didn't exist.
-        if ($table->id == 0) $this->_exists = false;
+        if ($table->id == 0) {
+            $this->_exists = false;
+        }
 
         // Assuming all is well at this point lets bind the data.
         $this->setProperties($table->getProperties());
@@ -273,7 +277,7 @@ abstract class AbstractObject extends \JObject
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeSave event.
-        $result = $application->triggerEvent('onContentBeforeSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
+        $result = $application->triggerEvent('onContentBeforeSave', ['com_gantry5.' . static::class, $table, $isNew]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -295,7 +299,7 @@ abstract class AbstractObject extends \JObject
         }
 
         // Trigger the onContentAfterSave event.
-        $application->triggerEvent('onContentAfterSave', ['com_gantry5.' . get_called_class(), $table, $isNew]);
+        $application->triggerEvent('onContentAfterSave', ['com_gantry5.' . static::class, $table, $isNew]);
 
         return true;
     }
@@ -326,7 +330,7 @@ abstract class AbstractObject extends \JObject
         PluginHelper::importPlugin('content');
 
         // Trigger the onContentBeforeDelete event.
-        $result = $application->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . get_called_class(), $table]);
+        $result = $application->triggerEvent('onContentBeforeDelete', ['com_gantry5.' . static::class, $table]);
         if (in_array(false, $result, true)) {
             $this->setError($table->getError());
             return false;
@@ -339,7 +343,7 @@ abstract class AbstractObject extends \JObject
         $this->_exists = false;
 
         // Trigger the onContentAfterDelete event.
-        $application->triggerEvent('onContentAfterDelete', ['com_gantry5.' . get_called_class(), $table]);
+        $application->triggerEvent('onContentAfterDelete', ['com_gantry5.' . static::class, $table]);
 
         return true;
     }
@@ -361,7 +365,7 @@ abstract class AbstractObject extends \JObject
     /**
      * @return Collection
      */
-    static public function getAvailableInstances()
+    public static function getAvailableInstances()
     {
         return static::collection(static::$instances);
     }
@@ -371,7 +375,7 @@ abstract class AbstractObject extends \JObject
      * @param bool $readonly
      * @return Collection
      */
-    static public function getInstances(array $ids, $readonly = true)
+    public static function getInstances(array $ids, $readonly = true)
     {
         if (!$ids) {
             return static::collection([]);
@@ -411,7 +415,7 @@ abstract class AbstractObject extends \JObject
      * @param $items
      * @return Collection
      */
-    static protected function collection($items)
+    protected static function collection($items)
     {
         return new Collection($items);
     }
@@ -421,7 +425,7 @@ abstract class AbstractObject extends \JObject
      *
      * @return  Table  The table object.
      */
-    static protected function getTable()
+    protected static function getTable()
     {
         return Table::getInstance(static::$table, static::$tablePrefix);
     }
@@ -442,7 +446,7 @@ abstract class AbstractObject extends \JObject
     /**
      * @param \JDatabaseQuery|string $query
      */
-    static protected function loadInstances($query = null)
+    protected static function loadInstances($query = null)
     {
         if (!$query) {
             $query = static::getQuery();
@@ -452,7 +456,7 @@ abstract class AbstractObject extends \JObject
         $db->setQuery($query);
 
         /** @var Object[] $items */
-        $items = (array) $db->loadObjectList('id', get_called_class());
+        $items = (array) $db->loadObjectList('id', static::class);
 
         foreach ($items as $item) {
             if (!isset(static::$instances[$item->id])) {

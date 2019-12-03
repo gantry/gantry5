@@ -75,7 +75,7 @@ class Widget extends JsonController
 
             // Load particle blueprints.
             $validator = $this->loadBlueprints($scope);
-            $callable = function () use ($validator) {
+            $callable = static function () use ($validator) {
                 return $validator;
             };
         } else {
@@ -200,7 +200,10 @@ class Widget extends JsonController
      */
     protected function getWidgetType($name)
     {
-        $widgets = $this->container['platform']->listWidgets();
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        $widgets = $platform->listWidgets();
         if (!isset($widgets[$name])) {
             throw new \RuntimeException(sprintf("Widget '%s' not found", $name), 404);
         }
@@ -240,7 +243,7 @@ class Widget extends JsonController
             } elseif (strtolower($field) === 'false') {
                 $input[$key] = false;
             } elseif ((string) $field === (string)(int) $field) {
-                $input[$key] = intval($field);
+                $input[$key] = (int)$field;
             }
         }
 

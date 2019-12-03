@@ -38,7 +38,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * Constructor to initialize array.
      *
      * @param  array  $items  Initial items inside the iterator.
-     * @param  callable $blueprints  Function to load Blueprints for the configuration.
+     * @param  callable|null $blueprint  Function to load Blueprints for the configuration.
      */
     public function __construct(array $items, callable $blueprint = null)
     {
@@ -204,7 +204,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     {
         $list = [];
         foreach ($element as $key => $value) {
-            $new = $name ? $name : $prefix;
+            $new = $name ?: $prefix;
             if (is_array($separator)) {
                 $new .= $separator[0] . $key . $separator[1];
             } else {
@@ -228,7 +228,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      */
     public function blueprint()
     {
-        if (!$this->blueprint){
+        if (!$this->blueprint) {
             $this->blueprint = new BlueprintSchema;
         } elseif (is_callable($this->blueprint)) {
             // Lazy load blueprints.

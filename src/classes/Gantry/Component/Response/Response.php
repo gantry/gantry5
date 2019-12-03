@@ -62,7 +62,7 @@ class Response
             $this->setContent($content);
         }
 
-        if ($status != 200) {
+        if ($status !== 200) {
             $this->setStatusCode($status);
         }
     }
@@ -162,8 +162,8 @@ class Response
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @param bool $replace
      * @return $this
      */

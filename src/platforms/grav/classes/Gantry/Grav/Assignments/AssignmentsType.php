@@ -64,7 +64,7 @@ class AssignmentsType implements AssignmentsInterface
      */
     protected function getItems()
     {
-        $pageTypes = \Grav\Plugin\AdminPlugin::pagesTypes();
+        $pageTypes = AdminPlugin::pagesTypes();
 
         $items = [];
 

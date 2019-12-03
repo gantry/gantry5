@@ -52,7 +52,7 @@ class Collection implements CollectionInterface
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      * @return $this
      */
     public function add($item)

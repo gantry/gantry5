@@ -15,8 +15,8 @@
 namespace Gantry\Component\Controller;
 
 use Gantry\Component\Response\Response;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
-use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
 
 /**
@@ -56,15 +56,15 @@ abstract class BaseController implements RestfulControllerInterface
     /** @var array Parameters from router. */
     protected $params = [];
 
-    /** @var Container */
+    /** @var Gantry */
     protected $container;
 
     /**
      * BaseController constructor.
      *
-     * @param Container $container
+     * @param Gantry $container
      */
-    public function __construct(Container $container)
+    public function __construct(Gantry $container)
     {
         $this->container = $container;
         $this->request = $container['request'];

@@ -35,11 +35,14 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
+        /** @var Config $config */
+        $config = $grav['config'];
+
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
         $route = trim($uri->path(), '/');
-        $home = trim($grav['config']->get('system.home.alias', '/home'), '/');
+        $home = trim($config->get('system.home.alias', '/home'), '/');
         $rules[$route ?: $home] = $this->priority;
 
         return [$rules];

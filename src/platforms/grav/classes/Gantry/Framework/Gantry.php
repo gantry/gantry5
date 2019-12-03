@@ -28,7 +28,7 @@ class Gantry extends Base\Gantry
         $container = parent::init();
 
         // Use locator from Grav.
-        $container['locator'] = function() {
+        $container['locator'] = static function() {
             return Grav::instance()['locator'];
         };
 
@@ -41,6 +41,10 @@ class Gantry extends Base\Gantry
     protected function loadGlobal()
     {
         $grav = Grav::instance();
-        return (array) $grav['config']->get('plugins.gantry5');
+
+        /** @var Config $config */
+        $config = $grav['config'];
+
+        return (array) $config->get('plugins.gantry5');
     }
 }

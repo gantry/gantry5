@@ -42,7 +42,10 @@ class Menu extends AbstractMenu
         $page = $grav['page'];
         $route = trim($page->rawRoute(), '/');
 
-        $this->default = trim($grav['config']->get('system.home.alias', '/home'), '/');
+        /** @var Config $config */
+        $config = $grav['config'];
+
+        $this->default = trim($config->get('system.home.alias', '/home'), '/');
         $this->active = $route ?: $this->default;
     }
 
@@ -80,20 +83,21 @@ class Menu extends AbstractMenu
      */
     public function getGroupedItems()
     {
-        $groups = array();
-
         $grav = Grav::instance();
 
+        /** @var Pages $pages */
+        $pages = $grav['pages'];
+
         // Get the menu items.
-        $pages = $grav['pages']->all()->nonModular();
+        $items = $pages->all()->nonModular();
 
         // Initialize the group.
-        $groups['mainmenu'] = array();
+        $groups = ['mainmenu' => []];
 
         // Build the options array.
 
         /** @var GravPage $page */
-        foreach ($pages as $page) {
+        foreach ($items as $page) {
             if (!$page->order()) {
                 continue;
             }
@@ -175,14 +179,16 @@ class Menu extends AbstractMenu
         $grav = Grav::instance();
 
         // Initialize pages.
-        $pages = $grav['pages']->all()->nonModular();
+        /** @var Pages $pages */
+        $pages = $grav['pages'];
+        $items = $pages->all()->nonModular();
 
         // Return flat list of routes.
         $list = [];
         $this->pages = [];
 
         /** @var GravPage $item */
-        foreach ($pages as $item) {
+        foreach ($items as $item) {
             if (!$item->visible()) {
                 continue;
             }

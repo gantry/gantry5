@@ -98,7 +98,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @param $current
+     * @param array|mixed $current
      * @return array|mixed
      * @internal
      */

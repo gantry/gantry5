@@ -30,9 +30,7 @@ class AssignmentsPage implements AssignmentsInterface
      */
     public function getRules()
     {
-        $rules = [[PAGE_PATH => $this->priority]];
-
-        return $rules;
+        return [[PAGE_PATH => $this->priority]];
     }
 
     /**

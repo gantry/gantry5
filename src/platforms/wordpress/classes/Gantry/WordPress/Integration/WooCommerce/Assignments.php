@@ -45,8 +45,8 @@ class AssignmentsWoocommerce implements AssignmentsInterface
     {
         $rules = [];
 
-        foreach($this->context as $var => $label) {
-            if (call_user_func($var) === true) {
+        foreach ($this->context as $var => $label) {
+            if ($var() === true) {
                 $rules[$var] = $this->priority;
             }
         }
@@ -79,7 +79,7 @@ class AssignmentsWoocommerce implements AssignmentsInterface
         $items = [];
         $context = $this->context;
 
-        foreach($context as $conditional => $label) {
+        foreach ($context as $conditional => $label) {
             $items[] = [
                 'name'  => $conditional,
                 'label' => $label
@@ -117,7 +117,7 @@ class AssignmentsWoocommerce implements AssignmentsInterface
             $rules = [];
         }
 
-        if (is_woocommerce() === true) {
+        if (\is_woocommerce() === true) {
             $rules['is_woocommerce'] = $priority;
         }
 

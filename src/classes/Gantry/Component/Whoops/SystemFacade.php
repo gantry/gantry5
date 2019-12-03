@@ -37,8 +37,8 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     public function __construct($patterns = [])
     {
         $this->registeredPatterns = array_map(
-            function ($pattern) {
-                return["pattern" => $pattern];
+            static function ($pattern) {
+                return ['pattern' => $pattern];
             },
             (array) $patterns
         );

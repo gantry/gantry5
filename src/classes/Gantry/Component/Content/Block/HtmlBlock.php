@@ -86,7 +86,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
                     $url = $theme->css(basename($url, '.scss'));
                 }
                 // Deal with streams and relative paths.
-                $url = $document->url($url, false, null, false);
+                $url = $document::url($url, false, null, false);
 
                 $styles[$key]['href'] = $url;
             }
@@ -116,7 +116,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         foreach ($scripts as $key => $script) {
             if (isset($script['src'])) {
                 // Deal with streams and relative paths.
-                $scripts[$key]['src'] = $document->url($script['src'], false, null, false);
+                $scripts[$key]['src'] = $document::url($script['src'], false, null, false);
             }
         }
 
@@ -465,10 +465,12 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         foreach ($items as &$item) {
             $item[':order'] = ++$count;
         }
+        unset ($item);
+
         uasort(
             $items,
-            function ($a, $b) {
-                return ($a[':priority'] == $b[':priority']) ? $a[':order'] - $b[':order'] : $b[':priority'] - $a[':priority'];
+            static function ($a, $b) {
+                return ($a[':priority'] === $b[':priority']) ? $a[':order'] - $b[':order'] : $b[':priority'] - $a[':priority'];
             }
         );
     }

@@ -145,7 +145,7 @@ abstract class ThemeInstaller
     public function render($template, $context = [])
     {
         try {
-            $loader = new \Twig_Loader_Filesystem();
+            $loader = new FilesystemLoader();
             $loader->setPaths([$this->getPath() . '/install/templates']);
 
             $params = [
@@ -154,7 +154,7 @@ abstract class ThemeInstaller
                 'autoescape' => 'html'
             ];
 
-            $twig = new \Twig_Environment($loader, $params);
+            $twig = new Environment($loader, $params);
 
             $name = $this->name;
             $context += [
@@ -258,11 +258,14 @@ abstract class ThemeInstaller
         // Restart Gantry and initialize it.
         $gantry = Gantry::restart();
         $gantry['theme.name'] = $name;
-        $gantry['streams']->register();
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
 
         // Only add error service if debug mode has been enabled.
         if ($gantry->debug()) {
-            $gantry->register(new ErrorServiceProvider);
+            $gantry->register(new ErrorServiceProvider());
         }
 
         /** @var Platform $patform */
@@ -283,8 +286,11 @@ abstract class ThemeInstaller
         Folder::create($cachePath);
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
 
+        /** @var Config $global */
+        $global = $gantry['global'];
+
         CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
+        CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
 
         $this->initialized = true;
     }

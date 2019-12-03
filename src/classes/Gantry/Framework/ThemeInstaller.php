@@ -11,18 +11,16 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Theme\ThemeInstaller as AbstractInstaller;
+
 /**
- * Class Site
+ * Class ThemeInstaller
  * @package Gantry\Framework
  */
-class Site extends \Timber\Site
+class ThemeInstaller extends AbstractInstaller
 {
-    /**
-     * @param string $widget_id
-     * @return \TimberFunctionWrapper
-     */
-    public function sidebar( $widget_id = '' )
+    public function getPath()
     {
-        return \TimberHelper::function_wrapper('dynamic_sidebar', [$widget_id], true);
+        throw new \RuntimeException('Not Implemented');
     }
 }

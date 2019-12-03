@@ -22,6 +22,11 @@ platforms/*/*/src
 platforms/*/*/assets
 platforms/*/*/engines
 
+# Grav
+
+platforms/grav/gantry5/vendor
+platforms/grav/gantry5/composer.lock
+
 # Symbolic links in themes
 themes/*/*/common
 

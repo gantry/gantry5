@@ -22,6 +22,7 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Unsaved extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index'

@@ -129,7 +129,7 @@ abstract class AbstractAssignments
         $locator = $gantry['locator'];
 
         // Find all the assignment files.
-        $paths = $locator->findResources("gantry-config://");
+        $paths = $locator->findResources('gantry-config://');
         $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
 
         // Make sure that base or system outlines aren't in the list.
@@ -277,7 +277,7 @@ abstract class AbstractAssignments
     /**
      * Set extra options for assignments.
      *
-     * @param $value
+     * @param mixed $value
      */
     public function setAssignment($value)
     {

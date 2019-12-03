@@ -23,14 +23,19 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Changelog extends JsonController
 {
+    /** @var string */
     protected $url = 'https://raw.githubusercontent.com/gantry/gantry5';
+    /** @var string */
     protected $fullurl = 'https://github.com/gantry/gantry5/blob/develop';
+    /** @var string */
     protected $issues = 'https://github.com/gantry/gantry5/issues';
+    /** @var string */
     protected $contrib = 'https://github.com';
+    /** @var string */
     protected $file = 'CHANGELOG.md';
-
+    /** @var array */
     protected $platforms = ['common' => 'share-alt', 'joomla' => '', 'wordpress' => '', 'grav' => ''];
-
+    /** @var array */
     protected $httpVerbs = [
         'POST' => [
             '/' => 'index'
@@ -44,7 +49,7 @@ class Changelog extends JsonController
     {
         $version = $this->request->post['version'];
         $lookup = $version;
-        
+
         if ($version === '@version@') {
             $version = 'develop';
             $lookup  = '';

@@ -126,12 +126,12 @@ class Response
 
         if ($isCurlResource) {
             $filesize = $args[1];
-        } elseif ($notification_code == STREAM_NOTIFY_FILE_SIZE_IS) {
+        } elseif ($notification_code === STREAM_NOTIFY_FILE_SIZE_IS) {
             $filesize = $args[5];
         }
 
         if ($bytes_transferred > 0) {
-            if ($notification_code == STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
+            if ($notification_code === STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
 
                 $progress = [
                     'code'        => $notification_code,
@@ -176,9 +176,7 @@ class Response
             $args = $args[0];
         }
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         if ($callback) {
             $options['fopen']['notification'] = ['self', 'progress'];
@@ -204,9 +202,7 @@ class Response
         $args = func_get_args();
         $args = count($args) > 1 ? $args : array_shift($args);
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         $ch = curl_init($uri);
         curl_setopt_array($ch, $options['curl']);

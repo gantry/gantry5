@@ -28,7 +28,7 @@ class Validation
     /**
      * Validate value against a blueprint field definition.
      *
-     * @param $value
+     * @param mixed $value
      * @param array $field
      * @return array
      */
@@ -281,11 +281,7 @@ class Validation
             $field['value'] = 1;
         }
 
-        if ($value && $value != $field['value']) {
-            return false;
-        }
-
-        return true;
+        return !($value && $value != $field['value']);
     }
 
     /**
@@ -446,7 +442,7 @@ class Validation
      */
     public static function type_Input_Color($value, array $params, array $field)
     {
-        return preg_match('/^\#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?$/u', $value);
+        return preg_match('/^#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?$/u', $value);
     }
 
     /**

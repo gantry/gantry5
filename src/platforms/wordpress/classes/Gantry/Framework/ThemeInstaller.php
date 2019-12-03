@@ -27,7 +27,7 @@ class ThemeInstaller extends AbstractInstaller
      */
     public function getPath()
     {
-        return get_theme_root() . '/' . $this->name;
+        return \get_theme_root() . '/' . $this->name;
     }
 
     public function createSampleData()

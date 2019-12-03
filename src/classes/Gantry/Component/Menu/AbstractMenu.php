@@ -134,7 +134,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (!$params['menu']) {
             throw new \RuntimeException('No menu selected', 404);
         }
-        if (!in_array($params['menu'], $menus)) {
+        if (!in_array($params['menu'], $menus, true)) {
             throw new \RuntimeException('Menu not found', 404);
         }
 
@@ -311,7 +311,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param $params
+     * @param array $params
      */
     public function init(&$params)
     {
@@ -415,7 +415,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     {
         if ($ordering === null) {
             $config = $this->config();
-            $ordering = $config['ordering'] ? $config['ordering'] : [];
+            $ordering = $config['ordering'] ?: [];
         }
 
         if (!isset($this->items[$path]) || !$this->items[$path]->hasChildren()) {

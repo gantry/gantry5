@@ -147,7 +147,10 @@ class Platform extends BasePlatform
             array_unshift($paths, "media/gantry5/themes/{$theme}/media-demo");
         }
 
-        if ($this->container['global']->get('use_media_folder', false)) {
+        /** @var Config $global */
+        $global = $this->container['global'];
+
+        if ($global->get('use_media_folder', false)) {
             $paths[] = 'gantry-theme://images';
         } else {
             array_unshift($paths, 'gantry-theme://images');
@@ -607,7 +610,7 @@ class Platform extends BasePlatform
 
     /**
      * @param $action
-     * @param null $id
+     * @param int|string|null $id
      * @return bool
      * @throws \RuntimeException
      */

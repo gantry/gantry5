@@ -54,9 +54,9 @@ class Platform extends BasePlatform
     {
         $this->content_dir = Folder::getRelativePath(WP_CONTENT_DIR);
         $this->includes_dir = Folder::getRelativePath(ABSPATH . WPINC);
-        $this->upload_dir = Folder::getRelativePath(wp_upload_dir()['basedir']);
+        $this->upload_dir = Folder::getRelativePath(\wp_upload_dir()['basedir']);
         $this->gantry_dir = Folder::getRelativePath(GANTRY5_PATH);
-        $this->multisite = get_current_blog_id() !== 1 ? '/blog-' . get_current_blog_id() : '';
+        $this->multisite = \get_current_blog_id() !== 1 ? '/blog-' . \get_current_blog_id() : '';
 
         parent::__construct($container);
 
@@ -130,7 +130,7 @@ class Platform extends BasePlatform
      */
     public function getThemesPaths()
     {
-        return ['' => Folder::getRelativePath(get_theme_root())];
+        return ['' => Folder::getRelativePath(\get_theme_root())];
     }
 
     /**
@@ -147,8 +147,10 @@ class Platform extends BasePlatform
             array_unshift($paths, "wp-content://gantry5/{$theme}/media-demo");
         }
 
-        if ($this->container['global']->get('use_media_folder', false)) {
-            array_push($paths, 'gantry-theme://images');
+        /** @var Config $global */
+        $global = $this->container['global'];
+        if ($global->get('use_media_folder', false)) {
+            $paths[] = 'gantry-theme://images';
         } else {
             array_unshift($paths, 'gantry-theme://images');
         }
@@ -192,7 +194,10 @@ class Platform extends BasePlatform
     {
         $gantry = Gantry::instance();
 
-        return $gantry['document']->url('wp-admin/customize.php?theme=' . $theme);
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        return $document::url('wp-admin/customize.php?theme=' . $theme);
     }
 
     /**
@@ -203,10 +208,13 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
-        if ($theme === Gantry::instance()['theme.name']) {
-            $gantry = Gantry::instance();
+        $gantry = Gantry::instance();
 
-            return $gantry['document']->url('wp-admin/admin.php?page=layout-manager');
+        if ($theme === $gantry['theme.name']) {
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            return $document::url('wp-admin/admin.php?page=layout-manager');
         }
         return null;
     }
@@ -252,7 +260,7 @@ class Platform extends BasePlatform
      */
     public function settings()
     {
-        return admin_url('options-general.php?page=g5-settings');
+        return \admin_url('options-general.php?page=g5-settings');
     }
 
     /**
@@ -260,7 +268,7 @@ class Platform extends BasePlatform
      */
     public function update()
     {
-        return esc_url(wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=') . $this->file, 'upgrade-plugin_' . $this->file));
+        return \esc_url(\wp_nonce_url(\self_admin_url('update.php?action=upgrade-plugin&plugin=') . $this->file, 'upgrade-plugin_' . $this->file));
     }
 
     /**
@@ -268,9 +276,9 @@ class Platform extends BasePlatform
      */
     public function updates()
     {
-        $plugin = get_site_transient('update_plugins');
+        $plugin = \get_site_transient('update_plugins');
         $list = [];
-        if (!isset($plugin->response[$this->file]) || version_compare(GANTRY5_VERSION, 0) < 0 || !current_user_can('update_plugins')) { return $list; }
+        if (!isset($plugin->response[$this->file]) || version_compare(GANTRY5_VERSION, 0) < 0 || !\current_user_can('update_plugins')) { return $list; }
 
         $response = $plugin->response[$this->file];
 
@@ -297,16 +305,16 @@ class Platform extends BasePlatform
             'pad_counts'               => 1
         ];
 
-        $args = wp_parse_args( apply_filters( 'gantry5_form_field_selectize_categories_args', $args ), $default );
+        $args = \wp_parse_args(\apply_filters('gantry5_form_field_selectize_categories_args', $args), $default);
 
-        $categories = get_categories( $args );
+        $categories = \get_categories($args);
         $new_categories = [];
 
         foreach( $categories as $cat ) {
             $new_categories[$cat->cat_ID] = $cat->name;
         }
 
-        return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
+        return \apply_filters('gantry5_form_field_selectize_categories', $new_categories);
     }
 
     /**

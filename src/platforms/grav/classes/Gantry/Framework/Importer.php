@@ -73,7 +73,10 @@ class Importer
     {
         $folder = $this->locator->findResource('gantry-positions://', true, true);
 
-        if (is_dir($folder)) Folder::delete($folder);
+        if (is_dir($folder)) {
+            Folder::delete($folder);
+        }
+
         Folder::copy("{$this->folder}/positions", $folder);
     }
 
@@ -81,7 +84,10 @@ class Importer
     {
         $folder = $this->locator->findResource('gantry-theme://config', true, true);
 
-        if (is_dir($folder)) Folder::delete($folder);
+        if (is_dir($folder)) {
+            Folder::delete($folder);
+        }
+
         Folder::copy("{$this->folder}/outlines", $folder);
     }
 
@@ -90,10 +96,14 @@ class Importer
         $from = "{$this->folder}/menus";
 
         $config = $this->locator->findResource('gantry-theme://config/menus', true, true);
-        if (is_dir($config)) Folder::delete($config);
+        if (is_dir($config)) {
+            Folder::delete($config);
+        }
 
         $pages = $this->locator->findResource('page://', true, true);
-        if (is_dir($pages)) Folder::delete($pages);
+        if (is_dir($pages)) {
+            Folder::delete($pages);
+        }
 
         $files = Folder::all($from, ['folders' => false, 'recursive' => false]);
 
@@ -169,6 +179,7 @@ class Importer
 
             $config->set($location, $item, '/');
         }
+        unset($item);
 
         foreach ($menu['items'] as $path => $menuitem) {
             $page = $menuitem['page'];
@@ -252,7 +263,7 @@ class Importer
                     'alias' => $content['created_by_alias'] ?: ($content['author']['realname'] ?: null)
                 ],
                 'date' => $content['created'] !== '0000-00-00 00:00:00' ? $content['created'] : null,
-                'published' => $content['state'] == 1,
+                'published' => $content['state'] === 1,
                 'publish_date' => $content['publish_up'] !== '0000-00-00 00:00:00' ? $content['publish_up'] : null,
                 'unpublish_date' => $content['publish_down'] !== '0000-00-00 00:00:00' ? $content['publish_down'] : null,
                 'taxonomy' => [
@@ -460,7 +471,7 @@ class Importer
         if (is_array($v)) {
             foreach ($v as $key => $value) {
                 $value = $this->filterNull($value);
-                if (is_null($value) || (is_array($value) && empty($value))) {
+                if (null === $value || (is_array($value) && empty($value))) {
                     unset($v[$key]);
                 } else {
                     $v[$key] = $value;
@@ -481,7 +492,7 @@ class Importer
     {
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
+        $html = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', static function($matches) use (&$tokens) {
             $token = uniqid('__g5_token');
             $tokens['#' . $token . '#'] = $matches[0];
 

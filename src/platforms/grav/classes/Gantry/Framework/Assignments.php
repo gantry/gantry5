@@ -30,7 +30,7 @@ class Assignments extends AbstractAssignments
         parent::__construct($configuration);
 
         // Deal with special language assignments.
-        $this->specialFilterMethod = function($candidate, $match, $page) {
+        $this->specialFilterMethod = static function($candidate, $match, $page) {
             if (!empty($candidate['language']) && !empty($page['language'])) {
                 // Always drop candidate if language does not match.
                 if (empty($match['language'])) {
@@ -55,8 +55,6 @@ class Assignments extends AbstractAssignments
      */
     public function types()
     {
-        $types = ['page', 'language', 'type'];
-
-        return $types;
+        return ['page', 'language', 'type'];
     }
 }

@@ -57,7 +57,7 @@ class Theme extends AbstractTheme
 
             if ($debug && !$twig->isDebug()) {
                 $twig->enableDebug();
-                $twig->addExtension(new \Twig_Extension_Debug());
+                $twig->addExtension(new DebugExtension());
             }
 
             if ($production) {
@@ -94,8 +94,7 @@ class Theme extends AbstractTheme
         if ($id) {
             // Render module.
             if (preg_match('`^(.*?)-module-(.*)$`', $id, $matches)) {
-                $position = $matches[1];
-                $id = $matches[2];
+                list(, $position, $id) = $matches;
 
                 $gantry = Gantry::instance();
 
@@ -106,10 +105,10 @@ class Theme extends AbstractTheme
 
                 /** @var Document $document */
                 $document = $gantry['document'];
-                $document->push();
+                $document::push();
                 $html = trim($platform->displayModule("{$position}/{$id}", $attribs + ['position' => ['key' => $position]]));
 
-                return $document->pop()->setContent($html);
+                return $document::pop()->setContent($html);
             }
 
             GANTRY_DEBUGGER && Debugger::addMessage("Rendering particle {$id}", 'debug');
@@ -123,10 +122,10 @@ class Theme extends AbstractTheme
             throw new \RuntimeException('Not Found', 404);
         }
 
-        $context = $attribs + array(
+        $context = $attribs + [
             'gantry' => $this,
             'inContent' => false
-        );
+        ];
 
         return $this->getContent($particle, $context);
     }
@@ -164,10 +163,16 @@ class Theme extends AbstractTheme
 
         // Emulate site context.
         if (!isset($context['theme'])) {
-            $context['theme'] = $grav['config']->get('theme');
+            /** @var GravConfig $config */
+            $config = $grav['config'];
+
+            $context['theme'] = $config->get('theme');
         }
         if (!isset($context['pages'])) {
-            $context['pages'] = $grav['pages']->root();
+            /** @var Pages $pages */
+            $pages = $grav['pages'];
+
+            $context['pages'] = $pages->root();
         }
         if (!isset($context['page'])) {
             $context['page'] = $page;

@@ -87,7 +87,7 @@ class JsonResponse extends Response
 
     /**
      * @param int|string|null $key
-     * @param $value
+     * @param mixed $value
      */
     protected function parseValue($key, $value)
     {

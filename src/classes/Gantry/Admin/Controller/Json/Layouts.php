@@ -24,6 +24,7 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Layouts extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index',
@@ -130,6 +131,7 @@ class Layouts extends JsonController
 
         $layout = Layout::instance($outline);
 
+        /** @var \stdClass $particle */
         $particle = clone $layout->find($id);
         if (!isset($particle->type)) {
             throw new \RuntimeException('Particle was not found from the outline', 404);

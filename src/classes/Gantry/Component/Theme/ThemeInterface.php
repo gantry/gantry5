@@ -46,7 +46,7 @@ interface ThemeInterface
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null);
+    public function extendTwig(Environment $twig, LoaderInterface $loader = null);
 
     /**
      * Returns renderer.
@@ -179,7 +179,7 @@ interface ThemeInterface
     /**
      * Function to convert block sizes into CSS classes.
      *
-     * @param $text
+     * @param string $text
      * @return string
      */
     public function toGrid($text);

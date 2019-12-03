@@ -171,7 +171,7 @@ class EventListener implements EventSubscriberInterface
             $route = trim($page->route(), '/');
             $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
             $parent = $page->parent();
-            if ($order !== null && $order !== (int) $page->order()) {
+            if ($parent && $order !== null && $order !== (int) $page->order()) {
                 $page = $page->move($parent);
                 $page->order($order);
                 $updated = true;

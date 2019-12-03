@@ -40,7 +40,7 @@ class Router extends BaseRouter
         $this->resource = array_shift($this->path);
 
         // FIXME: make it better by detecting admin-ajax.php..
-        $ajax = ($request->get['action'] == 'gantry5');
+        $ajax = ($request->get['action'] === 'gantry5');
         $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
@@ -82,7 +82,7 @@ class Router extends BaseRouter
         $this->container['ajax_suffix'] = '&action=gantry5';
 
         // Create nonce
-        $nonce = wp_create_nonce( 'gantry5-layout-manager' );
+        $nonce = \wp_create_nonce( 'gantry5-layout-manager' );
 
         $this->container['routes'] = [
             '1' => "&view=%s&_wpnonce={$nonce}",
@@ -102,7 +102,7 @@ class Router extends BaseRouter
     protected function checkSecurityToken()
     {
         // Check security nonce and return false on failure.
-        if(check_admin_referer('gantry5-layout-manager')) {
+        if(\check_admin_referer('gantry5-layout-manager')) {
             return true;
         }
 

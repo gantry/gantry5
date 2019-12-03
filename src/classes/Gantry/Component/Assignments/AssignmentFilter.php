@@ -51,7 +51,7 @@ class AssignmentFilter
      *
      * @param array $candidates  In format of candidates[name][section][rule].
      * @param array $page        In format of page[section][rule].
-     * @param callable|null      Matching function.
+     * @param callable|null $function Matching function.
      * @return array
      */
     public function matches(array $candidates, array &$page, callable $function = null)
@@ -84,7 +84,7 @@ class AssignmentFilter
                     }
                 }
             }
-            if (isset($matches[$type]) && $function && call_user_func($function, $candidate, $matches[$type], $page) === false) {
+            if (isset($matches[$type]) && $function && $function($candidate, $matches[$type], $page) === false) {
                 unset($matches[$type]);
             }
         }

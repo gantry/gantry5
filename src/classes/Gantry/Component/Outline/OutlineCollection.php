@@ -78,7 +78,8 @@ class OutlineCollection extends Collection
     public function system()
     {
         foreach ($this->items as $key => $item) {
-            if (substr($key, 0, 1) !== '_') {
+            $key = (string)$key;
+            if ($key && $key[0] !== '_') {
                 unset($this->items[$key]);
             }
         }
@@ -92,7 +93,8 @@ class OutlineCollection extends Collection
     public function user()
     {
         foreach ($this->items as $key => $item) {
-            if ($key === 'default' || substr($key, 0, 1) === '_') {
+            $key = (string)$key;
+            if ($key === 'default' || ($key && $key[0] !== '_')) {
                 unset($this->items[$key]);
             }
         }
@@ -157,7 +159,7 @@ class OutlineCollection extends Collection
             if (isset($index['sections'][$section])) {
                 if (!$includeInherited) {
                     foreach ($index['inherit'] as $outline => $items) {
-                        if (is_array($items) && in_array($section, $items)) {
+                        if (is_array($items) && in_array($section, $items, true)) {
                             continue 2;
                         }
                     }
@@ -318,7 +320,7 @@ class OutlineCollection extends Collection
 
             if (isset($head['atoms'])) {
                 foreach ($head['atoms'] as $atom) {
-                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] === $outline && (!$id || $atom['inherit']['atom'] == $id)) {
+                    if (!empty($atom['inherit']['outline']) && $atom['inherit']['outline'] === $outline && (!$id || $atom['inherit']['atom'] === $id)) {
                         $list[$name] = $title;
                     }
                 }
@@ -436,8 +438,7 @@ class OutlineCollection extends Collection
             $files[$name] = ucwords(trim(preg_replace(['|_|', '|/|'], [' ', ' / '], $name)));
         }
 
-        unset($files['default']);
-        unset($files['menu']);
+        unset($files['default'], $files['menu']);
 
         asort($files);
 
@@ -459,7 +460,7 @@ class OutlineCollection extends Collection
         $name = ltrim(strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title)), '_');
 
         if (!$name) {
-            throw new \RuntimeException("Outline needs a name", 400);
+            throw new \RuntimeException('Outline needs a name', 400);
         }
 
         if ($name === 'default') {
@@ -495,7 +496,7 @@ class OutlineCollection extends Collection
     public function duplicate($id, $title = null, $inherit = false)
     {
         if (!$this->canDuplicate($id)) {
-            throw new \RuntimeException("Outline '$id' cannot be duplicated", 400);
+            throw new \RuntimeException("Outline '{$id}' cannot be duplicated", 400);
         }
 
         $layout = Layout::load($id);
@@ -540,7 +541,7 @@ class OutlineCollection extends Collection
     public function rename($id, $title)
     {
         if (!$this->canDelete($id)) {
-            throw new \RuntimeException("Outline '$id' cannot be renamed", 400);
+            throw new \RuntimeException("Outline '{$id}' cannot be renamed", 400);
         }
 
         $gantry = $this->container;

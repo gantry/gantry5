@@ -32,6 +32,6 @@ class Translator extends BaseTranslator
 
         $args = \func_get_args();
 
-        return \call_user_func_array([Text::class, 'sprintf'], $args);
+        return Text::sprintf(...$args);
     }
 }

@@ -74,8 +74,11 @@ class Positions extends Collection
             }
         }
 
+        /** @var Outlines $outlines */
+        $outlines = $this->container['outlines'];
+
         // Add empty positions from the layouts.
-        foreach ($this->container['outlines']->positions() as $name => $title) {
+        foreach ($outlines->positions() as $name => $title) {
             if (!isset($positions[$name])) {
                 $positions[$name] = new Position($name, ['title' => $title]);
             }
@@ -147,7 +150,7 @@ class Positions extends Collection
         $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title));
 
         if (!$name) {
-            throw new \RuntimeException("Position needs a name", 400);
+            throw new \RuntimeException('Position needs a name', 400);
         }
 
         $name = $this->findFreeName($name);

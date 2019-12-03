@@ -89,10 +89,13 @@ class Platform extends BasePlatform
      */
     public function getMediaPaths()
     {
+        /** @var Config $global */
+        $global = $this->container['global'];
+
         $paths = ['image://'];
 
-        if ($this->container['global']->get('use_media_folder', false)) {
-            array_push($paths, 'gantry-theme://images');
+        if ($global->get('use_media_folder', false)) {
+            $paths[] = 'gantry-theme://images';
         } else {
             array_unshift($paths, 'gantry-theme://images');
         }
@@ -173,7 +176,7 @@ class Platform extends BasePlatform
 
             if (is_array($assignments) && !in_array($outline, ['_error', '_offline'])) {
                 // TODO: move Assignments to DI to speed it up.
-                $matches = (new Assignments)->matches(['test' => $assignments]);
+                $matches = (new Assignments())->matches(['test' => $assignments]);
                 if (GANTRY_DEBUGGER) {
                     Debugger::addMessage("Module assignments for '{$module['id']}' (rules, matches):", 'debug');
                     Debugger::addMessage($assignments, 'debug');
@@ -222,7 +225,10 @@ class Platform extends BasePlatform
      */
     public function displaySystemMessages($params = [])
     {
-        return Gantry::instance()['theme']->compile(
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+
+        return $theme->compile(
             '{% for message in grav.messages.fetch %}<div class="alert-{{ message.scope|e }} alert">{{ message.message|raw }}</div>{% endfor %}'
         );
     }
@@ -283,10 +289,11 @@ class Platform extends BasePlatform
     {
         if ($html) {
             return $length ? Utils::truncateHtml($text, $length) : $text;
-        } else {
-            $text = strip_tags($text);
-            return $length ? Utils::truncate($text, $length) : $text;
         }
+
+        $text = strip_tags($text);
+
+        return $length ? Utils::truncate($text, $length) : $text;
     }
 
     /**
@@ -306,7 +313,8 @@ class Platform extends BasePlatform
             if (isset($platform['plugin']) && is_array($platform['plugin'])) {
                 /** @var Plugins $plugins */
                 $plugins = Grav::instance()['plugins'];
-                $list = $plugins->all();
+                $list = $plugins::all();
+
                 foreach ($platform['plugin'] as $name => $condition) {
                     $exists = isset($list[$name]);
 

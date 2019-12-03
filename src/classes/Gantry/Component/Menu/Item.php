@@ -162,7 +162,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
     /**
      * @return AbstractMenu
-     * @deprecated Need to break relationship to the menu and use a collection instead.
+     * @todo Need to break relationship to the menu and use a collection instead.
      */
     protected function menu()
     {
@@ -347,9 +347,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
                 // Assign each menu items to the group.
                 $group = array_map(
-                    function($value) use ($i, $menu) {
+                    static function($value) use ($i, $menu) {
                         $item = $menu[$value];
                         $item->group = $i;
+
                         return $value;
                     },
                     $group

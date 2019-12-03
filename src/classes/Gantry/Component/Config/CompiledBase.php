@@ -78,7 +78,9 @@ abstract class CompiledBase
     /**
      * Function gets called when cached configuration is saved.
      */
-    public function modified() {}
+    public function modified()
+    {
+    }
 
     /**
      * Load the configuration.

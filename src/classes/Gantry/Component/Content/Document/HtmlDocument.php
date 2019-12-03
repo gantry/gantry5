@@ -331,16 +331,16 @@ class HtmlDocument
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
             case 'js':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', '_twig_escape_js_callback', $string);
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._]#Su', '_twig_escape_js_callback', $string);
 
                 return $string;
 
             case 'css':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
@@ -349,11 +349,11 @@ class HtmlDocument
                 return $string;
 
             case 'html_attr':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\.\-_]#Su', '_twig_escape_html_attr_callback', $string);
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._-]#Su', '_twig_escape_html_attr_callback', $string);
 
                 return $string;
 
@@ -366,7 +366,7 @@ class HtmlDocument
     }
 
     /**
-     * @param $framework
+     * @param string $framework
      * @return bool
      * @deprecated 5.3
      */
@@ -538,7 +538,7 @@ class HtmlDocument
         // Tokenize all PRE, CODE and SCRIPT tags to avoid modifying any src|href|url in them
         $tokens = [];
 
-        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', function($matches) use (&$tokens) {
+        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
             $token = '@@'. uniqid(mt_rand(), true) . '@@';
             $match = $matches[0];
@@ -609,14 +609,14 @@ class HtmlDocument
      * Replace tokens with strings.
      *
      * @param array $tokens
-     * @param $html
+     * @param string $html
      * @return string
      */
     protected static function replaceTokens(array $tokens, $html)
     {
         foreach ($tokens as $token => $replacement) {
             // We need to use callbacks to turn off backreferences ($1, \\1) in the replacement string.
-            $callback = function() use ($replacement) { return $replacement; };
+            $callback = static function() use ($replacement) { return $replacement; };
 
             $html = preg_replace_callback('#' . preg_quote($token, '#') . '#u', $callback, $html);
         }
@@ -631,7 +631,7 @@ class HtmlDocument
     {
         foreach (static::$stack[0]->getFrameworks() as $framework) {
             if (isset(static::$availableFrameworks[$framework])) {
-                call_user_func([get_called_class(), static::$availableFrameworks[$framework]]);
+                call_user_func([static::class, static::$availableFrameworks[$framework]]);
             }
         }
     }

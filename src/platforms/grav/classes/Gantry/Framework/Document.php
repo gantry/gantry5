@@ -78,10 +78,13 @@ class Document extends HtmlDocument
             /** @var Language $language */
             $language = $grav['language'];
 
+            /** @var Pages $pages */
+            $pages = $grav['pages'];
+
             $active_language = $language->getActive();
 
-            $path_append = rtrim($grav['pages']->base(), '/');
-            if ($language->getDefault() != $active_language || $config->get('system.languages.include_default_lang') === true) {
+            $path_append = rtrim($pages->base(), '/');
+            if ($language->getDefault() !== $active_language || $config->get('system.languages.include_default_lang') === true) {
                 $path_append .= $active_language ? '/' . $active_language : '';
             }
 
@@ -95,6 +98,9 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Config $config */
+        $config = $grav['config'];
+
         /** @var Assets $assets */
         $assets = $grav['assets'];
 
@@ -104,7 +110,7 @@ class Document extends HtmlDocument
             switch ($style[':type']) {
                 case 'file':
                     $assets->addCss(
-                        static::getRelativeUrl($style['href'], $grav['config']->get('system.assets.css_pipeline')),
+                        static::getRelativeUrl($style['href'], $config->get('system.assets.css_pipeline')),
                         90 + $style[':priority'],
                         true,
                         'head');
@@ -123,6 +129,9 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Config $config */
+        $config = $grav['config'];
+
         /** @var Assets $assets */
         $assets = $grav['assets'];
 
@@ -132,8 +141,8 @@ class Document extends HtmlDocument
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $assets->AddJs(
-                        static::getRelativeUrl($script['src'], $grav['config']->get('system.assets.js_pipeline')),
+                    $assets->addJs(
+                        static::getRelativeUrl($script['src'], $config->get('system.assets.js_pipeline')),
                         90 + $script[':priority'],
                         true,
                         $script['async'] ? 'async' : ($script['defer'] ? 'defer' : ''),
@@ -141,7 +150,7 @@ class Document extends HtmlDocument
                     );
                     break;
                 case 'inline':
-                    $assets->AddInlineJs($script['content'],
+                    $assets->addInlineJs($script['content'],
                         90 + $script[':priority'],
                         $group
                     );
@@ -162,7 +171,7 @@ class Document extends HtmlDocument
         if (strpos($url, $base) === 0) {
             if ($pipeline) {
                 // Remove file timestamp if CSS pipeline has been enabled.
-                $url = preg_replace('|[\?#].*|', '', $url);
+                $url = preg_replace('|[?#].*|', '', $url);
             }
 
             return substr($url, strlen($base) - 1);
@@ -172,6 +181,8 @@ class Document extends HtmlDocument
 
     protected static function registerJquery()
     {
-        Grav::instance()['assets']->addJs('jquery', 111);
+        /** @var Assets $assets */
+        $assets = Grav::instance()['assets'];
+        $assets->addJs('jquery', 111);
     }
 }

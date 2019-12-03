@@ -47,10 +47,10 @@ class Particle extends \WP_Widget
 
         try {
             $this->container = Gantry::instance();
-        } catch (Exception $e) {}
+        } catch (\Exception $e) {}
 
-        $ajax = ($pagenow === 'admin-ajax.php' && ( isset( $_POST['action'] ) && $_POST['action'] === 'save-widget' ) );
-        if (is_admin() && (in_array($pagenow, ['widgets.php', 'customize.php']) || $ajax)) {
+        $ajax = $pagenow === 'admin-ajax.php' && isset($_POST['action']) && $_POST['action'] === 'save-widget';
+        if (\is_admin() && (in_array($pagenow, ['widgets.php', 'customize.php']) || $ajax)) {
             // Initialize administrator if already not done that.
             $this->initialiseGantry();
         }
@@ -59,14 +59,17 @@ class Particle extends \WP_Widget
     /**
      * Initialise Gantry
      */
-    public function initialiseGantry() {
+    public function initialiseGantry()
+    {
         if (!isset($this->container['router'])) {
-            $this->container['router'] = function ($c) {
-                return new Router($c);
-            };
+            $router = new Router($this->container);
+            $router->boot()->load();
 
-            $this->container['router']->boot()->load();
-            $this->container['admin.theme']->render('@gantry-admin/partials/layout.html.twig', ['content' => '']);
+            $this->container['router'] = $router;
+
+            /** @var AdminTheme $theme */
+            $theme = $this->container['admin.theme'];
+            $theme->render('@gantry-admin/partials/layout.html.twig', ['content' => '']);
         }
     }
 
@@ -83,7 +86,7 @@ class Particle extends \WP_Widget
         }
 
         $sidebar = $args['id'] ? $args['id'] : '';
-        $widget_id = isset($args['widget_id']) ? preg_replace('/[^\d]/', '', $args['widget_id']) : null;
+        $widget_id = isset($args['widget_id']) ? preg_replace('/\D/', '', $args['widget_id']) : null;
         $md5 = md5(json_encode($instance));
         $id = isset($instance['id']) ? $instance['id'] : ($widget_id ?: "widget-{$md5}");
 
@@ -101,7 +104,9 @@ class Particle extends \WP_Widget
             $particle = $instance['particle'];
 
             if ($this->container->debug()) {
-                $enabled_outline = $this->container['config']->get("particles.{$particle}.enabled", true);
+                /** @var Config $config */
+                $config = $this->container['config'];
+                $enabled_outline = $config->get("particles.{$particle}.enabled", true);
                 $enabled = isset($instance['options']['particle']['enabled']) ? $instance['options']['particle']['enabled'] : true;
                 $location = (!$enabled_outline ? 'Outline' : (!$enabled ? 'Widget' : null));
 
@@ -113,17 +118,18 @@ class Particle extends \WP_Widget
                 }
             }
 
-            $object = (object) array(
+            $object = (object) [
                 'id' => "{$sidebar}-widget-{$particle}-{$id}",
                 'type' => $type,
                 'subtype' => $particle,
                 'attributes' => $instance['options']['particle'],
-            );
+            ];
 
-            $context = array(
+            $context = [
                 'gantry' => $this->container,
                 'inContent' => true
-            );
+            ];
+
             if (isset($args['ajax'])) {
                 $context['ajax'] = $args['ajax'];
             }
@@ -137,7 +143,7 @@ class Particle extends \WP_Widget
         $document = $this->container['document'];
         $document->addBlock($content);
 
-        $html = apply_filters('widget_content', $content->toString());
+        $html = \apply_filters('widget_content', $content->toString());
 
         if (trim($html)) {
             echo $args['before_widget'];
@@ -172,15 +178,19 @@ class Particle extends \WP_Widget
         $fieldId = $this->get_field_id('title');
         $fieldName = $this->get_field_name('title');
 
-        echo "<input id=\"{$fieldId}\" name=\"{$fieldName}\" type=\"hidden\" value=\"" . esc_attr($title) . "\" />";
+        echo "<input id=\"{$fieldId}\" name=\"{$fieldName}\" type=\"hidden\" value=\"" . \esc_attr($title) . '" />';
+
+
+        /** @var AdminTheme $theme */
+        $theme = $this->container['admin.theme'];
 
         $params = [
-            'content' => $this->container['admin.theme']->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
+            'content' => $theme->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
 
-        echo '<p>' . __('Click on the button below to choose a Particle.', 'gantry5') . '</p>';
+        echo '<p>' . \__('Click on the button below to choose a Particle.', 'gantry5') . '</p>';
 
-        echo $this->container['admin.theme']->render('@gantry-admin/partials/inline.html.twig', $params);
+        echo $theme->render('@gantry-admin/partials/inline.html.twig', $params);
     }
 
     /**
@@ -192,8 +202,6 @@ class Particle extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-        $instance = isset($new_instance['particle']) ? json_decode($new_instance['particle'], true) : [];
-
-        return $instance;
+        return isset($new_instance['particle']) ? json_decode($new_instance['particle'], true) : [];
     }
 }

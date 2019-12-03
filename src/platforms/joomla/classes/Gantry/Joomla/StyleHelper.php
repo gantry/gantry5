@@ -116,7 +116,7 @@ class StyleHelper
     {
         $style = static::getStyle($id);
 
-        $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
+        $extension = $style->extension_id ?: $style->template;
 
         $installer = new ThemeInstaller($extension);
         $installer->updateStyle($id, ['configuration' => $id, 'preset' => $preset]);

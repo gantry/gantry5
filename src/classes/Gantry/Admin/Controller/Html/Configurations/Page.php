@@ -30,6 +30,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Page extends HtmlController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/' => 'index'
@@ -239,7 +240,7 @@ class Page extends HtmlController
         $blueprint = $item->blueprint();
 
         // Load inheritance blueprint.
-        $inheritance = $atoms->getInheritanceBlueprint($name, $item->id);
+        $inheritance = $atoms->getInheritanceBlueprint($name, $item->get('id'));
         $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
@@ -247,7 +248,7 @@ class Page extends HtmlController
             'inheritance'   => $inheritance,
             'inheritable'   => $inheritable,
             'item'          => $item,
-            'data'          => ['particles' => [$name => $item->attributes]],
+            'data'          => ['particles' => [$name => $item->get('attributes')]],
             'blueprints'    => $blueprint,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
