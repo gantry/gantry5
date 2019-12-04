@@ -1,4 +1,11 @@
-# 5.4.30
+# 5.4.32
+## mm/dd/2019
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
+
+# 5.4.31
 ## 10/04/2019
 
 1. [Common](#common)
@@ -22,9 +29,17 @@
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - Fixed escaped letters such as `&amp;` in `Content Array` particle title
+        - Fixed regression in 5.4.30: Content Array displays error (#2547)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed `Document::uri()` not adding domain when asked for absolute path
+
+# 5.4.30
+## 10/04/2019
+
+1. [Common](#common)
+    1. [](#new)
+       - Release replaced by v5.4.31
 
 # 5.4.29
 ## 06/21/2019
