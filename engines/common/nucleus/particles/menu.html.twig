@@ -42,7 +42,13 @@
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = (item.target != '_self' or context.particle.forceTarget) ? ' target="' ~ item.target|e ~ '"' %}
-        {% set rel = item.rel ? ' rel="' ~ item.rel|e ~ '"' %}
+        {% if item.target == '_blank' %}
+            {% set relTarget = ('noopener' not in item.rel) ? 'noopener' : '' %}
+            {% set relTarget = (relTarget) ? relTarget ~ ' ' : relTarget %}
+            {% set relTarget = ('noreferrer' not in item.rel) ? relTarget ~ 'noreferrer' : relTarget %}
+            {% set relTarget = (item.rel and relTarget) ? ' ' ~ relTarget : relTarget %}
+        {% endif %}
+        {% set rel = (item.rel or relTarget) ? ' rel="' ~ item.rel|e ~ relTarget ~ '"' %}
         {% set attributes = '' %}
         {% if item.attributes %}
             {% for attribute in item.attributes %}
