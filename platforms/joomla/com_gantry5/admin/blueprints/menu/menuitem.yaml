@@ -39,6 +39,11 @@ form:
           type: input.text
           label: Link
           disabled: true
+          
+        .rel:
+          type: input.text
+          label: Link Rel Attribute
+          disabled: true
 
         .attributes:
           type: collection.keyvalue

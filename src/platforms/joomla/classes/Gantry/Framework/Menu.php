@@ -287,6 +287,7 @@ class Menu extends AbstractMenu
                     'path' => $menuItem->route,
                     'link' => $menuItem->link,
                     'link_title' => $menuItem->params->get('menu-anchor_title', ''),
+                    'rel' => $menuItem->params->get('menu-anchor_rel', ''),
                     'enabled' => (bool) $menuItem->params->get('menu_show', 1),
                 ];
 
