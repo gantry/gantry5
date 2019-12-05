@@ -47,11 +47,19 @@ form:
 
         .attributes:
           type: collection.keyvalue
-          label: Tag Attributes
-          description: Additional attributes for the menu item.
+          label: List Tag Attributes
+          description: Additional attributes for the menu item list tag.
           key_placeholder: Key (e.g. style, name, ...)
           value_placeholder: Value
-          exclude: ['id', 'class']
+          exclude: ['class', 'style', 'title']
+
+        .link_attributes:
+          type: collection.keyvalue
+          label: Link Tag Attributes
+          description: Additional attributes for the menu item link tag.
+          key_placeholder: Key (e.g. style, name, ...)
+          value_placeholder: Value
+          exclude: ['class', 'href', 'title', 'aria-label', 'target']
 
         .hash:
           type: input.text
