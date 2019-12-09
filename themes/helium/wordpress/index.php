@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +22,12 @@ use Timber\Timber;
  */
 
 $gantry = Gantry\Framework\Gantry::instance();
+
+/** @var \Gantry\Framework\Theme $theme */
 $theme  = $gantry['theme'];
+
+/** @var \Gantry\Component\Config\Config $config */
+$config = $gantry['config'];
 
 global $paged;
 
@@ -35,12 +41,12 @@ $context['page_head'] = $theme->render('partials/page_head.html.twig', $context)
 
 // Category variables for query manipulation
 $cat         = '';
-$cat_include = $gantry['config']->get('content.blog.query.categories.include');
-$cat_exclude = $gantry['config']->get('content.blog.query.categories.exclude');
+$cat_include = $config->get('content.blog.query.categories.include');
+$cat_exclude = $config->get('content.blog.query.categories.exclude');
 
-if ($cat_include != '') {
+if ($cat_include) {
     $cat = str_replace(' ', ',', $cat_include);
-} elseif ($cat_exclude != '') {
+} elseif ($cat_exclude) {
     $cat_exclude = explode(' ', $cat_exclude);
     $new_exclude = [];
     foreach ($cat_exclude as $exclude) {
@@ -50,8 +56,8 @@ if ($cat_include != '') {
 }
 
 // Override the main query only when $cat variable is not empty
-if ($cat != '') {
-    query_posts(['cat' => $cat, 'paged' => $paged]);
+if ($cat) {
+    \query_posts(['cat' => $cat, 'paged' => $paged]);
 }
 
 $context['posts']      = Timber::get_posts();
@@ -59,7 +65,7 @@ $context['pagination'] = Timber::get_pagination();
 
 $templates = ['index.html.twig'];
 
-if (is_home()) {
+if (\is_home()) {
     array_unshift($templates, 'home.html.twig');
 }
 

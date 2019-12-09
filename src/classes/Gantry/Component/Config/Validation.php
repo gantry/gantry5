@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,7 +28,7 @@ class Validation
     /**
      * Validate value against a blueprint field definition.
      *
-     * @param $value
+     * @param mixed $value
      * @param array $field
      * @return array
      */
@@ -280,11 +281,7 @@ class Validation
             $field['value'] = 1;
         }
 
-        if ($value && $value != $field['value']) {
-            return false;
-        }
-
-        return true;
+        return !($value && $value != $field['value']);
     }
 
     /**
@@ -445,7 +442,7 @@ class Validation
      */
     public static function type_Input_Color($value, array $params, array $field)
     {
-        return preg_match('/^\#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?$/u', $value);
+        return preg_match('/^#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?$/u', $value);
     }
 
     /**
@@ -488,9 +485,11 @@ class Validation
         if ($value instanceof \DateTime) {
             return true;
         }
+
         if (!\is_string($value)) {
             return false;
         }
+
         if (!isset($params['format'])) {
             return false !== strtotime($value);
         }
@@ -526,6 +525,7 @@ class Validation
         if (!isset($params['format'])) {
             $params['format'] = 'Y-m-d';
         }
+
         return self::type_Input_Datetime($value, $params, $field);
     }
 
@@ -542,6 +542,7 @@ class Validation
         if (!isset($params['format'])) {
             $params['format'] = 'H:i';
         }
+
         return self::type_Input_Datetime($value, $params, $field);
     }
 
@@ -558,6 +559,7 @@ class Validation
         if (!isset($params['format'])) {
             $params['format'] = 'Y-m';
         }
+
         return self::type_Input_Datetime($value, $params, $field);
     }
 
@@ -574,6 +576,7 @@ class Validation
         if (!isset($params['format']) && !preg_match('/^\d{4}-W\d{2}$/u', $value)) {
             return false;
         }
+
         return self::type_Input_Datetime($value, $params, $field);
     }
 
@@ -657,6 +660,7 @@ class Validation
     {
         try {
             Yaml::parse($value);
+
             return true;
         } catch (ParseException $e) {
             return false;
@@ -733,7 +737,7 @@ class Validation
     /**
      * @param mixed $value
      * @param array $params
-     * @return string
+     * @return bool
      */
     public static function validate_Alpha($value, $params)
     {
@@ -783,7 +787,7 @@ class Validation
     /**
      * @param mixed $value
      * @param array $params
-     * @return int|float
+     * @return bool
      */
     public static function validate_Digit($value, $params)
     {

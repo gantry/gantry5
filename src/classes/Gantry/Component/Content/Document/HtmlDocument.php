@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -28,16 +29,19 @@ class HtmlDocument
 {
     use GantryTrait;
 
+    /** @var int */
     public static $timestamp_age = 604800;
+    /** @var array */
     public static $urlFilterParams;
-
-    /**
-     * @var array|HtmlBlock[]
-     */
+    /** @var HtmlBlock[] */
     protected static $stack;
+    /** @var array */
     protected static $frameworks = [];
+    /** @var array */
     protected static $scripts = [];
+    /** @var array */
     protected static $styles = [];
+    /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
         'jquery.framework' => 'registerJquery',
@@ -113,6 +117,7 @@ class HtmlDocument
     public static function addStyle($element, $priority = 0, $location = 'head')
     {
         static::getObject();
+
         return static::$stack[0]->addStyle($element, $priority, $location);
     }
 
@@ -125,6 +130,7 @@ class HtmlDocument
     public static function addInlineStyle($element, $priority = 0, $location = 'head')
     {
         static::getObject();
+
         return static::$stack[0]->addInlineStyle($element, $priority, $location);
     }
 
@@ -137,6 +143,7 @@ class HtmlDocument
     public static function addScript($element, $priority = 0, $location = 'head')
     {
         static::getObject();
+
         return static::$stack[0]->addScript($element, $priority, $location);
     }
 
@@ -149,6 +156,7 @@ class HtmlDocument
     public static function addInlineScript($element, $priority = 0, $location = 'head')
     {
         static::getObject();
+
         return static::$stack[0]->addInlineScript($element, $priority, $location);
     }
 
@@ -161,6 +169,7 @@ class HtmlDocument
     public static function addHtml($html, $priority = 0, $location = 'bottom')
     {
         static::getObject();
+
         return static::$stack[0]->addHtml($html, $priority, $location);
     }
 
@@ -304,6 +313,7 @@ class HtmlDocument
      * Escape string (emulates twig filter).
      *
      * @param string|object $string
+     * @param string $strategy
      * @return string
      */
     public static function escape($string, $strategy = 'html')
@@ -312,7 +322,7 @@ class HtmlDocument
             if (is_object($string) && method_exists($string, '__toString')) {
                 $string = (string) $string;
             } elseif (in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
-                return $string;
+                return '';
             }
         }
 
@@ -321,16 +331,16 @@ class HtmlDocument
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
             case 'js':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', '_twig_escape_js_callback', $string);
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._]#Su', '_twig_escape_js_callback', $string);
 
                 return $string;
 
             case 'css':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
@@ -339,11 +349,11 @@ class HtmlDocument
                 return $string;
 
             case 'html_attr':
-                if (0 === strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (!($string === '' || 1 === preg_match('/^./su', $string))) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\.\-_]#Su', '_twig_escape_html_attr_callback', $string);
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._-]#Su', '_twig_escape_html_attr_callback', $string);
 
                 return $string;
 
@@ -356,7 +366,7 @@ class HtmlDocument
     }
 
     /**
-     * @param $framework
+     * @param string $framework
      * @return bool
      * @deprecated 5.3
      */
@@ -528,7 +538,7 @@ class HtmlDocument
         // Tokenize all PRE, CODE and SCRIPT tags to avoid modifying any src|href|url in them
         $tokens = [];
 
-        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', function($matches) use (&$tokens) {
+        $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
             $token = '@@'. uniqid(mt_rand(), true) . '@@';
             $match = $matches[0];
@@ -599,14 +609,14 @@ class HtmlDocument
      * Replace tokens with strings.
      *
      * @param array $tokens
-     * @param $html
+     * @param string $html
      * @return string
      */
     protected static function replaceTokens(array $tokens, $html)
     {
         foreach ($tokens as $token => $replacement) {
             // We need to use callbacks to turn off backreferences ($1, \\1) in the replacement string.
-            $callback = function() use ($replacement) { return $replacement; };
+            $callback = static function() use ($replacement) { return $replacement; };
 
             $html = preg_replace_callback('#' . preg_quote($token, '#') . '#u', $callback, $html);
         }
@@ -621,7 +631,7 @@ class HtmlDocument
     {
         foreach (static::$stack[0]->getFrameworks() as $framework) {
             if (isset(static::$availableFrameworks[$framework])) {
-                call_user_func([get_called_class(), static::$availableFrameworks[$framework]]);
+                call_user_func([static::class, static::$availableFrameworks[$framework]]);
             }
         }
     }
@@ -702,6 +712,7 @@ class HtmlDocument
 
         if (!$object) {
             // We need to initialize document for backwards compatibility (RokSprocket/RokGallery in WP).
+            /** @var HtmlDocument $object */
             $object = Gantry::instance()['document'];
         }
 

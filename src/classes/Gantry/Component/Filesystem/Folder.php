@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -123,10 +124,10 @@ abstract class Folder
      * @return array
      * @throws \RuntimeException
      */
-    public static function all($path, array $params = array())
+    public static function all($path, array $params = [])
     {
         if ($path === false) {
-            throw new \RuntimeException("Path to {$path} doesn't exist.");
+            throw new \RuntimeException("Path doesn't exist.");
         }
 
         $compare = isset($params['compare']) ? 'get' . $params['compare'] : null;
@@ -172,7 +173,7 @@ abstract class Folder
                     $filter = $filters['key'];
                     $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
                     if (is_callable($filter)) {
-                        $fileKey = $pre . call_user_func($filter, $fileKey);
+                        $fileKey = $pre . $filter($fileKey);
                     } else {
                         $fileKey = $pre . preg_replace($filter, '', $fileKey);
                     }
@@ -180,7 +181,7 @@ abstract class Folder
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];
                     if (is_callable($filter)) {
-                        $filePath = call_user_func($filter, $file);
+                        $filePath = $filter($file);
                     } else {
                         $filePath = preg_replace($filter, '', $filePath);
                     }

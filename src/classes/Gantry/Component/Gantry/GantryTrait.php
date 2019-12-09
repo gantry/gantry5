@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -21,9 +22,7 @@ use Gantry\Framework\Gantry;
  */
 trait GantryTrait
 {
-    /**
-     * @var Gantry
-     */
+    /** @var Gantry */
     private static $gantry;
 
     /**

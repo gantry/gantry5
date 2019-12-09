@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -466,11 +467,11 @@ class ThemeInstaller extends AbstractInstaller
     {
         /** @var MenuType $table */
         $table = MenuHelper::getMenuType();
-        $data  = array(
+        $data  = [
             'menutype'    => $type,
             'title'       => $title,
             'description' => $description
-        );
+        ];
 
         if (!$table->bind($data) || !$table->check()) {
             // Menu already exists, do nothing

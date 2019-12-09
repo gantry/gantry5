@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,7 +26,7 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
     public function toArray();
 
     /**
-     * @param $item
+     * @param mixed $item
      */
     public function add($item);
 
@@ -35,27 +36,25 @@ interface CollectionInterface extends \IteratorAggregate, \ArrayAccess, \Countab
     public function getIterator();
 
     /**
-     * @param $offset
-     *
+     * @param string|int $offset
      * @return bool
      */
     public function offsetExists($offset);
 
     /**
-     * @param $offset
-     * @param $value
+     * @param string|int $offset
+     * @param mixed $value
      */
     public function offsetSet($offset, $value);
 
     /**
-     * @param $offset
-     *
+     * @param string|int $offset
      * @return mixed
      */
     public function offsetGet($offset);
 
     /**
-     * @param $offset
+     * @param string|int $offset
      */
     public function offsetUnset($offset);
 

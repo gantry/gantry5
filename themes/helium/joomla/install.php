@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -18,8 +19,12 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
 
+/**
+ * Class G5_HeliumInstallerScript
+ */
 class G5_HeliumInstallerScript
 {
+    /** @var string */
     public $requiredGantryVersion = '5.5';
 
     /**

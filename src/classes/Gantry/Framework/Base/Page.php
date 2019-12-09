@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,8 @@
 
 namespace Gantry\Framework\Base;
 
+use Gantry\Component\Config\Config;
+
 /**
  * Class Page
  * @package Gantry\Framework\Base
@@ -21,6 +24,7 @@ abstract class Page
 {
     /** @var \Gantry\Framework\Gantry */
     protected $container;
+    /** @var Config */
     protected $config;
 
     /**

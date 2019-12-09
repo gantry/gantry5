@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,7 @@
 
 namespace Gantry\Admin\Controller\Html;
 
+use Gantry\Admin\Events\MenuEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
@@ -179,7 +181,7 @@ class Menu extends HtmlController
         $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
 
         // Fire save event.
-        $event = new Event;
+        $event = new MenuEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;
@@ -462,7 +464,7 @@ class Menu extends HtmlController
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
-        $this->params['group'] = isset($group) ? $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+        $this->params['group'] = $resource[implode('/', array_slice($path, 0, 2))]->group;
 
         if (!$item->title) {
             throw new \RuntimeException('Title from the Menu Item should not be empty', 400);

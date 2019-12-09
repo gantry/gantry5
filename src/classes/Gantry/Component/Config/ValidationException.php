@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,6 +20,7 @@ namespace Gantry\Component\Config;
  */
 class ValidationException extends \RuntimeException
 {
+    /** @var array */
     protected $messages = [];
 
     /**

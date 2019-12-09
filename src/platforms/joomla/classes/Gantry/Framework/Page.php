@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,24 +21,41 @@ use Joomla\CMS\Uri\Uri;
  */
 class Page extends Base\Page
 {
+    /** @var bool */
     public $home;
+    /** @var string */
     public $outline;
+    /** @var string */
     public $language;
+    /** @var string */
     public $direction;
 
     // Joomla specific properties.
+    /** @var string */
     public $tmpl;
+    /** @var string */
     public $option;
+    /** @var string */
     public $view;
+    /** @var string */
     public $layout;
+    /** @var string */
     public $task;
+    /** @var string */
     public $theme;
+    /** @var string */
     public $baseUrl;
+    /** @var string */
     public $sitename;
+    /** @var string */
     public $title;
+    /** @var string */
     public $description;
+    /** @var string */
     public $class;
+    /** @var string */
     public $printing;
+    /** @var int */
     public $itemid;
 
     /**

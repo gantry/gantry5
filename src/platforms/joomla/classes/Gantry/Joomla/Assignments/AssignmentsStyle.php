@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -22,7 +23,9 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class AssignmentsStyle implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'style';
+    /** @var int */
     public $priority = 2;
 
     /**

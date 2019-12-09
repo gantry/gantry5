@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -11,6 +12,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Admin\ThemeList;
+use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\Joomla\Category\CategoryFinder;
@@ -36,15 +38,21 @@ use Joomla\CMS\Uri\Uri;
 
 class Platform extends BasePlatform
 {
+    /** @var bool */
     public $no_base_layout = false;
+    /** @var string */
     public $module_wrapper = '<div class="platform-content">%s</div>';
+    /** @var string */
     public $component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
 
+    /** @var string */
     protected $name = 'joomla';
+    /** @var array */
     protected $features = ['modules' => true];
+    /** @var string */
     protected $settings_key = 'return';
+    /** @var array|null */
     protected $modules;
-
 
     /**
      * @param string $html
@@ -139,7 +147,10 @@ class Platform extends BasePlatform
             array_unshift($paths, "media/gantry5/themes/{$theme}/media-demo");
         }
 
-        if ($this->container['global']->get('use_media_folder', false)) {
+        /** @var Config $global */
+        $global = $this->container['global'];
+
+        if ($global->get('use_media_folder', false)) {
             $paths[] = 'gantry-theme://images';
         } else {
             array_unshift($paths, 'gantry-theme://images');
@@ -599,7 +610,7 @@ class Platform extends BasePlatform
 
     /**
      * @param $action
-     * @param null $id
+     * @param int|string|null $id
      * @return bool
      * @throws \RuntimeException
      */

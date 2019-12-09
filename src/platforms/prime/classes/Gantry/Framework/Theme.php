@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,6 +17,8 @@ namespace Gantry\Framework;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Class Theme
@@ -25,9 +28,7 @@ class Theme extends AbstractTheme
 {
     use ThemeTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $url;
 
     /**
@@ -56,10 +57,10 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Loader_Filesystem
+     * @param LoaderInterface $loader
+     * @return FilesystemLoader
      */
-    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
+    protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
         $loader = parent::setTwigLoaderPaths($loader);
 
@@ -69,7 +70,7 @@ class Theme extends AbstractTheme
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $loader->setPaths($this->getTwigPaths());
+            $loader->setPaths(static::getTwigPaths());
             $loader->setPaths($locator->findResources('gantry-pages://'), 'pages');
             $loader->setPaths($locator->findResources('gantry-positions://'), 'positions');
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,12 +14,12 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\SettingsEvent;
 use Gantry\Admin\Particles;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -253,7 +254,7 @@ class Settings extends HtmlController
         @rmdir($save_dir);
 
         // Fire save event.
-        $event = new Event;
+        $event = new SettingsEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,6 +20,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 
+/**
+ * Class Assignments
+ * @package Gantry\Framework
+ */
 class Assignments extends AbstractAssignments
 {
     protected $platform = 'Joomla';

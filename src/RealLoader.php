@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,7 +24,9 @@ namespace Gantry5;
  */
 abstract class RealLoader
 {
+    /** @var string */
     protected static $errorMessagePhpMin = 'You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.';
+    /** @var string */
     protected static $errorMessageGantryLoaded = 'Attempting to load Gantry 5 Framework multiple times.';
 
     /**
@@ -68,11 +70,11 @@ abstract class RealLoader
         if (defined('JVERSION') && defined('JPATH_ROOT')) {
             define('GANTRY5_PLATFORM', 'joomla');
             define('GANTRY5_ROOT', JPATH_ROOT);
-        } elseif (defined('WP_DEBUG') && defined('ABSPATH')) {
+        } elseif (defined('WP_DEBUG') && defined('ABSPATH') && defined('WP_CONTENT_DIR')) {
             define('GANTRY5_PLATFORM', 'wordpress');
-            if (class_exists('Env') && defined('CONTENT_DIR')) {
+            if (defined('CONTENT_DIR') && class_exists('Env')) {
                 // Bedrock support.
-                define('GANTRY5_ROOT', preg_replace('|' . preg_quote(CONTENT_DIR). '$|', '', WP_CONTENT_DIR));
+                define('GANTRY5_ROOT', preg_replace('|' . preg_quote(CONTENT_DIR, '|'). '$|', '', WP_CONTENT_DIR));
             } else {
                 // Plain WP support.
                 define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
@@ -101,7 +103,7 @@ abstract class RealLoader
         }
 
         /** @var \Composer\Autoload\ClassLoader $loader */
-        $loader = require_once $autoload;
+        $loader = require $autoload;
 
         if ($dev) {
             $loader->addPsr4('Gantry\\', "{$base}/classes/Gantry");

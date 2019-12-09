@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,6 +17,10 @@ namespace Gantry\Admin;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Router\Router as BaseRouter;
 
+/**
+ * Class Router
+ * @package Gantry\Admin
+ */
 class Router extends BaseRouter
 {
     public function boot()
@@ -24,7 +29,7 @@ class Router extends BaseRouter
         $request = $this->container['request'];
 
         // Split normalized request path to its parts.
-        $parts = array_filter(explode('/', PAGE_PATH), function($var) { return $var !== ''; });
+        $parts = array_filter(explode('/', PAGE_PATH), static function($var) { return $var !== ''; });
 
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : '';
 
@@ -35,7 +40,7 @@ class Router extends BaseRouter
 
         $this->load();
 
-        if ($theme && isset($parts[0]) && $parts[0] == 'admin') {
+        if ($theme && isset($parts[0]) && $parts[0] === 'admin') {
             // We are inside admin; we can skip the first part.
             array_shift($parts);
 
@@ -53,7 +58,7 @@ class Router extends BaseRouter
         $this->method = $request->getMethod();
         $this->path = $parts;
         $this->format = PAGE_EXTENSION;
-        $ajax = ($this->format == 'json');
+        $ajax = $this->format === 'json';
 
         $this->params = [
             'ajax' => $ajax,
@@ -75,6 +80,9 @@ class Router extends BaseRouter
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         // TODO: add CSRF check.

@@ -1,7 +1,19 @@
 <?php
+
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
+ * @license   MIT
+ *
+ * http://opensource.org/licenses/MIT
+ */
+
 namespace Gantry;
 
 use DebugBar\DataCollector\ConfigCollector;
+use DebugBar\DataCollector\DataCollectorInterface;
+use DebugBar\DebugBarException;
 use Gantry\Component\Config\Config;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -12,14 +24,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Debugger
 {
-    /**
-     * @var Debugger
-     */
+    /** @var Debugger */
     protected static $instance;
 
-    /**
-     * @var \Grav\Common\Debugger
-     */
+    /** @var \Grav\Common\Debugger */
     protected static $debugger;
 
     /**
@@ -45,9 +53,8 @@ class Debugger
     /**
      * Start a timer with an associated name and description
      *
-     * @param             $name
+     * @param string $name
      * @param string|null $description
-     *
      * @return static
      */
     public static function startTimer($name, $description = null)
@@ -61,7 +68,6 @@ class Debugger
      * Stop the named timer
      *
      * @param string $name
-     *
      * @return static
      */
     public static function stopTimer($name)
@@ -119,10 +125,9 @@ class Debugger
     /**
      * Returns a data collector.
      *
-     * @param $collector
-     *
-     * @return \DebugBar\DataCollector\DataCollectorInterface
-     * @throws \DebugBar\DebugBarException|null
+     * @param string $collector
+     * @return DataCollectorInterface
+     * @throws DebugBarException
      */
     public static function getCollector($collector)
     {
@@ -136,10 +141,9 @@ class Debugger
     /**
      * Adds a data collector.
      *
-     * @param $collector
-     *
+     * @param DataCollectorInterface $collector
      * @return static
-     * @throws \DebugBar\DebugBarException
+     * @throws DebugBarException
      */
     public static function addCollector($collector)
     {
@@ -153,7 +157,7 @@ class Debugger
     /**
      * Dump variables into the Messages tab of the Debug Bar.
      *
-     * @param        $message
+     * @param mixed $message
      * @param string $label
      * @return static
      */
@@ -215,7 +219,7 @@ class Debugger
                     static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
                 } else {
                     $collector = static::$debugger->getCollector('Streams');
-                    if ($collector) {
+                    if ($collector instanceof ConfigCollector) {
                         $collector->setData($paths);
                     }
                 }

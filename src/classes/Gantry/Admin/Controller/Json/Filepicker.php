@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -26,9 +27,13 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Filepicker extends JsonController
 {
-    protected $base = false;
+    /** @var string */
+    protected $base;
+    /** @var bool */
     protected $value = false;
+    /** @var bool */
     protected $filter = false;
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/'            => 'index',
@@ -133,7 +138,7 @@ class Filepicker extends JsonController
                     $active[] = $folder;
                 }
 
-                /** @var \SplFileInfo $info */
+                /** @var \DirectoryIterator $info */
                 foreach ($iterator as $info) {
                     // no dot files nor files beginning with dot
                     if ($info->isDot() || substr($info->getFilename(), 0, 1) === '.') {
@@ -239,7 +244,7 @@ class Filepicker extends JsonController
         $iterator = $isStream ? new \IteratorIterator($locator->getIterator($folder)) : new \DirectoryIterator($this->base . '/' . ltrim($folder, '/'));
         $files    = new \ArrayObject();
 
-        /** @var \SplFileInfo $info */
+        /** @var \DirectoryIterator $info */
         foreach ($iterator as $info) {
             // no dot files nor files beginning with dot
             if ($info->isDot() || substr($info->getFilename(), 0, 1) === '.') {

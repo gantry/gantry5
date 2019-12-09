@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,6 +26,7 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Particle extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/'                  => 'selectParticle',

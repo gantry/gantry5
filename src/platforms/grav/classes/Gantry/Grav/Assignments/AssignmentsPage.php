@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -11,11 +11,16 @@
 namespace Gantry\Grav\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
 
+/**
+ * Class AssignmentsPage
+ * @package Gantry\Grav\Assignments
+ */
 class AssignmentsPage implements AssignmentsInterface
 {
     public $type = 'page';
@@ -30,11 +35,14 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
+        /** @var Config $config */
+        $config = $grav['config'];
+
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
         $route = trim($uri->path(), '/');
-        $home = trim($grav['config']->get('system.home.alias', '/home'), '/');
+        $home = trim($config->get('system.home.alias', '/home'), '/');
         $rules[$route ?: $home] = $this->priority;
 
         return [$rules];

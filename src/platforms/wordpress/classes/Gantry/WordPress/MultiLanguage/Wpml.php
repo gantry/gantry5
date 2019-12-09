@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,11 +11,18 @@
 
 namespace Gantry\WordPress\MultiLanguage;
 
+/**
+ * Class Wpml
+ * @package Gantry\WordPress\MultiLanguage
+ */
 class Wpml extends WordPress
 {
+    /**
+     * @return bool
+     */
     public static function enabled()
     {
-        return apply_filters('wpml_current_language', null) !== null;
+        return \apply_filters('wpml_current_language', null) !== null;
     }
 
     /*

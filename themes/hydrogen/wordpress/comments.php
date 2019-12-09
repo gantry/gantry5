@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +22,7 @@ $context = Timber::get_context();
 $post            = new \Timber\Post();
 $context['post'] = $post;
 
-if (post_password_required($post)) {
+if (\post_password_required($post)) {
     return;
 }
 

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +16,10 @@ use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use Timber\Timber;
 
+/**
+ * Class Gantry
+ * @package Gantry\Framework
+ */
 class Gantry extends Base\Gantry
 {
     /**
@@ -33,7 +38,7 @@ class Gantry extends Base\Gantry
     public function styles($location = 'head', $force = false)
     {
         // Do not display head, WordPress will take care of it (most of the time).
-        return (!$force && in_array($location, ['head'])) ? Document::$wp_styles : parent::styles($location);
+        return !$force && $location === 'head' ? Document::$wp_styles : parent::styles($location);
     }
 
     /**
@@ -44,11 +49,11 @@ class Gantry extends Base\Gantry
     public function scripts($location = 'head', $force = false)
     {
         // Do not display head and footer, WordPress will take care of it (most of the time).
-        return (!$force && in_array($location, ['head', 'footer'])) ? Document::$wp_scripts[$location] : parent::scripts($location);
+        return !$force && in_array($location, ['head', 'footer']) ? Document::$wp_scripts[$location] : parent::scripts($location);
     }
 
     /**
-     * @return Gantry
+     * @return static
      * @throws \LogicException
      */
     protected static function init()
@@ -57,7 +62,7 @@ class Gantry extends Base\Gantry
         if (class_exists('Timber', false) && empty(\Timber::$version)) {
             $action = 'deactivate';
             $slug = 'timber-library/timber.php';
-            throw new \LogicException('<strong>Timber Plugin</strong> is too old for <strong>Gantry 5</strong> and it is no longer needed. Click <a href="' . wp_nonce_url( add_query_arg( [ 'action' => $action, 'plugin' => $slug ], admin_url( 'plugins.php' ) ), 'deactivate-plugin_' . $slug ) . '"><strong>here</strong></a> to deactivate it.');
+            throw new \LogicException('<strong>Timber Plugin</strong> is too old for <strong>Gantry 5</strong> and it is no longer needed. Click <a href="' . \wp_nonce_url(\add_query_arg(['action' => $action, 'plugin' => $slug], \admin_url( 'plugins.php')), 'deactivate-plugin_' . $slug) . '"><strong>here</strong></a> to deactivate it.');
         }
 
         $container = parent::init();

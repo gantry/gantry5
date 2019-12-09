@@ -1,4 +1,5 @@
 <?php
+
 use Gantry\Framework\Gantry;
 
 try

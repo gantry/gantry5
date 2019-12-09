@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,8 +17,12 @@ use Gantry5\Loader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
+/**
+ * Class G5_HydrogenInstallerScript
+ */
 class G5_HydrogenInstallerScript
 {
+    /** @var string */
     public $requiredGantryVersion = '5.5';
 
     /**
@@ -89,6 +94,8 @@ class G5_HydrogenInstallerScript
         }
 
         $installer->finalize();
+
+        return true;
     }
 
     /**

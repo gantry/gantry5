@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -28,52 +29,29 @@ abstract class CssCompiler implements CssCompilerInterface
 {
     use GantryTrait;
 
+    /** @var string */
     protected $type;
-
+    /** @var string */
     protected $name;
-
+    /** @var bool */
     protected $debug = false;
-
+    /** @var array */
     protected $warnings = [];
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $fonts;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $variables;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $target = 'gantry-theme://css-compiled';
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $configuration = 'default';
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $paths;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $files;
-
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $compiler;
-
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $production;
 
     public function __construct()
@@ -276,6 +254,8 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if variables have been changed.
         $oldVariables = isset($content['variables']) ? $content['variables'] : [];
+
+        // Note: Do not use strict check!
         if ($oldVariables != $this->getVariables()) {
             return true;
         }
@@ -330,7 +310,7 @@ abstract class CssCompiler implements CssCompilerInterface
             }
 
             // Check variable against predefined color names (we use ScssPhp SCSS Color class to do that).
-            if (isset(Colors::$cssColors[strtolower($value)])) {
+            if (Colors::colorNameToRGBa(strtolower($value))) {
                 continue;
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,6 +21,15 @@ use Joomla\CMS\Factory;
  */
 class Site
 {
+    /** @var string */
+    public $theme;
+    /** @var string */
+    public $url;
+    /** @var string */
+    public $title;
+    /** @var string */
+    public $description;
+
     public function __construct()
     {
         /** @var CMSApplication $application */

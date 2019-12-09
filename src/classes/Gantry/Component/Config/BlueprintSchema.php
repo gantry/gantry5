@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,8 +25,10 @@ use RocketTheme\Toolbox\Blueprints\BlueprintSchema as BlueprintSchemaBase;
  */
 class BlueprintSchema extends BlueprintSchemaBase
 {
+    /** @var Config */
     protected $configuration;
 
+    /** @var array */
     protected $ignoreFormKeys = [
         'title' => true,
         'help' => true,
@@ -33,6 +36,7 @@ class BlueprintSchema extends BlueprintSchemaBase
         'fields' => true
     ];
 
+    /** @var array */
     protected $types = [
         'container.set' => [
             'input@' => false
@@ -91,7 +95,7 @@ class BlueprintSchema extends BlueprintSchemaBase
     /**
      * Embed an array to the blueprint.
      *
-     * @param $name
+     * @param string $name
      * @param array $value
      * @param string $separator
      * @param bool $merge   Merge fields instead replacing them.
@@ -234,13 +238,16 @@ class BlueprintSchema extends BlueprintSchemaBase
      */
     protected function dynamicConfig(array &$field, $property, array &$call)
     {
-        $value = $call['params'];
+        $var = $call['params'];
 
         $default = isset($field[$property]) ? $field[$property] : null;
-        $config = Gantry::instance()['config']->get($value, $default);
 
-        if (null !== $config) {
-            $field[$property] = $config;
+        /** @var Config $config */
+        $config = Gantry::instance()['config'];
+        $value = $config->get($var, $default);
+
+        if (null !== $value) {
+            $field[$property] = $value;
         }
     }
 }

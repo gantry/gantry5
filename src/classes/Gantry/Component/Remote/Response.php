@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,27 +20,13 @@ namespace Gantry\Component\Remote;
  */
 class Response
 {
-    /**
-     * The callback for the progress
-     *
-     * @var callable    Either a function or callback in array notation
-     */
+    /** @var callable  The callback for the progress */
     public static $callback = null;
 
-    /**
-     * Which method to use for HTTP calls, can be 'curl', 'fopen' or 'auto'. Auto is default and fopen is the preferred method
-     *
-     * @var string
-     */
+    /** @var string Which method to use for HTTP calls, can be 'curl', 'fopen' or 'auto'. Auto is default and fopen is the preferred method */
     private static $method = 'auto';
-
-    /**
-     * Default parameters for `curl` and `fopen`
-     *
-     * @var array
-     */
+    /** @var array Default parameters for `curl` and `fopen` */
     private static $defaults = [
-
         'curl'  => [
             CURLOPT_REFERER        => 'Gantry5 Response',
             CURLOPT_USERAGENT      => 'Gantry5 Response',
@@ -47,7 +34,7 @@ class Response
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_TIMEOUT        => 15,
             CURLOPT_HEADER         => false,
-            /**
+            /*
              * Example of callback parameters from within your own class
              */
             //CURLOPT_NOPROGRESS     => false,
@@ -59,7 +46,7 @@ class Response
             'max_redirects'   => 5,
             'follow_location' => 1,
             'timeout'         => 15,
-            /**
+            /*
              * Example of callback parameters from within your own class
              */
             //'notification' => [$this, 'progress']
@@ -70,7 +57,6 @@ class Response
      * Sets the preferred method to use for making HTTP calls.
      *
      * @param string $method Default is `auto`
-     *
      * @return Response
      */
     public static function setMethod($method = 'auto')
@@ -90,7 +76,6 @@ class Response
      * @param  string   $uri     URL to call
      * @param  array    $options An array of parameters for both `curl` and `fopen`
      * @param  callable $callback
-     *
      * @return string The response of the request
      */
     public static function get($uri = '', $options = [], $callback = null)
@@ -141,12 +126,12 @@ class Response
 
         if ($isCurlResource) {
             $filesize = $args[1];
-        } elseif ($notification_code == STREAM_NOTIFY_FILE_SIZE_IS) {
+        } elseif ($notification_code === STREAM_NOTIFY_FILE_SIZE_IS) {
             $filesize = $args[5];
         }
 
         if ($bytes_transferred > 0) {
-            if ($notification_code == STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
+            if ($notification_code === STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
 
                 $progress = [
                     'code'        => $notification_code,
@@ -191,9 +176,7 @@ class Response
             $args = $args[0];
         }
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         if ($callback) {
             $options['fopen']['notification'] = ['self', 'progress'];
@@ -219,9 +202,7 @@ class Response
         $args = func_get_args();
         $args = count($args) > 1 ? $args : array_shift($args);
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         $ch = curl_init($uri);
         curl_setopt_array($ch, $options['curl']);

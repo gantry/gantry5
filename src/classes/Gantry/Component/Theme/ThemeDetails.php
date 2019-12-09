@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -23,6 +24,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 /**
  * Class ThemeDetails
  * @package Gantry\Component\Theme
+ *
+ * @property string $name
  */
 class ThemeDetails implements \ArrayAccess
 {
@@ -57,7 +60,7 @@ class ThemeDetails implements \ArrayAccess
         $this->offsetSet('name', $theme);
 
         $parent = (string) $this->get('configuration.theme.parent', $theme);
-        $parent = $parent != $theme ? $parent : null;
+        $parent = $parent !== $theme ? $parent : null;
 
         $this->offsetSet('parent', $parent);
     }
@@ -76,7 +79,7 @@ class ThemeDetails implements \ArrayAccess
         $loaded = [$this->offsetGet('name')];
         $details = $this;
 
-        while ($details = $details->parent()) {
+        while (($details = $details->parent())) {
             if (in_array($details->name, $loaded, true)) {
                 break;
             }

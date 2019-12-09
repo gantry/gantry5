@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,9 +14,15 @@ namespace Gantry\Joomla\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Joomla\CMS\Factory;
 
+/**
+ * Class AssignmentsMenu
+ * @package Gantry\Joomla\Assignments
+ */
 class AssignmentsMenu implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'menu';
+    /** @var int */
     public $priority = 1;
 
     /**

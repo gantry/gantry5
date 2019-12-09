@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -18,13 +19,19 @@ namespace Gantry\Component\Layout\Version;
  */
 class Format2
 {
+    /** @var array */
     protected $scopes = [0 => 'grid', 1 => 'block'];
+    /** @var array */
     protected $sections = ['wrapper', 'container', 'section', 'grid', 'block', 'offcanvas'];
+    /** @var array */
     protected $structures = ['div', 'section', 'aside', 'nav', 'article', 'header', 'footer', 'main'];
-
+    /** @var array */
     protected $data;
+    /** @var array */
     protected $structure;
+    /** @var array */
     protected $content;
+    /** @var array */
     protected $keys;
 
     /**
@@ -79,6 +86,7 @@ class Format2
         if ($this->structure) {
             $result['structure'] = $this->structure;
         }
+
         if ($this->content) {
             $result['content'] = $this->content;
         }
@@ -203,7 +211,7 @@ class Format2
             }
         }
         if ($scope <= 1) {
-            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+            $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass()];
             if (!empty($block)) {
                 $result->attributes = (object) $block;
             }
@@ -211,8 +219,8 @@ class Format2
                 $result->attributes->size = $size;
             }
         }
-        if ($scope == 0) {
-            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
+        if ($scope === 0) {
+            $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass()];
         }
 
         return $result;
@@ -257,7 +265,7 @@ class Format2
             $id = $child['id'];
             $type = $child['type'];
             $subtype = $child['subtype'];
-            $isSection = in_array($type, $this->sections);
+            $isSection = in_array($type, $this->sections, true);
 
             if (empty($child['inherit']['outline']) || empty($child['inherit']['include'])) {
                 unset ($child['inherit']);
@@ -344,7 +352,7 @@ class Format2
             }
 
             // Special handling for grid and block elements.
-            if (in_array($type, ['grid', 'block']) && count($child) === 1 && isset($child['type'])) {
+            if (in_array($type, ['grid', 'block'], true) && count($child) === 1 && isset($child['type'])) {
                 $id = null;
             }
 
@@ -381,6 +389,7 @@ class Format2
                 $result[] = trim("{$value} {$size}");
             }
         }
+        unset($child);
 
         // TODO: maybe collapse grid as well?
         if ($ctype && $ctype === 'block' && count($result) <= 1 && key($result) === 0) {
@@ -463,7 +472,7 @@ class Format2
      * @param string $type
      * @param string $subtype
      * @param string $id
-     * @return string
+     * @return string|null
      */
     protected function getTitle($type, $subtype, $id)
     {
@@ -513,12 +522,12 @@ class Format2
         $key = implode('-', $result);
 
         if (!$id || isset($this->keys[$key][$id])) {
-            while (true) {
+            do {
                 $id = mt_rand(1000, 9999);
                 if (!isset($this->keys[$key][$id])) {
                     break;
                 }
-            }
+            } while (true);
         }
 
         $this->keys[$key][$id] = true;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\LayoutEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
@@ -21,7 +23,6 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Layout\Layout as LayoutObject;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Outlines;
-use RocketTheme\Toolbox\Event\Event;
 
 /**
  * Class Layout
@@ -133,7 +134,7 @@ class Layout extends HtmlController
     public function save()
     {
         $layout = $this->request->post->get('layout');
-        $layout = json_decode($layout);
+        $layout = json_decode($layout, false);
 
         if (!isset($layout)) {
             throw new \RuntimeException('Error while saving layout: Structure missing', 400);
@@ -159,7 +160,7 @@ class Layout extends HtmlController
         $layout->save()->saveIndex();
 
         // Fire save event.
-        $event = new Event;
+        $event = new LayoutEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;

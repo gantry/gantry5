@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,7 +25,7 @@ class ParsedownExtra extends \ParsedownExtra
     /**
      * ParsedownExtra constructor.
      *
-     * @param array $defaults
+     * @param array|null $defaults
      * @throws \Exception
      */
     public function __construct(array $defaults = null)

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,6 +11,7 @@
 
 namespace Grav\Plugin\Console;
 
+use Grav\Common\Config\Config;
 use Grav\Common\Filesystem\Folder;
 use Grav\Common\Inflector;
 use Grav\Common\Theme;
@@ -18,6 +20,7 @@ use Grav\Console\ConsoleCommand;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -28,9 +31,7 @@ use Symfony\Component\Console\Question\Question;
  */
 class ChildThemeCommand extends ConsoleCommand
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [];
 
     protected function configure()
@@ -78,6 +79,7 @@ class ChildThemeCommand extends ConsoleCommand
 
         $this->validateOptions();
 
+        /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $this->output->writeln('<green>Creating new child theme</green>');
@@ -117,7 +119,10 @@ class ChildThemeCommand extends ConsoleCommand
         }
 
         $grav = Grav::instance();
-        $grav['config']->set('system.pages.theme', $parent);
+
+        /** @var Config $config */
+        $config = $grav['config'];
+        $config->set('system.pages.theme', $parent);
 
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
@@ -136,7 +141,7 @@ class ChildThemeCommand extends ConsoleCommand
         } else {
             $parentClass = '\\' . $parentClass;
         }
-        $childClass = $inflector->camelize($child);
+        $childClass = $inflector::camelize($child);
 
         Folder::create($folder);
         $file = File::instance("{$folder}/{$child}.yaml");
@@ -198,7 +203,6 @@ PHP
     /**
      * @param string $type
      * @param string $value
-     *
      * @return string
      */
     protected function validate($type, $value)
@@ -240,10 +244,16 @@ PHP
         return $value;
     }
 
+    /**
+     * @param string $name
+     * @return Theme|mixed
+     */
     protected function loadTheme($name)
     {
         // NOTE: ALL THE LOCAL VARIABLES ARE USED INSIDE INCLUDED FILE, DO NOT REMOVE THEM!
         $grav = Grav::instance();
+
+        /** @var Config $config */
         $config = $grav['config'];
 
         /** @var UniformResourceLocator $locator */
@@ -257,13 +267,14 @@ PHP
             // Local variables available in the file: $grav, $config, $name, $file
             $class = include_once $file;
             if ($class === true) {
+                // Class has already been loaded
                 $class = $grav['theme'];
             }
 
             if (!is_object($class)) {
                 $themeClassFormat = [
                     'Grav\\Theme\\' . $name,
-                    'Grav\\Theme\\' . $inflector->camelize($name)
+                    'Grav\\Theme\\' . $inflector::camelize($name)
                 ];
 
                 foreach ($themeClassFormat as $themeClass) {

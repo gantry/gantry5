@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,34 +26,22 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 abstract class AbstractAssignments
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $configuration;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $className = '\Gantry\%s\Assignments\Assignments%s';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $platform;
 
-    /**
-     * @var AssignmentFilter
-     */
+    /** @var AssignmentFilter */
     protected $filter;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $candidates;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $page;
 
     /** @var callable */
@@ -68,6 +57,8 @@ abstract class AbstractAssignments
 
     /**
      * Get list of assignment items.
+     *
+     * @return array
      */
     public function get()
     {
@@ -107,6 +98,7 @@ abstract class AbstractAssignments
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
+
         return $this->filter->scores($candidates, $this->page, $this->specialFilterMethod);
     }
 
@@ -120,6 +112,7 @@ abstract class AbstractAssignments
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
+
         return $this->filter->matches($candidates, $this->page, $this->specialFilterMethod);
     }
 
@@ -136,7 +129,7 @@ abstract class AbstractAssignments
         $locator = $gantry['locator'];
 
         // Find all the assignment files.
-        $paths = $locator->findResources("gantry-config://");
+        $paths = $locator->findResources('gantry-config://');
         $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
 
         // Make sure that base or system outlines aren't in the list.
@@ -284,7 +277,7 @@ abstract class AbstractAssignments
     /**
      * Set extra options for assignments.
      *
-     * @param $value
+     * @param mixed $value
      */
     public function setAssignment($value)
     {

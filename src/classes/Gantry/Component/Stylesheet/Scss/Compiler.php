@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,10 +28,15 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Compiler extends BaseCompiler
 {
+    /** @var string */
     protected $basePath;
-    protected $fonts;
-    protected $usedFonts;
-    protected $streamNames;
+    /** @var array */
+    protected $fonts = [];
+    /** @var array */
+    protected $usedFonts = [];
+    /** @var array */
+    protected $streamNames = [];
+    /** @var array */
     protected $parsedFiles = [];
 
     public function __construct()
@@ -45,13 +51,13 @@ class Compiler extends BaseCompiler
     }
 
     /**
-     * @param $basePath
+     * @param string $basePath
      */
     public function setBasePath($basePath)
     {
         /** @var Document $document */
         $document = Gantry::instance()['document'];
-        $this->basePath = rtrim($document->rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
+        $this->basePath = rtrim($document::rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
     }
 
     /**
@@ -63,7 +69,7 @@ class Compiler extends BaseCompiler
     }
 
     /**
-     * @param $args
+     * @param array $args
      * @return mixed
      */
     public function compileArgs($args)
@@ -118,8 +124,11 @@ class Compiler extends BaseCompiler
             $url = 'gantry-theme://' . substr($url, 3);
         }
 
+        /** @var Document $document */
+        $document = Gantry::instance()['document'];
+
         // Generate URL, failed streams will be transformed to 404 URLs.
-        $url = Gantry::instance()['document']->url($url, null, null, false);
+        $url = $document::url($url, null, null, false);
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url && $url[0] === '/' && $this->basePath) {
@@ -139,7 +148,7 @@ class Compiler extends BaseCompiler
      * get-font-url($my-font-variable);
      *
      * @param array $args
-     * @return string
+     * @return string|false
      */
     public function userGetFontUrl($args)
     {
@@ -186,9 +195,9 @@ class Compiler extends BaseCompiler
         $fonts = [];
         foreach ($args as $value) {
             // It's a local font, we need to load any of the mapped fonts from the theme
-            $fonts = array_merge($fonts, $this->decodeFonts($value, true));
+            $fonts[] = $this->decodeFonts($value, true);
         }
-
+        $fonts = array_merge([], ...$fonts);
         $fonts = $this->getLocalFonts($fonts);
 
         // Create a basic list of strings so that SCSS parser can parse the list.
@@ -225,7 +234,7 @@ class Compiler extends BaseCompiler
      * get-local-font-url(roboto, 400);
      *
      * @param array $args
-     * @return string
+     * @return string|false
      */
     public function userGetLocalFontUrl($args)
     {
@@ -273,7 +282,7 @@ class Compiler extends BaseCompiler
      */
     protected function encodeFonts(array $fonts)
     {
-        array_walk($fonts, function(&$val) {
+        array_walk($fonts, static function(&$val) {
             // Check if font family is one of the 4 default ones, otherwise add quotes.
             if (!\in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'], true)) {
                 $val = '"' . $val . '"';
@@ -305,7 +314,7 @@ class Compiler extends BaseCompiler
 
         // Filter list of fonts and quote them.
         $list = (array) explode(',', $string);
-        array_walk($list, function(&$val) {
+        array_walk($list, static function(&$val) {
             $val = trim($val, "'\" \t\n\r\0\x0B");
         });
         array_filter($list);
@@ -340,6 +349,7 @@ class Compiler extends BaseCompiler
         $this->sourceNames[] = $locator->isStream($path) ? $locator->findResource($path, false) : $path;
         $this->streamNames[] = $path;
         $this->addParsedFile($path);
+
         return $parser;
     }
 

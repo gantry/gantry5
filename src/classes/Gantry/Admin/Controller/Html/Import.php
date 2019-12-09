@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -65,7 +66,7 @@ class Import extends HtmlController
         }
 
         $filename = $_FILES['file']['tmp_name'];
-        
+
         if (!is_uploaded_file($filename)) {
             throw new \RuntimeException('No file sent', 400);
         }

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +15,10 @@ use Gantry\Component\Translator\Translator as BaseTranslator;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
 
+/**
+ * Class Translator
+ * @package Gantry\Framework
+ */
 class Translator extends BaseTranslator
 {
     public function __construct()

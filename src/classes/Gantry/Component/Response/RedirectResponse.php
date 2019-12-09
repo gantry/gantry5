@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -46,5 +47,7 @@ class RedirectResponse extends Response
     public function setContent($content)
     {
         $this->setHeader('Location', $content);
+
+        return $this;
     }
 }

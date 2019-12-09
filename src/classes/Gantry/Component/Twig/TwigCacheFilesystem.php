@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,20 +14,26 @@
 
 namespace Gantry\Component\Twig;
 
+use Twig\Cache\CacheInterface;
+
 /**
  * Class TwigCacheFilesystem
  * @package Gantry\Component\Twig
  *
- * Replaces \Twig_Cache_Filesystem, needed for being able to change PHP versions on fly.
+ * Replaces \Twig\FilesystemCache, needed for being able to change PHP versions on fly.
  */
-class TwigCacheFilesystem implements \Twig_CacheInterface
+class TwigCacheFilesystem implements CacheInterface
 {
     const FORCE_BYTECODE_INVALIDATION = 1;
+
+    /** @var string */
     private $directory;
+    /** @var int */
     private $options;
+
     /**
-     * @param $directory string The root cache directory
-     * @param $options   int    A set of options
+     * @param string $directory The root cache directory
+     * @param int $options A set of options
      */
     public function __construct($directory, $options = 0)
     {
@@ -39,7 +46,7 @@ class TwigCacheFilesystem implements \Twig_CacheInterface
     public function generateKey($name, $className)
     {
         $hash = hash('sha256', $className . '-' . PHP_VERSION);
-        return $this->directory.$hash[0].$hash[1].'/'.$hash.'.php';
+        return $this->directory . $hash[0] . $hash[1] . '/' . $hash . '.php';
     }
     /**
      * {@inheritdoc}
@@ -64,7 +71,7 @@ class TwigCacheFilesystem implements \Twig_CacheInterface
         $tmpFile = tempnam($dir, basename($key));
         if (false !== @file_put_contents($tmpFile, $content) && @rename($tmpFile, $key)) {
             @chmod($key, 0666 & ~umask());
-            if (self::FORCE_BYTECODE_INVALIDATION == ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
+            if (self::FORCE_BYTECODE_INVALIDATION === ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
                 // Compile cached file into bytecode cache
                 if (function_exists('opcache_invalidate')) {
                     // Silence error in case if `opcache.restrict_api` directive is set.

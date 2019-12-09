@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,6 +21,8 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use ScssPhp\ScssPhp\Formatter\Crunched;
+use ScssPhp\ScssPhp\Formatter\Expanded;
 
 /**
  * Class ScssCompiler
@@ -27,19 +30,12 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class ScssCompiler extends CssCompiler
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $type = 'scss';
-
-    /**
-     * @var string
-     */
+    /** @var string */
     public $name = 'SCSS';
 
-    /**
-     * @var Compiler
-     */
+    /** @var Compiler */
     protected $compiler;
 
     /**
@@ -52,9 +48,9 @@ class ScssCompiler extends CssCompiler
         $this->compiler = new Compiler();
 
         if ($this->production) {
-            $this->compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Crunched');
+            $this->compiler->setFormatter(Crunched::class);
         } else {
-            $this->compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Expanded');
+            $this->compiler->setFormatter(Expanded::class);
             // Work around bugs in SCSS compiler.
             // TODO: Pass our own SourceMapGenerator instance instead.
             $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
@@ -139,7 +135,7 @@ class ScssCompiler extends CssCompiler
             $document = $gantry['document'];
 
             foreach ($map['sources'] as &$source) {
-                $source = $document->url($source, null, -1);
+                $source = $document::url($source, null, -1);
             }
             unset($source);
 
@@ -223,7 +219,7 @@ WARN;
         }
 
         // Try both normal and the _partial filename.
-        $files = array($url, preg_replace('/[^\/]+$/', '_\0', $url));
+        $files = [$url, preg_replace('/[^\/]+$/', '_\0', $url)];
 
         foreach ($this->paths as $base) {
             foreach ($files as $file) {

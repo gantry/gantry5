@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,15 +11,19 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Content as ContentConfig;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
-use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Content
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Content extends HtmlController
 {
     protected $httpVerbs = [
@@ -51,11 +56,17 @@ class Content extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
+        /** @var ContentConfig $content */
+        $content = $this->container['content'];
+
         $outline = $this->params['outline'];
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -65,29 +76,43 @@ class Content extends HtmlController
         }
 
         $this->params['data'] = $data;
-        $this->params['content'] = $this->container['content']->group();
+        $this->params['content'] = $content->group();
         $this->params['route']  = "configurations.{$outline}.content";
         $this->params['page_id'] = $outline;
 
         return $this->render('@gantry-admin/pages/configurations/content/content.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string|null $id
+     * @return string
+     */
     public function display($group, $id = null)
     {
+        /** @var ContentConfig $content */
+        $content = $this->container['content'];
+
+        /** @var Config $config */
+        $config = $this->container['config'];
+
+        /** @var Config $defaults */
+        $defaults = $this->container['defaults'];
+
         $outline = $this->params['outline'];
-        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
+        $blueprints = $content->getBlueprintForm("{$group}/{$id}");
         $prefix = "content.{$group}.{$id}";
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
         } else {
-            $this->params['defaults'] = $this->container['defaults']->get($prefix);
+            $this->params['defaults'] = $defaults->get($prefix);
             $this->params['overrideable'] = true;
         }
 
         $this->params += [
             'particle' => $blueprints,
-            'data' =>  Gantry::instance()['config']->get($prefix),
+            'data' =>  $config->get($prefix),
             'id' => "{$group}.{$id}", // FIXME?
             'parent' => "configurations/{$outline}/content",
             'route'  => "configurations.{$outline}.content.{$prefix}",
@@ -97,22 +122,33 @@ class Content extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/content/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return string
+     */
     public function formfield($group, $id)
     {
         $path = func_get_args();
 
-        if (end($path) == 'validate') {
+        if (end($path) === 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
 
+        /** @var ContentConfig $content */
+        $content = $this->container['content'];
+
         // Load blueprints.
-        $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
+        $blueprints = $content->getBlueprintForm("{$group}/{$id}");
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
 
         if (!$fields) {
             throw new \RuntimeException('Page Not Found', 404);
         }
+
+        /** @var Config $config */
+        $config = $this->container['config'];
 
         $data = $this->request->post->getJsonArray('data');
 
@@ -121,11 +157,12 @@ class Content extends HtmlController
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
             $offset .= '.' . $value;
-            $data = $data ?: $this->container['config']->get($offset);
+            $data = $data ?: $config->get($offset);
             $data = ['data' => $data];
             $prefix = 'data.';
         } else {
-            $data = $data ?: $this->container['config']->get($offset);
+            $parent = null;
+            $data = $data ?: $config->get($offset);
             $prefix = 'data';
         }
 
@@ -156,6 +193,11 @@ class Content extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/content/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return JsonResponse
+     */
     public function validate($group, $id)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -2));
@@ -165,13 +207,16 @@ class Content extends HtmlController
             $this->undefined();
         }
 
+        /** @var ContentConfig $content */
+        $content = $this->container['content'];
+
         // Load blueprints.
-        $validator = $this->container['content']->get("{$group}/{$id}");
+        $validator = $content->get("{$group}/{$id}");
 
         // Create configuration from the defaults.
         $data = new Config(
             [],
-            function () use ($validator) {
+            static function () use ($validator) {
                 return $validator;
             }
         );
@@ -183,13 +228,18 @@ class Content extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param null $group
+     * @param null $id
+     * @return string
+     */
     public function save($group = null, $id = null)
     {
         $data = $id ? [$group => [$id => $this->request->post->getArray()]] : $this->request->post->getArray('content');
 
-        foreach ($data as $group => $subgroups) {
+        foreach ($data as $groupName => $subgroups) {
             foreach ($subgroups as $name => $values) {
-                $this->saveItem($group, $name, $values);
+                $this->saveItem($groupName, $name, $values);
             }
         }
 
@@ -204,6 +254,11 @@ class Content extends HtmlController
         return $id ? $this->display($group, $id) : $this->index();
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @param array|null $data
+     */
     protected function saveItem($group, $id, $data)
     {
         /** @var UniformResourceLocator $locator */
@@ -220,14 +275,22 @@ class Content extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = $this->container['content']->getBlueprintForm("{$group}/{$id}");
-            $config = new Config($data, function() use ($blueprints) { return $blueprints; });
+            /** @var ContentConfig $content */
+            $content = $this->container['content'];
+
+            $blueprints = $content->getBlueprintForm("{$group}/{$id}");
+            $config = new Config($data, static function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());
         }
         $file->free();
     }
 
+    /**
+     * @param string $group
+     * @param string $id
+     * @return string
+     */
     public function reset($group, $id)
     {
         $this->params += [

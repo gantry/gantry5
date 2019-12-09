@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,10 +20,15 @@ namespace Gantry\Component\Whoops;
  */
 class SystemFacade extends \Whoops\Util\SystemFacade
 {
+    /** @var array */
     protected $registeredPatterns;
+    /** @var callable */
     protected $whoopsErrorHandler;
+    /** @var callable */
     protected $whoopsExceptionHandler;
+    /** @var callable */
     protected $whoopsShutdownHandler;
+    /** @var callable */
     protected $platformExceptionHandler;
 
     /**
@@ -31,8 +37,8 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     public function __construct($patterns = [])
     {
         $this->registeredPatterns = array_map(
-            function ($pattern) {
-                return["pattern" => $pattern];
+            static function ($pattern) {
+                return ['pattern' => $pattern];
             },
             (array) $patterns
         );
@@ -46,11 +52,6 @@ class SystemFacade extends \Whoops\Util\SystemFacade
      */
     public function setErrorHandler(callable $handler, $types = 'use-php-defaults')
     {
-        // Workaround for PHP 5.5
-        if ($types === 'use-php-defaults') {
-            $types = E_ALL | E_STRICT;
-        }
-
         $this->whoopsErrorHandler = $handler;
 
         return parent::setErrorHandler([$this, 'handleError'], $types);

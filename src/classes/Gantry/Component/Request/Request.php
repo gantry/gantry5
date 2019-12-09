@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -19,34 +20,18 @@ namespace Gantry\Component\Request;
  */
 class Request
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $method;
 
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $get;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $post;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $cookie;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $server;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $request;
 
     public function __construct()

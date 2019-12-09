@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\PageEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\Config;
@@ -20,7 +22,6 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -30,6 +31,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Page extends HtmlController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/' => 'index'
@@ -109,7 +111,7 @@ class Page extends HtmlController
         }
 
         // Fire save event.
-        $event             = new Event;
+        $event             = new PageEvent();
         $event->gantry     = $this->container;
         $event->theme      = $this->container['theme'];
         $event->controller = $this;
@@ -239,7 +241,7 @@ class Page extends HtmlController
         $blueprint = $item->blueprint();
 
         // Load inheritance blueprint.
-        $inheritance = $atoms->getInheritanceBlueprint($name, $item->id);
+        $inheritance = $atoms->getInheritanceBlueprint($name, $item->get('id'));
         $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
@@ -247,7 +249,7 @@ class Page extends HtmlController
             'inheritance'   => $inheritance,
             'inheritable'   => $inheritable,
             'item'          => $item,
-            'data'          => ['particles' => [$name => $item->attributes]],
+            'data'          => ['particles' => [$name => $item->get('attributes')]],
             'blueprints'    => $blueprint,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",

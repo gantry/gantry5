@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -25,14 +26,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class BlueprintForm extends BaseBlueprintForm
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $context = 'gantry-blueprints://';
 
-    /**
-     * @var BlueprintSchema
-     */
+    /** @var BlueprintSchema */
     protected $schema;
 
     /**
@@ -127,12 +124,12 @@ class BlueprintForm extends BaseBlueprintForm
 
     /**
      * @param string $filename
-     * @return string
+     * @return array
      */
     protected function loadFile($filename)
     {
         $file = CompiledYamlFile::instance($filename);
-        $content = $file->content();
+        $content = (array)$file->content();
         $file->free();
 
         return $content;
@@ -222,13 +219,16 @@ class BlueprintForm extends BaseBlueprintForm
      */
     protected function dynamicConfig(array &$field, $property, array &$call)
     {
-        $value = $call['params'];
+        $var = $call['params'];
 
         $default = isset($field[$property]) ? $field[$property] : null;
-        $config = Gantry::instance()['config']->get($value, $default);
 
-        if (null !== $config) {
-            $field[$property] = $config;
+        /** @var Config $config */
+        $config = Gantry::instance()['config'];
+        $value = $config->get($var, $default);
+
+        if (null !== $value) {
+            $field[$property] = $value;
         }
     }
 
@@ -259,15 +259,15 @@ class BlueprintForm extends BaseBlueprintForm
                 $prefix = '';
                 $fields = true;
 
-            } elseif (isset($current[$prefix . $field])) {
+            } elseif (isset($current[$fieldName = $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current[$prefix . $field];
+                $current = $current[$fieldName];
                 $prefix = '';
                 $fields = false;
 
-            } elseif (isset($current['.' . $prefix . $field])) {
+            } elseif (isset($current[$fieldName = '.' . $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current['.' . $prefix . $field];
+                $current = $current[$fieldName];
                 $prefix = '';
                 $fields = false;
 

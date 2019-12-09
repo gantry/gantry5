@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -39,11 +40,14 @@ class Module extends AbstractObject implements ExportInterface
 {
     use Export;
 
+    /** @var array */
     static protected $instances = [];
-
+    /** @var string */
     static protected $table = 'Module';
+    /** @var string */
     static protected $order = 'id';
 
+    /** @var array */
     protected $_assignments;
 
     /**
@@ -164,7 +168,7 @@ class Module extends AbstractObject implements ExportInterface
             'published' => (int) !empty($options['published']),
             'module' => $options['type'],
             'showtitle' => (int) !empty($array['chrome']['display_title']),
-            'params' => isset($options['params']) ? json_decode(json_encode($options['params'])) : [],
+            'params' => isset($options['params']) ? json_decode(json_encode($options['params']), false) : [],
             'language' => isset($options['language']) ? $options['language'] : '*',
             '_assignments' => isset($array['assignments']) ? $array['assignments'] : [],
         ];
@@ -215,7 +219,7 @@ class Module extends AbstractObject implements ExportInterface
      * @param array $items
      * @return ModuleCollection
      */
-    static protected function collection($items)
+    protected static function collection($items)
     {
         return new ModuleCollection($items);
     }

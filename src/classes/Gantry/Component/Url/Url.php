@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -75,7 +76,7 @@ class Url
     /**
      * Parse query string and return array.
      *
-     * @param $query
+     * @param string $query
      * @return mixed
      */
     public static function parseQuery($query)

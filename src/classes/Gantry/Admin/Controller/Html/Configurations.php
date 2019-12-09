@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -218,7 +219,7 @@ class Configurations extends HtmlController
     }
 
     /**
-     * @return HtmlResponse|RedirectResponse|JsonResponse
+     * @return Response
      */
     public function forward()
     {
@@ -259,7 +260,7 @@ class Configurations extends HtmlController
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return HtmlResponse|Response
+     * @return Response
      */
     protected function executeForward($resource, $method = 'GET', $path = [], $params = [])
     {

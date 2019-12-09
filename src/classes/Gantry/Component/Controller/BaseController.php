@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -14,8 +15,8 @@
 namespace Gantry\Component\Controller;
 
 use Gantry\Component\Response\Response;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
-use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
 
 /**
@@ -24,19 +25,13 @@ use RuntimeException;
  */
 abstract class BaseController implements RestfulControllerInterface
 {
-    /**
-     * @var string Default HTTP method.
-     */
+    /** @var string Default HTTP method. */
     protected $method = 'GET';
 
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
-    /**
-     * @var array List of HTTP verbs and their actions.
-     */
+    /** @var array List of HTTP verbs and their actions. */
     protected $httpVerbs = [
         'GET' => [
             '/'         => 'index',
@@ -58,21 +53,18 @@ abstract class BaseController implements RestfulControllerInterface
         ]
     ];
 
-    /**
-     * @var array Parameters from router.
-     */
+    /** @var array Parameters from router. */
     protected $params = [];
 
-    /**
-     * @var Container
-     */
+    /** @var Gantry */
     protected $container;
 
     /**
      * BaseController constructor.
-     * @param Container $container
+     *
+     * @param Gantry $container
      */
-    public function __construct(Container $container)
+    public function __construct(Gantry $container)
     {
         $this->container = $container;
         $this->request = $container['request'];

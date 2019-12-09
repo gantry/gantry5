@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -12,16 +13,25 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
-use Gantry\Prime\Pages;
+use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Pages;
+use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class EventListener
+ * @package Gantry\Admin
+ */
 class EventListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -34,9 +44,13 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function onGlobalSave(Event $event)
     {
         $gantry = Gantry::instance();
+
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
@@ -50,17 +64,29 @@ class EventListener implements EventSubscriberInterface
         $file->free();
     }
 
+    /**
+     * @param Event $event
+     */
     public function onStylesSave(Event $event)
     {
         $cookie = md5($event->theme->name);
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     */
     protected function updateCookie($name, $value, $expire = 0)
     {
         // TODO: move to better place, copied from Gantry main plugin file.
         $grav = Grav::instance();
+
+        /** @var Uri $uri */
         $uri = $grav['uri'];
+
+        /** @var Config $config */
         $config = $grav['config'];
 
         $path   = $config->get('system.session.path', '/' . ltrim($uri->rootUrl(false), '/'));
@@ -69,18 +95,30 @@ class EventListener implements EventSubscriberInterface
         setcookie($name, $value, $expire, $path, $domain);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSettingsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onLayoutSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAssignmentsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onMenusSave(Event $event)
     {
         $defaults = [
@@ -133,7 +171,7 @@ class EventListener implements EventSubscriberInterface
             $route = trim($page->route(), '/');
             $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
             $parent = $page->parent();
-            if ($order !== null && $order !== (int) $page->order()) {
+            if ($parent && $order !== null && $order !== (int) $page->order()) {
                 $page = $page->move($parent);
                 $page->order($order);
                 $updated = true;
@@ -181,6 +219,12 @@ class EventListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param array $ordering
+     * @param array $parents
+     * @param int $i
+     * @return array
+     */
     protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
     {
         $list = [];

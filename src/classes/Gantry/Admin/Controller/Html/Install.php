@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -39,7 +40,7 @@ class Install extends HtmlController
         $installer->finalize();
 
         $this->params['actions'] = $installer->actions;
-        
+
         return $this->render('@gantry-admin/pages/install/install.html.twig', $this->params);
     }
 }

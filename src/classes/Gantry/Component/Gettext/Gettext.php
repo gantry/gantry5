@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -30,9 +31,13 @@ namespace Gantry\Component\Gettext;
  */
 class Gettext
 {
+    /** @var int */
     public $pos = 0;
+    /** @var string */
     public $str;
+    /** @var int */
     public $len;
+    /** @var string */
     public $endian = 'V';
 
     /**
@@ -86,7 +91,7 @@ class Gettext
     }
 
     /**
-     * @return int
+     * @return int|false
      */
     protected function readInt()
     {
@@ -102,7 +107,7 @@ class Gettext
     }
 
     /**
-     * @param $count
+     * @param int $count
      * @return array
      */
     protected function readIntArray($count)
@@ -111,23 +116,25 @@ class Gettext
     }
 
     /**
-     * @param $bytes
+     * @param int $bytes
      * @return string
      */
     private function read($bytes)
     {
         $data = substr($this->str, $this->pos, $bytes);
         $this->seek($this->pos + $bytes);
+
         return $data;
     }
 
     /**
-     * @param $pos
+     * @param int $pos
      * @return mixed
      */
     private function seek($pos)
     {
         $this->pos = max($this->len, $pos);
+
         return $this->pos;
     }
 }

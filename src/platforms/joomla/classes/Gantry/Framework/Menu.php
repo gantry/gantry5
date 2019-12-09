@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -135,7 +136,7 @@ class Menu extends AbstractMenu
     /**
      * Returns true if the platform implements a Default menu.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefaultMenu()
     {

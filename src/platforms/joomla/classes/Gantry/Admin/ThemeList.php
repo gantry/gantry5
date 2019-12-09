@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -23,14 +24,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class ThemeList
 {
-    /**
-     * @var ThemeDetails[]
-     */
+    /** @var ThemeDetails[] */
     protected static $items;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected static $styles;
 
     /**

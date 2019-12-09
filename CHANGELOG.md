@@ -6,6 +6,9 @@
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.0
+        - Platform independent code passes phpstan level 3 tests
+    1. [](#improved)
+        - Major code cleanup for PHP 5.6+
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
@@ -16,6 +19,7 @@
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
+        - Grav specific code passes phpstan level 1 tests
 
 # 5.4.32
 ## mm/dd/2019
@@ -78,7 +82,7 @@
         - Updated Timber to v1.9.2 (later versions have Twig conflict with current version of WPML)
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
-        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed compatibility issue with Grav 1.7.0-beta.1
@@ -92,7 +96,7 @@
         - Added `webp` to supported image types for image picker (#2450)
     1. [](#improved)
         - Logo particle: Added logo image max height (#2424)
-    1. [](#bugfix)   
+    1. [](#bugfix)
         - Social particle: Improved link target handling (#2214)
         - Helium Copyright particle: fixed missing link (#2214)
         - Fixed `mkdir(...)` race condition
@@ -107,7 +111,7 @@
         - Updated Timber to v1.9.1
     1. [](#bugfix)
         - Fixed potential query conflicts in `WordPress Posts` particle
-        
+
 # 5.4.27
 ## 12/14/2018
 
@@ -115,7 +119,7 @@
     1. [](#new)
         - Added Section Variation field for Layout sections.
     1. [](#improved)
-        - Updated Lightcase version.   
+        - Updated Lightcase version.
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
         - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
@@ -129,7 +133,7 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.8.3
-        
+
 # 5.4.26
 ## 09/11/2018
 

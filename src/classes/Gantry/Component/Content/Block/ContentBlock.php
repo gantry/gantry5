@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -55,7 +56,7 @@ class ContentBlock implements ContentBlockInterface
             $type = isset($serialized['_type']) ? $serialized['_type'] : null;
             $id = isset($serialized['id']) ? $serialized['id'] : null;
 
-            if (!$type || !$id || !is_a($type, 'Gantry\Component\Content\Block\ContentBlockInterface', true)) {
+            if (!$type || !$id || !$type instanceof ContentBlockInterface) {
                 throw new \RuntimeException('Bad data');
             }
 
@@ -243,7 +244,7 @@ class ContentBlock implements ContentBlockInterface
     protected function checkVersion(array $serialized)
     {
         $version = isset($serialized['_version']) ? (string) $serialized['_version'] : 1;
-        if ($version != $this->version) {
+        if ($version !== $this->version) {
             throw new \RuntimeException(sprintf('Unsupported version %s', $version));
         }
     }

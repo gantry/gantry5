@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -30,27 +31,17 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    /**
-     * @var  string
-     */
+    /** @var string */
     protected $name;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $ids;
-
-    /**
-     * @var array|static[]
-     */
-    protected static $instances;
-
+    /** @var bool */
     protected $inherit = false;
+
+    /** @var static[] */
+    protected static $instances;
 
     /**
      * @param string $outline
@@ -225,7 +216,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $self = $this;
 
-        $callable = function () use ($self, $type) {
+        $callable = static function () use ($self, $type) {
             return $self->getBlueprint($type);
         };
 
@@ -337,12 +328,12 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $type = $item['type'];
 
-        while (true) {
+        do {
             $num = mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }
-        }
+        } while (true);
 
         $id = "{$type}-{$num}";
 

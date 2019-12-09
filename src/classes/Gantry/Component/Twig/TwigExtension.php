@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -24,17 +25,23 @@ use Gantry\Component\Twig\TokenParser\TokenParserTryCatch;
 use Gantry\Component\Twig\TokenParser\TokenParserMarkdown;
 use Gantry\Component\Twig\TokenParser\TokenParserSwitch;
 use Gantry\Component\Twig\TokenParser\TokenParserThrow;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Markdown\Parsedown;
 use Gantry\Framework\Markdown\ParsedownExtra;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Request;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccess;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class TwigExtension
  * @package Gantry\Component\Twig
  */
-class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class TwigExtension extends AbstractExtension implements GlobalsInterface
 {
     use GantryTrait;
 
@@ -58,32 +65,32 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     public function getFilters()
     {
         $filters = [
-            new \Twig_SimpleFilter('html', [$this, 'htmlFilter']),
-            new \Twig_SimpleFilter('url', [$this, 'urlFunc']),
-            new \Twig_SimpleFilter('trans_key', [$this, 'transKeyFilter']),
-            new \Twig_SimpleFilter('trans', [$this, 'transFilter']),
-            new \Twig_SimpleFilter('repeat', [$this, 'repeatFilter']),
-            new \Twig_SimpleFilter('values', [$this, 'valuesFilter']),
-            new \Twig_SimpleFilter('base64', 'base64_encode'),
-            new \Twig_SimpleFilter('imagesize', [$this, 'imageSize']),
-            new \Twig_SimpleFilter('truncate_text', [$this, 'truncateText']),
-            new \Twig_SimpleFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
+            new TwigFilter('html', [$this, 'htmlFilter']),
+            new TwigFilter('url', [$this, 'urlFunc']),
+            new TwigFilter('trans_key', [$this, 'transKeyFilter']),
+            new TwigFilter('trans', [$this, 'transFilter']),
+            new TwigFilter('repeat', [$this, 'repeatFilter']),
+            new TwigFilter('values', [$this, 'valuesFilter']),
+            new TwigFilter('base64', 'base64_encode'),
+            new TwigFilter('imagesize', [$this, 'imageSize']),
+            new TwigFilter('truncate_text', [$this, 'truncateText']),
+            new TwigFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
         ];
 
         if (1 || GANTRY5_PLATFORM !== 'grav') {
             $filters = array_merge($filters, [
-                new \Twig_SimpleFilter('fieldName', [$this, 'fieldNameFilter']),
-                new \Twig_SimpleFilter('json_decode', [$this, 'jsonDecodeFilter']),
-                new \Twig_SimpleFilter('truncate_html', [$this, 'truncateHtml']),
-                new \Twig_SimpleFilter('markdown', [$this, 'markdownFunction'], ['is_safe' => ['html']]),
-                new \Twig_SimpleFilter('nicetime', [$this, 'nicetimeFilter']),
+                new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
+                new TwigFilter('json_decode', [$this, 'jsonDecodeFilter']),
+                new TwigFilter('truncate_html', [$this, 'truncateHtml']),
+                new TwigFilter('markdown', [$this, 'myMarkdownFunction'], ['is_safe' => ['html']]),
+                new TwigFilter('nicetime', [$this, 'nicetimeFilter']),
 
                 // Casting values
-                new \Twig_SimpleFilter('string', [$this, 'stringFilter']),
-                new \Twig_SimpleFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
-                new \Twig_SimpleFilter('bool', [$this, 'boolFilter']),
-                new \Twig_SimpleFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
-                new \Twig_SimpleFilter('array', [$this, 'arrayFilter']),
+                new TwigFilter('string', [$this, 'stringFilter']),
+                new TwigFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
+                new TwigFilter('bool', [$this, 'boolFilter']),
+                new TwigFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
+                new TwigFilter('array', [$this, 'arrayFilter']),
             ]);
         }
 
@@ -98,20 +105,20 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     public function getFunctions()
     {
         $functions = [
-            new \Twig_SimpleFunction('nested', [$this, 'nestedFunc']),
-            new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
-            new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
-            new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
-            new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-            new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
-            new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc']),
-            new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
+            new TwigFunction('nested', [$this, 'nestedFunc']),
+            new TwigFunction('parse_assets', [$this, 'parseAssetsFunc']),
+            new TwigFunction('colorContrast', [$this, 'colorContrastFunc']),
+            new TwigFunction('get_cookie', [$this, 'getCookie']),
+            new TwigFunction('preg_match', [$this, 'pregMatch']),
+            new TwigFunction('imagesize', [$this, 'imageSize']),
+            new TwigFunction('is_selected', [$this, 'is_selectedFunc']),
+            new TwigFunction('url', [$this, 'urlFunc']),
         ];
 
         if (1 || GANTRY5_PLATFORM !== 'grav') {
             $functions = array_merge($functions, [
-                new \Twig_SimpleFunction('array', [$this, 'arrayFilter']),
-                new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+                new TwigFunction('array', [$this, 'arrayFilter']),
+                new TwigFunction('json_decode', [$this, 'jsonDecodeFilter']),
             ]);
         }
 
@@ -151,7 +158,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     /**
      * Translate by using key, default on original string.
      *
-     * @param $str
+     * @param string $str
      * @return string
      */
     public function transKeyFilter($str)
@@ -183,7 +190,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             $translator = self::gantry()['translator'];
         }
 
-        return \call_user_func_array([$translator, 'translate'], $params);
+        return $translator->translate(...$params);
     }
 
     /**
@@ -227,7 +234,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         $sizes = ['width' => $width, 'height' => $height];
         $attr = '';
 
-        if (@is_file($src) || $remote) {
+        if ($remote || @is_file($src)) {
             try {
                 list($width, $height,, $attr) = @getimagesize($src);
             } catch (\Exception $e) {}
@@ -365,6 +372,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      */
     public function truncateText($string, $limit = 150)
     {
+        /** @var Platform $platform */
         $platform = Gantry::instance()['platform'];
 
         return $platform->truncate($string, (int) $limit, false);
@@ -380,6 +388,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      */
     public function truncateHtml($string, $limit = 150)
     {
+        /** @var Platform $platform */
         $platform = Gantry::instance()['platform'];
 
         return $platform->truncate($string, (int) $limit, true);
@@ -391,7 +400,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      * @param array $settings
      * @return mixed|string
      */
-    public function markdownFunction($string, $block = true, array $settings = null)
+    public function myMarkdownFunction($string, $block = true, array $settings = null)
     {
         // Initialize the preferred variant of Parsedown
         if ($settings['extra']) {
@@ -455,7 +464,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     {
         $gantry = Gantry::instance();
 
-        return $gantry['document']->url(trim((string) $input), $domain, $timestamp_age);
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        return $document::url(trim((string) $input), $domain, $timestamp_age);
     }
 
     /**
@@ -471,15 +483,18 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     {
         $gantry = Gantry::instance();
 
-        return $gantry['document']->urlFilter($str, $domain, $timestamp_age);
+        /** @var Document $document */
+        $document = $gantry['document'];
+
+        return $document::urlFilter($str, $domain, $timestamp_age);
     }
 
     /**
-     * @param \libXMLError $error
+     * @param \LibXMLError $error
      * @param string $input
      * @throws \RuntimeException
      */
-    protected function dealXmlError(\libXMLError $error, $input)
+    protected function dealXmlError(\LibXMLError $error, $input)
     {
         switch ($error->level) {
             case LIBXML_ERR_WARNING:
@@ -550,7 +565,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             foreach ($element->attributes as $attribute) {
                 $result[$attribute->name] = $attribute->value;
             }
-            $success = Gantry::instance()['document']->addHeaderTag($result, $location, (int) $priority);
+
+                /** @var Document $document */
+            $document = Gantry::instance()['document'];
+            $success = $document::addHeaderTag($result, $location, (int) $priority);
             if (!$success) {
                 $raw[] = $doc->saveHTML($element);
             }
@@ -591,9 +609,8 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         }
 
         $yiq = ((($rgb->r * 299) + ($rgb->g * 587) + ($rgb->b * 114)) / 1000) >= 128;
-        $contrast = $yiq || (!$opacity || (float) $opacity < 0.35);
 
-        return $contrast;
+        return $yiq || (!$opacity || (float) $opacity < 0.35);
     }
 
     /**
@@ -698,8 +715,8 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     }
 
     /**
-     * @param $pattern
-     * @param $subject
+     * @param string $pattern
+     * @param string $subject
      * @param array $matches
      * @return array|bool
      */

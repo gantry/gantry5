@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,9 +14,9 @@
 
 namespace Gantry\Admin\Controller\Json;
 
+use Gantry\Admin\Events\Event;
 use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Event\Event;
 
 /**
  * Class Devprod
@@ -31,7 +32,7 @@ class Devprod extends JsonController
         $production = (int)(bool)$this->request->post['mode'];
 
         // Fire save event.
-        $event = new Event;
+        $event = new Event();
         $event->gantry = $this->container;
         $event->controller = $this;
         $event->data = ['production' => $production];

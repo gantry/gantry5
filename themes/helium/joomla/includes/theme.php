@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -12,11 +13,15 @@ class_exists('\\Gantry\\Framework\\Gantry') or die;
 
 use Gantry\Framework\Theme;
 
-// Define the template.
+/**
+ * Define the template.
+ */
 class GantryTheme extends Theme {}
 
 // Initialize theme stream.
-$gantry['platform']->set(
+/** @var \Gantry\Framework\Platform $platform */
+$platform = $gantry['platform'];
+$platform->set(
     'streams.gantry-theme.prefixes',
     ['' => [
         "gantry-themes://{$gantry['theme.name']}/custom",
@@ -26,6 +31,6 @@ $gantry['platform']->set(
 );
 
 // Define Gantry services.
-$gantry['theme'] = function ($c)  {
+$gantry['theme'] = static function ($c)  {
     return new GantryTheme($c['theme.path'], $c['theme.name']);
 };

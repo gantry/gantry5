@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -16,11 +17,12 @@ namespace Gantry\Component\Router;
 use Gantry\Admin\EventListener;
 use Gantry\Admin\Theme;
 use Gantry\Component\Controller\BaseController;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ErrorServiceProvider;
-use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use Whoops\Exception\ErrorException;
 
@@ -30,22 +32,24 @@ use Whoops\Exception\ErrorException;
  */
 abstract class Router implements RouterInterface
 {
-    /**
-     * @var Container
-     */
+    /** @var Gantry */
     protected $container;
-
+    /** @var string */
     protected $format;
+    /** @var string */
     protected $resource;
+    /** @var string */
     protected $method;
+    /** @var array */
     protected $path;
+    /** @var array */
     protected $params;
 
     /**
      * Router constructor.
-     * @param Container $container
+     * @param Gantry $container
      */
-    public function __construct(Container $container)
+    public function __construct(Gantry $container)
     {
         $this->container = $container;
     }
@@ -57,7 +61,6 @@ abstract class Router implements RouterInterface
     public function dispatch()
     {
         $this->boot();
-
         $this->load();
 
         // Render the page or execute the task.
@@ -88,8 +91,7 @@ abstract class Router implements RouterInterface
      */
     public function execute($resource, $method = 'GET', $path = [], $params = [], $format = 'html')
     {
-        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . strtr(ucwords(strtr($resource, '/', ' ')), ' ', '\\');
-
+        $class = '\\Gantry\\Admin\\Controller\\' . ucfirst($format) . '\\' . str_replace(' ', '\\', ucwords(str_replace('/', ' ', $resource)));
         // Protect against CSRF Attacks.
         if (!in_array($method, ['GET', 'HEAD'], true) && !$this->checkSecurityToken()) {
             throw new \RuntimeException('Invalid security token; please reload the page and try again.', 403);
@@ -150,11 +152,13 @@ abstract class Router implements RouterInterface
             $this->container['theme'];
         } else {
             // Otherwise initialize streams and error handler manually.
-            $this->container['streams']->register();
+            /** @var Streams $streams */
+            $streams = $this->container['streams'];
+            $streams->register();
             $this->container->register(new ErrorServiceProvider);
         }
 
-        $this->container['admin.theme'] = function () {
+        $this->container['admin.theme'] = static function () {
             return new Theme(GANTRYADMIN_PATH);
         };
 
@@ -188,7 +192,10 @@ abstract class Router implements RouterInterface
             'title' => $response->getStatus(),
             'error' => $e,
         ];
-        $response->setContent($this->container['admin.theme']->render('@gantry-admin/error.html.twig', $params));
+
+        /** @var Theme $theme */
+        $theme = $this->container['admin.theme'];
+        $response->setContent($theme->render('@gantry-admin/error.html.twig', $params));
 
         if ($json) {
             return new JsonResponse([$e, $response]);

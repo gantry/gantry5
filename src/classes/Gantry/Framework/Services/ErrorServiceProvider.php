@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -57,7 +58,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $system = new SystemFacade($platform->errorHandlerPaths());
         $errors = new Run($system);
 
-        $error_page = new PrettyPageHandler;
+        $error_page = new PrettyPageHandler();
         $error_page->setPageTitle('Crikey! There was an error...');
         $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
@@ -69,7 +70,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
-            $json_handler = new JsonResponseHandler;
+            $json_handler = new JsonResponseHandler();
             //$json_handler->setJsonApi(true);
 
             $errors->pushHandler($json_handler);

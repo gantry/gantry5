@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,12 +13,20 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
 
+/**
+ * Class Document
+ * @package Gantry\Framework
+ */
 class Document extends HtmlDocument
 {
+    /** @var array */
     public static $wp_styles = [];
+    /** @var array */
     public static $wp_scripts = ['head' => [], 'footer' => []];
 
+    /** @var array */
     protected static $script_info = [];
+    /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
         'jquery.framework' => 'registerJquery',
@@ -56,7 +65,7 @@ class Document extends HtmlDocument
                         $href .= '?' . $version;
                         $version = null;
                     }
-                    \wp_enqueue_style($name, $href, array(), $version, $style['media']);
+                    \wp_enqueue_style($name, $href, [], $version, $style['media']);
                     break;
                 case 'inline':
                     $type = !empty($style['type']) ? $style['type'] : 'text/css';
@@ -68,10 +77,13 @@ class Document extends HtmlDocument
         static::$stack[0]->clearStyles();
     }
 
+    /**
+     * @param string $pos
+     */
     public static function registerScripts($pos)
     {
         $scripts = static::$stack[0]->getScripts($pos);
-        $in_footer = ($pos != 'head');
+        $in_footer = ($pos !== 'head');
 
         foreach ($scripts as $script) {
             switch ($script[':type']) {
@@ -88,7 +100,7 @@ class Document extends HtmlDocument
                         $src .= '?' . $version;
                         $version = null;
                     }
-                    \wp_enqueue_script($name, $src, array(), $version, $in_footer);
+                    \wp_enqueue_script($name, $src, [], $version, $in_footer);
                     break;
                 case 'inline':
                     $type = !empty($script['type']) ? $script['type'] : 'text/javascript';
@@ -100,6 +112,10 @@ class Document extends HtmlDocument
         static::$stack[0]->clearScripts($pos);
     }
 
+    /**
+     * @param bool $addDomain
+     * @return string
+     */
     public static function domain($addDomain = false)
     {
         static $domain;
@@ -121,11 +137,17 @@ class Document extends HtmlDocument
         return $addDomain !== null ? $domain : '';
     }
 
+    /**
+     * @return string
+     */
     public static function siteUrl()
     {
         return \get_site_url();
     }
 
+    /**
+     * @return string
+     */
     public static function rootUri()
     {
         static $path;
@@ -141,6 +163,11 @@ class Document extends HtmlDocument
         return $path;
     }
 
+    /**
+     * @param string $tag
+     * @param string $handle
+     * @return string
+     */
     public static function script_add_attributes($tag, $handle)
     {
         if (!isset(self::$script_info[$handle])) {
@@ -168,36 +195,36 @@ class Document extends HtmlDocument
 
     protected static function registerJquery()
     {
-        wp_enqueue_script('jquery');
+        \wp_enqueue_script('jquery');
     }
 
     protected static function registerJqueryUiCore()
     {
-        wp_enqueue_script('jquery-ui-core');
+        \wp_enqueue_script('jquery-ui-core');
     }
 
     protected static function registerJqueryUiSortable()
     {
-        wp_enqueue_script('jquery-ui-sortable');
+        \wp_enqueue_script('jquery-ui-sortable');
     }
 
     protected static function registerBootstrap2()
     {
-        wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
+        \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
     }
 
     protected static function registerBootstrap3()
     {
-        wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
+        \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js');
     }
 
     protected static function registerMootools()
     {
-        wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
+        \wp_enqueue_script('mootools', 'https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.2/mootools-core-compat.min.js');
     }
 
     protected static function registerMootoolsMore()
     {
-        wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
+        \wp_enqueue_script('mootools-more', 'https://cdnjs.cloudflare.com/ajax/libs/mootools-more/1.5.2/mootools-more-compat-compressed.js');
     }
 }

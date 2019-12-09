@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -27,9 +28,14 @@ class Module implements \ArrayAccess
 {
     use NestedArrayAccessWithGetters, Export;
 
+    /** @var string */
     public $name;
+    /** @var string|null */
     public $position;
+    /** @var string */
     public $assigned;
+
+    /** @var array */
     protected $items;
 
     /**

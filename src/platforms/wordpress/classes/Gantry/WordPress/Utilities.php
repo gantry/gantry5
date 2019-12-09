@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,8 +11,20 @@
 
 namespace Gantry\WordPress;
 
+/**
+ * Class Utilities
+ * @package Gantry\WordPress
+ */
 abstract class Utilities
 {
+    /**
+     * @param string $text
+     * @param int $length
+     * @param string $ending
+     * @param bool $exact
+     * @param bool $considerHtml
+     * @return string
+     */
     static function truncate($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
     {
         if (!function_exists('mb_strlen')) {
@@ -36,7 +49,6 @@ abstract class Utilities
      * @param string  $ending       Ending to be appended to the trimmed string.
      * @param boolean $exact        If false, $text will not be cut mid-word
      * @param boolean $considerHtml If true, HTML tags would be handled correctly
-     *
      * @return string Trimmed string.
      */
     static function truncateUtf8($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
@@ -45,9 +57,7 @@ abstract class Utilities
 
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text
-            if (mb_strlen(preg_replace(array('/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/iu'), array('', '', ' '), $text))
-                <= $length
-            ) {
+            if (mb_strlen(preg_replace(['/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/iu'], ['', '', ' '], $text)) <= $length) {
                 return $text;
             }
 
@@ -67,7 +77,7 @@ abstract class Utilities
                         // if tag is a closing tag (f.e. </b>)
                     } else if (preg_match('/^<\s*\/([^\s]+?)\s*>$/us', $line_matchings[1], $tag_matchings)) {
                         // delete tag from $open_tags list
-                        $pos = array_search($tag_matchings[1], $open_tags);
+                        $pos = array_search($tag_matchings[1], $open_tags, true);
                         if ($pos !== false) {
                             unset($open_tags[$pos]);
                         }
@@ -100,6 +110,7 @@ abstract class Utilities
                         }
                     }
                     $truncate .= mb_substr($line_matchings[2], 0, $left + $entities_length);
+
                     // maximum length is reached, so get off the loop
                     break;
                 } else {
@@ -115,9 +126,9 @@ abstract class Utilities
         } else {
             if (mb_strlen($text) <= $length) {
                 return $text;
-            } else {
-                $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
             }
+
+            $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
         }
 
         // if the words shouldn't be cut in the middle...
@@ -158,7 +169,6 @@ abstract class Utilities
      * @param string  $ending       Ending to be appended to the trimmed string.
      * @param boolean $exact        If false, $text will not be cut mid-word
      * @param boolean $considerHtml If true, HTML tags would be handled correctly
-     *
      * @return string Trimmed string.
      */
     static function truncateCompat($text, $length = 100, $ending = '&hellip;', $exact = false, $considerHtml = true)
@@ -167,9 +177,7 @@ abstract class Utilities
 
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text
-            if (strlen(utf8_decode(preg_replace(array('/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i'), array('', '', ' '), $text)))
-                <= $length
-            ) {
+            if (strlen(utf8_decode(preg_replace(['/<.*?>/', '/\n/', '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i'], ['', '', ' '], $text))) <= $length) {
                 return $text;
             }
 
@@ -189,7 +197,7 @@ abstract class Utilities
                         // if tag is a closing tag (f.e. </b>)
                     } else if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
                         // delete tag from $open_tags list
-                        $pos = array_search($tag_matchings[1], $open_tags);
+                        $pos = array_search($tag_matchings[1], $open_tags, true);
                         if ($pos !== false) {
                             unset($open_tags[$pos]);
                         }
@@ -237,9 +245,9 @@ abstract class Utilities
         } else {
             if (strlen(utf8_decode($text)) <= $length) {
                 return $text;
-            } else {
-                $truncate = substr($text, 0, $length - strlen(utf8_decode($ending)));
             }
+
+            $truncate = substr($text, 0, $length - strlen(utf8_decode($ending)));
         }
 
         // if the words shouldn't be cut in the middle...
@@ -263,7 +271,5 @@ abstract class Utilities
         }
 
         return $truncate;
-
     }
-
 }

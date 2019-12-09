@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +21,9 @@ use Gantry\Component\Router\Router as BaseRouter;
  */
 class Router extends BaseRouter
 {
+    /**
+     * @return $this
+     */
     public function boot()
     {
         /** @var Request $request */
@@ -36,7 +40,7 @@ class Router extends BaseRouter
         $this->resource = array_shift($this->path);
 
         // FIXME: make it better by detecting admin-ajax.php..
-        $ajax = ($request->get['action'] == 'gantry5');
+        $ajax = ($request->get['action'] === 'gantry5');
         $this->format = $ajax ? 'json' : 'html';
 
         $this->params = [
@@ -52,6 +56,10 @@ class Router extends BaseRouter
         return $this;
     }
 
+    /**
+     * @param string $url
+     * @return string
+     */
     protected function makeUri($url)
     {
         $components = parse_url($url);
@@ -63,6 +71,9 @@ class Router extends BaseRouter
         return "{$path}{$query}{$fragment}";
     }
 
+    /**
+     * @return $this
+     */
     public function setTemplate()
     {
         // FIXME: in here use pages.php, but in AJAX we need admin-ajax.php.
@@ -71,7 +82,7 @@ class Router extends BaseRouter
         $this->container['ajax_suffix'] = '&action=gantry5';
 
         // Create nonce
-        $nonce = wp_create_nonce( 'gantry5-layout-manager' );
+        $nonce = \wp_create_nonce( 'gantry5-layout-manager' );
 
         $this->container['routes'] = [
             '1' => "&view=%s&_wpnonce={$nonce}",
@@ -85,10 +96,13 @@ class Router extends BaseRouter
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         // Check security nonce and return false on failure.
-        if(check_admin_referer('gantry5-layout-manager')) {
+        if(\check_admin_referer('gantry5-layout-manager')) {
             return true;
         }
 

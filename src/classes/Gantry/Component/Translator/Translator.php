@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -23,10 +24,15 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Translator implements TranslatorInterface
 {
+    /** @var string */
     protected $default = 'en';
+    /** @var string */
     protected $active = 'en';
+    /** @var array */
     protected $sections = [];
+    /** @var array */
     protected $translations = [];
+    /** @var array */
     protected $untranslated = [];
 
     /**
@@ -48,7 +54,7 @@ class Translator implements TranslatorInterface
         $args = func_get_args();
         $args[0] = $string;
 
-        return call_user_func_array('sprintf', $args);
+        return sprintf(...$args);
     }
 
     /**

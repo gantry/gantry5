@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +15,19 @@ use Gantry\Component\Config\Config;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 
+/**
+ * Class Menu
+ * @package Gantry\Framework
+ */
 class Menu extends AbstractMenu
 {
+    /** @var array */
     protected $menus;
+    /** @var \TimberMenu */
     protected $wp_menu;
+    /** @var int */
     protected $current;
+    /** @var array */
     protected $active = [];
 
     public function __construct()
@@ -41,8 +50,8 @@ class Menu extends AbstractMenu
                 'orderby' => 'name'
             ];
 
-            $args = wp_parse_args($args, $defaults);
-            $get_menus = wp_get_nav_menus(apply_filters('g5_menu_get_menus_args', $args));
+            $args = \wp_parse_args($args, $defaults);
+            $get_menus = \wp_get_nav_menus(\apply_filters('g5_menu_get_menus_args', $args));
 
             foreach($get_menus as $menu) {
                 $list[$menu->term_id] = urldecode($menu->slug);
@@ -52,6 +61,9 @@ class Menu extends AbstractMenu
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function getGroupedItems()
     {
         $groups = [];
@@ -97,6 +109,10 @@ class Menu extends AbstractMenu
         return $config;
     }
 
+    /**
+     * @param array $params
+     * @return \TimberMenu
+     */
     protected function getWPMenu($params) {
         if (null === $this->wp_menu) {
             $menus = array_flip($this->getMenus());
@@ -116,19 +132,19 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        if (is_admin()) {
+        if (\is_admin()) {
             $gantry = static::gantry();
             $menus = array_flip($gantry['menu']->getMenus());
             $id = isset($menus[$params['menu']]) ? $menus[$params['menu']] : 0;
 
             // Save global menu settings into Wordpress.
-            $menuObject = wp_get_nav_menu_object($id);
-            if (is_wp_error($menuObject)) {
+            $menuObject = \wp_get_nav_menu_object($id);
+            if (\is_wp_error($menuObject)) {
                 return null;
             }
 
             // Get all menu items.
-            $unsorted_menu_items = wp_get_nav_menu_items(
+            $unsorted_menu_items = \wp_get_nav_menu_items(
                 $id,
                 ['post_status' => 'draft,publish']
             );
@@ -154,23 +170,31 @@ class Menu extends AbstractMenu
         return null;
     }
 
+    /**
+     * @param Item $item
+     * @return bool
+     */
     public function isActive($item)
     {
         return isset($this->active[$item->id]);
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
     public function getCacheId()
     {
-        if (is_user_logged_in()) {
+        if (\is_user_logged_in()) {
             return null;
         }
 
         return $this->current ?: 0;
     }
 
+    /**
+     * @param Item $item
+     * @return bool
+     */
     public function isCurrent($item)
     {
         return $this->current == $item->id;
@@ -184,18 +208,18 @@ class Menu extends AbstractMenu
      * If there is no home page, return null.
      *
      * @param   int  $itemid
-     *
      * @return  object|null
      */
     protected function calcBase($itemid = null)
     {
         // Use current menu item or fall back to default menu item.
-        $base = $this->current ?: $this->default;
-
-        // Return base menu item.
-        return $base;
+        return $this->current ?: $this->default;
     }
 
+    /**
+     * @param $item
+     * @param array $items
+     */
     protected function updateMenuItem($item, array $items)
     {
         if (!empty($item->menu_item_parent) && isset($items[$item->menu_item_parent])) {
@@ -213,6 +237,11 @@ class Menu extends AbstractMenu
         $item->path = implode('/', $item->tree);
     }
 
+    /**
+     * @param array $menuItems
+     * @param array $tree
+     * @return array
+     */
     protected function buildList($menuItems, $tree = [])
     {
         $list = [];
@@ -240,6 +269,11 @@ class Menu extends AbstractMenu
         return $list;
     }
 
+    /**
+     * @param array $menuItems
+     * @param array $tree
+     * @return string
+     */
     protected function getMenuSlug(array &$menuItems, $tree)
     {
         $result = [];
@@ -248,7 +282,7 @@ class Menu extends AbstractMenu
                 throw new \RuntimeException("Menu item parent ($id) cannot be found");
             }
             $menuItem = $menuItems[$id];
-            $slug = is_admin() ? $menuItem->title : $menuItem->title();
+            $slug = \is_admin() ? $menuItem->title : $menuItem->title();
             $slug = preg_replace('|[ /]|u', '-', $slug);
             if (preg_match('|^[a-zA-Z0-9-_]+$|', $slug)) {
                 $slug = \strtolower($slug);
@@ -311,7 +345,7 @@ class Menu extends AbstractMenu
                 'id' => $menuItem->ID,
                 'object_id' => $menuItem->object_id,
                 'type' => $menuItem->type,
-                'link' => is_admin() ? $menuItem->url : $menuItem->link(),
+                'link' => \is_admin() ? $menuItem->url : $menuItem->link(),
                 'link_title' => $menuItem->attr_title,
                 'rel' => $menuItem->xfn,
                 'level' => $menuItem->level + 1
@@ -379,9 +413,6 @@ class Menu extends AbstractMenu
                     break;
 
                 case 'custom':
-                    $item->url($item->link);
-                    break;
-
                 default:
                     $item->url($item->link);
                     break;

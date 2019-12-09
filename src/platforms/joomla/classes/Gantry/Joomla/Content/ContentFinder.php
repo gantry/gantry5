@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -23,8 +24,11 @@ use Joomla\CMS\Factory;
  */
 class ContentFinder extends Finder
 {
+    /** @var string */
     protected $table = '#__content';
+    /** @var bool */
     protected $readonly = true;
+    /** @var array */
     protected $state = [];
 
     /**
@@ -88,7 +92,7 @@ class ContentFinder extends Finder
             $ids = (array)$ids;
         }
 
-        array_walk($ids, function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
+        array_walk($ids, static function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
 
         return $this->addToGroup('a.catid', $ids, $include);
     }
@@ -166,7 +170,7 @@ class ContentFinder extends Finder
             $this->query
                 ->where("(a.publish_up = {$nullDate} OR a.publish_up <= {$nowDate})")
                 ->where("(a.publish_down = {$nullDate} OR a.publish_down >= {$nowDate})")
-                ->where("a.state >= 1")
+                ->where('a.state >= 1')
             ;
         }
 

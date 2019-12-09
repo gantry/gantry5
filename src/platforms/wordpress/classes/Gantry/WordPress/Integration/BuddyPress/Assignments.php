@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,36 +20,41 @@ use Gantry\Component\Assignments\AssignmentsInterface;
  */
 class AssignmentsBuddyPress implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'buddypress';
+    /** @var int */
     public $priority = 4;
-
+    /** @var bool */
     public $_active = false;
 
+    /** @var array */
     protected $components = [];
+    /** @var array */
     protected $member_types = [];
+    /** @var array */
     protected $groups = [];
 
     public function __construct()
     {
         include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        $this->_active = is_plugin_active('buddypress/bp-loader.php');
+        $this->_active = \is_plugin_active('buddypress/bp-loader.php');
 
         if ($this->_active) {
             $components = \bp_core_get_components( 'all' );
-            foreach($components as $key => $val) {
+            foreach ($components as $key => $val) {
                 $this->components[$key] = $val['title'] . ' (' . $key . ')';
             }
 
             if (\bp_is_active('members')) {
                 $member_types = \bp_get_member_types(array(), 'objects');
-                foreach($member_types as $member_type) {
+                foreach ($member_types as $member_type) {
                     $this->member_types[$member_type->name] = $member_type->labels['name'];
                 }
             }
 
             if (\bp_is_active('groups')) {
                 $groups = \groups_get_groups()['groups'];
-                foreach($groups as $group) {
+                foreach ($groups as $group) {
                     $this->groups[$group->id] = $group->name;
                 }
             }
@@ -67,19 +73,19 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         $rules_groups = [];
 
         if ($this->_active) {
-            foreach($this->components as $var => $label) {
+            foreach ($this->components as $var => $label) {
                 if (\bp_is_current_component($var) === true) {
                     $rules_components[$var] = $this->priority;
                 }
             }
 
-            $user_id = bp_loggedin_user_id();
+            $user_id = \bp_loggedin_user_id();
             if ($user_id) {
                 if (\bp_is_active('members')) {
-                    $user_member_types = bp_get_member_type($user_id, false);
+                    $user_member_types = \bp_get_member_type($user_id, false);
                     if (!empty($user_member_types)) {
-                        foreach($this->member_types as $var => $label) {
-                            if (in_array($var, $user_member_types)) {
+                        foreach ($this->member_types as $var => $label) {
+                            if (in_array($var, $user_member_types, true)) {
                                 $rules_member_types[$var] = $this->priority - 3;
                             }
                         }
@@ -87,9 +93,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
                 }
 
                 if (\bp_is_active('groups')) {
-                    $user_groups = groups_get_user_groups($user_id)['groups'];
+                    $user_groups = \groups_get_user_groups($user_id)['groups'];
                     foreach ($this->groups as $var => $label) {
-                        if (in_array($var, $user_groups)) {
+                        if (in_array($var, $user_groups, true)) {
                             $rules_groups[$var] = $this->priority - 3;
                         }
                     }
@@ -135,6 +141,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return [$components, $member_types, $groups];
     }
 
+    /**
+     * @return array
+     */
     protected function getComponents()
     {
         $items = [];
@@ -150,6 +159,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return $items;
     }
 
+    /**
+     * @return array
+     */
     protected function getMemberTypes()
     {
         $items = [];
@@ -165,6 +177,9 @@ class AssignmentsBuddyPress implements AssignmentsInterface
         return $items;
     }
 
+    /**
+     * @return array
+     */
     protected function getGroups()
     {
         $items = [];
@@ -210,8 +225,8 @@ class AssignmentsBuddyPress implements AssignmentsInterface
             $rules = [];
         }
 
-        $bp = buddypress();
-        if (!bp_is_blog_page()) {
+        $bp = \buddypress();
+        if (!\bp_is_blog_page()) {
             $rules['is_buddypress'] = $priority;
         }
 

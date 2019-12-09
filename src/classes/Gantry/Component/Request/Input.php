@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -26,9 +27,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
 {
     use NestedArrayAccessWithGetters, Iterator, Export;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
 
     /**
@@ -99,7 +98,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @param $current
+     * @param array|mixed $current
      * @return array|mixed
      * @internal
      */
@@ -108,6 +107,7 @@ class Input implements \ArrayAccess, \Iterator, ExportInterface
         if (!is_array($current)) {
             return $current;
         }
+
         $array = [];
         foreach ($current as $key => &$value) {
             if ($key === '_json') {

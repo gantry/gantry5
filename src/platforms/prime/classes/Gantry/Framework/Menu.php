@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,13 +21,15 @@ use Gantry\Component\Menu\Item;
 use Gantry\Prime\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Menu
+ * @package Gantry\Framework
+ */
 class Menu extends AbstractMenu
 {
     use GantryTrait;
 
-    /**
-     * @var Pages
-     */
+    /** @var Pages */
     protected $pages;
 
     public function __construct()
@@ -42,6 +45,7 @@ class Menu extends AbstractMenu
      */
     public function getMenus()
     {
+        /** @var array|null $list */
         static $list;
 
         if ($list === null) {
@@ -172,7 +176,7 @@ class Menu extends AbstractMenu
             if (($start && $start > $level)
                 || ($end && $level > $end)
                 || ($start > 1 && strpos(dirname($parent), $this->base) !== 0)
-                || (!$name || $name[0] == '_' || strpos($name, '_'))
+                || (!$name || $name[0] === '_' || strpos($name, '_'))
             ) {
                 continue;
             }
@@ -181,7 +185,7 @@ class Menu extends AbstractMenu
             $this->add($item);
 
             // Placeholder page.
-            if ($item->type == 'link' && !isset($this->pages[$item->path])) {
+            if ($item->type === 'link' && !isset($this->pages[$item->path])) {
                 $item->type = 'separator';
             }
 
@@ -199,7 +203,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                 default:
-                    if ($item->link == 'home') {
+                    if ($item->link === 'home') {
                         // Deal with home page.
                         $item->url('/' . trim(PRIME_URI . '/' . THEME, '/'));
                     } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,7 +14,9 @@
 
 namespace Gantry\Component\Admin;
 
+use Gantry\Admin\Theme;
 use Gantry\Component\Controller\JsonController as BaseController;
+use Gantry\Framework\Platform;
 
 /**
  * Class JsonController
@@ -28,7 +31,10 @@ abstract class JsonController extends BaseController
      */
     public function render($file, array $context = [])
     {
-        return $this->container['admin.theme']->render($file, $context);
+        /** @var Theme $theme */
+        $theme = $this->container['admin.theme'];
+
+        return $theme->render($file, $context);
     }
 
     /**
@@ -38,6 +44,9 @@ abstract class JsonController extends BaseController
      */
     public function authorize($action, $id = null)
     {
-        return $this->container['platform']->authorize($action, $id);
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        return $platform->authorize($action, $id);
     }
 }

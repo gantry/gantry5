@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -37,12 +38,17 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
     const VERSION = 1;
 
+    /** @var array */
     protected $items;
+    /** @var AbstractMenu */
     protected $menu;
+    /** @var array */
     protected $groups = [];
+    /** @var array */
     protected $children = [];
+    /** @var string */
     protected $url;
-
+    /** @var array */
     protected static $defaults = [
         'id' => 0,
         'type' => 'link',
@@ -150,12 +156,13 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         if ($url !== false) {
             $this->url = $url;
         }
+
         return $this->url;
     }
 
     /**
      * @return AbstractMenu
-     * @deprecated Need to break relationship to the menu and use a collection instead.
+     * @todo Need to break relationship to the menu and use a collection instead.
      */
     protected function menu()
     {
@@ -196,8 +203,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
                     $list[$i][] = $this->menu()[$path];
                 }
             }
+
             return $list;
         }
+
         return [$this->children()];
     }
 
@@ -210,6 +219,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         foreach ($this as $child) {
             $list[] = $child;
         }
+
         return $list;
     }
 
@@ -337,9 +347,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
                 // Assign each menu items to the group.
                 $group = array_map(
-                    function($value) use ($i, $menu) {
+                    static function($value) use ($i, $menu) {
                         $item = $menu[$value];
                         $item->group = $i;
+
                         return $value;
                     },
                     $group
@@ -433,6 +444,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     /**
      * Convert object into an array.
      *
+     * @param bool $withDefaults
      * @return array
      */
     public function toArray($withDefaults = true)

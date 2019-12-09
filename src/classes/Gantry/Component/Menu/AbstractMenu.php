@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -30,23 +31,23 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
     use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
 
+    /** @var string */
     protected $default;
+    /** @var string */
     protected $base;
+    /** @var string */
     protected $active;
+    /** @var array */
     protected $params;
+    /** @var bool */
     protected $override = false;
+    /** @var Config|null */
     protected $config;
-
-    /**
-     * @var array|Item[]
-     */
+    /** @var array|Item[] */
     protected $items;
-
-    /**
-     * @var Config|null
-     */
+    /** @var Config|null */
     protected $pathMap;
-
+    /** @var array */
     protected $defaults = [
         'menu' => '',
         'base' => '/',
@@ -70,7 +71,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Return default menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getDefaultMenuName()
     {
@@ -80,7 +81,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns true if the platform implements a Default menu.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasDefaultMenu()
     {
@@ -90,7 +91,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Return active menu.
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveMenuName()
     {
@@ -100,7 +101,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     /**
      * Returns true if the platform implements an Active menu.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasActiveMenu()
     {
@@ -133,7 +134,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if (!$params['menu']) {
             throw new \RuntimeException('No menu selected', 404);
         }
-        if (!\in_array($params['menu'], $menus)) {
+        if (!\in_array($params['menu'], $menus, true)) {
             throw new \RuntimeException('Menu not found', 404);
         }
 
@@ -310,7 +311,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param $params
+     * @param array $params
      */
     public function init(&$params)
     {
@@ -357,7 +358,6 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      * If there is no home page, return null.
      *
      * @param   string  $path
-     *
      * @return  string
      */
     abstract protected function calcBase($path);
@@ -420,7 +420,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     {
         if ($ordering === null) {
             $config = $this->config();
-            $ordering = $config['ordering'] ? $config['ordering'] : [];
+            $ordering = $config['ordering'] ?: [];
         }
 
         if (!isset($this->items[$path]) || !$this->items[$path]->hasChildren()) {
@@ -465,7 +465,6 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
             $item->groupChildren($order ?: $ordering);
         }
-
     }
 
     /**
