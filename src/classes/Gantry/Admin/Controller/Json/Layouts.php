@@ -200,13 +200,13 @@ class Layouts extends JsonController
      *
      * @param string $outline
      * @param string $particle
-     * @param string $selected
+     * @param string|null $selected
      * @return array
      */
     protected function getParticleInstances($outline, $particle, $selected)
     {
         $list = $outline ? $this->container['outlines']->getParticleInstances($outline, $particle, false) : [];
-        $selected = isset($list[$selected]) ? $selected : key($list);
+        $selected = $selected && isset($list[$selected]) ? $selected : (string)key($list);
 
         return ['list' => $list, 'selected' => $selected];
     }

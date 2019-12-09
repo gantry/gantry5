@@ -35,6 +35,21 @@ class JsonResponse extends Response
     protected $content = [];
 
     /**
+     * JsonResponse constructor.
+     * @param string|array $content
+     * @param int $status
+     */
+    public function __construct($content = [], $status = 200)
+    {
+        parent::__construct('', $status);
+        if (is_string($content)) {
+            $content = json_decode($content, true);
+        }
+
+        $this->content = $content;
+    }
+
+    /**
      * @param string|array $content
      * @param bool $success
      * @return $this

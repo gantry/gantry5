@@ -540,7 +540,7 @@ class HtmlDocument
 
         $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
-            $token = '@@'. uniqid(mt_rand(), true) . '@@';
+            $token = '@@'. uniqid((string)mt_rand(), true) . '@@';
             $match = $matches[0];
 
             $tokens[$token] = $match;

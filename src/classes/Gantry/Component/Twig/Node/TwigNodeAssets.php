@@ -33,7 +33,7 @@ class TwigNodeAssets extends Node implements NodeCaptureInterface
      * @param AbstractExpression|null $location
      * @param AbstractExpression|null $variables
      * @param int $lineno
-     * @param null $tag
+     * @param string|null $tag
      */
     public function __construct(Node $body = null, AbstractExpression $location = null, AbstractExpression $variables = null, $lineno = 0, $tag = null)
     {
