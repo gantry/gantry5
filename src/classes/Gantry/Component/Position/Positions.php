@@ -69,7 +69,7 @@ class Positions extends Collection
             $position = (array)CompiledYamlFile::instance($info->getPathname())->content();
 
             // Only use filesystem position if it it is properly set up.
-            if ($position) {
+            if (!empty($position)) {
                 $positions[$name] = new Position($name, $position);
             }
         }

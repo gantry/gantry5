@@ -18,6 +18,7 @@ use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Theme as SiteTheme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -71,8 +72,8 @@ class Particles
      */
     public function all()
     {
-        if (!$this->particles)
-        {
+        if (!$this->particles) {
+            /** @var Platform $platform */
             $platform = $this->container['platform'];
             $files = $this->locateParticles();
 
@@ -83,7 +84,7 @@ class Particles
                 $particle = (array)$file->content();
                 $file->free();
 
-                if (!isset($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
+                if (empty($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
                     $this->particles[$key] = $particle;
                 }
             }

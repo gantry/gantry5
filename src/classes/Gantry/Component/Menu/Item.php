@@ -279,7 +279,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     }
 
     /**
-     * @param array $ordering
+     * @param array|null $ordering
      * @return $this
      */
     public function sortChildren($ordering)
