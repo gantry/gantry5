@@ -498,7 +498,7 @@ class Layout extends HtmlController
 
     /**
      * @param string $name
-     * @return LayoutObject
+     * @return LayoutObject|null
      */
     protected function getLayout($name)
     {

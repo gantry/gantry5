@@ -190,7 +190,9 @@ class Platform extends BasePlatform
             }
         }
 
-        GANTRY_DEBUGGER && Debugger::addMessage("Rendering Gantry module '{$module['id']}'", 'info');
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Rendering Gantry module '{$module['id']}'", 'info');
+        }
 
         /** @var Theme $theme */
         $theme = $this->container['theme'];

@@ -187,11 +187,12 @@ class Response
     }
 
     /**
-     * @param string $content
+     * @param string|callable $content
      * @return Response
      * @throws \UnexpectedValueException
      */
-    public function setContent($content) {
+    public function setContent($content)
+    {
         if ($content !== null && !is_string($content) && !is_numeric($content) && !is_callable([$content, '__toString'])) {
             throw new \UnexpectedValueException(
                 sprintf('Content must be a string or object implementing __toString()')

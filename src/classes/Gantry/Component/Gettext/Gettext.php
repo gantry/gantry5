@@ -117,7 +117,7 @@ class Gettext
 
     /**
      * @param int $bytes
-     * @return string
+     * @return string|false
      */
     private function read($bytes)
     {

@@ -77,22 +77,22 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
         ];
 
-        if (1 || GANTRY5_PLATFORM !== 'grav') {
-            $filters = array_merge($filters, [
-                new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
-                new TwigFilter('json_decode', [$this, 'jsonDecodeFilter']),
-                new TwigFilter('truncate_html', [$this, 'truncateHtml']),
-                new TwigFilter('markdown', [$this, 'myMarkdownFunction'], ['is_safe' => ['html']]),
-                new TwigFilter('nicetime', [$this, 'nicetimeFilter']),
+        //if (1 || GANTRY5_PLATFORM !== 'grav') {
+        $filters = array_merge($filters, [
+            new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
+            new TwigFilter('json_decode', [$this, 'jsonDecodeFilter']),
+            new TwigFilter('truncate_html', [$this, 'truncateHtml']),
+            new TwigFilter('markdown', [$this, 'myMarkdownFunction'], ['is_safe' => ['html']]),
+            new TwigFilter('nicetime', [$this, 'nicetimeFilter']),
 
-                // Casting values
-                new TwigFilter('string', [$this, 'stringFilter']),
-                new TwigFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
-                new TwigFilter('bool', [$this, 'boolFilter']),
-                new TwigFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
-                new TwigFilter('array', [$this, 'arrayFilter']),
-            ]);
-        }
+            // Casting values
+            new TwigFilter('string', [$this, 'stringFilter']),
+            new TwigFilter('int', [$this, 'intFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('bool', [$this, 'boolFilter']),
+            new TwigFilter('float', [$this, 'floatFilter'], ['is_safe' => ['all']]),
+            new TwigFilter('array', [$this, 'arrayFilter']),
+        ]);
+        //}
 
         return $filters;
     }
@@ -115,12 +115,12 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('url', [$this, 'urlFunc']),
         ];
 
-        if (1 || GANTRY5_PLATFORM !== 'grav') {
-            $functions = array_merge($functions, [
-                new TwigFunction('array', [$this, 'arrayFilter']),
-                new TwigFunction('json_decode', [$this, 'jsonDecodeFilter']),
-            ]);
-        }
+//        if (1 || GANTRY5_PLATFORM !== 'grav') {
+        $functions = array_merge($functions, [
+            new TwigFunction('array', [$this, 'arrayFilter']),
+            new TwigFunction('json_decode', [$this, 'jsonDecodeFilter']),
+        ]);
+//        }
 
         return $functions;
     }
@@ -181,7 +181,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      */
     public function transFilter($str)
     {
-        /** @var TranslatorInterface $translator */
+        /** @var TranslatorInterface|null $translator */
         static $translator;
 
         $params = \func_get_args();
@@ -319,7 +319,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      * @example ['data-id' => 'id', 'data-key' => 'key'] => ' data-id="id" data-key="key"'
      * @example [['data-id' => 'id'], ['data-key' => 'key']] => ' data-id="id" data-key="key"'
      *
-     * @param string|string[] $input
+     * @param string|array $input
      * @return string
      */
     public function attributeArrayFilter($input)
@@ -423,7 +423,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      *
      * @example {{ nested(array, 'this.is.my.nested.variable')|json_encode }}
      *
-     * @param array   $items      Array of items.
+     * @param array|object $items Array of items.
      * @param string  $name       Dot separated path to the requested value.
      * @param mixed   $default    Default value (or null).
      * @param string  $separator  Separator, defaults to '.'

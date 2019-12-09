@@ -33,7 +33,9 @@ include_once __DIR__ . '/helper.php';
 
 $gantry = Gantry::instance();
 
-GANTRY_DEBUGGER && Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+if (GANTRY_DEBUGGER) {
+    Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
+}
 
 // Set up caching.
 $cacheid = md5($module->id);
@@ -58,4 +60,6 @@ $document->addBlock($block);
 
 echo $block->toString();
 
-GANTRY_DEBUGGER && Debugger::stopTimer("module-{$module->id}");
+if (GANTRY_DEBUGGER) {
+    Debugger::stopTimer("module-{$module->id}");
+}

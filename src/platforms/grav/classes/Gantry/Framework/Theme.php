@@ -101,7 +101,9 @@ class Theme extends AbstractTheme
                 /** @var Platform $platform */
                 $platform = $gantry['platform'];
 
-                GANTRY_DEBUGGER && Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
+                if (GANTRY_DEBUGGER) {
+                    Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
+                }
 
                 /** @var Document $document */
                 $document = $gantry['document'];
@@ -111,7 +113,9 @@ class Theme extends AbstractTheme
                 return $document::pop()->setContent($html);
             }
 
-            GANTRY_DEBUGGER && Debugger::addMessage("Rendering particle {$id}", 'debug');
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage("Rendering particle {$id}", 'debug');
+            }
 
             // Render particle.
             $layout = $this->loadLayout();

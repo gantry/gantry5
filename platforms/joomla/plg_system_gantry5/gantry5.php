@@ -285,7 +285,9 @@ class plgSystemGantry5 extends CMSPlugin
             include_once $themePath;
         }
 
-        GANTRY_DEBUGGER && Debugger::addMessage("Using Gantry 5 template {$templateName}");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Using Gantry 5 template {$templateName}");
+        }
 
         /** @var Theme $theme */
         $theme = $gantry['theme'];

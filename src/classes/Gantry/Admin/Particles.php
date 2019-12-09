@@ -29,7 +29,9 @@ class Particles
 {
     /** @var Gantry */
     protected $container;
+    /** @var array|null */
     protected $files;
+    /** @var array|null */
     protected $particles;
 
     /**

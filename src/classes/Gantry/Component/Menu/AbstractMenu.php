@@ -273,7 +273,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @return object
+     * @return object|null
      */
     public function getActive()
     {
@@ -289,7 +289,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param object $item
+     * @param object|null $item
      * @return bool
      */
     public function isActive($item)
@@ -300,7 +300,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param object $item
+     * @param object|null $item
      * @return bool
      */
     public function isCurrent($item)

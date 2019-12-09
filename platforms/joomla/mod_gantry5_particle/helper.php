@@ -96,7 +96,9 @@ class ModGantry5ParticleHelper
      */
     public static function render($module, $params)
     {
-        GANTRY_DEBUGGER && Debugger::addMessage("Particle Module #{$module->id} was not cached");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Particle Module #{$module->id} was not cached");
+        }
 
         $data = json_decode($params->get('particle'), true);
         $type = $data['type'];

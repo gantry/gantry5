@@ -47,7 +47,10 @@ class AssignmentsStyle implements AssignmentsInterface
             $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : $template->params->get('preset', null));
 
             if (JDEBUG) {
-                GANTRY_DEBUGGER && Debugger::addMessage('Template Style:', 'debug') && Debugger::addMessage($template, 'debug');
+                if (GANTRY_DEBUGGER) {
+                    Debugger::addMessage('Template Style:', 'debug');
+                    Debugger::addMessage($template, 'debug');
+                }
 
                 if (!$outline) {
                     $application->enqueueMessage('JApplicationSite::getTemplate() was overridden with no specified Gantry 5 outline.', 'debug');

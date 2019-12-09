@@ -35,7 +35,7 @@ abstract class AbstractAssignments
     /** @var string */
     protected $platform;
 
-    /** @var AssignmentFilter */
+    /** @var AssignmentFilter|null */
     protected $filter;
 
     /** @var array */

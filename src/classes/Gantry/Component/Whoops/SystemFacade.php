@@ -28,7 +28,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     protected $whoopsExceptionHandler;
     /** @var callable */
     protected $whoopsShutdownHandler;
-    /** @var callable */
+    /** @var callable|null */
     protected $platformExceptionHandler;
 
     /**

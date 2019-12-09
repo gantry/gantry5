@@ -509,7 +509,7 @@ class Filepicker extends JsonController
     }
 
     /**
-     * @param string $folder
+     * @param string|UniformResourceIterator $folder
      * @return bool
      */
     private function isStream($folder)
