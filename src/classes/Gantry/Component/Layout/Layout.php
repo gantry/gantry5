@@ -417,7 +417,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param string $id
-     * @return string|null
+     * @return object|null
      */
     public function getParentId($id)
     {

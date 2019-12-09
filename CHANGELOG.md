@@ -6,7 +6,7 @@
         - Updated minimum requirement to PHP 5.6.0
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.0
-        - Platform independent code passes phpstan level 4 tests
+        - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6+
 1. [Joomla](#joomla)
