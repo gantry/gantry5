@@ -51,7 +51,7 @@ interface ThemeInterface
     /**
      * Returns renderer.
      *
-     * @return \Twig_Environment
+     * @return Environment
      */
     public function renderer();
 

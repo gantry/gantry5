@@ -21,6 +21,8 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Framework\Platform;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Class Theme
@@ -120,11 +122,11 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_LoaderInterface $loader
+     * @param LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
+    protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+        if (!($loader instanceof FilesystemLoader)) {
             return;
         }
 

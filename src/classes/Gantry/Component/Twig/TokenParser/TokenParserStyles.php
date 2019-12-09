@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,8 @@
 
 namespace Gantry\Component\Twig\TokenParser;
 
+use Twig\Token;
+
 /**
  * Adds stylesheets to document.
  *
@@ -23,10 +26,10 @@ namespace Gantry\Component\Twig\TokenParser;
 class TokenParserStyles extends TokenParserAssets
 {
     /**
-     * @param \Twig_Token $token
+     * @param Token $token
      * @return bool
      */
-    public function decideBlockEnd(\Twig_Token $token)
+    public function decideBlockEnd(Token $token)
     {
         return $token->test('endstyles');
     }

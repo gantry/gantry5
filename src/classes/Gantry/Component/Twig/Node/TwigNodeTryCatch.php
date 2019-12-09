@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,30 +14,41 @@
 
 namespace Gantry\Component\Twig\Node;
 
+use Twig\Compiler;
+use Twig\Node\Node;
+
 /**
  * Class TwigNodeTryCatch
  * @package Gantry\Component\Twig\Node
  */
-class TwigNodeTryCatch extends \Twig_Node
+class TwigNodeTryCatch extends Node
 {
     /**
      * TwigNodeTryCatch constructor.
-     * @param \Twig_Node $try
-     * @param \Twig_Node|null $catch
+     * @param Node $try
+     * @param Node|null $catch
      * @param int $lineno
-     * @param null $tag
+     * @param string|null $tag
      */
-    public function __construct(\Twig_Node $try, \Twig_Node $catch = null, $lineno = 0, $tag = null)
-    {
-        parent::__construct(['try' => $try, 'catch' => $catch], [], $lineno, $tag);
+    public function __construct(
+        Node $try,
+        Node $catch = null,
+        $lineno = 0,
+        $tag = null
+    ) {
+        $nodes = ['try' => $try, 'catch' => $catch];
+        $nodes = array_filter($nodes);
+
+        parent::__construct($nodes, [], $lineno, $tag);
     }
 
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
+     * @throws \LogicException
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler->addDebugInfo($this);
 
@@ -49,7 +61,7 @@ class TwigNodeTryCatch extends \Twig_Node
             ->subcompile($this->getNode('try'))
         ;
 
-        if ($this->hasNode('catch') && null !== $this->getNode('catch')) {
+        if ($this->hasNode('catch')) {
             $compiler
                 ->outdent()
                 ->write('} catch (\Exception $e) {' . "\n")

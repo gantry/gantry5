@@ -22,7 +22,9 @@ use Grav\Common\Page\Page as GravPage;
 use Grav\Common\Page\Pages;
 use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Environment;
 use Twig\Extension\DebugExtension;
+use Twig\Extension\EscaperExtension;
 
 /**
  * Class Theme
@@ -35,7 +37,7 @@ class Theme extends AbstractTheme
     /**
      * Return renderer.
      *
-     * @return \Twig_Environment
+     * @return Environment
      */
     public function renderer()
     {
@@ -67,7 +69,7 @@ class Theme extends AbstractTheme
             }
 
             // Force html escaping strategy.
-            $twig->getExtension('Twig_Extension_Escaper')->setDefaultStrategy('html');
+            $twig->getExtension(EscaperExtension::class)->setDefaultStrategy('html');
 
             $this->setTwigLoaderPaths($loader);
 
