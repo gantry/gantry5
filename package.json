@@ -4,7 +4,7 @@
   "description": "Gantry 5 / JS and CSS bundler",
   "main": "gulpfile.js",
   "dependencies": {
-    "npm": "^5.4.2"
+    "npm": "^6.13.4"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
