@@ -14,8 +14,8 @@
         - Added a `Global` rule for assignments per taxonomy / category (#2045, thanks @nikola3244)
 1. [Grav](#grav)
     1. [](#bugfix)
-        - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
-        - Fixed menu editor having no menu items in Grav 1.7
+        - Fixed assignments for `Pages` not showing in Grav 1.7.0-rc.1 (#2557)
+        - Fixed menu editor having no menu items in Grav 1.7.0-rc.1
         - Fixed broken `Configure` link in admin (#2570)
 
 # 5.4.31
