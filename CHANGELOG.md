@@ -15,7 +15,7 @@
         - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes/gantry5.php` to your theme!)
 1. [WordPress](#wordpress)
     1. [](#new)
-        - Updated minimum requirement to WordPress 5.1
+        - Updated minimum requirement to WordPress 5.2
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
