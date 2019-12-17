@@ -2,8 +2,14 @@
 ## mm/dd/2019
 
 1. [Common](#common)
+    1. [](#new)
+        - Added support for custom menu item link attributes (#2575)
+1. [Common](#common)
     1. [](#bugfix)
         - Fixed missing `rel="noopener noreferrer"` in social particle when opening link into a new tab (#2581)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed missing `rel` attribute in menu items (#2573)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)

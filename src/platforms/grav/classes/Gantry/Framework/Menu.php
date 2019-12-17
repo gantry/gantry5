@@ -196,6 +196,7 @@ class Menu extends AbstractMenu
                 'parent_id' => $parent_id,
                 'layout' => 'list',
                 'target' => '_self',
+                // TODO: Grav is missing rel support
                 'rel' => '',
                 'dropdown' => '',
                 'icon' => '',
