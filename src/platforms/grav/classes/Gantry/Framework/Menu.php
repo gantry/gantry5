@@ -196,6 +196,7 @@ class Menu extends AbstractMenu
                 'parent_id' => $parent_id,
                 'layout' => 'list',
                 'target' => '_self',
+                'rel' => '',
                 'dropdown' => '',
                 'icon' => '',
                 'image' => '',
