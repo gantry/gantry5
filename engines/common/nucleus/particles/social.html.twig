@@ -2,7 +2,7 @@
 
 {% if particle.target %}
     {% set targetAttrib = ' target="' ~ particle.target|e ~ '"' %}
-    {% set targetAttrib = (target == '_blank') ? targetAttrib ~ ' rel="noopener noreferrer"' : targetAttrib %}
+    {% set targetAttrib = (particle.target == '_blank') ? targetAttrib ~ ' rel="noopener noreferrer"' : targetAttrib %}
 {% endif %}
 
 {% block particle %}
