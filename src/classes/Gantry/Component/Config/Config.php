@@ -31,7 +31,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
     /** @var array */
     protected $items;
 
-    /** @var BlueprintSchema|BlueprintForm|callable */
+    /** @var BlueprintSchema|BlueprintForm|callable|null */
     protected $blueprint;
 
     /**

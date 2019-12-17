@@ -68,7 +68,7 @@ class Theme extends AbstractTheme
         parent::extendTwig($twig, $loader);
 
         /** @var CoreExtension $core */
-        $core = $twig->getExtension('Twig_Extension_Core');
+        $core = $twig->getExtension(CoreExtension::class);
 
         $application = Factory::getApplication();
         $user = $application->getIdentity();
@@ -104,10 +104,10 @@ class Theme extends AbstractTheme
      *
      * @return string The formatted date
      */
-    public function twig_dateFilter(\Twig_Environment $env, $date, $format = null, $timezone = null)
+    public function twig_dateFilter(Environment $env, $date, $format = null, $timezone = null)
     {
         if (null === $format) {
-            $formats = $env->getExtension('Twig_Extension_Core')->getDateFormat();
+            $formats = $env->getExtension(CoreExtension::class)->getDateFormat();
             $format = $date instanceof \DateInterval ? $formats[1] : $formats[0];
         }
 

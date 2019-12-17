@@ -140,7 +140,9 @@ trait ThemeTrait
 
         // Set configuration if given.
         if ($name && $name !== $outline) {
-            GANTRY_DEBUGGER && Debugger::addMessage("Using Gantry outline {$name}");
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage("Using Gantry outline {$name}");
+            }
 
             $gantry['configuration'] = $name;
         }
@@ -240,11 +242,16 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
-                GANTRY_DEBUGGER && Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && Debugger::addMessage("Compiling CSS: {$name}");
+                if (GANTRY_DEBUGGER) {
+                    Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}");
+                    Debugger::addMessage("Compiling CSS: {$name}");
+                }
 
                 $compiler->compileFile($name);
 
-                GANTRY_DEBUGGER && Debugger::stopTimer("css-{$name}");
+                if (GANTRY_DEBUGGER) {
+                    Debugger::stopTimer("css-{$name}");
+                }
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);
@@ -364,7 +371,9 @@ trait ThemeTrait
         if (!$this->atoms) {
             $this->atoms = true;
 
-            GANTRY_DEBUGGER && Debugger::startTimer('atoms', 'Preparing atoms');
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('atoms', 'Preparing atoms');
+            }
 
             $gantry = static::gantry();
 
@@ -415,7 +424,9 @@ trait ThemeTrait
                 }
             }
 
-            GANTRY_DEBUGGER && Debugger::stopTimer('atoms');
+            if (GANTRY_DEBUGGER) {
+                Debugger::stopTimer('atoms');
+            }
         }
     }
 
@@ -429,11 +440,15 @@ trait ThemeTrait
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
 
-            GANTRY_DEBUGGER && Debugger::startTimer('segments', 'Preparing layout');
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('segments', 'Preparing layout');
+            }
 
             $this->prepareLayout($this->segments);
 
-            GANTRY_DEBUGGER && Debugger::stopTimer('segments');
+            if (GANTRY_DEBUGGER) {
+                Debugger::stopTimer('segments');
+            }
         }
 
         return $this->segments;
@@ -600,7 +615,9 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
-                    GANTRY_DEBUGGER && Debugger::startTimer($item->id, "Rendering {$item->id}");
+                    if (GANTRY_DEBUGGER) {
+                        Debugger::startTimer($item->id, "Rendering {$item->id}");
+                    }
 
                     $item->content = $this->renderContent($item, ['prepare_layout' => true]);
                     // Note that content can also be null (postpone rendering).
@@ -608,7 +625,9 @@ trait ThemeTrait
                         unset($items[$i]);
                     }
 
-                    GANTRY_DEBUGGER && Debugger::stopTimer($item->id);
+                    if (GANTRY_DEBUGGER) {
+                        Debugger::stopTimer($item->id);
+                    }
 
                     break;
 
@@ -769,7 +788,9 @@ trait ThemeTrait
                     return ContentBlock::fromArray((array) $file->content());
                 } catch (\Exception $e) {
                     // Invalid cache, continue to rendering.
-                    GANTRY_DEBUGGER && Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
+                    if (GANTRY_DEBUGGER) {
+                        Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
+                    }
                 }
             }
         }
@@ -785,7 +806,10 @@ trait ThemeTrait
 
         if (isset($file)) {
             // Save HTML and assets into the cache.
-            GANTRY_DEBUGGER && Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
+            }
+
             $file->save($content->toArray());
         }
 

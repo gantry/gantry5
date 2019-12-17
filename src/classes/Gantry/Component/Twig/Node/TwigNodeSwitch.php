@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,31 +14,42 @@
 
 namespace Gantry\Component\Twig\Node;
 
+use Twig\Compiler;
+use Twig\Node\Node;
+
 /**
  * Class TwigNodeSwitch
  * @package Gantry\Component\Twig\Node
  */
-class TwigNodeSwitch extends \Twig_Node
+class TwigNodeSwitch extends Node
 {
     /**
      * TwigNodeSwitch constructor.
-     * @param \Twig_Node $value
-     * @param \Twig_Node $cases
-     * @param \Twig_Node|null $default
+     * @param Node $value
+     * @param Node $cases
+     * @param Node|null $default
      * @param int $lineno
-     * @param null $tag
+     * @param string|null $tag
      */
-    public function __construct(\Twig_Node $value, \Twig_Node $cases, \Twig_Node $default = null, $lineno = 0, $tag = null)
-    {
-        parent::__construct(array('value' => $value, 'cases' => $cases, 'default' => $default), array(), $lineno, $tag);
+    public function __construct(
+        Node $value,
+        Node $cases,
+        Node $default = null,
+        $lineno = 0,
+        $tag = null
+    ) {
+        $nodes = ['value' => $value, 'cases' => $cases, 'default' => $default];
+        $nodes = array_filter($nodes);
+
+        parent::__construct($nodes, [], $lineno, $tag);
     }
 
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)
@@ -46,6 +58,7 @@ class TwigNodeSwitch extends \Twig_Node
             ->raw(") {\n")
             ->indent();
 
+        /** @var Node $case */
         foreach ($this->getNode('cases') as $case) {
             if (!$case->hasNode('body')) {
                 continue;
@@ -67,7 +80,7 @@ class TwigNodeSwitch extends \Twig_Node
                 ->write("}\n");
         }
 
-        if ($this->hasNode('default') && $this->getNode('default') !== null) {
+        if ($this->hasNode('default')) {
             $compiler
                 ->write("default:\n")
                 ->write("{\n")

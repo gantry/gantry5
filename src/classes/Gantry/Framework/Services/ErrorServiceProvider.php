@@ -80,7 +80,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $container['errors'] = $errors;
 
-        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setErrorHandler')) {
+        if (GANTRY_DEBUGGER) {
             Debugger::setErrorHandler();
         }
     }

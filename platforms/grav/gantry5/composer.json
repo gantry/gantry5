@@ -1,13 +1,21 @@
 {
-    "description": "Test environment for phpstan",
+    "name": "gantry/grav",
+    "description": "Gantry Framework Library",
+    "license": "MIT",
+
     "require": {
         "php": ">=7.1.3",
         "scssphp/scssphp": "~1.0"
     },
-    "config": {
-        "platform": {
-            "php": "7.1.3"
-        }
+    "require-dev": {
+        "symfony/event-dispatcher": "~3.4",
+        "symfony/yaml": "~3.4",
+        "twig/twig": "~1.42",
+        "pimple/pimple": "~3.2",
+        "filp/whoops": "~2.3",
+        "rockettheme/toolbox": "~1.4",
+        "erusev/parsedown-extra": "~0.7",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-4": {
@@ -23,5 +31,10 @@
             "src/RealLoader.php",
             "cli/ChildThemeCommand.php"
         ]
+    },
+    "config": {
+        "platform": {
+            "php": "7.1.3"
+        }
     }
 }

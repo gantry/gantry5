@@ -14,6 +14,8 @@
 
 namespace Gantry5;
 
+use Composer\Autoload\ClassLoader;
+
 /**
  * Use \Gantry5\Loader::setup() or \Gantry5\Loader::get() instead.
  *
@@ -102,7 +104,7 @@ abstract class RealLoader
             throw new \LogicException('Please run composer in Gantry 5 Library!');
         }
 
-        /** @var \Composer\Autoload\ClassLoader $loader */
+        /** @var ClassLoader $loader */
         $loader = require $autoload;
 
         if ($dev) {

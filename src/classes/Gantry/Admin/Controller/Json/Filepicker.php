@@ -29,8 +29,8 @@ class Filepicker extends JsonController
 {
     /** @var string */
     protected $base;
-    /** @var bool */
-    protected $value = false;
+    /** @var string */
+    protected $value;
     /** @var bool */
     protected $filter = false;
     /** @var array */
@@ -149,7 +149,7 @@ class Filepicker extends JsonController
                     $this->attachData($file, $info, $folder);
 
                     if ($file->dir) {
-                        if ($file->pathname == dirname($this->value)) {
+                        if ($file->pathname === dirname($this->value)) {
                             $active[] = $file->pathname;
                         }
 
@@ -509,7 +509,7 @@ class Filepicker extends JsonController
     }
 
     /**
-     * @param string $folder
+     * @param string|UniformResourceIterator $folder
      * @return bool
      */
     private function isStream($folder)

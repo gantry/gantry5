@@ -217,7 +217,7 @@ class Menu extends HtmlController
         $resource = $this->loadResource($id);
 
         // Get menu item and make sure it exists.
-        /** @var Item $item */
+        /** @var Item|null $item */
         $item = $resource[$path];
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);

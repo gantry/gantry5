@@ -46,7 +46,7 @@ class CompiledBlueprints extends CompiledBase
      * Load single configuration file and append it to the correct position.
      *
      * @param  string  $name  Name of the position.
-     * @param  string  $filename  File to be loaded.
+     * @param  string|array  $filename  File to be loaded.
      */
     protected function loadFile($name, $filename)
     {

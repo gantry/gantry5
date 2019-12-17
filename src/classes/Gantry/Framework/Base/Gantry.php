@@ -297,7 +297,9 @@ abstract class Gantry extends Container
 
         // @deprecated 5.3
         $instance['configurations'] = $instance->factory(static function ($c) {
-            GANTRY_DEBUGGER && Debugger::addMessage('Depredated call: gantry.configurations');
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage('Depredated call: gantry.configurations');
+            }
 
             static $collection;
             if (!$collection) {

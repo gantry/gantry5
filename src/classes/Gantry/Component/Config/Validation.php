@@ -379,7 +379,7 @@ class Validation
 
         $min = isset($params['min']) ? $params['min'] : 0;
 
-        return !(isset($params['step']) && fmod($value - $min, $params['step']) === 0);
+        return !(isset($params['step']) && fmod($value - $min, $params['step']) === 0.0);
     }
 
     /**

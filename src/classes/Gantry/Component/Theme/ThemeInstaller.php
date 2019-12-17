@@ -42,7 +42,7 @@ abstract class ThemeInstaller
     protected $name;
     /** @var array */
     protected $outlines;
-    /** @var object */
+    /** @var object|null */
     protected $script;
 
     /**
@@ -206,8 +206,6 @@ abstract class ThemeInstaller
 
         $this->initialize();
 
-        $created = false;
-
         $params += [
             'preset' => null,
             'title' => null
@@ -217,16 +215,12 @@ abstract class ThemeInstaller
         $preset = $params['preset'] ?: 'default';
 
         // Copy configuration for the new layout.
-        if (($this->copyCustom($folder, $folder) || $created)) {
+        if (($this->copyCustom($folder, $folder))) {
             // Update layout and save it.
             $layout = Layout::load($folder, $preset);
             $layout->save()->saveIndex();
 
-            if ($created) {
-                $this->actions[] = ['action' => 'outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
-            } else {
-                $this->actions[] = ['action' => 'outline_updated', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_UPDATED', $title)];
-            }
+            $this->actions[] = ['action' => 'outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
         }
 
         return $folder;
@@ -351,7 +345,7 @@ abstract class ThemeInstaller
     }
 
     /**
-     * @return object
+     * @return object|null
      */
     protected function getInstallerScript()
     {

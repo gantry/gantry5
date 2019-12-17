@@ -36,11 +36,15 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Container $gantry)
     {
         $gantry['blueprints'] = static function(Gantry $gantry) {
-            GANTRY_DEBUGGER && Debugger::startTimer('blueprints', 'Loading blueprints');
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('blueprints', 'Loading blueprints');
+            }
 
             $blueprints = static::blueprints($gantry);
 
-            GANTRY_DEBUGGER && Debugger::stopTimer('blueprints');
+            if (GANTRY_DEBUGGER) {
+                Debugger::stopTimer('blueprints');
+            }
 
             return $blueprints;
         };
@@ -51,14 +55,18 @@ class ConfigServiceProvider implements ServiceProviderInterface
                 throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
             }
 
-            GANTRY_DEBUGGER && Debugger::startTimer('config', 'Loading configuration');
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('config', 'Loading configuration');
+            }
 
             // Get the current configuration and lock the value from modification.
             $outline = $gantry->lock('configuration');
 
             $config = static::load($gantry, $outline);
 
-            GANTRY_DEBUGGER && Debugger::setConfig($config)->stopTimer('config');
+            if (GANTRY_DEBUGGER) {
+                Debugger::setConfig($config)->stopTimer('config');
+            }
 
             return $config;
         };
@@ -74,6 +82,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $locator = $container['locator'];
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
+        if (is_bool($cache)) {
+            throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
+        }
 
         $files = [];
         $paths = $locator->findResources('gantry-particles://');
@@ -113,8 +124,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $files = (new ConfigFileFinder)->locateFiles($paths);
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
-
-        if (!$cache) {
+        if (is_bool($cache)) {
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 

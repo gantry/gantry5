@@ -47,7 +47,7 @@ abstract class AbstractTheme
     /** @var string */
     public $path;
 
-    /** @var Environment */
+    /** @var Environment|null */
     protected $renderer;
 
     /**

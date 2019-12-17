@@ -294,7 +294,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \LogicException('Cannot save unnamed layout');
         }
 
-        GANTRY_DEBUGGER && Debugger::addMessage("Saving layout for outline {$this->name}");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Saving layout for outline {$this->name}");
+        }
 
         $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $this->name));
 
@@ -362,7 +364,9 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
             throw new \LogicException('Cannot save unnamed layout');
         }
 
-        GANTRY_DEBUGGER && Debugger::addMessage("Saving layout index for outline {$this->name}");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Saving layout index for outline {$this->name}");
+        }
 
         $gantry = Gantry::instance();
 
@@ -413,7 +417,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param string $id
-     * @return string|null
+     * @return object|null
      */
     public function getParentId($id)
     {
@@ -581,7 +585,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     /**
      * @param string $id
      * @param bool $createIfNotExists
-     * @return object
+     * @return object|null
      */
     public function find($id, $createIfNotExists = true)
     {
@@ -809,11 +813,17 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
                 $outline = $this::instance($outlineId);
             } catch (\Exception $e) {
                 // Outline must have been deleted.
-                GANTRY_DEBUGGER && Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
+                if (GANTRY_DEBUGGER) {
+                    Debugger::addMessage("Outline {$outlineId} is missing / deleted", 'error');
+                }
+
                 $outline = null;
             }
             foreach ($list as $id => $inheritId) {
                 $item = $this->find($id);
+                if (!$item) {
+                    continue;
+                }
 
                 $inheritId = !empty($item->inherit->particle) ? $item->inherit->particle : $id;
                 $inherited = $outline ? $outline->find($inheritId) : null;
@@ -857,11 +867,11 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
-     * @param array $items
-     * @param object $parent
-     * @param object $block
-     * @param string $inherit
-     * @param array $index
+     * @param array|null $items
+     * @param object|null $parent
+     * @param object|null $block
+     * @param array|null $inherit
+     * @param array|null $index
      */
     protected function initReferences(array $items = null, $parent = null, $block = null, $inherit = null, array $index = null)
     {
@@ -924,7 +934,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param string $type
-     * @param string $subtype
+     * @param string|null $subtype
      * @param string|int $id
      * @return string
      */
@@ -1033,7 +1043,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
 
     /**
      * @param  string $name
-     * @param  string $preset
+     * @param  string|null $preset
      * @return static
      */
     public static function load($name, $preset = null)

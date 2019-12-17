@@ -155,7 +155,9 @@ class Gantry5Plugin extends Plugin
         ]);
         }
 
-        GANTRY_DEBUGGER && Debugger::addMessage('Inside Gantry administration');
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage('Inside Gantry administration');
+        }
     }
 
     /**
@@ -246,7 +248,9 @@ class Gantry5Plugin extends Plugin
         // Initialize particle AJAX.
         $this->initializeApi();
 
-        GANTRY_DEBUGGER && Debugger::addMessage("Gantry theme {$theme->name} selected");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Gantry theme {$theme->name} selected");
+        }
    }
 
     public function initAdminTheme()
@@ -309,7 +313,9 @@ class Gantry5Plugin extends Plugin
             );
             $page->slug('particle');
 
-            GANTRY_DEBUGGER && Debugger::addMessage("AJAX request for {$id}");
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage("AJAX request for {$id}");
+            }
 
             return $page;
         };
@@ -409,12 +415,16 @@ class Gantry5Plugin extends Plugin
 
         // Set page to offline.
         if ($global->get('offline', 0)) {
-            GANTRY_DEBUGGER && Debugger::addMessage('Site is Offline!');
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage('Site is Offline!');
+            }
 
             /** @var UserInterface $user */
             $user = $this->grav['user'];
             if (empty($user->authenticated && $user->authorize('site.login'))) {
-                GANTRY_DEBUGGER && Debugger::addMessage('Displaying Offline Page');
+                if (GANTRY_DEBUGGER) {
+                    Debugger::addMessage('Displaying Offline Page');
+                }
 
                 $page = new Page;
                 $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -437,7 +447,9 @@ class Gantry5Plugin extends Plugin
      */
     public function getMaintenancePage(Event $event)
     {
-        GANTRY_DEBUGGER && Debugger::addMessage('Displaying Maintenance Page');
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage('Displaying Maintenance Page');
+        }
 
         $page = new Page;
         $page->init(new \SplFileInfo(__DIR__ . '/pages/offline.md'));
@@ -468,7 +480,9 @@ class Gantry5Plugin extends Plugin
         $header = $page->header();
         if (!empty($header->gantry['outline'])) {
             $this->outline = $header->gantry['outline'];
-            GANTRY_DEBUGGER && Debugger::addMessage("Current page forces outline {$this->outline} to be used");
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage("Current page forces outline {$this->outline} to be used");
+            }
         } elseif ($page->name() === 'notfound.md') {
             $this->outline = '_error';
         }
@@ -487,7 +501,7 @@ class Gantry5Plugin extends Plugin
         $theme->setLayout($this->outline);
         $this->setPreset();
 
-        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator')) {
+        if (GANTRY_DEBUGGER) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             Debugger::setLocator($locator);
@@ -534,7 +548,9 @@ class Gantry5Plugin extends Plugin
             $event->page = $page;
             $event->stopPropagation();
         } else {
-            GANTRY_DEBUGGER && Debugger::addMessage('Page not found');
+            if (GANTRY_DEBUGGER) {
+                Debugger::addMessage('Page not found');
+            }
             $this->outline = '_error';
         }
     }

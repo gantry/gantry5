@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,32 +14,37 @@
 
 namespace Gantry\Component\Twig\Node;
 
+use Twig\Compiler;
+use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Node;
+use Twig\Node\NodeCaptureInterface;
+
 /**
  * Class TwigNodeAssets
  * @package Gantry\Component\Twig\Node
  */
-class TwigNodeAssets extends \Twig_Node implements \Twig_NodeCaptureInterface
+class TwigNodeAssets extends Node implements NodeCaptureInterface
 {
     protected $tagName = 'assets';
 
     /**
      * TwigNodeAssets constructor.
-     * @param \Twig_Node|null $body
-     * @param \Twig_Node_Expression|null $location
-     * @param \Twig_Node_Expression|null $variables
+     * @param Node|null $body
+     * @param AbstractExpression|null $location
+     * @param AbstractExpression|null $variables
      * @param int $lineno
-     * @param null $tag
+     * @param string|null $tag
      */
-    public function __construct(\Twig_Node $body = null, \Twig_Node_Expression $location = null, \Twig_Node_Expression $variables = null, $lineno = 0, $tag = null)
+    public function __construct(Node $body = null, AbstractExpression $location = null, AbstractExpression $variables = null, $lineno = 0, $tag = null)
     {
         parent::__construct(['body' => $body, 'location' => $location, 'variables' => $variables], [], $lineno, $tag);
     }
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler->addDebugInfo($this)
             ->write("\$assetFunction = \$this->env->getFunction('parse_assets')->getCallable();\n")

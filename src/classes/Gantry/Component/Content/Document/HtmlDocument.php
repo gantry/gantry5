@@ -335,7 +335,9 @@ class HtmlDocument
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,._]#Su', '_twig_escape_js_callback', $string);
+                /** @var callable $callback */
+                $callback = '_twig_escape_js_callback';
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._]#Su', $callback, $string);
 
                 return $string;
 
@@ -344,7 +346,9 @@ class HtmlDocument
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', '_twig_escape_css_callback', $string);
+                /** @var callable $callback */
+                $callback = '_twig_escape_css_callback';
+                $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', $callback, $string);
 
                 return $string;
 
@@ -353,7 +357,9 @@ class HtmlDocument
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,._-]#Su', '_twig_escape_html_attr_callback', $string);
+                /** @var callable $callback */
+                $callback = '_twig_escape_html_attr_callback';
+                $string = preg_replace_callback('#[^a-zA-Z0-9,._-]#Su', $callback, $string);
 
                 return $string;
 
@@ -540,7 +546,7 @@ class HtmlDocument
 
         $html = preg_replace_callback('#<(pre|code|script)(\s[^>]+)?>.*?</\\1>#ius', static function($matches) use (&$tokens) {
             // Unfortunately uniqid() doesn't quite work in Windows, so we need to work it around by adding some randomness.
-            $token = '@@'. uniqid(mt_rand(), true) . '@@';
+            $token = '@@'. uniqid((string)mt_rand(), true) . '@@';
             $match = $matches[0];
 
             $tokens[$token] = $match;

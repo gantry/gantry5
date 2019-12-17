@@ -119,7 +119,7 @@ abstract class Folder
     /**
      * Return recursive list of all files and directories under given path.
      *
-     * @param  string            $path
+     * @param  string|false      $path
      * @param  array             $params
      * @return array
      * @throws \RuntimeException

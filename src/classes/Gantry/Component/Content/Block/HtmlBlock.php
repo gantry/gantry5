@@ -72,7 +72,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
 
         $gantry = Gantry::instance();
 
-        /** @var Theme $theme */
+        /** @var Theme|null $theme */
         $theme = isset($gantry['theme']) ? $gantry['theme'] : null;
 
         /** @var Document $document */

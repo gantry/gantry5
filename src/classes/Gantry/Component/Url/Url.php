@@ -35,30 +35,10 @@ class Url
             $url
         );
 
-        // PHP versions below 5.4.7 have troubles with URLs without scheme, so lets help by fixing that.
-        // TODO: This is not needed in PHP >= 5.4.7, but for now we need to test if the function works.
-        if ('/' === $encodedUrl[0] && false !== strpos($encodedUrl, '://')) {
-            $schemeless = true;
-
-            // Fix the path so that parse_url() will not return false.
-            $parts = parse_url('fake://fake.com' . $encodedUrl);
-
-            // Remove the fake values.
-            unset($parts['scheme'], $parts['host']);
-
-        } else {
-            $parts = parse_url($encodedUrl);
-        }
+        $parts = parse_url($encodedUrl);
 
         if (!$parts) {
             return false;
-        }
-
-        // PHP versions below 5.4.7 do not understand schemeless URLs starting with // either.
-        if (isset($schemeless) && !isset($parts['host']) && 0 === strpos($encodedUrl, '//')) {
-            // Path is stored in format: //[host]/[path], so let's fix it.
-            list($parts['host'], $path) = explode('/', substr($parts['path'], 2), 2);
-            $parts['path'] = "/{$path}";
         }
 
         foreach($parts as $name => $value) {

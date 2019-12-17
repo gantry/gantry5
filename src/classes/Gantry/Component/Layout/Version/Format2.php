@@ -83,11 +83,11 @@ class Format2
             'layout' => $structure
         ];
 
-        if ($this->structure) {
+        if (!empty($this->structure)) {
             $result['structure'] = $this->structure;
         }
 
-        if ($this->content) {
+        if (!empty($this->content)) {
             $result['content'] = $this->content;
         }
 
