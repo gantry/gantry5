@@ -58,15 +58,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         'highlightParentAlias' => true
     ];
 
-    abstract public function __construct();
-
     /**
      * Return list of menus.
      *
      * @return array
      */
     abstract public function getMenus();
-
 
     /**
      * Return default menu.
@@ -115,7 +112,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function instance(array $params = [], Config $menu = null)
     {
-        $params = $params + $this->defaults;
+        $params += $this->defaults;
 
         $menus = $this->getMenus();
 
@@ -214,17 +211,17 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function ordering()
     {
         $list = [];
-        foreach ($this->items as $name => $item) {
+        foreach ($this->items as $key => $item) {
             $groups = $item->groups();
             if (\count($groups) === 1 && empty($groups[0])) {
                 continue;
             }
 
-            $list[$name] = [];
+            $list[$key] = [];
             foreach ($groups as $col => $children) {
-                $list[$name][$col] = [];
+                $list[$key][$col] = [];
                 foreach ($children as $child) {
-                    $list[$name][$col][] = $child->path;
+                    $list[$key][$col][] = $child->path;
                 }
             }
         }
@@ -295,8 +292,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function isActive($item)
     {
         $active = $this->getActive();
+        if (!$active || !$item) {
+            return false;
+        }
 
-        return $active && $item && ($active->path === $item->path || strpos($active->path, $item->path . '/') === 0);
+        return $active->path === $item->path || strpos($active->path, $item->path . '/') === 0;
     }
 
     /**
@@ -306,8 +306,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function isCurrent($item)
     {
         $active = $this->getActive();
+        if (!$active || !$item) {
+            return false;
+        }
 
-        return $item && $active && $item->path === $active->path;
+        return $item->path === $active->path;
     }
 
     /**
@@ -473,6 +476,6 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     protected function isAssoc(array $array)
     {
-        return (array_values($array) !== $array);
+        return \array_values($array) !== $array;
     }
 }

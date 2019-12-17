@@ -300,6 +300,7 @@ class EventListener implements EventSubscriberInterface
         $counts = [];
         foreach ($ordering as $id => $children) {
             $tree = $parents;
+
             if ($isGroup) {
                 $counts[] = \count($children);
             } else {

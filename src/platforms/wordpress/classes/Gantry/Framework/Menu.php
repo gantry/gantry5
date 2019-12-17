@@ -62,6 +62,8 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Used in menu configuration to display full list of menu items as options.
+     *
      * @return array
      */
     public function getGroupedItems()
@@ -207,7 +209,7 @@ class Menu extends AbstractMenu
      * If there is no active menu item, fall back to home page for the current language.
      * If there is no home page, return null.
      *
-     * @param   int  $itemid
+     * @param   int  $itemid FIXME?
      * @return  object|null
      */
     protected function calcBase($itemid = null)

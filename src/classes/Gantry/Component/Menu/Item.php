@@ -32,7 +32,7 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
  * @property int $group
  * @property int $level
  */
-class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
+class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonSerializable
 {
     use ArrayAccessWithGetters, Export;
 
@@ -51,15 +51,16 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     /** @var array */
     protected static $defaults = [
         'id' => 0,
+        'parent_id' => null,
         'type' => 'link',
         'path' => null,
         'alias' => null,
         'title' => null,
         'link' => null,
-        'parent_id' => null,
         'layout' => 'list',
         'target' => '_self',
         'dropdown' => '',
+        'dropdown_hide' => 0,
         'icon' => '',
         'image' => '',
         'subtitle' => '',
@@ -70,6 +71,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         'visible' => true,
         'group' => 0,
         'columns' => [],
+        'columns_count' => [],
         'level' => 0,
         'link_title' => '',
         'anchor_class' => ''
@@ -85,12 +87,31 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     {
         $this->menu = $menu;
 
-        $tree = explode('/', $name);
-        $alias = array_pop($tree);
-        $parent = implode('/', $tree);
+    /**
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'items' => $this->items,
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ];
+    }
 
-        // As we always calculate parent (it can change), prevent old one from being inserted.
-        unset($item['parent_id']);
+    /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'items' => $this->items,
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ];
+    }
 
         $this->items = $item + [
             'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
@@ -119,7 +140,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
      */
     public function serialize()
     {
-        // FIXME: need to create collection class to gather the sibling data.
+        // TODO: need to create collection class to gather the sibling data.
         return serialize([
             'version' => static::VERSION,
             'items' => $this->items,
@@ -134,7 +155,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
      */
     public function unserialize($serialized)
     {
-        // FIXME: need to create collection class to gather the sibling data.
+        // TODO: need to create collection class to gather the sibling data.
         $data = unserialize($serialized);
 
         if (!isset($data['version']) && $data['version'] === static::VERSION) {
@@ -162,7 +183,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
     /**
      * @return AbstractMenu
-     * @todo Need to break relationship to the menu and use a collection instead.
+     * @TODO Need to break relationship to the menu and use a collection instead.
      */
     protected function menu()
     {

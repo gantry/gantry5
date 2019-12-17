@@ -109,7 +109,7 @@ class Menu extends HtmlController
         $path = array_slice(func_get_args(), 1);
 
         // Get menu item and make sure it exists.
-        $item = $resource[implode('/', $path)];
+        $item = $resource->get(implode('/', $path));
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
@@ -127,10 +127,10 @@ class Menu extends HtmlController
         if (empty($this->params['ajax']) || empty($this->request->get['inline'])) {
             // Handle special case to fetch only one column group.
             if (count($path) > 0) {
-                $this->params['columns'] = $resource[$path[0]];
+                $this->params['columns'] = $resource->get($path[0]);
             }
             if (count($path) > 1) {
-                $this->params['column'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+                $this->params['column'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($path, 0, 2)))->group;
                 $this->params['override'] = $item;
             }
 
@@ -142,7 +142,7 @@ class Menu extends HtmlController
         $layout = $this->layoutName(count($path) + (int) isset($group));
 
         $this->params['item'] = $item;
-        $this->params['group'] = isset($group) ? (int) $group : $resource[implode('/', array_slice($path, 0, 2))]->group;
+        $this->params['group'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($path, 0, 2)))->group;
 
         return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
     }
@@ -218,7 +218,7 @@ class Menu extends HtmlController
 
         // Get menu item and make sure it exists.
         /** @var Item|null $item */
-        $item = $resource[$path];
+        $item = $resource->get($path);
         if (!$item) {
             throw new \RuntimeException('Menu item not found', 404);
         }
@@ -235,6 +235,7 @@ class Menu extends HtmlController
                 'path'       => $path,
                 'blueprints' => ['fields' => $blueprints['form/fields/items/fields']],
                 'data'       => $item->toArray() + ['path' => $path],
+                'item'       => $item,
             ] + $this->params;
 
         return $this->render('@gantry-admin/pages/menu/menuitem.html.twig', $this->params);
@@ -458,13 +459,13 @@ class Menu extends HtmlController
 
         // TODO: validate
 
-        $item = $resource[implode('/', $path)];
+        $item = $resource->get(implode('/', $path));
         $item->update($data->toArray());
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
-        $this->params['group'] = $resource[implode('/', array_slice($path, 0, 2))]->group;
+        $this->params['group'] = $resource->get(implode('/', array_slice($path, 0, 2)))->group;
 
         if (!$item->title) {
             throw new \RuntimeException('Title from the Menu Item should not be empty', 400);

@@ -14,11 +14,12 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
-use Grav\Common\Config\Config;
+use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page as GravPage;
 use Grav\Common\Page\Pages;
@@ -42,7 +43,7 @@ class Menu extends AbstractMenu
         $page = $grav['page'];
         $route = trim($page->rawRoute(), '/');
 
-        /** @var Config $config */
+        /** @var GravConfig $config */
         $config = $grav['config'];
 
         $this->default = trim($config->get('system.home.alias', '/home'), '/');
@@ -169,7 +170,7 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * Get menu items from the platform.
+     * Get menu items from Grav.
      *
      * @param int $levels
      * @return array    List of routes to the pages.
