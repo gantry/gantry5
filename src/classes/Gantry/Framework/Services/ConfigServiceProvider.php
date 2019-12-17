@@ -82,6 +82,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $locator = $container['locator'];
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
+        if (is_bool($cache)) {
+            throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
+        }
 
         $files = [];
         $paths = $locator->findResources('gantry-particles://');
@@ -121,8 +124,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $files = (new ConfigFileFinder)->locateFiles($paths);
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
-
-        if (!$cache) {
+        if (is_bool($cache)) {
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 
