@@ -212,7 +212,6 @@ function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $
         $upgrader->skin->feedback('Gantry 5 theme detected.');
         unset($options['gantry5_abort']->true);
     }
-        }
 
     return $source;
 }
