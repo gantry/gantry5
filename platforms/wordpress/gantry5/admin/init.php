@@ -6,6 +6,7 @@ use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
+use Gantry\WordPress\NavMenuEditWalker;
 use Gantry5\Loader;
 
 add_action('admin_init', 'gantry5_admin_start_buffer', -10000);
@@ -56,9 +57,9 @@ function gantry5_admin_start_buffer()
 
 function gantry5_init()
 {
-    $gantry = Gantry\Framework\Gantry::instance();
+    $gantry = Gantry::instance();
     if (!isset($gantry['router'])) {
-        $gantry['router'] = $router = new Gantry\Admin\Router($gantry);
+        $gantry['router'] = $router = new Router($gantry);
         $router->boot()->load();
     }
 
@@ -132,7 +133,7 @@ function gantry5_wp_edit_nav_menu_walker()
 {
     gantry5_init();
 
-    return \Gantry\WordPress\NavMenuEditWalker::class;
+    return NavMenuEditWalker::class;
 }
 
 function gantry5_add_menu_item_types()
@@ -165,7 +166,7 @@ function gantry5_layout_manager()
     }
 
     // Detect Gantry Framework or fail gracefully.
-    if (!class_exists('Gantry5\Loader')) {
+    if (!class_exists(Loader::class)) {
         wp_die(__('Gantry 5 Framework not found.'));
     }
 
