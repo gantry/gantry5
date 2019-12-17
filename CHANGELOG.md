@@ -11,7 +11,7 @@
         - Fixed missing `rel` attribute in menu items (#2573, thanks @thexmanxyz)
 1. [WordPress](#wordpress)
     1. [](#improved)
-        - Added a `Global` rule for assignments per taxonomy / cagegory (#2045, thanks @nikola3244)
+        - Added a `Global` rule for assignments per taxonomy / category (#2045, thanks @nikola3244)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
