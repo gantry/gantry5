@@ -15,6 +15,7 @@
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
+        - Fixed menu editor having no menu items in Grav 1.7
         - Fixed broken `Configure` link in admin (#2570)
 
 # 5.4.31
