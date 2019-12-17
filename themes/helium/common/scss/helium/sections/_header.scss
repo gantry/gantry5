@@ -1,12 +1,14 @@
 #g-header {
-	background: $header-background;
+	background-color: $header-background;
 	color: $header-text-color;
     padding: $section-padding 0;
     position: relative;
     z-index: 10;
 
     @if $header-background-image {
-        background: url($header-background-image) center center no-repeat;
+        background-image: url($header-background-image);
+        background-position: center center;
+        background-repeat: no-repeat;
         background-size: cover;
 
         @if $header-background-overlay == 'enabled' {

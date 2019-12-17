@@ -70,8 +70,12 @@ class Particle extends \WP_Widget
         if (!is_array($instance)) {
             $instance = [];
         }
+
+        $sidebar = $args['id'] ? $args['id'] : '';
+        $widget_id = isset($args['widget_id']) ? preg_replace('/[^\d]/', '', $args['widget_id']) : null;
         $md5 = md5(json_encode($instance));
-        $id = isset($instance['id']) ? $instance['id'] : "widget-{$md5}";
+        $id = isset($instance['id']) ? $instance['id'] : ($widget_id ?: "widget-{$md5}");
+
         if (!isset($this->content[$md5])) {
             /** @var Theme $theme */
             $theme = $this->container['theme'];
@@ -99,7 +103,7 @@ class Particle extends \WP_Widget
             }
 
             $object = (object) array(
-                'id' => "widget-{$particle}-{$id}",
+                'id' => "{$sidebar}-widget-{$particle}-{$id}",
                 'type' => $type,
                 'subtype' => $particle,
                 'attributes' => $instance['options']['particle'],
@@ -109,6 +113,9 @@ class Particle extends \WP_Widget
                 'gantry' => $this->container,
                 'inContent' => true
             );
+            if (isset($args['ajax'])) {
+                $context['ajax'] = $args['ajax'];
+            }
 
             $this->content[$md5] = $theme->getContent($object, $context);
         }

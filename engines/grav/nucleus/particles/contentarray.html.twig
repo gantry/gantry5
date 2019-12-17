@@ -1,30 +1,26 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set attr_extra = '' %}
-{% if particle.extra %}
-    {% for attributes in particle.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
-
-{% block particle %}
-    {% set article_settings = particle.article %}
-    {% set filter = article_settings.filter %}
-    {% set sort = article_settings.sort %}
-    {% set limit = article_settings.limit %}
-    {% set display = article_settings.display %}
-
-    {# Content Finder #}
-    {% set pages = grav.page.collection({
+{% set attr_extra = particle.extra|attribute_array %}
+{% set article_settings = particle.article %}
+{% set filter = article_settings.filter %}
+{% set sort = article_settings.sort %}
+{% set limit = article_settings.limit %}
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% set display = article_settings.display %}
+{% set collection = grav.page.collection(
+    {
         items: {'@taxonomy.category': filter.categories|split(' ')},
         order: {by: sort.orderby, dir: sort.ordering},
         url_taxonomy_filters: false
-    }, false).slice(limit.start, limit.total) %}
+    },
+    false) %}
+{% set total = collection.count() %}
+{% set pages = collection.slice(start, limit.total) %}
+
+{% block particle %}
 
     {# All pages #}
-    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
         {% for column in pages.batch(limit.columns) %}
             <div class="g-grid">
@@ -61,23 +57,31 @@
                                     </div>
                                 {% endif %}
 
-                                {% if display.date.enabled or (display.author.enabled and page.username) or display.category.enabled %}
+                                {% if display.date.enabled or (display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias)) or display.category.enabled %}
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'published' %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.publish_date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.publishDate()|date(display.date.format) }}
                                                 {% elseif display.date.enabled == 'modified' %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.modified|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.modified|date(display.date.format) }}
                                                 {% else %}
-                                                    <i class="fa fa-clock-o"></i>{{ page.date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ page.date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
-                                        {% if display.author.enabled and (page.username or page.author) %}
+                                        {% if display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias) %}
+                                            {% if page.header.author.name %}
+                                                {% set author = page.header.author.name %}
+                                            {% elseif page.header.author.alias %}
+                                                {% set author = page.header.author.alias %}
+                                            {% else %}
+                                                {% set author = page.header.author.username %}
+                                            {% endif %}
+
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ page.author ?: page.username }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ author }}
                                             </span>
                                         {% endif %}
 
@@ -86,10 +90,10 @@
                                                 {% for category in page.taxonomy.category %}
                                                     {% if display.category.route %}
                                                         <a href="{{ base_url ~ display.category.route }}">
-                                                            <i class="fa fa-folder-open"></i>{{ category|raw }}
+                                                            <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
                                                         </a>
                                                     {% else %}
-                                                        <i class="fa fa-folder-open"></i>{{ category|raw }}
+                                                        <i class="fa fa-folder-open" aria-hidden="true"></i>{{ category|raw }}
                                                     {% endif %}
                                                 {% endfor %}
                                             </span>
@@ -123,6 +127,54 @@
                 {% endfor %}
             </div>
         {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
     </div>
 
+{% endblock %}
+
+{% block javascript_footer %}
+    {% if total > limit.total and display.pagination_buttons %}
+        {% do gantry.load('jquery') %}
+        <script>
+            (function ($) {
+                $(document).on('click', 'button.contentarray-button', function () {
+                    var id = $(this).attr('data-id'),
+                        start = $(this).attr('data-start'),
+                        request = {
+                            'outline': {{ gantry.page.outline|json_encode|raw }},
+                            'id'     : id,
+                            'start'  : start
+                        };
+                    $.ajax('{{ base_url ~ '/api/particle.json' }}', {
+                        type       : 'GET',
+                        data       : request,
+                        indexValue : id + '-particle',
+                        success: function (response) {
+                            if(response.html) {
+                                $('#' + this.indexValue).html(response.html);
+                            } else {
+                                // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                                $('#' + this.indexValue).html(response.message);
+                            }
+                            if (response._debugbar && window.phpdebugbar) {
+                                window.phpdebugbar.addDataSet(response._debugbar);
+                            }
+                        },
+                        error: function(response) {
+                            // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                            $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                        }
+                    });
+                    return false;
+                });
+            })(jQuery)
+        </script>
+    {% endif %}
 {% endblock %}

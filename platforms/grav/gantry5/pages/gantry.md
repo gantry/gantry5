@@ -7,6 +7,7 @@ process:
     twig: false
     
 access:
+    admin.gantry: true
     admin.themes: true
     admin.super: true
 ---

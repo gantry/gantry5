@@ -70,9 +70,14 @@ var Menu = new prime({
 
         this.selectors = this.options.selectors;
         this.states = this.options.states;
-        this.overlay = zen('div' + this.selectors.overlay).top('#g-page-surround');
+        this.overlay = zen('div' + this.selectors.overlay);
         this.active = null;
         this.location = [];
+
+        var pageSurround = $('#g-page-surround');
+        if (pageSurround) {
+            this.overlay.top(pageSurround);
+        }
 
         var mainContainer = $(this.selectors.mainContainer);
         if (!mainContainer) { return; }
@@ -104,7 +109,10 @@ var Menu = new prime({
 
         if (hasTouchEvents || !this.hoverExpand) {
             var linkedParent = $(selectors.linkedParent);
-            if (linkedParent) { linkedParent.on('touchend', this.bound('touchend')); }
+            if (linkedParent) {
+                linkedParent.on('touchmove', this.bound('touchmove'));
+                linkedParent.on('touchend', this.bound('touchend'));
+            }
             this.overlay.on('touchend', this.bound('closeAllDropdowns'));
         }
 
@@ -151,6 +159,11 @@ var Menu = new prime({
         this.closeDropdown(element);
     },
 
+    touchmove: function(event) {
+        var target      = $(event.target);
+        target.isMoving = true;
+    },
+
     touchend: function(event) {
         var selectors = this.selectors,
             states    = this.states;
@@ -160,6 +173,14 @@ var Menu = new prime({
             menuType    = target.parent('.g-standard') ? 'standard' : 'megamenu',
             isGoingBack = target.parent('.g-go-back'),
             parent, isSelected;
+
+        if (target.isMoving) {
+            target.isMoving = false;
+            return false;
+        }
+
+        target.off('touchmove', this.bound('touchmove'));
+        target.isMoving = false;
 
         if (indicator) {
             target = indicator;
@@ -285,7 +306,12 @@ var Menu = new prime({
 
         if (isGoingBack) {
             parents = parent.parents('[style^="height"]');
-            (parents || []).forEach(function(element) { element.style.height = heights.from.height + 'px'; });
+            (parents || []).forEach(function(element) {
+                element = $(element);
+                if (element.parent('.g-toplevel')) {
+                    element[0].style.height = heights.from.height + 'px';
+                }
+            });
         }
 
         if (!isGoingBack) {
@@ -294,7 +320,12 @@ var Menu = new prime({
                 parent[0].style.height = height + 'px';
 
                 parents = parent.parents('[style^="height"]');
-                (parents || []).forEach(function(element) { element.style.height = height + 'px'; });
+                (parents || []).forEach(function(element) {
+                    element = $(element);
+                    if (element.parent('.g-toplevel')) {
+                        element[0].style.height = height + 'px';
+                    }
+                });
             } else if (isNavMenu) {
                 sublevel[0].style.height = height + 'px';
             }
@@ -591,6 +622,8 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openingClass);
+            this.offcanvas.attribute('aria-expanded', true);
+            $('[data-offcanvas-toggle]').attribute('aria-expanded', true);
             panel.style.transition = panel.style[prefix.css + 'transition'] = '';
         }, this), this.options.duration);
 
@@ -613,6 +646,8 @@ var Offcanvas = new prime({
         this._setTransition();
         this._translateXTo(0);
         this.opened = false;
+        this.offcanvas.attribute('aria-expanded', false);
+        $('[data-offcanvas-toggle]').attribute('aria-expanded', false);
 
         setTimeout(bind(function() {
             var panel = this.panel[0];
@@ -775,7 +810,7 @@ var Offcanvas = new prime({
         timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
-            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+            var shouldCollapse = (blocks && blocks.length === 1) && mobileContainer && (!trim(this.offcanvas.text()).length && !blocks.find('.g-menu-item'));
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
             if (mobileContainer) {
@@ -4565,6 +4600,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');

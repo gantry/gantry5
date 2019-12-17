@@ -25,15 +25,21 @@
 
         // Entries
         .entries {
-            .tease {
-                margin: 0;
-                padding: 0;
+            margin: 0 -$content-padding;
 
-                // Sticky Posts
-                &.sticky {
-                    padding: ($content-padding / 2) $content-padding;
-                    background-color: #eceff3;
-                    border-radius: $core-border-radius;
+            .g-block {
+                padding: 0 $content-padding;
+
+                .tease {
+                    margin: 0;
+                    padding: 0;
+
+                    // Sticky Posts
+                    &.sticky {
+                        padding: ($content-padding / 2) $content-padding;
+                        background-color: #eceff3;
+                        border-radius: $core-border-radius;
+                    }
                 }
             }
         }

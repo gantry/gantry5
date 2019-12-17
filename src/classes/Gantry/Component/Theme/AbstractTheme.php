@@ -75,9 +75,6 @@ abstract class AbstractTheme
      */
     public function getContext(array $context)
     {
-        $gantry = static::gantry();
-
-        $context['gantry'] = $gantry;
         $context['theme'] = $this;
 
         return $context;
@@ -92,6 +89,10 @@ abstract class AbstractTheme
      */
     public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null)
     {
+        if ($twig->hasExtension('Gantry\Component\Twig\TwigExtension')) {
+            return $twig;
+        }
+
         if (!$loader) {
             $loader = $twig->getLoader();
         }

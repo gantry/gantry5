@@ -51,12 +51,12 @@ form:
     copyright:
       type: input.text
       label: Copyright
-      default: (C) 2005 - 2016 RocketTheme, LLC. All rights reserved.
+      default: '(C) 2005 - 2019 RocketTheme, LLC. All rights reserved.'
 
     license:
       type: input.text
       label: License
-      default: MIT / GPLv2
+      default: 'MIT / GPLv2'
 
     description:
       type: input.text
@@ -65,9 +65,9 @@ form:
     images.thumbnail:
       type: input.text
       label: Thumbnail Image
-      default: admin/images/preset1.png
+      default: 'admin/images/preset1.png'
 
     images.preview:
       type: input.text
       label: Preview Image
-      default: admin/images/preset1.png
+      default: 'admin/images/preset1.png'

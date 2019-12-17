@@ -1,21 +1,14 @@
 {% set tag_type = segment.subtype|default('section') %}
 {% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
-{% set attr_class = segment.attributes.class %}
-{% set attr_extra = '' %}
+{% set attr_class = segment.attributes.class
+    ~ (segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')) %}
+{% set attr_extra = segment.attributes.extra|attribute_array %}
 {% set boxed = segment.attributes.boxed %}
 {% if boxed is not null %}
     {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
 {% endif %}
 
-{% if segment.attributes.extra %}
-    {% for attributes in segment.attributes.extra %}
-        {% for key, value in attributes %}
-        {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
-
-{% set html %}
+{%- set html %}
     {% if segment.children %}
         {% for segment in segments %}
             {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments':segment.children } %}
@@ -23,8 +16,8 @@
     {% endif %}
 {% endset %}
 
-{% if segment.attributes.sticky or html|trim %}
-    {% if boxed is not null and (boxed == 0 or boxed == 2) %}
+{%- if segment.attributes.sticky or html|trim %}
+    {%- if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
         <div class="g-container">{{ html|raw }}</div>
         {% endset %}
@@ -32,13 +25,13 @@
 
     {% set html %}
     {% if boxed == 2 %}{% set attr_class = attr_class ~ ' g-flushed' %}{% endif %}
-    {% set attr_class = attr_class ? ' class="' ~ attr_class|trim ~ '"' %}
-    <{{ tag_type }} id="{{ attr_id }}"{{ attr_class|raw }}{{ attr_extra|raw }}>
+    {% set attr_class = attr_class ? ' class="' ~ attr_class|trim ~ '"' -%}
+    <{{ tag_type }} id="{{ attr_id }}"{{ attr_class|raw }} {{- attr_extra|raw }}>
         {{ html|raw }}
     </{{ tag_type }}>
-    {% endset %}
+    {%- endset %}
 
-    {% if boxed == 1 %}
+    {%- if boxed == 1 %}
     <div class="g-container">{{ html|raw }}</div>
     {% else %}
     {{ html|raw }}

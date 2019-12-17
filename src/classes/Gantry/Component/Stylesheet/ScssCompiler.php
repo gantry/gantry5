@@ -14,9 +14,11 @@
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Component\Stylesheet\Scss\Compiler;
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class ScssCompiler extends CssCompiler
@@ -49,6 +51,13 @@ class ScssCompiler extends CssCompiler
             $this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
         } else {
             $this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
+            // Work around bugs in SCSS compiler.
+            // TODO: Pass our own SourceMapGenerator instance instead.
+            $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            $this->compiler->setSourceMapOptions([
+                'sourceMapBasepath' => '/',
+                'sourceRoot'        => '/',
+            ]);
             $this->compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
         }
     }
@@ -65,6 +74,7 @@ class ScssCompiler extends CssCompiler
     /**
      * @param string $in    Filename without path or extension.
      * @return bool         True if the output file was saved.
+     * @throws \RuntimeException
      */
     public function compileFile($in)
     {
@@ -112,6 +122,25 @@ class ScssCompiler extends CssCompiler
             $css = '/* ' . $scss . ' */';
         }
 
+        // Extract map from css and save it as separate file.
+        if ($pos = strrpos($css, '/*# sourceMappingURL=')) {
+            $map = json_decode(urldecode(substr($css, $pos + 43, -3)), true);
+
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            foreach ($map['sources'] as &$source) {
+                $source = $document->url($source, null, -1);
+            }
+            unset($source);
+
+            $mapFile = JsonFile::instance($path . '.map');
+            $mapFile->save($map);
+            $mapFile->free();
+
+            $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
+        }
+
         $warnings = trim(ob_get_clean());
         if ($warnings) {
             $this->warnings[$in] = explode("\n", $warnings);
@@ -130,6 +159,8 @@ class ScssCompiler extends CssCompiler
  */
 WARN;
             $css = $warning . "\n\n" . $css;
+        } else {
+            $css = "{$this->checksum()}\n{$css}";
         }
 
         $file->save($css);

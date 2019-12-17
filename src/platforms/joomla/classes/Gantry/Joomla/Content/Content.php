@@ -12,9 +12,9 @@ namespace Gantry\Joomla\Content;
 
 use Gantry\Framework\Gantry;
 use Gantry\Joomla\Category\Category;
-use Gantry\Joomla\Object\Object;
+use Gantry\Joomla\Object\AbstractObject;
 
-class Content extends Object
+class Content extends AbstractObject
 {
     static protected $instances = [];
 
@@ -65,6 +65,16 @@ class Content extends Object
         return $this->introtext . ' ' . $this->fulltext;
     }
 
+    public function preparedText()
+    {
+        return \JHtml::_('content.prepare', $this->text());
+    }
+
+    public function preparedIntroText()
+    {
+        return \JHtml::_('content.prepare', $this->introtext);
+    }
+
     public function readmore()
     {
         return (bool)strlen($this->fulltext);
@@ -77,6 +87,18 @@ class Content extends Object
         $category = $this->category();
 
         return \JRoute::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+    }
+
+    public function edit()
+    {
+        $user = \JFactory::getUser();
+        $asset = "com_content.article.{$this->id}";
+
+        if ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset)) {
+            return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
+        }
+
+        return false;
     }
 
     public function render($file)

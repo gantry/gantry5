@@ -1,38 +1,39 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set attr_extra = '' %}
-{% if particle.extra %}
-    {% for attributes in particle.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
+{% set attr_extra = particle.extra|attribute_array %}
+{% set post_settings = particle.post %}
+{% set filter = post_settings.filter %}
+{% set sort = post_settings.sort %}
+{% set limit = post_settings.limit %}
+{% set start = limit.start + max(0, ajax.start|int) %}
+{% set display = post_settings.display %}
+
+{# Sticky Posts #}
+{% set sticky_posts = filter.sticky ? false : true %}
+
+{# Query Posts #}
+{% set query_parameters = {
+    'posts_per_page': limit.total|default('-1'),
+    'offset': start,
+    'orderby': sort.orderby,
+    'order': sort.ordering,
+    'ignore_sticky_posts': sticky_posts
+} %}
+
+{% if filter.posts %}
+    {% set query_parameters = query_parameters|merge({'post__in': filter.posts|replace({' ': ',', ', ': ','})|split(',')}) %}
+{% else %}
+    {% set query_parameters = query_parameters|merge({'cat': filter.categories|replace({' ': ',', ', ': ','})}) %}
 {% endif %}
 
+{% set posts = wordpress.query_posts(query_parameters) %}
+{% set total = posts.get_pagination([]).total|abs %}
+{% set total = max(posts|length, (total * max(0, limit.total)) - 1) %}
+
 {% block particle %}
-    {% set post_settings = particle.post %}
-    {% set filter = post_settings.filter %}
-    {% set sort = post_settings.sort %}
-    {% set limit = post_settings.limit %}
-    {% set display = post_settings.display %}
-
-    {# Sticky Posts #}
-    {% set sticky_posts = filter.sticky ? false : true %}
-
-    {# Query Posts #}
-    {% set query_parameters = {
-        'cat': filter.categories|replace(' ', ','),
-        'posts_per_page': limit.total|default('-1'),
-        'offset': limit.start|default('0'),
-        'orderby': sort.orderby,
-        'order': sort.ordering,
-        'ignore_sticky_posts': sticky_posts
-    } %}
-
-    {% set posts = wordpress.call('Timber::get_posts', query_parameters) %}
 
     {# All Posts #}
-    <div class="g-content-array g-wordpress-posts{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+    <div class="g-content-array g-wordpress-posts{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
         {% for column in posts|batch(limit.columns) %}
             <div class="g-grid">
@@ -43,7 +44,7 @@
                             <div class="g-array-item">
                                 {% if display.image.enabled and post.thumbnail.src %}
                                     <div class="g-array-item-image">
-                                        <a href="{{ post.link }}">
+                                        <a href="{{ post.link|raw }}">
                                             <img src="{{ url(post.thumbnail.src) }}" />
                                         </a>
                                     </div>
@@ -52,8 +53,8 @@
                                 {% if display.title.enabled %}
                                     <div class="g-array-item-title">
                                         <h3 class="g-item-title">
-                                            <a href="{{ post.link }}">
-                                                {{ display.title.limit ? post.title|truncate_text(display.title.limit) : post.title }}
+                                            <a href="{{ post.link|raw }}">
+                                                {{ display.title.limit ? post.title|truncate_text(display.title.limit)|raw : post.title|raw }}
                                             </a>
                                         </h3>
                                     </div>
@@ -64,16 +65,16 @@
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
                                                 {% if display.date.enabled == 'modified' %}
-                                                    <i class="fa fa-clock-o"></i>{{ post.post_modified|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ post.post_modified|date(display.date.format) }}
                                                 {% else %}
-                                                    <i class="fa fa-clock-o"></i>{{ post.post_date|date(display.date.format) }}
+                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>{{ post.post_date|date(display.date.format) }}
                                                 {% endif %}
                                             </span>
                                         {% endif %}
 
                                         {% if display.author.enabled %}
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user"></i>{{ post.author.name }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ post.author.name|raw }}
                                             </span>
                                         {% endif %}
 
@@ -83,17 +84,17 @@
                                                 {% for category in post.categories %}
                                                     {%- if category_link -%}
                                                         <a href="{{ category.link }}">
-                                                            {{ category.title }}
+                                                            {{ category.title|raw }}
                                                         </a>
                                                     {%- else -%}
-                                                        {{ category.title }}
+                                                        {{ category.title|raw }}
                                                     {%- endif -%}
                                                     {% if not loop.last %}{{ ','|trim }}{% endif %}
                                                 {% endfor %}
                                             {%- endset -%}
 
                                             <span class="g-array-item-category">
-                                                <i class="fa fa-folder-open"></i>{{ post_categories|raw }}
+                                                <i class="fa fa-folder-open" aria-hidden="true"></i>{{ post_categories|raw }}
                                             </span>
                                         {% endif %}
 
@@ -109,7 +110,7 @@
                                             {%- endset -%}
 
                                             <span class="g-array-item-comments">
-                                                <i class="fa fa-comments"></i>{{ comment_count }}
+                                                <i class="fa fa-comments" aria-hidden="true"></i>{{ comment_count }}
                                             </span>
                                         {% endif %}
                                     </div>
@@ -128,7 +129,7 @@
 
                                 {% if display.read_more.enabled %}
                                     <div class="g-array-item-read-more">
-                                        <a href="{{ post.link }}">
+                                        <a href="{{ post.link|raw }}">
                                             <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
                                         </a>
                                     </div>
@@ -140,6 +141,53 @@
                 {% endfor %}
             </div>
         {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
     </div>
 
+{% endblock %}
+
+{% block javascript_footer %}
+    {% if total > limit.total and display.pagination_buttons %}
+        {% do gantry.load('jquery') %}
+        <script>
+            (function ($) {
+                $(document).on('click', 'button.contentarray-button', function () {
+                    var id = $(this).attr('data-id'),
+                        start = $(this).attr('data-start'),
+                        request = {
+                            'action' : 'particle',
+                            'outline' : {{ gantry.page.outline|json_encode|raw }},
+                            'id'     : id,
+                            'start'  : start,
+                            'format' : 'json'
+                        };
+                    $.ajax({{ wordpress.call('admin_url', 'admin-ajax.php')|json_encode|raw }}, {
+                        type        : 'GET',
+                        data        : request,
+                        indexValue  : id + '-particle',
+                        success: function (response) {
+                            if(response.html){
+                                $('#' + this.indexValue).html(response.html);
+                            } else {
+                                // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                                $('#' + this.indexValue).html(response.message);
+                            }
+                        },
+                        error: function(response) {
+                            // TODO: Improve error handling -- instead of replacing particle content, display flash message or something...
+                            $('#' + this.indexValue).html('AJAX FAILED ON ERROR');
+                        }
+                    });
+                    return false;
+                });
+            })(jQuery)
+        </script>
+    {% endif %}
 {% endblock %}

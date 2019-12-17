@@ -11,7 +11,7 @@
                 {# Settings Tab #}
                 <li class="active">
                     <a href="#" id="g-settings-atom-tab" role="presentation" aria-controls="g-settings-atom" role="tab" aria-expanded="true">
-                        {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                        {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}" aria-hidden="true"></i>{% endif %}
                         {% block title %}
                             {{ 'GANTRY5_PLATFORM_ATOM'|trans }}
                         {% endblock %}

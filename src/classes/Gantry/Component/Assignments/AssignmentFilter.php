@@ -28,17 +28,18 @@ class AssignmentFilter
      * @param array $page        In format of page[section][rule].
      * @return array
      */
-    public function scores(array &$candidates, array &$page)
+    public function scores(array &$candidates, array &$page, callable $function = null)
     {
-        $matches = $this->matches($candidates, $page);
+        $matches = $this->matches($candidates, $page, $function);
 
         $scores = [];
         foreach ($matches as $type => $candidate) {
-            $scores[$type] = $this->getScore($candidate);
+            $scores[$type] = $this->getScore($candidate) + (isset($candidate['language']) ? 0.01 : 0);
         }
 
+        // Always return matches by score in alphabetical order.
         ksort($scores, SORT_STRING);
-        arsort($scores);
+        arsort($scores, SORT_NUMERIC);
 
         return $scores;
     }
@@ -50,7 +51,7 @@ class AssignmentFilter
      * @param array $page        In format of page[section][rule].
      * @return array
      */
-    public function matches(array &$candidates, array &$page)
+    public function matches(array $candidates, array &$page, callable $function = null)
     {
         $matches = [];
         foreach ($candidates as $type => $candidate) {
@@ -80,6 +81,9 @@ class AssignmentFilter
                     }
                 }
             }
+            if (isset($matches[$type]) && $function && call_user_func($function, $candidate, $matches[$type], $page) === false) {
+                unset($matches[$type]);
+            }
         }
 
         return $matches;
@@ -100,13 +104,13 @@ class AssignmentFilter
             $this->method = 'calcMax';
         }
 
-        return $this->calcArray(null, $matches);
+        return $this->calcArray(0, $matches);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float|array $item
-     * @return int|float
+     * @param float $carry
+     * @param float|array $item
+     * @return float
      * @internal
      */
     protected function calcArray($carry, $item)
@@ -116,35 +120,35 @@ class AssignmentFilter
         }
 
         $method = $this->method;
-        return $this->{$method}($carry, $item);
+        return $this->{$method}($carry, (float) $item);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcOr($carry, $item)
     {
-        return (int) ($carry || $item);
+        return (float) ($carry || $item);
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMin($carry, $item)
     {
-        return isset($carry) ? min($carry, $item) : $item;
+        return $carry ? min($carry, $item) : $item;
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMax($carry, $item)
@@ -153,9 +157,9 @@ class AssignmentFilter
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcSum($carry, $item)
@@ -164,13 +168,13 @@ class AssignmentFilter
     }
 
     /**
-     * @param int|float $carry
-     * @param int|float $item
-     * @return int|float
+     * @param float $carry
+     * @param float $item
+     * @return float
      * @internal
      */
     protected function calcMul($carry, $item)
     {
-        return isset($carry) ? $carry * $item : $item;
+        return $carry ? $carry * $item : $item;
     }
 }

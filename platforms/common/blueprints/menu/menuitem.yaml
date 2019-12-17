@@ -43,6 +43,27 @@ form:
         .link:
           type: input.text
           label: Link
+          
+        .rel:
+          type: input.text
+          label: Link Rel Attribute
+          disabled: true
+
+        .attributes:
+          type: collection.keyvalue
+          label: List Tag Attributes
+          description: Additional attributes for the menu item list tag.
+          key_placeholder: Key (e.g. style, name, ...)
+          value_placeholder: Value
+          exclude: ['class', 'style', 'title']
+
+        .link_attributes:
+          type: collection.keyvalue
+          label: Link Tag Attributes
+          description: Additional attributes for the menu item link tag.
+          key_placeholder: Key (e.g. style, name, ...)
+          value_placeholder: Value
+          exclude: ['class', 'href', 'title', 'aria-label', 'target']
 
         .hash:
           type: input.text
@@ -69,7 +90,7 @@ form:
           selectize:
             allowEmptyOption: true
           options:
-            '': - Use Default -
+            '': '- Use Default -'
             standard: Simple
             fullwidth: Extended
 
@@ -92,7 +113,7 @@ form:
         .width:
           type: input.text
           label: Dropdown Width
-          description: Set the width of this parent's dropdowns in rem, em, px units or auto.
+          description: "Set the width of this parent's dropdowns in rem, em, px units or auto."
           default: "auto"
           pattern: '((\d+(\.\d+){0,1}(rem|em|px))|auto)'
 

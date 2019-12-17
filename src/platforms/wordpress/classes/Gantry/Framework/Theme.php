@@ -12,6 +12,7 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Component\Theme\ThemeTrait;
+use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Timber\Timber;
 use Timber\User;
@@ -56,7 +57,7 @@ class Theme extends AbstractTheme
 
         $context['current_user'] = $this->user;
 
-        if (function_exists('is_rtl')) {
+        if (\function_exists('is_rtl')) {
             $context['is_rtl'] = is_rtl();
         }
 
@@ -91,6 +92,17 @@ class Theme extends AbstractTheme
     }
 
     /**
+     * Convert all stream uris into proper links.
+     */
+    public function postProcessOutput($html)
+    {
+        $gantry = Gantry::instance();
+
+        // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
+        return $gantry['document']->urlFilter($html, false, 0, true) ?: $html;
+    }
+
+    /**
      * @see AbstractTheme::renderer()
      */
     public function renderer()
@@ -99,6 +111,8 @@ class Theme extends AbstractTheme
             $twig = parent::renderer();
             $twig = apply_filters('twig_apply_filters', $twig);
             $twig = apply_filters('timber/twig/filters', $twig);
+            $twig = apply_filters('timber/twig/functions', $twig);
+            $twig = apply_filters('timber/twig/escapers', $twig);
             $twig = apply_filters('timber/loader/twig', $twig);
             $this->renderer = $twig;
         }
@@ -133,9 +147,10 @@ class Theme extends AbstractTheme
         $selected = $assignments->select();
 
         if (GANTRY_DEBUGGER) {
-            \Gantry\Debugger::addMessage('Selecting outline:');
-            \Gantry\Debugger::addMessage($assignments->matches());
-            \Gantry\Debugger::addMessage($assignments->scores());
+            \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
+            \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
+            \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
         }
 
         $this->setLayout($selected);
@@ -154,7 +169,7 @@ class Theme extends AbstractTheme
             add_action('load-widgets.php',
                 function() {
                     add_action('admin_notices', function() {
-                        echo '<div class="error"><p>' . __('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
+                        echo '<div class="error"><p>' . __('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" rel="noopener" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
                     });
                 });
         } else {
@@ -338,6 +353,18 @@ class Theme extends AbstractTheme
         return $filetypes;
     }
 
+    /**
+     * Register menu locations.
+     */
+    public function register_nav_menus()
+    {
+        // TODO: Not implemented
+        $locations = [];
+        foreach ($locations as $key => $val) {
+            \register_nav_menu($key, $val);
+        }
+    }
+
     public function install()
     {
         $installer = new ThemeInstaller($this->name);
@@ -398,8 +425,9 @@ class Theme extends AbstractTheme
         add_filter('timber_context', [$this, 'getContext']);
         add_filter('timber/loader/twig', [$this, 'timber_loader_twig']);
         add_filter('timber/cache/location', [$this, 'timber_cache_location']);
+        add_filter('timber_compile_result', [$this, 'postProcessOutput']);
         add_filter('wp_theme_editor_filetypes', [$this, 'extend_theme_editor_filetypes']);
-        add_filter('get_twig', [$this, 'extendTwig'], 100);
+        add_filter('timber/twig', [$this, 'extendTwig'], 100);
         add_filter('the_content', [$this, 'url_filter'], 0);
         add_filter('the_excerpt', [$this, 'url_filter'], 0);
         add_filter('widget_text', [$this, 'url_filter'], 0);
@@ -413,6 +441,7 @@ class Theme extends AbstractTheme
         add_action('init', [$this, 'register_taxonomies']);
         add_action('init', [$this, 'register_menus']);
 
+//        add_action('after_setup_theme', [$this, 'register_nav_menus']);
         add_action('template_redirect', [$this, 'set_template_layout'], -10000);
         add_action('template_redirect', [$this, 'disable_wpautop'], 10000);
         add_action('widgets_init', [$this, 'widgets_init']);
@@ -428,6 +457,10 @@ class Theme extends AbstractTheme
         add_action('widgets_init', function() {
             register_widget('\Gantry\WordPress\Widget\Particle');
         });
+
+        // Particle AJAX actions.
+        add_action('wp_ajax_particle', [$this, 'ajax_particle']);
+        add_action('wp_ajax_nopriv_particle', [$this, 'ajax_particle']);
 
         add_shortcode('loadposition', [$this, 'loadposition_shortcode']);
 
@@ -452,6 +485,13 @@ class Theme extends AbstractTheme
         $this->preset_styles_init();
 
         // Load theme text domains
+        $domain = $this->details()->get('configuration.gantry.engine', 'nucleus');
+        $lookup = '/engines/' . $domain . '/languages';
+        if (!file_exists(GANTRY5_PATH . $lookup)) {
+            $lookup = '/engines/wordpress/' . $domain . '/languages';
+        }
+        load_plugin_textdomain($domain, false, basename(GANTRY5_PATH) . $lookup);
+
         $domain = $this->details()->get('configuration.theme.textdomain', $this->name);
         load_theme_textdomain($domain, $this->path . '/languages');
 
@@ -486,6 +526,99 @@ class Theme extends AbstractTheme
         $domain = COOKIE_DOMAIN;
 
         setcookie($name, $value, $expire, $path, $domain);
+    }
+
+    /**
+     * Serve particle AJAX requests in '/wp-admin/admin-ajax.php?action=particle'.
+     */
+    public function ajax_particle()
+    {
+        $format = !empty($_GET['format']) ? sanitize_key($_GET['format']) : 'html';
+        $outline = !empty($_GET['outline']) ? sanitize_key($_GET['outline']) : 'default';
+        $identifier = !empty($_GET['id']) ? sanitize_key($_GET['id']) : null;
+
+        if (!in_array($format, ['json', 'raw'], true)) {
+            $this->ajax_not_found($format);
+        }
+
+        $props = $_GET;
+        unset($props['action'], $props['outline'], $props['id'], $props['format']);
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        $this->setLayout($outline, true);
+
+        if ($identifier === 'main-particle') {
+            // Does not exist in WP.
+            $this->ajax_not_found($format);
+        } elseif (preg_match('`^(.*?)-widget-(.*?)-([\d]+)$`', $identifier, $matches)) {
+            // Render widget.
+            $sidebar = $matches[1];
+            $type = $matches[2];
+            $id = 'particle_widget-' . $matches[3];
+            $html = Widgets::getAjax($sidebar, $id, $props);
+
+            if ($html === null) {
+                $this->ajax_not_found($format);
+            }
+
+            $this->ajax_particle_output('widget.' . $type, $identifier, $props, $html, $format);
+        } else {
+            // Render particle.
+            $layout = $this->loadLayout();
+            $particle = $layout->find($identifier);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                $this->ajax_not_found($format);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $this->getContent($particle, $context);
+            $type = $particle->type . '.' . $particle->subtype;
+            $html = (string) $block;
+            $this->ajax_particle_output($type, $identifier, $props, $html, $format);
+        }
+    }
+
+    protected function ajax_particle_output($type, $identifier, $props, $html, $format)
+    {
+        ob_clean();
+
+        if ($format === 'raw') {
+            echo $html;
+        } else {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'code' => 200,
+                'type' => $type,
+                'id' => $identifier,
+                'props' => (object)$props,
+                'html' => $html
+            ]);
+        }
+
+        wp_die();
+    }
+
+    protected function ajax_not_found($format)
+    {
+        ob_clean();
+
+        if ($format === 'raw') {
+            echo 'Not Found';
+        } else {
+            header('Content-Type: "application/json; charset=utf-8"');
+            echo json_encode([
+                'code' => 404,
+                'message' => 'Not Found'
+            ]);
+        }
+
+        wp_die();
     }
 
     /**

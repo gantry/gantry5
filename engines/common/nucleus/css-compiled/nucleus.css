@@ -2075,7 +2075,7 @@ input[type="submit"] {
   display: flex;
 }
 .equal-height .g-content {
-  width: 100%;
+  flex-basis: 100%;
 }
 
 #g-offcanvas {

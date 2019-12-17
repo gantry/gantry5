@@ -13,6 +13,7 @@
 
 namespace Gantry\Component\Content\Document;
 
+use Gantry\Component\Content\Block\ContentBlock;
 use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Url\Url;
@@ -73,10 +74,10 @@ class HtmlDocument
     }
 
     /**
-     * @param HtmlBlock $block
+     * @param ContentBlock $block
      * @return $this
      */
-    public function addBlock(HtmlBlock $block)
+    public function addBlock(ContentBlock $block)
     {
         static::$stack[0]->addBlock($block);
 
@@ -643,7 +644,7 @@ class HtmlDocument
     {
         static::registerJquery();
 
-        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'], 11);
+        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'], 11);
     }
 
     protected static function registerMootools()
@@ -663,14 +664,14 @@ class HtmlDocument
         static::registerJquery();
 
         static::addScript(['src' => static::url('gantry-assets://js/lightcase.js', false, null, false)], 11, 'footer');
-        static::addStyle(['href' => static::url('gantry-assets://css/lightcase.min.css', false, null, false)], 11);
+        static::addStyle(['href' => static::url('gantry-assets://css/lightcase.css', false, null, false)], 11);
     }
 
     protected static function registerLightcaseInit()
     {
         static::registerLightcase();
 
-        static::addInlineScript(['content' => "jQuery(document).ready(function($) { jQuery('[data-rel^=lightcase]').lightcase(); });"], 0, 'footer');
+        static::addInlineScript(['content' => "jQuery(document).ready(function($) { jQuery('[data-rel^=lightcase]').lightcase({maxWidth: '100%', maxHeight: '100%', video: {width: '1280', height: '720'}}); });"], 0, 'footer');
     }
 
     protected static function getObject()

@@ -14,12 +14,12 @@
                                 <div class="g-content" data-g5-content="">
                                     <div class="g-grid overview-header">
                                         <div class="g-block">
-                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug"></i> {{ 'GANTRY5_PLATFORM_AVAILABLE_THEMES'|trans }}</h2>
+                                            <h2 class="theme-title"><i class="fa fa-fw fa-plug" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_AVAILABLE_THEMES'|trans }}</h2>
                                         </div>
                                     {% if settings_url %}
                                         <div class="g-block">
                                             <a class="button button-primary float-right" href="{{ settings_url }}" data-settings-key="{{ settings_key }}">
-                                                <i class="fa fa-cog"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}
+                                                <i class="fa fa-cog" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_PLATFORM_SETTINGS'|trans }}
                                             </a>
                                         </div>
                                     {% endif %}
@@ -29,7 +29,7 @@
                                         {% for id, theme in themes %}
                                             <div class="theme card">
                                                 <div class="theme-id">
-                                                    {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon }}"></i>{% endif %}
+                                                    {% if theme.details.icon %}<i class="fa fa-fw fa-{{ theme.details.icon }}" aria-hidden="true"></i>{% endif %}
                                                     {{ theme.title }} <span class="theme-info">(v{{ theme.details.version }} / {{ theme.name }})</span>
                                                 </div>
                                                 <div class="theme-screenshot">

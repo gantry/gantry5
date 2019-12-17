@@ -3,7 +3,7 @@
 <!--
     Gantry phing build file.
 
-    @copyright (C) 2015 - 2016 RocketTheme, LLC. All rights reserved
+    @copyright (C) 2015 - 2017 RocketTheme, LLC. All rights reserved
     @copyright (C) 2014 Joshua Weiss, coder4life (@github)
 
     The following parameters can be defined inside the PHPSTORM build task as Arguments. They
@@ -111,7 +111,7 @@
     <!-- Initialize all project related files, at this point we are past any "location" setup work so its safe to proceed -->
     <target name="assets-prod">
         <echo message="Removing Sourcemaps and compressing Assets (CSS/JS)..." />
-        <exec command="gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
+        <exec command="${project_dir}/node_modules/.bin/gulp --prod" checkreturn="true" error="${phing.dir}/gulp-prod-error.txt" />
     </target>
 
     <target name="joomla">

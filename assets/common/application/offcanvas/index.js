@@ -208,6 +208,8 @@ var Offcanvas = new prime({
             var panel = this.panel[0];
 
             this.htmlEl.removeClass(this.options.openingClass);
+            this.offcanvas.attribute('aria-expanded', true);
+            $('[data-offcanvas-toggle]').attribute('aria-expanded', true);
             panel.style.transition = panel.style[prefix.css + 'transition'] = '';
         }, this), this.options.duration);
 
@@ -230,6 +232,8 @@ var Offcanvas = new prime({
         this._setTransition();
         this._translateXTo(0);
         this.opened = false;
+        this.offcanvas.attribute('aria-expanded', false);
+        $('[data-offcanvas-toggle]').attribute('aria-expanded', false);
 
         setTimeout(bind(function() {
             var panel = this.panel[0];
@@ -392,7 +396,7 @@ var Offcanvas = new prime({
         timeout(function() {
             blocks = this.offcanvas.search('.g-block');
             mCtext = mobileContainer ? mobileContainer.text().length : 0;
-            var shouldCollapse = (blocks && blocks.length == 1) && mobileContainer && !trim(this.offcanvas.text()).length;
+            var shouldCollapse = (blocks && blocks.length === 1) && mobileContainer && (!trim(this.offcanvas.text()).length && !blocks.find('.g-menu-item'));
 
             togglers[shouldCollapse ? 'addClass' : 'removeClass']('g-offcanvas-hide');
             if (mobileContainer) {

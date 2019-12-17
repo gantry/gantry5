@@ -27,7 +27,7 @@
             <div class="card settings-block">
                 <h4>
                     <span data-title-editable="{{ item.title }}" class="title">{{ item.title }}</span>
-                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title) }}" data-title-edit=""></i>
+                    <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(item.title) }}" data-title-edit=""></i>
                     <span class="badge font-small">{{ item.options.type }}</span>
                     {% if particle.form.fields.enabled %}
                     {% include 'forms/fields/enable/enable.html.twig' with {'name': prefix ~ 'enabled', 'field': particle.form.fields.enabled, 'value': item.options.particle.enabled, 'default': 1} %}

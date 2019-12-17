@@ -11,6 +11,7 @@ form:
       description: 'Specify the default width of menu dropdowns for simple mode in rem, em or px units. This width can be overridden on each individual menu item from the menu editor.'
       default: "180px"
       pattern: '\d+(\.\d+){0,1}(rem|em|px)'
+
     animation:
       type: select.select
       label: Dropdown Animation
@@ -24,3 +25,10 @@ form:
         g-dropdown-bounce-in-down: Bounce In Down
         g-dropdown-bounce-in-left: Bounce In Left
         g-dropdown-bounce-in-right: Bounce In Right
+
+    hide-on-mobile:
+      type: input.checkbox
+      label: Hide on Mobile
+      description: Check this field to completely hide the dropdown menu on mobile devices. This prevents menu flickering but you might end with no menu when JS is not supported by the respective device.
+      placeholder: 'Select...'
+      default: 0

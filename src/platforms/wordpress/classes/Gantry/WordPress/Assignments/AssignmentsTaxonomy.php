@@ -101,11 +101,13 @@ class AssignmentsTaxonomy implements AssignmentsInterface
         $terms = get_terms($tax->name, $args);
 
         if(empty($terms) || is_wp_error($terms)) {
+            /*
             $items[] = [
                 'name'     => '',
                 'label'    => 'No items',
                 'disabled' => true
             ];
+            */
         } else {
             $walker = new AssignmentsWalker;
 

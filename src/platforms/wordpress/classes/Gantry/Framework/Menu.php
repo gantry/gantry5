@@ -304,8 +304,7 @@ class Menu extends AbstractMenu
                 'object_id' => $menuItem->object_id,
                 'type' => $menuItem->type,
                 'link' => is_admin() ? $menuItem->url : $menuItem->link(),
-                // TODO: use
-                'attr_title' => $menuItem->attr_title,
+                'link_title' => $menuItem->attr_title,
                 'rel' => $menuItem->xfn,
                 'level' => $menuItem->level + 1
             ];

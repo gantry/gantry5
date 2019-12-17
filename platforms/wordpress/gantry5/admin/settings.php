@@ -21,7 +21,7 @@ function gantry5_manage_settings() {
 
 function gantry5_modify_plugin_action_links( $links, $file ) {
     // Return normal links if not Gantry 5 or insufficient permissions
-    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) != $file || !current_user_can( 'manage_options' ) ) {
+    if ( plugin_basename( GANTRY5_PATH . '/gantry5.php' ) !== $file || !current_user_can( 'manage_options' ) ) {
         return $links;
     }
 
@@ -56,9 +56,9 @@ function gantry5_plugin_settings() {
                             </th>
                             <td>
                                 <input id="production1" type="radio" <?php checked( $option[ 'production' ], '1' ); ?> value="1" name="gantry5_plugin[production]"/>
-                                <label for="production1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <label for="production1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="production2" class="second" type="radio" <?php checked( $option['production'], '0' ); ?> value="0" name="gantry5_plugin[production]"/>
-                                <label for="production2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                                <label for="production2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -74,13 +74,35 @@ function gantry5_plugin_settings() {
                         </tr>
                         <tr>
                             <th scope="row">
+                                <label for="assign_posts" title="<?php _e( 'If your site has or will have a lot of blog posts, you should disable this feature and always assign posts to outlines by taxonomy or by some other criteria. Note that all existing post assignments will be removed.', 'gantry5'  ); ?>"><?php _e( 'Post Assignments', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="assign_posts1" type="radio" <?php checked( $option[ 'assign_posts' ], '1' ); ?> value="1" name="gantry5_plugin[assign_posts]"/>
+                                <label for="assign_posts1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="assign_posts2" class="second" type="radio" <?php checked( $option['assign_posts'], '0' ); ?> value="0" name="gantry5_plugin[assign_posts]"/>
+                                <label for="assign_posts2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="assign_pages" title="<?php _e( 'If your site has or will have a lot of pages (including custom types), you should disable this feature and always assign pages to outlines by taxonomy or by some other criteria. Note that all existing page assignments will be removed.', 'gantry5'  ); ?>"><?php _e( 'Page Assignments', 'gantry5' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="assign_pages1" type="radio" <?php checked( $option[ 'assign_pages' ], '1' ); ?> value="1" name="gantry5_plugin[assign_pages]"/>
+                                <label for="assign_pages1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <input id="assign_pages2" class="second" type="radio" <?php checked( $option['assign_pages'], '0' ); ?> value="0" name="gantry5_plugin[assign_pages]"/>
+                                <label for="assign_pages2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
                                 <label for="offline1"><?php _e( 'Offline Mode', 'gantry5' ); ?></label>
                             </th>
                             <td>
                                 <input id="offline1" type="radio" <?php checked( $option[ 'offline' ], '1' ); ?> value="1" name="gantry5_plugin[offline]"/>
-                                <label for="offline1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <label for="offline1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="offline2" class="second" type="radio" <?php checked( $option['offline'], '0' ); ?> value="0" name="gantry5_plugin[offline]"/>
-                                <label for="offline2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                                <label for="offline2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -105,9 +127,9 @@ function gantry5_plugin_settings() {
                             </th>
                             <td>
                                 <input id="debug1" type="radio" <?php checked( $option[ 'debug' ], '1' ); ?> value="1" name="gantry5_plugin[debug]"/>
-                                <label for="debug1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <label for="debug1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="debug2" class="second" type="radio" <?php checked( $option['debug'], '0' ); ?> value="0" name="gantry5_plugin[debug]"/>
-                                <label for="debug2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                                <label for="debug2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -116,9 +138,9 @@ function gantry5_plugin_settings() {
                             </th>
                             <td>
                                 <input id="compile_yaml1" type="radio" <?php checked( $option[ 'compile_yaml' ], '1' ); ?> value="1" name="gantry5_plugin[compile_yaml]"/>
-                                <label for="compile_yaml1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <label for="compile_yaml1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="compile_yaml2" class="second" type="radio" <?php checked( $option['compile_yaml'], '0' ); ?> value="0" name="gantry5_plugin[compile_yaml]"/>
-                                <label for="compile_yaml2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                                <label for="compile_yaml2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -127,9 +149,9 @@ function gantry5_plugin_settings() {
                             </th>
                             <td>
                                 <input id="compile_twig1" type="radio" <?php checked( $option[ 'compile_twig' ], '1' ); ?> value="1" name="gantry5_plugin[compile_twig]"/>
-                                <label for="compile_twig1"><?php _e( 'Enable', 'gantry5' ); ?></label>&nbsp;&nbsp;
+                                <label for="compile_twig1"><?php _e( 'Enabled', 'gantry5' ); ?></label>&nbsp;&nbsp;
                                 <input id="compile_twig2" class="second" type="radio" <?php checked( $option['compile_twig'], '0' ); ?> value="0" name="gantry5_plugin[compile_twig]"/>
-                                <label for="compile_twig2"><?php _e( 'Disable', 'gantry5' ); ?></label>
+                                <label for="compile_twig2"><?php _e( 'Disabled', 'gantry5' ); ?></label>
                             </td>
                         </tr>
                     </tbody>

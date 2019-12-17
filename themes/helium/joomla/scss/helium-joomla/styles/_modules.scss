@@ -81,6 +81,7 @@
                 vertical-align: top;
                 width: 21px;
                 height: 21px;
+                line-height: 1.5;
 
                 &:before {
                     text-align: center;
@@ -128,10 +129,6 @@
                         border-color: $base-border-color;
                     }
                 }
-            }
-
-            .btn {
-                @extend %g-button;
             }
         }
     }

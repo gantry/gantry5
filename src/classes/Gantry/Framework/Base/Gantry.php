@@ -167,8 +167,8 @@ abstract class Gantry extends Container
 
         $path = implode('/', array_filter(func_get_args(), function($var) { return isset($var) && $var !== ''; }));
 
-        // urlencode() the whole path, but keep the slashes.
-        $path = preg_replace(['|%2F|', '|%25|'], ['/', '%'], urlencode($path));
+        // rawurlencode() the whole path, but keep the slashes.
+        $path = preg_replace(['|%2F|', '|%25|'], ['/', '%'], rawurlencode($path));
 
         return preg_replace('|/+|', '/', '/' . $this->offsetGet('base_url') . sprintf($route, $path));
     }

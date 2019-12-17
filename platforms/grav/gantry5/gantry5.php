@@ -35,6 +35,7 @@ class Gantry5Plugin extends Plugin
      */
     protected $theme;
     protected $outline;
+    protected $apiPath;
 
     /**
      * @return array
@@ -64,12 +65,12 @@ class Gantry5Plugin extends Plugin
         $remove = isset($event['remove']) ? $event['remove'] : 'standard';
         $paths = $event['paths'];
 
-        if (in_array($remove, ['all', 'standard', 'cache-only']) && !in_array('cache://', $paths)) {
+        if (in_array($remove, ['all', 'standard', 'cache-only'], true) && !in_array('cache://', $paths, true)) {
             $paths[] = 'cache://gantry5/';
             $event['paths'] = $paths;
         }
     }
-    
+
     /**
      * Bootstrap Gantry loader.
      */
@@ -118,7 +119,7 @@ class Gantry5Plugin extends Plugin
             define('GANTRYADMIN_PATH', 'plugins://gantry5/admin');
         }
 
-        $base = rtrim($this->grav['base_url'], '/');
+        $base = rtrim($this->grav['base_url_relative'], '/');
         $this->base = rtrim("{$base}{$admin->base}/{$admin->location}", '/');
 
         $gantry = Gantry::instance();
@@ -168,9 +169,9 @@ class Gantry5Plugin extends Plugin
                 $messages = $this->grav['messages'];
                 $messages->add($message, 'error');
                 return;
-            } else {
-                throw new \LogicException($message);
             }
+
+            throw new \LogicException($message);
         }
 
         $theme->registerStream(
@@ -188,11 +189,11 @@ class Gantry5Plugin extends Plugin
 
         $this->theme = $theme;
         if (!$this->isAdmin()) {
-            /** @var Platform $patform */
-            $patform = $gantry['platform'];
+            /** @var Platform $platform */
+            $platform = $gantry['platform'];
 
-            $nucleus = $patform->getEnginePaths('nucleus')[''];
-            $patform->set(
+            $nucleus = $platform->getEnginePaths('nucleus')[''];
+            $platform->set(
                 'streams.gantry-admin.prefixes', [
                     ''        => ['gantry-theme://admin', 'plugins://gantry5/admin', 'plugins://gantry5/admin/common', 'gantry-engine://admin'],
                     'assets/' => array_merge(['plugins://gantry5/admin', 'plugins://gantry5/admin/common'], $nucleus, ['gantry-assets://'])
@@ -200,7 +201,7 @@ class Gantry5Plugin extends Plugin
             );
 
             // Add admin paths.
-            foreach ($patform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
+            foreach ($platform->get('streams.gantry-admin.prefixes') as $prefix => $paths) {
                 $locator->addPath('gantry-admin', $prefix, $paths);
             }
 
@@ -211,16 +212,20 @@ class Gantry5Plugin extends Plugin
                 'getMaintenancePage' => ['getMaintenancePage', 0],
                 'onTwigExtensions' => ['onThemeTwigInitialized', 0],
                 'onTwigSiteVariables' => ['onThemeTwigVariables', 0],
-                'onPageNotFound' => ['onPageNotFound', 1000]
+                'onPageNotFound' => ['onPageNotFound', 1000],
+                'onOutputGenerated' => ['onOutputGenerated', 0],
             ]);
         }
 
-        if (!$gantry['global']->get('production', 0) || $gantry['global']->get('asset_timestamps', 1)) {
+        if ($gantry['global']->get('asset_timestamps', 1)) {
             $age = (int) ($gantry['global']->get('asset_timestamps_period', 7) * 86400);
             Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
             Document::$timestamp_age = 0;
         }
+
+        // Initialize particle AJAX.
+        $this->initializeApi();
 
         GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Gantry theme {$theme->name} selected");
    }
@@ -234,6 +239,55 @@ class Gantry5Plugin extends Plugin
         $gantry = Gantry::instance();
 
         $this->grav['gantry5'] = $gantry;
+    }
+
+    /**
+     * Serve particle AJAX requests in '/api/particles'.
+     */
+    public function initializeApi()
+    {
+        $apiBase = '/api/particle';
+        $route = $this->grav['uri']->route();
+
+        if ($route !== $apiBase || !substr($route, 0, strlen($apiBase) + 1) === $apiBase . '/') {
+            return;
+        }
+
+        $root = rtrim($this->grav['pages']->base(), '/');
+        $this->apiPath = substr($route, strlen($root . $apiBase) + 1);
+
+        $this->enable([
+            'onPagesInitialized' => ['initializeParticleAjax', -9999]
+        ]);
+    }
+
+    /**
+     * Initialize Widgets page.
+     */
+    public function initializeParticleAjax()
+    {
+        // make sure page is not frozen!
+        unset($this->grav['page']);
+
+        // Replace page service with a widget.
+        $this->grav['page'] = function () {
+            $page = new Page;
+            $props = $_REQUEST;
+            $outline = !empty($props['outline']) ? $props['outline'] : 'default';
+            $id = !empty($props['id']) ? $props['id'] : null;
+            unset($props['outline'], $props['id']);
+
+            $page->init(new \SplFileInfo(__DIR__ . "/pages/particle.md"));
+            $page->header(
+                array_replace((array) $page->header(),
+                ['gantry' => ['outline' => $outline], 'particle' => ['id' => $id], 'ajax' => $props])
+            );
+            $page->slug('particle');
+
+            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("AJAX request for {$id}");
+
+            return $page;
+        };
     }
 
     /**
@@ -254,7 +308,12 @@ class Gantry5Plugin extends Plugin
     public function onAdminMenu()
     {
         $nonce = Utils::getNonce('gantry-admin');
-        $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = ['route' => "gantry/configurations/default/styles?nonce={$nonce}", 'icon' => 'fa-gantry'];
+        $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = [
+            'authorize' => ['admin.gantry', 'admin.themes', 'admin.super'],
+            'location' => 'gantry',
+            'route' => "gantry/configurations/default/styles?nonce={$nonce}",
+            'icon' => 'fa-gantry'
+        ];
     }
 
     /**
@@ -313,7 +372,7 @@ class Gantry5Plugin extends Plugin
     public function onThemePagesInitialized(Event $event)
     {
         $gantry = Gantry::instance();
-        
+
         // Set page to offline.
         if ($gantry['global']->get('offline', 0)) {
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Site is Offline!");
@@ -374,7 +433,7 @@ class Gantry5Plugin extends Plugin
         if (!empty($header->gantry['outline'])) {
             $this->outline = $header->gantry['outline'];
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Current page forces outline {$this->outline} to be used");
-        } elseif ($page->name() == 'notfound.md') {
+        } elseif ($page->name() === 'notfound.md') {
             $this->outline = '_error';
         }
 
@@ -391,7 +450,7 @@ class Gantry5Plugin extends Plugin
 
         $theme->setLayout($this->outline);
         $this->setPreset();
-        
+
         if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setLocator')) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
@@ -414,11 +473,7 @@ class Gantry5Plugin extends Plugin
      */
     public function onThemeTwigInitialized()
     {
-        /** @var Twig $gravTwig */
-        $gravTwig = $this->grav['twig'];
-        $twig = $this->theme->renderer();
-
-        $this->theme->extendTwig($twig, $gravTwig->loader());
+        $this->theme->renderer();
     }
 
     /**
@@ -437,7 +492,7 @@ class Gantry5Plugin extends Plugin
     public function onPageNotFound(Event $event)
     {
         $page = $this->grav['page'];
-        if ($page->name() == 'offline.md') {
+        if ($page->name() === 'offline.md') {
             $event->page = $page;
             $event->stopPropagation();
         } else {
@@ -445,7 +500,7 @@ class Gantry5Plugin extends Plugin
             $this->outline = '_error';
         }
     }
-    
+
     public function setPreset()
     {
         $gantry = Gantry::instance();
@@ -497,5 +552,13 @@ class Gantry5Plugin extends Plugin
     public function onDataTypeExcludeFromDataManagerPluginHook()
     {
         $this->grav['admin']->dataTypesExcludedFromDataManagerPlugin[] = 'gantry5';
+    }
+
+    public function onOutputGenerated()
+    {
+        $gantry = Gantry::instance();
+
+        // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
+        $this->grav->output = $gantry['document']->urlFilter($this->grav->output, false, 0, true) ?: $this->grav->output;
     }
 }

@@ -240,7 +240,7 @@ class Menu extends AbstractMenu
         $this->base = $this->calcBase($params['base']);
 
         // Make sure that the menu item exists.
-        if (!$this->base) {
+        if (!$this->base && !\JFactory::getApplication()->isAdmin()) {
             return;
         }
 
@@ -257,7 +257,7 @@ class Menu extends AbstractMenu
         //}
 
         if (1) {
-            $tree    = $this->base->tree;
+            $tree    = isset($this->base->tree) ? $this->base->tree : [];
             $start   = $params['startLevel'];
             $max     = $params['maxLevels'];
             $end     = $max ? $start + $max - 1 : 0;
@@ -287,6 +287,7 @@ class Menu extends AbstractMenu
                     'path' => $menuItem->route,
                     'link' => $menuItem->link,
                     'link_title' => $menuItem->params->get('menu-anchor_title', ''),
+                    'rel' => $menuItem->params->get('menu-anchor_rel', ''),
                     'enabled' => (bool) $menuItem->params->get('menu_show', 1),
                 ];
 

@@ -21,11 +21,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.4' => '5.4.0',
-            '0' => '5.6.15' // Preferred version
+            '0' => '7.0.32' // Preferred version
         ),
         'Joomla!' => array (
             '3.4' => '3.4.1',
-            '0' => '3.4.5' // Preferred version
+            '0' => '3.8.13' // Preferred version
         )
     );
     /**
@@ -114,7 +114,7 @@ class Pkg_Gantry5InstallerScript
             @apc_clear_cache();
         }
 
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 
@@ -156,7 +156,9 @@ class Pkg_Gantry5InstallerScript
                 continue;
             }
 
-            $extension->protected = $state;
+            // Joomla 3.7 added a new package protection feature: only use individual protection in older versions.
+            $extension->protected = version_compare(JVERSION, '3.7', '<') ? $state : 0;
+
             if (isset($attributes->enabled)) {
                 $extension->enabled = $state ? (int) $attributes->enabled : 0;
             }

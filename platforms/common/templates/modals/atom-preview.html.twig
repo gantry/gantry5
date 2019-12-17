@@ -17,7 +17,7 @@
 <div class="g-panes">
     {# Settings Pane #}
     <div class="g-pane active" role="tabpanel" id="g-settings-atom" aria-labelledby="g-settings-atom-tab" aria-expanded="true">
-        <div class="g-atom-preview alert alert-warning"><i class="fa fa-fw fa-eye"></i> {{ 'GANTRY5_PLATFORM_ATOM_PREVIEW'|trans }}</div>
+        <div class="g-atom-preview alert alert-warning"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_ATOM_PREVIEW'|trans }}</div>
 
         {% include '@gantry-admin/pages/configurations/layouts/particle-card.html.twig' with {
             title: item.title,

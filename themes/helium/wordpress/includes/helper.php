@@ -53,7 +53,7 @@ class G5ThemeHelper
 
         <li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
         <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-            <span class="child-arrow-indicator"><i class="fa fa-arrow-up"></i></span>
+            <span class="child-arrow-indicator"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
             <header class="comment-author">
                 <div class="author-avatar">
                     <?php echo get_avatar($comment, $size = '40'); ?>

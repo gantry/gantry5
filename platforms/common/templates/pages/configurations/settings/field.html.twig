@@ -1,7 +1,7 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-{% set action = gantry.route(route|replace('.', '/') ~ '/validate') %}
+{% set action = gantry.route(route|replace({'.': '/'}) ~ '/validate') %}
 <form method="post" action="{{ action }}">
     {% if blueprints.type == 'collection.list' %}
         {% include 'forms/fields.html.twig' %}
@@ -12,7 +12,7 @@
                     <span data-title-editable="{{ data.data[title]|trim }}" data-collection-key="{{ (scope ~ title)|fieldName }}" class="title">
                         {{ data.data[title] }}
                     </span>
-                    <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.data[title]|trim) }}" data-title-edit=""></i>
+                    <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.data[title]|trim) }}" data-title-edit=""></i>
                 {% else %}
                 {{ 'GANTRY5_PLATFORM_EDIT'|trans }}
                 {% endif %}

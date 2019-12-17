@@ -42,7 +42,7 @@
                         {% endif %}
                         {%- if font.subsets|length > 1 -%}
                         , <span class="font-charsets">{{ 'GANTRY5_PLATFORM_FONTS_X_CHARSETS'|trans(font.subsets|length) }}
-                            <span class="font-charsets-selected">(<i class="fa fa-fw fa-check-square-o"></i>
+                            <span class="font-charsets-selected">(<i class="fa fa-fw fa-check-square-o" aria-hidden="true"></i>
                                 <span class="font-charsets-details">{{ 'GANTRY5_PLATFORM_FONTS_X_OF_Y'|trans(1, font.subsets|length) }}</span>
                                 {{ 'GANTRY5_PLATFORM_FONTS_SELECTED'|trans }})
                             </span>
@@ -66,10 +66,10 @@
     <div class="g-particles-footer settings-block">
         <div class="float-left font-left-container">
             <span class="button font-category" data-font-categories="{{ fonts.categories|join(',') }}">
-                {{ 'GANTRY5_PLATFORM_CATEGORIES'|trans }} (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down"></i>
+                {{ 'GANTRY5_PLATFORM_CATEGORIES'|trans }} (<small>{{ fonts.categories|length }}</small>) <i class="fa fa-caret-down" aria-hidden="true"></i>
             </span>
             <span class="button font-subsets" data-font-subsets="{{ fonts.subsets|join(',') }}">
-                {{ 'GANTRY5_PLATFORM_SUBSETS'|trans }} (<small>{{ 'GANTRY5_PLATFORM_LATIN'|trans }}</small>) <i class="fa fa-caret-down"></i>
+                {{ 'GANTRY5_PLATFORM_SUBSETS'|trans }} (<small>{{ 'GANTRY5_PLATFORM_LATIN'|trans }}</small>) <i class="fa fa-caret-down" aria-hidden="true"></i>
             </span>
         </div>
         <div class="float-right font-right-container">

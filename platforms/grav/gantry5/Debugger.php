@@ -46,7 +46,7 @@ class Debugger
      * @param             $name
      * @param string|null $description
      *
-     * @return $this
+     * @return static
      */
     public static function startTimer($name, $description = null)
     {
@@ -60,7 +60,7 @@ class Debugger
      *
      * @param string $name
      *
-     * @return $this
+     * @return static
      */
     public static function stopTimer($name)
     {
@@ -79,6 +79,74 @@ class Debugger
         return static::instance();
     }
 
+    /**
+     * Displays the debug bar
+     *
+     * @return string
+     */
+    public static function render()
+    {
+        // Return nothing as Grav handles rendering for us.
+        return '';
+    }
+
+    /**
+     * Sends the data through the HTTP headers
+     *
+     * @return static
+     */
+    public static function sendDataInHeaders()
+    {
+        if (static::$debugger && method_exists(static::$debugger, 'sendDataInHeaders')) {
+            static::$debugger->sendDataInHeaders();
+        }
+
+        return static::instance();
+    }
+
+    /**
+     * Returns collected debugger data.
+     *
+     * @return array|null
+     */
+    public static function getData()
+    {
+        return static::$debugger && method_exists(static::$debugger, 'getData') ? static::$debugger->getData() : null;
+    }
+
+    /**
+     * Returns a data collector.
+     *
+     * @param $collector
+     *
+     * @return \DebugBar\DataCollector\DataCollectorInterface
+     * @throws \DebugBar\DebugBarException|null
+     */
+    public static function getCollector($collector)
+    {
+        if (static::$debugger && method_exists(static::$debugger, 'getCollector')) {
+            return static::$debugger->getCollector($collector);
+        }
+
+        return null;
+    }
+
+    /**
+     * Adds a data collector.
+     *
+     * @param $collector
+     *
+     * @return static
+     * @throws \DebugBar\DebugBarException
+     */
+    public static function addCollector($collector)
+    {
+        if (static::$debugger && method_exists(static::$debugger, 'addCollector')) {
+            static::$debugger->addCollector($collector);
+        }
+
+        return static::instance();
+    }
 
     /**
      * Dump variables into the Messages tab of the Debug Bar.
@@ -144,7 +212,10 @@ class Debugger
                 if (!$exists) {
                     static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
                 } else {
-                    static::$debugger->getCollector('Streams')->setData($paths);
+                    $collector = static::$debugger->getCollector('Streams');
+                    if ($collector) {
+                        $collector->setData($paths);
+                    }
                 }
             }
             $exists = true;

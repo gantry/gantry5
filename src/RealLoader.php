@@ -70,7 +70,13 @@ abstract class RealLoader
             define('GANTRY5_ROOT', JPATH_ROOT);
         } elseif (defined('WP_DEBUG') && defined('ABSPATH')) {
             define('GANTRY5_PLATFORM', 'wordpress');
-            define('GANTRY5_ROOT', ABSPATH);
+            if (class_exists('Env') && defined('CONTENT_DIR')) {
+                // Bedrock support.
+                define('GANTRY5_ROOT', preg_replace('|' . preg_quote(CONTENT_DIR). '$|', '', WP_CONTENT_DIR));
+            } else {
+                // Plain WP support.
+                define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
+            }
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));

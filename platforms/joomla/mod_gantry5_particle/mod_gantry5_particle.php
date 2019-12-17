@@ -32,15 +32,15 @@ $cacheid = md5($module->id);
 
 $cacheparams = (object) [
     'cachemode'    => 'id',
-    'class'        => 'ModGantryParticlesHelper',
+    'class'        => 'ModGantry5ParticleHelper',
     'method'       => 'cache',
     'methodparams' => [$module, $params],
     'modeparams'   => $cacheid
 ];
 
-$block = ModGantryParticlesHelper::moduleCache($module, $params, $cacheparams);
+$block = ModGantry5ParticleHelper::moduleCache($module, $params, $cacheparams);
 if (!$block) {
-    $block = ModGantryParticlesHelper::render($module, $params);
+    $block = ModGantry5ParticleHelper::render($module, $params);
 }
 
 /** @var \Gantry\Framework\Document $document */

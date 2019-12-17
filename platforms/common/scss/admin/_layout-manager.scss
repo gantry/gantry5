@@ -107,7 +107,7 @@ $atom: #9055AF;
             }
 
             > .section {
-                position: static !important;
+                position: relative !important;
             }
         }
 
@@ -541,7 +541,7 @@ $atom: #9055AF;
         }
 
         .particle-size {
-            font-weight: 300;
+            font-weight: 400;
             font-size: $core-font-size + 0.2;
             vertical-align: middle;
             color: $core-text;
@@ -735,7 +735,7 @@ $atom: #9055AF;
             @include size(50px 50px);
             line-height: 50px;
             margin: 0 auto;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         span {

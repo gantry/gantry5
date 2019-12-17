@@ -15,7 +15,7 @@
     <target name="build-wordpress-plugin" depends="build-wordpress-installer">
         <echo message="Building Plugin..." />
 
-        <copy todir="${tmp_dir}/packages/gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5" overwrite="true">
             <fileset dir="${path.platforms}/wordpress/gantry5">
                 <exclude name=".sass-cache/"/>
                 <exclude name="assets/" />
@@ -30,7 +30,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/admin" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/admin" overwrite="true">
             <fileset dir="${path.platforms}/common">
                 <exclude name=".sass-cache/"/>
                 <exclude name="application/"/>
@@ -57,7 +57,7 @@
         <phingcall target="build-wordpress-media" />
 
         <!-- Add version information to all xml files -->
-        <copy todir="${tmp_dir}/packages/gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5" overwrite="true">
             <filterchain refid="filter"/>
             <fileset dir="${path.platforms}/wordpress/gantry5">
                 <include name="*.xml"/>
@@ -68,38 +68,37 @@
 
         <!-- Generate Manifest files -->
         <phingcall target="checksum">
-            <property name="source" value="${tmp_dir}/packages/gantry5" />
+            <property name="source" value="${tmp_dir}/wordpress/packages/plugin/gantry5" />
         </phingcall>
 
         <!-- Zip the Plugin -->
         <phingcall target="archive">
             <property name="destination.file" value="${package_dir}/wordpress-${cfg.prefix}${cfg.name}${str.fileversion}" />
-            <property name="base.directory" value="${tmp_dir}/packages/gantry5" />
-            <property name="prefix" value="gantry5/" />
+            <property name="base.directory" value="${tmp_dir}/wordpress/packages/plugin" />
         </phingcall>
     </target>
 
     <target name="build-wordpress-library">
         <echo message="Building Library.." />
 
-        <copy todir="${tmp_dir}/packages/gantry5/src" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src" overwrite="true">
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src/classes" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src/classes" overwrite="true">
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src" overwrite="true">
             <fileset dir="${path.src}/platforms/wordpress">
                 <exclude name="vendor/**"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/src/vendor" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src/vendor" overwrite="true">
             <fileset dir="${path.src}/platforms/wordpress/vendor">
                 <exclude name="bin/"/>
                 <exclude name="**/test/"/>
@@ -134,7 +133,7 @@
     <target name="build-wordpress-media">
         <echo message="Building Media (assets/nucleus).." />
 
-        <copy todir="${tmp_dir}/packages/gantry5/assets" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/assets" overwrite="true">
             <fileset dir="${path.assets}/common">
                 <exclude name="application/**"/>
                 <exclude name="**/*.js.map"/>
@@ -154,7 +153,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/gantry5/engines" overwrite="true">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/engines" overwrite="true">
             <fileset dir="${path.engines}/common">
                 <exclude name="**/*.sh"/>
                 <exclude name="**/.sass-cache/"/>
@@ -192,11 +191,11 @@
         <if>
             <available file='${path.themes}/${directory}/wordpress/gantry/theme.yaml' type='file' />
             <then>
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <copy todir="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/common"/>
                 </copy>
 
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <copy todir="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/wordpress">
                         <exclude name="common"/>
                         <exclude name="custom"/>
@@ -204,7 +203,7 @@
                 </copy>
 
                 <!-- Add version information to all xml files -->
-                <copy todir="${tmp_dir}/themes/tpl_g5_${directory}" overwrite="true">
+                <copy todir="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" overwrite="true">
                     <filterchain refid="filter"/>
                     <fileset dir="${path.themes}/${directory}/wordpress">
                         <include name="**/*.xml"/>
@@ -215,14 +214,13 @@
 
                 <!-- Generate Manifest files -->
                 <phingcall target="checksum">
-                    <property name="source" value="${tmp_dir}/themes/tpl_g5_${directory}" />
+                    <property name="source" value="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" />
                 </phingcall>
 
                 <!-- Zip the theme -->
                 <phingcall target="archive">
                     <property name="destination.file" value="${package_dir}/wordpress-tpl_g5_${directory}${str.fileversion}" />
-                    <property name="base.directory" value="${tmp_dir}/themes/tpl_g5_${directory}" />
-                    <property name="prefix" value="g5_${directory}/" />
+                    <property name="base.directory" value="${tmp_dir}/wordpress/themes/${directory}" />
                 </phingcall>
             </then>
         </if>

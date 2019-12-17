@@ -16,6 +16,6 @@
             {% if field.required in ['on', 'true', 1] %}required="required"{% endif %}
             />
 
-    <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+    <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle" aria-hidden="true"></i></span>
     </div></div></div>
 {% endblock %}

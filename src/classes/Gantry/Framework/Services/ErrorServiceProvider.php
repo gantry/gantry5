@@ -13,7 +13,7 @@
 
 namespace Gantry\Framework\Services;
 
-use Gantry\Component\Whoops\System;
+use Gantry\Component\Whoops\SystemFacade;
 use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -41,7 +41,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $platform = $container['platform'];
 
         // Setup Whoops-based error handler
-        $system = new System($platform->errorHandlerPaths());
+        $system = new SystemFacade($platform->errorHandlerPaths());
         $errors = new Run($system);
 
         $error_page = new PrettyPageHandler;
@@ -65,5 +65,9 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $errors->register();
 
         $container['errors'] = $errors;
+
+        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setErrorHandler')) {
+            \Gantry\Debugger::setErrorHandler();
+        }
     }
 }

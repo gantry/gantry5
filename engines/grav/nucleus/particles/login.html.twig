@@ -47,9 +47,9 @@
                     </div>
                 {% endif %}
 
-                <a class="button secondary" href="{{ base_url_relative }}{{ config.plugins.login.route_forgot }}"><i class="fa fa-exclamation-circle"></i> {{ 'PLUGIN_LOGIN.BTN_FORGOT'|t }}</a>
+                <a class="button secondary" href="{{ base_url_relative }}{{ config.plugins.login.route_forgot }}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ 'PLUGIN_LOGIN.BTN_FORGOT'|t }}</a>
 
-                <button type="submit" class="button primary" name="task" value="login.login"><i class="fa fa-sign-in"></i> {{ 'PLUGIN_LOGIN.BTN_LOGIN'|t }}</button>
+                <button type="submit" class="button primary" name="task" value="login.login"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'PLUGIN_LOGIN.BTN_LOGIN'|t }}</button>
             </div>
 
             {{ nonce_field('login-form', 'login-form-nonce')|raw }}

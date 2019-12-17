@@ -97,17 +97,6 @@ abstract class Widgets
         return $html;
     }
 
-    protected static function displayWidgetId($next = false)
-    {
-        static $id = -1;
-
-        if ($next) {
-            $id--;
-        }
-
-        return $id;
-    }
-
     public static function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
@@ -150,6 +139,53 @@ abstract class Widgets
         }
 
         return $html;
+    }
+
+
+    public static function getAjax($sidebar_id, $id, array $props = [])
+    {
+        global $wp_registered_sidebars, $wp_registered_widgets;
+
+        // Do nothing if sidebar is not active or widget doesn't exist.
+        if (!$sidebar_id || !$id || !is_active_sidebar($sidebar_id) || empty($wp_registered_widgets[$id])) {
+            return null;
+        }
+
+        // Make sure we have Gantry 5 compatible widget.
+        if (empty($wp_registered_widgets[$id]['gantry5'])) {
+            return null;
+        }
+
+        $sidebar = $wp_registered_sidebars[$sidebar_id];
+        $callback = $wp_registered_widgets[$id]['callback'];
+
+        // Pre-render Gantry widget.
+        if (is_callable($callback)) {
+            $name = $wp_registered_widgets[$id]['name'];
+
+            $args = array_merge(
+                [array_merge($sidebar, [
+                    'widget_id' => $id,
+                    'widget_name' => $name,
+                    'ajax' => $props,
+                    'before_widget' => '',
+                    'after_widget' => '',
+                    'before_title' => '',
+                    'after_title' => '',
+                ])],
+                (array)$wp_registered_widgets[$id]['params']
+            );
+
+            // Apply sidebar filter for rokbox and other plugins.
+            $args = apply_filters('dynamic_sidebar_params', $args);
+
+            // Grab the content of the plugin.
+            ob_start();
+            call_user_func_array($callback, $args);
+            $contents = ob_get_clean();
+        }
+
+        return $contents;
     }
 
     public static function listWidgets()
@@ -282,6 +318,17 @@ abstract class Widgets
         // Save widgets and sidebars.
         update_option("widget_{$type}", $widgets);
         update_option('sidebars_widgets', $sidebars);
+    }
+
+    protected static function displayWidgetId($next = false)
+    {
+        static $id = -1;
+
+        if ($next) {
+            $id--;
+        }
+
+        return $id;
     }
 
     protected static function getImportType($type)

@@ -54,7 +54,7 @@ class plgSystemGantry5 extends JPlugin
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
-             $this->onAfterRouteSite();
+            $this->onAfterRouteSite();
 
         } elseif ($this->app->isAdmin()) {
             $this->onAfterRouteAdmin();
@@ -93,10 +93,105 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Serve particle AJAX requests in 'index.php?option=com_ajax&plugin=particle&format=json'.
+     *
+     * @return array|string|null
+     */
+    public function onAjaxParticle()
+    {
+        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
+            return null;
+        }
+
+        $input = $this->app->input;
+        $format = $input->getCmd('format', 'html');
+
+        if (!in_array($format, ['json', 'raw', 'debug'])) {
+            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        }
+
+        $props = $_GET;
+        unset($props['option'], $props['plugin'], $props['format'], $props['id'], $props['Itemid']);
+
+        $identifier = $input->getCmd('id');
+
+        if (strpos($identifier, 'module-') === 0) {
+            preg_match('`-([\d]+)$`', $input->getCmd('id'), $matches);
+
+            if (!isset($matches[1])) {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $id = $matches[1];
+
+            require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
+
+            return ModGantry5ParticleHelper::ajax($id, $props, $format);
+        }
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+        $layout = $theme->loadLayout();
+        $html = '';
+
+        if ($identifier === 'main-particle') {
+            $type = $identifier;
+            $menu = $this->app->getMenu();
+            $menuItem = $menu->getActive();
+            $params = $menuItem ? $menuItem->getParams() : new JRegistry;
+
+            /** @var object $params */
+            $data = json_decode($params->get('particle'), true);
+            if ($data && $theme->hasContent()) {
+                $context = [
+                    'gantry' => $gantry,
+                    'noConfig' => true,
+                    'inContent' => true,
+                    'ajax' => $props,
+                    'segment' => [
+                        'id' => $identifier,
+                        'type' => $data['type'],
+                        'classes' => $params->get('pageclass_sfx'),
+                        'subtype' => $data['particle'],
+                        'attributes' => $data['options']['particle'],
+                    ]
+                ];
+
+                $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
+            }
+        } else {
+            $particle = $layout->find($identifier);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $theme->getContent($particle, $context);
+            $type = $particle->type . '.' . $particle->subtype;
+            $html = (string) $block;
+        }
+
+        if ($format === 'raw') {
+            return $html;
+        }
+
+        return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+    }
+
+    /**
      * Load Gantry framework before dispatching to the component.
      */
     private function onAfterRouteSite()
     {
+        $input = $this->app->input;
+
         $templateName = $this->app->getTemplate();
 
         if (!$this->isGantryTemplate($templateName)) {
@@ -150,7 +245,7 @@ class plgSystemGantry5 extends JPlugin
 
         $theme->setLayout($assignments->select());
 
-        if (!$this->params->get('production', 0) || $this->params->get('asset_timestamps', 1)) {
+        if ($this->params->get('asset_timestamps', 1)) {
             $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
             Gantry\Framework\Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
@@ -182,10 +277,9 @@ class plgSystemGantry5 extends JPlugin
                 }
 
                 // Special handling for tasks coming from com_template.
-                if ($task == 'style.edit') {
-                    $item = each($selected);
-                    $id = $item['key'];
-                    $theme = $item['value'];
+                if ($task === 'style.edit') {
+                    $theme = reset($selected);
+                    $id = key($selected);
                     $token = JSession::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
@@ -303,6 +397,9 @@ class plgSystemGantry5 extends JPlugin
         // Clean the cache.
         \Gantry\Joomla\CacheHelper::cleanPlugin();
 
+        // Update plugin settings.
+        $this->params = $params;
+
         // Trigger the onExtensionAfterSave event.
         $dispatcher->trigger('onExtensionAfterSave', array($name, $table, false));
 
@@ -337,8 +434,32 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
+    public function onExtensionBeforeSave($context, $table, $isNew)
+    {
+        if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
+            $name = 'plg_' . $this->_type . '_' . $this->_name;
+
+            $params = new Joomla\Registry\Registry($table->params);
+
+            $data = (array) $params->get($name);
+
+            Gantry5\Loader::setup();
+
+            $this->onGantry5SaveConfig($data);
+
+            // Do not save anything into the component itself (Joomla cannot handle it).
+            $table->params = '';
+
+            return;
+        }
+    }
+
     public function onExtensionAfterSave($context, $table, $isNew)
     {
+        if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
+
+        }
+
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
             return;
         }
@@ -388,16 +509,6 @@ class plgSystemGantry5 extends JPlugin
 
         // Check that we are manipulating a valid form.
         switch ($context) {
-            // TODO: Joomla seems to be missing support for component data manipulation!
-/*
-            case 'com_config.component':
-                // Add plugin parameters under plg_type_name.
-                if ($data instanceof JRegistry) {
-                    $data->set($name, $this->params->toObject());
-                }
-                break;
-*/
-
             case 'com_menus.item':
                 break;
         }
@@ -417,20 +528,21 @@ class plgSystemGantry5 extends JPlugin
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
         switch ($form->getName()) {
-            // TODO: This part works, but Joomla seems to be missing support for component data manipulation!
-/*
             case 'com_config.component':
                 // If we are editing configuration from Gantry component, add missing fields from system plugin.
                 $rules = $form->getField('rules');
                 if ($rules && $rules->getAttribute('component') == 'com_gantry5') {
-                    $this->loadLanguage('plg_system_gantry5.sys');
+                    $this->loadLanguage("{$name}.sys");
                     // Add plugin fields to the form under plg_type_name.
                     $file = file_get_contents(__DIR__."/{$this->_name}.xml");
                     $file = preg_replace('/ name="params"/', " name=\"{$name}\"", $file);
                     $form->load($file, false, '/extension/config');
+
+                    // Joomla seems to be missing support for component data manipulation so do it manually here.
+                    $form->bind([$name => $this->params->toArray()]);
                 }
                 break;
-*/
+
             case 'com_menus.items.filter':
                 break;
 
@@ -463,7 +575,7 @@ class plgSystemGantry5 extends JPlugin
                 $content = $content ?: 'No Particle Selected';
                 $title = $type ? ' title="Particle Type: ' . $type . '"' : '';
 
-                $html .= ' <span class="label" ' . $title . ' style="' . $colors . ';color:#fff;">' . $content . '</span>';
+                $html .= ' <span class="label" ' . $title . ' style="' . $colors . 'color:#fff;">' . $content . '</span>';
 
                 if (isset($this->modules[$id])) { unset($this->modules[$id]); }
                 else { unset($this->styles[$id]); }

@@ -99,7 +99,7 @@ body.gantry5 #g5-container li {
 }
 body.gantry5 #g5-container textarea, body.gantry5 #g5-container input {
   box-shadow: none;
-  color: #666;
+  color: #111;
 }
 body.gantry5 #g5-container input, body.gantry5 #g5-container button, body.gantry5 #g5-container select, body.gantry5 #g5-container textarea {
   font-family: inherit;

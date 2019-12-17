@@ -61,11 +61,17 @@ form:
     hoverExpand:
       type: input.checkbox
       label: Expand on Hover
-      description: Allows to enable / disable the ability to expand menu items by hover or click only
+      description: 'Allows to enable / disable the ability to expand menu items by hover or click only'
       default: 1
 
     mobileTarget:
       type: input.checkbox
       label: Mobile Target
       description: Check this field if you want this menu to become the target for Mobile Menu and to appear in Offcanvas
+      default: 0
+
+    forceTarget:
+      type: input.checkbox
+      label: Force Target Attribute
+      description: "Adds 'target=&quot;_self&quot;' attribute to all menu links instead of omitting the default value. Fixes an issue with pinned tabs in Firefox where external links always open in a new tab."
       default: 0

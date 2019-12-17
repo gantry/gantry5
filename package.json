@@ -1,24 +1,26 @@
 {
   "name": "gantry5",
-  "version": "1.0.0",
+  "version": "5.4",
   "description": "Gantry 5 / JS and CSS bundler",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "npm": "^5.4.2"
+  },
   "devDependencies": {
-    "browserify": "^13.3.0",
+    "browserify": "^14.4.0",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.2",
     "gulp-jsonminify": "1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
-    "gulp-sourcemaps": "^2.4.0",
-    "gulp-uglify": "^2.0.1",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "merge-stream": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0",
-    "yargs": "^6.6.0"
+    "watchify": "^3.9.0",
+    "yargs": "^9.0.1"
   },
   "scripts": {
     "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",

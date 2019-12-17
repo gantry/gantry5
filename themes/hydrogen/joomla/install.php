@@ -22,7 +22,7 @@ class G5_HydrogenInstallerScript
      */
     public function preflight($type, $parent)
     {
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 

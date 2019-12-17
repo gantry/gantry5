@@ -36,7 +36,7 @@ class Page extends Base\Page
         $this->view     = $input->getCmd('view', '');
         $this->layout   = $input->getCmd('layout', '');
         $this->task     = $input->getCmd('task', '');
-        $this->itemid   = $input->getCmd('Itemid', '');
+        $this->itemid   = $input->getInt('Itemid', 0);
         $this->printing = $input->getCmd('print', '');
 
         $this->class = '';

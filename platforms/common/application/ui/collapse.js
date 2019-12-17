@@ -2,28 +2,9 @@
 var ready  = require('elements/domready'),
     trim   = require('mout/string/trim'),
     forOwn = require('mout/object/forOwn'),
-    $      = require('elements');
+    $      = require('elements'),
+    Cookie = require('../utils/cookie');
 
-var Cookie = {
-    write: function(name, value) {
-        var date = new Date();
-        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
-
-        var host   = window.location.host.toString(),
-            domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
-
-        if (host.match(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/)) { domain = host; }
-        var cookie = [name, '=', JSON.stringify(value), '; expires=', date.toGMTString(), '; domain=.', domain, '; path=/;'];
-
-        document.cookie = cookie.join('');
-    },
-
-    read: function(name) {
-        name = name.replace(/([-.*+?^${}()|[\]\/\\])/g, '\\$1');
-        var value = document.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
-        return (value) ? JSON.parse(decodeURIComponent(value[1])) : null;
-    }
-};
 
 var loadFromStorage = function() {
     var storage    = Cookie.read('g5-collapsed') || {},
@@ -84,7 +65,7 @@ ready(function() {
         }
 
         var slide = function(override) {
-            collapsed = typeof override != 'number' ? override : collapsed;
+            collapsed = typeof override !== 'number' ? override : collapsed;
             if (!collapsed) {
                 card.addClass('g-collapsed');
                 element.addClass('g-collapsed-main');
@@ -123,7 +104,7 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode          = element.data('g-collapse-all') == 'true',
+        var mode          = element.data('g-collapse-all') === 'true',
             parent        = element.parent('.g-filter-actions'),
             container     = parent.nextSibling(),
             collapsers    = container.search('[data-g-collapse]'),
@@ -139,6 +120,10 @@ ready(function() {
             data = JSON.parse(collapser.data('g-collapse'));
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
+
+            handle
+                .data('title', mode ? data.expand : data.collapse)
+                .data('tip', mode ? data.expand : data.collapse);
 
             storage = ((data.store !== false) ? CookieStorage : storage) || {};
 

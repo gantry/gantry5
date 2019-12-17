@@ -2,8 +2,9 @@
 Contributors: gantry
 Author URI: http://gantry.org
 Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, html5, css3, bourbon, layout, builder, widgets, flexible, extensible, configurable, flex, grid, columns, powerful, buddypress, woocommerce, bbpress
-Requires at least: 4.2+
-Tested up to: 4.7.2
+Requires at least: 4.2
+Tested up to: 5.3
+Requires PHP: 5.6
 Stable tag: @version@
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
@@ -94,9 +95,9 @@ Please note that Gantry Framework plugin doesn't come up with the default theme.
 We try to ensure that any Gantry theme and the Gantry Plugin specifically will work with any modern and secure server environment. The recommended minimum requirements are :
 
 * WordPress 4.2 or higher
-* PHP 5.4+ (5.5+ recommended)
+* PHP 5.4+ (7.0+ recommended)
 * MySQL 3.23 (5+ recommended)
-* Apache 1.3 (2.2+ recommended)
+* Apache 1.3 (2.4+ recommended)
 
 = Is there any documentation available ? =
 

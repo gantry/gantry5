@@ -39,7 +39,7 @@ function gantry5_admin_start_buffer() {
 }
 
 function gantry5_admin_scripts() {
-    if( isset( $_GET['page'] ) && $_GET['page'] == 'layout-manager' ) {
+    if( isset( $_GET['page'] ) && $_GET['page'] === 'layout-manager' ) {
         gantry5_layout_manager();
     }
 }
@@ -116,7 +116,7 @@ function gantry5_upgrader_source_selection($source, $remote_source, $upgrader, $
 function gantry5_upgrader_post_install($success, $options, $result) {
     if ($success) {
         $theme = isset($options['gantry5_abort']) && !$options['gantry5_abort'];
-        $plugin = (isset($options['plugin']) && $options['plugin'] == 'gantry5/gantry5.php')
+        $plugin = (isset($options['plugin']) && $options['plugin'] === 'gantry5/gantry5.php')
             || (isset($options['type']) && $options['type'] === 'plugin' && basename($result['destination']) === 'gantry5');
 
         // Clear gantry cache after plugin / Gantry theme installs.

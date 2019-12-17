@@ -5,15 +5,17 @@
 
 {% block field %}
     {% if field.is_current %}
+        {# Editing field itself, no need to append field name #}
+        {% set name = '' %}
         <div class="g-filter-actions">
             <div class="g-panel-filters" data-g-global-filter="">
                 <div class="search settings-block">
                     {% set filter = {'element': '.settings-param', 'title': '.settings-param-title, h4 .g-title', 'fallback': true} %}
                     <input type="text" data-g-collapse-filter="{{ filter|json_encode|e('html_attr') }}" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
-                    <i class="fa fa-fw fa-search"></i>
+                    <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                 </div>
-                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
             </div>
         </div>
         <div class="cards-wrapper g-grid">
@@ -25,9 +27,9 @@
                     <h4
                         data-g-collapse="{{ labels|merge({collapsed: false, id: id, store: false,  target: '~ .inner-params' })|json_encode|e('html_attr') }}"
                     >
-                        <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up"></i></span>
+                        <span class="g-collapse" data-title="{{ labels.collapse }}" data-tip="{{ labels.collapse }}" data-tip-place="top-right"><i class="fa fa-fw fa-caret-up" aria-hidden="true"></i></span>
                         <span data-title-editable="{{ title }}" data-collection-key="{{ (scope ~ '.' ~ key ~ '.' ~ field.value)|fieldName }}" class="g-title">{{ title }}</span>
-                        <i class="fa fa-pencil font-small"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
+                        <i class="fa fa-pencil font-small" aria-hidden="true"  tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans|replace({'%s': title}) }}" data-title-edit=""></i>
                     </h4>
                     <div class="inner-params">
                         {{ block('collection_fields') }}
@@ -36,26 +38,28 @@
             {% endfor %}
         </div>
     {% else %}
+
         {% set can_reorder = field.reorder ?? true %}
         {% set can_remove = field.deletion ?? true %}
         {% set can_addnew = field.add_new ?? true %}
-        <div class="settings-param {{ field.type|replace('.', '-') }}">
+        <div class="settings-param {{ field.type|replace({'.': '-'}) }}">
             {% if overrideable and (field.overridable is not defined or field.overridable == true or has_value) and field.type != 'container.set' %}
                 {% include 'forms/override.html.twig' with {'scope': scope, 'name': name, 'field': field} %}
             {% endif %}
             {% block contents %}
-                {% set field_route = (route ~ '.' ~ prefix ~ '.' ~ field.name)|replace('.', '/') %}
+                {% set field_route = (route ~ '.' ~ (prefix ? prefix ~ '.') ~ name)|replace({'.': '/'}) %}
                 <span class="settings-param-title float-left">
                     {% block label %}
                         {% if field.description %}
-                            <span aria-label="{{ field.description }}" data-tip="{{ field.description|raw }}" data-tip-place="top-right">{{ field.label }}</span>
+                            {% set description = field.description|trans_key('GANTRY5_FORM_FIELD', scope, name, 'DESC') %}
+                            <span aria-label="{{ description }}" data-tip="{{ description|raw }}" data-tip-place="top-right">{{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}</span>
                         {% else %}
-                            {{ field.label }}
+                            {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}
                         {% endif %}
                         {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                     {% endblock %}
                 </span>
-                <div class="settings-param-field" data-field-name="{{ field.name }}">
+                <div class="settings-param-field" data-field-name="{{ name }}">
                     {% block input -%}
                         <div class="g5-collection-wrapper">
                         <ul>
@@ -64,32 +68,35 @@
                                     {% if (field.ajax == true) %}
                                         <li data-collection-item="{{ field.value }}">
                                             {% set itemValue = field.value == field.key ? key : val[field.value] %}
-                                            {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
+                                            {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
-                                            {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
-                                            {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
-                                            <i class="fa fa-fw fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
+                                            {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
+                                            {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                            <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
                                         {% block collection_fields %}
                                             <div data-g5-collections="">
                                                 {% for childName, child in field.fields %}
+                                                    {% set container = child.type starts with 'container.' %}
                                                     {% if childName starts with '.' %}
                                                         {% set childKey = childName|trim('.') %}
-                                                        {% set childValue = nested(val, childName[1:]) %}
+                                                        {% set childValue = container ? val : nested(val, childKey) %}
                                                         {% set childName = name ~ '.' ~ key ~ childName %}
                                                     {% else %}
                                                         {% set childKey = childName %}
-                                                        {% set childValue = nested(data, scope ~ childName) %}
+                                                        {% set childValue = container ? val : nested(data, scope ~ childKey) %}
                                                         {% set childName = childName|replace({'*': key}) %}
+                                                        {% set childParent = (childName == childKey) ? '.' ~ key ~ '.' %}
                                                     {% endif %}
+
                                                     {% if childName not in skip and not child.skip and field.value != childKey %}
                                                          {% if child.type == 'key' %}
                                                              {% include 'forms/fields/key/key.html.twig'
-                                                             with {name: childName, field: child, value: key} %}
+                                                             with {name: childName, field: child, value: key, current_value: null, default_value: null, parent: childParent} %}
                                                          {% elseif child.type %}
-                                                             {% include ["forms/fields/" ~ child.type|replace('.', '/') ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
-                                                             with {name: childName, field: child, current_value: childValue, value: null, default_value: null, prefix: (prefix ? prefix ~ '.' : '') ~ childName} %}
+                                                             {% include ["forms/fields/" ~ child.type|replace({'.': '/'}) ~ ".html.twig", 'forms/fields/unknown/unknown.html.twig']
+                                                             with {name: childName, field: child, value: null, current_value: childValue, default_value: null, parent_field: childParent} %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
@@ -103,15 +110,15 @@
                     <div>
                         <ul style="display: none">
                             <li data-collection-nosort="" data-collection-template="{{ field.value }}" style="display: none;">
-                                {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder"></i>{% endif %}
+                                {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
-                                {% if can_remove %}<i class="fa fa-fw fa-trash font-small" data-collection-remove=""></i>{% endif %}
-                                {% if can_addnew %}<i class="fa fa-files-o font-small" data-collection-duplicate=""></i>{% endif %}
-                                <i class="fa fa-fw fa-pencil font-small" data-title-edit=""></i>
+                                {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
+                                {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                <i class="fa fa-fw fa-pencil font-small" aria-hidden="true" data-title-edit=""></i>
                             </li>
                         </ul>
-                        {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small"></i></span>{% endif %}
-                        <a href="{{ gantry.route(field_route) }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small"></i></a>
+                        {% if can_addnew %}<span class="collection-addnew button button-simple" data-collection-addnew="" title="Add new item"><i class="fa fa-plus font-small" aria-hidden="true"></i></span>{% endif %}
+                        <a href="{{ gantry.route(field_route) }}" class="collection-editall button button-simple" data-collection-editall="" title="Edit all items" {% if value|length <= 1 %}style="display: none;"{% endif %}><i class="fa fa-th-large font-small" aria-hidden="true"></i></a>
                     </div>
                     <input data-collection-data="" name="{{ (scope ~ name ~ '._json')|fieldName }}" type="hidden" value="{{ value|default({})|json_encode(constant('JSON_UNESCAPED_SLASHES'))|e('html_attr') }}"/>
                     {% endblock %}

@@ -119,9 +119,14 @@ History.Adapter.bind(window, 'statechange', function() {
             var fader;
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
+                var navbar = $('#navbar');
                 fader.style({ opacity: 0 });
-                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
-                $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
+
+                if (isTopNavOrMenu) {
+                    $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true');
+                }
+
+                navbar[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
         } else { destination.html(response.body); }

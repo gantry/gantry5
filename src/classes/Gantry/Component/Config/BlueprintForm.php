@@ -245,8 +245,9 @@ class BlueprintForm extends BaseBlueprintForm
         $parts = [];
         $current = $this['form/fields'];
         $result = [null, null, null];
+        $prefix = '';
 
-        while (($field = current($path)) !== null) {
+        while (($field = current($path)) !== false) {
             if (!$fields && isset($current['fields'])) {
                 if (!empty($current['array'])) {
                     $result = [$current, $parts, $path ? implode($separator, $path) : null];
@@ -255,58 +256,81 @@ class BlueprintForm extends BaseBlueprintForm
                 }
 
                 $current = $current['fields'];
+                $prefix = '';
                 $fields = true;
 
-            } elseif (isset($current[$field])) {
+            } elseif (isset($current[$prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current[$field];
+                $current = $current[$prefix . $field];
+                $prefix = '';
                 $fields = false;
 
-            } elseif (isset($current['.' . $field])) {
+            } elseif (isset($current['.' . $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current['.' . $field];
+                $current = $current['.' . $prefix . $field];
+                $prefix = '';
+                $fields = false;
+
+            } elseif ($field && $this->fieldExists($prefix . $field, $current)) {
+                $parts[] = array_shift($path);
+                $prefix = "{$prefix}{$field}.";
                 $fields = false;
 
             } else {
-                // properly loop through nested containers to find deep matching fields
-                $inner_fields = null;
-                foreach($current as $field) {
-                    $type = isset($field['type']) ? $field['type'] : '-undefined-';
-                    $container = (0 === strpos($type, 'container.')) || $type === '-undefined-';
-                    $fields = isset($field['fields']);
-                    $container_fields = [];
+                // Check if there's a container with the field.
+                $current = $this->resolveContainer($current, $prefix, $field);
 
-                    // if the field has no type, it most certainly is a container
-                    if ($type === '-undefined-') {
-                        // loop through all the container inner fields and reduce to a flat blueprint
-                        $current_fields = isset($current['fields']) ? $current['fields'] : $current;
-                        foreach ($current_fields as $container_field) {
-                            if (isset($container_field['fields'])) {
-                                $container_fields[] = $container_field['fields'];
-                            }
-                        }
-
-                        // any container structural data can be discarded, flatten
-                        $field = array_reduce($container_fields, 'array_merge', []);
-                    }
-
-                    if ($container && is_array($field)) {
-                        $inner_fields = $field;
-                        break;
-                    }
+                // No containers with the field found.
+                if (!$current) {
+                    break;
                 }
 
-                // if a deep matching field is found, set it to current and continue cycling through
-                if ($inner_fields) {
-                    $current = $inner_fields;
-                    continue;
-                }
-
-                // nothing found, exit the loop
-                break;
+                $prefix = '';
+                $fields = false;
             }
         }
 
+        if (!$fields && !empty($current['array'])) {
+            $result = [$current, $parts, $path ? implode($separator, $path) : null];
+        }
+
         return $result;
+    }
+
+    protected function resolveContainer($current, $prefix, $fieldName)
+    {
+        foreach ($current as $field) {
+            $type = isset($field['type']) ? $field['type'] : 'container._implicit';
+            $container = (0 === strpos($type, 'container.'));
+
+            if (!$container || !isset($field['fields'])) {
+                continue;
+            }
+
+            $current_fields = $field['fields'];
+            if (isset($current_fields[$prefix . $fieldName]) || isset($current_fields['.' . $prefix . $fieldName])
+                || $this->fieldExists($prefix . $fieldName, $current_fields)) {
+                return $current_fields;
+            }
+
+            $current_fields = $this->resolveContainer($current_fields, $prefix, $fieldName);
+            if ($current_fields !== null) {
+                return $current_fields;
+            }
+        }
+
+        return null;
+    }
+
+    protected function fieldExists($prefix, $list)
+    {
+        foreach ($list as $field => $data) {
+            $pos = strpos($field, $prefix);
+            if ($pos === 0 || ($pos === 1 && $field[0] === '.')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

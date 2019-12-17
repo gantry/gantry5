@@ -11,6 +11,7 @@
 namespace Gantry\WordPress\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Gantry\Framework\Gantry;
 
 class AssignmentsPost implements AssignmentsInterface
 {
@@ -124,10 +125,18 @@ class AssignmentsPost implements AssignmentsInterface
      * @param       $post_type
      * @param array $args
      *
-     * @return mixed|void
+     * @return mixed
      */
     protected function getItems($post_type, $args = [])
     {
+        $global = Gantry::instance()['global'];
+        if (!$global['assign_posts'] && $post_type->name === 'post') {
+            return [];
+        }
+        if (!$global['assign_pages'] && $post_type->name !== 'post') {
+            return [];
+        }
+
         $items = [];
 
         $defaults = [
@@ -174,13 +183,13 @@ class AssignmentsPost implements AssignmentsInterface
 
         // Check if there are any posts
         if(!$wp_query->post_count) {
-
+            /*
             $items[] = [
                 'name'     => '',
                 'label'    => 'No items',
                 'disabled' => true
             ];
-
+            */
         } else {
 
             $walker = new AssignmentsWalker;
@@ -232,38 +241,40 @@ class AssignmentsPost implements AssignmentsInterface
             $taxonomy = get_taxonomy($tax);
             $terms    = get_terms($tax, $args);
 
-            $items[] = [
-                'name'     => $taxonomy->name,
-                'label'    => $taxonomy->label,
-                'section'  => true,
-                'disabled' => true
-            ];
-
-            if(empty($terms)) {
+            if ($terms) {
                 $items[] = [
-                    'name'     => '',
-                    'label'    => 'No items',
+                    'name'     => $taxonomy->name,
+                    'label'    => $taxonomy->label,
+                    'section'  => true,
                     'disabled' => true
                 ];
-            } else {
-                $walker = new AssignmentsWalker;
 
-                $new_terms = [];
-                foreach($terms as $new_term) {
-                    $new_term->id        = $new_term->term_id;
-                    $new_term->parent_id = $new_term->parent;
-                    $new_terms[]         = $new_term;
-                }
-
-                $terms = $walker->walk($new_terms, 0);
-
-                foreach($terms as $term) {
+                if(empty($terms)) {
                     $items[] = [
-                        'name'     => $term->taxonomy . '-' . $term->term_id,
-                        'label'    => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
-                        'taxonomy' => $term->taxonomy,
-                        'disabled' => false
+                        'name'     => '',
+                        'label'    => 'No items',
+                        'disabled' => true
                     ];
+                } else {
+                    $walker = new AssignmentsWalker;
+
+                    $new_terms = [];
+                    foreach ($terms as $new_term) {
+                        $new_term->id = $new_term->term_id;
+                        $new_term->parent_id = $new_term->parent;
+                        $new_terms[] = $new_term;
+                    }
+
+                    $terms = $walker->walk($new_terms, 0);
+
+                    foreach ($terms as $term) {
+                        $items[] = [
+                            'name' => $term->taxonomy . '-' . $term->term_id,
+                            'label' => $term->level > 0 ? str_repeat('—', max(0, $term->level + 1)) . ' ' . $term->name : '— ' . $term->name,
+                            'taxonomy' => $term->taxonomy,
+                            'disabled' => false
+                        ];
+                    }
                 }
             }
         }

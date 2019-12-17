@@ -13,6 +13,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Particles;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
@@ -57,7 +58,7 @@ class Settings extends HtmlController
     {
         $outline = $this->params['outline'];
 
-        if ($outline == 'default') {
+        if ($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -66,9 +67,11 @@ class Settings extends HtmlController
             $data = ConfigServiceProvider::load($this->container, $outline, false, false);
         }
 
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
         $this->params += [
             'data' => $data,
-            'particles' => $this->container['particles']->group(['atom']),
+            'particles' => $particles->group(['atom']),
             'route'  => "configurations.{$outline}.settings",
             'page_id' => $outline
         ];
@@ -79,10 +82,14 @@ class Settings extends HtmlController
     public function display($id)
     {
         $outline = $this->params['outline'];
-        $blueprints = $this->container['particles']->getBlueprintForm($id);
+
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
+
+        $blueprints = $particles->getBlueprintForm($id);
         $prefix = 'particles.' . $id;
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -112,31 +119,36 @@ class Settings extends HtmlController
         if ($end === '') {
             array_pop($path);
         }
-        if (end($path) == 'validate') {
+        if (end($path) === 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
 
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
+
         // Load blueprints.
-        $blueprints = $this->container['particles']->getBlueprintForm($id);
+        $blueprints = $particles->getBlueprintForm($id);
 
         list($fields, $path, $value) = $blueprints->resolve(array_slice($path, 1), '/');
-
         if (!$fields) {
             throw new \RuntimeException('Page Not Found', 404);
         }
 
         $data = $this->request->post->getJsonArray('data');
 
+        /** @var Config $config */
+        $config = $this->container['config'];
+
         $offset = "particles.{$id}." . implode('.', $path);
         if ($value !== null) {
             $parent = $fields;
             $fields = ['fields' => $fields['fields']];
             $offset .= '.' . $value;
-            $data = $data ?: $this->container['config']->get($offset);
+            $data = $data ?: $config->get($offset);
             $data = ['data' => $data];
             $scope = 'data.';
         } else {
-            $data = $data ?: $this->container['config']->get($offset);
+            $data = $data ?: $config->get($offset);
             $scope = 'data';
         }
 
@@ -150,7 +162,6 @@ class Settings extends HtmlController
                 'configuration' => $configuration,
                 'blueprints' => $fields,
                 'data' => $data,
-                'prefix' => '',
                 'scope' => $scope,
                 'parent' => $path
                     ? "{$configuration}/settings/particles/{$id}/" . implode('/', $path)
@@ -177,8 +188,11 @@ class Settings extends HtmlController
             $this->undefined();
         }
 
+        /** @var Particles $particles */
+        $particles = $this->container['particles'];
+
         // Load particle blueprints.
-        $validator = $this->container['particles']->get($particle);
+        $validator = $particles->get($particle);
 
         // Create configuration from the defaults.
         $data = new Config(
@@ -236,7 +250,10 @@ class Settings extends HtmlController
                 $file->delete();
             }
         } else {
-            $blueprints = $this->container['particles']->getBlueprintForm($id);
+            /** @var Particles $particles */
+            $particles = $this->container['particles'];
+
+            $blueprints = $particles->getBlueprintForm($id);
             $config = new Config($data, function() use ($blueprints) { return $blueprints; });
 
             $file->save($config->toArray());

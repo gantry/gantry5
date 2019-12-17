@@ -23,6 +23,7 @@ class Translator implements TranslatorInterface
     protected $active = 'en';
     protected $sections = [];
     protected $translations = [];
+    protected $untranslated = [];
 
     public function translate($string)
     {
@@ -59,6 +60,11 @@ class Translator implements TranslatorInterface
         return $previous;
     }
 
+    public function untranslated()
+    {
+        return $this->untranslated;
+    }
+
     protected function find($language, $section, $string)
     {
         if (!isset($this->sections[$language][$section])) {
@@ -73,7 +79,13 @@ class Translator implements TranslatorInterface
             $this->sections[$language][$section] = !empty($translations);
         }
 
-        return isset($this->translations[$language][$string]) ? $this->translations[$language][$string] : null;
+        if (!isset($this->translations[$language][$string])) {
+            $this->untranslated[$language][$section][$string] = null;
+
+            return null;
+        }
+
+        return $this->translations[$language][$string];
     }
 
     protected function load($language, $section)

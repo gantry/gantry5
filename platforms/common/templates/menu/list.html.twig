@@ -11,7 +11,7 @@
                href="{{ gantry.route('menu', id, item.parent.path) }}"
             >
                 {% for i in range(1, item.level-1) %}
-                <i class="fa fa-fw fa-chevron-left"></i> &nbsp;
+                <i class="fa fa-fw fa-chevron-left" aria-hidden="true"></i> &nbsp;
                 {% endfor %}
             </a>
         </li>
@@ -30,4 +30,4 @@
         </li>
     {% endfor -%}
 </ul>
-<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h"></i></span>
+<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h" aria-hidden="true"></i></span>

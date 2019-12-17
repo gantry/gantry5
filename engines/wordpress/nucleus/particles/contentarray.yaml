@@ -24,6 +24,12 @@ form:
               description: Select the categories the posts should be taken from.
               overridable: false
 
+            post.filter.posts:
+              type: input.text
+              label: Posts
+              description: 'Enter the WordPress posts that should be shown. It should be a list of post IDs separated with a comma (i.e. 1,2,3,4,5).'
+              overridable: false
+
             post.filter.sticky:
               type: select.select
               label: Sticky Posts
@@ -40,6 +46,16 @@ form:
               description: Enter the maximum number of posts to display.
               default: 2
               pattern: '-?\d{1,2}'
+              overridable: false
+
+            post.display.pagination_buttons:
+              type: select.select
+              label: Pagination
+              description: Select if the pagination buttons should be shown to allow users to see more posts.
+              default: ''
+              options:
+                show: Show
+                '': Hide
               overridable: false
 
             post.limit.columns:
@@ -59,7 +75,7 @@ form:
             post.limit.start:
               type: input.text
               label: Start From
-              description: Enter offset specifying the first post to return. The default is '0' (the first post).
+              description: "Enter offset specifying the first post to return. The default is '0' (the first post)."
               default: 0
               pattern: '\d{1,2}'
               overridable: false
@@ -149,6 +165,7 @@ form:
                   'l': Date9
                   'l j F Y': Date10
                   'j F Y': Date11
+                  'F d, Y': Date12
 
         _tab_readmore:
           label: Read More
@@ -156,7 +173,7 @@ form:
             post.display.read_more.enabled:
               type: select.select
               label: Read More
-              description: Select if the post 'Read More' button should be shown.
+              description: "Select if the post 'Read More' button should be shown."
               default: show
               options:
                 show: Show
@@ -165,13 +182,13 @@ form:
             post.display.read_more.label:
               type: input.text
               label: Read More Label
-              description: Type in the label for the 'Read More' button.
+              description: "Type in the label for the 'Read More' button."
               placeholder: 'Read More...'
 
             post.display.read_more.css:
               type: input.selectize
               label: Button CSS Classes
-              description: CSS class name for the 'Read More' button.
+              description: "CSS class name for the 'Read More' button."
 
         _tab_extras:
           label: Extras
@@ -207,7 +224,7 @@ form:
             post.display.text.type:
               type: select.select
               label: Content Type
-              description: Select if and how the article text should be shown.
+              description: Select if and how the post text should be shown.
               default: content
               options:
                 content: Content
@@ -217,7 +234,7 @@ form:
             post.display.text.limit:
               type: input.text
               label: Content Limit
-              description: Type in the number of characters the post content/excerpt should be limited to.
+              description: 'Type in the number of characters the post content/excerpt should be limited to.'
               default: ''
               pattern: '\d+'
 
@@ -239,6 +256,6 @@ form:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
-      key_placeholder: Key (data-*, style, ...)
+      key_placeholder: 'Key (data-*, style, ...)'
       value_placeholder: Value
       exclude: ['id', 'class']

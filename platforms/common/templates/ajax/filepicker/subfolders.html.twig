@@ -1,7 +1,7 @@
 <ul class="g-bookmark-folders fa-ul">
     {% for bookmarkFolder in folder|sort %}
         <li data-folder="{{ bookmarkFolder|json_encode()|e('html_attr') }}"{{ bookmarkFolder.pathname in active ? ' class="active"' : '' }}>
-            <i class="fa-li fa fa-folder-o"></i>
+            <i class="fa-li fa fa-folder-o" aria-hidden="true"></i>
             <span class="path" title="{{ bookmarkFolder.filename }}">{{ bookmarkFolder.filename }}</span>
         </li>
     {% endfor %}

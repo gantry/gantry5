@@ -7,7 +7,7 @@
             <div class="g5-lm-particles-picker menu-editor-particles">
                 <div class="search settings-block">
                     <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_SEARCH_ELI'|trans }}" />
-                    <i class="fa fa-search"></i>
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
                 <ul>
                     {% for key, list in particles %}
@@ -21,7 +21,7 @@
                                         data-lm-blocktype="{{ type }}"
                                         data-mm-filter="{{ item.name }}"
                                         data-lm-subtype="{{ item_key }}">
-                                        <span class="icon"><i class="fa fa-fw {{ item.icon|default('fa-cube') }}"></i></span>
+                                        <span class="icon"><i class="fa fa-fw {{ item.icon|default('fa-cube') }}" aria-hidden="true"></i></span>
                                         <span class="title">{{ item.name }}</span>
                                     </li>
                                 {%  endfor %}
@@ -35,7 +35,7 @@
     <div class="g-modal-actions">
         {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
         <button class="button button-primary" type="submit" data-mm-select="" disabled="disabled">
-            {{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right"></i>
+            {{ 'GANTRY5_PLATFORM_SELECT'|trans }} <i class="fa fa-fw fa-chevron-right" aria-hidden="true"></i>
         </button>
         <button class="button g5-dialog-close">
             {{ 'GANTRY5_PLATFORM_CANCEL'|trans }}

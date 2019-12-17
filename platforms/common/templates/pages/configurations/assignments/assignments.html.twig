@@ -9,7 +9,7 @@
                 {% if edit %}
                 <span class="float-right">
                     <button type="submit" class="button button-primary button-save" data-save="Assignments">
-                        <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                        <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
                     </button>
                 </span>
                 {% endif %}
@@ -20,7 +20,7 @@
                     <div class="g-panel-filters" data-g-global-filter="">
                         <div class="search settings-block">
                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_GLOBAL_FILTER_ELI'|trans }}" role="search">
-                            <i class="fa fa-fw fa-search"></i>
+                            <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                         </div>
                     </div>
                     <label>
@@ -49,13 +49,14 @@
                 <div class="cards-wrapper clearfix">
                     {% for type, types in assignments %}
                         {% for name, list in types %}
+                            {% if list.items %}
                             <div class="card settings-block">
                                 <h4>
                                     {{ list.label }}
                                     <div class="g-panel-filters float-right align-right">
                                         <div class="search settings-block">
                                             <input type="text" placeholder="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}" aria-label="{{ 'GANTRY5_PLATFORM_FILTER_ELI'|trans }}">
-                                            <i class="fa fa-fw fa-search"></i>
+                                            <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                                         </div>
                                         {% if edit %}
                                             <a href="#" data-g-assignments-check=""
@@ -75,9 +76,9 @@
                                 <div class="settings-param-wrapper">
                                     {% for link in list.items %}
                                         {% set path = 'assignments.' ~ type ~ '.' ~ name ~ '.' ~ link.name %}
-                                        {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                                        {% set group = link.section ? 'data-g-assignments-group="' ~ link.name|e ~ '"' : 'data-g-assignments-parent="' ~ link.taxonomy|e ~ '"' %}
                                         {% set value = link.value is defined ? link.value : gantry.config.get(path) %}
-                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
+                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}" {{ group|raw }}>
                                             {% include 'forms/fields/enable/enable.html.twig' with {
                                             'default': true,
                                             'name': path|fieldName,
@@ -88,12 +89,13 @@
                                             'title': "'" ~ link.label ~ "' Menu Item"
                                             } %}
                                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
-                                {{- link.label -}}
-                            </span>
+                                                {{- link.label -}}
+                                            </span>
                                         </label>
                                     {% endfor %}
                                 </div>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 </div>
@@ -102,7 +104,7 @@
                 <div class="g-footer-actions">
                     <span class="float-right">
                         <button type="submit" class="button button-primary button-save" data-save="{{ 'GANTRY5_PLATFORM_ASSIGNMENTS'|trans }}">
-                            <i class="fa fa-fw fa-check"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
+                            <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_ASSIGNMENTS'|trans }}</span>
                         </button>
                     </span>
                 </div>

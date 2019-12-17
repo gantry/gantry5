@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "agent": "w00fz/agent#patch-1",
-    "dropzone": "^4.3.0",
+    "dropzone": "^5.1.1",
     "elements": "w00fz/elements",
     "moofx": "^3.2.0",
     "mout": "~1.0.0",
@@ -13,22 +13,22 @@
     "sifter": "^0.5.2",
     "slick": "^1.12.2",
     "sortablejs": "gantry/Sortable#master",
-    "webfontloader": "^1.6.27"
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "browserify": "^13.3.0",
-    "deep-diff": "^0.3.4",
+    "browserify": "^14.4.0",
+    "deep-diff": "^0.3.8",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.2",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
-    "gulp-sourcemaps": "^2.4.0",
-    "gulp-uglify": "^2.0.1",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "merge-stream": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0",
-    "yargs": "^6.6.0"
+    "watchify": "^3.9.0",
+    "yargs": "^9.0.1"
   }
 }

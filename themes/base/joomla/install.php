@@ -22,7 +22,7 @@ class G5_BaseInstallerScript
      */
     public function preflight($type, $parent)
     {
-        if ($type == 'uninstall') {
+        if ($type === 'uninstall') {
             return true;
         }
 

@@ -11,6 +11,7 @@
 namespace Gantry\Framework;
 
 use Gantry\Component\Content\Document\HtmlDocument;
+use Grav\Common\Assets;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
@@ -22,6 +23,26 @@ class Document extends HtmlDocument
         static::registerFrameworks();
         static::registerStyles();
         static::registerScripts('head');
+        static::registerScripts('footer');
+    }
+
+    /**
+     * NOTE: In PHP this function can be called either from Gantry DI container or statically.
+     *
+     * @param bool $addDomain
+     * @return string
+     */
+    public static function domain($addDomain = false)
+    {
+        if (!$addDomain) {
+            return '';
+        }
+
+        $grav = Grav::instance();
+        $absolute = $grav['base_url_absolute'];
+        $relative = $grav['base_url_relative'];
+
+        return substr($absolute, 0, -strlen($relative));
     }
 
     public static function rootUri()
@@ -62,15 +83,22 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Assets $assets */
+        $assets = $grav['assets'];
+
         $styles = static::$stack[0]->getStyles();
 
         foreach ($styles as $style) {
             switch ($style[':type']) {
                 case 'file':
-                    $grav['assets']->addCss(static::getRelativeUrl($style['href']), 90 + $style[':priority']);
+                    $assets->addCss(
+                        static::getRelativeUrl($style['href'], $grav['config']->get('system.assets.css_pipeline')),
+                        90 + $style[':priority'],
+                        true,
+                        'head');
                     break;
                 case 'inline':
-                    $grav['assets']->addInlineCss($style['content'], 90 + $style[':priority']);
+                    $assets->addInlineCss($style['content'], 90 + $style[':priority'], 'head');
                     break;
             }
         }
@@ -80,32 +108,43 @@ class Document extends HtmlDocument
     {
         $grav = Grav::instance();
 
+        /** @var Assets $assets */
+        $assets = $grav['assets'];
+
         $scripts = static::$stack[0]->getScripts($group);
+        $group = $group === 'footer' ? 'bottom' : $group;
 
         foreach ($scripts as $script) {
             switch ($script[':type']) {
                 case 'file':
-                    $grav['assets']->AddJs(static::getRelativeUrl($script['src']), [
-                        'priority' => 90 + $script[':priority'],
-                        'loading' => ($script['async'] ? 'async' : ($script['defer'] ? 'defer' : '')),
-                        'group' => $group,
-                    ]);
+                    $assets->AddJs(
+                        static::getRelativeUrl($script['src'], $grav['config']->get('system.assets.js_pipeline')),
+                        90 + $script[':priority'],
+                        true,
+                        $script['async'] ? 'async' : ($script['defer'] ? 'defer' : ''),
+                        $group
+                    );
                     break;
                 case 'inline':
-                    $grav['assets']->AddInlineJs($script['content'], [
-                        'priority' => 90 + $script[':priority'],
-                        'group' => $group,
-                    ]);
+                    $assets->AddInlineJs($script['content'],
+                        90 + $script[':priority'],
+                        $group
+                    );
                     break;
             }
         }
     }
 
-    protected static function getRelativeUrl($url)
+    protected static function getRelativeUrl($url, $pipeline)
     {
         $base = rtrim(static::rootUri(), '/') . '/';
 
         if (strpos($url, $base) === 0) {
+            if ($pipeline) {
+                // Remove file timestamp if CSS pipeline has been enabled.
+                $url = preg_replace('|[\?#].*|', '', $url);
+            }
+
             return substr($url, strlen($base) - 1);
         }
         return $url;

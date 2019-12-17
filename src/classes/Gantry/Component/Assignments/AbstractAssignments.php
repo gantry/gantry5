@@ -51,6 +51,9 @@ abstract class AbstractAssignments
      */
     protected $page;
 
+    /** @var callable */
+    protected $specialFilterMethod;
+
     /**
      * @param string $configuration
      */
@@ -100,7 +103,7 @@ abstract class AbstractAssignments
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
-        return $this->filter->scores($candidates, $this->page);
+        return $this->filter->scores($candidates, $this->page, $this->specialFilterMethod);
     }
 
     /**
@@ -113,7 +116,7 @@ abstract class AbstractAssignments
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
-        return $this->filter->matches($candidates, $this->page);
+        return $this->filter->matches($candidates, $this->page, $this->specialFilterMethod);
     }
 
     /**
@@ -204,6 +207,7 @@ abstract class AbstractAssignments
                         $group = (bool) $group;
                     }
                 }
+                unset($group);
                 if ($minimize && empty($type)) {
                     unset($data[$tname]);
                 }

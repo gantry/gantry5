@@ -217,11 +217,17 @@ abstract class CssCompiler implements CssCompilerInterface
 
         if ($this->production) {
             // Open the file to see if it contains development comment in the beginning of the file.
-            $handle = fopen($path, "rb");
-            $contents = fread($handle, 14);
+            $handle = fopen($path, 'rb');
+            $contents = fread($handle, 36);
             fclose($handle);
 
-            if ($contents === '/* GANTRY5 DEV') {
+            if ($contents === '/* GANTRY5 DEVELOPMENT MODE ENABLED.') {
+                $this->setVariables($variables());
+                return true;
+            }
+
+            // Compare checksum comment in the file.
+            if ($contents !== $this->checksum()) {
                 $this->setVariables($variables());
                 return true;
             }
@@ -243,13 +249,13 @@ abstract class CssCompiler implements CssCompilerInterface
         $metaFile->free();
 
         // Check if filename in meta file matches.
-        if (empty($content['file']) || $content['file'] != $out) {
+        if (empty($content['file']) || $content['file'] !== $out) {
             $this->setVariables($variables());
             return true;
         }
 
         // Check if meta timestamp matches to CSS file.
-        if (filemtime($path) != $content['timestamp']) {
+        if (filemtime($path) !== $content['timestamp']) {
             $this->setVariables($variables());
             return true;
         }
@@ -276,7 +282,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
         foreach ($imports as $resource => $timestamp) {
             $import = $locator->isStream($resource) ? $locator->findResource($resource) : realpath($resource);
-            if (!$import || filemtime($import) != $timestamp) {
+            if (!$import || filemtime($import) !== $timestamp) {
                 return true;
             }
         }
@@ -336,6 +342,17 @@ abstract class CssCompiler implements CssCompilerInterface
      * @return null|string
      */
     abstract public function findImport($url);
+
+    protected function checksum($len = 36)
+    {
+        static $checksum;
+
+        if (!$checksum) {
+            $checksum = md5(GANTRY5_VERSION . ' ' . Gantry::instance()['theme']->version);
+        }
+
+        return '/*' . substr($checksum, 0, $len - 4) . '*/';
+    }
 
     protected function createMeta($out, $md5)
     {

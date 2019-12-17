@@ -52,14 +52,15 @@ class JFormFieldParticle extends JFormField
 
         // TODO: Use better style detection.
         $style = \Gantry\Joomla\StyleHelper::getDefaultStyle();
+
         if (!$style->template) {
             $app->enqueueMessage(
-                JText::_("MOD_GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
+                JText::_("GANTRY5_PARTICLE_FIELD_NO_DEFAULT_STYLE"),
                 'warning'
             );
         } elseif (!file_exists(JPATH_SITE . "/templates/{$style->template}/gantry/theme.yaml")) {
             $app->enqueueMessage(
-                JText::sprintf("MOD_GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
+                JText::sprintf("GANTRY5_PARTICLE_FIELD_NO_GANTRY5_STYLE", $style->title),
                 'warning'
             );
         }

@@ -1,11 +1,16 @@
 .platform-content {
     // Entries
     .entries {
-        .tease {
+        margin: 0 -$content-padding;
 
-            // Sticky Posts
-            &.sticky {
-                background-color: #f2f2f2;
+        .g-block {
+            padding: 0 $content-padding;
+
+            .tease {
+                // Sticky Posts
+                &.sticky {
+                    background-color: #f2f2f2;
+                }
             }
         }
     }

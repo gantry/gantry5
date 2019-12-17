@@ -17,11 +17,16 @@ defined('ABSPATH') or die;
 // NOTE: This file needs to be PHP 5.2 compatible.
 
 // Fail safe version check for PHP <5.4.0.
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+if (version_compare(PHP_VERSION, '5.6.20', '<')) {
+    if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+        if (is_admin()) {
+            add_action('admin_notices', 'gantry5_php_version_error');
+        }
+        return;
+    }
     if (is_admin()) {
         add_action('admin_notices', 'gantry5_php_version_warning');
     }
-    return;
 }
 
 require_once dirname(__FILE__) . '/src/Loader.php';
@@ -51,8 +56,10 @@ add_action('admin_init', 'gantry5_plugin_defaults');
 function gantry5_plugin_defaults()
 {
     $defaults = array(
-        'production'       => '1',
+        'production'       => '0',
         'use_media_folder' => '0',
+        'assign_posts'     => '1',
+        'assign_pages'     => '1',
         'debug'            => '0',
         'offline'          => '0',
         'offline_message'  => 'Site is currently in offline mode. Please try again later.',
@@ -100,19 +107,26 @@ if (load_plugin_textdomain($domain, false, $languages_path) === false) {
 
 load_plugin_textdomain($domain, false, $languages_path);
 
-function modify_gantry5_locale($locale, $domain)
+function modify_gantry5_locale($locale, $domain = null)
 {
     // Revert the gantry5 domain locale to en_US
-    if (isset($domain) && $domain == 'gantry5') {
+    if (isset($domain) && $domain === 'gantry5') {
         $locale = 'en_US';
     }
 
     return $locale;
 }
 
+function gantry5_php_version_error()
+{
+    echo '<div class="error"><p>';
+    echo sprintf("You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP %s</b> to run.", PHP_VERSION, '5.4.0');
+    echo '</p></div>';
+}
+
 function gantry5_php_version_warning()
 {
     echo '<div class="error"><p>';
-    echo sprintf("You are running PHP %s, but Gantry 5 Framework needs at least PHP %s to run.", PHP_VERSION, '5.4.0');
+    echo sprintf("You are running <b>PHP %s</b>. The next version of <b>Gantry 5 Framework</b> will need at least <b>PHP 5.6.20</b> (PHP 7.2 recommended) in order to work.", PHP_VERSION);
     echo '</p></div>';
 }

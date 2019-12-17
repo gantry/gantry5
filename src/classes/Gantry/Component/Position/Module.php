@@ -157,7 +157,7 @@ class Module implements \ArrayAccess
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 
-        if (!$locator->findResource("gantry-positions://{$position}/{$name}.yaml")) {
+        if (!file_exists($locator->findResource("gantry-positions://{$position}/{$name}.yaml", true, true))) {
             return $name;
         }
 
@@ -165,7 +165,7 @@ class Module implements \ArrayAccess
 
         do {
             $count++;
-        } while ($locator->findResource("gantry-positions://{$position}/{$name}_{$count}.yaml"));
+        } while (file_exists($locator->findResource("gantry-positions://{$position}/{$name}_{$count}.yaml", true, true)));
 
         return "{$name}_{$count}";
     }

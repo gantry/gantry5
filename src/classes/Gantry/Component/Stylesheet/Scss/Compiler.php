@@ -17,6 +17,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use Leafo\ScssPhp\Compiler as BaseCompiler;
+use Leafo\ScssPhp\Formatter\OutputBlock;
 use Leafo\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -39,6 +40,9 @@ class Compiler extends BaseCompiler
         $this->registerFunction('get-local-font-url', [$this, 'userGetLocalFontUrl']);
     }
 
+    /**
+     * @param $basePath
+     */
     public function setBasePath($basePath)
     {
         /** @var Document $document */
@@ -46,11 +50,18 @@ class Compiler extends BaseCompiler
         $this->basePath = rtrim($document->rootUri(), '/') . '/' . Folder::getRelativePath($basePath);
     }
 
+    /**
+     * @param array $fonts
+     */
     public function setFonts(array $fonts)
     {
         $this->fonts = $fonts;
     }
 
+    /**
+     * @param $args
+     * @return mixed
+     */
     public function compileArgs($args)
     {
         foreach ($args as &$arg) {
@@ -68,13 +79,14 @@ class Compiler extends BaseCompiler
      * @param string    $name
      * @param boolean   $shouldThrow
      * @param BaseCompiler\Environment $env
+     * @param bool $unreduced
      *
      * @return mixed
      */
-    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null)
+    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
     {
         try {
-            return parent::get($name, $shouldThrow, $env);
+            return parent::get($name, $shouldThrow, $env, $unreduced);
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             return ['string', '', ['']];
@@ -103,7 +115,7 @@ class Compiler extends BaseCompiler
         }
 
         // Generate URL, failed streams will be transformed to 404 URLs.
-        $url = Gantry::instance()['document']->url($url, false, null, false);
+        $url = Gantry::instance()['document']->url($url, null, null, false);
 
         // Changes absolute URIs to relative to make the path to work even if the site gets moved.
         if ($url && $url[0] === '/' && $this->basePath) {
@@ -130,7 +142,7 @@ class Compiler extends BaseCompiler
         $value = trim($this->compileValue(reset($args)), '\'"');
 
         // It's a google font
-        if (substr($value, 0, 7) === 'family=') {
+        if (0 === strpos($value, 'family=')) {
             $fonts = $this->decodeFonts($value);
             $font = reset($fonts);
 
@@ -161,7 +173,7 @@ class Compiler extends BaseCompiler
      * get-local-fonts($my-font-variable, $my-font-variable2, ...);
      *
      * @param array $args
-     * @return string
+     * @return array
      */
     public function userGetLocalFonts($args)
     {
@@ -188,7 +200,7 @@ class Compiler extends BaseCompiler
      * get-local-font-weights(roboto);
      *
      * @param array $args
-     * @return string
+     * @return array
      */
     public function userGetLocalFontWeights($args)
     {
@@ -219,8 +231,9 @@ class Compiler extends BaseCompiler
         $weight = isset($args[1]) ? $args[1] : 400;
 
         // Only return url once per font.
-        if (isset($this->fonts[$name][$weight]) && !isset($this->usedFonts[$name . '-' . $weight])) {
-            $this->usedFonts[$name . '-' . $weight] = true;
+        $weightName = $name . '-' . $weight;
+        if (isset($this->fonts[$name][$weight]) && !isset($this->usedFonts[$weightName])) {
+            $this->usedFonts[$weightName] = true;
 
             return $this->fonts[$name][$weight];
         }
@@ -258,7 +271,7 @@ class Compiler extends BaseCompiler
     {
         array_walk($fonts, function(&$val) {
             // Check if font family is one of the 4 default ones, otherwise add quotes.
-            if (!in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'])) {
+            if (!\in_array($val, ['cursive', 'serif', 'sans-serif', 'monospace'], true)) {
                 $val = '"' . $val . '"';
             }
         });
@@ -275,7 +288,7 @@ class Compiler extends BaseCompiler
      */
     protected function decodeFonts($string, $localOnly = false)
     {
-        if (substr($string, 0, 7) === 'family=') {
+        if (0 === strpos($string, 'family=')) {
             if ($localOnly) {
                 // Do not return external fonts.
                 return [];
@@ -382,9 +395,11 @@ class Compiler extends BaseCompiler
      * Override function to improve the logic.
      *
      * @param string $path
-     * @param mixed  $out
+     * @param OutputBlock  $out
+     *
+     * @throws \Exception
      */
-    protected function importFile($path, $out)
+    protected function importFile($path, OutputBlock $out)
     {
         $this->addParsedFile($path);
 

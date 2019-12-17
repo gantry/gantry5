@@ -7,7 +7,7 @@
             <span data-title-editable="{{ data.settings.title }}" class="title">
                 {{ data.settings.title }}
             </span>
-            <i class="fa fa-pencil font-small" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.settings.title) }}" data-title-edit=""></i>
+            <i class="fa fa-pencil font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.settings.title) }}" data-title-edit=""></i>
             {% if blueprints.form.fields.enabled %}
             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.form.fields.enabled, 'value': data.enabled} %}
             {% endif %}

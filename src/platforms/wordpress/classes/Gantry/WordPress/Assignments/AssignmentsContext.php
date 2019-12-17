@@ -15,11 +15,11 @@ use Gantry\Component\Assignments\AssignmentsInterface;
 class AssignmentsContext implements AssignmentsInterface
 {
     public $type = 'context';
-    public $priority = 1;
+    public $priority = 2;
 
     protected $priorities = [
-        'is_front_page'     => 2,
-        'is_home'           => 2,
+        'is_front_page'     => 0.9,
+        'is_home'           => 0.9,
     ];
 
     protected $context = [
@@ -51,13 +51,13 @@ class AssignmentsContext implements AssignmentsInterface
         $rules = [];
         foreach($this->context as $var => $label) {
             if (isset($wp_query->$var) && $wp_query->$var === true) {
-                $rules[$var] = isset($this->priorities[$var]) ? $this->priorities[$var] : $this->priority;
+                $rules[$var] = $this->priority + (isset($this->priorities[$var]) ? $this->priorities[$var] : 0);
             }
         }
 
         // Workaround for when is_front_page is missing in the $wp_query
         if(is_front_page() === true) {
-            $rules['is_front_page'] = $this->priorities['is_front_page'];
+            $rules['is_front_page'] = $this->priority + $this->priorities['is_front_page'];
         }
 
         // Allow to filter out rules by 3rd party plugin integration
