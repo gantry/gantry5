@@ -94,7 +94,7 @@ class OutlineCollection extends Collection
     {
         foreach ($this->items as $key => $item) {
             $key = (string)$key;
-            if ($key === 'default' || ($key && $key[0] !== '_')) {
+            if ($key === 'default' || ($key && $key[0] === '_')) {
                 unset($this->items[$key]);
             }
         }
