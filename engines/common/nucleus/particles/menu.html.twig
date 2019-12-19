@@ -42,14 +42,14 @@
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = (item.target != '_self' or context.particle.forceTarget) ? ' target="' ~ item.target|e ~ '"' %}
+        {% set relPlatform = item.rel %}
 
         {% if item.target == '_blank' %}
-            {% set relTarget = ('noopener' not in item.rel) ? 'noopener' : '' %}
-            {% if 'noreferrer' not in item.rel %}
+            {% set relTarget = ('noopener' not in relPlatform) ? 'noopener' : '' %}
+            {% if 'noreferrer' not in relPlatform %}
                 {% set relTarget = (relTarget) ? relTarget ~ ' ' : relTarget %}
                 {% set relTarget = relTarget ~ 'noreferrer' %}
             {% endif %}
-            {% set relTarget = (item.rel and relTarget) ? ' ' ~ relTarget : relTarget %}
         {% endif %}
 
         {% set listAttributes = '' %}
@@ -68,8 +68,11 @@
                 {% for key, value in attribute %}
                     {% if key == 'rel' %}
                         {% set hValue = value|e('html_attr') %}
-                        {% if hValue not in item.rel and hValue not in relTarget %}
-                            {% set relAttribute = (item.rel or relTarget) ? ' ' : '' %}
+                        {% if hValue not in relPlatform and hValue not in relTarget %}
+                            {% if relPlatform in hValue %}
+                                {% set relPlatform = '' %}
+                            {% endif %}
+                            {% set relAttribute = relTarget ? ' ' : '' %}
                             {% set relAttribute = relAttribute ~ hValue %}
                         {% endif %}
                     {% else %}
@@ -78,7 +81,9 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        {% set rel = (item.rel or relTarget or relAttribute) ? ' rel="' ~ item.rel|e ~ relTarget ~ relAttribute ~ '"' %}
+
+        {% set relPlatform = ((relTarget or relAttribute) and relPlatform) ? ' ' ~ relPlatform : relPlatform %}
+        {% set rel = (relPlatform or relTarget or relAttribute) ? ' rel="' ~ relTarget ~ relAttribute ~ relPlatform|e ~ '"' %}
 
         <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
                 {{- self.getCustomWidth(item, menu, 'item', dropdown) }}
