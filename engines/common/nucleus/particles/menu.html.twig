@@ -42,39 +42,32 @@
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
         {% set parent = item.children ? ' g-parent' %}
         {% set target = (item.target != '_self' or context.particle.forceTarget) ? ' target="' ~ item.target|e ~ '"' %}
-        {% set relPlatform = item.rel %}
+        {% set rel = item.rel %}
 
         {% if item.target == '_blank' %}
-            {% set relTarget = ('noopener' not in relPlatform) ? 'noopener' : '' %}
-            {% if 'noreferrer' not in relPlatform %}
-                {% set relTarget = (relTarget) ? relTarget ~ ' ' : relTarget %}
-                {% set relTarget = relTarget ~ 'noreferrer' %}
+            {% if 'noopener' not in rel %}
+                {% set rel = rel ? rel ~ ' ' : rel %}
+                {% set rel = rel ~ 'noopener' %}
+            {% endif %}
+            {% if 'noreferrer' not in rel %}
+                {% set rel = rel ? rel ~ ' ' : rel %}
+                {% set rel = rel ~ 'noreferrer' %}
             {% endif %}
         {% endif %}
 
-        {% set listAttributes = '' %}
-        {% if item.attributes %}
-            {% for attribute in item.attributes %}
-                {% for key, value in attribute %}
-                    {% set listAttributes = listAttributes ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-
+        {% set listAttributes = item.attributes|attribute_array %}
         {% set linkAttributes = '' %}
-        {% set relAttribute = '' %}
+        
         {% if item.link_attributes %}
             {% for attribute in item.link_attributes %}
                 {% for key, value in attribute %}
                     {% if key == 'rel' %}
-                        {% set hValue = value|e('html_attr') %}
-                        {% if hValue not in relPlatform and hValue not in relTarget %}
-                            {% if relPlatform in hValue %}
-                                {% set relPlatform = '' %}
+                        {% for hVal in value|split(' ') %}
+                            {% if hVal not in rel %}
+                                {% set rel = rel ? rel ~ ' ' : rel %}
+                                {% set rel = rel ~ hVal %}
                             {% endif %}
-                            {% set relAttribute = relTarget ? ' ' : '' %}
-                            {% set relAttribute = relAttribute ~ hValue %}
-                        {% endif %}
+                        {% endfor %}
                     {% else %}
                         {% set linkAttributes = linkAttributes ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
                     {% endif %}
@@ -82,9 +75,8 @@
             {% endfor %}
         {% endif %}
 
-        {% set relPlatform = ((relTarget or relAttribute) and relPlatform) ? ' ' ~ relPlatform : relPlatform %}
-        {% set rel = (relPlatform or relTarget or relAttribute) ? ' rel="' ~ relTarget ~ relAttribute ~ relPlatform|e ~ '"' %}
-
+        {% set rel = rel ? ' rel="' ~ rel|e('html_attr') ~ '"' %}
+        
         <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
                 {{- self.getCustomWidth(item, menu, 'item', dropdown) }}
                 {%- if context.particle.renderTitles|default(0) %} title="{{ item.title }}"{% endif %}{{listAttributes|raw}}>
