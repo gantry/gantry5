@@ -8,7 +8,7 @@
         - Fixed missing `rel="noopener noreferrer"` in social particle when opening link into a new tab (#2581)
 1. [Joomla](#joomla)
     1. [](#bugfix)
-        - Fixed missing `rel` attribute in menu items (#2573, thanks @thexmanxyz)
+        - Fixed missing `rel` attribute in menu items with double value detection (#2573, thanks @thexmanxyz)
 1. [WordPress](#wordpress)
     1. [](#improved)
         - Added a `Global` rule for assignments per taxonomy / category (#2045, thanks @nikola3244)
