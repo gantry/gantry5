@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "360e9739e821041bb583aaf02f30b739",
+    "content-hash": "a8b5076faef23c002437a9a1b8a4b30e",
     "packages": [
         {
             "name": "maximebf/debugbar",
@@ -234,20 +234,20 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v2.8.52",
+            "version": "v3.4.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "91abb1e39d14fb7773d25de9c711949ea8502ac1"
+                "reference": "569e261461600810845a8305ca3f64abd3e712c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/91abb1e39d14fb7773d25de9c711949ea8502ac1",
-                "reference": "91abb1e39d14fb7773d25de9c711949ea8502ac1",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/569e261461600810845a8305ca3f64abd3e712c0",
+                "reference": "569e261461600810845a8305ca3f64abd3e712c0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
+                "php": "^5.5.9|>=7.0.8",
                 "symfony/polyfill-mbstring": "~1.0"
             },
             "conflict": {
@@ -259,12 +259,13 @@
             },
             "suggest": {
                 "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
+                "ext-intl": "To show region name in time zone dump",
                 "ext-symfony_debug": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -298,7 +299,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2018-11-11T11:18:13+00:00"
+            "time": "2019-10-10T11:03:19+00:00"
         }
     ],
     "packages-dev": [],
@@ -308,7 +309,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.20"
     },
     "platform-dev": []
 }

@@ -3,12 +3,12 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Updated minimum requirement to PHP 5.6.0
+        - Updated minimum requirement to PHP 5.6.20
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.0
         - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
-        - Major code cleanup for PHP 5.6+
+        - Major code cleanup for PHP 5.6.20+
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
