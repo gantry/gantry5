@@ -148,6 +148,11 @@ class EventListener implements EventSubscriberInterface
         /** @var Pages $pages */
         $pages = $grav['pages'];
 
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
+
         // Initialize pages.
         $visible = $pages->all()->nonModular();
         $all = [];

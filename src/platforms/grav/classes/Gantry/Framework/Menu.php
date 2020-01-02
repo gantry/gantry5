@@ -89,6 +89,11 @@ class Menu extends AbstractMenu
         /** @var Pages $pages */
         $pages = $grav['pages'];
 
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
+
         // Get the menu items.
         $items = $pages->all()->nonModular();
 
@@ -179,9 +184,15 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
-        // Initialize pages.
         /** @var Pages $pages */
         $pages = $grav['pages'];
+
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
+
+        // Initialize pages.
         $items = $pages->all()->nonModular();
 
         // Return flat list of routes.
