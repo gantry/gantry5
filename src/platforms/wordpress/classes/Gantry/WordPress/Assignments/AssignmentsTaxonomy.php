@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2019 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -43,7 +43,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
                 $id = $queried_object->term_id;
 
                 $rules[$taxonomy][$id] = $this->priority;
-                
+
                 // Assignments to a single taxonomy will have high priority
                 $rules[$taxonomy]['is_archive'] = $this->priority - 1;
             }
@@ -93,7 +93,7 @@ class AssignmentsTaxonomy implements AssignmentsInterface
 			];
 
 			$list[$tax->name]['items'] = array_merge($list[$tax->name]['items'], $this->getItems($tax) );
-		
+
         }
 
         return $list;
