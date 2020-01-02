@@ -22,7 +22,7 @@
         - Grav specific code passes phpstan level 1 tests
 
 # 5.4.32
-## mm/dd/2019
+## 01/02/2020
 
 1. [Common](#common)
     1. [](#new)
@@ -31,13 +31,14 @@
         - Fixed missing `rel="noopener noreferrer"` in social particle when opening link into a new tab (#2581)
 1. [Joomla](#joomla)
     1. [](#bugfix)
-        - Fixed missing `rel` attribute in menu items (#2573, thanks @thexmanxyz)
+        - Fixed missing `rel` attribute in menu items with double value detection (#2573, thanks @thexmanxyz)
 1. [WordPress](#wordpress)
     1. [](#improved)
         - Added a `Global` rule for assignments per taxonomy / category (#2045, thanks @nikola3244)
 1. [Grav](#grav)
     1. [](#bugfix)
-        - Fixed assignments for `Pages` not showing in Grav 1.7 (#2557)
+        - Fixed assignments for `Pages` not showing in Grav 1.7.0-rc.1 (#2557)
+        - Fixed menu editor having no menu items in Grav 1.7.0-rc.1
         - Fixed broken `Configure` link in admin (#2570)
 
 # 5.4.31

@@ -76,6 +76,7 @@ class AssignmentsPage implements AssignmentsInterface
         if (method_exists($pages, 'enablePages')) {
             $pages->enablePages();
         }
+
         $pages = $pages->all()->routable();
 
         $items = [];
