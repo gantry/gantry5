@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b65dff34643a3507b3f12f52627e0c9a",
+    "content-hash": "4f7f873cf98274812ee415c6089ecf4d",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -308,27 +308,34 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.4.6",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "e7010c2a956aff241dfa100ab8aef5b6cf83892a"
+                "reference": "32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/e7010c2a956aff241dfa100ab8aef5b6cf83892a",
-                "reference": "e7010c2a956aff241dfa100ab8aef5b6cf83892a",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5",
+                "reference": "32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5",
                 "shasum": ""
+            },
+            "archive": {
+                "exclude": [
+                    "tests"
+                ]
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.4.0",
+                "php": ">=5.6.0",
                 "pimple/pimple": "~3.0",
-                "symfony/event-dispatcher": ">2.5",
-                "symfony/yaml": ">2.5"
+                "symfony/event-dispatcher": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6"
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpunit/phpunit": "~5"
             },
             "type": "library",
             "autoload": {
@@ -344,7 +351,17 @@
                     "RocketTheme\\Toolbox\\StreamWrapper\\": "StreamWrapper/src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit run unit"
+                ],
+                "test-windows": [
+                    "vendor\\bin\\phpunit run unit"
+                ],
+                "phpstan": [
+                    "vendor/bin/phpstan analyse -l 8 -c ./tests/phpstan/phpstan.neon . --memory-limit=128M"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -354,7 +371,11 @@
                 "php",
                 "rockettheme"
             ],
-            "time": "2019-03-20T19:59:17+00:00"
+            "support": {
+                "source": "https://github.com/rockettheme/toolbox/tree/develop",
+                "issues": "https://github.com/rockettheme/toolbox/issues"
+            },
+            "time": "2020-01-03T10:20:16+00:00"
         },
         {
             "name": "scssphp/scssphp",
@@ -1040,7 +1061,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rockettheme/toolbox": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
