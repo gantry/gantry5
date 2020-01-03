@@ -82,7 +82,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFilter('fieldName', [$this, 'fieldNameFilter']),
             new TwigFilter('json_decode', [$this, 'jsonDecodeFilter']),
             new TwigFilter('truncate_html', [$this, 'truncateHtml']),
-            new TwigFilter('markdown', [$this, 'myMarkdownFunction'], ['is_safe' => ['html']]),
+            new TwigFilter('markdown', [$this, 'markdownFunction'], ['is_safe' => ['html']]),
             new TwigFilter('nicetime', [$this, 'nicetimeFilter']),
 
             // Casting values
@@ -400,7 +400,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      * @param array $settings
      * @return mixed|string
      */
-    public function myMarkdownFunction($string, $block = true, array $settings = null)
+    public function markdownFunction($string, $block = true, array $settings = null)
     {
         // Initialize the preferred variant of Parsedown
         if ($settings['extra']) {
