@@ -127,6 +127,6 @@ function gantry5_php_version_error()
 function gantry5_php_version_warning()
 {
     echo '<div class="error"><p>';
-    echo sprintf('You are running <b>PHP %s</b>. Recommended version of PHP for <b>Gantry 5 Framework</b> is PHP 7.2 or later.', PHP_VERSION);
+    echo sprintf('You are running <b>PHP %s</b>. Recommended version of PHP for <b>Gantry 5 Framework</b> is PHP 7.3.1 or later.', PHP_VERSION);
     echo '</p></div>';
 }
