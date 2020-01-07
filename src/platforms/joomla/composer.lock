@@ -312,12 +312,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5"
+                "reference": "515885cf35dd7be30864216f87e7122c7f03be7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5",
-                "reference": "32fda12cfe3cbd9933541d3ffaa5a1beded4fbe5",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/515885cf35dd7be30864216f87e7122c7f03be7d",
+                "reference": "515885cf35dd7be30864216f87e7122c7f03be7d",
                 "shasum": ""
             },
             "archive": {
@@ -375,7 +375,7 @@
                 "source": "https://github.com/rockettheme/toolbox/tree/develop",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2020-01-03T10:20:16+00:00"
+            "time": "2020-01-06T15:08:03+00:00"
         },
         {
             "name": "scssphp/scssphp",
