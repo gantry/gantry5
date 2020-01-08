@@ -99,6 +99,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
             new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
+            new \Twig_SimpleFunction('preg_split', [$this, 'pregSplit']),
             new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
@@ -679,5 +680,10 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         preg_match($pattern, $subject, $matches);
 
         return $matches ?: false;
+    }
+    
+    public function pregSplit($pattern, $subject, $limit = -1)
+    {
+        return preg_split($pattern, $subject, $limit);
     }
 }
