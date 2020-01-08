@@ -681,7 +681,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
      * @param string $pattern the regex pattern to use for match
      * @param string $subject the content to perform the match on
      * @param array &$matches if given, the parameter is filled with the match results. The first array elements contains the text which matches the complete search pattern. The second element contains the text which matches the first bracketed subpattern and so on.
-     * @return int returns 1 if there is a match in the subject for a given pattern or 0 if not. FALSE if an error occurs.
+     * @return mixed returns the matches if there is at least one match in the subject for a given pattern or false if not.
      */
     public function pregMatch($pattern, $subject, &$matches = [])
     {
