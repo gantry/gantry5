@@ -98,8 +98,6 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             new \Twig_SimpleFunction('parse_assets', [$this, 'parseAssetsFunc']),
             new \Twig_SimpleFunction('colorContrast', [$this, 'colorContrastFunc']),
             new \Twig_SimpleFunction('get_cookie', [$this, 'getCookie']),
-            new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
-            new \Twig_SimpleFunction('preg_split', [$this, 'pregSplit']),
             new \Twig_SimpleFunction('imagesize', [$this, 'imageSize']),
             new \Twig_SimpleFunction('is_selected', [$this, 'is_selectedFunc']),
             new \Twig_SimpleFunction('url', [$this, 'urlFunc']),
@@ -109,6 +107,8 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
             $functions = array_merge($functions, [
                 new \Twig_SimpleFunction('array', [$this, 'arrayFilter']),
                 new \Twig_SimpleFunction('json_decode', [$this, 'jsonDecodeFilter']),
+                new \Twig_SimpleFunction('preg_match', [$this, 'pregMatch']),
+                new \Twig_SimpleFunction('preg_split', [$this, 'pregSplit']),
             ]);
         }
 
@@ -675,6 +675,14 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return $request->cookie[$name];
     }
 
+    /**
+     * Twig wrapper for PHP's preg_match method
+     *
+     * @param string $pattern the regex pattern to use for match
+     * @param string $subject the content to perform the match on
+     * @param array &$matches if given, the parameter is filled with the match results. The first array elements contains the text which matches the complete search pattern. The second element contains the text which matches the first bracketed subpattern and so on.
+     * @return int returns 1 if there is a match in the subject for a given pattern or 0 if not. FALSE if an error occurs.
+     */
     public function pregMatch($pattern, $subject, &$matches = [])
     {
         preg_match($pattern, $subject, $matches);
@@ -682,6 +690,14 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
         return $matches ?: false;
     }
     
+    /**
+     * Twig wrapper for PHP's preg_split method
+     *
+     * @param string $pattern the regex pattern to use for split
+     * @param string $subject the content to perform the split on
+     * @param int $limit the maximum possible splits for the given pattern
+     * @return array the resulting array after performing the split operation
+     */
     public function pregSplit($pattern, $subject, $limit = -1)
     {
         return preg_split($pattern, $subject, $limit);
