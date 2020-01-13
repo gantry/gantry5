@@ -20,6 +20,10 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\DispatcherInterface;
 
+// Quick check to prevent fatal error in unsupported Joomla admin.
+if (!class_exists(CMSPlugin::class)) {
+    return;
+}
 
 /**
  * Class plgQuickiconGantry5

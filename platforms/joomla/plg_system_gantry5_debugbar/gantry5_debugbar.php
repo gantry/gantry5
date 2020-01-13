@@ -12,6 +12,11 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\DispatcherInterface;
 
+// Quick check to prevent fatal error in unsupported Joomla admin.
+if (!class_exists(CMSPlugin::class)) {
+    return;
+}
+
 /**
  * Class plgSystemGantry5_Debugbar
  */
