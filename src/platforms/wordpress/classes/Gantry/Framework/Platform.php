@@ -81,16 +81,16 @@ class Platform extends BasePlatform
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
         if ($theme && is_dir(WP_CONTENT_DIR . "/gantry5/{$theme}/media-shared")) {
             $custom = WP_CONTENT_DIR . "/gantry5/{$theme}/custom";
-            if (!is_dir($custom)) {
-                // First run -- copy configuration into a single location.
-                $shared = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-shared";
-                $demo = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-demo";
-
+            if (!is_dir("{$custom}/config")) {
                 try {
-                    Folder::create($custom);
+                    Folder::create("{$custom}/config");
                 } catch (\Exception $e) {
                     throw new \RuntimeException(sprintf("Failed to create folder '%s'.", $custom), 500, $e);
                 }
+
+                // First run -- copy configuration into a single location.
+                $shared = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-shared";
+                $demo = WP_CONTENT_DIR . "/gantry5/{$theme}/theme-demo";
 
                 if (is_dir("{$shared}/custom/config")) {
                     Folder::copy("{$shared}/custom/config", "{$custom}/config");
