@@ -36,6 +36,11 @@ use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+// Quick check to prevent fatal error in unsupported Joomla admin.
+if (!class_exists(CMSPlugin::class)) {
+    return;
+}
+
 /**
  * Class plgSystemGantry5
  */
