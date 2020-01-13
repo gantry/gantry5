@@ -323,7 +323,10 @@ abstract class ThemeInstaller
         }
 
         try {
-            is_dir($src) ? Folder::copy($src, $dst) : Folder::create($dst);
+            Folder::create($dst);
+            if (is_dir($src)) {
+                Folder::copy($src, $dst);
+            }
         } catch (\Exception $e) {
             throw new \RuntimeException("Creating configuration for outline '{$layout}' failed: {$e->getMessage()}", 500, $e);
         }

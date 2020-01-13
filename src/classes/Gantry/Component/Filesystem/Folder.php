@@ -330,7 +330,8 @@ abstract class Folder
             }
 
             $error = error_get_last();
-            throw new \RuntimeException($error['message']);
+
+            throw new \RuntimeException($error['message'] ?: 'Cannot create folder');
         }
     }
 
