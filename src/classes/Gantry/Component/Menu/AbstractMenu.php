@@ -31,7 +31,11 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
     use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
 
-    /** @var string */
+    /** @var array */
+    protected $paths = [];
+    /** @var array */
+    protected $yaml_paths = [];
+    /** @var string|int */
     protected $default;
     /** @var string */
     protected $base;
@@ -151,13 +155,16 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         // Create menu structure.
         $instance->init($params);
 
-        // Get menu items from the system (if not specified otherwise).
-        if ($config->get('settings.type') !== 'custom') {
-            $instance->getList($params, $items);
-        }
+        $instance->pathMap = new Config([]);
 
-        // Add custom menu items.
-        $instance->addCustom($params, $items);
+        if ($config->get('settings.type') !== 'custom') {
+            // Get menu items from the CMS.
+            $instance->getList($params, $items);
+
+        } else {
+            // Add custom menu items.
+            $instance->addCustom($params, $items);
+        }
 
         // Sort menu items.
         $instance->sortAll();
@@ -211,22 +218,44 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     public function ordering()
     {
         $list = [];
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $item) {
             $groups = $item->groups();
             if (\count($groups) === 1 && empty($groups[0])) {
                 continue;
             }
 
-            $list[$key] = [];
+            $id = $item->path ?: '';
+            $list[$id] = [];
             foreach ($groups as $col => $children) {
-                $list[$key][$col] = [];
+                $list[$id][$col] = [];
                 foreach ($children as $child) {
-                    $list[$key][$col][] = $child->path;
+                    $list[$id][$col][] = $child->path ?: '';
                 }
             }
         }
 
         return $list;
+    }
+
+    /**
+     * @param $path
+     * @return string|int|null
+     */
+    public function get($path)
+    {
+        if (isset($this->paths[$path])) {
+            $id = $this->paths[$path];
+
+            return $this[$id];
+        }
+
+        if (isset($this->yaml_paths[$path])) {
+            $id = $this->yaml_paths[$path];
+
+            return $this[$id];
+        }
+
+        return null;
     }
 
     /**
@@ -238,7 +267,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $list = [];
         foreach ($this->items as $key => $item) {
             if ($key !== '') {
-                $list[$item->path] = $item->toArray($withdefaults);
+                $list[$key] = $item->toArray($withdefaults);
             }
         }
 
@@ -318,7 +347,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function init(&$params)
     {
-        $this->items = ['' => new Item($this, '', ['layout' => 'horizontal'])];
+        $this->items = ['' => new Item($this, ['id' => '', 'layout' => 'horizontal'])];
+        $this->paths = ['' => ''];
     }
 
     /**
@@ -327,20 +357,23 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function add(Item $item)
     {
-        if (isset($this->items[$item->path])) {
+        if (isset($this->items[$item->id])) {
             // Only add the item once.
             return $this;
         }
 
-        $this->items[$item->path] = $item;
-
         // If parent exists, assign menu item to its parent; otherwise ignore menu item.
         if (isset($this->items[$item->parent_id])) {
             $this->items[$item->parent_id]->addChild($item);
-        } elseif (!$this->items['']->count()) {
-            $this->items[$item->parent_id] = $this->items[''];
-            $this->items[$item->parent_id]->addChild($item);
+            $this->paths[$item->path] = $item->id;
+            if (isset($item->yaml_path)) {
+                $this->yaml_paths[$item->yaml_path] = $item->id;
+
+                $this->pathMap->set(preg_replace('|/|u', '/children/', $item->yaml_path) . '/id', $item->id, '/');
+            }
         }
+
+        $this->items[$item->id] = $item;
 
         return $this;
     }
@@ -381,36 +414,46 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public function addCustom(array $params, array $items)
     {
-        $start   = $params['startLevel'];
-        $max     = $params['maxLevels'];
-        $end     = $max ? $start + $max - 1 : 0;
-
+        $isAjax = !empty($params['POST']);
         $config = $this->config();
         $type = $config->get('settings.type');
 
         // Add custom menu elements.
         foreach ($items as $route => $item) {
-            if ($type !== 'custom' && (!isset($item['type']) || $item['type'] !== 'particle')) {
-                continue;
-            }
+            // If existing menu item does not contain Gantry metadata, update properties from menu YAML.
+            $object = isset($this->items[$route]) ? $this->items[$route] : null;
+            if ($object) {
+                if (empty($object->gantry)) {
+                    foreach ($item as $key => $value) {
+                        $object[$key] = $value;
+                    }
+                }
+            } else {
+                // Only add particles if menu isn't custom made.
+                if ($type !== 'custom' && (!isset($item['type']) || $item['type'] !== 'particle')) {
+                    continue;
+                }
 
-            $tree = explode('/', $route);
-            $parentTree = $tree;
-            array_pop($parentTree);
+                if ($isAjax) {
+                    $item = new Item($this, $item);
+                    $this->add($item);
+                } else {
+                    $tree = explode('/', $route);
+                    $level = \count($tree);
+                    $parentTree = $tree;
+                    array_pop($parentTree);
 
-            // Enabled state should equal particle setting.
-            $item['enabled'] = !isset($item['options']['particle']['enabled']) || !empty($item['options']['particle']['enabled']);
-            $item['level'] = $level = \count($tree);
-            $item['parent_id'] = implode('/', $parentTree);
-            if (($start && $start > $level)
-                || ($end && $level > $end)
-                // TODO: Improve. In the mean time Item::add() handles this part.
-                // || ($start > 1 && !in_array($tree[$start - 2], $tree))
-            ) {
-                continue;
+                    // Enabled state should equal particle setting.
+                    $item['enabled'] = !isset($item['options']['particle']['enabled']) || !empty($item['options']['particle']['enabled']);
+                    $item['id'] = $route;
+                    $item['parent_id'] = implode('/', $parentTree);
+                    $item['alias'] = basename($route);
+                    $item['level'] = $level;
+
+                    $item = new Item($this, $item);
+                    $this->add($item);
+                }
             }
-            $item = new Item($this, $route, $item);
-            $this->add($item);
         }
     }
 
@@ -441,12 +484,13 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             foreach ($ordering as $key => $value) {
                 if ($map) {
                     $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
-                    $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                    $key = isset($map[$key]['id']) ? $map[$key]['id'] : $key;
                     $order[$key] = $value;
                 }
 
                 if (\is_array($value)) {
-                    $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
+                    $newPath = $path ? $path . '/' . $key : $key;
+                    $this->sortAll($value, $newPath, $newMap);
                 }
             }
 
@@ -456,12 +500,13 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                 foreach ($group as $key => $value) {
                     if ($map) {
                         $newMap = isset($map[$key]['children']) ? $map[$key]['children'] : [];
-                        $key = isset($map[$key]['path']) ? basename($map[$key]['path']) : $key;
+                        $key = isset($map[$key]['id']) ? $map[$key]['id'] : $key;
                         $order[$i][$key] = $value;
                     }
 
                     if (\is_array($value)) {
-                        $this->sortAll($value, $path ? $path . '/' . $key : $key, $newMap);
+                        $newPath = $path ? $path . '/' . $key : $key;
+                        $this->sortAll($value, $newPath, $newMap);
                     }
                 }
             }

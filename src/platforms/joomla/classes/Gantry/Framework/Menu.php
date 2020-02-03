@@ -239,6 +239,226 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * @param object[] $menuItems
+     * @param array[] $items
+     * @return Item[]
+     */
+    public function createMenuItems($menuItems, $items)
+    {
+        // Generate lookup indexes using menu item ids and paths.
+        $idLookup = [];
+        $pathLookup = [];
+        foreach ($items as $path => &$item) {
+            if (isset($item['yaml_path'])) {
+                $path = $item['yaml_path'];
+            } else {
+                $item['yaml_path'] = $path;
+            }
+
+            $pathLookup[$path] = &$item;
+
+            if (isset($item['id']) && is_numeric($item['id'])) {
+                $idLookup[$item['id']] = &$item;
+            }
+        }
+        unset($item);
+
+        $map = [];
+        $list = [];
+        // Create menu items for the pages.
+        foreach ($menuItems as $menuItem) {
+            $id = $menuItem->id;
+            $path = $menuItem->route;
+
+            // Try to locate Gantry menu item.
+            if (isset($idLookup[$id])) {
+                // Id found, use it.
+                $data = $idLookup[$id];
+            } elseif (isset($pathLookup[$path])) {
+                // ID not found, use route instead.
+                $data = $pathLookup[$path];
+            } else {
+                // Menu item is not in YAML file.
+                $data = ['yaml_path' => $path];
+            }
+            $map[$data['yaml_path']] = $id;
+
+            $item = $this->createMenuItem($data, $menuItem);
+            $list[$item->id] = $item;
+        }
+
+        // Create particles which are only inside the menu YAML.
+        foreach ($pathLookup as $path => $data) {
+            // Ignore everything which is not a module or particle type.
+            if (!isset($data['type']) || !\in_array($data['type'], ['module', 'particle'], true)) {
+                continue;
+            }
+
+            $level = substr_count($path, '/');
+            if ($level) {
+                $parentRoute = $level ? dirname($path) : '';
+
+                // If we cannot locate parent, we need to skip the menu item.
+                if (!isset($map[$parentRoute])) {
+                    continue;
+                }
+
+                $parent_id = $map[$parentRoute];
+            } else {
+                $parent_id = '';
+            }
+
+            $data['id'] = $path;
+            $data['parent_id'] = $parent_id;
+
+            $item = $this->createMenuItem($data);
+            $list[$item->id] = $item;
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param array $data
+     * @param object $menuItem
+     * @return Item
+     */
+    protected function createMenuItem($data, $menuItem = null)
+    {
+        if ($menuItem) {
+            // This logic was originally copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
+            // We should keep the contents of the function similar to Joomla in order to review it against any changes.
+
+            $id = (int)$menuItem->id;
+            $type = $menuItem->type;
+            $link = $menuItem->link;
+
+            // Figure out menu link.
+            switch ($type) {
+                case 'separator':
+                case 'heading':
+                    // These types have no link.
+                    $link = null;
+                    break;
+
+                case 'url':
+                    if ((strpos($link, 'index.php?') === 0) && (strpos($link, 'Itemid=') === false)) {
+                        // If this is an internal Joomla link, ensure the Itemid is set.
+                        $link .= '&Itemid=' . $id;
+                    }
+                    break;
+
+                case 'alias':
+                    // If this is an alias use the item id stored in the parameters to make the link.
+                    $link = 'index.php?Itemid=' . $menuItem->params->get('aliasoptions', 0);
+
+                    // FIXME: Joomla 4: missing multilanguage support
+                    break;
+
+                case 'component':
+                default:
+                    $application = $this->application;
+                    $router = $application::getRouter();
+
+                    // FIXME: Joomla 4: do we need anything else?
+                    if (version_compare(JVERSION, 4, '<') && $router->getMode() !== JROUTER_MODE_SEF) {
+                        $link .= '&Itemid=' . $menuItem->id;
+                    } else {
+                        $link = 'index.php?Itemid=' . $menuItem->id;
+
+                        if (isset($menuItem->query['format']) && $application->get('sef_suffix')) {
+                            $link .= '&format=' . $menuItem->query['format'];
+                        }
+                    }
+
+                    break;
+            }
+
+            // Get default target from Joomla.
+            switch ($menuItem->browserNav) {
+                default:
+                case 0:
+                    // Target window: Parent.
+                    $target = '_self';
+                    break;
+                case 1:
+                case 2:
+                    // Target window: New with navigation.
+                    $target = '_blank';
+                    break;
+            }
+
+            $level = (int)$menuItem->level;
+
+            $properties = [
+                'id' => $id,
+                'parent_id' => $level !== 1 ? (int)$menuItem->parent_id : '',
+                'path' => $menuItem->route,
+                'alias' => $menuItem->alias,
+                'type' => $type,
+                'link' => $link,
+                'enabled' => (bool)$menuItem->params->get('menu_show', 1),
+                'level' => $level,
+                'link_title' => $menuItem->params->get('menu-anchor_title', ''),
+                'rel' => $menuItem->params->get('menu-anchor_rel', ''),
+            ];
+
+            // TODO: Add Gantry menu item properties from the menu item
+
+            // Add menu item properties from menu configuration.
+            $properties = array_replace($properties, $data);
+
+            // And if not available in configuration, default to Joomla.
+            $properties += [
+                'title' => $menuItem->title,
+                'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
+                'image' => $menuItem->params->get('menu_image', ''),
+                'icon_only' => !$menuItem->params->get('menu_text', 1),
+                'target' => $target
+            ];
+
+        } else {
+            // There is no Joomla menu item.
+            $properties = $data;
+
+            $route = $data['id'];
+            $level = substr_count($route, '/');
+
+            $properties['enabled'] = !isset($properties['options']['particle']['enabled']) || !empty($properties['options']['particle']['enabled']);
+            $properties['alias'] = basename($route);
+            $properties['level'] = $level;
+
+            // Deal with special types which do not have link.
+            if (in_array($properties['type'], ['module', 'particle', 'separator', 'heading'], true)) {
+                $properties['link'] = null;
+            }
+        }
+
+        // FIXME: do not commit this:
+        $properties['dropdown_hide'] = 0;
+
+        $item = new Item($this, $properties);
+
+        $link = $item->link;
+        if ($item->type === 'url') {
+            // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
+            // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
+            $link = htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($link, ENT_COMPAT|ENT_SUBSTITUTE, 'UTF-8')));
+        }
+        if (!$link) {
+            $url = false;
+        } elseif (strcasecmp(substr($link, 0, 4), 'http') && strpos($link, 'index.php?') !== false) {
+            $url = Route::_($link, false, $menuItem->params->get('secure'));
+        } else {
+            $url = Route::_($link, false);
+        }
+
+        $item->url($url);
+
+        return $item;
+    }
+
+    /**
      * Get base menu item.
      *
      * If itemid is not specified or does not exist, return active menu item.
@@ -268,9 +488,6 @@ class Menu extends AbstractMenu
     /**
      * Get a list of the menu items.
      *
-     * Logic was originally copied from Joomla 3.4 mod_menu/helper.php (joomla-cms/staging, 2014-11-12).
-     * We should keep the contents of the function similar to Joomla in order to review it against any changes.
-     *
      * @param  array  $params
      * @param  array  $items
      */
@@ -284,158 +501,21 @@ class Menu extends AbstractMenu
             return;
         }
 
-        // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
-        // $application = Factory::getApplication();
-        //$user = $application->getIdentity();
-        //$levels = $user ? $user->getAuthorisedViewLevels() : [];
-        //asort($levels);
-        //$key = 'gantry_menu_items.' . json_encode($params) . '.' . json_encode($levels) . '.' . $this->base->id;
-        //$cache = Factory::getCache('mod_menu', '');
-        //try {
-        //    $this->items = $cache->get($key);
-        //} catch (\Exception $e) {
-        //    $this->items = false;
-        //}
+        $tree    = isset($this->base->tree) ? $this->base->tree : [];
+        $start   = $params['startLevel'];
+        $max     = $params['maxLevels'];
+        $end     = $max ? $start + $max - 1 : 0;
 
-        if (1) {
-            $tree    = isset($this->base->tree) ? $this->base->tree : [];
-            $start   = $params['startLevel'];
-            $max     = $params['maxLevels'];
-            $end     = $max ? $start + $max - 1 : 0;
-
-            $menuItems = $this->getItemsFromPlatform($params);
-
-            $itemMap = [];
-            foreach ($items as $path => &$itemRef) {
-                if (isset($itemRef['id']) && is_numeric($itemRef['id'])) {
-                    $itemRef['path'] = $path;
-                    $itemMap[$itemRef['id']] = &$itemRef;
-                }
-            }
-            unset($itemRef);
-
-            foreach ($menuItems as $menuItem) {
-                if (($start && $start > $menuItem->level)
-                    || ($end && $menuItem->level > $end)
-                    || ($start > 1 && !\in_array($menuItem->tree[$start - 2], $tree, true))) {
-                    continue;
-                }
-
-                // These params always come from Joomla and cannot be overridden.
-                $itemParams = [
-                    'id' => $menuItem->id,
-                    'type' => $menuItem->type,
-                    'alias' => $menuItem->alias,
-                    'path' => $menuItem->route,
-                    'link' => $menuItem->link,
-                    'link_title' => $menuItem->params->get('menu-anchor_title', ''),
-                    'rel' => $menuItem->params->get('menu-anchor_rel', ''),
-                    'enabled' => (bool) $menuItem->params->get('menu_show', 1),
-                ];
-
-                // Rest of the items will come from saved configuration.
-                if (isset($itemMap[$menuItem->id])) {
-                    // ID found, use it.
-                    $itemParams += $itemMap[$menuItem->id];
-
-                    // Store new path for the menu item into path map.
-                    if ($itemParams['path'] !== $itemMap[$menuItem->id]['path']) {
-                        if (!$this->pathMap) {
-                            $this->pathMap = new Config([]);
-                        }
-                        $this->pathMap->set(preg_replace('|/|u', '/children/', $itemMap[$menuItem->id]['path']) . '/path', $itemParams['path'], '/');
-                    }
-                } elseif (isset($items[$menuItem->route])) {
-                    // ID not found, try to use route.
-                    $itemParams += $items[$menuItem->route];
-                }
-
-                // Get default target from Joomla.
-                switch ($menuItem->browserNav)
-                {
-                    default:
-                    case 0:
-                        // Target window: Parent.
-                        $target = '_self';
-                        break;
-                    case 1:
-                    case 2:
-                        // Target window: New with navigation.
-                        $target = '_blank';
-                        break;
-                }
-
-                // And if not available in configuration, default to Joomla.
-                $itemParams += [
-                    'title' => $menuItem->title,
-                    'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
-                    'image' => $menuItem->params->get('menu_image', ''),
-                    'icon_only' => !$menuItem->params->get('menu_text', 1),
-                    'target' => $target
-                ];
-
-                $item = new Item($this, $menuItem->route, $itemParams);
-                $this->add($item);
-
-                $link  = $item->link;
-
-                switch ($item->type) {
-                    case 'separator':
-                    case 'heading':
-                        // These types have no link.
-                        $link = null;
-                        break;
-
-                    case 'url':
-                        if ((strpos($item->link, 'index.php?') === 0) && (strpos($item->link, 'Itemid=') === false)) {
-                            // If this is an internal Joomla link, ensure the Itemid is set.
-                            $link = $item->link . '&Itemid=' . $item->id;
-                        }
-                        break;
-
-                    case 'alias':
-                        // If this is an alias use the item id stored in the parameters to make the link.
-                        $link = 'index.php?Itemid=' . $menuItem->params->get('aliasoptions', 0);
-
-                        // FIXME: Joomla 4: missing multilanguage support
-                        break;
-
-                    default:
-                        $application = $this->application;
-                        $router = $application::getRouter();
-
-                        // FIXME: Joomla 4: do we need anything else?
-                        if (version_compare(JVERSION, 4, '<') && $router->getMode() !== JROUTER_MODE_SEF) {
-                            $link .= '&Itemid=' . $item->id;
-                        } else {
-                            $link = 'index.php?Itemid=' . $item->id;
-
-                            if (isset($menuItem->query['format']) && $application->get('sef_suffix')) {
-                                $link .= '&format=' . $menuItem->query['format'];
-                            }
-                        }
-                        break;
-                }
-
-                if (!$link) {
-                    $item->url(false);
-                } elseif (strcasecmp(substr($link, 0, 4), 'http') && (strpos($link, 'index.php?') !== false)) {
-                    $item->url(Route::_($link, false, $menuItem->params->get('secure')));
-                } else {
-                    $item->url(Route::_($link, false));
-                }
-
-                if ($item->type === 'url') {
-                    // Moved from modules/mod_menu/tmpl/default_url.php, not sure why Joomla had application logic in there.
-                    // Keep compatibility to Joomla menu module, but we need non-encoded version of the url.
-                    $item->url(
-                        htmlspecialchars_decode(\JFilterOutput::ampReplace(htmlspecialchars($item->link, ENT_COMPAT|ENT_SUBSTITUTE, 'UTF-8')))
-                    );
-                }
+        $menuItems = $this->createMenuItems($this->getItemsFromPlatform($params), $items);
+        foreach ($menuItems as $item) {
+            $level = $item->level;
+            if (($start && $start > $level)
+                || ($end && $level > $end)
+                || ($start > 1 && !in_array($item->tree[$start - 2], $tree, true))) {
+                continue;
             }
 
-            // FIXME: need to create collection class to gather the sibling data, otherwise caching cannot work.
-            // $cache->store($this->items, $key);
+            $this->add($item);
         }
     }
 }

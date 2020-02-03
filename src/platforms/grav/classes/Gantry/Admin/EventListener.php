@@ -196,8 +196,12 @@ class EventListener implements EventSubscriberInterface
             }
         }
 
-        foreach ($list as $page) {
-            $page->save(true);
+        try {
+            foreach ($list as $page) {
+                $page->save(true);
+            }
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(sprintf('Updating menu item %s failed: %s', $page->rawRoute(), $e->getMessage()), 500, $e);
         }
 
         foreach ($menu['items'] as $key => $item) {

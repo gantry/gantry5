@@ -1,22 +1,24 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
 {% block gantry %}
-<form method="post" action="{{ gantry.route('menu/edit', id, path, 'validate') }}">
+<form method="post" action="{{ gantry.route('menu/edit', id, item.path, 'validate') }}">
     <div class="card settings-block">
         <h4>
+            <span class="g-menuitem-path font-small">
+                {{ item.getEscapedTitles(false)|join(' <i class="fa fa-caret-right"></i> ')|raw }}
+            </span>
             <span data-title-editable="{{ data.title }}" class="title">{{ data.title }}</span>
             <i class="fa fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(data.title) }}" data-title-edit=""></i>
             {% if blueprints.fields['.enabled'] %}
             {% include 'forms/fields/enable/enable.html.twig' with {'default': true, 'name': 'enabled', 'field': blueprints.fields['.enabled'], 'value': data.enabled} %}
             {% endif %}
-            <span class="g-menuitem-path font-small">/{{ path }}</span>
         </h4>
         <div class="inner-params">
             {% include 'forms/fields.html.twig' with {'skip': ['enabled', 'title', data.level > 1 ? 'dropdown' : '-noitem-'] } %}
         </div>
     </div>
     <div class="g-modal-actions">
-        {% if gantry.authorize('menu.edit', id) %}
+        {% if gantry.authorize('menu.edit', item.path) %}
         {#<a class="button float-left">{{ 'GANTRY5_PLATFORM_DEFAULTS'|trans }}</a>#}
         <button class="button button-primary" type="submit">{{ 'GANTRY5_PLATFORM_APPLY'|trans }}</button>
         <button class="button button-primary" data-apply-and-save="">{{ 'GANTRY5_PLATFORM_APPLY_SAVE'|trans }}</button>

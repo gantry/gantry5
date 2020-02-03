@@ -94,9 +94,10 @@ class Menu extends HtmlController
 
     /**
      * @param string|null $id
+     * @param array $parts
      * @return string
      */
-    public function item($id = null)
+    public function item($id = null, ...$parts)
     {
         // Load the menu.
         try {
@@ -106,12 +107,12 @@ class Menu extends HtmlController
         }
 
         // All extra arguments become the path.
-        $path = array_slice(func_get_args(), 1);
+        $path = $parts ? implode('/', $parts) : '';
 
         // Get menu item and make sure it exists.
-        $item = $resource->get(implode('/', $path));
+        $item = $resource->get($path);
         if (!$item) {
-            throw new \RuntimeException('Menu item not found', 404);
+            throw new \RuntimeException(sprintf('Menu item not found: %s', $path), 404);
         }
 
         // Fill parameters to be passed to the template file.
@@ -119,18 +120,18 @@ class Menu extends HtmlController
         $this->params['menus'] = $resource->getMenus();
         $this->params['default_menu'] = $resource->hasDefaultMenu() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
-        $this->params['path'] = implode('/', $path);
+        $this->params['path'] = $path;
 
         // Detect special case to fetch only single column group.
         $group = $this->request->get['group'];
 
         if (empty($this->params['ajax']) || empty($this->request->get['inline'])) {
             // Handle special case to fetch only one column group.
-            if (count($path) > 0) {
-                $this->params['columns'] = $resource->get($path[0]);
+            if (count($parts) > 0) {
+                $this->params['columns'] = $resource->get($parts[0]);
             }
-            if (count($path) > 1) {
-                $this->params['column'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($path, 0, 2)))->group;
+            if (count($parts) > 1) {
+                $this->params['column'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($parts, 0, 2)))->group;
                 $this->params['override'] = $item;
             }
 
@@ -139,10 +140,10 @@ class Menu extends HtmlController
         }
 
         // Get layout name.
-        $layout = $this->layoutName(count($path) + (int) isset($group));
+        $layout = $this->layoutName(count($parts) + (int) isset($group));
 
         $this->params['item'] = $item;
-        $this->params['group'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($path, 0, 2)))->group;
+        $this->params['group'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($parts, 0, 2)))->group;
 
         return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
     }
@@ -176,10 +177,6 @@ class Menu extends HtmlController
 
         $data = $this->build($this->request->post);
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $this->container['locator'];
-        $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
-
         // Fire save event.
         $event = new MenuEvent();
         $event->gantry = $this->container;
@@ -189,10 +186,24 @@ class Menu extends HtmlController
         $event->menu = $data;
         $this->container->fireEvent('admin.menus.save', $event);
 
-        $file = YamlFile::instance($filename);
-        $file->settings(['inline' => 99]);
-        $file->save($data->toArray());
-        $file->free();
+        if ($event->save) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $this->container['locator'];
+            $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
+
+            $file = YamlFile::instance($filename);
+            $file->settings(['inline' => 99]);
+            $file->save($data->toArray());
+            $file->free();
+        }
+
+        $response = ['code' => 200, 'success' => true, 'html' => ''];
+        $production = $this->container['global']->get('production');
+        if (!$production && $event->debug) {
+            $response['debug'] = $event->debug;
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -505,7 +516,7 @@ class Menu extends HtmlController
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->instance(['menu' => $id, 'admin' => true], $config);
+        return $menus->instance(['menu' => $id, 'admin' => true, 'POST' => $config !== null], $config);
     }
 
     /**

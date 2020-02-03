@@ -36,4 +36,8 @@ class MenuEvent extends Event
     public $resource;
     /** @var Config */
     public $menu;
+    /** @var bool */
+    public $save = true;
+    /** @var array|null */
+    public $debug;
 }

@@ -121,7 +121,7 @@ function gantry5_customize_menu_item_label($menu_item)
     $id = substr($menu_item->url, strlen('#gantry-particle-'));
 
     if (isset($particles[$id])) {
-        $menu_item->type_label = $particles[$id]['name'];
+        $menu_item->type_label = $particles[$id]['name'] . ' ' . __('Particle', 'gantry5');
     } else {
         $menu_item->type_label = __('Unknown Particle', 'gantry5');
     }

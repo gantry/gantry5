@@ -181,7 +181,10 @@ class Menu extends AbstractMenu
                 continue;
             }
 
-            $item = new Item($this, $name, isset($items[$name]) && is_array($items[$name]) ? $items[$name] : []);
+            $item = isset($items[$name]) && is_array($items[$name]) ? $items[$name] : [];
+            $item += ['id' => $name];
+
+            $item = new Item($this, $item);
             $this->add($item);
 
             // Placeholder page.

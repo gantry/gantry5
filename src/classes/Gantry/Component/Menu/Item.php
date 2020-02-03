@@ -18,38 +18,46 @@ use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 
 /**
- * @property string $id
+ * @property string|int $id
+ * @property string|int|null $parent_id
  * @property string $type
- * @property string $path
- * @property string $alias
- * @property string $title
- * @property string $link
- * @property string $parent_id
+ * @property string|null $path
+ * @property string|null $alias
+ * @property string|null $title
+ * @property string|null $link
  * @property string $layout
- * @property int $browserNav
- * @property bool $menu_text
+ * @property string $target
+ * @property string $dropdown
+ * @property string $dropdown_hide
+ * @property string $icon
+ * @property string $image
+ * @property string $subtitle
+ * @property string $hash
+ * @property string $class
+ * @property bool $icon_only
+ * @property bool $enabled
  * @property bool $visible
  * @property int $group
+ * @property array $columns
+ * @property array $columns_count
  * @property int $level
+ * @property string $link_title
+ * @property string $anchor_class
+ * @property string $yaml_path
+ * @property string $yaml_alias
+ *
+ * // TODO: MISSING DEFAULTS
+ * @property int $browserNav
+ * @property bool $menu_text
  */
 class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonSerializable
 {
     use ArrayAccessWithGetters, Export;
 
-    const VERSION = 1;
+    const VERSION = 2;
 
     /** @var array */
-    protected $items;
-    /** @var AbstractMenu */
-    protected $menu;
-    /** @var array */
-    protected $groups = [];
-    /** @var array */
-    protected $children = [];
-    /** @var string */
-    protected $url;
-    /** @var array */
-    protected static $defaults = [
+    public static $defaults = [
         'id' => 0,
         'parent_id' => null,
         'type' => 'link',
@@ -60,7 +68,11 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'layout' => 'list',
         'target' => '_self',
         'dropdown' => '',
-        'dropdown_hide' => 0,
+        'dropdown_hide' => false,
+        'attributes' => [], // WP
+        'link_attributes' => [], // WP
+        'dropdown_dir' => 'right', // WP
+        'width' => 'auto', // WP
         'icon' => '',
         'image' => '',
         'subtitle' => '',
@@ -74,18 +86,32 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'columns_count' => [],
         'level' => 0,
         'link_title' => '',
-        'anchor_class' => ''
+        'anchor_class' => '',
+        'yaml_path' => null,
+        'yaml_alias' => null,
     ];
+
+    /** @var array */
+    protected $items;
+    /** @var AbstractMenu */
+    protected $menu;
+    /** @var array */
+    protected $groups = [];
+    /** @var array */
+    protected $children = [];
+    /** @var string */
+    protected $url;
 
     /**
      * Item constructor.
      * @param AbstractMenu $menu
-     * @param string $name
      * @param array $item
      */
-    public function __construct(AbstractMenu $menu, $name, array $item = [])
+    public function __construct(AbstractMenu $menu, array $item = [])
     {
         $this->menu = $menu;
+        $this->items = array_merge(static::$defaults, $item);
+    }
 
     /**
      * @return array
@@ -113,14 +139,27 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         ];
     }
 
-        $this->items = $item + [
-            'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
-            'path' => $name,
-            'alias' => $alias,
-            'title' => ucfirst($alias),
-            'link' => $name,
-            'parent_id' => $parent !== '.' ? $parent : '',
-        ] + static::$defaults;
+    /**
+     * @param bool $includeCurrent
+     * @return array
+     */
+    public function getEscapedTitles($includeCurrent = true)
+    {
+        $list = [];
+        $current = $this;
+        if ($includeCurrent) {
+            do {
+                $list[] = htmlspecialchars($current->title, ENT_COMPAT | ENT_HTML5, 'UTF-8');
+                $current = $current->parent();
+            } while ($current->id);
+        } else {
+            $list[] = '';
+            while (($current = $current->parent()) && $current->id) {
+                $list[] = htmlspecialchars($current->title, ENT_COMPAT | ENT_HTML5, 'UTF-8');
+            }
+        }
+
+        return array_reverse($list);
     }
 
     /**
@@ -216,19 +255,42 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function groups()
     {
+        $children = $this->children();
+
+        // Grouped by column counts.
+        if ($this->items['columns_count']) {
+            $i = 0; $start = 0;
+            $list = [];
+            foreach ($this->items['columns_count'] as $i => $count) {
+                $list[$i] = array_slice($children, $start, $count);
+                $start += $count;
+            }
+            // Add missing items into the end of the list.
+            if (count($children) > $start) {
+                $list[$i] = array_merge($list[$i], array_slice($children, $start));
+            }
+
+            return $list;
+        }
+
+        // Grouped by explisit list.
         if ($this->groups) {
             $list = [];
             foreach ($this->groups as $i => $group) {
                 $list[$i] = [];
-                foreach ($group as $path) {
-                    $list[$i][] = $this->menu()[$path];
+                foreach ($group as $id => $value) {
+                    $item = $this->menu()[$id];
+                    if ($item) {
+                        $list[$i][] = $item;
+                    }
                 }
             }
 
             return $list;
         }
 
-        return [$this->children()];
+        // No grouping (use first group).
+        return [$children];
     }
 
     /**
@@ -282,8 +344,12 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
-        $child->parent_id = $this->path;
-        $this->children[$child->alias] = $child->path;
+        $child->parent_id = $this->id;
+        $child->path = $this->path ? "{$this->path}/$child->alias" : $child->alias;
+        if (isset($child->yaml_alias)) {
+            $child->yaml_path = $this->yaml_path ? "{$this->yaml_path}/$child->yaml_alias" : $child->yaml_alias;
+        }
+        $this->children[$child->id] = $child->alias;
 
         return $this;
     }
@@ -294,7 +360,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function removeChild(Item $child)
     {
-        unset($this->children[$child->alias]);
+        unset($this->children[$child->id]);
 
         return $this;
     }
@@ -347,7 +413,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     public function groupChildren(array $groups)
     {
         // Array with keys that point to the items.
-        $children =& $this->children;
+        $children = $this->children;
 
         if ($children) {
             $menu = $this->menu();
@@ -362,20 +428,16 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
                 }
 
                 // Get the items for this group with proper ordering.
-                $group = array_replace(
-                    array_intersect_key($ordering, $children), array_intersect_key($children, $ordering)
-                );
+                $group = [];
+                foreach ($ordering as $key => $dummy) {
+                    if (isset($children[$key])) {
+                        $group[$key] = $children[$key];
 
-                // Assign each menu items to the group.
-                $group = array_map(
-                    static function($value) use ($i, $menu) {
-                        $item = $menu[$value];
+                        // Assign each menu items to the group.
+                        $item = $menu[$key];
                         $item->group = $i;
-
-                        return $value;
-                    },
-                    $group
-                );
+                    }
+                }
 
                 // Update remaining children.
                 $children = array_diff_key($children, $ordering);
@@ -394,7 +456,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
             }
 
             // Reorder children by their groups.
-            $children = $ordered;
+            $this->children = $ordered;
         }
 
         return $this;
@@ -409,7 +471,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function current()
     {
-        return $this->menu()[current($this->children)];
+        $current = key($this->children);
+
+        return $this->menu()[$current];
     }
 
     /**
@@ -419,7 +483,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function key()
     {
-        return key($this->children);
+        return current($this->children);
     }
 
     /**
