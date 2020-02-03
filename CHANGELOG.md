@@ -9,6 +9,7 @@
         - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
+        - Major rework in Menu Manager logic
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
@@ -16,6 +17,7 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.2
+        - Store menu item meta data in database instead of menu YAML file
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
