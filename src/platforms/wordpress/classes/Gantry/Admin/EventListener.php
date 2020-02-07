@@ -160,7 +160,7 @@ class EventListener implements EventSubscriberInterface
 
         // Delete removed particles from the menu.
         foreach ($menu_items as $wpItem) {
-            if ($wpItem->type === 'custom' && !isset($menu['items'][$wpItem->path]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
+            if ($wpItem->type === 'custom' && !isset($menu['items'][$wpItem->db_id]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
                 $db_id = $wpItem->db_id;
 
                 $debug['delete_' . $db_id] = ['id' => $db_id];
