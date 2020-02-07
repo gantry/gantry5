@@ -140,18 +140,24 @@ function gantry5_wp_edit_nav_menu_walker()
 function gantry5_wp_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type, $post_parent)
 {
     global $wpdb;
-
     if ($post_type !== 'nav_menu_item') {
         return null;
+    }
+    if (strpos($slug, '__particle-') === 0) {
+        return $slug;
     }
 
     $sql = "SELECT * FROM $wpdb->posts WHERE post_type = %s AND ID = %d LIMIT 1";
     $post = $wpdb->get_row($wpdb->prepare($sql, $post_type, $post_ID));
-    if ($post->post_status !== 'draft' && strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
+    if (strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
         return null;
     }
 
-    return "_gp{$post_ID}";
+    if (strpos($post->content, '__particle-') === 0) {
+        return $post->content;
+    }
+
+    return "__particle-{$post_ID}";
 }
 
 

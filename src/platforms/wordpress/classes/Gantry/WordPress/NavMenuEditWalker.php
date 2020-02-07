@@ -12,11 +12,11 @@ namespace Gantry\WordPress;
 
 class NavMenuEditWalker extends \Walker_Nav_Menu_Edit
 {
-    public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 )
+    public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 )
     {
         parent::start_el($output, $item, $depth, $args, $id);
 
-        if ('custom' !== $item->type || strpos($item->url, '#gantry-particle-') !== 0) {
+        if ('custom' !== $item->type || strpos($item->attr_title, 'gantry-particle-') !== 0) {
             return;
         }
 

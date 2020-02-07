@@ -160,7 +160,7 @@ class EventListener implements EventSubscriberInterface
 
         // Delete removed particles from the menu.
         foreach ($menu_items as $wpItem) {
-            if ($wpItem->type === 'custom' && !isset($menu['items'][$wpItem->path]) && strpos($wpItem->url, '#gantry-particle-') === 0) {
+            if ($wpItem->type === 'custom' && !isset($menu['items'][$wpItem->path]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
                 $db_id = $wpItem->db_id;
 
                 $debug['delete_' . $db_id] = ['id' => $db_id];
@@ -217,7 +217,7 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
             } elseif ($item['type'] === 'particle') {
-                if (isset($item['parent_id']) and is_numeric($item['parent_id'])) {
+                if (isset($item['parent_id']) && is_numeric($item['parent_id'])) {
                     // We have parent id available, use it.
                     $parent_id = $item['parent_id'];
                 } else {
@@ -228,7 +228,6 @@ class EventListener implements EventSubscriberInterface
 
                     $item['path'] = $key;
                     $item['route'] = (!empty($parent_item['route']) ? $parent_item['route'] . '/' : '') . $slug;
-                    $item['link'] = '#gantry-particle-' . $item['particle'];
 
                     $wpItem = isset($menu_items[$parent_item['id']]) ? $menu_items[$parent_item['id']] : null;
                     $parent_id = !empty($wpItem->db_id) ? $wpItem->db_id : 0;
@@ -242,7 +241,7 @@ class EventListener implements EventSubscriberInterface
                     'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
                     'menu-item-type' => 'custom',
                     'menu-item-title' => \wp_slash(trim($item['title'])),
-                    'menu-item-url' => '#gantry-particle-' . $particle,
+                    'menu-item-attr-title' => 'gantry-particle-' . $particle,
                     'menu-item-description' => '',
                     'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
                     'menu-item-classes' => \wp_slash(trim($item['class'])),
@@ -275,7 +274,7 @@ class EventListener implements EventSubscriberInterface
             }
         }
 
-        unset($menu['settings']);//, $menu['ordering']);
+        unset($menu['settings']);
         $menu['items'] = $items;
 
         $debug['yaml'] = $event->menu->toArray();
