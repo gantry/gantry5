@@ -20,6 +20,7 @@ add_action('upgrader_post_install', 'gantry5_upgrader_post_install', 10, 3);
 add_action('admin_head', 'gantry5_add_menu_item_types', 99);
 add_filter('wp_setup_nav_menu_item', 'gantry5_customize_menu_item_label');
 add_filter('wp_edit_nav_menu_walker', 'gantry5_wp_edit_nav_menu_walker');
+add_filter('pre_wp_unique_post_slug', 'gantry5_wp_unique_post_slug', 0, 6);
 
 // Check if Timber is active before displaying sidebar button
 if (class_exists( 'Timber')) {
@@ -79,7 +80,7 @@ function gantry5_add_menu_item_type_particle()
     ?>
     <div class="posttypediv" id="custom-item-types">
         <div id="tabs-panel-custom-item-types" class="tabs-panel tabs-panel-active">
-            <ul id ="custom-item-types-checklist" class="categorychecklist form-no-clear">
+            <ul id="custom-item-types-checklist" class="categorychecklist form-no-clear">
                 <?php foreach ($particles as $name => $particle): ?>
                 <?php if ($name !== 'widget' && $particle['type'] !== 'particle') continue; ?>
                 <li>
@@ -89,7 +90,7 @@ function gantry5_add_menu_item_type_particle()
                     </label>
                     <input type="hidden" class="menu-item-type" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-type]" value="custom">
                     <input type="hidden" class="menu-item-title" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-title]" value="<?php echo $particle['name']; ?>">
-                    <input type="hidden" class="menu-item-url" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-url]" value="#gantry-particle-<?php echo $name; ?>">
+                    <input type="hidden" class="menu-item-attr-title" name="menu-item[<?php echo $_nav_menu_placeholder; ?>][menu-item-attr-title]" value="gantry-particle-<?php echo $name; ?>"/>
                 </li>
                 <?php endforeach; ?>
             </ul>
@@ -109,7 +110,7 @@ function gantry5_add_menu_item_type_particle()
 
 function gantry5_customize_menu_item_label($menu_item)
 {
-    if ('custom' !== $menu_item->type || strpos($menu_item->url, '#gantry-particle-') !== 0) {
+    if ('custom' !== $menu_item->type || strpos($menu_item->attr_title, 'gantry-particle-') !== 0) {
         return $menu_item;
     }
 
@@ -118,7 +119,7 @@ function gantry5_customize_menu_item_label($menu_item)
     // Get full list of particles.
     $particles = $gantry['particles']->all();
 
-    $id = substr($menu_item->url, strlen('#gantry-particle-'));
+    $id = substr($menu_item->attr_title, strlen('gantry-particle-'));
 
     if (isset($particles[$id])) {
         $menu_item->type_label = $particles[$id]['name'] . ' ' . __('Particle', 'gantry5');
@@ -135,6 +136,24 @@ function gantry5_wp_edit_nav_menu_walker()
 
     return NavMenuEditWalker::class;
 }
+
+function gantry5_wp_unique_post_slug($override_slug, $slug, $post_ID, $post_status, $post_type, $post_parent)
+{
+    global $wpdb;
+
+    if ($post_type !== 'nav_menu_item') {
+        return null;
+    }
+
+    $sql = "SELECT * FROM $wpdb->posts WHERE post_type = %s AND ID = %d LIMIT 1";
+    $post = $wpdb->get_row($wpdb->prepare($sql, $post_type, $post_ID));
+    if ($post->post_status !== 'draft' && strpos($post->post_excerpt, 'gantry-particle-') !== 0) {
+        return null;
+    }
+
+    return "_gp{$post_ID}";
+}
+
 
 function gantry5_add_menu_item_types()
 {

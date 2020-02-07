@@ -22,7 +22,7 @@ use Gantry\Component\Menu\Item;
 class Menu extends AbstractMenu
 {
     const READ_META = true;
-    const READ_YAML = true;
+    const READ_YAML = false;
     const WRITE_DB = true;
     const WRITE_META = true;
     const WRITE_YAML = false;
@@ -437,26 +437,24 @@ class Menu extends AbstractMenu
             if (isset($properties['particle'])) {
                 $properties['type'] = 'particle';
                 $properties['link'] = null;
-                $properties['alias'] = '__particle';
             }
         }
 
         if ('custom' === $properties['type']) {
-            if ($properties['link'] === '' || $properties['link'] === '#') {
-                // Gantry menu separator.
-                $properties['type'] = 'separator';
-                $properties['link'] = null;
-
-            } elseif (strpos($properties['link'], '#gantry-particle-') === 0) {
-                $properties['gantry'] = true;
+            if (strpos($properties['link_title'], 'gantry-particle-') === 0) {
                 // Detect newly created particle instance and convert it to a particle.
+                $properties['gantry'] = true;
                 $properties['type'] = 'particle';
                 $properties['link'] = null;
-                $properties['particle'] = substr($properties['link'],  17);
+                $properties['particle'] = substr($properties['link_title'],  16);
                 $properties['options'] = [
                     'particle' => ['enabled' => '0'],
                     'block' => ['extra' => []]
                 ];
+            } elseif ($properties['link'] === '' || $properties['link'] === '#') {
+                // Gantry menu separator.
+                $properties['type'] = 'separator';
+                $properties['link'] = null;
             }
         }
 

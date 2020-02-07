@@ -17,9 +17,10 @@
         </li>
     {% endif -%}
     {%- for child in children %}
-        <li data-mm-id="{{ child.path }}"
+        {% set is_particle = child.type == 'particle' or child.type == 'module' %}
+        <li data-mm-id="{{ child.id }}"
             data-mm-level="{{ child.level }}"
-            {% if child.type == 'particle' or child.type == 'module' %}
+            {% if is_particle %}
             class="g-menu-item-{{ child.type }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
             data-mm-original-type="{{ child.type }}"
             {% else %}

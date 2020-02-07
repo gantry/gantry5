@@ -4,7 +4,7 @@
         {% for child in item %}
             {% set is_particle = child.type == 'particle' or child.type == 'module' %}
             {% set active = (child.path|split('/')|first) == (path|split('/')|first) ? ' active' : '' %}
-            <li data-mm-id="{{ child.path }}"
+            <li data-mm-id="{{ child.id }}"
                 data-mm-level="{{ child.level }}"
                 {% if is_particle %}
                 class="g-menu-removable g-menu-item-{{ child.type }}{{ active }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
