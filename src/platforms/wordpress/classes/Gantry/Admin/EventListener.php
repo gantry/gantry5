@@ -135,10 +135,10 @@ class EventListener implements EventSubscriberInterface
         $unsorted_menu_items = \wp_get_nav_menu_items(
             $menuId,
             [
-                'orderby' => 'menu_order',
-                'order' => 'ASC',
-                'post_status' => 'draft,publish',
-                'output' => ARRAY_N
+                'orderby' => 'ID',
+                'output' => ARRAY_A,
+                'output_key'  => 'ID',
+                'post_status' => 'draft,publish'
             ]
         );
 
@@ -237,16 +237,18 @@ class EventListener implements EventSubscriberInterface
                 $particle = isset($item['particle']) ? $item['particle'] : '';
                 $args = [
                     'menu-item-db-id' => 0,
+                    'menu-item-object-id' => 0,
+                    'menu-item-object' => '',
                     'menu-item-parent-id' => $parent_id,
                     'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
                     'menu-item-type' => 'custom',
                     'menu-item-title' => \wp_slash(trim($item['title'])),
-                    'menu-item-attr-title' => 'gantry-particle-' . $particle,
+                    'menu-item-url' => '',
                     'menu-item-description' => '',
+                    'menu-item-attr-title' => 'gantry-particle-' . $particle,
                     'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
                     'menu-item-classes' => \wp_slash(trim($item['class'])),
-                    'menu-item-xfn' => '',
-                    'menu-item-status' => 'publish'
+                    'menu-item-xfn' => ''
                 ];
                 $meta = $this->normalizeMenuItem($item, $ignore_db);
 
@@ -256,7 +258,7 @@ class EventListener implements EventSubscriberInterface
                     $db_id = \wp_update_nav_menu_item($menuId, 0, $args);
                     if ($db_id) {
                         // We need to update post_name to match the alias
-                        //wp_update_nav_menu_item($menuId, $db_id, $args);
+                        \wp_update_nav_menu_item($menuId, $db_id, $args + ['menu-item-status' => 'publish']);
                         if (Menu::WRITE_META) {
                             \update_post_meta($db_id, '_menu_item_gantry5', \wp_slash(json_encode($meta)));
                         }
