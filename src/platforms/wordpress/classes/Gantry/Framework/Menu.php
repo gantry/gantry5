@@ -22,7 +22,7 @@ use Gantry\Component\Menu\Item;
 class Menu extends AbstractMenu
 {
     const READ_META = true;
-    const READ_YAML = false;
+    const READ_YAML = true;
     const WRITE_DB = true;
     const WRITE_META = true;
     const WRITE_YAML = false;
@@ -35,6 +35,8 @@ class Menu extends AbstractMenu
     protected $current = [];
     /** @var array */
     protected $active = [];
+    /** @var bool */
+    protected $dbMeta = false;
 
     /**
      * Return list of menus.
@@ -423,15 +425,15 @@ class Menu extends AbstractMenu
             'rel' => $post->xfn
         ];
 
-        if (!$properties['parent_id']) {
+        if ($properties['parent_id'] === 0) {
             // Parent ID = 0 is the root.
             $properties['parent_id'] = '';
         }
 
         // Add properties from post meta `_menu_item_gantry5`.
         if (static::READ_META && isset($post->gantry)) {
+            $this->dbMeta = true;
             $properties += $post->gantry;
-            $properties['gantry'] = true;
 
             // Detect particle which is saved into the menu.
             if (isset($properties['particle'])) {
@@ -443,7 +445,6 @@ class Menu extends AbstractMenu
         if ('custom' === $properties['type']) {
             if (strpos($properties['link_title'], 'gantry-particle-') === 0) {
                 // Detect newly created particle instance and convert it to a particle.
-                $properties['gantry'] = true;
                 $properties['type'] = 'particle';
                 $properties['link'] = null;
                 $properties['particle'] = substr($properties['link_title'],  16);
@@ -532,6 +533,9 @@ class Menu extends AbstractMenu
     public function addCustom(array $params, array $items)
     {
         $isAjax = !empty($params['POST']);
+        if (!$isAjax && $this->dbMeta) {
+            return;
+        }
         $config = $this->config();
         $type = $config->get('settings.type');
 
@@ -546,12 +550,10 @@ class Menu extends AbstractMenu
 
             $object = $this->getObject($object_id, $route);
             if ($object) {
-                // If existing menu item does not contain Gantry metadata, update properties which do not come from WordPress.
-                if (empty($object->gantry)) {
-                    foreach ($item as $key => $value) {
-                        if (!in_array($key, ['id', 'parent_id', 'object_id', 'type', 'alias', 'link', 'link_title', 'rel'])) {
-                            $object[$key] = $value;
-                        }
+                // Update properties which do not come from WordPress.
+                foreach ($item as $key => $value) {
+                    if (!in_array($key, ['id', 'parent_id', 'object_id', 'type', 'alias', 'link', 'link_title', 'rel'])) {
+                        $object[$key] = $value;
                     }
                 }
             } else {
