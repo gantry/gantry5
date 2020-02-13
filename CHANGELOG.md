@@ -18,6 +18,11 @@
     1. [](#new)
         - Updated minimum requirement to WordPress 5.2
         - Store menu item meta data in database instead of menu YAML file
+    1. [](#improved)
+        - Many WordPress menu system enhancements (#726)
+    1. [](#bugfix)
+        - Fixed Gantry menu editor does not synch wordpress menu (#2473)
+        - Fixed duplicated menu items breaking menu admin (#2265)
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
