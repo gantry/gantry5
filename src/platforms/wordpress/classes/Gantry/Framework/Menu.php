@@ -25,7 +25,7 @@ class Menu extends AbstractMenu
     const READ_YAML = true;
     const WRITE_DB = true;
     const WRITE_META = true;
-    const WRITE_YAML = false;
+    const WRITE_YAML = true;
 
     /** @var array */
     protected $menus;

@@ -125,6 +125,7 @@ class EventListener implements EventSubscriberInterface
         $debug['update_menu'] = ['menu_id' => $menuId, 'options' => $options];
 
         if (Menu::WRITE_DB) {
+            unset($menu['settings.title']);
             $menuId = \wp_update_nav_menu_object($menuId, $options);
             if (\is_wp_error($menuId)) {
                 throw new \RuntimeException("Saving menu failed: Failed to update {$event->resource}", 400);
@@ -276,7 +277,6 @@ class EventListener implements EventSubscriberInterface
             }
         }
 
-        unset($menu['settings']);
         $menu['items'] = $items;
 
         $debug['yaml'] = $event->menu->toArray();
@@ -287,6 +287,7 @@ class EventListener implements EventSubscriberInterface
         }
 
         if (Menu::WRITE_DB) {
+            unset($menu['items'], $menu['ordering']);
             \wp_defer_term_counting(false);
         }
     }
