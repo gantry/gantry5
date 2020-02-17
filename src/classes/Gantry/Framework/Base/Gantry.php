@@ -195,7 +195,6 @@ abstract class Gantry extends Container
         $route = isset($routes[$path]) ? $routes[$path] : $routes[1];
 
         if (!$route) {
-            // TODO: need to implement back to root in Prime..
             return $this->offsetGet('base_url');
         }
 

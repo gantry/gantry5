@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OUTPUT=--quiet
-PLATFORMS=("joomla" "wordpress" "grav" "prime")
+PLATFORMS=("joomla" "wordpress" "grav")
 
 if [[ "$1" == '--loud' || "$1" == '-l' ]]; then
     OUTPUT=''
@@ -12,4 +12,4 @@ do
     echo "# Updating composer for $platform"
     cd platforms/$platform && composer install --no-dev ${OUTPUT} && cd ../..
 done
- 
+

@@ -84,9 +84,6 @@ abstract class RealLoader
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
-        } elseif (defined('PRIME_ROOT')) {
-            define('GANTRY5_PLATFORM', 'prime');
-            define('GANTRY5_ROOT', PRIME_ROOT);
         } else {
             throw new \RuntimeException('Gantry: CMS not detected!');
         }

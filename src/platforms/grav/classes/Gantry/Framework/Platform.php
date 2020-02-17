@@ -44,7 +44,7 @@ class Platform extends BasePlatform
     {
         parent::__construct($container);
 
-        // Initialize custom streams for Prime.
+        // Initialize custom streams for Grav.
         $this->items['streams'] += [
             'gantry-positions' => [
                 'type' => 'ReadOnlyStream',
