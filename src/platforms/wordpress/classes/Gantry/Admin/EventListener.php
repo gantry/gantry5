@@ -109,6 +109,16 @@ class EventListener implements EventSubscriberInterface
         $debug = [];
         $menu = $event->menu;
 
+        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
+        $ordering = $this->flattenOrdering($menu['ordering']);
+        $this->embedMeta($menu['ordering'], $menu);
+
+        // Order menu items by their new ordering.
+        $items = $menu['items'];
+        uasort($items, static function ($a, $b) use ($ordering) {
+            return $ordering[$a['path']] < $ordering[$b['path']] ? -1 : 1;
+        });
+
         $menus = array_flip($event->gantry['menu']->getMenus());
         $menuId = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
 
@@ -151,17 +161,13 @@ class EventListener implements EventSubscriberInterface
         }
         unset($unsorted_menu_items);
 
-        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
-        $ordering = $this->flattenOrdering($menu['ordering']);
-        $this->embedMeta($menu['ordering'], $menu);
-
         if (Menu::WRITE_DB) {
             \wp_defer_term_counting(true);
         }
 
         // Delete removed particles from the menu.
         foreach ($menu_items as $wpItem) {
-            if ($wpItem->type === 'custom' && !isset($menu['items'][$wpItem->db_id]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
+            if ($wpItem->type === 'custom' && !isset($items[$wpItem->db_id]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
                 $db_id = $wpItem->db_id;
 
                 $debug['delete_' . $db_id] = ['id' => $db_id];
@@ -175,9 +181,9 @@ class EventListener implements EventSubscriberInterface
 
         $ignore = ['title', 'link', 'class', 'target', 'id'];
         $ignore_db = array_merge($ignore, ['object_id']);
-        $items = [];
+        $list = [];
 
-        foreach ($menu['items'] as $key => $item) {
+        foreach ($items as $key => $item) {
             $key = isset($item['path']) ? $item['path'] : $key;
 
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
@@ -225,7 +231,7 @@ class EventListener implements EventSubscriberInterface
                     $parts = explode('/', $key);
                     $slug = array_pop($parts);
                     $parent_path = implode('/', $parts);
-                    $parent_item = $parent_path && isset($menu['items'][$parent_path]) ? $menu['items'][$parent_path] : null;
+                    $parent_item = $parent_path && isset($items[$parent_path]) ? $items[$parent_path] : null;
 
                     $item['path'] = $key;
                     $item['route'] = (!empty($parent_item['route']) ? $parent_item['route'] . '/' : '') . $slug;
@@ -273,11 +279,11 @@ class EventListener implements EventSubscriberInterface
             $count = count($meta);
             // But only add menu items which have useful data in them.
             if ($count > 1 || ($count === 1 && !isset($meta['object_id']))) {
-                $items[$path] = $meta;
+                $list[$path] = $meta;
             }
         }
 
-        $menu['items'] = $items;
+        $menu['items'] = $list;
 
         $debug['yaml'] = $event->menu->toArray();
         $event->debug = $debug;
