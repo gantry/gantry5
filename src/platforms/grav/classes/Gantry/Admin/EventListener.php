@@ -12,6 +12,7 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
@@ -121,27 +122,11 @@ class EventListener implements EventSubscriberInterface
      */
     public function onMenusSave(Event $event)
     {
-        $defaults = [
-            'id' => 0,
-            'layout' => 'list',
-            'target' => '_self',
-            'dropdown' => '',
-            'icon' => '',
-            'image' => '',
-            'subtitle' => '',
-            'icon_only' => false,
-            'visible' => true,
-            'group' => 0,
-            'columns' => [],
-            'link_title' => '',
-            'hash' => '',
-            'class' => ''
-        ];
-
         $menu = $event->menu;
 
         // Each menu level has ordering from 1..n counting all menu items in the same level.
         $ordering = $this->flattenOrdering($menu['ordering']);
+        $this->embedMeta($menu['ordering'], $menu);
 
         $grav = Grav::instance();
 
@@ -205,27 +190,54 @@ class EventListener implements EventSubscriberInterface
         }
 
         foreach ($menu['items'] as $key => $item) {
-            // Do not save default values.
-            foreach ($defaults as $var => $value) {
-                if (isset($item[$var]) && $item[$var] == $value) {
-                    unset($item[$var]);
-                }
-            }
-
-            // Do not save derived values.
-            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
-
-            // Particles have no link.
-            if (isset($item['type']) && $item['type'] === 'particle') {
-                unset($item['link']);
-            }
-
+            $item = $this->normalizeMenuItem($item);
             if ($item) {
                 $event->menu["items.{$key}"] = $item;
             } else {
                 unset($menu["items.{$key}"]);
             }
         }
+    }
+
+    /**
+     * @param array $item
+     * @param array $ignore
+     * @return array
+     */
+    protected function normalizeMenuItem(array $item, array $ignore = [])
+    {
+        // Do not save default values.
+        $defaults = Item::$defaults;
+        $ignore = array_flip($ignore);
+        foreach ($item as $var => $val) {
+            // Check if variable should be ignored.
+            if (isset($ignore[$var])) {
+                unset($item[$var]);
+            }
+        }
+
+        foreach ($defaults as $var => $default) {
+            if (isset($item[$var])) {
+                // Convert boolean values.
+                if (is_bool($default)) {
+                    $item[$var] = (bool)$item[$var];
+                }
+
+                if ($item[$var] == $default) {
+                    unset($item[$var]);
+                }
+            }
+        }
+
+        // Do not save derived values.
+        unset($item['id'], $item['path'], $item['route'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current'], $item['yaml_path'], $item['yaml_alias'], $item['tree']);
+
+        // Particles have no link.
+        if (isset($item['type']) && $item['type'] === 'particle') {
+            unset($item['link']);
+        }
+
+        return $item;
     }
 
     /**
@@ -255,5 +267,37 @@ class EventListener implements EventSubscriberInterface
         }
 
         return $list;
+    }
+
+    /**
+     * @param array $ordering
+     * @param \Gantry\Component\Config\Config $menu
+     * @param array $parents
+     * @param int $pos
+     */
+    protected function embedMeta(array $ordering, Config $menu, $parents = [], $pos = 0)
+    {
+        $isGroup = isset($ordering[0]);
+        $name = implode('/', $parents);
+
+        $counts = [];
+        foreach ($ordering as $id => $children) {
+            $tree = $parents;
+
+            if ($isGroup) {
+                $counts[] = \count($children);
+            } else {
+                $tree[] = $id;
+            }
+            if (\is_array($children)) {
+                $this->embedMeta($children, $menu, $tree, $isGroup ? $pos : 0);
+
+                $pos += \count($children);
+            }
+        }
+
+        if ($isGroup) {
+            $menu["items.{$name}.columns_count"] = $counts;
+        }
     }
 }

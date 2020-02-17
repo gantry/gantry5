@@ -312,12 +312,14 @@ class EventListener implements EventSubscriberInterface
         // Do not save default values.
         $defaults = Item::$defaults;
         $ignore = array_flip($ignore);
-        foreach ($defaults as $var => $default) {
+        foreach ($item as $var => $val) {
             // Check if variable should be ignored.
             if (isset($ignore[$var])) {
                 unset($item[$var]);
             }
+        }
 
+        foreach ($defaults as $var => $default) {
             if (isset($item[$var])) {
                 // Convert boolean values.
                 if (is_bool($default)) {
@@ -327,12 +329,6 @@ class EventListener implements EventSubscriberInterface
                 if ($item[$var] == $default) {
                     unset($item[$var]);
                 }
-            }
-        }
-        foreach ($item as $var => $val) {
-            // Check if variable should be ignored.
-            if (isset($ignore[$var])) {
-                unset($item[$var]);
             }
         }
 
@@ -354,7 +350,6 @@ class EventListener implements EventSubscriberInterface
         }
 
         return $item;
-
     }
 
     /**
