@@ -62,7 +62,7 @@ trait ThemeTrait
     /**
      * Register Theme stream.
      *
-     * @param string $savePath
+     * @param string|string[] $savePath
      */
     public function registerStream($savePath = null)
     {

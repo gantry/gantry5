@@ -238,8 +238,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param $path
-     * @return string|int|null
+     * @param string $path
+     * @return object|null
      */
     public function get($path)
     {

@@ -230,7 +230,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     }
 
     /**
-     * @return Item
+     * @return Item|null
      */
     public function parent()
     {

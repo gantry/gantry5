@@ -94,7 +94,7 @@ class Menu extends HtmlController
 
     /**
      * @param string|null $id
-     * @param array $parts
+     * @param array<int,mixed> $parts
      * @return string
      */
     public function item($id = null, ...$parts)

@@ -275,7 +275,7 @@ class Gantry5Plugin extends Plugin
         $apiBase = '/api/particle';
         $route = $uri->route();
 
-        if ($route !== $apiBase || !substr($route, 0, strlen($apiBase) + 1) === $apiBase . '/') {
+        if ($route !== $apiBase || substr($route, 0, strlen($apiBase) + 1) !== $apiBase . '/') {
             return;
         }
 
@@ -578,7 +578,7 @@ class Gantry5Plugin extends Plugin
         if ($preset !== null) {
             if ($preset === false) {
                 // Invalidate the cookie.
-                $this->updateCookie($cookie, false, time() - 42000);
+                $this->updateCookie($cookie, '', time() - 42000);
             } else {
                 // Update the cookie.
                 $this->updateCookie($cookie, $preset, 0);
@@ -591,7 +591,9 @@ class Gantry5Plugin extends Plugin
             $theme->setPreset($preset);
             if (GANTRY_DEBUGGER) {
                 $preset = $theme->preset();
-                $preset && Debugger::addMessage("Using preset {$preset}");
+                if ($preset) {
+                    Debugger::addMessage("Using preset {$preset}");
+                }
             }
         }
     }

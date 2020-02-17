@@ -111,7 +111,7 @@ class ChildThemeCommand extends ConsoleCommand
 
         if (!$this->options['clone'] && !$this->options['no-clone']) {
             // Get username and validate
-            $question = new ConfirmationQuestion('Clone outlines and configuration to the child theme [Y/n]: ', 'y');
+            $question = new ConfirmationQuestion('Clone outlines and configuration to the child theme [Y/n]: ', true);
 
             $clone = $helper->ask($this->input, $this->output, $question);
         } else {
@@ -202,7 +202,7 @@ PHP
 
     /**
      * @param string $type
-     * @param string $value
+     * @param string|null $value
      * @return string
      */
     protected function validate($type, $value)

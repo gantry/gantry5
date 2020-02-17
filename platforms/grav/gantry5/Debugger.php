@@ -43,7 +43,7 @@ class Debugger
      */
     public static function instance()
     {
-        if (!static::$instance) {
+        if (null === static::$instance) {
             static::$instance = new static;
         }
 
@@ -105,7 +105,7 @@ class Debugger
      */
     public static function sendDataInHeaders()
     {
-        if (static::$debugger && method_exists(static::$debugger, 'sendDataInHeaders')) {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'sendDataInHeaders')) {
             static::$debugger->sendDataInHeaders();
         }
 
@@ -119,19 +119,19 @@ class Debugger
      */
     public static function getData()
     {
-        return static::$debugger && method_exists(static::$debugger, 'getData') ? static::$debugger->getData() : null;
+        return null !== static::$debugger && method_exists(static::$debugger, 'getData') ? static::$debugger->getData() : null;
     }
 
     /**
      * Returns a data collector.
      *
      * @param string $collector
-     * @return DataCollectorInterface
+     * @return DataCollectorInterface|null
      * @throws DebugBarException
      */
     public static function getCollector($collector)
     {
-        if (static::$debugger && method_exists(static::$debugger, 'getCollector')) {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'getCollector')) {
             return static::$debugger->getCollector($collector);
         }
 
@@ -147,7 +147,7 @@ class Debugger
      */
     public static function addCollector($collector)
     {
-        if (static::$debugger && method_exists(static::$debugger, 'addCollector')) {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'addCollector')) {
             static::$debugger->addCollector($collector);
         }
 
@@ -159,11 +159,12 @@ class Debugger
      *
      * @param mixed $message
      * @param string $label
+     * @param bool $isString
      * @return static
      */
     public static function addMessage($message, $label = 'info', $isString = true)
     {
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             static::$debugger->addMessage($message, $label, $isString);
         }
 
@@ -178,7 +179,7 @@ class Debugger
      */
     public static function addException(\Exception $e)
     {
-        if (static::$debugger && method_exists(static::$debugger, 'addException')) {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'addException')) {
             static::$debugger->addException($e);
         }
 
@@ -194,7 +195,7 @@ class Debugger
      */
     public static function setConfig(Config $config)
     {
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             static::$debugger->addCollector(new ConfigCollector($config->toArray(), 'Gantry'));
         }
 
@@ -212,7 +213,7 @@ class Debugger
     {
         static $exists = false;
 
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             $paths = $locator->getPaths(null);
             if ($paths) {
                 if (!$exists) {
