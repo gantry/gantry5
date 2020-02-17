@@ -27,7 +27,7 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
         - Grav specific code passes phpstan level 1 tests
-1. [Prime](#grav)
+1. [Prime](#prime)
     1. [](#new)
         - Remove unmaintained standalone Prime environment
 
