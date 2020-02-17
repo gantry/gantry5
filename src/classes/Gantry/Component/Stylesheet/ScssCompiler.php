@@ -95,6 +95,7 @@ class ScssCompiler extends CssCompiler
         $locator = $gantry['locator'];
 
         $out = $this->getCssUrl($in);
+        /** @var string $path */
         $path = $locator->findResource($out, true, true);
         $file = File::instance($path);
 
@@ -146,7 +147,7 @@ class ScssCompiler extends CssCompiler
             $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
         }
 
-        $warnings = trim(ob_get_clean());
+        $warnings = trim(ob_get_clean() ?: '');
         if ($warnings) {
             $this->warnings[$in] = explode("\n", $warnings);
         }

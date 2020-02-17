@@ -115,9 +115,13 @@ class Compiler extends BaseCompiler
         if (!$parsed) {
             $this->throwError('url() is missing parameter');
         }
+        $url = $this->compileValue($parsed);
+        if (!is_string($url)) {
+            $this->throwError('url() value is not a string');
+        }
 
         // Compile parsed value to string.
-        $url = trim($this->compileValue($parsed), '\'"');
+        $url = trim($url, '\'"');
 
         // Handle ../ inside CSS files (points to current theme).
         if (strpos($url, '../') === 0 && strpos($url, '../', 3) === false) {

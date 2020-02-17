@@ -19,6 +19,7 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Layout\Layout;
+use Gantry\Component\Translator\Translator;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
@@ -340,11 +341,12 @@ abstract class ThemeInstaller
      */
     protected function translate($text)
     {
+        /** @var Translator $translator */
         $translator = Gantry::instance()['translator'];
 
         $args = func_get_args();
 
-        return call_user_func_array([$translator, 'translate'], $args);
+        return $translator->translate(...$args);
     }
 
     /**

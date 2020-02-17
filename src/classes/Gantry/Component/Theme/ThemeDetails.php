@@ -51,10 +51,11 @@ class ThemeDetails implements \ArrayAccess
             throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
         }
 
+        /** @var string $cache */
         $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
 
         $file = CompiledYamlFile::instance($filename);
-        $this->items = $file->setCachePath($cache)->content();
+        $this->items = (array)$file->setCachePath($cache)->content();
         $file->free();
 
         $this->offsetSet('name', $theme);

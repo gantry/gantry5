@@ -69,7 +69,7 @@ class TwigCacheFilesystem implements CacheInterface
             throw new \RuntimeException(sprintf('Unable to write in the cache directory (%s).', $dir));
         }
         $tmpFile = tempnam($dir, basename($key));
-        if (false !== @file_put_contents($tmpFile, $content) && @rename($tmpFile, $key)) {
+        if ($tmpFile && false !== @file_put_contents($tmpFile, $content) && @rename($tmpFile, $key)) {
             @chmod($key, 0666 & ~umask());
             if (self::FORCE_BYTECODE_INVALIDATION === ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
                 // Compile cached file into bytecode cache

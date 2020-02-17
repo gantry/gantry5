@@ -42,12 +42,12 @@ class Url
         }
 
         foreach($parts as $name => $value) {
-            $parts[$name] = rawurldecode($value);
+            $parts[$name] = is_int($value) ? $value : rawurldecode($value);
         }
 
         // Return query string also as an array if requested.
         if ($queryArray) {
-            $parts['vars'] = isset($parts['query']) ? static::parseQuery($parts['query']) : [];
+            $parts['vars'] = isset($parts['query']) ? static::parseQuery((string)$parts['query']) : [];
         }
 
         return $parts;

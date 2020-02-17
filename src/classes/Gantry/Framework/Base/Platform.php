@@ -283,8 +283,8 @@ abstract class Platform
      */
     public function checkDependencies($dependencies)
     {
-        if (is_string($dependencies) && $dependencies !== $this->name) {
-            return false;
+        if (is_string($dependencies)) {
+            return $dependencies === $this->name;
         }
 
         if (isset($dependencies['platform'])) {

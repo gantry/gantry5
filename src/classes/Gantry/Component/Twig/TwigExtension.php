@@ -329,9 +329,17 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         }
 
         $array = [];
+        /**
+         * @var string $key
+         * @var string|string[] $value
+         */
         foreach ((array) $input as $key => $value) {
             if (\is_array($value)) {
-                foreach ((array) $value as $key2 => $value2) {
+                /**
+                 * @var string $key2
+                 * @var string $value2
+                 */
+                foreach ($value as $key2 => $value2) {
                     $array[] = HtmlDocument::escape($key2) . '="' . HtmlDocument::escape($value2, 'html_attr') . '"';
                 }
             } elseif ($key) {
@@ -434,7 +442,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         if ($items instanceof NestedArrayAccess) {
             return $items->get($name, $default, $separator);
         }
-        $path = explode($separator, $name);
+        $path = explode($separator, $name) ?: [];
         $current = $items;
         foreach ($path as $field) {
             if (\is_object($current) && isset($current->{$field})) {
@@ -654,7 +662,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         $now = time();
 
         // check if unix timestamp
-        if ((string)(int)$date === (string)$date) {
+        if (is_int($date) || (string)(int)$date === (string)$date) {
             $unix_date = (int)$date;
         } else {
             $unix_date = strtotime($date);

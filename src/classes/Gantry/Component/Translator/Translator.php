@@ -132,11 +132,12 @@ class Translator implements TranslatorInterface
         $filename = 'gantry-admin://translations/' . $language . '/' . $section . '.yaml';
         $file = CompiledYamlFile::instance($filename);
 
-        if (!$file->exists() && ($pos = strpos($language, '-')) > 0) {
+        if (!$file->exists() && ($pos = strpos($language, '-'))) {
             $filename = 'gantry-admin://translations/' . substr($language, 0, $pos) . '/' . $section . '.yaml';
             $file = CompiledYamlFile::instance($filename);
         }
 
+        /** @var string $cachePath */
         $cachePath = $locator->findResource('gantry-cache://translations', true, true);
         $translations = (array) $file->setCachePath($cachePath)->content();
         $file->free();
