@@ -10,6 +10,8 @@
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
         - Major rework in Menu Manager logic
+    1. [](#bugfix)
+        - Fixed browser console errors on missing css map files
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
