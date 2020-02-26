@@ -383,7 +383,7 @@ class Menu extends AbstractMenu
         }
 
         // And flatten the list.
-        return $this->flattenTree($tree[0], []);
+        return isset($tree[0]) ? $this->flattenTree($tree[0], []) : [];
     }
 
     /**
