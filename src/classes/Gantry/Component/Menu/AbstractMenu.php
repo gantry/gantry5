@@ -224,12 +224,12 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                 continue;
             }
 
-            $id = $item->id ?: '';
+            $id = $item->path ?: '';
             $list[$id] = [];
             foreach ($groups as $col => $children) {
                 $list[$id][$col] = [];
                 foreach ($children as $child) {
-                    $list[$id][$col][] = $child->id ?: '';
+                    $list[$id][$col][] = $child->path ?: '';
                 }
             }
         }
@@ -267,7 +267,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $list = [];
         foreach ($this->items as $key => $item) {
             if ($key !== '') {
-                $list[$key] = $item->toArray($withdefaults);
+                $list[$item->path] = $item->toArray($withdefaults);
             }
         }
 
