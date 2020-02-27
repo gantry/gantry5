@@ -186,7 +186,7 @@ var MenuManager = new prime({
         if (this.original) { this.original.style({ opacity: 0.5 }); }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (element.hasClass('g-menu-removable') || (type && type.match(/__(module|particle|widget)(-[a-z0-9]{5,})?$/i)))) {
+        if (!this.isNewParticle && (element.hasClass('g-menu-removable') || (type && type.match(/__(module|particle|widget)(-[a-z0-9]+)?$/i)))) {
             this.eraser.show();
         }
     },
@@ -307,7 +307,7 @@ var MenuManager = new prime({
 
         var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
 
-        if (!this.isNewParticle && (this.Element.hasClass('g-menu-removable') || this.itemID.match(/__(module|particle|widget)(-[a-z0-9]{5})?$/i))) {
+        if (!this.isNewParticle && (this.Element.hasClass('g-menu-removable') || this.itemID.match(/__(module|particle|widget)(-[a-z0-9]+)?$/i))) {
             target = $(target);
             if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
