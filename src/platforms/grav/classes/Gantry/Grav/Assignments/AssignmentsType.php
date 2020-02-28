@@ -13,7 +13,7 @@ namespace Gantry\Grav\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Plugin\AdminPlugin;
 
 /**
@@ -34,7 +34,7 @@ class AssignmentsType implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
-        /** @var Page $page */
+        /** @var PageInterface $page */
         $page = $grav['page'];
 
         $rules[$page->template()] = $this->priority;

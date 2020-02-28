@@ -18,7 +18,7 @@ use Gantry\Component\Theme\ThemeTrait;
 use Gantry\Debugger;
 use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page as GravPage;
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Pages;
 use Grav\Common\Twig\Twig;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -160,7 +160,7 @@ class Theme extends AbstractTheme
         $gantry = static::gantry();
         $grav = Grav::instance();
 
-        /** @var GravPage $page */
+        /** @var PageInterface $page */
         $page = $grav['page'];
 
         $context = parent::getContext($context);

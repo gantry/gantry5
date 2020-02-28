@@ -16,7 +16,7 @@ use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
@@ -143,7 +143,7 @@ class EventListener implements EventSubscriberInterface
         $all = [];
         $list = [];
 
-        /** @var Page $page */
+        /** @var PageInterface $page */
         foreach ($visible as $page) {
             if (!$page->order()) {
                 continue;

@@ -13,7 +13,7 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Config\Config;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
 
@@ -81,7 +81,7 @@ class AssignmentsPage implements AssignmentsInterface
 
         $items = [];
 
-        /** @var Page $page */
+        /** @var PageInterface $page */
         foreach ($pages as $page) {
             $route = trim($page->rawRoute(), '/');
             $items[] = [

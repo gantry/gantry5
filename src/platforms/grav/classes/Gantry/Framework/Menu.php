@@ -21,7 +21,7 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page as GravPage;
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -37,7 +37,7 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
-        /** @var GravPage $page */
+        /** @var PageInterface $page */
         $page = $grav['page'];
         $route = trim($page->rawRoute(), '/');
 
@@ -100,7 +100,7 @@ class Menu extends AbstractMenu
 
         // Build the options array.
 
-        /** @var GravPage $page */
+        /** @var PageInterface $page */
         foreach ($items as $page) {
             if (!$page->order()) {
                 continue;
@@ -190,7 +190,7 @@ class Menu extends AbstractMenu
             $pages->enablePages();
         }
 
-        /** @var GravPage $root */
+        /** @var PageInterface $root */
         $root = $pages->root();
 
         $list = [];
@@ -202,11 +202,11 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @param GravPage $page
+     * @param PageInterface $page
      * @param int $levels
      * @return array
      */
-    public function getItemsFromPlatformRecurse(GravPage $page, $levels)
+    public function getItemsFromPlatformRecurse(PageInterface $page, $levels)
     {
         if (!$page->visible() || $page->modular()) {
             return [];
@@ -225,7 +225,7 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @param GravPage[] $pages
+     * @param PageInterface[] $pages
      * @param array[] $items
      * @return Item[]
      */
@@ -273,7 +273,7 @@ class Menu extends AbstractMenu
 
     /**
      * @param array $data
-     * @param GravPage $page
+     * @param PageInterface $page
      * @return Item
      */
     protected function createMenuItem($data, $page = null)

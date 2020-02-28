@@ -15,7 +15,7 @@ use Gantry\Component\Url\Url;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
 use Grav\Common\Language\LanguageCodes;
-use Grav\Common\Page\Page as GravPage;
+use Grav\Common\Page\Interfaces\PageInterface;
 
 /**
  * Class Page
@@ -93,7 +93,7 @@ class Page extends Base\Page
     {
         $grav = Grav::instance();
 
-        /** @var GravPage $page */
+        /** @var PageInterface $page */
         $page = $grav['page'];
 
         $classes = [

@@ -14,7 +14,7 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Interfaces\PageInterface;
 
 /**
  * Class AssignmentsLanguage
@@ -83,7 +83,7 @@ class AssignmentsLanguage implements AssignmentsInterface
 
         $items = [];
 
-        /** @var Page $page */
+        /** @var PageInterface $page */
         foreach ($languages as $code) {
             $items[] = [
                 'name' => $code,

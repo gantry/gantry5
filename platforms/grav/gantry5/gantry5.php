@@ -24,7 +24,7 @@ use Gantry\Framework\Theme;
 use Gantry5\Loader;
 use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Page\Interfaces\PageInterface;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Page; // used in new Page()
 use Grav\Common\Page\Pages;
 use Grav\Common\Page\Types;
 use Grav\Common\Plugin;
