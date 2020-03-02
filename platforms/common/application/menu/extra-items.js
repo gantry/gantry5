@@ -176,7 +176,7 @@ var StepTwo = function(data, content, button) {
                                 path    = element.data('mm-id') + '-',
                                 id      = randomID(5),
                                 base    = element.parent('[data-mm-base]').data('mm-base'),
-                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/list-\d+$/) || [0])[0],
                                 index   = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
                             while (menumanager.items[path + id]) { id = randomID(5); }
