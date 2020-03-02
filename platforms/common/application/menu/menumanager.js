@@ -345,7 +345,7 @@ var MenuManager = new prime({
 
         var particle = this.block,
             base = particle.parent('[data-mm-base]').data('mm-base'),
-            col = (particle.parent('[data-mm-id]').data('mm-id').match(/list-\d+$/) || [0])[0],
+            col = (particle.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
             index = indexOf(particle.parent().children('[data-mm-id]:not(.original-placeholder)'), particle[0]);
 
         delete this.items[this.itemID];
@@ -435,7 +435,7 @@ var MenuManager = new prime({
                 if (!source) { return; }
 
                 items = source.search('[data-mm-id]');
-                column = Number(this.block.data('mm-level') > 2 ? 0 : (source.data('mm-id').match(/list-\d+$/) || [0])[0]);
+                column = Number(this.block.data('mm-level') > 2 ? 0 : (source.data('mm-id').match(/\d+$/) || [0])[0]);
 
                 if (!items) {
                     this.ordering[path][column] = [];
@@ -453,7 +453,7 @@ var MenuManager = new prime({
             // Refresh the origin if it's a particle
             base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
             if (this.isParticle && base && this.targetLevel != this.currentLevel) {
-                var list = (this.itemFrom.data('mm-id').match(/list-\d+$/) || [0])[0],
+                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0],
                     location = base.data('mm-base') || '',
                     currentLocation = ltrim([location, id].join('/'), ['/']);
 
@@ -473,9 +473,9 @@ var MenuManager = new prime({
                 element = $(element);
 
                 var id = element.data('mm-id'),
-                    column = Number((id.match(/list-\d+$/) || [0])[0]);
+                    column = Number((id.match(/\d+$/) || [0])[0]);
 
-                element.data('mm-id', id.replace(/list-\d+$/, 'list-' + index));
+                element.data('mm-id', id.replace(/\d+$/, '' + index));
                 colsOrder.push(this.ordering[active][column]);
             }, this);
 
