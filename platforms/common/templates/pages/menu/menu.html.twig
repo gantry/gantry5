@@ -73,7 +73,7 @@
 
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
-         data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
+         data-menu-items="{{ menu.items(false)|json_encode|escape('html_attr') }}"
          data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
         {% if menu.items|length %}
             {% include 'menu/base.html.twig' with {'item': menu.root} %}

@@ -73,6 +73,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'link_attributes' => [], // WP
         'dropdown_dir' => 'right', // WP
         'width' => 'auto', // WP
+        'rel' => '', // WP
         'icon' => '',
         'image' => '',
         'subtitle' => '',
@@ -132,7 +133,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     public function jsonSerialize()
     {
         return [
-            'items' => $this->items,
+            'items' => $this->toArray(false),
             'groups' => $this->groups,
             'children' => $this->children,
             'url' => $this->url
@@ -530,16 +531,47 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      * Convert object into an array.
      *
      * @param bool $withDefaults
+     * @param array $ignore
      * @return array
      */
-    public function toArray($withDefaults = true)
+    public function toArray($withDefaults = true, array $ignore = [])
     {
         $items = $this->items;
 
         if (!$withDefaults) {
-            foreach (static::$defaults as $key => $value) {
-                if ($items[$key] === $value) {
-                    unset($items[$key]);
+            // Particles have no link.
+            if (isset($items['type']) && $items['type'] === 'particle') {
+                unset($items['link']);
+            }
+
+            // Remove yaml variables if there's no need for them.
+            if ($items['yaml_path'] === $items['path']) {
+                unset($items['yaml_path']);
+            }
+            if ($items['yaml_alias'] === $items['alias']) {
+                unset($items['yaml_alias']);
+            }
+
+            // Check if variable should be ignored.
+            $ignore = array_flip($ignore) + ['tree' => true];
+            foreach ($items as $var => $val) {
+                if (isset($ignore[$var])) {
+                    unset($items[$var]);
+                }
+            }
+
+            $defaults = static::$defaults;
+            foreach ($defaults as $var => $default) {
+                if (array_key_exists($var, $items)) {
+                    // Convert boolean values.
+                    if (is_bool($default)) {
+                        $items[$var] = (bool)$items[$var];
+                    }
+
+                    // Ignore default values.
+                    if ($items[$var] == $default) {
+                        unset($items[$var]);
+                    }
                 }
             }
         }
