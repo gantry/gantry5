@@ -305,47 +305,25 @@ class EventListener implements EventSubscriberInterface
      */
     protected function normalizeMenuItem(array $item, array $ignore = [])
     {
+        static $ignoreList = [
+            // Never save derived values.
+            'id', 'path', 'route', 'alias', 'parent_id', 'level', 'group', 'current', 'yaml_path', 'yaml_alias',
+            // Also do not save WP variables we do not need.
+            'rel', 'attr_title'
+        ];
+
         if (isset($item['link_title'])) {
             $item['link_title'] = trim($item['link_title']);
-        }
-
-        // Do not save default values.
-        $defaults = Item::$defaults;
-        $ignore = array_flip($ignore);
-        foreach ($item as $var => $val) {
-            // Check if variable should be ignored.
-            if (isset($ignore[$var])) {
-                unset($item[$var]);
-            }
-        }
-
-        foreach ($defaults as $var => $default) {
-            if (isset($item[$var])) {
-                // Convert boolean values.
-                if (is_bool($default)) {
-                    $item[$var] = (bool)$item[$var];
-                }
-
-                if ($item[$var] == $default) {
-                    unset($item[$var]);
-                }
-            }
         }
 
         if (isset($item['object_id'])) {
             $item['object_id'] = (int)$item['object_id'];
         }
 
-        // Do not save derived values.
-        unset($item['id'], $item['path'], $item['route'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current'], $item['yaml_path'], $item['yaml_alias'], $item['tree']);
+        $item = Item::normalize($item, array_merge($ignore, $ignoreList));
 
-        // Do not save WP variables we do not use.
-        unset($item['rel'], $item['attr_title']);
-
-        // Particles have no link.
-        if (isset($item['type']) && $item['type'] === 'particle') {
-            unset($item['link']);
-        } else {
+        if (!isset($item['type']) || $item['type'] !== 'particle') {
+            // These are storec into DB for non-particles.
             unset($item['title'], $item['link'], $item['type']);
         }
 

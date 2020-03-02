@@ -536,46 +536,52 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function toArray($withDefaults = true, array $ignore = [])
     {
-        $items = $this->items;
+        return $withDefaults ? $this->items : static::normalize($this->items, $ignore);
+    }
 
-        if (!$withDefaults) {
-            // Particles have no link.
-            if (isset($items['type']) && $items['type'] === 'particle') {
-                unset($items['link']);
-            }
+    /**
+     * @param array $array
+     * @param array $ignore
+     * @return array
+     */
+    public static function normalize(array $array, array $ignore = [])
+    {
+        // Particles have no link.
+        if (isset($array['type']) && $array['type'] === 'particle') {
+            unset($array['link']);
+        }
 
-            // Remove yaml variables if there's no need for them.
-            if ($items['yaml_path'] === $items['path']) {
-                unset($items['yaml_path']);
-            }
-            if ($items['yaml_alias'] === $items['alias']) {
-                unset($items['yaml_alias']);
-            }
+        // Remove yaml specific variables if there's no need for them.
+        if (array_key_exists('yaml_path', $array) || $array['yaml_path'] === $array['path']) {
+            unset($array['yaml_path']);
+        }
+        if (array_key_exists('yaml_alias', $array) || $array['yaml_alias'] === $array['alias']) {
+            unset($array['yaml_alias']);
+        }
 
-            // Check if variable should be ignored.
-            $ignore = array_flip($ignore) + ['tree' => true];
-            foreach ($items as $var => $val) {
-                if (isset($ignore[$var])) {
-                    unset($items[$var]);
+        // Check if variable should be ignored.
+        $ignore = array_flip($ignore) + ['tree' => true];
+        foreach ($array as $var => $val) {
+            if (isset($ignore[$var])) {
+                unset($array[$var]);
+            }
+        }
+
+        $defaults = static::$defaults;
+        foreach ($defaults as $var => $default) {
+            if (array_key_exists($var, $array)) {
+                // Convert boolean values.
+                if (is_bool($default)) {
+                    $array[$var] = (bool)$array[$var];
                 }
-            }
 
-            $defaults = static::$defaults;
-            foreach ($defaults as $var => $default) {
-                if (array_key_exists($var, $items)) {
-                    // Convert boolean values.
-                    if (is_bool($default)) {
-                        $items[$var] = (bool)$items[$var];
-                    }
-
-                    // Ignore default values.
-                    if ($items[$var] == $default) {
-                        unset($items[$var]);
-                    }
+                // Ignore default values (do not distinct variable type).
+                if ($array[$var] == $default) {
+                    unset($array[$var]);
                 }
             }
         }
 
-        return $items;
+        return $array;
     }
 }
