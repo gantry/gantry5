@@ -208,9 +208,7 @@ class EventListener implements EventSubscriberInterface
     {
         static $ignoreList = [
             // Never save derived values.
-            'id', 'path', 'route', 'alias', 'parent_id', 'level', 'group', 'current', 'yaml_path', 'yaml_alias',
-            // Also do not save WP variables we do not need.
-            'rel', 'attr_title'
+            'id', 'path', 'route', 'alias', 'parent_id', 'level', 'group', 'current', 'yaml_path', 'yaml_alias'
         ];
 
         return Item::normalize($item, array_merge($ignore, $ignoreList));
