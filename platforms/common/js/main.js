@@ -5361,7 +5361,7 @@ var StepTwo = function(data, content, button) {
                                 path    = element.data('mm-id') + '-',
                                 id      = randomID(5),
                                 base    = element.parent('[data-mm-base]').data('mm-base'),
-                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+                                col     = (element.parent('[data-mm-id]').data('mm-id').match(/list-\d+$/) || [0])[0],
                                 index   = indexOf(element.parent().children('[data-mm-id]'), element[0]);
 
                             while (menumanager.items[path + id]) { id = randomID(5); }
@@ -6020,11 +6020,10 @@ var MenuManager = new prime({
 
     moveOnce: function(element) {
         element = $(element);
-        var type = element.data('mm-id');
         if (this.original) { this.original.style({ opacity: 0.5 }); }
 
         // it's a module or a particle and we allow for them to be deleted
-        if (!this.isNewParticle && (element.hasClass('g-menu-removable') || (type && type.match(/__(module|particle|widget)(-[a-z0-9]+)?$/i)))) {
+        if (!this.isNewParticle && (element.hasClass('g-menu-removable') || this.isParticle)) {
             this.eraser.show();
         }
     },
@@ -6145,7 +6144,7 @@ var MenuManager = new prime({
 
         var target = event.type.match(/^touch/i) ? document.elementFromPoint(event.touches.item(0).clientX, event.touches.item(0).clientY) : event.target;
 
-        if (!this.isNewParticle && (this.Element.hasClass('g-menu-removable') || this.itemID.match(/__(module|particle|widget)(-[a-z0-9]+)?$/i))) {
+        if (!this.isNewParticle && (this.Element.hasClass('g-menu-removable') || this.isParticle)) {
             target = $(target);
             if (target.matches(this.eraser.element) || this.eraser.element.find(target)) {
                 this.dragdrop.removeElement = true;
@@ -6184,7 +6183,7 @@ var MenuManager = new prime({
 
         var particle = this.block,
             base = particle.parent('[data-mm-base]').data('mm-base'),
-            col = (particle.parent('[data-mm-id]').data('mm-id').match(/\d+$/) || [0])[0],
+            col = (particle.parent('[data-mm-id]').data('mm-id').match(/list-\d+$/) || [0])[0],
             index = indexOf(particle.parent().children('[data-mm-id]:not(.original-placeholder)'), particle[0]);
 
         delete this.items[this.itemID];
@@ -6274,7 +6273,7 @@ var MenuManager = new prime({
                 if (!source) { return; }
 
                 items = source.search('[data-mm-id]');
-                column = Number(this.block.data('mm-level') > 2 ? 0 : (source.data('mm-id').match(/\d+$/) || [0])[0]);
+                column = Number(this.block.data('mm-level') > 2 ? 0 : (source.data('mm-id').match(/list-\d+$/) || [0])[0]);
 
                 if (!items) {
                     this.ordering[path][column] = [];
@@ -6292,7 +6291,7 @@ var MenuManager = new prime({
             // Refresh the origin if it's a particle
             base = this.itemFrom ? (this.itemFrom.attribute('data-mm-base') !== null ? this.itemFrom : this.itemFrom.find('[data-mm-base]')) : null;
             if (this.isParticle && base && this.targetLevel != this.currentLevel) {
-                var list = (this.itemFrom.data('mm-id').match(/\d+$/) || [0])[0],
+                var list = (this.itemFrom.data('mm-id').match(/list-\d+$/) || [0])[0],
                     location = base.data('mm-base') || '',
                     currentLocation = ltrim([location, id].join('/'), ['/']);
 
@@ -6312,9 +6311,9 @@ var MenuManager = new prime({
                 element = $(element);
 
                 var id = element.data('mm-id'),
-                    column = Number((id.match(/\d+$/) || [0])[0]);
+                    column = Number((id.match(/list-\d+$/) || [0])[0]);
 
-                element.data('mm-id', id.replace(/\d+$/, index));
+                element.data('mm-id', id.replace(/list-\d+$/, 'list-' + index));
                 colsOrder.push(this.ordering[active][column]);
             }, this);
 
