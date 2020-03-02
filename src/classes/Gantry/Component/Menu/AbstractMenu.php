@@ -63,6 +63,110 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     ];
 
     /**
+     * Create ordering lookup index [path => 1...n] from the nested ordering. Lookup has been sorted by accending ordering.
+     *
+     * @param array $ordering Nested ordering structure.
+     * @return array
+     */
+    public static function flattenOrdering(array $ordering)
+    {
+        $list = static::flattenOrderingRecurse($ordering);
+
+        asort($list, SORT_NUMERIC);
+
+        return $list;
+    }
+
+    /**
+     * Prepare menu items data.
+     *
+     * @param array $items
+     * @param array $ordering
+     * @param array|null $orderMap
+     * @return array
+     */
+    public static function prepareMenuItems(array $items, array $ordering, array $orderMap = null)
+    {
+        static::embedOrderingRecurse($items, $ordering);
+
+        if (null === $orderMap) {
+            $orderMap = static::flattenOrdering($ordering);
+        }
+
+        // Order menu items by their new ordering.
+        $items = array_replace($orderMap, $items);
+        foreach ($items as $key => $item) {
+            if (!is_array($item)) {
+                unset($items[$key]);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param array $ordering
+     * @param array $parents
+     * @param int $i
+     * @return array
+     */
+    public static function flattenOrderingRecurse(array $ordering, $parents = [], &$i = 0)
+    {
+        if (!$ordering) {
+            return [];
+        }
+
+        $list = [[]];
+        $isGroup = isset($ordering[0]);
+        foreach ($ordering as $path => $children) {
+            $tree = $parents;
+            if (!$isGroup) {
+                $tree[] = basename($path);
+                $name = implode('/', $tree);
+                $list[0][$name] = ++$i;
+            }
+            if (\is_array($children)) {
+                $list[] = static::flattenOrderingRecurse($children, $tree, $i);
+            }
+        }
+
+        return array_replace(...$list);
+    }
+
+    /**
+     * @param array $items
+     * @param array $ordering
+     * @param array $parents
+     * @param int $pos
+     */
+    protected static function embedOrderingRecurse(array &$items, array $ordering, $parents = [], $pos = 0)
+    {
+        $isGroup = isset($ordering[0]);
+        $name = implode('/', $parents);
+
+        $counts = [];
+        foreach ($ordering as $path => $children) {
+            $tree = $parents;
+            $count = \is_array($children) ? \count($children) : 0;
+
+            if ($isGroup) {
+                $counts[] = $count;
+            } else {
+                $tree[] = basename($path);
+            }
+            if (\is_array($children)) {
+                static::embedOrderingRecurse($children, $items, $tree, $isGroup ? $pos : 0);
+
+                $pos += $count;
+            }
+        }
+
+        if ($isGroup) {
+            $items[$name]['columns_count'] = $counts;
+        }
+    }
+
+    /**
      * Return list of menus.
      *
      * @return array
@@ -143,6 +247,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         $instance->params = $params;
 
         if ($menu) {
+            $menu->set('items', static::prepareMenuItems($menu->get('items'), $menu->get('ordering')));
             $instance->override = true;
             $instance->config = $menu;
         } else {

@@ -107,17 +107,15 @@ class EventListener implements EventSubscriberInterface
          */
 
         $debug = [];
+
+        /** @var Config $menu */
         $menu = $event->menu;
 
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
-        $ordering = $this->flattenOrdering($menu['ordering']);
-        $this->embedMeta($menu['ordering'], $menu);
+        $ordering = Menu::flattenOrdering($menu['ordering']);
 
-        // Order menu items by their new ordering.
-        $items = $menu['items'];
-        uasort($items, static function ($a, $b) use ($ordering) {
-            return $ordering[$a['path']] < $ordering[$b['path']] ? -1 : 1;
-        });
+        // Prepare menu items data.
+        $items = Menu::prepareMenuItems($menu['ordering'], $menu['items'], $ordering);
 
         $menus = array_flip($event->gantry['menu']->getMenus());
         $menuId = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
@@ -328,62 +326,5 @@ class EventListener implements EventSubscriberInterface
         }
 
         return $item;
-    }
-
-    /**
-     * @param array $ordering
-     * @param array $parents
-     * @param int $i
-     * @return array
-     */
-    protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
-    {
-        $list = [];
-        $group = isset($ordering[0]);
-        foreach ($ordering as $id => $children) {
-            $tree = $parents;
-            if (!$group) {
-                $tree[] = $id;
-                $name = implode('/', $tree);
-                $list[$name] = ++$i;
-            }
-            if (\is_array($children)) {
-                $list += $this->flattenOrdering($children, $tree, $i);
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param array $ordering
-     * @param Config $menu
-     * @param array $parents
-     * @param int $pos
-     */
-    protected function embedMeta(array $ordering, Config $menu, $parents = [], $pos = 0)
-    {
-        $isGroup = isset($ordering[0]);
-        $name = implode('/', $parents);
-
-        $counts = [];
-        foreach ($ordering as $id => $children) {
-            $tree = $parents;
-
-            if ($isGroup) {
-                $counts[] = \count($children);
-            } else {
-                $tree[] = $id;
-            }
-            if (\is_array($children)) {
-                $this->embedMeta($children, $menu, $tree, $isGroup ? $pos : 0);
-
-                $pos += \count($children);
-            }
-        }
-
-        if ($isGroup) {
-            $menu["items.{$name}.columns_count"] = $counts;
-        }
     }
 }
