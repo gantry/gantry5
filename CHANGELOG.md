@@ -1,3 +1,11 @@
+# 5.4.33
+## mm/dd/2020
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - PHP 7.4: Fixed `Trying to access array offset on value of type null` when recompiling CSS in PHP 7.4 (#2618)
+        - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
+
 # 5.4.32
 ## 01/02/2020
 

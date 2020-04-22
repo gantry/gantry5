@@ -4321,6 +4321,9 @@ class Compiler
 
         if ($name !== 'if' && $name !== 'call') {
             foreach ($sorted as &$val) {
+                // @todo fix root cause for this php 7.4 hack
+                if ($val === null)  continue;
+
                 $val = $this->reduce($val, true);
             }
         }
@@ -5873,10 +5876,10 @@ class Compiler
         return new Node\Number(strlen($stringContent), '');
     }
 
-    protected static $libStrSlice = ['string', 'start-at', 'end-at'];
+    protected static $libStrSlice = ['string', 'start-at', 'end-at:-1'];
     protected function libStrSlice($args)
     {
-        if (isset($args[2]) && $args[2][1] == 0) {
+        if (isset($args[2]) && ! $args[2][1]) {
             return static::$nullString;
         }
 
@@ -5889,7 +5892,7 @@ class Compiler
             $start--;
         }
 
-        $end    = (int) $args[2][1];
+        $end    = isset($args[2]) ? (int) $args[2][1] : -1;
         $length = $end < 0 ? $end + 1 : ($end > 0 ? $end - $start : $end);
 
         $string[2] = $length
