@@ -10,19 +10,13 @@
         "twig/twig": "~1.42",
         "pimple/pimple": "~3.2",
         "filp/whoops": "~2.3",
-        "rockettheme/toolbox": "dev-develop",
+        "rockettheme/toolbox": "~1.5",
         "scssphp/scssphp": "~1.0",
         "erusev/parsedown-extra": "~0.7"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rockettheme/toolbox"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Gantry\\": "classes/Gantry"
