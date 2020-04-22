@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4fef1d2d48a4044d399a0a005998034",
+    "content-hash": "ff0800793c21056f0f691abdb67122f1",
     "packages": [
         {
             "name": "leafo/scssphp",

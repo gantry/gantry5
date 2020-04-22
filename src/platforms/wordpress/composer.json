@@ -20,18 +20,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Gantry\\": "classes/Gantry"
+            "Gantry\\": "classes/Gantry",
+            "Leafo\\ScssPhp\\": "classes/Leafo/ScssPhp"
         }
     },
     "config": {
         "platform": {
             "php": "5.5.9"
-        }
-    },
-    "repositories": {
-        "leafo/scssphp": {
-            "type": "vcs",
-            "url": "https://github.com/leafo/scssphp"
         }
     }
 }
