@@ -2,9 +2,15 @@
 ## mm/dd/2020
 
 1. [Common](#common)
+    1. [](#new)
+        - **PHP 5.5.9 or later required**
     1. [](#bugfix)
         - PHP 7.4: Fixed `Trying to access array offset on value of type int|null` (#2618)
         - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
+        - PHP 7.4: Fixed twig rendering errors (#2613)
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - **WordPress 4.9.8 or later required**
 
 # 5.4.32
 ## 01/02/2020

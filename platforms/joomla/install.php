@@ -20,7 +20,7 @@ class Pkg_Gantry5InstallerScript
      */
     protected $versions = array(
         'PHP' => array (
-            '5.4' => '5.4.0',
+            '5.5' => '5.5.9',
             '0' => '7.0.32' // Preferred version
         ),
         'Joomla!' => array (

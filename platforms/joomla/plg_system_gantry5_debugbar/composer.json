@@ -4,9 +4,14 @@
     "license": "GPLv2",
 
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.9",
         "maximebf/debugbar": "~1.10",
         "symfony/polyfill-iconv": "~1.0",
         "symfony/var-dumper": "~2.8"
+    },
+    "config": {
+        "platform": {
+            "php": "5.5.9"
+        }
     }
 }
