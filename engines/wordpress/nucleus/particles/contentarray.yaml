@@ -43,7 +43,7 @@ form:
             post.limit.total:
               type: input.text
               label: Number of Posts
-              description: Enter the maximum number of posts to display.
+              description: Enter the maximum number of posts to display per page.
               default: 2
               pattern: '-?\d{1,2}'
               overridable: false
