@@ -4,6 +4,7 @@
 1. [Common](#common)
     1. [](#new)
         - **PHP 5.5.9 or later required**
+        - Updated Google Fonts list
     1. [](#bugfix)
         - PHP 7.4: Fixed `Trying to access array offset on value of type int|null` (#2618)
         - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
