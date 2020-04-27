@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d1716cdefaa17d2abd5581f728a9a34",
+    "content-hash": "0e3f4d3a206dd4b51c4e54bad7b73152",
     "packages": [
         {
             "name": "scssphp/scssphp",
@@ -758,6 +758,11 @@
                 "reference": "3c1f72c2196b8d8af3f50dba41b1610c98f5ba38",
                 "shasum": ""
             },
+            "archive": {
+                "exclude": [
+                    "tests"
+                ]
+            },
             "require": {
                 "ext-json": "*",
                 "php": ">=5.6.0",
@@ -784,7 +789,17 @@
                     "RocketTheme\\Toolbox\\StreamWrapper\\": "StreamWrapper/src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit run unit"
+                ],
+                "test-windows": [
+                    "vendor\\bin\\phpunit run unit"
+                ],
+                "phpstan": [
+                    "vendor/bin/phpstan analyse -l 8 -c ./tests/phpstan/phpstan.neon . --memory-limit=128M"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -794,6 +809,10 @@
                 "php",
                 "rockettheme"
             ],
+            "support": {
+                "source": "https://github.com/rockettheme/toolbox/tree/1.5.1",
+                "issues": "https://github.com/rockettheme/toolbox/issues"
+            },
             "time": "2020-03-19T18:26:22+00:00"
         },
         {
