@@ -11,6 +11,9 @@
         - PHP 7.4: Fixed twig rendering errors (#2613)
         - PHP 7.4: Fixed modifying particle settings throws an error (#2631)
         - Fixed grid breakpoint calculation overlaps not being tight enough (#2492)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Pagination in `Joomla Articles` particle does not work when used in module (#2511)
 1. [WordPress](#wordpress)
     1. [](#improved)
         - **WordPress 4.9.8 or later required**
