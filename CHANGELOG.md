@@ -9,6 +9,7 @@
         - PHP 7.4: Fixed `Trying to access array offset on value of type int|null` (#2618)
         - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
         - PHP 7.4: Fixed twig rendering errors (#2613)
+        - Helium: Headings should use title font instead of default (#2599)
 1. [WordPress](#wordpress)
     1. [](#improved)
         - **WordPress 4.9.8 or later required**
