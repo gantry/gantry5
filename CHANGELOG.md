@@ -10,6 +10,7 @@
         - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
         - PHP 7.4: Fixed twig rendering errors (#2613)
         - PHP 7.4: Fixed modifying particle settings throws an error (#2631)
+        - Fixed JS issue in Key => Value pairs when changing existing key name (#2539)
         - Fixed grid breakpoint calculation overlaps not being tight enough (#2492)
         - Helium: Headings should use title font instead of default (#2599)
 1. [Joomla](#joomla)
