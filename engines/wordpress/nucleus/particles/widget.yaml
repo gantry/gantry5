@@ -11,6 +11,11 @@ form:
       description: Globally enable widget particle.
       default: true
 
+    info:
+      type: separator.note
+      class: alert
+      content: 'Widgets that utilise JavaScript in their forms are not supported.<br />Such widgets can be used with Widget Position particle instead.'
+
     widget:
       type: gantry.widget
       label: Widget

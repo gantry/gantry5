@@ -33,6 +33,30 @@
     1. [](#new)
         - Remove unmaintained standalone Prime environment
 
+# 5.4.33
+## 04/27/2020
+
+1. [Common](#common)
+    1. [](#new)
+        - **PHP 5.5.9 or later required**
+        - Updated Google Fonts list
+    1. [](#bugfix)
+        - PHP 7.4: Fixed `Trying to access array offset on value of type int|null` (#2618)
+        - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
+        - PHP 7.4: Fixed twig rendering errors (#2613)
+        - PHP 7.4: Fixed modifying particle settings throws an error (#2631)
+        - Fixed JS issue in Key => Value pairs when changing existing key name (#2539)
+        - Fixed grid breakpoint calculation overlaps not being tight enough (#2492)
+        - Helium: Headings should use title font instead of default (#2599)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Pagination in `Joomla Articles` particle does not work when used in module (#2511)
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - **WordPress 4.9.8 or later required**
+    1. [](#bugfix)
+        - Fixed content array particle not resetting WP query
+
 # 5.4.32
 ## 01/02/2020
 
