@@ -134,7 +134,8 @@ abstract class AbstractAssignments
 
         // Make sure that base or system outlines aren't in the list.
         foreach ($files as $key => $array) {
-            if ($key && (((string)$key[0]) === '_' || $key === 'default')) {
+            $key = (string)$key;
+            if ($key === 'default' || strpos($key, '_') === 0) {
                 unset($files[$key]);
             }
         }

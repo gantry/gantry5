@@ -120,7 +120,7 @@ function modify_gantry5_locale($locale, $domain = null)
 function gantry5_php_version_error()
 {
     echo '<div class="error"><p>';
-    echo sprintf('You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP 5.6.20</b> to run.', PHP_VERSION);
+    echo sprintf("You are running <b>PHP %s</b>, but <b>Gantry 5 Framework</b> needs at least <b>PHP %s</b> to run.", PHP_VERSION, '5.6.20');
     echo '</p></div>';
 }
 
