@@ -9374,7 +9374,9 @@ ready(function() {
         if (keyElement == element) {
             // renamed or cleared key, need to cleanup JSON
             if (key !== keyValue && !duplicate) {
-                data.splice(index, 1);
+                if(typeof data[index] !== 'undefined') {
+                    delete data[index][key];
+                }
                 keyElement.data('keyvalue-key', keyValue || '');
             }
 
