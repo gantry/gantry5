@@ -1,3 +1,10 @@
+# 5.4.34
+## XX/XX/XXXX
+
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Regression: Fixed `WordPress Posts` particle not loading all queried posts (#2633)
+
 # 5.4.33
 ## 04/27/2020
 
