@@ -27,7 +27,7 @@
 {% endif %}
 
 {% set posts = wordpress.query_posts(query_parameters) %}
-{% set total = posts.get_pagination([]).total|abs %}
+{% set total = posts.pagination.total|abs %}
 {% set total = max(posts|length, (total * max(0, limit.total)) - 1) %}
 
 {% block particle %}
