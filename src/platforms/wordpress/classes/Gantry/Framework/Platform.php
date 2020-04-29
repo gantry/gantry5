@@ -16,7 +16,7 @@ use Gantry\Framework\Base\Platform as BasePlatform;
 use Gantry\WordPress\Utilities;
 use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\DI\Container;
-use Timber\QueryIterator;
+use Timber\PostQuery;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -179,9 +179,9 @@ class Platform extends BasePlatform
 
     public function query_posts($query)
     {
-        $wp_query = new \WP_Query($query);
+        $wp_query = new PostQuery($query);
 
-        return new QueryIterator($wp_query);
+        return $wp_query;
     }
 
     public function errorHandlerPaths()
