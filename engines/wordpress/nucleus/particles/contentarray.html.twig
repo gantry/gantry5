@@ -28,6 +28,7 @@
 
 {% set posts = wordpress.query_posts(query_parameters) %}
 {% set total = posts.pagination.total|abs %}
+{% set total = max(posts|length, (total * max(0, limit.total))) %}
 
 {% block particle %}
 
@@ -149,9 +150,6 @@
             </div>
         {% endif %}
     </div>
-
-    {# Reset Query #}
-    {{ wordpress.wp_reset_query() }}
 
 {% endblock %}
 
