@@ -31,7 +31,9 @@ before_install:
   - composer self-update
   - npm config set spin false
   - npm install -g yarn
+  - echo "TRAVIS_TAG ($TRAVIS_TAG)"
   - if [ ! -z "$TRAVIS_TAG" ]; then
+      echo "Installing SASS and Gulp"
       gem install sass;
       yarn global add gulp;
     fi
