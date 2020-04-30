@@ -26,7 +26,7 @@ class PostQuery extends \Timber\PostQuery
      */
     public function post_count()
     {
-        return $this->_query->post_count;
+        return $this->count();
     }
 
     /**
