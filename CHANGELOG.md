@@ -1,5 +1,5 @@
 # 5.4.34
-## XX/XX/XXXX
+## mm/dd/2020
 
 1. [WordPress](#wordpress)
     1. [](#bugfix)

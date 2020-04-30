@@ -13,10 +13,10 @@ namespace Gantry\Framework;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\System\Messages;
 use Gantry\Framework\Base\Platform as BasePlatform;
+use Gantry\WordPress\PostQuery;
 use Gantry\WordPress\Utilities;
 use Gantry\WordPress\Widgets;
 use RocketTheme\Toolbox\DI\Container;
-use Timber\PostQuery;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -179,9 +179,7 @@ class Platform extends BasePlatform
 
     public function query_posts($query)
     {
-        $wp_query = new PostQuery($query);
-
-        return $wp_query;
+        return new PostQuery($query);
     }
 
     public function errorHandlerPaths()
