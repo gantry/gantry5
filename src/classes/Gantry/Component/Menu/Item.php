@@ -552,10 +552,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         }
 
         // Remove yaml specific variables if there's no need for them.
-        if (array_key_exists('yaml_path', $array) || $array['yaml_path'] === $array['path']) {
+        if (array_key_exists('yaml_path', $array) && $array['yaml_path'] === $array['path']) {
             unset($array['yaml_path']);
         }
-        if (array_key_exists('yaml_alias', $array) || $array['yaml_alias'] === $array['alias']) {
+        if (array_key_exists('yaml_alias', $array) && $array['yaml_alias'] === $array['alias']) {
             unset($array['yaml_alias']);
         }
 

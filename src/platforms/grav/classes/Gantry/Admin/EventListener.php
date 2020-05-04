@@ -11,10 +11,11 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
-use Grav\Common\Config\Config;
+use Grav\Common\Config as GravConfig;
 use Grav\Common\Grav;
 use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Pages;
@@ -87,7 +88,7 @@ class EventListener implements EventSubscriberInterface
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
-        /** @var Config $config */
+        /** @var GravConfig $config */
         $config = $grav['config'];
 
         $path   = $config->get('system.session.path', '/' . ltrim($uri->rootUrl(false), '/'));
@@ -245,7 +246,7 @@ class EventListener implements EventSubscriberInterface
 
     /**
      * @param array $ordering
-     * @param \Gantry\Component\Config\Config $menu
+     * @param Config $menu
      * @param array $parents
      * @param int $pos
      */
