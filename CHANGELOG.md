@@ -33,6 +33,16 @@
     1. [](#new)
         - Remove unmaintained standalone Prime environment
 
+# 5.4.34
+## 04/30/2020
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Remove CSS source maps (#2637)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Regression: Fixed `WordPress Posts` particle not loading all queried posts (#2633)
+
 # 5.4.33
 ## 04/27/2020
 
