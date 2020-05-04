@@ -46,6 +46,7 @@ install:
   - cd $TRAVIS_BUILD_DIR/src/platforms/prime && composer install --no-dev;
   - cd $TRAVIS_BUILD_DIR/bin/build && composer install --no-dev
 script:
+  - echo "TRAVIS_TAG ($TRAVIS_TAG)"
   - export SHORT_COMMIT=$(echo $TRAVIS_COMMIT | cut -c1-9)
   - echo "Branch ($TRAVIS_BRANCH)"
   - cd $TRAVIS_BUILD_DIR/bin/build
