@@ -155,7 +155,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                 $tree[] = basename($path);
             }
             if (\is_array($children)) {
-                static::embedOrderingRecurse($children, $items, $tree, $isGroup ? $pos : 0);
+                static::embedOrderingRecurse($items, $children, $tree, $isGroup ? $pos : 0);
 
                 $pos += $count;
             }

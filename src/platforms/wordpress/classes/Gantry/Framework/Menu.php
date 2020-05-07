@@ -519,6 +519,11 @@ class Menu extends AbstractMenu
             }
         }
 
+        if ($this->dbMeta) {
+            // Disable custom ordering if using DB meta.
+            $this->config()->set('ordering', []);
+        }
+
         if (static::READ_YAML && $items) {
             $this->addCustom($params, $items);
         }
