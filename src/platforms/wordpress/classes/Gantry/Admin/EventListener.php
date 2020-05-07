@@ -116,6 +116,8 @@ class EventListener implements EventSubscriberInterface
 
         // Prepare menu items data.
         $items = Menu::prepareMenuItems($menu['items'], $menu['ordering'], $ordering);
+
+        // Create database id map to detect moved/deleted menu items.
         $map = [];
         foreach ($items as $path => $item) {
             if (!empty($item['id'])) {
@@ -189,8 +191,6 @@ class EventListener implements EventSubscriberInterface
         $list = [];
 
         foreach ($items as $key => $item) {
-            $key = isset($item['path']) ? $item['path'] : $key;
-
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
                     $item['object_id'] = (int)$item['object_id'];
@@ -200,12 +200,22 @@ class EventListener implements EventSubscriberInterface
                 $wpItem = $menu_items[$item['id']];
                 $db_id = $wpItem->db_id;
 
+                // Set parent and position.
+                $parent_path = ltrim(dirname('/' . $key), '/');
+                if ($parent_path) {
+                    $parent = $items[$parent_path];
+                    $parent_id = (int)$parent['id'];
+                } else {
+                    $parent_id = 0;
+                }
+                $position = $ordering[$key];
+
                 $args = [
                     'menu-item-db-id' => $db_id,
-                    'menu-item-object-id' => $wpItem->object_id,
+                    'menu-item-object-id' => (int)$wpItem->object_id,
                     'menu-item-object' => $wpItem->object,
-                    'menu-item-parent-id' => $wpItem->menu_item_parent,
-                    'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
+                    'menu-item-parent-id' => $parent_id,
+                    'menu-item-position' => $position,
                     'menu-item-type' => $wpItem->type,
                     'menu-item-title' => \wp_slash(trim($item['title'])),
                     'menu-item-url' => $wpItem->url,
