@@ -3,7 +3,7 @@
 <!--
     Gantry phing build file.
 
-    @copyright (C) 2015 - 2019 RocketTheme, LLC. All rights reserved
+    @copyright (C) 2015 - 2020 RocketTheme, LLC. All rights reserved
     @copyright (C) 2014 Joshua Weiss, coder4life (@github)
 
     The following parameters can be defined inside the PHPSTORM build task as Arguments. They
@@ -16,6 +16,7 @@
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
     -Dupdate_versions=false                (= true / for CI and automated push)
+    -Dxml.version=5.5.0-dev
 -->
 <project name="gantry5" basedir="." description="Phing Build Script" default="prod">
 
