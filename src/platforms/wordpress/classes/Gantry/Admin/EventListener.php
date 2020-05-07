@@ -115,7 +115,7 @@ class EventListener implements EventSubscriberInterface
         $ordering = Menu::flattenOrdering($menu['ordering']);
 
         // Prepare menu items data.
-        $items = Menu::prepareMenuItems($menu['ordering'], $menu['items'], $ordering);
+        $items = Menu::prepareMenuItems($menu['items'], $menu['ordering'], $ordering);
 
         $menus = array_flip($event->gantry['menu']->getMenus());
         $menuId = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
