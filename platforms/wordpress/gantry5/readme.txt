@@ -25,7 +25,7 @@ Gantry 5 uses the **Nucleus** grid system, built from scratch using Flexbox and 
 
 = Cross-platform Support =
 
-The new responsive Gantry 5 framework is available for **WordPress 5.2+**, **Joomla 3.9+** and **Grav 1.6+**.
+The new responsive Gantry 5 framework is available for **WordPress 5.2+**, **Joomla 3.9+** and **Grav 1.7+**.
 
 = Intuitive YAML-driven Configuration =
 

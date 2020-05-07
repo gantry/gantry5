@@ -27,7 +27,7 @@
         - Fixed duplicated menu items breaking menu admin (#2265)
 1. [Grav](#grav)
     1. [](#new)
-        - Updated minimum requirement to Grav 1.6 and Admin 1.9
+        - Updated minimum requirement to Grav 1.7 and Admin 1.10
         - Grav specific code passes phpstan level 5 tests
 1. [Prime](#prime)
     1. [](#new)

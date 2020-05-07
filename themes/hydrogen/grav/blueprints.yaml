@@ -13,7 +13,8 @@ bugs: https://github.com/gantry/gantry5/issues
 license: MIT
 
 dependencies:
-  - { name: grav, version: '>=1.5.10' }
+  - { name: grav, version: '>=1.7' }
+  - { name: gantry5, version: '>=5.5' }
 
 form:
   validation: loose
