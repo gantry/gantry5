@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,6 +11,7 @@
 
 namespace Grav\Plugin\Console;
 
+use Grav\Common\Config\Config;
 use Grav\Common\Filesystem\Folder;
 use Grav\Common\Inflector;
 use Grav\Common\Theme;
@@ -18,6 +20,7 @@ use Grav\Console\ConsoleCommand;
 use Grav\Common\Grav;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -28,9 +31,7 @@ use Symfony\Component\Console\Question\Question;
  */
 class ChildThemeCommand extends ConsoleCommand
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options = [];
 
     protected function configure()
@@ -78,6 +79,7 @@ class ChildThemeCommand extends ConsoleCommand
 
         $this->validateOptions();
 
+        /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $this->output->writeln('<green>Creating new child theme</green>');
@@ -109,15 +111,27 @@ class ChildThemeCommand extends ConsoleCommand
 
         if (!$this->options['clone'] && !$this->options['no-clone']) {
             // Get username and validate
-            $question = new ConfirmationQuestion('Clone outlines and configuration to the child theme [Y/n]: ', 'y');
+            $question = new ConfirmationQuestion('Clone outlines and configuration to the child theme [Y/n]: ', true);
 
             $clone = $helper->ask($this->input, $this->output, $question);
         } else {
             $clone = (bool)$this->options['clone'];
         }
 
+        // Initialize Grav.
+        $isNew = method_exists($this, 'initializeGrav');
+        if ($isNew) {
+            $this->initializeGrav();
+        }
         $grav = Grav::instance();
-        $grav['config']->set('system.pages.theme', $parent);
+
+        // Initialize parent theme.
+        /** @var Config $config */
+        $config = $grav['config'];
+        $config->set('system.pages.theme', $parent);
+        if ($isNew) {
+            $this->initializeThemes();
+        }
 
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
@@ -125,9 +139,11 @@ class ChildThemeCommand extends ConsoleCommand
         /** @var Inflector $inflector */
         $inflector = $grav['inflector'];
 
-        /** @var Themes $themes */
-        $themes = $grav['themes'];
-        $themes->init();
+        if (!$isNew) {
+            /** @var Themes $themes */
+            $themes = $grav['themes'];
+            $themes->init();
+        }
 
         $folder = $locator->findResource('themes://' . $child, true, true);
         $parentClass = get_class($this->loadTheme($parent));
@@ -136,7 +152,7 @@ class ChildThemeCommand extends ConsoleCommand
         } else {
             $parentClass = '\\' . $parentClass;
         }
-        $childClass = $inflector->camelize($child);
+        $childClass = strtr($inflector::humanize($inflector::underscorize($child), 'all'), ' ', '_');
 
         Folder::create($folder);
         $file = File::instance("{$folder}/{$child}.yaml");
@@ -165,15 +181,37 @@ PHP
 
         $oldFile = File::instance($locator->findResource("themes://{$parent}/blueprints.yaml"));
         $content = $oldFile->content();
-        $content = preg_replace('|name: (.*)|ui', 'name: \\1 Child', $content);
+        $oldFile->free();
+        $content = preg_replace('|^name: (.*)|um', 'name: \\1 Child', $content, 1);
         $file = File::instance($folder . '/blueprints.yaml');
         $file->save($content);
+        $file->free();
 
         $oldFile = File::instance($locator->findResource("themes://{$parent}/gantry/theme.yaml"));
         $content = $oldFile->content();
-        $content = preg_replace('|( +)name: (.*)|ui', '\\1name: \\2 Child', $content);
+        $oldFile->free();
+        $content = preg_replace('|^( +)name: (.*)|um', '\\1name: \\2 Child', $content, 1);
         $file = File::instance($folder . '/gantry/theme.yaml');
         $file->save($content);
+        $file->free();
+
+        $oldFile = File::instance($locator->findResource("themes://{$parent}/screenshot.jpg"));
+        $content = $oldFile->content();
+        $oldFile->free();
+        if ($content) {
+            $file = File::instance($folder . '/screenshot.jpg');
+            $file->save($content);
+            $file->free();
+        }
+
+        $oldFile = File::instance($locator->findResource("themes://{$parent}/thumbnail.jpg"));
+        $content = $oldFile->content();
+        $oldFile->free();
+        if ($content) {
+            $file = File::instance($folder . '/thumbnail.jpg');
+            $file->save($content);
+            $file->free();
+        }
 
         // Clone configuration if requested.
         if ($clone) {
@@ -197,8 +235,7 @@ PHP
 
     /**
      * @param string $type
-     * @param string $value
-     *
+     * @param string|null $value
      * @return string
      */
     protected function validate($type, $value)
@@ -240,10 +277,16 @@ PHP
         return $value;
     }
 
+    /**
+     * @param string $name
+     * @return Theme|mixed
+     */
     protected function loadTheme($name)
     {
         // NOTE: ALL THE LOCAL VARIABLES ARE USED INSIDE INCLUDED FILE, DO NOT REMOVE THEM!
         $grav = Grav::instance();
+
+        /** @var Config $config */
         $config = $grav['config'];
 
         /** @var UniformResourceLocator $locator */
@@ -257,13 +300,14 @@ PHP
             // Local variables available in the file: $grav, $config, $name, $file
             $class = include_once $file;
             if ($class === true) {
+                // Class has already been loaded
                 $class = $grav['theme'];
             }
 
             if (!is_object($class)) {
                 $themeClassFormat = [
                     'Grav\\Theme\\' . $name,
-                    'Grav\\Theme\\' . $inflector->camelize($name)
+                    'Grav\\Theme\\' . $inflector::camelize($name)
                 ];
 
                 foreach ($themeClassFormat as $themeClass) {
