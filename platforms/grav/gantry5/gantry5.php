@@ -49,6 +49,7 @@ class Gantry5Plugin extends Plugin
     protected $theme;
     /** @var string */
     protected $outline;
+    /** @var string */
     protected $apiPath;
 
     /**
@@ -251,7 +252,7 @@ class Gantry5Plugin extends Plugin
         if (GANTRY_DEBUGGER) {
             Debugger::addMessage("Gantry theme {$theme->name} selected");
         }
-   }
+    }
 
     public function initAdminTheme()
     {
@@ -275,7 +276,7 @@ class Gantry5Plugin extends Plugin
         $apiBase = '/api/particle';
         $route = $uri->route();
 
-        if ($route !== $apiBase || substr($route, 0, strlen($apiBase) + 1) !== $apiBase . '/') {
+        if ($route !== $apiBase || strpos($route, $apiBase . '/') !== 0) {
             return;
         }
 
