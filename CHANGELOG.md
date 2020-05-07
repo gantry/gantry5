@@ -33,6 +33,13 @@
     1. [](#new)
         - Remove unmaintained standalone Prime environment
 
+# 5.4.35
+## mm/dd/2020
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed issues when creating child theme in CLI
+
 # 5.4.34
 ## 04/30/2020
 

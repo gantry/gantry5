@@ -118,11 +118,20 @@ class ChildThemeCommand extends ConsoleCommand
             $clone = (bool)$this->options['clone'];
         }
 
+        // Initialize Grav.
+        $isNew = method_exists($this, 'initializeGrav');
+        if ($isNew) {
+            $this->initializeGrav();
+        }
         $grav = Grav::instance();
 
+        // Initialize parent theme.
         /** @var Config $config */
         $config = $grav['config'];
         $config->set('system.pages.theme', $parent);
+        if ($isNew) {
+            $this->initializeThemes();
+        }
 
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
@@ -130,9 +139,11 @@ class ChildThemeCommand extends ConsoleCommand
         /** @var Inflector $inflector */
         $inflector = $grav['inflector'];
 
-        /** @var Themes $themes */
-        $themes = $grav['themes'];
-        $themes->init();
+        if (!$isNew) {
+            /** @var Themes $themes */
+            $themes = $grav['themes'];
+            $themes->init();
+        }
 
         $folder = $locator->findResource('themes://' . $child, true, true);
         $parentClass = get_class($this->loadTheme($parent));
@@ -141,7 +152,7 @@ class ChildThemeCommand extends ConsoleCommand
         } else {
             $parentClass = '\\' . $parentClass;
         }
-        $childClass = $inflector::camelize($child);
+        $childClass = strtr($inflector::humanize($inflector::underscorize($child), 'all'), ' ', '_');
 
         Folder::create($folder);
         $file = File::instance("{$folder}/{$child}.yaml");
@@ -170,15 +181,37 @@ PHP
 
         $oldFile = File::instance($locator->findResource("themes://{$parent}/blueprints.yaml"));
         $content = $oldFile->content();
-        $content = preg_replace('|name: (.*)|ui', 'name: \\1 Child', $content);
+        $oldFile->free();
+        $content = preg_replace('|^name: (.*)|um', 'name: \\1 Child', $content, 1);
         $file = File::instance($folder . '/blueprints.yaml');
         $file->save($content);
+        $file->free();
 
         $oldFile = File::instance($locator->findResource("themes://{$parent}/gantry/theme.yaml"));
         $content = $oldFile->content();
-        $content = preg_replace('|( +)name: (.*)|ui', '\\1name: \\2 Child', $content);
+        $oldFile->free();
+        $content = preg_replace('|^( +)name: (.*)|um', '\\1name: \\2 Child', $content, 1);
         $file = File::instance($folder . '/gantry/theme.yaml');
         $file->save($content);
+        $file->free();
+
+        $oldFile = File::instance($locator->findResource("themes://{$parent}/screenshot.jpg"));
+        $content = $oldFile->content();
+        $oldFile->free();
+        if ($content) {
+            $file = File::instance($folder . '/screenshot.jpg');
+            $file->save($content);
+            $file->free();
+        }
+
+        $oldFile = File::instance($locator->findResource("themes://{$parent}/thumbnail.jpg"));
+        $content = $oldFile->content();
+        $oldFile->free();
+        if ($content) {
+            $file = File::instance($folder . '/thumbnail.jpg');
+            $file->save($content);
+            $file->free();
+        }
 
         // Clone configuration if requested.
         if ($clone) {
