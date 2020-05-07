@@ -116,6 +116,12 @@ class EventListener implements EventSubscriberInterface
 
         // Prepare menu items data.
         $items = Menu::prepareMenuItems($menu['items'], $menu['ordering'], $ordering);
+        $map = [];
+        foreach ($items as $path => $item) {
+            if (!empty($item['id'])) {
+                $map[$item['id']] = $path;
+            }
+        }
 
         $menus = array_flip($event->gantry['menu']->getMenus());
         $menuId = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
@@ -165,7 +171,8 @@ class EventListener implements EventSubscriberInterface
 
         // Delete removed particles from the menu.
         foreach ($menu_items as $wpItem) {
-            if ($wpItem->type === 'custom' && !isset($items[$wpItem->db_id]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
+            $path = isset($map[$wpItem->db_id]) ? $map[$wpItem->db_id] : '\\';
+            if ($wpItem->type === 'custom' && !isset($items[$path]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
                 $db_id = $wpItem->db_id;
 
                 $debug['delete_' . $db_id] = ['id' => $db_id];
