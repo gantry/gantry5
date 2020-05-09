@@ -63,6 +63,9 @@
                 {% endif %}
                 {% if particle.autoplay == 'enable' %}
                 autoplay: true,
+                {% if particle.autoplayHoverPause == 'enable' %}
+                autoplayHoverPause: true,
+                {% endif %}
                 autoplayTimeout: {{ particle.autoplaySpeed|default('5000') }},
                 {% else %}
                 autoplay: false,

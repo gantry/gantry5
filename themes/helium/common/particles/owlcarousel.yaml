@@ -53,6 +53,15 @@ form:
         enable: Enable
         disable: Disable
 
+    autoplayHoverPause:
+      type: select.select
+      label: Autoplay Hover Pause
+      description: Stops or does not stop the autoplay when the cursor points on the carousel.
+      default: disable
+      options:
+        enable: Enable
+        disable: Disable
+
     autoplaySpeed:
       type: input.text
       label: Autoplay Speed
