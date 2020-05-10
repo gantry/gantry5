@@ -56,7 +56,7 @@ form:
     autoplayHoverPause:
       type: select.select
       label: Autoplay Hover Pause
-      description: Stops or does not stop the autoplay when the cursor points on the carousel.
+      description: Enable or disable the Autoplay when hovering the current slide.
       default: disable
       options:
         enable: Enable
