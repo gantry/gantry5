@@ -1,9 +1,11 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
+{% set linkTitle = particle.title ? particle.title|e : particle.text|e %}
+
 {% block particle %}
 <div class="{{ particle.css.class|e }}">
     <div class="g-totop">
-        <a href="#" id="g-totop" rel="nofollow"{% if particle.title or particle.text %} title="{{particle.title ? particle.title|e : particle.text|e}}"{% endif %}>
+        <a href="#" id="g-totop" rel="nofollow"{% if linkTitle %} title="{{linkTitle}}" aria-label="{{linkTitle}}"{% endif %}>
             {% if particle.content %}{{particle.content|raw}}{% endif %}
             {% if particle.icon %}<i class="{{particle.icon}}"></i>{% endif %}
             {% if not particle.icon and not particle.content %}To Top{% endif %}
