@@ -46,7 +46,7 @@
                     {% if gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'excerpt' and post.post_excerpt is not empty %}
                         <div class="post-excerpt">{{ post.post_excerpt|apply_filters('the_excerpt')|raw }}</div>
                     {% elseif gantry.config.get('content.' ~ scope ~ '.content.type', 'content') == 'gexcerpt' %}
-                        <div class="post-excerpt">{{ post.preview.length(gantry.config.get('content.' ~ scope ~ '.content.gexcerpt-length', '50')).read_more(false)|apply_filters('the_excerpt')|raw }}</div>
+                        <div class="post-excerpt">{{ post.preview.length(gantry.config.get('content.' ~ scope ~ '.content.gexcerpt-length', '50')).force(true).read_more(false)|apply_filters('the_excerpt')|raw }}</div>
                     {% else %}
                         <div class="post-content">
                             {% set readmore = preg_match('/<!--more(.*?)?-->/', post.post_content) %}
