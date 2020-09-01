@@ -1,9 +1,18 @@
 # 5.4.35
 ## mm/dd/2020
 
+1. [Common](#common)
+    1. [](#improved)
+        - Added title option on To Top particle (#2654)
+    1. [](#bugfix)
+        - Removed Twig 1.x dependency on `HtmlDocument` class (#2656)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Truncate generated excerpt length (#2663)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed issues when creating child theme in CLI
+        - Fixed `TypeError: can't access property "getViewElement"` (#2651)
 
 # 5.4.34
 ## 04/30/2020
