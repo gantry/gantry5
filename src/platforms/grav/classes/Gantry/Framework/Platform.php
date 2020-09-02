@@ -194,6 +194,16 @@ class Platform extends BasePlatform
         return (new Module($module, $position))->toArray();
     }
 
+    public function filter($text)
+    {
+        $shortcode = Grav::instance()['shortcode'];
+        if ($shortcode && method_exists($shortcode, 'processShortcodes')) {
+            return $shortcode->processShortcodes($text);
+        }
+
+        return $text;
+    }
+
     /**
      * Get preview url for individual theme.
      *
