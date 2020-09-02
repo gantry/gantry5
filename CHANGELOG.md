@@ -13,6 +13,7 @@
     1. [](#bugfix)
         - Fixed issues when creating child theme in CLI
         - Fixed `TypeError: can't access property "getViewElement"` (#2651)
+        - CLI: Prevent creation of a child theme from a non-Gantry theme (#2395)
 
 # 5.4.34
 ## 04/30/2020
