@@ -1,5 +1,5 @@
 # 5.4.35
-## mm/dd/2020
+## 09/08/2020
 
 1. [Common](#common)
     1. [](#improved)
@@ -14,7 +14,8 @@
         - Fixed issues when creating child theme in CLI
         - Fixed `TypeError: can't access property "getViewElement"` (#2651)
         - CLI: Prevent creation of a child theme from a non-Gantry theme (#2395)
-        - Fixed Shortcodes not working from particles (#2675)
+        - Fixed shortcodes not working from particles (#2675)
+        - Helium: Fixed styling issue with Forgot Password form (#1812)
 
 # 5.4.34
 ## 04/30/2020
