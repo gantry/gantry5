@@ -244,6 +244,10 @@ PHP
                     throw new \RuntimeException('Theme does not exist');
                 }
 
+                if (!file_exists($folder . '/gantry/theme.yaml')) {
+                    throw new \RuntimeException('You can only create child theme from a Gantry 5 theme');
+                }
+
                 break;
             case 'child':
                 if ($value === null || trim($value) === '') {
@@ -257,7 +261,7 @@ PHP
                 $folder = $locator->findResource('themes://' . $value);
 
                 if ($folder) {
-                    throw new \RuntimeException('Theme already exists');
+                    throw new \RuntimeException("Theme '$value' already exists, please use another name for your child theme");
                 }
 
                 break;
