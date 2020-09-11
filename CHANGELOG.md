@@ -1,3 +1,10 @@
+# 5.4.36
+## mm/dd/2020
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
+
 # 5.4.35
 ## 09/08/2020
 

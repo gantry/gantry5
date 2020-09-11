@@ -196,7 +196,7 @@ class Platform extends BasePlatform
 
     public function filter($text)
     {
-        $shortcode = Grav::instance()['shortcode'];
+        $shortcode = isset(Grav::instance()['shortcode']) ? Grav::instance()['shortcode'] : null;
         if ($shortcode && method_exists($shortcode, 'processShortcodes')) {
             return $shortcode->processShortcodes($text);
         }
