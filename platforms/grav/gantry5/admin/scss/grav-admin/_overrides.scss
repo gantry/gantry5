@@ -4,8 +4,13 @@
   $header-text-color: #3D424E;
   $footer-background-color: #f0f0f0;
 
-  #admin-main .content-padding {
-    padding: 0;
+  #admin-main {
+   .content-padding {
+     padding: 0;
+   }
+   .titlebar {
+     z-index: auto;
+   }
   }
 
   #g5-container {

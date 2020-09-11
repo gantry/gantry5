@@ -21,12 +21,31 @@
         - Updated minimum requirement to Grav 1.6 and Admin 1.9
         - Grav specific code passes phpstan level 1 tests
 
-# 5.4.35
+# 5.4.36
 ## mm/dd/2020
 
 1. [Grav](#grav)
     1. [](#bugfix)
+        - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
+
+# 5.4.35
+## 09/08/2020
+
+1. [Common](#common)
+    1. [](#improved)
+        - Added title option on To Top particle (#2654)
+    1. [](#bugfix)
+        - Removed Twig 1.x dependency on `HtmlDocument` class (#2656)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Truncate generated excerpt length (#2663)
+1. [Grav](#grav)
+    1. [](#bugfix)
         - Fixed issues when creating child theme in CLI
+        - Fixed `TypeError: can't access property "getViewElement"` (#2651)
+        - CLI: Prevent creation of a child theme from a non-Gantry theme (#2395)
+        - Fixed shortcodes not working from particles (#2675)
+        - Helium: Fixed styling issue with Forgot Password form (#1812)
 
 # 5.4.34
 ## 04/30/2020
