@@ -101,9 +101,7 @@ class StyleHelper
             Folder::copy($oldPath, $newPath);
         }
 
-        $extension = !empty($style->extension_id) ? $style->extension_id : $style->template;
-
-        $installer = new ThemeInstaller($extension);
+        $installer = new ThemeInstaller($style->template);
         $installer->updateStyle($new, ['configuration' => $new]);
     }
 
@@ -116,9 +114,7 @@ class StyleHelper
     {
         $style = static::getStyle($id);
 
-        $extension = $style->extension_id ?: $style->template;
-
-        $installer = new ThemeInstaller($extension);
+        $installer = new ThemeInstaller($style->template);
         $installer->updateStyle($id, ['configuration' => $id, 'preset' => $preset]);
     }
 
