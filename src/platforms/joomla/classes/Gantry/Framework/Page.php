@@ -86,7 +86,7 @@ class Page extends Base\Page
             $menuItem = $menu ? $menu->getActive() : null;
             if ($menuItem && $menuItem->id) {
                 $this->home = (bool) $menuItem->home;
-                $this->class = $menuItem->params->get('pageclass_sfx', '');
+                $this->class = $menuItem->getParams()->get('pageclass_sfx', '');
             }
         }
         $templateParams = $application->getTemplate(true);

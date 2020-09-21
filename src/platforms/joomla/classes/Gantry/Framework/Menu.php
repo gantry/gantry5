@@ -11,7 +11,6 @@
 
 namespace Gantry\Framework;
 
-use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
@@ -19,6 +18,7 @@ use Gantry\Joomla\MenuHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\Router\Route;
 
 /**
@@ -35,7 +35,7 @@ class Menu extends AbstractMenu
     protected $application;
 
     /**
-     * @var \JMenu
+     * @var \Joomla\CMS\Menu\AbstractMenu
      */
     protected $menu;
 
@@ -179,7 +179,7 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @param object $item TODO: which object?
+     * @param MenuItem $item
      * @return bool
      */
     public function isActive($item)
@@ -206,20 +206,20 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @param object $item TODO: which object?
+     * @param MenuItem $item
      * @return bool
      */
     public function isCurrent($item)
     {
         return $item->id == $this->active->id
-        || ($item->type === 'alias' && $item->params->get('aliasoptions') == $this->active->id);
+        || ($item->type === 'alias' && $item->getParams()->get('aliasoptions') == $this->active->id);
     }
 
     /**
      * Get menu items from the platform.
      *
      * @param array $params
-     * @return array    List of routes to the pages.
+     * @return MenuItem[] List of routes to the pages.
      */
     protected function getItemsFromPlatform($params)
     {
@@ -239,7 +239,7 @@ class Menu extends AbstractMenu
     }
 
     /**
-     * @param object[] $menuItems
+     * @param MenuItem[] $menuItems
      * @param array[] $items
      * @return Item[]
      */
@@ -320,7 +320,7 @@ class Menu extends AbstractMenu
 
     /**
      * @param array $data
-     * @param object $menuItem
+     * @param MenuItem|null $menuItem
      * @return Item
      */
     protected function createMenuItem($data, $menuItem = null)
@@ -350,7 +350,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                     // If this is an alias use the item id stored in the parameters to make the link.
-                    $link = 'index.php?Itemid=' . $menuItem->params->get('aliasoptions', 0);
+                    $link = 'index.php?Itemid=' . $menuItem->getParams()->get('aliasoptions', 0);
 
                     // FIXME: Joomla 4: missing multilanguage support
                     break;
@@ -397,10 +397,10 @@ class Menu extends AbstractMenu
                 'alias' => $menuItem->alias,
                 'type' => $type,
                 'link' => $link,
-                'enabled' => (bool)$menuItem->params->get('menu_show', 1),
+                'enabled' => (bool)$menuItem->getParams()->get('menu_show', 1),
                 'level' => $level,
-                'link_title' => $menuItem->params->get('menu-anchor_title', ''),
-                'rel' => $menuItem->params->get('menu-anchor_rel', ''),
+                'link_title' => $menuItem->getParams()->get('menu-anchor_title', ''),
+                'rel' => $menuItem->getParams()->get('menu-anchor_rel', ''),
             ];
 
             // TODO: Add Gantry menu item properties from the menu item
@@ -411,9 +411,9 @@ class Menu extends AbstractMenu
             // And if not available in configuration, default to Joomla.
             $properties += [
                 'title' => $menuItem->title,
-                'anchor_class' => $menuItem->params->get('menu-anchor_css', ''),
-                'image' => $menuItem->params->get('menu_image', ''),
-                'icon_only' => !$menuItem->params->get('menu_text', 1),
+                'anchor_class' => $menuItem->getParams()->get('menu-anchor_css', ''),
+                'image' => $menuItem->getParams()->get('menu_image', ''),
+                'icon_only' => !$menuItem->getParams()->get('menu_text', 1),
                 'target' => $target
             ];
 
@@ -448,7 +448,7 @@ class Menu extends AbstractMenu
         if (!$link) {
             $url = false;
         } elseif (strcasecmp(substr($link, 0, 4), 'http') && strpos($link, 'index.php?') !== false) {
-            $url = Route::_($link, false, $menuItem->params->get('secure'));
+            $url = Route::_($link, false, $menuItem->getParams()->get('secure'));
         } else {
             $url = Route::_($link, false);
         }
