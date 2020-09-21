@@ -24,6 +24,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Adapter\TemplateAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\Extension;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\Menus\Administrator\Table\MenuTypeTable; // Joomla 4
@@ -41,7 +42,7 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * ThemeInstaller constructor.
-     * @param TemplateAdapter|null $extension
+     * @param TemplateAdapter|string|null $extension
      */
     public function __construct($extension = null)
     {
@@ -82,6 +83,7 @@ class ThemeInstaller extends AbstractInstaller
             $id = ['type' => 'template', 'element' => (string) $id, 'client_id' => 0];
         }
 
+        /** @var Extension extension */
         $this->extension = Table::getInstance('extension');
         $this->extension->load($id);
         $this->name = $this->extension->name;
@@ -165,7 +167,7 @@ class ThemeInstaller extends AbstractInstaller
 
     /**
      * @param string $type
-     * @return \TableMenuType|MenuTypeTable
+     * @return MenuTypeTable|\TableMenuType
      */
     public function getMenu($type)
     {
@@ -340,7 +342,7 @@ class ThemeInstaller extends AbstractInstaller
             }
 
             // Update preset in Joomla table.
-            $this->updateStyle($title, ['preset' => $layout['preset']['name']]);
+            $this->updateStyle($title, ['preset' => $layout->preset['name']]);
         }
 
         return $id;

@@ -12,6 +12,7 @@
 namespace Gantry\Joomla;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
 use Joomla\CMS\Factory;
@@ -83,12 +84,18 @@ class StyleHelper
     }
 
     /**
-     * @param object $style
+     * @param ThemeDetails|StyleTable|\TemplatesTableStyle $style
      * @param string $old
      * @param string $new
      */
     public static function copy($style, $old, $new)
     {
+        if ($style instanceof ThemeDetails) {
+            $name = $style->name;
+        } else {
+            $name = $style->template;
+        }
+
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
@@ -101,7 +108,7 @@ class StyleHelper
             Folder::copy($oldPath, $newPath);
         }
 
-        $installer = new ThemeInstaller($style->template);
+        $installer = new ThemeInstaller($name);
         $installer->updateStyle($new, ['configuration' => $new]);
     }
 
