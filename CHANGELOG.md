@@ -12,6 +12,7 @@
         - Major rework in Menu Manager logic
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
+        - Fixed getting missing menu configuration
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9
