@@ -12,12 +12,14 @@
 defined('_JEXEC') or die;
 
 use Gantry\Framework\Theme;
+use Joomla\CMS\Factory;
 
 // Bootstrap Gantry framework or fail gracefully (inside included file).
 $gantry = include __DIR__ . '/includes/gantry.php';
 
 /** @var Theme $theme */
 $theme = $gantry['theme'];
+$app = Factory::getApplication();
 
 $context = array(
     'errorcode' => isset($this->error) ? $this->error->getCode() : null,
