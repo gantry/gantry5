@@ -5,8 +5,8 @@
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.20
         - Updated Symfony Components from v2.8 to v3.4
-        - Updated SCSS compiler to v1.0
-        - Platform independent code passes phpstan level 5 tests
+        - Updated SCSS compiler to v1.2
+        - Platform independent code passes phpstan v0.11 level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
         - Major rework in Menu Manager logic
@@ -15,9 +15,10 @@
         - Fixed getting missing menu configuration
 1. [Joomla](#joomla)
     1. [](#new)
-        - Updated minimum requirement to Joomla! 3.9
-        - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes/gantry5.php` to your theme!)
-        - Updated error page template (please copy updated `error.php` to your theme!)
+        - Updated minimum requirement to Joomla! 3.9 (includes themes)
+        - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes`, `fields` and `html` folders to your theme!)
+        - Update theme installation  to work in Joomla! 4.0 (please copy or update `install.php` in your theme!)
+        - Update page templates to work in Joomla! 4.0 (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.2
