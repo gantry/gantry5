@@ -42,6 +42,8 @@
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
+        - Fixed Gantry modules and positions not showing up in Layout editor (#2701)
+        - Fixed Gantry positions not working if folder is missing (#2703)
 
 # 5.4.35
 ## 09/08/2020

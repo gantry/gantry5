@@ -56,6 +56,13 @@ class Positions extends Collection
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
 
+        if (!$locator->findResource($path)) {
+            // If positions folder is missing, there is nothing to load.
+            $this->items = $positions;
+
+            return $this;
+        }
+
         /** @var UniformResourceIterator $iterator */
         $iterator = $locator->getIterator($path);
 
