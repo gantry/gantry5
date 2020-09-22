@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -129,6 +130,8 @@ class Assignments extends AbstractAssignments
         $n = 0;
 
         if ($user && $user->authorise('core.edit', 'com_menus')) {
+            $checked_out_default = Version::MAJOR_VERSION < 4 ? 'checked_out = 0' : 'checked_out IS null';
+
             $db   = Factory::getDbo();
 
             if (!empty($active)) {
@@ -140,7 +143,7 @@ class Assignments extends AbstractAssignments
                     ->set('template_style_id = ' . (int) $style->id)
                     ->where('id IN (' . implode(',', $active) . ')')
                     ->where('template_style_id != ' . (int) $style->id)
-                    ->where('checked_out IN (0,' . (int) $user->id . ')');
+                    ->where('(checked_out = ' . (int) $user->id . ' OR ' . $checked_out_default . ')');
                 $db->setQuery($query);
                 $db->execute();
                 $n += $db->getAffectedRows();
@@ -157,7 +160,7 @@ class Assignments extends AbstractAssignments
             }
 
             $query2->where('template_style_id = ' . (int) $style->id)
-                ->where('checked_out IN (0,' . (int) $user->id . ')');
+                ->where('(checked_out = ' . (int) $user->id . ' OR ' . $checked_out_default . ')');
             $db->setQuery($query2);
             $db->execute();
 

@@ -144,7 +144,7 @@ class StyleHelper
 
     /**
      * @param string $name
-     * @return \TemplatesModelStyle|StyleModel
+     * @return StyleModel|\TemplatesModelStyle
      */
     public static function loadModel($name = 'Style')
     {

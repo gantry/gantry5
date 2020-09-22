@@ -13,6 +13,7 @@ namespace Gantry\Joomla\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Version;
 
 /**
  * Class AssignmentsMenu
@@ -64,6 +65,8 @@ class AssignmentsMenu implements AssignmentsInterface
 
         $list = [];
 
+        $checked_out_default = Version::MAJOR_VERSION < 4 ? '0' : null;
+
         foreach ($data as $menu) {
             $items = [];
             foreach ($menu->links as $link) {
@@ -71,7 +74,7 @@ class AssignmentsMenu implements AssignmentsInterface
                     'name' => $link->value,
                     'field' => ['id', 'link' . $link->value],
                     'value' => $link->template_style_id == $configuration,
-                    'disabled' => $link->type !== 'component' || ($link->checked_out && $link->checked_out != $userid),
+                    'disabled' => $link->type !== 'component' || ($link->checked_out !== $checked_out_default && $link->checked_out != $userid),
                     'label' => str_repeat('—', max(0, $link->level-1)) . ' ' . $link->text
                 ];
             }

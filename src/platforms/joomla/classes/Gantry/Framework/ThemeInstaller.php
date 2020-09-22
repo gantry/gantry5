@@ -27,6 +27,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Extension;
 use Joomla\CMS\Table\MenuType;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
 use Joomla\Component\Menus\Administrator\Table\MenuTypeTable; // Joomla 4
 use Joomla\Component\Templates\Administrator\Table\StyleTable; // Joomla 4
 use RocketTheme\Toolbox\File\YamlFile;
@@ -363,6 +364,9 @@ class ThemeInstaller extends AbstractInstaller
         $date = new Date();
         $update = false;
 
+        $checked_out = Version::MAJOR_VERSION < 4 ? 0 : null;
+        $checked_out_time = Version::MAJOR_VERSION < 4 ? $date->toSql() : null;
+
         // Defaults for the item.
         $item += [
             'menutype' => 'mainmenu',
@@ -374,8 +378,8 @@ class ThemeInstaller extends AbstractInstaller
             'published' => 1,
             'parent_id' => $parent_id,
             'component_id' => $component_id,
-            'checked_out' => 0,
-            'checked_out_time' => $date->toSql(),
+            'checked_out' => $checked_out,
+            'checked_out_time' => $checked_out_time,
             'browserNav' => 0,
             'access' => 1,
             'img' => '',

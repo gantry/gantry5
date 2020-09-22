@@ -28,6 +28,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -632,13 +633,15 @@ class Platform extends BasePlatform
                     $db = Factory::getDbo();
                     $userId = $user->id;
 
+                    $checked_out_default = Version::MAJOR_VERSION < 4 ? 'checked_out != 0' : 'checked_out IS NOT null';
+
                     // Verify that no items are checked out.
                     $query = $db->getQuery(true)
                         ->select('id')
-                        ->from('#__menu')
+                        ->from($db->quoteName('#__menu'))
                         ->where('menutype=' . $db->quote($id))
                         ->where('checked_out !=' . (int) $userId)
-                        ->where('checked_out !=0');
+                        ->where($checked_out_default);
                     $db->setQuery($query);
 
                     if ($db->loadRowList()) {
@@ -648,11 +651,11 @@ class Platform extends BasePlatform
                     // Verify that no module for this menu are checked out.
                     $query->clear()
                         ->select('id')
-                        ->from('#__modules')
+                        ->from($db->quoteName('#__modules'))
                         ->where('module=' . $db->quote('mod_menu'))
                         ->where('params LIKE ' . $db->quote('%"menutype":' . json_encode($id) . '%'))
                         ->where('checked_out !=' . (int) $userId)
-                        ->where('checked_out !=0');
+                        ->where($checked_out_default);
                     $db->setQuery($query);
 
                     if ($db->loadRowList()) {
