@@ -62,7 +62,7 @@ content:
           description: '<p>Gantry 5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
           title: 'Twig Templating'
         -
-          icon: 'fa fa-newspaper-o'
+          icon: 'far fa-newspaper'
           subtitle: ''
           description: '<p>Drag-and-drop functionality gives you the power to place content blocks, resize them, and configure their unique settings in seconds.</p>'
           title: 'Layout Manager'

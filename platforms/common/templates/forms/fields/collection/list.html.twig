@@ -71,7 +71,7 @@
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
-                                            {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                            {% if can_addnew %}<i class="far fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
                                             <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
@@ -113,7 +113,7 @@
                                 {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
-                                {% if can_addnew %}<i class="fa fa-files-o font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                {% if can_addnew %}<i class="far fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
                                 <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" data-title-edit=""></i>
                             </li>
                         </ul>
