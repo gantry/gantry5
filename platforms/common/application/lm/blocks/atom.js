@@ -39,7 +39,7 @@ var Atom = new prime({
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
         if (!state && icon) { icon.remove(); }
-        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').before(this.block.find('.icon')); }
+        if (state && !icon) { zen('i.far.fa-circle.changes-indicator').before(this.block.find('.icon')); }
     },
 
     onRendered: function(element, parent) {

@@ -14,8 +14,8 @@
                     <input type="text" data-g-collapse-filter="{{ filter|json_encode|e('html_attr') }}" placeholder="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." aria-label="{{ 'GANTRY5_PLATFORM_FILTER'|trans ~ ' ' ~ group|capitalize }}..." role="search">
                     <i class="fa fa-fw fa-search" aria-hidden="true"></i>
                 </div>
-                <button class="button" type="button" data-g-collapse-all="true"><i class="fa fa-fw fa-toggle-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
-                <button class="button" type="button" data-g-collapse-all="false"><i class="fa fa-fw fa-toggle-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="true"><i class="far fa-fw fa-caret-square-up" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_COLLAPSE_ALL'|trans }}</button>
+                <button class="button" type="button" data-g-collapse-all="false"><i class="far fa-fw fa-caret-square-down" aria-hidden="true"></i> {{ 'GANTRY5_PLATFORM_EXPAND_ALL'|trans }}</button>
             </div>
         </div>
         <div class="cards-wrapper g-grid">
@@ -71,7 +71,7 @@
                                             {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                             <a class="config-cog" href="{{ gantry.route(field_route ~ '/' ~ key) }}"><span data-title-editable="{{ itemValue }}" class="g-title">{{ itemValue }}</span></a>
                                             {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
-                                            {% if can_addnew %}<i class="far fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                            {% if can_addnew %}<i class="far fa-fw fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
                                             <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" tabindex="0" aria-label="{{ 'GANTRY5_PLATFORM_EDIT_TITLE'|trans(itemValue) }}" data-title-edit=""></i>
                                         </li>
                                     {% else %}
@@ -113,7 +113,7 @@
                                 {% if can_reorder %}<i class="fa fa-reorder font-small item-reorder" aria-hidden="true"></i>{% endif %}
                                 <a class="config-cog" href="{{ gantry.route(field_route ~ '/%id%') }}"><span data-title-editable="New item" class="title">New item</span></a>
                                 {% if can_remove %}<i class="fa fa-fw fa-trash font-small" aria-hidden="true" data-collection-remove=""></i>{% endif %}
-                                {% if can_addnew %}<i class="far fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
+                                {% if can_addnew %}<i class="far fa-fw fa-copy font-small" aria-hidden="true" data-collection-duplicate=""></i>{% endif %}
                                 <i class="fa fa-fw fa-pencil fa-pencil-alt font-small" aria-hidden="true" data-title-edit=""></i>
                             </li>
                         </ul>

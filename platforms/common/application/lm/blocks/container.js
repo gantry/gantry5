@@ -38,7 +38,7 @@ var Container = new prime({
         if (!state && icon) { icon.remove(); }
         if (state && !icon) {
             var title = this.block.find('span.title');
-            if (title) { zen('i.fa.fa-circle-o.changes-indicator').top(title); }
+            if (title) { zen('i.far.fa-circle.changes-indicator').top(title); }
         }
     },
 
