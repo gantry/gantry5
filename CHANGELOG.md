@@ -1,12 +1,12 @@
 # 5.5.0-dev
-## mm/dd/2019
+## mm/dd/2020
 
 1. [Common](#common)
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.20
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.2
-        - Use Font Awesome 5 (#2196)
+        - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan v0.11 level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
