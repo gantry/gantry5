@@ -203,12 +203,12 @@
 
 
     <target name="dev" depends="preflight,info,mkdir,joomla,wordpress,grav,cleanup,postflight" />
-    <target name="prod" depends="preflight,info,mkdir,assets-prod,joomla,wordpress,grav,cleanup,postflight" />
+    <target name="prod" depends="preflight,info,mkdir,joomla,wordpress,grav,cleanup,postflight" />
     <target name="joomla-dev" depends="preflight,info,mkdir,joomla,cleanup,postflight" />
     <target name="wordpress-dev" depends="preflight,info,mkdir,wordpress,cleanup,postflight" />
     <target name="grav-dev" depends="preflight,info,mkdir,grav,cleanup,postflight" />
-    <target name="joomla-prod" depends="preflight,info,mkdir,assets-prod,joomla,cleanup,postflight" />
-    <target name="wordpress-prod" depends="preflight,info,mkdir,assets-prod,wordpress,cleanup,postflight" />
-    <target name="grav-prod" depends="preflight,info,mkdir,assets-prod,grav,cleanup,postflight" />
+    <target name="joomla-prod" depends="preflight,info,mkdir,joomla,cleanup,postflight" />
+    <target name="wordpress-prod" depends="preflight,info,mkdir,wordpress,cleanup,postflight" />
+    <target name="grav-prod" depends="preflight,info,mkdir,grav,cleanup,postflight" />
 
 </project>

@@ -19,6 +19,7 @@ use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page as GravPage;
+use Grav\Common\Page\Pages;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Menu extends AbstractMenu
@@ -77,8 +78,16 @@ class Menu extends AbstractMenu
 
         $grav = Grav::instance();
 
+        /** @var Pages $pages */
+        $pages = $grav['pages'];
+
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
+
         // Get the menu items.
-        $pages = $grav['pages']->all()->nonModular();
+        $pages = $pages->all()->nonModular();
 
         // Initialize the group.
         $groups['mainmenu'] = array();
@@ -166,8 +175,16 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
+        /** @var Pages $pages */
+        $pages = $grav['pages'];
+
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
+
         // Initialize pages.
-        $pages = $grav['pages']->all()->nonModular();
+        $pages = $pages->all()->nonModular();
 
         // Return flat list of routes.
         $list = [];
@@ -196,6 +213,8 @@ class Menu extends AbstractMenu
                 'parent_id' => $parent_id,
                 'layout' => 'list',
                 'target' => '_self',
+                // TODO: Grav is missing rel support
+                'rel' => '',
                 'dropdown' => '',
                 'icon' => '',
                 'image' => '',

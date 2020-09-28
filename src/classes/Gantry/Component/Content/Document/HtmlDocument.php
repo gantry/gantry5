@@ -287,7 +287,8 @@ class HtmlDocument
     /**
      * Escape string (emulates twig filter).
      *
-     * @param string $string
+     * @param string|object $string
+     * @param string $strategy
      * @return string
      */
     public static function escape($string, $strategy = 'html')
@@ -295,7 +296,7 @@ class HtmlDocument
         if (!is_string($string)) {
             if (is_object($string) && method_exists($string, '__toString')) {
                 $string = (string) $string;
-            } elseif (in_array($strategy, array('html', 'js', 'css', 'html_attr', 'url'))) {
+            } elseif (in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
                 return $string;
             }
         }
@@ -305,29 +306,41 @@ class HtmlDocument
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
             case 'js':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 === preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', '_twig_escape_js_callback', $string);
+                $string = preg_replace_callback(
+                    '#[^a-zA-Z0-9,\._]#Su',
+                    'Gantry\\Component\\Content\\Document\\HtmlDocument::_escape_js_callback',
+                    $string
+                );
 
                 return $string;
 
             case 'css':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 === preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', '_twig_escape_css_callback', $string);
+                $string = preg_replace_callback(
+                    '#[^a-zA-Z0-9]#Su',
+                    'Gantry\\Component\\Content\\Document\\HtmlDocument::_escape_css_callback',
+                    $string
+                );
 
                 return $string;
 
             case 'html_attr':
-                if (0 == strlen($string) ? false : (1 == preg_match('/^./su', $string) ? false : true)) {
+                if (0 === strlen($string) ? false : (1 === preg_match('/^./su', $string) ? false : true)) {
                     throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
-                $string = preg_replace_callback('#[^a-zA-Z0-9,\.\-_]#Su', '_twig_escape_html_attr_callback', $string);
+                $string = preg_replace_callback(
+                    '#[^a-zA-Z0-9,\.\-_]#Su',
+                    'Gantry\\Component\\Content\\Document\\HtmlDocument::_escape_html_attr_callback',
+                    $string
+                );
 
                 return $string;
 
@@ -577,6 +590,116 @@ class HtmlDocument
     }
 
     /**
+     * This function is adapted from code coming from Twig.
+     *
+     * @param array $matches
+     * @return string
+     * @internal
+     */
+    public static function _escape_js_callback($matches)
+    {
+        $char = $matches[0];
+
+        /*
+         * A few characters have short escape sequences in JSON and JavaScript.
+         * Escape sequences supported only by JavaScript, not JSON, are ommitted.
+         * \" is also supported but omitted, because the resulting string is not HTML safe.
+         */
+        static $shortMap = [
+            '\\' => '\\\\',
+            '/' => '\\/',
+            "\x08" => '\b',
+            "\x0C" => '\f',
+            "\x0A" => '\n',
+            "\x0D" => '\r',
+            "\x09" => '\t',
+        ];
+
+        if (isset($shortMap[$char])) {
+            return $shortMap[$char];
+        }
+
+        // \uHHHH
+        $char = static::convert_encoding($char, 'UTF-16BE', 'UTF-8');
+        $char = strtoupper(bin2hex($char));
+
+        if (4 >= \strlen($char)) {
+            return sprintf('\u%04s', $char);
+        }
+
+        return sprintf('\u%04s\u%04s', substr($char, 0, -4), substr($char, -4));
+    }
+
+    /**
+     * This function is adapted from code coming from Twig.
+     *
+     * @param $matches
+     * @return string
+     * @internal
+     */
+    public static function _escape_css_callback($matches)
+    {
+        $char = $matches[0];
+
+        return sprintf('\\%X ', 1 === \strlen($char) ? \ord($char) : static::ord($char));
+    }
+
+    /**
+     * This function is adapted from code coming from Twig and Zend Framework.
+     *
+     * @param array $matches
+     * @return string
+     *
+     * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (https://www.zend.com)
+     * @license   https://framework.zend.com/license/new-bsd New BSD License
+     * @internal
+     */
+    public static function _escape_html_attr_callback($matches)
+    {
+        $chr = $matches[0];
+        $ord = \ord($chr);
+
+        /*
+         * The following replaces characters undefined in HTML with the
+         * hex entity for the Unicode replacement character.
+         */
+        if (($ord <= 0x1f && "\t" !== $chr && "\n" !== $chr && "\r" !== $chr) || ($ord >= 0x7f && $ord <= 0x9f)) {
+            return '&#xFFFD;';
+        }
+
+        /*
+         * Check if the current character to escape has a name entity we should
+         * replace it with while grabbing the hex value of the character.
+         */
+        if (1 === \strlen($chr)) {
+            /*
+             * While HTML supports far more named entities, the lowest common denominator
+             * has become HTML5's XML Serialisation which is restricted to the those named
+             * entities that XML supports. Using HTML entities would result in this error:
+             *     XML Parsing Error: undefined entity
+             */
+            static $entityMap = [
+                34 => '&quot;', /* quotation mark */
+                38 => '&amp;',  /* ampersand */
+                60 => '&lt;',   /* less-than sign */
+                62 => '&gt;',   /* greater-than sign */
+            ];
+
+            if (isset($entityMap[$ord])) {
+                return $entityMap[$ord];
+            }
+
+            return sprintf('&#x%02X;', $ord);
+        }
+
+        /*
+         * Per OWASP recommendations, we'll use hex entities for any other
+         * characters where a named entity does not exist.
+         */
+        return sprintf('&#x%04X;', static::ord($chr));
+    }
+
+    /**
      * Replace tokens with strings.
      *
      * @param array $tokens
@@ -684,5 +807,49 @@ class HtmlDocument
         }
 
         return $object;
+    }
+
+    /**
+     * @param string $string
+     * @param string $to
+     * @param string $from
+     * @return false|string|string[]|null
+     * @internal
+     */
+    private static function convert_encoding($string, $to, $from)
+    {
+        if (\function_exists('mb_convert_encoding')) {
+            return mb_convert_encoding($string, $to, $from);
+        }
+        if (\function_exists('iconv')) {
+            return iconv($from, $to, $string);
+        }
+
+        throw new \RuntimeException('No suitable convert encoding function (use UTF-8 as your encoding or install the iconv or mbstring extension).');
+    }
+
+    /**
+     * @param string $string
+     * @return false|int|mixed
+     * @internal
+     */
+    private static function ord($string)
+    {
+        if (\function_exists('mb_ord')) {
+            return mb_ord($string, 'UTF-8');
+        }
+
+        $code = ($string = unpack('C*', substr($string, 0, 4))) ? $string[1] : 0;
+        if (0xF0 <= $code) {
+            return (($code - 0xF0) << 18) + (($string[2] - 0x80) << 12) + (($string[3] - 0x80) << 6) + $string[4] - 0x80;
+        }
+        if (0xE0 <= $code) {
+            return (($code - 0xE0) << 12) + (($string[2] - 0x80) << 6) + $string[3] - 0x80;
+        }
+        if (0xC0 <= $code) {
+            return (($code - 0xC0) << 6) + $string[2] - 0x80;
+        }
+
+        return $code;
     }
 }

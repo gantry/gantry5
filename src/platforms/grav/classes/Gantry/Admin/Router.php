@@ -58,7 +58,7 @@ class Router extends BaseRouter
 
         // Figure out the action we want to make.
         $this->method = $request->getMethod();
-        $this->path = $parts ?: ($theme ? ['configurations', true] : ['themes']);
+        $this->path = $parts ?: ($theme ? ['configurations', 'default', 'styles'] : ['themes']);
         $this->resource = array_shift($this->path);
         $this->format = $uri->extension('html');
         $ajax = ($this->format === 'json');

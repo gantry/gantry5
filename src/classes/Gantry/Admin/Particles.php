@@ -52,8 +52,7 @@ class Particles
 
     public function all()
     {
-        if (!$this->particles)
-        {
+        if (null === $this->particles) {
             $platform = $this->container['platform'];
             $files = $this->locateParticles();
 
@@ -94,7 +93,7 @@ class Particles
 
     public function get($id)
     {
-        if ($this->particles[$id]) {
+        if (isset($this->particles[$id])) {
             return $this->particles[$id];
         }
 

@@ -12,9 +12,9 @@ namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
-use Gantry\Prime\Pages;
 use Grav\Common\Grav;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Pages;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -109,6 +109,11 @@ class EventListener implements EventSubscriberInterface
 
         /** @var Pages $pages */
         $pages = $grav['pages'];
+
+        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
+        if (method_exists($pages, 'enablePages')) {
+            $pages->enablePages();
+        }
 
         // Initialize pages.
         $visible = $pages->all()->nonModular();

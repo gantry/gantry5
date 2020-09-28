@@ -35,6 +35,9 @@ class AssignmentsTaxonomy implements AssignmentsInterface
                 $id = $queried_object->term_id;
 
                 $rules[$taxonomy][$id] = $this->priority;
+                
+                // Assignments to a single taxonomy will have high priority
+                $rules[$taxonomy]['is_archive'] = $this->priority - 1;
             }
         }
 
@@ -61,7 +64,28 @@ class AssignmentsTaxonomy implements AssignmentsInterface
             $tax = apply_filters('g5_assignments_' . $this->type . '_' . $tax->name . '_taxonomy_object', $tax);
 
             $list[$tax->name]['label'] = sprintf($this->label, $tax->labels->name);
-            $list[$tax->name]['items'] = $this->getItems($tax);
+            $list[$tax->name]['items'][] = [
+				'name'     => '',
+				'label'    => 'General',
+				'section'  => true,
+				'disabled' => true
+			];
+
+			$list[$tax->name]['items'][] = [
+				'name'  => 'is_archive',
+				'label' => $tax->labels->name . ' - Archive View'
+			];
+
+			$list[$tax->name]['items'][] = [
+				'name'     => '',
+                // Pluralize the label (it can be "taxonomy", "archive" and maybe even something else)
+				'label'    => substr($this->type, -1, 1) === 'y' ? substr($this->type, 0, -1) . 'ies' : $this->type . 's',
+				'section'  => true,
+				'disabled' => true
+			];
+
+			$list[$tax->name]['items'] = array_merge($list[$tax->name]['items'], $this->getItems($tax) );
+		
         }
 
         return $list;

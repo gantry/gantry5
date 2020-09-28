@@ -97,8 +97,9 @@ class ModGantry5ParticleHelper
             }
         }
 
+        $id = static::getIdentifier($particle, $module->id);
         $object = (object) array(
-            'id' => static::getIdentifier($particle, $module->id),
+            'id' => $id,
             'type' => $type,
             'subtype' => $particle,
             'attributes' => $data['options']['particle'],
@@ -114,7 +115,12 @@ class ModGantry5ParticleHelper
         $theme = $gantry['theme'];
         $block = $theme->getContent($object, $context);
 
-        return $block;
+        // Create outer block with the particle ID for AJAX calls.
+        $outer = \Gantry\Component\Content\Block\HtmlBlock::create();
+        $outer->setContent('<div id="' . $id . '-particle" class="g-particle">' . $block->getToken() . '</div>');
+        $outer->addBlock($block);
+
+        return $outer;
     }
 
     /**

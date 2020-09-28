@@ -1,3 +1,85 @@
+# 5.4.36
+## mm/dd/2020
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
+        - Grav 1.7: Fixed Gantry modules and positions not showing up in Layout editor (#2701)
+        - Fixed Gantry positions not working if folder is missing (#2703)
+
+# 5.4.35
+## 09/08/2020
+
+1. [Common](#common)
+    1. [](#improved)
+        - Added title option on To Top particle (#2654)
+    1. [](#bugfix)
+        - Removed Twig 1.x dependency on `HtmlDocument` class (#2656)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Truncate generated excerpt length (#2663)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed issues when creating child theme in CLI
+        - Fixed `TypeError: can't access property "getViewElement"` (#2651)
+        - CLI: Prevent creation of a child theme from a non-Gantry theme (#2395)
+        - Fixed shortcodes not working from particles (#2675)
+        - Helium: Fixed styling issue with Forgot Password form (#1812)
+
+# 5.4.34
+## 04/30/2020
+
+1. [Common](#common)
+    1. [](#bugfix)
+        - Remove CSS source maps (#2637)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - Regression: Fixed `WordPress Posts` particle not loading all queried posts (#2633)
+
+# 5.4.33
+## 04/27/2020
+
+1. [Common](#common)
+    1. [](#new)
+        - **PHP 5.5.9 or later required**
+        - Updated Google Fonts list
+    1. [](#bugfix)
+        - PHP 7.4: Fixed `Trying to access array offset on value of type int|null` (#2618)
+        - PHP 7.4: implemented required `Stream::stream_set_option()` method for streams
+        - PHP 7.4: Fixed twig rendering errors (#2613)
+        - PHP 7.4: Fixed modifying particle settings throws an error (#2631)
+        - Fixed JS issue in Key => Value pairs when changing existing key name (#2539)
+        - Fixed grid breakpoint calculation overlaps not being tight enough (#2492)
+        - Helium: Headings should use title font instead of default (#2599)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Pagination in `Joomla Articles` particle does not work when used in module (#2511)
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - **WordPress 4.9.8 or later required**
+    1. [](#bugfix)
+        - Fixed content array particle not resetting WP query
+
+# 5.4.32
+## 01/02/2020
+
+1. [Common](#common)
+    1. [](#new)
+        - Added support for custom menu item link attributes (#2575, thanks @thexmanxyz)
+    1. [](#bugfix)
+        - Fixed missing `rel="noopener noreferrer"` in social particle when opening link into a new tab (#2581)
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed missing `rel` attribute in menu items with double value detection (#2573, thanks @thexmanxyz)
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - Added a `Global` rule for assignments per taxonomy / category (#2045, thanks @nikola3244)
+1. [Grav](#grav)
+    1. [](#bugfix)
+        - Fixed assignments for `Pages` not showing in Grav 1.7.0-rc.1 (#2557)
+        - Fixed menu editor having no menu items in Grav 1.7.0-rc.1
+        - Fixed broken `Configure` link in admin (#2570)
+
 # 5.4.31
 ## 10/04/2019
 
@@ -52,7 +134,7 @@
         - Updated Timber to v1.9.2 (later versions have Twig conflict with current version of WPML)
     1. [](#bugfix)
         - Fixed `Gantry 5 Particle` widget inactive Save button (#2211)
-        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)  
+        - Regression: Fixed pagination in `WordPress Posts` particle (#2480)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed compatibility issue with Grav 1.7.0-beta.1
@@ -66,7 +148,7 @@
         - Added `webp` to supported image types for image picker (#2450)
     1. [](#improved)
         - Logo particle: Added logo image max height (#2424)
-    1. [](#bugfix)   
+    1. [](#bugfix)
         - Social particle: Improved link target handling (#2214)
         - Helium Copyright particle: fixed missing link (#2214)
         - Fixed `mkdir(...)` race condition
@@ -81,7 +163,7 @@
         - Updated Timber to v1.9.1
     1. [](#bugfix)
         - Fixed potential query conflicts in `WordPress Posts` particle
-        
+
 # 5.4.27
 ## 12/14/2018
 
@@ -89,7 +171,7 @@
     1. [](#new)
         - Added Section Variation field for Layout sections.
     1. [](#improved)
-        - Updated Lightcase version.     
+        - Updated Lightcase version.
     1. [](#bugfix)
         - Fixed fatal error on PHP 5.4 (#2378)
         - Fixed `Folder::doDelete($folder, false)` removing symlink when it should not (#2396)
@@ -103,7 +185,7 @@
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated Timber to v1.8.3
-        
+
 # 5.4.26
 ## 09/11/2018
 

@@ -51,7 +51,7 @@ var initSizes = function() {
 ready(function() {
     initSizes();
 
-    var scrollElement = $(GANTRY_PLATFORM === 'grav' ? Grav.default.Scrollbar.Instance.instance.getViewElement() || '#admin-main .content-padding' : window) || [window],
+    var scrollElement = $(GANTRY_PLATFORM === 'grav' ? '#admin-main .content-padding' : window) || [window],
         scroll        = function() {
             if (!container || !sidebar) { return; }
 
