@@ -1,12 +1,18 @@
 name: Font Awesome Settings
-description: Configuration for Font Awesome icon set and toolkit. 
+description: Configuration for Font Awesome icon set and toolkit.
 type: global
 
 form:
   fields:
-  
+
     enable:
       type: enable.enable
       label: Enable
-      description: Enable or disable the loading of the Font Awesome icon library on the frontend. This is useful if you want to manually add a different version of the library (e.g. v5.x).
+      description: Enable or disable the loading of the Font Awesome icon library on the frontend. This is useful if you want to manually add a different version of the library (e.g. paid version).
       default: 1
+
+    enable_v4_shims:
+        type: enable.enable
+        label: V4.7 Compatibility
+        description: Enable or disable backwards compatibility to Font Awesome 4.7.0. This option allows a quick fix for broken icons if you have older version of Gantry 5 theme or you are using old icons inside the site content.
+        default: 1
