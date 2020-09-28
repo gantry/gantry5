@@ -5,17 +5,17 @@ title: ''
 target: _blank
 items:
   -
-    icon: 'fab fa-twitter fa-fw'
+    icon: 'fa fa-twitter fa-fw'
     text: ''
     link: 'http://www.twitter.com/rockettheme'
     name: Twitter
   -
-    icon: 'fab fa-facebook-f fa-fw'
+    icon: 'fa fa-facebook fa-fw'
     text: ''
     link: 'http://www.facebook.com/RocketTheme'
     name: Facebook
   -
-    icon: 'fab fa-google-plus-g fa-fw'
+    icon: 'fa fa-google-plus fa-fw'
     text: ''
     link: 'https://plus.google.com/+rockettheme'
     name: Google+
