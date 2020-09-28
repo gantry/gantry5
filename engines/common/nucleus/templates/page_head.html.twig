@@ -1,23 +1,23 @@
 {%- do gantry.debugger.assets() -%}
 {%- do gantry.theme.loadAtoms() -%}
 
+{% set faEnabled = gantry.config.page.fontawesome.enable|default(1) %}
 {% set faVersion = gantry.config.page.fontawesome.version|default('fa4') %}
 {% assets with { priority: 10 } %}
     {% block head_stylesheets -%}
-        {% if faVersion == 'fa4' %}
-            <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
-        {% elseif faVersion == 'fa5css' %}
-            <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
-            {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
-                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-shim.min.css" type="text/css">
+        {% if faEnabled %}
+            {% if faVersion == 'fa4' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome.min.css" type="text/css"/>
+            {% elseif faVersion == 'fa5css' %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-all.min.css" type="text/css">
+                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
+                    <link rel="stylesheet" href="gantry-assets://css/font-awesome5-shim.min.css" type="text/css">
+                {% endif %}
+            {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
+                <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
+            {% elseif faVersion == 'manual' %}
+                {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
             {% endif %}
-        {% elseif (faVersion == 'fa5js' or (faVersion == 'manual' and gantry.config.page.fontawesome.html_js_import)) and (gantry.config.page.fontawesome.content_compatibility|default(1)) %}
-            <link rel="stylesheet" href="gantry-assets://css/font-awesome5-pseudo.min.css" type="text/css">
-        {% elseif faVersion == 'manual' %}
-            {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
-        {% endif %}
-        {% if gantry.config.page.fontawesome.enable_v4_shims|default(1) %}
-            <link rel="stylesheet" href="gantry-assets://css/font-awesome-v4-shims.min.css" type="text/css"/>
         {% endif %}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
@@ -26,13 +26,15 @@
     {% endblock -%}
 
     {% block head_scripts -%}
-        {% if faVersion == 'fa5js' %}
-            <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-all.min.js') }}"></script>
-            {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
-                <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-shim.min.js') }}"></script>
+        {% if faEnabled %}
+            {% if faVersion == 'fa5js' %}
+                <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-all.min.js') }}"></script>
+                {% if gantry.config.page.fontawesome.fa4_compatibility|default(1) %}
+                    <script type="text/javascript" src="{{ url('gantry-assets://js/font-awesome5-shim.min.js') }}"></script>
+                {% endif %}
+            {% elseif faVersion == 'manual' %}
+                {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
             {% endif %}
-        {% elseif faVersion == 'manual' %}
-            {{ gantry.config.page.fontawesome.html_js_import|html|raw -}}
         {% endif %}
     {% endblock -%}
 

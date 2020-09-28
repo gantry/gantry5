@@ -49,7 +49,7 @@ class Platform extends BasePlatform
     /** @var string */
     protected $name = 'joomla';
     /** @var array */
-    protected $features = ['modules' => true];
+    protected $features = ['modules' => true, 'fontawesome' => false];
     /** @var string */
     protected $settings_key = 'return';
     /** @var array|null */

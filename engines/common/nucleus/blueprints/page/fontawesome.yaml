@@ -5,6 +5,12 @@ type: global
 form:
   fields:
 
+    enable:
+      type: enable.enable
+      label: Enable
+      description: Enable or disable the loading of the Font Awesome icon library on the frontend. This is useful if you want to manually add a different version of the library (e.g. paid version).
+      default: 1
+
     version:
       type: select.select
       label: Version
@@ -12,10 +18,9 @@ form:
       default: fa4
       options:
         fa4: Font Awesome 4 (legacy)
-        fa5js: Font Awesome 5 (SVG / JS)
-        fa5css: Font Awesome 5 (Webfont / CSS)
-        manual: Manual
-        disable: Disable
+        fa5css: Font Awesome 5 Free (Webfont / CSS)
+        fa5js: Font Awesome 5 Free (SVG / JS)
+        manual: Load Manually
 
     fa4_compatibility:
       type: enable.enable
@@ -31,10 +36,10 @@ form:
 
     html_css_import:
       type: textarea.textarea
-      label: HTML CSS Import
+      label: HTML CSS Import (Manual)
       description: Enter your HTML to manually load the CSS files of the Font Awesome library. This is only necessary if you selected the option to manually load the library from the dropdown field above.
 
     html_js_import:
       type: textarea.textarea
-      label: HTML JS Import
+      label: HTML JS Import (Manual)
       description: Enter your HTML to manually load the JS files of the Font Awesome library. This is only necessary if you selected the option to manually load the library from the dropdown field above.

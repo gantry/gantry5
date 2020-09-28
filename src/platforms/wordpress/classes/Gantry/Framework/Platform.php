@@ -42,7 +42,7 @@ class Platform extends BasePlatform
     /** @var string */
     protected $name = 'wordpress';
     /** @var array */
-    protected $features = ['widgets' => true];
+    protected $features = ['widgets' => true, 'fontawesome' => false];
     /** @var string */
     protected $file = 'gantry5/gantry5.php';
 
