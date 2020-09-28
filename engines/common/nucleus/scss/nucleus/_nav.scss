@@ -60,7 +60,7 @@
 						cursor: pointer;
 						width: 1.5rem;
 						opacity: 0.5;
-						font-family: FontAwesome, "Font Awesome 5 Free", serif;
+						font-family: FontAwesome, "Font Awesome 5 Free", "Font Awesome 5 Pro", serif;
 						font-weight: 900;
 						content: "\f078";
 						text-align: right;
@@ -291,7 +291,7 @@
 			display: block;
 		    text-align: center;
 		    width: 1.28571em;
-			font-family: FontAwesome, "Font Awesome 5 Free";
+			font-family: FontAwesome, "Font Awesome 5 Free, "Font Awesome 5 Pro"";
 			font-weight: 900;
 			content: "\f053";
 			opacity: 0.5;
@@ -368,7 +368,7 @@
 						opacity: 0.5;
 						width: 1.5rem;
 						line-height: normal;
-						font-family: FontAwesome, "Font Awesome 5 Free";
+						font-family: FontAwesome, "Font Awesome 5 Free, "Font Awesome 5 Pro"";
 						font-weight: 900;
 						content: "\f054";
 					}
