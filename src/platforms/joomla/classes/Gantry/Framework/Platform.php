@@ -56,6 +56,19 @@ class Platform extends BasePlatform
     protected $modules;
 
     /**
+     * @param string $feature
+     * @return bool
+     */
+    public function has($feature)
+    {
+        if (\JVersion::MAJOR_VERSION === 4 && $feature === 'fontawesome') {
+            return true;
+        }
+
+        return parent::has($feature);
+    }
+
+    /**
      * @param string $html
      */
     public function setModuleWrapper($html)
