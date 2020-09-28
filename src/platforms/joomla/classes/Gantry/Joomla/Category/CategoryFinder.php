@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,16 +12,26 @@
 namespace Gantry\Joomla\Category;
 
 use Gantry\Joomla\Object\Finder;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 
+/**
+ * Class CategoryFinder
+ * @package Gantry\Joomla\Category
+ */
 class CategoryFinder extends Finder
 {
+    /** @var string */
     protected $table = '#__categories';
+    /** @var string */
     protected $extension = 'com_content';
+    /** @var bool */
     protected $readonly = true;
 
     /**
      * Makes all created objects as readonly.
      *
+     * @param bool $readonly
      * @return $this
      */
     public function readonly($readonly = true)
@@ -30,6 +41,10 @@ class CategoryFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param bool $object
+     * @return array|\Gantry\Joomla\Object\Collection
+     */
     public function find($object = true)
     {
         $ids = parent::find();
@@ -41,6 +56,11 @@ class CategoryFinder extends Finder
         return Category::getInstances($ids, $this->readonly);
     }
 
+    /**
+     * @param int|int[] $ids
+     * @param int $levels
+     * @return $this
+     */
     public function id($ids, $levels = 0)
     {
         if ($ids && $levels) {
@@ -70,25 +90,40 @@ class CategoryFinder extends Finder
         return $this;
     }
 
+    /**
+     * @param string|bool|int $language
+     * @return $this
+     */
     public function language($language = true)
     {
         if (!$language) {
             return $this;
         }
         if ($language === true || is_numeric($language)) {
-            $language = \JFactory::getLanguage()->getTag();
+            /** @var CMSApplication $application */
+            $application = Factory::getApplication();
+
+            $language = $application->getLanguage()->getTag();
         }
         return $this->where('a.language', 'IN', [$language, '*']);
     }
 
+    /**
+     * @param int|int[] $published
+     * @return $this
+     */
     public function published($published = 1)
     {
         if (!is_array($published)) {
-            $published = (array) intval($published);
+            $published = (array) ((int)$published);
         }
         return $this->where('a.published', 'IN', $published);
     }
 
+    /**
+     * @param bool $authorised
+     * @return $this
+     */
     public function authorised($authorised = true)
     {
         if (!$authorised) {
@@ -96,19 +131,30 @@ class CategoryFinder extends Finder
         }
 
         // Ignore unpublished categories.
-        $unpublished = $this->getUnpublished($this->extension);
+        $unpublished = self::getUnpublished($this->extension);
 
         if ($unpublished) {
             $this->where('a.id', 'NOT IN', $unpublished);
         }
 
+        $app = Factory::getApplication();
+
         // Check authorization.
-        $user = \JFactory::getUser();
-        $groups = $user->getAuthorisedViewLevels();
+        $user = $app->getIdentity();
+        $groups = $user ? $user->getAuthorisedViewLevels() : [];
+        if (!$groups) {
+            $this->skip = true;
+
+            return $this;
+        }
 
         return $this->where('a.access', 'IN', $groups);
     }
 
+    /**
+     * @param string $extension
+     * @return $this
+     */
     public function extension($extension)
     {
         $this->extension = static::getExtension($extension);
@@ -116,6 +162,10 @@ class CategoryFinder extends Finder
         return $this->where('a.extension', '=', $this->extension);
     }
 
+    /**
+     * @param string $extension
+     * @return string
+     */
     public static function getExtension($extension)
     {
         static $map = [
@@ -131,12 +181,16 @@ class CategoryFinder extends Finder
         return $extension;
     }
 
+    /**
+     * @param $extension
+     * @return array
+     */
     public static function getUnpublished($extension)
     {
         static $list;
 
         if ($list === null) {
-            $db = \JFactory::getDbo();
+            $db = Factory::getDbo();
 
             $query = $db->getQuery(true)
                 ->select('cat.id AS id')
@@ -147,7 +201,7 @@ class CategoryFinder extends Finder
                 ->group('cat.id');
 
             $db->setQuery($query);
-            $list = $db->loadColumn();
+            $list = $db->loadColumn() ?: [];
         }
 
         return $list;

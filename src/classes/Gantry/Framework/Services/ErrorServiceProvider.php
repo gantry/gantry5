@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +15,7 @@
 namespace Gantry\Framework\Services;
 
 use Gantry\Component\Whoops\SystemFacade;
+use Gantry\Debugger;
 use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -23,15 +25,27 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Whoops\Util\Misc;
 
+/**
+ * Class ErrorServiceProvider
+ * @package Gantry\Framework\Services
+ */
 class ErrorServiceProvider implements ServiceProviderInterface
 {
+    /** @var string */
     protected $format;
 
+    /**
+     * ErrorServiceProvider constructor.
+     * @param string $format
+     */
     public function __construct($format = 'html')
     {
         $this->format = $format;
     }
 
+    /**
+     * @param Container $container
+     */
     public function register(Container $container)
     {
         /** @var UniformResourceLocator $locator */
@@ -44,7 +58,7 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $system = new SystemFacade($platform->errorHandlerPaths());
         $errors = new Run($system);
 
-        $error_page = new PrettyPageHandler;
+        $error_page = new PrettyPageHandler();
         $error_page->setPageTitle('Crikey! There was an error...');
         $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
@@ -54,9 +68,9 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $errors->pushHandler($error_page);
 
-        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json');
+        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
-            $json_handler = new JsonResponseHandler;
+            $json_handler = new JsonResponseHandler();
             //$json_handler->setJsonApi(true);
 
             $errors->pushHandler($json_handler);
@@ -66,8 +80,8 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $container['errors'] = $errors;
 
-        if (GANTRY_DEBUGGER && method_exists('Gantry\Debugger', 'setErrorHandler')) {
-            \Gantry\Debugger::setErrorHandler();
+        if (GANTRY_DEBUGGER) {
+            Debugger::setErrorHandler();
         }
     }
 }

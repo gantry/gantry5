@@ -1,7 +1,7 @@
 name: Sample Content
 description: Displays Sample Content
 type: particle
-icon: fa-pencil-square-o
+icon: far fa-edit
 
 configuration:
   caching:

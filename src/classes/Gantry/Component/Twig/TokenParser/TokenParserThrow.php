@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +15,10 @@
 namespace Gantry\Component\Twig\TokenParser;
 
 use Gantry\Component\Twig\Node\TwigNodeThrow;
+use Twig\Error\SyntaxError;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
 /**
  * Handles try/catch in template file.
@@ -22,25 +27,25 @@ use Gantry\Component\Twig\Node\TwigNodeThrow;
  * {% throw 404 'Not Found' %}
  * </pre>
  */
-class TokenParserThrow extends \Twig_TokenParser
+class TokenParserThrow extends AbstractTokenParser
 {
     /**
      * Parses a token and returns a node.
      *
-     * @param \Twig_Token $token A Twig_Token instance
-     *
-     * @return \Twig_Node A Twig_Node instance
+     * @param Token $token A Twig Token instance
+     * @return Node A Twig Node instance
+     * @throws SyntaxError
      */
-    public function parse(\Twig_Token $token)
+    public function parse(Token $token)
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
 
-        $code = $stream->expect(\Twig_Token::NUMBER_TYPE)->getValue();
+        $code = $stream->expect(Token::NUMBER_TYPE)->getValue();
         $message = $this->parser->getExpressionParser()->parseExpression();
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new TwigNodeThrow($code, $message, $lineno, $this->getTag());
+        return new TwigNodeThrow((int)$code, $message, $lineno, $this->getTag());
     }
 
     /**

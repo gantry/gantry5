@@ -16,7 +16,7 @@
     }
 
     .input-group input, .input-group-addon, .input-group-btn {
-        display: table-cell;
+        display: inline-block;
     }
 
     .input-group-addon:first-child {
@@ -33,7 +33,7 @@
     }
 
     .input-group-addon {
-        padding: 6px 0;
+        padding: 8px 0;
         width: 42px;
         font-size: $core-font-size - 0.1;
         font-weight: 400;

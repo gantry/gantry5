@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -19,13 +20,22 @@ use RocketTheme\Toolbox\ArrayTraits\Export;
 use RocketTheme\Toolbox\ArrayTraits\NestedArrayAccessWithGetters;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Module
+ * @package Gantry\Component\Position
+ */
 class Module implements \ArrayAccess
 {
     use NestedArrayAccessWithGetters, Export;
 
+    /** @var string */
     public $name;
+    /** @var string|null */
     public $position;
+    /** @var string */
     public $assigned;
+
+    /** @var array */
     protected $items;
 
     /**
@@ -47,6 +57,10 @@ class Module implements \ArrayAccess
         }
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function update(array $data)
     {
         $this->init($data);
@@ -100,6 +114,9 @@ class Module implements \ArrayAccess
         return $this->name ? $this->file()->exists() : false;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return  ['position' => $this->position, 'id' => $this->name] + $this->items;
@@ -108,10 +125,13 @@ class Module implements \ArrayAccess
     protected function load()
     {
         $file = $this->file();
-        $this->init($file->content());
+        $this->init((array)$file->content());
         $file->free();
     }
 
+    /**
+     * @param array $data
+     */
     protected function init($data)
     {
         unset($data['id'], $data['position']);
@@ -132,6 +152,10 @@ class Module implements \ArrayAccess
         }
     }
 
+    /**
+     * @param bool $save
+     * @return CompiledYamlFile
+     */
     protected function file($save = false)
     {
         $position = $this->position ?: '_unassigned_';
@@ -152,7 +176,7 @@ class Module implements \ArrayAccess
     {
         $position = $this->position ?: '_unassigned_';
         $name = $this->get('type');
-        $name = $name == 'particle' ? $this->get('options.type') : $name;
+        $name = $name === 'particle' ? $this->get('options.type') : $name;
 
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];

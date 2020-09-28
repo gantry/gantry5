@@ -15,7 +15,7 @@
                     <ul class="g-folders fa-ul">
                         {% for folder in bookmark %}
                             <li{{ (folder in active) ? ' class="selected active"' : '' }} data-folder="{{ {pathname: folder}|json_encode|e('html_attr') }}">
-                                <i class="fa-li fa fa-folder-o" aria-hidden="true"></i> <span class="path" title="{{ folder }}">{{ folder }}</span>
+                                <i class="fa-li far fa-folder" aria-hidden="true"></i> <span class="path" title="{{ folder }}">{{ folder }}</span>
                             </li>
                             {% include 'ajax/filepicker/subfolders.html.twig' with {'folder': attribute(attribute(folders, index), folder), 'active': active } %}
                         {% endfor %}

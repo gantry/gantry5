@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 20179RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,13 +11,32 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
+
+/**
+ * Class Site
+ * @package Gantry\Framework
+ */
 class Site
 {
+    /** @var string */
+    public $theme;
+    /** @var string */
+    public $url;
+    /** @var string */
+    public $title;
+    /** @var string */
+    public $description;
+
     public function __construct()
     {
-        $document = \JFactory::getDocument();
+        /** @var CMSApplication $application */
+        $application = Factory::getApplication();
+        $document = $application->getDocument();
 
-        if ($document instanceof \JDocumentHTML) {
+        if ($document instanceof HtmlDocument) {
             $this->theme = $document->template;
             $this->url = $document->baseurl;
             $this->title = $document->title;

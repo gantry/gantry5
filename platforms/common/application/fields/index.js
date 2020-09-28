@@ -108,7 +108,7 @@ ready(function() {
         if (!target || !originals || originals.get(element.attribute('name')) == null) { return; }
         if (originals.get(element.attribute('name')) !== element.value() || isNewWidget) {
             if (isOverride && event.forceOverride && !isOverride.checked()) { isOverride[0].click(); }
-            target.showIndicator('changes-indicator font-small fa fa-circle-o fa-fw');
+            target.showIndicator('changes-indicator font-small far fa-circle fa-fw');
         } else {
             if (isOverride && event.forceOverride && isOverride.checked()) { isOverride[0].click(); }
             target.hideIndicator();
@@ -133,7 +133,7 @@ ready(function() {
         if (!save) { return; }
 
         flags.set('pending', !equals);
-        save[equals ? 'hideIndicator' : 'showIndicator']('changes-indicator fa fa-circle-o fa-fw');
+        save[equals ? 'hideIndicator' : 'showIndicator']('changes-indicator far fa-circle fa-fw');
     };
 
     compare.blanks = function(event, element) {

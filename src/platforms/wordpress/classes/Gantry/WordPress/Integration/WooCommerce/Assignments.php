@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,9 +20,12 @@ use Gantry\Component\Assignments\AssignmentsInterface;
  */
 class AssignmentsWoocommerce implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'woocommerce';
+    /** @var int */
     public $priority = 4;
 
+    /** @var array */
     protected $context = [
         'is_shop'             => 'Shop Page',
         'is_product'          => 'Product Page',
@@ -41,8 +45,8 @@ class AssignmentsWoocommerce implements AssignmentsInterface
     {
         $rules = [];
 
-        foreach($this->context as $var => $label) {
-            if (call_user_func($var) === true) {
+        foreach ($this->context as $var => $label) {
+            if ($var() === true) {
                 $rules[$var] = $this->priority;
             }
         }
@@ -67,12 +71,15 @@ class AssignmentsWoocommerce implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @return array
+     */
     protected function getItems()
     {
         $items = [];
         $context = $this->context;
 
-        foreach($context as $conditional => $label) {
+        foreach ($context as $conditional => $label) {
             $items[] = [
                 'name'  => $conditional,
                 'label' => $label
@@ -86,7 +93,6 @@ class AssignmentsWoocommerce implements AssignmentsInterface
      * Add WooCommerce to the Page Context list
      *
      * @param $context
-     *
      * @return array
      */
     public static function addPageContextItem($context)
@@ -103,7 +109,6 @@ class AssignmentsWoocommerce implements AssignmentsInterface
      *
      * @param $rules
      * @param $priority
-     *
      * @return array
      */
     public static function addPageContextConditionals($rules, $priority = 1)
@@ -112,7 +117,7 @@ class AssignmentsWoocommerce implements AssignmentsInterface
             $rules = [];
         }
 
-        if (is_woocommerce() === true) {
+        if (\is_woocommerce() === true) {
             $rules['is_woocommerce'] = $priority;
         }
 

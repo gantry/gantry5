@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,11 +14,21 @@
 
 namespace Gantry\Component\Config;
 
+/**
+ * Class ValidationException
+ * @package Gantry\Component\Config
+ */
 class ValidationException extends \RuntimeException
 {
+    /** @var array */
     protected $messages = [];
 
-    public function setMessages(array $messages = []) {
+    /**
+     * @param array $messages
+     * @return $this
+     */
+    public function setMessages(array $messages = [])
+    {
         $this->messages = $messages;
 
         // TODO: add translation.
@@ -33,6 +44,9 @@ class ValidationException extends \RuntimeException
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getMessages()
     {
         return $this->messages;

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,14 +18,27 @@ use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Translator
+ * @package Gantry\Component\Translator
+ */
 class Translator implements TranslatorInterface
 {
+    /** @var string */
     protected $default = 'en';
+    /** @var string */
     protected $active = 'en';
+    /** @var array */
     protected $sections = [];
+    /** @var array */
     protected $translations = [];
+    /** @var array */
     protected $untranslated = [];
 
+    /**
+     * @param string $string
+     * @return string
+     */
     public function translate($string)
     {
         if (preg_match('|^GANTRY5(_[A-Z0-9]+){2,}$|', $string)) {
@@ -40,7 +54,7 @@ class Translator implements TranslatorInterface
         $args = func_get_args();
         $args[0] = $string;
 
-        return call_user_func_array('sprintf', $args);
+        return sprintf(...$args);
     }
 
     /**
@@ -60,11 +74,20 @@ class Translator implements TranslatorInterface
         return $previous;
     }
 
+    /**
+     * @return array
+     */
     public function untranslated()
     {
         return $this->untranslated;
     }
 
+    /**
+     * @param string $language
+     * @param string $section
+     * @param string $string
+     * @return string|null
+     */
     protected function find($language, $section, $string)
     {
         if (!isset($this->sections[$language][$section])) {
@@ -88,6 +111,11 @@ class Translator implements TranslatorInterface
         return $this->translations[$language][$string];
     }
 
+    /**
+     * @param string $language
+     * @param string $section
+     * @return array
+     */
     protected function load($language, $section)
     {
         $gantry = Gantry::instance();
@@ -104,11 +132,12 @@ class Translator implements TranslatorInterface
         $filename = 'gantry-admin://translations/' . $language . '/' . $section . '.yaml';
         $file = CompiledYamlFile::instance($filename);
 
-        if (!$file->exists() && ($pos = strpos($language, '-')) > 0) {
+        if (!$file->exists() && ($pos = strpos($language, '-'))) {
             $filename = 'gantry-admin://translations/' . substr($language, 0, $pos) . '/' . $section . '.yaml';
             $file = CompiledYamlFile::instance($filename);
         }
 
+        /** @var string $cachePath */
         $cachePath = $locator->findResource('gantry-cache://translations', true, true);
         $translations = (array) $file->setCachePath($cachePath)->content();
         $file->free();

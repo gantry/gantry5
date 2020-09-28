@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,12 +14,21 @@
 
 namespace Gantry\Component\Whoops;
 
+/**
+ * Class SystemFacade
+ * @package Gantry\Component\Whoops
+ */
 class SystemFacade extends \Whoops\Util\SystemFacade
 {
+    /** @var array */
     protected $registeredPatterns;
+    /** @var callable */
     protected $whoopsErrorHandler;
+    /** @var callable */
     protected $whoopsExceptionHandler;
+    /** @var callable */
     protected $whoopsShutdownHandler;
+    /** @var callable|null */
     protected $platformExceptionHandler;
 
     /**
@@ -27,8 +37,8 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     public function __construct($patterns = [])
     {
         $this->registeredPatterns = array_map(
-            function ($pattern) {
-                return["pattern" => $pattern];
+            static function ($pattern) {
+                return ['pattern' => $pattern];
             },
             (array) $patterns
         );
@@ -42,11 +52,6 @@ class SystemFacade extends \Whoops\Util\SystemFacade
      */
     public function setErrorHandler(callable $handler, $types = 'use-php-defaults')
     {
-        // Workaround for PHP 5.5
-        if ($types === 'use-php-defaults') {
-            $types = E_ALL | E_STRICT;
-        }
-
         $this->whoopsErrorHandler = $handler;
 
         return parent::setErrorHandler([$this, 'handleError'], $types);
@@ -102,7 +107,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         // If there are registered patterns, only handle errors if error matches one of the patterns.
         if ($level & error_reporting()) {
             foreach ($this->registeredPatterns as $entry) {
-                $pathMatches = $file && preg_match($entry["pattern"], $file);
+                $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
                     return $handler($level, $message, $file, $line);
                 }
@@ -127,7 +132,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         if ($this->registeredPatterns) {
             foreach ($this->registeredPatterns as $entry) {
                 $file = $exception->getFile();
-                $pathMatches = $file && preg_match($entry["pattern"], $file);
+                $pathMatches = $file && preg_match($entry['pattern'], $file);
                 if ($pathMatches) {
                     $handler($exception);
                     return;

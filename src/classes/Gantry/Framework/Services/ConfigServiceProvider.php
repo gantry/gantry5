@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,50 +17,74 @@ namespace Gantry\Framework\Services;
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
+use Gantry\Debugger;
 use Gantry\Framework\Atoms;
+use Gantry\Framework\Gantry;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ConfigServiceProvider
+ * @package Gantry\Framework\Services
+ */
 class ConfigServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param Container $gantry
+     */
     public function register(Container $gantry)
     {
-        $gantry['blueprints'] = function($c) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('blueprints', 'Loading blueprints');
+        $gantry['blueprints'] = static function(Gantry $gantry) {
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('blueprints', 'Loading blueprints');
+            }
 
-            $blueprints = static::blueprints($c);
+            $blueprints = static::blueprints($gantry);
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('blueprints');
+            if (GANTRY_DEBUGGER) {
+                Debugger::stopTimer('blueprints');
+            }
 
             return $blueprints;
         };
 
-        $gantry['config'] = function($c) {
+        $gantry['config'] = static function(Gantry $gantry) {
             // Make sure configuration has been set.
-            if (!isset($c['configuration'])) {
+            if (!isset($gantry['configuration'])) {
                 throw new \LogicException('Gantry: Please set current configuration before using $gantry["config"]', 500);
             }
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('config', 'Loading configuration');
+            if (GANTRY_DEBUGGER) {
+                Debugger::startTimer('config', 'Loading configuration');
+            }
 
             // Get the current configuration and lock the value from modification.
-            $outline = $c->lock('configuration');
+            $outline = $gantry->lock('configuration');
 
-            $config = static::load($c, $outline);
+            $config = static::load($gantry, $outline);
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::setConfig($config)->stopTimer('config');
+            if (GANTRY_DEBUGGER) {
+                Debugger::setConfig($config)->stopTimer('config');
+            }
 
             return $config;
         };
     }
 
+    /**
+     * @param Container $container
+     * @return mixed
+     */
     public static function blueprints(Container $container)
     {
         /** @var UniformResourceLocator $locator */
         $locator = $container['locator'];
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
+        if (is_bool($cache)) {
+            throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
+        }
 
         $files = [];
         $paths = $locator->findResources('gantry-particles://');
@@ -72,6 +97,13 @@ class ConfigServiceProvider implements ServiceProviderInterface
         return $config->load();
     }
 
+    /**
+     * @param Container $container
+     * @param string $name
+     * @param bool $combine
+     * @param bool $withDefaults
+     * @return mixed
+     */
     public static function load(Container $container, $name = 'default', $combine = true, $withDefaults = true)
     {
         /** @var UniformResourceLocator $locator */
@@ -84,20 +116,20 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
         $paths = [];
         foreach ($uris as $uri) {
-            $paths = array_merge($paths, $locator->findResources($uri));
+            $paths[] = $locator->findResources($uri);
         }
+        $paths = array_merge([], ...$paths);
 
         // Locate all configuration files to be compiled.
         $files = (new ConfigFileFinder)->locateFiles($paths);
 
         $cache = $locator->findResource('gantry-cache://theme/compiled/config', true, true);
-
-        if (!$cache) {
+        if (is_bool($cache)) {
             throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
         }
 
         $compiled = new CompiledConfig($cache, $files, GANTRY5_ROOT);
-        $compiled->setBlueprints(function() use ($container) {
+        $compiled->setBlueprints(static function() use ($container) {
             return $container['blueprints'];
         });
 

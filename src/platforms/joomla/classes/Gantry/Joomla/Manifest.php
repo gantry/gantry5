@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,8 +16,11 @@ namespace Gantry\Joomla;
  */
 class Manifest
 {
+    /** @var string */
     protected $theme;
+    /** @var string */
     protected $path;
+    /** @var \SimpleXMLElement */
     protected $xml;
 
     /**
@@ -52,11 +56,17 @@ class Manifest
         return $this->xml;
     }
 
+    /**
+     * @return string
+     */
     public function getScriptFile()
     {
         return (string) $this->xml->scriptfile;
     }
 
+    /**
+     * @param array $positions
+     */
     public function setPositions(array $positions)
     {
         sort($positions);
@@ -72,7 +82,6 @@ class Manifest
         $insertDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($insert), true);
         $targetDom->parentNode->replaceChild($insertDom, $targetDom);
     }
-
 
     public function save()
     {

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,6 +11,10 @@
 
 namespace Gantry\WordPress\MultiLanguage;
 
+/**
+ * Interface MultiLantuageInterface
+ * @package Gantry\WordPress\MultiLanguage
+ */
 interface MultiLantuageInterface
 {
     /**

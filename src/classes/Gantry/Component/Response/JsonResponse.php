@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,18 +14,38 @@
 
 namespace Gantry\Component\Response;
 
+/**
+ * Class JsonResponse
+ * @package Gantry\Component\Response
+ */
 class JsonResponse extends Response
 {
+    /** @var string */
     public $mimeType = 'application/json';
 
+    /** @var bool */
     protected $success = true;
+    /** @var string */
     protected $message;
+    /** @var array */
     protected $exceptions = [];
+    /** @var array */
     protected $messages = [];
+    /** @var array */
     protected $content = [];
 
     /**
-     * @param string $content
+     * JsonResponse constructor.
+     * @param string|array|Response|\Exception $content
+     * @param int $status
+     */
+    public function __construct($content = '', $status = 200)
+    {
+        parent::__construct($content, $status);
+    }
+
+    /**
+     * @param string|array $content
      * @param bool $success
      * @return $this
      */
@@ -74,6 +95,10 @@ class JsonResponse extends Response
         return (string) json_encode($json);
     }
 
+    /**
+     * @param int|string|null $key
+     * @param mixed $value
+     */
     protected function parseValue($key, $value)
     {
         if ($value instanceof \Exception) {
@@ -86,7 +111,7 @@ class JsonResponse extends Response
             $key =  !$key || is_int($key) ? 'html' : $key;
             $this->content[$key] = trim((string) $value);
 
-        } elseif (is_null($key)) {
+        } elseif (null === $key) {
             // If the returned value was not an array, put the contents into data variable.
             $this->content['data'] = $value;
 
@@ -99,6 +124,10 @@ class JsonResponse extends Response
         }
     }
 
+    /**
+     * @param \Exception $e
+     * @return array
+     */
     protected function parseException(\Exception $e)
     {
         $this->code = $e->getCode();

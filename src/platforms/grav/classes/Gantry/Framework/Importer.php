@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -17,16 +18,19 @@ use RocketTheme\Toolbox\File\MarkdownFile;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Importer
+ * @package Gantry\Framework
+ */
 class Importer
 {
+    /** @var string */
     protected $folder;
-
+    /** @var array */
     protected $articles;
+    /** @var array */
     protected $categories;
-
-    /**
-     * @var UniformResourceLocator
-     */
+    /** @var UniformResourceLocator */
     protected $locator;
 
     /**
@@ -69,7 +73,10 @@ class Importer
     {
         $folder = $this->locator->findResource('gantry-positions://', true, true);
 
-        if (is_dir($folder)) Folder::delete($folder);
+        if (is_dir($folder)) {
+            Folder::delete($folder);
+        }
+
         Folder::copy("{$this->folder}/positions", $folder);
     }
 
@@ -77,7 +84,10 @@ class Importer
     {
         $folder = $this->locator->findResource('gantry-theme://config', true, true);
 
-        if (is_dir($folder)) Folder::delete($folder);
+        if (is_dir($folder)) {
+            Folder::delete($folder);
+        }
+
         Folder::copy("{$this->folder}/outlines", $folder);
     }
 
@@ -86,10 +96,14 @@ class Importer
         $from = "{$this->folder}/menus";
 
         $config = $this->locator->findResource('gantry-theme://config/menus', true, true);
-        if (is_dir($config)) Folder::delete($config);
+        if (is_dir($config)) {
+            Folder::delete($config);
+        }
 
         $pages = $this->locator->findResource('page://', true, true);
-        if (is_dir($pages)) Folder::delete($pages);
+        if (is_dir($pages)) {
+            Folder::delete($pages);
+        }
 
         $files = Folder::all($from, ['folders' => false, 'recursive' => false]);
 
@@ -122,6 +136,9 @@ class Importer
         }
     }
 
+    /**
+     * @param array $menu
+     */
     protected function menu(array $menu)
     {
         $config = new Config([]);
@@ -161,8 +178,8 @@ class Importer
             $item['folder'] = $folder;
 
             $config->set($location, $item, '/');
-
         }
+        unset($item);
 
         foreach ($menu['items'] as $path => $menuitem) {
             $page = $menuitem['page'];
@@ -177,6 +194,9 @@ class Importer
         }
     }
 
+    /**
+     * @return array
+     */
     protected function fetchArticles()
     {
         if (!isset($this->articles)) {
@@ -195,16 +215,28 @@ class Importer
         return $this->articles;
     }
 
+    /**
+     * @param string $id
+     * @return string|null
+     */
     protected function getCategoryAlias($id)
     {
         return isset($this->categories[$id]['alias']) ? $this->categories[$id]['alias'] : null;
     }
 
+    /**
+     * @param string $id
+     * @return string|null
+     */
     protected function getCategoryTitle($id)
     {
         return isset($this->categories[$id]['title']) ? $this->categories[$id]['title'] : null;
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     protected function readArticle($id)
     {
         if (!isset($this->articles[$id])) {
@@ -231,7 +263,7 @@ class Importer
                     'alias' => $content['created_by_alias'] ?: ($content['author']['realname'] ?: null)
                 ],
                 'date' => $content['created'] !== '0000-00-00 00:00:00' ? $content['created'] : null,
-                'published' => $content['state'] == 1,
+                'published' => $content['state'] === 1,
                 'publish_date' => $content['publish_up'] !== '0000-00-00 00:00:00' ? $content['publish_up'] : null,
                 'unpublish_date' => $content['publish_down'] !== '0000-00-00 00:00:00' ? $content['publish_down'] : null,
                 'taxonomy' => [
@@ -254,6 +286,10 @@ class Importer
         return $article;
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createComponentPage(array $item)
     {
         $page = [];
@@ -363,6 +399,10 @@ class Importer
         return $page;
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createAliasPage(array $item)
     {
         return [
@@ -374,6 +414,10 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createUrlPage(array $item)
     {
         return [
@@ -386,6 +430,10 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createSeparatorPage(array $item)
     {
         return [
@@ -398,7 +446,10 @@ class Importer
         ];
     }
 
-
+    /**
+     * @param array $item
+     * @return array
+     */
     protected function createParticlePage(array $item)
     {
         return [
@@ -411,12 +462,16 @@ class Importer
         ];
     }
 
+    /**
+     * @param array $v
+     * @return array
+     */
     protected function filterNull($v)
     {
         if (is_array($v)) {
             foreach ($v as $key => $value) {
                 $value = $this->filterNull($value);
-                if (is_null($value) || (is_array($value) && empty($value))) {
+                if (null === $value || (is_array($value) && empty($value))) {
                     unset($v[$key]);
                 } else {
                     $v[$key] = $value;
@@ -431,16 +486,13 @@ class Importer
      * Filter stream URLs from HTML.
      *
      * @param  string $html         HTML input to be filtered.
-     * @param  bool $domain         True to include domain name.
-     * @param  int $timestamp_age   Append timestamp to files that are less than x seconds old. Defaults to a week.
-     *                              Use value <= 0 to disable the feature.
      * @return string               Returns modified HTML.
      */
     protected function urlFilter($html)
     {
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
+        $html = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', static function($matches) use (&$tokens) {
             $token = uniqid('__g5_token');
             $tokens['#' . $token . '#'] = $matches[0];
 

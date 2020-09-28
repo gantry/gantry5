@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,11 +11,22 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Admin\Events\MenuEvent;
+use Gantry\Component\Config\Config;
+use Gantry\Component\Menu\Item;
+use Gantry\Framework\Menu;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 
+/**
+ * Class EventListener
+ * @package Gantry\Admin
+ */
 class EventListener implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -27,33 +39,54 @@ class EventListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function onGlobalSave(Event $event)
     {
         $option = (array) \get_option('gantry5_plugin');
-        $option['production'] = intval((bool) $event->data['production']);
+        $option['production'] = (int)(bool) $event->data['production'];
         \update_option('gantry5_plugin', $option);
     }
 
+    /**
+     * @param Event $event
+     */
     public function onStylesSave(Event $event)
     {
         $event->theme->preset_styles_update_css();
     }
 
+    /**
+     * @param Event $event
+     */
     public function onSettingsSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onLayoutSave(Event $event)
     {
     }
 
+    /**
+     * @param Event $event
+     */
     public function onAssignmentsSave(Event $event)
     {
     }
 
+    /**
+     * @param MenuEvent|Event $event
+     */
     public function onMenusSave(Event $event)
     {
         /*
+         * Automatically create navigation menu items:
+         * https://clicknathan.com/web-design/automatically-create-wordpress-navigation-menu-items/
+         *
          * Add widgets and particles to any menu:
          * http://www.wpbeginner.com/wp-themes/how-to-add-custom-items-to-specific-wordpress-menus/
          *
@@ -68,68 +101,96 @@ class EventListener implements EventSubscriberInterface
          *   update_post_meta()
          *
          * https://github.com/WordPress/WordPress/blob/master/wp-admin/nav-menus.php#L65
+         *
+         * Example to handle custom menu items:
+         * https://github.com/wearerequired/custom-menu-item-types/blob/master/inc/Custom_Menu_Items.php
          */
 
-        $defaults = [
-            'id' => 0,
-            'layout' => 'list',
-            'target' => '_self',
-            'dropdown' => '',
-            'icon' => '',
-            'image' => '',
-            'subtitle' => '',
-            'icon_only' => false,
-            'visible' => true,
-            'group' => 0,
-            'columns' => [],
-            'link_title' => '',
-            'hash' => '',
-            'class' => '',
-            'anchor_class' => '',
-            'enabled' => 1,
-        ];
+        $debug = [];
 
+        /** @var Config $menu */
         $menu = $event->menu;
 
+        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
+        $ordering = Menu::flattenOrdering($menu['ordering']);
+
+        // Prepare menu items data.
+        $items = Menu::prepareMenuItems($menu['items'], $menu['ordering'], $ordering);
+
+        // Create database id map to detect moved/deleted menu items.
+        $map = [];
+        foreach ($items as $path => $item) {
+            if (!empty($item['id'])) {
+                $map[$item['id']] = $path;
+            }
+        }
+
         $menus = array_flip($event->gantry['menu']->getMenus());
-        $id = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
+        $menuId = isset($menus[$event->resource]) ? $menus[$event->resource] : 0;
 
         // Save global menu settings into Wordpress.
-        $menuObject = wp_get_nav_menu_object($id);
-        if (is_wp_error($menuObject)) {
-            throw new \RuntimeException("Saving menu failed: Menu {$event->resource} ({$id}) not found", 400);
+        $menuObject = \wp_get_nav_menu_object($menuId);
+        if (\is_wp_error($menuObject)) {
+            throw new \RuntimeException("Saving menu failed: Menu {$event->resource} ({$menuId}) not found", 400);
         }
 
         $options = [
-            'menu-name' => trim(esc_html($menu['settings.title']))
+            'menu-name' => trim(\esc_html($menu['settings.title']))
         ];
 
-        $id = wp_update_nav_menu_object($id, $options);
-        if (is_wp_error($id)) {
-            throw new \RuntimeException("Saving menu failed: Failed to update {$event->resource}", 400);
+        $debug['update_menu'] = ['menu_id' => $menuId, 'options' => $options];
+
+        if (Menu::WRITE_DB) {
+            unset($menu['settings.title']);
+            $menuId = \wp_update_nav_menu_object($menuId, $options);
+            if (\is_wp_error($menuId)) {
+                throw new \RuntimeException("Saving menu failed: Failed to update {$event->resource}", 400);
+            }
         }
 
-        unset($menu['settings']);
-
         // Get all menu items (or false).
-        $unsorted_menu_items = wp_get_nav_menu_items(
-            $id,
-            ['orderby' => 'ID', 'output' => ARRAY_A, 'output_key' => 'ID', 'post_status' => 'draft,publish']
+        $unsorted_menu_items = \wp_get_nav_menu_items(
+            $menuId,
+            [
+                'orderby' => 'ID',
+                'output' => ARRAY_A,
+                'output_key'  => 'ID',
+                'post_status' => 'draft,publish'
+            ]
         );
 
         $menu_items = [];
         if ($unsorted_menu_items) {
-            foreach ($unsorted_menu_items as $_item) {
-                $menu_items[$_item->db_id] = $_item;
+            foreach ($unsorted_menu_items as $item) {
+                $menu_items[$item->db_id] = $item;
+            }
+        }
+        unset($unsorted_menu_items);
+
+        if (Menu::WRITE_DB) {
+            \wp_defer_term_counting(true);
+        }
+
+        // Delete removed particles from the menu.
+        foreach ($menu_items as $wpItem) {
+            $path = isset($map[$wpItem->db_id]) ? $map[$wpItem->db_id] : '\\';
+            if ($wpItem->type === 'custom' && !isset($items[$path]) && strpos($wpItem->attr_title, 'gantry-particle-') === 0) {
+                $db_id = $wpItem->db_id;
+
+                $debug['delete_' . $db_id] = ['id' => $db_id];
+
+                if (Menu::WRITE_DB) {
+                    \delete_post_meta($db_id, '_menu_item_gantry5');
+                    \wp_delete_post($db_id);
+                }
             }
         }
 
-        wp_defer_term_counting(true);
+        $ignore = ['title', 'link', 'class', 'target', 'id'];
+        $ignore_db = array_merge($ignore, ['object_id']);
+        $list = [];
 
-        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
-        $ordering = $this->flattenOrdering($menu['ordering']);
-
-        foreach ($menu['items'] as $key => $item) {
+        foreach ($items as $key => $item) {
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
                     $item['object_id'] = (int)$item['object_id'];
@@ -137,70 +198,150 @@ class EventListener implements EventSubscriberInterface
                     unset($item['object_id']);
                 }
                 $wpItem = $menu_items[$item['id']];
+                $db_id = $wpItem->db_id;
+
+                // Set parent and position.
+                $parent_path = ltrim(dirname('/' . $key), '/');
+                if ($parent_path) {
+                    $parent = $items[$parent_path];
+                    $parent_id = (int)$parent['id'];
+                } else {
+                    $parent_id = 0;
+                }
+                $position = $ordering[$key];
 
                 $args = [
-                    'menu-item-db-id' => $wpItem->db_id,
-                    'menu-item-object-id' => $wpItem->object_id,
+                    'menu-item-db-id' => $db_id,
+                    'menu-item-object-id' => (int)$wpItem->object_id,
                     'menu-item-object' => $wpItem->object,
-                    'menu-item-parent-id' => $wpItem->menu_item_parent,
-                    'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
+                    'menu-item-parent-id' => $parent_id,
+                    'menu-item-position' => $position,
                     'menu-item-type' => $wpItem->type,
-                    'menu-item-title' => trim($item['title']),
+                    'menu-item-title' => \wp_slash(trim($item['title'])),
                     'menu-item-url' => $wpItem->url,
                     'menu-item-description' => $wpItem->description,
                     'menu-item-attr-title' => $wpItem->attr_title,
-                    'menu-item-target' => $item['target'] != '_self' ? $item['target'] : '',
-                    'menu-item-classes' => trim($item['class']),
-                    'menu-item-xfn' => $wpItem->xfn
+                    'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
+                    'menu-item-classes' => \wp_slash(trim($item['class'])),
+                    'menu-item-xfn' => $wpItem->xfn,
+                    'menu-item-status' => $wpItem->status
                 ];
+                $meta = $this->normalizeMenuItem($item, $ignore_db);
 
-                wp_update_nav_menu_item($id, $wpItem->db_id, $args);
+                $debug['update_' . $key] = ['menu_id' => $menuId, 'id' => $db_id, 'args' => $args, 'meta' => $meta];
 
-                unset($item['title'], $item['link'], $item['class'], $item['target'], $item['type'], $item['id']);
-            }
+                if (Menu::WRITE_DB) {
+                    \wp_update_nav_menu_item($menuId, $db_id, $args);
+                    if (Menu::WRITE_META) {
+                        \update_post_meta($db_id, '_menu_item_gantry5', \wp_slash(json_encode($meta)));
+                    } else {
+                        \delete_post_meta($db_id, '_menu_item_gantry5');
+                    }
+                }
+            } elseif ($item['type'] === 'particle') {
+                if (isset($item['parent_id']) && is_numeric($item['parent_id'])) {
+                    // We have parent id available, use it.
+                    $parent_id = $item['parent_id'];
+                } else {
+                    $parts = explode('/', $key);
+                    $slug = array_pop($parts);
+                    $parent_path = implode('/', $parts);
+                    $parent_item = $parent_path && isset($items[$parent_path]) ? $items[$parent_path] : null;
 
-            $item['enabled'] = (int) $item['enabled'];
+                    $item['path'] = $key;
+                    $item['route'] = (!empty($parent_item['route']) ? $parent_item['route'] . '/' : '') . $slug;
 
-            // Do not save default values.
-            foreach ($defaults as $var => $value) {
-                if (isset($item[$var]) && $item[$var] == $value) {
-                    unset($item[$var]);
+                    $wpItem = isset($menu_items[$parent_item['id']]) ? $menu_items[$parent_item['id']] : null;
+                    $parent_id = !empty($wpItem->db_id) ? $wpItem->db_id : 0;
+                }
+
+                // Create new particle menu item.
+                $particle = isset($item['particle']) ? $item['particle'] : '';
+                $args = [
+                    'menu-item-db-id' => 0,
+                    'menu-item-object-id' => 0,
+                    'menu-item-object' => '',
+                    'menu-item-parent-id' => $parent_id,
+                    'menu-item-position' => isset($ordering[$key]) ? $ordering[$key] : 0,
+                    'menu-item-type' => 'custom',
+                    'menu-item-title' => \wp_slash(trim($item['title'])),
+                    'menu-item-url' => '',
+                    'menu-item-description' => '',
+                    'menu-item-attr-title' => 'gantry-particle-' . $particle,
+                    'menu-item-target' => $item['target'] !== '_self' ? $item['target'] : '',
+                    'menu-item-classes' => \wp_slash(trim($item['class'])),
+                    'menu-item-xfn' => ''
+                ];
+                $meta = $this->normalizeMenuItem($item, $ignore_db);
+
+                $debug['create_' . $key] = ['menu_id' => $menuId, 'args' => $args, 'meta' => $meta, 'item' => $item];
+
+                if (Menu::WRITE_DB) {
+                    $db_id = \wp_update_nav_menu_item($menuId, 0, $args);
+                    if ($db_id) {
+                        // We need to update post_name to match the alias
+                        \wp_update_nav_menu_item($menuId, $db_id, $args + ['menu-item-status' => 'publish']);
+                        if (Menu::WRITE_META) {
+                            \update_post_meta($db_id, '_menu_item_gantry5', \wp_slash(json_encode($meta)));
+                        }
+                    }
                 }
             }
 
-            // Do not save derived values.
-            unset($item['path'], $item['alias'], $item['parent_id'], $item['level'], $item['group'], $item['current']);
-
-            // Do not save WP variables we do not use.
-            unset($item['rel'], $item['attr_title']);
-
-            // Particles have no link.
-            if (isset($item['type']) && $item['type'] === 'particle') {
-                unset($item['link']);
+            // Add menu items for YAML file.
+            $path = isset($item['yaml_path']) ? $item['yaml_path'] : $key;
+            $meta = $this->normalizeMenuItem($item, $item['type'] !== 'particle' ? $ignore : []);
+            $count = count($meta);
+            // But only add menu items which have useful data in them.
+            if ($count > 1 || ($count === 1 && !isset($meta['object_id']))) {
+                $list[$path] = $meta;
             }
-
-            $event->menu["items.{$key}"] = $item;
         }
 
-        wp_defer_term_counting(false);
+        $menu['items'] = $list;
+
+        $debug['yaml'] = $event->menu->toArray();
+        $event->debug = $debug;
+
+        if (!Menu::WRITE_YAML) {
+            $event->save = false;
+        }
+
+        if (Menu::WRITE_DB) {
+            unset($menu['items'], $menu['ordering']);
+            \wp_defer_term_counting(false);
+        }
     }
 
-    protected function flattenOrdering(array $ordering, $parents = [], &$i = 0)
+    /**
+     * @param array $item
+     * @param array $ignore
+     * @return array
+     */
+    protected function normalizeMenuItem(array $item, array $ignore = [])
     {
-        $list = [];
-        $group = isset($ordering[0]);
-        foreach ($ordering as $id => $children) {
-            $tree = $parents;
-            if (!$group && !preg_match('/^(__particle|__widget)/', $id)) {
-                $tree[] = $id;
-                $name = implode('/', $tree);
-                $list[$name] = ++$i;
-            }
-            if (is_array($children)) {
-                $list += $this->flattenOrdering($children, $tree, $i);
-            }
+        static $ignoreList = [
+            // Never save derived values.
+            'id', 'path', 'route', 'alias', 'parent_id', 'level', 'group', 'current', 'yaml_path', 'yaml_alias',
+            // Also do not save WP variables we do not need.
+            'rel', 'attr_title'
+        ];
+
+        if (isset($item['link_title'])) {
+            $item['link_title'] = trim($item['link_title']);
         }
 
-        return $list;
+        if (isset($item['object_id'])) {
+            $item['object_id'] = (int)$item['object_id'];
+        }
+
+        $item = Item::normalize($item, array_merge($ignore, $ignoreList));
+
+        if (!isset($item['type']) || $item['type'] !== 'particle') {
+            // These are storec into DB for non-particles.
+            unset($item['title'], $item['link'], $item['type']);
+        }
+
+        return $item;
     }
 }

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,9 +15,15 @@ use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
+use Gantry\Framework\Platform;
 
+/**
+ * Class Widget
+ * @package Gantry\Admin\Controller\Json
+ */
 class Widget extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/'                  => 'select',
@@ -68,7 +75,7 @@ class Widget extends JsonController
 
             // Load particle blueprints.
             $validator = $this->loadBlueprints($scope);
-            $callable = function () use ($validator) {
+            $callable = static function () use ($validator) {
                 return $validator;
             };
         } else {
@@ -82,6 +89,7 @@ class Widget extends JsonController
 
         $widgetType = $this->getWidgetType($name);
         $widgetType->number = 0;
+
         ob_start();
         // TODO: We might want to add the filters back; for now we just assume that widget works like the_widget().
         //$instance = apply_filters( 'widget_form_callback', $instance, $data );
@@ -192,7 +200,10 @@ class Widget extends JsonController
      */
     protected function getWidgetType($name)
     {
-        $widgets = $this->container['platform']->listWidgets();
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        $widgets = $platform->listWidgets();
         if (!isset($widgets[$name])) {
             throw new \RuntimeException(sprintf("Widget '%s' not found", $name), 404);
         }
@@ -208,7 +219,6 @@ class Widget extends JsonController
      * Load blueprints.
      *
      * @param string $name
-     *
      * @return BlueprintForm
      */
     protected function loadBlueprints($name = 'menu')
@@ -216,6 +226,10 @@ class Widget extends JsonController
         return BlueprintForm::instance("menu/{$name}.yaml", 'gantry-admin://blueprints');
     }
 
+    /**
+     * @param array $input
+     * @return array
+     */
     protected function castInput(array $input)
     {
         // TODO: Following code is a hack; we really need to pass the data as JSON instead of individual HTTP fields
@@ -229,7 +243,7 @@ class Widget extends JsonController
             } elseif (strtolower($field) === 'false') {
                 $input[$key] = false;
             } elseif ((string) $field === (string)(int) $field) {
-                $input[$key] = intval($field);
+                $input[$key] = (int)$field;
             }
         }
 

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -10,21 +11,29 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Request\Request;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Component\Router\Router as BaseRouter;
+use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Router
+ * @package Gantry\Admin
+ */
 class Router extends BaseRouter
 {
     public function boot()
     {
-        static $booted;
+        /** @var bool */
+        static $booted = false;
 
         if ($booted) {
             return;
@@ -41,7 +50,7 @@ class Router extends BaseRouter
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
-        $parts = array_filter(explode('/', $admin->route), function($var) { return $var !== ''; });
+        $parts = array_filter(explode('/', $admin->route), static function($var) { return $var !== ''; });
         $base = '';
 
         // Set theme.
@@ -49,7 +58,10 @@ class Router extends BaseRouter
             $base = '/' . array_shift($parts);
             $theme = array_shift($parts);
         } else {
-            $theme = $grav['config']->get('system.pages.theme');
+            /** @var GravConfig $config */
+            $config = $grav['config'];
+
+            $theme = $config->get('system.pages.theme');
         }
         $this->setTheme($theme);
 
@@ -91,38 +103,59 @@ class Router extends BaseRouter
         }
     }
 
+    /**
+     * @param string|null $theme
+     * @return $this
+     */
     public function setTheme(&$theme)
     {
         $path = "themes://{$theme}";
 
         if (!$theme || !is_file("{$path}/gantry/theme.yaml") || !is_file("{$path}/theme.php")) {
             $theme = null;
-            $this->container['streams']->register();
+            /** @var Streams $streams */
+            $streams = $this->container['streams'];
+            $streams->register();
 
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
 
+            /** @var Config $global */
+            $global = $this->container['global'];
+
             CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-            CompiledYamlFile::$defaultCaching = $this->container['global']->get('compile_yaml', 1);
+            CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
         } else {
-            Grav::instance()['config']->set('system.pages.theme', $theme);
+            /** @var GravConfig $config */
+            $config = Grav::instance()['config'];
+            $config->set('system.pages.theme', $theme);
         }
 
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkSecurityToken()
     {
         /** @var Request $request */
         $request = $this->container['request'];
         $nonce = $request->get->get('nonce');
+
         return isset($nonce) && Utils::verifyNonce($nonce, 'gantry-admin');
     }
 
+    /**
+     * @param Response $response
+     * @return bool
+     */
     protected function send(Response $response)
     {
         // Add missing translations to debugbar.
-        //GANTRY_DEBUGGER && \Gantry\Debugger::addCollector(new ConfigCollector(Gantry::instance()['translator']->untranslated(), 'Untranslated'));
+//        if (GANTRY_DEBUGGER) {
+//            Debugger::addCollector(new ConfigCollector(Gantry::instance()['translator']->untranslated(), 'Untranslated'));
+//        }
 
         // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -71,7 +72,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
 
         $gantry = Gantry::instance();
 
-        /** @var Theme $theme */
+        /** @var Theme|null $theme */
         $theme = isset($gantry['theme']) ? $gantry['theme'] : null;
 
         /** @var Document $document */
@@ -85,7 +86,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
                     $url = $theme->css(basename($url, '.scss'));
                 }
                 // Deal with streams and relative paths.
-                $url = $document->url($url, false, null, false);
+                $url = $document::url($url, false, null, false);
 
                 $styles[$key]['href'] = $url;
             }
@@ -115,7 +116,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         foreach ($scripts as $key => $script) {
             if (isset($script['src'])) {
                 // Deal with streams and relative paths.
-                $scripts[$key]['src'] = $document->url($script['src'], false, null, false);
+                $scripts[$key]['src'] = $document::url($script['src'], false, null, false);
             }
         }
 
@@ -197,9 +198,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['href' => (string) $element];
         }
+
         if (empty($element['href'])) {
             return false;
         }
+
         if (!isset($this->styles[$location])) {
             $this->styles[$location] = [];
         }
@@ -234,9 +237,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['content' => (string) $element];
         }
+
         if (empty($element['content'])) {
             return false;
         }
+
         if (!isset($this->styles[$location])) {
             $this->styles[$location] = [];
         }
@@ -266,9 +271,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['src' => (string) $element];
         }
+
         if (empty($element['src'])) {
             return false;
         }
+
         if (!isset($this->scripts[$location])) {
             $this->scripts[$location] = [];
         }
@@ -304,9 +311,11 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (!is_array($element)) {
             $element = ['content' => (string) $element];
         }
+
         if (empty($element['content'])) {
             return false;
         }
+
         if (!isset($this->scripts[$location])) {
             $this->scripts[$location] = [];
         }
@@ -336,6 +345,7 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         if (empty($html) || !is_string($html)) {
             return false;
         }
+
         if (!isset($this->html[$location])) {
             $this->html[$location] = [];
         }
@@ -455,10 +465,12 @@ class HtmlBlock extends ContentBlock implements HtmlBlockInterface
         foreach ($items as &$item) {
             $item[':order'] = ++$count;
         }
+        unset ($item);
+
         uasort(
             $items,
-            function ($a, $b) {
-                return ($a[':priority'] == $b[':priority']) ? $a[':order'] - $b[':order'] : $b[':priority'] - $a[':priority'];
+            static function ($a, $b) {
+                return ($a[':priority'] === $b[':priority']) ? $a[':order'] - $b[':order'] : $b[':priority'] - $a[':priority'];
             }
         );
     }

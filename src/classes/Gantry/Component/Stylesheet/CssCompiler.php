@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,60 +17,41 @@ namespace Gantry\Component\Stylesheet;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
-use Leafo\ScssPhp\Colors;
+use ScssPhp\ScssPhp\Colors;
 use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class CssCompiler
+ * @package Gantry\Component\Stylesheet
+ */
 abstract class CssCompiler implements CssCompilerInterface
 {
     use GantryTrait;
 
+    /** @var string */
     protected $type;
-
+    /** @var string */
     protected $name;
-
+    /** @var bool */
     protected $debug = false;
-
+    /** @var array */
     protected $warnings = [];
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $fonts;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $variables;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $target = 'gantry-theme://css-compiled';
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $configuration = 'default';
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $paths;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $files;
-
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $compiler;
-
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $production;
 
     public function __construct()
@@ -83,6 +65,9 @@ abstract class CssCompiler implements CssCompilerInterface
         $this->production = (bool) $global->get('production');
     }
 
+    /**
+     * @return array
+     */
     public function getWarnings()
     {
         return $this->warnings;
@@ -198,6 +183,11 @@ abstract class CssCompiler implements CssCompilerInterface
         return $this;
     }
 
+    /**
+     * @param string $in
+     * @param callable $variables
+     * @return bool
+     */
     public function needsCompile($in, $variables)
     {
         $gantry = static::gantry();
@@ -264,6 +254,8 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if variables have been changed.
         $oldVariables = isset($content['variables']) ? $content['variables'] : [];
+
+        // Note: Do not use strict check!
         if ($oldVariables != $this->getVariables()) {
             return true;
         }
@@ -290,6 +282,10 @@ abstract class CssCompiler implements CssCompilerInterface
         return false;
     }
 
+    /**
+     * @param array $variables
+     * @return $this
+     */
     public function setVariables(array $variables)
     {
         $this->variables = array_filter($variables);
@@ -313,8 +309,8 @@ abstract class CssCompiler implements CssCompilerInterface
                 continue;
             }
 
-            // Check variable against predefined color names (we use Leafo SCSS Color class to do that).
-            if (isset(Colors::$cssColors[strtolower($value)])) {
+            // Check variable against predefined color names (we use ScssPhp SCSS Color class to do that).
+            if (Colors::colorNameToRGBa(strtolower($value))) {
                 continue;
             }
 
@@ -325,11 +321,17 @@ abstract class CssCompiler implements CssCompilerInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getVariables()
     {
         return $this->variables;
     }
 
+    /**
+     * @return $this|CssCompilerInterface
+     */
     public function reset()
     {
         $this->compiler->reset();
@@ -343,6 +345,10 @@ abstract class CssCompiler implements CssCompilerInterface
      */
     abstract public function findImport($url);
 
+    /**
+     * @param int $len
+     * @return string
+     */
     protected function checksum($len = 36)
     {
         static $checksum;
@@ -354,6 +360,10 @@ abstract class CssCompiler implements CssCompilerInterface
         return '/*' . substr($checksum, 0, $len - 4) . '*/';
     }
 
+    /**
+     * @param string $out
+     * @param string $md5
+     */
     protected function createMeta($out, $md5)
     {
         $gantry = Gantry::instance();

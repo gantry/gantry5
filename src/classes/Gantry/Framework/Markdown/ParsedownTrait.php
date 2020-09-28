@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,17 +14,24 @@
 
 namespace Gantry\Framework\Markdown;
 
+use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 
+/**
+ * Trait ParsedownTrait
+ * @package Gantry\Framework\Markdown
+ */
 trait ParsedownTrait
 {
+    /** @var array */
     protected $special_chars;
+    /** @var string */
     protected $twig_link_regex = '/\!*\[(?:.*)\]\((\{([\{%#])\s*(.*?)\s*(?:\2|\})\})\)/';
 
     /**
      * Initialization function to setup key variables needed by the MarkdownGravLinkTrait
      *
-     * @param $defaults
+     * @param array $defaults
      */
     protected function init(array $defaults)
     {
@@ -46,8 +54,7 @@ trait ParsedownTrait
     /**
      * Setter for special chars
      *
-     * @param $special_chars
-     *
+     * @param array $special_chars
      * @return $this
      */
     public function setSpecialChars($special_chars)
@@ -72,6 +79,10 @@ trait ParsedownTrait
         return null;
     }
 
+    /**
+     * @param array $excerpt
+     * @return array|null
+     */
     protected function inlineSpecialCharacter($excerpt)
     {
         if ($excerpt['text'][0] === '&' && !preg_match('/^&#?\w+;/', $excerpt['text'])) {
@@ -91,6 +102,10 @@ trait ParsedownTrait
         return null;
     }
 
+    /**
+     * @param array $excerpt
+     * @return array
+     */
     protected function inlineImage($excerpt)
     {
         if (preg_match($this->twig_link_regex, $excerpt['text'], $matches)) {
@@ -109,12 +124,19 @@ trait ParsedownTrait
         if (isset($excerpt['element']['attributes']['src'])) {
             $gantry = Gantry::instance();
 
-            $excerpt['element']['attributes']['src'] = $gantry['document']->url($excerpt['element']['attributes']['src']);
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            $excerpt['element']['attributes']['src'] = $document::url($excerpt['element']['attributes']['src']);
         }
 
         return $excerpt;
     }
 
+    /**
+     * @param array $excerpt
+     * @return array
+     */
     protected function inlineLink($excerpt)
     {
         if (!isset($excerpt['type'])) {
@@ -137,7 +159,10 @@ trait ParsedownTrait
         if (isset($excerpt['element']['attributes']['href'])) {
             $gantry = Gantry::instance();
 
-            $excerpt['element']['attributes']['href'] = $gantry['document']->url($excerpt['element']['attributes']['href']);
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            $excerpt['element']['attributes']['href'] = $document::url($excerpt['element']['attributes']['href']);
         }
 
         return $excerpt;

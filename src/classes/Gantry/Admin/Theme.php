@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,14 +14,20 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Admin\Events\InitThemeEvent;
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\AbstractTheme;
 use Gantry\Framework\Platform;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
+/**
+ * Class Theme
+ * @package Gantry\Admin
+ */
 class Theme extends AbstractTheme
 {
     /**
@@ -88,9 +95,10 @@ class Theme extends AbstractTheme
         }
 
         // Fire admin init event.
-        $event = new Event;
+        $event = new InitThemeEvent();
         $event->gantry = $gantry;
         $event->theme = $this;
+
         $gantry->fireEvent('admin.init.theme', $event);
     }
 
@@ -114,11 +122,11 @@ class Theme extends AbstractTheme
     /**
      * @see AbstractTheme::setTwigLoaderPaths()
      *
-     * @param \Twig_LoaderInterface $loader
+     * @param LoaderInterface $loader
      */
-    protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
+    protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
-        if (!($loader instanceof \Twig_Loader_Filesystem)) {
+        if (!($loader instanceof FilesystemLoader)) {
             return;
         }
 

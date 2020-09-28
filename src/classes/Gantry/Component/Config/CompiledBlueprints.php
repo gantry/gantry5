@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,14 +19,10 @@ namespace Gantry\Component\Config;
  */
 class CompiledBlueprints extends CompiledBase
 {
-    /**
-     * @var int Version number for the compiled file.
-     */
+    /** @var int Version number for the compiled file. */
     public $version = 3;
 
-    /**
-     * @var BlueprintSchema  Blueprints object.
-     */
+    /** @var BlueprintSchema  Blueprints object. */
     protected $object;
 
     /**
@@ -49,12 +46,12 @@ class CompiledBlueprints extends CompiledBase
      * Load single configuration file and append it to the correct position.
      *
      * @param  string  $name  Name of the position.
-     * @param  array   $files  Files to be loaded.
+     * @param  string|array  $filename  File to be loaded.
      */
-    protected function loadFile($name, $files)
+    protected function loadFile($name, $filename)
     {
         // Load blueprint file.
-        $blueprint = new BlueprintForm($files);
+        $blueprint = new BlueprintForm($filename);
 
         $this->object->embed($name, $blueprint->load()->toArray(), '/', true);
     }
@@ -87,6 +84,9 @@ class CompiledBlueprints extends CompiledBase
         return true;
     }
 
+    /**
+     * @return array
+     */
     protected function getState()
     {
         return $this->object->getState();

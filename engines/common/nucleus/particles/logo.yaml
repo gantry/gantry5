@@ -1,7 +1,7 @@
 name: 'Logo / Image'
 description: Display a logo or an image.
 type: particle
-icon: fa-file-image-o
+icon: far fa-file-image
 
 configuration:
   caching:

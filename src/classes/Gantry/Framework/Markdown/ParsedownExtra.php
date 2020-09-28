@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,10 @@
 
 namespace Gantry\Framework\Markdown;
 
+/**
+ * Class ParsedownExtra
+ * @package Gantry\Framework\Markdown
+ */
 class ParsedownExtra extends \ParsedownExtra
 {
     use ParsedownTrait;
@@ -20,7 +25,7 @@ class ParsedownExtra extends \ParsedownExtra
     /**
      * ParsedownExtra constructor.
      *
-     * @param array $defaults
+     * @param array|null $defaults
      * @throws \Exception
      */
     public function __construct(array $defaults = null)

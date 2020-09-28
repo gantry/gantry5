@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -23,6 +24,10 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Positions as PositionsObject;
 
+/**
+ * Class Positions
+ * @package Gantry\Admin\Controller\Html
+ */
 class Positions extends HtmlController
 {
     protected $httpVerbs = [
@@ -46,6 +51,9 @@ class Positions extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $this->params['positions'] = $this->container['positions'];
@@ -53,6 +61,9 @@ class Positions extends HtmlController
         return $this->render('@gantry-admin/pages/positions/positions.html.twig', $this->params);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function create()
     {
         // Create only exists for JSON.
@@ -73,6 +84,10 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position '%s' created.", $id), 'id' => "position-{$id}", 'key' => $id, 'position' => $html]);
     }
 
+    /**
+     * @param string $old
+     * @return JsonResponse
+     */
     public function rename($old)
     {
         // Rename only exists for JSON.
@@ -117,6 +132,10 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position saved"), 'id' => "position-{$position->name}", 'key' => $position->name, 'position' => $html]);
     }
 
+    /**
+     * @param string $position
+     * @return JsonResponse
+     */
     public function duplicate($position)
     {
         // Duplicate only exists for JSON.
@@ -132,6 +151,10 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position duplicated as '%s'.", $id)]);
     }
 
+    /**
+     * @param string $position
+     * @return JsonResponse
+     */
     public function delete($position)
     {
         // Delete only exists for JSON.
@@ -147,6 +170,9 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Position '%s' deleted.", $position), 'position' => $position]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function save()
     {
         // Save only exists for JSON.
@@ -163,6 +189,10 @@ class Positions extends HtmlController
         return new JsonResponse(['html' => sprintf("Positions saved.")]);
     }
 
+    /**
+     * @param string|null $position
+     * @return string
+     */
     public function particle($position = null)
     {
         if (!$position) {
@@ -206,7 +236,11 @@ class Positions extends HtmlController
         return $this->render('@gantry-admin/pages/positions/particle.html.twig', $this->params);
     }
 
-
+    /**
+     * @param string $position
+     * @param string $name
+     * @return JsonResponse
+     */
     public function validateParticle($position, $name)
     {
         // Validate only exists for JSON.
@@ -264,6 +298,10 @@ class Positions extends HtmlController
         return new JsonResponse(['item' => $data->toArray(), 'html' => $html, 'position' => $position]);
     }
 
+    /**
+     * @param string $position
+     * @return string
+     */
     public function selectParticle($position)
     {
         $groups = [
@@ -283,6 +321,7 @@ class Positions extends HtmlController
         foreach ($particles as &$group) {
             asort($group);
         }
+        unset($group);
 
         foreach ($groups as $section => $children) {
             foreach ($children as $key => $child) {
@@ -298,6 +337,9 @@ class Positions extends HtmlController
         return $this->render('@gantry-admin/modals/particle-picker.html.twig', $this->params);
     }
 
+    /**
+     * @return array
+     */
     protected function getParticles()
     {
         $particles = $this->container['particles']->all();

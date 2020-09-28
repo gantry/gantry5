@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,7 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\PageEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\Config;
@@ -20,12 +22,16 @@ use Gantry\Component\Layout\Layout;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Atoms;
 use Gantry\Framework\Services\ConfigServiceProvider;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Page
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Page extends HtmlController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET'    => [
             '/' => 'index'
@@ -49,11 +55,14 @@ class Page extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
 
-        if ($outline == 'default') {
+        if ($outline === 'default') {
             $this->params['overrideable'] = false;
             $data = $this->container['config'];
         } else {
@@ -89,6 +98,10 @@ class Page extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/page/page.html.twig', $this->params);
     }
 
+    /**
+     * @param string|null $id
+     * @return string
+     */
     public function save($id = null)
     {
         $data = $id ? [$id => $this->request->post->getArray()] : $this->request->post->getArray('page');
@@ -98,7 +111,7 @@ class Page extends HtmlController
         }
 
         // Fire save event.
-        $event             = new Event;
+        $event             = new PageEvent();
         $event->gantry     = $this->container;
         $event->theme      = $this->container['theme'];
         $event->controller = $this;
@@ -108,6 +121,10 @@ class Page extends HtmlController
         return $id ? $this->display($id) : $this->index();
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -116,7 +133,7 @@ class Page extends HtmlController
         if ($end === '') {
             array_pop($path);
         }
-        if (end($path) == 'validate') {
+        if (end($path) === 'validate') {
             return call_user_func_array([$this, 'validate'], $path);
         }
 
@@ -172,6 +189,10 @@ class Page extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/settings/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $particle
+     * @return JsonResponse
+     */
     public function validate($particle)
     {
         $path = implode('.', array_slice(func_get_args(), 1, -1));
@@ -199,6 +220,10 @@ class Page extends HtmlController
         return new JsonResponse(['data' => $data->get($path)]);
     }
 
+    /**
+     * @param string $name
+     * @return JsonResponse
+     */
     public function atom($name)
     {
         $outline = $this->params['outline'];
@@ -216,7 +241,7 @@ class Page extends HtmlController
         $blueprint = $item->blueprint();
 
         // Load inheritance blueprint.
-        $inheritance = $atoms->getInheritanceBlueprint($name, $item->id);
+        $inheritance = $atoms->getInheritanceBlueprint($name, $item->get('id'));
         $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
@@ -224,7 +249,7 @@ class Page extends HtmlController
             'inheritance'   => $inheritance,
             'inheritable'   => $inheritable,
             'item'          => $item,
-            'data'          => ['particles' => [$name => $item->attributes]],
+            'data'          => ['particles' => [$name => $item->get('attributes')]],
             'blueprints'    => $blueprint,
             'parent'        => 'settings',
             'prefix'        => "particles.{$name}.",
@@ -286,6 +311,10 @@ class Page extends HtmlController
         return new JsonResponse(['item' => $data->toArray()]);
     }
 
+    /**
+     * @param string $id
+     * @param array $data
+     */
     protected function saveItem($id, $data)
     {
         /** @var UniformResourceLocator $locator */
@@ -323,6 +352,9 @@ class Page extends HtmlController
         $file->free();
     }
 
+    /**
+     * @return array|null
+     */
     protected function getDeprecatedAtoms()
     {
         $id     = $this->params['outline'];
@@ -331,6 +363,10 @@ class Page extends HtmlController
         return $layout->atoms();
     }
 
+    /**
+     * @param bool $onlyEnabled
+     * @return array
+     */
     protected function getAtoms($onlyEnabled = false)
     {
         $config = $this->container['config'];

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -23,6 +24,8 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 /**
  * Class ThemeDetails
  * @package Gantry\Component\Theme
+ *
+ * @property string $name
  */
 class ThemeDetails implements \ArrayAccess
 {
@@ -48,16 +51,17 @@ class ThemeDetails implements \ArrayAccess
             throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
         }
 
+        /** @var string $cache */
         $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
 
         $file = CompiledYamlFile::instance($filename);
-        $this->items = $file->setCachePath($cache)->content();
+        $this->items = (array)$file->setCachePath($cache)->content();
         $file->free();
 
         $this->offsetSet('name', $theme);
 
         $parent = (string) $this->get('configuration.theme.parent', $theme);
-        $parent = $parent != $theme ? $parent : null;
+        $parent = $parent !== $theme ? $parent : null;
 
         $this->offsetSet('parent', $parent);
     }
@@ -76,8 +80,8 @@ class ThemeDetails implements \ArrayAccess
         $loaded = [$this->offsetGet('name')];
         $details = $this;
 
-        while ($details = $details->parent()) {
-            if (in_array($details->name, $loaded)) {
+        while (($details = $details->parent())) {
+            if (in_array($details->name, $loaded, true)) {
                 break;
             }
             $this->addStream($details->name, $details->getPaths(false));

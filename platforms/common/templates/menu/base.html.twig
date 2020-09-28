@@ -2,11 +2,12 @@
     {%- if particle.css.id %} id="{{ particle.css.id }}"{% endif %} class="menu-selector-bar{%- if particle.css.class %} {{ particle.css.class }}{% endif %}" role="navigation">
     <ul class="g-grid g-toplevel menu-selector" data-mm-id="" data-mm-base="" data-mm-base-level="1">
         {% for child in item %}
+            {% set is_particle = child.type == 'particle' or child.type == 'module' %}
             {% set active = (child.path|split('/')|first) == (path|split('/')|first) ? ' active' : '' %}
             <li data-mm-id="{{ child.path }}"
                 data-mm-level="{{ child.level }}"
-                {% if child.type == 'particle' or child.type == 'module' %}
-                class="g-menu-item-{{ child.type }}{{ active }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
+                {% if is_particle %}
+                class="g-menu-removable g-menu-item-{{ child.type }}{{ active }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
                 data-mm-original-type="{{ child.type }}"
                 {% else %}
                 class="{{ active }}{% if child.enabled == false %} g-menu-item-disabled{% endif %}"

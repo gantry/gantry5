@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,19 +15,34 @@ use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Framework\Theme as SiteTheme;
+use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Content
+ * @package Gantry\Admin
+ */
 class Content
 {
+    /** @var Grav */
     protected $container;
+    /** @var array */
     protected $files;
+    /** @var array */
     protected $content;
 
+    /**
+     * Content constructor.
+     * @param Grav $container
+     */
     public function __construct($container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         if (!$this->content) {
@@ -44,6 +60,9 @@ class Content
         return $this->content;
     }
 
+    /**
+     * @return array
+     */
     public function group()
     {
         $content = $this->all();
@@ -59,6 +78,10 @@ class Content
         return $this->sort($list);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function get($id)
     {
         if ($this->content[$id]) {
@@ -73,7 +96,7 @@ class Content
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $item = $file->content();
+        $item = (array)$file->content();
         $file->free();
 
         return $item;
@@ -88,6 +111,10 @@ class Content
         return BlueprintForm::instance($id, 'gantry-blueprints://content');
     }
 
+    /**
+     * @param array $blocks
+     * @return array
+     */
     protected function sort(array $blocks)
     {
         $list = [];
@@ -108,7 +135,11 @@ class Content
         return $list;
     }
 
-
+    /**
+     * @param array $items
+     * @param array $ordering
+     * @return array
+     */
     protected function sortItems(array $items, array $ordering)
     {
         $list = [];
@@ -125,6 +156,9 @@ class Content
         return $list;
     }
 
+    /**
+     * @return array
+     */
     protected function locateBlueprints()
     {
         if (!$this->files) {

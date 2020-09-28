@@ -1,26 +1,30 @@
 {
   "name": "gantry5",
-  "version": "5.4",
+  "version": "5.4.32",
   "description": "Gantry 5 / JS and CSS bundler",
   "main": "gulpfile.js",
   "dependencies": {
-    "npm": "^5.4.2"
+    "domready": "^1.0.8",
+    "elements": "^0.6.0",
+    "npm": "^5.4.2",
+    "prime": "^0.5.0",
+    "prime-util": "^0.5.0"
   },
   "devDependencies": {
-    "browserify": "^14.4.0",
-    "gulp": "^3.9.1",
-    "gulp-if": "^2.0.2",
+    "browserify": "14.4.0",
+    "gulp": "3.9.1",
+    "gulp-if": "2.0.2",
     "gulp-jsonminify": "1.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.1.1",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "merge-stream": "^1.0.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0",
-    "yargs": "^9.0.1"
+    "gulp-rename": "1.2.2",
+    "gulp-ruby-sass": "2.1.1",
+    "gulp-sourcemaps": "2.6.1",
+    "gulp-uglify": "3.0.0",
+    "gulp-util": "3.0.8",
+    "merge-stream": "1.0.1",
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.1.0",
+    "watchify": "3.9.0",
+    "yargs": "9.0.1"
   },
   "scripts": {
     "list-paths": "echo './' && echo 'assets/common' && echo 'platforms/common' && echo 'engines/common/nucleus'",

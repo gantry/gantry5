@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,23 +18,25 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\StreamWrapper\ReadOnlyStream;
 use RocketTheme\Toolbox\StreamWrapper\Stream;
 
+/**
+ * Class Streams
+ * @package Gantry\Component\Filesystem
+ */
 class Streams
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $schemes = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $registered;
 
-    /**
-     * @var UniformResourceLocator
-     */
+    /** @var UniformResourceLocator */
     protected $locator;
 
+    /**
+     * Streams constructor.
+     * @param UniformResourceLocator|null $locator
+     */
     public function __construct(UniformResourceLocator $locator = null)
     {
         if ($locator) {
@@ -61,6 +64,9 @@ class Streams
         return $this->locator;
     }
 
+    /**
+     * @param array $schemes
+     */
     public function add(array $schemes)
     {
         foreach ($schemes as $scheme => $config) {
@@ -75,7 +81,7 @@ class Streams
                 }
             }
             $type = !empty($config['type']) ? $config['type'] : 'ReadOnlyStream';
-            if ($type[0] != '\\') {
+            if ($type[0] !== '\\') {
                 $type = '\\Rockettheme\\Toolbox\\StreamWrapper\\' . $type;
             }
             $this->schemes[$scheme] = $type;
@@ -95,9 +101,13 @@ class Streams
         }
     }
 
+    /**
+     * @param string $scheme
+     * @param string $type
+     */
     protected function doRegister($scheme, $type)
     {
-        if (in_array($scheme, $this->registered)) {
+        if (in_array($scheme, $this->registered, true)) {
             stream_wrapper_unregister($scheme);
         }
 

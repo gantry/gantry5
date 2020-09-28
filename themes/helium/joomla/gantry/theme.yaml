@@ -17,7 +17,7 @@ details:
   updates:
     link: 'http://updates.rockettheme.com/themes/helium.yaml'
 
-  copyright: '(C) 2007 - 2019 RocketTheme, LLC. All rights reserved.'
+  copyright: '(C) 2007 - 2020 RocketTheme, LLC. All rights reserved.'
   license: GPLv2
   description: Helium Theme
   images:
@@ -76,7 +76,7 @@ configuration:
       - custom
 
   dependencies:
-    gantry: 5.4.0
+    gantry: 5.5
 
   section-variations:
     Padding Variations:

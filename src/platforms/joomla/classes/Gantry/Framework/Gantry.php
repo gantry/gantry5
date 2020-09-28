@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,10 +11,17 @@
 
 namespace Gantry\Framework;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+
+/**
+ * Class Gantry
+ * @package Gantry\Framework
+ */
 class Gantry extends Base\Gantry
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function debug()
     {
@@ -21,11 +29,11 @@ class Gantry extends Base\Gantry
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function admin()
     {
-        return \JFactory::getApplication()->isAdmin();
+        return Factory::getApplication()->isClient('administrator');
     }
 
     /**
@@ -36,7 +44,7 @@ class Gantry extends Base\Gantry
     public function styles($location = 'head', $force = false)
     {
         // Do not display head, Joomla will take care of it (most of the time).
-        return (!$force && $location == 'head') ? [] : parent::styles($location);
+        return (!$force && $location === 'head') ? [] : parent::styles($location);
     }
 
     /**
@@ -47,7 +55,7 @@ class Gantry extends Base\Gantry
     public function scripts($location = 'head', $force = false)
     {
         // Do not display head, Joomla will take care of it (most of the time).
-        return (!$force && $location == 'head') ? [] : parent::scripts($location);
+        return (!$force && $location === 'head') ? [] : parent::scripts($location);
     }
 
     /**
@@ -57,9 +65,11 @@ class Gantry extends Base\Gantry
     {
         $global = null;
 
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
         // Trigger the event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onGantryGlobalConfig', ['global' => &$global]);
+        $app->triggerEvent('onGantryGlobalConfig', ['global' => &$global]);
 
         return $global;
     }

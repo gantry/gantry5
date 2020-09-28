@@ -40,7 +40,7 @@
         {% set label = item.icon_only and (item.image or item.icon) ? ' aria-label="' ~ item.title|e ~'"' %}
         {% set active = menu.isActive(item) ? ' active' %}
         {% set dropdown = item.level == 1 ? ' g-' ~ item.getDropdown() %}
-        {% set parent = item.children ? ' g-parent' %}
+        {% set parent = item.children|length ? ' g-parent' %}
         {% set target = (item.target != '_self' or context.particle.forceTarget) ? ' target="' ~ item.target|e ~ '"' %}
         {% set rel = item.rel %}
 
@@ -57,7 +57,7 @@
 
         {% set listAttributes = item.attributes|attribute_array %}
         {% set linkAttributes = '' %}
-        
+
         {% if item.link_attributes %}
             {% for attribute in item.link_attributes %}
                 {% for key, value in attribute %}
@@ -76,12 +76,14 @@
         {% endif %}
 
         {% set rel = rel ? ' rel="' ~ rel|e('html_attr') ~ '"' %}
-        
-        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
+
+        <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children|length %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"
                 {{- self.getCustomWidth(item, menu, 'item', dropdown) }}
                 {%- if context.particle.renderTitles|default(0) %} title="{{ item.title }}"{% endif %}{{listAttributes|raw}}>
-            {% if item.url %}<a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url }}{{ item.hash }}"{{ (title ~ label ~ target ~ rel ~ linkAttributes)|raw }}>
-            {% else %}<div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent=""{{ label|raw }}>{% endif %}
+            {% if item.url %}
+                <a class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" href="{{ item.url }}{{ item.hash }}"{{ (title ~ label ~ target ~ rel ~ linkAttributes)|raw }}>
+            {% else %}
+                <div class="g-menu-item-container{{ item.anchor_class ? ' ' ~ item.anchor_class }}" data-g-menuparent=""{{ label|raw }}>{% endif %}
                 {% if item.image %}
                     <img src="{{ url(item.image) }}" alt="{{ item.title }}" />
                 {% elseif item.icon %}
@@ -91,7 +93,7 @@
                     <span class="g-menu-item-content">
                         {{ self.displayTitle(item) }}
                     </span>
-                    {% if (item.children) and not item.dropdown_hide -%}
+                    {% if item.children|length and not item.dropdown_hide -%}
                         <span class="g-menu-parent-indicator" data-g-menuparent=""></span>
                     {%- endif %}
                 {% else %}
@@ -102,13 +104,13 @@
                     {% else %}
                         <span class="g-separator g-menu-item-content"{{ title|raw }}>{{ self.displayTitle(item) }}</span>
                     {% endif %}
-                        {% if (item.children) and not item.dropdown_hide -%}
-                            <span class="g-menu-parent-indicator"></span>
-                        {%- endif %}
+                    {% if item.children|length and not item.dropdown_hide -%}
+                        <span class="g-menu-parent-indicator"></span>
+                    {%- endif %}
                 {% endif %}
             {% if item.url %}</a>
             {% else %}</div>{% endif %}
-            {% if (item.children) -%}
+            {% if item.children|length -%}
                 {{ self.displaySubmenu(item, menu, context, dropdown_type) }}
             {%- endif %}
         </li>
@@ -144,7 +146,9 @@
     {% import _self as self %}
     {% if not item.dropdown_hide %}
         {% set animation = context.gantry.config.get('styles.menu.animation')|default('g-fade') %}
-        {% if ((item.groups|length == 1 and not dropdown_type == 'fullwidth') or dropdown_type == 'standard') or (item.width|default('auto') != 'auto' and dropdown_type == 'fullwidth')%}{% set dropdown_dir = 'g-dropdown-' ~ item.dropdown_dir|default('right') %}{% endif %}
+        {% if ((item.groups|length == 1 and not dropdown_type == 'fullwidth') or dropdown_type == 'standard') or (item.width|default('auto') != 'auto' and dropdown_type == 'fullwidth')%}
+            {% set dropdown_dir = 'g-dropdown-' ~ item.dropdown_dir|default('right') %}
+        {% endif %}
         <ul class="g-dropdown g-inactive {{ animation }} {{ dropdown_dir }}"{{ self.getCustomWidth(item, menu, 'submenu', dropdown_type) }}>
             <li class="g-dropdown-column">
                 {{ self.displayContainers(item, menu, context, dropdown_type) }}

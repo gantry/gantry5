@@ -2,12 +2,24 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
+
+use Gantry\Component\Content\Block\ContentBlockInterface;
+use Gantry\Component\Content\Block\HtmlBlock;
+use Gantry\Debugger;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Platform;
+use Gantry\Framework\Theme;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 class ModGantry5ParticleHelper
 {
@@ -18,8 +30,11 @@ class ModGantry5ParticleHelper
      */
     public static function getAjax()
     {
-        $input = JFactory::getApplication()->input;
-        $format = $input->getCmd('format', 'html');
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
+        $input = $app->input;
+        $format = strtolower($input->getCmd('format', 'html'));
         $id = $input->getInt('id');
 
         $props = $_GET;
@@ -37,25 +52,29 @@ class ModGantry5ParticleHelper
     public static function ajax($id, $props = [], $format = 'raw')
     {
         if (!in_array($format, ['json', 'raw', 'debug'])) {
-            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new \RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
-        $module = $gantry['platform']->getModule($id);
+        /** @var Platform $platform */
+        $platform = $gantry['platform'];
+        $module = $platform->getModule($id);
 
         // Make sure that module really exists.
         if (!is_object($module) || strpos($module->module, 'gantry5') === false) {
-            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            throw new \RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $attribs = ['style' => 'gantry'];
 
-        // Trigger the onRenderModule event.
-        $dispatcher = \JEventDispatcher::getInstance();
-        $dispatcher->trigger('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
 
-        $params = new JRegistry($module->params);
+        // Trigger the onRenderModule event.
+        $app->triggerEvent('onRenderModule', ['module' => &$module, 'attribs' => &$attribs]);
+
+        $params = new Registry($module->params);
         $params->set('ajax', $props);
         $block = static::render($module, $params);
         $data = json_decode($params->get('particle'), true);
@@ -73,24 +92,26 @@ class ModGantry5ParticleHelper
     /**
      * @param object $module
      * @param object $params
-     * @return Gantry\Component\Content\Block\ContentBlockInterface
+     * @return ContentBlockInterface
      */
     public static function render($module, $params)
     {
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Particle Module #{$module->id} was not cached");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Particle Module #{$module->id} was not cached");
+        }
 
         $data = json_decode($params->get('particle'), true);
         $type = $data['type'];
         $particle = $data['particle'];
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
         if ($gantry->debug()) {
             $enabled_outline = $gantry['config']->get("particles.{$particle}.enabled", true);
             $enabled = isset($data['options']['particle']['enabled']) ? $data['options']['particle']['enabled'] : true;
             $location = (!$enabled_outline ? 'Outline' : (!$enabled ? 'Module' : null));
 
             if ($location) {
-                $block = \Gantry\Component\Content\Block\HtmlBlock::create();
+                $block = HtmlBlock::create();
                 $block->setContent(sprintf('<div class="alert alert-error">The Particle has been disabled from the %s and won\'t render.</div>', $location));
 
                 return $block;
@@ -111,7 +132,7 @@ class ModGantry5ParticleHelper
             'ajax' => $params->get('ajax'),
         );
 
-        /** @var Gantry\Framework\Theme $theme */
+        /** @var Theme $theme */
         $theme = $gantry['theme'];
         $block = $theme->getContent($object, $context);
 
@@ -137,18 +158,23 @@ class ModGantry5ParticleHelper
      * @param $module
      * @param $params
      * @param $cacheparams
-     * @return \Gantry\Component\Content\Block\ContentBlockInterface|null
+     * @return ContentBlockInterface|null
      */
     public static function moduleCache($module, $params, $cacheparams)
     {
-        $block = (array) JModuleHelper::moduleCache($module, $params, $cacheparams);
+        $block = (array) ModuleHelper::moduleCache($module, $params, $cacheparams);
         try {
-            return $block ? \Gantry\Component\Content\Block\HtmlBlock::fromArray($block) : null;
+            return $block ? HtmlBlock::fromArray($block) : null;
         } catch (Exception $e) {
             return null;
         }
     }
 
+    /**
+     * @param string $particle
+     * @param string $id
+     * @return string
+     */
     public static function getIdentifier($particle, $id)
     {
         return "module-{$particle}-{$id}";

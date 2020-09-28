@@ -5,18 +5,19 @@
 		<description>Gantry Framework</description>
 		<element>pkg_gantry5</element>
 		<type>package</type>
+		<client>site</client>
 		<version>@version@</version>
 		<infourl title="Gantry @version@">http://docs.gantry.org/gantry5</infourl>
 		<downloads>
 			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-pkg_gantry5_v@version@.zip</downloadurl>
 		</downloads>
 		<tags>
-			<tag>stable</tag>
+			<tag>dev</tag>
 		</tags>
 		<maintainer>RocketTheme, LLC</maintainer>
 		<maintainerurl>http://gantry.org</maintainerurl>
 		<section>Updates</section>
-		<targetplatform name="joomla" version="3.[456789]"/>
-		<client>site</client>
+		<targetplatform name="joomla" version="3.9|4.0"/>
+		<php_minimum>5.6.20</php_minimum>
 	</update>
 </updates>

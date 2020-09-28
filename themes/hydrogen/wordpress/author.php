@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +20,8 @@ use Timber\Timber;
 global $wp_query;
 
 $gantry = Gantry\Framework\Gantry::instance();
+
+/** @var \Gantry\Framework\Theme $theme */
 $theme  = $gantry['theme'];
 
 // We need to render contents of <head> before plugin content gets added.
@@ -30,7 +33,7 @@ $context['posts'] = Timber::get_posts();
 if (isset($authordata)) {
     $author            = new \Timber\User($authordata->ID);
     $context['author'] = $author;
-    $context['title']  = __('Author:', 'g5_hydrogen') . ' ' . $author->name();
+    $context['title']  = \__('Author:', 'g5_hydrogen') . ' ' . $author->name();
 }
 
 Timber::render(['author.html.twig', 'archive.html.twig', 'index.html.twig'], $context);

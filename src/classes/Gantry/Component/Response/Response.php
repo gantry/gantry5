@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,26 +14,30 @@
 
 namespace Gantry\Component\Response;
 
+/**
+ * Class Response
+ * @package Gantry\Component\Response
+ */
 class Response
 {
+    /** @var string */
     public $charset = 'utf-8';
+    /** @var string */
     public $mimeType = 'text/html';
 
+    /** @var int */
     protected $code = 200;
+    /** @var string */
     protected $message = 'OK';
+    /** @var int */
     protected $lifetime = 0;
+    /** @var string */
     protected $etag;
-
-    /**
-     * @var array Response headers.
-     */
+    /** @var array Response headers. */
     protected $headers = [];
-
-    /**
-     * @var string Response body.
-     */
+    /** @var string Response body. */
     protected $content;
-
+    /** @var array */
     protected $responseCodes = [
         200 => 'OK',
         400 => 'Bad Request',
@@ -46,13 +51,18 @@ class Response
         503 => 'Service Temporarily Unavailable'
     ];
 
+    /**
+     * Response constructor.
+     * @param string $content
+     * @param int $status
+     */
     public function __construct($content = '', $status = 200)
     {
         if ($content) {
             $this->setContent($content);
         }
 
-        if ($status != 200) {
+        if ($status !== 200) {
             $this->setStatusCode($status);
         }
     }
@@ -152,8 +162,8 @@ class Response
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
      * @param bool $replace
      * @return $this
      */
@@ -177,11 +187,12 @@ class Response
     }
 
     /**
-     * @param string $content
+     * @param string|callable $content
      * @return Response
      * @throws \UnexpectedValueException
      */
-    public function setContent($content) {
+    public function setContent($content)
+    {
         if ($content !== null && !is_string($content) && !is_numeric($content) && !is_callable([$content, '__toString'])) {
             throw new \UnexpectedValueException(
                 sprintf('Content must be a string or object implementing __toString()')

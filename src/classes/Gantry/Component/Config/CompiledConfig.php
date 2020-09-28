@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -20,24 +21,16 @@ use Gantry\Component\File\CompiledYamlFile;
  */
 class CompiledConfig extends CompiledBase
 {
-    /**
-     * @var int Version number for the compiled file.
-     */
+    /** @var int Version number for the compiled file. */
     public $version = 2;
 
-    /**
-     * @var Config  Configuration object.
-     */
+    /** @var Config  Configuration object. */
     protected $object;
 
-    /**
-     * @var callable  Blueprints loader.
-     */
+    /** @var callable  Blueprints loader. */
     protected $callable;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $withDefaults;
 
     /**

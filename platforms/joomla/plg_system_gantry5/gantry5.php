@@ -2,28 +2,72 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
-class plgSystemGantry5 extends JPlugin
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Event\DispatcherInterface;
+use Joomla\Registry\Registry;
+use Gantry5\Loader;
+use Gantry\Component\Config\Config;
+use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Component\FileSystem\Folder;
+use Gantry\Component\Theme\ThemeDetails;
+use Gantry\Debugger;
+use Gantry\Framework\Assignments;
+use Gantry\Framework\Document;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Outlines;
+use Gantry\Framework\Platform;
+use Gantry\Framework\Theme;
+use Gantry\Joomla\CacheHelper;
+use Gantry\Joomla\StyleHelper;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+
+// Quick check to prevent fatal error in unsupported Joomla admin.
+if (!class_exists(CMSPlugin::class)) {
+    return;
+}
+
+/**
+ * Class plgSystemGantry5
+ */
+class plgSystemGantry5 extends CMSPlugin
 {
-    /**
-     * @var JApplicationCms
-     */
+    protected $autoloadLanguage = true;
+
+    /** @var CMSApplication */
     protected $app;
     protected $styles;
     protected $modules;
 
+    /**
+     * plgSystemGantry5 constructor.
+     * @param DispatcherInterface $subject
+     * @param array $config
+     * @throws Exception
+     */
     public function __construct(&$subject, $config = array())
     {
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';
 
-        $this->app = JFactory::getApplication();
+        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
+        if (!$this->app) {
+            $this->app = Factory::getApplication();
+        }
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
@@ -31,9 +75,9 @@ class plgSystemGantry5 extends JPlugin
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
-            if ($this->app->isAdmin()) {
+            if ($this->app->isClient('administrator')) {
                 $this->app->enqueueMessage(
-                    JText::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', JText::_('PLG_SYSTEM_GANTRY5')),
+                    Text::sprintf('PLG_SYSTEM_GANTRY5_LIBRARY_MISSING', Text::_('PLG_SYSTEM_GANTRY5')),
                     'warning'
                 );
             }
@@ -45,28 +89,45 @@ class plgSystemGantry5 extends JPlugin
 
     /**
      * Return global configuration for Gantry5.
+     *
+     * @param array $global
      */
     public function onGantryGlobalConfig(&$global)
     {
         $global = $this->params->toArray();
     }
 
+    /**
+     * Document gets set during dispatch, we need language and direction.
+     */
+    public function onAfterDispatch()
+    {
+        if (class_exists('Gantry\Framework\Gantry')) {
+            if (version_compare(JVERSION, '4.0', '<')) {
+                // In Joomla 3.9 we need to make sure that user identity has been loaded.
+                $this->app->loadIdentity();
+            }
+
+            $this->onAfterDispatchSiteAdmin();
+        }
+    }
+
     public function onAfterRoute()
     {
-        if ($this->app->isSite()) {
+        if ($this->app->isClient('site')) {
             $this->onAfterRouteSite();
 
-        } elseif ($this->app->isAdmin()) {
+        } elseif ($this->app->isClient('administrator')) {
             $this->onAfterRouteAdmin();
         }
     }
 
     public function onAfterRender()
     {
-        if ($this->app->isSite() && class_exists('Gantry\Framework\Gantry')) {
+        if ($this->app->isClient('site') && class_exists('Gantry\Framework\Gantry')) {
             $this->onAfterRenderSite();
 
-        } elseif ($this->app->isAdmin()) {
+        } elseif ($this->app->isClient('administrator')) {
             $this->onAfterRenderAdmin();
         }
     }
@@ -77,15 +138,15 @@ class plgSystemGantry5 extends JPlugin
      */
     public function onRenderModule(&$module, &$attribs)
     {
-        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
+        if (!$this->app->isClient('site') || !class_exists('Gantry\Framework\Gantry')) {
             return;
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
         $outline = $gantry['configuration'];
 
         // Do not render modules assigned to menu items in error and offline page.
-        if (isset($module->menuid) && $module->menuid > 0 && in_array($outline, array('_error', '_offline'))) {
+        if (isset($module->menuid) && $module->menuid > 0 && in_array($outline, array('_error', '_offline'), true)) {
             $module = null;
         }
 
@@ -96,18 +157,19 @@ class plgSystemGantry5 extends JPlugin
      * Serve particle AJAX requests in 'index.php?option=com_ajax&plugin=particle&format=json'.
      *
      * @return array|string|null
+     * @throws RuntimeException
      */
     public function onAjaxParticle()
     {
-        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
+        if (!$this->app->isClient('site') || !class_exists('Gantry\Framework\Gantry')) {
             return null;
         }
 
         $input = $this->app->input;
-        $format = $input->getCmd('format', 'html');
+        $format = strtolower($input->getCmd('format', 'html'));
 
-        if (!in_array($format, ['json', 'raw', 'debug'])) {
-            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        if (!in_array($format, ['json', 'raw', 'debug'], true)) {
+            throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
         }
 
         $props = $_GET;
@@ -119,7 +181,7 @@ class plgSystemGantry5 extends JPlugin
             preg_match('`-([\d]+)$`', $input->getCmd('id'), $matches);
 
             if (!isset($matches[1])) {
-                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+                throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
             }
 
             $id = $matches[1];
@@ -129,9 +191,9 @@ class plgSystemGantry5 extends JPlugin
             return ModGantry5ParticleHelper::ajax($id, $props, $format);
         }
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
-        /** @var \Gantry\Framework\Theme $theme */
+        /** @var Theme $theme */
         $theme = $gantry['theme'];
         $layout = $theme->loadLayout();
         $html = '';
@@ -139,8 +201,8 @@ class plgSystemGantry5 extends JPlugin
         if ($identifier === 'main-particle') {
             $type = $identifier;
             $menu = $this->app->getMenu();
-            $menuItem = $menu->getActive();
-            $params = $menuItem ? $menuItem->getParams() : new JRegistry;
+            $menuItem = $menu ? $menu->getActive() : null;
+            $params = $menuItem ? $menuItem->getParams() : new Registry;
 
             /** @var object $params */
             $data = json_decode($params->get('particle'), true);
@@ -159,12 +221,12 @@ class plgSystemGantry5 extends JPlugin
                     ]
                 ];
 
-                $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
+                $html = trim($theme->render('@nucleus/content/particle.html.twig', $context));
             }
         } else {
             $particle = $layout->find($identifier);
             if (!isset($particle->type) || $particle->type !== 'particle') {
-                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+                throw new RuntimeException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);
             }
 
             $context = array(
@@ -187,11 +249,11 @@ class plgSystemGantry5 extends JPlugin
 
     /**
      * Load Gantry framework before dispatching to the component.
+     *
+     * @throws \RuntimeException
      */
     private function onAfterRouteSite()
     {
-        $input = $this->app->input;
-
         $templateName = $this->app->getTemplate();
 
         if (!$this->isGantryTemplate($templateName)) {
@@ -206,7 +268,7 @@ class plgSystemGantry5 extends JPlugin
 
             if (!$gantry) {
                 throw new \RuntimeException(
-                    JText::sprintf("GANTRY5_THEME_LOADING_FAILED", $templateName, JText::_('GANTRY5_THEME_INCLUDE_FAILED')),
+                    Text::sprintf('GANTRY5_THEME_LOADING_FAILED', $templateName, Text::_('GANTRY5_THEME_INCLUDE_FAILED')),
                     500
                 );
             }
@@ -214,10 +276,10 @@ class plgSystemGantry5 extends JPlugin
         } else {
 
             // Setup Gantry 5 Framework or throw exception.
-            Gantry5\Loader::setup();
+            Loader::setup();
 
             // Get Gantry instance.
-            $gantry = Gantry\Framework\Gantry::instance();
+            $gantry = Gantry::instance();
 
             // Initialize the template.
             $gantry['theme.path'] = JPATH_THEMES . "/{$templateName}";
@@ -228,28 +290,30 @@ class plgSystemGantry5 extends JPlugin
             include_once $themePath;
         }
 
-        GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry 5 template {$templateName}");
+        if (GANTRY_DEBUGGER) {
+            Debugger::addMessage("Using Gantry 5 template {$templateName}");
+        }
 
-        /** @var Gantry\Framework\Theme $theme */
+        /** @var Theme $theme */
         $theme = $gantry['theme'];
 
-        $assignments = new \Gantry\Framework\Assignments();
+        $assignments = new Assignments();
 
         if (GANTRY_DEBUGGER) {
-            \Gantry\Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
-            \Gantry\Debugger::addMessage($assignments->getPage(), 'debug');
-            \Gantry\Debugger::addMessage($assignments->loadAssignments(), 'debug');
-            \Gantry\Debugger::addMessage($assignments->matches(), 'debug');
-            \Gantry\Debugger::addMessage($assignments->scores(), 'debug');
+            Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
+            Debugger::addMessage($assignments->getPage(), 'debug');
+            Debugger::addMessage($assignments->loadAssignments(), 'debug');
+            Debugger::addMessage($assignments->matches(), 'debug');
+            Debugger::addMessage($assignments->scores(), 'debug');
         }
 
         $theme->setLayout($assignments->select());
 
         if ($this->params->get('asset_timestamps', 1)) {
-            $age = (int) ($this->params->get('asset_timestamps_period', 7) * 86400);
-            Gantry\Framework\Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
+            $age = (int)($this->params->get('asset_timestamps_period', 7) * 86400);
+            Document::$timestamp_age = $age > 0 ? $age : PHP_INT_MAX;
         } else {
-            Gantry\Framework\Document::$timestamp_age = 0;
+            Document::$timestamp_age = 0;
         }
     }
 
@@ -263,7 +327,7 @@ class plgSystemGantry5 extends JPlugin
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
 
-        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && $task && strpos($task, 'style') === 0) {
+        if (in_array($option, array('com_templates', 'com_advancedtemplates'), true) && $task && strpos($task, 'style') === 0) {
             // Get all ids.
             $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
 
@@ -280,7 +344,8 @@ class plgSystemGantry5 extends JPlugin
                 if ($task === 'style.edit') {
                     $theme = reset($selected);
                     $id = key($selected);
-                    $token = JSession::getFormToken();
+                    $session = $this->app->getSession();
+                    $token = $session::getFormToken();
                     $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
                 }
             }
@@ -288,16 +353,39 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Document gets set during dispatch, we need language and direction.
+     */
+    public function onAfterDispatchSiteAdmin()
+    {
+        $gantry = Gantry::instance();
+        if (!isset($gantry['theme'])) {
+            return;
+        }
+
+        $theme = $gantry['theme'];
+
+        $document = $this->app->getDocument();
+        if ($document instanceof HtmlDocument) {
+            $document->setHtml5(true);
+        }
+        $theme->language = $document->language;
+        $theme->direction = $document->direction;
+    }
+
+    /**
      * Convert all stream uris into proper links.
      */
     private function onAfterRenderSite()
     {
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
         $html = $this->app->getBody();
 
+        /** @var Document $document */
+        $document = $gantry['document'];
+
         // Only filter our streams. If there's an error (bad UTF8), fallback with original output.
-        $this->app->setBody($gantry['document']->urlFilter($html, false, 0, true) ?: $html);
+        $this->app->setBody($document::urlFilter($html, false, 0, true) ?: $html);
     }
 
     /**
@@ -305,14 +393,14 @@ class plgSystemGantry5 extends JPlugin
      */
     private function onAfterRenderAdmin()
     {
-        $document = JFactory::getDocument();
+        $document = $this->app->getDocument();
         $type   = $document->getType();
 
         $option = $this->app->input->getString('option');
         $view   = $this->app->input->getString('view', 'g5');
         $task   = $this->app->input->getString('task');
 
-        if (in_array($option, array('com_templates', 'com_advancedtemplates')) && ($view == 'g5' || $view == 'styles') && !$task && $type == 'html') {
+        if (($option === 'com_templates' || $option === 'com_advancedtemplates') && ($view === 'g5' || $view === 'styles') && !$task && $type === 'html') {
             $this->styles = $this->getStyles();
 
             $body = preg_replace_callback('/(<a\s[^>]*href=")([^"]*)("[^>]*>)(.*)(<\/a>)/siU', array($this, 'appendHtml'), $this->app->getBody());
@@ -320,8 +408,8 @@ class plgSystemGantry5 extends JPlugin
             $this->app->setBody($body);
         }
 
-        if (($option == 'com_modules' || $option == 'com_advancedmodules') && (($view == 'g5' || $view == 'modules') || empty($view)) && $type == 'html') {
-            $db    = JFactory::getDBO();
+        if (($option === 'com_modules' || $option === 'com_advancedmodules') && (($view === 'g5' || $view === 'modules') || empty($view)) && $type === 'html') {
+            $db    = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('id, title, params');
             $query->from('#__modules');
@@ -334,8 +422,8 @@ class plgSystemGantry5 extends JPlugin
                 $body = $this->app->getBody();
 
                 foreach ($data as $module) {
-                    $params   = json_decode($module->params);
-                    $particle = isset($params->particle) ? json_decode($params->particle) : '';
+                    $params   = json_decode($module->params, false);
+                    $particle = isset($params->particle) ? json_decode($params->particle, false) : '';
                     $title = isset($particle->title) ? $particle->title : (isset($particle->particle) ? $particle->particle : '');
                     $type = isset($particle->particle) ? $particle->particle : '';
 
@@ -357,6 +445,7 @@ class plgSystemGantry5 extends JPlugin
      *
      * @param array $data
      * @return bool
+     * @throws RuntimeException
      * @see JModelAdmin::save()
      */
     public function onGantry5SaveConfig(array $data)
@@ -364,16 +453,15 @@ class plgSystemGantry5 extends JPlugin
         $name = 'plg_' . $this->_type . '_' . $this->_name;
 
         // Initialise variables;
-        $dispatcher = JEventDispatcher::getInstance();
-        $table = JTable::getInstance('Extension');
+        $table = Table::getInstance('Extension');
 
         // Include the content plugins for the on save events.
-        JPluginHelper::importPlugin('extension');
+        PluginHelper::importPlugin('extension');
 
         // Load the row if saving an existing record.
         $table->load(array('type'=>'plugin', 'folder'=>$this->_type, 'element'=>$this->_name));
 
-        $params = new Joomla\Registry\Registry($table->params);
+        $params = new Registry($table->params);
         $params->loadArray($data);
 
         $table->params = $params->toString();
@@ -384,7 +472,7 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Trigger the onContentBeforeSave event.
-        $result = $dispatcher->trigger('onExtensionBeforeSave', array($name, $table, false));
+        $result = $this->app->triggerEvent('onExtensionBeforeSave', array($name, $table, false));
         if (in_array(false, $result, true)) {
             throw new RuntimeException($table->getError());
         }
@@ -395,13 +483,13 @@ class plgSystemGantry5 extends JPlugin
         }
 
         // Clean the cache.
-        \Gantry\Joomla\CacheHelper::cleanPlugin();
+        CacheHelper::cleanPlugin();
 
         // Update plugin settings.
         $this->params = $params;
 
         // Trigger the onExtensionAfterSave event.
-        $dispatcher->trigger('onExtensionAfterSave', array($name, $table, false));
+        $this->app->triggerEvent('onExtensionAfterSave', array($name, $table, false));
 
         return true;
     }
@@ -434,16 +522,21 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     * @param bool $isNew
+     */
     public function onExtensionBeforeSave($context, $table, $isNew)
     {
         if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
             $name = 'plg_' . $this->_type . '_' . $this->_name;
 
-            $params = new Joomla\Registry\Registry($table->params);
+            $params = new Registry($table->params);
 
             $data = (array) $params->get($name);
 
-            Gantry5\Loader::setup();
+            Loader::setup();
 
             $this->onGantry5SaveConfig($data);
 
@@ -454,6 +547,11 @@ class plgSystemGantry5 extends JPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     * @param bool $isNew
+     */
     public function onExtensionAfterSave($context, $table, $isNew)
     {
         if ($context === 'com_config.component' && $table && $table->type === 'component' && $table->name === 'com_gantry5') {
@@ -471,15 +569,19 @@ class plgSystemGantry5 extends JPlugin
         $template = $table->template;
 
         $this->load($template);
-        $registry = new Joomla\Registry\Registry($table->params);
+        $registry = new Registry($table->params);
         $old = (int) $registry->get('configuration', 0);
         $new = (int) $table->id;
 
         if ($old && $old !== $new) {
-            Gantry\Joomla\StyleHelper::copy($table, $old, $new);
+            StyleHelper::copy($table, $old, $new);
         }
     }
 
+    /**
+     * @param string $context
+     * @param object $table
+     */
     public function onExtensionBeforeDelete($context, $table)
     {
         if ($context !== 'com_templates.style' || $table->client_id || !$this->isGantryTemplate($table->template)) {
@@ -490,7 +592,7 @@ class plgSystemGantry5 extends JPlugin
 
         $gantry = $this->load($template);
 
-        /** @var \Gantry\Framework\Outlines $outlines */
+        /** @var Outlines $outlines */
         $outlines = $gantry['outlines'];
 
         try {
@@ -503,6 +605,11 @@ class plgSystemGantry5 extends JPlugin
         return true;
     }
 
+    /**
+     * @param string $context
+     * @param object $data
+     * @return bool
+     */
     public function onContentPrepareData($context, $data)
     {
         $name = 'plg_' . $this->_type . '_' . $this->_name;
@@ -516,10 +623,15 @@ class plgSystemGantry5 extends JPlugin
         return true;
     }
 
+    /**
+     * @param Form $form
+     * @param object $data
+     * @return bool
+     */
     public function onContentPrepareForm($form, $data)
     {
         // Check that we are manipulating a valid form.
-        if (!($form instanceof JForm)) {
+        if (!($form instanceof Form)) {
             $this->_subject->setError('JERROR_NOT_A_FORM');
 
             return false;
@@ -531,7 +643,7 @@ class plgSystemGantry5 extends JPlugin
             case 'com_config.component':
                 // If we are editing configuration from Gantry component, add missing fields from system plugin.
                 $rules = $form->getField('rules');
-                if ($rules && $rules->getAttribute('component') == 'com_gantry5') {
+                if ($rules && $rules->getAttribute('component') === 'com_gantry5') {
                     $this->loadLanguage("{$name}.sys");
                     // Add plugin fields to the form under plg_type_name.
                     $file = file_get_contents(__DIR__."/{$this->_name}.xml");
@@ -556,9 +668,7 @@ class plgSystemGantry5 extends JPlugin
     /**
      * @param array  $matches
      * @param string $content
-     *
      * @param string $type
-     *
      * @return string
      */
     private function appendHtml(array $matches, $content = 'Gantry 5', $type = '')
@@ -566,19 +676,23 @@ class plgSystemGantry5 extends JPlugin
         $html = $matches[0];
 
         if (strpos($matches[2], 'task=style.edit') || strpos($matches[2], 'task=module.edit')) {
-            $uri = new JUri($matches[2]);
+            $uri = new Uri($matches[2]);
             $id = (int) $uri->getVar('id');
 
-            if ($id && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules')) && (isset($this->styles[$id]) || isset($this->modules[$id]))) {
+            if ($id && (isset($this->styles[$id]) || isset($this->modules[$id])) && in_array($uri->getVar('option'), array('com_templates', 'com_advancedtemplates', 'com_modules', 'com_advancedmodules'), true)) {
                 $html = $matches[1] . $uri . $matches[3] . $matches[4] . $matches[5];
                 $colors = $content ? 'background:#439a86;' : 'background:#f17f48;';
                 $content = $content ?: 'No Particle Selected';
                 $title = $type ? ' title="Particle Type: ' . $type . '"' : '';
 
-                $html .= ' <span class="label" ' . $title . ' style="' . $colors . 'color:#fff;">' . $content . '</span>';
+                // TODO: remove label when dropping Joomla 3 support.
+                $html .= ' <span class="label badge bagde-info" ' . $title . ' style="' . $colors . 'color:#fff;">' . $content . '</span>';
 
-                if (isset($this->modules[$id])) { unset($this->modules[$id]); }
-                else { unset($this->styles[$id]); }
+                if (isset($this->modules[$id])) {
+                    unset($this->modules[$id]);
+                } else {
+                    unset($this->styles[$id]);
+                }
             }
         }
 
@@ -594,7 +708,7 @@ class plgSystemGantry5 extends JPlugin
 
         if ($list === null) {
             // Load styles
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db
                 ->getQuery(true)
                 ->select('s.id, s.template')
@@ -618,37 +732,51 @@ class plgSystemGantry5 extends JPlugin
         return $list;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     private function isGantryTemplate($name)
     {
         return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");
     }
 
+    /**
+     * @param string $name
+     * @return \Gantry\Framework\Gantry
+     */
     protected function load($name)
     {
-        Gantry5\Loader::setup();
+        Loader::setup();
 
-        $gantry = \Gantry\Framework\Gantry::instance();
+        $gantry = Gantry::instance();
 
         if (!isset($gantry['theme.name']) || $name !== $gantry['theme.name']) {
             // Restart Gantry and initialize it.
-            $gantry = Gantry\Framework\Gantry::restart();
+            $gantry = Gantry::restart();
             $gantry['theme.name'] = $name;
-            $gantry['streams']->register();
 
+            $streams = $gantry['streams'];
+            $streams->register();
+
+            /** @var Platform $patform */
             $patform = $gantry['platform'];
+            /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
+            /** @var Config $global */
+            $global = $gantry['global'];
 
             // Initialize theme stream.
-            $details = new Gantry\Component\Theme\ThemeDetails($name);
+            $details = new ThemeDetails($name);
             $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
 
             // Initialize theme cache stream.
             $cachePath = $patform->getCachePath() . '/' . $name;
-            Gantry\Component\FileSystem\Folder::create($cachePath);
+            Folder::create($cachePath);
             $locator->addPath('gantry-cache', 'theme', array($cachePath), true, true);
 
-            \Gantry\Component\File\CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-            \Gantry\Component\File\CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
+            CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
+            CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
         }
 
         return $gantry;

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,36 +14,24 @@
 
 namespace Gantry\Component\Request;
 
+/**
+ * Class Request
+ * @package Gantry\Component\Request
+ */
 class Request
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $method;
 
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $get;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $post;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $cookie;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $server;
-
-    /**
-     * @var Input
-     */
+    /** @var Input */
     public $request;
 
     public function __construct()
@@ -50,6 +39,9 @@ class Request
         $this->init();
     }
 
+    /**
+     * @return string
+     */
     public function getMethod()
     {
         if (!$this->method) {

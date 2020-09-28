@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,17 +19,25 @@ namespace Gantry\Component\Layout\Version;
  */
 class Format1
 {
+    /** @var array */
     protected $scopes = [0 => 'grid', 1 => 'block'];
-
+    /** @var array */
     protected $data;
-
+    /** @var array */
     protected $keys = [];
 
+    /**
+     * Format1 constructor.
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
+    /**
+     * @return array
+     */
     public function load()
     {
         $data = &$this->data;
@@ -64,17 +73,26 @@ class Format1
         return ['preset' => $preset] + $result;
     }
 
+    /**
+     * @param array $preset
+     * @param array $structure
+     * @return array
+     */
     public function store(array $preset, array $structure)
     {
         return ['preset' => $preset, 'children' => $structure];
     }
 
+    /**
+     * @param \stdClass $item
+     * @param bool $container
+     */
     protected function normalize(&$item, $container = false)
     {
         if ($item->type === 'pagecontent') {
             // Update pagecontent to match the new standards.
             $item->type = 'system';
-            if (!$item->subtype || $item->subtype == 'pagecontent') {
+            if (!$item->subtype || $item->subtype === 'pagecontent') {
                 $item->subtype = 'content';
                 $item->title = 'Page Content';
             } else {
@@ -91,6 +109,7 @@ class Format1
         } elseif ($item->type === 'offcanvas') {
             $item->id = $item->subtype = $item->type;
             unset ($item->attributes->name, $item->attributes->boxed);
+
             return;
         } else {
             // Update all ids to match the new standards.
@@ -98,13 +117,15 @@ class Format1
         }
 
         if (!empty($item->attributes->extra)) {
-            foreach ($item->attributes->extra as $i => $extra) {
+            /** @var \stdClass $attributes */
+            $attributes = $item->attributes;
+            foreach ($attributes->extra as $i => $extra) {
                 $v = reset($extra);
                 $k = key($extra);
                 if ($k === 'id') {
                     $item->id = preg_replace('/^g-/', '', $v);
-                    $item->attributes->id = $v;
-                    unset ($item->attributes->extra[$i]);
+                    $attributes->id = $v;
+                    unset ($attributes->extra[$i]);
                 }
             }
             if (empty($item->attributes->extra)) {
@@ -118,6 +139,7 @@ class Format1
         if (isset($item->attributes->boxed)) {
             // Boxed already set, just change boxed=0 to boxed='' to use default settings.
             $item->attributes->boxed = $item->attributes->boxed ?: '';
+
             return;
         }
 
@@ -148,7 +170,7 @@ class Format1
      * @param array $content
      * @param int $scope
      * @param bool|null $container
-     * @return array
+     * @return object
      */
     protected function parse($field, array $content, $scope, $container = true)
     {
@@ -157,7 +179,7 @@ class Format1
             $type = $this->scopes[$scope];
             $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
             $scope = ($scope + 1) % 2;
-        } elseif (substr($field, 0, 9) == 'container') {
+        } elseif (strpos($field, 'container') === 0) {
             // Container
             $type = 'container';
             $result = (object) ['id' => null, 'type' => $type, 'subtype' => $type, 'layout' => true, 'attributes' => (object) []];
@@ -211,7 +233,7 @@ class Format1
     /**
      * @param string $field
      * @param int $scope
-     * @return array
+     * @return object
      */
     protected function resolve($field, $scope)
     {
@@ -246,7 +268,7 @@ class Format1
                 $result->attributes->size = $size;
             }
         }
-        if ($scope == 0) {
+        if ($scope === 0) {
             $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 
@@ -254,6 +276,11 @@ class Format1
     }
 
 
+    /**
+     * @param string $type
+     * @param string|null $subtype
+     * @return string
+     */
     protected function id($type, $subtype = null)
     {
         if ($type === 'atoms') {
@@ -269,11 +296,12 @@ class Format1
         }
         $key = implode('-', $result);
 
-        while ($id = rand(1000, 9999)) {
+        do {
+            $id = mt_rand(1000, 9999);
             if (!isset($this->keys[$key][$id])) {
                 break;
             }
-        }
+        } while (true);
 
         $this->keys[$key][$id] = true;
 

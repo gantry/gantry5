@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,25 +14,24 @@
 
 namespace Gantry\Component\Controller;
 
+use Gantry\Component\Response\Response;
+use Gantry\Framework\Gantry;
 use Gantry\Framework\Request;
-use RocketTheme\Toolbox\DI\Container;
 use RuntimeException;
 
+/**
+ * Class BaseController
+ * @package Gantry\Component\Controller
+ */
 abstract class BaseController implements RestfulControllerInterface
 {
-    /**
-     * @var string Default HTTP method.
-     */
+    /** @var string Default HTTP method. */
     protected $method = 'GET';
 
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
-    /**
-     * @var array List of HTTP verbs and their actions.
-     */
+    /** @var array List of HTTP verbs and their actions. */
     protected $httpVerbs = [
         'GET' => [
             '/'         => 'index',
@@ -53,17 +53,18 @@ abstract class BaseController implements RestfulControllerInterface
         ]
     ];
 
-    /**
-     * @var array Parameters from router.
-     */
+    /** @var array Parameters from router. */
     protected $params = [];
 
-    /**
-     * @var Container
-     */
+    /** @var Gantry */
     protected $container;
 
-    public function __construct(Container $container)
+    /**
+     * BaseController constructor.
+     *
+     * @param Gantry $container
+     */
+    public function __construct(Gantry $container)
     {
         $this->container = $container;
         $this->request = $container['request'];
@@ -75,7 +76,7 @@ abstract class BaseController implements RestfulControllerInterface
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return mixed
+     * @return Response
      * @throws \RuntimeException
      */
     public function execute($method, array $path, array $params)
@@ -242,7 +243,7 @@ abstract class BaseController implements RestfulControllerInterface
     protected function resolveHttpVerb($method, array $items)
     {
         // HEAD has identical behavior to GET.
-        $method = ($method == 'HEAD') ? 'GET' : $method;
+        $method = ($method === 'HEAD') ? 'GET' : $method;
 
         if (!isset($this->httpVerbs[$method])) {
             // HTTP method is not defined.

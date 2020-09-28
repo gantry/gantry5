@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,29 +14,42 @@
 
 namespace Gantry\Component\Theme;
 
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Layout\Layout;
+use Gantry\Component\Translator\Translator;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Services\ErrorServiceProvider;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
+/**
+ * Class ThemeInstaller
+ * @package Gantry\Component\Theme
+ */
 abstract class ThemeInstaller
 {
-    /**
-     * Set to true if in Gantry.
-     *
-     * @var bool
-     */
+    /** @var bool Set to true if in Gantry. */
     public $initialized = false;
+    /** @var array */
     public $actions = [];
 
+    /** @var string|null */
     protected $name;
+    /** @var array */
     protected $outlines;
+    /** @var object|null */
     protected $script;
 
+    /**
+     * ThemeInstaller constructor.
+     * @param string|null $extension
+     */
     public function __construct($extension = null)
     {
         if ($extension) {
@@ -82,6 +96,10 @@ abstract class ThemeInstaller
         return is_array($filter) ? array_intersect_key($this->outlines, array_flip($filter)) : $this->outlines;
     }
 
+    /**
+     * @param string $name
+     * @return array
+     */
     public function getOutline($name)
     {
         $list = $this->getOutlines([$name]);
@@ -120,10 +138,15 @@ abstract class ThemeInstaller
     {
     }
 
+    /**
+     * @param string $template
+     * @param array $context
+     * @return string
+     */
     public function render($template, $context = [])
     {
         try {
-            $loader = new \Twig_Loader_Filesystem();
+            $loader = new FilesystemLoader();
             $loader->setPaths([$this->getPath() . '/install/templates']);
 
             $params = [
@@ -132,7 +155,7 @@ abstract class ThemeInstaller
                 'autoescape' => 'html'
             ];
 
-            $twig = new \Twig_Environment($loader, $params);
+            $twig = new Environment($loader, $params);
 
             $name = $this->name;
             $context += [
@@ -184,8 +207,6 @@ abstract class ThemeInstaller
 
         $this->initialize();
 
-        $created = false;
-
         $params += [
             'preset' => null,
             'title' => null
@@ -195,16 +216,12 @@ abstract class ThemeInstaller
         $preset = $params['preset'] ?: 'default';
 
         // Copy configuration for the new layout.
-        if (($this->copyCustom($folder, $folder) || $created)) {
+        if (($this->copyCustom($folder, $folder))) {
             // Update layout and save it.
             $layout = Layout::load($folder, $preset);
             $layout->save()->saveIndex();
 
-            if ($created) {
-                $this->actions[] = ['action' => 'outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
-            } else {
-                $this->actions[] = ['action' => 'outline_updated', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_UPDATED', $title)];
-            }
+            $this->actions[] = ['action' => 'outline_created', 'text' => $this->translate('GANTRY5_INSTALLER_ACTION_OUTLINE_CREATED', $title)];
         }
 
         return $folder;
@@ -236,11 +253,14 @@ abstract class ThemeInstaller
         // Restart Gantry and initialize it.
         $gantry = Gantry::restart();
         $gantry['theme.name'] = $name;
-        $gantry['streams']->register();
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
 
         // Only add error service if debug mode has been enabled.
         if ($gantry->debug()) {
-            $gantry->register(new ErrorServiceProvider);
+            $gantry->register(new ErrorServiceProvider());
         }
 
         /** @var Platform $patform */
@@ -261,8 +281,11 @@ abstract class ThemeInstaller
         Folder::create($cachePath);
         $locator->addPath('gantry-cache', 'theme', [$cachePath], true, true);
 
+        /** @var Config $global */
+        $global = $gantry['global'];
+
         CompiledYamlFile::$defaultCachePath = $locator->findResource('gantry-cache://theme/compiled/yaml', true, true);
-        CompiledYamlFile::$defaultCaching = $gantry['global']->get('compile_yaml', 1);
+        CompiledYamlFile::$defaultCaching = $global->get('compile_yaml', 1);
 
         $this->initialized = true;
     }
@@ -301,7 +324,10 @@ abstract class ThemeInstaller
         }
 
         try {
-            is_dir($src) ? Folder::copy($src, $dst) : Folder::create($dst);
+            Folder::create($dst);
+            if (is_dir($src)) {
+                Folder::copy($src, $dst);
+            }
         } catch (\Exception $e) {
             throw new \RuntimeException("Creating configuration for outline '{$layout}' failed: {$e->getMessage()}", 500, $e);
         }
@@ -309,16 +335,23 @@ abstract class ThemeInstaller
         return true;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     protected function translate($text)
     {
+        /** @var Translator $translator */
         $translator = Gantry::instance()['translator'];
 
         $args = func_get_args();
 
-        return call_user_func_array([$translator, 'translate'], $args);
+        return $translator->translate(...$args);
     }
 
-
+    /**
+     * @return object|null
+     */
     protected function getInstallerScript()
     {
         if (!$this->script) {

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,6 +25,7 @@ use Gantry\Component\Response\JsonResponse;
  */
 class Layouts extends JsonController
 {
+    /** @var array */
     protected $httpVerbs = [
         'GET' => [
             '/' => 'index',
@@ -36,7 +38,10 @@ class Layouts extends JsonController
             '/particle' => 'particle'
         ]
     ];
-    
+
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         $path = implode('/', func_get_args());
@@ -58,7 +63,7 @@ class Layouts extends JsonController
             $layout->inheritAll();
         }
 
-        if ($path == 'list' && !$layout->isLayoutType($type)) {
+        if ($path === 'list' && !$layout->isLayoutType($type)) {
             $instance = $this->getParticleInstances($outline, $subtype, null);
             $id = $instance['selected'];
         }
@@ -105,13 +110,16 @@ class Layouts extends JsonController
 
         $html['g-settings-particle'] = $this->render('@gantry-admin/pages/configurations/layouts/particle-card.html.twig',  $paramsParticle);
         $html['g-settings-block-attributes'] = $this->renderBlockFields($block, $params);
-        if ($path == 'list') {
+        if ($path === 'list') {
             $html['g-inherit-particle'] = $this->renderParticlesInput($inherit || $clone ? $outline : null, $subtype, $post['selected']);
         }
 
         return new JsonResponse(['json' => $item, 'html' => $html]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function particle()
     {
         $post = $this->request->request;
@@ -124,6 +132,7 @@ class Layouts extends JsonController
 
         $layout = Layout::instance($outline);
 
+        /** @var \stdClass $particle */
         $particle = clone $layout->find($id);
         if (!isset($particle->type)) {
             throw new \RuntimeException('Particle was not found from the outline', 404);
@@ -191,14 +200,13 @@ class Layouts extends JsonController
      *
      * @param string $outline
      * @param string $particle
-     * @param string $selected
-     * @return string
+     * @param string|null $selected
+     * @return array
      */
-
     protected function getParticleInstances($outline, $particle, $selected)
     {
         $list = $outline ? $this->container['outlines']->getParticleInstances($outline, $particle, false) : [];
-        $selected = isset($list[$selected]) ? $selected : key($list);
+        $selected = $selected && isset($list[$selected]) ? $selected : (string)key($list);
 
         return ['list' => $list, 'selected' => $selected];
     }

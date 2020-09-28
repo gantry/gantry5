@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,19 +13,31 @@ namespace Gantry\Framework;
 
 use Gantry\Component\Layout\Layout;
 use Gantry\Framework\Services\ConfigServiceProvider;
+use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Category\CategoryFinder;
+use Gantry\Joomla\Content\Content;
 use Gantry\Joomla\Content\ContentFinder;
 use Gantry\Joomla\Module\ModuleFinder;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * @package Gantry\Framework
+ */
 class Exporter
 {
     protected $files = [];
 
+    /**
+     * @return array
+     */
     public function all()
     {
-        $theme = Gantry::instance()['theme']->details();
+        /** @var Theme $theme */
+        $theme = Gantry::instance()['theme'];
+        $details = $theme->details();
 
         return [
             'export' => [
@@ -37,13 +50,13 @@ class Exporter
                     'version' => JVERSION
                 ],
                 'theme' => [
-                    'name' => $theme->get('name'),
-                    'title' => $theme->get('details.name'),
-                    'version' => $theme->get('details.version'),
-                    'date' => $theme->get('details.date'),
-                    'author' => $theme->get('details.author'),
-                    'copyright' => $theme->get('details.copyright'),
-                    'license' => $theme->get('details.license'),
+                    'name' => $details->get('name'),
+                    'title' => $details->get('details.name'),
+                    'version' => $details->get('details.version'),
+                    'date' => $details->get('details.date'),
+                    'author' => $details->get('details.author'),
+                    'copyright' => $details->get('details.copyright'),
+                    'license' => $details->get('details.license'),
                 ]
             ],
             'outlines' => $this->outlines(),
@@ -55,6 +68,9 @@ class Exporter
         ];
     }
 
+    /**
+     * @return array
+     */
     public function outlines()
     {
         $gantry = Gantry::instance();
@@ -102,7 +118,7 @@ class Exporter
 
             // Update atom inheritance.
             $atoms = $config->get('page.head.atoms');
-            if (is_array($atoms)) {
+            if (\is_array($atoms)) {
                 $atoms = new Atoms($atoms);
                 foreach ($inheritance as $from => $to) {
                     $atoms->updateInheritance($from, $to);
@@ -117,35 +133,46 @@ class Exporter
                     $config->set('assignments', $this->getOutlineAssignments($id));
                 }
             }
-            
+
             $style['config'] = $config->toArray();
         }
 
         return $list;
     }
 
+    /**
+     * @param bool $all
+     * @return array
+     */
     public function positions($all = true)
     {
         $gantry = Gantry::instance();
-        $positions = $gantry['outlines']->positions();
+
+        /** @var Outlines $outlines */
+        $outlines = $gantry['outlines'];
+        $positions = $outlines->positions();
         $positions['debug'] = 'Debug';
 
         $finder = new ModuleFinder();
         if (!$all) {
             $finder->particle();
         }
+        /** @var array $modules */
         $modules = $finder->find()->export();
         $list = [];
+        /** @var array $items */
         foreach ($modules as $position => &$items) {
             if (!isset($positions[$position])) {
                 continue;
             }
             foreach ($items as &$item) {
-                $func = 'module' . $item['options']['type'];
-                if (method_exists($this, $func)) {
-                    $item = $this->{$func}($item);
+                $method = 'module' . $item['options']['type'];
+                if (method_exists($this, $method)) {
+                    $item = $this->{$method}($item);
                 }
             }
+            unset($item);
+
             $list[$position] = [
                 'title' => $positions[$position],
                 'items' => $items,
@@ -155,26 +182,35 @@ class Exporter
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function menus()
     {
         $gantry = Gantry::instance();
-        $db = \JFactory::getDbo();
+
+        /** @var Menu $menu */
+        $menu = $gantry['menu'];
+
+        $db = Factory::getDbo();
 
         $query = $db->getQuery(true)
             ->select('id, menutype, title, description')
             ->from('#__menu_types');
         $db->setQuery($query);
-        $menus = $db->loadObjectList('id');
+
+        /** @var array $menuList */
+        $menuList = $db->loadObjectList('id');
 
         $list = [];
-        foreach ($menus as $menu) {
-            $items = $gantry['menu']->instance(['menu' => $menu->menutype])->items(false);
+        foreach ($menuList as $menuItem) {
+            $items = $menu->instance(['menu' => $menuItem->menutype])->items(false);
 
             array_walk(
                 $items,
                 function (&$item) {
                     $item['id'] = (int) $item['id'];
-                    if (in_array($item['type'], ['component', 'alias'])) {
+                    if (\in_array($item['type'], ['component', 'alias'], true)) {
                         $item['type'] = "joomla.{$item['type']}";
                     }
 
@@ -182,10 +218,10 @@ class Exporter
                 }
             );
 
-            $list[$menu->menutype] = [
-                'id' => (int) $menu->id,
-                'title' => $menu->title,
-                'description' => $menu->description,
+            $list[$menuItem->menutype] = [
+                'id' => (int) $menuItem->id,
+                'title' => $menuItem->title,
+                'description' => $menuItem->description,
                 'items' => $items
             ];
         }
@@ -193,6 +229,9 @@ class Exporter
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function articles()
     {
         $finder = new ContentFinder();
@@ -200,6 +239,7 @@ class Exporter
         $articles = $finder->limit(0)->find();
 
         $list = [];
+        /** @var Content $article */
         foreach ($articles as $article) {
             $exported = $article->toArray();
 
@@ -213,6 +253,9 @@ class Exporter
         return $list;
     }
 
+    /**
+     * @return array
+     */
     public function categories()
     {
         $finder = new CategoryFinder();
@@ -220,6 +263,7 @@ class Exporter
         $categories = $finder->limit(0)->find();
 
         $list = [];
+        /** @var Category $category */
         foreach ($categories as $category) {
             $list[$category->id] = $category->toArray();
         }
@@ -236,10 +280,13 @@ class Exporter
      */
     public function getOutlineAssignments($configuration)
     {
-        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-        $app = \JApplicationCms::getInstance('site');
+        $app = CMSApplication::getInstance('site');
         $menu = $app->getMenu();
-        $data = \MenusHelper::getMenuLinks();
+
+        // Works also in Joomla 4
+        require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
+        $data = (array)\MenusHelper::getMenuTypes();
 
         $items = [];
         foreach ($data as $item) {
@@ -267,20 +314,25 @@ class Exporter
     {
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
-        $html = preg_replace_callback('#<(pre|code).*?>.*?<\\/\\1>#is', function($matches) use (&$tokens) {
-            $token = uniqid('__g5_token');
+        $temp = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', function($matches) use (&$tokens) {
+            $token = uniqid('__g5_token', false);
             $tokens['#' . $token . '#'] = $matches[0];
 
             return $token;
         }, $html);
 
-        $html = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $html);
-        $html = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $html);
-        $html = preg_replace(array_keys($tokens), array_values($tokens), $html); // restore tokens
+        $temp = preg_replace_callback('^(\s)(src|href)="(.*?)"^', [$this, 'linkHandler'], $temp);
+        $temp = preg_replace_callback('^(\s)url\((.*?)\)^', [$this, 'urlHandler'], $temp);
+        $temp = preg_replace(array_keys($tokens), array_values($tokens), $temp); // restore tokens
 
-        return $html;
+        // Fall back to original input if ran into errors.
+        return null !== $temp ? $temp : $html;
     }
 
+    /**
+     * @param string $url
+     * @return string
+     */
     public function url($url)
     {
         // Only process local urls.
@@ -307,11 +359,13 @@ class Exporter
 
         $found = false;
         $stream = $path = '';
+        /** @var array $prefixes */
         foreach ($paths as $stream => $prefixes) {
+            /** @var array $paths */
             foreach ($prefixes as $prefix => $paths) {
                 foreach ($paths as $path) {
-                    if (is_string($path) && strpos($url, $path) === 0) {
-                        $path = ($prefix ? "{$prefix}/" : '') . substr($url, strlen($path) + 1);
+                    if (\is_string($path) && strpos($url, $path) === 0) {
+                        $path = ($prefix ? "{$prefix}/" : '') . substr($url, \strlen($path) + 1);
                         $found = true;
                         break 3;
                     }
@@ -351,6 +405,10 @@ class Exporter
         return "{$matches[1]}url({$url})";
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     protected function moduleMod_Custom(array $data)
     {
         // Convert to particle...

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -25,14 +26,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class BlueprintForm extends BaseBlueprintForm
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $context = 'gantry-blueprints://';
 
-    /**
-     * @var BlueprintSchema
-     */
+    /** @var BlueprintSchema */
     protected $schema;
 
     /**
@@ -127,12 +124,12 @@ class BlueprintForm extends BaseBlueprintForm
 
     /**
      * @param string $filename
-     * @return string
+     * @return array
      */
     protected function loadFile($filename)
     {
         $file = CompiledYamlFile::instance($filename);
-        $content = $file->content();
+        $content = (array)$file->content();
         $file->free();
 
         return $content;
@@ -192,20 +189,20 @@ class BlueprintForm extends BaseBlueprintForm
             $params = [];
         }
 
-        list($o, $f) = preg_split('/::/', $function, 2);
+        list($o, $f) = explode('::', $function, 2);
         if (!$f) {
             if (function_exists($o)) {
                 $data = call_user_func_array($o, $params);
             }
         } else {
             if (method_exists($o, $f)) {
-                $data = call_user_func_array(array($o, $f), $params);
+                $data = call_user_func_array([$o, $f], $params);
             }
         }
 
         // If function returns a value,
         if (isset($data)) {
-            if (isset($field[$property]) && is_array($field[$property]) && is_array($data)) {
+            if (is_array($data) && isset($field[$property]) && is_array($field[$property])) {
                 // Combine field and @data-field together.
                 $field[$property] += $data;
             } else {
@@ -222,13 +219,16 @@ class BlueprintForm extends BaseBlueprintForm
      */
     protected function dynamicConfig(array &$field, $property, array &$call)
     {
-        $value = $call['params'];
+        $var = $call['params'];
 
         $default = isset($field[$property]) ? $field[$property] : null;
-        $config = Gantry::instance()['config']->get($value, $default);
 
-        if (!is_null($config)) {
-            $field[$property] = $config;
+        /** @var Config $config */
+        $config = Gantry::instance()['config'];
+        $value = $config->get($var, $default);
+
+        if (null !== $value) {
+            $field[$property] = $value;
         }
     }
 
@@ -259,15 +259,15 @@ class BlueprintForm extends BaseBlueprintForm
                 $prefix = '';
                 $fields = true;
 
-            } elseif (isset($current[$prefix . $field])) {
+            } elseif (isset($current[$fieldName = $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current[$prefix . $field];
+                $current = $current[$fieldName];
                 $prefix = '';
                 $fields = false;
 
-            } elseif (isset($current['.' . $prefix . $field])) {
+            } elseif (isset($current[$fieldName = '.' . $prefix . $field])) {
                 $parts[] = array_shift($path);
-                $current = $current['.' . $prefix . $field];
+                $current = $current[$fieldName];
                 $prefix = '';
                 $fields = false;
 
@@ -297,6 +297,12 @@ class BlueprintForm extends BaseBlueprintForm
         return $result;
     }
 
+    /**
+     * @param array $current
+     * @param string $prefix
+     * @param string $fieldName
+     * @return array|null
+     */
     protected function resolveContainer($current, $prefix, $fieldName)
     {
         foreach ($current as $field) {
@@ -322,6 +328,11 @@ class BlueprintForm extends BaseBlueprintForm
         return null;
     }
 
+    /**
+     * @param string $prefix
+     * @param array $list
+     * @return bool
+     */
     protected function fieldExists($prefix, $list)
     {
         foreach ($list as $field => $data) {

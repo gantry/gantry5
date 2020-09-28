@@ -40,7 +40,7 @@
             {% if gantry.platform.has('modules') %}
             <li data-mm-blocktype="module" data-mm-id="__module">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <i class="far fa-fw fa-hand-paper" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_MODULE'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/module') }}">
@@ -50,7 +50,7 @@
             {% elseif gantry.platform.has('widgets') %}
             <li data-mm-blocktype="widget" data-mm-id="__widget">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <i class="far fa-fw fa-hand-paper" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_WIDGET'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/widget') }}">
@@ -60,7 +60,7 @@
             {% endif %}
             <li data-mm-blocktype="particle" data-mm-id="__particle">
                 <span class="menu-item">
-                    <i class="fa fa-fw fa-hand-stop-o" aria-hidden="true"></i>
+                    <i class="far fa-fw fa-hand-paper" aria-hidden="true"></i>
                     <span class="title">{{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}</span>
                 </span>
                 <a class="config-cog" href="{{ gantry.route('menu/select/particle') }}">
@@ -73,7 +73,7 @@
 
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
-         data-menu-items="{{ menu.items|json_encode|escape('html_attr') }}"
+         data-menu-items="{{ menu.items(false)|json_encode|escape('html_attr') }}"
          data-menu-settings="{{ menu.settings|json_encode|escape('html_attr') }}">
         {% if menu.items|length %}
             {% include 'menu/base.html.twig' with {'item': menu.root} %}

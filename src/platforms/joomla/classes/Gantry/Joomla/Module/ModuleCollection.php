@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,14 +12,25 @@
 namespace Gantry\Joomla\Module;
 
 use Gantry\Joomla\Object\Collection;
+use Joomla\CMS\Factory;
 
+/**
+ * Class ModuleCollection
+ * @package Gantry\Joomla\Module
+ */
 class ModuleCollection extends Collection
 {
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->__call('toArray', []);
     }
 
+    /**
+     * @return array
+     */
     public function export()
     {
         $assignments = $this->assignments();
@@ -37,7 +49,7 @@ class ModuleCollection extends Collection
             }
             if (empty($item['assignments'])) {
                 $item['assignments'] = [];
-            } elseif (in_array(0, $item['assignments'])) {
+            } elseif (in_array(0, $item['assignments'], true)) {
                 $item['assignments'] = ['page' => true];
             } else {
                 $list = [];
@@ -57,6 +69,9 @@ class ModuleCollection extends Collection
         return $positions;
     }
 
+    /**
+     * @return array
+     */
     public function assignments()
     {
         $this->loadAssignments();
@@ -75,7 +90,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_keys($ids));
 
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('moduleid, menuid')->from('#__modules_menu')->where("moduleid IN ($idlist)");
         $db->setQuery($query);
@@ -87,11 +102,16 @@ class ModuleCollection extends Collection
             $list[$value[0]][] = (int) $value[1];
         }
 
+        /** @var Module $module */
         foreach ($this as $module) {
             $module->assignments(isset($list[$module->id]) ? $list[$module->id] : []);
         }
     }
 
+    /**
+     * @param array $ids
+     * @return array
+     */
     protected function getAssignmentPath(array $ids)
     {
         if (!$ids) {
@@ -100,7 +120,7 @@ class ModuleCollection extends Collection
 
         $idlist = implode(',', array_map('intval', $ids));
 
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id, path')->from('#__menu')->where("id IN ($idlist)");
         $db->setQuery($query);
@@ -115,12 +135,17 @@ class ModuleCollection extends Collection
         return $list;
     }
 
+    /**
+     * @param array $values
+     * @return array
+     */
     protected function values($values)
     {
         $list = [];
         foreach ($values as $array) {
-            $list = array_merge($list, (array) $array);
+            $list[] = (array) $array;
         }
+        $list = array_merge([], ...$list);
 
         return array_unique($list);
     }

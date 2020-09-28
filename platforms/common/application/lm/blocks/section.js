@@ -147,7 +147,7 @@ var Section = new prime({
         this.block[state ? 'addClass' : 'removeClass']('block-has-changes');
 
         if (!state && icon) { icon.remove(); }
-        if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(this.block.find('h4')); }
+        if (state && !icon) { zen('i.far.fa-circle.changes-indicator').top(this.block.find('h4')); }
     },
 
     onDone: function(event) {

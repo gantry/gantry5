@@ -6,7 +6,8 @@ body.com_gantry5 { color: #ddd; background-color: #404040 !important; }
 @media (max-width: 767px) { body.com_gantry5 #g5-container { margin-left: -20px; margin-right: -5px; } }
 body.com_gantry5 textarea, body.com_gantry5 input, body.com_gantry5 .input-append, body.com_gantry5 .input-prepend { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 body.com_gantry5 a { text-decoration: none; }
-body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header { display: none; }
+body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header, body.com_gantry5 #subhead { display: none; }
+body.com_gantry5 #header { display: block; }
 body.com_gantry5 .container-main { padding: 0; }
 body.com_gantry5 #status { box-shadow: none !important; }
 body.com_gantry5 #footer a { color: #3180C2; }

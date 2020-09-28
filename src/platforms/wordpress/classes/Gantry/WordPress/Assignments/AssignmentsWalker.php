@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -11,7 +12,12 @@
 
 namespace Gantry\WordPress\Assignments;
 
-class AssignmentsWalker {
+/**
+ * Class AssignmentsWalker
+ * @package Gantry\WordPress\Assignments
+ */
+class AssignmentsWalker
+{
     var $tree_type = ['post_type', 'taxonomy', 'custom'];
     var $db_fields = ['parent' => 'parent_id', 'id' => 'id'];
 

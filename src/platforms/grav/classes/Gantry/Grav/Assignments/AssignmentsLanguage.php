@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -13,11 +14,17 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
-use Grav\Common\Page\Page;
+use Grav\Common\Page\Interfaces\PageInterface;
 
+/**
+ * Class AssignmentsLanguage
+ * @package Gantry\Grav\Assignments
+ */
 class AssignmentsLanguage implements AssignmentsInterface
 {
+    /** @var string */
     public $type = 'language';
+    /** @var int */
     public $priority = 1;
 
     /**
@@ -66,13 +73,17 @@ class AssignmentsLanguage implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @param Language $language
+     * @return array
+     */
     protected function getItems(Language $language)
     {
         $languages = $language->getLanguages();
 
         $items = [];
 
-        /** @var Page $page */
+        /** @var PageInterface $page */
         foreach ($languages as $code) {
             $items[] = [
                 'name' => $code,

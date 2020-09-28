@@ -17,17 +17,18 @@
         </li>
     {% endif -%}
     {%- for child in children %}
+        {% set is_particle = child.type == 'particle' or child.type == 'module' %}
         <li data-mm-id="{{ child.path }}"
             data-mm-level="{{ child.level }}"
-            {% if child.type == 'particle' or child.type == 'module' %}
-            class="g-menu-item-{{ child.type }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
+            {% if is_particle %}
+            class="g-menu-removable g-menu-item-{{ child.type }}{% if child.options.particle.enabled == false %} g-menu-item-disabled{% endif %}"
             data-mm-original-type="{{ child.type }}"
             {% else %}
-                class="{% if child.enabled == false %}g-menu-item-disabled{% endif %}"
+            class="{% if child.enabled == false %}g-menu-item-disabled{% endif %}"
             {% endif %}
         >
             {% include 'menu/item.html.twig' with {'item': child, 'target': 'list-' ~ group } %}
         </li>
     {% endfor -%}
 </ul>
-<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h" aria-hidden="true"></i></span>
+<span class="submenu-reorder"><i class="fa fa-fw fa-arrows-h fa-arrows-alt-h" aria-hidden="true"></i></span>

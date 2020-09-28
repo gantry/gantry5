@@ -47,7 +47,7 @@ var StepOne = function(map, mode) { // mode [reorder, resize, evenResize]
 
     if (!this.isNewParticle) {
         if (!deepEquals(map, current)) {
-            save.showIndicator('fa fa-fw changes-indicator fa-circle-o');
+            save.showIndicator('far fa-fw changes-indicator fa-circle');
             flags.set('pending', true);
         } else {
             save.hideIndicator();

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,25 +14,38 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodeThrow extends \Twig_Node
+use Twig\Compiler;
+use Twig\Node\Node;
+
+/**
+ * Class TwigNodeThrow
+ * @package Gantry\Component\Twig\Node
+ */
+class TwigNodeThrow extends Node
 {
+    /**
+     * TwigNodeThrow constructor.
+     * @param int $code
+     * @param Node $message
+     * @param int $lineno
+     * @param string|null $tag
+     */
     public function __construct(
         $code,
-        \Twig_Node $message,
+        Node $message,
         $lineno = 0,
         $tag = null
-    )
-    {
+    ) {
         parent::__construct(['message' => $message], ['code' => $code], $lineno, $tag);
     }
 
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
      * @throws \LogicException
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler->addDebugInfo($this);
 

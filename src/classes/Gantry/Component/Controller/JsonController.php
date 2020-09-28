@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,6 +16,10 @@ namespace Gantry\Component\Controller;
 
 use Gantry\Component\Response\JsonResponse;
 
+/**
+ * Class JsonController
+ * @package Gantry\Component\Controller
+ */
 abstract class JsonController extends BaseController
 {
     /**
@@ -23,7 +28,7 @@ abstract class JsonController extends BaseController
      * @param string $method
      * @param array $path
      * @param array $params
-     * @return mixed
+     * @return JsonResponse
      * @throws \RuntimeException
      */
     public function execute($method, array $path, array $params)

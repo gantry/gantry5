@@ -553,7 +553,7 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 #g5-container .settings-block .settings-param-override { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; background-color: rgba(244, 244, 244, 0.5); z-index: 4; opacity: 1; -webkit-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out; -moz-transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out; transition: opacity 0.3s ease-in-out, z-index 0.3s ease-in-out; -webkit-backface-visibility: hidden; backface-visibility: hidden; /*@include linear-gradient(90deg, transparentize($white, 0.7) 0%, transparentize($white, 0.7) 150px, transparentize($white, 0.4) 150px, transparentize($white, 0.4) 100%);*/ }
 #g5-container .settings-block .settings-param-field { margin-left: 175px; }
 #g5-container .settings-block .settings-param-field .g-reset-field { display: inline-block; opacity: 0; cursor: pointer; margin: 0 5px; vertical-align: middle; -webkit-transition: opacity 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-in-out; transition: opacity 0.2s ease-in-out; }
-#g5-container .settings-block .settings-param-field .input-group .g-reset-field { display: table-cell; vertical-align: middle; padding-left: 4px; }
+#g5-container .settings-block .settings-param-field .input-group .g-reset-field { vertical-align: middle; padding-left: 4px; }
 #g5-container .settings-block .settings-param-field textarea + .g-reset-field { vertical-align: top; }
 #g5-container .settings-block .settings-param-field:hover .g-reset-field { opacity: 1; -webkit-transition: opacity 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-in-out; transition: opacity 0.2s ease-in-out; }
 #g5-container .settings-block .settings-param-title { max-width: 175px; margin: 5px; }
@@ -772,11 +772,11 @@ i.fa-grav, i.fa-grav-spaceman, i.fa-grav-text, i.fa-grav-full, i.fa-grav-logo, i
 #g5-container .input-group { position: relative; display: table; border-collapse: separate; }
 @media only all and (max-width: 47.99rem) { #g5-container .input-group { width: 90%; } }
 #g5-container .input-group input { position: relative; z-index: 2; }
-#g5-container .input-group input, #g5-container .input-group-addon, #g5-container .input-group-btn { display: table-cell; }
+#g5-container .input-group input, #g5-container .input-group-addon, #g5-container .input-group-btn { display: inline-block; }
 #g5-container .input-group-addon:first-child { border-right: 0 none; }
 #g5-container .input-group-addon:last-child { border-left: 0 none; }
 #g5-container .input-group-addon, #g5-container .input-group-btn { white-space: nowrap; vertical-align: middle; }
-#g5-container .input-group-addon { padding: 6px 0; width: 42px; font-size: 0.9rem; font-weight: 400; color: #111; text-align: center; background-color: #f6f6f6; border: 1px solid #ddd; border-left: 0; border-radius: 0.1875rem; }
+#g5-container .input-group-addon { padding: 8px 0; width: 42px; font-size: 0.9rem; font-weight: 400; color: #111; text-align: center; background-color: #f6f6f6; border: 1px solid #ddd; border-left: 0; border-radius: 0.1875rem; }
 #g5-container .input-group-btn { position: relative; font-size: 0; white-space: nowrap; z-index: 1; }
 @media only all and (max-width: 47.99rem) { #g5-container .input-group-btn { width: 42px; } }
 #g5-container .input-group-btn button { outline: 0; }
@@ -1228,7 +1228,7 @@ html.g5-dialog-open { overflow: hidden; }
 #g5-container .g5-popover-extras a:focus, #g5-container .g5-popover-extras [data-g-devprod]:focus { outline: auto; }
 
 #g5-container { /* Panel */ /* Panel positioning */ /* Pickers */ /* Tabs */ /* Default theme */ }
-#g5-container .g-colorpicker { position: relative; border-radius: 0.1875rem; max-width: 100%; }
+#g5-container .g-colorpicker { display: inline-block; position: relative; border-radius: 0.1875rem; max-width: 100%; }
 #g5-container .g-colorpicker input { color: #333; width: 100% !important; }
 #g5-container .g-colorpicker i { position: absolute; top: 10px; right: 10px; z-index: 2; }
 #g5-container .g-colorpicker.light-text input, #g5-container .g-colorpicker.light-text i { color: #fff; }

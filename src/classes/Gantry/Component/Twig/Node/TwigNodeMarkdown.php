@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,18 +14,32 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodeMarkdown extends \Twig_Node implements \Twig_NodeOutputInterface
+use Twig\Compiler;
+use Twig\Node\Node;
+use Twig\Node\NodeOutputInterface;
+
+/**
+ * Class TwigNodeMarkdown
+ * @package Gantry\Component\Twig\Node
+ */
+class TwigNodeMarkdown extends Node implements NodeOutputInterface
 {
-    public function __construct(\Twig_Node $body, $lineno, $tag = 'markdown')
+    /**
+     * TwigNodeMarkdown constructor.
+     * @param Node $body
+     * @param int $lineno
+     * @param string $tag
+     */
+    public function __construct(Node $body, $lineno, $tag = 'markdown')
     {
         parent::__construct(['body' => $body], [], $lineno, $tag);
     }
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)

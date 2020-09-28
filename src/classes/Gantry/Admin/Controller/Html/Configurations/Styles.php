@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,15 +14,19 @@
 
 namespace Gantry\Admin\Controller\Html\Configurations;
 
+use Gantry\Admin\Events\StylesEvent;
 use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Services\ConfigServiceProvider;
 use Gantry\Framework\Theme;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Styles
+ * @package Gantry\Admin\Controller\Html\Configurations
+ */
 class Styles extends HtmlController
 {
 
@@ -55,11 +60,14 @@ class Styles extends HtmlController
         ]
     ];
 
+    /**
+     * @return string
+     */
     public function index()
     {
         $outline = $this->params['outline'];
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config'];
         } else {
@@ -74,13 +82,17 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/styles.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function display($id)
     {
         $outline = $this->params['outline'];
         $blueprints = $this->container['styles']->getBlueprintForm($id);
         $prefix = 'styles.' . $id;
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
@@ -100,6 +112,10 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/item.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function formfield($id)
     {
         $path = func_get_args();
@@ -126,7 +142,7 @@ class Styles extends HtmlController
         }
         array_pop($path);
 
-        if($outline == 'default') {
+        if($outline === 'default') {
             $this->params['overrideable'] = false;
             $this->params['data'] = $this->container['config']->get($prefix);
         } else {
@@ -150,6 +166,10 @@ class Styles extends HtmlController
         return $this->render('@gantry-admin/pages/configurations/styles/field.html.twig', $this->params);
     }
 
+    /**
+     * @param string $id
+     * @return string
+     */
     public function reset($id)
     {
         $this->params += [
@@ -159,7 +179,9 @@ class Styles extends HtmlController
         return $this->display($id);
     }
 
-
+    /**
+     * @return JsonResponse
+     */
     public function compile()
     {
         // Validate only exists for JSON.
@@ -178,11 +200,15 @@ class Styles extends HtmlController
                     'title'   => 'CSS Compiled With Warnings',
                 ]
             );
-        } else {
-            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
         }
+
+        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
     }
 
+    /**
+     * @param string|null $id
+     * @return JsonResponse|string
+     */
     public function save($id = null)
     {
         /** @var Config $config */
@@ -208,7 +234,7 @@ class Styles extends HtmlController
         $file->free();
 
         // Fire save event.
-        $event = new Event;
+        $event = new StylesEvent();
         $event->gantry = $this->container;
         $event->theme = $this->container['theme'];
         $event->controller = $this;
@@ -232,9 +258,9 @@ class Styles extends HtmlController
                     'title'   => 'CSS Compiled With Warnings',
                 ]
             );
-        } else {
-            return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
         }
+
+        return new JsonResponse(['html' => 'The CSS was successfully compiled', 'title' => 'CSS Compiled']);
     }
 
     /**

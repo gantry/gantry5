@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,18 +14,28 @@ namespace Gantry\WordPress;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Theme;
 
+/**
+ * Class Widgets
+ * @package Gantry\WordPress
+ */
 abstract class Widgets
 {
     use GantryTrait;
 
+    /** @var array */
     static protected $chromeArgs = [];
 
+    /**
+     * @param string $key
+     * @param array $params
+     * @return false|string|null
+     */
     public static function displayPosition($key, array $params = [])
     {
-        $key = sanitize_title($key);
+        $key = \sanitize_title($key);
 
         // Do nothing if sidebar is not active.
-        if (!is_active_sidebar($key)) {
+        if (!\is_active_sidebar($key)) {
             return null;
         }
 
@@ -39,7 +50,7 @@ abstract class Widgets
             global $wp_registered_sidebars, $wp_registered_widgets;
 
             $sidebar          = $wp_registered_sidebars[$key];
-            $sidebars_widgets = wp_get_sidebars_widgets();
+            $sidebars_widgets = \wp_get_sidebars_widgets();
             $widgets          = !empty($sidebars_widgets[$key]) ? $sidebars_widgets[$key] : [];
 
             foreach ($widgets as $id) {
@@ -63,12 +74,12 @@ abstract class Widgets
                     $name = $wp_registered_widgets[$id]['name'];
 
                     $args = array_merge(
-                        [array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $name))],
+                        [array_merge($sidebar, ['widget_id' => $id, 'widget_name' => $name])],
                         (array)$wp_registered_widgets[$id]['params']
                     );
 
                     // Apply sidebar filter for rokbox and other plugins.
-                    $args = apply_filters('dynamic_sidebar_params', $args);
+                    $args = \apply_filters('dynamic_sidebar_params', $args);
 
                     // Grab the content of the plugin.
                     ob_start();
@@ -97,6 +108,11 @@ abstract class Widgets
         return $html;
     }
 
+    /**
+     * @param array|string $instance
+     * @param array $params
+     * @return string|null
+     */
     public static function displayWidget($instance = [], array $params = [])
     {
         if (is_string($instance)) {
@@ -132,7 +148,7 @@ abstract class Widgets
         \the_widget($widgetClass, $options['widget'], $args);
         $html = ob_get_clean();
 
-        if (trim($html) && !$gantry5Widget) {
+        if (!$gantry5Widget && trim($html)) {
             /** @var Theme $theme */
             $theme = static::gantry()['theme'];
             $theme->wordpress(true);
@@ -141,13 +157,18 @@ abstract class Widgets
         return $html;
     }
 
-
+    /**
+     * @param string|int $sidebar_id
+     * @param string|int $id
+     * @param array $props
+     * @return string|null
+     */
     public static function getAjax($sidebar_id, $id, array $props = [])
     {
         global $wp_registered_sidebars, $wp_registered_widgets;
 
         // Do nothing if sidebar is not active or widget doesn't exist.
-        if (!$sidebar_id || !$id || !is_active_sidebar($sidebar_id) || empty($wp_registered_widgets[$id])) {
+        if (!$sidebar_id || !$id || empty($wp_registered_widgets[$id]) || !\is_active_sidebar($sidebar_id)) {
             return null;
         }
 
@@ -160,6 +181,7 @@ abstract class Widgets
         $callback = $wp_registered_widgets[$id]['callback'];
 
         // Pre-render Gantry widget.
+        $contents = null;
         if (is_callable($callback)) {
             $name = $wp_registered_widgets[$id]['name'];
 
@@ -177,7 +199,7 @@ abstract class Widgets
             );
 
             // Apply sidebar filter for rokbox and other plugins.
-            $args = apply_filters('dynamic_sidebar_params', $args);
+            $args = \apply_filters('dynamic_sidebar_params', $args);
 
             // Grab the content of the plugin.
             ob_start();
@@ -188,6 +210,9 @@ abstract class Widgets
         return $contents;
     }
 
+    /**
+     * @return array
+     */
     public static function listWidgets()
     {
         static $list;
@@ -200,18 +225,23 @@ abstract class Widgets
 
         $list = [];
         foreach ($widgets as $key => $widget) {
-            $description           = isset($widget->widget_options['description']) ? $widget->widget_options['description'] : '';
-            $info                   =
-                ['id'     => $widget->id_base, 'title' => $widget->name, 'description' => $description, 'class' => $key,
-                 'widget' => $widget];
+            $description = isset($widget->widget_options['description']) ? $widget->widget_options['description'] : '';
+            $info = [
+                'id' => $widget->id_base, 'title' => $widget->name, 'description' => $description, 'class' => $key,
+                'widget' => $widget
+            ];
             $list[$widget->id_base] = $info;
         }
 
-        uasort($list, function ($a, $b) { return strcmp($a['title'], $b['title']); });
+        uasort($list, static function ($a, $b) { return strcmp($a['title'], $b['title']); });
 
         return $list;
     }
 
+    /**
+     * @param bool $particlesOnly
+     * @return array
+     */
     public static function export($particlesOnly = true)
     {
         global $wp_registered_widget_controls;
@@ -231,7 +261,7 @@ abstract class Widgets
                         continue;
                     }
                 }
-                foreach (get_option("widget_{$base}") as $id => $instance) {
+                foreach (\get_option("widget_{$base}") as $id => $instance) {
                     if (is_numeric($id)) {
                         $wordpress = $particle = [];
                         if (!$isParticle) {
@@ -260,7 +290,7 @@ abstract class Widgets
         }
 
         $sidebars = [];
-        foreach (get_option('sidebars_widgets') as $sidebar => $widgets) {
+        foreach (\get_option('sidebars_widgets') as $sidebar => $widgets) {
             if (!is_array($widgets) || $sidebar === 'wp_inactive_widgets' || strpos($sidebar, 'orphaned_widgets_') === 0) {
                 continue;
             }
@@ -277,10 +307,13 @@ abstract class Widgets
         return $sidebars;
     }
 
+    /**
+     * @param array $positions
+     */
     public static function import(array $positions)
     {
         // Load sidebars.
-        $sidebars = (array)get_option('sidebars_widgets');
+        $sidebars = (array)\get_option('sidebars_widgets');
         $widgets = [];
 
         foreach ($positions as $sidebar => $list) {
@@ -292,7 +325,7 @@ abstract class Widgets
 
                 if (!isset($widgets[$type])) {
                     // Load widgets.
-                    $widgets[$type] = (array)get_option("widget_{$type}");
+                    $widgets[$type] = (array)\get_option("widget_{$type}");
                 }
 
                 static::addWidget($type, $data, $sidebar, $widgets[$type], $sidebars);
@@ -301,25 +334,35 @@ abstract class Widgets
 
         // Bulk update all widgets and sidebars.
         foreach ($widgets as $type => $list) {
-            update_option("widget_{$type}", $list);
+            \update_option("widget_{$type}", $list);
         }
-        update_option('sidebars_widgets', $sidebars);
+
+        \update_option('sidebars_widgets', $sidebars);
     }
 
+    /**
+     * @param string $type
+     * @param array $data
+     * @param string $sidebar
+     */
     public static function create($type, array $data, $sidebar = 'wp_inactive_widgets')
     {
         // Load widgets and sidebars.
-        $sidebars = (array)get_option('sidebars_widgets');
-        $widgets = (array)get_option("widget_{$type}");
+        $sidebars = (array)\get_option('sidebars_widgets');
+        $widgets = (array)\get_option("widget_{$type}");
 
         // Add widget to the sidebar.
         static::addWidget($type, $data, $sidebar, $widgets, $sidebars);
 
         // Save widgets and sidebars.
-        update_option("widget_{$type}", $widgets);
-        update_option('sidebars_widgets', $sidebars);
+        \update_option("widget_{$type}", $widgets);
+        \update_option('sidebars_widgets', $sidebars);
     }
 
+    /**
+     * @param bool $next
+     * @return int
+     */
     protected static function displayWidgetId($next = false)
     {
         static $id = -1;
@@ -331,6 +374,10 @@ abstract class Widgets
         return $id;
     }
 
+    /**
+     * @param string $type
+     * @return string|false
+     */
     protected static function getImportType($type)
     {
         if ($type === 'gantry.particle') {
@@ -352,6 +399,13 @@ abstract class Widgets
         return $type;
     }
 
+    /**
+     * @param string $type
+     * @param array $data
+     * @param string|int $sidebar
+     * @param array $widgets
+     * @param array $sidebars
+     */
     protected static function addWidget($type, array $data, $sidebar, array &$widgets, array &$sidebars)
     {
         global $wp_registered_sidebars;
@@ -384,6 +438,10 @@ abstract class Widgets
         $sidebars[$sidebar][] = "{$type}-{$id}";
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public static function sidebarChromeFilter($params)
     {
         if (empty(static::$chromeArgs)) {
@@ -391,14 +449,18 @@ abstract class Widgets
         }
 
         $sidebar = &$params[0];
-        $id      = $sidebar['widget_id'];
+        $id = $sidebar['widget_id'];
 
-        $sidebar                  = array_replace($sidebar, static::$chromeArgs);
+        $sidebar = array_replace($sidebar, static::$chromeArgs);
         $sidebar['before_widget'] = sprintf($sidebar['before_widget'], $id, static::getWidgetClassname($id));
 
         return $params;
     }
 
+    /**
+     * @param string|object $id
+     * @return string
+     */
     protected static function getWidgetClassname($id)
     {
         if (is_string($id)) {
@@ -420,6 +482,10 @@ abstract class Widgets
         return ltrim($classname, '_');
     }
 
+    /**
+     * @param string|int $id
+     * @return array|null
+     */
     protected static function getWidgetData($id)
     {
         $widgets = static::listWidgets();
@@ -429,13 +495,23 @@ abstract class Widgets
         return $widgets[$id];
     }
 
+    /**
+     * @param string $chrome
+     * @return array
+     */
     protected static function getChromeArgs($chrome = 'gantry')
     {
         /** @var Theme $theme */
         $theme = static::gantry()['theme'];
+
         return (array)$theme->details()->get('chrome.' . $chrome);
     }
 
+    /**
+     * @param string $widgetClass
+     * @param mixed $chrome
+     * @return array
+     */
     protected static function getWidgetChrome($widgetClass, $chrome)
     {
         global $wp_widget_factory;
@@ -474,24 +550,37 @@ abstract class Widgets
         return $args + ['widget_id' => $widgetObj->id, 'widget_name' => $widgetObj->name];
     }
 
+    /**
+     * @param object $widget
+     * @param mixed $return
+     * @param array $instance
+     * @return null
+     */
     public static function widgetCustomClassesForm($widget, $return, $instance)
     {
-        $instance = wp_parse_args($instance, ['g5_classes' => '']);
+        $instance = \wp_parse_args($instance, ['g5_classes' => '']);
 
         // TODO: Move this HTML to a Twig file ?
         ?>
         <p>
-            <label for="<?php echo $widget->get_field_id('g5_classes'); ?>"><?php _e('Custom class(es):', 'gantry5'); ?></label>
+            <label for="<?php echo $widget->get_field_id('g5_classes'); ?>"><?php \_e('Custom class(es):', 'gantry5'); ?></label>
             <input type="text" class="widefat" id="<?php echo $widget->get_field_id('g5_classes'); ?>"
-                   name="<?php echo $widget->get_field_name('g5_classes'); ?>" value="<?php echo esc_attr($instance['g5_classes']); ?>"/>
+                   name="<?php echo $widget->get_field_name('g5_classes'); ?>" value="<?php echo \esc_attr($instance['g5_classes']); ?>"/>
             <br />
-            <small><?php _e('Multiple class names must be separated by white space characters.', 'gantry5'); ?></small>
+            <small><?php \_e('Multiple class names must be separated by white space characters.', 'gantry5'); ?></small>
         </p>
         <?php
 
         return null;
     }
 
+    /**
+     * @param array $instance
+     * @param array $new_instance
+     * @param array $old_instance
+     * @param mixed $widget
+     * @return array
+     */
     public static function widgetCustomClassesUpdate($instance, $new_instance, $old_instance, $widget)
     {
         if (!empty($new_instance['g5_classes'])) {
@@ -503,9 +592,14 @@ abstract class Widgets
         return $instance;
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public static function widgetCustomClassesSidebarParams($params)
     {
         global $wp_registered_widgets;
+
         $widget_id  = $params[0]['widget_id'];
         $widget_obj = $wp_registered_widgets[$widget_id];
 
@@ -513,7 +607,7 @@ abstract class Widgets
             return $params;
         }
 
-        $widget_options = get_option($widget_obj['callback'][0]->option_name);
+        $widget_options = \get_option($widget_obj['callback'][0]->option_name);
 
         if (empty($widget_options)) {
             return $params;

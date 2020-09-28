@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,8 +19,15 @@ use Gantry\Framework\Exporter;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class Export
+ * @package Gantry\Admin\Controller\Html
+ */
 class Export extends HtmlController
 {
+    /**
+     * @return void
+     */
     public function index()
     {
         if (!class_exists('Gantry\Framework\Exporter')) {
@@ -67,6 +75,8 @@ class Export extends HtmlController
             }
             unset($data['config']);
         }
+        unset($data);
+
         $zip->addFromString("outlines/outlines.yaml", Yaml::dump($exported['outlines'], 10, 2));
 
         foreach ($exported['menus'] as $menu => $data) {
@@ -87,12 +97,12 @@ class Export extends HtmlController
         foreach ($exported['files'] as $stream => $files) {
             foreach ($files as $path => $uri) {
                 $filename = $locator->findResource($uri);
-                
+
                 if (file_exists($filename)) {
                     $zip->addFile($filename, "files/{$stream}/{$path}");
                 }
             }
-            
+
         }
 
         $zip->close();

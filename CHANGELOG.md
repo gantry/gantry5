@@ -1,3 +1,42 @@
+# 5.5.0-dev
+## mm/dd/2020
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated minimum requirement to PHP 5.6.20
+        - Updated Symfony Components from v2.8 to v3.4
+        - Updated SCSS compiler to v1.2
+        - Use Font Awesome 5 free (#2196)
+        - Platform independent code passes phpstan v0.11 level 5 tests
+    1. [](#improved)
+        - Major code cleanup for PHP 5.6.20+
+        - Major rework in Menu Manager logic
+    1. [](#bugfix)
+        - Fixed browser console errors on missing css map files
+        - Fixed getting missing menu configuration
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Updated minimum requirement to Joomla! 3.9 (includes themes)
+        - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes`, `fields` and `html` folders to your theme!)
+        - Update theme installation  to work in Joomla! 4.0 (please copy or update `install.php` in your theme!)
+        - Update page templates to work in Joomla! 4.0 (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
+1. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated minimum requirement to WordPress 5.2
+        - Store menu item meta data in database instead of menu YAML file
+    1. [](#improved)
+        - Many WordPress menu system enhancements (#726)
+    1. [](#bugfix)
+        - Fixed Gantry menu editor does not synch wordpress menu (#2473)
+        - Fixed duplicated menu items breaking menu admin (#2265)
+1. [Grav](#grav)
+    1. [](#new)
+        - Updated minimum requirement to Grav 1.7 and Admin 1.10
+        - Grav specific code passes phpstan v0.11 level 5 tests
+1. [Prime](#prime)
+    1. [](#new)
+        - Remove unmaintained standalone Prime environment
+
 # 5.4.36
 ## mm/dd/2020
 

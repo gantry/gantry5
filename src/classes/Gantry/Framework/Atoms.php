@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -22,31 +23,25 @@ use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Atoms
+ * @package Gantry\Framework
+ */
 class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    /**
-     * @var  string
-     */
+    /** @var string */
     protected $name;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $ids;
-
-    /**
-     * @var array|static[]
-     */
-    protected static $instances;
-
+    /** @var bool */
     protected $inherit = false;
+
+    /** @var static[] */
+    protected static $instances;
 
     /**
      * @param string $outline
@@ -56,7 +51,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         if (!isset(static::$instances[$outline])) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
-            $head = $file->content();
+            $head = (array)$file->content();
             static::$instances[$outline] = new static(isset($head['atoms']) ? $head['atoms'] : [], $outline);
             $file->free();
 
@@ -84,6 +79,9 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         }
     }
 
+    /**
+     * @return $this
+     */
     public function init()
     {
         foreach ($this->items as &$item) {
@@ -150,7 +148,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         $this->init();
 
         foreach ($this->items as &$item) {
-            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] == $old && isset($item['inherit']['atom'])) {
+            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] === $old && isset($item['inherit']['atom'])) {
                 if ($new && ($ids === null || isset($ids[$item['inherit']['atom']]))) {
                     $item['inherit']['outline'] = $new;
                 } else {
@@ -173,7 +171,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 
             if ($loadPath && $savePath) {
                 $file = CompiledYamlFile::instance($loadPath);
-                $head = $file->content();
+                $head = (array)$file->content();
                 $head['atoms'] = $this->update()->toArray();
                 $file->free();
 
@@ -218,7 +216,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $self = $this;
 
-        $callable = function () use ($self, $type) {
+        $callable = static function () use ($self, $type) {
             return $self->getBlueprint($type);
         };
 
@@ -330,11 +328,12 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $type = $item['type'];
 
-        while ($num = rand(1000, 9999)) {
+        do {
+            $num = mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }
-        }
+        } while (true);
 
         $id = "{$type}-{$num}";
 

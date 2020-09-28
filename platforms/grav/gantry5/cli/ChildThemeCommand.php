@@ -119,31 +119,20 @@ class ChildThemeCommand extends ConsoleCommand
         }
 
         // Initialize Grav.
-        $isNew = method_exists($this, 'initializeGrav');
-        if ($isNew) {
-            $this->initializeGrav();
-        }
+        $this->initializeGrav();
         $grav = Grav::instance();
 
         // Initialize parent theme.
         /** @var Config $config */
         $config = $grav['config'];
         $config->set('system.pages.theme', $parent);
-        if ($isNew) {
-            $this->initializeThemes();
-        }
+        $this->initializeThemes();
 
         /** @var UniformResourceLocator $locator */
         $locator = $grav['locator'];
 
         /** @var Inflector $inflector */
         $inflector = $grav['inflector'];
-
-        if (!$isNew) {
-            /** @var Themes $themes */
-            $themes = $grav['themes'];
-            $themes->init();
-        }
 
         $folder = $locator->findResource('themes://' . $child, true, true);
         $parentClass = get_class($this->loadTheme($parent));

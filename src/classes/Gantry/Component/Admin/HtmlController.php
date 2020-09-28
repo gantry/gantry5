@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,8 +14,14 @@
 
 namespace Gantry\Component\Admin;
 
+use Gantry\Admin\Theme;
 use Gantry\Component\Controller\HtmlController as BaseController;
+use Gantry\Framework\Platform;
 
+/**
+ * Class HtmlController
+ * @package Gantry\Component\Admin
+ */
 abstract class HtmlController extends BaseController
 {
     /**
@@ -24,7 +31,10 @@ abstract class HtmlController extends BaseController
      */
     public function render($file, array $context = [])
     {
-        return $this->container['admin.theme']->render($file, $context);
+        /** @var Theme $theme */
+        $theme = $this->container['admin.theme'];
+
+        return $theme->render($file, $context);
     }
 
     /**
@@ -34,6 +44,9 @@ abstract class HtmlController extends BaseController
      */
     public function authorize($action, $id = null)
     {
-        return $this->container['platform']->authorize($action, $id);
+        /** @var Platform $platform */
+        $platform = $this->container['platform'];
+
+        return $platform->authorize($action, $id);
     }
 }

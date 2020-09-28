@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -24,8 +25,10 @@ use RocketTheme\Toolbox\Blueprints\BlueprintSchema as BlueprintSchemaBase;
  */
 class BlueprintSchema extends BlueprintSchemaBase
 {
+    /** @var Config */
     protected $configuration;
 
+    /** @var array */
     protected $ignoreFormKeys = [
         'title' => true,
         'help' => true,
@@ -33,6 +36,7 @@ class BlueprintSchema extends BlueprintSchemaBase
         'fields' => true
     ];
 
+    /** @var array */
     protected $types = [
         'container.set' => [
             'input@' => false
@@ -91,7 +95,7 @@ class BlueprintSchema extends BlueprintSchemaBase
     /**
      * Embed an array to the blueprint.
      *
-     * @param $name
+     * @param string $name
      * @param array $value
      * @param string $separator
      * @param bool $merge   Merge fields instead replacing them.
@@ -160,7 +164,7 @@ class BlueprintSchema extends BlueprintSchemaBase
             } elseif (is_array($field) && is_array($val)) {
                 // Array has been defined in blueprints.
                 $messages += $this->validateArray($field, $val);
-            } elseif (isset($rules['validation']) && $rules['validation'] == 'strict') {
+            } elseif (isset($rules['validation']) && $rules['validation'] === 'strict') {
                 // Undefined/extra item.
                 throw new \RuntimeException(sprintf('%s is not defined in blueprints', $key));
             }
@@ -177,7 +181,7 @@ class BlueprintSchema extends BlueprintSchemaBase
      */
     protected function filterArray(array $data, array $rules)
     {
-        $results = array();
+        $results = [];
         foreach ($data as $key => $field) {
             $val = isset($rules[$key]) ? $rules[$key] : (isset($rules['*']) ? $rules['*'] : null);
             $rule = is_string($val) ? $this->items[$val] : null;
@@ -188,7 +192,7 @@ class BlueprintSchema extends BlueprintSchemaBase
             } elseif (is_array($field) && is_array($val)) {
                 // Array has been defined in blueprints.
                 $field = $this->filterArray($field, $val);
-            } elseif (isset($rules['validation']) && $rules['validation'] == 'strict') {
+            } elseif (isset($rules['validation']) && $rules['validation'] === 'strict') {
                 $field = null;
             }
 
@@ -234,13 +238,16 @@ class BlueprintSchema extends BlueprintSchemaBase
      */
     protected function dynamicConfig(array &$field, $property, array &$call)
     {
-        $value = $call['params'];
+        $var = $call['params'];
 
         $default = isset($field[$property]) ? $field[$property] : null;
-        $config = Gantry::instance()['config']->get($value, $default);
 
-        if (!is_null($config)) {
-            $field[$property] = $config;
+        /** @var Config $config */
+        $config = Gantry::instance()['config'];
+        $value = $config->get($var, $default);
+
+        if (null !== $value) {
+            $field[$property] = $value;
         }
     }
 }

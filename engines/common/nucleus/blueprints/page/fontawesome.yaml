@@ -1,10 +1,10 @@
 name: Font Awesome Settings
-description: Configuration for Font Awesome icon set and toolkit. 
+description: Configuration for Font Awesome icon set and toolkit.
 type: global
 
 form:
   fields:
-  
+
     version:
       type: select.select
       label: Version

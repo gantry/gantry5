@@ -16,6 +16,9 @@
         {% elseif faVersion == 'manual' %}
             {{ gantry.config.page.fontawesome.html_css_import|html|raw -}}
         {% endif %}
+        {% if gantry.config.page.fontawesome.enable_v4_shims|default(1) %}
+            <link rel="stylesheet" href="gantry-assets://css/font-awesome-v4-shims.min.css" type="text/css"/>
+        {% endif %}
         <link rel="stylesheet" href="gantry-engine://css-compiled/nucleus.css" type="text/css"/>
         {% for scss in gantry.theme.configuration.css.persistent|default(gantry.theme.configuration.css.files) %}
         <link rel="stylesheet" href="{{ scss }}.scss" type="text/css"/>

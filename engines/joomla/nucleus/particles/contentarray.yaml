@@ -1,7 +1,7 @@
 name: Joomla Articles
 description: Display Joomla Articles.
 type: particle
-icon: fa-joomla
+icon: fa-joomla fab
 
 form:
   fields:
@@ -18,13 +18,13 @@ form:
           label: Articles
           overridable: false
           fields:
-          
+
             title:
                 type: input.text
                 label: Title
                 description: Customize the title text.
                 placeholder: Enter title
-                
+
             article.filter.categories:
               type: joomla.categories
               label: Categories

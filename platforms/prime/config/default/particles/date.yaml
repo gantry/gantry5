@@ -1,7 +1,0 @@
-enabled: true
-
-css:
-  id:
-  class: 'date'
-
-date.formats: l, F d, Y

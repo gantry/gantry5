@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,20 +14,37 @@
 
 namespace Gantry\Component\Twig\Node;
 
-class TwigNodePageblock extends \Twig_Node implements \Twig_NodeCaptureInterface
+use Twig\Compiler;
+use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Node;
+use Twig\Node\NodeCaptureInterface;
+
+/**
+ * Class TwigNodePageblock
+ * @package Gantry\Component\Twig\Node
+ */
+class TwigNodePageblock extends Node implements NodeCaptureInterface
 {
     protected $tagName = 'pageblock';
 
-    public function __construct(\Twig_Node $body = null, \Twig_Node_Expression $location = null, \Twig_Node_Expression $variables = null, $lineno = 0, $tag = null)
+    /**
+     * TwigNodePageblock constructor.
+     * @param Node|null $body
+     * @param AbstractExpression|null $location
+     * @param AbstractExpression|null $variables
+     * @param int $lineno
+     * @param string|null $tag
+     */
+    public function __construct(Node $body = null, AbstractExpression $location = null, AbstractExpression $variables = null, $lineno = 0, $tag = null)
     {
         parent::__construct(['body' => $body, 'location' => $location, 'variables' => $variables], [], $lineno, $tag);
     }
     /**
      * Compiles the node to PHP.
      *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * @param Compiler $compiler A Twig Compiler instance
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         $compiler->addDebugInfo($this)
             ->write('$pageblockVariables = ')

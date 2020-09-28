@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,8 +19,15 @@ use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Filesystem\Folder;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Cache
+ * @package Gantry\Admin\Controller\Html
+ */
 class Cache extends HtmlController
 {
+    /**
+     * @return JsonResponse
+     */
     public function index()
     {
         /** @var UniformResourceLocator $locator */

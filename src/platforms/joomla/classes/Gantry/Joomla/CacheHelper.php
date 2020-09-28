@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,6 +11,15 @@
 
 namespace Gantry\Joomla;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\Exception\CacheExceptionInterface;
+use Joomla\CMS\Factory;
+
+/**
+ * Class CacheHelper
+ * @package Gantry\Joomla
+ */
 class CacheHelper
 {
     public static function cleanTemplates()
@@ -32,25 +42,33 @@ class CacheHelper
         self::cleanByType('com_plugins', 1);
     }
 
+    /**
+     * @param string|null $group
+     * @param int $client_id
+     * @param string $event
+     */
     private static function cleanByType($group = null, $client_id = 0, $event = 'onContentCleanCache')
     {
-        $conf = \JFactory::getConfig();
-        $dispatcher = \JEventDispatcher::getInstance();
+        $config = Factory::getConfig();
 
-        $options = array(
+        $options = [
             'defaultgroup' => $group,
-            'cachebase' => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'),
+            'cachebase' => $client_id ? JPATH_ADMINISTRATOR . '/cache' : $config->get('cache_path', JPATH_SITE . '/cache'),
             'result' => true
-        );
+        ];
 
         try {
-            $cache = \JCache::getInstance('callback', $options);
+            /** @var Cache $cache */
+            $cache = Cache::getInstance('callback', $options);
             $cache->clean();
-        } catch (\Exception $e) { // TODO: Joomla 3.7 uses JCacheException
+        } catch (CacheExceptionInterface $e) {
             $options['result'] = false;
         }
 
+        /** @var CMSApplication $application */
+        $application = Factory::getApplication();
+
         // Trigger the onContentCleanCache event.
-        $dispatcher->trigger($event, $options);
+        $application->triggerEvent($event, $options);
     }
 }

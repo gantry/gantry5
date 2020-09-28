@@ -2,34 +2,60 @@
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
-class plgGantry5Preset extends JPlugin
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\DispatcherInterface;
+
+/**
+ * Class plgGantry5Preset
+ */
+class plgGantry5Preset extends CMSPlugin
 {
-    public function __construct(&$subject, $config)
+    /** @var CMSApplication */
+    protected $app;
+
+    /**
+     * plgGantry5Preset constructor.
+     * @param DispatcherInterface $subject
+     * @param array $config
+     */
+    public function __construct(&$subject, $config = array())
     {
         // Do not load if Gantry libraries are not installed or initialised.
         if (!class_exists('Gantry5\Loader')) return;
 
         parent::__construct($subject, $config);
 
+        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
+        if (!$this->app) {
+            $this->app = Factory::getApplication();
+        }
+
         // Always load language.
-        $lang = JFactory::getLanguage();
-        $lang->load('com_gantry5.sys') || $lang->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+        $language = $this->app->getLanguage();
+
+        $language->load('com_gantry5.sys')
+        || $language->load('com_gantry5.sys', JPATH_ADMINISTRATOR . '/components/com_gantry5');
+
         $this->loadLanguage('plg_quickicon_gantry5.sys');
     }
 
+    /**
+     * @param object $theme
+     * @throws Exception
+     */
     public function onGantry5ThemeInit($theme)
     {
-        $app = JFactory::getApplication();
-
-        if ($app->isSite()) {
-            $input = $app->input;
+        if ($this->app->isClient('site')) {
+            $input = $this->app->input;
 
             $cookie = md5($theme->name);
             $presetVar = $this->params->get('preset', 'presets');
@@ -58,6 +84,9 @@ class plgGantry5Preset extends JPlugin
         }
     }
 
+    /**
+     * @param object $theme
+     */
     public function onGantry5UpdateCss($theme)
     {
         $cookie = md5($theme->name);
@@ -65,13 +94,18 @@ class plgGantry5Preset extends JPlugin
         $this->updateCookie($cookie, false, time() - 42000);
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     * @throws Exception
+     */
     protected function updateCookie($name, $value, $expire = 0)
     {
-        $app = JFactory::getApplication();
-        $path   = $app->get('cookie_path', '/');
-        $domain = $app->get('cookie_domain');
+        $path   = $this->app->get('cookie_path', '/');
+        $domain = $this->app->get('cookie_domain');
 
-        $input = $app->input;
+        $input = $this->app->input;
         $input->cookie->set($name, $value, $expire, $path, $domain);
     }
 }

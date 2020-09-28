@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +15,12 @@
 namespace Gantry\Component\Twig\TokenParser;
 
 use Gantry\Component\Twig\Node\TwigNodePageblock;
+use Twig\Error\SyntaxError;
+use Twig\Node\Expression\ArrayExpression;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
 /**
  * Adds javascript / style assets to head/footer/custom location.
@@ -22,16 +29,16 @@ use Gantry\Component\Twig\Node\TwigNodePageblock;
  *   <div>Bottom HTML</div>
  * {% endpageblock -%}
  */
-class TokenParserPageblock extends \Twig_TokenParser
+class TokenParserPageblock extends AbstractTokenParser
 {
     /**
      * Parses a token and returns a node.
      *
-     * @param \Twig_Token $token A Twig_Token instance
-     *
-     * @return \Twig_Node A Twig_Node instance
+     * @param Token $token A Twig Token instance
+     * @return Node A Twig Node instance
+     * @throws SyntaxError
      */
-    public function parse(\Twig_Token $token)
+    public function parse(Token $token)
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
@@ -39,34 +46,39 @@ class TokenParserPageblock extends \Twig_TokenParser
         list($location, $variables) = $this->parseArguments($token);
 
         $content = $this->parser->subparse([$this, 'decideBlockEnd'], true);
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         return new TwigNodePageblock($content, $location, $variables, $lineno, $this->getTag());
     }
 
     /**
-     * @param \Twig_Token $token
+     * @param Token $token
      * @return array
+     * @throws SyntaxError
      */
-    protected function parseArguments(\Twig_Token $token)
+    protected function parseArguments(Token $token)
     {
         $stream = $this->parser->getStream();
         $lineno = $token->getLine();
-        $location = new \Twig_Node_Expression_Constant($stream->expect(\Twig_Token::NAME_TYPE)->getValue(), $lineno);
+        $location = new ConstantExpression($stream->expect(Token::NAME_TYPE)->getValue(), $lineno);
 
-        if ($stream->nextIf(\Twig_Token::NAME_TYPE, 'with')) {
+        if ($stream->nextIf(Token::NAME_TYPE, 'with')) {
             $variables = $this->parser->getExpressionParser()->parseExpression();
         } else {
             $lineno = $token->getLine();
-            $variables = new \Twig_Node_Expression_Array([], $lineno);
+            $variables = new ArrayExpression([], $lineno);
             $variables->setAttribute('priority', 0);
         }
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         return [$location, $variables];
     }
 
-    public function decideBlockEnd(\Twig_Token $token)
+    /**
+     * @param Token $token
+     * @return bool
+     */
+    public function decideBlockEnd(Token $token)
     {
         return $token->test('endpageblock');
     }

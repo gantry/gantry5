@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,6 +15,10 @@
 namespace Gantry\Component\Twig\TokenParser;
 
 use Gantry\Component\Twig\Node\TwigNodeTryCatch;
+use Twig\Error\SyntaxError;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
 /**
  * Handles try/catch in template file.
@@ -26,39 +31,47 @@ use Gantry\Component\Twig\Node\TwigNodeTryCatch;
  * {% endcatch %}
  * </pre>
  */
-class TokenParserTryCatch extends \Twig_TokenParser
+class TokenParserTryCatch extends AbstractTokenParser
 {
     /**
      * Parses a token and returns a node.
      *
-     * @param \Twig_Token $token A Twig_Token instance
-     *
-     * @return \Twig_Node A Twig_Node instance
+     * @param Token $token A Twig Token instance
+     * @return Node A Twig Node instance
+     * @throws SyntaxError
      */
-    public function parse(\Twig_Token $token)
+    public function parse(Token $token)
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
 
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
         $try = $this->parser->subparse([$this, 'decideCatch']);
         $stream->next();
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
         $catch = $this->parser->subparse([$this, 'decideEnd']);
         $stream->next();
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         return new TwigNodeTryCatch($try, $catch, $lineno, $this->getTag());
     }
 
-    public function decideCatch(\Twig_Token $token)
+    /**
+     * @param Token $token
+     * @return bool
+     */
+    public function decideCatch(Token $token)
     {
-        return $token->test(array('catch'));
+        return $token->test(['catch']);
     }
 
-    public function decideEnd(\Twig_Token $token)
+    /**
+     * @param Token $token
+     * @return bool
+     */
+    public function decideEnd(Token $token)
     {
-        return $token->test(array('endtry')) || $token->test(array('endcatch'));
+        return $token->test(['endtry']) || $token->test(['endcatch']);
     }
 
     /**

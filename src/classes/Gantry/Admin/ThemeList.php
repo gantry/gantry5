@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,6 +19,10 @@ use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class ThemeList
+ * @package Gantry\Admin
+ */
 class ThemeList
 {
     protected static $items;
@@ -34,6 +39,10 @@ class ThemeList
         return static::$items;
     }
 
+    /**
+     * @param string $name
+     * @return ThemeDetails|null
+     */
     public static function getTheme($name)
     {
         if (!is_array(static::$items)) {
