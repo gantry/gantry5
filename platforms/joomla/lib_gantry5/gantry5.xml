@@ -27,6 +27,7 @@
         <folder>fonts</folder>
         <folder>images</folder>
         <folder>js</folder>
+        <folder>webfonts</folder>
     </media>
 
     <languages folder="language">
