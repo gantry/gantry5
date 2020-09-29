@@ -61,7 +61,7 @@ class Platform extends BasePlatform
      */
     public function has($feature)
     {
-        if (\JVersion::MAJOR_VERSION === 4 && $feature === 'fontawesome') {
+        if (Version::MAJOR_VERSION === 4 && $feature === 'fontawesome') {
             return true;
         }
 
