@@ -171,16 +171,6 @@
                 "reference": "b9cdea3e42c3bcb1a9faafd04ccce4e8ec860ad9",
                 "shasum": ""
             },
-            "archive": {
-                "exclude": [
-                    "/Makefile",
-                    "/.gitattributes",
-                    "/.gitignore",
-                    "/.travis.yml",
-                    "/phpunit.xml.dist",
-                    "/tests"
-                ]
-            },
             "require": {
                 "php": "^5.4.0 || ^7"
             },
@@ -199,11 +189,7 @@
                     "Leafo\\ScssPhp\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Leafo\\ScssPhp\\Test\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -223,10 +209,6 @@
                 "scss",
                 "stylesheet"
             ],
-            "support": {
-                "source": "https://github.com/leafo/scssphp/tree/v0.8.4",
-                "issues": "https://github.com/leafo/scssphp/issues"
-            },
             "abandoned": "scssphp/scssphp",
             "time": "2019-06-18T21:15:44+00:00"
         },
