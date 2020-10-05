@@ -1,8 +1,8 @@
 {% if particle.ua.code %}
 
-    {% block javascript %}
+    {% scripts %}
       <script async src="https://www.googletagmanager.com/gtag/js?id={{ particle.ua.code }}"></script>
-    {% endblock %}
+    {% endscripts %}
 
     {% set script %}
       window.dataLayer = window.dataLayer || [];
@@ -13,9 +13,6 @@
 
       {% if particle.ua.anonym %}
         gtag('set', { 'anonymize_ip': true });
-      {% endif %}
-      {% if particle.ua.ssl %}
-        gtag('set', { 'force_ssl': true });
       {% endif %}
     {% endset %}
 
