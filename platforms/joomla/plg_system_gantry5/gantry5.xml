@@ -29,6 +29,16 @@
                     <option value="0">JNO</option>
                 </field>
 
+                <field name="use_assignments"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       description="PLG_SYSTEM_GANTRY5_FIELD_USE_ASSIGNMENTS_DESC"
+                       label="PLG_SYSTEM_GANTRY5_FIELD_USE_ASSIGNMENTS_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
                 <field name="use_media_folder"
                        type="radio"
                        class="btn-group btn-group-yesno"

@@ -42,7 +42,7 @@
 
     <config>
         <fields name="params" addfieldpath="/templates/g5_hydrogen/fields">
-            <fieldset name="advanced">
+            <fieldset name="basic">
                 <field name="warning" type="warning" />
             </fieldset>
         </fields>
