@@ -138,6 +138,8 @@ trait ThemeTrait
             GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
 
             $gantry['configuration'] = $name;
+            unset($gantry['config']);
+            $gantry['config'] = ConfigServiceProvider::load($gantry, $name);
         }
 
         return $this;

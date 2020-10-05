@@ -1,6 +1,9 @@
 # 5.4.36
 ## mm/dd/2020
 
+1. [Common](#common)
+    1. [](#bugfix)
+        - Fixed bad configuration with forced outlines (#2686)
 1. [Joomla](#joomla)
     1. [](#new)
         - Added configuration option to support Advanced Module Manager (#2710)
