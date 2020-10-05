@@ -3,7 +3,7 @@
 
 1. [Joomla](#joomla)
     1. [](#new)
-        - Added configuration option to support Advance Module Manager (#2710)
+        - Added configuration option to support Advanced Module Manager (#2710)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
