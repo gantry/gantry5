@@ -2,7 +2,7 @@ enabled: true
 production: false
 use_media_folder: false
 offline: false
-offline_message:
+offline_message: 'Site is currently in offline mode. Please try again later.'
 asset_timestamps: true
 asset_timestamps_period: 7
 debug: false

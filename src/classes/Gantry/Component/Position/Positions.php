@@ -55,29 +55,23 @@ class Positions extends Collection
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
+        if ($locator->findResource($path)) {
+            /** @var UniformResourceIterator $iterator */
+            $iterator = $locator->getIterator($path);
 
-        if (!$locator->findResource($path)) {
-            // If positions folder is missing, there is nothing to load.
-            $this->items = $positions;
-
-            return $this;
-        }
-
-        /** @var UniformResourceIterator $iterator */
-        $iterator = $locator->getIterator($path);
-
-        /** @var UniformResourceIterator $info */
-        foreach ($iterator as $info) {
+            /** @var UniformResourceIterator $info */
+            foreach ($iterator as $info) {
             if (!$info->isFile() || $info->getExtension() !== 'yaml') {
-                continue;
-            }
+                    continue;
+                }
 
-            $name = $info->getBasename('.yaml');
+                $name = $info->getBasename('.yaml');
             $position = (array)CompiledYamlFile::instance($info->getPathname())->content();
 
-            // Only use filesystem position if it it is properly set up.
+                // Only use filesystem position if it it is properly set up.
             if (!empty($position)) {
-                $positions[$name] = new Position($name, $position);
+                    $positions[$name] = new Position($name, $position);
+                }
             }
         }
 

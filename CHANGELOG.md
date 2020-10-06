@@ -53,6 +53,7 @@
         - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
         - Grav 1.7: Fixed Gantry modules and positions not showing up in Layout editor (#2701)
         - Fixed Gantry positions not working if folder is missing (#2703)
+        - Fixed fatal error in offline mode
 1. [WordPress](#wordpress)
     1. [](#bugfix)
         - System Outlines - Styles don't work (#2686)
