@@ -72,7 +72,7 @@
 
     <config>
         <fields name="params" addfieldpath="/templates/g5_helium/fields">
-            <fieldset name="advanced">
+            <fieldset name="basic">
                 <field name="warning" type="warning" />
             </fieldset>
         </fields>

@@ -72,6 +72,7 @@ class plgSystemGantry5 extends CMSPlugin
         $this->loadLanguage('plg_system_gantry5.sys');
 
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
+        JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
@@ -327,7 +328,10 @@ class plgSystemGantry5 extends CMSPlugin
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
 
-        if (in_array($option, array('com_templates', 'com_advancedtemplates'), true) && $task && strpos($task, 'style') === 0) {
+        class_exists(JFormFieldWarning::class, true);
+
+        $useAssignments = $this->params->get('use_assignments', true);
+        if ($useAssignments && in_array($option, array('com_templates', 'com_advancedtemplates'), true) && $task && strpos($task, 'style') === 0) {
             // Get all ids.
             $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
 

@@ -145,6 +145,8 @@ trait ThemeTrait
             }
 
             $gantry['configuration'] = $name;
+            unset($gantry['config']);
+            $gantry['config'] = ConfigServiceProvider::load($gantry, $name);
         }
 
         return $this;

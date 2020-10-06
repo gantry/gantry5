@@ -40,11 +40,22 @@
 # 5.4.36
 ## mm/dd/2020
 
+1. [Common](#common)
+    1. [](#improved)
+        - Added new Google Analytics tag gtag.js to analytics atom (#2711)
+    1. [](#bugfix)
+        - Fixed bad configuration with forced outlines (#2686)
+1. [Joomla](#joomla)
+    1. [](#new)
+        - Added configuration option to support Advanced Module Manager (#2710)
 1. [Grav](#grav)
     1. [](#bugfix)
         - Fixed `{{ gantry.platform.filter() }}` throws error (#2700)
         - Grav 1.7: Fixed Gantry modules and positions not showing up in Layout editor (#2701)
         - Fixed Gantry positions not working if folder is missing (#2703)
+1. [WordPress](#wordpress)
+    1. [](#bugfix)
+        - System Outlines - Styles don't work (#2686)
 
 # 5.4.35
 ## 09/08/2020
