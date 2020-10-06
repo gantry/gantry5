@@ -276,7 +276,8 @@ abstract class Gantry extends Container
                     'asset_timestamps' => true,
                     'asset_timestamps_period' => 7,
                     'compile_yaml' => true,
-                    'compile_twig' => true
+                    'compile_twig' => true,
+                    'offline_message'  => ''
                 ];
 
             return new Config($data);

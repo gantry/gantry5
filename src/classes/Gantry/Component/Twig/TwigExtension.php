@@ -379,7 +379,7 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     public function markdownFunction($string, $block = true, array $settings = null)
     {
         // Initialize the preferred variant of Parsedown
-        if ($settings['extra']) {
+        if (!empty($settings['extra'])) {
             $parsedown = new ParsedownExtra($settings);
         } else {
             $parsedown = new Parsedown($settings);
