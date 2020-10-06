@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#improved)
-        - Added new Google Analytics tag gtag.js to analytics atom [#2711]
+        - Added new Google Analytics tag gtag.js to analytics atom (#2711)
     1. [](#bugfix)
         - Fixed bad configuration with forced outlines (#2686)
 1. [Joomla](#joomla)
