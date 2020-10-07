@@ -289,13 +289,15 @@
             <available file='${path.themes}/${directory}/joomla/gantry/theme.yaml' type='file' />
             <then>
                 <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
-                    <fileset dir="${path.themes}/${directory}/common"/>
+                    <fileset dir="${path.themes}/${directory}/common">
+                        <exclude name="custom/**"/>
+                    </fileset>
                 </copy>
 
                 <copy todir="${tmp_dir}/templates/tpl_g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/joomla">
-                        <exclude name="common"/>
-                        <exclude name="custom"/>
+                        <exclude name="common/**"/>
+                        <exclude name="custom/**"/>
                     </fileset>
                 </copy>
 

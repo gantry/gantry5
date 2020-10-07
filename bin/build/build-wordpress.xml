@@ -192,13 +192,15 @@
             <available file='${path.themes}/${directory}/wordpress/gantry/theme.yaml' type='file' />
             <then>
                 <copy todir="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" overwrite="true">
-                    <fileset dir="${path.themes}/${directory}/common"/>
+                    <fileset dir="${path.themes}/${directory}/common">
+                        <exclude name="custom/**"/>
+                    </fileset>
                 </copy>
 
                 <copy todir="${tmp_dir}/wordpress/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/wordpress">
-                        <exclude name="common"/>
-                        <exclude name="custom"/>
+                        <exclude name="common/**"/>
+                        <exclude name="custom/**"/>
                     </fileset>
                 </copy>
 
