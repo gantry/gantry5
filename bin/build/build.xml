@@ -10,11 +10,14 @@
     allow the build file to be platform independent as not path information resides within
     any of the build files.
 
+    Example: ./build.php dev -Dxml.version=5.4.99-dev
+
     Parameters: (with default values - adjust the directories in PHPSTORM to your individual setup)
     -Dproject_dir=../../                   (= git/gantry5)
     -Dpackage_dir=../../../builds/gantry5  (= builds/gantry5)
     -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
     -Dbuild_dir=package                    (= git/gantry5/build/package)
+    -Dxml.version=version                  (= build version)
     -Dupdate_versions=false                (= true / for CI and automated push)
     -Dxml.version=5.5.0-dev
 -->

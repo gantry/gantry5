@@ -192,13 +192,15 @@
                 <mkdir dir="${tmp_dir}/themes/${directory}" />
 
                 <copy todir="${tmp_dir}/themes/${directory}/g5_${directory}" overwrite="true">
-                    <fileset dir="${path.themes}/${directory}/common"/>
+                    <fileset dir="${path.themes}/${directory}/common">
+                        <exclude name="custom/**"/>
+                    </fileset>
                 </copy>
 
                 <copy todir="${tmp_dir}/themes/${directory}/g5_${directory}" overwrite="true">
                     <fileset dir="${path.themes}/${directory}/grav">
-                        <exclude name="common"/>
-                        <exclude name="custom"/>
+                        <exclude name="common/**"/>
+                        <exclude name="custom/**"/>
                     </fileset>
                 </copy>
 

@@ -72,7 +72,6 @@ class plgSystemGantry5 extends CMSPlugin
         $this->loadLanguage('plg_system_gantry5.sys');
 
         JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
-        JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
@@ -83,6 +82,11 @@ class plgSystemGantry5 extends CMSPlugin
                 );
             }
             return;
+        }
+
+        JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
+        if ($this->app->isAdmin()) {
+            class_exists(JFormFieldWarning::class, true);
         }
 
         parent::__construct($subject, $config);
@@ -327,8 +331,6 @@ class plgSystemGantry5 extends CMSPlugin
 
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
-
-        class_exists(JFormFieldWarning::class, true);
 
         $useAssignments = $this->params->get('use_assignments', true);
         if ($useAssignments && in_array($option, array('com_templates', 'com_advancedtemplates'), true) && $task && strpos($task, 'style') === 0) {
