@@ -1,5 +1,6 @@
 language: php
-php: 5.6
+php:
+    - '5.6'
 branches:
   except:
     - master
@@ -26,8 +27,8 @@ env:
     - secure: "PaqUd7fcOF9zQ68E1uRbZtigh+2u7QDoczBt/WqE6F75Ja1gbGadTqwvy28JdQbBhVjqkGh7MwkEJ5DvHLGKQQjuIbDRRuV5vNoWDRugkuw2m9io7M/3Af9vys7RU2MFst7zGeD7a0xdDctgg3guk+MOHacWPMiL6KzRgPce1HmTxfejXeJpG6R5opVQSv2H97024yybQkW/7iieso9wG3saiH7RUMfjdtdo7BLhR99wS1im7bbfA5KPyUGcOl64HmFDMYE3GaxODM/gTjB3CRLSptMl6kFAAwH8EoEGxUf0tzU019iRHQOmcF5fbH+8BBe2xnI931V1AXAT/xieI1SffHzUHqYbtnF3Rc1UhEG6UOwPNLzlyz0J6j+DtwhwF/3rHCVCnilb4WhKXWeUGs4n6ijwN2oFqN9o449kLESZoyYXDJQ1N9TRqAzqRBWa3u0l+g9ylf1njKF5QIq7CziU5xgnYLp7Qi0qDeKItUmv3+KVaVKoYVI9uERlXLKdI5wWCG3BQnWnRUZqogmMcrkT/9DbmfJ93g9akMSMNpnDERj6/V+d/hdJk2rMYI1CAGvQWouPRpLOoIingtu8NdOhSO8VCzLLD+6aLHhe+i0XlgEMEL0SvQBRGhbd7DOYtc/kLbWLkY0LbhCdgbePIDwEbfXPpwOf+rGOS/zMfuc="
 before_install:
   - rvm install 2.0.0
-  - nvm install 7
-  - nvm use 7
+  - nvm install 8
+  - nvm use 8
   - composer self-update
   - npm config set spin false
   - npm install -g yarn
