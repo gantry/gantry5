@@ -1,3 +1,10 @@
+# 5.4.37
+## mm/dd/2020
+
+1. [Joomla](#joomla)
+    1. [](#bugfix)
+        - Fixed FormFIeld issues with Fabrik (#2721)
+
 # 5.4.36
 ## 10/16/2020
 

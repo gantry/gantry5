@@ -40,11 +40,6 @@ class plgSystemGantry5 extends JPlugin
             return;
         }
 
-        JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
-        if ($this->app->isAdmin()) {
-            class_exists(JFormFieldWarning::class, true);
-        }
-
         parent::__construct($subject, $config);
     }
 
@@ -268,26 +263,30 @@ class plgSystemGantry5 extends JPlugin
         $option = $input->getCmd('option');
         $task   = $input->getCmd('task');
 
-        $useAssignments = $this->params->get('use_assignments', true);
-        if ($useAssignments && in_array($option, array('com_templates', 'com_advancedtemplates')) && $task && strpos($task, 'style') === 0) {
-            // Get all ids.
-            $cid = $input->post->get('cid', (array) $input->getInt('id'), 'array');
+        if (in_array($option, array('com_templates', 'com_advancedtemplates'))) {
+            JLoader::register('JFormFieldWarning', __DIR__ . '/fields/warning.php');
+            class_exists(JFormFieldWarning::class, true);
 
-            if ($cid) {
-                $styles = $this->getStyles();
-                $selected = array_intersect_key($styles, array_flip($cid));
+            if ($task && strpos($task, 'style') === 0 && $this->params->get('use_assignments', true)) {
+                // Get all ids.
+                $cid = $input->post->get('cid', (array)$input->getInt('id'), 'array');
 
-                // If no Gantry templates were selected, just let com_templates deal with the request.
-                if (!$selected) {
-                    return;
-                }
+                if ($cid) {
+                    $styles = $this->getStyles();
+                    $selected = array_intersect_key($styles, array_flip($cid));
 
-                // Special handling for tasks coming from com_template.
-                if ($task === 'style.edit') {
-                    $theme = reset($selected);
-                    $id = key($selected);
-                    $token = JSession::getFormToken();
-                    $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
+                    // If no Gantry templates were selected, just let com_templates deal with the request.
+                    if (!$selected) {
+                        return;
+                    }
+
+                    // Special handling for tasks coming from com_template.
+                    if ($task === 'style.edit') {
+                        $theme = reset($selected);
+                        $id = key($selected);
+                        $token = JSession::getFormToken();
+                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
+                    }
                 }
             }
         }
