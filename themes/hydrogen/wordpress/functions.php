@@ -54,3 +54,8 @@ foreach ($helpers as $file) {
 
     require $filepath;
 }
+
+// Custom Functions
+if ($customInclude = locate_template('custom/functions.php')) {
+    require $customInclude;
+}
