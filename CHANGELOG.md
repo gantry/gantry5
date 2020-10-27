@@ -3,7 +3,10 @@
 
 1. [Joomla](#joomla)
     1. [](#bugfix)
-        - Fixed FormFIeld issues with Fabrik (#2721)
+        - Regression: Fixed FormField issues with Fabrik (#2721)
+1. [WordPress](#wordpress)
+    1. [](#improved)
+        - Hydrogen/Helium: Load `functions.php` from custom folder (#2723)
 
 # 5.4.36
 ## 10/16/2020
