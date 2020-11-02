@@ -30,38 +30,51 @@ class Compiler extends BaseCompiler
     protected $streamNames = [];
 
     /**
-     * @param array $args
-     * @return mixed
-     */
-    public function compileArgs($args)
-    {
-        foreach ($args as &$arg) {
-            $arg = $this->compileValue($arg);
-        }
-
-        return $args;
-    }
-
-    /**
      * Get variable
      *
      * @api
      *
-     * @param string    $name
-     * @param boolean   $shouldThrow
-     * @param BaseCompiler\Environment $env
-     * @param bool $unreduced
+     * @param string                                $name
+     * @param boolean                               $shouldThrow
+     * @param \ScssPhp\ScssPhp\Compiler\Environment $env
+     * @param boolean                               $unreduced
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
     {
         try {
             return parent::get($name, $shouldThrow, $env, $unreduced);
         } catch (\Exception $e) {
+            // FIXME: I don't think this is the way to go anymore.
             echo $e->getMessage() . "\n";
             return ['string', '', ['']];
         }
+    }
+
+    /**
+     * Adds to list of parsed files
+     *
+     * Overrides original function without `realpath($path)`. Allows user to create new override files.
+     *
+     * @api
+     * @param string $path
+     */
+    public function addParsedFile($path)
+    {
+        if ($path && is_file($path)) {
+            $this->parsedFiles[$path] = filemtime($path);
+        }
+    }
+
+    /**
+     * Clean parsed files.
+     *
+     * This method allows us to speed up compiling multiple files with the same includes repeating multiple times.
+     */
+    public function cleanParsedFiles()
+    {
+        $this->parsedFiles = [];
     }
 
     /**
@@ -73,38 +86,19 @@ class Compiler extends BaseCompiler
      */
     protected function parserFactory($path)
     {
-        $parser = new Parser($path, count($this->sourceNames), $this->encoding);
+        $parser = new Parser($path, count($this->sourceNames), $this->encoding, $this->cache);
 
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 
-        $this->sourceNames[] = $locator->isStream($path) ? $locator->findResource($path, false) : $path;
+        // This one is needed for import loop detenction.
         $this->streamNames[] = $path;
+
+        // Resolve URIs to make CSS line comments to use real paths instead of streams.
+        $this->sourceNames[] = $locator->isStream($path) ? $locator->findResource($path, false) : $path;
         $this->addParsedFile($path);
 
         return $parser;
-    }
-
-    /**
-     * Adds to list of parsed files
-     *
-     * @api
-     *
-     * @param string $path
-     */
-    public function addParsedFile($path)
-    {
-        if ($path && file_exists($path)) {
-            $this->parsedFiles[$path] = filemtime($path);
-        }
-    }
-
-    /**
-     * Clean parsed files.
-     */
-    public function cleanParsedFiles()
-    {
-        $this->parsedFiles = [];
     }
 
     /**
@@ -117,6 +111,11 @@ class Compiler extends BaseCompiler
     protected function handleImportLoop($name)
     {
         for ($env = $this->env; $env; $env = $env->parent) {
+            if (!$env->block) {
+                continue;
+            }
+
+            // We need to use original paths instead of the resolved ones to detect loops (orig file = overridden file).
             $file = $this->streamNames[$env->block->sourceIndex];
 
             if (realpath($file) === $name) {
@@ -127,24 +126,23 @@ class Compiler extends BaseCompiler
     }
 
     /**
-     * Override function to improve the logic.
+     * Import file
      *
-     * @param string $path
-     * @param OutputBlock  $out
-     *
-     * @throws \Exception
+     * @param string      $path
+     * @param OutputBlock $out
      */
     protected function importFile($path, OutputBlock $out)
     {
-        $this->addParsedFile($path);
-
         /** @var UniformResourceLocator $locator */
         $locator = Gantry::instance()['locator'];
 
         // see if tree is cached
-        $realPath = $locator($path);
+        $realPath = $locator->findResource($path);
 
         if (isset($this->importCache[$realPath])) {
+            // We need to add parsed file also when it's found from the cache. This makes compiling multiple files to work.
+            $this->addParsedFile($path);
+
             $this->handleImportLoop($realPath);
 
             $tree = $this->importCache[$realPath];
