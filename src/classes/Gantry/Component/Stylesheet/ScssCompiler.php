@@ -15,6 +15,7 @@
 namespace Gantry\Component\Stylesheet;
 
 use Gantry\Component\Stylesheet\Scss\Compiler;
+use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use ScssPhp\ScssPhp\Exception\CompilerException;
@@ -37,6 +38,8 @@ class ScssCompiler extends CssCompiler
 
     /** @var Compiler */
     protected $compiler;
+    /** @var Functions */
+    protected $functions;
 
     /**
      * Constructor.
@@ -46,6 +49,7 @@ class ScssCompiler extends CssCompiler
         parent::__construct();
 
         $this->compiler = new Compiler();
+        $this->functions = new Functions($this->compiler);
 
         if ($this->production) {
             $this->compiler->setFormatter(Crunched::class);
@@ -69,6 +73,16 @@ class ScssCompiler extends CssCompiler
     public function compile($in)
     {
         return $this->compiler->compile($in);
+    }
+
+    /**
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->functions->reset();
+
+        return $this;
     }
 
     public function resetCache()
@@ -112,7 +126,7 @@ class ScssCompiler extends CssCompiler
         }
 
         // Set the lookup paths.
-        $this->compiler->setBasePath($path);
+        $this->functions->setBasePath($path);
         $this->compiler->setImportPaths([[$this, 'findImport']]);
 
         // Run the compiler.
@@ -234,5 +248,13 @@ WARN;
         }
 
         return null;
+    }
+
+    /**
+     * @param array $list
+     */
+    protected function doSetFonts(array $list)
+    {
+        $this->functions->setFonts($list);
     }
 }

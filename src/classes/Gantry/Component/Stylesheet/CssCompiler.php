@@ -127,7 +127,8 @@ abstract class CssCompiler implements CssCompilerInterface
                     $list[$family] = [400 => (string) $data];
                 }
             }
-            $this->compiler->setFonts($list);
+
+            $this->doSetFonts($list);
         }
 
         return $this;
@@ -358,6 +359,14 @@ abstract class CssCompiler implements CssCompilerInterface
         }
 
         return '/*' . substr($checksum, 0, $len - 4) . '*/';
+    }
+
+    /**
+     * @param array $list
+     */
+    protected function doSetFonts(array $list)
+    {
+        $this->compiler->setFonts($list);
     }
 
     /**
