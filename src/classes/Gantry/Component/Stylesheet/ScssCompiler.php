@@ -22,8 +22,7 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
-use ScssPhp\ScssPhp\Formatter\Crunched;
-use ScssPhp\ScssPhp\Formatter\Expanded;
+use ScssPhp\ScssPhp\OutputStyle;
 
 /**
  * Class ScssCompiler
@@ -52,9 +51,9 @@ class ScssCompiler extends CssCompiler
         $this->functions = new Functions($this->compiler);
 
         if ($this->production) {
-            $this->compiler->setFormatter(Crunched::class);
+            $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
         } else {
-            $this->compiler->setFormatter(Expanded::class);
+            $this->compiler->setOutputStyle(OutputStyle::EXPANDED);
             // Work around bugs in SCSS compiler.
             // TODO: Pass our own SourceMapGenerator instance instead.
             $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
@@ -62,7 +61,6 @@ class ScssCompiler extends CssCompiler
                 'sourceMapBasepath' => '/',
                 'sourceRoot'        => '/',
             ]);
-            $this->compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
         }
     }
 

@@ -16,6 +16,7 @@ namespace Gantry\Component\Stylesheet\Scss;
 
 use Gantry\Framework\Gantry;
 use ScssPhp\ScssPhp\Compiler as BaseCompiler;
+use ScssPhp\ScssPhp\Compiler\Environment;
 use ScssPhp\ScssPhp\Formatter\OutputBlock;
 use ScssPhp\ScssPhp\Parser;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -36,12 +37,12 @@ class Compiler extends BaseCompiler
      *
      * @param string                                $name
      * @param boolean                               $shouldThrow
-     * @param \ScssPhp\ScssPhp\Compiler\Environment $env
+     * @param Environment $env
      * @param boolean                               $unreduced
      *
      * @return mixed|null
      */
-    public function get($name, $shouldThrow = true, BaseCompiler\Environment $env = null, $unreduced = false)
+    public function get($name, $shouldThrow = true, Environment $env = null, $unreduced = false)
     {
         try {
             return parent::get($name, $shouldThrow, $env, $unreduced);
@@ -82,7 +83,7 @@ class Compiler extends BaseCompiler
      *
      * @param string $path
      *
-     * @return \ScssPhp\ScssPhp\Parser
+     * @return Parser
      */
     protected function parserFactory($path)
     {
@@ -119,8 +120,7 @@ class Compiler extends BaseCompiler
             $file = $this->streamNames[$env->block->sourceIndex];
 
             if (realpath($file) === $name) {
-                $this->throwError('An @import loop has been found: %s imports %s', $file, basename($file));
-                break;
+                throw $this->error('An @import loop has been found: %s imports %s', $file, basename($file));
             }
         }
     }
