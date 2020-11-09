@@ -86,11 +86,11 @@ class Functions
         // Function has a single parameter.
         $parsed = reset($args);
         if (!$parsed) {
-            $this->compiler->error('url() is missing parameter');
+            throw $this->compiler->error('url() is missing parameter');
         }
         $url = $this->compiler->compileValue($parsed);
         if (!is_string($url)) {
-            $this->compiler->error('url() value is not a string');
+            throw $this->compiler->error('url() value is not a string');
         }
 
         // Compile parsed value to string.
