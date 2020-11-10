@@ -14,6 +14,7 @@
 
 namespace Gantry\Component\Stylesheet;
 
+use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
@@ -53,7 +54,14 @@ class ScssCompiler extends CssCompiler
 
     protected function createCompiler()
     {
-        $compiler = new Compiler();
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+        $cacheDir = $locator->findResource('gantry-cache://theme/scss/source', true, true);
+        if (!file_exists($cacheDir)) {
+            Folder::create($cacheDir);
+        }
+
+        $compiler = new Compiler(['cacheDir' => $cacheDir]);
 
         $this->functions->setCompiler($compiler);
 
@@ -188,6 +196,8 @@ WARN;
         $file->free();
 
         $this->createMeta($out, md5($css));
+
+        $this->reset();
 
         return true;
     }
