@@ -37,7 +37,6 @@
     1. [](#new)
         - Remove unmaintained standalone Prime environment
 
-# 5.4.36
 # 5.4.37
 ## mm/dd/2020
 
