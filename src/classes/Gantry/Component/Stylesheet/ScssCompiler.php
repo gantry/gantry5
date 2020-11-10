@@ -14,10 +14,10 @@
 
 namespace Gantry\Component\Stylesheet;
 
-use Gantry\Component\Stylesheet\Scss\Compiler;
 use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
@@ -47,30 +47,30 @@ class ScssCompiler extends CssCompiler
     {
         parent::__construct();
 
-        $this->compiler = new Compiler();
-        $this->functions = new Functions($this->compiler);
-
-        if ($this->production) {
-            $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
-        } else {
-            $this->compiler->setOutputStyle(OutputStyle::EXPANDED);
-            // Work around bugs in SCSS compiler.
-            // TODO: Pass our own SourceMapGenerator instance instead.
-            $this->compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
-            $this->compiler->setSourceMapOptions([
-                'sourceMapBasepath' => '/',
-                'sourceRoot'        => '/',
-            ]);
-        }
+        $this->functions = new Functions();
+        $this->createCompiler();
     }
 
-    /**
-     * @param string $in
-     * @return string
-     */
-    public function compile($in)
+    protected function createCompiler()
     {
-        return $this->compiler->compile($in);
+        $compiler = new Compiler();
+
+        $this->functions->setCompiler($compiler);
+
+        if ($this->production) {
+            $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+        } else {
+            $compiler->setOutputStyle(OutputStyle::EXPANDED);
+            // Work around bugs in SCSS compiler.
+            // TODO: Pass our own SourceMapGenerator instance instead.
+            $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            $compiler->setSourceMapOptions([
+                'sourceMapRootpath' => '',
+                'sourceMapBasepath' => GANTRY5_ROOT,
+            ]);
+        }
+
+        $this->compiler = $compiler;
     }
 
     /**
@@ -122,6 +122,8 @@ class ScssCompiler extends CssCompiler
             // File was already locked by another process, lets avoid compiling the same file twice.
             return false;
         }
+
+        $this->createCompiler();
 
         // Set the lookup paths.
         $this->functions->setBasePath($path);
@@ -186,7 +188,6 @@ WARN;
         $file->free();
 
         $this->createMeta($out, md5($css));
-        $this->compiler->cleanParsedFiles();
 
         return true;
     }
@@ -198,7 +199,7 @@ WARN;
      */
     public function registerFunction($name, callable $callback)
     {
-        $this->compiler->registerFunction($name, $callback);
+        $this->functions->registerFunction($name, $callback);
 
         return $this;
     }
@@ -209,7 +210,7 @@ WARN;
      */
     public function unregisterFunction($name)
     {
-        $this->compiler->unregisterFunction($name);
+        $this->functions->unregisterFunction($name);
 
         return $this;
     }
@@ -239,8 +240,9 @@ WARN;
                 if (!preg_match('|\.scss$|', $file)) {
                     $file .= '.scss';
                 }
-                if ($locator->findResource($base . '/' . $file)) {
-                    return $base . '/' . $file;
+                $filepath = $locator->findResource($base . '/' . $file);
+                if ($filepath) {
+                    return $filepath;
                 }
             }
         }

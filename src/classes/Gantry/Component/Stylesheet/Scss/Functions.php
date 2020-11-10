@@ -17,6 +17,7 @@ namespace Gantry\Component\Stylesheet\Scss;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use ScssPhp\ScssPhp\Compiler;
 
 /**
  * Class Compiler
@@ -34,8 +35,13 @@ class Functions
     protected $usedFonts = [];
     /** @var array */
     protected $streamNames = [];
+    /** @var array */
+    protected $userFunctions = [];
 
-    public function __construct(Compiler $compiler)
+    /**
+     * @param Compiler $compiler
+     */
+    public function setCompiler(Compiler $compiler)
     {
         $this->compiler = $compiler;
 
@@ -45,6 +51,36 @@ class Functions
         $compiler->registerFunction('get-local-fonts', [$this, 'libGetLocalFonts']);
         $compiler->registerFunction('get-local-font-weights', [$this, 'libGetLocalFontWeights']);
         $compiler->registerFunction('get-local-font-url', [$this, 'libGetLocalFontUrl']);
+
+        foreach ($this->userFunctions as $name => $userFunction) {
+            $compiler->registerFunction($name, $userFunction[0], $userFunction[1]);
+        }
+    }
+
+    /**
+     * @param string   $name
+     * @param callable $func
+     * @param array    $prototype
+     */
+    public function registerFunction($name, $func, $prototype = null)
+    {
+        $this->userFunctions[$name] = [$func, $prototype];
+
+        if ($this->compiler) {
+            $this->compiler->registerFunction($name, $func, $prototype);
+        }
+    }
+
+    /**
+     * @param string $name
+     */
+    public function unregisterFunction($name)
+    {
+        unset($this->userFunctions[$name]);
+
+        if ($this->compiler) {
+            $this->compiler->unregisterFunction($name);
+        }
     }
 
     /**
