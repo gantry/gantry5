@@ -69,9 +69,8 @@ class ScssCompiler extends CssCompiler
             $compiler->setOutputStyle(OutputStyle::COMPRESSED);
         } else {
             $compiler->setOutputStyle(OutputStyle::EXPANDED);
-            // Work around bugs in SCSS compiler.
-            // TODO: Pass our own SourceMapGenerator instance instead.
             $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            // TODO: Look if we can / should use option to let compiler to save the source map.
             $compiler->setSourceMapOptions([
                 'sourceMapRootpath' => '',
                 'sourceMapBasepath' => GANTRY5_ROOT,
