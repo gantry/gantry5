@@ -54,6 +54,12 @@
             </section>
             {# End Entry Content #}
 
+            {# Begin Comments #}
+            {% if (post.comment_status == 'open' or post.comment_count > 0) and post.post_type != 'product' %}
+                {{ function('comments_template')|raw }}
+            {% endif %}
+            {# End Comments #}
+
         {% else %}
 
             {# Begin Password Protected Form #}
