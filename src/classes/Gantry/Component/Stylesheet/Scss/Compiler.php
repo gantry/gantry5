@@ -31,29 +31,6 @@ class Compiler extends BaseCompiler
     protected $streamNames = [];
 
     /**
-     * Get variable
-     *
-     * @api
-     *
-     * @param string                                $name
-     * @param boolean                               $shouldThrow
-     * @param Environment $env
-     * @param boolean                               $unreduced
-     *
-     * @return mixed|null
-     */
-    public function get($name, $shouldThrow = true, Environment $env = null, $unreduced = false)
-    {
-        try {
-            return parent::get($name, $shouldThrow, $env, $unreduced);
-        } catch (\Exception $e) {
-            // FIXME: I don't think this is the way to go anymore.
-            echo $e->getMessage() . "\n";
-            return ['string', '', ['']];
-        }
-    }
-
-    /**
      * Adds to list of parsed files
      *
      * Overrides original function without `realpath($path)`. Allows user to create new override files.

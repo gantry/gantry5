@@ -6,6 +6,7 @@
         - Updated minimum requirement to PHP 5.6.20
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.4
+        - New SCSS compiler is more strict and fails on badly written SCSS where the old version did not
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan v0.11 level 5 tests
     1. [](#improved)
