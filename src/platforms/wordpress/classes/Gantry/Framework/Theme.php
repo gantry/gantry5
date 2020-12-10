@@ -416,7 +416,7 @@ class Theme extends AbstractTheme
 
         add_theme_support('html5', ['comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'widgets']);
         add_theme_support('title-tag');
-        add_theme_support('post-formats');
+        add_theme_support('post-formats', []);
         add_theme_support('post-thumbnails');
         add_theme_support('menus');
         add_theme_support('widgets');
@@ -511,7 +511,7 @@ class Theme extends AbstractTheme
     protected function setTwigLoaderPaths(\Twig_LoaderInterface $loader)
     {
         $loader = parent::setTwigLoaderPaths($loader);
-        
+
         if ($loader) {
             // TODO: right now we are replacing all paths; we need to do better, but there are some issues with this call.
             $loader->setPaths($this->getTwigPaths());

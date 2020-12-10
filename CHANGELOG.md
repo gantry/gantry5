@@ -8,6 +8,8 @@
     1. [](#improved)
         - Hydrogen/Helium: Load `functions.php` from custom folder (#2723, thanks @Chrissi2812)
         - Added options for comments on pages
+    1. [](#bugfix)
+        - Fixed WordPress 5.6 `add_theme_support('post-formats')` Notice (#2731)
 
 # 5.4.36
 ## 10/16/2020
