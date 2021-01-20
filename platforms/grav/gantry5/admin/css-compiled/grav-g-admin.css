@@ -29,6 +29,7 @@
 body #admin-main .admin-block { padding: 0; }
 
 #g5-container { font-family: inherit; font-weight: inherit; }
+#g5-container .g-colorpicker input { flex-basis: auto; }
 #g5-container .button i { margin-right: 0 !important; }
 #g5-container .inner-container { margin: 0; box-shadow: none; color: inherit; }
 #g5-container form select { -webkit-appearance: menulist; -moz-appearance: menulist; appearance: menulist; }
