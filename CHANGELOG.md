@@ -39,7 +39,7 @@
         - Remove unmaintained standalone Prime environment
 
 # 5.4.37
-## mm/dd/2020
+## 01/25/2021
 
 1. [Joomla](#joomla)
     1. [](#bugfix)
