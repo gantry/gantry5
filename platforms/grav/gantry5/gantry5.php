@@ -33,6 +33,8 @@ use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use Grav\Common\User\Interfaces\UserInterface;
 use Grav\Common\Utils;
+use Grav\Events\PermissionsRegisterEvent;
+use Grav\Framework\Acl\PermissionsReader;
 use Grav\Plugin\Admin\Admin;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -70,6 +72,9 @@ class Gantry5Plugin extends Plugin
             ],
             'onDataTypeExcludeFromDataManagerPluginHook' => [
                 ['onDataTypeExcludeFromDataManagerPluginHook', 0],
+            ],
+            PermissionsRegisterEvent::class => [
+                ['onRegisterPermissions', 100]
             ],
         ];
     }
@@ -565,6 +570,21 @@ class Gantry5Plugin extends Plugin
             }
             $this->outline = '_error';
         }
+    }
+
+    /**
+     * Initial stab at registering permissions (WIP)
+     *
+     * @param PermissionsRegisterEvent $event
+     * @return void
+     */
+    public function onRegisterPermissions(PermissionsRegisterEvent $event): void
+    {
+        $permissions = $event->permissions;
+
+        $actions = PermissionsReader::fromYaml("plugin://{$this->name}/permissions.yaml");
+
+        $permissions->addActions($actions);
     }
 
     public function setPreset()

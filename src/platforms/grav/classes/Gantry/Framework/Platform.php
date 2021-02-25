@@ -18,6 +18,7 @@ use Gantry\Debugger;
 use Gantry\Framework\Base\Platform as BasePlatform;
 use Grav\Common\Grav;
 use Grav\Common\Plugins;
+use Grav\Common\User\Interfaces\UserInterface;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\DI\Container;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -310,6 +311,43 @@ class Platform extends BasePlatform
         $text = strip_tags($text);
 
         return $length ? Utils::truncate($text, $length) : $text;
+    }
+
+    /**
+     * @param string $action
+     * @param int|string|null $id
+     * @return bool
+     */
+    public function authorize($action, $id = null)
+    {
+        // TODO: hook in ACL
+        static $actions = [
+            'platform.settings.manage' => 'admin.plugins',
+            'updates.manage' => null,
+            'menu.manage' => null,
+            'menu.edit' => null,
+            'outline.create' => null,
+            'outline.rename' => null,
+            'outline.delete' => null,
+            'outline.assign' => null
+        ];
+
+        if (isset($actions['action'])) {
+            $action = $actions['action'];
+
+            $grav = Grav::instance();
+            if (isset($grav['admin'])) {
+                /** @var UserInterface $user */
+                $user = $grav['admin']->user;
+            } else {
+                /** @var UserInterface $user */
+                $user = $grav['user'];
+            }
+
+            return $user->authorize($action) ?: false;
+        }
+
+        return true;
     }
 
     /**
