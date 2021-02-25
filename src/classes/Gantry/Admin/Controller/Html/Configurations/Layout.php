@@ -181,11 +181,8 @@ class Layout extends HtmlController
 
         $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);
-        if (!$layout) {
-            throw new \RuntimeException('Layout not found', 404);
-        }
-
         $item = $layout->find($id);
+
         $item->type    = $this->request->post['type'] ?: $type;
         $item->subtype = $this->request->post['subtype'] ?: $type;
         $item->title   = $this->request->post['title'] ?: ucfirst($type);
@@ -498,7 +495,7 @@ class Layout extends HtmlController
 
     /**
      * @param string $name
-     * @return LayoutObject|null
+     * @return LayoutObject
      */
     protected function getLayout($name)
     {

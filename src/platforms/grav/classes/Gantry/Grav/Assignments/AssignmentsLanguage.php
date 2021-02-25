@@ -14,6 +14,7 @@ namespace Gantry\Grav\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Grav;
 use Grav\Common\Language\Language;
+use Grav\Common\Language\LanguageCodes;
 use Grav\Common\Page\Interfaces\PageInterface;
 
 /**
@@ -80,14 +81,15 @@ class AssignmentsLanguage implements AssignmentsInterface
     protected function getItems(Language $language)
     {
         $languages = $language->getLanguages();
+        $languages = LanguageCodes::getNames($languages);
 
         $items = [];
 
         /** @var PageInterface $page */
-        foreach ($languages as $code) {
+        foreach ($languages as $code => $name) {
             $items[] = [
                 'name' => $code,
-                'label' => ucfirst($code),
+                'label' => "{$name['nativeName']} ({$code})",
             ];
         }
 
