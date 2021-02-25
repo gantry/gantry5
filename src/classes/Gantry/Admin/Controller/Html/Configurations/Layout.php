@@ -97,8 +97,8 @@ class Layout extends HtmlController
         ];
 
         $particles = [
-            'position'    => [],
-            'spacer'      => [],
+            'position' => [],
+            'spacer' => [],
             'system' => [],
             'particle' => []
         ];

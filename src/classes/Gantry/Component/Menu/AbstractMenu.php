@@ -47,7 +47,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     protected $override = false;
     /** @var Config|null */
     protected $config;
-    /** @var array|Item[] */
+    /** @var Item[] */
     protected $items;
     /** @var Config|null */
     protected $pathMap;
@@ -351,7 +351,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 
     /**
      * @param string $path
-     * @return string|int|null
+     * @return Item|null
      */
     public function get($path)
     {
