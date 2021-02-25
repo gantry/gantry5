@@ -29,10 +29,15 @@ namespace Gantry\Component\Content\Block;
  */
 class ContentBlock implements ContentBlockInterface
 {
+    /** @var int */
     protected $version = 1;
+    /** @var string */
     protected $id;
+    /** @var string */
     protected $tokenTemplate = '@@BLOCK-%s@@';
+    /** @var string */
     protected $content = '';
+    /** @var ContentBlockInterface[] */
     protected $blocks = [];
 
     /**
@@ -56,11 +61,10 @@ class ContentBlock implements ContentBlockInterface
             $type = isset($serialized['_type']) ? $serialized['_type'] : null;
             $id = isset($serialized['id']) ? $serialized['id'] : null;
 
-            if (!$type || !$id || !$type instanceof ContentBlockInterface) {
+            if (!$type || !$id || !is_subclass_of($type, ContentBlockInterface::class, true)) {
                 throw new \RuntimeException('Bad data');
             }
 
-            /** @var ContentBlockInterface $instance */
             $instance = new $type($id);
             $instance->build($serialized);
         } catch (\Exception $e) {
@@ -106,10 +110,6 @@ class ContentBlock implements ContentBlockInterface
     public function toArray()
     {
         $blocks = [];
-        /**
-         * @var string $id
-         * @var ContentBlockInterface $block
-         */
         foreach ($this->blocks as $block) {
             $blocks[$block->getId()] = $block->toArray();
         }

@@ -187,7 +187,7 @@ class Response
     }
 
     /**
-     * @param string|callable $content
+     * @param string|int|callable|null $content
      * @return Response
      * @throws \UnexpectedValueException
      */

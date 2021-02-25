@@ -84,6 +84,8 @@ abstract class RealLoader
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
+
+            return \Grav\Common\Grav::instance()['loader'];
         } else {
             throw new \RuntimeException('Gantry: CMS not detected!');
         }
@@ -105,7 +107,7 @@ abstract class RealLoader
         $loader = require $autoload;
 
         if ($dev) {
-            $loader->addPsr4('Gantry\\', "{$base}/classes/Gantry");
+            $loader->addPsr4('Gantry\\', "{$base}/classes/Gantry", true);
         }
 
         return $loader;

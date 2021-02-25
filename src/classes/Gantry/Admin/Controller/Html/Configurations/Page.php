@@ -245,7 +245,7 @@ class Page extends HtmlController
         $inheritable = $inheritance && $inheritance->get('form/fields/outline/filter', []);
 
         $this->params += [
-            'inherit'       => !empty($inherit['outline']) ? $inherit['outline'] : null,
+            'inherit'       => null, //!empty($inherit['outline']) ? $inherit['outline'] : null,
             'inheritance'   => $inheritance,
             'inheritable'   => $inheritable,
             'item'          => $item,

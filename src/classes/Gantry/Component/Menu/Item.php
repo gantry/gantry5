@@ -401,8 +401,8 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
      */
     public function reverse()
     {
-        array_reverse($this->children, true);
-        array_reverse($this->groups, true);
+        $this->children = array_reverse($this->children, true);
+        $this->groups = array_reverse($this->groups, true);
 
         return $this;
     }

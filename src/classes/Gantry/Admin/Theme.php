@@ -127,7 +127,7 @@ class Theme extends AbstractTheme
     protected function setTwigLoaderPaths(LoaderInterface $loader)
     {
         if (!($loader instanceof FilesystemLoader)) {
-            return;
+            return null;
         }
 
         $gantry = static::gantry();
@@ -137,5 +137,7 @@ class Theme extends AbstractTheme
 
         $loader->setPaths($locator->findResources('gantry-admin://templates'));
         $loader->setPaths($locator->findResources('gantry-admin://templates'), 'gantry-admin');
+
+        return $loader;
     }
 }

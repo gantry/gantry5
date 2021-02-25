@@ -24,7 +24,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Debugger
 {
-    /** @var Debugger */
+    /** @var static */
     protected static $instance;
 
     /** @var \Grav\Common\Debugger */

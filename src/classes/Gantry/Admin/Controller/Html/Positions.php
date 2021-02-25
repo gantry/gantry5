@@ -71,7 +71,7 @@ class Positions extends HtmlController
             $this->undefined();
         }
 
-        /** @var PositionsObject $position */
+        /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
 
         $title = (string) $this->request->post->get('title', 'Untitled');
@@ -182,7 +182,7 @@ class Positions extends HtmlController
 
         $data = $this->request->post->getJsonArray('positions');
 
-        /** @var PositionsObject $position */
+        /** @var PositionsObject $positions */
         $positions = $this->container['positions'];
         $positions->import($data);
 

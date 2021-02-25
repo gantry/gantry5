@@ -14,29 +14,35 @@
 
 namespace Gantry5;
 
+use Composer\Autoload\ClassLoader;
+
 /**
  * Class Loader
  * @package Gantry5
  */
 abstract class Loader
 {
+    /** @var ClassLoader */
+    private static $loader;
+
+    /**
+     * @return void
+     */
     public static function setup()
     {
         self::get();
     }
 
     /**
-     * @return mixed
+     * @return ClassLoader
      */
     public static function get()
     {
-        static $loader;
-
-        if (!$loader) {
+        if (null === self::$loader) {
             require_once __DIR__ . '/RealLoader.php';
-            $loader = RealLoader::getClassLoader();
+            self::$loader = RealLoader::getClassLoader();
         }
 
-        return $loader;
+        return self::$loader;
     }
 }

@@ -194,13 +194,18 @@ class Filepicker extends JsonController
                 ]
             );
         } else {
-            $response['subfolder'] = !$folders[$key][$folder]->count()
-                ? false
-                : $this->render(
+            $current = isset($folder) && isset($folders[$key][$folder]) ? $folders[$key][$folder] : null;
+            $count = $current ? $current->count() : 0;
+            if ($current && $count) {
+                $response['subfolder'] = $this->render(
                     '@gantry-admin/ajax/filepicker/subfolders.html.twig',
-                    ['folder' => $folders[$key][$folder]]
+                    ['folder' => $current]
                 );
-            $response['files']     = $this->render(
+            } else {
+                $response['subfolder'] = false;
+            }
+
+            $response['files'] = $this->render(
                 '@gantry-admin/ajax/filepicker/files.html.twig',
                 ['files' => $files, 'value' => $this->value]
             );

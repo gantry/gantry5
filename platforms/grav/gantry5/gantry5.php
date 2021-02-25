@@ -75,6 +75,23 @@ class Gantry5Plugin extends Plugin
     }
 
     /**
+     * [PluginsLoadedEvent:100000] Composer autoload.
+     *
+     * @return ClassLoader
+     */
+    public function autoload()
+    {
+        /** @var ClassLoader $loader */
+        $loader = require __DIR__ . '/vendor/autoload.php';
+        $dev = __DIR__ . '/src/platforms/grav/classes/Gantry';
+        if (is_dir($dev)) {
+            $loader->addPsr4('Gantry\\', $dev, true);
+        };
+
+        return $loader;
+    }
+
+    /**
      * @param Event $event
      */
     public function onBeforeCacheClear(Event $event)
@@ -93,12 +110,6 @@ class Gantry5Plugin extends Plugin
      */
     public function initialize()
     {
-        /** @var ClassLoader $loader */
-        $loader = $this->grav['loader'];
-        $loader->addClassMap([Loader::class => __DIR__ . '/src/Loader.php']);
-
-        include_once __DIR__ . '/Debugger.php';
-
         $this->grav['gantry5_plugin'] = $this;
     }
 

@@ -439,8 +439,8 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
      */
     public function nestedFunc($items, $name, $default = null, $separator = '.')
     {
-        if ($items instanceof NestedArrayAccess) {
-            return $items->get($name, $default, $separator);
+        if (is_callable([$items, 'getNestedProperty'])) {
+            return $items->getNestedProperty($name, $default, $separator);
         }
         $path = explode($separator, $name) ?: [];
         $current = $items;

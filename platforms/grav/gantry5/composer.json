@@ -1,40 +1,26 @@
 {
-    "name": "gantry/grav",
-    "description": "Gantry Framework Library",
+    "name": "rockettheme/gantry5",
+    "type": "grav-plugin",
+    "description": "Gantry Framework",
+    "keywords": ["gantry"],
     "license": "MIT",
 
     "require": {
-        "php": ">=7.1.3",
-        "scssphp/scssphp": "~1.0"
-    },
-    "require-dev": {
-        "symfony/event-dispatcher": "~3.4",
-        "symfony/yaml": "~3.4",
-        "twig/twig": "~1.42",
-        "pimple/pimple": "~3.2",
-        "filp/whoops": "~2.3",
-        "rockettheme/toolbox": "~1.4",
-        "erusev/parsedown-extra": "~0.7",
-        "phpunit/phpunit": "3.7.*"
+        "php": ">=7.3.6"
     },
     "autoload": {
         "psr-4": {
-            "Gantry\\": [
-                "src/platforms/grav/classes/Gantry",
-                "src/classes/Gantry"
-            ]
+            "Gantry\\": "src/classes/Gantry"
         },
-        "files": [
+        "classmap":  [
             "gantry5.php",
             "Debugger.php",
-            "src/Loader.php",
-            "src/RealLoader.php",
-            "cli/ChildThemeCommand.php"
+            "src/Loader.php"
         ]
     },
     "config": {
         "platform": {
-            "php": "7.1.3"
+            "php": "7.3.6"
         }
     }
 }

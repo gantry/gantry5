@@ -96,7 +96,6 @@ class Gettext
     protected function readInt()
     {
         $read = $this->read(4);
-
         if ($read === false) {
             return false;
         }
@@ -124,12 +123,12 @@ class Gettext
         $data = substr($this->str, $this->pos, $bytes);
         $this->seek($this->pos + $bytes);
 
-        return $data;
+        return strlen($data) === $bytes ? $data : false;
     }
 
     /**
      * @param int $pos
-     * @return mixed
+     * @return int
      */
     private function seek($pos)
     {

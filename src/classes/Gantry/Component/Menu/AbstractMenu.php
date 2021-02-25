@@ -350,7 +350,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * @param $path
+     * @param string $path
      * @return string|int|null
      */
     public function get($path)

@@ -64,7 +64,7 @@ class Position extends Collection
      * Clone position together with its modules. Returns new position.
      *
      * @param string $name
-     * @return Position
+     * @return static
      */
     public function duplicate($name)
     {

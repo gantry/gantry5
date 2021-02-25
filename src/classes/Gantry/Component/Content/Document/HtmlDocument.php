@@ -655,7 +655,7 @@ class HtmlDocument
     /**
      * This function is adapted from code coming from Twig.
      *
-     * @param $matches
+     * @param array $matches
      * @return string
      * @internal
      */
@@ -839,7 +839,7 @@ class HtmlDocument
      * @param string $string
      * @param string $to
      * @param string $from
-     * @return false|string|string[]|null
+     * @return false|string
      * @internal
      */
     private static function convert_encoding($string, $to, $from)
@@ -865,15 +865,16 @@ class HtmlDocument
             return mb_ord($string, 'UTF-8');
         }
 
-        $code = ($string = unpack('C*', substr($string, 0, 4))) ? $string[1] : 0;
+        $unpacked = unpack('C*', substr($string, 0, 4));
+        $code = isset($unpacked[0]) ? $unpacked[1] : 0;
         if (0xF0 <= $code) {
-            return (($code - 0xF0) << 18) + (($string[2] - 0x80) << 12) + (($string[3] - 0x80) << 6) + $string[4] - 0x80;
+            return (($code - 0xF0) << 18) + (($unpacked[2] - 0x80) << 12) + (($unpacked[3] - 0x80) << 6) + $unpacked[4] - 0x80;
         }
         if (0xE0 <= $code) {
-            return (($code - 0xE0) << 12) + (($string[2] - 0x80) << 6) + $string[3] - 0x80;
+            return (($code - 0xE0) << 12) + (($unpacked[2] - 0x80) << 6) + $unpacked[3] - 0x80;
         }
         if (0xC0 <= $code) {
-            return (($code - 0xC0) << 6) + $string[2] - 0x80;
+            return (($code - 0xC0) << 6) + $unpacked[2] - 0x80;
         }
 
         return $code;

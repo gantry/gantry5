@@ -78,4 +78,9 @@ interface ContentBlockInterface extends \Serializable
      * @since 5.4.3
      */
     public function addBlock(ContentBlockInterface $block);
+
+    /**
+     * @return string
+     */
+    public function toString();
 }

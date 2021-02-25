@@ -19,13 +19,13 @@ use Gantry\Component\Admin\HtmlController;
 use Gantry\Component\Config\BlueprintSchema;
 use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\Config;
+use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Gantry\Component\Request\Input;
 use Gantry\Component\Response\HtmlResponse;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Component\Response\Response;
 use Gantry\Framework\Menu as MenuObject;
-use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -94,7 +94,7 @@ class Menu extends HtmlController
 
     /**
      * @param string|null $id
-     * @param array<int,mixed> $parts
+     * @param string[] $parts
      * @return string
      */
     public function item($id = null, ...$parts)
@@ -124,6 +124,13 @@ class Menu extends HtmlController
 
         // Detect special case to fetch only single column group.
         $group = $this->request->get['group'];
+        $level = count($parts);
+        if (null !== $group) {
+            $group = (int)$group;
+            $level++;
+        } else {
+            $group = (int)$resource->get(implode('/', array_slice($parts, 0, 2)))->group;
+        }
 
         if (empty($this->params['ajax']) || empty($this->request->get['inline'])) {
             // Handle special case to fetch only one column group.
@@ -131,7 +138,7 @@ class Menu extends HtmlController
                 $this->params['columns'] = $resource->get($parts[0]);
             }
             if (count($parts) > 1) {
-                $this->params['column'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($parts, 0, 2)))->group;
+                $this->params['column'] = $group;
                 $this->params['override'] = $item;
             }
 
@@ -140,10 +147,10 @@ class Menu extends HtmlController
         }
 
         // Get layout name.
-        $layout = $this->layoutName(count($parts) + (int) isset($group));
+        $layout = $this->layoutName($level);
 
         $this->params['item'] = $item;
-        $this->params['group'] = isset($group) ? (int) $group : $resource->get(implode('/', array_slice($parts, 0, 2)))->group;
+        $this->params['group'] = $group;
 
         return $this->render('@gantry-admin/menu/' . $layout . '.html.twig', $this->params) ?: '&nbsp;';
     }
@@ -402,6 +409,7 @@ class Menu extends HtmlController
         foreach ($particles as &$group) {
             asort($group);
         }
+        unset($group);
 
         foreach ($groups as $section => $children) {
             foreach ($children as $key => $child) {
@@ -472,11 +480,12 @@ class Menu extends HtmlController
 
         $item = $resource->get(implode('/', $path));
         $item->update($data->toArray());
+        $group = $resource->get(implode('/', array_slice($path, 0, 2)))->group;
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
         $this->params['item'] = $item;
-        $this->params['group'] = $resource->get(implode('/', array_slice($path, 0, 2)))->group;
+        $this->params['group'] = $group;
 
         if (!$item->title) {
             throw new \RuntimeException('Title from the Menu Item should not be empty', 400);
@@ -508,7 +517,7 @@ class Menu extends HtmlController
      *
      * @param string $id
      * @param Config $config
-     * @return \Gantry\Component\Menu\AbstractMenu
+     * @return AbstractMenu
      * @throws \RuntimeException
      */
     protected function loadResource($id, Config $config = null)

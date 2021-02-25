@@ -260,15 +260,12 @@ class Format1
             if ($size) {
                 $result->attributes->size = $size;
             }
-            return $result;
-        }
-        if ($scope <= 1) {
+        } elseif ($scope === 1) {
             $result = (object) ['id' => $this->id('block'), 'type' => 'block', 'subtype' => 'block', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
             if ($size) {
                 $result->attributes->size = $size;
             }
-        }
-        if ($scope === 0) {
+        } elseif ($scope === 0) {
             $result = (object) ['id' => $this->id('grid'), 'type' => 'grid', 'subtype' => 'grid', 'layout' => true, 'children' => [$result], 'attributes' => new \stdClass];
         }
 

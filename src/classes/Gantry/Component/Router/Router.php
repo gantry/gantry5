@@ -149,6 +149,7 @@ abstract class Router implements RouterInterface
 
         if (isset($this->container['theme'])) {
             // Initialize current theme if it is set.
+            /** @phpstan-ignore-next-line */
             $this->container['theme'];
         } else {
             // Otherwise initialize streams and error handler manually.
@@ -172,6 +173,7 @@ abstract class Router implements RouterInterface
         }
 
         // Boot the service.
+        /** @phpstan-ignore-next-line */
         $this->container['admin.theme'];
 
         return $this;

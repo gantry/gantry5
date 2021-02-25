@@ -15,6 +15,7 @@
 namespace Gantry\Component\Twig\TokenParser;
 
 use Gantry\Component\Twig\Node\TwigNodeMarkdown;
+use Twig\Error\SyntaxError;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -31,7 +32,9 @@ use Twig\TokenParser\AbstractTokenParser;
 class TokenParserMarkdown extends AbstractTokenParser
 {
     /**
-     * {@inheritdoc}
+     * @param Token $token
+     * @return TwigNodeMarkdown
+     * @throws SyntaxError
      */
     public function parse(Token $token)
     {

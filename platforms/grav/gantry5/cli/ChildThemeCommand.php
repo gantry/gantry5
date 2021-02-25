@@ -34,6 +34,9 @@ class ChildThemeCommand extends ConsoleCommand
     /** @var array */
     protected $options = [];
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this
@@ -68,6 +71,9 @@ class ChildThemeCommand extends ConsoleCommand
         ;
     }
 
+    /**
+     * @return int
+     */
     protected function serve()
     {
         $this->options = [
@@ -213,6 +219,8 @@ PHP
 
         $this->output->writeln('');
         $this->output->writeln('<green>Success!</green> Child theme <cyan>' . $child . '</cyan> created.');
+
+        return 0;
     }
 
     protected function validateOptions()
