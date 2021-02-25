@@ -246,6 +246,10 @@ class Platform extends BasePlatform
         return (new Module($module, $position))->toArray();
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public function filter($text)
     {
         $shortcode = isset(Grav::instance()['shortcode']) ? Grav::instance()['shortcode'] : null;

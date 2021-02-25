@@ -493,7 +493,7 @@ class Importer
         // Tokenize all PRE and CODE tags to avoid modifying any src|href|url in them
         $tokens = [];
         $html = preg_replace_callback('#<(pre|code).*?>.*?</\\1>#is', static function($matches) use (&$tokens) {
-            $token = uniqid('__g5_token');
+            $token = uniqid('__g5_token', false);
             $tokens['#' . $token . '#'] = $matches[0];
 
             return $token;

@@ -65,6 +65,9 @@ class AssignmentsPage implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @return array
+     */
     protected function getItems()
     {
         $grav = Grav::instance();

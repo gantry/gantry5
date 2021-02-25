@@ -22,6 +22,7 @@ use Grav\Common\Config\Config as GravConfig;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
+use Grav\Plugin\Admin\Admin;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -30,13 +31,16 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Router extends BaseRouter
 {
+    /**
+     * @return void
+     */
     public function boot()
     {
         /** @var bool */
         static $booted = false;
 
         if ($booted) {
-            return;
+            return null;
         }
 
         $booted = true;
@@ -44,7 +48,7 @@ class Router extends BaseRouter
         $grav = Grav::instance();
         $plugin = $grav['gantry5_plugin'];
 
-        /** @var \Grav\Plugin\Admin $admin */
+        /** @var Admin $admin */
         $admin = $grav['admin'];
 
         /** @var Uri $uri */

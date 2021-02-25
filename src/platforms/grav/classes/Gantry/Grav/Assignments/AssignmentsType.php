@@ -67,8 +67,6 @@ class AssignmentsType implements AssignmentsInterface
         $pageTypes = AdminPlugin::pagesTypes();
 
         $items = [];
-
-        /** @var Page $page */
         foreach ($pageTypes as $name => $title) {
             $items[] = [
                 'name' => $name,

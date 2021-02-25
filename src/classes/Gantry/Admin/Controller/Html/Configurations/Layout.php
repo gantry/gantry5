@@ -76,9 +76,7 @@ class Layout extends HtmlController
         }
 
         $layout = $this->getLayout("presets/{$id}");
-        if (!$layout) {
-            throw new \RuntimeException('Preset not found', 404);
-        }
+
         $this->params['page_id'] = $id;
         $this->params['layout'] = $layout->prepareWidths()->toArray();
 
@@ -92,9 +90,6 @@ class Layout extends HtmlController
     {
         $outline = $this->params['outline'];
         $layout = $this->getLayout($outline);
-        if (!$layout) {
-            throw new \RuntimeException('Layout not found', 404);
-        }
 
         $groups = [
             'Positions' => ['position' => [], 'spacer' => [], 'system' => []],
