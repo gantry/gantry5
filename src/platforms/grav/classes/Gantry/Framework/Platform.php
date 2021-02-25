@@ -291,6 +291,10 @@ class Platform extends BasePlatform
      */
     public function settings()
     {
+        if (!$this->authorize('platform.settings.manage')) {
+            return '';
+        }
+
         $grav = Grav::instance();
 
         return $grav['base_url_relative'] . $grav['admin']->base . '/plugins/gantry5';
@@ -320,7 +324,7 @@ class Platform extends BasePlatform
      */
     public function authorize($action, $id = null)
     {
-        // TODO: hook in ACL
+        // TODO: hook everything into ACL
         static $actions = [
             'platform.settings.manage' => 'admin.plugins',
             'updates.manage' => null,
@@ -332,8 +336,8 @@ class Platform extends BasePlatform
             'outline.assign' => null
         ];
 
-        if (isset($actions['action'])) {
-            $action = $actions['action'];
+        if (isset($actions[$action])) {
+            $action = $actions[$action];
 
             $grav = Grav::instance();
             if (isset($grav['admin'])) {
