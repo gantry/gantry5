@@ -3,7 +3,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2020 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -50,15 +50,18 @@ abstract class Gantry extends Container
      */
     public static function instance()
     {
-        if (null === self::$instance) {
-            self::$instance = static::init();
+        $instance = self::$instance;
+        if (null === $instance) {
+            $instance = static::init();
 
             if (!defined('GANTRY5_DEBUG')) {
-                define('GANTRY5_DEBUG', self::$instance->debug());
+                define('GANTRY5_DEBUG', $instance->debug());
             }
+
+            self::$instance = $instance;
         }
 
-        return self::$instance;
+        return $instance;
     }
 
     /**
