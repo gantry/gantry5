@@ -16,10 +16,11 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
 use Grav\Common\Config as GravConfig;
+use Grav\Common\Flex\Types\Pages\PageIndex;
+use Grav\Common\Flex\Types\Pages\PageObject;
 use Grav\Common\Grav;
-use Grav\Common\Page\Interfaces\PageInterface;
-use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
+use Grav\Framework\Flex\Flex;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
 use RocketTheme\Toolbox\File\YamlFile;
@@ -131,20 +132,20 @@ class EventListener implements EventSubscriberInterface
 
         $grav = Grav::instance();
 
-        /** @var Pages $pages */
-        $pages = $grav['pages'];
-
-        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
-        if (method_exists($pages, 'enablePages')) {
-            $pages->enablePages();
+        /** @var Flex $flex */
+        $flex = $grav['flex'];
+        $directory = $flex->getDirectory('pages');
+        if (!$directory) {
+            throw new \RuntimeException('Flex Pages are required for Gantry to work!');
         }
+        /** @var PageIndex $pages */
+        $pages = $directory->getCollection();
+        $visible = $pages->visible()->nonModular();
 
-        // Initialize pages.
-        $visible = $pages->all()->nonModular();
         $all = [];
         $list = [];
 
-        /** @var PageInterface $page */
+        /** @var PageObject $page */
         foreach ($visible as $page) {
             if (!$page->order()) {
                 continue;
@@ -159,7 +160,7 @@ class EventListener implements EventSubscriberInterface
             $all[$route] = $page->path();
 
             $updated = false;
-            $route = trim($page->route(), '/');
+            $route = $page->getKey();
             $order = isset($ordering[$route]) ? (int) $ordering[$route] : null;
             $parent = $page->parent();
             if ($parent && $order !== null && $order !== (int) $page->order()) {
@@ -184,7 +185,7 @@ class EventListener implements EventSubscriberInterface
 
         try {
             foreach ($list as $page) {
-                $page->save(true);
+                $page->save(false);
             }
         } catch (\RuntimeException $e) {
             throw new \RuntimeException(sprintf('Updating menu item %s failed: %s', $page->rawRoute(), $e->getMessage()), 500, $e);

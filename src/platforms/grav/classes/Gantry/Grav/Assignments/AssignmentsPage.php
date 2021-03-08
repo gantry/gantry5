@@ -12,10 +12,10 @@ namespace Gantry\Grav\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Grav\Common\Config\Config;
+use Grav\Common\Flex\Types\Pages\PageIndex;
 use Grav\Common\Grav;
-use Grav\Common\Page\Interfaces\PageInterface;
-use Grav\Common\Page\Pages;
 use Grav\Common\Uri;
+use Grav\Framework\Flex\Flex;
 
 /**
  * Class AssignmentsPage
@@ -72,19 +72,17 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
-        /** @var Pages $pages */
-        $pages = $grav['pages'];
-
-        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
-        if (method_exists($pages, 'enablePages')) {
-            $pages->enablePages();
+        /** @var Flex $flex */
+        $flex = $grav['flex'];
+        $directory = $flex->getDirectory('pages');
+        if (!$directory) {
+            throw new \RuntimeException('Flex Pages are required for Gantry to work!');
         }
-
-        $pages = $pages->all()->routable();
+        /** @var PageIndex $pages */
+        $pages = $directory->getCollection();
+        $pages = $pages->routable();
 
         $items = [];
-
-        /** @var PageInterface $page */
         foreach ($pages as $page) {
             $route = trim($page->rawRoute(), '/');
             $items[] = [

@@ -20,9 +20,10 @@ use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Menu\AbstractMenu;
 use Gantry\Component\Menu\Item;
 use Grav\Common\Config\Config as GravConfig;
+use Grav\Common\Flex\Types\Pages\PageIndex;
 use Grav\Common\Grav;
 use Grav\Common\Page\Interfaces\PageInterface;
-use Grav\Common\Page\Pages;
+use Grav\Framework\Flex\Flex;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -84,16 +85,15 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
-        /** @var Pages $pages */
-        $pages = $grav['pages'];
-
-        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
-        if (method_exists($pages, 'enablePages')) {
-            $pages->enablePages();
+        /** @var Flex $flex */
+        $flex = $grav['flex'];
+        $directory = $flex->getDirectory('pages');
+        if (!$directory) {
+            throw new \RuntimeException('Flex Pages are required for Gantry to work!');
         }
-
-        // Get the menu items.
-        $items = $pages->all()->nonModular();
+        /** @var PageIndex $pages */
+        $pages = $directory->getCollection();
+        $pages = $pages->visible()->nonModular();
 
         // Initialize the group.
         $groups = ['mainmenu' => []];
@@ -101,7 +101,7 @@ class Menu extends AbstractMenu
         // Build the options array.
 
         /** @var PageInterface $page */
-        foreach ($items as $page) {
+        foreach ($pages as $page) {
             if (!$page->order()) {
                 continue;
             }
@@ -182,16 +182,15 @@ class Menu extends AbstractMenu
     {
         $grav = Grav::instance();
 
-        /** @var Pages $pages */
-        $pages = $grav['pages'];
-
-        // Initialize pages; in Grav 1.7 admin, pages are not initialized by default.
-        if (method_exists($pages, 'enablePages')) {
-            $pages->enablePages();
+        /** @var Flex $flex */
+        $flex = $grav['flex'];
+        $directory = $flex->getDirectory('pages');
+        if (!$directory) {
+            throw new \RuntimeException('Flex Pages are required for Gantry to work!');
         }
-
-        /** @var PageInterface $root */
-        $root = $pages->root();
+        /** @var PageIndex $pages */
+        $pages = $directory->getIndex();
+        $root = $pages->getRoot();
 
         $list = [];
         foreach ($root->children() as $next) {
