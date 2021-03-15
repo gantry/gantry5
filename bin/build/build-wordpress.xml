@@ -22,6 +22,7 @@
                 <exclude name="**/common/"/>
                 <exclude name="engines/" />
                 <exclude name="src/" />
+                <exclude name="vendor/" />
                 <exclude name="gulpfile.js"/>
                 <exclude name="package.json"/>
                 <exclude name="scss.sh"/>
@@ -93,13 +94,11 @@
         </copy>
 
         <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src" overwrite="true">
-            <fileset dir="${path.src}/platforms/wordpress">
-                <exclude name="vendor/**"/>
-            </fileset>
+            <fileset dir="${path.src}/platforms/wordpress"/>
         </copy>
 
-        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/src/vendor" overwrite="true">
-            <fileset dir="${path.src}/platforms/wordpress/vendor">
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/vendor" overwrite="true">
+            <fileset dir="${path.platforms}/wordpress/gantry5/vendor">
                 <exclude name="bin/"/>
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>

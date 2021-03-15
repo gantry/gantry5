@@ -80,7 +80,7 @@
     <target name="build-joomla-library" depends="build-joomla-installer">
         <echo message="Building Library.." />
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
@@ -88,21 +88,21 @@
         </copy>
 
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/lib_gantry5"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/classes" overwrite="true">
-            <fileset dir="${path.src}/classes"/>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library" overwrite="true">
-            <fileset dir="${path.src}/platforms/joomla">
-                <exclude name="vendor/**"/>
+            <fileset dir="${path.platforms}/joomla/lib_gantry5">
+                <exclude name="vendor/"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5/library/vendor" overwrite="true">
-            <fileset dir="${path.src}/platforms/joomla/vendor">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+            <fileset dir="${path.src}/classes"/>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
+            <fileset dir="${path.src}/platforms/joomla"/>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5/vendor" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/lib_gantry5/vendor">
                 <exclude name="bin/"/>
                 <exclude name="**/test/"/>
                 <exclude name="**/tests/"/>
@@ -163,7 +163,7 @@
 
         <!-- Generate Manifest files -->
         <phingcall target="checksum">
-            <property name="source" value="${tmp_dir}/packages/lib_gantry5/library" />
+            <property name="source" value="${tmp_dir}/packages/lib_gantry5" />
         </phingcall>
     </target>
 
