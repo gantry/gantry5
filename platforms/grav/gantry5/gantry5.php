@@ -91,7 +91,7 @@ class Gantry5Plugin extends Plugin
         $dev = __DIR__ . '/src/platforms/grav/classes/Gantry';
         if (is_dir($dev)) {
             $loader->addPsr4('Gantry\\', $dev, true);
-        };
+        }
 
         return $loader;
     }

@@ -8,10 +8,7 @@ Thumbs.db
 
 # Composer
 bin/**/composer.lock
-bin/**/vendor/**
-src/vendor/**
-src/platforms/*/vendor
-platforms/*/*debugbar*/vendor
+**/vendor/**
 
 # Symbolic links in admin
 platforms/joomla/com_gantry5/admin/common
@@ -22,13 +19,8 @@ platforms/*/*/src
 platforms/*/*/assets
 platforms/*/*/engines
 
-# Grav
-
-platforms/grav/gantry5/vendor
-
 # Symbolic links in themes
 themes/*/*/common
-
 themes/*/*/src
 themes/*/*/cache
 themes/*/*/custom

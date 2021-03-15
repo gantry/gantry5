@@ -8,7 +8,7 @@
         - Updated SCSS compiler to v1.4
         - New SCSS compiler is more strict and fails on badly written SCSS where the old version did not
         - Use Font Awesome 5 free (#2196)
-        - Platform independent code passes phpstan v0.11 level 5 tests
+        - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
         - Major rework in Menu Manager logic

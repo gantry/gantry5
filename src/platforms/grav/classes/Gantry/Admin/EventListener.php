@@ -141,6 +141,8 @@ class EventListener implements EventSubscriberInterface
         /** @var PageIndex $pages */
         $pages = $directory->getCollection();
         $visible = $pages->visible()->nonModular();
+        // TODO: multilang support?
+        // TODO: menu particle as a real page?
 
         $all = [];
         $list = [];

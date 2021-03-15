@@ -10,7 +10,7 @@
         "pimple/pimple": "~3.2",
         "filp/whoops": "~2.5",
         "rockettheme/toolbox": "~1.5",
-        "scssphp/scssphp": "~1.2",
+        "scssphp/scssphp": "~1.4",
         "erusev/parsedown-extra": "~0.7",
         "twig/twig": "~1.42",
         "timber/timber": "^1.14"
@@ -26,7 +26,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Gantry\\": "classes/Gantry"
+            "Gantry\\": "src/classes/Gantry"
         }
     },
     "config": {

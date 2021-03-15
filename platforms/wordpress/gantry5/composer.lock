@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9f6165fc3f5cecbcfb225cab3e517ff",
+    "content-hash": "816351b8647f629edf7bb89fcc76311c",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -376,16 +376,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.9.1",
+            "version": "2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "307fb34a5ab697461ec4c9db865b20ff2fd40771"
+                "reference": "df7933820090489623ce0be5e85c7e693638e536"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/307fb34a5ab697461ec4c9db865b20ff2fd40771",
-                "reference": "307fb34a5ab697461ec4c9db865b20ff2fd40771",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/df7933820090489623ce0be5e85c7e693638e536",
+                "reference": "df7933820090489623ce0be5e85c7e693638e536",
                 "shasum": ""
             },
             "require": {
@@ -435,9 +435,15 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.9.1"
+                "source": "https://github.com/filp/whoops/tree/2.9.2"
             },
-            "time": "2020-11-01T12:00:00+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/denis-sokolov",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-24T12:00:00+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -598,16 +604,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.5.6",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "b021ce236e6273687f4eb8c113a12ccff05d6ac3"
+                "reference": "8d3ebc4d982595d6eac90e851f2b4d5c0cec0399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/b021ce236e6273687f4eb8c113a12ccff05d6ac3",
-                "reference": "b021ce236e6273687f4eb8c113a12ccff05d6ac3",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/8d3ebc4d982595d6eac90e851f2b4d5c0cec0399",
+                "reference": "8d3ebc4d982595d6eac90e851f2b4d5c0cec0399",
                 "shasum": ""
             },
             "archive": {
@@ -662,10 +668,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.5.6",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.5.7",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2020-12-03T18:08:19+00:00"
+            "time": "2021-02-17T17:58:36+00:00"
         },
         {
             "name": "scssphp/scssphp",

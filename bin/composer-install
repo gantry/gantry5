@@ -1,0 +1,19 @@
+#!/bin/bash
+
+OUTPUT=--quiet
+if [[ "$1" == '--loud' || "$1" == '-l' ]]; then
+    OUTPUT=''
+fi
+
+cd platforms
+
+echo "# Updating composer for Grav"
+cd grav/gantry5 && composer install --no-dev ${OUTPUT} && cd ../..
+
+echo "# Updating composer for Joomla"
+cd joomla/lib_gantry5 && composer install --no-dev ${OUTPUT} && cd ../..
+cd joomla/plg_system_gantry5_debugbar && composer install --no-dev ${OUTPUT} && cd ../..
+
+echo "# Updating composer for WP"
+cd wordpress/gantry5 && composer install --no-dev ${OUTPUT} && cd ../..
+cd wordpress/gantry5_debugbar && composer install --no-dev ${OUTPUT} && cd ../..

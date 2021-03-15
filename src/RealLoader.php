@@ -72,6 +72,7 @@ abstract class RealLoader
         if (defined('JVERSION') && defined('JPATH_ROOT')) {
             define('GANTRY5_PLATFORM', 'joomla');
             define('GANTRY5_ROOT', JPATH_ROOT);
+            $lib = GANTRY5_ROOT . '/libraries/gantry5';
         } elseif (defined('WP_DEBUG') && defined('ABSPATH') && defined('WP_CONTENT_DIR')) {
             define('GANTRY5_PLATFORM', 'wordpress');
             if (defined('CONTENT_DIR') && class_exists('Env')) {
@@ -81,6 +82,7 @@ abstract class RealLoader
                 // Plain WP support.
                 define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
             }
+            $lib = WP_CONTENT_DIR . '/plugins/gantry5';
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
@@ -90,13 +92,7 @@ abstract class RealLoader
             throw new \RuntimeException('Gantry: CMS not detected!');
         }
 
-        $base = __DIR__;
-        $vendor = "{$base}/platforms/" . GANTRY5_PLATFORM;
-        $dev = is_dir($vendor);
-        if (!$dev) {
-            $vendor = $base;
-        }
-        $autoload = "{$vendor}/vendor/autoload.php";
+        $autoload = "{$lib}/vendor/autoload.php";
 
         // Initialize auto-loading.
         if (!file_exists($autoload)) {
@@ -106,8 +102,11 @@ abstract class RealLoader
         /** @var ClassLoader $loader */
         $loader = require $autoload;
 
-        if ($dev) {
-            $loader->addPsr4('Gantry\\', "{$base}/classes/Gantry", true);
+        // Support for development environments.
+        if (file_exists($lib . '/platforms')) {
+            $loader->addPsr4('Gantry\\', "{$lib}/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);
+        } elseif (file_exists($lib . '/src/platforms')) {
+            $loader->addPsr4('Gantry\\', "{$lib}/src/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);
         }
 
         return $loader;
