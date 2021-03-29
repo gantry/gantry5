@@ -143,6 +143,8 @@ class EventListener implements EventSubscriberInterface
      */
     public function onMenusSave(Event $event)
     {
+        static $ignoreList = ['title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
+
         /** @var Gantry $gantry */
         $gantry = $event->gantry;
         /** @var array $menu */
@@ -207,18 +209,42 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
 
+                // Save Gantry menu data into the menu item.
+                $all = $item;
+                $item = $this->normalizeMenuItem($item, $ignoreList);
+                foreach ($all as $var => $value) {
+                    if (!isset($item[$var])) {
+                        $value = null;
+                    } elseif (is_array($value)) {
+                        // Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                        $i = 10;
+                        $list = [];
+                        foreach ($value as $k => $v) {
+                            $list['__field' . $i] = ['key' => $k, 'value' => $v];
+                        }
+                        $value = $list;
+                    }
+                    $var = 'gantry-' . $var;
+                    $old = $params->get($var);
+                    if ($value !== $old) {
+                        if (null === $value) {
+                            $params->remove($var);
+                        } else {
+                            $params->set($var, $value);
+                        }
+                        $modified = true;
+                    }
+                }
+
                 if ($modified && $gantry->authorize('menu.edit')) {
                     $table->params = (string) $params;
                     if (!$table->check() || !$table->store()) {
                         throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
                     }
                 }
-
-                // Avoid saving values which are also stored in Joomla.
-                unset($item['title'], $item['anchor_class'], $item['image'], $item['icon_only'], $item['target'], $item['enabled']);
+            } else {
+                $item = $this->normalizeMenuItem($item);
             }
-
-            $item = $this->normalizeMenuItem($item);
 
             // Because of ordering we need to save all menu items, including those from Joomla which have no data except id.
             $event->menu["items.{$key}"] = $item;

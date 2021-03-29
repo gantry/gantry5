@@ -13,12 +13,13 @@
 
     <files folder="library">
         <filename>bootstrap.php</filename>
-        <filename>Loader.php</filename>
-        <filename>RealLoader.php</filename>
         <filename>composer.json</filename>
         <filename>composer.lock</filename>
+        <filename>Loader.php</filename>
+        <filename>RealLoader.php</filename>
         <filename>MD5SUMS</filename>
         <folder>classes</folder>
+        <folder>language</folder>
         <folder>vendor</folder>
     </files>
 

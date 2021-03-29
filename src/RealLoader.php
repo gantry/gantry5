@@ -72,7 +72,7 @@ abstract class RealLoader
         if (defined('JVERSION') && defined('JPATH_ROOT')) {
             define('GANTRY5_PLATFORM', 'joomla');
             define('GANTRY5_ROOT', JPATH_ROOT);
-            $lib = GANTRY5_ROOT . '/libraries/gantry5';
+            $lib = JPATH_ROOT . '/libraries/gantry5';
         } elseif (defined('WP_DEBUG') && defined('ABSPATH') && defined('WP_CONTENT_DIR')) {
             define('GANTRY5_PLATFORM', 'wordpress');
             if (defined('CONTENT_DIR') && class_exists('Env')) {
