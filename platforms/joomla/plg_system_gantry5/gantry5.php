@@ -681,6 +681,8 @@ class plgSystemGantry5 extends CMSPlugin
                 break;
 
             case 'com_menus.item':
+                JForm::addFormPath(__DIR__ . '/forms');
+                $form->loadFile('menu_item', false);
                 break;
         }
 

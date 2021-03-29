@@ -336,6 +336,7 @@ class Menu extends AbstractMenu
             $id = (int)$menuItem->id;
             $type = $menuItem->type;
             $link = $menuItem->link;
+            $params = $menuItem->getParams();
 
             // Figure out menu link.
             switch ($type) {
@@ -354,7 +355,7 @@ class Menu extends AbstractMenu
 
                 case 'alias':
                     // If this is an alias use the item id stored in the parameters to make the link.
-                    $link = 'index.php?Itemid=' . $menuItem->getParams()->get('aliasoptions', 0);
+                    $link = 'index.php?Itemid=' . $params->get('aliasoptions', 0);
 
                     // FIXME: Joomla 4: missing multilanguage support
                     break;
@@ -401,23 +402,43 @@ class Menu extends AbstractMenu
                 'alias' => $menuItem->alias,
                 'type' => $type,
                 'link' => $link,
-                'enabled' => (bool)$menuItem->getParams()->get('menu_show', 1),
+                'enabled' => (bool)$params->get('menu_show', 1),
                 'level' => $level,
-                'link_title' => $menuItem->getParams()->get('menu-anchor_title', ''),
-                'rel' => $menuItem->getParams()->get('menu-anchor_rel', ''),
+                'link_title' => $params->get('menu-anchor_title', ''),
+                'rel' => $params->get('menu-anchor_rel', ''),
             ];
 
-            // TODO: Add Gantry menu item properties from the menu item
+            // Add Gantry menu item properties from the menu item.
+            $paramsEmbedded = false;
+            foreach ($params as $param => $value) {
+                if (strpos($param, 'gantry-') === 0) {
+                    $paramsEmbedded = true;
+                    $param = substr($param, 7);
+                    if (is_object($value)) {
+                        $value = get_object_vars($value);
+                    }
+                    if (is_array($value)) {
+                        $list = [];
+                        foreach ($value as $v) {
+                            $list[] = [$v->key => $v->value];
+                        }
+                        $value = $list;
+                    }
+                    $properties[$param] = $value;
+                }
+            }
 
             // Add menu item properties from menu configuration.
-            $properties = array_replace($properties, $data);
+            if ($paramsEmbedded === false) {
+                $properties = array_replace($properties, $data);
+            }
 
             // And if not available in configuration, default to Joomla.
             $properties += [
                 'title' => $menuItem->title,
-                'anchor_class' => $menuItem->getParams()->get('menu-anchor_css', ''),
-                'image' => $menuItem->getParams()->get('menu_image', ''),
-                'icon_only' => !$menuItem->getParams()->get('menu_text', 1),
+                'anchor_class' => $params->get('menu-anchor_css', ''),
+                'image' => $params->get('menu_image', ''),
+                'icon_only' => !$params->get('menu_text', 1),
                 'target' => $target
             ];
 

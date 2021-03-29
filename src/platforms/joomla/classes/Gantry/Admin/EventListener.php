@@ -22,6 +22,7 @@ use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Version;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -212,15 +213,22 @@ class EventListener implements EventSubscriberInterface
                 // Save Gantry menu data into the menu item.
                 $all = $item;
                 $item = $this->normalizeMenuItem($item, $ignoreList);
+                $version = Version::MAJOR_VERSION;
                 foreach ($all as $var => $value) {
                     if (!isset($item[$var])) {
                         $value = null;
                     } elseif (is_array($value)) {
-                        // Save lists as {"__field10":{"key":"key","value":"value"}, ...}
-                        $i = 10;
+                        $i = $version < 4 ? 0 : 10;
                         $list = [];
-                        foreach ($value as $k => $v) {
-                            $list['__field' . $i] = ['key' => $k, 'value' => $v];
+                        foreach ($value as $v) {
+                            if ($version < 4) {
+                                // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
+                                $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            } else {
+                                // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                                $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            }
+                            $i++;
                         }
                         $value = $list;
                     }
