@@ -14,6 +14,7 @@ namespace Gantry\Admin;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Menu\Item;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\Manifest;
@@ -170,7 +171,11 @@ class EventListener implements EventSubscriberInterface
 
         $table = MenuHelper::getMenu();
 
+        $menuObject = new Menu();
         foreach ($menu['items'] as $key => $item) {
+            // Make sure we have all the default values.
+            $item = (new Item($menuObject, $item))->toArray(true);
+
             $id = !empty($item['id']) ? (int) $item['id'] : 0;
             if ($id && $table->load($item['id'])) {
                 $params = new Registry($table->params);
@@ -180,15 +185,15 @@ class EventListener implements EventSubscriberInterface
 
                 $item['id'] = $id;
 
-                $title = $menu["items.{$key}.title"];
-                $browserNav = (int)($menu["items.{$key}.target"] === '_blank');
+                $title = $item['title'];
+                $browserNav = (int)($item['target'] === '_blank');
 
                 $options = [
                     // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
-                    // 'menu-anchor_css' => $menu["items.{$key}.class"],
-                    'menu_image' => $menu["items.{$key}.image"],
-                    'menu_text' => (int)(!$menu["items.{$key}.icon_only"]),
-                    'menu_show' => (int)$menu["items.{$key}.enabled"],
+                    // 'menu-anchor_css' => $item['class'],
+                    'menu_image' => $item['image'],
+                    'menu_text' => (int)(!$item['icon_only']),
+                    'menu_show' => (int)$item['enabled'],
                 ];
 
                 $modified = false;
@@ -216,8 +221,11 @@ class EventListener implements EventSubscriberInterface
                 $version = Version::MAJOR_VERSION;
                 foreach ($all as $var => $value) {
                     if (!isset($item[$var])) {
+                        // Unset default values.
                         $value = null;
-                    } elseif (is_array($value)) {
+                    }
+
+                    if (is_array($value)) {
                         $i = $version < 4 ? 0 : 10;
                         $list = [];
                         foreach ($value as $v) {
