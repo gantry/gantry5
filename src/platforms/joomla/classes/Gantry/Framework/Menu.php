@@ -414,16 +414,21 @@ class Menu extends AbstractMenu
                 if (strpos($param, 'gantry-') === 0) {
                     $paramsEmbedded = true;
                     $param = substr($param, 7);
+
+                    // Convert input from Joomla list format.
                     if (is_object($value)) {
                         $value = get_object_vars($value);
                     }
-                    if (is_array($value)) {
+                    if (is_array($value) && in_array($param, ['attributes', 'link_attributes'], true)) {
                         $list = [];
-                        foreach ($value as $v) {
-                            $list[] = [$v->key => $v->value];
+                        foreach ($value as $k => $v) {
+                            if (is_array($v) && isset($v->key, $v->value)) {
+                                $list[] = [$v->key => $v->value];
+                            }
                         }
                         $value = $list;
                     }
+
                     $properties[$param] = $value;
                 }
             }
@@ -436,7 +441,8 @@ class Menu extends AbstractMenu
             // And if not available in configuration, default to Joomla.
             $properties += [
                 'title' => $menuItem->title,
-                'anchor_class' => $params->get('menu-anchor_css', ''),
+                // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
+                //'anchor_class' => $params->get('menu-anchor_css', ''),
                 'image' => $params->get('menu_image', ''),
                 'icon_only' => !$params->get('menu_text', 1),
                 'target' => $target

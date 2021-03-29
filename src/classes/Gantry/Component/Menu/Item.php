@@ -69,10 +69,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
         'target' => '_self',
         'dropdown' => '',
         'dropdown_hide' => false,
-        'attributes' => [], // WP
-        'link_attributes' => [], // WP
-        'dropdown_dir' => 'right', // WP
-        'width' => 'auto', // WP
+        'attributes' => [],
+        'link_attributes' => [],
+        'dropdown_dir' => 'right',
+        'width' => 'auto',
         'rel' => '', // WP
         'icon' => '',
         'image' => '',

@@ -147,14 +147,18 @@ class EventListener implements EventSubscriberInterface
     {
         static $ignoreList = ['type', 'link', 'title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
 
-        /** @var Gantry $gantry */
-        $gantry = $event->gantry;
         /** @var array $menu */
         $menu = $event->menu;
-        /** @var string $resource */
-        $resource = $event->resource;
+
+        // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
+        $ordering = Menu::flattenOrdering($menu['ordering']);
+
+        // Prepare menu items data.
+        $items = Menu::prepareMenuItems($menu['items'], $menu['ordering'], $ordering);
 
         // Save global menu settings into Joomla.
+        /** @var string $resource */
+        $resource = $event->resource;
         $menuType = MenuHelper::getMenuType();
         if (!$menuType->load(['menutype' => $resource])) {
             throw new \RuntimeException("Saving menu failed: Menu type {$resource} not found.", 400);
@@ -163,6 +167,9 @@ class EventListener implements EventSubscriberInterface
             'title' => $menu['settings.title'],
             'description' => $menu['settings.description']
         ];
+
+        /** @var Gantry $gantry */
+        $gantry = $event->gantry;
         if ($gantry->authorize('menu.edit') && !$menuType->save($options)) {
             throw new \RuntimeException('Saving menu failed: '. $menuType->getError(), 400);
         }
@@ -171,8 +178,11 @@ class EventListener implements EventSubscriberInterface
 
         $table = MenuHelper::getMenu();
 
+        // Delete removed particles from the menu.
+        // TODO: remove deleted particles
+
         $menuObject = new Menu();
-        foreach ($menu['items'] as $key => $item) {
+        foreach ($items as $key => $item) {
             // Make sure we have all the default values.
             $item = (new Item($menuObject, $item))->toArray(true);
 
@@ -214,6 +224,7 @@ class EventListener implements EventSubscriberInterface
                 // Gantry params.
                 $all = $item;
                 $item = $this->normalizeMenuItem($item, $ignoreList);
+
                 $version = Version::MAJOR_VERSION;
                 foreach ($all as $var => $value) {
                     // Default value check.
@@ -221,17 +232,21 @@ class EventListener implements EventSubscriberInterface
                         $value = null;
                     }
 
-                    // Joomla has different format for lists than Gantry, convert to Joomla supperted version.
-                    if (is_array($value)) {
+                    // Joomla has different format for lists than Gantry, convert to Joomla supported version.
+                    if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
                         $i = $version < 4 ? 0 : 10;
                         $list = [];
-                        foreach ($value as $v) {
-                            if ($version < 4) {
-                                // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
-                                $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                        foreach ($value as $k => $v) {
+                            if (is_array($v)) {
+                                if ($version < 4) {
+                                    // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
+                                    $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                                } else {
+                                    // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                                    $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                                }
                             } else {
-                                // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
-                                $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                                $list[$k] = $v;
                             }
                             $i++;
                         }
@@ -260,6 +275,9 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
             } else {
+                // Create new particle menu item.
+                // TODO: Add missing particle
+
                 $item = $this->normalizeMenuItem($item);
             }
 
