@@ -29,6 +29,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version;
+use RocketTheme\Toolbox\DI\Container;
 
 /**
  * The Platform Configuration class contains configuration information.
@@ -42,9 +43,9 @@ class Platform extends BasePlatform
     /** @var bool */
     public $no_base_layout = false;
     /** @var string */
-    public $module_wrapper = '<div class="platform-content">%s</div>';
+    public $module_wrapper;
     /** @var string */
-    public $component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
+    public $component_wrapper;
 
     /** @var string */
     protected $name = 'joomla';
@@ -55,17 +56,18 @@ class Platform extends BasePlatform
     /** @var array|null */
     protected $modules;
 
-    /**
-     * @param string $feature
-     * @return bool
-     */
-    public function has($feature)
+    public function __construct(Container $container)
     {
-        if (Version::MAJOR_VERSION === 4 && $feature === 'fontawesome') {
-            return true;
-        }
+        parent::__construct($container);
 
-        return parent::has($feature);
+        $this->module_wrapper = '<div class="platform-content">%s</div>';
+
+        if (Version::MAJOR_VERSION < 4) {
+            $this->component_wrapper = '<div class="platform-content row-fluid"><div class="span12">%s</div></div>';
+        } else {
+            $this->features['fontawesome'] = true;
+            $this->component_wrapper = '<div class="platform-content container"><div class="row"><div class="col">%s</div></div></div>';
+        }
     }
 
     /**
@@ -90,11 +92,6 @@ class Platform extends BasePlatform
      */
     public function init()
     {
-        if (version_compare(JVERSION, '4', '>=')) {
-            // FIXME: Joomla 4 Font Awesome 5 support
-            //$this->features['fontawesome'] = true;
-        }
-
         // Support linked sample data.
         $theme = isset($this->container['theme.name']) ? $this->container['theme.name'] : null;
         if ($theme && is_dir(JPATH_ROOT . "/media/gantry5/themes/{$theme}/media-shared")) {
@@ -217,6 +214,7 @@ class Platform extends BasePlatform
      */
     public function getThemeAdminUrl($theme)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $session = $application->getSession();
         $token = $session::getFormToken();
@@ -593,6 +591,9 @@ class Platform extends BasePlatform
      */
     public function finder($domain, $options = null)
     {
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
         $options = (array) $options;
         switch ($domain) {
             case 'article':
@@ -600,12 +601,12 @@ class Platform extends BasePlatform
             case 'content':
                 $finder = new ContentFinder($options);
 
-                return Factory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return $app->isClient('site') ? $finder->authorised() : $finder;
             case 'category':
             case 'categories':
                 $finder = (new CategoryFinder($options))->extension('content');
 
-                return Factory::getApplication()->isClient('site') ? $finder->authorised() : $finder;
+                return $app->isClient('site') ? $finder->authorised() : $finder;
         }
 
         return null;
@@ -630,6 +631,7 @@ class Platform extends BasePlatform
      */
     public function authorize($action, $id = null)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
         if (!$user) {

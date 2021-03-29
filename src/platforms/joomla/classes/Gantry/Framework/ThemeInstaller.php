@@ -97,6 +97,7 @@ class ThemeInstaller extends AbstractInstaller
      */
     public function render($template, $context = [])
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $jsession = $application->getSession();
         $token = $jsession::getFormToken();

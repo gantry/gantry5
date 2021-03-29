@@ -14,6 +14,7 @@ namespace Gantry\Framework;
 use Gantry\Component\Assignments\AbstractAssignments;
 use Gantry\Joomla\CacheHelper;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -36,6 +37,7 @@ class Assignments extends AbstractAssignments
      */
     public function loadAssignments()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         if (!$application->isClient('site')) {
@@ -124,6 +126,7 @@ class Assignments extends AbstractAssignments
             throw new \RuntimeException('Template style does not exist');
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         $user = $application->getIdentity();

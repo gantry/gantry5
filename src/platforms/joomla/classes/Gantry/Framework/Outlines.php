@@ -16,6 +16,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Outline\OutlineCollection;
 use Gantry\Debugger;
 use Gantry\Joomla\StyleHelper;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -50,6 +51,7 @@ class Outlines extends OutlineCollection
      */
     public function current($template = null)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         if (!is_object($template)) {

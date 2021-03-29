@@ -14,6 +14,7 @@ namespace Gantry\Joomla\Assignments;
 use Gantry\Component\Assignments\AssignmentsInterface;
 use Gantry\Debugger;
 use Gantry\Framework\Gantry;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -40,6 +41,7 @@ class AssignmentsStyle implements AssignmentsInterface
         if (null === $rules) {
             $rules = [];
 
+            /** @var CMSApplication $application */
             $application = Factory::getApplication();
             $template = $application->getTemplate(true);
 

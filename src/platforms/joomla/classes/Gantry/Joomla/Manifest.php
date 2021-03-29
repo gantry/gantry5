@@ -36,7 +36,7 @@ class Manifest
         if (!is_file($this->path)) {
             throw new \RuntimeException(sprintf('Template %s does not exist.', $theme));
         }
-        $this->xml = $manifest ?: simplexml_load_file($this->path);
+        $this->xml = $manifest ?: simplexml_load_string(file_get_contents($this->path));
     }
 
     /**

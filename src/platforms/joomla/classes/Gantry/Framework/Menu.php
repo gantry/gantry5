@@ -168,6 +168,7 @@ class Menu extends AbstractMenu
      */
     public function getCacheId()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
 
@@ -226,8 +227,11 @@ class Menu extends AbstractMenu
         $attributes = ['menutype'];
         $values = [$params['menu']];
 
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+
         // Items are already filtered by access and language, in admin we need to work around that.
-        if (Factory::getApplication()->isClient('administrator')) {
+        if ($app->isClient('administrator')) {
             $attributes[] = 'access';
             $values[] = null;
 

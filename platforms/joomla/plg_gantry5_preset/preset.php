@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -13,6 +14,11 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\DispatcherInterface;
+
+// Quick check to prevent fatal error in unsupported Joomla admin.
+if (!class_exists(CMSPlugin::class)) {
+    return;
+}
 
 /**
  * Class plgGantry5Preset

@@ -44,7 +44,7 @@ class Router extends BaseRouter
         // TODO: Remove style variable.
         $style = $input->getInt('style');
         $theme = $input->getCmd('theme');
-        $path = array_filter(explode('/', $input->getString('view', '')), function($var) { return $var !== ''; });
+        $path = array_filter(explode('/', $input->getString('view', '')), static function($var) { return $var !== ''; });
 
         $this->setTheme($theme, $style);
 
@@ -140,6 +140,7 @@ class Router extends BaseRouter
      */
     protected function checkSecurityToken()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $session = $application->getSession();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -9,6 +10,7 @@
  */
 defined('_JEXEC') or die ();
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\Router\RouterBase;
 use Joomla\CMS\Factory;
 
@@ -60,6 +62,7 @@ class Gantry5Router extends RouterBase
  */
 function Gantry5BuildRoute(&$query)
 {
+    /** @var CMSApplication $app */
 	$app = Factory::getApplication();
 	$router = new Gantry5Router($app, $app->getMenu());
 
@@ -77,7 +80,8 @@ function Gantry5BuildRoute(&$query)
  */
 function Gantry5ParseRoute($segments)
 {
-	$app = Factory::getApplication();
+    /** @var CMSApplication $app */
+    $app = Factory::getApplication();
 	$router = new Gantry5Router($app, $app->getMenu());
 
 	return $router->parse($segments);

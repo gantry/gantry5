@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -21,6 +22,9 @@ use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 
+/**
+ * Class ModGantry5ParticleHelper
+ */
 class ModGantry5ParticleHelper
 {
     /**

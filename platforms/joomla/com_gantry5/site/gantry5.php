@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -49,7 +50,7 @@ if (!$menuItem) {
 }
 
 // Handle non-html formats and error page.
-if (strtolower($input->getCmd('format', 'html')) !== 'html' || $input->getCmd('view') === 'error' || $input->getInt('g5_not_found')) {
+if ($input->getCmd('view') === 'error' || $input->getInt('g5_not_found') || strtolower($input->getCmd('format', 'html')) !== 'html') {
     // Joomla 3 support
     if (class_exists('JException')) {
         throw new JException(Text::_('JERROR_PAGE_NOT_FOUND'), 404);

@@ -120,6 +120,7 @@ class ModuleFinder extends Finder
             return $this;
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
 

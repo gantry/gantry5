@@ -153,6 +153,7 @@ class ContentFinder extends Finder
             $this->where('a.catid', 'NOT IN', $unpublished);
         }
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
         if (!$user) {

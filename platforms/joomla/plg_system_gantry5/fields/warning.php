@@ -1,5 +1,8 @@
 <?php
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Text;
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -20,6 +23,7 @@ class JFormFieldWarning extends JFormField
 
     protected function getInput()
     {
+        /** @var CMSApplication $app */
         $app = JFactory::getApplication();
         $input = $app->input;
 
@@ -43,9 +47,9 @@ class JFormFieldWarning extends JFormField
         $lang = JFactory::getLanguage();
         $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
-        $title1 = JText::_('GANTRY5_PLATFORM_STYLES');
-        $title2 = JText::_('GANTRY5_PLATFORM_LAYOUT');
-        $title3 = JText::_('GANTRY5_PLATFORM_PAGESETTINGS');
+        $title1 = Text::_('GANTRY5_PLATFORM_STYLES');
+        $title2 = Text::_('GANTRY5_PLATFORM_LAYOUT');
+        $title3 = Text::_('GANTRY5_PLATFORM_PAGESETTINGS');
 
         return <<<HTML
 <a href="{$route}/styles&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title1}</a>
@@ -87,6 +91,10 @@ HTML;
         return $list;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     private function isGantryTemplate($name)
     {
         return file_exists(JPATH_SITE . "/templates/{$name}/gantry/theme.yaml");

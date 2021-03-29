@@ -15,6 +15,7 @@ use Gantry\Framework\Gantry;
 use Gantry\Framework\Theme;
 use Gantry\Joomla\Category\Category;
 use Gantry\Joomla\Object\AbstractObject;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -153,6 +154,7 @@ class Content extends AbstractObject
      */
     public function edit()
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
         $asset = "com_content.article.{$this->id}";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -9,6 +10,7 @@
  */
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -29,11 +31,11 @@ class Pkg_Gantry5InstallerScript
     protected $versions = array(
         'PHP' => array (
             '5.6' => '5.6.20',
-            '0' => '7.3.17' // Preferred version
+            '0' => '7.4.16' // Preferred version
         ),
         'Joomla!' => array (
             '3.9' => '3.9.0',
-            '0' => '3.9.18' // Preferred version
+            '0' => '3.9.25' // Preferred version
         )
     );
     /**
@@ -106,6 +108,7 @@ class Pkg_Gantry5InstallerScript
             // Prevent installation if requirements are not met.
             $errors = $this->checkRequirements($manifest->version);
             if ($errors) {
+                /** @var CMSApplication $app */
                 $app = Factory::getApplication();
 
                 foreach ($errors as $error) {

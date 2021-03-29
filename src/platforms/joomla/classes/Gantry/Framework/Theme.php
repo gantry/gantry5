@@ -70,6 +70,7 @@ class Theme extends AbstractTheme
         /** @var CoreExtension $core */
         $core = $twig->getExtension(CoreExtension::class);
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         $user = $application->getIdentity();
 
@@ -213,7 +214,7 @@ class Theme extends AbstractTheme
         $loader = parent::setTwigLoaderPaths($loader);
 
         if ($loader) {
-            $loader->setPaths($this->getTwigPaths());
+            $loader->setPaths(self::getTwigPaths());
         }
 
         return $loader;

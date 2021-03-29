@@ -11,6 +11,7 @@
 
 namespace Gantry\Joomla;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\Menus\Administrator\Model\ItemModel; // Joomla 4
@@ -68,7 +69,7 @@ class MenuHelper
 
     /**
      * @param string $name
-     * @return \MenusModelItem|ItemModel
+     * @return ItemModel|\MenusModelItem
      */
     private static function loadModel($name = 'Item')
     {
@@ -85,6 +86,7 @@ class MenuHelper
                 Table::addIncludePath("{$path}/tables");
                 require_once "{$path}/models/{$filename}.php";
 
+                /** @var CMSApplication $application */
                 $application = Factory::getApplication();
 
                 // Load language strings.

@@ -33,7 +33,10 @@ class Gantry extends Base\Gantry
      */
     public function admin()
     {
-        return Factory::getApplication()->isClient('administrator');
+        /** @var CMSApplication $application */
+        $app = Factory::getApplication();
+
+        return $app->isClient('administrator');
     }
 
     /**

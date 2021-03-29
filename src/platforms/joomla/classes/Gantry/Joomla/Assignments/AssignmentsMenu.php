@@ -12,6 +12,7 @@
 namespace Gantry\Joomla\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Version;
 
@@ -35,6 +36,7 @@ class AssignmentsMenu implements AssignmentsInterface
     {
         $rules = [];
 
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
         if ($application->isClient('site')) {
             $menu = $application->getMenu();
@@ -57,6 +59,7 @@ class AssignmentsMenu implements AssignmentsInterface
      */
     public function listRules($configuration)
     {
+        /** @var CMSApplication $application */
         $application = Factory::getApplication();
 
         $data = $this->getMenulinks();

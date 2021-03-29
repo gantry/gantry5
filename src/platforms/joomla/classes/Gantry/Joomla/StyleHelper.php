@@ -15,6 +15,7 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\ThemeInstaller;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
@@ -161,6 +162,7 @@ class StyleHelper
 
                 require_once "{$path}/models/{$filename}.php";
 
+                /** @var CMSApplication $application */
                 $application = Factory::getApplication();
 
                 // Load language strings.

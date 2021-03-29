@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   Gantry 5
  * @author    RocketTheme http://www.rockettheme.com
@@ -64,10 +65,7 @@ class plgSystemGantry5 extends CMSPlugin
         $this->_name = isset($config['name']) ? $config['name'] : 'gantry5';
         $this->_type = isset($config['type']) ? $config['type'] : 'system';
 
-        // Get the application if not done by JPlugin. This may happen during upgrades from Joomla 2.5.
-        if (!$this->app) {
-            $this->app = Factory::getApplication();
-        }
+        $this->app = Factory::getApplication();
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
@@ -84,6 +82,7 @@ class plgSystemGantry5 extends CMSPlugin
             return;
         }
 
+        // Finish initialization and register all the events.
         parent::__construct($subject, $config);
     }
 
@@ -499,6 +498,11 @@ class plgSystemGantry5 extends CMSPlugin
         return true;
     }
 
+    /**
+     * @param string $context
+     * @param JTable $table
+     * @param bool $isNew
+     */
     public function onContentBeforeSave($context, $table, $isNew)
     {
         if ($context !== 'com_menus.item') {
@@ -506,6 +510,11 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param JTable $table
+     * @param bool $isNew
+     */
     public function onContentAfterSave($context, $table, $isNew)
     {
         if ($context !== 'com_menus.item') {
@@ -513,6 +522,10 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param JTable $table
+     */
     public function onContentBeforeDelete($context, $table)
     {
         if ($context !== 'com_menus.item') {
@@ -520,6 +533,10 @@ class plgSystemGantry5 extends CMSPlugin
         }
     }
 
+    /**
+     * @param string $context
+     * @param JTable $table
+     */
     public function onContentAfterDelete($context, $table)
     {
         if ($context !== 'com_menus.item') {

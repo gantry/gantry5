@@ -137,6 +137,7 @@ class CategoryFinder extends Finder
             $this->where('a.id', 'NOT IN', $unpublished);
         }
 
+        /** @var CMSApplication $app */
         $app = Factory::getApplication();
 
         // Check authorization.
