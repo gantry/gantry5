@@ -145,7 +145,7 @@ class EventListener implements EventSubscriberInterface
      */
     public function onMenusSave(Event $event)
     {
-        static $ignoreList = ['title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
+        static $ignoreList = ['type', 'link', 'title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
 
         /** @var Gantry $gantry */
         $gantry = $event->gantry;
@@ -178,16 +178,25 @@ class EventListener implements EventSubscriberInterface
 
             $id = !empty($item['id']) ? (int) $item['id'] : 0;
             if ($id && $table->load($item['id'])) {
-                $params = new Registry($table->params);
+                $modified = false;
 
-                // Menu item exists in Joomla, let's update it instead.
-                unset($item['type'], $item['link']);
+                $params = new Registry($table->params);
 
                 $item['id'] = $id;
 
                 $title = $item['title'];
-                $browserNav = (int)($item['target'] === '_blank');
+                if ($table->title !== $title) {
+                    $table->title = $title;
+                    $modified = true;
+                }
 
+                $browserNav = (int)($item['target'] === '_blank');
+                if ($table->browserNav != $browserNav) {
+                    $table->browserNav = $browserNav;
+                    $modified = true;
+                }
+
+                // Joomla params.
                 $options = [
                     // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
                     // 'menu-anchor_css' => $item['class'],
@@ -195,19 +204,6 @@ class EventListener implements EventSubscriberInterface
                     'menu_text' => (int)(!$item['icon_only']),
                     'menu_show' => (int)$item['enabled'],
                 ];
-
-                $modified = false;
-
-                if ($table->title !== $title) {
-                    $table->title = $title;
-                    $modified = true;
-                }
-
-                if ($table->browserNav != $browserNav) {
-                    $table->browserNav = $browserNav;
-                    $modified = true;
-                }
-
                 foreach ($options as $var => $value) {
                     if ($params->get($var) !== $value) {
                         $params->set($var, $value);
@@ -215,16 +211,17 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
 
-                // Save Gantry menu data into the menu item.
+                // Gantry params.
                 $all = $item;
                 $item = $this->normalizeMenuItem($item, $ignoreList);
                 $version = Version::MAJOR_VERSION;
                 foreach ($all as $var => $value) {
+                    // Default value check.
                     if (!isset($item[$var])) {
-                        // Unset default values.
                         $value = null;
                     }
 
+                    // Joomla has different format for lists than Gantry, convert to Joomla supperted version.
                     if (is_array($value)) {
                         $i = $version < 4 ? 0 : 10;
                         $list = [];
@@ -240,12 +237,16 @@ class EventListener implements EventSubscriberInterface
                         }
                         $value = $list;
                     }
+
+                    // Prefix gantry parameters and save them.
                     $var = 'gantry-' . $var;
                     $old = $params->get($var);
                     if ($value !== $old) {
                         if (null === $value) {
+                            // Remove default value.
                             $params->remove($var);
                         } else {
+                            // Change value.
                             $params->set($var, $value);
                         }
                         $modified = true;
