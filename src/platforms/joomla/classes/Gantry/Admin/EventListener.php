@@ -176,10 +176,31 @@ class EventListener implements EventSubscriberInterface
 
         unset($menu['settings']);
 
+        $stored = $this->getAll($resource);
+
+        // Create database id map to detect moved/deleted menu items.
+        $idMap = [];
+        foreach ($items as $path => $item) {
+            if (!empty($item['id'])) {
+                $idMap[$item['id']] = $path;
+            }
+        }
+
         $table = MenuHelper::getMenu();
 
         // Delete removed particles from the menu.
-        // TODO: remove deleted particles
+        foreach ($stored as $key => $info) {
+            $path = isset($idMap[$key]) ? $idMap[$key] : null;
+            if (null === $path && $info['type'] === 'heading') {
+                $params = json_decode($info['params'], true);
+                if (!empty($params['gantry_particle'])) {
+                    $table->delete($key, false);
+                }
+            }
+        }
+
+        // Add missing particles into the menu.
+        // TODO: Add missing particles
 
         $menuObject = new Menu();
         foreach ($items as $key => $item) {
@@ -275,9 +296,6 @@ class EventListener implements EventSubscriberInterface
                     }
                 }
             } else {
-                // Create new particle menu item.
-                // TODO: Add missing particle
-
                 $item = $this->normalizeMenuItem($item);
             }
 
@@ -285,9 +303,46 @@ class EventListener implements EventSubscriberInterface
             $event->menu["items.{$key}"] = $item;
         }
 
+        // Finally reorder all menu items.
+        $first = reset($stored);
+        $i = isset($first['lft']) ? $first['lft'] : null;
+        if ($i) {
+            $ids = [];
+            $lft = [];
+            foreach ($idMap as $key => $path) {
+                $ids[] = $key;
+                $lft[] = $i++;
+            }
+
+            $table->saveorder($ids, $lft);
+        }
+
         // Clean the cache.
         CacheHelper::cleanMenu();
     }
+
+    /**
+     * @param string $menutype
+     * @return array
+     */
+    protected function getAll($menutype)
+	{
+	    $table = MenuHelper::getMenu();
+        $db = $table->getDbo();
+        $name = $table->getTableName();
+		$key = $table->getKeyName();
+
+		// Get the node and children as a tree.
+		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.params';
+		$query = $db->getQuery(true)
+			->select($select)
+			->from($name . ' AS n, ' . $name . ' AS p')
+			->where('n.lft BETWEEN p.lft AND p.rgt')
+			->where('n.menutype = ' . $db->quote($menutype))
+			->order('n.lft');
+
+		return $db->setQuery($query)->loadAssocList($key);
+	}
 
     /**
      * @param array $item
