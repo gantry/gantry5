@@ -255,10 +255,10 @@ class Menu extends AbstractMenu
         foreach ($items as $path => &$item) {
             if (isset($item['yaml_path'])) {
                 $path = $item['yaml_path'];
-            } else {
-                $item['yaml_path'] = $path;
             }
 
+            $path = strtolower(str_replace('/__', '/', trim($path, '_')));
+            $item['yaml_path'] = $path;
             $pathLookup[$path] = &$item;
 
             if (isset($item['id']) && is_numeric($item['id'])) {
@@ -294,7 +294,7 @@ class Menu extends AbstractMenu
         // Create particles which are only inside the menu YAML.
         foreach ($pathLookup as $path => $data) {
             // Ignore everything which is not a module or particle type.
-            if (!isset($data['type']) || !\in_array($data['type'], ['module', 'particle'], true)) {
+            if (isset($map[$path]) || !isset($data['type']) || !\in_array($data['type'], ['module', 'particle'], true)) {
                 continue;
             }
 
@@ -340,8 +340,13 @@ class Menu extends AbstractMenu
 
             // Figure out menu link.
             switch ($type) {
-                case 'separator':
                 case 'heading':
+                case 'separator':
+                    // Check if menu item contains a particle.
+                    if (!empty($params['gantry-particle'])) {
+                        $type = 'particle';
+                    }
+
                     // These types have no link.
                     $link = null;
                     break;
@@ -427,6 +432,8 @@ class Menu extends AbstractMenu
                             }
                         }
                         $value = $list;
+                    } elseif ($param === 'options') {
+                        $value = $value ? json_decode($value, true) : [];
                     }
 
                     $properties[$param] = $value;
@@ -464,9 +471,6 @@ class Menu extends AbstractMenu
                 $properties['link'] = null;
             }
         }
-
-        // FIXME: do not commit this:
-        $properties['dropdown_hide'] = 0;
 
         $item = new Item($this, $properties);
 

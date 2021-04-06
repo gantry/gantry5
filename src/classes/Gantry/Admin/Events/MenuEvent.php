@@ -38,6 +38,8 @@ class MenuEvent extends Event
     public $menu;
     /** @var bool */
     public $save = true;
+    /** @var bool */
+    public $delete = false;
     /** @var array|null */
     public $debug;
 }

@@ -84,6 +84,11 @@
             <field name="gantry-subtitle"
                    type="text"
                    label="Subtitle"/>
+            <field name="gantry-particle"
+                   type="hidden"/>
+            <field name="gantry-options"
+                   type="hidden"
+                   filter="raw"/>
         </fieldset>
     </fields>
 </form>

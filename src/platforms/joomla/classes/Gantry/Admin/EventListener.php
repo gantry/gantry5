@@ -149,6 +149,7 @@ class EventListener implements EventSubscriberInterface
 
         /** @var array $menu */
         $menu = $event->menu;
+        $event->delete = true;
 
         // Each menu has ordering from 1..n counting all menu items. Children come right after parent ordering.
         $ordering = Menu::flattenOrdering($menu['ordering']);
@@ -193,118 +194,164 @@ class EventListener implements EventSubscriberInterface
             $path = isset($idMap[$key]) ? $idMap[$key] : null;
             if (null === $path && $info['type'] === 'heading') {
                 $params = json_decode($info['params'], true);
-                if (!empty($params['gantry_particle'])) {
+                if (!empty($params['gantry-particle'])) {
                     $table->delete($key, false);
+                    unset($stored[$key]);
                 }
             }
         }
-
-        // Add missing particles into the menu.
-        // TODO: Add missing particles
+        $first = reset($stored);
 
         $menuObject = new Menu();
-        foreach ($items as $key => $item) {
+        foreach ($items as $key => &$item) {
             // Make sure we have all the default values.
             $item = (new Item($menuObject, $item))->toArray(true);
 
-            $id = !empty($item['id']) ? (int) $item['id'] : 0;
-            if ($id && $table->load($item['id'])) {
+            $id = !empty($item['id']) ? (int)$item['id'] : 0;
+            if ($id && $table->load($item['id'], true)) {
+                // Loaded existing menu item.
                 $modified = false;
-
                 $params = new Registry($table->params);
 
-                $item['id'] = $id;
-
-                $title = $item['title'];
-                if ($table->title !== $title) {
-                    $table->title = $title;
-                    $modified = true;
-                }
-
-                $browserNav = (int)($item['target'] === '_blank');
-                if ($table->browserNav != $browserNav) {
-                    $table->browserNav = $browserNav;
-                    $modified = true;
-                }
-
-                // Joomla params.
-                $options = [
-                    // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
-                    // 'menu-anchor_css' => $item['class'],
-                    'menu_image' => $item['image'],
-                    'menu_text' => (int)(!$item['icon_only']),
-                    'menu_show' => (int)$item['enabled'],
-                ];
-                foreach ($options as $var => $value) {
-                    if ($params->get($var) !== $value) {
-                        $params->set($var, $value);
-                        $modified = true;
+                // Move particles.
+                if ($item['type'] === 'particle') {
+                    $parentKey = dirname($key);
+                    $parent = isset($items[$parentKey]) ? $items[$parentKey] : null;
+                    $parentId = $parent ? $parent['id'] : null;
+                    if ($item['parent_id'] !== $parentId && $item['id'] !== $parentId) {
+                        $table->setLocation($parentId ?: $table->getRootId(), 'last-child');
                     }
                 }
 
-                // Gantry params.
-                $all = $item;
-                $item = $this->normalizeMenuItem($item, $ignoreList);
-
-                $version = Version::MAJOR_VERSION;
-                foreach ($all as $var => $value) {
-                    // Default value check.
-                    if (!isset($item[$var])) {
-                        $value = null;
-                    }
-
-                    // Joomla has different format for lists than Gantry, convert to Joomla supported version.
-                    if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
-                        $i = $version < 4 ? 0 : 10;
-                        $list = [];
-                        foreach ($value as $k => $v) {
-                            if (is_array($v)) {
-                                if ($version < 4) {
-                                    // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
-                                    $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
-                                } else {
-                                    // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
-                                    $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
-                                }
-                            } else {
-                                $list[$k] = $v;
-                            }
-                            $i++;
-                        }
-                        $value = $list;
-                    }
-
-                    // Prefix gantry parameters and save them.
-                    $var = 'gantry-' . $var;
-                    $old = $params->get($var);
-                    if ($value !== $old) {
-                        if (null === $value) {
-                            // Remove default value.
-                            $params->remove($var);
-                        } else {
-                            // Change value.
-                            $params->set($var, $value);
-                        }
-                        $modified = true;
-                    }
-                }
-
-                if ($modified && $gantry->authorize('menu.edit')) {
-                    $table->params = (string) $params;
-                    if (!$table->check() || !$table->store()) {
-                        throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
-                    }
-                }
             } else {
-                $item = $this->normalizeMenuItem($item);
+                // Add missing particles into the menu.
+                if ($item['type'] !== 'particle') {
+                    throw new \RuntimeException("Failed to save /{$key}: New menu item is not a particle");
+                }
+                $modified = true;
+                $item['alias'] = strtolower($item['alias'] ?: basename($key));
+                $parentKey = dirname($key);
+                $parentId = !empty($items[$parentKey]['id']) ? (int)$items[$parentKey]['id'] : $table->getRootId();
+                $model = isset($stored[$parentId]) ? $stored[$parentId] : $first;
+
+                $table->reset();
+                $data = [
+                    'id' => 0,
+                    'menutype' => $resource,
+                    'alias' => $item['alias'],
+                    'note' =>  'Menu Particle',
+                    'type' => 'heading',
+                    'published' => 1,
+                    'client_id' => 0,
+                    'access' => isset($model['access']) ? (int)$model['access'] : 1,
+                    'language' => isset($model['language']) ? $model['language'] : '*'
+                ];
+                $table->bind($data);
+                $table->setLocation($parentId, 'last-child');
+                $params = new Registry($table->params);
             }
 
-            // Because of ordering we need to save all menu items, including those from Joomla which have no data except id.
-            $event->menu["items.{$key}"] = $item;
+            $title = $item['title'];
+            if ($table->title !== $title) {
+                $table->title = $title;
+                $modified = true;
+            }
+
+            $browserNav = (int)($item['target'] === '_blank');
+            if ($table->browserNav != $browserNav) {
+                $table->browserNav = $browserNav;
+                $modified = true;
+            }
+
+            // Joomla params.
+            $options = [
+                // Disabled as the option has different meaning in Joomla than in Gantry, see issue #1656.
+                // 'menu-anchor_css' => $item['class'],
+                'menu_image' => $item['image'],
+                'menu_text' => (int)(!$item['icon_only']),
+                'menu_show' => (int)$item['enabled'],
+            ];
+            foreach ($options as $var => $value) {
+                if ($params->get($var) !== $value) {
+                    $params->set($var, $value);
+                    $modified = true;
+                }
+            }
+
+            // Gantry params.
+            $all = $item;
+            $data = $this->normalizeMenuItem($item, $ignoreList);
+
+            $version = Version::MAJOR_VERSION;
+            foreach ($all as $var => $value) {
+                // Default value check.
+                if (!isset($data[$var])) {
+                    $value = null;
+                }
+
+                // Joomla has different format for lists than Gantry, convert to Joomla supported version.
+                if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
+                    $i = $version < 4 ? 0 : 10;
+                    $list = [];
+                    foreach ($value as $k => $v) {
+                        if (is_array($v)) {
+                            if ($version < 4) {
+                                // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
+                                $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            } else {
+                                // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                                $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                            }
+                        } else {
+                            $list[$k] = $v;
+                        }
+                        $i++;
+                    }
+                    $value = $list;
+                } elseif ($var === 'options') {
+                    $value = json_encode($value);
+                }
+
+                // Prefix gantry parameters and save them.
+                $var = 'gantry-' . $var;
+                $old = $params->get($var);
+                if ($value !== $old) {
+                    if (null === $value) {
+                        // Remove default value.
+                        $params->remove($var);
+                    } else {
+                        // Change value.
+                        $params->set($var, $value);
+                    }
+                    $modified = true;
+                }
+            }
+
+            if ($modified && $gantry->authorize('menu.edit')) {
+                $table->params = (string) $params;
+                if (!$table->check() || !$table->store()) {
+                    throw new \RuntimeException("Failed to save /{$key}: {$table->getError()}", 400);
+                }
+            }
+
+            $key = $table->getKeyName();
+            $item['id'] = (int)$table->{$key};
+
+            // We do not need to save anything into a file anymore.
+            //$item = $this->normalizeMenuItem($item);
+            //$event->menu["items.{$key}"] = $item;
+        }
+        unset($item);
+
+        // Update database id map to reorder menu items.
+        $idMap = [];
+        foreach ($items as $path => $item) {
+            if (!empty($item['id'])) {
+                $idMap[$item['id']] = $path;
+            }
         }
 
         // Finally reorder all menu items.
-        $first = reset($stored);
         $i = isset($first['lft']) ? $first['lft'] : null;
         if ($i) {
             $ids = [];
@@ -333,12 +380,13 @@ class EventListener implements EventSubscriberInterface
 		$key = $table->getKeyName();
 
 		// Get the node and children as a tree.
-		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.params';
+		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language';
 		$query = $db->getQuery(true)
 			->select($select)
 			->from($name . ' AS n, ' . $name . ' AS p')
 			->where('n.lft BETWEEN p.lft AND p.rgt')
 			->where('n.menutype = ' . $db->quote($menutype))
+            ->where('n.client_id = 0')
 			->order('n.lft');
 
 		return $db->setQuery($query)->loadAssocList($key);

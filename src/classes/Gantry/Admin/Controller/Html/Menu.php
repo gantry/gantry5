@@ -193,7 +193,16 @@ class Menu extends HtmlController
         $event->menu = $data;
         $this->container->fireEvent('admin.menus.save', $event);
 
-        if ($event->save) {
+        if ($event->delete) {
+            /** @var UniformResourceLocator $locator */
+            $locator = $this->container['locator'];
+            $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
+
+            $file = YamlFile::instance($filename);
+            $file->delete();
+            $file->free();
+
+        } elseif ($event->save) {
             /** @var UniformResourceLocator $locator */
             $locator = $this->container['locator'];
             $filename = $locator->findResource("gantry-config://menu/{$resource->name()}.yaml", true, true);
