@@ -70,6 +70,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public static function flattenOrdering(array $ordering)
     {
+        $ordering = static::fixOrdering($ordering);
         $list = static::flattenOrderingRecurse($ordering);
 
         asort($list, SORT_NUMERIC);
@@ -87,6 +88,7 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     public static function prepareMenuItems(array $items, array $ordering, array $orderMap = null)
     {
+        $ordering = static::fixOrdering($ordering);
         static::embedOrderingRecurse($items, $ordering);
 
         if (null === $orderMap) {
@@ -164,6 +166,20 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
         if ($isGroup) {
             $items[$name]['columns_count'] = $counts;
         }
+    }
+
+    /**
+     * @param array $ordering
+     * @return array
+     */
+    protected static function fixOrdering(array $ordering)
+    {
+        // FIXME: @djamil, if you move particle from column 2+, it breaks the main level.
+        if (isset($ordering[0])) {
+            $ordering = $ordering[0];
+        }
+
+        return $ordering;
     }
 
     /**
