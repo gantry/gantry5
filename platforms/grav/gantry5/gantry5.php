@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -23,6 +23,7 @@ use Grav\Common\Plugin;
 use Grav\Common\Themes;
 use Grav\Common\Twig\Twig;
 use Grav\Common\Utils;
+use Grav\Plugin\Admin\Admin;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
@@ -90,7 +91,9 @@ class Gantry5Plugin extends Plugin
      */
     public function initializeGantryAdmin()
     {
-        if (!$this->isAdmin()) {
+        /** @var Admin|null $admin */
+        $admin = isset($this->grav['admin']) ? $this->grav['admin'] : null;
+        if (!($admin && $admin->user->authorize('admin.login'))) {
             return;
         }
 
@@ -105,10 +108,7 @@ class Gantry5Plugin extends Plugin
             ]);
         }
 
-        /** @var \Grav\Plugin\Admin $admin */
-        $admin = $this->grav['admin'];
-        $inAdmin = $admin->location === 'gantry';
-        if (!$inAdmin) {
+        if ($admin->location !== 'gantry') {
             return;
         }
 

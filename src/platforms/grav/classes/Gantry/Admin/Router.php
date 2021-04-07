@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ use Gantry\Component\Router\Router as BaseRouter;
 use Grav\Common\Grav;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
+use Grav\Plugin\Admin\Admin;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Router extends BaseRouter
@@ -35,7 +36,7 @@ class Router extends BaseRouter
         $grav = Grav::instance();
         $plugin = $grav['gantry5_plugin'];
 
-        /** @var \Grav\Plugin\Admin $admin */
+        /** @var Admin $admin */
         $admin = $grav['admin'];
 
         /** @var Uri $uri */

@@ -1,3 +1,10 @@
+# 5.4.38
+## mm/dd/2021
+
+1. [Grav](#grav)
+    1. [](#bugfix)
+        * Restricted Gantry Admin initialization to logged in admins
+
 # 5.4.37
 ## 01/25/2021
 
