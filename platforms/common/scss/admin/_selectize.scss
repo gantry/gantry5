@@ -240,7 +240,8 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 
     &:after {
         content: "\f078";
-        font-family: FontAwesome;
+        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+        font-weight: 900;
         display: block;
         position: absolute;
         top: 50%;
@@ -254,7 +255,8 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
 
     &.g-dropdown-active:after {
         content: "\f077";
-        font-family: FontAwesome;
+        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+        font-weight: 900;
     }
 }
 

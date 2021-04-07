@@ -6,7 +6,8 @@ $submenu-ratio:                 60px;
 #menu-editor {
     .parent-indicator {
         &:before {
-            font-family: FontAwesome;
+            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+            font-weight: 900;
             vertical-align: middle;
             display: inline-block;
         }
@@ -247,7 +248,8 @@ $submenu-ratio:                 60px;
             text-align: center;
             z-index: 5;
             color: $core-text;
-            font-family: FontAwesome, sans-serif;
+            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+            font-weight: 900;
             border-radius: 0 0 $core-border-radius $core-border-radius;
             left: 50%;
             margin-left: -25px;
@@ -402,7 +404,8 @@ $submenu-ratio:                 60px;
 
             &:after {
                 content: "\f057";
-                font-family: FontAwesome;
+                font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+                font-weight: 900;
                 font-size: 1.5rem;
                 position: absolute;
                 top: 0;

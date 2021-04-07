@@ -122,7 +122,8 @@
 
             &:before {
                 content: "\f054";
-                font-family: FontAwesome;
+                font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+                font-weight: 900;
                 font-size: 100%;
                 vertical-align: middle;
                 display: inline-block;
