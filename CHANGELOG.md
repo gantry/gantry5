@@ -4,6 +4,7 @@
 1. [Grav](#grav)
     1. [](#bugfix)
         * Restricted Gantry Admin initialization to logged in admins
+        * Fixed hardcoded date format in `partials/blog_item.html.twig` template (#2783)
 
 # 5.4.37
 ## 01/25/2021
