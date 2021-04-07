@@ -123,7 +123,9 @@ class Gantry5Plugin extends Plugin
      */
     public function initializeGantryAdmin()
     {
-        if (!$this->isAdmin()) {
+        /** @var Admin|null $admin */
+        $admin = isset($this->grav['admin']) ? $this->grav['admin'] : null;
+        if (!($admin && $admin->user->authorize('admin.login'))) {
             return;
         }
 
@@ -138,10 +140,7 @@ class Gantry5Plugin extends Plugin
             ]);
         }
 
-        /** @var Admin $admin */
-        $admin = $this->grav['admin'];
-        $inAdmin = $admin->location === 'gantry';
-        if (!$inAdmin) {
+        if ($admin->location !== 'gantry') {
             return;
         }
 

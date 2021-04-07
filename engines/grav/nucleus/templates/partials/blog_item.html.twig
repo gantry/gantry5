@@ -35,7 +35,7 @@
             {% if show_date %}
             <i class="far fa-clock" aria-hidden="true"></i>
             <time class="dt-published" datetime="{{ page.date|date("c") }}">
-                {{ page.date|date('jS M Y') }}
+                {{ page.date|date(config.system.pages.dateformat.default) }}
             </time>
             {% endif %}
             {% if page.taxonomy.tag %} <span class="separator">/</span> {% endif %}
@@ -53,7 +53,7 @@
 
     <div class="list-blog-padding">
 
-    {% if page.header.continue_link is same as(false) %} 
+    {% if page.header.continue_link is same as(false) %}
         <div class="e-content">
             {{ page.content|raw }}
         </div>
