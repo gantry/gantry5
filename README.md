@@ -88,6 +88,16 @@ Contributing to the Gantry 5 framework, or to its associated documentation is ea
 
 We recommend chatting with the team via [Gitter](https://gitter.im/gantry/gantry5) prior to submitting the pull request to avoid doubling up on a fix that is already pending or likely to be overwritten by an upcoming change.
 
+## Using git version of Gantry
+
+To use git version of Gantry, you first need to install composer dependencies. To do this, run:
+
+```
+bin/composer-install
+```
+
+After that, you need to properly symlink Gantry into your CMS installation.
+
 ## Bundling JS and Compiling SCSS
 
 In our development environment, we use **Gulp** to bundle **JavaScript** and compile **SCSS** with the capability of `watch` so that any change on target files will automatically trigger the recompilation.

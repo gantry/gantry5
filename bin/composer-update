@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd platforms
+
+echo "# Updating composer for Grav"
+cd grav/gantry5 && composer update --no-dev && cd ../..
+
+echo "# Updating composer for Joomla"
+cd joomla/lib_gantry5 && composer update --no-dev && cd ../..
+cd joomla/plg_system_gantry5_debugbar && composer update --no-dev && cd ../..
+
+echo "# Updating composer for WP"
+cd wordpress/gantry5 && composer update --no-dev && cd ../..
+cd wordpress/gantry5_debugbar && composer update --no-dev && cd ../..

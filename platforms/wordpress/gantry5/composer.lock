@@ -376,16 +376,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.11.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "f6e14679f948d8a5cfb866fa7065a30c66bd64d3"
+                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/f6e14679f948d8a5cfb866fa7065a30c66bd64d3",
-                "reference": "f6e14679f948d8a5cfb866fa7065a30c66bd64d3",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/d501fd2658d55491a2295ff600ae5978eaad7403",
+                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403",
                 "shasum": ""
             },
             "require": {
@@ -435,7 +435,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.11.0"
+                "source": "https://github.com/filp/whoops/tree/2.12.0"
             },
             "funding": [
                 {
@@ -443,7 +443,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-19T12:00:00+00:00"
+            "time": "2021-03-30T12:00:00+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -604,16 +604,16 @@
         },
         {
             "name": "rockettheme/toolbox",
-            "version": "1.5.7",
+            "version": "1.5.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rockettheme/toolbox.git",
-                "reference": "8d3ebc4d982595d6eac90e851f2b4d5c0cec0399"
+                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/8d3ebc4d982595d6eac90e851f2b4d5c0cec0399",
-                "reference": "8d3ebc4d982595d6eac90e851f2b4d5c0cec0399",
+                "url": "https://api.github.com/repos/rockettheme/toolbox/zipball/2d6693235aaca2efaadb61c84dac927aaf4eabfa",
+                "reference": "2d6693235aaca2efaadb61c84dac927aaf4eabfa",
                 "shasum": ""
             },
             "archive": {
@@ -668,10 +668,10 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.5.7",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.5.9",
                 "issues": "https://github.com/rockettheme/toolbox/issues"
             },
-            "time": "2021-02-17T17:58:36+00:00"
+            "time": "2021-04-14T19:52:40+00:00"
         },
         {
             "name": "scssphp/scssphp",
