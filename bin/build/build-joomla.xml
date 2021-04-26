@@ -81,23 +81,24 @@
         <echo message="Building Library.." />
 
         <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
+            <fileset dir="${path.platforms}/joomla/lib_gantry5">
+                <exclude name="src/"/>
+                <exclude name="vendor/"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
             <filterchain refid="filter" />
             <fileset dir="${path.src}">
                 <include name="*.php"/>
             </fileset>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
-            <fileset dir="${path.platforms}/joomla/lib_gantry5">
-                <exclude name="vendor/"/>
-            </fileset>
-        </copy>
-
-        <copy todir="${tmp_dir}/packages/lib_gantry5/classes" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/src/classes" overwrite="true">
             <fileset dir="${path.src}/classes"/>
         </copy>
 
-        <copy todir="${tmp_dir}/packages/lib_gantry5" overwrite="true">
+        <copy todir="${tmp_dir}/packages/lib_gantry5/src" overwrite="true">
             <fileset dir="${path.src}/platforms/joomla"/>
         </copy>
 

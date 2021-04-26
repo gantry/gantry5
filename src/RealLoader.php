@@ -103,9 +103,7 @@ abstract class RealLoader
         $loader = require $autoload;
 
         // Support for development environments.
-        if (file_exists($lib . '/platforms')) {
-            $loader->addPsr4('Gantry\\', "{$lib}/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);
-        } elseif (file_exists($lib . '/src/platforms')) {
+        if (file_exists($lib . '/src/platforms')) {
             $loader->addPsr4('Gantry\\', "{$lib}/src/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);
         }
 

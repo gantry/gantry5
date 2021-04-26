@@ -1,18 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env php
+<?php
 
-cd "${0%/*}"
-cd ../platforms
+setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
+date_default_timezone_set('America/Denver');
+chdir(__DIR__ . '/..');
 
-echo "# Updating composer for Grav"
-cd grav/gantry5 && composer update --no-dev --no-progress && cd ../..
+echo "# Running composer update for build script\n";
+composer_update('bin/build', false);
 
-echo "# Updating composer for Joomla"
-cd joomla/lib_gantry5 && composer update --no-dev --no-progress && cd ../..
-cd joomla/plg_system_gantry5_debugbar && composer update --no-dev --no-progress && cd ../..
+chdir('platforms');
 
-echo "# Updating composer for WP"
-cd wordpress/gantry5 && composer update --no-dev --no-progress && cd ../..
-cd wordpress/gantry5_debugbar && composer update --no-dev --no-progress && cd ../..
+echo "# Running composer update for Grav\n";
+composer_update('grav/gantry5', true);
 
-echo "# Updating composer for build"
-cd ../bin/build && composer update --no-dev --no-progress && cd ../..
+echo "# Running composer update for Joomla\n";
+composer_update('joomla/lib_gantry5', true);
+composer_update('joomla/plg_system_gantry5_debugbar', false);
+
+echo "# Running composer update for WP\n";
+composer_update('wordpress/gantry5', true);
+composer_update('wordpress/gantry5_debugbar', false);
+
+function composer_update($folder, $link)
+{
+    chdir($folder);
+    if ($link && !file_exists('src')) {
+        symlink('../../../src', 'src');
+    }
+    if (false === exec('composer update --no-dev --no-progress', $output, $result) || $result) {
+        echo implode("\n", $output);
+        throw new \RuntimeException('Failed to run composer update in ' . $folder);
+    }
+
+    echo implode("\n", $output) . "\n";
+    chdir(preg_replace('|[^/]+|', '..', $folder));
+}
