@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+cd "${0%/*}"
 cd ../platforms
 
 echo "# Updating composer for Grav"
