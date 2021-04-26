@@ -11,38 +11,44 @@ chdir('platforms');
 
 echo "# Running composer install for Grav\n";
 chdir('grav/gantry5');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
 
 echo "# Running composer install for Joomla\n";
 chdir('joomla/lib_gantry5');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
 chdir('joomla/plg_system_gantry5_debugbar');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
 
 echo "# Running composer install for WP\n";
 chdir('wordpress/gantry5');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
 chdir('wordpress/gantry5_debugbar');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
 
 echo "# Running composer install for build\n";
 chdir('../bin/build');
-if (false === exec('composer install --no-dev --no-progress --quiet')) {
+if (false === exec('composer install --no-dev --no-progress', $output, $result) || $result) {
+    echo $output;
     return 1;
 }
 chdir('../..');
