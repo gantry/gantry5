@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd platforms
+cd "$(dirname "$0")"
+cd ../platforms
 
 echo "# Updating composer for Grav"
 cd grav/gantry5 && composer update --no-dev --no-progress && cd ../..

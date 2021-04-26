@@ -5,7 +5,8 @@ if [[ "$1" == '--loud' || "$1" == '-l' ]]; then
     OUTPUT=''
 fi
 
-cd platforms
+cd "$(dirname "$0")"
+cd ../platforms
 
 echo "# Running composer install for Grav"
 cd grav/gantry5 && composer install --no-dev --no-progress ${OUTPUT} && cd ../..
