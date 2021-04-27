@@ -22,7 +22,7 @@ jobs:
         env:
           COMPOSER_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
 
-      - name: Install Dependencies
+      - name: Install packages
         run: |
           sudo apt-get -y update -qq  < /dev/null > /dev/null
           sudo apt-get -y install -qq git zip < /dev/null > /dev/null
@@ -31,7 +31,7 @@ jobs:
         run: bin/composer-install
 
       - name: Build Gantry packages (using CHANGELOG.md to get the version)
-        run: bin/build
+        run: bin/build prod
 
       # TODO: Release should also trigger a build, but with PROD
       # TODO: Release should also trigger updating of master with prod-versions update
