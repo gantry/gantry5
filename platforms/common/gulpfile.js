@@ -1,21 +1,21 @@
 'use strict';
 
-var gulp       = require('gulp'),
-    argv       = require('yargs').argv,
-    gutil      = require('gulp-util'),
-    gulpif     = require('gulp-if'),
-    uglify     = require('gulp-uglify'),
-    rename     = require('gulp-rename'),
-    buffer     = require('vinyl-buffer'),
-    source     = require('vinyl-source-stream'),
-    merge      = require('merge-stream'),
-    sourcemaps = require('gulp-sourcemaps'),
-    browserify = require('browserify'),
-    watchify   = require('watchify'),
-    sass       = require('gulp-ruby-sass'),
+var gulp            = require('gulp'),
+    argv            = require('yargs').argv,
+    gutil           = require('gulp-util'),
+    gulpif          = require('gulp-if'),
+    uglify          = require('gulp-uglify'),
+    rename          = require('gulp-rename'),
+    buffer          = require('vinyl-buffer'),
+    source          = require('vinyl-source-stream'),
+    merge           = require('merge-stream'),
+    sourcemaps      = require('gulp-sourcemaps'),
+    browserify      = require('browserify'),
+    watchifyModule  = require('watchify'),
+    sass            = require('gulp-sass'),
 
-    prod       = !!(argv.p || argv.prod || argv.production),
-    watch      = false;
+    prod            = !!(argv.p || argv.prod || argv.production),
+    watch           = false;
 
 var paths = {
     js: [
@@ -45,20 +45,18 @@ var compileCSS = function(app) {
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
 
     var options = {
-        sourcemap: !prod,
-        loadPath: _load,
-        style: prod ? 'compact' : 'expanded',
-        lineNumbers: false,
-        trace: !prod
+        sourceMap: !prod,
+        includePaths: _load,
+        outputStyle: prod ? 'compact' : 'expanded'
     };
 
-    return sass(_in, options)
+    return gulp.src(_in)
+        .pipe(sass(options).on('error', sass.logError))
         .on('end', function() {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
-        .on('error', gutil.log)
-        .pipe(rename(_out))
         .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; } })))
+        .pipe(rename(_out))
         .pipe(gulp.dest(_dest));
 };
 
@@ -82,7 +80,7 @@ var compileJS = function(app, watching) {
     });
 
     if (watching) {
-        bundle = watchify(bundle);
+        bundle = watchifyModule(bundle);
         bundle.on('update', function(files) {
             gutil.log(gutil.colors.red('>'), 'Change detected in', files.join(', '), '...');
             bundleShare(bundle, _in, _out, _maps, _dest);
@@ -108,7 +106,7 @@ var bundleShare = function(bundle, _in, _out, _maps, _dest) {
         .pipe(gulp.dest(_dest));
 };
 
-gulp.task('watchify', function() {
+function watchify() {
     watch = true;
 
     // watch js
@@ -116,28 +114,28 @@ gulp.task('watchify', function() {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));
         return compileJS(app, true);
     });
+}
 
-});
-
-gulp.task('js', function() {
+function js() {
     var streams = [];
     paths.js.forEach(function(app) {
         streams.push(compileJS(app));
     });
 
     return merge(streams);
-});
+}
 
-gulp.task('css', function(done) {
+function css(done) {
     var streams = [];
     paths.css.forEach(function(app) {
         streams.push(compileCSS(app, done));
     });
 
     return merge(streams);
-});
+}
 
-gulp.task('watch', ['watchify'], function() {
+exports.watchify = watchify;
+exports.watch = gulp.series(watchify, function() {
     // watch css
     paths.css.forEach(function(app) {
         var _path = app.in.substring(0, app.in.lastIndexOf('/'));
@@ -148,5 +146,7 @@ gulp.task('watch', ['watchify'], function() {
     });
 });
 
-gulp.task('all', ['css', 'js']);
-gulp.task('default', ['all']);
+exports.css = css;
+exports.js = js;
+exports.all = gulp.series(css, js);
+exports.default = gulp.series(css, js);
