@@ -1,0 +1,66 @@
+name: Release Builds
+
+on:
+  push:
+    branches-ignore: [ master, main ]
+  release:
+    types: [published]
+
+jobs:
+  build:
+    if: "!github.event.release.prerelease"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
+          extensions: opcache, gd
+          tools: composer:v2
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get -y update -qq  < /dev/null > /dev/null
+          sudo apt-get -y install -qq git zip < /dev/null > /dev/null
+
+      - name: Install dependencies
+        run: bin/composer-install
+
+      - name: Build Gantry packages (using CHANGELOG.md to get the version)
+        run: bin/build dev
+
+      # TODO: Release should also trigger a build, but with PROD
+      # TODO: Release should also trigger updating of master with prod-versions update
+      # TODO: develop should push to S3 bucket
+#      - name: Upload Gantry Release
+#        id: upload-release
+#        uses: alexellis/upload-assets@0.2.3
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+#        with:
+#          asset_paths: '["./dist/*.zip"]'
+
+#  slack:
+#    name: Slack
+#    needs: build
+#    runs-on: ubuntu-latest
+#    if: always()
+#    steps:
+#      - uses: technote-space/workflow-conclusion-action@v2
+#      - uses: 8398a7/action-slack@v3
+#        with:
+#          status: failure
+#          fields: repo,message,author,action
+#          icon_emoji: ':octocat:'
+#          author_name: 'Github Action Build'
+#          text: '🚚 Automated Build Failure'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#        if: env.WORKFLOW_CONCLUSION == 'failure'
