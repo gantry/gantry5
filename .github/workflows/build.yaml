@@ -1,8 +1,6 @@
 name: Release Builds
 
 on:
-  push:
-    branches-ignore: [ master, main ]
   release:
     types: [published]
 
@@ -33,7 +31,7 @@ jobs:
         run: bin/composer-install
 
       - name: Build Gantry packages (using CHANGELOG.md to get the version)
-        run: bin/build dev
+        run: bin/build
 
       # TODO: Release should also trigger a build, but with PROD
       # TODO: Release should also trigger updating of master with prod-versions update

@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: bin/composer-install
 
+      - name: Build Gantry packages
+        run: bin/build dev
+
 #      - name: Run test suite
 #        run: vendor/bin/codecept run
 
