@@ -32,7 +32,7 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir -d bin/build)"
+        run: echo "::set-output name=dir::$(composer config cache-files-dir -d bin/builder)"
 
       - name: Cache dependencies
         uses: actions/cache@v2
