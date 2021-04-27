@@ -6,7 +6,7 @@ date_default_timezone_set('America/Denver');
 chdir(__DIR__ . '/..');
 
 echo "# Running composer install for build script\n";
-composer_install('bin/build', false);
+composer_install('bin/builder', false);
 
 chdir('platforms');
 

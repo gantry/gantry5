@@ -14,9 +14,9 @@
 
     Parameters: (with default values - adjust the directories in PHPSTORM to your individual setup)
     -Dproject_dir=../../                   (= git/gantry5)
-    -Dpackage_dir=packages                 (= git/gantry5/build/packages)
-    -Dtmp_dir=tmp                          (= git/gantry5/build/tmp)
-    -Dbuild_dir=package                    (= git/gantry5/build/package)
+    -Dpackage_dir=dist                     (= git/gantry5/dist)
+    -Dtmp_dir=build/tmp                    (= git/gantry5/build/tmp)
+    -Dbuild_dir=build/package              (= git/gantry5/build/package)
     -Dxml.version=version                  (= build version)
     -Dupdate_versions=false                (= true / for CI and automated push)
 -->
@@ -28,7 +28,7 @@
     <condition property="project_dir" value="${phing.dir}/../../">
         <not><isset property="project_dir" /></not>
     </condition>
-    <condition property="package_dir" value="${project_dir}/bin/build/packages">
+    <condition property="package_dir" value="${project_dir}/dist">
         <not><isset property="package_dir" /></not>
     </condition>
 
