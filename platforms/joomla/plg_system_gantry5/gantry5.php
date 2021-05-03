@@ -69,7 +69,7 @@ class plgSystemGantry5 extends CMSPlugin
 
         $this->loadLanguage('plg_system_gantry5.sys');
 
-        JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/Loader.php');
+        JLoader::register('Gantry5\Loader', JPATH_LIBRARIES . '/gantry5/src/Loader.php');
 
         // Detect Gantry Framework or fail gracefully.
         if (!class_exists('Gantry5\Loader')) {
