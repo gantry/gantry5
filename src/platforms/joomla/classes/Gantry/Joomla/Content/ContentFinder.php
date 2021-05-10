@@ -55,13 +55,8 @@ class ContentFinder extends Finder
     }
 
     public function category($ids, $include = true)
-    {
-        if ($ids instanceof Collection) {
-            $ids = $ids->toArray();
-        } else {
-            $ids = (array)$ids;
-        }
-
+    {   
+        $ids = $this->toArray($ids);
         array_walk($ids, function (&$item) { $item = $item instanceof Category ? $item->id : (int) $item; });
 
         return $this->addToGroup('a.catid', $ids, $include);
@@ -108,8 +103,8 @@ class ContentFinder extends Finder
         $user = \JFactory::getUser();
 
         // Define null and now dates
-        $nullDate = $this->db->quote($this->db->getNullDate());
-        $nowDate = $this->db->quote(\JFactory::getDate()->toSql());
+        $nullDate = $this->quote($this->db->getNullDate());
+        $nowDate = $this->quote(\JFactory::getDate()->toSql());
 
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
@@ -122,9 +117,108 @@ class ContentFinder extends Finder
 
         $groups = $user->getAuthorisedViewLevels();
 
-        $this->query->join('INNER', '#__categories AS c ON c.id = a.catid');
+        $this->query->join('INNER', $this->quoteName('#__categories', 'c') 
+                           . ' ON c.id = a.catid');
 
         return $this->where('a.access', 'IN', $groups)->where('c.access', 'IN', $groups);
+    }
+    
+    public function tags($tags = [], $matchAll = false)
+    {
+        $tagTitles = !empty($tags['titles']) ? $tags['titles'] : NULL;
+        $tagIds = !empty($tags['ids']) ? $tags['ids'] : NULL;
+        $condition = '';
+        $result = $this;
+        
+        if (is_null($tagTitles) && is_null($tagIds)) {
+            return $result;
+        }
+        
+        // generalize input
+        $tagTitles = $this->toArray($tagTitles);
+        $tagIds = $this->toArray($tagIds);
+
+        // match all tag ids a/o titles
+        if ($matchAll){
+            
+            //build up sub query with check for count
+            if(!is_null($tagTitles)) {
+                $condition .=  "({$this->tagsCountSubQuery($tagTitles)}) >= " . count($tagTitles);
+            }
+            
+            if (!is_null($tagIds)) {
+                if (strlen($condition) > 0){
+                    $condition .= ' OR ';
+                }
+    
+                $condition .=  "({$this->tagsCountSubQuery($tagIds, true)}) >= " . count($tagIds);
+            }
+            $result = $this->query->where($condition);
+
+        // match any tag id a/o title
+        } else {
+
+            $this->query->join('INNER', $this->quoteName('#__contentitem_tag_map', 'tm') 
+                               . ' ON tm.content_item_id = a.id');
+
+            // check if tag title exists for article
+            if (!is_null($tagTitles)) {
+                $this->query->join('INNER', $this->quoteName('#__tags', 'ta') 
+                                   . ' ON tm.tag_id = ta.id');
+                
+                $condition .= "ta.title IN {$this->toQuotedList($tagTitles)}";
+            }
+
+            // check if tag id exists for article
+            if (!is_null($tagIds)) {
+                if(strlen($condition) > 0){
+                    $condition .= ' OR ';
+                }
+                
+                $condition .= "tm.tag_id IN {$this->toQuotedList($tagIds)}";
+            }
+
+            $this->query->where($condition);
+            $result = $this->where('tm.type_alias', '=', 'com_content.article');
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Creates a sub query to retrieve the tag id or tag title count.
+     *
+     * @param  array         $tags        Tag ids or tag titles.
+     * @param  boolean       $ids         Match ids or titles
+     *
+     * @return query
+     */
+    
+    protected function tagsCountSubQuery($tags = [], $ids = false)
+    {
+        // build up sub query for tag count
+        $subQuery = $this->db->getQuery(true)->select('COUNT(tm_s.tag_id)');
+        $subQuery->from($this->quoteName($this->table, 'a_s'));
+
+        $subQuery->join('INNER', $this->quoteName('#__contentitem_tag_map', 'tm_s')
+                        . ' ON tm_s.content_item_id = a_s.id');
+        
+        if (!$ids) {
+            $subQuery->join('INNER',  $this->quoteName('#__tags', 'ta_s')
+                            . ' ON tm_s.tag_id = ta_s.id');
+        }
+        
+        // the referenced article has to match
+        $subQuery->where("a_s.id = a.id");
+        
+        // check for tag ids or tag titles
+        if ($ids) {
+            $subQuery->where("tm_s.tag_id IN {$this->toQuotedList($tags)}");
+        } else {
+            $subQuery->where("ta_s.title IN {$this->toQuotedList($tags)}");
+        }
+        
+        return $subQuery->where("tm_s.type_alias = {$this->quote('com_content.article')}");
     }
 
     protected function addToGroup($key, $ids, $include = true)
@@ -138,6 +232,16 @@ class ContentFinder extends Finder
         }
 
         return $this;
+    }
+    
+    protected function toArray($values){
+        if (is_null($values)) {
+            return $values;
+        } elseif ($values instanceof Collection) {
+            return $values->toArray();
+        } else {
+            return (array)$values;
+        }
     }
 
     protected function prepare()
