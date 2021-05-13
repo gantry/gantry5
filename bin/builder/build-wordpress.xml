@@ -28,6 +28,8 @@
                 <exclude name="scss.sh"/>
                 <exclude name="**/*.js.map"/>
                 <exclude name="**/*.css.map"/>
+                <!-- PHP 5.6 compatibility -->
+                <exclude name="compat/" />
             </fileset>
         </copy>
 
@@ -125,6 +127,22 @@
                 <exclude name="**/todo"/>
                 <exclude name="**/composer.lock"/>
                 <exclude name="filp/whoops/src/deprecated"/>
+            </fileset>
+        </copy>
+
+        <!-- PHP 5.6 compatibility -->
+        <copy todir="${tmp_dir}/wordpress/packages/plugin/gantry5/compat" overwrite="true">
+            <fileset dir="${path.platforms}/wordpress/gantry5/compat">
+                <exclude name="vendor/bin/"/>
+                <exclude name="vendor/composer/"/>
+                <exclude name="vendor/autoload.php"/>
+                <exclude name="**/doc/"/>
+                <exclude name="**/ext/"/>
+                <exclude name="**/.*"/>
+                <exclude name="**/CHANGELOG"/>
+                <exclude name="**/drupal_test.sh"/>
+                <exclude name="**/LICENSE"/>
+                <exclude name="vendor/**/composer.lock"/>
             </fileset>
         </copy>
     </target>

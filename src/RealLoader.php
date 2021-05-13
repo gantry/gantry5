@@ -102,6 +102,12 @@ abstract class RealLoader
         /** @var ClassLoader $loader */
         $loader = require $autoload;
 
+        // In PHP <7.2.5 we need to use older version of Twig.
+        if (\PHP_VERSION_ID < 70205) {
+            $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
+            $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
+        }
+
         // Support for development environments.
         if (file_exists($lib . '/src/platforms')) {
             $loader->addPsr4('Gantry\\', "{$lib}/src/platforms/" . GANTRY5_PLATFORM . '/classes/Gantry', true);

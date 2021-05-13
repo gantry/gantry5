@@ -15,6 +15,7 @@
         <filename>composer.json</filename>
         <filename>composer.lock</filename>
         <filename>MD5SUMS</filename>
+        <folder>compat</folder>
         <folder>src</folder>
         <folder>language</folder>
         <folder>vendor</folder>
