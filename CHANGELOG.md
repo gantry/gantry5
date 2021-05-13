@@ -15,6 +15,7 @@
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration
+        - Fixed admin cookie timeouts for GDPR compliance (#2775)
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9 (includes themes)

@@ -3,7 +3,7 @@
 var Cookie = {
     write: function(name, value) {
         var date = new Date();
-        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 10); // 10 years
+        date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 1); // 1 year
 
         var host   = window.location.host.toString(),
             domain = host.substring(host.lastIndexOf(".", host.lastIndexOf(".") - 1) + 1);
