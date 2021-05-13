@@ -16,10 +16,12 @@ composer_update('grav/gantry5', true);
 echo "# Running composer update for Joomla\n";
 composer_update('joomla/lib_gantry5', true);
 composer_update('joomla/plg_system_gantry5_debugbar', false);
+composer_update('joomla/lib_gantry5/compat', false);
 
 echo "# Running composer update for WP\n";
 composer_update('wordpress/gantry5', true);
 composer_update('wordpress/gantry5_debugbar', false);
+composer_update('wordpress/gantry5/compat', false);
 
 function composer_update($folder, $link)
 {

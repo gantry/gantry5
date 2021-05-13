@@ -3,7 +3,7 @@
 
 1. [Common](#common)
     1. [](#new)
-        - Updated minimum requirement to PHP 5.6.20
+        - Updated minimum requirement to PHP 5.6.20, added PHP 8 support
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.4
         - New SCSS compiler is more strict and fails on badly written SCSS where the old version did not
