@@ -62,7 +62,7 @@
 						opacity: 0.5;
 						font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
 						font-weight: 900;
-						content: "\f078";
+						content: $fa-chevron-down;
 						text-align: right;
 					}
 				}
@@ -70,7 +70,7 @@
 					> .g-menu-item-container {
 						> .g-menu-parent-indicator {
 							&:after {
-								content: "\f00d";
+								content: $fa-times;
 							}
 						}
 					}
@@ -113,7 +113,7 @@
 	    			text-align: center;
 
 	    			&:after {
-						content: "\f054";
+						content: $fa-chevron-right;
 						text-align: center;
 					}
 				}
@@ -121,7 +121,7 @@
 					> .g-menu-item-container {
 						> .g-menu-parent-indicator {
 							&:after {
-								content: "\f00d";
+								content: $fa-times;
 							}
 						}
 					}
@@ -293,7 +293,7 @@
 		    width: 1.28571em;
 			font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
 			font-weight: 900;
-			content: "\f053";
+			content: $fa-chevron-left;
 			opacity: 0.5;
 		}
 	}
@@ -370,7 +370,7 @@
 						line-height: normal;
 						font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
 						font-weight: 900;
-						content: "\f054";
+						content: $fa-chevron-right;
 					}
 				}
 	    	}

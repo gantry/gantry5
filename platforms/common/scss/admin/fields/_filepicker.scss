@@ -78,7 +78,7 @@
 
                 &.collapsed {
                     .g-bookmark-collapse::before {
-                        content: "\f067";
+                        content: $fa-plus;
                     }
                 }
 
@@ -96,7 +96,7 @@
                         }
 
                         &.active > .fa.fa-folder-o::before {
-                            content: "\f115";
+                            content: $fa-folder-open;
                         }
 
                         .path {

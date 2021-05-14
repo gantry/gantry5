@@ -6,7 +6,7 @@ $submenu-ratio:                 60px;
 #menu-editor {
     .parent-indicator {
         &:before {
-            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
             font-weight: 900;
             vertical-align: middle;
             display: inline-block;
@@ -160,7 +160,7 @@ $submenu-ratio:                 60px;
 
         .parent-indicator {
             &:before {
-                content: "\f078";
+                content: $fa-chevron-down;
             }
         }
 
@@ -248,7 +248,7 @@ $submenu-ratio:                 60px;
             text-align: center;
             z-index: 5;
             color: $core-text;
-            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+            font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
             font-weight: 900;
             border-radius: 0 0 $core-border-radius $core-border-radius;
             left: 50%;
@@ -354,7 +354,7 @@ $submenu-ratio:                 60px;
             }
             .parent-indicator {
                 &:before {
-                    content: "\f054";
+                    content: $fa-chevron-right;
                     font-size: $core-font-size - 0.2;
                     line-height: $core-line-height + 0.5;
                     margin-right: 10px;
@@ -403,8 +403,8 @@ $submenu-ratio:                 60px;
             }
 
             &:after {
-                content: "\f057";
-                font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+                content: $fa-times-circle;
+                font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
                 font-weight: 900;
                 font-size: 1.5rem;
                 position: absolute;
