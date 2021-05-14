@@ -224,22 +224,20 @@ class Menu extends AbstractMenu
      */
     protected function getItemsFromPlatform($params)
     {
-        $attributes = ['menutype'];
-        $values = [$params['menu']];
-
         /** @var CMSApplication $app */
         $app = Factory::getApplication();
 
         // Items are already filtered by access and language, in admin we need to work around that.
         if ($app->isClient('administrator')) {
-            $attributes[] = 'access';
-            $values[] = null;
+            $items = $this->getMenuItemsInAdmin($params['menu']);
+        } else {
+            $attributes = ['menutype'];
+            $values = [$params['menu']];
 
-            $attributes[] = 'language';
-            $values[] = null;
+            $items = $this->menu->getItems($attributes, $values);
         }
 
-        return $this->menu->getItems($attributes, $values);
+        return $items;
     }
 
     /**
@@ -552,5 +550,70 @@ class Menu extends AbstractMenu
 
             $this->add($item);
         }
+    }
+
+    /**
+     * This code is taken from Joomla\CMS\Menu\SiteMenu::load()
+     *
+     * @param string$menutype
+     * @return array|null
+     */
+    private function getMenuItemsInAdmin($menutype)
+    {
+        $loader = static function () use ($menutype) {
+            $db = \JFactory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('m.id, m.menutype, m.title, m.alias, m.note, m.path AS route, m.link, m.type, m.level, m.language')
+                ->select($db->quoteName('m.browserNav') . ', m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id')
+                ->select('e.element as component')
+                ->from('#__menu AS m')
+                ->join('LEFT', '#__extensions AS e ON m.component_id = e.extension_id')
+                ->where('m.menutype = ' . $db->quote($menutype))
+                ->where('m.parent_id > 0')
+                ->where('m.client_id = 0')
+                ->order('m.lft');
+
+            // Set the query
+            $db->setQuery($query);
+
+            return $db->loadObjectList('id', MenuItem::class);
+        };
+
+        try {
+            /** @var \JCacheControllerCallback $cache */
+            $cache = \JFactory::getCache('com_menus', 'callback');
+
+            $items = $cache->get($loader, [], md5(get_class($this)), false);
+        } catch (\JCacheException $e) {
+            try {
+                $items = $loader();
+            } catch (\JDatabaseExceptionExecuting $databaseException) {
+                throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $databaseException->getMessage()));
+            }
+        }
+        catch (\JDatabaseExceptionExecuting $e) {
+            throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()));
+        }
+
+        foreach ($items as &$item) {
+            // Get parent information.
+            $parent_tree = [];
+
+            if (isset($items[$item->parent_id])) {
+                $parent_tree = $items[$item->parent_id]->tree;
+            }
+
+            // Create tree.
+            $parent_tree[] = $item->id;
+            $item->tree = $parent_tree;
+
+            // Create the query array.
+            $url = str_replace('index.php?', '', $item->link);
+            $url = str_replace('&amp;', '&', $url);
+
+            parse_str($url, $item->query);
+        }
+
+        return array_values($items);
     }
 }
