@@ -241,6 +241,7 @@ class EventListener implements EventSubscriberInterface
                     'alias' => $item['alias'],
                     'note' =>  'Menu Particle',
                     'type' => 'heading',
+                    'link' => '',
                     'published' => 1,
                     'client_id' => 0,
                     'access' => isset($model['access']) ? (int)$model['access'] : 1,
