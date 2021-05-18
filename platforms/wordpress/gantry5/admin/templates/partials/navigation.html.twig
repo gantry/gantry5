@@ -5,16 +5,6 @@
             <section id="navbar"{{ style|raw }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
-                    <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
-                        <a data-g5-ajaxify=""
-                           data-g5-nav="styles"
-                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
-                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
-                           href="{{ gantry.route('configurations', configuration, 'styles') }}"
-                        >
-                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i><span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
-                        </a>
-                    </li>
                     <li {{ (location == 'configurations/layout') ? 'class="active"' }}>
                         <a data-g5-ajaxify=""
                            data-g5-nav="layout"
@@ -24,6 +14,16 @@
                            href="{{ gantry.route('configurations', configuration, 'layout') }}"
                         >
                             <i class="fa fa-fw fa-columns" aria-hidden="true"></i><span>{{ 'GANTRY5_PLATFORM_LAYOUT'|trans }}</span>
+                        </a>
+                    </li>
+                    <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
+                        <a data-g5-ajaxify=""
+                           data-g5-nav="styles"
+                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                           href="{{ gantry.route('configurations', configuration, 'styles') }}"
+                        >
+                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i><span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
                         </a>
                     </li>
                     <li {{ (location == 'configurations/content') ? 'class="active"' }}>

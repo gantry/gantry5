@@ -232,7 +232,7 @@ class Configurations extends HtmlController
 
         if ((!isset($outline) || !isset($page)) && $this->params['format'] !== 'json') {
             // Redirect path to the styles page of the selected outline.
-            return new RedirectResponse($this->container->route('configurations', is_string($outline) ? $outline : 'default', 'styles'));
+            return new RedirectResponse($this->container->route('configurations', is_string($outline) ? $outline : 'default', 'layout'));
         }
 
         $outlines = $this->container['outlines'];

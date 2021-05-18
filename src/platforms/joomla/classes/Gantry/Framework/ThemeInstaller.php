@@ -114,7 +114,7 @@ class ThemeInstaller extends AbstractInstaller
             'copyright' => (string) $manifest->get('copyright'),
             'license' => (string) $manifest->get('license'),
             'install_url' => Route::_("index.php?option=com_gantry5&view=install&theme={$this->name}&{$token}=1", false),
-            'edit_url' => Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$this->name}&{$token}=1", false),
+            'edit_url' => Route::_("index.php?option=com_gantry5&view=configurations/default/layout&theme={$this->name}&{$token}=1", false),
         ];
 
         return parent::render($template, $context);

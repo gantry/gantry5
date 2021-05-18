@@ -47,13 +47,13 @@ class JFormFieldWarning extends JFormField
         $lang = JFactory::getLanguage();
         $lang->load('com_gantry5', JPATH_ADMINISTRATOR) || $lang->load('com_gantry5', JPATH_ADMINISTRATOR . '/components/com_gantry5');
 
-        $title1 = Text::_('GANTRY5_PLATFORM_STYLES');
-        $title2 = Text::_('GANTRY5_PLATFORM_LAYOUT');
+        $title1 = Text::_('GANTRY5_PLATFORM_LAYOUT');
+        $title2 = Text::_('GANTRY5_PLATFORM_STYLES');
         $title3 = Text::_('GANTRY5_PLATFORM_PAGESETTINGS');
 
         return <<<HTML
-<a href="{$route}/styles&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title1}</a>
-<a href="{$route}/layout&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title2}</a>
+<a href="{$route}/layout&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title1}</a>
+<a href="{$route}/styles&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title2}</a>
 <a href="{$route}/page&theme={$theme}&{$token}=1" class="btn" style="background:#439a86; color:#fff;">{$title3}</a>
 HTML;
     }

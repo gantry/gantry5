@@ -349,7 +349,7 @@ class plgSystemGantry5 extends CMSPlugin
                         $id = key($selected);
                     $session = $this->app->getSession();
                     $token = $session::getFormToken();
-                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/styles&theme={$theme}&{$token}=1");
+                        $this->app->redirect("index.php?option=com_gantry5&view=configurations/{$id}/layout&theme={$theme}&{$token}=1");
                     }
                 }
             }

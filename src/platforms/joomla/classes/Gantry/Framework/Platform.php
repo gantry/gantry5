@@ -219,7 +219,7 @@ class Platform extends BasePlatform
         $session = $application->getSession();
         $token = $session::getFormToken();
 
-        return Route::_("index.php?option=com_gantry5&view=configurations/default/styles&theme={$theme}&{$token}=1" , false);
+        return Route::_("index.php?option=com_gantry5&view=configurations/default/layout&theme={$theme}&{$token}=1" , false);
     }
 
     /**

@@ -360,7 +360,7 @@ class Gantry5Plugin extends Plugin
         $this->grav['twig']->plugins_hooked_nav['Gantry 5'] = [
             'authorize' => ['admin.gantry', 'admin.themes', 'admin.super'],
             'location' => 'gantry',
-            'route' => "gantry/configurations/default/styles?nonce={$nonce}",
+            'route' => "gantry/configurations/default/layout?nonce={$nonce}",
             'icon' => 'fa-gantry'
         ];
     }

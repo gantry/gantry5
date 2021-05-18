@@ -5,16 +5,6 @@
             <section id="navbar"{{ style|raw }}>
                 <ul>
                     {% include 'partials/configuration-selector.html.twig' %}
-                    <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
-                        <a data-g5-ajaxify=""
-                           data-g5-nav="styles"
-                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
-                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
-                           href="{{ gantry.route('configurations', configuration ?: 'default', 'styles') }}"
-                        >
-                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
-                        </a>
-                    </li>
                     {% if (configuration and configuration != 'default') or not gantry.platform.no_base_layout %}
                         <li {{ (location == 'configurations/layout') ? 'class="active"' }}>
                             <a data-g5-ajaxify=""
@@ -27,6 +17,16 @@
                             </a>
                         </li>
                     {% endif %}
+                    <li {{ (location == 'configurations/styles') ? 'class="active"' }}>
+                        <a data-g5-ajaxify=""
+                           data-g5-nav="styles"
+                           data-g5-ajaxify-target="[data-g5-content-wrapper]"
+                           data-g5-ajaxify-params="{{ {"navbar": true}|json_encode|e('html_attr') }}"
+                           href="{{ gantry.route('configurations', configuration ?: 'default', 'styles') }}"
+                        >
+                            <i class="fa fa-fw fa-adjust" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_STYLES'|trans }}</span>
+                        </a>
+                    </li>
                     <li {{ (location == 'configurations/page') ? 'class="active"' }}>
                         <a data-g5-ajaxify=""
                            data-g5-nav="page"

@@ -12,6 +12,7 @@
     1. [](#improved)
         - Major code cleanup for PHP 5.6.20+
         - Major rework in Menu Manager logic
+        - Changed `Layout` to be the default tab (#2638)
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration
