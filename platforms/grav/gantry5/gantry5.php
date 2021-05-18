@@ -389,7 +389,7 @@ class Gantry5Plugin extends Plugin
         $page->content($content);
 
         // Hook page into Grav as current page.
-        unset( $this->grav['page']);
+        unset($this->grav['page']);
         $this->grav['page'] = $page;;
     }
 

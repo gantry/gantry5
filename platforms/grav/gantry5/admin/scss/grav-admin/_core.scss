@@ -73,10 +73,10 @@ body #admin-main .admin-block {
         ul li a {
             padding: 1.33rem 0.938rem;
             @include breakpoint(desktop-range) {
-                padding: 1.33rem 0.638rem; 
-            }     
-            @include breakpoint(tablet-range) {      
-                padding: 1.33rem 0.638rem;     
+                padding: 1.33rem 0.638rem;
+            }
+            @include breakpoint(tablet-range) {
+                padding: 1.33rem 0.638rem;
             }
         }
     }

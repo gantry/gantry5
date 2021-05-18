@@ -1,5 +1,10 @@
 {% extends 'partials/base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% do grav.assets.removeCss(theme_url ~ '/css/fork-awesome.min.css') %}
+{% endblock %}
+
 {% block content %}
     {{ content|raw }}
 {% endblock %}
