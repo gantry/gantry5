@@ -1,0 +1,41 @@
+fonts:
+  roboto:
+    400: 'gantry-theme://fonts/roboto_regular_macroman/Roboto-Regular-webfont'
+    500: 'gantry-theme://fonts/roboto_medium_macroman/Roboto-Medium-webfont'
+    700: 'gantry-theme://fonts/roboto_bold_macroman/Roboto-Bold-webfont'
+
+css:
+  compiler: \Gantry\Component\Stylesheet\ScssCompiler
+  paths:
+    - gantry-theme://scss
+    - gantry-engine://scss
+  files:
+    - hydrogen
+    - hydrogen-joomla
+    - custom
+  persistent:
+    - hydrogen
+  overrides:
+    - hydrogen-joomla
+    - custom
+
+block-variations:
+  Box Variations:
+    box1: Box 1
+    box2: Box 2
+    box3: Box 3
+    box4: Box 4
+  Effects:
+    shadow: Shadow 1
+    shadow2: Shadow 2
+    rounded: Rounded
+    square: Square
+  Utility:
+    disabled: Disabled
+    align-right: Align Right
+    align-left: Align Left
+    center: Center
+    full-width: Full Width
+    equal-height: Equal Height
+    nomarginall: No Margin
+    nopaddingall: No Padding

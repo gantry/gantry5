@@ -14,6 +14,7 @@
 namespace Gantry\Admin;
 
 use Gantry\Component\Filesystem\Folder;
+use Gantry\Component\Filesystem\Streams;
 use Gantry\Component\Theme\ThemeDetails;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -59,22 +60,24 @@ class ThemeList
         foreach ($files as $theme) {
             try {
                 if ($locator('gantry-themes://' . $theme . '/gantry/theme.yaml')) {
-                    $details = new ThemeDetails($theme);
-                    $details->addStreams();
+                    $details = ThemeDetails::instance($theme);
 
-                    $details['name'] = $theme;
                     $details['title'] = $details['details.name'];
                     $details['preview_url'] = $gantry['platform']->getThemePreviewUrl($theme);
                     $details['admin_url'] = $gantry['platform']->getThemeAdminUrl($theme);
                     $details['params'] = [];
 
-                    $list[$details->name] = $details;
+                    $list[$theme] = $details;
                 }
             } catch (\Exception $e) {
                 // Do not add broken themes into the list.
                 continue;
             }
         }
+
+        /** @var Streams $streams */
+        $streams = $gantry['streams'];
+        $streams->register();
 
         // Add Thumbnails links after adding all the paths to the locator.
         foreach ($list as $details) {

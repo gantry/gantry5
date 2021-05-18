@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2015 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -18,12 +18,12 @@ use Gantry\Component\File\CompiledYamlFile;
 /**
  * The Compiled Configuration class.
  */
-class CompiledConfig extends CompiledBase
+class CompiledTheme extends CompiledBase
 {
     /**
      * @var int Version number for the compiled file.
      */
-    public $version = 2;
+    public $version = 1;
 
     /**
      * @var Config  Configuration object.
@@ -34,26 +34,6 @@ class CompiledConfig extends CompiledBase
      * @var callable  Blueprints loader.
      */
     protected $callable;
-
-    /**
-     * @var bool
-     */
-    protected $withDefaults;
-
-    /**
-     * Get filename for the compiled PHP file.
-     *
-     * @param string $name
-     * @return $this
-     */
-    public function name($name = null)
-    {
-        if (!$this->name) {
-            $this->name = $name ?: md5(json_encode(array_keys($this->files)) . (int) $this->withDefaults);
-        }
-
-        return $this;
-    }
 
     /**
      * Set blueprints for the configuration.
@@ -69,28 +49,12 @@ class CompiledConfig extends CompiledBase
     }
 
     /**
-     * @param bool|array $data
-     * @return mixed
-     */
-    public function load($data = [])
-    {
-        $this->withDefaults = is_bool($data) ? $data : false;
-
-        return parent::load($data);
-    }
-
-    /**
      * Create configuration object.
      *
      * @param  array  $data
      */
     protected function createObject(array $data)
     {
-        if ($this->withDefaults && empty($data) && is_callable($this->callable)) {
-            $blueprints = $this->callable;
-            $data = $blueprints()->getDefaults();
-        }
-
         $this->object = new Config($data, $this->callable);
     }
 
@@ -109,8 +73,10 @@ class CompiledConfig extends CompiledBase
      */
     protected function loadFile($name, $filename)
     {
-        $file = CompiledYamlFile::instance($filename);
-        $this->object->join($name, $file->content(), '/');
-        $file->free();
+        if ($name !== 'theme') {
+            $file = CompiledYamlFile::instance($filename);
+            $this->object->join($name, $file->content(), '/');
+            $file->free();
+        }
     }
 }

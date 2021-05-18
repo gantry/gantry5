@@ -15,6 +15,7 @@ namespace Gantry\Framework\Services;
 
 use Gantry\Component\Config\CompiledBlueprints;
 use Gantry\Component\Config\CompiledConfig;
+use Gantry\Component\Config\CompiledTheme;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Framework\Atoms;
 use Pimple\Container;
@@ -51,6 +52,19 @@ class ConfigServiceProvider implements ServiceProviderInterface
             GANTRY_DEBUGGER && \Gantry\Debugger::setConfig($config)->stopTimer('config');
 
             return $config;
+        };
+
+        $gantry['theme_blueprints'] = function($c) {
+            return static::themeBlueprints($c);
+        };
+
+        $gantry['theme_details'] = function($c) {
+            // Make sure configuration has been set.
+            if (!isset($c['theme'])) {
+                throw new \LogicException('Gantry: Please initialize theme before using $gantry["details"]', 500);
+            }
+
+            return static::loadThemeDetails($c);
         };
     }
 
@@ -110,5 +124,45 @@ class ConfigServiceProvider implements ServiceProviderInterface
         }
 
         return $config;
+    }
+
+    protected static function themeBlueprints(Container $container)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $container['locator'];
+
+        $cache = $locator->findResource('gantry-cache://theme/compiled/blueprints', true, true);
+
+        $files = [];
+        $paths = $locator->findResources('gantry-admin://blueprints/gantry');
+        $files += (new ConfigFileFinder)->locateFiles($paths);
+
+        $config = new CompiledBlueprints($cache, $files, GANTRY5_ROOT);
+
+        return $config->load();
+    }
+
+    protected static function loadThemeDetails(Container $container)
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = $container['locator'];
+
+        $paths = $locator->findResources('gantry-theme://gantry');
+
+        // Locate all configuration files to be compiled.
+        $files = (new ConfigFileFinder)->locateFiles($paths);
+
+        $cache = $locator->findResource('gantry-cache://theme/compiled/theme', true, true);
+
+        if (!$cache) {
+            throw new \RuntimeException('Who just removed Gantry 5 cache folder? Try reloading the page if it fixes the issue');
+        }
+
+        $config = new CompiledTheme($cache, $files, GANTRY5_ROOT);
+        $config->setBlueprints(function() use ($container) {
+            return $container['theme_blueprints'];
+        });
+
+        return $config->load(true);
     }
 }

@@ -13,6 +13,10 @@
 
 namespace Gantry\Component\Theme;
 
+use Gantry\Component\Config\BlueprintSchema;
+use Gantry\Component\Config\CompiledBlueprints;
+use Gantry\Component\Config\CompiledTheme;
+use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Streams;
 use Gantry\Framework\Gantry;
@@ -28,8 +32,24 @@ class ThemeDetails implements \ArrayAccess
 {
     use NestedArrayAccessWithGetters, Export;
 
+    static protected $instances = [];
+
     protected $items;
     protected $parent;
+    protected $blueprints;
+
+    /**
+     * @param string $theme
+     * @return static
+     */
+    public static function instance($theme)
+    {
+        if (!isset(static::$instances[$theme])) {
+            static::$instances[$theme] = new static($theme);
+        }
+
+        return static::$instances[$theme];
+    }
 
     /**
      * Create new theme details.
@@ -38,57 +58,17 @@ class ThemeDetails implements \ArrayAccess
      */
     public function __construct($theme)
     {
-        $gantry = Gantry::instance();
+        // Load gantry/theme.yaml file.
+        $this->loadInitialDetails($theme);
 
-        /** @var UniformResourceLocator $locator */
-        $locator = $gantry['locator'];
+        // Initialize parent theme.
+        $this->parent();
 
-        $filename = $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
-        if (!$filename) {
-            throw new \RuntimeException(sprintf('Theme %s not found', $theme), 404);
-        }
+        // Add stream for this theme.
+        $this->addStream();
 
-        $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
-
-        $file = CompiledYamlFile::instance($filename);
-        $this->items = $file->setCachePath($cache)->content();
-        $file->free();
-
-        $this->offsetSet('name', $theme);
-
-        $parent = (string) $this->get('configuration.theme.parent', $theme);
-        $parent = $parent != $theme ? $parent : null;
-
-        $this->offsetSet('parent', $parent);
-    }
-
-    /**
-     * @return string
-     */
-    public function addStreams()
-    {
-        $gantry = Gantry::instance();
-
-        // Initialize theme stream.
-        $streamName = $this->addStream($this->offsetGet('name'), $this->getPaths());
-
-        // Initialize parent theme streams.
-        $loaded = [$this->offsetGet('name')];
-        $details = $this;
-
-        while ($details = $details->parent()) {
-            if (in_array($details->name, $loaded)) {
-                break;
-            }
-            $this->addStream($details->name, $details->getPaths(false));
-            $loaded[] = $details->name;
-        }
-
-        /** @var Streams $streams */
-        $streams = $gantry['streams'];
-        $streams->register();
-
-        return $streamName;
+        // Load compiled theme details.
+        $this->loadCompiledDetails();
     }
 
     /**
@@ -103,7 +83,7 @@ class ThemeDetails implements \ArrayAccess
 
         if (!$this->parent && $parent) {
             try {
-                $this->parent = new ThemeDetails($parent);
+                $this->parent = static::instance($parent);
             } catch (\RuntimeException $e) {
                 throw new \RuntimeException(sprintf('Parent theme %s not found', $parent), 404);
             }
@@ -120,9 +100,9 @@ class ThemeDetails implements \ArrayAccess
     public function getPaths($overrides = true)
     {
         $paths = array_merge(
-            $overrides ? (array) $this->get('configuration.theme.overrides', 'gantry-theme://custom') : [],
+            $overrides ? (array) $this->get('theme.setup.overrides', 'gantry-theme://custom') : [],
             ['gantry-theme://'],
-            (array) $this->get('configuration.theme.base', 'gantry-theme://common')
+            (array) $this->get('theme.setup.base', 'gantry-theme://common')
         );
 
         $parent = $this->offsetGet('parent');
@@ -187,10 +167,38 @@ class ThemeDetails implements \ArrayAccess
         }
         if (!strpos($path, '://')) {
             $name = $this->offsetGet('name');
-            $path = "gantry-themes://{$name}/{$path}";
+            $path = $path ? "gantry-themes://{$name}/{$path}" : "gantry-themes://{$name}";
         }
 
         return $path;
+    }
+
+    /**
+     * @return BlueprintSchema
+     */
+    public function blueprints()
+    {
+        if (!$this->blueprints) {
+            $gantry = Gantry::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+
+            $cache = $locator->findResource("gantry-cache://{$this->name}/compiled/blueprints", true, true);
+            $paths = $locator->findResources('gantry-theme://blueprints/theme');
+
+            $files = (new ConfigFileFinder)->locateFiles($paths);
+            $config = new CompiledBlueprints($cache, $files);
+
+            $this->blueprints = $config->load();
+        }
+
+        return $this->blueprints;
+    }
+
+    public function getStreamName()
+    {
+        return 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $this->offsetGet('name'));
     }
 
     /**
@@ -202,27 +210,105 @@ class ThemeDetails implements \ArrayAccess
         return $this->offsetGet('parent');
     }
 
-    /**
-     * @param string $name
-     * @param array $paths
-     * @return string|null
-     */
-    protected function addStream($name, $paths)
+    protected function addStream()
     {
         $gantry = Gantry::instance();
 
         /** @var UniformResourceLocator $locator */
         $locator = $gantry['locator'];
 
-        /** @var Streams $streams */
-        $streams = $gantry['streams'];
-
         // Add theme stream.
-        $streamName = 'gantry-themes-' . preg_replace('|[^a-z\d+.-]|ui', '-', $name);
+        $streamName = $this->getStreamName();
         if (!$locator->schemeExists($streamName)) {
-            $streams->add([$streamName => ['paths' => $paths]]);
+            /** @var Streams $streams */
+            $streams = $gantry['streams'];
+
+            $streams->add([$streamName => ['paths' => $this->getPaths(false)]]);
+        }
+    }
+
+    protected function updateInitialDetails(array $list)
+    {
+        if (isset($list['details'])) {
+            $new = [];
+
+            // Convert old file format into the new one.
+            $new['theme']['name'] = isset($list['details']['name']) ? $list['details']['name'] : '';
+            $new['theme']['version'] = isset($list['details']['version']) ? $list['details']['version'] : '';
+            $new['theme']['date'] = isset($list['details']['date']) ? $list['details']['date'] : '';
+            $new['theme']['gantry'] = isset($list['configuration']['gantry']) ? $list['configuration']['gantry'] : [];
+            $new['theme']['setup'] = isset($list['configuration']['theme']) ? $list['configuration']['theme'] : [];
+            $new['dependencies'] = isset($list['configuration']['dependencies']) ? $list['configuration']['dependencies'] : [];
+
+            unset($new['details']['name']);
+            unset($new['details']['version']);
+            unset($new['details']['date']);
+            unset($new['configuration']['gantry']);
+            unset($new['configuration']['theme']);
+            unset($new['configuration']['dependencies']);
+
+            foreach ($list as $key => $value) {
+                $new[$key] = $value;
+            }
+
+            return $new;
         }
 
-        return $streamName;
+        return ['theme' => $list];
+    }
+
+    protected function loadInitialDetails($theme)
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $filename = $locator->findResource("gantry-themes://{$theme}/gantry/theme.yaml");
+        if (!$filename) {
+            throw new \RuntimeException(sprintf('Gantry 5 Theme %s not found', $theme), 404);
+        }
+
+        $cache = $locator->findResource("gantry-cache://{$theme}/compiled/yaml", true, true);
+
+        $file = CompiledYamlFile::instance($filename);
+        $this->items = $this->updateInitialDetails($file->setCachePath($cache)->content());
+        $file->free();
+
+        $parent = $this->get('theme.setup.parent', $theme);
+        $parent = $parent != $theme ? $parent : null;
+
+        $this->offsetSet('name', $theme);
+        $this->offsetSet('parent', $parent);
+    }
+
+    protected function loadCompiledDetails()
+    {
+        $gantry = Gantry::instance();
+
+        /** @var UniformResourceLocator $locator */
+        $locator = $gantry['locator'];
+
+        $cache = $locator->findResource("gantry-cache://{$this->name}/compiled/theme", true, true);
+
+        // Generate lookup paths for the theme details.
+        $paths = [];
+        foreach ($this->getPaths() as $path) {
+            $found = $locator->findResources($path . '/gantry');
+            if (!empty($found)) {
+                $paths = array_merge($paths, $found);
+            }
+        }
+
+        // Locate all theme detail files to be compiled.
+        $files = (new ConfigFileFinder)->locateFiles($paths);
+
+        $self = $this;
+        $config = new CompiledTheme($cache, $files);
+        $config->setBlueprints(function() use ($self) {
+            return $self->blueprints();
+        });
+
+        $this->items = $config->load($this->items)->toArray();
     }
 }
