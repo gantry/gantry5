@@ -192,12 +192,7 @@ class Platform extends BasePlatform
      */
     public function getThemePreviewUrl($theme)
     {
-        $gantry = Gantry::instance();
-
-        /** @var Document $document */
-        $document = $gantry['document'];
-
-        return $document::url('wp-admin/customize.php?theme=' . $theme);
+        return admin_url('customize.php?theme=' . $theme);
     }
 
     /**
@@ -211,11 +206,9 @@ class Platform extends BasePlatform
         $gantry = Gantry::instance();
 
         if ($theme === $gantry['theme.name']) {
-            /** @var Document $document */
-            $document = $gantry['document'];
-
-            return $document::url('wp-admin/admin.php?page=layout-manager');
+            return admin_url('admin.php?page=layout-manager');
         }
+
         return null;
     }
 

@@ -35,6 +35,7 @@
     1. [](#bugfix)
         - Fixed Gantry menu editor does not synch wordpress menu (#2473)
         - Fixed duplicated menu items breaking menu admin (#2265)
+        - Fixed custom admin url compatibility (#2478)
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.7 and Admin 1.10
