@@ -6,7 +6,8 @@
         - Updated minimum requirement to PHP 5.6.20, added PHP 8 support
         - Updated Symfony Components from v2.8 to v3.4
         - Updated SCSS compiler to v1.5
-        - New SCSS compiler is more strict and fails on badly written SCSS where the old version did not
+          - Much faster and has far better compatibility to the latest SCSS specs
+          - More strict and fails on badly written SCSS where the old version did not
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
@@ -41,6 +42,7 @@
     1. [](#new)
         - Updated minimum requirement to Grav 1.7 and Admin 1.10
         - Grav specific code passes phpstan level 5 tests
+        - Added debugger support in admin JSON requests
 1. [Prime](#prime)
     1. [](#new)
         - Remove unmaintained standalone Prime environment

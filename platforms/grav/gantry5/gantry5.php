@@ -375,22 +375,18 @@ class Gantry5Plugin extends Plugin
         $page->init(new \SplFileInfo(__DIR__ . '/pages/gantry.md'));
         $page->slug('gantry');
 
-        // Dispatch Gantry in output buffer.
-        ob_start();
         $gantry = Gantry::instance();
 
         /** @var Router $router */
         $router = $gantry['router'];
-        $router->dispatch();
-
-        $content = ob_get_clean();
+        $response = $router->dispatch();
 
         // Store response into the page.
-        $page->content($content);
+        $page->content($response->getBody());
 
         // Hook page into Grav as current page.
         unset($this->grav['page']);
-        $this->grav['page'] = $page;;
+        $this->grav['page'] = $page;
     }
 
     /**

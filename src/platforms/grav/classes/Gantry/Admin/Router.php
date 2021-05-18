@@ -23,6 +23,7 @@ use Grav\Common\Grav;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use Grav\Plugin\Admin\Admin;
+use Psr\Http\Message\ResponseInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -152,7 +153,7 @@ class Router extends BaseRouter
 
     /**
      * @param Response $response
-     * @return bool
+     * @return ResponseInterface
      */
     protected function send(Response $response)
     {
@@ -161,28 +162,22 @@ class Router extends BaseRouter
 //            Debugger::addCollector(new ConfigCollector(Gantry::instance()['translator']->untranslated(), 'Untranslated'));
 //        }
 
-        // Output HTTP header.
-        header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
-        header("Content-Type: {$response->mimeType}; charset={$response->charset}");
-        foreach ($response->getHeaders() as $key => $values) {
-            foreach ($values as $value) {
-                header("{$key}: {$value}");
-            }
-        }
+       $headers = [
+           'Content-Type' => "{$response->mimeType}; charset={$response->charset}"
+       ] + $response->getHeaders();
+       if ($response instanceof JsonResponse) {
+           $headers['expires'] = 'Wed, 17 Aug 2005 00:00:00 GMT';
+           $headers['Last-Modified'] = gmdate('D, d M Y H:i:s') . ' GMT';
+           $headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0';
+           $headers['Pragma'] = 'no-cache';
+       }
 
+        $resp = new \Grav\Framework\Psr7\Response($response->getStatusCode(), $headers, (string)$response);
         if ($response instanceof JsonResponse) {
-            header('Expires: Wed, 17 Aug 2005 00:00:00 GMT', true);
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT', true);
-            header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
-            header('Pragma: no-cache');
+            $grav = Grav::instance();
+            $grav->close($resp);
         }
 
-        echo $response;
-
-        if ($response instanceof JsonResponse) {
-            exit();
-        }
-
-        return true;
+        return $resp;
     }
 }

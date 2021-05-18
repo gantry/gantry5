@@ -23,6 +23,7 @@ use Gantry\Component\Response\Response;
 use Gantry\Component\Response\JsonResponse;
 use Gantry\Framework\Gantry;
 use Gantry\Framework\Services\ErrorServiceProvider;
+use Psr\Http\Message\ResponseInterface;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use Whoops\Exception\ErrorException;
 
@@ -55,7 +56,7 @@ abstract class Router implements RouterInterface
     }
 
     /**
-     * @return bool
+     * @return ResponseInterface|bool
      * @throws ErrorException
      */
     public function dispatch()
@@ -214,9 +215,10 @@ abstract class Router implements RouterInterface
 
     /**
      * @param Response $response
-     * @return bool
+     * @return ResponseInterface|bool
      */
-    protected function send(Response $response) {
+    protected function send(Response $response)
+    {
         // Output HTTP header.
         header("HTTP/1.1 {$response->getStatus()}", true, $response->getStatusCode());
         header("Content-Type: {$response->mimeType}; charset={$response->charset}");
