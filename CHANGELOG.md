@@ -10,13 +10,14 @@
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan level 5 tests
     1. [](#improved)
-        - Major code cleanup for PHP 5.6.20+
+        - Major code cleanup for PHP 5.6
         - Major rework in Menu Manager logic
         - Changed `Layout` to be the default tab (#2638)
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration
         - Fixed admin cookie timeouts for GDPR compliance (#2775)
+        - Fixed W3C validation error in content array particle read more button (#2729)
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9 (includes themes)

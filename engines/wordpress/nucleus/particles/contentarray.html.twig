@@ -129,8 +129,8 @@
 
                                 {% if display.read_more.enabled %}
                                     <div class="g-array-item-read-more">
-                                        <a href="{{ post.link|raw }}">
-                                            <button class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">{{ display.read_more.label|default('Read More...') }}</button>
+                                        <a href="{{ post.link|raw }}" class="button{% if display.read_more.css %} {{ display.read_more.css }}{% endif %}">
+                                            {{ display.read_more.label|default('Read More...') }}
                                         </a>
                                     </div>
                                 {% endif %}
