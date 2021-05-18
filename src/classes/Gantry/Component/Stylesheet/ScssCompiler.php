@@ -18,12 +18,14 @@ use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use ScssPhp\ScssPhp\CompilationResult;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\ValueConverter;
 
 /**
  * Class ScssCompiler
@@ -38,6 +40,8 @@ class ScssCompiler extends CssCompiler
 
     /** @var Compiler */
     protected $compiler;
+    /** @var CompilationResult|null */
+    protected $result;
     /** @var Functions */
     protected $functions;
 
@@ -137,10 +141,11 @@ class ScssCompiler extends CssCompiler
         $this->compiler->setImportPaths([[$this, 'findImport']]);
 
         // Run the compiler.
-        $this->compiler->setVariables($this->getVariables());
+        $this->compiler->addVariables($this->getVariables(true));
         $scss = '@import "' . $in . '.scss"';
         try {
-            $css = $this->compiler->compile($scss);
+            $this->result = $this->compiler->compileString($scss);
+            $css = $this->result->getCss();
         } catch (CompilerException $e) {
             throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
         }
@@ -265,5 +270,28 @@ WARN;
     protected function doSetFonts(array $list)
     {
         $this->functions->setFonts($list);
+    }
+
+    /**
+     * @param bool $encoded
+     * @return array
+     */
+    public function getVariables($encoded = false)
+    {
+        $variables = $this->variables;
+
+        foreach($variables as &$value) {
+            $value = ValueConverter::parseValue($value);
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getIncludedFiles()
+    {
+        return $this->result->getIncludedFiles();
     }
 }

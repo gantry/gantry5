@@ -45,12 +45,12 @@ class Functions
     {
         $this->compiler = $compiler;
 
-        $compiler->registerFunction('url', [$this, 'libUrl']);
-        $compiler->registerFunction('get-font-url', [$this, 'libGetFontUrl']);
-        $compiler->registerFunction('get-font-family', [$this, 'libGetFontFamily']);
-        $compiler->registerFunction('get-local-fonts', [$this, 'libGetLocalFonts']);
-        $compiler->registerFunction('get-local-font-weights', [$this, 'libGetLocalFontWeights']);
-        $compiler->registerFunction('get-local-font-url', [$this, 'libGetLocalFontUrl']);
+        $compiler->registerFunction('url', [$this, 'libUrl'], ['url']);
+        $compiler->registerFunction('get-font-url', [$this, 'libGetFontUrl'], ['list...']);
+        $compiler->registerFunction('get-font-family', [$this, 'libGetFontFamily'], ['family']);
+        $compiler->registerFunction('get-local-fonts', [$this, 'libGetLocalFonts'], ['list...']);
+        $compiler->registerFunction('get-local-font-weights', [$this, 'libGetLocalFontWeights'], ['font']);
+        $compiler->registerFunction('get-local-font-url', [$this, 'libGetLocalFontUrl'], ['font', 'weight']);
 
         foreach ($this->userFunctions as $name => $userFunction) {
             $compiler->registerFunction($name, $userFunction[0], $userFunction[1]);

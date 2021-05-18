@@ -391,7 +391,7 @@ abstract class CssCompiler implements CssCompilerInterface
             'timestamp' => filemtime($locator->findResource($out)),
             'md5' => $md5,
             'variables' => $this->getVariables(),
-            'imports' => $this->compiler->getParsedFiles()
+            'imports' => $this->getIncludedFiles()
         ];
 
         // Attempt to lock the file for writing.
@@ -406,5 +406,13 @@ abstract class CssCompiler implements CssCompilerInterface
             $metaFile->unlock();
         }
         $metaFile->free();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getIncludedFiles()
+    {
+        return $this->compiler->getParsedFiles();
     }
 }
