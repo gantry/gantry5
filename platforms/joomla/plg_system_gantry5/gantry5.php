@@ -259,8 +259,10 @@ class plgSystemGantry5 extends CMSPlugin
             return;
         }
 
-        $gantryPath = JPATH_THEMES . "/{$templateName}/includes/gantry.php";
-
+        $gantryPath = JPATH_THEMES . "/{$templateName}/custom/includes/gantry.php";
+        if (!is_file($gantryPath)) {
+            $gantryPath = JPATH_THEMES . "/{$templateName}/includes/gantry.php";
+        }
         if (is_file($gantryPath)) {
             // Manually setup Gantry 5 Framework from the template.
             $gantry = include $gantryPath;
@@ -284,9 +286,12 @@ class plgSystemGantry5 extends CMSPlugin
             $gantry['theme.path'] = JPATH_THEMES . "/{$templateName}";
             $gantry['theme.name'] = $templateName;
 
-            $themePath = $gantry['theme.path'] . '/includes/theme.php';
+            $classPath = $gantry['theme.path'] . '/custom/includes/theme.php';
+            if (!is_file($classPath)) {
+                $classPath = $gantry['theme.path'] . '/includes/theme.php';
+            }
 
-            include_once $themePath;
+            include_once $classPath;
         }
 
         if (GANTRY_DEBUGGER) {

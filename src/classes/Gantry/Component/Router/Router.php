@@ -143,8 +143,14 @@ abstract class Router implements RouterInterface
 
         $loaded = true;
 
-        if (isset($this->container['theme.path']) && file_exists($this->container['theme.path'] . '/includes/gantry.php')) {
-            include $this->container['theme.path'] . '/includes/gantry.php';
+        if (isset($this->container['theme.path'])) {
+            $className = $this->container['theme.path'] . '/custom/includes/gantry.php';
+            if (!is_file($className)) {
+                $className = $this->container['theme.path'] . '/includes/gantry.php';
+            }
+            if (is_file($className)) {
+                include $className;
+            }
         }
 
         if (isset($this->container['theme'])) {

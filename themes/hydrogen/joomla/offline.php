@@ -14,7 +14,11 @@ defined('_JEXEC') or die;
 use Gantry\Framework\Theme;
 
 // Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include __DIR__ . '/includes/gantry.php';
+$className = __DIR__ . '/custom/includes/gantry.php';
+if (!is_file($className)) {
+    $className = __DIR__ . '/includes/gantry.php';
+}
+$gantry = include $className;
 
 /** @var Theme $theme */
 $theme = $gantry['theme'];

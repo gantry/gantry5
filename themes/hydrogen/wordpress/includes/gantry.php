@@ -33,7 +33,12 @@ try {
 
     // Only a single template can be loaded at any time.
     if (!isset($gantry['theme'])) {
-        include_once $gantry['theme.path'] . '/includes/theme.php';
+        $classPath = $gantry['theme.path'] . '/custom/includes/theme.php';
+        if (!file_exists($classPath)) {
+            $classPath = $gantry['theme.path'] . '/includes/theme.php';
+        }
+
+        include_once $classPath;
     }
 
 } catch (Exception $e) {

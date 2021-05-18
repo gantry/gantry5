@@ -18,7 +18,7 @@ $requiredGantryVersion = '5.5';
 $translationDomain = 'g5_helium';
 
 // Bootstrap Gantry framework or fail gracefully.
-$gantry_include = locate_template('/includes/gantry.php');
+$gantry_include = locate_template('/custom/includes/gantry.php') ?: locate_template('/includes/gantry.php');
 if (!$gantry_include) {
     wp_die('Gantry theme is missing a file: includes/gantry.php');
 }
