@@ -601,13 +601,21 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             return;
         }
 
+        // Ordering in menu item itself.
+        $item = $this->items[$path];
+        if (!$ordering) {
+            $this->setGroupToChildren($item);
+
+            return;
+        }
+
+        // Ordering in YAML file.
         if ($map === null) {
             $map = $this->pathMap ? $this->pathMap->toArray() : [];
         }
 
         $order = [];
         $newMap = [];
-        $item = $this->items[$path];
         if ($this->isAssoc($ordering)) {
             foreach ($ordering as $key => $value) {
                 if ($map) {
@@ -640,6 +648,20 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             }
 
             $item->groupChildren($order ?: $ordering);
+        }
+    }
+
+    /**
+     * @param Item $item
+     */
+    protected function setGroupToChildren($item)
+    {
+        $groups = $item->groups();
+        foreach ($groups as $group => $children) {
+            foreach ($children as $child) {
+                $child->group = $group;
+                $this->setGroupToChildren($child);
+            }
         }
     }
 
