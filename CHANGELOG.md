@@ -40,7 +40,7 @@
         - Fixed custom admin url compatibility (#2478)
 1. [Grav](#grav)
     1. [](#new)
-        - Updated minimum requirement to Grav 1.7 and Admin 1.10
+        - Updated minimum requirement to Grav 1.7.15 and Admin 1.10.15
         - Grav specific code passes phpstan level 5 tests
         - Added debugger support in admin JSON requests
 1. [Prime](#prime)
