@@ -13,12 +13,21 @@
 {%- endmacro %}
 
 {% macro displayParticle(item, context) %}
-    {% set context = context|merge({ particle: item.options.particle }) %}
+    {% try %}
+    {% set in_particle = (context.in_particle ?? 0) + 1 %}
+    {% if in_particle > 5 %}
+        {% throw 500 'Particle loop detected' %}
+    {% endif %}
+
+    {% set context = context|merge({ particle: item.options.particle, in_particle: in_particle}) %}
     {% set classes = item.options.block.class %}
     <div class="menu-item-particle{{ classes ? ' ' ~ classes }}">
         {% include ['particles/' ~ item.particle ~ '.html.twig', '@particles/' ~ item.particle ~ '.html.twig']
         ignore missing with context only %}
     </div>
+    {% catch %}
+        <div class="alert alert-error">{{ e.getMessage }}</div>
+    {% endtry %}
 {% endmacro %}
 
 {% macro displayTitle(item) %}

@@ -20,6 +20,7 @@
         - Fixed getting missing menu configuration
         - Fixed admin cookie timeouts for GDPR compliance (#2775)
         - Fixed W3C validation error in content array particle read more button (#2729)
+        - Fixed infinite recursive loop if the menu contains menu particle (#2527)
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9 (includes themes)

@@ -1,4 +1,9 @@
 {% try %}
+    {% set in_particle = (in_particle ?? 0) + 1 %}
+    {% if in_particle > 5 %}
+        {% throw 500 'Particle loop detected' %}
+    {% endif %}
+
     {% set id = segment.id %}
     {% if not particle %}
         {% if noConfig %}
