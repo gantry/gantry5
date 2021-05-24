@@ -88,6 +88,7 @@
 
         <delete dir="${tmp_dir}"/>
         <delete dir="${build_dir}"/>
+        <delete dir="${package_dir}"/>
     </target>
 
     <target name="info">
