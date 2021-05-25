@@ -84,17 +84,20 @@ class Menu extends HtmlController
      */
     public function item($id = null, ...$parts)
     {
+        // All extra arguments become the path.
+        $path = $parts ? implode('/', $parts) : '';
+
         // Load the menu.
         try {
             $resource = $this->loadResource($id, $this->build($this->request->post));
         } catch (\Exception $e) {
             $this->params['error'] = $e;
+            $this->params['id'] = $id;
+            $this->params['menus'] = $this->getMenus();
+            $this->params['path'] = $path;
 
             return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
         }
-
-        // All extra arguments become the path.
-        $path = $parts ? implode('/', $parts) : '';
 
         // Get menu item and make sure it exists.
         $item = $resource->get($path);
@@ -532,6 +535,17 @@ class Menu extends HtmlController
         $menus = $this->container['menu'];
 
         return $menus->instance(['menu' => $id, 'admin' => true, 'POST' => $config !== null], $config);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getMenus()
+    {
+        /** @var MenuObject $menus */
+        $menus = $this->container['menu'];
+
+        return $menus->getMenus();
     }
 
     /**
