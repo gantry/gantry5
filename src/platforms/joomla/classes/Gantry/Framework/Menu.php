@@ -68,6 +68,7 @@ class Menu extends AbstractMenu
             $menuType = MenuHelper::getMenuType($params['menu']);
 
             $config = $this->config();
+            $this->id = $menuType->id;
             $config->set('settings.title', $menuType->title);
             $config->set('settings.description', $menuType->description);
         }

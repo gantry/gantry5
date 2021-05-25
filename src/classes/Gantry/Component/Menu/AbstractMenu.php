@@ -31,6 +31,9 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
 {
     use GantryTrait, ArrayAccessWithGetters, Iterator, Export, Countable;
 
+    /** @var int|string|null */
+    public $id;
+
     /** @var array */
     protected $paths = [];
     /** @var array */

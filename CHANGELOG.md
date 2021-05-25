@@ -10,6 +10,7 @@
           - More strict and fails on badly written SCSS where the old version did not
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan level 5 tests
+        - Fixed `The menu selected is empty!` instead of displaying error message (#2806)
     1. [](#improved)
         - Major code cleanup for PHP 5.6
         - Major rework in Menu Manager logic

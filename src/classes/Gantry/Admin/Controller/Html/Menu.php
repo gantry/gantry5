@@ -78,21 +78,6 @@ class Menu extends HtmlController
     ];
 
     /**
-     * @param string $method
-     * @param array $path
-     * @param array $params
-     * @return Response
-     */
-    public function execute($method, array $path, array $params)
-    {
-        if (!$this->authorize('menu.manage')) {
-            $this->forbidden();
-        }
-
-        return parent::execute($method, $path, $params);
-    }
-
-    /**
      * @param string|null $id
      * @param string ...$parts
      * @return string
@@ -103,6 +88,8 @@ class Menu extends HtmlController
         try {
             $resource = $this->loadResource($id, $this->build($this->request->post));
         } catch (\Exception $e) {
+            $this->params['error'] = $e;
+
             return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
         }
 
@@ -162,6 +149,10 @@ class Menu extends HtmlController
     public function edit($id)
     {
         $resource = $this->loadResource($id);
+        if (!$this->authorize('menu.manage', $resource->name())) {
+            $this->forbidden();
+        }
+
         $input = $this->build($this->request->post);
         if ($input) {
             $resource->config()->merge(['settings' => $input['settings']]);
@@ -181,6 +172,9 @@ class Menu extends HtmlController
     public function save($id = null)
     {
         $resource = $this->loadResource($id);
+        if (!$this->authorize('menu.manage', $resource->name()) && !$this->authorize('menu.edit', $resource->name())) {
+            $this->forbidden();
+        }
 
         $data = $this->build($this->request->post);
 
@@ -242,6 +236,9 @@ class Menu extends HtmlController
 
         // Load the menu.
         $resource = $this->loadResource($id);
+        if (!$this->authorize('menu.manage', $resource->name())) {
+            $this->forbidden();
+        }
 
         // Get menu item and make sure it exists.
         /** @var Item|null $item */

@@ -1,5 +1,8 @@
 {% extends ajax-suffix ? "@gantry-admin/partials/ajax.html.twig" : "@gantry-admin/partials/base.html.twig" %}
 
+{% set visible = not error and gantry.authorize('menu.manage', id) %}
+{% set authorized = visible and gantry.authorize('menu.edit', id) %}
+
 {% block gantry %}
 <form method="post" action="{{ gantry.route('menu', id) }}" data-mm-container="">
     <div class="menu-header">
@@ -7,13 +10,14 @@
             <button class="button button-back-to-conf">
                 <i class="fa fa-fw fa-arrow-left" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_BACK_SETUP'|trans }}</span>
             </button>
-            {% if gantry.authorize('menu.edit', id) %}
+            {% if authorized %}
             <button type="submit" class="button button-primary button-save" data-save="Menu">
                 <i class="fa fa-fw fa-check" aria-hidden="true"></i> <span>{{ 'GANTRY5_PLATFORM_SAVE_MENU'|trans }}</span>
             </button>
             {% endif %}
         </span>
         <h2 class="page-title">{{ 'GANTRY5_PLATFORM_MENU_EDITOR'|trans }}</h2>
+        {% if menus %}
         <select placeholder="{{ 'GANTRY5_PLATFORM_SELECT_ELI'|trans }}"
                 data-selectize-ajaxify=""
                 data-selectize=""
@@ -28,13 +32,16 @@
             </option>
             {% endfor %}
         </select>
+        {% endif %}
     </div>
 
-    {% if not gantry.authorize('menu.edit', id) %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+    {% elseif not authorized %}
         <div class="alert alert-danger">{{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED'|trans }} {{ 'GANTRY5_PLATFORM_MENU_EDIT_UNAUTHORIZED_PLATFORM'|trans }}</div>
     {% endif %}
 
-    {% if gantry.authorize('menu.edit', id) %}
+    {% if authorized %}
     <div class="g5-mm-particles-picker">
         <ul class="g-menu-addblock">
             {% if gantry.platform.has('modules') %}
@@ -71,6 +78,7 @@
     </div>
     {% endif %}
 
+    {% if visible %}
     <div id="menu-editor"
          data-menu-ordering="{{ menu.ordering|json_encode|escape('html_attr') }}"
          data-menu-items="{{ menu.items(false)|json_encode|escape('html_attr') }}"
@@ -83,5 +91,6 @@
     </div>
 
     <div id="trash" data-mm-eraseparticle=""><div class="trash-zone">&times;</div><span>{{ 'GANTRY5_PLATFORM_DROP_DELETE'|trans }}</span></div>
+    {% endif %}
 </form>
 {% endblock %}
