@@ -28,6 +28,7 @@
         - Update theme initialization to work in Joomla! 4.0 (please copy updated `includes`, `fields` and `html` folders to your theme!)
         - Update theme installation  to work in Joomla! 4.0 (please copy or update `install.php` in your theme!)
         - Update page templates to work in Joomla! 4.0 (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
+        - Implemented per menu ACL in Menu Manager (#1240)
     1. [](#bugfix)
         - Display unpublished menu items in Menu Editor
 1. [WordPress](#wordpress)

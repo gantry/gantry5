@@ -642,9 +642,37 @@ class Platform extends BasePlatform
             case 'platform.settings.manage':
                 return $user->authorise('core.admin', 'com_templates') || $user->authorise('core.admin', 'com_gantry5');
             case 'menu.manage':
-                return $user->authorise('core.manage', 'com_menus') && $user->authorise('core.edit', 'com_menus');
+                /** @var Menu $menus */
+                $menus = $this->container['menu'];
+
+                if (null !== $id) {
+                    $menu = $menus->instance(['menu' => $id, 'admin' => true]);
+
+                    return $user->authorise('core.manage', 'com_menus.menu.' . $menu->id);
+                }
+
+                if ($user->authorise('core.manage', 'com_menus')) {
+                    return true;
+                }
+
+                $menus = $menus->getMenuIds();
+                foreach ($menus as $menuId) {
+                    if ($user->authorise('core.manage', 'com_menus.menu.' . $menuId)) {
+                        return true;
+                    }
+                }
+
+                return false;
             case 'menu.edit':
                 if ($id) {
+                    /** @var Menu $menus */
+                    $menus = $this->container['menu'];
+
+                    $menu = $menus->instance(['menu' => $id, 'admin' => true]);
+                    if (!$user->authorise('core.edit', 'com_menus.menu.' . $menu->id)) {
+                        return false;
+                    }
+
                     $db = Factory::getDbo();
                     $userId = $user->id;
 
@@ -654,7 +682,7 @@ class Platform extends BasePlatform
                     $query = $db->getQuery(true)
                         ->select('id')
                         ->from($db->quoteName('#__menu'))
-                        ->where('menutype=' . $db->quote($id))
+                        ->where('id=' . $db->quote($menu->id))
                         ->where('checked_out !=' . (int) $userId)
                         ->where($checked_out_default);
                     $db->setQuery($query);
@@ -673,10 +701,9 @@ class Platform extends BasePlatform
                         ->where($checked_out_default);
                     $db->setQuery($query);
 
-                    if ($db->loadRowList()) {
-                        return false;
-                    }
+                    return !$db->loadRowList();
                 }
+
                 return $user->authorise('core.edit', 'com_menus');
             case 'updates.manage':
                 return $user->authorise('core.manage', 'com_installer');

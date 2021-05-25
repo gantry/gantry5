@@ -95,6 +95,25 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Get menu ids.
+     *
+     * @return int[]
+     */
+    public function getMenuIds()
+    {
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('a.id')
+            ->from('#__menu_types AS a');
+
+        $query->where('a.client_id = 0');
+
+        $db->setQuery($query);
+
+        return $db->loadColumn();
+    }
+
+    /**
      * @return array
      */
     public function getGroupedItems()
