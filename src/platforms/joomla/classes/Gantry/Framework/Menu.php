@@ -444,8 +444,8 @@ class Menu extends AbstractMenu
                     }
                     if (is_array($value) && in_array($param, ['attributes', 'link_attributes'], true)) {
                         $list = [];
-                        foreach ($value as $k => $v) {
-                            if (is_array($v) && isset($v->key, $v->value)) {
+                        foreach ($value as $v) {
+                            if (is_object($v) && isset($v->key, $v->value)) {
                                 $list[] = [$v->key => $v->value];
                             }
                         }
