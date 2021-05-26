@@ -212,7 +212,8 @@ class Menu extends AbstractMenu
         // Create menu items from all WP menu items.
         $list = [];
         foreach ($menuItems as $wpItem) {
-            $list[$item->id] = $item = $this->createMenuItemFromPost($wpItem);
+            $item = $this->createMenuItemFromPost($wpItem);
+            $list[$item->id] = $item;
 
             // Check if user is in the current menu item.
             if ($current && $item->object_id === $current) {
