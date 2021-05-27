@@ -191,6 +191,9 @@ class EventListener implements EventSubscriberInterface
         $list = [];
 
         foreach ($items as $key => $item) {
+            // Add menu item defaults.
+            $item += Item::$defaults;
+
             if (!empty($item['id']) && isset($menu_items[$item['id']])) {
                 if (!empty($item['object_id'])) {
                     $item['object_id'] = (int)$item['object_id'];
