@@ -576,7 +576,7 @@ class Menu extends AbstractMenu
     /**
      * This code is taken from Joomla\CMS\Menu\SiteMenu::load()
      *
-     * @param string$menutype
+     * @param string $menutype
      * @return array|null
      */
     private function getMenuItemsInAdmin($menutype)
@@ -592,6 +592,7 @@ class Menu extends AbstractMenu
                 ->where('m.menutype = ' . $db->quote($menutype))
                 ->where('m.parent_id > 0')
                 ->where('m.client_id = 0')
+                ->where('m.published >= 0')
                 ->order('m.lft');
 
             // Set the query

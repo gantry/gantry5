@@ -189,9 +189,14 @@ class EventListener implements EventSubscriberInterface
 
         $table = MenuHelper::getMenu();
 
-        // Delete removed particles from the menu.
         foreach ($stored as $key => $info) {
             $path = isset($idMap[$key]) ? $idMap[$key] : null;
+            if ($info['published'] <= 0) {
+                // Ignore trashed menu items.
+                continue;
+            }
+
+            // Delete removed particles from the menu.
             if (null === $path && $info['type'] === 'heading') {
                 $params = json_decode($info['params'], true);
                 if (!empty($params['gantry-particle'])) {
@@ -355,11 +360,20 @@ class EventListener implements EventSubscriberInterface
         // Finally reorder all menu items.
         $i = isset($first['lft']) ? $first['lft'] : null;
         if ($i) {
+            $exists = [];
             $ids = [];
             $lft = [];
             foreach ($idMap as $key => $path) {
+                $exists[$key] = true;
                 $ids[] = $key;
                 $lft[] = $i++;
+            }
+            foreach ($stored as $key => $info) {
+                // Move trashed/missing items into the end of the list.
+                if (!isset($exists[$key])) {
+                    $ids[] = $key;
+                    $lft[] = $i++;
+                }
             }
 
             $table->saveorder($ids, $lft);
@@ -381,7 +395,7 @@ class EventListener implements EventSubscriberInterface
 		$key = $table->getKeyName();
 
 		// Get the node and children as a tree.
-		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language';
+		$select = 'DISTINCT n.' . $key . ', n.parent_id, n.level, n.lft, n.path, n.type, n.access, n.params, n.language, n.published';
 		$query = $db->getQuery(true)
 			->select($select)
 			->from($name . ' AS n, ' . $name . ' AS p')

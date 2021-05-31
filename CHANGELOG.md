@@ -30,7 +30,6 @@
         - Update page templates to work in Joomla! 4.0 (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
         - Implemented per menu ACL in Menu Manager (#1240)
     1. [](#bugfix)
-        - Display unpublished menu items in Menu Editor
         - Fixed dropdown menu of Menu Manager listing items by id instead of alphabetical order (#2816)
 1. [WordPress](#wordpress)
     1. [](#new)
