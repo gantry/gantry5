@@ -89,6 +89,7 @@ class Menu extends AbstractMenu
             require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
 
             $items = (array)\MenusHelper::getMenuTypes();
+            natsort($items);
         }
 
         return $items;

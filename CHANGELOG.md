@@ -10,7 +10,6 @@
           - More strict and fails on badly written SCSS where the old version did not
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan level 5 tests
-        - Fixed `The menu selected is empty!` instead of displaying error message (#2806)
     1. [](#improved)
         - Major code cleanup for PHP 5.6
         - Major rework in Menu Manager logic
@@ -22,6 +21,7 @@
         - Fixed admin cookie timeouts for GDPR compliance (#2775)
         - Fixed W3C validation error in content array particle read more button (#2729)
         - Fixed infinite recursive loop if the menu contains menu particle (#2527)
+        - Fixed `The menu selected is empty!` instead of displaying error message (#2806)
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9 (includes themes)
@@ -31,6 +31,7 @@
         - Implemented per menu ACL in Menu Manager (#1240)
     1. [](#bugfix)
         - Display unpublished menu items in Menu Editor
+        - Fixed dropdown menu of Menu Manager listing items by id instead of alphabetical order (#2816)
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.2
