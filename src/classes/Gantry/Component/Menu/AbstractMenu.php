@@ -501,6 +501,8 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
                 $this->yaml_paths[$item->yaml_path] = $item->id;
 
                 $this->pathMap->set(preg_replace('|/|u', '/children/', $item->yaml_path) . '/id', $item->id, '/');
+            } elseif ($item->path) {
+                $this->pathMap->set(preg_replace('|/|u', '/children/', $item->path) . '/id', $item->id, '/');
             }
         }
 
@@ -599,22 +601,23 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
             $config = $this->config();
             $ordering = $config['ordering'] ?: [];
         }
+        // Ordering in AJAX / YAML file.
+        if ($map === null) {
+            $map = $this->pathMap ? $this->pathMap->toArray() : [];
+        }
 
-        if (!isset($this->items[$path]) || !$this->items[$path]->hasChildren()) {
+        $key = $map && isset($map[basename($path)]['id']) ? $map[basename($path)]['id'] : $path;
+
+        if (!isset($this->items[$key]) || !$this->items[$key]->hasChildren()) {
             return;
         }
 
         // Ordering in menu item itself.
-        $item = $this->items[$path];
+        $item = $this->items[$key];
         if (!$ordering) {
             $this->setGroupToChildren($item);
 
             return;
-        }
-
-        // Ordering in YAML file.
-        if ($map === null) {
-            $map = $this->pathMap ? $this->pathMap->toArray() : [];
         }
 
         $order = [];

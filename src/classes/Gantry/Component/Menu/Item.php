@@ -448,12 +448,14 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
 
                 // Add items to the current group.
                 $this->groups[$i] = $group;
+                $this->items['columns_count'][$i] = count($group);
             }
 
             if ($children) {
                 // Add leftover children to the ordered list and to the first group.
                 $ordered += $children;
                 $this->groups[0] += $children;
+                $this->items['columns_count'][0] = count($this->groups[0]);
             }
 
             // Reorder children by their groups.
