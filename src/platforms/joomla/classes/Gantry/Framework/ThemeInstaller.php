@@ -368,6 +368,10 @@ class ThemeInstaller extends AbstractInstaller
         $checked_out = Version::MAJOR_VERSION < 4 ? 0 : null;
         $checked_out_time = Version::MAJOR_VERSION < 4 ? $date->toSql() : null;
 
+        // Make sure we can store home menu even if the current home is checked out.
+        $isHhome = $item['home'];
+        unset($item['home']);
+
         // Defaults for the item.
         $item += [
             'menutype' => 'mainmenu',
@@ -411,6 +415,12 @@ class ThemeInstaller extends AbstractInstaller
 
         if (!$table->bind($item) || !$table->check() || !$table->store()) {
             throw new \Exception($table->getError());
+        }
+
+        // Turn menu item into home, ignore errors.
+        if ($isHhome) {
+            $table->home = 1;
+            $table->store();
         }
 
         CacheHelper::cleanMenu();
