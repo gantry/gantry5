@@ -605,15 +605,14 @@ class Menu extends AbstractMenu
             /** @var \JCacheControllerCallback $cache */
             $cache = \JFactory::getCache('com_menus', 'callback');
 
-            $items = $cache->get($loader, [], md5(get_class($this)), false);
+            $items = $cache->get($loader, [], md5(get_class($this) . $menutype), false);
         } catch (\JCacheException $e) {
             try {
                 $items = $loader();
             } catch (\JDatabaseExceptionExecuting $databaseException) {
                 throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $databaseException->getMessage()));
             }
-        }
-        catch (\JDatabaseExceptionExecuting $e) {
+        } catch (\JDatabaseExceptionExecuting $e) {
             throw new \RuntimeException(\JText::sprintf('JERROR_LOADING_MENUS', $e->getMessage()));
         }
 
