@@ -30,6 +30,7 @@ use Gantry\Debugger;
 use Gantry\Framework\Assignments;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Outlines;
 use Gantry\Framework\Platform;
 use Gantry\Framework\Theme;
@@ -507,45 +508,26 @@ class plgSystemGantry5 extends CMSPlugin
      * @param string $context
      * @param JTable $table
      * @param bool $isNew
+     * @param array $data
+     * @return void
      */
-    public function onContentBeforeSave($context, $table, $isNew)
+    public function onContentBeforeSave($context, $table, $isNew, $data = array())
     {
-        if ($context !== 'com_menus.item') {
-            return;
-        }
-    }
+        switch ($context) {
+            case 'com_menus.item':
+                Loader::setup();
 
-    /**
-     * @param string $context
-     * @param JTable $table
-     * @param bool $isNew
-     */
-    public function onContentAfterSave($context, $table, $isNew)
-    {
-        if ($context !== 'com_menus.item') {
-            return;
-        }
-    }
+                $params = new Registry($table->params ?: '{}');
+                $isGantry = !empty($params['gantry']);
+                if ($isGantry and class_exists(Menu::class)) {
+                    // Remove default Gantry params.
+                    $gantryParams = Menu::decodeJParams($params);
+                    Menu::updateJParams($params, $gantryParams);
 
-    /**
-     * @param string $context
-     * @param JTable $table
-     */
-    public function onContentBeforeDelete($context, $table)
-    {
-        if ($context !== 'com_menus.item') {
-            return;
-        }
-    }
+                    $table->params = $params->toString();
+                }
 
-    /**
-     * @param string $context
-     * @param JTable $table
-     */
-    public function onContentAfterDelete($context, $table)
-    {
-        if ($context !== 'com_menus.item') {
-            return;
+                break;
         }
     }
 
@@ -644,6 +626,14 @@ class plgSystemGantry5 extends CMSPlugin
         // Check that we are manipulating a valid form.
         switch ($context) {
             case 'com_menus.item':
+                Loader::setup();
+
+                $isNew = $data->parent_id === null;
+                $isGantry = !empty($data->params['gantry']) || is_array(Menu::decodeJParams($data->params));
+                if ($isNew || $isGantry) {
+                    // Add default Gantry params to menu item.
+                    $data->params += Menu::encodeJParams([], false);
+                }
                 break;
         }
 
@@ -686,8 +676,16 @@ class plgSystemGantry5 extends CMSPlugin
                 break;
 
             case 'com_menus.item':
-                JForm::addFormPath(__DIR__ . '/forms');
-                $form->loadFile('menu_item', false);
+                Loader::setup();
+
+                $isNew = $data->parent_id === null;
+                $isGantry = !empty($data->params['gantry']) || is_array(Menu::decodeJParams($data->params));
+                if ($isNew || $isGantry) {
+                    // Add Gantry Menu tab to the form.
+                    JForm::addFormPath(__DIR__ . '/forms');
+                    $form->loadFile('menu_item', false);
+                }
+
                 break;
         }
 

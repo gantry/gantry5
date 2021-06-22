@@ -544,9 +544,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
     /**
      * @param array $array
      * @param array $ignore
+     * @param bool $keepDefaults
      * @return array
      */
-    public static function normalize(array $array, array $ignore = [])
+    public static function normalize(array $array, array $ignore = [], $keepDefaults = false)
     {
         // Particles have no link.
         if (isset($array['type']) && $array['type'] === 'particle') {
@@ -579,7 +580,11 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonS
 
                 // Ignore default values (do not distinct variable type).
                 if ($array[$var] == $default) {
-                    unset($array[$var]);
+                    if ($keepDefaults) {
+                        $array[$var] = $default;
+                    } else {
+                        unset($array[$var]);
+                    }
                 }
             }
         }

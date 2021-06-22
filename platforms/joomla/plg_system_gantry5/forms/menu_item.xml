@@ -3,6 +3,11 @@
     <fields name="params">
         <fieldset name="gantry" label="Gantry Menu">
             <field
+                name="gantry"
+                type="hidden"
+                value="1"
+            />
+            <field
                 name="gantry-attributes"
                 type="subform"
                 label="List Tag Attributes"

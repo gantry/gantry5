@@ -20,6 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Version;
+use Joomla\Registry\Registry;
 
 /**
  * Class Menu
@@ -342,6 +344,131 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * @param Registry $params
+     * @param array $item
+     * @return bool
+     */
+    public static function updateJParams($params, $item)
+    {
+        $modified = false;
+
+        // Convert Gantry params to Registry format.
+        $all = Menu::encodeJParams($item);
+
+        // Registry thinks that empty strings do not exist, so work around that.
+        $list = $params->toArray();
+        foreach ($all as $var => $value) {
+            $old = isset($list[$var]) ? $list[$var] : null;
+            if ($value !== $old) {
+                if (null === $value) {
+                    // Remove default value.
+                    $params->remove($var);
+                } else {
+                    // Change value.
+                    $params->set($var, $value);
+                }
+
+                $modified = true;
+            }
+        }
+
+        return $modified;
+    }
+
+    /**
+     * @param array $item
+     * @param bool $defaultsAsNull
+     * @return int[]
+     */
+    public static function encodeJParams($item = [], $defaultsAsNull = true)
+    {
+        // These are stored in Joomla menu item.
+        static $ignoreList = ['type', 'link', 'title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
+
+        $version = Version::MAJOR_VERSION;
+
+        // Flag menu item to contain gantry data.
+        $params = [
+            'gantry' => 1
+        ];
+
+        $defaults = Item::$defaults;
+        $item = static::normalizeMenuItem($item + $defaults, $ignoreList, true);
+        foreach ($item as $var => $value) {
+            // Joomla has different format for lists than Gantry, convert to Joomla supported version.
+            if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
+                $i = $version < 4 ? 0 : 10;
+                $list = [];
+                foreach ($value as $k => $v) {
+                    if (is_array($v)) {
+                        if ($version < 4) {
+                            // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
+                            $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
+                        } else {
+                            // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
+                            $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
+                        }
+                    } else {
+                        $list[$k] = $v;
+                    }
+                    $i++;
+                }
+                $value = $list;
+            } elseif ($var === 'options') {
+                $value = json_encode($value);
+            }
+
+            // Prefix gantry parameters and save them.
+            $var = 'gantry-' . $var;
+
+            if ($defaultsAsNull && $value == (isset($defaults[$var]) ? $defaults[$var] : null)) {
+                $params[$var] = null;
+            } else {
+                $params[$var] = $value;
+            }
+        }
+
+        return $params;
+    }
+
+    /**
+     * @param iterable $params
+     * @return array|null
+     */
+    public static function decodeJParams($params)
+    {
+        $properties = [];
+
+        // Add Gantry menu item properties from the menu item.
+        $paramsEmbedded = !empty($params['gantry']);
+        foreach ($params as $param => $value) {
+            if (strpos($param, 'gantry-') === 0) {
+                $param = substr($param, 7);
+
+                // Convert input from Joomla list format.
+                if (is_object($value)) {
+                    $value = get_object_vars($value);
+                }
+                if (is_array($value) && in_array($param, ['attributes', 'link_attributes'], true)) {
+                    $list = [];
+                    foreach ($value as $v) {
+                        if (is_object($v) && isset($v->key, $v->value)) {
+                            $list[] = [$v->key => $v->value];
+                        }
+                    }
+                    $value = $list;
+                } elseif ($param === 'options') {
+                    $value = $value ? json_decode($value, true) : [];
+                }
+
+                $properties[$param] = $value;
+            }
+        }
+
+        return $paramsEmbedded || $properties ? $properties : null;
+    }
+
+    /**
      * @param array $data
      * @param MenuItem|null $menuItem
      * @return Item
@@ -432,31 +559,14 @@ class Menu extends AbstractMenu
                 'rel' => $params->get('menu-anchor_rel', ''),
             ];
 
-            // Add Gantry menu item properties from the menu item.
-            $paramsEmbedded = false;
-            foreach ($params as $param => $value) {
-                if (strpos($param, 'gantry-') === 0) {
-                    $paramsEmbedded = true;
-                    $param = substr($param, 7);
-
-                    // Convert input from Joomla list format.
-                    if (is_object($value)) {
-                        $value = get_object_vars($value);
-                    }
-                    if (is_array($value) && in_array($param, ['attributes', 'link_attributes'], true)) {
-                        $list = [];
-                        foreach ($value as $v) {
-                            if (is_object($v) && isset($v->key, $v->value)) {
-                                $list[] = [$v->key => $v->value];
-                            }
-                        }
-                        $value = $list;
-                    } elseif ($param === 'options') {
-                        $value = $value ? json_decode($value, true) : [];
-                    }
-
+            $props = static::decodeJParams($params);
+            if (null !== $props) {
+                $paramsEmbedded = true;
+                foreach ($props as $param => $value) {
                     $properties[$param] = $value;
                 }
+            } else {
+                $paramsEmbedded = false;
             }
 
             // Add menu item properties from menu configuration.
@@ -510,6 +620,22 @@ class Menu extends AbstractMenu
         $item->url($url);
 
         return $item;
+    }
+
+    /**
+     * @param array $item
+     * @param array $ignore
+     * @param bool $keepDefaults
+     * @return array
+     */
+    protected static function normalizeMenuItem(array $item, array $ignore = [], $keepDefaults = false)
+    {
+        static $ignoreList = [
+            // Never save derived values.
+            'id', 'path', 'route', 'alias', 'parent_id', 'level', 'group', 'current', 'yaml_path', 'yaml_alias'
+        ];
+
+        return Item::normalize($item, array_merge($ignore, $ignoreList), $keepDefaults);
     }
 
     /**

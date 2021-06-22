@@ -145,8 +145,6 @@ class EventListener implements EventSubscriberInterface
      */
     public function onMenusSave(Event $event)
     {
-        static $ignoreList = ['type', 'link', 'title', 'anchor_class', 'image', 'icon_only', 'target', 'enabled'];
-
         /** @var array $menu */
         $menu = $event->menu;
         $event->delete = true;
@@ -285,54 +283,7 @@ class EventListener implements EventSubscriberInterface
             }
 
             // Gantry params.
-            $all = $item;
-            $data = $this->normalizeMenuItem($item, $ignoreList);
-
-            $version = Version::MAJOR_VERSION;
-            foreach ($all as $var => $value) {
-                // Default value check.
-                if (!isset($data[$var])) {
-                    $value = null;
-                }
-
-                // Joomla has different format for lists than Gantry, convert to Joomla supported version.
-                if (is_array($value) && in_array($var, ['attributes', 'link_attributes'], true)) {
-                    $i = $version < 4 ? 0 : 10;
-                    $list = [];
-                    foreach ($value as $k => $v) {
-                        if (is_array($v)) {
-                            if ($version < 4) {
-                                // Joomla 3: Save lists as {"fieldname0":{"key":"key","value":"value"}, ...}
-                                $list["{$var}{$i}"] = ['key' => key($v), 'value' => current($v)];
-                            } else {
-                                // Joomla 4: Save lists as {"__field10":{"key":"key","value":"value"}, ...}
-                                $list["__field{$i}"] = ['key' => key($v), 'value' => current($v)];
-                            }
-                        } else {
-                            $list[$k] = $v;
-                        }
-                        $i++;
-                    }
-                    $value = $list;
-                } elseif ($var === 'options') {
-                    $value = json_encode($value);
-                }
-
-                // Prefix gantry parameters and save them.
-                $var = 'gantry-' . $var;
-                $old = $params->get($var);
-                if ($value !== $old) {
-                    if (null === $value) {
-                        // Remove default value.
-                        $params->remove($var);
-                    } else {
-                        // Change value.
-                        $params->set($var, $value);
-                    }
-                    $modified = true;
-                }
-            }
-
+            $modified = Menu::updateJParams($params, $item);
             if ($modified && $gantry->authorize('menu.edit')) {
                 $table->params = (string) $params;
                 if (!$table->check() || !$table->store()) {
