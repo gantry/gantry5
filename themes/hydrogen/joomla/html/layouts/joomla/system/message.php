@@ -12,6 +12,10 @@
 
 defined('_JEXEC') or die;
 
+/**
+ * Joomla 3 version of the system messages.
+ */
+
 use Joomla\CMS\Language\Text;
 
 $msgList = $displayData['msgList'];
