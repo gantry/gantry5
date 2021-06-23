@@ -261,7 +261,13 @@ class EventListener implements EventSubscriberInterface
                 $modified = true;
             }
 
-            $browserNav = (int)($item['target'] === '_blank');
+            $targets = [
+                '_self' => 0,
+                '_blank' => 1,
+                '_nonav' => 2
+            ];
+            $target = $item['target'];
+            $browserNav = isset($targets[$target]) ? $targets[$target] : 0;
             if ($table->browserNav != $browserNav) {
                 $table->browserNav = $browserNav;
                 $modified = true;
@@ -283,7 +289,7 @@ class EventListener implements EventSubscriberInterface
             }
 
             // Gantry params.
-            $modified = Menu::updateJParams($params, $item);
+            $modified = $modified || Menu::updateJParams($params, $item);
             if ($modified && $gantry->authorize('menu.edit')) {
                 $table->params = (string) $params;
                 if (!$table->check() || !$table->store()) {

@@ -84,6 +84,12 @@
             {% endfor %}
         {% endif %}
 
+        {# Special handling for opening link in a new window without navigation #}
+        {% if item.target == '_nonav' %}
+            {% set target = 'target="_blank"' %}
+            {% set linkAttributes = linkAttributes ~ ' onclick="window.open(this.href, \'targetWindow\', \'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes\'); return false;"' %}
+        {% endif %}
+
         {% set rel = rel ? ' rel="' ~ rel|e('html_attr') ~ '"' %}
 
         <li class="g-menu-item g-menu-item-type-{{ item.type }} g-menu-item-{{ item.id }}{% if not item.dropdown_hide %}{{ parent }}{% endif %}{{ active }}{{ dropdown }} {% if item.url and item.children|length %}{% if not item.dropdown_hide %}g-menu-item-link-parent{% endif %}{% endif %} {{ item.class|default('') }}"

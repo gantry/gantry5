@@ -538,9 +538,12 @@ class Menu extends AbstractMenu
                     $target = '_self';
                     break;
                 case 1:
-                case 2:
                     // Target window: New with navigation.
                     $target = '_blank';
+                    break;
+                case 2:
+                    // Target window: New without navigation.
+                    $target = '_nonav';
                     break;
             }
 

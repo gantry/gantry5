@@ -39,7 +39,7 @@ form:
           type: input.text
           label: Link
           disabled: true
-          
+
         .rel:
           type: input.text
           label: Link Rel Attribute
@@ -78,6 +78,7 @@ form:
           options:
             _self: Current Window or Tab
             _blank: New Window or Tab
+            _nonav: New Window, no Navigation
 
         .dropdown:
           type: select.selectize

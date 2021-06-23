@@ -15,6 +15,7 @@
         - Major rework in Menu Manager logic
         - Changed `Layout` to be the default tab (#2638)
         - Added support for `includes/gantry.php` and `includes/theme.php` overrides in `custom/` (#2784, #2485)
+        - Added menu target option for a Window without navigation (#2812)
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration
