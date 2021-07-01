@@ -33,8 +33,8 @@ class Devprod extends JsonController
 
         $response = [
             'mode' => $production,
-            'title' => $production ? 'Production' : 'Development',
-            'html' => $production ? 'Production mode enabled' : 'Development mode enabled',
+            'title' => $production ? $this->container['translator']->translate('GANTRY5_PLATFORM_PRODUCTION') : $this->container['translator']->translate('GANTRY5_PLATFORM_DEVELOPMENT'),
+            'html' => $production ? $this->container['translator']->translate('GANTRY5_PLATFORM_PROD_MODE_ENABLED') : $this->container['translator']->translate('GANTRY5_PLATFORM_DEV_MODE_ENABLED'),
         ];
         return new JsonResponse($response);
     }

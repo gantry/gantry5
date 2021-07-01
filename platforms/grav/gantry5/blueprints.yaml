@@ -20,109 +20,109 @@ form:
   fields:
     enabled:
       type: toggle
-      label: Plugin Status
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
       highlight: 1
       default: 1
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     production:
       type: toggle
-      label: Production Mode
-      description: Production mode makes Gantry faster by more aggressive caching and ignoring changed files in the filesystem. Most changes made from admin should still be detected.
+      label: PLUGIN_GANTRY.PRODUCTION_MODE
+      description: PLUGIN_GANTRY.PRODUCTION_MODE_DESC
       highlight: 1
       default: 1
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     use_media_folder:
       type: toggle
-      label: Use Grav Images Folder
-      description: 'By default Gantry media picker saves all files under the <strong>data://gantry5/themes/[theme]/images</strong> folder. If you want to save files into <strong>user://images</strong> folder instead, please select this option. Files in the old location can still be used, but are overridden by the files in the selected folder.'
+      label: PLUGIN_GANTRY.USE_GRAV_IMAGE_FOLDER
+      description: PLUGIN_GANTRY.USE_GRAV_IMAGE_FOLDER_DESC
       highlight: 1
       default: 0
       options:
-        1: Yes
-        0: No
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
       validate:
         type: bool
 
     offline:
       type: toggle
-      label: Offline
-      description: "Set site to maintenance mode. When site is offline, it's only visible for logged in users."
+      label: PLUGIN_GANTRY.OFFLINE
+      description: PLUGIN_GANTRY.OFFLINE_DESC
       highlight: 1
       default: 0
       options:
-        1: Yes
-        0: No
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
       validate:
         type: bool
 
     offline_message:
       type: textarea
-      label: Offline Message
-      description: Set your own offline message explaining why the site is offline. Field accepts Markdown and HTML.
+      label: PLUGIN_GANTRY.OFFLINE_MESSAGE
+      description: PLUGIN_GANTRY.OFFLINE_MESSAGE_DESC
 
     asset_timestamps:
       type: toggle
-      label: Asset Timestamps
-      description: 'Adds timestamps on changed asset files, like images, css and js. The option makes browser to get fresh assets without forcing reload on the page.'
+      label: PLUGIN_GANTRY.ASSET_TIMESTAMPS
+      description: PLUGIN_GANTRY.ASSET_TIMESTAMPS_DESC
       highlight: 1
       default: 1
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     asset_timestamps_period:
       type: text
-      label: Timestamp Period
-      description: 'Number of days which timestamp is kept after updating the file. Accepts also decimal numbers, eg. 0.5 = 12 hours. Set to 0 to add timestamps on every single asset file.'
+      label: PLUGIN_GANTRY.ASSET_TIMESTAMPS_PERIOD
+      description: PLUGIN_GANTRY.ASSET_TIMESTAMPS_PERIOD_DESC
       default: 7
       validate:
         type: float
 
     debug:
       type: toggle
-      label: Debug Mode
-      description: By enabling debugging mode, you will get more information what's going on inside Gantry.
+      label: PLUGIN_GANTRY.DEBUG
+      description: PLUGIN_GANTRY.DEBUG_DESC
       highlight: 1
       default: 0
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     compile_yaml:
       type: toggle
-      label: Compile YAML
-      description: Compile YAML configuration files into PHP, making page loads significantly faster.
+      label: PLUGIN_GANTRY.COMPILE_YAML
+      description: PLUGIN_GANTRY.COMPILE_YAML_DESC
       highlight: 1
       default: 1
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     compile_twig:
       type: toggle
-      label: Compile Twig
-      description: Compile Twig template files into PHP, making page loads significantly faster.
+      label: PLUGIN_GANTRY.COMPILE_TWIG
+      description: PLUGIN_GANTRY.COMPILE_TWIG_DESC
       highlight: 1
       default: 1
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
