@@ -61,6 +61,10 @@ class Particle extends \WP_Widget
      */
     public function initialiseGantry()
     {
+        if (!defined('GANTRYADMIN_PATH')) {
+            // Works also with symlinks.
+            define('GANTRYADMIN_PATH', GANTRY5_PATH . '/admin');
+        }
         if (!isset($this->container['router'])) {
             $router = new Router($this->container);
             $router->boot()->load();
@@ -85,7 +89,7 @@ class Particle extends \WP_Widget
             $instance = [];
         }
 
-        $sidebar = $args['id'] ? $args['id'] : '';
+        $sidebar = isset($args['id']) ? (string)$args['id'] : '';
         $widget_id = isset($args['widget_id']) ? preg_replace('/\D/', '', $args['widget_id']) : null;
         $md5 = md5(json_encode($instance));
         $id = isset($instance['id']) ? $instance['id'] : ($widget_id ?: "widget-{$md5}");
