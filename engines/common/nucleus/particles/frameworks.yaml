@@ -51,6 +51,24 @@ form:
           label: Framework
           default: 0
 
+    bootstrap4:
+      type: container.set
+      label: Bootstrap 4
+      fields:
+        .enabled:
+          type: enable.enable
+          label: Framework
+          default: 0
+
+    bootstrap5:
+      type: container.set
+      label: Bootstrap 5
+      fields:
+        .enabled:
+          type: enable.enable
+          label: Framework
+          default: 0
+
     mootools:
       label: Mootools
       type: container.set

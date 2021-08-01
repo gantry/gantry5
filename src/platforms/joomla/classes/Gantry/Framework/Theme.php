@@ -49,8 +49,7 @@ class Theme extends AbstractTheme
             $this->joomla = true;
 
             // Workaround for Joomla! not loading bootstrap when it needs it.
-            // FIXME: Joomla 4 support?
-            static::gantry()->load('bootstrap.2');
+            static::gantry()->load('bootstrap');
         }
 
         return $this->joomla;

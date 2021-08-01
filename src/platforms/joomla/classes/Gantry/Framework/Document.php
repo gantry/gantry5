@@ -28,6 +28,7 @@ class Document extends HtmlDocument
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiCore',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
+        'bootstrap' => 'registerBootstrap',
         'bootstrap.2' => 'registerBootstrap2',
         'bootstrap.3' => 'registerBootstrap3',
         'bootstrap.4' => 'registerBootstrap4',
@@ -236,6 +237,15 @@ class Document extends HtmlDocument
             'head',
             100
         );
+    }
+
+    protected static function registerBootstrap()
+    {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            static::registerBootstrap5();
+        } else {
+            static::registerBootstrap2();
+        }
     }
 
     protected static function registerBootstrap2()

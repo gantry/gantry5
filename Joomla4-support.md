@@ -15,3 +15,10 @@ Joomla! 4 has made some changes to the templates, which means that also Gantry T
 - Update page templates to work in Joomla! 4.0
   (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
 
+## JavaScript libraries
+
+Note that Joomla 4 removes support for:
+
+- jQuery UI
+- Mootools
+- Bootstrap 2.2
