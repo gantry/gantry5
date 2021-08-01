@@ -355,11 +355,6 @@ abstract class CssCompiler implements CssCompilerInterface
     }
 
     /**
-     * @param array $list
-     */
-    abstract protected function doSetFonts(array $list);
-
-    /**
      * @param string $out
      * @param string $md5
      */
@@ -397,6 +392,11 @@ abstract class CssCompiler implements CssCompilerInterface
         }
         $metaFile->free();
     }
+
+    /**
+     * @param array $list
+     */
+    abstract protected function doSetFonts(array $list);
 
     /**
      * @return array

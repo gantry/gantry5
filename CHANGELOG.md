@@ -8,6 +8,7 @@
         - Updated SCSS compiler to v1.6
           - Much faster and has far better compatibility to the latest SCSS specs
           - More strict and fails on badly written SCSS where the old version did not
+        - Updated Bourbon to v4.3.4 (#2835)
         - Use Font Awesome 5 free (#2196)
         - Platform independent code passes phpstan level 5 tests
     1. [](#improved)

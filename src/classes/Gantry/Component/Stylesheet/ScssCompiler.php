@@ -38,8 +38,6 @@ class ScssCompiler extends CssCompiler
     /** @var string */
     public $name = 'SCSS';
 
-    /** @var Compiler */
-    protected $compiler;
     /** @var CompilationResult|null */
     protected $result;
     /** @var Functions */
@@ -53,35 +51,6 @@ class ScssCompiler extends CssCompiler
         parent::__construct();
 
         $this->functions = new Functions();
-        $this->createCompiler();
-    }
-
-    protected function createCompiler()
-    {
-        /** @var UniformResourceLocator $locator */
-        $locator = Gantry::instance()['locator'];
-        $cacheDir = $locator->findResource('gantry-cache://theme/scss/source', true, true);
-        if (!file_exists($cacheDir)) {
-            Folder::create($cacheDir);
-        }
-
-        $compiler = new Compiler(['cacheDir' => $cacheDir]);
-
-        $this->functions->setCompiler($compiler);
-
-        if ($this->production) {
-            $compiler->setOutputStyle(OutputStyle::COMPRESSED);
-        } else {
-            $compiler->setOutputStyle(OutputStyle::EXPANDED);
-            $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
-            // TODO: Look if we can / should use option to let compiler to save the source map.
-            $compiler->setSourceMapOptions([
-                'sourceMapRootpath' => '',
-                'sourceMapBasepath' => GANTRY5_ROOT,
-            ]);
-        }
-
-        $this->compiler = $compiler;
     }
 
     /**
@@ -134,17 +103,17 @@ class ScssCompiler extends CssCompiler
             return false;
         }
 
-        $this->createCompiler();
+        $compiler = $this->getCompiler();
 
         // Set the lookup paths.
         $this->functions->setBasePath($path);
-        $this->compiler->setImportPaths([[$this, 'findImport']]);
+        $compiler->setImportPaths([[$this, 'findImport']]);
 
         // Run the compiler.
-        $this->compiler->addVariables($this->getVariables(true));
+        $compiler->addVariables($this->getVariables(true));
         $scss = '@import "' . $in . '.scss"';
         try {
-            $this->result = $this->compiler->compileString($scss);
+            $this->result = $compiler->compileString($scss);
             $css = $this->result->getCss();
         } catch (CompilerException $e) {
             throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
@@ -267,14 +236,6 @@ WARN;
     }
 
     /**
-     * @param array $list
-     */
-    protected function doSetFonts(array $list)
-    {
-        $this->functions->setFonts($list);
-    }
-
-    /**
      * @param bool $encoded
      * @return array
      */
@@ -287,6 +248,45 @@ WARN;
         }
 
         return $variables;
+    }
+
+    /**
+     * @return Compiler
+     */
+    protected function getCompiler()
+    {
+        /** @var UniformResourceLocator $locator */
+        $locator = Gantry::instance()['locator'];
+        $cacheDir = $locator->findResource('gantry-cache://theme/scss/source', true, true);
+        if (!file_exists($cacheDir)) {
+            Folder::create($cacheDir);
+        }
+
+        $compiler = new Compiler(['cacheDir' => $cacheDir]);
+
+        $this->functions->setCompiler($compiler);
+
+        if ($this->production) {
+            $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+        } else {
+            $compiler->setOutputStyle(OutputStyle::EXPANDED);
+            $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+            // TODO: Look if we can / should use option to let compiler to save the source map.
+            $compiler->setSourceMapOptions([
+                'sourceMapRootpath' => '',
+                'sourceMapBasepath' => GANTRY5_ROOT,
+            ]);
+        }
+
+        return $compiler;
+    }
+
+    /**
+     * @param array $list
+     */
+    protected function doSetFonts(array $list)
+    {
+        $this->functions->setFonts($list);
     }
 
     /**
