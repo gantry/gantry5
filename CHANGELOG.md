@@ -44,7 +44,7 @@
         - Fixed duplicated menu items breaking menu admin (#2265)
         - Fixed custom admin url compatibility (#2478)
         - Fixed 404 in Menu Manager when clicking `Back to Setup` button (#2785)
-        - Fixed particle widgets in Wordpress 5.8 (#2843)
+        - Fixed particle widgets in WordPress 5.8 (#2843)
 1. [Grav](#grav)
     1. [](#new)
         - Updated minimum requirement to Grav 1.7.15 and Admin 1.10.15
