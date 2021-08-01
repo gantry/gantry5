@@ -8,6 +8,7 @@ Thumbs.db
 
 # Composer
 **/vendor/**
+!**/scss/vendor/**
 
 # Builds
 bin/build/tmp
@@ -36,4 +37,3 @@ platforms/**/cache
 themes/**/cache
 npm-debug.log
 
-/vendor/
