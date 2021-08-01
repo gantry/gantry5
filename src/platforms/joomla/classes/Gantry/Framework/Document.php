@@ -25,10 +25,15 @@ class Document extends HtmlDocument
 {
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
+        'jquery.2' => 'registerJquery',
+        'jquery.3' => 'registerJquery3',
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiCore',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
         'bootstrap.2' => 'registerBootstrap2',
+        'bootstrap.3' => 'registerBootstrap3',
+        'bootstrap.4' => 'registerBootstrap4',
+        'bootstrap.5' => 'registerBootstrap5',
         'mootools' => 'registerMootools',
         'mootools.framework' => 'registerMootools',
         'mootools.core' => 'registerMootools',

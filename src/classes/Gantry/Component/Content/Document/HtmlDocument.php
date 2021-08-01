@@ -44,11 +44,15 @@ class HtmlDocument
     /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
+        'jquery.2' => 'registerJquery',
+        'jquery.3' => 'registerJquery3',
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiSortable',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
         'bootstrap.2' => 'registerBootstrap2',
         'bootstrap.3' => 'registerBootstrap3',
+        'bootstrap.4' => 'registerBootstrap4',
+        'bootstrap.5' => 'registerBootstrap5',
         'mootools' => 'registerMootools',
         'mootools.framework' => 'registerMootools',
         'mootools.core' => 'registerMootools',
@@ -756,9 +760,21 @@ class HtmlDocument
     {
         static::addScript(
             [
-                'src' => 'https://code.jquery.com/jquery-2.2.2.min.js',
-                'integrity' => 'sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=',
+                'src' => 'https://code.jquery.com/jquery-2.2.4.min.js',
+                'integrity' => 'sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=',
                 'crossorigin' => 'anonymous'
+            ],
+            11
+        );
+    }
+
+    protected static function registerJquery3()
+    {
+        static::addScript(
+            [
+                'src' => 'https://code.jquery.com/jquery-3.6.0.min.js',
+			    'integrity' => 'sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=',
+			    'crossorigin' => 'anonymous'
             ],
             11
         );
@@ -789,7 +805,38 @@ class HtmlDocument
     {
         static::registerJquery();
 
-        static::addScript(['src' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'], 11);
+        static::addScript(
+            [
+                'src' => 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
+                'integrity' => 'sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd',
+                'crossorigin' => 'anonymous'
+            ],
+            11);
+    }
+
+    protected static function registerBootstrap4()
+    {
+        static::registerJquery3();
+
+        static::addScript(
+            [
+                'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
+                'integrity' => 'sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns',
+                'crossorigin' => 'anonymous'
+            ],
+            11);
+    }
+
+
+    protected static function registerBootstrap5()
+    {
+        static::addScript(
+            [
+                'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',
+                'integrity' => 'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM',
+                'crossorigin' => 'anonymous'
+            ],
+            11);
     }
 
     protected static function registerMootools()
