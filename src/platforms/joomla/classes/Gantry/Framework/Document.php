@@ -25,8 +25,6 @@ class Document extends HtmlDocument
 {
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
-        'jquery.2' => 'registerJquery',
-        'jquery.3' => 'registerJquery3',
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiCore',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
@@ -147,6 +145,13 @@ class Document extends HtmlDocument
 
     protected static function registerJquery()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            HTMLHelper::_('jquery.framework');
+
+            return;
+        }
+
+        // Joomla 3:
         if (!static::errorPage()) {
             HTMLHelper::_('jquery.framework');
 
@@ -182,6 +187,12 @@ class Document extends HtmlDocument
 
     protected static function registerJqueryUiCore()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            user_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+
+            return;
+        }
+
         if (!static::errorPage()) {
             HTMLHelper::_('jquery.ui', ['core']);
 
@@ -203,6 +214,12 @@ class Document extends HtmlDocument
 
     protected static function registerJqueryUiSortable()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            user_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+
+            return;
+        }
+
         if (!static::errorPage()) {
             HTMLHelper::_('jquery.ui', ['sortable']);
 
@@ -223,6 +240,14 @@ class Document extends HtmlDocument
 
     protected static function registerBootstrap2()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            user_error('Bootstrap 2 is not supported in Joomla 4, using Bootstrap 5 instead!', E_USER_DEPRECATED);
+
+            static::registerBootstrap5();
+
+            return;
+        }
+
         /** @var Theme $theme */
         $theme = Gantry::instance()['theme'];
         $theme->joomla(true);
@@ -245,8 +270,29 @@ class Document extends HtmlDocument
         );
     }
 
+    protected static function registerBootstrap5()
+    {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            /** @var Theme $theme */
+            $theme = Gantry::instance()['theme'];
+            $theme->joomla(true);
+
+            HTMLHelper::_('bootstrap.framework');
+
+            return;
+        }
+
+        parent::registerBootstrap5();
+    }
+
     protected static function registerMootools()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+
+            return;
+        }
+
         if (!static::errorPage()) {
             HTMLHelper::_('behavior.framework');
 
@@ -274,6 +320,12 @@ class Document extends HtmlDocument
 
     protected static function registerMootoolsMore()
     {
+        if (version_compare(JVERSION, '4.0', '>')) {
+            user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+
+            return;
+        }
+
         if (!static::errorPage()) {
             HTMLHelper::_('behavior.framework', true);
 

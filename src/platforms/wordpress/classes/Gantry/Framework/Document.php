@@ -29,8 +29,6 @@ class Document extends HtmlDocument
     /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
-        'jquery.2' => 'registerJquery',
-        'jquery.3' => 'registerJquery3',
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiCore',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
@@ -202,11 +200,6 @@ class Document extends HtmlDocument
         \wp_enqueue_script('jquery');
     }
 
-    protected static function registerJquery3()
-    {
-        \wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js');
-    }
-
     protected static function registerJqueryUiCore()
     {
         \wp_enqueue_script('jquery-ui-core');
@@ -219,19 +212,16 @@ class Document extends HtmlDocument
 
     protected static function registerBootstrap2()
     {
-        // Needs jquery 2
         \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
     }
 
     protected static function registerBootstrap3()
     {
-        // Needs jquery 2 or 3
         \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js');
     }
 
     protected static function registerBootstrap4()
     {
-        // Needs jquery 3
         \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js');
     }
 

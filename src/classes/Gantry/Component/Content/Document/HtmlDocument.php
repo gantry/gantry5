@@ -44,8 +44,6 @@ class HtmlDocument
     /** @var array */
     protected static $availableFrameworks = [
         'jquery' => 'registerJquery',
-        'jquery.2' => 'registerJquery',
-        'jquery.3' => 'registerJquery3',
         'jquery.framework' => 'registerJquery',
         'jquery.ui.core' => 'registerJqueryUiSortable',
         'jquery.ui.sortable' => 'registerJqueryUiSortable',
@@ -757,18 +755,6 @@ class HtmlDocument
     }
 
     protected static function registerJquery()
-    {
-        static::addScript(
-            [
-                'src' => 'https://code.jquery.com/jquery-2.2.4.min.js',
-                'integrity' => 'sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=',
-                'crossorigin' => 'anonymous'
-            ],
-            11
-        );
-    }
-
-    protected static function registerJquery3()
     {
         static::addScript(
             [
