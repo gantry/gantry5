@@ -803,8 +803,6 @@ class HtmlDocument
 
     protected static function registerBootstrap3()
     {
-        static::registerJquery();
-
         static::addScript(
             [
                 'src' => 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
@@ -816,8 +814,6 @@ class HtmlDocument
 
     protected static function registerBootstrap4()
     {
-        static::registerJquery3();
-
         static::addScript(
             [
                 'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',

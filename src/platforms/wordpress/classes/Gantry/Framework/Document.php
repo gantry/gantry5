@@ -219,22 +219,19 @@ class Document extends HtmlDocument
 
     protected static function registerBootstrap2()
     {
-        static::registerJquery();
-
+        // Needs jquery 2
         \wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
     }
 
     protected static function registerBootstrap3()
     {
-        static::registerJquery();
-
+        // Needs jquery 2 or 3
         \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js');
     }
 
     protected static function registerBootstrap4()
     {
-        static::registerJquery3();
-
+        // Needs jquery 3
         \wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js');
     }
 
