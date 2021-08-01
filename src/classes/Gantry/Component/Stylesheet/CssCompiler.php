@@ -49,8 +49,6 @@ abstract class CssCompiler implements CssCompilerInterface
     protected $paths;
     /** @var array */
     protected $files;
-    /** @var mixed */
-    protected $compiler;
     /** @var bool */
     protected $production;
 
@@ -333,12 +331,7 @@ abstract class CssCompiler implements CssCompilerInterface
     /**
      * @return $this|CssCompilerInterface
      */
-    public function reset()
-    {
-        $this->compiler->reset();
-
-        return $this;
-    }
+    abstract public function reset();
 
     /**
      * @param string $url
@@ -364,10 +357,7 @@ abstract class CssCompiler implements CssCompilerInterface
     /**
      * @param array $list
      */
-    protected function doSetFonts(array $list)
-    {
-        $this->compiler->setFonts($list);
-    }
+    abstract protected function doSetFonts(array $list);
 
     /**
      * @param string $out
@@ -411,8 +401,5 @@ abstract class CssCompiler implements CssCompilerInterface
     /**
      * @return array
      */
-    protected function getIncludedFiles()
-    {
-        return $this->compiler->getParsedFiles();
-    }
+    abstract protected function getIncludedFiles();
 }

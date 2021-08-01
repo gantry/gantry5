@@ -148,6 +148,8 @@ class ScssCompiler extends CssCompiler
             $css = $this->result->getCss();
         } catch (CompilerException $e) {
             throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on error: {$e->getMessage()}", 500, $e);
+        } catch (\Exception $e) {
+            throw new \RuntimeException("CSS Compilation on file '{$in}.scss' failed on fatal error: {$e->getMessage()}", 500, $e);
         }
         if (strpos($css, $scss) === 0) {
             $css = '/* ' . $scss . ' */';
