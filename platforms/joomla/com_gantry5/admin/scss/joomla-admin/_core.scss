@@ -12,6 +12,10 @@ body.com_gantry5 {
     color: $light-gray;
     background-color: $body-bg !important;
 
+    #content { // Joomla 4
+        padding: 0px;
+    }
+
     #g5-container {
         @media (max-width: 767px) {
             margin-left: -20px;
@@ -29,7 +33,7 @@ body.com_gantry5 {
         text-decoration: none;
     }
 
-    .btn-subhead, .subhead-collapse.collapse, .header, #subhead { // #subhead is for Joomla 4
+    .btn-subhead, .subhead-collapse.collapse, .header, .subhead { // .subhead is for Joomla 4
         display: none;
     }
 

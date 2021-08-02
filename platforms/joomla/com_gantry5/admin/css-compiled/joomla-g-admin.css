@@ -13,6 +13,10 @@ body.com_gantry5 {
   background-color: #404040 !important;
 }
 
+body.com_gantry5 #content {
+  padding: 0px;
+}
+
 @media (max-width: 767px) {
   body.com_gantry5 #g5-container {
     margin-left: -20px;
@@ -30,7 +34,7 @@ body.com_gantry5 a {
   text-decoration: none;
 }
 
-body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header, body.com_gantry5 #subhead {
+body.com_gantry5 .btn-subhead, body.com_gantry5 .subhead-collapse.collapse, body.com_gantry5 .header, body.com_gantry5 .subhead {
   display: none;
 }
 
