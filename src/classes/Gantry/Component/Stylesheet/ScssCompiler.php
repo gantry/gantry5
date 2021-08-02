@@ -16,6 +16,7 @@ namespace Gantry\Component\Stylesheet;
 
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Stylesheet\Scss\Functions;
+use Gantry\Debugger;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
 use ScssPhp\ScssPhp\CompilationResult;
@@ -24,6 +25,7 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
 use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\File\JsonFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
+use ScssPhp\ScssPhp\Logger\StreamLogger;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
 
@@ -79,7 +81,6 @@ class ScssCompiler extends CssCompiler
         @set_time_limit(60);
         @set_time_limit(90);
         @set_time_limit(120);
-        ob_start();
 
         $gantry = Gantry::instance();
 
@@ -103,7 +104,11 @@ class ScssCompiler extends CssCompiler
             return false;
         }
 
+        $logfile = fopen('php://memory', 'rb+');
+        $logger = new StreamLogger($logfile, true);
+
         $compiler = $this->getCompiler();
+        $compiler->setLogger($logger);
 
         // Set the lookup paths.
         $this->functions->setBasePath($path);
@@ -144,9 +149,15 @@ class ScssCompiler extends CssCompiler
             $css = substr($css, 0, $pos) . '/*# sourceMappingURL=' . basename($out) . '.map */';
         }
 
-        $warnings = trim(ob_get_clean() ?: '');
+        $warnings = stream_get_contents($logfile, -1, 0);
         if ($warnings) {
             $this->warnings[$in] = explode("\n", $warnings);
+
+            if (GANTRY_DEBUGGER) {
+                foreach ($this->warnings[$in] as $warning) {
+                    Debugger::addMessage("{$in}: {$warning}", 'warning');
+                }
+            }
         }
 
         if (!$this->production) {
