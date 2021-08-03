@@ -115,10 +115,6 @@ paths = {
         { // google fonts
             in: './platforms/common/js/google-fonts.json',
             out: './platforms/common/js/google-fonts.json'
-        },
-        { // matchMedia polyfill
-            in: './assets/common/js/matchmedia.polyfill.js',
-            out: './assets/common/js/matchmedia.polyfill.js'
         }
     ]
 };

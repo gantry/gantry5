@@ -86,18 +86,13 @@
     {%- endblock %}
 
     {% block head_ie_stylesheets -%}
-        <!--[if (gte IE 8)&(lte IE 9)]>
-        <script type="text/javascript" src="{{ url('gantry-assets://js/html5shiv-printshiv.min.js') }}"></script>
-        <link rel="stylesheet" href="{{ url('gantry-engine://css/nucleus-ie9.css') }}" type="text/css"/>
-        <script type="text/javascript" src="{{ url('gantry-assets://js/matchmedia.polyfill.js') }}"></script>
-        <![endif]-->
     {% endblock -%}
 
-    {% block head %}{% endblock %}
+    {% block head %}{% endblock -%}
     {% block head_custom %}
         {% if gantry.config.page.head.head_bottom %}
         {{ gantry.config.page.head.head_bottom|raw }}
         {% endif %}
-    {% endblock %}
+    {% endblock -%}
     {{ gantry.document.getHtml('head_bottom')|join("\n    ")|raw }}
 </head>

@@ -12,6 +12,7 @@
         - Use Font Awesome 5 free (#2196)
         - Added support for loading the latest Bootstrap 3.4, 4.6 and 5.0 JavaScript from CDN
         - Platform independent code passes phpstan level 5 tests
+        - Removed IE8 and IE9 support
     1. [](#improved)
         - Major code cleanup for PHP 5.6
         - Major rework in Menu Manager logic
