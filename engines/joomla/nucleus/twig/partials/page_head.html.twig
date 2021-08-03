@@ -9,13 +9,19 @@
 
 {% block head_platform -%}
     {{ parent() }}
-    {% if gantry.theme.joomla %}
+    {% if gantry.theme.joomla == 3 %} {# Joomla 3.x #}
         <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap-gantry.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla.css') }}" type="text/css" />
         {% if gantry.page.direction == 'rtl' %}
         <link rel="stylesheet" href="{{ url('media/jui/css/bootstrap-rtl.css') }}" type="text/css" />
         {% endif %}
         <link rel="stylesheet" href="{{ url('media/jui/css/icomoon.css') }}" type="text/css" />
+    {% else %} {# Joomla 4.x #}
+        <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap5.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla4.css') }}" type="text/css" />
+        {% if gantry.page.direction == 'rtl' %}
+            <link rel="stylesheet" href="{{ url('gantry-assets://css/bootstrap5-rtl.css') }}" type="text/css" />
+        {% endif %}
     {% endif %}
     {% if gantry.debug %}
         <link rel="stylesheet" href="{{ url('media/cms/css/debug.css') }}" type="text/css" />
