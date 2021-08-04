@@ -105,6 +105,11 @@ paths = {
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
             load: './engines/common/nucleus/scss'
         },
+        { // bootstrap - joomla
+            in: './engines/joomla/nucleus/scss/vendor/bootstrap.scss',
+            out: './engines/joomla/nucleus/css-compiled/bootstrap.css',
+            load: './engines/common/nucleus/scss/vendor/bootstrap/'
+        },
         { // nucleus - wordpress
             in: './engines/wordpress/nucleus/scss/wordpress.scss',
             out: './engines/wordpress/nucleus/css-compiled/wordpress.css',
