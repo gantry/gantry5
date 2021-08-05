@@ -60,7 +60,7 @@ class Document extends HtmlDocument
         ) {
             /** @var Theme $theme */
             $theme = Gantry::instance()['theme'];
-            $theme->joomla = JVersion::MAJOR_VERSION;
+            $theme->joomla = true;
         }
 
         return true;

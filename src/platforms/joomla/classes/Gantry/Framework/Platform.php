@@ -71,6 +71,14 @@ class Platform extends BasePlatform
     }
 
     /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return JVERSION;
+    }
+
+    /**
      * @param string $html
      */
     public function setModuleWrapper($html)

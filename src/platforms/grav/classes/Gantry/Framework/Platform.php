@@ -62,6 +62,14 @@ class Platform extends BasePlatform
     /**
      * @return string
      */
+    public function getVersion()
+    {
+        return Grav::instance()->getVersion();
+    }
+
+    /**
+     * @return string
+     */
     public function getCachePath()
     {
         $grav = Grav::instance();

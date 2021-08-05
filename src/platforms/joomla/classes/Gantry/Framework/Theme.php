@@ -35,19 +35,19 @@ class Theme extends AbstractTheme
 {
     use ThemeTrait;
 
-    /** @var int */
-    public $joomla = 0;
+    /** @var bool */
+    protected $joomla = false;
 
     /**
      * If parameter is set to true, loads bootstrap. Returns true if bootstrap has been loaded.
      *
      * @param bool|null $enable
-     * @return int
+     * @return bool
      */
     public function joomla($enable = null)
     {
         if ($enable && !$this->joomla) {
-            $this->joomla = JVersion::MAJOR_VERSION;
+            $this->joomla = true;
 
             // Workaround for Joomla! not loading bootstrap when it needs it.
             static::gantry()->load('bootstrap');

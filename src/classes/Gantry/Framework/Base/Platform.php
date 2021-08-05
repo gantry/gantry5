@@ -123,6 +123,27 @@ abstract class Platform
         ];
     }
 
+    /**
+     * Gets version of CMS.
+     *
+     * @return string
+     */
+    abstract public function getVersion();
+
+    /**
+     * Compares version of CMS against the given version.
+     *
+     * @param string $version Lower bound (>=)
+     * @param string|null $version2 Upper bound (<)
+     * @return bool True if version matches, false otherwise.
+     */
+    public function checkVersion($version, $version2 = null)
+    {
+        $cmsVersion = $this->getVersion();
+
+        return version_compare($cmsVersion, $version, '>=') && (null === $version2 || version_compare($cmsVersion, $version2, '<'));
+    }
+
     abstract public function getCachePath();
     abstract public function getThemesPaths();
     abstract public function getAssetsPaths();

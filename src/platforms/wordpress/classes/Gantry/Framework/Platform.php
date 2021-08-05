@@ -73,6 +73,14 @@ class Platform extends BasePlatform
     }
 
     /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return \get_bloginfo('version');
+    }
+
+    /**
      * @return Platform
      */
     public function init()
