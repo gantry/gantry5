@@ -100,15 +100,25 @@ paths = {
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
         },
-        { // nucleus - joomla
+        { // nucleus - joomla 3
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
             load: './engines/common/nucleus/scss'
         },
-        { // bootstrap - joomla
-            in: './engines/joomla/nucleus/scss/vendor/bootstrap.scss',
-            out: './engines/joomla/nucleus/css-compiled/bootstrap.css',
-            load: './engines/common/nucleus/scss/vendor/bootstrap/'
+        { // nucleus - joomla 4
+            in: './engines/joomla/nucleus/scss/joomla4.scss',
+            out: './engines/joomla/nucleus/css-compiled/joomla4.css',
+            load: './engines/common/nucleus/scss'
+        },
+        { // bootstrap - joomla 4
+            in: './engines/joomla/nucleus/scss/bootstrap5.scss',
+            out: './engines/joomla/nucleus/css-compiled/bootstrap5.css',
+            load: './engines/common/nucleus/scss'
+        },
+        { // bootstrap rtl - joomla 4
+            in: './engines/joomla/nucleus/scss/bootstrap5-rtl.scss',
+            out: './engines/joomla/nucleus/css-compiled/bootstrap5-rtl.css',
+            load: './engines/common/nucleus/scss'
         },
         { // nucleus - wordpress
             in: './engines/wordpress/nucleus/scss/wordpress.scss',
