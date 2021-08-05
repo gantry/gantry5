@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version as JVersion;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Twig\Environment;
 use Twig\Extension\CoreExtension;
@@ -35,7 +36,7 @@ class Theme extends AbstractTheme
     use ThemeTrait;
 
     /** @var int */
-    protected $joomla = 0;
+    public $joomla = 0;
 
     /**
      * If parameter is set to true, loads bootstrap. Returns true if bootstrap has been loaded.
@@ -46,7 +47,7 @@ class Theme extends AbstractTheme
     public function joomla($enable = null)
     {
         if ($enable && !$this->joomla) {
-            $this->joomla = \JVersion::MAJOR_VERSION;
+            $this->joomla = JVersion::MAJOR_VERSION;
 
             // Workaround for Joomla! not loading bootstrap when it needs it.
             static::gantry()->load('bootstrap');

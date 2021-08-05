@@ -16,6 +16,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version as JVersion;
 
 /**
  * Class Document
@@ -40,6 +41,30 @@ class Document extends HtmlDocument
         'lightcase' => 'registerLightcase',
         'lightcase.init' => 'registerLightcaseInit',
     ];
+
+    /**
+     * @param string $framework
+     * @return bool
+     */
+    public static function addFramework($framework)
+    {
+        if (!parent::addFramework($framework)) {
+            return false;
+        }
+
+        // Make sure that if Bootstap framework is loaded, also load CSS.
+        if (
+            $framework === 'bootstrap'
+            || ($framework === 'bootstrap.2' && JVersion::MAJOR_VERSION === 3)
+            || ($framework === 'bootstrap.5' && JVersion::MAJOR_VERSION >= 4)
+        ) {
+            /** @var Theme $theme */
+            $theme = Gantry::instance()['theme'];
+            $theme->joomla = JVersion::MAJOR_VERSION;
+        }
+
+        return true;
+    }
 
     /**
      *
@@ -258,10 +283,6 @@ class Document extends HtmlDocument
             return;
         }
 
-        /** @var Theme $theme */
-        $theme = Gantry::instance()['theme'];
-        $theme->joomla(true);
-
         if (!static::errorPage()) {
             HTMLHelper::_('bootstrap.framework');
 
@@ -283,10 +304,6 @@ class Document extends HtmlDocument
     protected static function registerBootstrap5()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            /** @var Theme $theme */
-            $theme = Gantry::instance()['theme'];
-            $theme->joomla(true);
-
             HTMLHelper::_('bootstrap.framework');
 
             return;
