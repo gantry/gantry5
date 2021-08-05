@@ -15,6 +15,9 @@ bin/build/tmp
 bin/build/package
 dist
 
+# SCSS compiler
+/engines/joomla/nucleus/scss/vendor/bootstrap5/
+
 # Tester
 bin/tester/cache
 bin/tester/tests
@@ -36,4 +39,3 @@ themes/*/*/custom
 platforms/**/cache
 themes/**/cache
 npm-debug.log
-
