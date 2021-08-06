@@ -1,4 +1,6 @@
 // Load Third Party Libraries
+//FIXME Remove deprecated bourbon mixins
+$output-bourbon-deprecation-warnings: false;
 @import "vendor/bourbon/bourbon";
 
 // Load Theme Configuration

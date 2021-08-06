@@ -62,3 +62,24 @@
   width: 100% !important;
   max-width: 240px;
 }
+.list-inline {
+  margin-left: 0;
+}
+
+.list-inline-item {
+  display: inline-block;
+  .btn {
+    border: 1px solid;
+    padding: 5px 8px;
+  }
+
+  &:not(:last-child) {
+    margin-right: $list-inline-padding;
+  }
+}
+
+.blog figure {
+  margin: 0;
+}
+
+
