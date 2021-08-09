@@ -216,6 +216,8 @@ class Document extends HtmlDocument
         if (version_compare(JVERSION, '4.0', '>')) {
             user_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
 
+            parent::registerJqueryUiSortable();
+
             return;
         }
 
@@ -242,6 +244,8 @@ class Document extends HtmlDocument
     {
         if (version_compare(JVERSION, '4.0', '>')) {
             user_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+
+            parent::registerJqueryUiSortable();
 
             return;
         }
@@ -317,6 +321,8 @@ class Document extends HtmlDocument
         if (version_compare(JVERSION, '4.0', '>')) {
             user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
 
+            parent::registerMootools();
+
             return;
         }
 
@@ -349,6 +355,8 @@ class Document extends HtmlDocument
     {
         if (version_compare(JVERSION, '4.0', '>')) {
             user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+
+            parent::registerMootoolsMore();
 
             return;
         }
