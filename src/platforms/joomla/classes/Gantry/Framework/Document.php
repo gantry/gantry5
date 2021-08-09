@@ -214,7 +214,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiCore()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            user_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+            //user_error('jQuery UI Core is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
 
             parent::registerJqueryUiSortable();
 
@@ -243,7 +243,7 @@ class Document extends HtmlDocument
     protected static function registerJqueryUiSortable()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            user_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
+            //user_error('jQuery UI Sortable is not supported in Joomla 4, please remove the dependency!', E_USER_DEPRECATED);
 
             parent::registerJqueryUiSortable();
 
@@ -280,7 +280,7 @@ class Document extends HtmlDocument
     protected static function registerBootstrap2()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            user_error('Bootstrap 2 is not supported in Joomla 4, using Bootstrap 5 instead!', E_USER_DEPRECATED);
+            //user_error('Bootstrap 2 is not supported in Joomla 4, using Bootstrap 5 instead!', E_USER_DEPRECATED);
 
             static::registerBootstrap5();
 
@@ -319,7 +319,7 @@ class Document extends HtmlDocument
     protected static function registerMootools()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+            //user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
 
             parent::registerMootools();
 
@@ -354,7 +354,7 @@ class Document extends HtmlDocument
     protected static function registerMootoolsMore()
     {
         if (version_compare(JVERSION, '4.0', '>')) {
-            user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
+            //user_error('Mootools is no longer supported in Joomla 4!', E_USER_DEPRECATED);
 
             parent::registerMootoolsMore();
 
