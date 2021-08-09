@@ -21,7 +21,6 @@ namespace Gantry\Component\Gettext;
  * Examples on translating gettext in twig:
  *
  * {% trans string_var %}
- * http://twig.sensiolabs.org/doc/extensions/i18n.html
  *
  * {% trans %}Hello {{ author.name }}{% endtrans %}
  * http://symfony.com/doc/current/book/translation.html

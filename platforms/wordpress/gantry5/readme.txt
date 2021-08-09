@@ -33,7 +33,7 @@ The new responsive Gantry 5 framework is available for **WordPress 5.2+**, **Joo
 
 = Twig Templating =
 
-Gantry 5 utilizes [Twig](http://twig.sensiolabs.org/) and [Timber](http://upstatement.com/timber/) to make creating powerful, dynamic themes quick and easy.
+Gantry 5 utilizes [Twig](https://twig.symfony.com/doc/1.x/) and [Timber](http://upstatement.com/timber/) to make creating powerful, dynamic themes quick and easy.
 
 = New Administrative Interface =
 

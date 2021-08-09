@@ -59,7 +59,7 @@ content:
         -
           icon: 'fa fa-code'
           subtitle: ''
-          description: '<p>Gantry 5 leverages the power of <a href="http://twig.sensiolabs.org/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
+          description: '<p>Gantry 5 leverages the power of <a href="https://twig.symfony.com/doc/1.x/">Twig</a> to make creating powerful, dynamic themes quick and easy.</p>'
           title: 'Twig Templating'
         -
           icon: 'far fa-newspaper'
