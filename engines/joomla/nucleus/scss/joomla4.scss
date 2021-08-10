@@ -2,8 +2,20 @@
 @import "vendor/bootstrap5/functions";
 @import "vendor/bootstrap5/variables";
 @import "vendor/bootstrap5/bootstrap";
+
+// Cassiopeia Variables
+// Grid
 $grid-gutter-width:                   1em !default;
 $cassiopeia-grid-gutter:              $grid-gutter-width;
 
+// Forms
+$input-padding:                       .6rem 1rem;
+$input-border:                        solid 1px $gray-400;
+$input-btn-padding-y:                 .6rem;
+$input-btn-padding-x:                 1rem;
+$input-max-width:                     100%;
+$input-focus-border-color:            transparent;
+
 @import "joomla4/css-grid";
 @import "joomla4/modifiers";
+@import "joomla4/form";

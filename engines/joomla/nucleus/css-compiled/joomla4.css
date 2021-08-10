@@ -10569,7 +10569,7 @@ fieldset:disabled .btn {
 .form-control:focus {
   color: #212529;
   background-color: #fff;
-  border-color: #86b7fe;
+  border-color: transparent;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
@@ -18625,4 +18625,131 @@ fieldset:disabled .btn {
 
 .mod-list li .mod-menu__sub {
   padding-left: 1.5rem;
+}
+
+.form-control {
+  max-width: 100%;
+  background-color: #fff;
+}
+
+.form-control.input-xlarge {
+  max-width: 21.875rem;
+}
+
+.form-control.input-xxlarge {
+  max-width: 34.375rem;
+}
+
+.form-control.input-full {
+  max-width: 100%;
+}
+
+.spacer hr {
+  width: 23.75rem;
+}
+
+.form-select {
+  max-width: 100%;
+}
+
+.form-inline .form-select {
+  display: inline-block;
+  width: auto;
+}
+
+@media (max-width: 767.98px) {
+  .form-inline .form-select {
+    width: 100%;
+  }
+}
+
+td .form-control {
+  display: inline-block;
+  width: auto;
+}
+
+.checkboxes {
+  padding-top: 5px;
+}
+
+.checkboxes .checkbox input {
+  position: static;
+  margin-left: 0;
+}
+
+.modal label {
+  width: 100%;
+}
+
+.invalid {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.valid {
+  border-color: #198754;
+}
+
+.form-control-feedback {
+  display: block;
+}
+
+[role="tooltip"]:not(.show) {
+  right: 5em;
+  z-index: 1080;
+  display: none;
+  max-width: 100%;
+  padding: .5em;
+  margin: .5em;
+  color: #000;
+  text-align: start;
+  background: #fff;
+  border: 1px solid #6c757d;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.8);
+}
+
+[role="tooltip"]:not(.show)[id^=editarticle-] {
+  right: auto;
+  margin-inline-start: -10em;
+}
+
+[role="tooltip"]:not(.show)[id^=editcontact-] {
+  right: auto;
+  margin-inline-start: -10em;
+}
+
+:focus + [role="tooltip"],
+:hover + [role="tooltip"] {
+  position: absolute;
+  display: block;
+}
+
+[id="filter[search]-desc"] {
+  bottom: 100%;
+}
+
+fieldset {
+  margin-bottom: 3rem;
+}
+
+fieldset + fieldset {
+  margin-top: 3rem;
+}
+
+fieldset > * {
+  margin-bottom: 0;
+}
+
+.control-group {
+  margin: 1.5rem 0;
+}
+
+.container-popup [id="filter[search]-desc"] {
+  top: 100%;
+  bottom: auto;
+}
+
+.com-users-login__options {
+  margin-top: 3rem;
 }
