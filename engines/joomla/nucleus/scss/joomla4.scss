@@ -1,0 +1,9 @@
+// J4 and Cassiopeia
+@import "vendor/bootstrap5/functions";
+@import "vendor/bootstrap5/variables";
+@import "vendor/bootstrap5/bootstrap";
+$grid-gutter-width:                   1em !default;
+$cassiopeia-grid-gutter:              $grid-gutter-width;
+
+@import "joomla4/css-grid";
+@import "joomla4/modifiers";
