@@ -13,6 +13,7 @@
         {% if gantry.platform.checkVersion(4) %} {# Joomla 4.x #}
             {% if gantry.page.direction != 'rtl' %}
             <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/bootstrap5.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/joomla.css') }}" type="text/css" />
             {% else %}
             <link rel="stylesheet" href="{{ url('gantry-engine://css-compiled/bootstrap5-rtl.css') }}" type="text/css" />
             {% endif %}
