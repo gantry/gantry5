@@ -11,6 +11,11 @@
 // Bootstrap
 @import "vendor/bootstrap5/variables";
 @import "vendor/bootstrap5/bootstrap";
+// Cassiopeia
+@import "vendor/cassiopeia/variables";
+@import "vendor/cassiopeia/css-grid";
+@import "vendor/cassiopeia/modifiers";
+@import "vendor/cassiopeia/form";
 
 // jQuery Minicolors
 //@import "../../../media/system/scss/jquery-minicolors";
