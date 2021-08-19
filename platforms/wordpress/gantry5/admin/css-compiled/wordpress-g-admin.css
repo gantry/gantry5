@@ -936,3 +936,11 @@ body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"], body.
 body.wp-admin.widgets-php #g5-container .g5-dialog input[type="checkbox"]:checked:before, body.wp-customizer #g5-container .g5-dialog input[type="checkbox"]:checked:before {
   height: 16px;
 }
+
+html.g5-dialog-open .block-editor-block-list__layout .block-editor-block-list__block, html.g5-dialog-open .blocks-widgets-container *, html.g5-dialog-open .blocks-widgets-container :after, html.g5-dialog-open .blocks-widgets-container :before, html.g5-dialog-open .components-modal__frame *, html.g5-dialog-open .components-modal__frame :after, html.g5-dialog-open .components-modal__frame :before {
+  z-index: 1;
+}
+
+html.g5-dialog-open .interface-interface-skeleton__sidebar, html.g5-dialog-open .components-dropdown block-editor-inserter, html.g5-dialog-open .wp-block[data-type="core/widget-area"] {
+  z-index: 0 !important;
+}
