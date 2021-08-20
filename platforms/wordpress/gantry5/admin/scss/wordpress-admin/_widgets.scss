@@ -13,6 +13,15 @@ body.wp-admin.widgets-php, body.wp-customizer {
 
         .g5-dialog {
             z-index: 99999;
+            position: relative;
+
+            .g5-overlay {
+                display: none;
+            }
+
+            .g5-content {
+                margin: 0;
+            }
 
             .button-primary {
                 text-shadow: none;
@@ -39,17 +48,5 @@ body.wp-admin.widgets-php, body.wp-customizer {
                 }
             }
         }
-    }
-}
-
-html.g5-dialog-open {
-    .block-editor-block-list__layout .block-editor-block-list__block, .blocks-widgets-container *, .blocks-widgets-container :after, .blocks-widgets-container :before, .components-modal__frame *, .components-modal__frame :after, .components-modal__frame :before {
-        z-index: 1;
-    }
-}
-
-html.g5-dialog-open {
-    .interface-interface-skeleton__sidebar, .components-dropdown block-editor-inserter, .wp-block[data-type="core/widget-area"] {
-        z-index: 0 !important;
     }
 }
