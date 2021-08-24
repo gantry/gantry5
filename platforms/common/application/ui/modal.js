@@ -205,7 +205,8 @@ var Modal = new prime({
 
         // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
-            container = $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
+            container = $('#widgets-editor') || $('#widgets-right') || $(options.appendNode);
+            console.log(container);
             if ('#' + container.id() != options.appendNode) {
                 var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
                 if (wpwrap.id() == 'wpwrap') {

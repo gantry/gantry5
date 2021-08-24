@@ -914,15 +914,6 @@ body.wp-admin.widgets-php #g5-container .g-content .settings-block .settings-par
 
 body.wp-admin.widgets-php #g5-container .g5-dialog, body.wp-customizer #g5-container .g5-dialog {
   z-index: 99999;
-  position: relative;
-}
-
-body.wp-admin.widgets-php #g5-container .g5-dialog .g5-overlay, body.wp-customizer #g5-container .g5-dialog .g5-overlay {
-  display: none;
-}
-
-body.wp-admin.widgets-php #g5-container .g5-dialog .g5-content, body.wp-customizer #g5-container .g5-dialog .g5-content {
-  margin: 0;
 }
 
 body.wp-admin.widgets-php #g5-container .g5-dialog .button-primary, body.wp-customizer #g5-container .g5-dialog .button-primary {

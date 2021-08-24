@@ -13,15 +13,6 @@ body.wp-admin.widgets-php, body.wp-customizer {
 
         .g5-dialog {
             z-index: 99999;
-            position: relative;
-
-            .g5-overlay {
-                display: none;
-            }
-
-            .g5-content {
-                margin: 0;
-            }
 
             .button-primary {
                 text-shadow: none;
