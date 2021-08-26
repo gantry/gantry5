@@ -192,7 +192,7 @@ class Particle extends \WP_Widget
             'content' => $theme->render('@gantry-admin/forms/fields/gantry/particle.html.twig', $field)
         ];
 
-        echo '<p>' . \__('Click on the button below to choose a Particle.', 'gantry5') . '</p>';
+        echo '<p>' . \__('Clic§k on the button below to choose a Particle.', 'gantry5') . '</p>';
 
         echo $theme->render('@gantry-admin/partials/inline.html.twig', $params);
     }
@@ -206,6 +206,10 @@ class Particle extends \WP_Widget
      */
     public function update($new_instance, $old_instance)
     {
-        return isset($new_instance['particle']) ? json_decode($new_instance['particle'], true) : [];
+        $instance = isset($new_instance['particle']) ? json_decode($new_instance['particle'], true) : [];
+        if ($instance == null) {
+            $instance = $new_instance;
+        }
+        return $instance;
     }
 }

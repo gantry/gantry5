@@ -39,3 +39,4 @@ themes/*/*/custom
 platforms/**/cache
 themes/**/cache
 npm-debug.log
+.vscode/launch.json
