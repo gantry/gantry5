@@ -10984,7 +10984,7 @@ var Modal = new prime({
 
         // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
-            container = $('#widgets-editor') || $('#widgets-right') || $(options.appendNode);
+            container = $('#widgets-editor') || $('#customize-preview') || $('#widgets-right') || $(options.appendNode);
             if ('#' + container.id() != options.appendNode) {
                 var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
                 if (wpwrap.id() == 'wpwrap') {
@@ -11409,7 +11409,7 @@ var Popover = new prime({
 
         // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
-            container = $('#customize-preview') || $('#widgets-right') || $(this.options.where);
+            container = $('#widgets-editor') || $('#customize-preview') || $('#widgets-right') || $(this.options.where);
             if ('#' + container.id() != this.options.where) {
                 var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
                 if (wpwrap.id() == 'wpwrap') {
