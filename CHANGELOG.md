@@ -26,6 +26,7 @@
         - Fixed W3C validation error in content array particle read more button (#2729)
         - Fixed infinite recursive loop if the menu contains menu particle (#2527)
         - Fixed `The menu selected is empty!` instead of displaying error message (#2806)
+        - Fixed menu dropdown title
 1. [Joomla](#joomla)
     1. [](#new)
         - Updated minimum requirement to Joomla! 3.9 (includes themes)

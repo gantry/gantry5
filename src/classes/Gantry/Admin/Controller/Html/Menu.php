@@ -93,7 +93,7 @@ class Menu extends HtmlController
         } catch (\Exception $e) {
             $this->params['error'] = $e;
             $this->params['id'] = $id;
-            $this->params['menus'] = $this->getMenus();
+            $this->params['menus'] = $this->getMenuOptions();
             $this->params['path'] = $path;
 
             return $this->render('@gantry-admin/pages/menu/menu.html.twig', $this->params);
@@ -107,7 +107,7 @@ class Menu extends HtmlController
 
         // Fill parameters to be passed to the template file.
         $this->params['id'] = $resource->name();
-        $this->params['menus'] = $resource->getMenus();
+        $this->params['menus'] = $resource->getMenuOptions();
         $this->params['default_menu'] = $resource->hasDefaultMenu() ? $resource->getDefaultMenuName() : false;
         $this->params['menu'] = $resource;
         $this->params['path'] = $path;
@@ -540,12 +540,12 @@ class Menu extends HtmlController
     /**
      * @return string[]
      */
-    protected function getMenus()
+    protected function getMenuOptions()
     {
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];
 
-        return $menus->getMenus();
+        return $menus->getMenuOptions();
     }
 
     /**

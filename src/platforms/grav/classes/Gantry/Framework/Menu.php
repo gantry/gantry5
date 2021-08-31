@@ -79,6 +79,23 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Return list of menus.
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getMenuOptions()
+    {
+        $list = [];
+        foreach ($this->getMenus() as $val) {
+            $list[$val] = ucwords($val);
+        }
+        sort($list);
+
+        return $list;
+    }
+
+    /**
      * @return array
      */
     public function getGroupedItems()

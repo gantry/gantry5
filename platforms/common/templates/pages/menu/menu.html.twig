@@ -24,11 +24,11 @@
                 data-g5-ajaxify-target="[data-g5-content]"
                 class="menu-select-wrap"
         >
-            {% for menu_name in menus %}
+            {% for menu_name,menu_title in menus %}
             <option value="{{ menu_name }}"
                     {% if id == menu_name %}selected="selected"{% endif %}
                     data-data="{{ {url: gantry.route('menu', menu_name)}|json_encode|e('html_attr') }}">
-                {{ menu_name|capitalize }}{{ default_menu == menu_name ? ' ★' : '' }}
+                {{ menu_title }}{{ default_menu == menu_name ? ' ★' : '' }}
             </option>
             {% endfor %}
         </select>

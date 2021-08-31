@@ -63,6 +63,28 @@ class Menu extends AbstractMenu
     }
 
     /**
+     * Return list of menus.
+     *
+     * @param  array $args
+     * @return array
+     */
+    public function getMenuOptions($args = [])
+    {
+        $defaults = [
+            'orderby' => 'name'
+        ];
+
+        $menus = \wp_get_nav_menus(\apply_filters('g5_menu_get_menus_args', \wp_parse_args($args, $defaults)));
+
+        $list = [];
+        foreach($menus as $menu) {
+            $list[urldecode($menu->slug)] = urldecode($menu->name);
+        }
+
+        return $list;
+    }
+
+    /**
      * Used in menu configuration to display full list of menu items as options.
      *
      * @return array

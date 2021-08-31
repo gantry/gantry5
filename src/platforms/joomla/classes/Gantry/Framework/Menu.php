@@ -84,13 +84,31 @@ class Menu extends AbstractMenu
      */
     public function getMenus()
     {
+        return array_keys($this->getMenuOptions());
+    }
+
+    /**
+     * Return list of menus.
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getMenuOptions()
+    {
         static $items;
 
         if ($items === null) {
-            // Works also in Joomla 4
-            require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('a.menutype'))
+                ->select($db->quoteName('a.title'))
+                ->from($db->quoteName('#__menu_types', 'a'))
+                ->where($db->quoteName('a.client_id') . ' = 0');
 
-            $items = (array)\MenusHelper::getMenuTypes();
+            $db->setQuery($query);
+
+            $items = $db->loadAssocList('menutype');
+            $items = array_map(static function($val) { return $val['title']; }, $items);
             natsort($items);
         }
 
