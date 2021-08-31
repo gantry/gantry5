@@ -745,7 +745,14 @@ class Menu extends AbstractMenu
             // Set the query
             $db->setQuery($query);
 
-            return $db->loadObjectList('id', MenuItem::class);
+            // Workaround for Joomla 4 bug in  mysqli engine.
+            //return $db->loadObjectList('id', MenuItem::class);
+            $list = [];
+            foreach ($db->loadAssocList('id') as $id => $data) {
+                $list[$id] = new MenuItem($data);
+            }
+
+            return $list;
         };
 
         try {
