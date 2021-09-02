@@ -19,6 +19,7 @@
         - Changed `Layout` to be the default tab (#2638)
         - Added support for `includes/gantry.php` and `includes/theme.php` overrides in `custom/` (#2784, #2485)
         - Added menu target option for a Window without navigation (#2812)
+        - Twig filter `|imagesize` no longer needs `|raw` filter in HTML output (#2825)
     1. [](#bugfix)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration

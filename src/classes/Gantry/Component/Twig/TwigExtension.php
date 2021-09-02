@@ -72,7 +72,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFilter('repeat', [$this, 'repeatFilter']),
             new TwigFilter('values', [$this, 'valuesFilter']),
             new TwigFilter('base64', 'base64_encode'),
-            new TwigFilter('imagesize', [$this, 'imageSize']),
+            new TwigFilter('imagesize', [$this, 'imageSize'], ['is_safe' => ['html']]),
             new TwigFilter('truncate_text', [$this, 'truncateText']),
             new TwigFilter('attribute_array', [$this, 'attributeArrayFilter'], ['is_safe' => ['html']]),
         ];
@@ -110,7 +110,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('colorContrast', [$this, 'colorContrastFunc']),
             new TwigFunction('get_cookie', [$this, 'getCookie']),
             new TwigFunction('preg_match', [$this, 'pregMatch']),
-            new TwigFunction('imagesize', [$this, 'imageSize']),
+            new TwigFunction('imagesize', [$this, 'imageSize'], ['is_safe' => ['html']]),
             new TwigFunction('is_selected', [$this, 'is_selectedFunc']),
             new TwigFunction('url', [$this, 'urlFunc']),
         ];
