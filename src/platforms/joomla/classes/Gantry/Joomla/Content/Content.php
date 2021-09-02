@@ -144,7 +144,7 @@ class Content extends AbstractObject
             return Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
         }
 
-        require_once JPATH_SITE . '/components/com_content/Helper/RouteHelper.php';
+        require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
 
         return Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
     }
