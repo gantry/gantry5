@@ -291,7 +291,7 @@ class Gantry5Plugin extends Plugin
         $apiBase = '/api/particle';
         $route = $uri->route();
 
-        if ($route !== $apiBase || strpos($route, $apiBase . '/') !== 0) {
+        if ($route !== $apiBase && strpos($route, $apiBase . '/') !== 0) {
             return;
         }
 
