@@ -115,6 +115,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('url', [$this, 'urlFunc']),
         ];
 
+        if (GANTRY5_PLATFORM === 'grav') {
+            $functions[] = new TwigFunction('taxonomy_categories', [$this, 'taxonomyCategories']);
+        }
+
 //        if (1 || GANTRY5_PLATFORM !== 'grav') {
         $functions = array_merge($functions, [
             new TwigFunction('array', [$this, 'arrayFilter']),
@@ -733,5 +737,25 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         preg_match($pattern, $subject, $matches);
 
         return $matches ?: false;
+    }
+
+    /**
+     * @param string|array $str
+     * @return array
+     */
+    public function taxonomyCategories($str)
+    {
+        if (!is_array($str)) {
+            $taxonomies = explode(' ', $str);
+        } else {
+            $taxonomies = $str;
+        }
+
+        $list = [];
+        foreach ($taxonomies as $taxonomy) {
+            $list[] = ['@taxonomy.category' => $taxonomy];
+        }
+
+        return $list;
     }
 }

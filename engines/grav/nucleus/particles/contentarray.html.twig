@@ -9,7 +9,7 @@
 {% set display = article_settings.display %}
 {% set collection = grav.page.collection(
     {
-        items: {'@taxonomy.category': filter.categories|split(' ')},
+        items: taxonomy_categories(filter.categories),
         order: {by: sort.orderby, dir: sort.ordering},
         url_taxonomy_filters: false
     },

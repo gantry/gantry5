@@ -55,6 +55,8 @@
         - Updated minimum requirement to Grav 1.7.15 and Admin 1.10.15
         - Grav specific code passes phpstan level 5 tests
         - Added debugger support in admin JSON requests
+    1. [](#bugfix)
+        - Fixed categories filter in `Grav Content` particle (#2830)
 1. [Prime](#prime)
     1. [](#new)
         - Remove unmaintained standalone Prime environment
