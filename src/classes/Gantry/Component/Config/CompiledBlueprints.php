@@ -33,7 +33,7 @@ class CompiledBlueprints extends CompiledBase
      *
      * @param array  $data
      */
-    protected function createObject(array $data = [])
+    protected function createObject(array $data)
     {
         $this->object = new BlueprintSchema($data);
     }
@@ -62,12 +62,13 @@ class CompiledBlueprints extends CompiledBase
     /**
      * Load and join all configuration files.
      *
+     * @param array $data
      * @return bool
      * @internal
      */
-    protected function loadFiles()
+    protected function loadFiles(array $data)
     {
-        $this->createObject();
+        $this->createObject($data);
 
         // Convert file list into parent list.
         $list = [];

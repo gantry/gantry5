@@ -250,7 +250,7 @@ abstract class ThemeInstaller
         $locator = $gantry['locator'];
 
         // Initialize theme stream.
-        $details = new ThemeDetails($name);
+        $details = ThemeDetails::instance($name);
         $locator->addPath('gantry-theme', '', $details->getPaths(), false, true);
 
         // Initialize theme cache stream and clear theme cache.
