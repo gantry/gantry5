@@ -162,14 +162,22 @@ class ContentFinder extends Finder
             return $this;
         }
 
-        // Define null and now dates
-        $nowDate = $this->db->quote(Factory::getDate()->toSql());
-
         // Filter by start and end dates.
         if (!$user->authorise('core.edit.state', 'com_content') && !$user->authorise('core.edit', 'com_content')) {
+            // Define null and now dates
+            $nowDate = $this->db->quote(Factory::getDate()->toSql());
+            if (version_compare(JVERSION, '4.0', '<')) {
+                $nullDate = $this->db->quote($this->db->getNullDate());
+                $nullDateUp = "a.publish_up = {$nullDate}";
+                $nullDateDown = "a.publish_down = {$nullDate}";
+            } else {
+                $nullDateUp = $this->query->isNullDatetime('a.publish_up');
+                $nullDateDown = $this->query->isNullDatetime('a.publish_down');
+            }
+
             $this->query
-                ->where('(' . $this->query->isNullDatetime('a.publish_up') . ' OR a.publish_up <= ' . $nowDate . ')')
-                ->where('(' . $this->query->isNullDatetime('a.publish_down') . ' OR a.publish_down >= ' . $nowDate . ')')
+                ->where('(' . $nullDateUp . ' OR a.publish_up <= ' . $nowDate . ')')
+                ->where('(' . $nullDateDown. ' OR a.publish_down >= ' . $nowDate . ')')
                 ->where('a.state >= 1')
             ;
         }
