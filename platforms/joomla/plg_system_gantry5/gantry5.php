@@ -295,7 +295,7 @@ class plgSystemGantry5 extends CMSPlugin
             include_once $classPath;
         }
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage("Using Gantry 5 template {$templateName}");
         }
 
@@ -304,7 +304,7 @@ class plgSystemGantry5 extends CMSPlugin
 
         $assignments = new Assignments();
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
             Debugger::addMessage($assignments->getPage(), 'debug');
             Debugger::addMessage($assignments->loadAssignments(), 'debug');

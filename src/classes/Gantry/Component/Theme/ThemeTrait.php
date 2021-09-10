@@ -140,7 +140,7 @@ trait ThemeTrait
 
         // Set configuration if given.
         if ($name && $name !== $outline) {
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage("Using Gantry outline {$name}");
             }
 
@@ -244,14 +244,14 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}");
                     Debugger::addMessage("Compiling CSS: {$name}");
                 }
 
                 $compiler->compileFile($name);
 
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::stopTimer("css-{$name}");
                 }
             }
@@ -373,7 +373,7 @@ trait ThemeTrait
         if (!$this->atoms) {
             $this->atoms = true;
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::startTimer('atoms', 'Preparing atoms');
             }
 
@@ -426,7 +426,7 @@ trait ThemeTrait
                 }
             }
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::stopTimer('atoms');
             }
         }
@@ -442,13 +442,13 @@ trait ThemeTrait
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::startTimer('segments', 'Preparing layout');
             }
 
             $this->prepareLayout($this->segments);
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::stopTimer('segments');
             }
         }
@@ -617,7 +617,7 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
-                    if (GANTRY_DEBUGGER) {
+                    if (\GANTRY_DEBUGGER) {
                         Debugger::startTimer($item->id, "Rendering {$item->id}");
                     }
 
@@ -627,7 +627,7 @@ trait ThemeTrait
                         unset($items[$i]);
                     }
 
-                    if (GANTRY_DEBUGGER) {
+                    if (\GANTRY_DEBUGGER) {
                         Debugger::stopTimer($item->id);
                     }
 
@@ -790,7 +790,7 @@ trait ThemeTrait
                     return ContentBlock::fromArray((array) $file->content());
                 } catch (\Exception $e) {
                     // Invalid cache, continue to rendering.
-                    if (GANTRY_DEBUGGER) {
+                    if (\GANTRY_DEBUGGER) {
                         Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
                     }
                 }
@@ -808,7 +808,7 @@ trait ThemeTrait
 
         if (isset($file)) {
             // Save HTML and assets into the cache.
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
             }
 

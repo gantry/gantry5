@@ -103,7 +103,7 @@ class Theme extends AbstractTheme
                 /** @var Platform $platform */
                 $platform = $gantry['platform'];
 
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::addMessage("Rendering module {$id} in position {$position}", 'debug');
                 }
 
@@ -115,7 +115,7 @@ class Theme extends AbstractTheme
                 return $document::pop()->setContent($html);
             }
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage("Rendering particle {$id}", 'debug');
             }
 

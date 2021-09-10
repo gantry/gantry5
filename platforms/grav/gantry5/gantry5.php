@@ -171,7 +171,7 @@ class Gantry5Plugin extends Plugin
         ]);
         }
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage('Inside Gantry administration');
         }
     }
@@ -264,7 +264,7 @@ class Gantry5Plugin extends Plugin
         // Initialize particle AJAX.
         $this->initializeApi();
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage("Gantry theme {$theme->name} selected");
         }
     }
@@ -329,7 +329,7 @@ class Gantry5Plugin extends Plugin
             );
             $page->slug('particle');
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage("AJAX request for {$id}");
             }
 
@@ -427,14 +427,14 @@ class Gantry5Plugin extends Plugin
 
         // Set page to offline.
         if ($global->get('offline', 0)) {
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Site is Offline!');
             }
 
             /** @var UserInterface $user */
             $user = $this->grav['user'];
             if (empty($user->authenticated && $user->authorize('site.login'))) {
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::addMessage('Displaying Offline Page');
                 }
 
@@ -459,7 +459,7 @@ class Gantry5Plugin extends Plugin
      */
     public function getMaintenancePage(Event $event)
     {
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage('Displaying Maintenance Page');
         }
 
@@ -492,7 +492,7 @@ class Gantry5Plugin extends Plugin
         $header = $page->header();
         if (!empty($header->gantry['outline'])) {
             $this->outline = $header->gantry['outline'];
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage("Current page forces outline {$this->outline} to be used");
             }
         } elseif ($page->name() === 'notfound.md') {
@@ -500,7 +500,7 @@ class Gantry5Plugin extends Plugin
         }
 
         if (!$this->outline) {
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Selecting outline (rules, matches, scores):');
                 Debugger::addMessage($assignments->getPage());
                 Debugger::addMessage($assignments->matches());
@@ -513,7 +513,7 @@ class Gantry5Plugin extends Plugin
         $theme->setLayout($this->outline);
         $this->setPreset();
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             Debugger::setLocator($locator);
@@ -560,7 +560,7 @@ class Gantry5Plugin extends Plugin
             $event->page = $page;
             $event->stopPropagation();
         } else {
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Page not found');
             }
             $this->outline = '_error';
@@ -616,7 +616,7 @@ class Gantry5Plugin extends Plugin
 
         if ($preset) {
             $theme->setPreset($preset);
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 $preset = $theme->preset();
                 if ($preset) {
                     Debugger::addMessage("Using preset {$preset}");

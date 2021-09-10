@@ -240,7 +240,7 @@ abstract class Gantry extends Container
     {
         $instance = new static();
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             $instance['debugger'] = Debugger::instance();
         }
 
@@ -297,7 +297,7 @@ abstract class Gantry extends Container
 
         // @deprecated 5.3
         $instance['configurations'] = $instance->factory(static function ($c) {
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Depredated call: gantry.configurations');
             }
 

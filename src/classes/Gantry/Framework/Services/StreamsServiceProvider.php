@@ -49,7 +49,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             $streams = new Streams($locator);
             $streams->add($schemes);
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::setLocator($locator);
             }
 

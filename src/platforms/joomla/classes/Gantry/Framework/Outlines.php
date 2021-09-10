@@ -62,7 +62,7 @@ class Outlines extends OutlineCollection
         $preset = $template->params->get('preset', 'default');
         $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : null);
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage('Template Style:' . $template);
         }
 

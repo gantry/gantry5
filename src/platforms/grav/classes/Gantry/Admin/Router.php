@@ -158,7 +158,7 @@ class Router extends BaseRouter
     protected function send(Response $response)
     {
         // Add missing translations to debugbar.
-//        if (GANTRY_DEBUGGER) {
+//        if (\GANTRY_DEBUGGER) {
 //            Debugger::addCollector(new ConfigCollector(Gantry::instance()['translator']->untranslated(), 'Untranslated'));
 //        }
 

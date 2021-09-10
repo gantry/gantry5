@@ -49,7 +49,7 @@ class AssignmentsStyle implements AssignmentsInterface
             $outline = $template->params->get('configuration', !empty($template->id) ? $template->id : $template->params->get('preset', null));
 
             if (JDEBUG) {
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::addMessage('Template Style:', 'debug');
                     Debugger::addMessage($template, 'debug');
                 }

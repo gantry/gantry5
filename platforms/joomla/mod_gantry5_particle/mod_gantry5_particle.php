@@ -34,7 +34,7 @@ include_once __DIR__ . '/helper.php';
 
 $gantry = Gantry::instance();
 
-if (GANTRY_DEBUGGER) {
+if (\GANTRY_DEBUGGER) {
     Debugger::startTimer("module-{$module->id}", "Rendering Particle Module #{$module->id}");
 }
 
@@ -61,6 +61,6 @@ $document->addBlock($block);
 
 echo $block->toString();
 
-if (GANTRY_DEBUGGER) {
+if (\GANTRY_DEBUGGER) {
     Debugger::stopTimer("module-{$module->id}");
 }

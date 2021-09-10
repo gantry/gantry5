@@ -157,7 +157,7 @@ class Theme extends AbstractTheme
         $assignments = new Assignments();
         $selected = $assignments->select();
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage('Selecting outline (rules, matches, scores):', 'debug');
             Debugger::addMessage($assignments->getPage(), 'debug');
             Debugger::addMessage($assignments->matches(), 'debug');

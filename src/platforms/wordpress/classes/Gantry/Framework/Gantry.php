@@ -69,13 +69,13 @@ class Gantry extends Base\Gantry
 
         if (class_exists('TimberHelper')) {
             // Using Timber plugin.
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Using Timber Plugin v' . Timber::$version);
             }
         } else {
             // Using composer version of Timber; Initialize it.
             new Timber;
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 Debugger::addMessage('Using Timber Library v' . Timber::$version);
             }
         }

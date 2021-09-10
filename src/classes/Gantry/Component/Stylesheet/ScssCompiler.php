@@ -153,7 +153,7 @@ class ScssCompiler extends CssCompiler
         if ($warnings) {
             $this->warnings[$in] = explode("\n", $warnings);
 
-            if (GANTRY_DEBUGGER) {
+            if (\GANTRY_DEBUGGER) {
                 foreach ($this->warnings[$in] as $warning) {
                     Debugger::addMessage("{$in}: {$warning}", 'warning');
                 }

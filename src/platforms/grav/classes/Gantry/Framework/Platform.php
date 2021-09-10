@@ -186,7 +186,7 @@ class Platform extends BasePlatform
             if (is_array($assignments) && !in_array($outline, ['_error', '_offline'])) {
                 // TODO: move Assignments to DI to speed it up.
                 $matches = (new Assignments())->matches(['test' => $assignments]);
-                if (GANTRY_DEBUGGER) {
+                if (\GANTRY_DEBUGGER) {
                     Debugger::addMessage("Module assignments for '{$module['id']}' (rules, matches):", 'debug');
                     Debugger::addMessage($assignments, 'debug');
                     Debugger::addMessage(isset($matches['test']) ? $matches['test'] : [], 'debug');
@@ -199,7 +199,7 @@ class Platform extends BasePlatform
             }
         }
 
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage("Rendering Gantry module '{$module['id']}'", 'info');
         }
 

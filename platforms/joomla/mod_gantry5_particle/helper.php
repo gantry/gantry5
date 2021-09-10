@@ -100,7 +100,7 @@ class ModGantry5ParticleHelper
      */
     public static function render($module, $params)
     {
-        if (GANTRY_DEBUGGER) {
+        if (\GANTRY_DEBUGGER) {
             Debugger::addMessage("Particle Module #{$module->id} was not cached");
         }
 
