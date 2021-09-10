@@ -23,7 +23,6 @@ use Gantry\Joomla\StyleHelper;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Version;
 use Joomla\Registry\Registry;
 use RocketTheme\Toolbox\Event\Event;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
@@ -282,14 +281,16 @@ class EventListener implements EventSubscriberInterface
                 'menu_show' => (int)$item['enabled'],
             ];
             foreach ($options as $var => $value) {
-                if ($params->get($var) !== $value) {
+                $orig_value = $params->get($var);
+                if ($orig_value === null && $value === '') {
+                } elseif ($orig_value !== $value) {
                     $params->set($var, $value);
                     $modified = true;
                 }
             }
 
             // Gantry params.
-            $modified = $modified || Menu::updateJParams($params, $item);
+            $modified = Menu::updateJParams($params, $item) || $modified; // Keep the order!
             if ($modified && $gantry->authorize('menu.edit')) {
                 $table->params = (string) $params;
                 if (!$table->check() || !$table->store()) {

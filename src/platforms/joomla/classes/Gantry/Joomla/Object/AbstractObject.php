@@ -456,8 +456,6 @@ abstract class AbstractObject extends \JObject
         $db->setQuery($query);
 
         /** @var Object[] $items */
-        // Workaround for Joomla 4 bug in  mysqli engine.
-        //$items = (array) $db->loadObjectList('id', static::class);
         $items = [];
         foreach ($db->loadAssocList('id') as $id => $data) {
             $items[$id] = new static($data);
