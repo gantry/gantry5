@@ -102,10 +102,14 @@
                 <exclude name="**/ext/"/>
                 <exclude name="**/bin/"/>
                 <exclude name="**/site/"/>
-                <exclude name="**/.github"/>
+                <exclude name="**/.github/"/>
+                <exclude name="**/.mailmap"/>
                 <exclude name="**/.*.yml"/>
                 <exclude name="**/.editor*"/>
+                <exclude name="**/phpcs.xml*"/>
+                <exclude name="**/.php_cs*"/>
                 <exclude name="**/phpunit.xml*"/>
+                <exclude name="**/phpunit-nocover.xml"/>
                 <exclude name="**/*.md"/>
                 <exclude name="**/*.rst"/>
                 <exclude name="**/*.sh"/>
