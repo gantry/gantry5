@@ -184,11 +184,13 @@ abstract class CssCompiler implements CssCompilerInterface
 
     /**
      * @param string $in
-     * @param callable $variables
+     * @param callable $variablesCallable
      * @return bool
      */
-    public function needsCompile($in, $variables)
+    public function needsCompile($in, $variablesCallable)
     {
+        /** @var array $variables */
+        $variables = $variablesCallable();
         $gantry = static::gantry();
 
         /** @var UniformResourceLocator $locator */
@@ -199,7 +201,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if CSS file exists at all.
         if (!$path) {
-            $this->setVariables($variables());
+            $this->setVariables($variables);
 
             return true;
         }
@@ -211,13 +213,13 @@ abstract class CssCompiler implements CssCompilerInterface
             fclose($handle);
 
             if ($contents === '/* GANTRY5 DEVELOPMENT MODE ENABLED.') {
-                $this->setVariables($variables());
+                $this->setVariables($variables);
                 return true;
             }
 
             // Compare checksum comment in the file.
             if ($contents !== $this->checksum()) {
-                $this->setVariables($variables());
+                $this->setVariables($variables);
                 return true;
             }
 
@@ -230,7 +232,7 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if meta file exists.
         if (!$metaFile->exists()) {
-            $this->setVariables($variables());
+            $this->setVariables($variables);
             return true;
         }
 
@@ -239,17 +241,17 @@ abstract class CssCompiler implements CssCompilerInterface
 
         // Check if filename in meta file matches.
         if (empty($content['file']) || $content['file'] !== $out) {
-            $this->setVariables($variables());
+            $this->setVariables($variables);
             return true;
         }
 
         // Check if meta timestamp matches to CSS file.
         if (filemtime($path) !== $content['timestamp']) {
-            $this->setVariables($variables());
+            $this->setVariables($variables);
             return true;
         }
 
-        $this->setVariables($variables());
+        $this->setVariables($variables);
 
         // Check if variables have been changed.
         $oldVariables = isset($content['variables']) ? $content['variables'] : [];

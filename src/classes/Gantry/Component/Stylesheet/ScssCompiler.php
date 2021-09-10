@@ -253,12 +253,16 @@ WARN;
     public function getVariables($encoded = false)
     {
         $variables = $this->variables;
-
-        foreach($variables as &$value) {
-            $value = ValueConverter::parseValue($value);
+        if (!$encoded) {
+            return $variables;
         }
 
-        return $variables;
+        $list = [];
+        foreach($variables as $key => $value) {
+            $list[$key] = ValueConverter::parseValue($value);
+        }
+
+        return $list;
     }
 
     /**
@@ -305,6 +309,11 @@ WARN;
      */
     protected function getIncludedFiles()
     {
-        return $this->result->getIncludedFiles();
+        $list = [];
+        foreach ($this->result->getIncludedFiles() as $filename) {
+            $list[$filename] = filemtime($filename);
+        }
+
+        return $list;
     }
 }
