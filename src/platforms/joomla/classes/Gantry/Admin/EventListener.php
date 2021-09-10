@@ -290,7 +290,7 @@ class EventListener implements EventSubscriberInterface
             }
 
             // Gantry params.
-            $modified = Menu::updateJParams($params, $item) || $modified; // Keep the order!
+            $modified = Menu::updateJParams($params, $item) | $modified;
             if ($modified && $gantry->authorize('menu.edit')) {
                 $table->params = (string) $params;
                 if (!$table->check() || !$table->store()) {
