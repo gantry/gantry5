@@ -43,11 +43,15 @@ class Menu extends AbstractMenu
 
     public function __construct()
     {
-        $this->application = CMSApplication::getInstance('site');
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+        if ($app->isClient('administrator')) {
+            $this->application = CMSApplication::getInstance('site');
+        } else {
+            $this->application = $app;
+        }
 
         if (Multilanguage::isEnabled()) {
-            /** @var CMSApplication $app */
-            $app = Factory::getApplication();
             $language = $app->getLanguage();
             $tag = $language->getTag();
         } else {
@@ -227,8 +231,7 @@ class Menu extends AbstractMenu
     public function isActive($item)
     {
         $tree = $this->base->tree;
-
-        if (\in_array($item->id, $tree, true)) {
+        if (\in_array($item->id, $tree, false)) {
             return true;
         }
 
@@ -239,7 +242,7 @@ class Menu extends AbstractMenu
                 return (bool) $this->params['highlightAlias'];
             }
 
-            if (\in_array($aliasToId, $tree, true)) {
+            if (\in_array($aliasToId, $tree, false)) {
                 return (bool) $this->params['highlightParentAlias'];
             }
         }
@@ -712,7 +715,7 @@ class Menu extends AbstractMenu
             $level = $item->level;
             if (($start && $start > $level)
                 || ($end && $level > $end)
-                || ($start > 1 && !in_array($item->tree[$start - 2], $tree, true))) {
+                || ($start > 1 && !in_array($item->tree[$start - 2], $tree, false))) {
                 continue;
             }
 
