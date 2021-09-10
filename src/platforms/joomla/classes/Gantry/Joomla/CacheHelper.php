@@ -24,22 +24,36 @@ class CacheHelper
 {
     public static function cleanTemplates()
     {
-        self::cleanByType('com_templates');
-        self::cleanByType('_system');
+        static::cleanSystem();
+        self::cleanByType('com_templates', 0);
+        self::cleanByType('com_templates', 1);
+    }
+
+    public static function cleanModules()
+    {
+        static::cleanSystem();
+        self::cleanByType('com_modules', 0);
     }
 
     public static function cleanMenu()
     {
-        self::cleanByType('mod_menu');
-        self::cleanByType('_system');
+        static::cleanSystem();
+        self::cleanByType('mod_menu', 0);
+        self::cleanByType('com_menus', 0);
+        self::cleanByType('com_menus', 1);
     }
 
     public static function cleanPlugin()
     {
-        self::cleanByType('_system', 0);
-        self::cleanByType('_system', 1);
+        static::cleanSystem();
         self::cleanByType('com_plugins', 0);
         self::cleanByType('com_plugins', 1);
+    }
+
+    public static function cleanSystem()
+    {
+        self::cleanByType('_system', 0);
+        self::cleanByType('_system', 1);
     }
 
     /**

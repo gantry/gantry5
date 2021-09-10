@@ -38,6 +38,7 @@
     1. [](#bugfix)
         - Fixed dropdown menu of Menu Manager listing items by id instead of alphabetical order (#2816)
         - Fixed Sample Data error during installation (#2790)
+        - Fixed clearing menu cache with the latest Joomla versions
 1. [WordPress](#wordpress)
     1. [](#new)
         - Updated minimum requirement to WordPress 5.2
