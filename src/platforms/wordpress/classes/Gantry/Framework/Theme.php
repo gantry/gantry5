@@ -183,7 +183,7 @@ class Theme extends AbstractTheme
             \add_action('load-widgets.php',
                 function() {
                     \add_action('admin_notices', function() {
-                        echo '<div class="error"><p>' . \__('No widget positions have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" rel="noopener" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget positions.', 'gantry5') . '</p></div>';
+                        echo '<div class="error"><p>' . \__('No widget blocks have been defined. Please add some in Gantry 5 Layout Manger or read <a target="_blank" rel="noopener" href="http://docs.gantry.org/gantry5/particles/position">documentation</a> on how to create widget blocks.', 'gantry5') . '</p></div>';
                     });
                 });
         } else {

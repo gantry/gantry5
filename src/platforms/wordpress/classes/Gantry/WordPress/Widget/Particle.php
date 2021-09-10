@@ -40,7 +40,7 @@ class Particle extends \WP_Widget
             'particle_widget',
             __( 'Gantry 5 Particle', 'gantry5' ),
             [
-                'description' => __( 'Displays Gantry 5 particle instance in a widget position.', 'gantry5' ),
+                'description' => __( 'Displays Gantry 5 particle instance in a widget block.', 'gantry5' ),
                 'gantry5' => true
             ]
         );
