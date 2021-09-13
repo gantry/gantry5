@@ -44,7 +44,7 @@
         - Updated minimum requirement to WordPress 5.2
         - Store menu item meta data in database instead of menu YAML file
         - Use `Widget Block` instead of `Widget Position`
-        - **DEPRECATED** Widgets in layout manager
+        - **DEPRECATED** Widgets in layout manager, use new `Widget Blocks` instead
     1. [](#improved)
         - Many WordPress menu system enhancements (#726)
     1. [](#bugfix)
