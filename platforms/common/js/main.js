@@ -7684,7 +7684,7 @@ var $             = require('../../utils/elements.utils'),
     getAjaxURL    = require('../../utils/get-ajax-url').global,
     translate     = require('../../utils/translate'),
     Cookie        = require('../../utils/cookie'),
-    dropzone      = require('dropzone');
+    dropzone      = require('dropzone').default;
 
 var FilePicker = new prime({
     constructor: function(element) {
