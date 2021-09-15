@@ -187,6 +187,9 @@ class Gantry5Plugin extends Plugin
             return;
         }
 
+        // Setup Gantry 5 Framework or throw exception.
+        Loader::setup();
+
         $gantry = Gantry::instance();
 
         if (!isset($gantry['theme'])) {
