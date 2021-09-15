@@ -14,8 +14,8 @@ form:
 
     key:
       type: input.text
-      label: Block Id
-      description: Widget block id.
+      label: Block Key
+      description: Widget key id.
       pattern: '[a-z0-9-]+'
       overridable: false
 
