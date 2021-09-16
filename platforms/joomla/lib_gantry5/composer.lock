@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e69f7681ea8d96a42685780f9e29cb3f",
+    "content-hash": "33bd15f344287bbfbd155a3441bf87db",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -408,16 +408,16 @@
         },
         {
             "name": "scssphp/scssphp",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "b83594e2323c5d6e80785df3f91b9d1d32aad530"
+                "reference": "797f76527c72bc4fe4ee32a94c4732e8d94517ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/b83594e2323c5d6e80785df3f91b9d1d32aad530",
-                "reference": "b83594e2323c5d6e80785df3f91b9d1d32aad530",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/797f76527c72bc4fe4ee32a94c4732e8d94517ae",
+                "reference": "797f76527c72bc4fe4ee32a94c4732e8d94517ae",
                 "shasum": ""
             },
             "require": {
@@ -475,9 +475,9 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.6.0"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.7.0"
             },
-            "time": "2021-07-02T16:28:10+00:00"
+            "time": "2021-09-15T21:57:30+00:00"
         },
         {
             "name": "symfony/event-dispatcher",

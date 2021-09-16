@@ -14,11 +14,14 @@
 
 namespace Gantry\Component\Stylesheet;
 
+use Composer\Autoload\ClassLoader;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Stylesheet\Scss\Functions;
 use Gantry\Debugger;
 use Gantry\Framework\Document;
 use Gantry\Framework\Gantry;
+use Gantry\Framework\Theme;
+use Grav\Common\Plugins;
 use ScssPhp\ScssPhp\CompilationResult;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Exception\CompilerException;
@@ -28,6 +31,7 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use ScssPhp\ScssPhp\Logger\StreamLogger;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
+use ScssPhp\ScssPhp\Version;
 
 /**
  * Class ScssCompiler
@@ -44,12 +48,42 @@ class ScssCompiler extends CssCompiler
     protected $result;
     /** @var Functions */
     protected $functions;
+    protected $compatMode = false;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
+        if (!class_exists(Compiler::class, false)) {
+            /** @var ClassLoader $loader */
+            $loader = static::gantry()['loader'];
+
+            /** @var Theme $theme */
+            $theme = static::gantry()['theme'];
+            $config = $theme->configuration();
+            $version = (string)(isset($config['dependencies']['gantry']) ? $config['dependencies']['gantry'] : '5.0');
+            if (version_compare($version, '5.5', '<')) {
+                $this->compatMode = true;
+                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');
+            } else {
+                $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/vendor/scssphp/scssphp/src');
+            }
+
+            // Do not use SCSS compiler from admin.
+            $adminPlugin = Plugins::getPlugin('admin');
+            if ($adminPlugin && method_exists($adminPlugin, 'getAutoloader')) {
+                $adminLoader = $adminPlugin->getAutoloader();
+                if ($adminLoader) {
+                    $adminLoader->setPsr4('ScssPhp\\ScssPhp\\', '');
+                }
+            }
+        }
+
+        if (\GANTRY_DEBUGGER) {
+            Debugger::addMessage('Using SCSS PHP library v' . Version::VERSION);
+        }
+
         parent::__construct();
 
         $this->functions = new Functions();

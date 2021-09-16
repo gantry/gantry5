@@ -10,7 +10,7 @@
         "pimple/pimple": "~3.2",
         "filp/whoops": "~2.5",
         "rockettheme/toolbox": "~1.5",
-        "scssphp/scssphp": "~1.4",
+        "scssphp/scssphp": "~1.7",
         "erusev/parsedown-extra": "~0.7",
         "twig/twig": "~1.42",
         "timber/timber": "^1.14"

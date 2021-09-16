@@ -1,0 +1,15 @@
+{
+    "name": "gantry/grav-compat",
+    "description": "Gantry Framework Library (compat)",
+    "license": "GPLv2",
+
+    "require": {
+        "php": ">=7.3.6",
+        "scssphp/scssphp": "1.6.0"
+    },
+    "config": {
+        "platform": {
+            "php": "7.3.6"
+        }
+    }
+}

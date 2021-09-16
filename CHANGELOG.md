@@ -5,7 +5,8 @@
     1. [](#new)
         - Updated minimum requirement to PHP 5.6.20, added PHP 8 support
         - Updated Symfony Components from v2.8 to v3.4
-        - Updated SCSS compiler to v1.6
+        - Updated SCSS compiler to v1.6 and v1.7
+          - Themes requiring Gantry 5.5 will use the newer version of SCSS compiler
           - Much faster and has far better compatibility to the latest SCSS specs
           - More strict and fails on badly written SCSS where the old version did not
         - Updated Bourbon SCSS library to v4.3.4 (#2835)

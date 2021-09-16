@@ -12,6 +12,7 @@ chdir('platforms');
 
 echo "# Running composer install for Grav\n";
 composer_install('grav/gantry5', true);
+composer_install('grav/gantry5/compat', false);
 
 echo "# Running composer install for Joomla\n";
 composer_install('joomla/lib_gantry5', true);

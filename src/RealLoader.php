@@ -72,7 +72,7 @@ abstract class RealLoader
         if (defined('JVERSION') && defined('JPATH_ROOT')) {
             define('GANTRY5_PLATFORM', 'joomla');
             define('GANTRY5_ROOT', JPATH_ROOT);
-            $lib = JPATH_ROOT . '/libraries/gantry5';
+            define('GANTRY5_LIBRARY', JPATH_ROOT . '/libraries/gantry5');
         } elseif (defined('WP_DEBUG') && defined('ABSPATH') && defined('WP_CONTENT_DIR')) {
             define('GANTRY5_PLATFORM', 'wordpress');
             if (defined('CONTENT_DIR') && class_exists('Env')) {
@@ -82,16 +82,18 @@ abstract class RealLoader
                 // Plain WP support.
                 define('GANTRY5_ROOT', dirname(WP_CONTENT_DIR));
             }
-            $lib = WP_CONTENT_DIR . '/plugins/gantry5';
+            define('GANTRY5_LIBRARY', WP_CONTENT_DIR . '/plugins/gantry5');
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
+            define('GANTRY5_LIBRARY', 'plugin://gantry5');
 
             return \Grav\Common\Grav::instance()['loader'];
         } else {
             throw new \RuntimeException('Gantry: CMS not detected!');
         }
 
+        $lib = GANTRY5_LIBRARY;
         $autoload = "{$lib}/vendor/autoload.php";
 
         // Initialize auto-loading.
@@ -107,6 +109,9 @@ abstract class RealLoader
             $loader->setPsr4('Twig\\', "{$lib}/compat/vendor/twig/twig/src");
             $loader->set('Twig_', "{$lib}/compat/vendor/twig/twig/lib");
         }
+
+        // Skip registering SCSS compiler until it's needed.
+        $loader->setPsr4('ScssPhp\\ScssPhp\\', '');
 
         // Support for development environments.
         if (file_exists($lib . '/src/platforms')) {
