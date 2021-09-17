@@ -189,7 +189,11 @@ class ScssCompiler extends CssCompiler
 
             if (\GANTRY_DEBUGGER) {
                 foreach ($this->warnings[$in] as $warning) {
-                    Debugger::addMessage("{$in}: {$warning}", 'warning');
+                    if (strpos($warning, '[Bourbon] [Deprecation]') === false) {
+                        Debugger::addMessage("{$in}: {$warning}", 'warning');
+                    } elseif (!$this->compatMode) {
+                        Debugger::addMessage("{$in}: {$warning}", 'deprecated');
+                    }
                 }
             }
         }
