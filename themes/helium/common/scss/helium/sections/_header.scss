@@ -30,10 +30,10 @@
     }
 
     a {
-        color: fadeout($header-text-color, 40%);
+        color: fade-out($header-text-color, 0.4);
 
         &:hover {
-            color: fadeout($header-text-color, 20%);
+            color: fade-out($header-text-color, 0.2);
         }
     }
 

@@ -479,7 +479,7 @@
             }
 
             &:hover {
-                background: fadeout($white, 80%);
+                background: fade-out($white, 0.8);
                 border-color: transparent;
             }
         }

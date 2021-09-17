@@ -65,7 +65,7 @@
         margin-right: 3px;
         padding: $content-padding ($content-padding * 2);
         border-radius: $core-border-radius $core-border-radius 0 0;
-        background: fadeout($accent-color-1, 85%);
+        background: fade-out($accent-color-1, 0.85);
 
         @include breakpoint(mobile-only) {
             border-radius: 0;

@@ -20,7 +20,7 @@
             // Social Particle
             .g-social {
                 a {
-                    color: fadeout($white, 50%);
+                    color: fade-out($white, 0.5);
 
                     @include breakpoint(mobile-only) {
                         color: inherit;
@@ -56,10 +56,10 @@
                 &.button-outline {
                     background: transparent;
                     color: $white;
-                    border-color: fadeout($white, 50%);
+                    border-color: fade-out($white, 0.5);
 
                     &:hover, &:active, &:focus {
-                        background: fadeout($white, 50%);
+                        background: fade-out($white, 0.5);
                         border-color: transparent;
                     }
                 }
@@ -101,7 +101,7 @@
                             font-size: 4.125rem;
                             line-height: 6.5rem;
                             margin: 0 auto 20px;
-                            border: 8px solid fadeout($base-border-color, 60%);
+                            border: 8px solid fade-out($base-border-color, 0.6);
                             border-radius: 50%;
                         }
 
@@ -114,7 +114,7 @@
 
                         .card-subtitle {
                             display: block;
-                            color: fadeout($base-text-color, 50%);
+                            color: fade-out($base-text-color, 0.5);
                             margin-bottom: 1.5rem;
                             font-weight: $font-weight-light;
 
@@ -124,7 +124,7 @@
                                 height: 1px;
                                 margin: 30px auto 0;
                                 content: "";
-                                background-color: fadeout($base-border-color, 20%);
+                                background-color: fade-out($base-border-color, 0.2);
                             }
                         }
                     }
@@ -149,7 +149,7 @@
                         width: 2.5rem;
                         height: 1px;
                         content: "";
-                        background-color: fadeout($white, 75%);
+                        background-color: fade-out($white, 0.75);
                     }
                 }
             }

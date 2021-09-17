@@ -86,10 +86,10 @@
 
                 &:hover {
                     > .g-menu-item-container {
-                        color: fadeout($navigation-text-color, 30%);
+                        color: fade-out($navigation-text-color, 0.3);
 
                         > .g-selected {
-                            color: fadeout($navigation-text-color, 30%);
+                            color: fade-out($navigation-text-color, 0.3);
                         }
                     }
                 }
@@ -97,11 +97,11 @@
                 &.active {
                     > .g-menu-item-container {
                         > .g-menu-item-content {
-                            box-shadow: 0 2px 0 fadeout($navigation-text-color, 80%);
+                            box-shadow: 0 2px 0 fade-out($navigation-text-color, 0.8);
                         }
 
                         > .g-selected {
-                            box-shadow: 0 2px 0 fadeout($navigation-text-color, 80%);
+                            box-shadow: 0 2px 0 fade-out($navigation-text-color, 0.8);
                         }
                     }
                 }
@@ -110,7 +110,7 @@
 
         .g-dropdown {
             background: lighten($navigation-background, 2%);
-            border: 1px solid fadeout($navigation-text-color, 80%);
+            border: 1px solid fade-out($navigation-text-color, 0.8);
             border-radius: $border-radius;
 
             > .g-dropdown-column {
@@ -147,10 +147,10 @@
 
                 &:not(:last-child) {
                     > .g-menu-item-container {
-                        border-bottom: 1px solid fadeout($navigation-text-color, 80%);
+                        border-bottom: 1px solid fade-out($navigation-text-color, 0.8);
 
                         > .g-selected {
-                            border-bottom: 1px solid fadeout($navigation-text-color, 80%);
+                            border-bottom: 1px solid fade-out($navigation-text-color, 0.8);
                         }
                     }
                 }

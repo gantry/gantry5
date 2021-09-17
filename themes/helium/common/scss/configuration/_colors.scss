@@ -85,4 +85,4 @@ $border-color-focus:            $accent-color-1;
 $border-color-light:            rgba(0, 0, 0, 0.1);
 
 // Shadows
-$base-box-shadow:               0 0 4px fadeout($accent-color-1, 50%);
+$base-box-shadow:               0 0 4px fade-out($accent-color-1, 0.5);

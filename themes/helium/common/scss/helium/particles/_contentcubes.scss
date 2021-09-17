@@ -41,7 +41,7 @@
                 width: 100%;
                 height: 100%;
                 content: "";
-                background-color: fadeout($white, 25%);
+                background-color: fade-out($white, 0.25);
                 opacity: 0.6;
                 @include transition(opacity 0.3s);
             }
@@ -120,7 +120,7 @@
                     margin-right: 0.5rem;
                     margin-bottom: 0.5rem;
                     padding: 0.35rem 0;
-                    color: fadeout($white, 40%);
+                    color: fade-out($white, 0.4);
                     text-transform: uppercase;
                     font-size: $core-font-size - 0.1875;
                     font-weight: $font-weight-semibold;
