@@ -124,7 +124,16 @@ abstract class AbstractTheme
             $global = $gantry['global'];
 
             $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
-            $cache = $cachePath ? new TwigCacheFilesystem($cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION) : null;
+            if ($cachePath) {
+                if (Environment::VERSION_ID > 3) {
+                    // Twig 3 support.
+                    $cache = new FilesystemCache($cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION);
+                } else {
+                    $cache = new TwigCacheFilesystem($cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION);
+                }
+            } else {
+                $cache = null;
+            }
             $debug = $gantry->debug();
             $production = (bool) $global->get('production', 1);
             $loader = new FilesystemLoader();
