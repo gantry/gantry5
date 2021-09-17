@@ -14,6 +14,9 @@ Joomla! 4 has made some changes to the templates, which means that also Gantry T
   (please copy or update `install.php` in your theme!)
 - Update page templates to work in Joomla! 4.0
   (please copy or update `component.php`, `error.php`, `index.php`, `offline.php` in your theme!)
+- Update SCSS files:
+  - `fadeout($x, n%)` to `fade-out($x, 0.n)`
+  - `transparentize($x, n%)` to `transparentize($x, 0.n)`
 
 ## JavaScript libraries
 
