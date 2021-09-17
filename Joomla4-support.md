@@ -25,3 +25,5 @@ Note that Joomla 4 removes support for:
 - jQuery UI
 - Mootools
 - Bootstrap 2.2
+
+Those still work, but I recommend those to be removed from the themes.

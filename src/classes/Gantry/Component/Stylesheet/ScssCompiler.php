@@ -70,8 +70,8 @@ class ScssCompiler extends CssCompiler
                 $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/vendor/scssphp/scssphp/src');
             }
 
-            // Do not use SCSS compiler from admin.
-            $adminPlugin = Plugins::getPlugin('admin');
+            // Do not use SCSS compiler from Grav Admin.
+            $adminPlugin = class_exists(Plugins::class) ? Plugins::getPlugin('admin') : null;
             if ($adminPlugin && method_exists($adminPlugin, 'getAutoloader')) {
                 $adminLoader = $adminPlugin->getAutoloader();
                 if ($adminLoader) {
