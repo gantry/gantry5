@@ -62,7 +62,7 @@ class ScssCompiler extends CssCompiler
             /** @var Theme $theme */
             $theme = static::gantry()['theme'];
             $config = $theme->configuration();
-            $version = (string)(isset($config['dependencies']['gantry']) ? $config['dependencies']['gantry'] : '5.0');
+            $version = preg_replace('/[^\d.]+/', '', (string)(isset($config['dependencies']['gantry']) ? $config['dependencies']['gantry'] : '5.0'));
             if (version_compare($version, '5.5', '<')) {
                 $this->compatMode = true;
                 $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');

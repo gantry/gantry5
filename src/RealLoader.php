@@ -84,11 +84,11 @@ abstract class RealLoader
             }
             define('GANTRY5_LIBRARY', WP_CONTENT_DIR . '/plugins/gantry5');
         } elseif (defined('GRAV_VERSION') && defined('ROOT_DIR')) {
+            /** @var \RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator $locator */
+            $locator = \Grav\Common\Grav::instance()['locator'];
             define('GANTRY5_PLATFORM', 'grav');
             define('GANTRY5_ROOT', rtrim(ROOT_DIR, '/'));
-            define('GANTRY5_LIBRARY', 'plugin://gantry5');
-
-            return \Grav\Common\Grav::instance()['loader'];
+            define('GANTRY5_LIBRARY', $locator('plugin://gantry5'));
         } else {
             throw new \RuntimeException('Gantry: CMS not detected!');
         }
