@@ -36,7 +36,7 @@ jobs:
         run: composer build-dev
       - name: Upload files to S3
         if: success()
-        uses: ochanje210/s3-upload-action@v1.0.0
+        uses: ochanje210/simple-s3-upload-action@v1.0.0
         with:
           AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY_SECURE}}
