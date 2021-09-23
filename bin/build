@@ -30,23 +30,26 @@ foreach ($argv as $arg) {
 
 $base = dirname(__DIR__);
 if (false === $hasVersion) {
+    $file = fopen("{$base}/CHANGELOG.md",'rb');
+    if (preg_match('/^# (\d\.\d+.\d+(-[a-z0-9.]+)?)\s*$/i', fgets($file), $matches) !== 1) {
+        echo 'First line of CHANGELOG.md has wrong Gantry version format, aborting';
+        return 1;
+    }
+    $version = $matches[1];
+
     if (false === $isProd && is_file("{$base}/.git/HEAD")) {
         $head = preg_replace('!^ref: (\S+)\s+$!m', '\\1', file_get_contents("{$base}/.git/HEAD"));
-        $version = substr(is_file("{$base}/.git/{$head}") ? file_get_contents("{$base}/.git/{$head}") : '', 0, 8);
         $branch = basename($head);
+        $commit = substr(is_file("{$base}/.git/{$head}") ? file_get_contents("{$base}/.git/{$head}") : '', 0, 8);
         if ($branch !== 'develop') {
-            $branch .= '-dev';
+            $branch = 'dev-' . $branch;
         }
-        $version = 'dev-' . $version;
+        if (!strpos($version, '-dev')) {
+            $version .= '-dev';
+        }
+        $version .= '-' . $commit;
 
         $argv[] = '-Dstr.fileversion=_' . $branch;
-    } else {
-        $file = fopen("{$base}/CHANGELOG.md",'rb');
-        if (preg_match('/^# (\d\.\d+.\d+(-[a-z0-9.]+)?)\s*$/i', fgets($file), $matches) !== 1) {
-            echo 'First line of CHANGELOG.md has wrong Gantry version format, aborting';
-            return 1;
-        }
-        $version = $matches[1];
     }
 
     $argv[] = '-Dxml.version=' . $version;
