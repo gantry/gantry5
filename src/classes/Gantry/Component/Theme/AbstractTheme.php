@@ -125,9 +125,11 @@ abstract class AbstractTheme
 
             $cachePath = $global->get('compile_twig', 1) ? $this->getCachePath('twig') : null;
             if ($cachePath) {
+                /** @phpstan-ignore-next-line */
                 if (Environment::VERSION_ID > 3) {
                     // Twig 3 support.
                     $cache = new FilesystemCache($cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION);
+                /** @phpstan-ignore-next-line */
                 } else {
                     $cache = new TwigCacheFilesystem($cachePath, FilesystemCache::FORCE_BYTECODE_INVALIDATION);
                 }

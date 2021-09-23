@@ -65,8 +65,10 @@ class ScssCompiler extends CssCompiler
             $version = preg_replace('/[^\d.]+/', '', (string)(isset($config['dependencies']['gantry']) ? $config['dependencies']['gantry'] : '5.0'));
             if (version_compare($version, '5.5', '<')) {
                 $this->compatMode = true;
+                /** @phpstan-ignore-next-line */
                 $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/compat/vendor/scssphp/scssphp/src');
             } else {
+                /** @phpstan-ignore-next-line */
                 $loader->setPsr4('ScssPhp\\ScssPhp\\', GANTRY5_LIBRARY . '/vendor/scssphp/scssphp/src');
             }
 

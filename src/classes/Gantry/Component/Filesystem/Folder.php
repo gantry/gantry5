@@ -95,6 +95,7 @@ abstract class Folder
         $pathParts[] = $lastPart;
         $path = str_repeat('../', count($baseParts)) . implode('/', $pathParts);
 
+        /** @phpstan-ignore-next-line */
         return '' === $path
             || '/' === $path[0]
             || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)

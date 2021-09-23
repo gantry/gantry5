@@ -39,7 +39,7 @@ use RocketTheme\Toolbox\Event\EventDispatcher;
  */
 abstract class Gantry extends Container
 {
-    /** @var static */
+    /** @var static|null */
     protected static $instance;
 
     /** @var mixed */

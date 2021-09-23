@@ -193,6 +193,13 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
     abstract public function getMenus();
 
     /**
+     * Return list of menus.
+     *
+     * @return array
+     */
+    abstract public function getMenuOptions();
+
+    /**
      * Return default menu.
      *
      * @return string|null
