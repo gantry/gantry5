@@ -2,11 +2,12 @@ name: Release Builds
 
 on:
   release:
+    ignore-forks: true
     types: [published]
 
 jobs:
   build:
-    if: "!github.event.release.prerelease"
+    if: "github.repository == 'gantry/gantry5' && !github.event.release.prerelease'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
