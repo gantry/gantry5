@@ -7,9 +7,7 @@ on:
     branches-ignore: [ master, main ]
 
 jobs:
-
   unit-tests:
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -19,7 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -29,29 +26,21 @@ jobs:
           coverage: none
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Install packages
         run: |
           sudo apt-get -y update -qq  < /dev/null > /dev/null
           sudo apt-get -y install -qq git zip < /dev/null > /dev/null
-
       - name: Get composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir -d bin/builder)"
-
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: bin/composer-install
-
       - name: Build Gantry packages
-        run: bin/build dev
-
+        run: composer build-dev
 #      - name: Run test suite
 #        run: vendor/bin/codecept run
 
