@@ -48,7 +48,11 @@
                         <div class="g-content">
                             <div class="g-array-item">
                                 {% if display.edit and article.edit %}
-                                    <a class="g-array-item-edit" href="{{ article.edit }}">{{ 'COM_CONTENT_FORM_EDIT_ARTICLE'|trans }}</a>
+                                    {% if not joomla.checkVersion('4.0') %}
+                                        <a class="g-array-item-edit" href="{{ article.edit }}">{{ 'COM_CONTENT_FORM_EDIT_ARTICLE'|trans }}</a>
+                                    {% else %}
+                                        <a class="g-array-item-edit" href="{{ article.edit }}" aria-describedby="editarticle-{{ article.id }}">{{ 'JGLOBAL_EDIT'|trans }}</a>
+                                    {% endif %}
                                 {% endif %}
                                 {% if display.image.enabled and article.images.image_intro or article.images.image_fulltext %}
                                     {% if article.images.image_intro and display.image.enabled == 'intro' or display.image.enabled == 'show' %}

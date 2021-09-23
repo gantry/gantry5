@@ -572,6 +572,18 @@ class Platform extends BasePlatform
     }
 
     /**
+     * @param string $layoutFile
+     * @param mixed $displayData
+     * @param string $basePath
+     * @param mixed $options
+     * @return string
+     */
+    public function layout($layoutFile, $displayData = null, $basePath = '', $options = null)
+    {
+        return LayoutHelper::render($layoutFile, $displayData, $basePath, $options);
+    }
+
+    /**
      * @return string
      */
     public function html()

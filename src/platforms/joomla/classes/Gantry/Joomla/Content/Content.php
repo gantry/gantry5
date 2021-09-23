@@ -18,9 +18,12 @@ use Gantry\Joomla\Object\AbstractObject;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\User\User;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Component\Content\Site\Model\ArticleModel;
 
 /**
  * Class Content
@@ -141,12 +144,12 @@ class Content extends AbstractObject
         if (version_compare(JVERSION, '4.0', '<')) {
             require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 
-            return Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+            return htmlspecialchars_decode(Route::_(\ContentHelperRoute::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
         }
 
         require_once JPATH_SITE . '/components/com_content/src/Helper/RouteHelper.php';
 
-        return Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false);
+        return htmlspecialchars_decode(Route::_(RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $category->id . ':' . $category->alias), false), ENT_COMPAT);
     }
 
     /**
@@ -160,7 +163,14 @@ class Content extends AbstractObject
         $asset = "com_content.article.{$this->id}";
 
         if ($user && ($user->authorise('core.edit', $asset) || $user->authorise('core.edit.own', $asset))) {
-            return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
+            if (version_compare(JVERSION, '4.0', '<')) {
+                return "index.php?option=com_content&task=article.edit&a_id={$this->id}&tmpl=component";
+            }
+
+            $contentUrl = RouteHelper::getArticleRoute($this->id . ':' . $this->alias, $this->catid);
+		    $url = $contentUrl . '&task=article.edit&a_id=' . $this->id;
+
+            return htmlspecialchars_decode(Route::_($url), ENT_COMPAT);
         }
 
         return false;
@@ -188,6 +198,38 @@ class Content extends AbstractObject
         $theme = Gantry::instance()['theme'];
 
         return $theme->compile($string, ['article' => $this]);
+    }
+
+    /**
+     * @param $config
+     * @return object
+     */
+    public function object($config = [])
+    {
+        $config += [
+            'ignore_request' => true
+        ];
+
+        $user = Factory::getUser();
+        $app = Factory::getApplication();
+        $params = $app->getParams();
+
+        $model = new ArticleModel($config);
+        $model->setState('article.id', $this->id);
+        $model->setState('list.offset', 0);
+        $model->setState('params', $params);
+
+        // If $pk is set then authorise on complete asset, else on component only
+        $asset = empty($this->id) ? 'com_content' : 'com_content.article.' . $this->id;
+        if ((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset)))
+        {
+            $model->setState('filter.published', ContentComponent::CONDITION_PUBLISHED);
+            $model->setState('filter.archived', ContentComponent::CONDITION_ARCHIVED);
+        }
+
+        $model->setState('filter.language', Multilanguage::isEnabled());
+
+        return $model->getItem($this->id);
     }
 
     /**
