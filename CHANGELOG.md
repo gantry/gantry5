@@ -22,6 +22,8 @@
         - Added menu target option for a Window without navigation (#2812)
         - Twig filter `|imagesize` no longer needs `|raw` filter in HTML output (#2825)
     1. [](#bugfix)
+        - Restricted Gantry Admin initialization to logged in admins
+        - Fixed hardcoded date format in `partials/blog_item.html.twig` template (#2783)
         - Fixed browser console errors on missing css map files
         - Fixed getting missing menu configuration
         - Fixed admin cookie timeouts for GDPR compliance (#2775)
@@ -65,14 +67,6 @@
 1. [Prime](#prime)
     1. [](#new)
         - Remove unmaintained standalone Prime environment
-
-# 5.4.38
-## mm/dd/2021
-
-1. [Grav](#grav)
-    1. [](#bugfix)
-        * Restricted Gantry Admin initialization to logged in admins
-        * Fixed hardcoded date format in `partials/blog_item.html.twig` template (#2783)
 
 # 5.4.37
 ## 01/25/2021
