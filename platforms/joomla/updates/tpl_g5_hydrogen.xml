@@ -12,7 +12,7 @@
 			<downloadurl type="full" format="zip">http://updates.gantry.org/download/@version@/joomla-tpl_g5_hydrogen_v@version@.zip</downloadurl>
 		</downloads>
 		<tags>
-			<tag>dev</tag>
+			<tag>stable</tag>
 		</tags>
 		<maintainer>RocketTheme, LLC</maintainer>
 		<maintainerurl>http://gantry.org</maintainerurl>
