@@ -98,7 +98,7 @@ abstract class Folder
         /** @phpstan-ignore-next-line */
         return '' === $path
             || '/' === $path[0]
-            || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
+            || (false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos))
             ? "./$path" : $path;
     }
 
