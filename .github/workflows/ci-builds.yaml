@@ -3,7 +3,7 @@ name: Development CI Builds
 on:
   push:
     ignore-forks: true
-    branches-ignore: [ master, main ]
+    branches: [ develop ]
 
 jobs:
   build-ci:
