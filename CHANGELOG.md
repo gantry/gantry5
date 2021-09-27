@@ -12,7 +12,7 @@
         - Updated Bourbon SCSS library to v4.3.4 (#2835)
         - Use Font Awesome 5 free (#2196)
         - Added support for loading the latest Bootstrap 3.4, 4.6 and 5.0 JavaScript from CDN
-        - Platform independent code passes phpstan level 5 tests
+        - Platform independent code pass phpstan level 5 tests
     1. [](#improved)
         - Major code cleanup for PHP 5.6
         - Removed IE8 and IE9 support CSS / JS files

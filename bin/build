@@ -40,16 +40,18 @@ if (false === $hasVersion) {
     if (false === $isProd && is_file("{$base}/.git/HEAD")) {
         $head = preg_replace('!^ref: (\S+)\s+$!m', '\\1', file_get_contents("{$base}/.git/HEAD"));
         $branch = basename($head);
-        $commit = substr(is_file("{$base}/.git/{$head}") ? file_get_contents("{$base}/.git/{$head}") : '', 0, 8);
+        $commit = is_file("{$base}/.git/{$head}") ? trim(file_get_contents("{$base}/.git/{$head}")) : '';
+        $commitShort = substr($commit, 0, 9);
         if ($branch !== 'develop') {
             $branch = 'dev-' . $branch;
         }
         if (!strpos($version, '-dev')) {
             $version .= '-dev';
         }
-        $version .= '-' . $commit;
+        $version .= '-' . $commitShort;
 
         $argv[] = '-Dstr.fileversion=_' . $branch;
+        $argv[] = '-Dcommit=' . $commit;
     }
 
     $argv[] = '-Dxml.version=' . $version;

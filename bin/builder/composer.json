@@ -1,5 +1,8 @@
 {
     "require": {
         "phing/phing": "2.*"
+    },
+    "autoload": {
+        "classmap": ["classes/"]
     }
 }
