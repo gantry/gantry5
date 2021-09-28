@@ -50,19 +50,21 @@ class JsonMapTask extends Task {
                 continue;
             }
 
-            $list[] = [
+            $list[$fileInfo->getFilename()] = [
                 'file' => $fileInfo->getFilename(),
                 'size' => $fileInfo->getSize(),
                 'date' =>  $fileInfo->getMTime()
             ];
         }
 
+        ksort($list);
+
         $data = [
             'count' => count($list),
             'commit' => $commit,
             'commit_short' => substr($commit, 0, 9),
             'date' => time(),
-            'files' => $list
+            'files' => array_values($list)
         ];
 
         file_put_contents("{$folder}/map.json", json_encode($data, JSON_PRETTY_PRINT));
