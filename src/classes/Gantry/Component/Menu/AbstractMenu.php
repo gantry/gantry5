@@ -146,8 +146,28 @@ abstract class AbstractMenu implements \ArrayAccess, \Iterator, \Countable
      */
     protected static function embedOrderingRecurse(array &$items, array $ordering, $parents = [], $pos = 0)
     {
-        $isGroup = isset($ordering[0]);
         $name = implode('/', $parents);
+        $isGroup = isset($ordering[0]);
+        if ($isGroup) {
+            // Remove empty columns from the end of the list.
+            do {
+                $last = end($ordering);
+                if ($last === []) {
+                    array_pop($ordering);
+                }
+            } while ($last === []);
+
+            // Make sure that ordering keys are 0...n.
+            $ordering = array_values($ordering);
+
+            // If there is only a single column, remove columns settings.
+            if (count($ordering) < 2) {
+                $ordering = isset($ordering[0]) ? $ordering[0] : [];
+                $isGroup = false;
+                $items[$name]['columns'] = [];
+                $items[$name]['columns_count'] = [];
+            }
+        }
 
         $counts = [];
         foreach ($ordering as $path => $children) {
