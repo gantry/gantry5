@@ -9769,6 +9769,73 @@ iframe {
   width: 100%;
 }
 
+.icon-white {
+  color: #fff;
+}
+
+.input-group-text::before {
+  min-width: 16px;
+}
+
+.tbody-icon {
+  padding: 0 3px;
+  text-align: center;
+  background-color: transparent;
+  border: 0;
+}
+
+.tbody-icon [class^="icon-"],
+.tbody-icon [class*=" icon-"],
+.tbody-icon [class^="fa-"],
+.tbody-icon [class*=" fa-"] {
+  width: 26px;
+  height: 26px;
+  font-size: 1.1rem;
+  line-height: 22px;
+  color: #ced4da;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+}
+
+.tbody-icon .icon-publish,
+.tbody-icon .icon-check,
+.tbody-icon .fa-check {
+  color: #198754;
+  border-color: #198754;
+}
+
+.tbody-icon .icon-checkedout,
+.tbody-icon .icon-lock,
+.tbody-icon .fa-lock {
+  width: auto;
+  height: auto;
+  font-size: 1.2rem;
+  line-height: 1rem;
+  color: #495057;
+  border: 0;
+}
+
+.tbody-icon.home-disabled, .tbody-icon.featured-disabled, .tbody-icon.color-featured-disabled, .tbody-icon.icon-star-disabled, .tbody-icon.fa-star-disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.tbody-icon .icon-delete,
+.tbody-icon .fa-delete,
+.tbody-icon .icon-times,
+.tbody-icon .fa-times {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.plg_system_webauthn_login_button svg {
+  margin-inline-end: 2px;
+}
+
+.plg_system_webauthn_login_button svg path {
+  fill: var(--black);
+}
+
 .chzn-container-single {
   width: auto !important;
 }
