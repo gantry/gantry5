@@ -141,7 +141,9 @@ class Page extends Base\Page
     public function bodyAttributes($attributes = [])
     {
         if ($this->tmpl === 'component') {
-            $classes = ['contentpane', 'modal'];
+            if (version_compare(JVERSION, '4.0', '<')) {
+                $classes = ['contentpane', 'modal'];
+            }
         } else {
             $classes = ['site', $this->option, "view-{$this->view}"];
             $classes[] = $this->layout ? 'layout-' . $this->layout : 'no-layout';
