@@ -50,8 +50,9 @@ class JsonMapTask extends Task {
                 continue;
             }
 
-            $list[$fileInfo->getFilename()] = [
-                'file' => $fileInfo->getFilename(),
+            $filename = $fileInfo->getFilename();
+            $list[$filename] = [
+                'file' => $filename,
                 'size' => $fileInfo->getSize(),
                 'date' =>  $fileInfo->getMTime()
             ];
