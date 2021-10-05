@@ -7,11 +7,13 @@ on:
 
 jobs:
   build:
-    if: "github.repository == 'gantry/gantry5' && !github.event.release.prerelease"
+    if: "github.repository == 'gantry/gantry5'"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
+      - name: Extract Tag
+        run: echo "PACKAGE_VERSION=${{ github.ref }}" >> $GITHUB_ENV
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -46,6 +48,7 @@ jobs:
           file_glob: true
 
       # TODO: Release should also trigger updating of master with prod-versions update
+      # if: "!github.event.release.prerelease"
 
 #  slack:
 #    name: Slack

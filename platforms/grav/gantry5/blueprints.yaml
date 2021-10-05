@@ -1,6 +1,6 @@
 name: Gantry 5 Framework
 version: '@version@'
-description: Theme framework.
+description: Gantry 5 Theme framework
 icon: gantry
 author:
   name: RocketTheme
@@ -11,6 +11,7 @@ readme: 'https://github.com/gantry/gantry5/blob/master/README.md'
 keywords: gantry, gantry5, theme, framework
 bugs: 'https://github.com/gantry/gantry5/issues'
 license: MIT
+testing: true
 dependencies:
    - { name: grav, version: '>=1.7.22' }
    - { name: admin, version: '>=1.10.22' }
