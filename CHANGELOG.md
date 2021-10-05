@@ -59,7 +59,7 @@
         - Fixed particle widgets in WordPress 5.8 (#2843)
 1. [Grav](#grav)
     1. [](#new)
-        - Updated minimum requirement to Grav 1.7.15 and Admin 1.10.15
+        - Updated minimum requirement to Grav 1.7.22 and Admin 1.10.22
         - Grav specific code passes phpstan level 5 tests
         - Added debugger support in admin JSON requests
     1. [](#bugfix)
