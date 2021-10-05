@@ -36,17 +36,16 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Build Gantry packages (using CHANGELOG.md to get the version)
         run: composer build-prod
+      - name: Upload packages to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.PACKAGE_VERSION }}
+          file: ./dist/*.zip
+          overwrite: true
+          file_glob: true
 
-      # TODO: Release should also trigger a build, but with PROD
       # TODO: Release should also trigger updating of master with prod-versions update
-      # TODO: develop should push to S3 bucket
-#      - name: Upload Gantry Release
-#        id: upload-release
-#        uses: alexellis/upload-assets@0.2.3
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
-#        with:
-#          asset_paths: '["./dist/*.zip"]'
 
 #  slack:
 #    name: Slack
