@@ -1,0 +1,199 @@
+// Standard
+$standard-color-primary:              hsl(220, 67%, 20%);
+$standard-color-link:                 hsl(220, 67%, 40%);
+$standard-color-hover:                hsl(242, 30%, 36%);
+
+// Forms
+$input-padding:                       .6rem 1rem;
+$input-border:                        solid 1px $gray-400;
+$input-btn-padding-y:                 .6rem;
+$input-btn-padding-x:                 1rem;
+$input-max-width:                     100%;
+$input-focus-border-color:            tint-color($standard-color-primary, 50%);
+
+$cassiopeia-input-focus-shadow:       0 0 0 .2rem hsla(0, 0%, 0%, .1);
+.choices {
+  border: 0;
+  border-radius: $border-radius;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.is-focused {
+    box-shadow: $cassiopeia-input-focus-shadow;
+  }
+}
+
+.choices__inner {
+  padding: .4rem 1rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  border: $input-border;
+  border-radius: $border-radius;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+
+  .is-focused & {
+    border-color: #000;
+  }
+}
+
+.choices__input {
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 1rem;
+  background-color: transparent;
+
+  &::-moz-placeholder {
+    color: $gray-700;
+    opacity: 1;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $gray-700;
+    opacity: 1;
+  }
+}
+
+.choices__list--dropdown {
+  z-index: $zindex-popover;
+}
+
+.choices__list--multiple .choices__item {
+  position: relative;
+  margin: 2px;
+  background-color: black;
+  margin-inline-end: 2px;
+  border: 0;
+  border-radius: $border-radius;
+
+  &.is-highlighted {
+    background-color: black;
+    opacity: .9;
+  }
+}
+
+.choices .choices__list--dropdown {
+  .choices__item {
+    padding-inline-end: 10px;
+  }
+
+  .choices__item--selectable::after {
+    display: none;
+  }
+}
+
+.choices__button_joomla {
+  position: relative;
+  padding: 0 10px;
+  color: inherit;
+  text-indent: -9999px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  opacity: .5;
+  appearance: none;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    text-align: center;
+    text-indent: 0;
+    content: "\00d7";
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.choices[data-type*="select-one"],
+.choices[data-type*="select-multiple"] {
+  .choices__inner {
+    padding-inline-end: 3rem;
+    cursor: pointer;
+    background: url("../images/select-bg.svg") no-repeat 100%/116rem;
+    background-color: $form-select-bg;
+
+    [dir="rtl"] & {
+      background: url("../images/select-bg-rtl.svg") no-repeat 0/116rem;
+      background-color: $form-select-bg;
+    }
+  }
+}
+
+.choices[data-type*="select-one"] {
+  .choices__item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .choices__button_joomla {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-top: -10px;
+    margin-right: 50px;
+    border-radius: 10em;
+    opacity: .5;
+
+    [dir=rtl] & {
+      right: auto;
+      left: 0;
+      margin-right: 0;
+      margin-left: 50px;
+    }
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px #00bcd4;
+    }
+  }
+
+  &::after {
+    display: none;
+  }
+}
+
+.choices[data-type*="select-multiple"],
+.choices[data-type*="text"] {
+  .choices__input {
+    padding: .2rem 0;
+    height: auto;
+    background: transparent;
+    border: 0 none;
+    box-shadow: none;
+    padding: 0;
+    line-height: normal;
+  }
+}
+
+.choices__inner {
+  line-height: 1.5;
+  min-height: 35px;
+  box-shadow: 0 0 0 0;
+}
+
+.js-stools-field-filter .form-select {
+  background-size: 27px 17px;
+}
+
+.choices__heading {
+  font-size: 1.2rem;
+}
