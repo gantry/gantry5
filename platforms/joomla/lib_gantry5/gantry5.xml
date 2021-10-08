@@ -10,17 +10,7 @@
     <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>LIB_GANTRY5_DESCRIPTION</description>
-
-    <files folder="library">
-        <filename>composer.json</filename>
-        <filename>composer.lock</filename>
-        <filename>MD5SUMS</filename>
-        <folder>compat</folder>
-        <folder>src</folder>
-        <folder>language</folder>
-        <folder>vendor</folder>
-    </files>
-
+    
     <media folder="assets" destination="gantry5/assets">
         <folder>css</folder>
         <folder>fonts</folder>
