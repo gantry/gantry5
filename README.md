@@ -36,6 +36,7 @@ Once you have the latest packages, installation is simple. We have provided a st
 ## Accessing the Gantry Administrator
 
 ### Joomla
+
 When you have installed and activated both the Gantry framework and Hydrogen, you can access the Gantry 5 administrator in several different ways. The easiest being simply navigating to **Components > Gantry 5 Templates** from the back end of Joomla.
 
 Here, you will see a list of any installed Gantry-powered themes. You can **Preview** the theme from here or select **Configure** to go directly to the **Gantry Administrator** where you can get started modifying your Gantry-powered site.
