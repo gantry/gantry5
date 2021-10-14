@@ -21,8 +21,10 @@ ready(function() {
     var body = $('body'),
         warningURL = parseAjaxURI(getAjaxURL('confirmdeletion') + getAjaxSuffix());
 
+    Cards.init();
+
     // Handles Positions Duplicate / Remove
-    body.delegate('click', '#positions [data-g-config]', function(event, element) {
+    body.delegate('click', '#positions [data-g-config], [data-g-create="position"]', function(event, element) {
         var mode = element.data('g-config'),
             href = element.data('g-config-href'),
             encode = window.btoa(href),//.substr(-20, 20), // in case the strings gets too long
@@ -179,7 +181,7 @@ ready(function() {
 
         var data = {},
             parent = element.parent('[data-pm-data]'),
-            position = JSON.parse(element.parent('[data-position]').data('position'));
+            position = JSON.parse(element.parent('[data-g5-position]').data('g5-position'));
 
         data.position = position.name;
         data.item = parent.data('pm-data');
@@ -218,6 +220,7 @@ ready(function() {
                 // Position Settings apply
                 submit.on('click', function(e) {
                     e.preventDefault();
+                    fakeDOM = content.elements.content.find('form');
 
                     var target = $(e.currentTarget);
                     target.disabled(true);
@@ -260,7 +263,8 @@ ready(function() {
                                 if (save) { body.emit('click', { target: save }); }
                             }
 
-                            Cards.serialize(element.parent('[data-position]'));
+                            Cards.serialize(element.parent('[data-g5-position]'));
+                            Cards.updatePendingChanges();
 
                             modal.close();
                             toastr.success(translate('GANTRY5_PLATFORM_JS_POSITIONS_SETTINGS_APPLIED'), translate('GANTRY5_PLATFORM_JS_SETTINGS_APPLIED'));
@@ -279,13 +283,17 @@ ready(function() {
             if (wasCanceled || title == original) { return; }
             var element = this,
                 href = element.data('g-config-href'),
+                type = element.data('title-editable-type'),
                 method = (element.data('g-config-method') || 'post').toLowerCase(),
-                parent = element.parent();
+                parent = element.parent('[id]');
 
             parent.showIndicator();
             parent.find('[data-title-edit]').addClass('disabled');
 
-            request(method, parseAjaxURI(href + getAjaxSuffix()), { title: trim(title) }, function(error, response) {
+            var data = type === 'title' ? { title: trim(title) } : { key: trim(title) };
+            data.data = parent.find('[data-g5-position]').data('g5-position');
+
+            request(method, parseAjaxURI(href + getAjaxSuffix()), data, function(error, response) {
                 if (!response.body.success) {
                     modal.open({
                         content: response.body.html || response.body,
@@ -296,20 +304,12 @@ ready(function() {
 
                     element.data('title-editable', original).text(original);
                 } else {
-                    element.data('title', title).data('tip', title);
+                    var dummy = zen('div').html(response.body.position);
 
-                    // refresh ID label and actions buttons
-                    var dummy = zen('div').html(response.body.position),
-                        actions = dummy.find('.position-actions');
+                    parent.html(dummy.find('[id]').html());
 
-                    element.parent('.card').find('h4 .position-key').html(response.body.id);
-                    element.parent('.card').find('.position-actions').html(actions.html());
-
-                    var position = element.parent('.card').find('[data-position]'),
-                        data = JSON.parse(position.data('position'));
-
-                    data.title = title;
-                    position.data('position', JSON.stringify(data));
+                    var editables = parent.search('[data-title-editable]');
+                    attachEditables(editables);
                 }
 
                 parent.hideIndicator();
@@ -328,6 +328,18 @@ ready(function() {
                 editable.on('title-edit-end', updateTitle);
             });
         };
+
+    // Toggle all assignments on/off
+    body.delegate('change', '[data-g5-positions-assignments] input[type="hidden"]', function(event, element) {
+        var card = element.parent('.card'),
+            wrapper = card.find('.settings-param-wrapper');
+
+        wrapper[element.value() == 1 ? 'addClass' : 'removeClass']('hide');
+        wrapper.search('input[type="hidden"]').forEach(function(element) {
+            element = $(element);
+            element.value(0).disabled(true);
+        });
+    });
 
     // Global state change
     body.on('statechangeAfter', function(event, element) {

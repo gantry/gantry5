@@ -50,10 +50,25 @@ input[type="color"],
 	}
 }
 
+// Core Joomla Login Form
+#login-form {
+    .input-prepend > .add-on {
+        color: $base-text-color;
+            height: 2.1rem;
+    }
+    input[type="text"], input[type="password"] {
+        color: $base-text-color;
+        height: 1.25rem;
+    }
+    .controls .input-append .btn {
+        line-height: 26px;
+        height: 2.15rem;
+    }
+}
+
 // Mailto and Print Windows
 .view-mailto, .body-only {
     #g-page-surround {
         box-shadow: none;
     }
 }
-

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,43 +18,62 @@ use RocketTheme\Toolbox\ArrayTraits\ArrayAccessWithGetters;
 use RocketTheme\Toolbox\ArrayTraits\Export;
 
 /**
- * @property string $id
+ * @property string|int $id
+ * @property string|int|null $parent_id
  * @property string $type
- * @property string $path
- * @property string $alias
- * @property string $title
- * @property string $link
- * @property string $parent_id
+ * @property string|null $path
+ * @property string|null $alias
+ * @property string|null $title
+ * @property string|null $link
  * @property string $layout
- * @property int $browserNav
- * @property bool $menu_text
+ * @property string $target
+ * @property string $dropdown
+ * @property string $dropdown_hide
+ * @property string $icon
+ * @property string $image
+ * @property string $subtitle
+ * @property string $hash
+ * @property string $class
+ * @property bool $icon_only
+ * @property bool $enabled
  * @property bool $visible
  * @property int $group
+ * @property array $columns
+ * @property array $columns_count
  * @property int $level
+ * @property string $link_title
+ * @property string $anchor_class
+ * @property string $yaml_path
+ * @property string $yaml_alias
+ *
+ * // TODO: MISSING DEFAULTS
+ * @property int $browserNav
+ * @property bool $menu_text
  */
-class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
+class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable, \JsonSerializable
 {
     use ArrayAccessWithGetters, Export;
 
-    const VERSION = 1;
+    const VERSION = 2;
 
-    protected $items;
-    protected $menu;
-    protected $groups = [];
-    protected $children = [];
-    protected $url;
-
-    protected static $defaults = [
+    /** @var array */
+    public static $defaults = [
         'id' => 0,
+        'parent_id' => null,
         'type' => 'link',
         'path' => null,
         'alias' => null,
         'title' => null,
         'link' => null,
-        'parent_id' => null,
         'layout' => 'list',
         'target' => '_self',
         'dropdown' => '',
+        'dropdown_hide' => false,
+        'attributes' => [],
+        'link_attributes' => [],
+        'dropdown_dir' => 'right',
+        'width' => 'auto',
+        'rel' => '', // WP
         'icon' => '',
         'image' => '',
         'subtitle' => '',
@@ -64,32 +84,88 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         'visible' => true,
         'group' => 0,
         'columns' => [],
+        'columns_count' => [],
         'level' => 0,
         'link_title' => '',
-        'anchor_class' => ''
+        'anchor_class' => '',
+        'yaml_path' => null,
+        'yaml_alias' => null,
     ];
 
-    public function __construct(AbstractMenu $menu, $name, array $item = [])
+    /** @var array */
+    protected $items;
+    /** @var AbstractMenu */
+    protected $menu;
+    /** @var array */
+    protected $groups = [];
+    /** @var array */
+    protected $children = [];
+    /** @var string */
+    protected $url;
+
+    /**
+     * Item constructor.
+     * @param AbstractMenu $menu
+     * @param array $item
+     */
+    public function __construct(AbstractMenu $menu, array $item = [])
     {
         $this->menu = $menu;
-
-        $tree = explode('/', $name);
-        $alias = array_pop($tree);
-        $parent = implode('/', $tree);
-
-        // As we always calculate parent (it can change), prevent old one from being inserted.
-        unset($item['parent_id']);
-
-        $this->items = $item + [
-            'id' => preg_replace('|[^a-z0-9]|i', '-', $name) ?: 'root',
-            'path' => $name,
-            'alias' => $alias,
-            'title' => ucfirst($alias),
-            'link' => $name,
-            'parent_id' => $parent != '.' ? $parent : '',
-        ] + static::$defaults;
+        $this->items = array_merge(static::$defaults, $item);
     }
 
+    /**
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'items' => $this->items,
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ];
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'items' => $this->toArray(false),
+            'groups' => $this->groups,
+            'children' => $this->children,
+            'url' => $this->url
+        ];
+    }
+
+    /**
+     * @param bool $includeCurrent
+     * @return array
+     */
+    public function getEscapedTitles($includeCurrent = true)
+    {
+        $list = [];
+        $current = $this;
+        if ($includeCurrent) {
+            do {
+                $list[] = htmlspecialchars($current->title, ENT_COMPAT | ENT_HTML5, 'UTF-8');
+                $current = $current->parent();
+            } while ($current->id);
+        } else {
+            $list[] = '';
+            while (($current = $current->parent()) && $current->id) {
+                $list[] = htmlspecialchars($current->title, ENT_COMPAT | ENT_HTML5, 'UTF-8');
+            }
+        }
+
+        return array_reverse($list);
+    }
+
+    /**
+     * @return string
+     */
     public function getDropdown()
     {
         if (!$this->items['dropdown']) {
@@ -99,9 +175,12 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this->items['dropdown'];
     }
 
+    /**
+     * @return string
+     */
     public function serialize()
     {
-        // FIXME: need to create collection class to gather the sibling data.
+        // TODO: need to create collection class to gather the sibling data.
         return serialize([
             'version' => static::VERSION,
             'items' => $this->items,
@@ -111,9 +190,12 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         ]);
     }
 
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
-        // FIXME: need to create collection class to gather the sibling data.
+        // TODO: need to create collection class to gather the sibling data.
         $data = unserialize($serialized);
 
         if (!isset($data['version']) && $data['version'] === static::VERSION) {
@@ -135,12 +217,13 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         if ($url !== false) {
             $this->url = $url;
         }
+
         return $this->url;
     }
 
     /**
      * @return AbstractMenu
-     * @deprecated Need to break relationship to the menu and use a collection instead.
+     * @TODO Need to break relationship to the menu and use a collection instead.
      */
     protected function menu()
     {
@@ -148,13 +231,17 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     }
 
     /**
-     * @return Item
+     * @return Item|null
      */
     public function parent()
     {
         return $this->menu()[$this->items['parent_id']];
     }
 
+    /**
+     * @param string|int $column
+     * @return float|int
+     */
     public function columnWidth($column)
     {
         if (isset($this->items['columns'][$column])) {
@@ -164,35 +251,74 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return 100 / count($this->groups());
     }
 
+    /**
+     * @return array
+     */
     public function groups()
     {
+        $children = $this->children();
+
+        // Grouped by column counts.
+        if ($this->items['columns_count']) {
+            $i = 0; $start = 0;
+            $list = [];
+            foreach ($this->items['columns_count'] as $i => $count) {
+                $list[$i] = array_slice($children, $start, $count);
+                $start += $count;
+            }
+            // Add missing items into the end of the list.
+            if (count($children) > $start) {
+                $list[$i] = array_merge($list[$i], array_slice($children, $start));
+            }
+
+            return $list;
+        }
+
+        // Grouped by explisit list.
         if ($this->groups) {
             $list = [];
             foreach ($this->groups as $i => $group) {
                 $list[$i] = [];
-                foreach ($group as $path) {
-                    $list[$i][] = $this->menu()[$path];
+                foreach ($group as $id => $value) {
+                    $item = $this->menu()[$id];
+                    if ($item) {
+                        $list[$i][] = $item;
+                    }
                 }
             }
+
             return $list;
         }
-        return [$this->children()];
+
+        // No grouping (use first group).
+        return [$children];
     }
 
+    /**
+     * @return array
+     */
     public function children()
     {
         $list = [];
         foreach ($this as $child) {
             $list[] = $child;
         }
+
         return $list;
     }
 
+    /**
+     * @return bool
+     */
     public function hasChildren()
     {
         return !empty($this->children);
     }
 
+    /**
+     * @param int $i
+     * @return array
+     */
     public function getGroup($i)
     {
         $groups = $this->groups();
@@ -201,6 +327,10 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return isset($groups[$i]) ? $groups[$i] : [];
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function update(array $data)
     {
         $this->items = array_replace($this->items, $data);
@@ -208,22 +338,38 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
+    /**
+     * @param Item $child
+     * @return $this
+     */
     public function addChild(Item $child)
     {
         $child->level = $this->level + 1;
-        $child->parent_id = $this->path;
-        $this->children[$child->alias] = $child->path;
+        $child->parent_id = $this->id;
+        $child->path = $this->path ? "{$this->path}/$child->alias" : $child->alias;
+        if (isset($child->yaml_alias)) {
+            $child->yaml_path = $this->yaml_path ? "{$this->yaml_path}/$child->yaml_alias" : $child->yaml_alias;
+        }
+        $this->children[$child->id] = $child->alias;
 
         return $this;
     }
 
+    /**
+     * @param Item $child
+     * @return $this
+     */
     public function removeChild(Item $child)
     {
-        unset($this->children[$child->alias]);
+        unset($this->children[$child->id]);
 
         return $this;
     }
 
+    /**
+     * @param array|null $ordering
+     * @return $this
+     */
     public function sortChildren($ordering)
     {
         // Array with keys that point to the items.
@@ -250,19 +396,25 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
         return $this;
     }
 
-
+    /**
+     * @return $this
+     */
     public function reverse()
     {
-        array_reverse($this->children, true);
-        array_reverse($this->groups, true);
+        $this->children = array_reverse($this->children, true);
+        $this->groups = array_reverse($this->groups, true);
 
         return $this;
     }
 
+    /**
+     * @param array $groups
+     * @return $this
+     */
     public function groupChildren(array $groups)
     {
         // Array with keys that point to the items.
-        $children =& $this->children;
+        $children = $this->children;
 
         if ($children) {
             $menu = $this->menu();
@@ -277,19 +429,16 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
                 }
 
                 // Get the items for this group with proper ordering.
-                $group = array_replace(
-                    array_intersect_key($ordering, $children), array_intersect_key($children, $ordering)
-                );
+                $group = [];
+                foreach ($ordering as $key => $dummy) {
+                    if (isset($children[$key])) {
+                        $group[$key] = $children[$key];
 
-                // Assign each menu items to the group.
-                $group = array_map(
-                    function($value) use ($i, $menu) {
-                        $item = $menu[$value];
+                        // Assign each menu items to the group.
+                        $item = $menu[$key];
                         $item->group = $i;
-                        return $value;
-                    },
-                    $group
-                );
+                    }
+                }
 
                 // Update remaining children.
                 $children = array_diff_key($children, $ordering);
@@ -299,16 +448,18 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
 
                 // Add items to the current group.
                 $this->groups[$i] = $group;
+                $this->items['columns_count'][$i] = count($group);
             }
 
             if ($children) {
                 // Add leftover children to the ordered list and to the first group.
                 $ordered += $children;
                 $this->groups[0] += $children;
+                $this->items['columns_count'][0] = count($this->groups[0]);
             }
 
             // Reorder children by their groups.
-            $children = $ordered;
+            $this->children = $ordered;
         }
 
         return $this;
@@ -323,7 +474,9 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
      */
     public function current()
     {
-        return $this->menu()[current($this->children)];
+        $current = key($this->children);
+
+        return $this->menu()[$current];
     }
 
     /**
@@ -333,7 +486,7 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
      */
     public function key()
     {
-        return key($this->children);
+        return current($this->children);
     }
 
     /**
@@ -379,20 +532,63 @@ class Item implements \ArrayAccess, \Iterator, \Serializable, \Countable
     /**
      * Convert object into an array.
      *
+     * @param bool $withDefaults
+     * @param array $ignore
      * @return array
      */
-    public function toArray($withDefaults = true)
+    public function toArray($withDefaults = true, array $ignore = [])
     {
-        $items = $this->items;
+        return $withDefaults ? $this->items : static::normalize($this->items, $ignore);
+    }
 
-        if (!$withDefaults) {
-            foreach (static::$defaults as $key => $value) {
-                if ($items[$key] === $value) {
-                    unset($items[$key]);
+    /**
+     * @param array $array
+     * @param array $ignore
+     * @param bool $keepDefaults
+     * @return array
+     */
+    public static function normalize(array $array, array $ignore = [], $keepDefaults = false)
+    {
+        // Particles have no link.
+        if (isset($array['type']) && $array['type'] === 'particle') {
+            unset($array['link']);
+        }
+
+        // Remove yaml specific variables if there's no need for them.
+        if (array_key_exists('yaml_path', $array) && $array['yaml_path'] === $array['path']) {
+            unset($array['yaml_path']);
+        }
+        if (array_key_exists('yaml_alias', $array) && $array['yaml_alias'] === $array['alias']) {
+            unset($array['yaml_alias']);
+        }
+
+        // Check if variable should be ignored.
+        $ignore = array_flip($ignore) + ['tree' => true];
+        foreach ($array as $var => $val) {
+            if (isset($ignore[$var])) {
+                unset($array[$var]);
+            }
+        }
+
+        $defaults = static::$defaults;
+        foreach ($defaults as $var => $default) {
+            if (array_key_exists($var, $array)) {
+                // Convert boolean values.
+                if (is_bool($default)) {
+                    $array[$var] = (bool)$array[$var];
+                }
+
+                // Ignore default values (do not distinct variable type).
+                if ($array[$var] == $default) {
+                    if ($keepDefaults) {
+                        $array[$var] = $default;
+                    } else {
+                        unset($array[$var]);
+                    }
                 }
             }
         }
 
-        return $items;
+        return $array;
     }
 }

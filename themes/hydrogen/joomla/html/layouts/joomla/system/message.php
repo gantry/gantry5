@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @copyright Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license   GNU/GPLv2 and later
  *
@@ -11,27 +12,33 @@
 
 defined('_JEXEC') or die;
 
+/**
+ * Joomla 3 version of the system messages.
+ */
+
+use Joomla\CMS\Language\Text;
+
 $msgList = $displayData['msgList'];
 
 ?>
-<?php if (is_array($msgList) && !empty($msgList)) : ?>
-	<div id="system-message-container">
-		<div id="system-message">
-			<?php foreach ($msgList as $type => $msgs) : ?>
-				<div class="alert alert-<?php echo $type; ?>">
-					<?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
-					<a class="close" data-dismiss="alert">×</a>
+<div id="system-message-container">
+    <?php if (is_array($msgList) && !empty($msgList)) : ?>
+    <div id="system-message">
+        <?php foreach ($msgList as $type => $msgs) : ?>
+            <div class="alert alert-<?php echo $type; ?>">
+                <?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
+                <a class="close" data-dismiss="alert">×</a>
 
-					<?php if (!empty($msgs)) : ?>
-						<h4 class="alert-heading"><?php echo JText::_($type); ?></h4>
-						<div>
-							<?php foreach ($msgs as $msg) : ?>
-								<p><?php echo $msg; ?></p>
-							<?php endforeach; ?>
-						</div>
-					<?php endif; ?>
-				</div>
-			<?php endforeach; ?>
-		</div>
-	</div>
-<?php endif; ?>
+                <?php if (!empty($msgs)) : ?>
+                    <h4 class="alert-heading"><?php echo Text::_($type); ?></h4>
+                    <div>
+                        <?php foreach ($msgs as $msg) : ?>
+                            <p><?php echo $msg; ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+</div>

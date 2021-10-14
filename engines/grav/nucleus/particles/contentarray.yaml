@@ -15,10 +15,11 @@ form:
       type: container.tabs
       fields:
         _tab_articles:
-          label: Articles
+          label: Pages
+          overridable: false
           fields:
             article.filter.categories:
-              type: joomla.categories
+              type: input.selectize
               label: Categories
               description: Select the categories the content should be taken from.
               overridable: false
@@ -29,6 +30,16 @@ form:
               description: Enter the maximum number of content to display.
               default: 2
               pattern: '\d{1,2}'
+              overridable: false
+
+            article.display.pagination_buttons:
+              type: select.select
+              label: Pagination
+              description: Select if the pagination buttons should be shown to allow users to see more articles.
+              default: ''
+              options:
+                show: Show
+                '': Hide
               overridable: false
 
             article.limit.columns:
@@ -48,7 +59,7 @@ form:
             article.limit.start:
               type: input.text
               label: Start From
-              description: Enter offset specifying the first article to return. The default is '0' (the first content item).
+              description: "Enter offset specifying the first article to return. The default is '0' (the first content item)."
               default: 0
               pattern: '\d{1,2}'
               overridable: false
@@ -57,26 +68,25 @@ form:
               type: select.select
               label: Order By
               description: Select how the content should be ordered by.
-              default: publish_up
+              default: default
               options:
-                publish_up: Published Date
-                created: Created Date
+                default: Default Ordering
+                date: Date
+                publish_date: Publish Date
+                unpublish_date: Unpublish Date
                 modified: Last Modified Date
                 title: Title
-                ordering: Ordering
-                hits: Hits
-                id: ID
-                alias: Alias
+                slug: Slug
               overridable: false
 
             article.sort.ordering:
               type: select.select
               label: Ordering Direction
               description: Select the direction the content should be ordered by.
-              default: ASC
+              default: asc
               options:
-                ASC: Ascending
-                DESC: Descending
+                asc: Ascending
+                desc: Descending
               overridable: false
         _tab_display:
           label: Display
@@ -84,12 +94,13 @@ form:
             article.display.image.enabled:
               type: select.select
               label: Image
-              description: Select if and what image of the content should be shown.
+              description: 'Select what image should be shown (Pages -> Blog Item -> Header Image settings).'
               default: intro
               options:
                 intro: Intro
                 full: Full
                 '': None
+
             article.display.text.type:
               type: select.select
               label: Article Text
@@ -146,7 +157,7 @@ form:
               type: select.date
               label: Date Format
               description: Select preferred date format. Leave empty not to display a date.
-              default: l, F d, Y
+              default: 'l, F d, Y'
               selectize:
                   allowEmptyOption: true
               options:
@@ -161,6 +172,7 @@ form:
                   'l': Date9
                   'l j F Y': Date10
                   'j F Y': Date11
+                  'F d, Y': Date12
 
         _tab_readmore:
           label: Read More
@@ -168,7 +180,7 @@ form:
             article.display.read_more.enabled:
               type: select.select
               label: Read More
-              description: Select if the content 'Read More' button should be shown.
+              description: "Select if the content 'Read More' button should be shown."
               default: show
               options:
                 show: Show
@@ -177,13 +189,13 @@ form:
             article.display.read_more.label:
               type: input.text
               label: Read More Label
-              description: Type in the label for the 'Read More' button.
+              description: "Type in the label for the 'Read More' button."
               placeholder: 'Read More...'
 
             article.display.read_more.css:
               type: input.selectize
               label: Button CSS Classes
-              description: CSS class name for the 'Read More' button.
+              description: "CSS class name for the 'Read More' button."
 
         _tab_extras:
           label: Extras
@@ -204,8 +216,12 @@ form:
               default: link
               options:
                 show: Show
-                link: Show with Link
                 '': Hide
+
+            article.display.category.route:
+              type: input.text
+              label: Category Route
+              description: Route to the category page
 
     css.class:
       type: input.selectize
@@ -216,6 +232,6 @@ form:
       type: collection.keyvalue
       label: Tag Attributes
       description: Extra Tag attributes.
-      key_placeholder: Key (data-*, style, ...)
+      key_placeholder: 'Key (data-*, style, ...)'
       value_placeholder: Value
       exclude: ['id', 'class']

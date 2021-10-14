@@ -2,7 +2,7 @@
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   MIT
  *
  * http://opensource.org/licenses/MIT
@@ -11,14 +11,20 @@
 namespace Gantry\Grav\Assignments;
 
 use Gantry\Component\Assignments\AssignmentsInterface;
+use Grav\Common\Config\Config;
+use Grav\Common\Flex\Types\Pages\PageIndex;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
 use Grav\Common\Uri;
+use Grav\Framework\Flex\Flex;
 
+/**
+ * Class AssignmentsPage
+ * @package Gantry\Grav\Assignments
+ */
 class AssignmentsPage implements AssignmentsInterface
 {
     public $type = 'page';
-    public $priority = 1;
+    public $priority = 3;
 
     /**
      * Returns list of rules which apply to the current page.
@@ -29,11 +35,15 @@ class AssignmentsPage implements AssignmentsInterface
     {
         $grav = Grav::instance();
 
+        /** @var Config $config */
+        $config = $grav['config'];
+
         /** @var Uri $uri */
         $uri = $grav['uri'];
 
         $route = trim($uri->path(), '/');
-        $rules[$route ?: 'home'] = $this->priority;
+        $home = trim($config->get('system.home.alias', '/home'), '/');
+        $rules[$route ?: $home] = $this->priority;
 
         return [$rules];
     }
@@ -55,21 +65,28 @@ class AssignmentsPage implements AssignmentsInterface
         return [$list];
     }
 
+    /**
+     * @return array
+     */
     protected function getItems()
     {
         $grav = Grav::instance();
 
-        // Initialize pages.
-        $pages = $grav['pages']->all()->routable();
+        /** @var Flex $flex */
+        $flex = $grav['flex'];
+        $directory = $flex->getDirectory('pages');
+        if (!$directory) {
+            throw new \RuntimeException('Flex Pages are required for Gantry to work!');
+        }
+        /** @var PageIndex $pages */
+        $pages = $directory->getCollection();
+        $pages = $pages->routable();
 
         $items = [];
-
-        /** @var Page $page */
         foreach ($pages as $page) {
-            $route = trim($page->route(), '/');
+            $route = trim($page->rawRoute(), '/');
             $items[] = [
                 'name' => $route,
-                'field' => ['id', 'link/' . $route],
                 'disabled' => !$page->isPage(),
                 'label' => str_repeat('—', substr_count($route, '/')) . ' ' . $page->title(),
             ];

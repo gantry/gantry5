@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,8 +16,11 @@ namespace Gantry\Joomla;
  */
 class Manifest
 {
+    /** @var string */
     protected $theme;
+    /** @var string */
     protected $path;
+    /** @var \SimpleXMLElement */
     protected $xml;
 
     /**
@@ -32,7 +36,7 @@ class Manifest
         if (!is_file($this->path)) {
             throw new \RuntimeException(sprintf('Template %s does not exist.', $theme));
         }
-        $this->xml = $manifest ?: simplexml_load_file($this->path);
+        $this->xml = $manifest ?: simplexml_load_string(file_get_contents($this->path));
     }
 
     /**
@@ -52,11 +56,17 @@ class Manifest
         return $this->xml;
     }
 
+    /**
+     * @return string
+     */
     public function getScriptFile()
     {
         return (string) $this->xml->scriptfile;
     }
 
+    /**
+     * @param array $positions
+     */
     public function setPositions(array $positions)
     {
         sort($positions);
@@ -72,7 +82,6 @@ class Manifest
         $insertDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($insert), true);
         $targetDom->parentNode->replaceChild($insertDom, $targetDom);
     }
-
 
     public function save()
     {

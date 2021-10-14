@@ -20,6 +20,15 @@
         background: darken($accent-color-1, 10%);
         color: $white;
     }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+
+        &:hover {
+            background: $accent-color-1;
+        }
+    }
 }
 
 // Buttons
@@ -122,7 +131,6 @@ table.table-bordered {
 
         button {
             border-radius: 0 6px 6px 0;
-            padding: 7px 12px;
         }
     }
 
@@ -162,6 +170,11 @@ table.table-bordered {
     a {
         @extend %g-button;
     }
+}
+
+// Pagintation
+.pagination {
+    text-align: center;
 }
 
 // Print Mode

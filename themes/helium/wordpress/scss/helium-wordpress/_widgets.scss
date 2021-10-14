@@ -40,9 +40,10 @@
             vertical-align: bottom;
 
             &:before {
-                font-family: FontAwesome;
+                font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", FontAwesome;
+                font-weight: 900;
                 margin-right: 5px;
-                content: "\f02b";
+                content: $fa-tag;
             }
 
             &:hover {

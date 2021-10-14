@@ -11,5 +11,10 @@
 /// @return {Number (Unitless)}
 
 @function strip-units($value) {
+  @if $output-bourbon-deprecation-warnings == true {
+    @warn "[Bourbon] [Deprecation] `strip-units` is deprecated and will be " +
+    "removed in 5.0.0 and replaced by the `strip-unit` function.";
+  }
+
   @return ($value / ($value * 0 + 1));
 }

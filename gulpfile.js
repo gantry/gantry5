@@ -1,14 +1,20 @@
 'use strict';
 
-var paths,
-    gulp         = require('gulp'),
-    fs           = require('fs'),
-    convertBytes = function(bytes) {
-        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes == 0) return '0 Byte';
-        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-        return Math.round(((bytes / Math.pow(1024, i) * 100)) / 100) + ' ' + sizes[i];
-    };
+const gulp = require('gulp');
+const fs = require('fs');
+
+let paths;
+const convertBytes = function(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) {
+        return '0 Byte';
+    }
+
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+    return Math.round(((bytes / Math.pow(1024, i) * 100)) / 100) + ' ' + sizes[i];
+};
+
 
 // You can install or update NPM dependencies across the whole project via the supported commands:
 //      -update, --update, -up, --up, -install, --install, -inst, --inst, -go, --go, -deps, --deps
@@ -39,23 +45,23 @@ if (process.argv.slice(2).join(',').match(/(-{1,2}update|-{1,2}up|-{1,2}install|
     return;
 }
 
-var argv       = require('yargs').argv,
-    gutil      = require('gulp-util'),
-    gulpif     = require('gulp-if'),
-    uglify     = require('gulp-uglify'),
-    rename     = require('gulp-rename'),
-    buffer     = require('vinyl-buffer'),
-    source     = require('vinyl-source-stream'),
-    merge      = require('merge-stream'),
-    sourcemaps = require('gulp-sourcemaps'),
-    browserify = require('browserify'),
-    watchify   = require('watchify'),
-    jsonminify = require('gulp-jsonminify'),
-    sass       = require('gulp-ruby-sass'),
+var argv            = require('yargs').argv,
+    gutil           = require('gulp-util'),
+    gulpif          = require('gulp-if'),
+    uglify          = require('gulp-uglify'),
+    rename          = require('gulp-rename'),
+    buffer          = require('vinyl-buffer'),
+    source          = require('vinyl-source-stream'),
+    merge           = require('merge-stream'),
+    sourcemaps      = require('gulp-sourcemaps'),
+    browserify      = require('browserify'),
+    watchifyModule  = require('watchify'),
+    jsonminify      = require('gulp-jsonminify'),
+    sass            = require('gulp-sass'),
 
-    prod       = !!(argv.p || argv.prod || argv.production),
-    watchType  = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
-    watch      = false;
+    prod            = !!(argv.p || argv.prod || argv.production),
+    watchType       = (argv.css && argv.js) ? 'all' : (argv.css ? 'css' : (argv.js ? 'js' : 'all')),
+    watch           = false;
 
 paths = {
     js: [
@@ -94,9 +100,14 @@ paths = {
             in: './engines/common/nucleus/scss/nucleus.scss',
             out: './engines/common/nucleus/css-compiled/nucleus.css'
         },
-        { // nucleus - joomla
+        { // nucleus - joomla 3
             in: './engines/joomla/nucleus/scss/joomla.scss',
             out: './engines/joomla/nucleus/css-compiled/joomla.css',
+            load: './engines/common/nucleus/scss'
+        },
+        { // bootstrap - joomla 4
+            in: './engines/joomla/nucleus/scss/bootstrap5.scss',
+            out: './engines/joomla/nucleus/css-compiled/bootstrap5.css',
             load: './engines/common/nucleus/scss'
         },
         { // nucleus - wordpress
@@ -109,10 +120,6 @@ paths = {
         { // google fonts
             in: './platforms/common/js/google-fonts.json',
             out: './platforms/common/js/google-fonts.json'
-        },
-        { // matchMedia polyfill
-            in: './assets/common/js/matchmedia.polyfill.js',
-            out: './assets/common/js/matchmedia.polyfill.js'
         }
     ]
 };
@@ -129,22 +136,17 @@ var compileCSS = function(app) {
     gutil.log(gutil.colors.blue('*'), 'Compiling', _in);
 
     var options = {
-        sourcemap: !prod,
-        loadPath: _load,
-        style: prod ? 'compact' : 'expanded',
-        lineNumbers: false,
-        trace: !prod
+        sourceMap: !prod,
+        includePaths: _load,
+        outputStyle: prod ? 'compact' : 'expanded'
     };
 
-    return sass(_in, options)
+    return gulp.src(_in)
+        .pipe(sass(options).on('error', sass.logError))
         .on('end', function() {
             gutil.log(gutil.colors.green('√'), 'Saved ' + _in);
         })
-        .on('error', gutil.log)
-        .pipe(gulpif(!prod, sourcemaps.write('.', {
-            sourceRoot: _maps,
-            sourceMappingURL: function() { return _out + '.map'; }
-        })))
+        .pipe(gulpif(!prod, sourcemaps.write('.', { sourceRoot: _maps, sourceMappingURL: function() { return _out + '.map'; }})))
         .pipe(rename(_out))
         .pipe(gulp.dest(_dest));
 };
@@ -178,7 +180,7 @@ var compileJS = function(app, watching) {
 
 
     if (watching) {
-        bundle = watchify(bundle);
+        bundle = watchifyModule(bundle);
         bundle.on('log', function(msg) {
             var bytes = msg.match(/^(\d{1,})\s/)[1];
             msg = msg.replace(/^\d{1,}\sbytes/, convertBytes(bytes));
@@ -232,13 +234,13 @@ var minifyJS = function() {
     return merge(streams);
 };
 
-gulp.task('minify', function() {
+function minify() {
     if (!prod) { return; }
 
     return minifyJS();
-});
+}
 
-gulp.task('watchify', function() {
+function watchify() {
     if (watchType != 'js' && watchType != 'all') { return; }
     watch = true;
 
@@ -248,27 +250,28 @@ gulp.task('watchify', function() {
         return compileJS(app, true);
     });
 
-});
+}
 
-gulp.task('js', function() {
+function js() {
     var streams = [];
     paths.js.forEach(function(app) {
         streams.push(compileJS(app));
     });
 
     return merge(streams);
-});
+}
 
-gulp.task('css', function(done) {
+function css(done) {
     var streams = [];
     paths.css.forEach(function(app) {
         streams.push(compileCSS(app, done));
     });
 
     return merge(streams);
-});
+}
 
-gulp.task('watch', ['watchify'], function() {
+exports.watchify = watchify;
+exports.watch = gulp.series(watchify, function() {
     if (watchType != 'css' && watchType != 'all') { return; }
 
     // watch css
@@ -281,5 +284,8 @@ gulp.task('watch', ['watchify'], function() {
     });
 });
 
-gulp.task('all', ['css', 'js', 'minify']);
-gulp.task('default', ['all']);
+exports.css = css;
+exports.js = js;
+exports.minify = minify;
+exports.all = gulp.series(css, js, minify);
+exports.defaults = gulp.series(css, js, minify)

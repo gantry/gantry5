@@ -3,7 +3,7 @@
 {% block particle %}
 
     {% if particle.title %}
-        {{ particle.title|raw }}
+        <div class="g-loginform-title">{{ particle.title|raw }}</div>
     {% endif %}
 
     <div class="g-loginform {{ particle.class|e }}">

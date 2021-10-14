@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,45 +16,39 @@ namespace Gantry\Component\Assignments;
 
 use Gantry\Component\Config\CompiledConfig;
 use Gantry\Component\Config\ConfigFileFinder;
-use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\YamlFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class AbstractAssignments
+ * @package Gantry\Component\Assignments
+ */
 abstract class AbstractAssignments
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $configuration;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $className = '\Gantry\%s\Assignments\Assignments%s';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $platform;
 
-    /**
-     * @var AssignmentFilter
-     */
+    /** @var AssignmentFilter|null */
     protected $filter;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $candidates;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $page;
 
+    /** @var callable */
+    protected $specialFilterMethod;
+
     /**
-     * @param string $configuration
+     * @param string|null $configuration
      */
     public function __construct($configuration = null)
     {
@@ -62,6 +57,8 @@ abstract class AbstractAssignments
 
     /**
      * Get list of assignment items.
+     *
+     * @return array
      */
     public function get()
     {
@@ -94,27 +91,29 @@ abstract class AbstractAssignments
     /**
      * List matching outlines sorted by score.
      *
-     * @param array $candidates
+     * @param array|null $candidates
      * @return array
      */
     public function scores(array $candidates = null)
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
-        return $this->filter->scores($candidates, $this->page);
+
+        return $this->filter->scores($candidates, $this->page, $this->specialFilterMethod);
     }
 
     /**
      * List matching outlines with matched assignments.
      *
-     * @param array $candidates
+     * @param array|null $candidates
      * @return array
      */
     public function matches(array $candidates = null)
     {
         $this->init();
         $candidates = $candidates ?: $this->candidates;
-        return $this->filter->matches($candidates, $this->page);
+
+        return $this->filter->matches($candidates, $this->page, $this->specialFilterMethod);
     }
 
     /**
@@ -130,12 +129,13 @@ abstract class AbstractAssignments
         $locator = $gantry['locator'];
 
         // Find all the assignment files.
-        $paths = $locator->findResources("gantry-config://");
+        $paths = $locator->findResources('gantry-config://');
         $files = (new ConfigFileFinder)->locateFileInFolder('assignments', $paths);
 
         // Make sure that base or system outlines aren't in the list.
         foreach ($files as $key => $array) {
-            if ($key && (((string)$key[0]) === '_' || $key === 'default')) {
+            $key = (string)$key;
+            if ($key === 'default' || strpos($key, '_') === 0) {
                 unset($files[$key]);
             }
         }
@@ -176,9 +176,10 @@ abstract class AbstractAssignments
      * Filter assignments data.
      *
      * @param array $data
+     * @param bool $minimize
      * @return array
      */
-    public function filter(array $data)
+    public function filter(array $data, $minimize = false)
     {
         $types = [];
         foreach ($this->types() as $type) {
@@ -194,14 +195,22 @@ abstract class AbstractAssignments
                             if (!$value) {
                                 unset($group[$key]);
                             } else {
-                                $group[$key] = (bool)$value;
+                                $group[$key] = (bool) $value;
                             }
                         }
                         if (empty($group)) {
                             unset($type[$gname]);
                         }
+                    } else {
+                        $group = (bool) $group;
                     }
                 }
+                unset($group);
+                if ($minimize && empty($type)) {
+                    unset($data[$tname]);
+                }
+            } else {
+                $type = (bool) $type;
             }
         }
 
@@ -269,7 +278,7 @@ abstract class AbstractAssignments
     /**
      * Set extra options for assignments.
      *
-     * @param $value
+     * @param mixed $value
      */
     public function setAssignment($value)
     {

@@ -1,8 +1,11 @@
 {% extends "partials/page_head.html.twig" %}
 
 {% block head_application -%}
+    <meta charset="utf-8" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ errorcode|default(500) }} {{ error|default('GANTRY5_ENGINE_UNKNOWN_ERROR'|trans) }}</title>
+    {% do gantry.document.errorPage(true) -%}
+    {% do gantry.platform.finalize() -%}
     {{ gantry.styles('head', true)|join("\n    ")|raw }}
     {{ gantry.scripts('head', true)|join("\n    ")|raw }}
 {%- endblock %}

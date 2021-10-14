@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,6 +14,8 @@
 
 namespace Gantry\Framework;
 
+use Gantry\Component\Config\BlueprintForm;
+use Gantry\Component\Config\Config;
 use Gantry\Component\File\CompiledYamlFile;
 use RocketTheme\Toolbox\ArrayTraits\ArrayAccess;
 use RocketTheme\Toolbox\ArrayTraits\Export;
@@ -20,28 +23,24 @@ use RocketTheme\Toolbox\ArrayTraits\ExportInterface;
 use RocketTheme\Toolbox\ArrayTraits\Iterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Atoms
+ * @package Gantry\Framework
+ */
 class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 {
     use ArrayAccess, Iterator, Export;
 
-    /**
-     * @var  string
-     */
+    /** @var string */
     protected $name;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $ids;
+    /** @var bool */
+    protected $inherit = false;
 
-    /**
-     * @var array|static[]
-     */
+    /** @var static[] */
     protected static $instances;
 
     /**
@@ -52,7 +51,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         if (!isset(static::$instances[$outline])) {
             $file = CompiledYamlFile::instance("gantry-theme://config/{$outline}/page/head.yaml");
-            $head = $file->content();
+            $head = (array)$file->content();
             static::$instances[$outline] = new static(isset($head['atoms']) ? $head['atoms'] : [], $outline);
             $file->free();
 
@@ -71,6 +70,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $this->name = $name;
         $this->items = array_filter($atoms);
+        $this->inherit = file_exists('gantry-admin://blueprints/layout/inheritance/atom.yaml');
 
         foreach ($this->items as &$item) {
             if (!empty($item['id'])) {
@@ -79,6 +79,9 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         }
     }
 
+    /**
+     * @return $this
+     */
     public function init()
     {
         foreach ($this->items as &$item) {
@@ -145,7 +148,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
         $this->init();
 
         foreach ($this->items as &$item) {
-            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] == $old && isset($item['inherit']['atom'])) {
+            if (!empty($item['inherit']['outline']) && $item['inherit']['outline'] === $old && isset($item['inherit']['atom'])) {
                 if ($new && ($ids === null || isset($ids[$item['inherit']['atom']]))) {
                     $item['inherit']['outline'] = $new;
                 } else {
@@ -168,7 +171,7 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
 
             if ($loadPath && $savePath) {
                 $file = CompiledYamlFile::instance($loadPath);
-                $head = $file->content();
+                $head = (array)$file->content();
                 $head['atoms'] = $this->update()->toArray();
                 $file->free();
 
@@ -205,6 +208,119 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     }
 
     /**
+     * @param string $type
+     * @param array $data
+     * @return Config
+     */
+    public function createAtom($type, array $data = [])
+    {
+        $self = $this;
+
+        $callable = static function () use ($self, $type) {
+            return $self->getBlueprint($type);
+        };
+
+        // Create configuration from the data.
+        $item = new Config($data, $callable);
+        $item->def('id', null);
+        $item->def('type', $type);
+        if (!isset($item['title'])) {
+            $item->def('title', $item->blueprint()->get('name'));
+        }
+        $item->def('attributes', []);
+        $item->def('inherit', []);
+
+        return $item;
+    }
+
+    /**
+     * @param string $type
+     * @return BlueprintForm
+     */
+    public function getBlueprint($type)
+    {
+        $blueprint = BlueprintForm::instance($type, 'gantry-blueprints://particles');
+
+        if ($this->inherit) {
+            $blueprint->set('form/fields/_inherit', ['type' => 'gantry.inherit']);
+        }
+
+        return $blueprint;
+    }
+
+    /**
+     * @param string $type
+     * @param string $id
+     * @param bool $force
+     * @return BlueprintForm|null
+     */
+    public function getInheritanceBlueprint($type, $id = null, $force = false)
+    {
+        if (!$this->inherit) {
+            return null;
+        }
+
+        $inheriting = $id ? $this->getInheritingOutlines($id) : [];
+        $list = $this->getOutlines($type, false);
+
+        if ($force || (empty($inheriting) && $list)) {
+            $inheritance = BlueprintForm::instance('layout/inheritance/atom.yaml', 'gantry-admin://blueprints');
+            $inheritance->set('form/fields/outline/filter', array_keys($list));
+            $inheritance->set('form/fields/atom/atom', $type);
+
+        } elseif (!empty($inheriting)) {
+            // Already inherited by other outlines.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/inherited.yaml', 'gantry-admin://blueprints');
+            $inheritance->set(
+                'form/fields/_note/content',
+                sprintf($inheritance->get('form/fields/_note/content'), 'atom', ' <ul><li>' . implode('</li> <li>', $inheriting) . '</li></ul>')
+            );
+
+        } elseif ($this->name === 'default') {
+            // Base outline.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/default.yaml', 'gantry-admin://blueprints');
+
+        } else {
+            // Nothing to inherit from.
+            $inheritance = BlueprintForm::instance('layout/inheritance/messages/empty.yaml', 'gantry-admin://blueprints');
+        }
+
+        return $inheritance;
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     */
+    public function getInheritingOutlines($id = null)
+    {
+        /** @var Outlines $outlines */
+        $outlines = Gantry::instance()['outlines'];
+
+        return $outlines->getInheritingOutlinesWithAtom($this->name, $id);
+    }
+
+    /**
+     * @param string $type
+     * @param bool $includeInherited
+     * @return array
+     */
+    public function getOutlines($type, $includeInherited = true)
+    {
+        if ($this->name !== 'default') {
+            /** @var Outlines $outlines */
+            $outlines = Gantry::instance()['outlines'];
+
+            $list = $outlines->getOutlinesWithAtom($type, $includeInherited);
+            unset($list[$this->name]);
+        } else {
+            $list = [];
+        }
+
+        return $list;
+    }
+
+    /**
      * @param array $item
      * @return string
      */
@@ -212,11 +328,12 @@ class Atoms implements \ArrayAccess, \Iterator, ExportInterface
     {
         $type = $item['type'];
 
-        while ($num = rand(1000, 9999)) {
+        do {
+            $num = mt_rand(1000, 9999);
             if (!isset($this->ids["{$type}-{$num}"])) {
                 break;
             }
-        }
+        } while (true);
 
         $id = "{$type}-{$num}";
 

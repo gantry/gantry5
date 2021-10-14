@@ -100,7 +100,7 @@ var Block = new prime({
             icon = child.find('i:first-child');
 
             if (!state && icon) { icon.remove(); }
-            if (state && !icon) { zen('i.fa.fa-circle-o.changes-indicator').top(child); }
+            if (state && !icon) { zen('i.far.fa-circle.changes-indicator').top(child); }
 
             return;
         }

@@ -4,6 +4,10 @@ type: particle
 icon: fa-ellipsis-v
 hidden: false
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:

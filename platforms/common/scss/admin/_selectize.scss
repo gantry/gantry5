@@ -112,7 +112,7 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
         display: inline-block;
         zoom: 1;
         *display: inline;
-        @include ellipsis(215px);
+        @include ellipsis(235px);
     }
     .g-selectize-control.g-multi & > div {
         cursor: pointer;
@@ -239,8 +239,9 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
 
     &:after {
-        content: "\f078";
-        font-family: FontAwesome;
+        content: $fa-chevron-down;
+        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+        font-weight: 900;
         display: block;
         position: absolute;
         top: 50%;
@@ -253,8 +254,9 @@ $selectize-caret-margin-rtl: 0 4px 0 -2px;
     }
 
     &.g-dropdown-active:after {
-        content: "\f077";
-        font-family: FontAwesome;
+        content: $fa-chevron-up;
+        font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+        font-weight: 900;
     }
 }
 

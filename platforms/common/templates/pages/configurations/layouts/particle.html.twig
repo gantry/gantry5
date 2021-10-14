@@ -10,7 +10,7 @@
             {# Settings Tab #}
             <li class="active">
                 <a href="#" id="g-settings-particle-tab" role="presentation" aria-controls="g-settings-particle" role="tab" aria-expanded="true">
-                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('attributes' in item.inherit.include)) ? 'lock' : 'unlock' }}" aria-hidden="true"></i>{% endif %}
                     {% block title %}
                     {{ 'GANTRY5_PLATFORM_PARTICLE'|trans }}
                     {% endblock %}
@@ -20,7 +20,7 @@
             {% if extra %}
             <li>
                 <a href="#" id="g-settings-block-tab" role="presentation" aria-controls="g-settings-block" role="tab" aria-expanded="false">
-                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}"></i>{% endif %}
+                    {% if inheritable %}<i class="fa fa-fw fa-{{ (item.inherit and ('block' in item.inherit.include)) ? 'lock' : 'unlock' }}" aria-hidden="true"></i>{% endif %}
                     {{ 'GANTRY5_PLATFORM_BLOCK'|trans }}
                 </a>
             </li>

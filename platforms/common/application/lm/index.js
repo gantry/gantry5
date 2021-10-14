@@ -550,12 +550,12 @@ ready(function() {
 
                             if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
-                            if (particle.getType() != 'section') {
+                            if (particle.getType() !== 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
                             }
 
-                            if (particle.getType() == 'position') {
+                            if (particle.getType() === 'position') {
                                 particle.updateKey();
                             }
 

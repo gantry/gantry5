@@ -1,5 +1,0 @@
-debug: false
-production: false
-use_media_folder: false
-asset_timestamps: true
-asset_timestamps_period: 7

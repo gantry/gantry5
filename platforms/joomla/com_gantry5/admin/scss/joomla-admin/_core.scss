@@ -12,6 +12,10 @@ body.com_gantry5 {
     color: $light-gray;
     background-color: $body-bg !important;
 
+    #content { // Joomla 4
+        padding: 0px;
+    }
+
     #g5-container {
         @media (max-width: 767px) {
             margin-left: -20px;
@@ -29,16 +33,20 @@ body.com_gantry5 {
         text-decoration: none;
     }
 
-    .btn-subhead, .subhead-collapse.collapse, .header {
-    	display: none;
+    .btn-subhead, .subhead-collapse.collapse, .header, .subhead { // .subhead is for Joomla 4
+        display: none;
+    }
+
+    #header { // Joomla 4
+        display: block;
     }
 
     .container-main {
-    	padding: 0;
+        padding: 0;
     }
 
     #status {
-    	box-shadow: none !important;
+        box-shadow: none !important;
     }
 
     #footer {
@@ -78,7 +86,7 @@ body.com_gantry5 {
     }
 }
 
-body.com_modules, body.com_menus {
+body.com_modules, body.com_advancedmodules, body.com_menus {
     #g5-container {
         font-size: inherit; // inherit from the platform
 

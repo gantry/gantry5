@@ -1,7 +1,7 @@
 version: 2
 
 preset:
-  image: gantry-admin://images/layouts/3-col-left.png
+  image: 'gantry-admin://images/layouts/3-col-left.png'
 
 layout:
   /header/:

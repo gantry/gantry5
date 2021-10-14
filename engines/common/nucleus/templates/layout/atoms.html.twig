@@ -1,7 +1,7 @@
-{% set invisible %}
+{%- set invisible %}
     {% if segment.children %}
         {% for segment in segments %}
             {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
         {% endfor %}
     {% endif %}
-{% endset %}
+{% endset -%}

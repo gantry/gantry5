@@ -1,0 +1,11 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block particle %}
+    {% try %}
+
+        {% include 'partials/breadcrumbs.html.twig' %}
+
+    {% catch %}
+        <div class="alert alert-error"><strong>Error:</strong> Please enable breadcrumbs plugin!</div>
+    {% endtry %}
+{% endblock %}

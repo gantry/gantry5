@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -15,30 +16,28 @@ namespace Gantry\Component\Position;
 
 use Gantry\Component\Collection\Collection;
 use Gantry\Component\File\CompiledYamlFile;
-use Gantry\Component\Filesystem\Folder;
-use Gantry\Component\Layout\Layout;
-use RocketTheme\Toolbox\File\YamlFile;
+use Gantry\Framework\Outlines;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use RocketTheme\Toolbox\DI\Container;
 
+/**
+ * Class Positions
+ * @package Gantry\Component\Position
+ */
 class Positions extends Collection
 {
-    /**
-     * @var array|Position[]
-     */
+    /** @var array|Position[] */
     protected $items;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
-
-    /**
-     * @var Container
-     */
+    /** @var Container */
     protected $container;
 
+    /**
+     * Positions constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -46,7 +45,6 @@ class Positions extends Collection
 
     /**
      * @param string $path
-     *
      * @return $this
      * @throws \RuntimeException
      */
@@ -57,27 +55,31 @@ class Positions extends Collection
 
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
+        if ($locator->findResource($path)) {
+            /** @var UniformResourceIterator $iterator */
+            $iterator = $locator->getIterator($path);
 
-        /** @var UniformResourceIterator $iterator */
-        $iterator = $locator->getIterator($path);
+            /** @var UniformResourceIterator $info */
+            foreach ($iterator as $info) {
+            if (!$info->isFile() || $info->getExtension() !== 'yaml') {
+                    continue;
+                }
 
-        /** @var UniformResourceIterator $info */
-        foreach ($iterator as $info) {
-            if (!$info->isFile() || $info->getExtension() != 'yaml') {
-                continue;
-            }
+                $name = $info->getBasename('.yaml');
+            $position = (array)CompiledYamlFile::instance($info->getPathname())->content();
 
-            $name = $info->getBasename('.yaml');
-            $position = CompiledYamlFile::instance($info->getPathname())->content();
-
-            // Only use filesystem position if it it is properly set up.
-            if ($position) {
-                $positions[$name] = new Position($name, $position);
+                // Only use filesystem position if it it is properly set up.
+            if (!empty($position)) {
+                    $positions[$name] = new Position($name, $position);
+                }
             }
         }
 
+        /** @var Outlines $outlines */
+        $outlines = $this->container['outlines'];
+
         // Add empty positions from the layouts.
-        foreach ($this->container['outlines']->positions() as $name => $title) {
+        foreach ($outlines->positions() as $name => $title) {
             if (!isset($positions[$name])) {
                 $positions[$name] = new Position($name, ['title' => $title]);
             }
@@ -139,16 +141,17 @@ class Positions extends Collection
 
     /**
      * @param string $title
+     * @param string $id
      *
      * @return string
      * @throws \RuntimeException
      */
-    public function create($title = 'Untitled')
+    public function create($title = 'Untitled', $id = null)
     {
-        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $title));
+        $name = strtolower(preg_replace('|[^a-z\d_-]|ui', '_', $id ?: $title));
 
         if (!$name) {
-            throw new \RuntimeException("Position needs a name", 400);
+            throw new \RuntimeException('Position needs a name', 400);
         }
 
         $name = $this->findFreeName($name);
@@ -235,7 +238,7 @@ class Positions extends Collection
 
         $name  = $id;
         $count = 0;
-        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|ui', $id, $matches)) {
+        if (preg_match('|^(?:_)?(.*?)(?:_(\d+))?$|u', $id, $matches)) {
             $matches += ['', '', ''];
             list (, $name, $count) = $matches;
         }

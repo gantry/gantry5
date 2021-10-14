@@ -4,7 +4,7 @@
     {% for feature in page.header.features %}
            <div class="feature">
             {% if feature.icon %}
-            <i class="fa fa-fw fa-{{ feature.icon }}"></i>
+            <i class="fa fa-fw fa-{{ feature.icon }}" aria-hidden="true"></i>
             <div class="feature-content icon-offset">
             {% else %}
             <div class="feature-content">

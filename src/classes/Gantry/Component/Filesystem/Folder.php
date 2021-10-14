@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -94,9 +95,10 @@ abstract class Folder
         $pathParts[] = $lastPart;
         $path = str_repeat('../', count($baseParts)) . implode('/', $pathParts);
 
+        /** @phpstan-ignore-next-line */
         return '' === $path
             || '/' === $path[0]
-            || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
+            || (false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos))
             ? "./$path" : $path;
     }
 
@@ -118,15 +120,15 @@ abstract class Folder
     /**
      * Return recursive list of all files and directories under given path.
      *
-     * @param  string            $path
+     * @param  string|false      $path
      * @param  array             $params
      * @return array
      * @throws \RuntimeException
      */
-    public static function all($path, array $params = array())
+    public static function all($path, array $params = [])
     {
         if ($path === false) {
-            throw new \RuntimeException("Path to {$path} doesn't exist.");
+            throw new \RuntimeException("Path doesn't exist.");
         }
 
         $compare = isset($params['compare']) ? 'get' . $params['compare'] : null;
@@ -148,12 +150,12 @@ abstract class Folder
             $iterator = new \FilesystemIterator($path);
         }
 
-        $results = array();
+        $results = [];
 
         /** @var \RecursiveDirectoryIterator $file */
         foreach ($iterator as $file) {
             // Ignore hidden files.
-            if ($file->getFilename()[0] == '.') {
+            if ($file->getFilename()[0] === '.') {
                 continue;
             }
             if (!$folders && $file->isDir()) {
@@ -172,7 +174,7 @@ abstract class Folder
                     $filter = $filters['key'];
                     $pre = !empty($filters['pre-key']) ? $filters['pre-key'] : '';
                     if (is_callable($filter)) {
-                        $fileKey = $pre . call_user_func($filter, $fileKey);
+                        $fileKey = $pre . $filter($fileKey);
                     } else {
                         $fileKey = $pre . preg_replace($filter, '', $fileKey);
                     }
@@ -180,7 +182,7 @@ abstract class Folder
                 if (isset($filters['value'])) {
                     $filter = $filters['value'];
                     if (is_callable($filter)) {
-                        $filePath = call_user_func($filter, $file);
+                        $filePath = $filter($file);
                     } else {
                         $filePath = preg_replace($filter, '', $filePath);
                     }
@@ -286,7 +288,9 @@ abstract class Folder
      */
     public static function delete($target, $include_target = true)
     {
-        if (!$target) { return; }
+        if (!$target) {
+            return;
+        }
 
         if (!is_dir($target)) {
             throw new \RuntimeException('Cannot delete non-existing folder.');
@@ -310,7 +314,6 @@ abstract class Folder
     /**
      * @param  string  $folder
      * @throws \RuntimeException
-     * @internal
      */
     public static function create($folder)
     {
@@ -321,8 +324,15 @@ abstract class Folder
         $success = @mkdir($folder, 0777, true);
 
         if (!$success) {
+            // Take yet another look, make sure that the folder doesn't exist.
+            clearstatcache(true, $folder);
+            if (is_dir($folder)) {
+                return;
+            }
+
             $error = error_get_last();
-            throw new \RuntimeException($error['message']);
+
+            throw new \RuntimeException($error['message'] ?: 'Cannot create folder');
         }
     }
 
@@ -335,12 +345,12 @@ abstract class Folder
     protected static function doDelete($folder, $include_target = true)
     {
         // Special case for symbolic links.
-        if (is_link($folder)) {
+        if ($include_target && is_link($folder)) {
             return @unlink($folder);
         }
 
         // Go through all items in filesystem and recursively remove everything.
-        $files = array_diff(scandir($folder), array('.', '..'));
+        $files = array_diff(scandir($folder), ['.', '..']);
         foreach ($files as $file) {
             $path = "{$folder}/{$file}";
             (is_dir($path)) ? self::doDelete($path) : @unlink($path);

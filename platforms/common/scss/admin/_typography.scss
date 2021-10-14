@@ -46,7 +46,7 @@
         font-size: $core-font-size;
     }
 
-    font-weight: 300;
+    font-weight: 400;
     font-family: $font-family-default;
 
     // Headings
@@ -82,6 +82,18 @@
         color: $red;
         text-decoration: underline;
         border-bottom: 1px dotted $red;
+    }
+
+    .theme-title > * {
+        display: inline-block;
+        line-height: 1rem;
+
+        &.fa-tint {
+            margin-top: 5px;
+        }
+    }
+    .g-ellipsis {
+        @include ellipsis(170px);
     }
 
 }//endwrapper

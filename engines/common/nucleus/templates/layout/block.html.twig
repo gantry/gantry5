@@ -1,11 +1,8 @@
-{% set attr_extra = '' %}
-{% if segment.attributes.extra %}
-    {% for attributes in segment.attributes.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
+{% set attr_extra = segment.attributes.extra|attribute_array %}
+
+{% set class = 'g-block ' ~ segment.attributes.size|toGrid
+    ~ (segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' '))
+    ~ (segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')) %}
 
 {% set html %}
     {% if segment.children %}
@@ -19,10 +16,8 @@
     {% endif %}
 {% endset %}
 
-{% if html|trim %}
-    <div {% if segment.attributes.id %}id="{{ segment.attributes.id|e }}"{% endif %}
-        {{ attr_extra|raw }}
-         class="g-block{{ segment.attributes.variations ? ' ' ~ segment.attributes.variations|join(' ')|e }}{{ segment.attributes.class ? ' ' ~ segment.attributes.class|join(' ')|e }} {{ segment.attributes.size|toGrid }}">
-        {{ html|raw }}
-    </div>
-{% endif %}
+{%- if html|trim %}
+        <div {% if segment.attributes.id %}id="{{ segment.attributes.id }}" {% endif %}class="{{ class }}" {{- attr_extra|raw }}>
+             {{ html|trim|raw }}
+        </div>
+{% endif -%}

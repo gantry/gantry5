@@ -1,0 +1,100 @@
+// TODO: Make sure you have Joomla Bootstrap symlinked
+//  from JOOMLA4_INSTALL/media/vendor/bootstrap/scss
+//  to GANTRY5/engines/joomla/nucleus/scss/vendor/bootstrap5
+
+// Bootstrap functions
+@import "vendor/bootstrap5/functions";
+
+// Variables, Functions and Mixins
+//@import "tools/tools";
+
+// Bootstrap
+@import "vendor/bootstrap5/variables";
+@import "vendor/bootstrap5/bootstrap";
+// Cassiopeia
+@import "vendor/cassiopeia/variables";
+@import "vendor/cassiopeia/css-grid";
+@import "vendor/cassiopeia/modifiers";
+@import "vendor/cassiopeia/form";
+@import "vendor/cassiopeia/searchtools";
+@import "vendor/cassiopeia/modal";
+@import "vendor/cassiopeia/iframe";
+@import "vendor/cassiopeia/icons";
+@import "vendor/cassiopeia/choices";
+@import "vendor/cassiopeia/toolbar";
+
+
+// jQuery Minicolors
+//@import "../../../media/system/scss/jquery-minicolors";
+
+// Blocks
+//@import "blocks/global"; // Leave this first
+//@import "blocks/alerts";
+//@import "blocks/back-to-top";
+//@import "blocks/banner";
+//@import "blocks/footer";
+//@import "blocks/form";
+//@import "blocks/frontend-edit";
+//@import "blocks/header";
+//@import "blocks/icons";
+//@import "blocks/iframe";
+//@import "blocks/layout";
+//@import "blocks/modals";
+//@import "blocks/modifiers";
+//@import "blocks/utilities";
+//@import "blocks/toolbar";
+//@import "blocks/legacy";
+//@import "blocks/tags";
+//@import "blocks/css-grid"; // Last to allow fallback
+
+// Vendor overrides
+//@import "vendor/awesomplete";
+//@import "bootstrap5/buttons";
+//@import "bootstrap5/custom-forms";
+//@import "bootstrap5/collapse";
+//@import "bootstrap5/dropdown";
+//@import "bootstrap5/forms";
+//@import "bootstrap5/lists";
+//@import "bootstrap5/modal";
+//@import "bootstrap5/nav";
+//@import "bootstrap5/pagination";
+//@import "bootstrap5/table";
+//@import "vendor/chosen";
+//@import "vendor/dragula";
+//@import "vendor/metismenu/metismenu";
+//@import "vendor/minicolors";
+//@import "vendor/tinymce";
+
+// Chosen (TEMPORARY)
+.chzn-container-single {
+  width: auto !important;
+}
+
+.chzn-container-multi {
+  width: 100% !important;
+  max-width: 240px;
+}
+.list-inline {
+  margin-left: 0;
+}
+
+.list-inline-item {
+  display: inline-block;
+  .btn {
+    border: 1px solid;
+    padding: 5px 8px;
+  }
+
+  &:not(:last-child) {
+    margin-right: $list-inline-padding;
+  }
+}
+
+.blog figure {
+  margin: 0;
+}
+
+.platform-content.container {
+  max-width: 100% !important;
+}
+

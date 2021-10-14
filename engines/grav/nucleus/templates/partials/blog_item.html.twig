@@ -1,95 +1,104 @@
 <div class="list-item h-entry">
 
-    {% set header_image = page.header.header_image|defined(true) %}
-    {% set header_image_width  = page.header.header_image_width|defined(900) %}
-    {% set header_image_height = page.header.header_image_height|defined(300) %}
-    {% set header_image_file = page.header.header_image_file %}
+    {% if truncate %}
+        {% set image_file = page.header.image.summary.enabled|defined(false) ? (page.header.image.summary.file ?: true) %}
+    {% else %}
+        {% set image_file = page.header.image.text.enabled|defined(false) ? (page.header.image.text.file ?: true) %}
+    {% endif %}
 
     <div class="list-blog-header">
+        {% if image_file %}
+            {% set image = image_file is same as(true) ? page.media.images|first : (image_file ? page.media.images[image_file]) %}
+            {% if image %}
+                {{ image.cropZoom(page.header.image.width|defined(900), page.header.image.height|defined(300)).html|raw }}
+            {% endif %}
+        {% endif %}
+        {% if truncate %}
         {% if page.header.link %}
             <h2 class="p-name">
-                {% if page.header.continue_link is not sameas(false) %}
-                    <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url"></i></a>
+                {% if page.header.continue_link is not same as(false) %}
+                <a href="{{ page.url }}"><i class="fa fa-angle-double-right u-url" aria-hidden="true"></i></a>
                 {% endif %}
                 <a href="{{ page.header.link }}" class="u-url">{{ page.title }}</a>
             </h2>
         {% else %}
             <h2 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
         {% endif %}
+        {% else %}
+            <h2 class="p-name">{{ page.title }}</h2>
+        {% endif %}
 
-        <span class="list-blog-date">
+
+
+        {% if page.taxonomy.tag or show_date  %}
+        <div class="list-blog-meta">
+            {% if show_date %}
+            <i class="far fa-clock" aria-hidden="true"></i>
             <time class="dt-published" datetime="{{ page.date|date("c") }}">
-                <span>{{ page.date|date("d") }}</span>
-                <em>{{ page.date|date("M") }}</em>
+                {{ page.date|date(config.system.pages.dateformat.default) }}
             </time>
-        </span>
-        {% if page.taxonomy.tag %}
-            <span class="tags">
-            {% for tag in page.taxonomy.tag %}
-                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>
-            {% endfor %}
-        </span>
-        {% endif %}
-        {% if header_image %}
-            {% if header_image_file %}
-                {% set header_image_media = page.media.images[header_image_file] %}
-            {% else %}
-                {% set header_image_media = page.media.images|first %}
             {% endif %}
-            {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+            {% if page.taxonomy.tag %} <span class="separator">/</span> {% endif %}
+            {% if page.taxonomy.tag %}
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <span class="tags">
+                {% for tag in page.taxonomy.tag %}
+                <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}" class="p-category">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
         {% endif %}
-
     </div>
 
     <div class="list-blog-padding">
 
-        {% if page.header.continue_link is sameas(false) %}
+    {% if page.header.continue_link is same as(false) %}
         <div class="e-content">
             {{ page.content|raw }}
         </div>
         {% if not truncate %}
-            {% set show_prev_next = true %}
+        {% set show_prev_next = true %}
         {% endif %}
-        {% elseif truncate and page.summary != page.content %}
-            <div class="p-summary e-content">
-                {{ page.summary|raw }}
-                <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
-            </div>
-        {% elseif truncate %}
+    {% elseif truncate and page.summary != page.content %}
+        <div class="p-summary e-content">
+            {{ page.summary|raw }}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
+        </div>
+    {% elseif truncate %}
         <div class="p-summary e-content">
             {% if page.summary != page.content %}
-            {{ page.content|truncate(550)|raw }}
+                    {{ page.content|truncate(550)|raw }}
+            {% else %}
+                    {{ page.content|raw }}
+
+            {% endif %}
+            <p><a class="read-more button" href="{{ page.url }}">{{ display.read_more.label|default('GANTRY5_ENGINE_READMORE'|trans) }}</a></p>
         </div>
-        {% else %}
+    {% else %}
+        <div class="e-content">
             {{ page.content|raw }}
+        </div>
 
+        {% if config.plugins.comments.enabled %}
+            {% include 'partials/comments.html.twig' %}
         {% endif %}
-        <p><a href="{{ page.url }}">{{ 'BLOG.ITEM.READMORE'|t }}</a></p>
-    </div>
-{% else %}
-    <div class="e-content">
-        {{ page.content|raw }}
-    </div>
 
-    {% if config.plugins.comments.enabled %}
-        {% include 'partials/comments.html.twig' %}
-    {% endif %}
-
-    {% set show_prev_next = true %}
+        {% set show_prev_next = true %}
     {% endif %}
 
     {% if show_prev_next %}
 
         <p class="prev-next">
             {% if not page.isFirst %}
-                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left"></i> {{ 'BLOG.ITEM.NEXT_POST'|t }}</a>
+                <a class="button" href="{{ page.nextSibling.url }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ 'GANTRY5_ENGINE_BLOG_ITEM_NEXT_POST'|trans }}</a>
             {% endif %}
 
             {% if not page.isLast %}
-                <a class="button" href="{{ page.prevSibling.url }}">{{ 'BLOG.ITEM.PREV_POST'|t }} <i class="fa fa-chevron-right"></i></a>
+                <a class="button" href="{{ page.prevSibling.url }}">{{ 'GANTRY5_ENGINE_BLOG_ITEM_PREV_POST'|trans }} <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
             {% endif %}
         </p>
     {% endif %}
 
-</div>
+    </div>
 </div>

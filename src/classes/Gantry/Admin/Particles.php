@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,22 +14,41 @@
 
 namespace Gantry\Admin;
 
+use Gantry\Component\Config\BlueprintForm;
 use Gantry\Component\Config\ConfigFileFinder;
 use Gantry\Component\File\CompiledYamlFile;
+use Gantry\Framework\Gantry;
+use Gantry\Framework\Platform;
 use Gantry\Framework\Theme as SiteTheme;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
+/**
+ * Class Particles
+ * @package Gantry\Admin
+ */
 class Particles
 {
+    /** @var Gantry */
     protected $container;
+    /** @var array|null */
     protected $files;
+    /** @var array|null */
     protected $particles;
 
+    /**
+     * Particles constructor.
+     * @param Gantry $container
+     */
     public function __construct($container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @param string $outline
+     * @param string|null $particle
+     * @return bool
+     */
     public function overrides($outline, $particle = null)
     {
         if ($outline === 'default') {
@@ -39,34 +59,44 @@ class Particles
         $locator = $this->container['locator'];
 
         if ($particle) {
-            // PHP 5.4
             $resource = $locator->findResources("gantry-theme://config/{$outline}/particles/{$particle}.yaml");
             return !empty($resource);
         }
 
-        // PHP 5.4
         $resource = $locator->findResources("gantry-theme://config/{$outline}/particles");
         return !empty($resource);
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
-        if (!$this->particles)
-        {
+        if (null ===$this->particles) {
+            /** @var Platform $platform */
+            $platform = $this->container['platform'];
             $files = $this->locateParticles();
 
             $this->particles = [];
             foreach ($files as $key => $fileArray) {
                 $filename = key($fileArray);
                 $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-                $this->particles[$key] = $file->content();
+                $particle = (array)$file->content();
                 $file->free();
+
+                if (empty($particle['dependencies']) || $platform->checkDependencies($particle['dependencies'])) {
+                    $this->particles[$key] = $particle;
+                }
             }
         }
 
         return $this->particles;
     }
 
+    /**
+     * @param array $exclude
+     * @return array
+     */
     public function group($exclude = [])
     {
         $particles = $this->all();
@@ -86,9 +116,13 @@ class Particles
         return $this->sort($list);
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     public function get($id)
     {
-        if ($this->particles[$id]) {
+        if (isset($this->particles[$id])) {
             return $this->particles[$id];
         }
 
@@ -100,13 +134,26 @@ class Particles
 
         $filename = key($files[$id]);
         $file = CompiledYamlFile::instance(GANTRY5_ROOT . '/' . $filename);
-        $particle = $file->content();
+        $particle = (array)$file->content();
         $particle['subtype'] = $id; // TODO: can this be done better or is it fine like that?
         $file->free();
 
         return $particle;
     }
 
+    /**
+     * @param string $id
+     * @return BlueprintForm
+     */
+    public function getBlueprintForm($id)
+    {
+        return BlueprintForm::instance($id, 'gantry-blueprints://particles');
+    }
+
+    /**
+     * @param array $blocks
+     * @return array
+     */
     protected function sort(array $blocks)
     {
         $list = [];
@@ -131,7 +178,11 @@ class Particles
         return $list;
     }
 
-
+    /**
+     * @param array $items
+     * @param array $ordering
+     * @return array
+     */
     protected function sortItems(array $items, array $ordering)
     {
         $list = [];
@@ -148,6 +199,9 @@ class Particles
         return $list;
     }
 
+    /**
+     * @return array
+     */
     protected function locateParticles()
     {
         if (!$this->files) {

@@ -1,7 +1,7 @@
 name: JavaScript Frameworks
 description: Loads selected frameworks for the page.
 type: atom
-icon: fa-file-code-o
+icon: far fa-file-code
 
 form:
   fields:
@@ -14,7 +14,7 @@ form:
     _info:
       type: separator.note
       class: alert alert-info
-      content: <strong>TIP</strong>: Only enable following frameworks if you need them in your own particles or your content.
+      content: '<strong>TIP</strong>: Only enable following frameworks if you need them in your own particles or your content.'
 
     jquery:
       type: container.set

@@ -43,7 +43,7 @@ var initSizes = function() {
         overflow: 'auto'
     });
 
-    if (particles[0].scrollHeight != particles[0].offsetHeight) {
+    if (particles[0].scrollHeight !== particles[0].offsetHeight) {
         particles.addClass('has-scrollbar').style({ 'margin-right': -scrollbarWidth() });
     }
 };
@@ -51,7 +51,7 @@ var initSizes = function() {
 ready(function() {
     initSizes();
 
-    var scrollElement = $(GANTRY_PLATFORM == 'grav' ? '#admin-main .content-padding' : window) || [window],
+    var scrollElement = $(GANTRY_PLATFORM === 'grav' ? '#admin-main .content-padding' : window) || [window],
         scroll        = function() {
             if (!container || !sidebar) { return; }
 
@@ -71,7 +71,7 @@ ready(function() {
                     bottom: 'inherit'
                 });
             } else if (shouldBeFixed && reachedTheLimit) {
-                if (sidebarTallerThanContainer) {
+                if (sidebarTallerThanContainer || (GANTRY_PLATFORM === 'grav' && containerBounds.bottom < sidebarCoords.bottom)) {
                     sidebar.removeClass('particles-fixed').addClass('particles-absolute');
                     sidebar.style({
                         top: 'inherit',

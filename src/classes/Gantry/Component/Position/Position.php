@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -17,15 +18,20 @@ use Gantry\Component\Collection\Collection;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Framework\Gantry;
-use RocketTheme\Toolbox\ResourceLocator\UniformResourceIterator;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
-use Symfony\Component\Yaml\Exception\DumpException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class Position
+ * @package Gantry\Component\Position
+ */
 class Position extends Collection
 {
+    /** @var string */
     public $name;
+    /** @var string */
     public $title;
+    /** @var array */
     protected $modules = [];
 
     /**
@@ -58,7 +64,7 @@ class Position extends Collection
      * Clone position together with its modules. Returns new position.
      *
      * @param string $name
-     * @return Position
+     * @return static
      */
     public function duplicate($name)
     {
@@ -76,17 +82,17 @@ class Position extends Collection
     }
 
     /**
-     * Raname module title
+     * Raname module key
      *
-     * @param string $title
-     * @return $this
+     * @param string $name
+     * @return static
      */
-    public function rename($title)
+    public function rename($name)
     {
-        $this->title = $title;
-        $this->save();
+        $new = $this->duplicate($name);
+        $this->delete();
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -97,7 +103,9 @@ class Position extends Collection
     public function delete()
     {
         $file = $this->file(true);
-        $file->delete();
+        if ($file->exists()) {
+            $file->delete();
+        }
 
         $folder = $this->folder(true);
         if (is_dir($folder)) {
@@ -120,7 +128,7 @@ class Position extends Collection
             $name = ($item instanceof Module) ? $item->name : $item;
 
             $list[] = $name;
-            if (!in_array($name, $this->items)) {
+            if (!in_array($name, $this->items, true)) {
                 $this->add($item);
             }
         }
@@ -137,16 +145,17 @@ class Position extends Collection
 
         return $this;
     }
-    
+
     /**
      * @param Module|string $item
+     * @param string        $name  Temporary name for the module.
      * @return $this
      */
-    public function add($item)
+    public function add($item, $name = null)
     {
         if ($item instanceof Module) {
-            $this->modules[$item->name] = $item;
-            $item = $item->name;
+            $this->modules[$name ?: $item->name] = $item;
+            $item = $name ?: $item->name;
         }
 
         $this->items[] = $item;
@@ -154,7 +163,12 @@ class Position extends Collection
         return $this;
     }
 
-    public function remove($item) {
+    /**
+     * @param array|Module $item
+     * @return $this
+     */
+    public function remove($item)
+    {
         if ($item instanceof Module) {
             $item = $item->name;
         }
@@ -167,7 +181,7 @@ class Position extends Collection
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return Module
      */
     public function get($name)
@@ -183,7 +197,7 @@ class Position extends Collection
      * Returns the value at specified offset.
      *
      * @param string $offset  The offset to retrieve.
-     * @return Module
+     * @return Module|null
      */
     public function offsetGet($offset)
     {
@@ -211,7 +225,7 @@ class Position extends Collection
         if (!$value instanceof Position) {
             throw new \InvalidArgumentException('Value has to be instance of Position');
         }
-        if (is_null($offset)) {
+        if (null === $offset) {
             $this->items[] = $value->name;
             $this->modules[$value->name] = $value;
         } else {
@@ -253,6 +267,7 @@ class Position extends Collection
     }
 
     /**
+     * @param bool $includeModules
      * @return array
      */
     public function toArray($includeModules = false)
@@ -284,7 +299,7 @@ class Position extends Collection
      */
     public function toYaml($inline = 3, $indent = 2, $includeModules = false)
     {
-        return Yaml::dump($this->toArray($includeModules), $inline, $indent, true, false);
+        return Yaml::dump($this->toArray($includeModules), $inline, $indent);
     }
 
     /**
@@ -319,17 +334,25 @@ class Position extends Collection
     }
 
     /**
-     * @param $data
+     * @param array|null $data
      */
     protected function load($data)
     {
         if ($data === null) {
             $file = $this->file();
-            $data = $file->content();
+            $data = (array)$file->content();
             $file->free();
         }
 
         $this->title = isset($data['title']) ? $data['title'] : $this->name;
+
+        if (isset($data['modules'])) {
+            foreach ($data['modules'] as $array) {
+                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: mt_rand());
+            }
+
+            return;
+        }
 
         // Sort modules by ordering, if items are not listed in ordering, use alphabetical order.
         $ordering = isset($data['ordering']) ? array_flip($data['ordering']) : [];
@@ -351,7 +374,7 @@ class Position extends Collection
 
     /**
      * @param  string $name
-     * @return $this
+     * @return Module
      */
     protected function loadModule($name)
     {

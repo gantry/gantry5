@@ -1,5 +1,10 @@
 // Pagination
 .pagination, .page-links {
+    @include breakpoint(mobile-only) {
+        .pagination-list-item {
+            margin-bottom: 0.8rem;
+        }
+    }
 
     .page-numbers, .prev, .next {
         padding: 0.3rem 1rem;

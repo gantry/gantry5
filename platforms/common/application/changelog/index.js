@@ -45,7 +45,7 @@ ready(function() {
                         section.parent('li').after(section.parent('ol').find('> li'));
                     }
 
-                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"]').bottom(section);
+                    zen('i[class="fa g-changelog-toggle fa-fw fa-' + status + '"][aria-hidden="true"]').bottom(section);
 
                     if (collapsed) {
                         section.nextSibling().style({

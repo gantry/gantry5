@@ -2,13 +2,9 @@ version: 2
 preset:
   image: 'gantry-admin://images/layouts/default.png'
   name: home_-_particles
-  timestamp: 1465417397
+  timestamp: 1475608600
 layout:
-  /navigation/:
-    -
-      - 'logo-9608 15'
-      - 'menu-6409 65'
-      - 'social-3171 20'
+  navigation: {  }
   /header/:
     -
       - owlcarousel-2455
@@ -36,23 +32,17 @@ layout:
         'mainbar 75': {  }
       -
         'sidebar 25': {  }
-  /footer/:
-    -
-      - 'logo-9571 10'
-      - 'copyright-1736 30'
-      - 'horizontalmenu-9034 45'
-      - 'totop-8670 15'
-  /offcanvas/:
-    -
-      - mobile-menu-5697
+  footer: {  }
+  offcanvas: {  }
 structure:
   navigation:
     type: section
-    attributes:
-      boxed: ''
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
   header:
-    type: section
-    subtype: header
     attributes:
       boxed: ''
       class: g-flushed
@@ -91,19 +81,18 @@ structure:
     attributes:
       boxed: ''
   footer:
-    type: section
-    subtype: footer
-    attributes:
-      boxed: ''
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
   offcanvas:
-    attributes:
-      boxed: ''
+    inherit:
+      outline: default
+      include:
+        - attributes
+        - children
 content:
-  logo-9608:
-    title: 'Logo / Image'
-  social-3171:
-    block:
-      class: g-social-header
   owlcarousel-2455:
     title: 'Owl Carousel'
     attributes:
@@ -134,7 +123,7 @@ content:
   custom-3119:
     title: Features
     attributes:
-      html: "<div class=\"fp-features\">\n    <div class=\"g-grid\">\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-joomla\"></i>\n                    <h4 class=\"card-title\">Joomla</h4>\n                    <p class=\"card-text\">Bring your website to life with one of the most powerful and popular theming frameworks for Joomla.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-wordpress\"></i>\n                    <h4 class=\"card-title\">WordPress</h4>\n                    <p class=\"card-text\">Gantry extends WordPress' native functionality, empowering users to manipulate virtually every aspect of their visitors' experience.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-grav\"></i>\n                    <h4 class=\"card-title\">Grav</h4>\n                    <p class=\"card-text\">Gantry 5 is the first theming framework for Grav, designed by members of the same team that developed the CMS.</p>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+      html: "<div class=\"fp-features\">\n    <div class=\"g-grid\">\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-joomla fab fab-joomla\"></i>\n                    <h4 class=\"card-title\">Joomla</h4>\n                    <p class=\"card-text\">Bring your website to life with one of the most powerful and popular theming frameworks for Joomla.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-wordpress fab fab-wordpress\"></i>\n                    <h4 class=\"card-title\">WordPress</h4>\n                    <p class=\"card-text\">Gantry extends WordPress' native functionality, empowering users to manipulate virtually every aspect of their visitors' experience.</p>\n                </div>\n            </div>\n        </div>\n        <div class=\"g-block size-33-3\">\n            <div class=\"card\">\n                <div class=\"card-block\">\n                    <i class=\"fa fa-grav fab fab-grav\"></i>\n                    <h4 class=\"card-title\">Grav</h4>\n                    <p class=\"card-text\">Gantry 5 is the first theming framework for Grav, designed by members of the same team that developed the CMS.</p>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
     block:
       variations: center
   contenttabs-3854:
@@ -205,25 +194,3 @@ content:
       html: "<div class=\"fp-multi-column-text\">\n    <h2 class=\"g-title\">Develop CMS themes quickly and efficiently</h2>\n    <div class=\"g-grid\">\n        <div class=\"g-block size-50\">\n            <p>\n                Helium was crafted with love by the <a href=\"http://rockettheme.com\">RocketTheme</a> team to showcase the capabilities of the Gantry 5 framework. Helium is open source and available for free under a dual license system (<a href=\"http://www.opensource.org/licenses/mit-license.php\">MIT</a> or <a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\">GPL version 2 or later</a>). You do not have to keep the Gantry or RocketTheme links and logos in the front end, however, you must ensure that all copyright notices in the code are retained.\n            </p>\n        </div>\n        <div class=\"g-block size-50\">\n            <p>\n                Documentation for Gantry 5 is available on the <a href=\"http://docs.gantry.org\">official Gantry website</a>. You can submit any issues or feature requests for Gantry through <a href=\"http://github.com/gantry/gantry5\">GitHub</a>. A chat room has been set up using <a href=\"https://gitter.im/gantry/gantry5\">Gitter</a> where you can go to talk about the project with developers, contributors, and other members of the community. This is the best place to go to get quick tips and discuss features with others.\n            </p>\n        </div>\n    </div>\n</div>"
     block:
       variations: title-center
-  logo-9571:
-    title: 'Logo / Image'
-    attributes:
-      svg: '<svg width="100%" height="100%" viewBox="0 0 30 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;"><path id="logo-footer" d="M14.937,0.096l14.882,7.044l0,18.089l-14.882,7.044l-14.883,-7.044l0,-18.089l14.883,-7.044ZM25.412,18.086c0.024,-0.138 0.046,-0.324 0.064,-0.556c0.018,-0.233 0.027,-0.469 0.027,-0.708c0,-0.654 -0.091,-1.267 -0.275,-1.839c-0.183,-0.572 -0.455,-1.066 -0.815,-1.481c-0.361,-0.414 -0.797,-0.741 -1.311,-0.98c-0.513,-0.239 -1.099,-0.359 -1.759,-0.359c-0.758,0 -1.421,0.135 -1.989,0.406c-0.568,0.27 -1.045,0.638 -1.43,1.103c-0.384,0.466 -0.675,1.013 -0.87,1.641c-0.196,0.629 -0.293,1.302 -0.293,2.019c0,0.729 0.094,1.402 0.284,2.018c0.189,0.616 0.482,1.147 0.879,1.594c0.398,0.446 0.911,0.795 1.54,1.047c0.629,0.251 1.384,0.377 2.264,0.377c1.197,0 2.272,-0.189 3.226,-0.566c-0.013,-0.402 -0.068,-0.779 -0.165,-1.132c-0.098,-0.352 -0.214,-0.654 -0.349,-0.905c-0.391,0.151 -0.803,0.267 -1.237,0.349c-0.434,0.082 -0.858,0.123 -1.274,0.123c-0.757,0 -1.368,-0.17 -1.833,-0.51c-0.464,-0.339 -0.721,-0.886 -0.769,-1.641l6.085,0ZM11.995,16.275l0,5.867c0.452,0.075 0.904,0.113 1.356,0.113c0.428,0 0.874,-0.038 1.338,-0.113l0,-13.563c-0.464,-0.075 -0.916,-0.113 -1.356,-0.113c-0.44,0 -0.886,0.038 -1.338,0.113l0,5.32l-4.417,0l0,-5.32c-0.465,-0.075 -0.917,-0.113 -1.357,-0.113c-0.439,0 -0.885,0.038 -1.338,0.113l0,13.563c0.453,0.075 0.905,0.113 1.357,0.113c0.427,0 0.873,-0.038 1.338,-0.113l0,-5.867l4.417,0ZM23.047,16.219l-3.702,0c0.061,-0.642 0.25,-1.138 0.568,-1.49c0.318,-0.353 0.782,-0.529 1.393,-0.529c0.538,0 0.956,0.186 1.256,0.557c0.299,0.371 0.461,0.858 0.485,1.462Z"/></svg>'
-  horizontalmenu-9034:
-    title: 'Horizontal Menu'
-    attributes:
-      items:
-        -
-          text: Gantry
-          link: 'http://gantry.org'
-          name: Gantry
-        -
-          text: Documentation
-          link: 'http://docs.gantry.org'
-          name: Documentation
-        -
-          text: Download
-          link: 'http://gantry.org/downloads'
-          name: Download
-  totop-8670:
-    title: 'To Top'

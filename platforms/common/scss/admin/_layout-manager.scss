@@ -107,7 +107,7 @@ $atom: #9055AF;
             }
 
             > .section {
-                position: static !important;
+                position: relative !important;
             }
         }
 
@@ -232,8 +232,9 @@ $atom: #9055AF;
                 }
 
                 &:not(:empty):not(.no-hover):before {
-                    font-family: FontAwesome, sans-serif;
-                    content: "\f0c9";
+                    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+                    font-weight: 900;
+                    content: $fa-bars;
                     border-radius: 3px 0 0 3px;
                     left: -21px;
                     cursor: move;
@@ -241,8 +242,9 @@ $atom: #9055AF;
                 }
 
                 &:not(:empty):not(.no-hover):not(.no-gear):after {
-                    font-family: FontAwesome, sans-serif;
-                    content: "\f0db";
+                    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
+                    font-weight: 900;
+                    content: $fa-columns;
                     border-radius: 0 3px 3px 0;
                     right: -21px;
                     border-left: 0 !important;
@@ -541,7 +543,7 @@ $atom: #9055AF;
         }
 
         .particle-size {
-            font-weight: 300;
+            font-weight: 400;
             font-size: $core-font-size + 0.2;
             vertical-align: middle;
             color: $core-text;
@@ -735,7 +737,7 @@ $atom: #9055AF;
             @include size(50px 50px);
             line-height: 50px;
             margin: 0 auto;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         span {

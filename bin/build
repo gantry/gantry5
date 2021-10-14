@@ -1,0 +1,60 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2017 RocketTheme, LLC
+ * @license   Dual License: MIT or GNU/GPLv2 and later
+ *
+ * http://opensource.org/licenses/MIT
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Gantry Framework code that extends GPL code is considered GNU/GPLv2 and later
+ */
+
+setlocale(LC_ALL, ['en_GB.utf8', 'en_GB']);
+date_default_timezone_set('America/Denver');
+chdir(__DIR__ . '/builder');
+
+$hasVersion = false;
+$isProd = true;
+foreach ($argv as $arg) {
+    if (strpos($arg, '-') === 0) {
+        if (strpos($arg, '-Dxml.version=') === 0) {
+            $hasVersion = true;
+        }
+    } elseif (strpos($arg, 'dev') !== false) {
+        $isProd = false;
+    }
+}
+
+$base = dirname(__DIR__);
+if (false === $hasVersion) {
+    $file = fopen("{$base}/CHANGELOG.md",'rb');
+    if (preg_match('/^# (\d\.\d+.\d+(-[a-z0-9.]+)?)\s*$/i', fgets($file), $matches) !== 1) {
+        echo 'First line of CHANGELOG.md has wrong Gantry version format, aborting';
+        return 1;
+    }
+    $version = $matches[1];
+
+    if (false === $isProd && is_file("{$base}/.git/HEAD")) {
+        $head = preg_replace('!^ref: (\S+)\s+$!m', '\\1', file_get_contents("{$base}/.git/HEAD"));
+        $branch = basename($head);
+        $commit = is_file("{$base}/.git/{$head}") ? trim(file_get_contents("{$base}/.git/{$head}")) : '';
+        $commitShort = substr($commit, 0, 9);
+        if ($branch !== 'develop') {
+            $branch = 'dev-' . $branch;
+        }
+        if (!strpos($version, '-dev')) {
+            $version .= '-dev';
+        }
+        $version .= '-' . $commitShort;
+
+        $argv[] = '-Dstr.fileversion=_' . $branch;
+        $argv[] = '-Dcommit=' . $commit;
+    }
+
+    $argv[] = '-Dxml.version=' . $version;
+}
+
+require_once __DIR__ . '/builder/vendor/bin/phing';

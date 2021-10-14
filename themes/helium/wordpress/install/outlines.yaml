@@ -2,6 +2,6 @@ default:
   title: Default
   preset: default
 
-home:
-  title: Home - Particles
+home_-_particles:
+  title: 'Home - Particles'
   preset: home_-_particles

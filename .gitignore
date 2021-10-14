@@ -1,5 +1,5 @@
 # OS Generated
-.DS_Store*
+.DS_Store
 ehthumbs.db
 Thumbs.db
 
@@ -7,26 +7,26 @@ Thumbs.db
 .idea
 
 # Composer
-bin/**/composer.lock
-bin/**/vendor/**
-src/vendor/**
-src/platforms/*/vendor
-platforms/*/*debugbar*/vendor
+**/vendor/**
+!**/scss/vendor/**
+
+# Builds
+bin/build/tmp
+bin/build/package
+dist
+
+# Tester
+bin/tester/cache
+bin/tester/tests
 
 # Symbolic links in admin
-platforms/joomla/com_gantry5/admin/common
-platforms/wordpress/gantry5/admin/common
-platforms/grav/gantry5/admin/common
-platforms/*/*/common
+platforms/*/*/admin/common
 platforms/*/*/src
 platforms/*/*/assets
 platforms/*/*/engines
 
 # Symbolic links in themes
 themes/*/*/common
-
-themes/*/*/src
-themes/*/*/cache
 themes/*/*/custom
 
 # Compiled
@@ -34,4 +34,6 @@ themes/*/*/custom
 **/*.map
 **/node_modules/*
 platforms/**/cache
+themes/**/cache
 npm-debug.log
+.vscode/launch.json

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -16,6 +17,8 @@ namespace Gantry\Component\Theme;
 use Gantry\Component\Config\Config;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
+use Twig\Environment;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Class ThemeTrait
@@ -39,16 +42,16 @@ interface ThemeInterface
     /**
      * Define twig environment.
      *
-     * @param \Twig_Environment $twig
-     * @param \Twig_LoaderInterface $loader
-     * @return \Twig_Environment
+     * @param Environment $twig
+     * @param LoaderInterface $loader
+     * @return Environment
      */
-    public function extendTwig(\Twig_Environment $twig, \Twig_LoaderInterface $loader = null);
+    public function extendTwig(Environment $twig, LoaderInterface $loader = null);
 
     /**
      * Returns renderer.
      *
-     * @return \Twig_Environment
+     * @return Environment
      */
     public function renderer();
 
@@ -59,7 +62,7 @@ interface ThemeInterface
      * @param array $context
      * @return string
      */
-    public function render($file, array $context = array());
+    public function render($file, array $context = []);
 
     // ThemeTrait class
 
@@ -176,7 +179,7 @@ interface ThemeInterface
     /**
      * Function to convert block sizes into CSS classes.
      *
-     * @param $text
+     * @param string $text
      * @return string
      */
     public function toGrid($text);

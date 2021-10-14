@@ -3,5 +3,5 @@ default:
   preset: default
 
 home:
-  title: Home - Particles
+  title: 'Home - Particles'
   preset: home_-_particles

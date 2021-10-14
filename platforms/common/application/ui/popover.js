@@ -216,7 +216,7 @@ var Popover = new prime({
 
         // wordpress workaround for out-of-scope cases
         if (GANTRY_PLATFORM == 'wordpress') {
-            container = $('#customize-preview') || $('#widgets-right') || $(this.options.where);
+            container = $('#widgets-editor') || $('#customize-preview') || $('#widgets-right') || $(this.options.where);
             if ('#' + container.id() != this.options.where) {
                 var wpwrap = $('#wpwrap') || $('.wp-customizer'), sibling, workaround;
                 if (wpwrap.id() == 'wpwrap') {

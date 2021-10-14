@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -14,14 +15,20 @@
 namespace Gantry\Component\Theme;
 
 use Gantry\Component\Config\Config;
+use Gantry\Component\Content\Block\ContentBlock;
+use Gantry\Component\Content\Block\ContentBlockInterface;
+use Gantry\Component\Content\Block\HtmlBlock;
 use Gantry\Component\File\CompiledYamlFile;
 use Gantry\Component\Filesystem\Folder;
 use Gantry\Component\Gantry\GantryTrait;
 use Gantry\Component\Layout\Layout;
 use Gantry\Component\Stylesheet\CssCompilerInterface;
-use Gantry\Component\Theme\ThemeDetails;
-use Gantry\Framework\Base\Gantry;
+use Gantry\Component\Stylesheet\ScssCompiler;
+use Gantry\Debugger;
+use Gantry\Framework\Document;
+use Gantry\Framework\Menu;
 use Gantry\Framework\Services\ConfigServiceProvider;
+use RocketTheme\Toolbox\File\PhpFile;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -35,25 +42,27 @@ trait ThemeTrait
 {
     use GantryTrait;
 
+    /** @var Layout */
     protected $layoutObject;
+    /** @var bool */
+    protected $atoms = false;
+    /** @var array */
     protected $segments;
+    /** @var string|null */
     protected $preset;
-    protected $cssCache;
-    /**
-     * @var CssCompilerInterface
-     */
+    /** @var array */
+    protected $cssCache = [];
+    /** @var CssCompilerInterface */
     protected $compiler;
+    /** @var array */
     protected $equalized = [3 => 33.3, 6 => 16.7, 7 => 14.3, 8 => 12.5, 9 => 11.1, 11 => 9.1, 12 => 8.3];
-
-    /**
-     * @var ThemeDetails
-     */
+    /** @var ThemeDetails */
     protected $details;
 
     /**
      * Register Theme stream.
      *
-     * @param string $savePath
+     * @param string|string[] $savePath
      */
     public function registerStream($savePath = null)
     {
@@ -75,7 +84,7 @@ trait ThemeTrait
         $gantry = static::gantry();
         $compiler = $this->compiler();
 
-        if (is_null($outlines)) {
+        if (null === $outlines) {
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
             $path = $locator->findResource($compiler->getTarget(), true, true);
@@ -130,10 +139,14 @@ trait ThemeTrait
         $outline = isset($gantry['configuration']) ? $gantry['configuration'] : null;
 
         // Set configuration if given.
-        if ($name && $name != $outline) {
-            GANTRY_DEBUGGER && \Gantry\Debugger::addMessage("Using Gantry outline {$name}");
+        if ($name && $name !== $outline) {
+            if (\GANTRY_DEBUGGER) {
+                Debugger::addMessage("Using Gantry outline {$name}");
+            }
 
             $gantry['configuration'] = $name;
+            unset($gantry['config']);
+            $gantry['config'] = ConfigServiceProvider::load($gantry, $name);
         }
 
         return $this;
@@ -152,7 +165,9 @@ trait ThemeTrait
         $preset = $this->preset;
 
         if (!$preset && !$forced) {
-            $preset = static::gantry()['config']->get('styles.preset', '-undefined-');
+            /** @var Config $config */
+            $config = static::gantry()['config'];
+            $preset = $config->get('styles.preset', '-undefined-');
         }
 
         if ($preset && !isset($presets[$preset])) {
@@ -187,7 +202,7 @@ trait ThemeTrait
     public function compiler()
     {
         if (!$this->compiler) {
-            $compilerClass = (string) $this->details()->get('configuration.css.compiler', '\Gantry\Component\Stylesheet\ScssCompiler');
+            $compilerClass = (string) $this->details()->get('configuration.css.compiler', ScssCompiler::class);
 
             if (!class_exists($compilerClass)) {
                 throw new \RuntimeException('CSS compiler used by the theme not found');
@@ -229,11 +244,16 @@ trait ThemeTrait
             $compiler = $this->compiler();
 
             if ($compiler->needsCompile($name, [$this, 'getCssVariables'])) {
-                GANTRY_DEBUGGER && \Gantry\Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}") && \Gantry\Debugger::addMessage("Compiling CSS: {$name}");
+                if (\GANTRY_DEBUGGER) {
+                    Debugger::startTimer("css-{$name}", "Compiling CSS: {$name}");
+                    Debugger::addMessage("Compiling CSS: {$name}");
+                }
 
                 $compiler->compileFile($name);
 
-                GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer("css-{$name}");
+                if (\GANTRY_DEBUGGER) {
+                    Debugger::stopTimer("css-{$name}");
+                }
             }
 
             $this->cssCache[$name] = $compiler->getCssUrl($name);
@@ -242,13 +262,18 @@ trait ThemeTrait
         return $this->cssCache[$name];
     }
 
+    /**
+     * @return array
+     */
     public function getCssVariables()
     {
         if ($this->preset) {
             $variables = $this->presets()->flatten($this->preset . '.styles', '-');
         } else {
             $gantry = self::gantry();
-            $variables = $gantry['config']->flatten('styles', '-');
+            /** @var Config $config */
+            $config = $gantry['config'];
+            $variables = $config->flatten('styles', '-');
         }
 
         return $variables;
@@ -269,9 +294,9 @@ trait ThemeTrait
             /** @var UniformResourceLocator $locator */
             $locator = $gantry['locator'];
 
-            $filename = $locator->findResource("gantry-theme://gantry/presets.yaml");
+            $filename = $locator->findResource('gantry-theme://gantry/presets.yaml');
             $file = CompiledYamlFile::instance($filename);
-            $presets = new Config($file->content());
+            $presets = new Config((array)$file->content());
             $file->free();
         }
 
@@ -311,7 +336,7 @@ trait ThemeTrait
             }
         }
 
-        if (!isset($this->layoutObject) || $this->layoutObject->name != $name) {
+        if (!isset($this->layoutObject) || $this->layoutObject->name !== $name) {
             $layout = Layout::instance($name);
 
             if (!$layout->exists()) {
@@ -339,6 +364,75 @@ trait ThemeTrait
     }
 
     /**
+     * Load atoms and assets from the page settings.
+     *
+     * @since 5.4.9
+     */
+    public function loadAtoms()
+    {
+        if (!$this->atoms) {
+            $this->atoms = true;
+
+            if (\GANTRY_DEBUGGER) {
+                Debugger::startTimer('atoms', 'Preparing atoms');
+            }
+
+            $gantry = static::gantry();
+
+            /** @var Config $config */
+            $config = $gantry['config'];
+
+            /** @var Document $document */
+            $document = $gantry['document'];
+
+            $atoms = (array) $config->get('page.head.atoms');
+
+            foreach ($atoms as $data) {
+                $atom = [
+                    'type' => 'atom',
+                    'subtype' => $data['type'],
+                ] + $data;
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering Atom '{$atom['subtype']}' failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            $assets = (array) $config->get('page.assets');
+
+            if ($assets) {
+                $atom = [
+                    'id' => 'page-assets',
+                    'title' => 'Page Assets',
+                    'type' => 'atom',
+                    'subtype' => 'assets',
+                    'attributes' => $assets + ['enabled' => 1]
+                ];
+
+                try {
+                    $block = $this->getContent($atom);
+                    $document->addBlock($block);
+
+                } catch (\Exception $e) {
+                    if ($gantry->debug()) {
+                        throw new \RuntimeException("Rendering CSS/JS Assets failed on error: {$e->getMessage()}", 500, $e);
+                    }
+                }
+            }
+
+            if (\GANTRY_DEBUGGER) {
+                Debugger::stopTimer('atoms');
+            }
+        }
+    }
+
+    /**
      * Returns all non-empty segments from the layout.
      *
      * @return array
@@ -348,11 +442,15 @@ trait ThemeTrait
         if (!isset($this->segments)) {
             $this->segments = $this->loadLayout()->toArray();
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::startTimer('segments', "Preparing layout");
+            if (\GANTRY_DEBUGGER) {
+                Debugger::startTimer('segments', 'Preparing layout');
+            }
 
             $this->prepareLayout($this->segments);
 
-            GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer('segments');
+            if (\GANTRY_DEBUGGER) {
+                Debugger::stopTimer('segments');
+            }
         }
 
         return $this->segments;
@@ -403,9 +501,9 @@ trait ThemeTrait
 
         $number = round($text, 1);
         $number = max(5, $number);
-        $number = (string) ($number == 100 ? 100 : min(95, $number));
+        $number = (string) ($number === 100.0 ? 100 : min(95, $number));
 
-        static $sizes = array(
+        static $sizes = [
             '33.3' => 'size-33-3',
             '16.7' => 'size-16-7',
             '14.3' => 'size-14-3',
@@ -413,7 +511,7 @@ trait ThemeTrait
             '11.1' => 'size-11-1',
             '9.1'  => 'size-9-1',
             '8.3'  => 'size-8-3'
-        );
+        ];
 
         return isset($sizes[$number]) ? ' ' . $sizes[$number] : 'size-' . (int) $number;
     }
@@ -426,7 +524,7 @@ trait ThemeTrait
      */
     public function __set($offset, $value)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -441,13 +539,13 @@ trait ThemeTrait
      */
     public function __get($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
         $value = $this->details()->offsetGet('details.' . $offset);
 
-        if ($offset == 'version' && is_int($value)) {
+        if ($offset === 'version' && is_int($value)) {
             $value .= '.0';
         }
 
@@ -462,7 +560,7 @@ trait ThemeTrait
      */
     public function __isset($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -476,7 +574,7 @@ trait ThemeTrait
      */
     public function __unset($offset)
     {
-        if ($offset == 'title') {
+        if ($offset === 'title') {
             $offset = 'name';
         }
 
@@ -519,15 +617,19 @@ trait ThemeTrait
                 case 'particle':
                 case 'position':
                 case 'spacer':
-                    GANTRY_DEBUGGER && \Gantry\Debugger::startTimer($item->id, "Rendering {$item->id}");
+                    if (\GANTRY_DEBUGGER) {
+                        Debugger::startTimer($item->id, "Rendering {$item->id}");
+                    }
 
-                    $item->content = $this->renderContent($item);
+                    $item->content = $this->renderContent($item, ['prepare_layout' => true]);
                     // Note that content can also be null (postpone rendering).
                     if ($item->content === '') {
                         unset($items[$i]);
                     }
 
-                    GANTRY_DEBUGGER && \Gantry\Debugger::stopTimer($item->id);
+                    if (\GANTRY_DEBUGGER) {
+                        Debugger::stopTimer($item->id);
+                    }
 
                     break;
 
@@ -560,7 +662,7 @@ trait ThemeTrait
                     $equalized = isset($this->equalized[$childrenCount]) ? $this->equalized[$childrenCount] : 0;
 
                     // force-casting string for testing comparison due to weird PHP behavior that returns wrong result
-                    if ($roundSize != 100 && (string) $roundSize != (string) ($equalized * $childrenCount)) {
+                    if ($roundSize !== 100.0 && (string) $roundSize !== (string) ($equalized * $childrenCount)) {
                         $fraction = 0;
                         $multiplier = (100 - $fixedSize) / ($dynamicSize ?: 1);
                         foreach ($item->children as $child) {
@@ -586,15 +688,133 @@ trait ThemeTrait
      *
      * Function is used to pre-render content.
      *
-     * @param object $item
+     * @param object|array $item
+     * @param array $options
      * @return string|null
      */
-    protected function renderContent($item)
+    public function renderContent($item, $options = [])
     {
-        $context = $this->getContext(['segment' => $item, 'prepare_layout' => true]);
+        $gantry = static::gantry();
 
+        $content = $this->getContent($item, $options);
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+        $document->addBlock($content);
+
+        $html = $content->toString();
+
+        return false === strpos($html, '@@DEFERRED@@') ? $html : null;
+    }
+
+    /**
+     * Renders individual content block, like particle or position.
+     *
+     * Function is used to pre-render content.
+     *
+     * @param object|array $item
+     * @param array $options
+     * @return ContentBlock|ContentBlockInterface
+     * @since 5.4.3
+     */
+    public function getContent($item, $options = [])
+    {
+        if (is_array($item)) {
+            $item = (object) $item;
+        }
+
+        $gantry = static::gantry();
+
+        /** @var Config $global */
+        $global = $gantry['global'];
+
+        /** @var Config $config */
+        $config = $gantry['config'];
+
+        $production = (bool) $global->get('production');
+        $subtype = $item->subtype;
+        $enabled = $config->get("particles.{$subtype}.enabled", 1);
+
+        if (!$enabled) {
+            return new HtmlBlock;
+        }
+
+        $attributes = isset($item->attributes) ? $item->attributes : [];
+        $particle = $config->getJoined("particles.{$subtype}", $attributes);
+
+        $cached = false;
+        $cacheKey = [];
+
+        // Enable particle caching only in production mode.
+        if ($production && isset($particle['caching'])) {
+            $caching = $particle['caching'] + ['type' => 'dynamic'];
+
+            switch ($caching['type']) {
+                case 'static':
+                    $cached = true;
+                    break;
+                case 'config_matches':
+                    if (isset($particle['caching']['values'])) {
+                        $values = (array) $particle['caching']['values'];
+                        $compare = array_intersect_key($particle, $values);
+                        $cached = ($values === $compare);
+                    }
+                    break;
+                case 'menu':
+                    /** @var Menu $menu */
+                    $menu = $gantry['menu'];
+                    $cacheId = $menu->getCacheId();
+
+                    // FIXME: menu caching needs to handle dynamic modules inside menu: turning it off for now.
+                    if (false && $cacheId !== null) {
+                        $cached = true;
+                        $cacheKey['menu_cache_key'] = $cacheId;
+                    }
+                    break;
+            }
+        }
+
+        if ($cached) {
+            $cacheKey['language'] = $gantry['page']->language;
+            $cacheKey['attributes'] = $particle;
+            $cacheKey += (array) $item;
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $gantry['locator'];
+            $key = md5(json_encode($cacheKey));
+
+            $filename = $locator->findResource("gantry-cache://theme/html/{$key}.php", true, true);
+            $file = PhpFile::instance($filename);
+            if ($file->exists()) {
+                try {
+                    return ContentBlock::fromArray((array) $file->content());
+                } catch (\Exception $e) {
+                    // Invalid cache, continue to rendering.
+                    if (\GANTRY_DEBUGGER) {
+                        Debugger::addMessage(sprintf('Failed to load %s %s cache', $item->type, $item->id), 'debug');
+                    }
+                }
+            }
+        }
+
+        // Create new document context for assets.
+        $context = $this->getContext(['segment' => $item, 'enabled' => 1, 'particle' => $particle] + $options);
+
+        /** @var Document $document */
+        $document = $gantry['document'];
+        $document::push();
         $html = trim($this->render("@nucleus/content/{$item->type}.html.twig", $context));
+        $content = $document::pop()->setContent($html);
 
-        return !strstr($html, '@@DEFERRED@@') ? $html : null;
+        if (isset($file)) {
+            // Save HTML and assets into the cache.
+            if (\GANTRY_DEBUGGER) {
+                Debugger::addMessage(sprintf('Caching %s %s', $item->type, $item->id), 'debug');
+            }
+
+            $file->save($content->toArray());
+        }
+
+        return $content;
     }
 }

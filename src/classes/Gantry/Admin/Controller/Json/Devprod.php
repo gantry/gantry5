@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,20 +14,25 @@
 
 namespace Gantry\Admin\Controller\Json;
 
-use Gantry\Component\Controller\JsonController;
+use Gantry\Admin\Events\Event;
+use Gantry\Component\Admin\JsonController;
 use Gantry\Component\Response\JsonResponse;
-use RocketTheme\Toolbox\Event\Event;
 
+/**
+ * Class Devprod
+ * @package Gantry\Admin\Controller\Json
+ */
 class Devprod extends JsonController
 {
+    /**
+     * @return JsonResponse
+     */
     public function store()
     {
-        $global = $this->container['global'];
-
-        $production = ($global->get('production', 0) + 1) & 1;
+        $production = (int)(bool)$this->request->post['mode'];
 
         // Fire save event.
-        $event = new Event;
+        $event = new Event();
         $event->gantry = $this->container;
         $event->controller = $this;
         $event->data = ['production' => $production];
@@ -38,6 +44,7 @@ class Devprod extends JsonController
             'title' => $production ? 'Production' : 'Development',
             'html' => $production ? 'Production mode enabled' : 'Development mode enabled',
         ];
+
         return new JsonResponse($response);
     }
 }

@@ -1,9 +1,3 @@
-{% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
-{% set boxed = segment.attributes.boxed %}
-{% if boxed is not null %}
-    {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
-{% endif %}
-
 {% set html %}
     {% for segment in segments %}
         {% include '@nucleus/layout/' ~ segment.type ~ '.html.twig' with { 'segments': segment.children } %}
@@ -11,16 +5,13 @@
 {% endset %}
 
 {% if segment.attributes.sticky or html|trim %}
-    {% set classes = segment.attributes.class ? ' ' ~ segment.attributes.class|e %}
-    {% set attr_extra = '' %}
-
-    {% if segment.attributes.extra %}
-        {% for attributes in segment.attributes.extra %}
-            {% for key, value in attributes %}
-                {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-            {% endfor %}
-        {% endfor %}
+    {% set attr_id = segment.attributes.id ?: 'g-' ~ segment.id %}
+    {% set boxed = segment.attributes.boxed %}
+    {% if boxed is not null %}
+        {% set boxed = boxed|trim == '' ? gantry.config.page.body.layout.sections : boxed %}
     {% endif %}
+    {% set class = 'g-wrapper' ~ (segment.attributes.class ? ' ' ~ segment.attributes.class) %}
+    {% set attr_extra = segment.attributes.extra|attribute_array %}
 
     {% if boxed is not null and (boxed == 0 or boxed == 2) %}
         {% set html %}
@@ -29,7 +20,7 @@
     {% endif %}
 
     {% set html %}
-    <section id="{{ attr_id }}" class="g-wrapper{{ classes }}"{{ attr_extra|raw }}>
+    <section id="{{ attr_id }}" class="{{ class }}" {{- attr_extra|raw }}>
         {{ html|raw }}
     </section>
     {% endset %}

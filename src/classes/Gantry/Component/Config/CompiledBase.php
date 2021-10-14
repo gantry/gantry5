@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,7 +14,7 @@
 
 namespace Gantry\Component\Config;
 
-use Gantry\Framework\Base\Gantry;
+use Gantry\Framework\Gantry;
 use RocketTheme\Toolbox\File\PhpFile;
 
 /**
@@ -21,39 +22,25 @@ use RocketTheme\Toolbox\File\PhpFile;
  */
 abstract class CompiledBase
 {
-    /**
-     * @var int Version number for the compiled file.
-     */
+    /** @var int Version number for the compiled file. */
     public $version = 1;
 
-    /**
-     * @var string  Filename (base name) of the compiled configuration.
-     */
+    /** @var string  Filename (base name) of the compiled configuration. */
     public $name;
 
-    /**
-     * @var string|bool  Configuration checksum.
-     */
+    /** @var string|bool  Configuration checksum. */
     public $checksum;
 
-    /**
-     * @var string Cache folder to be used.
-     */
+    /** @var string Cache folder to be used. */
     protected $cacheFolder;
 
-    /**
-     * @var array  List of files to load.
-     */
+    /** @var array  List of files to load. */
     protected $files;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $path;
 
-    /**
-     * @var mixed  Configuration object.
-     */
+    /** @var mixed  Configuration object. */
     protected $object;
 
     /**
@@ -91,7 +78,9 @@ abstract class CompiledBase
     /**
      * Function gets called when cached configuration is saved.
      */
-    public function modified() {}
+    public function modified()
+    {
+    }
 
     /**
      * Load the configuration.
@@ -128,6 +117,9 @@ abstract class CompiledBase
         return $this->checksum;
     }
 
+    /**
+     * @return string
+     */
     protected function createFilename()
     {
         return "{$this->cacheFolder}/{$this->name()->name}.php";
@@ -200,10 +192,8 @@ abstract class CompiledBase
         $cache = include $filename;
         if (
             !is_array($cache)
-            || !isset($cache['checksum'])
-            || !isset($cache['data'])
-            || !isset($cache['@class'])
-            || $cache['@class'] != get_class($this)
+            || !isset($cache['checksum'], $cache['data'], $cache['@class'])
+            || $cache['@class'] !== get_class($this)
         ) {
             return false;
         }
@@ -214,6 +204,8 @@ abstract class CompiledBase
         }
 
         $this->createObject($cache['data']);
+
+        $this->finalizeObject();
 
         return true;
     }
@@ -255,7 +247,7 @@ abstract class CompiledBase
             'timestamp' => time(),
             'checksum' => $this->checksum(),
             'files' => $this->files,
-            'data' => $this->object->toArray()
+            'data' => $this->getState()
         ];
 
         $file->save($cache);
@@ -263,5 +255,13 @@ abstract class CompiledBase
         $file->free();
 
         $this->modified();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getState()
+    {
+        return $this->object->toArray();
     }
 }

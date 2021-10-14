@@ -1,7 +1,10 @@
-{% extends "@nucleus/page.html.twig" %}
+{% extends "partials/page.html.twig" %}
 
 {% set show_onpage_menu = header.onpage_menu == true or header.onpage_menu is null %}
+
 {% macro pageLinkName(text) %}{{ text|lower|replace({' ':'_'}) }}{% endmacro %}
+
+{% import _self as macro %}
 
 {% block javascripts %}
     {% if show_onpage_menu %}
@@ -31,12 +34,12 @@
         <ul class="navigation">
         {% for module in page.collection() %}
             {% set current_module = (module.active or module.activeChild) ? 'active' : '' %}
-            <li class="{{ current_module }}"><a href="#{{ _self.pageLinkName(module.menu) }}">{{ module.menu }}</a></li>
+            <li class="{{ current_module }}"><a href="#{{ macro.pageLinkName(module.menu) }}">{{ module.menu }}</a></li>
         {% endfor %}
         {% for mitem in site.menu %}
             <li>
                 <a href="{{ mitem.url }}">
-                    {% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}"></i>{% endif %}
+                    {% if mitem.icon %}<i class="fa fa-{{ mitem.icon }}" aria-hidden="true"></i>{% endif %}
                     {{ mitem.text }}
                 </a>
             </li>
@@ -50,7 +53,7 @@
 {% block content %}
     {{ page.content|raw }}
     {% for module in page.collection() %}
-        <div id="{{ _self.pageLinkName(module.menu) }}"></div>
+        <div id="{{ macro.pageLinkName(module.menu) }}"></div>
         {{ module.content|raw }}
     {% endfor %}
 {% endblock %}

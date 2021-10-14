@@ -1,0 +1,75 @@
+// Core
+$core-text:						#444 !default;
+$core-accent:					#1BB3E9 !default;
+$secondary-link:				#F6635E !default;
+$white:							#fff !default;
+$black:							#000 !default;
+$light-gray:					#ddd !default;
+$border-color: 					#EEEEEE !default;
+
+// Borders
+$core-border-color:				$light-gray !default;
+$core-border-color-hover: 		darken($core-border-color, 10) !default;
+$core-border-color-focus: 		$core-accent !default;
+
+// Shadows
+$core-box-shadow: 				inset 0 1px 3px hsla(0, 0%, 0%, 0.06) !default;
+$core-box-shadow-focus: 		$core-box-shadow, 0 0 5px rgba(darken($core-border-color-focus, 5), 0.7) !default;
+
+// Background
+$page-bg:						#fff !default;
+
+// Header
+$header-text: 					#FFFFFF !default;
+
+// Nav
+$navbar-text: 					#75879A !default;
+$navbar-bg: 					#FFFFFF !default;
+
+// Showcase
+$showcase-bg:					lighten($core-accent, 6%) !default;
+$showcase-text:					#fff !default;
+
+// Feature
+$feature-bg:					#fff !default;
+
+// Main Body
+$main-bg:						#f7f7f7 !default;
+$body-border:					darken($main-bg, 5%) !default;
+
+// Sidebar
+$sidebar-text:					#aaa !default;
+
+// Bottom
+$bottom-bg:						#f7f7f7 !default;
+$bottom-text:					$core-text !default;
+
+// Footer
+$footer-bg:						#333 !default;
+$footer-text:					#999 !default;
+
+$rule-color: 					#F0F2F4 !default;
+$code-text:						#c7254e !default;
+$code-bg:						#f9f2f4 !default;
+$pre-text:						#237794 !default;
+$pre-bg:						#f0f0f0 !default;
+
+// Dark Contrast variation
+$dark-navbar-text:				#999 !default;
+$dark-sidebar:					#222 !default;
+$dark-sidebar-text:				#999 !default;
+$dark-main-bg:					#333 !default;
+$dark-body-border:				#666 !default;
+
+// Info - Yellow
+$notes-info-border:     #F0AD4E !default;
+$notes-info-bg:         #FCF8F2 !default;
+// Warning - Red
+$notes-warning-border:  #D9534F !default;
+$notes-warning-bg:      #FDF7F7 !default;
+// Note - Blue
+$notes-note-border:     #5BC0DE !default;
+$notes-note-bg:         #F4F8FA !default;
+// Success - Green
+$notes-success-border:  #5CB85C !default;
+$notes-success-bg:      #F1F9F1 !default;

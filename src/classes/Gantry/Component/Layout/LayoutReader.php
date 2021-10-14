@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -59,16 +60,16 @@ class LayoutReader
     /**
      * Read layout from yaml file and return parsed version of it.
      *
-     * @param string $file
+     * @param string $filename
      * @return array
      */
-    public static function read($file)
+    public static function read($filename)
     {
-        if (!$file) {
+        if (!$filename) {
             return [];
         }
 
-        $file = CompiledYamlFile::instance($file);
+        $file = CompiledYamlFile::instance($filename);
         $content = (array) $file->content();
         $file->free();
 

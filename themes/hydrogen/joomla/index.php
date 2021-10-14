@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry 5 Theme
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   GNU/GPLv2 and later
  *
  * http://www.gnu.org/licenses/gpl-2.0.html
@@ -10,14 +11,17 @@
 
 defined('_JEXEC') or die;
 
+use Gantry\Framework\Theme;
+
 // Bootstrap Gantry framework or fail gracefully (inside included file).
-$gantry = include __DIR__ . '/includes/gantry.php';
+$className = __DIR__ . '/custom/includes/gantry.php';
+if (!is_file($className)) {
+    $className = __DIR__ . '/includes/gantry.php';
+}
+$gantry = include $className;
 
-/** @var \Gantry\Framework\Theme $theme */
+/** @var Theme $theme */
 $theme = $gantry['theme'];
-
-/** @var \Gantry\Framework\Outlines $outlines */
-$outlines = $gantry['outlines'];
 
 // All the custom twig variables can be defined in here:
 $context = array();

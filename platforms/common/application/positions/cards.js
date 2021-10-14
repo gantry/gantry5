@@ -27,11 +27,35 @@ var PositionsField = '[name="page[head][atoms][_json]"]',
 var Positions = {
     eraser: null,
     lists: [],
+    state: [],
+
+    init: function(position) {
+        Positions.state = Positions.serialize(position);
+
+        return Positions.state;
+    },
+
+    equals: function() {
+        return Positions.state === Positions.serialize();
+    },
+
+    updatePendingChanges: function() {
+        var different = false,
+
+            equals    = Positions.equals(),
+            save      = $('[data-save="Positions"]'),
+            icon      = save.find('i'),
+            indicator = save.find('.changes-indicator');
+
+        if (equals && indicator) { save.hideIndicator(); }
+        if (!equals && !indicator) { save.showIndicator('changes-indicator far fa-fw fa-circle') }
+        flags.set('pending', !equals);
+    },
 
     serialize: function(position) {
         var data,
-            output = [],
-            positions  = $(position) || $('[data-position]');
+            output    = [],
+            positions = $(position) || $('[data-g5-position]');
 
         if (!positions) {
             return '[]';
@@ -39,7 +63,7 @@ var Positions = {
 
         positions.forEach(function(position) {
             position = $(position);
-            data = JSON.parse(position.data('position'));
+            data = JSON.parse(position.data('g5-position'));
             data.modules = [];
 
             // collect positions items
@@ -49,7 +73,7 @@ var Positions = {
             });
 
             output.push(data);
-            position.data('position', JSON.stringify(data));
+            position.data('g5-position', JSON.stringify(data));
         });
 
         return JSON.stringify(output).replace(/\//g, '\\/');
@@ -57,12 +81,12 @@ var Positions = {
 
     attachEraser: function() {
         if (Positions.eraser) {
-            Positions.eraser.element = $('[data-positions-erase]');
+            Positions.eraser.element = $('[data-g5-positions-erase]');
             Positions.eraser.hide('fast');
             return;
         }
 
-        Positions.eraser = new Eraser('[data-positions-erase]');
+        Positions.eraser = new Eraser('[data-g5-positions-erase]');
     },
 
     createSortables: function(element) {
@@ -71,13 +95,13 @@ var Positions = {
         Positions.attachEraser();
 
         groupOptions.forEach(function(groupOption, i) {
-            list = !i ? '[data-position] ul' : '#trash';
+            list = !i ? '[data-g5-position] ul' : '#trash';
             list = $(list);
 
-            list.forEach(function(element, listIndex){
+            list.forEach(function(element, listIndex) {
                 sort = simpleSort.create(element, {
                     sort: !i,
-                    filter: '[data-position-ignore]',
+                    filter: '[data-g5-position-ignore]',
                     group: groupOption,
                     scroll: true,
                     forceFallback: true,
@@ -120,15 +144,16 @@ var Positions = {
                     },
 
                     onSort: function(event) {
-                        var from = $(event.from),
-                            to = $(event.to),
-                            lists = [from.parent('[data-position]'), to.parent('[data-position]')];
+                        var from  = $(event.from),
+                            to    = $(event.to),
+                            lists = [from.parent('[data-g5-position]'), to.parent('[data-g5-position]')];
 
                         if (event.from[0] === event.to[0]) {
                             lists.shift();
                         }
 
                         Positions.serialize(lists);
+                        Positions.updatePendingChanges();
                     },
 
                     onOver: function(event) {

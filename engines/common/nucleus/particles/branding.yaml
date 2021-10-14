@@ -3,6 +3,10 @@ description: Displays powered by link to Gantry Framework
 type: particle
 icon: fa-trademark
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:

@@ -1,0 +1,23 @@
+{
+    "name": "gantry/gantry5-builder",
+    "description": "Gantry 5 Framework builder",
+    "type": "metapackage",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.20",
+        "ext-zip": "*"
+    },
+    "scripts": {
+        "install-deps": "bin/composer-install",
+        "update-deps": "bin/composer-update",
+        "build-dev": [
+            "bin/composer-install",
+            "bin/build dev"
+        ],
+        "build-prod": [
+            "bin/composer-install",
+            "bin/build prod"
+        ]
+    }
+}

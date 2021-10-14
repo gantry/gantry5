@@ -3,14 +3,13 @@
 {% block options %}
     {{ parent() }}
     {% set current = gantry.menu.getDefaultMenuName() %}
-    {% for key in gantry.menu.getMenus() %}
-        {% set text = key|capitalize %}
+    {% for menu_name,menu_title in gantry.menu.getMenuOptions() %}
         <option
                 {# required attribute structures #}
-                {% if key == value %}selected="selected"{% endif %}
-                value="{{ key }}"
+                {% if menu_name == value %}selected="selected"{% endif %}
+                value="{{ menu_name }}"
                 {# non-gloval attribute structures #}
                 {% if field.options.disabled in ['on', 'true', 1] %}disabled="disabled"{% endif %}
-                >{{ text }}{{ (current == key and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
+                >{{ menu_title }}{{ (current == menu_name and gantry.menu.hasDefaultMenu()) ? ' ★' : '' }}</option>
     {% endfor %}
 {% endblock %}

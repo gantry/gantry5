@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,29 +14,19 @@
 
 namespace Gantry\Component\Remote;
 
+/**
+ * Class Response
+ * @package Gantry\Component\Remote
+ */
 class Response
 {
-    /**
-     * The callback for the progress
-     *
-     * @var callable    Either a function or callback in array notation
-     */
+    /** @var callable  The callback for the progress */
     public static $callback = null;
 
-    /**
-     * Which method to use for HTTP calls, can be 'curl', 'fopen' or 'auto'. Auto is default and fopen is the preferred method
-     *
-     * @var string
-     */
+    /** @var string Which method to use for HTTP calls, can be 'curl', 'fopen' or 'auto'. Auto is default and fopen is the preferred method */
     private static $method = 'auto';
-
-    /**
-     * Default parameters for `curl` and `fopen`
-     *
-     * @var array
-     */
+    /** @var array Default parameters for `curl` and `fopen` */
     private static $defaults = [
-
         'curl'  => [
             CURLOPT_REFERER        => 'Gantry5 Response',
             CURLOPT_USERAGENT      => 'Gantry5 Response',
@@ -43,7 +34,7 @@ class Response
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_TIMEOUT        => 15,
             CURLOPT_HEADER         => false,
-            /**
+            /*
              * Example of callback parameters from within your own class
              */
             //CURLOPT_NOPROGRESS     => false,
@@ -55,7 +46,7 @@ class Response
             'max_redirects'   => 5,
             'follow_location' => 1,
             'timeout'         => 15,
-            /**
+            /*
              * Example of callback parameters from within your own class
              */
             //'notification' => [$this, 'progress']
@@ -66,7 +57,6 @@ class Response
      * Sets the preferred method to use for making HTTP calls.
      *
      * @param string $method Default is `auto`
-     *
      * @return Response
      */
     public static function setMethod($method = 'auto')
@@ -86,7 +76,6 @@ class Response
      * @param  string   $uri     URL to call
      * @param  array    $options An array of parameters for both `curl` and `fopen`
      * @param  callable $callback
-     *
      * @return string The response of the request
      */
     public static function get($uri = '', $options = [], $callback = null)
@@ -124,28 +113,25 @@ class Response
 
     /**
      * Progress normalized for cURL and fopen
-     *
-     * @return array Normalized array with useful data.
-     *               Format: ['code' => int|false, 'filesize' => bytes, 'transferred' => bytes, 'percent' => int]
      */
     public static function progress()
     {
         static $filesize = null;
 
         $args           = func_get_args();
-        $isCurlResource = is_resource($args[0]) && get_resource_type($args[0]) == 'curl';
+        $isCurlResource = is_resource($args[0]) && get_resource_type($args[0]) === 'curl';
 
         $notification_code = !$isCurlResource ? $args[0] : false;
         $bytes_transferred = $isCurlResource ? $args[2] : $args[4];
 
         if ($isCurlResource) {
             $filesize = $args[1];
-        } elseif ($notification_code == STREAM_NOTIFY_FILE_SIZE_IS) {
+        } elseif ($notification_code === STREAM_NOTIFY_FILE_SIZE_IS) {
             $filesize = $args[5];
         }
 
         if ($bytes_transferred > 0) {
-            if ($notification_code == STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
+            if ($notification_code === STREAM_NOTIFY_PROGRESS | STREAM_NOTIFY_COMPLETED || $isCurlResource) {
 
                 $progress = [
                     'code'        => $notification_code,
@@ -155,7 +141,7 @@ class Response
                 ];
 
                 if (self::$callback !== null) {
-                    call_user_func_array(self::$callback, [$progress]);
+                    call_user_func(self::$callback, $progress);
                 }
             }
         }
@@ -186,13 +172,11 @@ class Response
      */
     private static function getFopen()
     {
-        if (count($args = func_get_args()) == 1) {
+        if (count($args = func_get_args()) === 1) {
             $args = $args[0];
         }
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         if ($callback) {
             $options['fopen']['notification'] = ['self', 'progress'];
@@ -218,9 +202,7 @@ class Response
         $args = func_get_args();
         $args = count($args) > 1 ? $args : array_shift($args);
 
-        $uri      = $args[0];
-        $options  = $args[1];
-        $callback = $args[2];
+        list($uri, $options, $callback) = $args;
 
         $ch = curl_init($uri);
         curl_setopt_array($ch, $options['curl']);
@@ -237,7 +219,8 @@ class Response
 
         $response = curl_exec($ch);
 
-        if ($errno = curl_errno($ch)) {
+        $errno = curl_errno($ch);
+        if ($errno) {
             $error_message = curl_strerror($errno);
             throw new \RuntimeException("cURL error ({$errno}):\n {$error_message}");
         }

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @package   Gantry5
  * @author    RocketTheme http://www.rockettheme.com
- * @copyright Copyright (C) 2007 - 2016 RocketTheme, LLC
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
  * http://opensource.org/licenses/MIT
@@ -13,19 +14,38 @@
 
 namespace Gantry\Framework\Services;
 
-use Gantry\Component\Whoops\System;
+use Gantry\Component\Whoops\SystemFacade;
+use Gantry\Debugger;
 use Gantry\Framework\Platform;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
-use Whoops\Handler\PlainTextHandler;
 use Whoops\Run;
 use Whoops\Util\Misc;
 
+/**
+ * Class ErrorServiceProvider
+ * @package Gantry\Framework\Services
+ */
 class ErrorServiceProvider implements ServiceProviderInterface
 {
+    /** @var string */
+    protected $format;
+
+    /**
+     * ErrorServiceProvider constructor.
+     * @param string $format
+     */
+    public function __construct($format = 'html')
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * @param Container $container
+     */
     public function register(Container $container)
     {
         /** @var UniformResourceLocator $locator */
@@ -35,10 +55,10 @@ class ErrorServiceProvider implements ServiceProviderInterface
         $platform = $container['platform'];
 
         // Setup Whoops-based error handler
-        $system = new System($platform->errorHandlerPaths());
+        $system = new SystemFacade($platform->errorHandlerPaths());
         $errors = new Run($system);
 
-        $error_page = new PrettyPageHandler;
+        $error_page = new PrettyPageHandler();
         $error_page->setPageTitle('Crikey! There was an error...');
         $error_page->setEditor('sublime');
         foreach ($locator->findResources('gantry-assets://css/whoops.css') as $path) {
@@ -48,13 +68,20 @@ class ErrorServiceProvider implements ServiceProviderInterface
 
         $errors->pushHandler($error_page);
 
-        $jsonRequest = $_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] == 'application/json';
+        $jsonRequest = $this->format === 'json' || ($_SERVER && isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
         if (Misc::isAjaxRequest() || $jsonRequest) {
-            $errors->pushHandler(new JsonResponseHandler);
+            $json_handler = new JsonResponseHandler();
+            //$json_handler->setJsonApi(true);
+
+            $errors->pushHandler($json_handler);
         }
 
         $errors->register();
 
         $container['errors'] = $errors;
+
+        if (\GANTRY_DEBUGGER) {
+            Debugger::setErrorHandler();
+        }
     }
 }

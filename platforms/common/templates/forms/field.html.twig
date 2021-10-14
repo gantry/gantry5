@@ -19,7 +19,7 @@
 
 {% block field %}
 {% if not field.isset or value is not null %}
-    <div class="settings-param {{ field.type|replace('.', '-') }}">
+    <div class="settings-param {{ field.type|replace({'.': '-'}) }}">
         {% block overridable %}
         {% set field_overridable = field.overridable ?? (field.overrideable ?? true) %}
         {% if overrideable and (field_overridable or has_value) %}
@@ -30,12 +30,12 @@
             <span class="settings-param-title float-left">
                 {% block label %}
                     {% if field.description %}
-                        {% set description = field.description|trans_key('FORM_FIELD', scope, name, 'DESC') %}
+                        {% set description = field.description|trans_key('GANTRY5_FORM_FIELD', scope, name, 'DESC') %}
                         <span data-tip="{{ description|raw }}" data-tip-place="top-right" aria-label="{{ description }}" data-title="{{ description }}">
-                            {{ field.label|trans_key('FORM_FIELD', scope, name, 'LABEL') }}
+                            {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}
                         </span>
                     {% else %}
-                        {{ field.label|trans_key('FORM_FIELD', scope, name, 'LABEL') }}
+                        {{ field.label|trans_key('GANTRY5_FORM_FIELD', scope, name, 'LABEL') }}
                     {% endif %}
                     {{ field.validate.required in ['on', 'true', 1] ? '<span class="required">*</span>' }}
                 {% endblock %}
@@ -60,7 +60,7 @@
 
                         {% block reset_field -%}
                             {% if field.reset_field is not defined or field.reset_field in ['on', 'true', 1] %}
-                                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle"></i></span>
+                                <span class="g-reset-field" data-g-reset-field="{{ (scope ~ name)|fieldName }}"><i class="fa  fa-fw fa-times-circle" aria-hidden="true"></i></span>
                             {% endif %}
                         {%- endblock %}
                     {% endblock %}

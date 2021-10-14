@@ -21,7 +21,7 @@ form:
       type: select.date
       label: Format
       description: Select preferred date format.
-      default: l, F d, Y
+      default: 'l, F d, Y'
       placeholder: 'Select...'
       selectize:
           allowEmptyOption: true
@@ -37,3 +37,4 @@ form:
           'l': Date9
           'l j F Y': Date10
           'j F Y': Date11
+          'F d, Y': Date12

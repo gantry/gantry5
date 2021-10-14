@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extension version="3.4" type="plugin" group="system" method="upgrade">
+<extension version="3.9" type="plugin" group="system" method="upgrade">
     <name>plg_system_gantry5</name>
     <version>@version@</version>
     <creationDate>@versiondate@</creationDate>
     <author>RocketTheme, LLC</author>
     <authorEmail>support@rockettheme.com</authorEmail>
     <authorUrl>http://www.rockettheme.com</authorUrl>
-    <copyright>(C) 2005 - 2016 RocketTheme, LLC. All rights reserved.</copyright>
+    <copyright>(C) 2005 - 2021 RocketTheme, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
     <description>PLG_SYSTEM_GANTRY5_DESCRIPTION</description>
 
     <files>
         <filename plugin="gantry5">gantry5.php</filename>
         <filename>MD5SUMS</filename>
+        <folder>fields</folder>
+        <folder>forms</folder>
         <folder>language</folder>
     </files>
 
@@ -22,9 +24,19 @@
                 <field name="production"
                        type="radio"
                        class="btn-group btn-group-yesno"
-                       default="1"
+                       default="0"
                        description="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_DESC"
                        label="PLG_SYSTEM_GANTRY5_FIELD_PRODUCTION_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field name="use_assignments"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       description="PLG_SYSTEM_GANTRY5_FIELD_USE_ASSIGNMENTS_DESC"
+                       label="PLG_SYSTEM_GANTRY5_FIELD_USE_ASSIGNMENTS_LABEL">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>

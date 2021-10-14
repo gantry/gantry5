@@ -1,6 +1,8 @@
 {% try %}
-    {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
-    {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+    {% if not particle %}
+        {% set enabled = gantry.config.get('particles.' ~ segment.type ~ '.enabled', 1) %}
+        {% set particle = gantry.config.getJoined('particles.' ~ segment.type, segment.attributes) %}
+    {% endif %}
 
     {% set html %}
         {% if enabled and (segment.attributes.enabled is null or segment.attributes.enabled) %}
@@ -9,10 +11,13 @@
         {% endif %}
     {% endset %}
 
-    {% if html|trim %}
+    {%- if html|trim %}
+        {% if gantry.debug and segment.attributes.key %}<!-- START POSITION {{ segment.attributes.key }} -->{% endif %}
+
         <div class="g-content{{ segment.classes ? ' ' ~ segment.classes|join(' ')|e }}">
             {{ html|raw }}
         </div>
+        {% if gantry.debug and segment.attributes.key %}<!-- END POSITION {{ segment.attributes.key }} -->{% endif %}
     {% endif %}
 
 {% catch %}

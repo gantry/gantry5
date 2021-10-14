@@ -3,7 +3,7 @@
 {% set attributes = 'data-g5-ajaxify="" data-g5-ajaxify-params="' ~ ('{"inline":1}'|escape('html_attr')) ~ '" ' ~ ajaxTarget %}
 
 {% if item.path %}
-<a {{ attributes|raw }} href="{{ gantry.route('menu', id, item.path|url_encode) }}" class="menu-item">
+<a {{ attributes|raw }} href="{{ gantry.route('menu', id, item.path) }}" class="menu-item">
 {% else %}
 <span class="menu-item">
 {% endif %}
@@ -15,7 +15,7 @@
     <span class="badge menu-item-type">{{ item.particle }}</span>
 {% else %}
     {% if item.image %}
-        <img src="{{ url(item.image) }}" />
+        <img alt="" src="{{ url(item.image) }}" />
     {% elseif item.icon %}
         <i class="{{ item.icon }}"></i>
     {% endif %}
@@ -34,6 +34,6 @@
 {% else %}
 </a>
 {% endif %}
-<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle') : gantry.route('menu/edit', id, item.path|url_encode) }}">
-    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_ITEM_SETTINGS'|trans }}" class="fa fa-cog"></i>
+<a class="config-cog" href="{{ item.type == 'particle' ? gantry.route('menu/particle') : gantry.route('menu/edit', id, item.path) }}">
+    <i aria-label="{{ 'GANTRY5_PLATFORM_MENU_ITEM_SETTINGS'|trans }}" class="fa fa-cog" aria-hidden="true"></i>
 </a>

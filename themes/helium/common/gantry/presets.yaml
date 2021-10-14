@@ -11,6 +11,9 @@ preset1:
     accent:
       color-1: '#4db2b3'
       color-2: '#8f4dae'
+    link:
+      regular: '#4db2b3'
+      hover:   '#424753'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'
@@ -63,6 +66,9 @@ preset2:
     accent:
       color-1: '#b34b4b'
       color-2: '#4cad9e'
+    link:
+      regular: '#b34b4b'
+      hover:   '#424753'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'
@@ -104,7 +110,7 @@ preset2:
 
 preset3:
   image: 'gantry-admin://images/preset3.png'
-  description: GANTRY5_PLATFORM_PRESET4
+  description: GANTRY5_PLATFORM_PRESET3
   colors:
     - '#c06c84'
     - '#355c7d'
@@ -115,6 +121,9 @@ preset3:
     accent:
       color-1: '#c06c84'
       color-2: '#355c7d'
+    link:
+      regular: '#c06c84'
+      hover:   '#424753'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'
@@ -167,6 +176,9 @@ preset4:
     accent:
       color-1: '#e84a5f'
       color-2: '#2a363b'
+    link:
+      regular: '#e84a5f'
+      hover:   '#2a363b'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'
@@ -219,6 +231,9 @@ preset5:
     accent:
       color-1: '#a8a7a7'
       color-2: '#474747'
+    link:
+      regular: '#a8a7a7'
+      hover:   '#2a363b'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'
@@ -271,6 +286,9 @@ preset6:
     accent:
       color-1: '#a8a7a7'
       color-2: '#474747'
+    link:
+      regular: '#a8a7a7'
+      hover:   '#eceeef'
     font:
       family-default: 'Raleway, Helvetica, Tahoma, Geneva, Arial, sans-serif'
       family-title: 'Lato, Helvetica, Tahoma, Geneva, Arial, sans-serif'

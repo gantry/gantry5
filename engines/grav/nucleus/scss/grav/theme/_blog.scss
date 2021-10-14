@@ -1,3 +1,30 @@
+// Blog Columns
+.list-blog {
+    @include display(flex);
+    @include flex-direction(column);
+    &.cols-1, &.cols-2, &.cols-3, &.cols-4, &.cols-5, &.cols-6 {
+        .list-blog-row {
+            @include display(flex);
+            @include breakpoint(mobile-only) {
+              @include flex-direction(column);
+            }
+            margin: -$content-padding;
+            .list-item {
+                @include flex(1);
+                @include flex-basis(0);
+                padding: $content-padding;
+
+                @include breakpoint(mobile-only) {
+                  padding-top: 0;
+                  padding-bottom: 0;
+                  margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+// Blog Header
 .blog-header {
 
     padding-top: 2rem;
@@ -33,8 +60,6 @@
 
 // List Blog Item
 .list-item {
-
-    border-bottom: 1px solid $border-color;
     margin-bottom: $padding-vert;
 
     &:last-child {
@@ -59,22 +84,11 @@
             margin-top: 1rem;
             border-radius: $border-radius;
         }
-    }
-
-    .list-blog-date {
-        float: right;
-        text-align: center;
-        span {
-            display: block;
-            font-size: 1.75rem;
-            font-weight: $font-weight-bold;
-            line-height: 110%;
-        }
-        em {
-            display: block;
-            border-top: 1px solid $border-color;
-            font-style: normal;
-            text-transform: uppercase;
+        .list-blog-meta {
+            .separator {
+                margin: 0 0.3rem;
+                color: transparentize($base-text-color, 0.8);
+            }
         }
     }
 }
@@ -89,12 +103,6 @@
 // Tags
 .tags {
     a {
-        display: inline-block;
-        font-size: $core-font-size - 0.2rem;
-        border: 1px solid $core-accent;
-        border-radius: $border-radius;
-        padding: 0.1rem 0.4rem;
-        margin-bottom: 0.2rem;
         text-transform: uppercase;
     }
 }

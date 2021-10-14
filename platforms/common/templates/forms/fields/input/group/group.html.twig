@@ -1,27 +1,6 @@
 {% extends default ? "partials/field.html.twig" : 'forms/' ~ layout|default('field') ~ '.html.twig' %}
 
-{% block group %}
-    <div class="input-group
-        {% if field.prepend -%} prepend
-        {% endif %}
-        {% if field.append -%} append
-        {% endif %}
-    ">
-
-
-        {% if field.prepend %}
-            {{ _self.pend(field.prepend) }}
-        {% endif %}
-        {% block input %}
-        {% endblock %}
-        {% if field.append %}
-            {{ _self.pend(field.append) }}
-        {% endif %}
-        {% block reset_field %}{{ parent() }}{% endblock %}
-    </div>
-{% endblock %}
-
-{% macro pend(item) %}
+{%- macro pend(item) %}
     {% if item.type == "text" %}
         <span class="input-group-addon">{{ item.text|e }}</span>
     {% elseif item.type == "list" %}
@@ -34,4 +13,20 @@
         </span>
     {% elseif item.type == "actions" %}
     {% endif %}
-{% endmacro %}
+{% endmacro -%}
+
+{%- import _self as macro %}
+
+{% block group %}
+    <div class="input-group{% if field.prepend %} prepend{% endif %}{% if field.append %} append{% endif %}">
+        {% if field.prepend %}
+            {{- macro.pend(field.prepend) -}}
+        {% endif -%}
+        {%- block input -%}
+        {%- endblock -%}
+        {% if field.append %}
+            {{- macro.pend(field.append) -}}
+        {% endif -%}
+        {% block reset_field %}{{ parent() }}{% endblock %}
+    </div>
+{% endblock %}

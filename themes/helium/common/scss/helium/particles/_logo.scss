@@ -23,5 +23,10 @@
 		display: block;
 		text-align: center;
 		margin: -0.85rem 0;
+        padding-left: $content-padding;
+
+        img, svg {
+            margin: 0 auto;
+        }
 	}
 }

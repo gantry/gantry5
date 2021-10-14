@@ -7,7 +7,7 @@
         {# Begin Meta - Date #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-date.enabled', '1') and post.date %}
             <div class="meta-date">
-                <i class="fa fa-clock-o"></i>
+                <i class="far fa-clock" aria-hidden="true"></i>
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') is not empty %}
                     <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-date.prefix', '') ~ ' ' }}</span>
@@ -27,7 +27,7 @@
         {# Begin Meta - Author #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-author.enabled', '1') and post.author.name %}
             <div class="meta-author">
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil fa-pencil-alt" aria-hidden="true"></i>
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') is not empty %}
                     <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-author.prefix', '') ~ ' ' }}</span>
@@ -45,7 +45,7 @@
         {# Begin Meta - Comments #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.enabled', '1') %}
             <div class="meta-comments-count">
-                <i class="fa fa-comments"></i>
+                <i class="fa fa-comments" aria-hidden="true"></i>
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') is not empty %}
                     <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-comments.prefix', '') ~ ' ' }}</span>
@@ -71,7 +71,7 @@
         {# Begin Meta - Categories #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.enabled', '1') and post.categories is not empty %}
             <div class="meta-categories">
-                <i class="fa fa-folder-open"></i>
+                <i class="fa fa-folder-open" aria-hidden="true"></i>
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') is not empty %}
                     <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-categories.prefix', 'Categories:') ~ ' ' }}</span>
@@ -94,7 +94,7 @@
         {# Begin Meta - Tags #}
         {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.enabled', '1') and post.tags is not empty %}
             <div class="meta-tags">
-                <i class="fa fa-tags"></i>
+                <i class="fa fa-tags" aria-hidden="true"></i>
 
                 {% if gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') is not empty %}
                     <span class="meta-prefix">{{ gantry.config.get('content.' ~ scope ~ '.meta-tags.prefix', 'Tags:') ~ ' ' }}</span>

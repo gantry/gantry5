@@ -3,6 +3,10 @@ description: Display content in side-by-side cubes.
 type: particle
 icon: fa-cube
 
+configuration:
+  caching:
+    type: static
+
 form:
   fields:
     enabled:
@@ -31,6 +35,8 @@ form:
       ajax: true
 
       fields:
+        .name:
+          type: input.text
         .image:
           type: input.imagepicker
           label: Image
@@ -106,4 +112,3 @@ form:
           options:
               _self: Self
               _blank: New Window
-

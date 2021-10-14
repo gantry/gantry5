@@ -1,7 +1,21 @@
 <?php
+
+/**
+ * @package   Gantry5
+ * @author    RocketTheme http://www.rockettheme.com
+ * @copyright Copyright (C) 2007 - 2021 RocketTheme, LLC
+ * @license   MIT
+ *
+ * http://opensource.org/licenses/MIT
+ */
+
 namespace Gantry;
+
 use DebugBar\DataCollector\ConfigCollector;
+use DebugBar\DataCollector\DataCollectorInterface;
+use DebugBar\DebugBarException;
 use Gantry\Component\Config\Config;
+use Grav\Common\Grav;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 /**
@@ -10,14 +24,10 @@ use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
  */
 class Debugger
 {
-    /**
-     * @var Debugger
-     */
+    /** @var static */
     protected static $instance;
 
-    /**
-     * @var \Grav\Common\Debugger
-     */
+    /** @var \Grav\Common\Debugger */
     protected static $debugger;
 
     /**
@@ -25,7 +35,7 @@ class Debugger
      */
     public function __construct()
     {
-        static::$debugger = \Grav\Common\Grav::instance()['debugger'];
+        static::$debugger = Grav::instance()['debugger'];
     }
 
     /**
@@ -33,7 +43,7 @@ class Debugger
      */
     public static function instance()
     {
-        if (!static::$instance) {
+        if (null === static::$instance) {
             static::$instance = new static;
         }
 
@@ -43,10 +53,9 @@ class Debugger
     /**
      * Start a timer with an associated name and description
      *
-     * @param             $name
+     * @param string $name
      * @param string|null $description
-     *
-     * @return $this
+     * @return static
      */
     public static function startTimer($name, $description = null)
     {
@@ -59,8 +68,7 @@ class Debugger
      * Stop the named timer
      *
      * @param string $name
-     *
-     * @return $this
+     * @return static
      */
     public static function stopTimer($name)
     {
@@ -79,17 +87,84 @@ class Debugger
         return static::instance();
     }
 
+    /**
+     * Displays the debug bar
+     *
+     * @return string
+     */
+    public static function render()
+    {
+        // Return nothing as Grav handles rendering for us.
+        return '';
+    }
+
+    /**
+     * Sends the data through the HTTP headers
+     *
+     * @return static
+     */
+    public static function sendDataInHeaders()
+    {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'sendDataInHeaders')) {
+            static::$debugger->sendDataInHeaders();
+        }
+
+        return static::instance();
+    }
+
+    /**
+     * Returns collected debugger data.
+     *
+     * @return array|null
+     */
+    public static function getData()
+    {
+        return null !== static::$debugger && method_exists(static::$debugger, 'getData') ? static::$debugger->getData() : null;
+    }
+
+    /**
+     * Returns a data collector.
+     *
+     * @param string $collector
+     * @return DataCollectorInterface|null
+     * @throws DebugBarException
+     */
+    public static function getCollector($collector)
+    {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'getCollector')) {
+            return static::$debugger->getCollector($collector);
+        }
+
+        return null;
+    }
+
+    /**
+     * Adds a data collector.
+     *
+     * @param DataCollectorInterface $collector
+     * @return static
+     * @throws DebugBarException
+     */
+    public static function addCollector($collector)
+    {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'addCollector')) {
+            static::$debugger->addCollector($collector);
+        }
+
+        return static::instance();
+    }
 
     /**
      * Dump variables into the Messages tab of the Debug Bar.
      *
-     * @param        $message
+     * @param mixed $message
      * @param string $label
+     * @param bool $isString
      * @return static
      */
     public static function addMessage($message, $label = 'info', $isString = true)
     {
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             static::$debugger->addMessage($message, $label, $isString);
         }
 
@@ -104,7 +179,7 @@ class Debugger
      */
     public static function addException(\Exception $e)
     {
-        if (static::$debugger && method_exists(static::$debugger, 'addException')) {
+        if (null !== static::$debugger && method_exists(static::$debugger, 'addException')) {
             static::$debugger->addException($e);
         }
 
@@ -120,7 +195,7 @@ class Debugger
      */
     public static function setConfig(Config $config)
     {
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             static::$debugger->addCollector(new ConfigCollector($config->toArray(), 'Gantry'));
         }
 
@@ -138,13 +213,16 @@ class Debugger
     {
         static $exists = false;
 
-        if (static::$debugger) {
+        if (null !== static::$debugger) {
             $paths = $locator->getPaths(null);
             if ($paths) {
                 if (!$exists) {
                     static::$debugger->addCollector(new ConfigCollector($paths, 'Streams'));
                 } else {
-                    static::$debugger->getCollector('Streams')->setData($paths);
+                    $collector = static::$debugger->getCollector('Streams');
+                    if ($collector instanceof ConfigCollector) {
+                        $collector->setData($paths);
+                    }
                 }
             }
             $exists = true;
